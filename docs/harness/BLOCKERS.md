@@ -44,16 +44,18 @@ their owning PR deltas and frozen receipts.
 - GitHub ruleset mutation is separately blocked on `G-CI-H`.
 - PR-277 is merged at remote descendant `a780043...`; its historical failed
   and passed review receipts remain preserved.
-- PR-278 content is complete. Immutable R1's source-regeneration failure is
-  preserved; amended content R2 passed all 21 cells on `34ec32aa...`. The
-  closeout commit changes status/handoff bytes and is not yet delivery-final:
-  it requires a new exact seal/review, latest-target integration, and fresh PR
-  inventory before the single attended transaction.
+- PR-278 is merged at target `1b0e4200...`; its preserved R1 failure and R2
+  acceptance remain historical evidence.
+- PR-279 content commit `404c4907...` passed the clean-room 23-cell review and
+  23/23 mutation oracle. Its closeout changes status, retrace projections, and
+  handoff bytes, so the final two-commit candidate still requires a new exact
+  seal/review, latest-target integration, and fresh PR inventory before the
+  single attended transaction.
 - Active graph `INVALIDATES_*`, `REQUIRES_RECALIBRATION`, and
   `REQUIRES_REEXECUTION` edges are capability blockers. They cannot be cleared
   by caller omission or a status/gate annotation.
-- The owner authorized one content history slot, one closeout commit, and one
-  attended non-draft review PR for PR-278. Direct push/PR commands remain
+- The owner authorized one content commit, one closeout commit, and one
+  attended non-draft review PR for PR-279. Direct push/PR commands remain
   forbidden; the exact final sealed SHA may
   be pushed only inside the single attended transaction. Approval, merge,
   force-push, and ruleset mutation remain unauthorized.

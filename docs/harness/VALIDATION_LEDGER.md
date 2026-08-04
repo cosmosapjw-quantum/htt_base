@@ -3021,3 +3021,33 @@ independent review, latest-target integration, and fresh PR inventory before
 one attended non-draft review-PR transaction. Approval, merge, force-push,
 ruleset mutation, data execution, capability promotion, and scientific public
 release remain unauthorized.
+
+## PR-279 — reverse trace and semantic invalidation routing (2026-08-04)
+
+Change classification: COMMON diagnostic reverse-trace contracts, exact
+source normalization, typed PR-277 lifecycle routing, generated governance
+artifacts, tests, and current status/handoff surfaces. No observed data,
+method calibration, theorem promotion, posterior/evidence result, native
+solver/atlas result, family identification, capability issuance, or public use
+is produced.
+
+| Command or evidence | Result | Notes |
+| --- | --- | --- |
+| verified remote entry | PASS | PR-278 is merged at target `1b0e4200ab4dd487909a8519d7808e81ad4b9169`; isolated PR-279 worktree preserves the main checkout and all eight user-owned untracked inputs. The ZIP was not unpacked. |
+| source intake and deterministic build | PASS | Exact 222-row internal source, 366-row GitHub source, and redo campaign hashes are pinned in a portable tracked snapshot. Build/check reports 222 historical, 19 prospective, 366 GitHub, 45 artifacts, 12 roots, seven lanes, one withheld relation, and zero drift. |
+| focused suite | PASS | `202 passed`; covers source bytes, lossless disposition parsing, exact projections, typed lifecycle edges, supersession, recompute routing, artifacts, runbooks, claim boundaries, and repaired PR-276 chronology. |
+| source-layout collection | PASS | `10740/10799 collected`, 59 deselected, zero collection errors. |
+| smoke | PASS | `8 passed`, 10791 deselected, with eight declared legacy deprecation warnings. |
+| DAG/status and mirrors | PASS | Strict 241-card DAG/status validation passes; canonical and compatibility mirrors are synchronized. |
+| claim scans | PASS | `check_claim_language.py` found no forbidden language after skipping the absent optional `manuscripts` path; research-surface lint reported zero hits. |
+| mutable terminal mutation review | PASS, PRE-COMMIT ONLY | Result `052d36d...` rejected 30/30 mutations while preserving 14 sealed inputs. Later commits invalidate exactness. |
+| first immutable content reviewer | ERROR, PRESERVED NON-ACCEPTANCE | The reviewer exposed prior PR-279 result paths during search, stopped immediately, and recorded `error/not_examined` with all 23 cells non-accepting. No majority vote or waiver was used. |
+| clean-room immutable content review | PASS | Exact content `404c4907...`, tree `e6c02f55...`, seal `0a8c560e...`; all 23 policy cells and eight policy commands passed. Result `9633ded5...`, coverage `9e94a8f7...`, and oracle `911a78f5...` bind 23/23 rejected temporary-copy mutations. |
+| canonical closeout and C1 programme checkpoint | PASS; SCIENCE OPEN UNCHANGED | PR-279 is `COMPLETED_SUCCESS`; `174/241 = 72.20%`, dependency weighted `75.55%`, critical path `98.70%`, 36 pending, no foreground card, and PR-280 is the sole unblocked next node. PR-190/276/277/278/279 form the planned C1 slice. No capability or public-use transition follows. |
+
+PR-279 content is closed and the clean-room immutable content result authorizes
+the canonical status transition. The separate closeout commit still requires
+an exact final seal, independent review, latest-target integration, and fresh
+PR inventory before one attended non-draft review-PR transaction. Approval,
+merge, force-push, ruleset mutation, data execution, capability promotion, and
+scientific public release remain unauthorized.

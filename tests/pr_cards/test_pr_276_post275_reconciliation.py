@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import hashlib
+import re
 import subprocess
 from pathlib import Path
 import sys
@@ -216,7 +218,30 @@ def test_status_is_total_and_preserves_negative_chronology() -> None:
     assert status["execution_resolutions"]["PR-277"][
         "success_dependency_satisfied"
     ] is True
-    assert all(states[pr_id] == "pending" for pr_id in POST275_IDS[2:])
+    resolutions = status["execution_resolutions"]
+    for pr_id in POST275_IDS:
+        state = states[pr_id]
+        resolution = resolutions.get(pr_id)
+        if state == "completed":
+            assert isinstance(resolution, dict), pr_id
+            assert resolution["resolution"] == "COMPLETED_SUCCESS", pr_id
+            assert resolution["success_dependency_satisfied"] is True, pr_id
+        elif state == "blocked":
+            assert isinstance(resolution, dict), pr_id
+            assert resolution["resolution"] in {
+                "COMPLETED_FAILED_WITH_RECEIPT",
+                "BLOCKED_WITH_RECEIPT",
+                "ABANDONED_WITH_RECEIPT",
+            }, pr_id
+            assert resolution["success_dependency_satisfied"] is False, pr_id
+        else:
+            assert state in {
+                "pending",
+                "in_progress",
+                "background_in_progress",
+                "dormant_external",
+            }, pr_id
+            assert resolution is None, pr_id
     if states["PR-276"] == "in_progress":
         assert "PR-276" not in status["execution_resolutions"]
     else:
@@ -366,7 +391,32 @@ def test_generated_status_surfaces_cover_current_dag_and_worktree() -> None:
     # last form is required in a detached latest-target integration worktree,
     # whose HEAD intentionally stays on the target while candidate bytes are
     # applied to the index.  The immutable candidate seal binds the exact tree.
-    assert snapshot["metadata"]["source_commit"] in allowed_sources
+    snapshot_metadata = snapshot["metadata"]
+    ledger_metadata = ledger["metadata"]
+    assert snapshot_metadata["source_commit"] == ledger_metadata["source_commit"]
+    assert snapshot_metadata["input_hashes"] == ledger_metadata["input_hashes"]
+    source_commit = snapshot_metadata["source_commit"]
+    if source_commit not in allowed_sources:
+        match = re.fullmatch(r"([0-9a-f]{8})\+dirty", source_commit)
+        assert match is not None
+        prefix = match.group(1)
+        candidates = {
+            receipt["candidate_sha"]
+            for receipt in status.get("execution_resolutions", {}).values()
+            if isinstance(receipt, dict)
+            and isinstance(receipt.get("candidate_sha"), str)
+            and receipt["candidate_sha"].startswith(prefix)
+        }
+        assert len(candidates) == 1
+        candidate_sha = candidates.pop()
+        resolved = _run("git", "rev-parse", f"{candidate_sha}^{{commit}}")
+        assert resolved.returncode == 0, resolved.stderr
+        assert resolved.stdout.strip() == candidate_sha
+    for row in snapshot_metadata["input_hashes"]:
+        relative, expected = row.rsplit(":", 1)
+        path = ROOT / relative
+        assert path.is_file() and not path.is_symlink()
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == expected
     assert snapshot["metadata"]["worktree_state"] == "dirty"
     matrix = (ROOT / "docs/generated/status_matrix.md").read_text(encoding="utf-8")
     assert "| Total PRs | 241 |" in matrix

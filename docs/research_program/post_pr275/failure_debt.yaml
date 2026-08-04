@@ -1,0 +1,177 @@
+schema: htt.pr279_failure_debt.v1
+document_id: PR279-FAILURE-DEBT
+owner: COMMON
+scope: named unresolved or explicitly resolved blockers discovered by reverse trace
+allowed_use: dependency routing and stop decisions only
+transfer_source: preserved per affected lane
+source_identities:
+- backlog_semantic_sha256: d38bedda9aa01d613fb69c581b4f7977f108c86fafca4df65d9d356ed494f8dc
+- inventory_semantic_sha256: 03105a50fec3ecb7500094efa04bb4f708f8a4bfdd2bbd17e049418f2321b28e
+assumptions:
+- Blockers affect only named capabilities and downstream work units.
+caveats:
+- A named route does not authorize execution, admission, claim promotion, or publication.
+generating_procedure: scripts/codex_harness/run_pr279_reverse_trace.py build
+claim_tier_ceiling: diagnostic_only
+rows:
+- debt_id: DEBT-PR280-FRESH-INVENTORY
+  status: OPEN
+  blocker_class: INFRASTRUCTURE_DEBT
+  affected_prs:
+  - PR-280
+  route_id: ROUTE-STABLE_REPLAY
+  next_work_unit: PR-280
+  named_event: null
+  effect: Fresh cache-free full inventory and failure classification have not run.
+- debt_id: DEBT-PR276-STALE-RECONCILIATION-ASSERTIONS
+  status: RESOLVED_IN_PR279
+  blocker_class: INFRASTRUCTURE_DEBT
+  affected_prs:
+  - PR-276
+  - PR-279
+  route_id: ROUTE-MIGRATION_ONLY
+  next_work_unit: PR-279
+  named_event: null
+  effect: Two fixed-list/generated-source assertions were stale after PR-278 completion.
+- debt_id: DEBT-NO-ADMITTED-DATA
+  status: OPEN
+  blocker_class: EVIDENCE_CONDITIONAL
+  affected_prs:
+  - PR-274
+  - PR-289
+  - PR-290
+  - PR-291
+  - PR-292
+  - PR-293
+  route_id: ROUTE-EXTERNAL_BLOCKED
+  next_work_unit: PR-289
+  named_event: LANE_SPECIFIC_DATA_ADMISSION
+  effect: PR-274 admitted zero products; observed execution remains forbidden.
+- debt_id: DEBT-NATIVE-SOLVER-ATLAS
+  status: BLOCKED_NAMED_EVENT
+  blocker_class: PHYSICAL_HARD
+  affected_prs:
+  - PR-229
+  - PR-230
+  - PR-231
+  - PR-232
+  - PR-233
+  - PR-234
+  - PR-235
+  - PR-236
+  - PR-237
+  - PR-238
+  - PR-239
+  - PR-240
+  - PR-241
+  - PR-242
+  - PR-243
+  - PR-244
+  - PR-245
+  - PR-246
+  route_id: ROUTE-NATIVE_BLOCKED
+  next_work_unit: null
+  named_event: EXTERNAL_NATIVE_LOW_ELL_SOLVER_AND_MORPHOLOGY_ATLAS_VALIDATED
+  effect: Native-dependent cards remain dormant; family identification stays blocked.
+- debt_id: DEBT-PR151-PARTIAL-DESI
+  status: OPEN
+  blocker_class: EVIDENCE_CONDITIONAL
+  affected_prs:
+  - PR-151
+  - PR-203
+  - PR-178
+  route_id: ROUTE-EXTERNAL_BLOCKED
+  next_work_unit: PR-151
+  named_event: AUTHENTICATED_COMPLETE_1000_EZMOCK_AND_25_ABACUS_ACQUISITION
+  effect: Partial/background DESI inputs cannot enter a statistic.
+- debt_id: DEBT-CF4-P0-QUARANTINE
+  status: OPEN
+  blocker_class: EVIDENCE_CONDITIONAL
+  affected_prs:
+  - PR-120
+  - PR-209
+  - PR-291
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  next_work_unit: PR-291
+  named_event: H-CF4
+  effect: P0 rescue count remains zero; raw-catalogue/full-covariance replay is required.
+- debt_id: DEBT-THEOREM-151-ADJUDICATIONS
+  status: OPEN
+  blocker_class: EVIDENCE_CONDITIONAL
+  affected_prs:
+  - PR-285
+  - PR-286
+  route_id: ROUTE-REPROVE
+  next_work_unit: PR-285
+  named_event: null
+  effect: The 123 source plus 28 VT obligations require receipt-bearing terminal adjudication.
+- debt_id: DEBT-BAYES-SEMANTICS
+  status: OPEN
+  blocker_class: EVIDENCE_CONDITIONAL
+  affected_prs:
+  - PR-288
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  next_work_unit: PR-288
+  named_event: null
+  effect: Legacy evidence, posterior, PPC, and LOOCV surfaces remain legacy-only until PR-288.
+- debt_id: DEBT-RESIDUAL-TYPED-GAPS
+  status: OPEN
+  blocker_class: EVIDENCE_CONDITIONAL
+  affected_prs:
+  - PR-281
+  - PR-282
+  - PR-283
+  - PR-284
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  next_work_unit: PR-281
+  named_event: null
+  effect: Orbit acceptance, parity, weak-ID, and depth-path calibration remain pending.
+- debt_id: DEBT-DESI-BGS-ANY-ESTIMAND-ROUTE
+  status: OPEN_REPLAN_REQUIRED
+  blocker_class: EVIDENCE_CONDITIONAL
+  affected_prs:
+  - PR-203
+  - PR-289
+  - PR-294
+  route_id: ROUTE-CORRECTED_SUPERSEDED
+  next_work_unit: null
+  named_event: OWNER_APPROVED_VERSIONED_BGS_ANY_SUCCESSOR_CARD
+  effect: BGS_ANY and BGS_BRIGHT-21.5 are distinct estimands; no dedicated BGS_ANY successor is registered.
+- debt_id: DEBT-ACT-ADMISSION-AUTHORIZATION
+  status: OPEN
+  blocker_class: EVIDENCE_CONDITIONAL
+  affected_prs:
+  - PR-204
+  - PR-289
+  route_id: ROUTE-EXTERNAL_BLOCKED
+  next_work_unit: PR-204
+  named_event: H-ACT
+  effect: PR-204 consumes PR-289 through the canonical dependency overlay but still lacks admission and
+    H-ACT execution receipts.
+- debt_id: DEBT-PR248-PR252-HASH-CONTRADICTION
+  status: OPEN_REPLAN_REQUIRED
+  blocker_class: LEGACY_SUPERSESSION
+  affected_prs:
+  - PR-168
+  - PR-248
+  - PR-252
+  - PR-259
+  route_id: ROUTE-CORRECTED_SUPERSEDED
+  next_work_unit: null
+  named_event: OWNER_APPROVED_CHRONOLOGY_PRESERVING_SUCCESSOR_REGISTRATION
+  effect: Tracked PR-252 extension and migration receipt disagree on exact hashes; the edge is withheld.
+- debt_id: DEBT-FINAL-PUBLICATION
+  status: OPEN
+  blocker_class: EVIDENCE_CONDITIONAL
+  affected_prs:
+  - PR-207
+  - PR-208
+  route_id: ROUTE-STABLE_REPLAY
+  next_work_unit: PR-208
+  named_event: null
+  effect: Publication may consume only capability-approved generated results after independent reproduction.
+summary:
+  row_count: 13
+  open_count: 11
+  named_event_blocked_count: 7
+  unknown_route_count: 0

@@ -12187,9 +12187,11 @@ prs:
   inputs:
   - PR-278 adjudicated lanes and all PR-000 through PR-275 terminal/current records
   - Separate GitHub publication and review record identity space
+  - Hash-pinned read-only 222-row, 366-row, and redo-campaign inputs normalized into one portable tracked snapshot
   outputs:
-  - PR_RETRACE_LEDGER covering each historical internal card exactly once
-  - Supersession map, semantic invalidation graph, recompute matrix, failure debt, and data runbooks
+  - PR_RETRACE_LEDGER covering 222 historical cards exactly once and a separate 19-card prospective section
+  - Separate 366-row GitHub publication/review index and exact 45-group data-artifact disposition
+  - PR-277 typed semantic invalidation graph, supersession map, recompute matrix, failure debt, and seven non-executing data runbooks
   contributors:
   - HTT
   - MIO
@@ -12207,16 +12209,41 @@ prs:
   - Route scalar-to-typed, orbit, MES, frame, anchor, exceedance, depth, response, open-set, data, theorem, and CF4-P0 invalidations.
   - Keep 222 internal work units distinct from GitHub publication/review records.
   files:
+  - .agent-harness/context/CLAIM_REGISTRY.jsonl
+  - htt/src/common/pr_retrace.py
+  - docs/research_program/post_pr275/pr279_spec.yaml
+  - docs/research_program/post_pr275/pr279_publication_policy.json
+  - docs/research_program/post_pr275/pr279_source_snapshot.yaml
   - docs/research_program/post_pr275/PR_RETRACE_LEDGER.yaml
+  - docs/research_program/post_pr275/github_publication_review_index.yaml
   - docs/research_program/post_pr275/semantic_invalidation_graph.yaml
+  - docs/research_program/post_pr275/supersession_map.yaml
+  - docs/research_program/post_pr275/recompute_matrix.yaml
+  - docs/research_program/post_pr275/failure_debt.yaml
+  - docs/research_program/post_pr275/data_runbooks.yaml
+  - docs/research_program/post_pr275/data_artifact_disposition.yaml
+  - docs/generated/status_snapshot.json
+  - docs/generated/claim_ledger.json
+  - docs/generated/status_matrix.md
+  - scripts/codex_harness/run_pr279_reverse_trace.py
   - tests/contracts/test_pr_retrace_ledger.py
+  - tests/pr_cards/test_pr_276_post275_reconciliation.py
   - docs/PR_DELTAS/pr-279.md
   tests:
-  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_pr_retrace_ledger.py
+  - python -B scripts/codex_harness/run_pr279_reverse_trace.py check
+  - python -B scripts/codex_harness/run_pr279_reverse_trace.py focused
+  - python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check
+  - python -B scripts/codex_harness/run_pr279_reverse_trace.py collect
+  - python -B scripts/codex_harness/run_pr279_reverse_trace.py smoke
+  - python -B scripts/check_claim_language.py
+  - python -B scripts/claim_lint_research_surfaces.py
   dod:
   - Historical PR-000 through PR-275 appear exactly once and PR-276 through PR-294 occupy a separate prospective section.
-  - Every claim and artifact consumer resolves to a known disposition and recompute route.
-  kill: Orphan PR, claim, artifact, downstream consumer, or unknown disposition.
+  - GitHub records remain in a separate 366-row identity space and every work unit, artifact, and consumer resolves to a known disposition and recompute route.
+  - All 12 artifact invalidation roots use PR-277 typed lifecycle edges with content-addressed endpoints, capability scope, and reason refs; work-unit routing remains non-authoritative.
+  - The exact 45-group split is 20 REDO_REQUIRED, 14 REDO_UPGRADE, 5 PRESERVE, and 6 BLOCKED, with seven admission/authorization-separated runbooks and zero observed execution.
+  kill: Orphan PR, claim, artifact, downstream consumer, typed edge, unknown disposition, identity-space conflation, historical rewrite, or unregistered execution route.
   cost: very_high
   level: L3
   scope: pre-solver
@@ -12230,6 +12257,7 @@ prs:
   - No GitHub/internal ID conflation, synthetic result promotion, native status, or family-identification claim.
   anti_drift:
   - Historical dispositions are immutable inputs; corrections use explicit supersession edges.
+  - Exact-hash contradictions remain WITHHELD failure debt until a chronology-preserving successor is separately registered.
   roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
   activation_state: PENDING
   execution_lane: defensible

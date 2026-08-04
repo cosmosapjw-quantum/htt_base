@@ -23,8 +23,8 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
   unattended work remains external-publisher-only, while current-turn owner
   authorization may consume one sealed `CREATE_REVIEW_PR` transaction. No
   force-push, approval, merge, ruleset, data, or claim action is enabled.
-- Current counts: 173 completed (71.78%), dependency-weighted 75.33%,
-  critical-path 98.70%, 37 pending, 2 blocked, 28 dormant, no foreground card,
+- Current counts: 174 completed (72.20%), dependency-weighted 75.55%,
+  critical-path 98.70%, 36 pending, 2 blocked, 28 dormant, no foreground card,
   and PR-151 background-only.
 - The dependency overlay adds PR-285 to PR-191--195, PR-278 to PR-157, typed
   residual/replay prerequisites to Planck/CF4/ACT cards, and PR-294 to PR-207
@@ -104,18 +104,37 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
   commit `3fa98dc3...`; its seal and normally closed run summary authorize the
   canonical closeout without changing any scientific capability.
 
+## PR-279 completed; exact delivery review pending
+
+- Exact internal/GitHub identity spaces: 222 historical plus 19 prospective
+  internal rows, and 366 separate GitHub publication/review rows.
+- Lifecycle/recompute products: 12 roots, 58 typed nodes, 212 lifecycle edges,
+  five supersessions, one withheld hash contradiction, and no orphan consumer
+  or unknown disposition.
+- Data routing: 45 groups split 20 `REDO_REQUIRED`, 14 `REDO_UPGRADE`, five
+  `PRESERVE`, and six `BLOCKED`; 13 debt rows; seven runbooks; zero admitted,
+  authorized, or executed lanes.
+- Content commit `404c4907...`, tree `e6c02f55...`, seal `0a8c560e...` passed
+  clean-room result `9633ded5...`, coverage `9e94a8f7...`, and a 23/23
+  mutation oracle `911a78f5...`.
+- The first immutable reviewer contaminated blind independence and stopped;
+  its `error/not_examined` receipt is preserved and excluded from acceptance.
+- Canonical closeout records 174/241 complete, dependency weighted 75.55%, no
+  foreground card, and PR-280 as the sole unblocked next node. Scientific
+  status remains open and public use remains false.
+
 ## Next transition
 
-PR-278 is canonically `COMPLETED_SUCCESS` after immutable content R2 passed all
-21 registered policy cells on exact content commit `34ec32aa...`. Scientific
-status remains `OPEN_UNCHANGED`, public use remains false, and PR-279 is the
-sole unblocked next card. The owner authorized one content slot, one closeout
-commit, and one attended review PR. The remaining delivery transition is an
+PR-279 is canonically `COMPLETED_SUCCESS` after the exact content review.
+Scientific status remains `OPEN_UNCHANGED`, public use remains false, and
+PR-280 is the sole unblocked next card. The owner authorized one content
+commit, one closeout commit, and one attended review PR. The remaining
+delivery transition is an
 exact two-commit seal, independent review, latest-target integration, fresh PR
 inventory, and one non-draft review PR; no approval, merge, data execution,
 capability promotion, or scientific release follows.
 
-## PR-278 completed; exact delivery review pending
+## PR-278 historical closeout record
 
 - Frozen 28 family rows into 19 reviewable, one non-terminal, and eight
   event-gated rows; preserved zero CF4 P0 rescue.
@@ -137,6 +156,7 @@ capability promotion, or scientific release follows.
   `35fae6bf...`, strict result `c5ddc511...`, coverage `c86fcc64...`, oracle
   `266822a5...`, merged result `2a0789ae...`, and normally closed summary
   `2fed1a5e...`.
-- Canonical closeout records 173/241 complete, no foreground card, and PR-279
-  as the sole unblocked next node. This status transition grants no capability
-  or scientific/public-use effect.
+- At PR-278 closeout the ledger recorded 173/241 complete and PR-279 as the
+  sole unblocked next node. Target merge `1b0e4200...` later satisfied that
+  delivery gate; this historical transition granted no capability or
+  scientific/public-use effect.

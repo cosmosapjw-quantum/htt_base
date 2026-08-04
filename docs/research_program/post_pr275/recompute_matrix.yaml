@@ -1,0 +1,2954 @@
+schema: htt.pr279_recompute_matrix.v1
+document_id: PR279-RECOMPUTE-MATRIX
+owner: COMMON
+scope: total routing projection for historical work units and normalized data artifacts
+allowed_use: scheduling diagnostic only
+transfer_source: preserved per routed object
+source_identities:
+- ledger_semantic_sha256: 05590abdcae36f543435f4a33f7ee7e481778ac20241090899fb2156ff89c69d
+  inventory_semantic_sha256: 03105a50fec3ecb7500094efa04bb4f708f8a4bfdd2bbd17e049418f2321b28e
+assumptions:
+- A route is not execution authorization or capability evidence.
+caveats:
+- Work-unit root hints are coarse routing hints and never PR-277 lifecycle authority.
+generating_procedure: scripts/codex_harness/run_pr279_reverse_trace.py build
+claim_tier_ceiling: diagnostic_only
+claim_effect: none_routing_only
+routes:
+- route_id: ROUTE-STABLE_REPLAY
+  disposition: STABLE_REPLAY
+  capability_effect: none
+- route_id: ROUTE-MIGRATION_ONLY
+  disposition: MIGRATION_ONLY
+  capability_effect: none
+- route_id: ROUTE-REPROVE
+  disposition: REPROVE
+  capability_effect: none
+- route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  disposition: RECALIBRATE_SYNTHETIC
+  capability_effect: none
+- route_id: ROUTE-RERUN_FROM_RAW_DATA
+  disposition: RERUN_FROM_RAW_DATA
+  capability_effect: none
+- route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  disposition: RERUN_FROM_ADMITTED_SUMMARY
+  capability_effect: none
+- route_id: ROUTE-CORRECTED_SUPERSEDED
+  disposition: CORRECTED_SUPERSEDED
+  capability_effect: none
+- route_id: ROUTE-FALSIFIED_HISTORICAL
+  disposition: FALSIFIED_HISTORICAL
+  capability_effect: none
+- route_id: ROUTE-LEGACY_REPRODUCTION_ONLY
+  disposition: LEGACY_REPRODUCTION_ONLY
+  capability_effect: none
+- route_id: ROUTE-EXTERNAL_BLOCKED
+  disposition: EXTERNAL_BLOCKED
+  capability_effect: none
+- route_id: ROUTE-NATIVE_BLOCKED
+  disposition: NATIVE_BLOCKED
+  capability_effect: none
+historical_work_units:
+- internal_pr_id: PR-000
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-001
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-002
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-003
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-004
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-005
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-010
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-011
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-012
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-013
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-014
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-015
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-020
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-021
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-022
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-023
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-030
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-031
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-032
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-040
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-041
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-042
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-043
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-050
+  primary_disposition: LEGACY_REPRODUCTION_ONLY
+  normalized_dispositions:
+  - LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-LEGACY_REPRODUCTION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-051
+  primary_disposition: LEGACY_REPRODUCTION_ONLY
+  normalized_dispositions:
+  - LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-LEGACY_REPRODUCTION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-052
+  primary_disposition: LEGACY_REPRODUCTION_ONLY
+  normalized_dispositions:
+  - LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-LEGACY_REPRODUCTION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-053
+  primary_disposition: LEGACY_REPRODUCTION_ONLY
+  normalized_dispositions:
+  - LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-LEGACY_REPRODUCTION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-054
+  primary_disposition: LEGACY_REPRODUCTION_ONLY
+  normalized_dispositions:
+  - LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-LEGACY_REPRODUCTION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-055
+  primary_disposition: LEGACY_REPRODUCTION_ONLY
+  normalized_dispositions:
+  - LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-LEGACY_REPRODUCTION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-056
+  primary_disposition: LEGACY_REPRODUCTION_ONLY
+  normalized_dispositions:
+  - LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-LEGACY_REPRODUCTION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-060
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-061
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-062
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-063
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-064
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-065
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-066
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-070
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-071
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-072
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-073
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-074
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-075
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-076
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-080
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-081
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-082
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-083
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-084
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-090
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-091
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-092
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-100
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  - LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-101
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  - LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-102
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  - LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-103
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  - LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-110
+  primary_disposition: LEGACY_REPRODUCTION_ONLY
+  normalized_dispositions:
+  - LEGACY_REPRODUCTION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-LEGACY_REPRODUCTION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-111
+  primary_disposition: STABLE_REPLAY
+  normalized_dispositions:
+  - STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-112
+  primary_disposition: LEGACY_REPRODUCTION_ONLY
+  normalized_dispositions:
+  - LEGACY_REPRODUCTION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-LEGACY_REPRODUCTION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-113
+  primary_disposition: STABLE_REPLAY
+  normalized_dispositions:
+  - STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-114
+  primary_disposition: STABLE_REPLAY
+  normalized_dispositions:
+  - STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-115
+  primary_disposition: STABLE_REPLAY
+  normalized_dispositions:
+  - STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-116
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-117
+  primary_disposition: STABLE_REPLAY
+  normalized_dispositions:
+  - STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-118
+  primary_disposition: STABLE_REPLAY
+  normalized_dispositions:
+  - STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-119
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-120
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-121
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-122
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-123
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-124
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-125
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-126
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-127
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-128
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-129
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-130
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-131
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-132
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-133
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-134
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-135
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-136
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-137
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-138
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-139
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-140
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-141
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-142
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-143
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-144
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-145
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-146
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-147
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-148
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-149
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-150
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-151
+  primary_disposition: EXTERNAL_BLOCKED
+  normalized_dispositions:
+  - EXTERNAL_BLOCKED
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-EXTERNAL_BLOCKED
+  execution_steps:
+  - COMPLETE_AUTHENTICATED_ACQUISITION
+  start_condition: NERSC return + complete official acquisition; partial use forbidden
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: background_in_progress
+- internal_pr_id: PR-152
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-153
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-154
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-155
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-156
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-157
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-158
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-159
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-160
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-161
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-162
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-163
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-164
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-165
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-166
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-167
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-168
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-169
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-170
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-171
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-172
+  primary_disposition: FALSIFIED_HISTORICAL
+  normalized_dispositions:
+  - CORRECTED_SUPERSEDED
+  - FALSIFIED_HISTORICAL
+  route_id: ROUTE-FALSIFIED_HISTORICAL
+  execution_steps:
+  - USE_REGISTERED_SUCCESSOR_NOT_HISTORICAL_FAILURE
+  start_condition: repair collection/import and symmetry-contract blocker
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: blocked
+- internal_pr_id: PR-173
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-174
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-175
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-176
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-177
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-178
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-179
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-180
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-181
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-182
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-183
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-184
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-185
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-186
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-187
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-188
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-189
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-190
+  primary_disposition: FALSIFIED_HISTORICAL
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - REPROVE
+  - FALSIFIED_HISTORICAL
+  route_id: ROUTE-FALSIFIED_HISTORICAL
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: blocked
+- internal_pr_id: PR-191
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-192
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-193
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-194
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-195
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-196
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-197
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-198
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-199
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-200
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-201
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-202
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-203
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-204
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-205
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  - REPROVE
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-206
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-207
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  - STABLE_REPLAY
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-208
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - RERUN_FROM_RAW_DATA
+  - STABLE_REPLAY
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: formal DAG replan on current vector/tensor contracts and all dependencies green
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: pending
+- internal_pr_id: PR-209
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-210
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-211
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-212
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-213
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-214
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-215
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-216
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-217
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-218
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-219
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-220
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-221
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-222
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-223
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-224
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-225
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-226
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-227
+  primary_disposition: RERUN_FROM_RAW_DATA
+  normalized_dispositions:
+  - RERUN_FROM_RAW_DATA
+  - STABLE_REPLAY
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-228
+  primary_disposition: STABLE_REPLAY
+  normalized_dispositions:
+  - STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-229
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-230
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-231
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-232
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-233
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-234
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-235
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-236
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-237
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-238
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-239
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-240
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-241
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-242
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-243
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-244
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-245
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-246
+  primary_disposition: NATIVE_BLOCKED
+  normalized_dispositions:
+  - NATIVE_BLOCKED
+  route_id: ROUTE-NATIVE_BLOCKED
+  execution_steps: []
+  start_condition: none until genuine native delivery
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: dormant_external
+- internal_pr_id: PR-247
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-248
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-249
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-250
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-251
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-252
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-253
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-254
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-255
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-256
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-257
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-258
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-259
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-260
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-261
+  primary_disposition: MIGRATION_ONLY
+  normalized_dispositions:
+  - MIGRATION_ONLY
+  - STABLE_REPLAY
+  route_id: ROUTE-MIGRATION_ONLY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-262
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-263
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-264
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-265
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-266
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-267
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-268
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-269
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-270
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-271
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-272
+  primary_disposition: REPROVE
+  normalized_dispositions:
+  - REPROVE
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-REPROVE
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  - ROOT-THEOREM-REGISTRY-V3
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-273
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  normalized_dispositions:
+  - RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  execution_steps:
+  - FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints:
+  - ROOT-SCALAR-TO-TYPED-STATE
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-274
+  primary_disposition: EXTERNAL_BLOCKED
+  normalized_dispositions:
+  - EXTERNAL_BLOCKED
+  - RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-EXTERNAL_BLOCKED
+  execution_steps:
+  - READMIT_COMPLETE_DATA
+  - REQUIRE_SEPARATE_EXECUTION_AUTHORIZATION
+  start_condition: PR-151 terminal completeness or another fully authenticated release; preserve the zero-admission
+    receipt
+  routing_root_hints:
+  - ROOT-DATA-ADMISSION
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+- internal_pr_id: PR-275
+  primary_disposition: STABLE_REPLAY
+  normalized_dispositions:
+  - STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  execution_steps: []
+  start_condition: successor harness on current HEAD; preserve historical receipts byte-for-byte
+  routing_root_hints: []
+  routing_root_hints_are_authority: false
+  current_orchestration_status: completed
+data_artifacts:
+- artifact_id: DATA-ART-001
+  disposition: REDO_UPGRADE
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-290
+  - PR-150
+  blocking_event: null
+- artifact_id: DATA-ART-002
+  disposition: REDO_UPGRADE
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-290
+  blocking_event: null
+- artifact_id: DATA-ART-003
+  disposition: REDO_UPGRADE
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-290
+  blocking_event: null
+- artifact_id: DATA-ART-004
+  disposition: REDO_UPGRADE
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-290
+  blocking_event: null
+- artifact_id: DATA-ART-005
+  disposition: REDO_UPGRADE
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-290
+  - PR-180
+  blocking_event: null
+- artifact_id: DATA-ART-006
+  disposition: REDO_UPGRADE
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-294
+  blocking_event: null
+- artifact_id: DATA-ART-007
+  disposition: REDO_UPGRADE
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-294
+  blocking_event: null
+- artifact_id: DATA-ART-008
+  disposition: REDO_UPGRADE
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-152
+  blocking_event: null
+- artifact_id: DATA-ART-009
+  disposition: REDO_UPGRADE
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-291
+  - PR-179
+  blocking_event: null
+- artifact_id: DATA-ART-010
+  disposition: REDO_UPGRADE
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-293
+  - PR-153
+  blocking_event: null
+- artifact_id: DATA-ART-011
+  disposition: REDO_UPGRADE
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-291
+  blocking_event: null
+- artifact_id: DATA-ART-012
+  disposition: REDO_UPGRADE
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  internal_prs:
+  - PR-287
+  - PR-109
+  blocking_event: null
+- artifact_id: DATA-ART-013
+  disposition: REDO_UPGRADE
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  internal_prs:
+  - PR-287
+  - PR-110
+  blocking_event: null
+- artifact_id: DATA-ART-014
+  disposition: REDO_UPGRADE
+  primary_disposition: RECALIBRATE_SYNTHETIC
+  route_id: ROUTE-RECALIBRATE_SYNTHETIC
+  internal_prs:
+  - PR-287
+  - PR-111
+  blocking_event: null
+- artifact_id: DATA-ART-015
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  - PR-119
+  blocking_event: null
+- artifact_id: DATA-ART-016
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  blocking_event: null
+- artifact_id: DATA-ART-017
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  blocking_event: null
+- artifact_id: DATA-ART-018
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  - PR-066
+  blocking_event: null
+- artifact_id: DATA-ART-019
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  - PR-066
+  blocking_event: null
+- artifact_id: DATA-ART-020
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  - PR-066
+  blocking_event: null
+- artifact_id: DATA-ART-021
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  blocking_event: null
+- artifact_id: DATA-ART-022
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  blocking_event: null
+- artifact_id: DATA-ART-023
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  blocking_event: null
+- artifact_id: DATA-ART-024
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  - PR-064
+  blocking_event: null
+- artifact_id: DATA-ART-025
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  - PR-065
+  blocking_event: null
+- artifact_id: DATA-ART-026
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  - PR-065
+  blocking_event: null
+- artifact_id: DATA-ART-027
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  - PR-065
+  blocking_event: null
+- artifact_id: DATA-ART-028
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  - PR-065
+  - PR-140
+  blocking_event: null
+- artifact_id: DATA-ART-029
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  blocking_event: null
+- artifact_id: DATA-ART-030
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  blocking_event: null
+- artifact_id: DATA-ART-031
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  - PR-155
+  blocking_event: null
+- artifact_id: DATA-ART-032
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-288
+  - PR-155
+  blocking_event: null
+- artifact_id: DATA-ART-033
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_ADMITTED_SUMMARY
+  route_id: ROUTE-RERUN_FROM_ADMITTED_SUMMARY
+  internal_prs:
+  - PR-294
+  - PR-156
+  blocking_event: null
+- artifact_id: DATA-ART-034
+  disposition: REDO_REQUIRED
+  primary_disposition: RERUN_FROM_RAW_DATA
+  route_id: ROUTE-RERUN_FROM_RAW_DATA
+  internal_prs:
+  - PR-290
+  blocking_event: null
+- artifact_id: DATA-ART-035
+  disposition: PRESERVE
+  primary_disposition: STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  internal_prs:
+  - PR-291
+  blocking_event: null
+- artifact_id: DATA-ART-036
+  disposition: PRESERVE
+  primary_disposition: LEGACY_REPRODUCTION_ONLY
+  route_id: ROUTE-LEGACY_REPRODUCTION_ONLY
+  internal_prs:
+  - PR-287
+  blocking_event: null
+- artifact_id: DATA-ART-037
+  disposition: PRESERVE
+  primary_disposition: STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  internal_prs:
+  - PR-152
+  blocking_event: null
+- artifact_id: DATA-ART-038
+  disposition: PRESERVE
+  primary_disposition: STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  internal_prs:
+  - PR-252
+  - PR-248
+  - PR-259
+  blocking_event: null
+- artifact_id: DATA-ART-039
+  disposition: PRESERVE
+  primary_disposition: STABLE_REPLAY
+  route_id: ROUTE-STABLE_REPLAY
+  internal_prs:
+  - PR-153
+  blocking_event: null
+- artifact_id: DATA-ART-040
+  disposition: BLOCKED
+  primary_disposition: EXTERNAL_BLOCKED
+  route_id: ROUTE-EXTERNAL_BLOCKED
+  internal_prs:
+  - PR-291
+  - PR-144
+  - PR-145
+  - PR-148
+  blocking_event: CF4 P0 five-way conjunction plus PR-289 admission and H-CF4 execution authorization
+- artifact_id: DATA-ART-041
+  disposition: BLOCKED
+  primary_disposition: EXTERNAL_BLOCKED
+  route_id: ROUTE-EXTERNAL_BLOCKED
+  internal_prs:
+  - PR-151
+  blocking_event: PR-151 terminal receipt with all 1025 mock checksums, compact-random authentication,
+    and rehash
+- artifact_id: DATA-ART-042
+  disposition: BLOCKED
+  primary_disposition: EXTERNAL_BLOCKED
+  route_id: ROUTE-EXTERNAL_BLOCKED
+  internal_prs:
+  - PR-152
+  blocking_event: local authenticated QE inputs/pipeline and explicit execution authorization
+- artifact_id: DATA-ART-043
+  disposition: BLOCKED
+  primary_disposition: EXTERNAL_BLOCKED
+  route_id: ROUTE-EXTERNAL_BLOCKED
+  internal_prs:
+  - PR-291
+  blocking_event: CF4 WF residual covariance/operator
+- artifact_id: DATA-ART-044
+  disposition: BLOCKED
+  primary_disposition: EXTERNAL_BLOCKED
+  route_id: ROUTE-EXTERNAL_BLOCKED
+  internal_prs:
+  - PR-179
+  - PR-283
+  - PR-291
+  blocking_event: registered response-identifiability gate passes across folds
+- artifact_id: DATA-ART-045
+  disposition: BLOCKED
+  primary_disposition: EXTERNAL_BLOCKED
+  route_id: ROUTE-EXTERNAL_BLOCKED
+  internal_prs:
+  - PR-294
+  blocking_event: upstream CF4 P0 five-way closure
+summary:
+  historical_work_unit_count: 222
+  data_artifact_count: 45
+  unknown_route_count: 0
+  orphan_route_count: 0
