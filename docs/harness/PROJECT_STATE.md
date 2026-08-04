@@ -9,27 +9,27 @@ runs.
 ## Baseline
 
 - Canonical target: `research/pr04-multicomponent`.
-- Verified merge HEAD: `a7800430660c5a4bd532d8655fc63df03b21496e`.
-- That remote merge contains the reviewed PR-277 delivery; PR-278 started only
+- Verified merge HEAD: `1b0e4200ab4dd487909a8519d7808e81ad4b9169`.
+- That remote merge contains the reviewed PR-278 delivery; PR-279 started only
   after its ancestry and GitHub merge state were verified.
 - PR-190 is `COMPLETED_FAILED_WITH_RECEIPT`. Its registered full typed
   attainability statement is refuted; `success_dependency_satisfied=false`.
 - Work proceeds in the isolated branch
-  `changeset/pr278-tier-a-per-lane-adjudication`. The main user checkout and
+  `changeset/pr279-reverse-trace-invalidation`. The main user checkout and
   all user-owned untracked inputs remain untouched.
 
 ## Canonical orchestration state
 
 - DAG: 241 cards; validation passes.
-- Completed: 173/241 = 71.78%.
-- Dependency-weighted completion: 75.33%.
+- Completed: 174/241 = 72.20%.
+- Dependency-weighted completion: 75.55%.
 - Critical-path completion: 98.70%.
 - In progress: none.
-- Pending: 37.
+- Pending: 36.
 - Blocked terminal receipts: PR-190 and PR-172.
 - Dormant external/native: 28.
 - Background acquisition: PR-151 only.
-- PR-279 is the sole dependency-ready next node.
+- PR-280 is the sole dependency-ready next node.
 
 The lower count percentage reflects atomic registration of PR-276 through
 PR-294; it is bookkeeping, not scientific regression or readiness evidence.
@@ -144,8 +144,31 @@ Immutable content R2 passed all 21 policy cells on amended content commit
 therefore `COMPLETED_SUCCESS`, while scientific status remains `OPEN_UNCHANGED`
 and public use remains false.
 
-Current orchestration is 173/241 completed, no foreground card, with PR-279 as
-the sole dependency-ready next node. The closeout bytes still require an exact
-final seal/review, latest-target integration, fresh inventory, and the single
-attended non-draft review-PR transaction. Approval, merge, ruleset change,
-data execution, capability promotion, and scientific release remain blocked.
+PR-278 is merged at `1b0e4200...`; its receipt-level result and claim boundary
+remain unchanged.
+
+## PR-279 scope and current result
+
+PR-279 creates a portable exact projection of 222 historical internal work
+units, keeps 19 prospective work units separate, and keeps 366 GitHub
+publication/review records in a distinct identity space. It normalizes the
+legacy action vocabulary into eleven registered dispositions without changing
+the source text.
+
+The registered outputs contain 12 content-addressed invalidation roots, 58
+typed lifecycle nodes, 212 PR-277 recalibration/reexecution edges, five narrow
+supersession edges, one explicitly withheld PR-248/PR-252 hash contradiction,
+45 data-artifact groups split 20/14/5/6, 13 failure-debt rows, and seven
+non-executing data runbooks. No data lane is admitted, authorized, or executed.
+
+Exact content `404c4907...` passed a clean-room immutable review with all 23
+policy cells and 23/23 bounded mutations. An earlier reviewer independence
+contamination is preserved as `error/not_examined` and is not acceptance
+evidence. Canonical PR-279 is `COMPLETED_SUCCESS`; scientific status remains
+`OPEN_UNCHANGED`, public use is false, and PR-280 is the sole unblocked next
+node.
+
+The closeout bytes still require a fresh exact final seal/review,
+latest-target integration, fresh inventory, and the single attended non-draft
+review-PR transaction. Approval, merge, ruleset change, data execution,
+capability promotion, and scientific release remain blocked.

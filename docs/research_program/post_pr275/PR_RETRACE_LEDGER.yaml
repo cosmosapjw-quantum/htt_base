@@ -10,7 +10,7 @@ source_identities:
 - source_id: canonical_backlog
   semantic_sha256: d38bedda9aa01d613fb69c581b4f7977f108c86fafca4df65d9d356ed494f8dc
 - source_id: canonical_status
-  semantic_sha256: b60ca478d8835708e72167643af1a7c908840bfef3deed47c331081626d36556
+  semantic_sha256: b75788b7c8ab2b0239caa8ca68611894492217861e4de8660fe8c05a9102e81e
 assumptions:
 - Legacy CSV status is historical text; current orchestration status comes only from the canonical SSoT.
 - Normalized dispositions route work and do not grant scientific capability.
@@ -42,7 +42,7 @@ source:
   record_count: 222
 canonical_snapshot:
   backlog_semantic_sha256: d38bedda9aa01d613fb69c581b4f7977f108c86fafca4df65d9d356ed494f8dc
-  status_semantic_sha256: b60ca478d8835708e72167643af1a7c908840bfef3deed47c331081626d36556
+  status_semantic_sha256: b75788b7c8ab2b0239caa8ca68611894492217861e4de8660fe8c05a9102e81e
 historical_internal_work_units:
 - internal_pr_id: PR-000
   source_fields:
@@ -9693,9 +9693,20 @@ prospective_post275_work_units:
     capability: complete_internal_pr_retrace_and_recompute_routing
     claim_tier_ceiling: diagnostic_only
   current_canonical:
-    orchestration_status: pending
+    orchestration_status: completed
     execution_lane: defensible
-    execution_resolution: null
+    execution_resolution:
+      resolution: COMPLETED_SUCCESS
+      receipt: docs/PR_DELTAS/pr-279.md
+      review_receipt: .agent-harness/runs/pr279-content-immutable-review-r1-20260804/results/A-PR279-CONTENT-CLEANROOM-REVIEW.json
+      candidate_sha: 404c49078153394c4474a8331281c52369925b4d
+      resolved_on: '2026-08-04'
+      scientific_status_effect: diagnostic_reverse_trace_and_recompute_routing_registered
+      scientific_status_after: OPEN_UNCHANGED
+      scientific_artifact_mode: governance_retrace_diagnostic
+      observed_data_executed: false
+      public_use: false
+      success_dependency_satisfied: true
 - internal_pr_id: PR-280
   section: prospective_post275
   canonical_card:

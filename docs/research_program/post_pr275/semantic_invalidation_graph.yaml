@@ -167,19 +167,6 @@ typed_lifecycle_graph:
       root_id: ROOT-CF4-P0-QUARANTINE
     test_execution: null
     node_ref: 1aed9c96a72829339ca8541382d055efbb470512606b4d8a7fe81a79ec9b7ebf
-  - kind: claim
-    label: C-PR279-REVERSE-TRACE
-    content_sha256: 0dea00380efff8c15a6d1bcfec5ca4dfd12903f6fe12412bfed2e440bbd4acbc
-    axes:
-      process_result: PASS
-      evidence_status: PRESENT
-      scientific_status: OPEN
-    metadata:
-      capability_issuance: forbidden
-      claim_id: C-PR279-REVERSE-TRACE
-      scope: diagnostic reverse trace and recomputation routing
-    test_execution: null
-    node_ref: 2344165ea1412cc35891f54230380e3e6b7ee929ad7921dc7028fddd938407a6
   - kind: artifact
     label: PR279 target DATA-ART-020
     content_sha256: 6e9892423c50894f2478c4b017e14b916a1f28182c0bb943802f054b435b48d2
@@ -278,6 +265,19 @@ typed_lifecycle_graph:
       source_group_id: DA-P04
     test_execution: null
     node_ref: 469c932aaaf4a1c604be08cc3ea54f71a5c9c9689035e4fc49c4b395cd1304d0
+  - kind: claim
+    label: C-PR279-REVERSE-TRACE
+    content_sha256: ad674a96e4f20b14f87f155da789754e098995e0c1e700f1f69846479a7a2176
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      capability_issuance: forbidden
+      claim_id: C-PR279-REVERSE-TRACE
+      scope: diagnostic reverse trace and recomputation routing
+    test_execution: null
+    node_ref: 48da87974fcf197421ea35b5eceea74e30691587a589b8d75227a01e2d6aa728
   - kind: artifact
     label: PR279 authority ROOT-DATA-ADMISSION
     content_sha256: e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea
@@ -3431,7 +3431,7 @@ typed_lifecycle_graph:
       - PUBLIC_RELEASE
       reason_ref: a6e912ec1b6ff98c11ad5c6ef513073b9fbb67b725c36a92697bc0d4d120b300
     edge_ref: ffd0211bd5107ebc7397e23c7e37edabc47dae86b5e02865df433e6d841620ab
-  graph_ref: 9e9536a81a805dfbb8e28e44191254eb078427b49ca6a01e332c9fa3c339480a
+  graph_ref: 7fe2fa3f7d87f000d6eb9c0eb28d0108490de1695eb2a272ea8da577a9fce919
 root_index:
 - root_id: ROOT-SCALAR-TO-TYPED-STATE
   current_activation: ACTIVE_TARGETS_REQUIRED

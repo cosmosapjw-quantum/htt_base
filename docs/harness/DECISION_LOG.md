@@ -153,5 +153,27 @@ Canonical PR-278 status is therefore `COMPLETED_SUCCESS`.
 This closeout registers receipt-level lane dispositions only. Scientific
 status remains `OPEN_UNCHANGED`; it grants no theorem, method, data, observed,
 source-separation, morphology, native, family-identification, public-release,
-approval, or merge capability. PR-279 is the sole dependency-ready next card,
-but begins only after owner review and merge of the exact PR-278 delivery.
+approval, or merge capability. That delivery gate was satisfied by target
+merge `1b0e4200...`; the section remains a historical closeout record.
+
+## PR-279 closeout
+
+PR-279 keeps internal work units and GitHub publication/review records in
+separate typed identity spaces. Its canonical authority is the portable
+tracked snapshot plus the current DAG/status overlay; the three user-owned
+source files remain read-only and untracked, and the uploaded ZIP remains
+unopened.
+
+Lifecycle invalidation reuses PR-277 `REQUIRES_RECALIBRATION` and
+`REQUIRES_REEXECUTION` edges. Scheduling routes are non-authoritative and
+cannot issue a capability. The theorem-registry root is explicitly dormant,
+the PR-248/PR-252 hash contradiction remains withheld, and preserved artifacts
+cannot carry active invalidation roots.
+
+Immutable content `404c4907...` passed a clean-room 23-cell review and 23/23
+mutation oracle. A prior reviewer independence breach is preserved as
+`error/not_examined` and contributes no vote. Canonical PR-279 status is
+`COMPLETED_SUCCESS`; this grants no scientific status, data execution, public
+use, native status, posterior/evidence result, or family identification.
+PR-280 is the sole dependency-ready next node after owner review and merge of
+the exact PR-279 delivery.
