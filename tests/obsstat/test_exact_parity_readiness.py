@@ -12,6 +12,7 @@ import sys
 import pytest
 import yaml
 
+import obsstat.exact_parity_readiness as parity_readiness_module
 from obsstat.egs3_evalue_merge import merge_evalues_arbitrary_dependence
 from obsstat.exact_parity_readiness import (
     BLOCK_TOKEN,
@@ -213,6 +214,87 @@ def test_registered_mutations_all_execute_differ_and_are_killed() -> None:
     assert receipt["terminal"]["mutation_survivors"] == []
 
 
+@pytest.mark.parametrize(
+    "defect",
+    ("omitted", "duplicate", "unmapped", "reordered", "inconsistent_flags"),
+)
+def test_mutation_execution_evidence_fails_closed(
+    monkeypatch: pytest.MonkeyPatch,
+    defect: str,
+) -> None:
+    original = parity_readiness_module._run_mutations
+
+    def defective_rows(contract, clean):
+        rows = deepcopy(original(contract, clean))
+        if defect == "omitted":
+            return rows[:-1]
+        if defect == "duplicate":
+            return [rows[0], rows[0], *rows[2:]]
+        if defect == "unmapped":
+            rows[0]["mutation_id"] = "MU282-UNREGISTERED"
+            return rows
+        if defect == "reordered":
+            return [rows[1], rows[0], rows[2]]
+        for row in rows:
+            row["executed"] = False
+            row["activated"] = False
+            row["killed"] = True
+        return rows
+
+    monkeypatch.setattr(parity_readiness_module, "_run_mutations", defective_rows)
+    receipt = build_parity_readiness_receipt(_spec())
+
+    assert receipt["terminal"]["g3_outcome"] == BLOCK_TOKEN
+    assert "REGISTERED_MUTATION_RESULTS_INCOMPLETE_OR_INCONSISTENT" in (
+        receipt["terminal"]["reasons"]
+    )
+    assert receipt["terminal"]["mutation_survivors"]
+
+
+def test_orientation_reversing_orthogonal_noninvolution_is_rejected() -> None:
+    spec = _spec()
+    spec["relation"]["reflection_matrix"] = [
+        [0, 1, 0],
+        [0, 0, 1],
+        [-1, 0, 0],
+    ]
+
+    with pytest.raises(ParityReadinessError, match="involution"):
+        build_parity_readiness_receipt(spec)
+
+
+@pytest.mark.parametrize(
+    ("path", "replacement"),
+    [
+        (("contributors",), None),
+        (("dependencies",), None),
+        (("mutation_registry",), None),
+        (("dependent_evalue_merge", "inputs"), None),
+        (("dependent_evalue_merge", "weights"), None),
+    ],
+)
+def test_malformed_sequence_fields_raise_contract_error(
+    path: tuple[str, ...],
+    replacement: object,
+) -> None:
+    spec = _spec()
+    target = spec
+    for key in path[:-1]:
+        target = target[key]
+    target[path[-1]] = replacement
+
+    with pytest.raises(ParityReadinessError):
+        build_parity_readiness_receipt(spec)
+
+
+def test_dependent_evalue_rows_are_closed_mappings() -> None:
+    spec = _spec()
+    spec["dependent_evalue_merge"]["inputs"][0]["unregistered"] = True
+
+    with pytest.raises(ParityReadinessError, match="input row"):
+        build_parity_readiness_receipt(spec)
+
+
 def test_arbitrary_dependence_evalue_merge_is_exact_convex_arithmetic() -> None:
     report = merge_evalues_arbitrary_dependence(
         labels=("nested-a", "nested-b"),
@@ -261,6 +343,33 @@ def test_generated_receipt_replays_exactly() -> None:
     )
     payload = json.loads(RECEIPT_PATH.read_text(encoding="utf-8"))
     assert payload["readiness_receipt"]["terminal"]["g3_outcome"] == PASS_TOKEN
+    source_record = payload["readiness_receipt"]["theorem_boundary"][
+        "source_obligation_record"
+    ]
+    assert source_record["obligation_id"] == "TF-09-PARITY-SIGN-EXACTNESS"
+    assert source_record["source_proof_adjudication_status"] == "NOT_ADJUDICATED"
+    assert source_record["evidence_grade"] == "EXACT_ANALYTIC"
+    assert source_record["verdict"] == "PROVED_ANALYTIC_UNDER_TYPED_PREMISES"
+    assert source_record["claim_ceiling"] == "diagnostic_only"
+    assert source_record["registry_sha256"] == hashlib.sha256(
+        (
+            ROOT
+            / "docs/research_program/vector_tensor/proofs/"
+            "PILLAR_S_CORE_PROOFS_V1.yaml"
+        ).read_bytes()
+    ).hexdigest()
+    assert source_record["registry_path"] in {
+        row["path"] for row in payload["source_bindings"]
+    }
+    assert payload["generation_identity"] == {
+        "mode": "EXACT_BOUND_SOURCE_HASHES",
+        "git_or_worktree_identity": "EXTERNAL_CANDIDATE_SEAL_REQUIRED",
+        "reason": (
+            "Embedding the commit or tree that contains this artifact would be circular; "
+            "acceptance binds the candidate in the external seal and review run plan."
+        ),
+    }
+    assert "worktree_state" not in payload
     assert payload["mask_status"] == "synthetic_fixed_under_registered_reflection"
     assert payload["weighting_status"] == (
         "synthetic_fixed_under_registered_reflection"

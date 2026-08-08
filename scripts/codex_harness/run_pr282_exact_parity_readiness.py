@@ -19,6 +19,7 @@ SPEC = ROOT / "docs/research_program/post_pr275/pr282_spec.yaml"
 OUTPUT = ROOT / "docs/generated/pr282_exact_parity_readiness_receipt.json"
 BOUND_SOURCES = (
     "docs/research_program/post_pr275/pr282_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
     "htt/obsstat/exact_parity_readiness.py",
     "htt/obsstat/egs3_evalue_merge.py",
     "htt/src/common/vector_tensor_statistical_foundations.py",
@@ -105,7 +106,14 @@ def _build_artifact() -> dict[str, Any]:
             "python3 -B scripts/codex_harness/"
             "run_pr282_exact_parity_readiness.py build"
         ),
-        "worktree_state": "dirty_pr282_candidate_source_hash_bound",
+        "generation_identity": {
+            "mode": "EXACT_BOUND_SOURCE_HASHES",
+            "git_or_worktree_identity": "EXTERNAL_CANDIDATE_SEAL_REQUIRED",
+            "reason": (
+                "Embedding the commit or tree that contains this artifact would be circular; "
+                "acceptance binds the candidate in the external seal and review run plan."
+            ),
+        },
         "assumptions": receipt["assumptions"],
         "caveats": [
             "H1 and H3 remain separate unestablished premises",

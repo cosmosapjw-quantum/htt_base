@@ -1,5 +1,5 @@
 {
-  "artifact_content_sha256": "079ead091fc32d6392bd6f8319d41692f98bcad1217f10c19958705f17d38b30",
+  "artifact_content_sha256": "6637b4c99d3835cf5838d6f6bb3e16a823f031f800050e1faf37212b3b63b784",
   "artifact_id": "PR282-EXACT-PARITY-READINESS",
   "assumptions": [
     "Each sigma fixture is exactly symmetric and trace-free.",
@@ -23,6 +23,11 @@
   "covariance_status": "not_used_by_exact_h2_execution",
   "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
   "generating_command": "python3 -B scripts/codex_harness/run_pr282_exact_parity_readiness.py build",
+  "generation_identity": {
+    "git_or_worktree_identity": "EXTERNAL_CANDIDATE_SEAL_REQUIRED",
+    "mode": "EXACT_BOUND_SOURCE_HASHES",
+    "reason": "Embedding the commit or tree that contains this artifact would be circular; acceptance binds the candidate in the external seal and review run plan."
+  },
   "mask_status": "synthetic_fixed_under_registered_reflection",
   "null_mock_status": "not_used_by_exact_h2_execution",
   "observed_data_executed": false,
@@ -110,8 +115,8 @@
       "fixture_content_sha256": "fd32534c218caa47030e6fc956ee7f4136b49d241b0a1c7044375fe46269d245",
       "mask_content_sha256": "5799e9697bab158066592906cc23e71862b0073ef5aaef0524980916cd266102",
       "mutation_registry_content_sha256": "eb4ce7308aa5070ac78042eac2eeec39e65f130c08df3732c6092754c519bbb2",
-      "receipt_contract_content_sha256": "190b05aaec17b9ade657c99f00562c0fb2d4109d5969808d3872ef2372bc70d6",
-      "spec_semantic_sha256": "b3ed0b02b2716d13a540e4ae353036d7a6711b2793bd1c9b8c9bb75e255ef2fb",
+      "receipt_contract_content_sha256": "b6f0a55a18d8133038ec9405a5b414c95eb514cd1717d870a88cb569bfba62dc",
+      "spec_semantic_sha256": "27de9b171c5275d90966572f7fed5effbe33727ca7036fb6c463fd12adbdf26f",
       "weighting_content_sha256": "5aba34aeaac1ab20db762bf8b431752b5c3cb53dd37aa0febffac8e21fab5b63"
     },
     "contributors": [
@@ -222,7 +227,7 @@
     "observed_data_executed": false,
     "owner": "OBSSTAT",
     "public_use": false,
-    "receipt_content_sha256": "e992634b1d8fd0d34769df14a06115ea53299db4026bc64710b853d20dc5ad12",
+    "receipt_content_sha256": "ca2d2f92f87f9816d386cabdeb614820761a6815a7771771cbac418d5ad9c5a0",
     "relation": {
       "coordinate_frame": "synthetic_registered_cartesian_right_handed",
       "estimator_id": "weighted_krylov_pseudoscalar_mean.v1",
@@ -279,7 +284,19 @@
       ],
       "h2_p_equivariant_estimator": "EXECUTED_REGISTERED_SYNTHETIC_PATH_ONLY",
       "h3_no_atom_at_zero": "CONDITIONAL_AND_NOT_ESTABLISHED_BY_G3",
-      "source_obligation": "TF-09-PARITY-SIGN-EXACTNESS"
+      "source_obligation": "TF-09-PARITY-SIGN-EXACTNESS",
+      "source_obligation_record": {
+        "claim_ceiling": "diagnostic_only",
+        "evidence_grade": "EXACT_ANALYTIC",
+        "obligation_id": "TF-09-PARITY-SIGN-EXACTNESS",
+        "registry_path": "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+        "registry_sha256": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e",
+        "relation_to_source": "EXACT_REGISTERED_ORACLE_STATEMENT",
+        "source_proof_adjudication_status": "NOT_ADJUDICATED",
+        "source_statement_identity_sha256": "011104cca223a99b1238262bd291bbe7083d44e21672298bdee58488ffc1a5e4",
+        "source_status": "ORACLE_VERIFIED",
+        "verdict": "PROVED_ANALYTIC_UNDER_TYPED_PREMISES"
+      }
     },
     "transfer_source": "none",
     "weighting_status": "synthetic_fixed_under_registered_reflection"
@@ -291,11 +308,15 @@
   "source_bindings": [
     {
       "path": "docs/research_program/post_pr275/pr282_spec.yaml",
-      "sha256": "8ca2322264d76503e45d52d702f5790fb3cb6b4aaefec8c34fe2c8b1929ea2cc"
+      "sha256": "fe9293936e25bd79fcceb5cbb4f9874435eb1f704b90638430823fe38f37f73f"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+      "sha256": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e"
     },
     {
       "path": "htt/obsstat/exact_parity_readiness.py",
-      "sha256": "373e8a591caae41ae00ba18021c66e99e6859da506260adce4798e81ca4ac81c"
+      "sha256": "786de82e3ac3c8879ca9515fa13f4240b5c3e37c6001721f8f6d352e64fb886f"
     },
     {
       "path": "htt/obsstat/egs3_evalue_merge.py",
@@ -307,11 +328,11 @@
     },
     {
       "path": "scripts/codex_harness/run_pr282_exact_parity_readiness.py",
-      "sha256": "ff2479015d5a8f7564bad401849c9e8acdd1b4dd28dca53abce0edc166a4d4d3"
+      "sha256": "6a3825eafe51b545f7819cb58f665d2fe1a39efdbb268efb426a2fbcf3499923"
     },
     {
       "path": "tests/obsstat/test_exact_parity_readiness.py",
-      "sha256": "96319601d4701735b169591f56c8644252fd58693a22729b58cfd2f65786b06a"
+      "sha256": "754656e7000df3d4fd13be275de27f75dc5cfdee501edb7f292bcaa5bfbec7c7"
     },
     {
       "path": "tests/contracts/test_pillar_s_core.py",
@@ -319,6 +340,5 @@
     }
   ],
   "transfer_source": "none",
-  "weighting_status": "synthetic_fixed_under_registered_reflection",
-  "worktree_state": "dirty_pr282_candidate_source_hash_bound"
+  "weighting_status": "synthetic_fixed_under_registered_reflection"
 }

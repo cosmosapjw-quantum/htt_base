@@ -13,7 +13,13 @@ from fractions import Fraction
 import hashlib
 import json
 from numbers import Integral, Rational
+from pathlib import Path
 from typing import Any
+
+from common.vector_tensor_statistical_foundations import (
+    VectorTensorStatisticalFoundationError,
+    load_pillar_s_core_registry,
+)
 
 from .egs3_evalue_merge import merge_evalues_arbitrary_dependence
 
@@ -23,6 +29,10 @@ BLOCK_TOKEN = "BLOCKED_P_EQUIVARIANCE"
 SCHEMA = "obsstat.exact_parity_readiness.v1"
 CLAIM_TIER = "diagnostic_only"
 FAMILY_GATE = "BLOCKED_PRE_NATIVE_ATLAS"
+_ROOT = Path(__file__).resolve().parents[2]
+_PILLAR_S_REGISTRY = (
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml"
+)
 
 _SPEC_KEYS = {
     "schema",
@@ -104,6 +114,7 @@ _FIXTURE_STATUS = {
 }
 _RECEIPT_BINDINGS = (
     "docs/research_program/post_pr275/pr282_spec.yaml",
+    _PILLAR_S_REGISTRY,
     "htt/obsstat/exact_parity_readiness.py",
     "htt/obsstat/egs3_evalue_merge.py",
     "htt/src/common/vector_tensor_statistical_foundations.py",
@@ -127,6 +138,27 @@ _MUTATION_RULE = (
     "Every registered mutation must execute, differ on its intended surface, "
     "and be killed. Missing, skipped, unmapped, or surviving mutations block G3."
 )
+_MUTATION_RESULT_KEYS = {
+    "mutation_id",
+    "mutation_kind",
+    "executed",
+    "activated",
+    "killed",
+    "observed_outcome",
+    "observed_reasons",
+    "relation_residual",
+}
+_MUTATION_EXPECTED_REASON = {
+    "MU282-ESTIMATOR-ABSOLUTE": ("ESTIMATOR_RELATION_FAILED",),
+    "MU282-MASK-PAIR-DROP": (
+        "MASK_NOT_FIXED_BY_P",
+        "ESTIMATOR_RELATION_FAILED",
+    ),
+    "MU282-WEIGHT-PAIR-SKEW": (
+        "WEIGHTING_NOT_FIXED_BY_P",
+        "ESTIMATOR_RELATION_FAILED",
+    ),
+}
 
 
 class ParityReadinessError(ValueError):
@@ -301,10 +333,10 @@ def _parse_contract(spec: Mapping[str, Any]) -> dict[str, Any]:
         or spec["publication_group_id"] != "PG-PR282-EXACT-PARITY"
     ):
         raise ParityReadinessError("PR-282 change-set or publication-group identity drifted")
-    if tuple(spec["contributors"]) != ("COMMON",):
+    if _texts(spec["contributors"], "contributors") != ("COMMON",):
         raise ParityReadinessError("PR-282 contributors drifted")
     if (
-        tuple(spec["dependencies"]) != ("PR-280",)
+        _texts(spec["dependencies"], "dependencies") != ("PR-280",)
         or dict(_mapping(spec["dependency_contract"], "dependency_contract"))
         != {"upstream_id": "PR-280", "mode": "requires_terminal_receipt"}
     ):
@@ -359,7 +391,7 @@ def _parse_contract(spec: Mapping[str, Any]) -> dict[str, Any]:
         != "CONDITIONAL_AND_NOT_ESTABLISHED_BY_G3"
     ):
         raise ParityReadinessError("PR-282 theorem boundary drifted")
-    if tuple(theorem.get("h2_not_executed", ())) != (
+    if _texts(theorem.get("h2_not_executed"), "h2_not_executed") != (
         "mask_deconvolution",
         "observed_selection_function",
         "point_source_hole_correction",
@@ -445,6 +477,8 @@ def _parse_contract(spec: Mapping[str, Any]) -> dict[str, Any]:
         raise ParityReadinessError("reflection_matrix must be exactly orthogonal")
     if _determinant(reflection) != -1:
         raise ParityReadinessError("reflection_matrix must reverse orientation")
+    if _matmul(reflection, reflection) != identity:
+        raise ParityReadinessError("reflection_matrix must be an exact involution")
 
     raw_permutation = _sequence(relation.get("support_permutation"), "support_permutation")
     if any(isinstance(value, bool) or not isinstance(value, int) for value in raw_permutation):
@@ -501,7 +535,10 @@ def _parse_contract(spec: Mapping[str, Any]) -> dict[str, Any]:
         if sum((sigma[index][index] for index in range(3)), start=Fraction(0, 1)) != 0:
             raise ParityReadinessError("sigma_by_support must be exactly trace-free")
 
-    mutation_rows = tuple(_mapping(row, "mutation_registry") for row in spec["mutation_registry"])
+    mutation_rows = tuple(
+        _mapping(row, "mutation_registry")
+        for row in _sequence(spec["mutation_registry"], "mutation_registry")
+    )
     if any(
         set(row)
         != {"mutation_id", "mutation_kind", "intended_defect", "expected_kill"}
@@ -585,10 +622,24 @@ def _parse_contract(spec: Mapping[str, Any]) -> dict[str, Any]:
         != "CONDITIONAL_ON_EACH_INPUT_BEING_A_VALID_EVALUE_UNDER_COMMON_NULL"
         or merge.get("weight_registration_status")
         != "FIXED_IN_SPEC_BEFORE_EXECUTION"
-        or tuple(merge.get("forbidden_combinations", ())) != _MERGE_FORBIDDEN
+        or _texts(
+            merge.get("forbidden_combinations"),
+            "dependent_evalue_merge.forbidden_combinations",
+        )
+        != _MERGE_FORBIDDEN
     ):
         raise ParityReadinessError("dependent e-value merge contract drifted")
-    merge_inputs = tuple(_mapping(row, "dependent_evalue_merge.inputs") for row in merge["inputs"])
+    merge_inputs = tuple(
+        _mapping(row, "dependent_evalue_merge.inputs")
+        for row in _sequence(merge["inputs"], "dependent_evalue_merge.inputs")
+    )
+    if any(
+        set(row) != {"vector_id", "numerator", "denominator"}
+        for row in merge_inputs
+    ):
+        raise ParityReadinessError(
+            "dependent e-value input row must contain only vector_id, numerator, and denominator"
+        )
     labels = tuple(_text(row.get("vector_id"), "vector_id") for row in merge_inputs)
     e_values = tuple(
         _fraction_from_payload(
@@ -602,8 +653,32 @@ def _parse_contract(spec: Mapping[str, Any]) -> dict[str, Any]:
     )
     merge_weights = tuple(
         _fraction_from_payload(row, "e_value weight")
-        for row in merge["weights"]
+        for row in _sequence(merge["weights"], "dependent_evalue_merge.weights")
     )
+
+    try:
+        source_registry = load_pillar_s_core_registry(_ROOT)
+        source_record = source_registry.record(theorem["source_obligation"])
+    except VectorTensorStatisticalFoundationError as exc:
+        raise ParityReadinessError(
+            f"authoritative Pillar-S source obligation is invalid: {exc}"
+        ) from exc
+    source_obligation_record = {
+        "registry_path": _PILLAR_S_REGISTRY,
+        "registry_sha256": source_registry.registry_sha256,
+        "obligation_id": source_record.obligation_id,
+        "source_status": source_record.source_status,
+        "source_proof_adjudication_status": (
+            source_record.source_proof_adjudication_status
+        ),
+        "source_statement_identity_sha256": (
+            source_record.source_statement_identity_sha256
+        ),
+        "relation_to_source": source_record.relation_to_source,
+        "evidence_grade": source_record.evidence_grade.value,
+        "verdict": source_record.verdict.value,
+        "claim_ceiling": source_record.claim_ceiling,
+    }
 
     return {
         "relation": relation,
@@ -624,6 +699,7 @@ def _parse_contract(spec: Mapping[str, Any]) -> dict[str, Any]:
         "forbidden_uses": forbidden_uses,
         "caveats": caveats,
         "receipt_contract": receipt_contract,
+        "source_obligation_record": source_obligation_record,
     }
 
 
@@ -766,14 +842,84 @@ def _run_mutations(contract: Mapping[str, Any], clean: Mapping[str, Any]) -> lis
     return rows
 
 
+def _validate_mutation_results(
+    mutations: Sequence[Mapping[str, Any]],
+) -> tuple[list[str], list[str]]:
+    """Derive fail-closed terminal evidence from the returned mutation rows."""
+
+    expected_pairs = tuple(_MUTATIONS)
+    actual_pairs: list[tuple[object, object]] = []
+    invalid_ids: list[str] = []
+    counts = {mutation_id: 0 for mutation_id, _ in expected_pairs}
+    structurally_consistent = True
+
+    for index, raw_row in enumerate(mutations):
+        row = _mapping(raw_row, "mutation result")
+        mutation_id = row.get("mutation_id")
+        mutation_kind = row.get("mutation_kind")
+        actual_pairs.append((mutation_id, mutation_kind))
+        if isinstance(mutation_id, str) and mutation_id in counts:
+            counts[mutation_id] += 1
+        row_id = mutation_id if isinstance(mutation_id, str) else f"row:{index}"
+
+        expected_reasons = _MUTATION_EXPECTED_REASON.get(mutation_id)
+        observed_reasons = row.get("observed_reasons")
+        reasons_valid = (
+            isinstance(observed_reasons, list)
+            and expected_reasons is not None
+            and tuple(observed_reasons) == expected_reasons
+        )
+        try:
+            residual = _fraction_from_payload(
+                row.get("relation_residual"),
+                "mutation relation_residual",
+            )
+            residual_valid = residual != 0
+        except ParityReadinessError:
+            residual_valid = False
+
+        flags_valid = (
+            type(row.get("executed")) is bool
+            and row["executed"] is True
+            and type(row.get("activated")) is bool
+            and row["activated"] is True
+            and type(row.get("killed")) is bool
+            and row["killed"] is True
+            and row.get("observed_outcome") == BLOCK_TOKEN
+        )
+        row_consistent = (
+            set(row) == _MUTATION_RESULT_KEYS
+            and flags_valid
+            and reasons_valid
+            and residual_valid
+        )
+        if not row_consistent:
+            structurally_consistent = False
+            invalid_ids.append(row_id)
+
+    exact_coverage = tuple(actual_pairs) == expected_pairs
+    for mutation_id, count in counts.items():
+        if count != 1:
+            invalid_ids.append(mutation_id)
+    for mutation_id, _ in actual_pairs:
+        if isinstance(mutation_id, str) and mutation_id not in counts:
+            invalid_ids.append(mutation_id)
+    if not exact_coverage and not invalid_ids:
+        invalid_ids.extend(mutation_id for mutation_id, _ in expected_pairs)
+
+    if exact_coverage and structurally_consistent:
+        return [], []
+    survivors = list(dict.fromkeys(invalid_ids))
+    return ["REGISTERED_MUTATION_RESULTS_INCOMPLETE_OR_INCONSISTENT"], survivors
+
+
 def _build_unsigned_receipt(spec: Mapping[str, Any]) -> dict[str, Any]:
     contract = _parse_contract(spec)
     clean = _execute(contract)
     mutations = _run_mutations(contract, clean)
-    survivors = [row["mutation_id"] for row in mutations if not row["killed"]]
+    mutation_reasons, survivors = _validate_mutation_results(mutations)
     reasons = list(clean["reasons"])
-    if survivors:
-        reasons.append("REGISTERED_MUTATION_SURVIVED_OR_DID_NOT_EXECUTE")
+    reasons.extend(mutation_reasons)
     outcome = PASS_TOKEN if not reasons else BLOCK_TOKEN
 
     merge_report = merge_evalues_arbitrary_dependence(
@@ -868,6 +1014,7 @@ def _build_unsigned_receipt(spec: Mapping[str, Any]) -> dict[str, Any]:
         },
         "theorem_boundary": {
             "source_obligation": contract["theorem"]["source_obligation"],
+            "source_obligation_record": contract["source_obligation_record"],
             "h1_reflection_symmetric_null": contract["theorem"][
                 "h1_reflection_symmetric_null"
             ],
