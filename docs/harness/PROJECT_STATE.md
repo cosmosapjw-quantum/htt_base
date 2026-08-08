@@ -9,28 +9,29 @@ runs.
 ## Baseline
 
 - Canonical target: `research/pr04-multicomponent`.
-- Verified merge HEAD: `eaaff9db2636099e8286fb81acc1e652b018fbc5`.
-- That remote merge contains the reviewed PR-280 terminal inventory and the
-  PR-151 acquisition-path repair; PR-295 started only after its ancestry and
-  GitHub merge state were verified.
+- Verified merge HEAD: `cca54d95f0347cfa808d40c992437046b5dfc24c`.
+- That remote merge contains the reviewed PR-280 terminal inventory, the
+  PR-151 acquisition-path repair, and the successful PR-295 production-boundary
+  repair; PR-296 started only after their ancestry and GitHub merge state were
+  verified.
 - PR-190 is `COMPLETED_FAILED_WITH_RECEIPT`. Its registered full typed
   attainability statement is refuted; `success_dependency_satisfied=false`.
 - Work proceeds in the isolated branch
-  `changeset/pr295-external-boundary-repair`. The main user checkout and
+  `changeset/pr296-pstf-progressive-closure`. The main user checkout and
   all user-owned untracked inputs remain untouched.
 
 ## Canonical orchestration state
 
 - DAG: 244 cards; validation passes.
-- Completed: 175/244 = 71.72%.
-- Dependency-weighted completion: 74.09%.
+- Completed: 176/244 = 72.13%.
+- Dependency-weighted completion: 75.05%.
 - Critical-path completion: 98.70%.
 - In progress: none.
-- Pending: 37.
+- Pending: 36.
 - Blocked terminal receipts: PR-190, PR-172, and PR-280.
 - Dormant external/native: 28.
 - Background acquisition: PR-151 only.
-- PR-296 and PR-297 are dependency-ready; execute PR-296 first.
+- PR-297 is the sole dependency-ready next card.
 
 The lower count percentage reflects atomic registration through PR-297; it is
 bookkeeping, not scientific regression or readiness evidence.
@@ -174,7 +175,7 @@ PR-279's closeout review and merge requirements were subsequently satisfied.
 That delivery granted no ruleset change, data execution, capability promotion,
 or scientific release.
 
-## PR-280 terminal inventory and PR-295 repair (2026-08-08)
+## PR-280 terminal inventory and PR-295/PR-296 repairs (2026-08-08)
 
 PR-280 is terminal `COMPLETED_FAILED_WITH_RECEIPT`, with three exact
 active-core successors. PR-295 is now the first successful successor: content
@@ -183,10 +184,19 @@ installed BASS project, repairs direct-runner and exception lifecycle
 classification, and makes wheel staging resilient to a deleted-module cache.
 The frozen numerical seal remains byte-identical at SHA-256 `43d4d88b...`.
 
-Canonical status records 175/244 completed (71.72%) and dependency-weighted
-completion 74.09%. PR-296 and PR-297 are the only dependency-ready next cards.
-PR-280 remains a failed terminal receipt and its aggregate success dependency
-remains false until both remaining successors complete; PR-281--294 stay held.
+PR-296 is the second successful successor. Content commit `3b090aea...`
+replaces the unrelated constraint/shear projection denominator with one
+parent-resolved linear primordial amplitude shared by the Tier-B integrator and
+LoS normalization. Ordinary callable grids are resolved in parent k-order
+before process-pool creation, while bias and linear-probe paths remain raw
+through subtraction and divide exactly once. The exact frozen 65-point,
+four-worker progressive node passed in 1545.36 seconds at exactly the
+`ten_orders` tier. Strict Route-B bit-level closure remains open and XFAIL.
+
+Canonical status records 176/244 completed (72.13%) and dependency-weighted
+completion 75.05%. PR-297 is the sole dependency-ready next card. PR-280
+remains a failed terminal receipt and its aggregate success dependency remains
+false until PR-297 completes; PR-281--294 stay held.
 
 The PR-295 artifact is a governance/external-transfer diagnostic with
 `TransferSource.external_transfer`. Scientific status is `OPEN_UNCHANGED`,
@@ -194,8 +204,14 @@ observed-data execution and public use are false, and no native transfer,
 posterior/evidence, geometry, morphology-family, or family-identification
 claim is granted.
 
+The PR-296 artifact is a BASS-owned, pre-solver `diagnostic_only` C1
+`synthetic_diagnostic` with `transfer_source=none`. It restores only Python
+PSTF D2 progressive software non-regression. Scientific status remains
+`OPEN_UNCHANGED`; no observed data, null result, native transfer, posterior,
+geometry, morphology, or family-identification claim is granted.
+
 PR-151 remains acquisition-only on the external volume. At the checkpoint,
-540/1000 EZmocks were complete and batch 55 was actively advancing; Abacus was
-0/25. Partial files remain forbidden for scientific use. The observed recent
-cadence implies roughly 2.5--3 days for the remaining EZmock batches; no
-restart-from-zero condition is present.
+560/1000 EZmocks were receipt-complete and batch 57 was actively advancing;
+Abacus was 0/25. Partial files remain forbidden for scientific use. The
+observed recent cadence implies roughly 2.5--3 days for the remaining EZmock
+batches; no restart-from-zero condition is present.
