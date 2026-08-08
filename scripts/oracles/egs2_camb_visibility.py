@@ -190,12 +190,28 @@ def seminative_camb_crosscheck_seal() -> dict:
     """Fail-closed seal for the CAMB-visibility cross-check (B1 exit gate)."""
     try:
         cc = visibility_crosscheck()
-    except Exception as exc:  # camb unavailable -> registered blocker, not silence
+    except ModuleNotFoundError as exc:
+        if exc.name != "camb":
+            return {
+                "seal": "egs2.seminative_camb_crosscheck",
+                "status": "FAIL",
+                "error": f"{type(exc).__name__}: {exc}",
+                "claim_boundary": "external CAMB diagnostic failed; "
+                                  "no conclusion recorded",
+            }
         return {
             "seal": "egs2.seminative_camb_crosscheck",
             "status": "BLOCKED_CAMB_UNAVAILABLE",
             "error": f"{type(exc).__name__}: {exc}",
             "claim_boundary": "cross-check unavailable in this environment; "
+                              "no conclusion recorded",
+        }
+    except Exception as exc:
+        return {
+            "seal": "egs2.seminative_camb_crosscheck",
+            "status": "FAIL",
+            "error": f"{type(exc).__name__}: {exc}",
+            "claim_boundary": "external CAMB diagnostic failed; "
                               "no conclusion recorded",
         }
     ok = all(cc["checks"].values())

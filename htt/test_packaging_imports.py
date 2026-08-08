@@ -213,9 +213,16 @@ def test_dirty_build_cache_cannot_change_wheel_or_source_payload() -> None:
 
         clean_wheel = build_wheel(clean_project, tmp / "clean-wheel")
 
-        source_cache = dirty_project / "htt" / "build" / "lib" / "htt" / "stale_source.py"
+        source_cache = (
+            dirty_project
+            / "build"
+            / "lib"
+            / "bass"
+            / "transfer"
+            / "visibility_camb_crosscheck.py"
+        )
         source_cache.parent.mkdir(parents=True)
-        source_cache.write_text("STALE_SOURCE = True\n", encoding="utf-8")
+        source_cache.write_text("import camb\n", encoding="utf-8")
 
         injected_package_data = (
             dirty_project / "bass" / "validation" / "untracked_matching_name.json",
@@ -226,7 +233,6 @@ def test_dirty_build_cache_cannot_change_wheel_or_source_payload() -> None:
             injected.write_bytes(b"UNTRACKED_PACKAGE_DATA\n")
 
         source_before = _source_hashes(dirty_project)
-        source_cache_before = source_cache.read_bytes()
         dirty_wheel = build_wheel(dirty_project, tmp / "dirty-wheel")
 
         assert dirty_wheel.read_bytes() == clean_wheel.read_bytes()
@@ -234,7 +240,7 @@ def test_dirty_build_cache_cannot_change_wheel_or_source_payload() -> None:
             clean_wheel.read_bytes()
         ).digest()
         assert _source_hashes(dirty_project) == source_before
-        assert source_cache.read_bytes() == source_cache_before
+        assert not source_cache.exists()
         assert all(path.read_bytes() == b"UNTRACKED_PACKAGE_DATA\n" for path in injected_package_data)
 
         with zipfile.ZipFile(dirty_wheel) as archive:
@@ -277,6 +283,93 @@ def test_dirty_build_cache_cannot_change_wheel_or_source_payload() -> None:
         )
         assert not any(name.startswith("workspace/results/") for name in names)
         assert not any("untracked_matching_name" in name for name in names)
+        assert "bass/transfer/visibility_camb_crosscheck.py" not in names
+        assert not any(name.startswith("scripts/") for name in names)
+
+
+def test_main_editable_wheel_accepts_frontend_owned_temporary_staging() -> None:
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp = Path(tmpdir)
+        project = tmp / "project"
+        shutil.copytree(
+            PACKAGE_ROOT,
+            project,
+            ignore=shutil.ignore_patterns(
+                "build", "dist", "*.egg-info", "__pycache__", "*.pyc"
+            ),
+        )
+        output = tmp / "dist"
+        output.mkdir()
+        code = """
+from setuptools.build_meta import build_editable
+import sys
+print(build_editable(sys.argv[1]))
+"""
+        completed = subprocess.run(
+            [sys.executable, "-c", code, str(output)],
+            cwd=project,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        assert completed.returncode == 0, completed.stderr
+        wheels = list(output.glob("bass_py-*.whl"))
+        assert len(wheels) == 1, [wheel.name for wheel in wheels]
+
+
+def test_wheel_cache_cleanup_refuses_a_symlinked_build_root() -> None:
+    env = os.environ.copy()
+    env["PIP_DISABLE_PIP_VERSION_CHECK"] = "1"
+    env["PIP_NO_INDEX"] = "1"
+    env.pop("PYTHONPATH", None)
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp = Path(tmpdir)
+        project = tmp / "project"
+        shutil.copytree(
+            PACKAGE_ROOT,
+            project,
+            ignore=shutil.ignore_patterns(
+                "build", "dist", "*.egg-info", "__pycache__", "*.pyc"
+            ),
+        )
+        external = tmp / "external"
+        external.mkdir()
+        sentinel = external / "must-survive.txt"
+        sentinel.write_text("preserve\n", encoding="utf-8")
+        (project / "build").symlink_to(external, target_is_directory=True)
+        output = tmp / "dist"
+        output.mkdir()
+
+        completed = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "wheel",
+                "--disable-pip-version-check",
+                "--no-cache-dir",
+                "--no-deps",
+                "--no-build-isolation",
+                "--wheel-dir",
+                str(output),
+                str(project),
+            ],
+            cwd=tmp,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+        assert completed.returncode != 0
+        assert "refusing to clean symlinked build path" in completed.stderr
+        assert sentinel.read_text(encoding="utf-8") == "preserve\n"
 
 
 def test_compat_sdist_and_editable_wheel_are_metadata_only() -> None:
@@ -1095,7 +1188,7 @@ assert float(obs["h"]) == fid["h"]
 
 def test_active_sources_use_canonical_bass_imports() -> None:
     active_consumers = [
-        "htt/bass/transfer/visibility_camb_crosscheck.py",
+        "scripts/oracles/egs2_camb_visibility.py",
         "htt/obsstat/egs3_psd_cone.py",
         "htt/obsstat/joint_pv_cmb_forecast.py",
         "research_gates/egs2/tests/test_egs2_camb_crosscheck.py",
@@ -1109,6 +1202,15 @@ def test_active_sources_use_canonical_bass_imports() -> None:
     for relative_path in active_consumers:
         source = (REPO_ROOT / relative_path).read_text(encoding="utf-8")
         assert "htt.bass" not in source, relative_path
+
+
+def test_external_camb_oracle_is_outside_the_installable_project() -> None:
+    oracle = REPO_ROOT / "scripts/oracles/egs2_camb_visibility.py"
+    old_production_path = PACKAGE_ROOT / "bass/transfer/visibility_camb_crosscheck.py"
+
+    assert oracle.is_file()
+    assert not old_production_path.exists()
+    assert PACKAGE_ROOT not in oracle.parents
 
 
 def test_obsstat_joint_forecast_import_does_not_boot_bass() -> None:

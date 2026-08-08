@@ -15,7 +15,13 @@ Diagnostic-only, single-mode, exact-FLRW-anchored; the frozen Gaussian module
 is imported read-only. AWAITING_NATIVE_LOWELL_SOLVER stays partially
 discharged.
 """
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
 import unittest
+from unittest import mock
 
 import numpy as np
 
@@ -25,10 +31,11 @@ try:
 except Exception:
     _HAVE_CAMB = False
 
-from bass.transfer import visibility_camb_crosscheck as vcc
-from bass.transfer.visibility_camb_crosscheck import (
+from scripts.oracles import egs2_camb_visibility as vcc
+from scripts.oracles.egs2_camb_visibility import (
     seminative_camb_crosscheck_seal, SINGLE_L_FLOOR,
 )
+from scripts import run_egs2_camb_crosscheck_seal as seal_runner
 from htt.obsstat.egs3_graded_comparator import COMPARATOR_SIGNS
 from htt.obsstat.egs3_psd_cone import sector_matrix, xc_from_matrix
 
@@ -76,6 +83,61 @@ class CC3SealTests(unittest.TestCase):
         self.assertIn(seal["status"], ("PASS", "BLOCKED_CAMB_UNAVAILABLE"))
         if _HAVE_CAMB:
             self.assertEqual(seal["status"], "PASS")
+
+    def test_missing_camb_is_the_only_unavailable_blocker(self):
+        missing = ModuleNotFoundError("No module named 'camb'", name="camb")
+        with mock.patch.object(vcc, "visibility_crosscheck", side_effect=missing):
+            seal = seminative_camb_crosscheck_seal()
+        self.assertEqual(seal["status"], "BLOCKED_CAMB_UNAVAILABLE")
+        self.assertIn("ModuleNotFoundError", seal["error"])
+
+    def test_missing_camb_submodule_is_a_failed_oracle_not_unavailable_camb(self):
+        missing = ModuleNotFoundError(
+            "No module named 'camb.model'", name="camb.model"
+        )
+        with mock.patch.object(vcc, "visibility_crosscheck", side_effect=missing):
+            seal = seminative_camb_crosscheck_seal()
+        self.assertEqual(seal["status"], "FAIL")
+        self.assertIn("camb.model", seal["error"])
+
+    def test_numerical_failure_is_not_laundered_as_camb_unavailable(self):
+        with mock.patch.object(
+            vcc,
+            "visibility_crosscheck",
+            side_effect=FloatingPointError("non-finite visibility"),
+        ):
+            seal = seminative_camb_crosscheck_seal()
+        self.assertEqual(seal["status"], "FAIL")
+        self.assertIn("FloatingPointError", seal["error"])
+
+    def test_runner_keeps_blocked_and_failed_lifecycles_distinct(self):
+        cases = (("BLOCKED_CAMB_UNAVAILABLE", 2), ("FAIL", 1))
+        for status, expected_code in cases:
+            with self.subTest(status=status), tempfile.TemporaryDirectory() as td:
+                output = Path(td) / "seal.json"
+                with mock.patch.object(seal_runner, "OUT", output), mock.patch.object(
+                    vcc, "seminative_camb_crosscheck_seal", return_value={"status": status}
+                ):
+                    self.assertEqual(seal_runner.main([]), expected_code)
+                self.assertFalse(output.exists())
+
+    def test_runner_executes_without_ambient_pythonpath(self):
+        repo = Path(__file__).resolve().parents[3]
+        env = os.environ.copy()
+        env.pop("PYTHONPATH", None)
+        proc = subprocess.run(
+            [sys.executable, "scripts/run_egs2_camb_crosscheck_seal.py", "--check"],
+            cwd=repo,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertIn(proc.returncode, (0, 2), proc.stdout + proc.stderr)
+        if proc.returncode == 2:
+            self.assertIn("REGISTERED BLOCKER: camb unavailable", proc.stderr)
+        else:
+            self.assertIn("camb cross-check seal current", proc.stdout)
 
     @unittest.skipUnless(_HAVE_CAMB, "camb not installed in this environment")
     def test_seal_is_deterministic_and_records_provenance(self):
