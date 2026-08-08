@@ -1,6 +1,6 @@
 # Current Project State
 
-Date: 2026-08-08
+Date: 2026-08-09
 
 This is a current-state handoff, not a historical receipt. Historical candidate
 and review details remain in Git history, `docs/PR_DELTAS/`, and frozen harness
@@ -9,30 +9,30 @@ runs.
 ## Baseline
 
 - Canonical target: `research/pr04-multicomponent`.
-- Verified merge HEAD: `cd8172a17d48a5c3829fea9a7f9570ed1795d3af`.
+- Verified merge HEAD: `0525bbda30311ebc99b5085c895139407de25536`.
 - That remote merge contains the reviewed PR-280 terminal inventory, the
-  PR-151 acquisition-path repair, and the successful PR-295 and PR-296
-  active-core repairs; PR-297 started only after their ancestry and GitHub
-  merge state were verified.
+  PR-151 acquisition-path repair, and the successful PR-295, PR-296, and
+  PR-297 active-core repairs; PR-281 started only after their ancestry and
+  GitHub merge state were verified.
 - PR-190 is `COMPLETED_FAILED_WITH_RECEIPT`. Its registered full typed
   attainability statement is refuted; `success_dependency_satisfied=false`.
 - Work proceeds in the isolated branch
-  `changeset/pr297-handoff-installer-closure`. The main user checkout and
+  `changeset/pr281-orbit-type-acceptance`. The main user checkout and
   all user-owned untracked inputs remain untouched.
 
 ## Canonical orchestration state
 
 - DAG: 244 cards; validation passes.
-- Completed: 177/244 = 72.54%.
-- Dependency-weighted completion: 76.01%.
+- Completed: 178/244 = 72.95%.
+- Dependency-weighted completion: 76.33%.
 - Critical-path completion: 98.70%.
 - In progress: none.
-- Pending: 35.
+- Pending: 34.
 - Blocked terminal receipts: PR-190, PR-172, and PR-280.
 - Dormant external/native: 28.
 - Background acquisition: PR-151 only.
-- PR-281, PR-282, PR-283, PR-284, PR-285, PR-286, PR-288, and PR-289 are
-  dependency-ready. Canonical topological order selects PR-281 first.
+- PR-282, PR-283, PR-284, PR-285, PR-286, PR-288, and PR-289 are
+  dependency-ready. Canonical topological order selects PR-282 first.
 
 The lower count percentage reflects atomic registration through PR-297; it is
 bookkeeping, not scientific regression or readiness evidence.
@@ -204,8 +204,9 @@ R2, and R3 failures were preserved and repaired.
 Canonical status records 177/244 completed (72.54%) and dependency-weighted
 completion 76.01%. PR-280 remains a failed terminal receipt; all three named
 successors now pass, so only its aggregate success dependency becomes true.
-PR-281, PR-282, PR-283, PR-284, PR-285, PR-286, PR-288, and PR-289 are now
-dependency-ready, with PR-281 first in canonical topological order.
+At that 2026-08-08 checkpoint, PR-281, PR-282, PR-283, PR-284, PR-285,
+PR-286, PR-288, and PR-289 were dependency-ready, with PR-281 first in
+canonical topological order.
 
 The PR-295 artifact is a governance/external-transfer diagnostic with
 `TransferSource.external_transfer`. Scientific status is `OPEN_UNCHANGED`,
@@ -225,8 +226,37 @@ handoff portability and path isolation only. Scientific status remains
 `OPEN_UNCHANGED`; no observed data, native transfer, posterior, public release,
 geometry, morphology, or family-identification claim is granted.
 
+## PR-281 orbit/type acceptance closure (2026-08-09)
+
+PR-281 content commit `f9edd792...` registers the finite-principal-stratum
+dimension/rank table 12-to-9, 15-to-12, and 18-to-15 together with the nonzero
+single-vector U(1) counterexample 3-to-1. It exposes replay-bound uncovered
+response directions without equating quotient rank, response rank, or data
+identifiability. Exact former V1 joint-state and type-report modules remain
+byte-preserved for PR-269 and PR-273 historical replay, and every relocation
+consumer binds the exact canonical successor path.
+
+R1 and R2 code findings remain retained in their failed review envelopes. The
+R3 code/harness and physics/claim reviews passed all 14 required cells, with
+clean system-Python suites of 24 focused, 79 adjacent, 24 PR-269 replay, and
+27 PR-273 replay tests. The newer NumPy/SciPy virtual-environment differential
+is retained as a cross-environment byte-replay limitation, not regraded as
+scientific equivalence.
+
+Canonical status records 178/244 completed (72.95%), dependency-weighted
+completion 76.33%, and critical-path completion 98.70%. The next checkpoint is
+at 180 completions, so no five-PR checkpoint is due. PR-282 is first in
+canonical topological order among the seven dependency-ready cards.
+
+The PR-281 artifact is a COMMON-owned C2 `diagnostic_only`
+`synthetic_diagnostic` with `transfer_source=none`. Scientific status remains
+`OPEN_UNCHANGED`; generic orbit separation, degree completeness, and global
+chart completeness remain `UNPROVEN`. No observed data, native transfer,
+posterior/evidence, geometry, morphology-family, public-use, or
+family-identification claim is granted.
+
 PR-151 remains acquisition-only on the external volume. At the checkpoint,
-570/1000 EZmocks were receipt-complete and batch 58 was actively advancing;
+590/1000 EZmocks were receipt-complete and batch 60 was actively advancing;
 Abacus was 0/25. Partial files remain forbidden for scientific use. The
-observed recent cadence implies roughly 60--62 hours for the remaining EZmock
+recent five-batch median implies roughly 59 hours for the remaining EZmock
 batches; no restart-from-zero condition is present.
