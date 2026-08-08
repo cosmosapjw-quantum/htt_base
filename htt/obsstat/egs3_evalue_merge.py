@@ -26,14 +26,103 @@ claim, no detection, no family/geometry/native-solver/posterior claim.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from fractions import Fraction
 import math
+from numbers import Integral, Rational
+from typing import Sequence
 
 import numpy as np
 
 __all__ = [
+    "ArbitraryDependenceMergeReport", "merge_evalues_arbitrary_dependence",
     "MergeResult", "arithmetic_merge_mc",
     "VilleResult", "test_martingale_ville_mc",
 ]
+
+
+def _exact_rational(value: object, name: str) -> Fraction:
+    if isinstance(value, bool) or not isinstance(value, Rational):
+        raise ValueError(f"{name} must be an exact rational")
+    if isinstance(value, Integral):
+        return Fraction(int(value), 1)
+    return Fraction(value)
+
+
+@dataclass(frozen=True)
+class ArbitraryDependenceMergeReport:
+    """Exact convex arithmetic merge; no independence premise is consumed."""
+
+    labels: tuple[str, ...]
+    e_values: tuple[Fraction, ...]
+    weights: tuple[Fraction, ...]
+    merged_numerator: int
+    merged_denominator: int
+    combination_rule: str = "CONVEX_ARITHMETIC_MEAN"
+    dependence_class: str = "ARBITRARY_OR_DEPENDENT"
+    independence_assumed: bool = False
+    common_null_required: bool = True
+    prespecified_weights_required: bool = True
+    validity_scope: str = "ARITHMETIC_ONLY_CONDITIONAL_ON_VALID_INPUT_EVALUES"
+
+    @property
+    def merged_e_value(self) -> Fraction:
+        return Fraction(self.merged_numerator, self.merged_denominator)
+
+
+def merge_evalues_arbitrary_dependence(
+    *,
+    labels: Sequence[str],
+    e_values: Sequence[Rational],
+    weights: Sequence[Rational],
+) -> ArbitraryDependenceMergeReport:
+    """Merge individually valid e-values by an exact convex arithmetic mean.
+
+    Linearity of expectation makes this merge valid under arbitrary dependence.
+    The function deliberately exposes neither a product rule nor a pooled sign
+    count, because those require additional independence or martingale premises.
+    """
+
+    labels_i = tuple(labels)
+    e_values_i = tuple(e_values)
+    weights_i = tuple(weights)
+    if not labels_i:
+        raise ValueError("labels must not be empty")
+    if not (len(labels_i) == len(e_values_i) == len(weights_i)):
+        raise ValueError("labels, e_values, and weights must align")
+    if any(
+        not isinstance(label, str)
+        or not label.strip()
+        or label != label.strip()
+        for label in labels_i
+    ):
+        raise ValueError("labels must be non-empty trimmed strings")
+    if len(labels_i) != len(set(labels_i)):
+        raise ValueError("labels must not contain duplicates")
+
+    exact_e_values = tuple(
+        _exact_rational(value, "e_values") for value in e_values_i
+    )
+    exact_weights = tuple(
+        _exact_rational(value, "weights") for value in weights_i
+    )
+    if any(value < 0 for value in exact_e_values):
+        raise ValueError("e_values must be nonnegative")
+    if any(weight < 0 for weight in exact_weights):
+        raise ValueError("weights must be nonnegative")
+    if sum(exact_weights, start=Fraction(0, 1)) != 1:
+        raise ValueError("weights must sum exactly to one")
+
+    merged = sum(
+        (weight * value for weight, value in zip(exact_weights, exact_e_values, strict=True)),
+        start=Fraction(0, 1),
+    )
+    return ArbitraryDependenceMergeReport(
+        labels=labels_i,
+        e_values=exact_e_values,
+        weights=exact_weights,
+        merged_numerator=merged.numerator,
+        merged_denominator=merged.denominator,
+    )
 
 
 @dataclass(frozen=True)

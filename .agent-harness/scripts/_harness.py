@@ -18,6 +18,7 @@ from publication_integrity import (
     require_change_set_id,
     require_publication_group_id,
     validate_candidate_binding,
+    validate_declared_policy_identity,
 )
 
 
@@ -768,6 +769,13 @@ def validate_run_plan_payload(
             repo,
             policy_ref.get("path"),
             expected_sha256=str(policy_ref.get("sha256") or ""),
+        )
+        validate_declared_policy_identity(
+            policy,
+            change_set_id=change_set_id,
+            publication_group_id=publication_group_id,
+            target_ref=f"{target_remote}/{target_branch}",
+            target_sha=base_sha,
         )
         if policy_ref != {
             "path": policy_ref.get("path"),

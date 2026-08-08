@@ -1,0 +1,178 @@
+schema: htt.pr282.exact_parity_readiness_spec.v1
+pr_id: PR-282
+title: Exact parity readiness and executable P-equivariance
+owner: OBSSTAT
+contributors:
+  - COMMON
+change_set_id: CS-PR282-EXACT-PARITY
+publication_group_id: PG-PR282-EXACT-PARITY
+dependencies:
+  - PR-280
+dependency_contract:
+  upstream_id: PR-280
+  mode: requires_terminal_receipt
+claim_tier: diagnostic_only
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C2
+scientific_artifact_mode: synthetic_diagnostic
+transfer_source: none
+observed_data_executed: false
+public_use: false
+family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
+
+gate:
+  gate_id: G3
+  statement: Estimator, mask, and weighting pass executable parity equivariance.
+  pass_token: PASS_EXECUTABLE_P_EQUIVARIANCE
+  block_token: BLOCKED_P_EQUIVARIANCE
+  derivation_rule: >-
+    The terminal token is recomputed from clean primitive executions and the
+    complete registered mutation battery. No caller-supplied readiness, pass,
+    or threshold field is accepted.
+
+theorem_boundary:
+  source_obligation: TF-09-PARITY-SIGN-EXACTNESS
+  h1_reflection_symmetric_null: NOT_EVALUATED_METHOD_ONLY
+  h2_p_equivariant_estimator: EXECUTED_REGISTERED_SYNTHETIC_PATH_ONLY
+  h2_executed_scope: weighted Krylov estimator with a fixed selection mask and fixed weights
+  h2_not_executed:
+    - mask_deconvolution
+    - observed_selection_function
+    - point_source_hole_correction
+  h3_no_atom_at_zero: CONDITIONAL_AND_NOT_ESTABLISHED_BY_G3
+  consequence_if_all_three_hold: >-
+    The nonzero parity-odd sign is an exact fair Bernoulli bit under the
+    registered null. PR-282 establishes only the executable H2 method gate.
+  forbidden_inference: >-
+    A G3 pass does not establish H1, H3, observed-sky validity, a physical
+    parity claim, transfer validation, geometry detection, or family
+    identification.
+
+relation:
+  relation_id: PR282-P-EQUIVARIANCE-001
+  relation_class: ANTI_EQUIVARIANT
+  estimator_id: weighted_krylov_pseudoscalar_mean.v1
+  estimator_definition: >-
+    On each registered support element compute
+    K_beta=det[beta,sigma beta,sigma^2 beta], then take the masked convex
+    weighted mean over active support.
+  input_action: >-
+    Apply the registered support involution and transform sigma to
+    P sigma P^T and beta to P beta.
+  output_action: psi_hat maps exactly to minus psi_hat.
+  reflection_matrix:
+    - [1, 0, 0]
+    - [0, 1, 0]
+    - [0, 0, -1]
+  support_permutation: [1, 0, 3, 2]
+  coordinate_frame: synthetic_registered_cartesian_right_handed
+  handedness: right_handed_input_frame_with_orientation_reversing_P
+  parity_exponent: 1
+  expected_output_sign: -1
+  numeric_contract: exact_rational_arithmetic_no_tolerance
+  mask_action: fixed_under_registered_support_permutation
+  weighting_action: fixed_under_registered_support_permutation
+
+execution_fixture:
+  fixture_id: pr282.synthetic.reflection_pairs.v1
+  sigma_by_support:
+    - [[-1, 0, 0], [0, 0, 0], [0, 0, 1]]
+    - [[-2, 0, 0], [0, 0, 0], [0, 0, 2]]
+    - [[-3, 0, 0], [0, 1, 0], [0, 0, 2]]
+    - [[-4, 0, 0], [0, 1, 0], [0, 0, 3]]
+  beta_by_support:
+    - [1, 1, 1]
+    - [1, 2, -1]
+    - [2, 1, 1]
+    - [1, -1, 2]
+  mask: [true, true, true, true]
+  weights: [1, 1, 2, 2]
+  sky_support_status: synthetic_reflection_paired_support
+  mask_status: synthetic_fixed_under_registered_reflection
+  weighting_status: synthetic_fixed_under_registered_reflection
+  covariance_status: not_used_by_exact_h2_execution
+  null_mock_status: not_used_by_exact_h2_execution
+
+dependent_evalue_merge:
+  merge_id: pr282.synthetic.dependent-sign-vectors.v1
+  dependence_class: ARBITRARY_OR_DEPENDENT
+  combination_rule: CONVEX_ARITHMETIC_MEAN
+  common_null_id: pr282.synthetic.common-null.v1
+  input_validity_status: CONDITIONAL_ON_EACH_INPUT_BEING_A_VALID_EVALUE_UNDER_COMMON_NULL
+  weight_registration_status: FIXED_IN_SPEC_BEFORE_EXECUTION
+  inputs:
+    - {vector_id: nested-mask-rung-a, numerator: 1, denominator: 2}
+    - {vector_id: nested-mask-rung-b, numerator: 3, denominator: 2}
+  weights:
+    - {numerator: 1, denominator: 2}
+    - {numerator: 1, denominator: 2}
+  forbidden_combinations:
+    - binomial_pooling_across_dependent_signs
+    - evalue_product_without_independence_or_supermartingale_contract
+
+mutation_registry:
+  - mutation_id: MU282-ESTIMATOR-ABSOLUTE
+    mutation_kind: absolute_krylov_value
+    intended_defect: erase the parity-odd estimator sign
+    expected_kill: clean anti-equivariance relation fails
+  - mutation_id: MU282-MASK-PAIR-DROP
+    mutation_kind: drop_first_support_only
+    intended_defect: break mask invariance within a reflection pair
+    expected_kill: mask equivariance precondition blocks G3
+  - mutation_id: MU282-WEIGHT-PAIR-SKEW
+    mutation_kind: increment_first_weight_only
+    intended_defect: break weighting invariance within a reflection pair
+    expected_kill: weighting equivariance precondition blocks G3
+
+receipt_contract:
+  output_path: docs/generated/pr282_exact_parity_readiness_receipt.json
+  content_address: sha256_of_canonical_json_excluding_receipt_content_sha256
+  required_bindings:
+    - docs/research_program/post_pr275/pr282_spec.yaml
+    - htt/obsstat/exact_parity_readiness.py
+    - htt/obsstat/egs3_evalue_merge.py
+    - htt/src/common/vector_tensor_statistical_foundations.py
+    - scripts/codex_harness/run_pr282_exact_parity_readiness.py
+    - tests/obsstat/test_exact_parity_readiness.py
+    - tests/contracts/test_pillar_s_core.py
+  terminal_precedence:
+    - BLOCKED_CONTRACT_INVALID
+    - BLOCKED_P_EQUIVARIANCE
+    - PASS_EXECUTABLE_P_EQUIVARIANCE
+  mutation_rule: >-
+    Every registered mutation must execute, differ on its intended surface,
+    and be killed. Missing, skipped, unmapped, or surviving mutations block G3.
+  required_metadata:
+    - owner
+    - scope
+    - claim_tier_and_level
+    - transfer_source
+    - synthetic_sky_mask_weighting_status
+    - covariance_and_null_status
+    - assumptions
+    - caveats
+    - generating_command_or_procedure
+    - git_commit_or_worktree_state
+
+assumptions:
+  - Each sigma fixture is exactly symmetric and trace-free.
+  - The registered P is an orientation-reversing orthogonal involution.
+  - Arithmetic e-value merging is conditional on every input being a valid e-value under one common null.
+  - Convex merge weights are frozen before any execution output is viewed.
+
+allowed_uses:
+  - Synthetic method-readiness evidence for the registered estimator path.
+  - A prerequisite receipt for later separately admitted and authorized PR-290 execution.
+  - Arbitrary-dependence arithmetic e-value combination of individually valid e-values.
+forbidden_uses:
+  - Observed-sky inference or Planck execution.
+  - Caller-supplied readiness or post-result threshold changes.
+  - Binomial pooling of dependent or nested sign vectors.
+  - Physical parity validation, native solver validation, geometry detection, or family identification.
+  - HTT likelihood, posterior, evidence, or MIO certificate production.
+caveats:
+  - H1 and H3 remain separate premises and are not established by a G3 pass.
+  - Mask deconvolution is not executed; H2 is closed only for the registered fixed-mask synthetic path.
+  - The fixture is synthetic and exercises one registered estimator, mask, weighting, and convention path.
+  - PR-151 partial/background data is forbidden input.

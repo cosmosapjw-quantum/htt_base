@@ -1498,10 +1498,28 @@ def exact_parity_sign_test(
             "pooled exact sign testing requires a uniform conditional "
             "sign-vector law"
         )
-    vector = _vector(values, "values")
-    positive = int(np.count_nonzero(vector > 0.0))
-    negative = int(np.count_nonzero(vector < 0.0))
-    ties = int(np.count_nonzero(vector == 0.0))
+    if isinstance(values, (str, bytes)):
+        raise VectorTensorStatisticalFoundationError(
+            "values must be a numeric sequence"
+        )
+    try:
+        raw_values = tuple(values)
+    except TypeError as exc:
+        raise VectorTensorStatisticalFoundationError(
+            "values must be a finite vector"
+        ) from exc
+    vector = _vector(raw_values, "values")
+    signs = tuple(
+        (
+            1 if value > 0 else -1 if value < 0 else 0
+        )
+        if isinstance(value, Rational) and not isinstance(value, (bool, np.bool_))
+        else (1 if numeric > 0.0 else -1 if numeric < 0.0 else 0)
+        for value, numeric in zip(raw_values, vector, strict=True)
+    )
+    positive = signs.count(1)
+    negative = signs.count(-1)
+    ties = signs.count(0)
     nonzero = positive + negative
     if nonzero == 0:
         p_value = Fraction(1, 1)
