@@ -8,12 +8,12 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Metric | Value |
 | --- | ---: |
 | Total PRs | 244 |
-| Completed PRs | 175 |
+| Completed PRs | 176 |
 | Blocked PRs | 3 |
 | Skipped PRs | 0 |
 | In progress | 0 |
 | Background in progress | 1 |
-| Pending PRs | 37 |
+| Pending PRs | 36 |
 | Dormant external PRs | 28 |
 
 | Metadata | Value |
@@ -22,13 +22,13 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Implementation scope | `common` |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `9a4debfa5ddc9641d3b3ba96f32615505797cbe975e10202b0118748d6f86eec` |
-| Input hashes | `docs/codex_handoff/pr_backlog.yaml:1537f10f49b4c41af5ed8c744b04396aea99fc80a648b7fa2ea0788d65bee3ea`<br>`docs/codex_handoff/pr_status.yaml:7fe2165a1ad062f6a5010ed362615b326587a2ae12f3dff98ccd72410aa73017`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4`<br>`docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c`<br>`docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912` |
+| Config hash | `3cf3c287afa154eed23cc21eacdf070406bba63c756e64feb41eb5e25f0da2b0` |
+| Input hashes | `docs/codex_handoff/pr_backlog.yaml:1537f10f49b4c41af5ed8c744b04396aea99fc80a648b7fa2ea0788d65bee3ea`<br>`docs/codex_handoff/pr_status.yaml:b44c2276f5c5ee613e1baf2b630d88149755e00667c7443d4402b4132b3ced52`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4`<br>`docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c`<br>`docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912` |
 | Sky support status | `not_directional` |
 | Null/mock status | `not_statistical` |
 | Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false without an exact factory-issued ClaimCapabilityDecision.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier.<br>Verified smoke receipts set only generic process readiness; they do not grant a ClaimCapability. |
-| Generating command | `python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --source-commit 824a0c40ba63e130ae2eeb35b93b1ece6fc16e88 --execution-receipts docs/research_program/post_pr275/test_execution_receipts_v4.yaml --write docs/generated/status_snapshot.json` |
-| Source commit | `824a0c40ba63e130ae2eeb35b93b1ece6fc16e88` |
+| Generating command | `python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --source-commit 3b090aeaf4a70df0c26b8a46e23805d0eb1d76b9 --write docs/generated/status_snapshot.json` |
+| Source commit | `3b090aeaf4a70df0c26b8a46e23805d0eb1d76b9` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
@@ -43,9 +43,9 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | --- | ---: |
 | `background_in_progress` | 1 |
 | `blocked` | 3 |
-| `completed` | 175 |
+| `completed` | 176 |
 | `dormant_external` | 28 |
-| `pending` | 37 |
+| `pending` | 36 |
 
 | Claim Tier | Rows |
 | --- | ---: |
@@ -55,8 +55,8 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Artifact Readiness | Rows |
 | --- | ---: |
 | `blocked` | 3 |
-| `generated` | 175 |
-| `missing` | 66 |
+| `generated` | 176 |
+| `missing` | 65 |
 
 | Allowed Use | Rows |
 | --- | ---: |
