@@ -158,8 +158,40 @@ def test_pr281_joint_state_relocation_is_single_use_and_exact() -> None:
         "sha256",
     }
     assert entry["allowed_use"] == "exact historical PR-269 replay only"
+    assert entry["caveat"] == (
+        "PR-281 successor acceptance metadata is not part of the frozen "
+        "PR-269 proof artifact"
+    )
     assert entry["frozen_input"] == entry["original_path"]
     assert _sha256(ROOT / entry["relocated_path"]) == entry["sha256"]
+
+
+def test_pr281_joint_state_relocation_caveat_mutation_fails_closed(
+    tmp_path: Path,
+) -> None:
+    original = "htt/src/common/joint_anisotropy_state.py"
+    expected = SOURCE_HASHES[original]
+    relocation = json.loads(
+        (
+            ROOT
+            / "docs/research_program/vector_tensor/integration/"
+            "PR281_PR269_V1_RELOCATION.json"
+        ).read_text(encoding="utf-8")
+    )
+    relocation["entries"][0]["caveat"] = "promotion permitted"
+    relocation_path = (
+        tmp_path
+        / "docs/research_program/vector_tensor/integration/"
+        "PR281_PR269_V1_RELOCATION.json"
+    )
+    relocation_path.parent.mkdir(parents=True)
+    relocation_path.write_text(json.dumps(relocation), encoding="utf-8")
+    frozen = tmp_path / relocation["entries"][0]["relocated_path"]
+    frozen.parent.mkdir(parents=True)
+    frozen.write_bytes((ROOT / frozen.relative_to(tmp_path)).read_bytes())
+
+    with pytest.raises(PillarTCoreProofError, match="binding drifted"):
+        resolve_pillar_t_frozen_source(tmp_path, original, expected)
 
 
 def test_exact_analytic_core_selection_and_inventory(registry) -> None:

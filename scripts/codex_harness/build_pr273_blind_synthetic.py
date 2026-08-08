@@ -121,6 +121,11 @@ def _frozen_input_path(name: str, record: MappingLike) -> Path:
         or entry.get("original_path") != record["path"]
         or entry.get("sha256") != record["sha256"]
         or entry.get("allowed_use") != "exact historical PR-273 replay only"
+        or entry.get("caveat")
+        != (
+            "PR-281 V2 is the current public surface; this relocation cannot "
+            "promote or reseal the PR-273 result"
+        )
     ):
         raise RuntimeError("PR-273 type-report relocation binding drifted")
     relative = Path(str(entry.get("relocated_path")))

@@ -194,6 +194,11 @@ def _frozen_source_path(path: Path, expected_sha256: str) -> Path:
         or entry.get("sha256") != expected_sha256
         or entry.get("allowed_use")
         != "exact historical PR-269 replay only"
+        or entry.get("caveat")
+        != (
+            "PR-281 successor acceptance metadata is not part of the "
+            "frozen PR-269 proof artifact"
+        )
     ):
         raise BuildError("PR-281 joint-state relocation binding drifted")
     relocated = Path(str(entry.get("relocated_path")))

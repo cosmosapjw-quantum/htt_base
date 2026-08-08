@@ -139,6 +139,10 @@ def test_frozen_challenge_truth_and_upstream_hashes_match_bytes() -> None:
             assert relocated["allowed_use"] == (
                 "exact historical PR-273 replay only"
             )
+            assert relocated["caveat"] == (
+                "PR-281 V2 is the current public surface; this relocation "
+                "cannot promote or reseal the PR-273 result"
+            )
         assert hashlib.sha256(path.read_bytes()).hexdigest() == record["sha256"]
     assert spec["frozen_inputs"]["pillar_t_cas"]["required_verdict"] == (
         "CAS_4AXIS_PASS"

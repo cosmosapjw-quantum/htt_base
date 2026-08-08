@@ -16,6 +16,16 @@ from typing import Sequence
 from common import anisotropy_type_report_v1 as _v1
 from common.anisotropy_type_report_v1 import *  # noqa: F401,F403
 
+# Preserve the legacy module's runtime annotation namespace as well as the
+# public call signature exposed by ``functools.wraps``.
+AnchoredResponseGeometryReport = _v1.AnchoredResponseGeometryReport
+ConditionalExceedanceProfile = _v1.ConditionalExceedanceProfile
+DepthCoherenceReport = _v1.DepthCoherenceReport
+DepthPath = _v1.DepthPath
+JointAnisotropyState = _v1.JointAnisotropyState
+NormalizerSpec = _v1.NormalizerSpec
+OrbitCatalogueV3Report = _v1.OrbitCatalogueV3Report
+
 
 def _receipt(value: object, name: str) -> str:
     text = _v1._text(value, name)
@@ -114,14 +124,40 @@ class AnisotropyTypeReport(_v1.AnisotropyTypeReport):
 
 
 @wraps(_v1.build_anisotropy_type_report)
-def build_anisotropy_type_report(**kwargs: object) -> AnisotropyTypeReport:
+def build_anisotropy_type_report(
+    *,
+    report_id: str,
+    joint_state: JointAnisotropyState,
+    orbit_report: OrbitCatalogueV3Report,
+    anchored_response: AnchoredResponseGeometryReport,
+    anchored_normalizer: NormalizerSpec,
+    anchored_comparison_response: object | None,
+    local_global: LocalGlobalCompatibilityInput,
+    open_set: OpenSetReplayInputs,
+    conditional_exceedance: ConditionalExceedanceProfile,
+    depth_path: DepthPath,
+    depth_coherence: DepthCoherenceReport,
+) -> AnisotropyTypeReport:
     """Build V2 after the complete V1 replay and abstention pipeline passes."""
 
+    kwargs = {
+        "report_id": report_id,
+        "joint_state": joint_state,
+        "orbit_report": orbit_report,
+        "anchored_response": anchored_response,
+        "anchored_normalizer": anchored_normalizer,
+        "anchored_comparison_response": anchored_comparison_response,
+        "local_global": local_global,
+        "open_set": open_set,
+        "conditional_exceedance": conditional_exceedance,
+        "depth_path": depth_path,
+        "depth_coherence": depth_coherence,
+    }
     try:
         anchored = _v1._replay_anchored_response(
-            kwargs["anchored_response"],
-            normalizer=kwargs["anchored_normalizer"],
-            comparison_response=kwargs["anchored_comparison_response"],
+            anchored_response,
+            normalizer=anchored_normalizer,
+            comparison_response=anchored_comparison_response,
         )
     except _v1.AnisotropyTypeReportError:
         raise
@@ -130,6 +166,14 @@ def build_anisotropy_type_report(**kwargs: object) -> AnisotropyTypeReport:
             "anchored response failed exact replay"
         ) from exc
     base = _v1.build_anisotropy_type_report(**kwargs)
+    if (
+        base.anchored_response_id != _v1._sha256_payload(anchored.as_payload())
+        or base.response_rank != anchored.rank
+        or base.response_parameter_dimension != anchored.parameter_dimension
+    ):
+        raise _v1.AnisotropyTypeReportError(
+            "anchored response changed between successor and V1 replay"
+        )
     if anchored.covariance_id is None or anchored.response_id is None:
         raise _v1.AnisotropyTypeReportError(
             "replayed uncovered directions require covariance and response identities"
@@ -147,6 +191,9 @@ def build_anisotropy_type_report(**kwargs: object) -> AnisotropyTypeReport:
         uncovered_response_id=anchored.response_id,
         _construction_token=_v1._REPORT_TOKEN,
     )
+
+
+build_anisotropy_type_report.__module__ = __name__
 
 
 # The HTT PR-256 replay adapter intentionally consumes this private factory.

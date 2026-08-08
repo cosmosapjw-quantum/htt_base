@@ -642,6 +642,11 @@ def resolve_pillar_t_frozen_source(
         or entry.get("sha256") != expected_sha256
         or entry.get("allowed_use")
         != "exact historical PR-269 replay only"
+        or entry.get("caveat")
+        != (
+            "PR-281 successor acceptance metadata is not part of the "
+            "frozen PR-269 proof artifact"
+        )
     ):
         raise PillarTCoreProofError(
             "PR-281 joint-state relocation binding drifted"

@@ -41,12 +41,8 @@
       "argv": [
         "{python}",
         "-B",
-        "-m",
-        "pytest",
-        "-p",
-        "no:cacheprovider",
-        "-q",
-        "tests/contracts/test_orbit_type_acceptance.py"
+        "scripts/codex_harness/run_pr281_orbit_type_acceptance.py",
+        "focused"
       ],
       "timeout_seconds": 900
     },
@@ -55,15 +51,8 @@
       "argv": [
         "{python}",
         "-B",
-        "-m",
-        "pytest",
-        "-p",
-        "no:cacheprovider",
-        "-q",
-        "tests/contracts/test_joint_anisotropy_state.py",
-        "tests/contracts/test_orbit_catalogue_v3.py",
-        "tests/contracts/test_anisotropy_type_report.py",
-        "tests/pr_cards/test_pr_255_anchored_response_geometry.py"
+        "scripts/codex_harness/run_pr281_orbit_type_acceptance.py",
+        "adjacent"
       ],
       "timeout_seconds": 1200
     },
@@ -72,12 +61,8 @@
       "argv": [
         "{python}",
         "-B",
-        "-m",
-        "pytest",
-        "-p",
-        "no:cacheprovider",
-        "-q",
-        "tests/contracts/test_pillar_t_core.py"
+        "scripts/codex_harness/run_pr281_orbit_type_acceptance.py",
+        "pr269-replay"
       ],
       "timeout_seconds": 900
     },
@@ -86,13 +71,8 @@
       "argv": [
         "{python}",
         "-B",
-        "-m",
-        "pytest",
-        "-p",
-        "no:cacheprovider",
-        "-q",
-        "tests/integration/test_vector_tensor_blind_synthetic.py::test_frozen_challenge_truth_and_upstream_hashes_match_bytes",
-        "tests/integration/test_vector_tensor_blind_synthetic.py::test_frozen_submission_replays_and_contains_no_hidden_truth"
+        "scripts/codex_harness/run_pr281_orbit_type_acceptance.py",
+        "pr273-replay"
       ],
       "timeout_seconds": 900
     },
@@ -136,6 +116,7 @@
     "generic_completeness_unproven",
     "claim_and_family_ceiling",
     "adjacent_contract_regression",
+    "portable_clean_integration",
     "latest_target_integration"
   ],
   "invalidates_review": [
@@ -148,6 +129,7 @@
     "anchored_response_identity_changed",
     "pr269_frozen_v1_binding_changed",
     "pr273_frozen_v1_binding_changed",
+    "portable_runner_changed",
     "unproven_status_changed",
     "claim_ceiling_changed"
   ],

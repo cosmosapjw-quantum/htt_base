@@ -105,6 +105,11 @@ def test_joint_state_v1_payload_is_not_widened() -> None:
     assert JointAnisotropyState.from_payload(payload) == state
 
 
+def test_public_v2_factory_preserves_missing_argument_type_error() -> None:
+    with pytest.raises(TypeError, match="missing 11 required keyword-only arguments"):
+        build_anisotropy_type_report()
+
+
 def test_rank_deficient_report_binds_replayed_uncovered_directions() -> None:
     values = _inputs(anchored_rank_deficient=True)
     anchored = values["anchored_response"]
