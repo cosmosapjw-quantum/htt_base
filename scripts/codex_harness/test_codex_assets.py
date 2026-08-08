@@ -13,6 +13,9 @@ import pytest
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+CONTEXT_SPEC_INVENTORY = (
+    REPO_ROOT / "scripts/codex_harness/context_spec_inventory.py"
+)
 REQUIRED_AGENT_NAMES = {
     "adjudicator",
     "cas_lean",
@@ -100,6 +103,68 @@ def _reported_skill_names(output: str) -> set[str]:
         for line in output.splitlines()
         if line.startswith("- ")
     }
+
+
+def _write_claim_registry(root: Path, rows: list[dict[str, object]]) -> None:
+    registry = root / ".agent-harness/context/CLAIM_REGISTRY.jsonl"
+    registry.parent.mkdir(parents=True, exist_ok=True)
+    registry.write_text(
+        "".join(json.dumps(row) + "\n" for row in rows),
+        encoding="utf-8",
+    )
+
+
+def _run_context_spec_inventory(root: Path) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [sys.executable, str(CONTEXT_SPEC_INVENTORY), str(root)],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+
+def _registry_spec_paths(root: Path) -> tuple[str, ...]:
+    registry = root / ".agent-harness/context/CLAIM_REGISTRY.jsonl"
+    seen: set[str] = set()
+    paths: list[str] = []
+    for raw in registry.read_text(encoding="utf-8").splitlines():
+        if not raw.strip():
+            continue
+        row = json.loads(raw)
+        spec_refs = row.get("spec_refs")
+        if (
+            spec_refs is None
+            and row.get("evidence_refs") is None
+            and "evidence_ids" not in row
+        ):
+            continue
+        for ref in spec_refs:
+            rel = ref.split("#", 1)[0]
+            if rel not in seen:
+                seen.add(rel)
+                paths.append(rel)
+    return tuple(paths)
+
+
+def _context_index_paths(root: Path) -> tuple[str, ...]:
+    index_path = root / ".agent-harness/context/CONTEXT_INDEX.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    candidates: list[str] = [
+        *index["shared_files"],
+        *index["pack_files"],
+        *index.get("reference_only_files", []),
+    ]
+    for role_paths in index.get("role_files", {}).values():
+        candidates.extend(role_paths)
+    candidates.extend(index.get("live_sources", {}).values())
+    seen: set[str] = set()
+    paths: list[str] = []
+    for path in candidates:
+        if path not in seen:
+            seen.add(path)
+            paths.append(path)
+    return tuple(paths)
 
 
 def test_agents_md_stays_terse_and_names_repo_boundaries() -> None:
@@ -716,6 +781,317 @@ max_threads = "many"
     assert "agents.max_threads must be int" in rejected.stdout
 
 
+def test_context_spec_inventory_strips_fragments_and_stably_deduplicates(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "source"
+    first = source / "docs/specs/first.yaml"
+    second = source / "docs/specs/second.yaml"
+    first.parent.mkdir(parents=True)
+    first.write_text("id: first\n", encoding="utf-8")
+    second.write_text("id: second\n", encoding="utf-8")
+    _write_claim_registry(
+        source,
+        [
+            {
+                "claim_id": "C-FIRST",
+                "spec_refs": [
+                    "docs/specs/first.yaml#alpha",
+                    "docs/specs/second.yaml",
+                ],
+                "evidence_refs": ["E-FIRST"],
+            },
+            {
+                "claim_id": "C-SECOND",
+                "spec_refs": ["docs/specs/first.yaml#beta"],
+                "evidence_refs": ["E-SECOND"],
+            },
+        ],
+    )
+
+    completed = _run_context_spec_inventory(source)
+
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    assert completed.stdout.splitlines() == [
+        "docs/specs/first.yaml",
+        "docs/specs/second.yaml",
+    ]
+
+
+def test_context_spec_inventory_accepts_validator_valid_identity_only_rows(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "source"
+    spec = source / "docs/specs/referenced.yaml"
+    spec.parent.mkdir(parents=True)
+    spec.write_text("id: referenced\n", encoding="utf-8")
+    _write_claim_registry(
+        source,
+        [
+            {
+                "claim_id": "C-IDENTITY-ONLY",
+                "status": "OPEN",
+            },
+            {
+                "claim_id": "C-REFERENCED",
+                "spec_refs": ["docs/specs/referenced.yaml#contract"],
+                "evidence_refs": ["E-REFERENCED"],
+            },
+        ],
+    )
+
+    completed = _run_context_spec_inventory(source)
+
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    assert completed.stdout.splitlines() == ["docs/specs/referenced.yaml"]
+
+
+def test_context_spec_inventory_accepts_all_identity_only_registry(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "source"
+    _write_claim_registry(
+        source,
+        [
+            {"claim_id": "C-IDENTITY-FIRST", "status": "OPEN"},
+            {"claim_id": "C-IDENTITY-SECOND", "status": "OPEN"},
+        ],
+    )
+
+    completed = _run_context_spec_inventory(source)
+
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    assert completed.stdout == ""
+    assert _registry_spec_paths(source) == ()
+
+
+@pytest.mark.parametrize(
+    ("ref", "source_kind", "needle"),
+    [
+        ("/absolute/spec.yaml", "absent", "canonical and repository-relative"),
+        ("../escape.yaml", "absent", "canonical and repository-relative"),
+        ("docs\\spec.yaml", "absent", "canonical and repository-relative"),
+        ("./docs/spec.yaml", "absent", "canonical and repository-relative"),
+        ("docs//spec.yaml", "absent", "canonical and repository-relative"),
+        ("docs/missing.yaml", "absent", "missing or not a regular file"),
+        ("docs/directory", "directory", "missing or not a regular file"),
+        ("docs/symlink.yaml", "symlink", "traverses a symlink"),
+        ("linked/spec.yaml", "parent_symlink", "traverses a symlink"),
+    ],
+)
+def test_context_spec_inventory_rejects_unsafe_or_nonregular_sources(
+    tmp_path: Path,
+    ref: str,
+    source_kind: str,
+    needle: str,
+) -> None:
+    source = tmp_path / "source"
+    if source_kind == "directory":
+        (source / ref).mkdir(parents=True)
+    elif source_kind == "symlink":
+        target = source / "real.yaml"
+        target.parent.mkdir(parents=True)
+        target.write_text("id: real\n", encoding="utf-8")
+        (source / ref).parent.mkdir(parents=True, exist_ok=True)
+        (source / ref).symlink_to(target)
+    elif source_kind == "parent_symlink":
+        outside = tmp_path / "outside"
+        outside.mkdir()
+        (outside / "spec.yaml").write_text("id: outside\n", encoding="utf-8")
+        source.mkdir(parents=True)
+        (source / "linked").symlink_to(outside, target_is_directory=True)
+    _write_claim_registry(
+        source,
+        [
+            {
+                "claim_id": "C-INVALID",
+                "spec_refs": [ref],
+                "evidence_refs": ["E-INVALID"],
+            }
+        ],
+    )
+
+    completed = _run_context_spec_inventory(source)
+
+    assert completed.returncode == 1
+    assert needle in completed.stderr
+
+
+def test_installer_rejects_invalid_registry_source_before_target_mutation(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "source"
+    scripts = source / "scripts"
+    harness_scripts = scripts / "codex_harness"
+    harness_scripts.mkdir(parents=True)
+    shutil.copy2(REPO_ROOT / "scripts/install_codex_handoff.sh", scripts)
+    shutil.copy2(CONTEXT_SPEC_INVENTORY, harness_scripts)
+    _write_claim_registry(
+        source,
+        [
+            {
+                "claim_id": "C-MISSING",
+                "spec_refs": ["docs/missing.yaml"],
+                "evidence_refs": ["E-MISSING"],
+            }
+        ],
+    )
+    target = tmp_path / "target"
+    target.mkdir()
+
+    completed = subprocess.run(
+        ["bash", str(scripts / "install_codex_handoff.sh"), str(target)],
+        cwd=source,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert completed.returncode == 1
+    assert "missing or not a regular file" in completed.stderr
+    assert list(target.iterdir()) == []
+
+
+@pytest.mark.parametrize(
+    "destination_kind",
+    ["divergent", "symlink", "parent_symlink", "parent_file"],
+)
+def test_installer_preflights_registered_spec_destinations_without_partial_write(
+    tmp_path: Path,
+    destination_kind: str,
+) -> None:
+    target = tmp_path / "target"
+    registered = target / "docs/research_program/premise_anchor/pr254_spec.yaml"
+    registered.parent.mkdir(parents=True)
+    if destination_kind == "divergent":
+        registered.write_text("local: divergent\n", encoding="utf-8")
+    elif destination_kind == "symlink":
+        outside = tmp_path / "outside.yaml"
+        outside.write_text("outside: true\n", encoding="utf-8")
+        registered.symlink_to(outside)
+    elif destination_kind == "parent_symlink":
+        registered.parent.rmdir()
+        outside = tmp_path / "outside"
+        outside.mkdir()
+        registered.parent.symlink_to(outside, target_is_directory=True)
+    else:
+        registered.parent.rmdir()
+        registered.parent.write_text("not a directory\n", encoding="utf-8")
+
+    completed = subprocess.run(
+        ["bash", "scripts/install_codex_handoff.sh", str(target)],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert completed.returncode == 1
+    assert "registered context spec" in completed.stderr
+    assert not (target / "AGENTS.md").exists()
+    if destination_kind == "divergent":
+        assert registered.read_text(encoding="utf-8") == "local: divergent\n"
+    elif destination_kind == "symlink":
+        assert registered.is_symlink()
+    elif destination_kind == "parent_symlink":
+        assert registered.parent.is_symlink()
+        assert not (outside / registered.name).exists()
+    else:
+        assert registered.parent.is_file()
+        assert registered.parent.read_text(encoding="utf-8") == (
+            "not a directory\n"
+        )
+
+
+@pytest.mark.parametrize(
+    "blocked_directory",
+    [
+        ".agent-harness",
+        "docs/codex_handoff",
+        "machine_readable",
+        "harness_templates/vendor",
+    ],
+)
+def test_installer_preflights_every_destination_root_without_partial_write(
+    tmp_path: Path,
+    blocked_directory: str,
+) -> None:
+    target = tmp_path / "target"
+    blocker = target / blocked_directory
+    blocker.parent.mkdir(parents=True)
+    blocker.write_text("not a directory\n", encoding="utf-8")
+
+    completed = subprocess.run(
+        ["bash", "scripts/install_codex_handoff.sh", str(target)],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert completed.returncode == 1
+    assert blocker.is_file()
+    assert blocker.read_text(encoding="utf-8") == "not a directory\n"
+    assert not (target / "AGENTS.md").exists()
+    assert not (target / ".agents").exists()
+    assert not (target / ".codex").exists()
+
+
+def test_installer_preflights_replace_tree_symlink_without_partial_write(
+    tmp_path: Path,
+) -> None:
+    target = tmp_path / "target"
+    installed_index = target / ".agent-harness/context/CONTEXT_INDEX.json"
+    installed_index.parent.mkdir(parents=True)
+    outside = tmp_path / "outside-index.json"
+    outside.write_text('{"outside": true}\n', encoding="utf-8")
+    installed_index.symlink_to(outside)
+
+    completed = subprocess.run(
+        ["bash", "scripts/install_codex_handoff.sh", str(target)],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert completed.returncode == 1
+    assert outside.read_text(encoding="utf-8") == '{"outside": true}\n'
+    assert installed_index.is_symlink()
+    assert not (target / "AGENTS.md").exists()
+    assert not (target / ".agents").exists()
+    assert not (target / ".codex").exists()
+
+
+def test_installer_preflights_replace_tree_hardlink_without_external_mutation(
+    tmp_path: Path,
+) -> None:
+    target = tmp_path / "target"
+    installed_index = target / ".agent-harness/context/CONTEXT_INDEX.json"
+    installed_index.parent.mkdir(parents=True)
+    outside = tmp_path / "outside-index.json"
+    outside.write_text('{"outside": true}\n', encoding="utf-8")
+    installed_index.hardlink_to(outside)
+
+    completed = subprocess.run(
+        ["bash", "scripts/install_codex_handoff.sh", str(target)],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert completed.returncode == 1
+    assert outside.read_text(encoding="utf-8") == '{"outside": true}\n'
+    assert installed_index.read_text(encoding="utf-8") == (
+        '{"outside": true}\n'
+    )
+    assert outside.stat().st_nlink == 2
+    assert not (target / "AGENTS.md").exists()
+    assert not (target / ".agents").exists()
+    assert not (target / ".codex").exists()
+
+
 def test_installer_copies_repo_scoped_assets_with_project_harness_config(
     tmp_path: Path,
 ) -> None:
@@ -781,6 +1157,27 @@ def test_installer_copies_repo_scoped_assets_with_project_harness_config(
         "harness_templates/vendor/physmath-gpt56/3.1.0/research/manifest.json",
     ]:
         assert (target / path).exists(), path
+    registered_dependencies = dict.fromkeys(
+        (*_context_index_paths(REPO_ROOT), *_registry_spec_paths(REPO_ROOT))
+    )
+    for path in registered_dependencies:
+        installed = target / path
+        source = REPO_ROOT / path
+        assert installed.is_file() and not installed.is_symlink(), path
+        assert installed.read_bytes() == source.read_bytes(), path
+    source_index = json.loads(
+        (REPO_ROOT / ".agent-harness/context/CONTEXT_INDEX.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    installed_index = json.loads(
+        (target / ".agent-harness/context/CONTEXT_INDEX.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert {
+        key: value for key, value in installed_index.items() if key != "built_at"
+    } == {key: value for key, value in source_index.items() if key != "built_at"}
     assert (
         target / "docs/codex_handoff/pr_backlog.yaml"
     ).read_bytes() == (
@@ -804,6 +1201,8 @@ def test_installer_copies_repo_scoped_assets_with_project_harness_config(
     assert not (target / ".agent-harness/ACTIVE_RUN").exists()
     assert not (target / ".agent-harness/runtime/ACTIVE_RUN").exists()
     assert not (target / ".agent-harness/runs").exists()
+    assert not any(target.rglob("__pycache__"))
+    assert not any(target.rglob("*.pyc"))
 
     installed_skills = subprocess.run(
         [
