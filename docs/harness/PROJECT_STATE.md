@@ -16,6 +16,9 @@ runs.
   GitHub merge state were verified.
 - PR-190 is `COMPLETED_FAILED_WITH_RECEIPT`. Its registered full typed
   attainability statement is refuted; `success_dependency_satisfied=false`.
+- PR-280 is likewise a historical `COMPLETED_FAILED_WITH_RECEIPT` with
+  `success_dependency_satisfied=false`. PR-295, PR-296, and PR-297 satisfy the
+  separate downstream stop-release condition without rewriting that receipt.
 - Work proceeds in the isolated branch
   `changeset/pr281-orbit-type-acceptance`. The main user checkout and
   all user-owned untracked inputs remain untouched.
@@ -202,8 +205,12 @@ layouts. Its exact R4 code, harness, and claim reviews all passed after R1,
 R2, and R3 failures were preserved and repaired.
 
 Canonical status records 177/244 completed (72.54%) and dependency-weighted
-completion 76.01%. PR-280 remains a failed terminal receipt; all three named
-successors now pass, so only its aggregate success dependency becomes true.
+completion 76.01%. PR-280 remains a failed terminal receipt with its own
+`success_dependency_satisfied=false`. All three named successors now pass, so
+the separate downstream stop-release condition is satisfied without mutating
+the failed receipt. The earlier aggregate-field wording in the historical
+PR-297 delta is superseded by the PR-281 status-integrity correction; the
+historical delta remains preserved rather than rewritten.
 At that 2026-08-08 checkpoint, PR-281, PR-282, PR-283, PR-284, PR-285,
 PR-286, PR-288, and PR-289 were dependency-ready, with PR-281 first in
 canonical topological order.

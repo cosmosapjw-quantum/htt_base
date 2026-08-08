@@ -309,7 +309,7 @@ def test_canonical_dag_and_compatibility_mirrors_validate() -> None:
         "--strict-rescue-slice",
     )
     assert dag.returncode == 0, dag.stdout + dag.stderr
-    assert "OK: 241 PRs, DAG valid" in dag.stdout
+    assert "OK: 244 PRs, DAG valid" in dag.stdout
 
     mirrors = _run(
         sys.executable,

@@ -267,8 +267,9 @@ def test_status_is_total_and_preserves_negative_chronology() -> None:
             "resolution"
         ] == "COMPLETED_SUCCESS"
     for pr_id in PR280_ROOT_CAUSE_IDS:
-        assert states[pr_id] == "pending"
-        assert pr_id not in resolutions
+        assert states[pr_id] == "completed"
+        assert resolutions[pr_id]["resolution"] == "COMPLETED_SUCCESS"
+        assert resolutions[pr_id]["success_dependency_satisfied"] is True
 
 
 def test_only_defined_g1_through_g8_are_registered() -> None:

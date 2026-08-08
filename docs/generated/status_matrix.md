@@ -22,13 +22,13 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Implementation scope | `common` |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `a68690cdd7099545a8e8337e32931ebf6e6009ddec255dd8ed192d1e13ad7da4` |
-| Input hashes | `docs/codex_handoff/pr_backlog.yaml:68b081d498853ed6819e93db5ea2ca35d3744339c73d27200880548eec249d95`<br>`docs/codex_handoff/pr_status.yaml:2143392873e8d1d308e862ec30da8eb5aa36b6927b076d2ecfa7ff23e84d3e7b`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4`<br>`docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c`<br>`docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912` |
+| Config hash | `eacbf2513255b5728d9934c7d5a8ca231cb890fdedacfa66190882ec8b0fa4fe` |
+| Input hashes | `docs/codex_handoff/pr_backlog.yaml:68b081d498853ed6819e93db5ea2ca35d3744339c73d27200880548eec249d95`<br>`docs/codex_handoff/pr_status.yaml:af290eef7821ea6dbc4d378eb9a3fde987b03f02ece40707645133692ccab273`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4`<br>`docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c`<br>`docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912` |
 | Sky support status | `not_directional` |
 | Null/mock status | `not_statistical` |
 | Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false without an exact factory-issued ClaimCapabilityDecision.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier.<br>Verified smoke receipts set only generic process readiness; they do not grant a ClaimCapability. |
-| Generating command | `python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --source-commit f9edd792726419843cfd568684c63d46e92be412 --write docs/generated/status_snapshot.json` |
-| Source commit | `f9edd792726419843cfd568684c63d46e92be412` |
+| Generating command | `python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --source-commit f9edd792+dirty --write docs/generated/status_snapshot.json` |
+| Source commit | `f9edd792+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
