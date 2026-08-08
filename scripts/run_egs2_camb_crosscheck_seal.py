@@ -3,13 +3,13 @@
 docs/generated/seminative_camb_crosscheck_seal.json.
 
 Engine-dependent lane (real CAMB background): follows the exit-2
-registered-blocker pattern (like the Sage/Lean/mathlib runners) -- camb absent
-or failing is a REGISTERED blocker (exit 2), never silence; a FAIL status on a
-completed cross-check exits 1 (fail-closed). ``--check`` regenerates in memory
-and diffs against disk.
+registered-blocker pattern (like the Sage/Lean/mathlib runners) -- CAMB absence
+is a REGISTERED blocker (exit 2), never silence; any other failed cross-check
+exits 1 (fail-closed). ``--check`` regenerates in memory and diffs against disk.
 
-Claim boundary: single-mode exact-FLRW-anchored diagnostic cross-check; no
-data claim, no signal-discovery/geometry/probabilistic-inference claim.
+Claim boundary: single-mode exact-FLRW-anchored external-transfer diagnostic
+cross-check; no native-solver, data, signal-discovery, geometry, or
+probabilistic-inference claim.
 """
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ from pathlib import Path
 import sys
 
 REPO = Path(__file__).resolve().parents[1]
-for p in (REPO, REPO / "htt", REPO / "htt/htt"):
+for p in (REPO, REPO / "htt/src", REPO / "htt", REPO / "htt/htt"):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
@@ -29,7 +29,7 @@ def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
     check = "--check" in argv
 
-    from bass.transfer.visibility_camb_crosscheck import (
+    from scripts.oracles.egs2_camb_visibility import (
         seminative_camb_crosscheck_seal)
     seal = seminative_camb_crosscheck_seal()
     payload = json.dumps(seal, indent=2, default=float) + "\n"

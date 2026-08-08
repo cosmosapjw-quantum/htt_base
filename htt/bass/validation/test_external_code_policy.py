@@ -152,6 +152,19 @@ def test_no_external_code_imports_in_production() -> None:
         pytest.fail("\n".join(msg_lines))
 
 
+def test_camb_oracle_is_repo_only_and_still_exercises_the_scanner() -> None:
+    """The live CAMB import is outside the installed production package."""
+    package_root = _repo_bass_py_root()
+    repo_root = package_root.parent
+    old_production_path = package_root / "bass/transfer/visibility_camb_crosscheck.py"
+    oracle = repo_root / "scripts/oracles/egs2_camb_visibility.py"
+
+    assert not old_production_path.exists()
+    assert oracle.is_file()
+    violations = _scan_forbidden_imports(oracle)
+    assert any(module == "camb" for _, module, _ in violations)
+
+
 # ════════════════════════════════════════════════════════════════════
 # Negative (self-) tests: confirm the scanner actually detects things.
 # ════════════════════════════════════════════════════════════════════

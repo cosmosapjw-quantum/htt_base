@@ -12,7 +12,8 @@ scope: >
 exit_gate: exact-FLRW-anchored single-mode shear transfer cross-checked vs CAMB/CLASS visibility
 not_in_scope: matched masks/randoms/covariance, family-equivalence gates (PR10 native solver)
 exit_gate_discharged_2026_07_10: |
-  v8-update cycle (REV-R162): htt/bass/transfer/visibility_camb_crosscheck.py
+  v8-update cycle (REV-R162), relocated by PR-295 without changing the frozen
+  numerical seal: scripts/oracles/egs2_camb_visibility.py
   recomputes the frozen lane's line-of-sight Bessel projection through the REAL
   CAMB 1.6.6 recombination visibility (pinned H0=67.5, ombh2=0.022, omch2=0.122,
   YHe=0.24; chi_star = 13804.5 Mpc, sigma_FWHM-equiv = 16.3 Mpc -- far narrower

@@ -179,7 +179,7 @@ SOURCE_FILES = [
     "htt/obsstat/egs3_teff_statistical.py",
     "htt/teff/transport_application.py",
     "htt/teff/rust_twin_parity.py",
-    "htt/bass/transfer/visibility_camb_crosscheck.py",
+    "scripts/oracles/egs2_camb_visibility.py",
 ]
 
 
