@@ -13511,7 +13511,8 @@ prs:
   - Copy and validate every referenced spec without weakening the context validator or dropping claim-registry references.
   - Keep installation repository-scoped and leave user-global Codex or agent state untouched.
   files:
-  - scripts/codex_harness/install_codex_handoff.sh
+  - scripts/install_codex_handoff.sh
+  - scripts/codex_harness/context_spec_inventory.py
   - scripts/codex_harness/test_codex_assets.py
   - .agent-harness/context/CONTEXT_INDEX.json
   - .agent-harness/context/CLAIM_REGISTRY.jsonl
