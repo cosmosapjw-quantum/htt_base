@@ -13,6 +13,8 @@ import numpy as np
 import pytest
 import yaml
 
+import scripts.codex_harness.build_pr269_pillar_t_core as pr269_builder
+
 from common.joint_anisotropy_state import (
     AccelerationNormalization,
     UnitsConvention,
@@ -163,11 +165,23 @@ def test_pr281_joint_state_relocation_is_single_use_and_exact() -> None:
         "PR-269 proof artifact"
     )
     assert entry["frozen_input"] == entry["original_path"]
+    assert entry["relocated_path"] == (
+        "htt/src/common/joint_anisotropy_state_v1.py"
+    )
     assert _sha256(ROOT / entry["relocated_path"]) == entry["sha256"]
 
 
-def test_pr281_joint_state_relocation_caveat_mutation_fails_closed(
+@pytest.mark.parametrize(
+    ("field", "replacement"),
+    (
+        ("caveat", "promotion permitted"),
+        ("relocated_path", "htt/src/common/joint_anisotropy_state_copy.py"),
+    ),
+)
+def test_pr281_joint_state_relocation_binding_mutation_fails_closed(
     tmp_path: Path,
+    field: str,
+    replacement: str,
 ) -> None:
     original = "htt/src/common/joint_anisotropy_state.py"
     expected = SOURCE_HASHES[original]
@@ -178,7 +192,7 @@ def test_pr281_joint_state_relocation_caveat_mutation_fails_closed(
             "PR281_PR269_V1_RELOCATION.json"
         ).read_text(encoding="utf-8")
     )
-    relocation["entries"][0]["caveat"] = "promotion permitted"
+    relocation["entries"][0][field] = replacement
     relocation_path = (
         tmp_path
         / "docs/research_program/vector_tensor/integration/"
@@ -188,10 +202,46 @@ def test_pr281_joint_state_relocation_caveat_mutation_fails_closed(
     relocation_path.write_text(json.dumps(relocation), encoding="utf-8")
     frozen = tmp_path / relocation["entries"][0]["relocated_path"]
     frozen.parent.mkdir(parents=True)
-    frozen.write_bytes((ROOT / frozen.relative_to(tmp_path)).read_bytes())
+    frozen.write_bytes(
+        (ROOT / "htt/src/common/joint_anisotropy_state_v1.py").read_bytes()
+    )
 
     with pytest.raises(PillarTCoreProofError, match="binding drifted"):
         resolve_pillar_t_frozen_source(tmp_path, original, expected)
+
+
+def test_pr281_joint_state_generator_rejects_duplicate_relocated_path(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    original = Path("htt/src/common/joint_anisotropy_state.py")
+    expected = SOURCE_HASHES[str(original)]
+    relocation = json.loads(
+        (
+            ROOT
+            / "docs/research_program/vector_tensor/integration/"
+            "PR281_PR269_V1_RELOCATION.json"
+        ).read_text(encoding="utf-8")
+    )
+    relocation["entries"][0]["relocated_path"] = (
+        "htt/src/common/joint_anisotropy_state_copy.py"
+    )
+    relocation_path = (
+        tmp_path
+        / "docs/research_program/vector_tensor/integration/"
+        "PR281_PR269_V1_RELOCATION.json"
+    )
+    relocation_path.parent.mkdir(parents=True)
+    relocation_path.write_text(json.dumps(relocation), encoding="utf-8")
+    duplicate = tmp_path / relocation["entries"][0]["relocated_path"]
+    duplicate.parent.mkdir(parents=True)
+    duplicate.write_bytes(
+        (ROOT / "htt/src/common/joint_anisotropy_state_v1.py").read_bytes()
+    )
+    monkeypatch.setattr(pr269_builder, "REPO", tmp_path)
+
+    with pytest.raises(pr269_builder.BuildError, match="binding drifted"):
+        pr269_builder._frozen_source_path(original, expected)
 
 
 def test_exact_analytic_core_selection_and_inventory(registry) -> None:

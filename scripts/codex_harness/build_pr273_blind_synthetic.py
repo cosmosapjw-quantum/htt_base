@@ -119,6 +119,8 @@ def _frozen_input_path(name: str, record: MappingLike) -> Path:
         }
         or entry.get("frozen_input") != name
         or entry.get("original_path") != record["path"]
+        or entry.get("relocated_path")
+        != "htt/src/common/anisotropy_type_report_v1.py"
         or entry.get("sha256") != record["sha256"]
         or entry.get("allowed_use") != "exact historical PR-273 replay only"
         or entry.get("caveat")

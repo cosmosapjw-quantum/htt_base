@@ -191,6 +191,8 @@ def _frozen_source_path(path: Path, expected_sha256: str) -> Path:
         }
         or entry.get("frozen_input") != str(path)
         or entry.get("original_path") != str(path)
+        or entry.get("relocated_path")
+        != "htt/src/common/joint_anisotropy_state_v1.py"
         or entry.get("sha256") != expected_sha256
         or entry.get("allowed_use")
         != "exact historical PR-269 replay only"
