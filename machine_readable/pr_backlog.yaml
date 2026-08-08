@@ -12787,6 +12787,12 @@ prs:
     mode: requires_success
   - upstream_id: PR-286
     mode: requires_success
+    required_terminal: PASS_COMPLETE_PILLAR_S_ADJUDICATION
+    success_semantics: PROCESS_COMPLETION_ONLY
+    downstream_row_contract:
+      preserve_row_verdicts: true
+      preserve_inconclusive_and_blocked: true
+      synthetic_validation_effect: NO_OBSERVED_OR_SOURCE_PROOF_PROMOTION
   targets:
   - Replay the current typed spine in semantic DAG order and keep historical replay distinct from fresh blind evidence.
   - Regenerate x_phi/Q_phi/Pi_phi, SectorStress, support utilization, and partial-identification crosswalk outputs.

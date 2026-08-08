@@ -1403,6 +1403,7 @@ def evaluate_depth_local_global(
     mask_path_id: str,
     transfer_source: str,
     indifference_tolerance: float = 1.0e-12,
+    principal_angle_floor_radians: float = 1.0e-12,
 ) -> HttDepthDiscriminationReport:
     values = _vector(data, "data")
     covariance_matrix = _positive_definite(
@@ -1414,6 +1415,24 @@ def evaluate_depth_local_global(
         raise PillarSInferenceError(
             "local/global designs must match the depth path"
         )
+    angle_floor = _real(
+        principal_angle_floor_radians, "principal_angle_floor_radians"
+    )
+    if angle_floor < 0.0 or angle_floor >= math.pi / 2.0:
+        raise PillarSInferenceError(
+            "principal_angle_floor_radians must lie in [0, pi/2)"
+        )
+    whitening = np.linalg.inv(np.linalg.cholesky(covariance_matrix))
+    whitened_local = whitening @ local
+    whitened_global = whitening @ global_
+    cosine = abs(float(whitened_local @ whitened_global)) / (
+        float(np.linalg.norm(whitened_local))
+        * float(np.linalg.norm(whitened_global))
+    )
+    principal_angle = math.acos(min(1.0, max(0.0, cosine)))
+    design_rank = int(
+        np.linalg.matrix_rank(np.column_stack((local, global_)))
+    )
     local_amplitude, local_chi2, _ = _gls_fit(
         values, local, covariance_matrix
     )
@@ -1426,14 +1445,20 @@ def evaluate_depth_local_global(
         raise PillarSInferenceError(
             "indifference_tolerance must be nonnegative"
         )
-    if difference > tolerance:
+    if design_rank < 2 or principal_angle <= angle_floor:
+        selected = ModelCandidate.INDETERMINATE
+        status = ValidationStatus.ABSTAIN_NON_IDENTIFIED
+    elif difference > tolerance:
         selected = ModelCandidate.LOCAL
+        status = ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC
     elif difference < -tolerance:
         selected = ModelCandidate.GLOBAL
+        status = ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC
     else:
         selected = ModelCandidate.INDETERMINATE
+        status = ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC
     return HttDepthDiscriminationReport(
-        status=ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC,
+        status=status,
         selected_candidate=selected,
         local_chi_square=local_chi2,
         global_chi_square=global_chi2,

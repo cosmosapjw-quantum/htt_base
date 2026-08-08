@@ -714,6 +714,34 @@ def test_depth_local_global_keeps_htt_and_mio_ownership_separate() -> None:
     assert mio_report.local_residual_norm < mio_report.global_residual_norm
 
 
+def test_depth_local_global_abstains_for_proportional_designs() -> None:
+    design = np.asarray((1.0, 2.0, 3.0, 4.0))
+    report = evaluate_depth_local_global(
+        design,
+        covariance=np.eye(4),
+        covariance_id="identity",
+        local_design=design,
+        global_design=2.0 * design,
+        mask_path_id="nested-mask",
+        transfer_source="none",
+    )
+    assert report.status is ValidationStatus.ABSTAIN_NON_IDENTIFIED
+    assert report.selected_candidate is ModelCandidate.INDETERMINATE
+
+    near_overlap = evaluate_depth_local_global(
+        design,
+        covariance=np.eye(4),
+        covariance_id="identity",
+        local_design=design,
+        global_design=design + np.asarray((0.0, 0.0, 0.0, 1.0e-8)),
+        mask_path_id="nested-mask",
+        transfer_source="none",
+        principal_angle_floor_radians=1.0e-6,
+    )
+    assert near_overlap.status is ValidationStatus.ABSTAIN_NON_IDENTIFIED
+    assert near_overlap.selected_candidate is ModelCandidate.INDETERMINATE
+
+
 def test_public_facades_enforce_owner_boundary() -> None:
     import htt.infer.vector_tensor_validation as htt_surface
     import mio.formalism.vector_tensor_validation as mio_surface
