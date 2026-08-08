@@ -69,6 +69,10 @@ SOURCE_HASHES = {
     Path("htt/src/common/w2_convention.py"):
         "39b15209868fe81c8c5f907384820313b90615aa916e0a16f1ad56eb5db8bcac",
 }
+PR281_JOINT_STATE_V1_RELOCATION = Path(
+    "docs/research_program/vector_tensor/integration/"
+    "PR281_PR269_V1_RELOCATION.json"
+)
 
 VT_IDS = ("VT-T1", "VT-T2", "VT-T3", "VT-T4", "VT-T9", "VT-T10")
 TF_LINKS = {
@@ -149,6 +153,69 @@ class BuildError(ValueError):
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256((REPO / path).read_bytes()).hexdigest()
+
+
+def _frozen_source_path(path: Path, expected_sha256: str) -> Path:
+    if path != Path("htt/src/common/joint_anisotropy_state.py"):
+        return path
+    relocation_path = REPO / PR281_JOINT_STATE_V1_RELOCATION
+    if relocation_path.is_symlink() or not relocation_path.is_file():
+        raise BuildError("PR-281 joint-state relocation must be a regular file")
+    relocation = json.loads(
+        relocation_path.read_text(encoding="utf-8")
+    )
+    if (
+        not isinstance(relocation, Mapping)
+        or set(relocation)
+        != {"entries", "relocation_id", "schema", "source_pr", "successor_pr"}
+        or relocation.get("schema") != "htt.pr281.frozen_source_relocation.v1"
+        or relocation.get("relocation_id")
+        != "PR281-PR269-JOINT-ANISOTROPY-STATE-V1"
+        or relocation.get("source_pr") != "PR-269"
+        or relocation.get("successor_pr") != "PR-281"
+        or not isinstance(relocation.get("entries"), list)
+        or len(relocation["entries"]) != 1
+    ):
+        raise BuildError("PR-281 joint-state relocation contract drifted")
+    entry = relocation["entries"][0]
+    if (
+        not isinstance(entry, Mapping)
+        or set(entry)
+        != {
+            "allowed_use",
+            "caveat",
+            "frozen_input",
+            "original_path",
+            "relocated_path",
+            "sha256",
+        }
+        or entry.get("frozen_input") != str(path)
+        or entry.get("original_path") != str(path)
+        or entry.get("relocated_path")
+        != "htt/src/common/joint_anisotropy_state_v1.py"
+        or entry.get("sha256") != expected_sha256
+        or entry.get("allowed_use")
+        != "exact historical PR-269 replay only"
+        or entry.get("caveat")
+        != (
+            "PR-281 successor acceptance metadata is not part of the "
+            "frozen PR-269 proof artifact"
+        )
+    ):
+        raise BuildError("PR-281 joint-state relocation binding drifted")
+    relocated = Path(str(entry.get("relocated_path")))
+    if relocated.is_absolute() or ".." in relocated.parts:
+        raise BuildError("relocated joint state must stay repository-relative")
+    candidate = REPO / relocated
+    if candidate.is_symlink() or not candidate.is_file():
+        raise BuildError("relocated joint state must be a regular file")
+    try:
+        candidate.resolve(strict=True).relative_to(REPO.resolve())
+    except (OSError, ValueError) as exc:
+        raise BuildError(
+            "relocated joint state must stay inside the repository"
+        ) from exc
+    return relocated
 
 
 def _canonical_sha256(value: object) -> str:
@@ -259,7 +326,7 @@ def _load_inputs() -> tuple[
     Mapping[str, object],
 ]:
     for path, digest in SOURCE_HASHES.items():
-        actual = _sha256(path)
+        actual = _sha256(_frozen_source_path(path, digest))
         if actual != digest:
             raise BuildError(
                 f"frozen input hash drifted for {path}: "

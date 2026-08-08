@@ -13,6 +13,8 @@ import sys
 import pytest
 import yaml
 
+import scripts.codex_harness.build_pr273_blind_synthetic as pr273_builder
+
 from common.blind_synthetic_contract import (
     BlindSyntheticContractError,
     build_blind_synthetic_adjudication,
@@ -56,6 +58,11 @@ PACK = (
     "PR273_DIAGNOSTIC_PACK.json"
 )
 BUILDER = ROOT / "scripts/codex_harness/build_pr273_blind_synthetic.py"
+V1_RELOCATION = (
+    ROOT
+    / "docs/research_program/vector_tensor/integration/"
+    "PR281_PR273_V1_RELOCATION.json"
+)
 
 
 def _load(path: Path):
@@ -97,8 +104,50 @@ def test_pr273_spec_card_and_policy_bind_the_blind_integration_scope() -> None:
 
 def test_frozen_challenge_truth_and_upstream_hashes_match_bytes() -> None:
     spec = yaml.safe_load(SPEC.read_text(encoding="utf-8"))
-    for record in spec["frozen_inputs"].values():
-        path = ROOT / record["path"]
+    relocation = _load(V1_RELOCATION)
+    assert set(relocation) == {
+        "entries",
+        "relocation_id",
+        "schema",
+        "source_pr",
+        "successor_pr",
+    }
+    assert relocation["relocation_id"] == (
+        "PR281-PR273-ANISOTROPY-TYPE-REPORT-V1"
+    )
+    assert relocation["source_pr"] == "PR-273"
+    assert relocation["successor_pr"] == "PR-281"
+    entries = {
+        row["frozen_input"]: row for row in relocation["entries"]
+    }
+    for name, record in spec["frozen_inputs"].items():
+        relocated = entries.get(name)
+        path = ROOT / (
+            record["path"]
+            if relocated is None
+            else relocated["relocated_path"]
+        )
+        if relocated is not None:
+            assert set(relocated) == {
+                "allowed_use",
+                "caveat",
+                "frozen_input",
+                "original_path",
+                "relocated_path",
+                "sha256",
+            }
+            assert relocated["original_path"] == record["path"]
+            assert relocated["sha256"] == record["sha256"]
+            assert relocated["allowed_use"] == (
+                "exact historical PR-273 replay only"
+            )
+            assert relocated["caveat"] == (
+                "PR-281 V2 is the current public surface; this relocation "
+                "cannot promote or reseal the PR-273 result"
+            )
+            assert relocated["relocated_path"] == (
+                "htt/src/common/anisotropy_type_report_v1.py"
+            )
         assert hashlib.sha256(path.read_bytes()).hexdigest() == record["sha256"]
     assert spec["frozen_inputs"]["pillar_t_cas"]["required_verdict"] == (
         "CAS_4AXIS_PASS"
@@ -106,6 +155,31 @@ def test_frozen_challenge_truth_and_upstream_hashes_match_bytes() -> None:
     assert spec["frozen_inputs"]["pillar_s_inference"]["required_verdict"] == (
         "PASS"
     )
+
+
+def test_pr281_type_report_generator_rejects_duplicate_relocated_path(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    spec = yaml.safe_load(SPEC.read_text(encoding="utf-8"))
+    record = spec["frozen_inputs"]["type_report_contract"]
+    relocation = _load(V1_RELOCATION)
+    relocation["entries"][0]["relocated_path"] = (
+        "htt/src/common/anisotropy_type_report_copy.py"
+    )
+    relocation_path = tmp_path / V1_RELOCATION.relative_to(ROOT)
+    relocation_path.parent.mkdir(parents=True)
+    relocation_path.write_text(json.dumps(relocation), encoding="utf-8")
+    duplicate = tmp_path / relocation["entries"][0]["relocated_path"]
+    duplicate.parent.mkdir(parents=True)
+    duplicate.write_bytes(
+        (ROOT / "htt/src/common/anisotropy_type_report_v1.py").read_bytes()
+    )
+    monkeypatch.setattr(pr273_builder, "ROOT", tmp_path)
+    monkeypatch.setattr(pr273_builder, "V1_RELOCATION", relocation_path)
+
+    with pytest.raises(RuntimeError, match="binding drifted"):
+        pr273_builder._frozen_input_path("type_report_contract", record)
 
 
 def test_challenge_is_truth_free_and_partitions_cases_exactly_once() -> None:

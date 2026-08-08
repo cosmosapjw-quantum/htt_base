@@ -27,7 +27,9 @@ from common.anchored_response_geometry import (
     anchored_numeric_content_id,
     measure_anchored_response_geometry,
 )
-from common.anisotropy_type_report import (
+# PR-273 is a frozen historical blind result. Its analyzer intentionally
+# retains the exact V1 type-report implementation after the PR-281 successor.
+from common.anisotropy_type_report_v1 import (
     build_anisotropy_type_report,
     build_open_set_replay_inputs,
 )

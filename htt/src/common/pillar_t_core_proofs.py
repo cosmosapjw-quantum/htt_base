@@ -74,6 +74,10 @@ SOURCE_HASHES = {
     "htt/src/common/w2_convention.py":
         "39b15209868fe81c8c5f907384820313b90615aa916e0a16f1ad56eb5db8bcac",
 }
+PR281_JOINT_STATE_V1_RELOCATION = (
+    "docs/research_program/vector_tensor/integration/"
+    "PR281_PR269_V1_RELOCATION.json"
+)
 VT_ANALYTIC_IDS = frozenset(
     {"VT-T1", "VT-T2", "VT-T3", "VT-T4", "VT-T9", "VT-T10"}
 )
@@ -584,6 +588,90 @@ def _validate_record_semantics(
         )
 
 
+def resolve_pillar_t_frozen_source(
+    repo_root: Path,
+    relative: str,
+    expected_sha256: str,
+) -> Path:
+    """Resolve the one registered PR-281 relocation without rewriting PR-269."""
+
+    root = Path(repo_root).resolve()
+    if relative != "htt/src/common/joint_anisotropy_state.py":
+        return root / relative
+    relocation_path = root / PR281_JOINT_STATE_V1_RELOCATION
+    if relocation_path.is_symlink() or not relocation_path.is_file():
+        raise PillarTCoreProofError("PR-281 joint-state relocation is missing")
+    relocation = _mapping(
+        json.loads(relocation_path.read_text(encoding="utf-8")),
+        "pr281_joint_state_relocation",
+    )
+    if (
+        set(relocation)
+        != {
+            "entries",
+            "relocation_id",
+            "schema",
+            "source_pr",
+            "successor_pr",
+        }
+        or relocation["schema"] != "htt.pr281.frozen_source_relocation.v1"
+        or relocation["relocation_id"]
+        != "PR281-PR269-JOINT-ANISOTROPY-STATE-V1"
+        or relocation["source_pr"] != "PR-269"
+        or relocation["successor_pr"] != "PR-281"
+    ):
+        raise PillarTCoreProofError("PR-281 joint-state relocation drifted")
+    entries = _rows(relocation["entries"], "relocation.entries")
+    if len(entries) != 1:
+        raise PillarTCoreProofError(
+            "PR-281 joint-state relocation must contain one entry"
+        )
+    entry = entries[0]
+    if (
+        set(entry)
+        != {
+            "allowed_use",
+            "caveat",
+            "frozen_input",
+            "original_path",
+            "relocated_path",
+            "sha256",
+        }
+        or entry.get("frozen_input") != relative
+        or entry.get("original_path") != relative
+        or entry.get("relocated_path")
+        != "htt/src/common/joint_anisotropy_state_v1.py"
+        or entry.get("sha256") != expected_sha256
+        or entry.get("allowed_use")
+        != "exact historical PR-269 replay only"
+        or entry.get("caveat")
+        != (
+            "PR-281 successor acceptance metadata is not part of the "
+            "frozen PR-269 proof artifact"
+        )
+    ):
+        raise PillarTCoreProofError(
+            "PR-281 joint-state relocation binding drifted"
+        )
+    relocated = Path(str(entry.get("relocated_path")))
+    if relocated.is_absolute() or ".." in relocated.parts:
+        raise PillarTCoreProofError(
+            "PR-281 joint-state relocation must stay repository-relative"
+        )
+    path = root / relocated
+    if path.is_symlink() or not path.is_file():
+        raise PillarTCoreProofError(
+            "relocated PR-269 joint state must be a regular file"
+        )
+    try:
+        path.resolve(strict=True).relative_to(root)
+    except (OSError, ValueError) as exc:
+        raise PillarTCoreProofError(
+            "relocated PR-269 joint state must stay inside the repository"
+        ) from exc
+    return path
+
+
 def load_pillar_t_core_registry(
     repo_root: Path,
     path: Path | None = None,
@@ -592,7 +680,9 @@ def load_pillar_t_core_registry(
 
     root = Path(repo_root).resolve()
     for relative, expected in SOURCE_HASHES.items():
-        actual = _sha256(root / relative)
+        actual = _sha256(
+            resolve_pillar_t_frozen_source(root, relative, expected)
+        )
         if actual != expected:
             raise PillarTCoreProofError(
                 f"frozen PR-269 input hash drifted for {relative}"
