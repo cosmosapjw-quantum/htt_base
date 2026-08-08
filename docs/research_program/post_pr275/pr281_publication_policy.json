@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "policy_id": "PR281-PUBLICATION-POLICY",
+  "change_set_id": "CS-PR281-ORBIT-TYPE-ACCEPTANCE",
+  "publication_group_id": "PG-PR281-ORBIT-TYPE-ACCEPTANCE",
+  "target_ref": "origin/research/pr04-multicomponent",
+  "target_sha": "0525bbda30311ebc99b5085c895139407de25536",
+  "max_open_prs": 1,
+  "max_direct_to_target_prs": 1,
+  "max_prs_per_change_set": 1,
+  "max_stack_depth": 1,
+  "max_file_overlap_prs": 0,
+  "max_inventory_age_seconds": 300,
+  "max_receipt_age_seconds": 1800,
+  "max_authorization_ttl_seconds": 1800,
+  "default_publication_mode": "unattended_external_publisher_only",
+  "unattended_publication_requires_external_publisher": true,
+  "ordinary_agent_push_forbidden": true,
+  "ordinary_agent_pr_mutation_forbidden": true,
+  "attended_publication": {
+    "enabled": true,
+    "authorization_mode": "attended_explicit_user",
+    "transaction": "sealed_sha_push_then_single_pr_create",
+    "max_transactions": 1,
+    "requires_current_turn_authorization": true,
+    "direct_mutation_commands_forbidden": true,
+    "nonce_ledger_binding": "authorization_hmac_frozen_external_inode_v1",
+    "publisher_entrypoint": ".agent-harness/scripts/attended_pr_publisher.py",
+    "forbidden_actions": [
+      "force_push",
+      "approve",
+      "merge",
+      "ruleset_mutation"
+    ]
+  },
+  "claim_ceiling": "diagnostic_only",
+  "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+  "required_commands": [
+    {
+      "id": "pr281-focused",
+      "argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_orbit_type_acceptance.py"
+      ],
+      "timeout_seconds": 900
+    },
+    {
+      "id": "pr281-adjacent-contracts",
+      "argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_joint_anisotropy_state.py",
+        "tests/contracts/test_orbit_catalogue_v3.py",
+        "tests/contracts/test_anisotropy_type_report.py",
+        "tests/pr_cards/test_pr_255_anchored_response_geometry.py"
+      ],
+      "timeout_seconds": 1200
+    },
+    {
+      "id": "pr281-pr269-frozen-replay",
+      "argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_pillar_t_core.py"
+      ],
+      "timeout_seconds": 900
+    },
+    {
+      "id": "pr281-pr273-frozen-replay",
+      "argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/integration/test_vector_tensor_blind_synthetic.py::test_frozen_challenge_truth_and_upstream_hashes_match_bytes",
+        "tests/integration/test_vector_tensor_blind_synthetic.py::test_frozen_submission_replays_and_contains_no_hidden_truth"
+      ],
+      "timeout_seconds": 900
+    },
+    {
+      "id": "pr281-dag-strict",
+      "argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "pr281-claim-language",
+      "argv": [
+        "{python}",
+        "-B",
+        "scripts/check_claim_language.py",
+        "htt/src/common/joint_anisotropy_state.py",
+        "htt/src/common/anisotropy_type_report.py",
+        "tests/contracts/test_orbit_type_acceptance.py",
+        "docs/PR_DELTAS/pr-281.md"
+      ],
+      "timeout_seconds": 300
+    }
+  ],
+  "required_review_cells": [
+    "candidate_identity",
+    "registered_dimension_rank_table",
+    "invalid_pair_fail_closed",
+    "single_vector_stabilizer_counterexample",
+    "anchored_null_space_exact_replay",
+    "covariance_and_response_identity_binding",
+    "pr269_historical_v1_successor_versioning",
+    "pr273_historical_v1_successor_versioning",
+    "typed_missingness",
+    "generic_completeness_unproven",
+    "claim_and_family_ceiling",
+    "adjacent_contract_regression",
+    "latest_target_integration"
+  ],
+  "invalidates_review": [
+    "candidate_sha_changed",
+    "candidate_tree_changed",
+    "diff_digest_changed",
+    "tests_changed",
+    "target_sha_changed",
+    "dimension_rank_table_changed",
+    "anchored_response_identity_changed",
+    "pr269_frozen_v1_binding_changed",
+    "pr273_frozen_v1_binding_changed",
+    "unproven_status_changed",
+    "claim_ceiling_changed"
+  ],
+  "forbidden_inputs": [
+    "native low-ell solver output",
+    "native morphology atlas",
+    "observed-data science output",
+    "PR-151 partial acquisition",
+    "unlabeled numerical rank",
+    "nearest-family or geometry-identification fallback",
+    "generic completeness promotion"
+  ]
+}

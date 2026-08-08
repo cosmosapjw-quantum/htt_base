@@ -9,6 +9,7 @@ import hashlib
 import json
 from pathlib import Path
 import sys
+from typing import Mapping
 
 import yaml
 
@@ -58,6 +59,11 @@ DIAGNOSTIC_PACK = (
     / "docs/research_program/vector_tensor/integration/"
     "PR273_DIAGNOSTIC_PACK.json"
 )
+V1_RELOCATION = (
+    ROOT
+    / "docs/research_program/vector_tensor/integration/"
+    "PR281_PR273_V1_RELOCATION.json"
+)
 
 
 def _sha256(path: Path) -> str:
@@ -77,9 +83,64 @@ def _json_bytes(payload: object) -> bytes:
     ).encode("ascii")
 
 
+def _frozen_input_path(name: str, record: MappingLike) -> Path:
+    if name != "type_report_contract":
+        return ROOT / str(record["path"])
+    if V1_RELOCATION.is_symlink() or not V1_RELOCATION.is_file():
+        raise RuntimeError("PR-281 relocation must be a regular file")
+    relocation = json.loads(V1_RELOCATION.read_text(encoding="utf-8"))
+    if not isinstance(relocation, Mapping) or set(relocation) != {
+        "entries",
+        "relocation_id",
+        "schema",
+        "source_pr",
+        "successor_pr",
+    } or (
+        relocation["schema"] != "htt.pr281.frozen_source_relocation.v1"
+        or relocation["relocation_id"]
+        != "PR281-PR273-ANISOTROPY-TYPE-REPORT-V1"
+        or relocation["source_pr"] != "PR-273"
+        or relocation["successor_pr"] != "PR-281"
+        or not isinstance(relocation["entries"], list)
+        or len(relocation["entries"]) != 1
+    ):
+        raise RuntimeError("PR-281 frozen-source relocation contract drifted")
+    entry = relocation["entries"][0]
+    if (
+        not isinstance(entry, Mapping)
+        or set(entry)
+        != {
+            "allowed_use",
+            "caveat",
+            "frozen_input",
+            "original_path",
+            "relocated_path",
+            "sha256",
+        }
+        or entry.get("frozen_input") != name
+        or entry.get("original_path") != record["path"]
+        or entry.get("sha256") != record["sha256"]
+        or entry.get("allowed_use") != "exact historical PR-273 replay only"
+    ):
+        raise RuntimeError("PR-273 type-report relocation binding drifted")
+    relative = Path(str(entry.get("relocated_path")))
+    if relative.is_absolute() or ".." in relative.parts:
+        raise RuntimeError("relocated frozen source must stay repository-relative")
+    path = ROOT / relative
+    if not path.is_file() or path.is_symlink():
+        raise RuntimeError("relocated frozen source must be a regular file")
+    try:
+        path.resolve(strict=True).relative_to(ROOT.resolve())
+    except (OSError, ValueError) as exc:
+        raise RuntimeError(
+            "relocated frozen source must stay inside the repository"
+        ) from exc
+    return path
+
+
 def _verify_frozen_inputs(spec: MappingLike) -> None:
     for name, record in spec["frozen_inputs"].items():
-        path = ROOT / record["path"]
+        path = _frozen_input_path(name, record)
         actual = _sha256(path)
         if actual != record["sha256"]:
             raise RuntimeError(

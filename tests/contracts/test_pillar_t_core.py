@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import json
 import math
 import subprocess
 import sys
@@ -34,6 +35,7 @@ from common.pillar_t_core_proofs import (
     factorized_budget_directional_derivative,
     linear_image_gauge,
     load_pillar_t_core_registry,
+    resolve_pillar_t_frozen_source,
     polar_box_support,
     product_ball_gauge,
     weighted_box_gauge,
@@ -113,7 +115,9 @@ def test_generated_registry_is_current() -> None:
 
 def test_frozen_inputs_and_pr268_registry_remain_exact() -> None:
     for relative, expected in SOURCE_HASHES.items():
-        assert _sha256(ROOT / relative) == expected
+        assert _sha256(
+            resolve_pillar_t_frozen_source(ROOT, relative, expected)
+        ) == expected
     v3 = yaml.safe_load(V3_PATH.read_text(encoding="utf-8"))
     assert v3["authority"] == "PR-268"
     assert v3["proof_adjudication_status"] == "NOT_ADJUDICATED"
@@ -122,6 +126,40 @@ def test_frozen_inputs_and_pr268_registry_remain_exact() -> None:
         for group in v3["source_groups"].values()
         for row in group["entries"]
     )
+
+
+def test_pr281_joint_state_relocation_is_single_use_and_exact() -> None:
+    path = (
+        ROOT
+        / "docs/research_program/vector_tensor/integration/"
+        "PR281_PR269_V1_RELOCATION.json"
+    )
+    relocation = json.loads(path.read_text(encoding="utf-8"))
+    assert set(relocation) == {
+        "entries",
+        "relocation_id",
+        "schema",
+        "source_pr",
+        "successor_pr",
+    }
+    assert relocation["relocation_id"] == (
+        "PR281-PR269-JOINT-ANISOTROPY-STATE-V1"
+    )
+    assert relocation["source_pr"] == "PR-269"
+    assert relocation["successor_pr"] == "PR-281"
+    assert len(relocation["entries"]) == 1
+    entry = relocation["entries"][0]
+    assert set(entry) == {
+        "allowed_use",
+        "caveat",
+        "frozen_input",
+        "original_path",
+        "relocated_path",
+        "sha256",
+    }
+    assert entry["allowed_use"] == "exact historical PR-269 replay only"
+    assert entry["frozen_input"] == entry["original_path"]
+    assert _sha256(ROOT / entry["relocated_path"]) == entry["sha256"]
 
 
 def test_exact_analytic_core_selection_and_inventory(registry) -> None:

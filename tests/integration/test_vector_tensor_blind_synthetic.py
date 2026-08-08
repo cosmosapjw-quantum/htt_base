@@ -56,6 +56,11 @@ PACK = (
     "PR273_DIAGNOSTIC_PACK.json"
 )
 BUILDER = ROOT / "scripts/codex_harness/build_pr273_blind_synthetic.py"
+V1_RELOCATION = (
+    ROOT
+    / "docs/research_program/vector_tensor/integration/"
+    "PR281_PR273_V1_RELOCATION.json"
+)
 
 
 def _load(path: Path):
@@ -97,8 +102,43 @@ def test_pr273_spec_card_and_policy_bind_the_blind_integration_scope() -> None:
 
 def test_frozen_challenge_truth_and_upstream_hashes_match_bytes() -> None:
     spec = yaml.safe_load(SPEC.read_text(encoding="utf-8"))
-    for record in spec["frozen_inputs"].values():
-        path = ROOT / record["path"]
+    relocation = _load(V1_RELOCATION)
+    assert set(relocation) == {
+        "entries",
+        "relocation_id",
+        "schema",
+        "source_pr",
+        "successor_pr",
+    }
+    assert relocation["relocation_id"] == (
+        "PR281-PR273-ANISOTROPY-TYPE-REPORT-V1"
+    )
+    assert relocation["source_pr"] == "PR-273"
+    assert relocation["successor_pr"] == "PR-281"
+    entries = {
+        row["frozen_input"]: row for row in relocation["entries"]
+    }
+    for name, record in spec["frozen_inputs"].items():
+        relocated = entries.get(name)
+        path = ROOT / (
+            record["path"]
+            if relocated is None
+            else relocated["relocated_path"]
+        )
+        if relocated is not None:
+            assert set(relocated) == {
+                "allowed_use",
+                "caveat",
+                "frozen_input",
+                "original_path",
+                "relocated_path",
+                "sha256",
+            }
+            assert relocated["original_path"] == record["path"]
+            assert relocated["sha256"] == record["sha256"]
+            assert relocated["allowed_use"] == (
+                "exact historical PR-273 replay only"
+            )
         assert hashlib.sha256(path.read_bytes()).hexdigest() == record["sha256"]
     assert spec["frozen_inputs"]["pillar_t_cas"]["required_verdict"] == (
         "CAS_4AXIS_PASS"
