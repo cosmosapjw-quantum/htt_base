@@ -136,6 +136,179 @@ def test_primordial_b_k_sq_fn_callable_override() -> None:
     )
 
 
+def test_los_unit_normalization_uses_resolved_primordial_amplitude(
+    monkeypatch,
+) -> None:
+    """Unit transfer response must not be divided by the shear-seed floor.
+
+    The slow Tier-B solve and LoS quadrature are replaced below; the real
+    ``_los_and_wrap`` normalization boundary remains under test.  The
+    callable is a sentinel: LoS must consume the explicit value already
+    resolved by its caller, never re-evaluate config or use a trace amplitude.
+    """
+    from bass.spectrum import flrw_pipeline as fp
+
+    monkeypatch.setattr(
+        fp,
+        "extract_flrw_sources_from_tier_b",
+        lambda *_args, **_kwargs: object(),
+    )
+    monkeypatch.setattr(
+        fp,
+        "build_los_grid",
+        lambda **_kwargs: np.array([0.0, 1.0], dtype=np.float64),
+    )
+    monkeypatch.setattr(
+        fp,
+        "build_scalar_sources_pair",
+        lambda *_args, **_kwargs: (object(), object()),
+    )
+    monkeypatch.setattr(
+        fp,
+        "project_scalar_transfer_pair",
+        lambda *_args, **_kwargs: (
+            np.array([2.0, 4.0, 6.0], dtype=np.float64),
+            np.array([8.0, 10.0, 12.0], dtype=np.float64),
+        ),
+    )
+
+    integration_result = SimpleNamespace(
+        eta=np.array([0.0, 1.0], dtype=np.float64),
+    )
+    species = SimpleNamespace(bg_table=SimpleNamespace(eta_today=1.0))
+    cfg = FLRWPipelineConfig(
+        L_max_tower=2,
+        ell_max_transfer=2,
+        primordial_b_k_sq=7.0,
+        primordial_b_k_sq_fn=lambda _k: (_ for _ in ()).throw(
+            AssertionError("LoS must consume the parent-resolved amplitude")
+        ),
+    )
+
+    transfer = fp._los_and_wrap(
+        integration_result,
+        species,
+        1.0e-2,
+        cfg,
+        primordial_amplitude_for_norm=2.0,
+        visibility_callables=(lambda eta: eta, lambda eta: eta),
+    )
+
+    np.testing.assert_array_equal(transfer.delta_T_m0, np.array([1.0, 2.0, 3.0]))
+    np.testing.assert_array_equal(transfer.delta_E_m0, np.array([4.0, 5.0, 6.0]))
+
+
+def test_single_k_reuses_integrator_primordial_amplitude_for_los(monkeypatch) -> None:
+    """The per-k callable is resolved once and shared by solve and LoS."""
+    from bass.spectrum import flrw_pipeline as fp
+
+    calls: list[float] = []
+
+    def resolve_once(k_mpc: float) -> float:
+        calls.append(float(k_mpc))
+        return 3.0
+
+    captured: dict[str, float] = {}
+
+    monkeypatch.setattr(fp, "_resolve_z_injection_for_k", lambda *_args: 1000.0)
+    monkeypatch.setattr(
+        fp,
+        "build_cosmological_integrator_config",
+        lambda *_args, **kwargs: SimpleNamespace(
+            primordial_b_k_sq=float(kwargs["primordial_b_k_sq"])
+        ),
+    )
+    monkeypatch.setattr(
+        fp,
+        "execute_tier_b_solver",
+        lambda **_kwargs: SimpleNamespace(integration_result=object()),
+    )
+
+    sentinel = object()
+
+    def fake_los(*_args, primordial_amplitude_for_norm, **_kwargs):
+        captured["amplitude"] = float(primordial_amplitude_for_norm)
+        return sentinel
+
+    monkeypatch.setattr(fp, "_los_and_wrap", fake_los)
+
+    result = fp.compute_transfer_function_at_k(
+        object(),
+        1.0e-3,
+        config=FLRWPipelineConfig(primordial_b_k_sq_fn=resolve_once),
+    )
+
+    assert result is sentinel
+    assert calls == [1.0e-3]
+    assert captured["amplitude"] == 3.0
+
+
+def test_parallel_grid_parent_resolves_callable_before_per_k_dispatch(
+    monkeypatch,
+) -> None:
+    """Fork workers receive concrete amplitudes, not a stateful callable."""
+    from bass.spectrum import flrw_pipeline as fp
+
+    calls: list[float] = []
+
+    def stateful_amplitude(k_mpc: float) -> float:
+        calls.append(float(k_mpc))
+        return float(len(calls))
+
+    def fake_compute(_species, k_mpc, *, config, bianchi_type):
+        del _species, bianchi_type
+        return (
+            float(config.primordial_b_k_sq_fn(float(k_mpc)))
+            if config.primordial_b_k_sq_fn is not None
+            else float(config.primordial_b_k_sq)
+        )
+
+    monkeypatch.setattr(fp, "compute_transfer_function_at_k", fake_compute)
+    k_grid = np.array([1.0e-3, 2.0e-3], dtype=np.float64)
+
+    results = fp.compute_transfer_function_grid(
+        object(),
+        k_grid,
+        config=FLRWPipelineConfig(primordial_b_k_sq_fn=stateful_amplitude),
+        n_workers=2,
+        chunked=False,
+    )
+
+    assert calls == k_grid.tolist()
+    assert results == [1.0, 2.0]
+
+
+def test_parallel_chunk_grid_parent_resolves_callable_before_dispatch(
+    monkeypatch,
+) -> None:
+    """Chunk partitioning cannot restart callable state in each worker."""
+    from bass.spectrum import flrw_pipeline as fp
+
+    calls: list[float] = []
+
+    def stateful_amplitude(k_mpc: float) -> float:
+        calls.append(float(k_mpc))
+        return float(len(calls))
+
+    def fake_shared_chunk(_species, run_specs, *, cfg, bianchi_type):
+        del _species, cfg, bianchi_type
+        return [float(amplitude) for _k, amplitude in run_specs]
+
+    monkeypatch.setattr(fp, "_run_chunk_shared_bg_for_specs", fake_shared_chunk)
+    k_grid = np.array([1.0e-3, 2.0e-3, 3.0e-3, 4.0e-3], dtype=np.float64)
+
+    results = fp.compute_transfer_function_grid(
+        object(),
+        k_grid,
+        config=FLRWPipelineConfig(primordial_b_k_sq_fn=stateful_amplitude),
+        n_workers=2,
+        chunked=True,
+    )
+
+    assert calls == k_grid.tolist()
+    assert results == [1.0, 2.0, 3.0, 4.0]
+
+
 def test_linear_probe_rejects_non_positive_probe_b_k_sq(species) -> None:
     """Round-8 linear-probe API validates its probe amplitude."""
     from bass.spectrum.flrw_pipeline import compute_linear_probe_transfer_function
@@ -277,7 +450,11 @@ def test_bias_subtraction_uses_shared_chunk_when_workers_are_limiting(monkeypatc
 
     monkeypatch.setattr(fp, "_run_chunk_shared_bg_for_specs", fake_shared_chunk)
 
-    cfg = FLRWPipelineConfig(bias_subtraction=True, primordial_b_k_sq=1.25)
+    cfg = FLRWPipelineConfig(
+        bias_subtraction=True,
+        primordial_b_k_sq=1.25,
+        unit_amplitude_normalization=False,
+    )
     k_grid = np.array([1.0e-4, 2.0e-4], dtype=np.float64)
     results = fp._compute_transfer_function_grid_bias_subtracted(
         object(),
@@ -297,6 +474,84 @@ def test_bias_subtraction_uses_shared_chunk_when_workers_are_limiting(monkeypatc
     for result in results:
         np.testing.assert_allclose(result.delta_T_m0, np.array([1.25]))
         np.testing.assert_allclose(result.delta_E_m0, np.array([2.5]))
+
+
+def test_bias_subtraction_normalizes_after_differencing(monkeypatch) -> None:
+    """A unit response divides the raw target-minus-bias by its amplitude."""
+    from bass.spectrum import flrw_pipeline as fp
+
+    def transfer(value: float) -> BianchiTransferFunctions:
+        data = np.array([value], dtype=np.float64)
+        zeros = np.zeros(1, dtype=np.float64)
+        return BianchiTransferFunctions(
+            delta_T_m0=data,
+            delta_T_m_plus2=zeros.copy(),
+            delta_T_m_minus2=zeros.copy(),
+            delta_E_m0=2.0 * data,
+            delta_E_m_plus2=zeros.copy(),
+            delta_E_m_minus2=zeros.copy(),
+            delta_B_all_zero=zeros.copy(),
+        )
+
+    monkeypatch.setattr(
+        fp,
+        "_worker_task_bias_pair_chunk",
+        lambda _items: [(transfer(2.0), transfer(6.0))],
+    )
+
+    results = fp._compute_transfer_function_grid_bias_subtracted(
+        object(),
+        np.array([1.0e-3], dtype=np.float64),
+        cfg=FLRWPipelineConfig(
+            bias_subtraction=True,
+            primordial_b_k_sq=2.0,
+            unit_amplitude_normalization=True,
+        ),
+        bianchi_type="I",
+        effective=1,
+    )
+
+    np.testing.assert_array_equal(results[0].delta_T_m0, np.array([2.0]))
+    np.testing.assert_array_equal(results[0].delta_E_m0, np.array([4.0]))
+
+
+def test_bias_worker_uses_concrete_parent_resolved_amplitude(monkeypatch) -> None:
+    """A bias worker must not re-evaluate the parent's amplitude callable."""
+    from bass.spectrum import flrw_pipeline as fp
+
+    def fake_compute(_species, k_mpc, *, config, bianchi_type):
+        del _species, bianchi_type
+        amplitude = (
+            float(config.primordial_b_k_sq_fn(float(k_mpc)))
+            if config.primordial_b_k_sq_fn is not None
+            else float(config.primordial_b_k_sq)
+        )
+        data = np.array([amplitude], dtype=np.float64)
+        zeros = np.zeros(1, dtype=np.float64)
+        return BianchiTransferFunctions(
+            delta_T_m0=data,
+            delta_T_m_plus2=zeros.copy(),
+            delta_T_m_minus2=zeros.copy(),
+            delta_E_m0=data.copy(),
+            delta_E_m_plus2=zeros.copy(),
+            delta_E_m_minus2=zeros.copy(),
+            delta_B_all_zero=zeros.copy(),
+        )
+
+    monkeypatch.setattr(fp, "_WORKER_SPECIES", object())
+    monkeypatch.setattr(
+        fp,
+        "_WORKER_CONFIG",
+        FLRWPipelineConfig(
+            primordial_b_k_sq=7.0,
+            primordial_b_k_sq_fn=lambda _k: 99.0,
+        ),
+    )
+    monkeypatch.setattr(fp, "compute_transfer_function_at_k", fake_compute)
+
+    result = fp._worker_task_bias_pair((1.0e-3, 0.0))
+
+    np.testing.assert_array_equal(result.delta_T_m0, np.array([0.0]))
 
 
 def test_d_ell_linear_probe_rejects_invalid_inputs(species) -> None:

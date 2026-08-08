@@ -192,6 +192,12 @@ class FLRWPipelineConfig:
     """
     random_seed: int = 42
     unit_amplitude_normalization: bool = True
+    """When True, divide the LoS response by the resolved linear
+    ``primordial_b_k_sq`` amplitude used for that k.  This yields a
+    per-unit-curvature response for the C_l assembly, which supplies
+    ``P_R(k)`` exactly once.  The independent Bianchi shear-projection
+    amplitude is not a primordial normalization and is never used here.
+    Set False to retain the raw solver response."""
     max_step_factor: int = 1000
     """V5 Round-17 P3.5 perf knob (2026-04-27): forwarded to
     ``IntegratorConfig.max_step_factor``. Default 1000 preserves the
@@ -323,13 +329,6 @@ class FLRWPipelineConfig:
     pipeline returns ``Δ_pure = Δ_target − Δ_bias``. Doubles per-k
     cost but isolates the pure seed response for transfer-function
     extraction. Defaults False (legacy single-run path)."""
-    """When True (default), divide Δ_ℓ by the solver's seed amplitude so
-    that the returned transfer function is the physical "unit
-    primordial amplitude" response (C_ℓ = 4π ∫ P(k) |Δ|² dlnk then
-    pairs Δ directly with the primordial P(k) in cl_assembly without
-    double-counting). Set False if callers want the raw solver
-    response scaled by the seed amplitude (e.g. for debugging
-    linearity)."""
 
     def __post_init__(self) -> None:
         if self.L_max_tower < 2:
@@ -661,15 +660,20 @@ def _los_and_wrap(
     species: "SpeciesBackgroundRegistry",
     k_mpc: float,
     cfg: FLRWPipelineConfig,
-    seed_amp_for_norm: float | None,
+    *,
+    primordial_amplitude_for_norm: float,
     visibility_callables: tuple[
         Callable[[np.ndarray], np.ndarray],
         Callable[[np.ndarray], np.ndarray],
     ] | None = None,
 ) -> BianchiTransferFunctions:
-    """Run Round-5 extractor + LoS projectors + optional seed-amp
+    """Run Round-5 extractor + LoS projectors + optional primordial
     normalization for a single k. Shared helper between the high-level
     ``compute_transfer_function_at_k`` and the chunked low-level path.
+
+    ``primordial_amplitude_for_norm`` is resolved by the caller from the
+    same per-k configuration used to build the Tier-B integrator.  It is
+    deliberately distinct from the constraint-projection trace amplitude.
     """
 
     sources = extract_flrw_sources_from_tier_b(
@@ -720,14 +724,16 @@ def _los_and_wrap(
         float(k_mpc), source_T, source_E, eta_for_los, bessel_config
     )
 
-    if cfg.unit_amplitude_normalization and seed_amp_for_norm is not None:
-        if not (seed_amp_for_norm > 0.0):
+    if cfg.unit_amplitude_normalization:
+        primordial_amplitude = float(primordial_amplitude_for_norm)
+        if not (np.isfinite(primordial_amplitude) and primordial_amplitude > 0.0):
             raise ValueError(
-                f"seed_amp must be positive for unit-amplitude normalization; "
-                f"got {seed_amp_for_norm!r}"
+                "primordial_b_k_sq must be finite and positive for "
+                "unit-amplitude normalization; "
+                f"got {primordial_amplitude!r}"
             )
-        delta_T = delta_T / seed_amp_for_norm
-        delta_E = delta_E / seed_amp_for_norm
+        delta_T = delta_T / primordial_amplitude
+        delta_E = delta_E / primordial_amplitude
 
     zero_template = np.zeros_like(delta_T)
     return BianchiTransferFunctions(
@@ -1631,6 +1637,7 @@ def compute_transfer_function_at_k(
         raise ValueError(f"k_mpc must be positive; got {k_mpc}")
     cfg = config or FLRWPipelineConfig()
     z_injection = _resolve_z_injection_for_k(species, cfg, float(k_mpc))
+    resolved_primordial_b_k_sq = _resolve_primordial_b_k_sq(cfg, float(k_mpc))
 
     integrator_config = build_cosmological_integrator_config(
         species,
@@ -1646,7 +1653,7 @@ def compute_transfer_function_at_k(
         # Per-k resolution (Round-7): callable override takes precedence
         # over the scalar; evaluated HERE in the parent process, so fork
         # workers only see a resolved float.
-        primordial_b_k_sq=_resolve_primordial_b_k_sq(cfg, k_mpc),
+        primordial_b_k_sq=resolved_primordial_b_k_sq,
         # Round-17 P3.5 perf knob: forward max_step_factor to the integrator.
         max_step_factor=int(getattr(cfg, "max_step_factor", 1000)),
         imex_explicit_update_limit=float(
@@ -1676,17 +1683,12 @@ def compute_transfer_function_at_k(
         k_grid_mpc=k_grid_pair,
     )
 
-    seed_amp = (
-        float(run.trace.seed_projection.projected_seed.amplitude)
-        if cfg.unit_amplitude_normalization
-        else None
-    )
     return _los_and_wrap(
         run.integration_result,
         species,
         float(k_mpc),
         cfg,
-        seed_amp_for_norm=seed_amp,
+        primordial_amplitude_for_norm=resolved_primordial_b_k_sq,
     )
 
 
@@ -1902,17 +1904,14 @@ def _run_chunk_shared_bg_for_specs(
             prepared=prepared,
             result=result,
         )
-        seed_amp = (
-            float(run.trace.seed_projection.projected_seed.amplitude)
-            if cfg.unit_amplitude_normalization
-            else None
-        )
         return _los_and_wrap(
             run.integration_result,
             species,
             float(k_mpc),
             cfg,
-            seed_amp_for_norm=seed_amp,
+            primordial_amplitude_for_norm=float(
+                per_k_request.integrator_config.primordial_b_k_sq
+            ),
             visibility_callables=shared_visibility_callables,
         )
 
@@ -2097,13 +2096,24 @@ _WORKER_CONFIG: FLRWPipelineConfig | None = None
 _WORKER_BIANCHI_TYPE: str = "I"
 
 
-def _worker_task(k_mpc: float) -> BianchiTransferFunctions:  # pragma: no cover
-    """Worker-side single-k entry point (per-k full Tier-B setup)."""
+def _worker_task(
+    run_spec: tuple[float, float],
+) -> BianchiTransferFunctions:  # pragma: no cover
+    """Worker-side single-k entry point with a parent-resolved amplitude."""
     assert _WORKER_SPECIES is not None, "worker globals not initialized"
+    assert _WORKER_CONFIG is not None, "worker config not initialized"
+    from dataclasses import replace
+
+    k_mpc, primordial_amplitude = run_spec
+    cfg_override = replace(
+        _WORKER_CONFIG,
+        primordial_b_k_sq=float(primordial_amplitude),
+        primordial_b_k_sq_fn=None,
+    )
     return compute_transfer_function_at_k(
         _WORKER_SPECIES,
         float(k_mpc),
-        config=_WORKER_CONFIG,
+        config=cfg_override,
         bianchi_type=_WORKER_BIANCHI_TYPE,
     )
 
@@ -2119,7 +2129,15 @@ def _worker_task_bias_pair(
     k_mpc, b_k_sq = k_and_bk_sq
     from dataclasses import replace
 
-    cfg_override = replace(_WORKER_CONFIG, primordial_b_k_sq=float(b_k_sq))
+    # Each task carries the parent-resolved concrete amplitude.  Keep both
+    # bias and target responses raw; their caller subtracts first and applies
+    # the target-amplitude normalization exactly once.
+    cfg_override = replace(
+        _WORKER_CONFIG,
+        primordial_b_k_sq=float(b_k_sq),
+        primordial_b_k_sq_fn=None,
+        unit_amplitude_normalization=False,
+    )
     return compute_transfer_function_at_k(
         _WORKER_SPECIES,
         float(k_mpc),
@@ -2256,19 +2274,23 @@ def _scale_transfer_function(
     )
 
 
-def _worker_task_chunk(k_values: Sequence[float]) -> list[BianchiTransferFunctions]:  # pragma: no cover
+def _worker_task_chunk(
+    run_specs: Sequence[tuple[float, float]],
+) -> list[BianchiTransferFunctions]:  # pragma: no cover
     """Worker-side chunk entry point — amortizes the ~0.8 s k-independent
     Tier-B setup (background_monitor, visibility_source, backend,
     canonical_decision, runtime_decision, execution_plan) across
-    ``len(k_values)`` k-runs by calling the low-level
-    ``_run_chunk_shared_bg`` path.
+    ``len(run_specs)`` k-runs. Every ``(k, amplitude)`` pair is resolved
+    by the parent before the process pool starts.
     """
     assert _WORKER_SPECIES is not None, "worker globals not initialized"
     assert _WORKER_CONFIG is not None, "worker config not initialized"
-    return _run_chunk_shared_bg(
+    from dataclasses import replace
+
+    return _run_chunk_shared_bg_for_specs(
         _WORKER_SPECIES,
-        list(k_values),
-        cfg=_WORKER_CONFIG,
+        list(run_specs),
+        cfg=replace(_WORKER_CONFIG, primordial_b_k_sq_fn=None),
         bianchi_type=_WORKER_BIANCHI_TYPE,
     )
 
@@ -2286,14 +2308,18 @@ def _worker_task_bias_pair_chunk(
     """
     assert _WORKER_SPECIES is not None, "worker globals not initialized"
     assert _WORKER_CONFIG is not None, "worker config not initialized"
+    from dataclasses import replace
+
     specs: list[tuple[float, float]] = []
     for k_mpc, target_b_k_sq in k_and_target_values:
         specs.append((float(k_mpc), 0.0))
         specs.append((float(k_mpc), float(target_b_k_sq)))
+    # As in the one-run worker, normalize only after each target-bias pair
+    # has been differenced by the parent.
     raw = _run_chunk_shared_bg_for_specs(
         _WORKER_SPECIES,
         specs,
-        cfg=_WORKER_CONFIG,
+        cfg=replace(_WORKER_CONFIG, unit_amplitude_normalization=False),
         bianchi_type=_WORKER_BIANCHI_TYPE,
     )
     return [(raw[2 * i], raw[2 * i + 1]) for i in range(len(k_and_target_values))]
@@ -2374,6 +2400,17 @@ def compute_transfer_function_grid(
             effective=effective,
         )
 
+    # Resolve every configured amplitude in the parent before any fork.
+    # This makes callable evaluation order independent of worker count and
+    # chunk partitioning; children receive only concrete floats.
+    run_specs = [
+        (float(k_mpc), _resolve_primordial_b_k_sq(cfg, float(k_mpc)))
+        for k_mpc in k_array
+    ]
+    from dataclasses import replace
+
+    resolved_cfg = replace(cfg, primordial_b_k_sq_fn=None)
+
     if effective == 1:
         # Single-worker path — run sequentially. Use shared-bg chunk when
         # the caller asked for it so the savings still materialize.
@@ -2382,19 +2419,25 @@ def compute_transfer_function_grid(
             and cfg.superhorizon_x_max_at_start is None
             and k_array.size >= 2
         ):
-            return _run_chunk_shared_bg(
-                species, k_array.tolist(), cfg=cfg, bianchi_type=bianchi_type
+            return _run_chunk_shared_bg_for_specs(
+                species, run_specs, cfg=resolved_cfg, bianchi_type=bianchi_type
             )
         return [
             compute_transfer_function_at_k(
-                species, float(k), config=cfg, bianchi_type=bianchi_type
+                species,
+                float(k_mpc),
+                config=replace(
+                    resolved_cfg,
+                    primordial_b_k_sq=float(primordial_amplitude),
+                ),
+                bianchi_type=bianchi_type,
             )
-            for k in k_array
+            for k_mpc, primordial_amplitude in run_specs
         ]
 
     # Fork-inherited worker globals (parent installs; children read).
     _WORKER_SPECIES = species
-    _WORKER_CONFIG = cfg
+    _WORKER_CONFIG = resolved_cfg
     _WORKER_BIANCHI_TYPE = bianchi_type
 
     import multiprocessing as _mp
@@ -2416,9 +2459,9 @@ def compute_transfer_function_grid(
             # historical one-chunk-per-worker behavior; k_chunk_size lets
             # large grids use smaller chunks for better load balancing.
             chunks = [
-                [float(k) for k in chunk]
+                [(float(k), float(amplitude)) for k, amplitude in chunk]
                 for chunk in _split_work_chunks(
-                    k_array,
+                    run_specs,
                     worker_count=effective,
                     chunk_size=cfg.k_chunk_size,
                 )
@@ -2439,7 +2482,7 @@ def compute_transfer_function_grid(
                 mp_context=ctx,
                 initializer=_worker_init,
             ) as exe:
-                results = list(exe.map(_worker_task, k_array.tolist()))
+                results = list(exe.map(_worker_task, run_specs))
     finally:
         # Always clear worker globals so the parent's memory doesn't
         # hold lingering references after the pool exits.
@@ -2551,8 +2594,22 @@ def _compute_transfer_function_grid_bias_subtracted(
         _WORKER_BIANCHI_TYPE = "I"
 
     out: list[BianchiTransferFunctions] = []
-    for bias_tf, target_tf in pair_results:
-        out.append(_subtract_transfer_functions(target_tf, bias_tf))
+    for index, (bias_tf, target_tf) in enumerate(pair_results):
+        difference = _subtract_transfer_functions(target_tf, bias_tf)
+        if cfg.unit_amplitude_normalization:
+            primordial_amplitude = float(target_pairs[index][1])
+            if not (
+                np.isfinite(primordial_amplitude) and primordial_amplitude > 0.0
+            ):
+                raise ValueError(
+                    "primordial_b_k_sq must be finite and positive for "
+                    "unit-amplitude normalization; "
+                    f"got {primordial_amplitude!r}"
+                )
+            difference = _scale_transfer_function(
+                difference, 1.0 / primordial_amplitude
+            )
+        out.append(difference)
     return out
 
 
@@ -2794,14 +2851,10 @@ def compute_flrw_d_ell_linear_probe(
         )
 
     base_cfg = pipeline_config or FLRWPipelineConfig()
-    # ``unit_amplitude_normalization=True`` divides each run by
-    # ``seed_amp = max(|Σ_±|, 1e-6)`` which for Bianchi I (Σ_±=0) is the
-    # uniform 1e-6 floor — NOT the primordial amplitude. That floor
-    # multiplies α by ~1e+6 (and |α|² by 1e+12) without carrying any
-    # physical content, so the linear-probe path forces it OFF and lets
-    # the explicit ``probe_b_k_sq`` division handle normalization. With
-    # ``primordial_b_k_sq_fn`` cleared the probe runs at a uniform
-    # amplitude across k.
+    # Keep the two probe runs raw, subtract the seed-independent response,
+    # then apply the explicit probe-amplitude normalization below.  With
+    # ``primordial_b_k_sq_fn`` cleared the probe runs use one uniform
+    # parent-resolved amplitude across k.
     probe_cfg = _dc_replace(
         base_cfg,
         primordial_b_k_sq=float(probe_b_k_sq),
