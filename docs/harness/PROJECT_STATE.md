@@ -1,6 +1,6 @@
 # Current Project State
 
-Date: 2026-08-04
+Date: 2026-08-08
 
 This is a current-state handoff, not a historical receipt. Historical candidate
 and review details remain in Git history, `docs/PR_DELTAS/`, and frozen harness
@@ -9,30 +9,31 @@ runs.
 ## Baseline
 
 - Canonical target: `research/pr04-multicomponent`.
-- Verified merge HEAD: `1b0e4200ab4dd487909a8519d7808e81ad4b9169`.
-- That remote merge contains the reviewed PR-278 delivery; PR-279 started only
-  after its ancestry and GitHub merge state were verified.
+- Verified merge HEAD: `eaaff9db2636099e8286fb81acc1e652b018fbc5`.
+- That remote merge contains the reviewed PR-280 terminal inventory and the
+  PR-151 acquisition-path repair; PR-295 started only after its ancestry and
+  GitHub merge state were verified.
 - PR-190 is `COMPLETED_FAILED_WITH_RECEIPT`. Its registered full typed
   attainability statement is refuted; `success_dependency_satisfied=false`.
 - Work proceeds in the isolated branch
-  `changeset/pr279-reverse-trace-invalidation`. The main user checkout and
+  `changeset/pr295-external-boundary-repair`. The main user checkout and
   all user-owned untracked inputs remain untouched.
 
 ## Canonical orchestration state
 
-- DAG: 241 cards; validation passes.
-- Completed: 174/241 = 72.20%.
-- Dependency-weighted completion: 75.55%.
+- DAG: 244 cards; validation passes.
+- Completed: 175/244 = 71.72%.
+- Dependency-weighted completion: 74.09%.
 - Critical-path completion: 98.70%.
 - In progress: none.
-- Pending: 36.
-- Blocked terminal receipts: PR-190 and PR-172.
+- Pending: 37.
+- Blocked terminal receipts: PR-190, PR-172, and PR-280.
 - Dormant external/native: 28.
 - Background acquisition: PR-151 only.
-- PR-280 is the sole dependency-ready next node.
+- PR-296 and PR-297 are dependency-ready; execute PR-296 first.
 
-The lower count percentage reflects atomic registration of PR-276 through
-PR-294; it is bookkeeping, not scientific regression or readiness evidence.
+The lower count percentage reflects atomic registration through PR-297; it is
+bookkeeping, not scientific regression or readiness evidence.
 
 ## Scientific authority
 
@@ -165,10 +166,36 @@ Exact content `404c4907...` passed a clean-room immutable review with all 23
 policy cells and 23/23 bounded mutations. An earlier reviewer independence
 contamination is preserved as `error/not_examined` and is not acceptance
 evidence. Canonical PR-279 is `COMPLETED_SUCCESS`; scientific status remains
-`OPEN_UNCHANGED`, public use is false, and PR-280 is the sole unblocked next
-node.
+`OPEN_UNCHANGED`, and public use is false. At that historical checkpoint,
+PR-280 was the sole unblocked next node; PR-280 has since closed with a failed
+terminal receipt and three exact successors.
 
-The closeout bytes still require a fresh exact final seal/review,
-latest-target integration, fresh inventory, and the single attended non-draft
-review-PR transaction. Approval, merge, ruleset change, data execution,
-capability promotion, and scientific release remain blocked.
+PR-279's closeout review and merge requirements were subsequently satisfied.
+That delivery granted no ruleset change, data execution, capability promotion,
+or scientific release.
+
+## PR-280 terminal inventory and PR-295 repair (2026-08-08)
+
+PR-280 is terminal `COMPLETED_FAILED_WITH_RECEIPT`, with three exact
+active-core successors. PR-295 is now the first successful successor: content
+commit `824a0c40...` physically relocates the CAMB 1.6.6 oracle outside the
+installed BASS project, repairs direct-runner and exception lifecycle
+classification, and makes wheel staging resilient to a deleted-module cache.
+The frozen numerical seal remains byte-identical at SHA-256 `43d4d88b...`.
+
+Canonical status records 175/244 completed (71.72%) and dependency-weighted
+completion 74.09%. PR-296 and PR-297 are the only dependency-ready next cards.
+PR-280 remains a failed terminal receipt and its aggregate success dependency
+remains false until both remaining successors complete; PR-281--294 stay held.
+
+The PR-295 artifact is a governance/external-transfer diagnostic with
+`TransferSource.external_transfer`. Scientific status is `OPEN_UNCHANGED`,
+observed-data execution and public use are false, and no native transfer,
+posterior/evidence, geometry, morphology-family, or family-identification
+claim is granted.
+
+PR-151 remains acquisition-only on the external volume. At the checkpoint,
+540/1000 EZmocks were complete and batch 55 was actively advancing; Abacus was
+0/25. Partial files remain forbidden for scientific use. The observed recent
+cadence implies roughly 2.5--3 days for the remaining EZmock batches; no
+restart-from-zero condition is present.

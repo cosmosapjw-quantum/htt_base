@@ -177,3 +177,23 @@ mutation oracle. A prior reviewer independence breach is preserved as
 use, native status, posterior/evidence result, or family identification.
 PR-280 is the sole dependency-ready next node after owner review and merge of
 the exact PR-279 delivery.
+
+## D-PR295-EXTERNAL-ORACLE-BOUNDARY
+
+The real-CAMB visibility cross-check is a repository-only BASS-owned external
+oracle under `scripts/oracles`, never an installed production module. Its
+canonical transfer source is `external_transfer`; CAMB name/version is source
+identity metadata, not a new enum value and never native evidence.
+
+Only exact top-level CAMB absence is `BLOCKED_CAMB_UNAVAILABLE` with runner
+exit 2. Missing CAMB submodules or transitive dependencies, numerical errors,
+and failed checks are `FAIL` with runner exit 1. A historical successful seal
+is not rewritten by a source relocation; before/after source identities and
+the unchanged seal identity are bound in the PR delta.
+
+Non-editable wheel builds must refresh project-local generated staging because
+Setuptools can retain deleted Python modules in `build/lib`. Cleanup is
+fail-closed to the project build tree, refuses symlinks, and does not clean the
+frontend-owned temporary staging used by editable wheels. Scanner exemptions,
+package-data exclusions for `.py` modules, and historical-manifest rewrites are
+not accepted repairs.

@@ -3051,3 +3051,29 @@ an exact final seal, independent review, latest-target integration, and fresh
 PR inventory before one attended non-draft review-PR transaction. Approval,
 merge, force-push, ruleset mutation, data execution, capability promotion, and
 scientific public release remain unauthorized.
+
+## PR-295 — external CAMB production-boundary repair (2026-08-08)
+
+| Command or evidence | Result | Notes |
+| --- | --- | --- |
+| baseline production policy | FAIL, REPRODUCED | `1 failed, 24 passed`; the sole offender was the live CAMB import in the installed BASS tree. |
+| final production policy | PASS | `26 passed`; no exemption or scanner weakening. |
+| PR-card EGS2 CAMB suite | PASS | `15 passed, 2 subtests passed`; exact CAMB absence blocks, `camb.*`/transitive/numerical failures fail. |
+| full EGS2 gates | PASS | `29 tests`; healthy CAMB 1.6.6 output remains numerically consistent. |
+| historical seal | PASS, BYTE-IDENTICAL | `--check` exits 0; SHA-256 `43d4d88b...`, git blob `55b26999...`. |
+| packaging discriminators | PASS | Six focused nodes cover correct project-root stale staging, clean/dirty wheel identity, editable staging, symlink fail-closed behavior, installed boundary, and live consumers. |
+| direct wheel | PASS | 1,023 members; deleted oracle and repository `scripts/` absent. |
+| claim language and enum | PASS | 16 claim-language tests; `external_transfer` resolves through `TransferSource`. |
+| DAG/status/mirrors | PASS | 244 valid cards; 175 completed; canonical and compatibility mirrors synchronized. |
+| first candidate review | FAIL, PRESERVED | Fingerprint `fd2ac179...`: `camb.model` laundering and wrong dirty-cache fixture. |
+| post-fix review | FAIL, PRESERVED | Fingerprint `1465a7a6...`: non-canonical `CAMB_external_oracle` transfer source. |
+| final candidate review | PASS | Fingerprint `9d12f3b9...`; strict result SHA-256 `e6943e45...`; all prior blockers resolved. |
+| first closeout review | FAIL, PRESERVED | Fingerprint `f653e75d...`; `PROJECT_STATE.md` simultaneously declared stale 241-card/PR-280-next state and current 244-card/PR-296+297 state. Strict result SHA-256 `32bbcff...`; the current-state block and progress framing were reconciled before reseal. |
+| closeout rerun without source-bound `PYTHONPATH` | FAIL, PRESERVED | The shared canonical venv resolved the separate canonical checkout first: one import-file mismatch, six stale node-name lookup failures, and one missing `common.harness_profiles_v4` collection error. This is environment/command evidence, not a candidate pass. |
+| corrected source-bound closeout rerun | PASS | Production policy plus EGS2: `41 passed, 2 subtests`; packaging discriminators: `6 passed`; claim-language plus status snapshot: `48 passed`; full EGS2: `29 passed, 2 subtests`; direct seal current. |
+| broad mixed-environment package attempts | NOT ACCEPTANCE | Bare system Python produced 18 dependency/install failures; the canonical checkout venv produced five cross-worktree import failures. Neither is relabelled green or used as candidate evidence. |
+
+Changed packages/surfaces: BASS external oracle, COMMON packaging boundary,
+EGS2 gate/runner, current audit builders, claim ledger, DAG/status, and
+generated status sidecars. No numerical artifact, observed dataset, theorem,
+HTT inference, or MIO certificate was produced.

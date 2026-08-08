@@ -1,9 +1,10 @@
 # Current PR Progress
 
-Date: 2026-08-04
+Date: 2026-08-08
 
-This is a generated-current summary companion, not a historical receipt. Exact
-historical execution/review evidence remains under `docs/PR_DELTAS/` and
+This is a chronological checkpoint summary, not a historical receipt. The
+last checkpoint section is the current orchestration state. Exact historical
+execution/review evidence remains under `docs/PR_DELTAS/` and
 `.agent-harness/runs/`.
 
 ## PR-190 merge and terminal result
@@ -104,7 +105,7 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
   commit `3fa98dc3...`; its seal and normally closed run summary authorize the
   canonical closeout without changing any scientific capability.
 
-## PR-279 completed; exact delivery review pending
+## Historical PR-279 pre-delivery checkpoint
 
 - Exact internal/GitHub identity spaces: 222 historical plus 19 prospective
   internal rows, and 366 separate GitHub publication/review rows.
@@ -123,16 +124,14 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
   foreground card, and PR-280 as the sole unblocked next node. Scientific
   status remains open and public use remains false.
 
-## Next transition
+## Historical PR-279 delivery transition
 
-PR-279 is canonically `COMPLETED_SUCCESS` after the exact content review.
-Scientific status remains `OPEN_UNCHANGED`, public use remains false, and
-PR-280 is the sole unblocked next card. The owner authorized one content
-commit, one closeout commit, and one attended review PR. The remaining
-delivery transition is an
-exact two-commit seal, independent review, latest-target integration, fresh PR
-inventory, and one non-draft review PR; no approval, merge, data execution,
-capability promotion, or scientific release follows.
+At that checkpoint PR-279 was canonically `COMPLETED_SUCCESS` after the exact
+content review, scientific status was `OPEN_UNCHANGED`, public use was false,
+and PR-280 was the sole unblocked next card. The then-authorized content,
+closeout, exact two-commit review, latest-target integration, inventory, and
+non-draft PR transition was subsequently satisfied. It granted no data
+execution, capability promotion, or scientific release.
 
 ## PR-278 historical closeout record
 
@@ -160,3 +159,29 @@ capability promotion, or scientific release follows.
   sole unblocked next node. Target merge `1b0e4200...` later satisfied that
   delivery gate; this historical transition granted no capability or
   scientific/public-use effect.
+
+## Checkpoint 175 — PR-295 completed (2026-08-08)
+
+- Completed: 175/244 (71.72%); dependency-weighted 74.09%; registered critical
+  path 98.70%. Progress increased from the prior 174-complete checkpoint.
+- Changed packages/surfaces: BASS external oracle, COMMON wheel staging,
+  EGS2 tests/runner, current audit builders, claim/DAG/status SSOT, and generated
+  status sidecars.
+- Validation: production policy 26 passed; EGS2 CAMB 15 plus two subtests;
+  full EGS2 29; packaging discriminators 6; claim-language 16; direct wheel,
+  seal, DAG, mirrors, compile, and whitespace checks pass.
+- Preserved failures: two exact candidate reviews remain FAIL receipts. The
+  final exact fingerprint `9d12f3b9...` passed strict review only after both
+  runtime/packaging defects and the transfer-source vocabulary defect were
+  repaired.
+- Claim-tier drift: none. The lane remains BASS-owned `external_transfer`,
+  `diagnostic_only`, EGS3 `SPECIFIED/C1`, science `OPEN_UNCHANGED`, no observed
+  data, no public use, and no native/family promotion.
+- Subagents: one code mapper, one harness reviewer, one transfer/physics
+  auditor, and one claim reviewer were used; all four threads and both harness
+  runs were closed after preserving strict envelopes.
+- Open blockers: PR-296 and PR-297 remain dependency-ready; PR-280 aggregate
+  success stays false and PR-281--294 remain held. PR-151 remains background
+  acquire-only at 540/1000 EZmocks plus active batch 55 and 0/25 Abacus.
+- Replan: no DAG edge change. Execute PR-296 next, then PR-297; recompute the
+  PR-280 aggregate only after both pass. Do not use partial PR-151 data.

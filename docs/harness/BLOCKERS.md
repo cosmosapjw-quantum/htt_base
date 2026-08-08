@@ -1,63 +1,57 @@
 # Current Blockers
 
-Date: 2026-08-04
+Date: 2026-08-08
 
-This file lists current blockers only. Historical failure narratives remain in
-their owning PR deltas and frozen receipts.
+This file lists current blockers only. Historical failures remain in their PR
+deltas and strict result envelopes.
+
+## PR-280 successor blockers
+
+- PR-280 is terminal `COMPLETED_FAILED_WITH_RECEIPT`; completion is not success.
+- PR-295 is `COMPLETED_SUCCESS` and satisfies only its own successor edge.
+- PR-296 must repair the exact D2 PSTF progressive-closure active-core failure.
+- PR-297 must repair the exact repo-scoped installer/config active-core failure.
+- PR-280 `success_dependency_satisfied` remains false and PR-281--294 remain
+  held until PR-296 and PR-297 both close successfully. No status annotation
+  or partial test pass may clear this aggregate dependency.
 
 ## Closed success dependencies
 
 - PR-190 is a terminal receipt-bearing refutation, not a successful theorem.
   Its `requires_success` edges into PR-191 and PR-205 remain closed.
-- Completion status alone cannot reopen those edges. A future versioned
-  `ClaimCapabilityDecision` must name the replacement statement/evidence and
-  explicit supersession before any DAG replan.
 - PR-172 remains `COMPLETED_FAILED_WITH_RECEIPT`; PR-184 is its completed
   premise-complete successor. The old failure does not justify a duplicate
   B-projector repair event.
 
 ## Data and execution blockers
 
-- PR-274 admitted zero products. There is no observed execution authority.
-- All lane approvals are absent: `H-PLANCK`, `H-CF4`, `H-HSC-KiDS`, `H-ACT`,
-  `H-DESI`, and `H-JWST` are `NOT_AUTHORIZED`.
-- PR-151 remains background acquisition only. Partial DESI inputs, `.part`
-  files, or incomplete validation ensembles cannot enter a result.
-- Name-only HSC/KiDS, cited-seed JWST rows, or incomplete Planck/CF4/ACT
-  products do not pass admission.
+- PR-274 admitted zero products. No observed execution authority exists.
+- All lane approvals remain absent: `H-PLANCK`, `H-CF4`, `H-HSC-KiDS`,
+  `H-ACT`, `H-DESI`, and `H-JWST` are `NOT_AUTHORIZED`.
+- PR-151 is background acquisition only. At this checkpoint 540/1000 EZmocks
+  were complete, batch 55 was active, and Abacus was 0/25. `.part` files and
+  incomplete ensembles cannot enter a result or finalize phase.
 - A clean checkout is not permission to redownload external data. Existing
-  external roots must first pass the PR-289 identity/admission contract.
+  external roots must first pass their registered identity/admission contract.
 
 ## External/native blockers
 
 - The authenticated native low-ell solver and native morphology atlas are not
   available. PR-159--166, PR-183, PR-229--246, and native-dependent rows stay
   dormant.
+- PR-295 preserves a CAMB external-transfer diagnostic only. It is neither a
+  native transfer nor a morphology atlas.
 - Pre-native family identification remains forbidden even if a scalar,
-  nearest-orbit, response, or cross-probe diagnostic is numerically sharp.
+  response, or cross-probe diagnostic is numerically sharp.
 
 ## Harness and publication blockers
 
-- The two historical broad-suite receipts agree on 406 failures but differ by
-  one pass. They remain historical. PR-280 must create the cache-free JUnit
-  baseline and classify every failure with `UNKNOWN_UNCLASSIFIED=0`.
-- GitHub ruleset mutation is separately blocked on `G-CI-H`.
-- PR-277 is merged at remote descendant `a780043...`; its historical failed
-  and passed review receipts remain preserved.
-- PR-278 is merged at target `1b0e4200...`; its preserved R1 failure and R2
-  acceptance remain historical evidence.
-- PR-279 content commit `404c4907...` passed the clean-room 23-cell review and
-  23/23 mutation oracle. Its closeout changes status, retrace projections, and
-  handoff bytes, so the final two-commit candidate still requires a new exact
-  seal/review, latest-target integration, and fresh PR inventory before the
-  single attended transaction.
+- The final PR-295 staged candidate passed exact review, but delivery still
+  requires the closeout commit, current-target integration/CI, and merge of one
+  review PR before starting PR-296 from the new remote target.
 - Active graph `INVALIDATES_*`, `REQUIRES_RECALIBRATION`, and
-  `REQUIRES_REEXECUTION` edges are capability blockers. They cannot be cleared
-  by caller omission or a status/gate annotation.
-- The owner authorized one content commit, one closeout commit, and one
-  attended non-draft review PR for PR-279. Direct push/PR commands remain
-  forbidden; the exact final sealed SHA may
-  be pushed only inside the single attended transaction. Approval, merge,
-  force-push, and ruleset mutation remain unauthorized.
-- Publication remains blocked until PR-208 and may consume only results granted
-  by the capability engine with generated sources and admitted data identities.
+  `REQUIRES_REEXECUTION` edges remain capability blockers and cannot be cleared
+  by omission or status prose.
+- GitHub ruleset mutation remains separately blocked on `G-CI-H`.
+- Publication remains blocked until PR-208 and may consume only capability-
+  granted results with generated sources and admitted data identities.
