@@ -331,7 +331,27 @@ def test_check_portable_from_tmp():
     assert completed.returncode == 0, completed.stdout + completed.stderr
 
 
-def test_minimal_clean_copy_replay():
+def test_build_refuses_hardlinked_output_before_payload_generation(
+    monkeypatch, tmp_path, runner
+):
+    generated = tmp_path / "generated"
+    generated.mkdir()
+    outside = tmp_path / "outside.json"
+    outside.write_text("preserve\n", encoding="utf-8")
+    destination = generated / "receipt.json"
+    destination.hardlink_to(outside)
+    monkeypatch.setattr(runner, "ROOT", tmp_path)
+    monkeypatch.setattr(runner, "OUTPUT", destination, raising=False)
+
+    def must_not_build():
+        raise AssertionError("builder ran before destination preflight")
+
+    monkeypatch.setattr(runner, "build_complete_adjudication_receipt", must_not_build)
+    assert runner.main(["build"]) == 1
+    assert outside.read_text(encoding="utf-8") == "preserve\n"
+
+
+def test_clean_git_archive_replay():
     completed = subprocess.run(
         [sys.executable, "-B", str(RUNNER), "portable"],
         cwd=ROOT, text=True, capture_output=True, check=False,

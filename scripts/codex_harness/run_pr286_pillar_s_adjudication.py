@@ -13,14 +13,17 @@ import argparse
 from collections import Counter
 from copy import deepcopy
 import hashlib
+from importlib import metadata as importlib_metadata
+from io import BytesIO
 import json
 import math
 import os
 from pathlib import Path
-import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
+import time
 from typing import Any
 
 import numpy as np
@@ -77,6 +80,7 @@ OUTPUT_PATH = (
     "docs/research_program/post_pr275/pillar_s_adjudication/"
     "PILLAR_S_COMPLETE_ADJUDICATION_V1.json"
 )
+OUTPUT = ROOT / OUTPUT_PATH
 
 SOURCE_BINDING_PATHS = (
     SPEC_PATH,
@@ -205,6 +209,98 @@ def _sha256_bytes(value: bytes) -> str:
 
 def _json_identity(value: Any) -> str:
     return _sha256_bytes(_canonical_json(value))
+
+
+def _validate_output_destination_for_write() -> None:
+    if ROOT.is_symlink() or not ROOT.is_dir():
+        raise PillarSAdjudicationError("REPOSITORY_ROOT_NOT_REGULAR")
+    try:
+        relative = OUTPUT.relative_to(ROOT)
+    except ValueError as exc:
+        raise PillarSAdjudicationError("OUTPUT_ESCAPES_REPOSITORY_ROOT") from exc
+    cursor = ROOT
+    for part in relative.parent.parts:
+        cursor /= part
+        if cursor.is_symlink() or not cursor.is_dir():
+            raise PillarSAdjudicationError(
+                f"OUTPUT_PARENT_NOT_REGULAR:{cursor}"
+            )
+    if OUTPUT.is_symlink():
+        raise PillarSAdjudicationError("OUTPUT_DESTINATION_SYMLINK")
+    if OUTPUT.exists() and (
+        not OUTPUT.is_file() or OUTPUT.stat().st_nlink != 1
+    ):
+        raise PillarSAdjudicationError("OUTPUT_DESTINATION_NOT_SINGLE_LINK_FILE")
+
+
+def _atomic_write(payload: bytes) -> None:
+    with tempfile.NamedTemporaryFile(
+        mode="wb",
+        dir=OUTPUT.parent,
+        prefix=f".{OUTPUT.name}.",
+        delete=False,
+    ) as handle:
+        temporary = Path(handle.name)
+        try:
+            handle.write(payload)
+            handle.flush()
+            os.fsync(handle.fileno())
+        except BaseException:
+            temporary.unlink(missing_ok=True)
+            raise
+    try:
+        os.replace(temporary, OUTPUT)
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise
+
+
+def _tracked_paths() -> tuple[str, ...]:
+    completed = subprocess.run(
+        ["git", "ls-files", "-z"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+    )
+    if completed.returncode != 0:
+        raise PillarSAdjudicationError("TRACKED_FILE_INVENTORY_FAILED")
+    return tuple(
+        item.decode("utf-8")
+        for item in completed.stdout.split(b"\0")
+        if item
+    )
+
+
+def _manifest(root: Path, paths: tuple[str, ...]) -> dict[str, Any]:
+    identities: dict[str, str] = {}
+    for relative in paths:
+        path = root / relative
+        if path.is_symlink() or not path.is_file():
+            raise PillarSAdjudicationError(
+                f"TRACKED_MANIFEST_MEMBER_NOT_REGULAR:{relative}"
+            )
+        identities[relative] = _sha256_bytes(path.read_bytes())
+    encoded = _canonical_json(identities)
+    return {
+        "file_count": len(identities),
+        "manifest_sha256": _sha256_bytes(encoded),
+        "path_inventory_sha256": _sha256_bytes(
+            "\0".join(identities).encode("utf-8")
+        ),
+        "content_identity_inventory_sha256": _sha256_bytes(
+            "\0".join(identities.values()).encode("ascii")
+        ),
+    }
+
+
+def _versions() -> dict[str, str]:
+    values = {"python": sys.version.split()[0]}
+    for distribution in ("numpy", "scipy", "PyYAML", "pytest"):
+        try:
+            values[distribution] = importlib_metadata.version(distribution)
+        except importlib_metadata.PackageNotFoundError:
+            values[distribution] = "UNAVAILABLE"
+    return values
 
 
 def _sha256_file(relative: str) -> str:
@@ -1524,10 +1620,13 @@ def _pytest(paths: tuple[str, ...], extra: tuple[str, ...] = ()) -> int:
 
 
 def _build() -> int:
+    try:
+        _validate_output_destination_for_write()
+    except PillarSAdjudicationError as exc:
+        sys.stderr.write(f"{exc}\n")
+        return 1
     payload = build_complete_adjudication_receipt()
-    output = ROOT / OUTPUT_PATH
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_bytes(_serialized(payload))
+    _atomic_write(_serialized(payload))
     print(
         json.dumps(
             {
@@ -1544,11 +1643,14 @@ def _build() -> int:
 
 def _check() -> int:
     expected = _serialized(build_complete_adjudication_receipt())
-    output = ROOT / OUTPUT_PATH
-    if not output.is_file() or output.is_symlink():
+    if (
+        not OUTPUT.is_file()
+        or OUTPUT.is_symlink()
+        or OUTPUT.stat().st_nlink != 1
+    ):
         sys.stderr.write("tracked PR-286 receipt missing or not regular\n")
         return 1
-    if output.read_bytes() != expected:
+    if OUTPUT.read_bytes() != expected:
         sys.stderr.write("tracked PR-286 receipt differs from exact replay\n")
         return 1
     print("ok=true")
@@ -1556,36 +1658,94 @@ def _check() -> int:
 
 
 def _portable() -> int:
+    status = subprocess.run(
+        ["git", "status", "--porcelain=v1"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if status.returncode != 0 or status.stdout:
+        sys.stderr.write("portable replay requires a clean committed candidate\n")
+        return 1
+    tracked = _tracked_paths()
+    source_before = _manifest(ROOT, tracked)
+    archived = subprocess.run(
+        ["git", "archive", "--format=tar", "HEAD"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+    )
+    if archived.returncode != 0:
+        sys.stderr.write("git archive failed\n")
+        return 1
     with tempfile.TemporaryDirectory(prefix="pr286-portable-") as temporary:
-        clean_root = Path(temporary) / "repo"
-        for relative in (*SOURCE_BINDING_PATHS, OUTPUT_PATH):
-            source = ROOT / relative
-            if not source.is_file() or source.is_symlink():
-                sys.stderr.write(f"portable source not regular: {relative}\n")
-                return 1
-            destination = clean_root / relative
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(source, destination)
+        clean_root = Path(temporary) / "source"
+        clean_root.mkdir()
+        with tarfile.open(fileobj=BytesIO(archived.stdout), mode="r:") as archive:
+            archive.extractall(clean_root, filter="data")
+        clean_before = _manifest(clean_root, tracked)
+        if clean_before != source_before:
+            sys.stderr.write("clean archive manifest differs from source\n")
+            return 1
         env = dict(os.environ)
-        env.pop("PYTHONPATH", None)
+        scrubbed = (
+            "PYTHONHOME",
+            "PYTEST_ADDOPTS",
+            "PYTEST_PLUGINS",
+            "PYTHONSTARTUP",
+        )
+        for key in (*scrubbed, "PYTHONPATH"):
+            env.pop(key, None)
+        env["PYTHONPATH"] = os.pathsep.join(
+            (str(clean_root), str(clean_root / "htt/src"), str(clean_root / "htt"))
+        )
+        command = [
+            sys.executable,
+            "-B",
+            "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+            "check",
+        ]
+        started = time.perf_counter()
         completed = subprocess.run(
-            [
-                sys.executable,
-                "-B",
-                str(clean_root / RUNNER_PATH),
-                "check",
-            ],
-            cwd=Path(temporary),
+            command,
+            cwd=clean_root,
             env=env,
             text=True,
             capture_output=True,
             check=False,
         )
-        if completed.returncode != 0:
-            sys.stderr.write(completed.stdout + completed.stderr)
-            return completed.returncode or 1
-    print("ok=true portable_clean=true")
-    return 0
+        elapsed = time.perf_counter() - started
+        clean_after = _manifest(clean_root, tracked)
+        source_after = _manifest(ROOT, tracked)
+        if clean_after != clean_before or source_after != source_before:
+            sys.stderr.write("portable replay changed tracked bytes\n")
+            return 1
+        evidence = {
+            "schema": "PR286_PORTABLE_CLEAN_REPLAY_EVIDENCE_V1",
+            "tracked_source_manifest": source_before,
+            "interpreter_and_dependency_versions": _versions(),
+            "scrubbed_environment_keys": {
+                key: key not in env for key in scrubbed
+            }
+            | {"PYTHONPATH": "CLEAN_ROOT_ONLY"},
+            "exact_command": command,
+            "exact_command_exit_code": completed.returncode,
+            "exact_command_runtime_seconds": elapsed,
+            "nested_stdout_sha256": _sha256_bytes(
+                completed.stdout.encode("utf-8")
+            ),
+            "nested_stderr_sha256": _sha256_bytes(
+                completed.stderr.encode("utf-8")
+            ),
+            "source_root_pre_hash": source_before["manifest_sha256"],
+            "source_root_post_hash": source_after["manifest_sha256"],
+            "clean_root_pre_hash": clean_before["manifest_sha256"],
+            "clean_root_post_hash": clean_after["manifest_sha256"],
+            "source_root_differs_from_execution_root": ROOT != clean_root,
+        }
+        print(json.dumps(evidence, sort_keys=True))
+        return completed.returncode
 
 
 def main(argv: list[str] | None = None) -> int:
