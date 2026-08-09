@@ -50,6 +50,7 @@ from htt.departure.velocity_frame_decomposition import (
     register_source_response_provider,
 )
 from htt.statistics.open_set_response_classes import (
+    PR283_DEFAULT_THRESHOLD_CONTRACT,
     source_separation_gate_from_pr256,
 )
 
@@ -242,6 +243,21 @@ def _benchmark_perturbation_inputs(
     return classes_by_kind, equivalence_by_kind, reports_by_kind
 
 
+def _pr256_normalizer() -> NormalizerSpec:
+    return NormalizerSpec(
+        normalizer_id="pr258-pr256-projection-normalizer",
+        kind=NormalizerKind.MES_ANCHORED,
+        purposes=(NormalizerPurpose.RESPONSE_CONDITIONING,),
+        coordinate_labels=(
+            "beta_MO_amplitude",
+            "beta_RM_amplitude",
+        ),
+        coordinate_map=((1.0, 0.0), (0.0, 1.0)),
+        source_identity="PR258-PR256-PROJECTION-TEST",
+        assumptions=("block-preserving map",),
+    )
+
+
 def _pr256_report(
     *,
     separable: bool,
@@ -299,18 +315,7 @@ def _pr256_report(
             ),
         ),
         covariance=covariance,
-        normalizer=NormalizerSpec(
-            normalizer_id="pr258-pr256-projection-normalizer",
-            kind=NormalizerKind.MES_ANCHORED,
-            purposes=(NormalizerPurpose.RESPONSE_CONDITIONING,),
-            coordinate_labels=(
-                "beta_MO_amplitude",
-                "beta_RM_amplitude",
-            ),
-            coordinate_map=((1.0, 0.0), (0.0, 1.0)),
-            source_identity="PR258-PR256-PROJECTION-TEST",
-            assumptions=("block-preserving map",),
-        ),
+        normalizer=_pr256_normalizer(),
         covariance_id=anchored_numeric_content_id(covariance),
         mask_id=_id("pr256-mask"),
         nuisance_response=nuisance_tangent,
@@ -349,6 +354,8 @@ def _pr256_source_gate(
         classes=classes,
         covariance=covariance,
         nuisance_tangent=nuisance_tangent,
+        normalizer=_pr256_normalizer(),
+        threshold_contract=PR283_DEFAULT_THRESHOLD_CONTRACT,
     )
 
 
@@ -1121,6 +1128,8 @@ def test_source_gate_binds_exact_geometry_and_provider_provenance() -> None:
                 classes=classes,
                 covariance=np.eye(2),
                 nuisance_tangent=None,
+                normalizer=_pr256_normalizer(),
+                threshold_contract=PR283_DEFAULT_THRESHOLD_CONTRACT,
             )
 
     changed_covariance = np.diag([2.0, 1.0])
@@ -1199,6 +1208,8 @@ def test_source_gate_binds_exact_geometry_and_provider_provenance() -> None:
             classes=wrong_provider_classes,
             covariance=np.eye(2),
             nuisance_tangent=None,
+            normalizer=_pr256_normalizer(),
+            threshold_contract=PR283_DEFAULT_THRESHOLD_CONTRACT,
         )
 
     wrong_response_classes = (
@@ -1216,6 +1227,8 @@ def test_source_gate_binds_exact_geometry_and_provider_provenance() -> None:
             classes=wrong_response_classes,
             covariance=np.eye(2),
             nuisance_tangent=None,
+            normalizer=_pr256_normalizer(),
+            threshold_contract=PR283_DEFAULT_THRESHOLD_CONTRACT,
         )
 
 

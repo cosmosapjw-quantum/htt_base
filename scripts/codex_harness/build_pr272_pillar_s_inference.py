@@ -47,6 +47,7 @@ from common.vector_tensor_statistical_inference import (  # noqa: E402
     evaluate_registered_composition,
     evaluate_weak_identification,
     load_preregistered_design,
+    resolve_preregistered_frozen_input,
 )
 from common.weak_id_coverage import (  # noqa: E402
     bonferroni_conf,
@@ -132,7 +133,7 @@ def _seed_member_stream(
 
 def _verify_frozen_inputs(design: dict) -> None:
     for name, record in design["frozen_inputs"].items():
-        path = ROOT / record["path"]
+        path = resolve_preregistered_frozen_input(ROOT, name, record)
         actual = _sha256(path)
         if actual != record["sha256"]:
             raise RuntimeError(

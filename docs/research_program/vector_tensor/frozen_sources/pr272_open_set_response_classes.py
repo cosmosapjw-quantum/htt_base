@@ -34,11 +34,6 @@ from common.anchored_response_geometry import (
     anchored_numeric_content_id,
     measure_anchored_response_geometry,
 )
-from common.source_separation import (
-    SourceSeparationDecision,
-    SourceSeparationError,
-    revalidate_source_separation_decision,
-)
 from common.transfer_registry import TransferSource
 
 
@@ -83,7 +78,6 @@ class SourceSeparationGateStatus(_StringEnum):
     SEPARABLE_CANDIDATE = "SEPARABLE_CANDIDATE"
     NON_IDENTIFIED = "NON_IDENTIFIED"
     SUM_ONLY = "SUM_ONLY"
-    WEAKLY_IDENTIFIED = "WEAKLY_IDENTIFIED"
     MISSING_RESPONSE_PROVIDER = "MISSING_RESPONSE_PROVIDER"
 
 
@@ -693,10 +687,7 @@ class SourceSeparationGate:
     source_mask_id: str | None
     source_normalizer_id: str | None
     source_normalizer_identity: str | None
-    source_normalizer_coordinate_map_id: str | None
-    source_parameter_coordinate_units: str | None
     metric_id: str | None
-    source_separation_decision: SourceSeparationDecision | None
     allowed_use: tuple[str, ...] = (
         "fail-closed local/global response-candidate gating",
     )
@@ -726,10 +717,7 @@ class SourceSeparationGate:
                 or self.source_mask_id is not None
                 or self.source_normalizer_id is not None
                 or self.source_normalizer_identity is not None
-                or self.source_normalizer_coordinate_map_id is not None
-                or self.source_parameter_coordinate_units is not None
                 or self.metric_id is not None
-                or self.source_separation_decision is not None
             ):
                 raise OpenSetResponseError(
                     "NOT_APPLICABLE source gate must not carry source bindings"
@@ -751,49 +739,6 @@ class SourceSeparationGate:
                 raise OpenSetResponseError(
                     "source gate metric identity drifted"
                 )
-            if self.source_separation_decision is None:
-                if (
-                    self.status is SourceSeparationGateStatus.WEAKLY_IDENTIFIED
-                    or self.source_normalizer_coordinate_map_id is not None
-                    or self.source_parameter_coordinate_units is not None
-                ):
-                    raise OpenSetResponseError(
-                        "WEAKLY_IDENTIFIED requires a bound PR-283 decision"
-                    )
-            else:
-                _receipt(
-                    self.source_normalizer_coordinate_map_id,
-                    "source_normalizer_coordinate_map_id",
-                )
-                _text(
-                    self.source_parameter_coordinate_units,
-                    "source_parameter_coordinate_units",
-                )
-                try:
-                    decision = revalidate_source_separation_decision(
-                        self.source_separation_decision
-                    )
-                except SourceSeparationError as exc:
-                    raise OpenSetResponseError(
-                        "source gate requires a replay-valid PR-283 decision"
-                    ) from exc
-                if (
-                    SourceSeparationGateStatus(decision.status.value)
-                    is not self.status
-                    or decision.source_geometry_report_id != self.report_id
-                    or decision.covariance_id != self.covariance_id
-                    or decision.nuisance_tangent_id != self.nuisance_tangent_id
-                    or decision.normalizer_id != self.source_normalizer_id
-                    or decision.normalizer_source_identity
-                    != self.source_normalizer_identity
-                    or decision.normalizer_coordinate_map_id
-                    != self.source_normalizer_coordinate_map_id
-                    or decision.parameter_coordinate_units
-                    != self.source_parameter_coordinate_units
-                ):
-                    raise OpenSetResponseError(
-                        "PR-283 decision is not bound to the source gate"
-                    )
             if not self.class_contract_ids:
                 raise OpenSetResponseError(
                     "source gate must bind class contracts"
@@ -847,7 +792,7 @@ class SourceSeparationGate:
         return _payload_id(self.as_payload())
 
     def as_payload(self) -> dict[str, object]:
-        payload = {
+        return {
             "allowed_use": list(self.allowed_use),
             "class_contract_ids": [
                 {"class_id": class_id, "contract_id": contract_id}
@@ -896,20 +841,6 @@ class SourceSeparationGate:
             ],
             "status": self.status.value,
         }
-        if self.source_separation_decision is not None:
-            payload["source_normalizer_coordinate_map_id"] = (
-                self.source_normalizer_coordinate_map_id
-            )
-            payload["source_parameter_coordinate_units"] = (
-                self.source_parameter_coordinate_units
-            )
-            payload["source_separation_decision"] = (
-                self.source_separation_decision.as_payload()
-            )
-            payload["source_separation_decision_id"] = (
-                self.source_separation_decision.decision_id
-            )
-        return payload
 
 
 def _build_source_separation_gate(
@@ -930,9 +861,6 @@ def _build_source_separation_gate(
     source_mask_id: str | None = None,
     source_normalizer_id: str | None = None,
     source_normalizer_identity: str | None = None,
-    source_normalizer_coordinate_map_id: str | None = None,
-    source_parameter_coordinate_units: str | None = None,
-    source_separation_decision: SourceSeparationDecision | None = None,
 ) -> SourceSeparationGate:
     """Internal constructor used only by typed PR-256 projections."""
 
@@ -961,10 +889,7 @@ def _build_source_separation_gate(
             source_mask_id=None,
             source_normalizer_id=None,
             source_normalizer_identity=None,
-            source_normalizer_coordinate_map_id=None,
-            source_parameter_coordinate_units=None,
             metric_id=None,
-            source_separation_decision=None,
             _construction_token=_SOURCE_GATE_TOKEN,
         )
     items = _validate_class_collection(classes or ())
@@ -1092,12 +1017,7 @@ def _build_source_separation_gate(
         source_mask_id=source_mask_id,
         source_normalizer_id=source_normalizer_id,
         source_normalizer_identity=source_normalizer_identity,
-        source_normalizer_coordinate_map_id=(
-            source_normalizer_coordinate_map_id
-        ),
-        source_parameter_coordinate_units=source_parameter_coordinate_units,
         metric_id=PR258_METRIC_ID,
-        source_separation_decision=source_separation_decision,
         _construction_token=_SOURCE_GATE_TOKEN,
     )
 
@@ -2516,26 +2436,11 @@ def _classify_prepared(
     if structural_mismatch or null_residual > null_tolerance:
         status = OpenSetClassificationStatus.OUTSIDE_SUPPORTED_QUOTIENT
         returned = best_component
-    elif (
-        equivalence_report.status
-        is ResponseEquivalenceStatus.MISSING_RESPONSE_PROVIDER
-        or source_separation_gate.status
-        is SourceSeparationGateStatus.MISSING_RESPONSE_PROVIDER
-    ):
+    elif equivalence_report.status is ResponseEquivalenceStatus.MISSING_RESPONSE_PROVIDER:
         status = OpenSetClassificationStatus.MISSING_RESPONSE_PROVIDER
     elif equivalence_report.status is ResponseEquivalenceStatus.TYPE_UNIDENTIFIED:
         status = OpenSetClassificationStatus.TYPE_UNIDENTIFIED
         returned = best_component
-    elif source_separation_gate.status in {
-        SourceSeparationGateStatus.NON_IDENTIFIED,
-        SourceSeparationGateStatus.SUM_ONLY,
-        SourceSeparationGateStatus.WEAKLY_IDENTIFIED,
-    }:
-        status = OpenSetClassificationStatus.TYPE_UNIDENTIFIED
-        returned = tuple(
-            _class_id(value, "source_separation_response_class_id")
-            for value in best_component
-        )
     elif len(best_component) > 1:
         status = OpenSetClassificationStatus.EQUIVALENCE_CLASS
         returned = best_component
@@ -2543,6 +2448,18 @@ def _classify_prepared(
         status = OpenSetClassificationStatus.UNKNOWN_CLASS
     elif score_margin <= margin_threshold:
         status = OpenSetClassificationStatus.TYPE_UNIDENTIFIED
+        returned = best_component
+    elif source_separation_gate.status in {
+        SourceSeparationGateStatus.NON_IDENTIFIED,
+        SourceSeparationGateStatus.SUM_ONLY,
+    }:
+        status = OpenSetClassificationStatus.TYPE_UNIDENTIFIED
+        returned = best_component
+    elif (
+        source_separation_gate.status
+        is SourceSeparationGateStatus.MISSING_RESPONSE_PROVIDER
+    ):
+        status = OpenSetClassificationStatus.MISSING_RESPONSE_PROVIDER
         returned = best_component
     else:
         status = OpenSetClassificationStatus.RESPONSE_CLASS_CANDIDATE

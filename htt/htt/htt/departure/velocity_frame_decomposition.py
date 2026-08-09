@@ -112,6 +112,7 @@ _GEOMETRY_FORBIDDEN_USE = (
     "native-solver validation",
     "posterior odds, Bayes factor, e-value, or evidence",
 )
+_PARAMETER_COORDINATE_UNITS = "dimensionless_beta_c_equals_1"
 
 
 def _text(value: object, name: str) -> str:
@@ -874,6 +875,8 @@ class SourceResponseGeometryReport:
     common_geometry: AnchoredResponseGeometryReport | None
     normalizer_id: str
     normalizer_source_identity: str
+    normalizer_coordinate_map_id: str
+    parameter_coordinate_units: str
     covariance_id: str
     mask_id: str
     joint_transfer_id: str | None
@@ -911,6 +914,16 @@ class SourceResponseGeometryReport:
         ):
             raise VelocityFrameError(
                 "source-response geometry must retain its claim boundary"
+            )
+        _text(self.normalizer_id, "normalizer_id")
+        _text(self.normalizer_source_identity, "normalizer_source_identity")
+        _receipt(
+            self.normalizer_coordinate_map_id,
+            "normalizer_coordinate_map_id",
+        )
+        if self.parameter_coordinate_units != _PARAMETER_COORDINATE_UNITS:
+            raise VelocityFrameError(
+                "source-response parameter-coordinate units drifted"
             )
 
     @property
@@ -1006,6 +1019,9 @@ def measure_source_response_geometry(
         local_labels=local.parameter_labels,
         global_labels=global_value.parameter_labels,
     )
+    normalizer_coordinate_map_id = anchored_numeric_content_id(
+        normalizer_value.coordinate_map
+    )
     observables = local.observable_labels
     covariance_matrix = _matrix(
         covariance,
@@ -1075,6 +1091,8 @@ def measure_source_response_geometry(
             common_geometry=None,
             normalizer_id=normalizer_value.normalizer_id,
             normalizer_source_identity=normalizer_value.source_identity,
+            normalizer_coordinate_map_id=normalizer_coordinate_map_id,
+            parameter_coordinate_units=_PARAMETER_COORDINATE_UNITS,
             covariance_id=covariance_receipt,
             mask_id=mask,
             joint_transfer_id=None,
@@ -1202,6 +1220,8 @@ def measure_source_response_geometry(
         common_geometry=common_report,
         normalizer_id=normalizer_value.normalizer_id,
         normalizer_source_identity=normalizer_value.source_identity,
+        normalizer_coordinate_map_id=normalizer_coordinate_map_id,
+        parameter_coordinate_units=_PARAMETER_COORDINATE_UNITS,
         covariance_id=covariance_receipt,
         mask_id=mask,
         joint_transfer_id=joint_transfer_id,

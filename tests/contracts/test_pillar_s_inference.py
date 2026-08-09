@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from dataclasses import replace
+import hashlib
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -43,6 +45,7 @@ from common.vector_tensor_statistical_inference import (
     load_pillar_s_inference_registry,
     load_preregistered_design,
     require_simultaneous_control,
+    resolve_preregistered_frozen_input,
 )
 
 
@@ -97,11 +100,10 @@ def test_preregistration_bytes_and_input_hashes_are_load_bearing(
     assert EXPECTED_SPEC_SHA256 == (
         "4ab978cf971e565dd6a598bd795249555a717aefa8f6c89b26727fdf58f7f9a2"
     )
-    for record in design["frozen_inputs"].values():
-        import hashlib
-
+    for name, record in design["frozen_inputs"].items():
+        source = resolve_preregistered_frozen_input(ROOT, name, record)
         assert (
-            hashlib.sha256((ROOT / record["path"]).read_bytes()).hexdigest()
+            hashlib.sha256(source.read_bytes()).hexdigest()
             == record["sha256"]
         )
     drifted_root = tmp_path / "repo"
@@ -110,6 +112,210 @@ def test_preregistration_bytes_and_input_hashes_are_load_bearing(
     path.write_bytes(SPEC.read_bytes() + b"\n")
     with pytest.raises(PillarSInferenceError, match="bytes drifted"):
         load_preregistered_design(drifted_root)
+
+
+def test_pr282_relocation_preserves_pr272_frozen_foundations(design) -> None:
+    record = design["frozen_inputs"]["pr271_statistical_foundations"]
+    current = ROOT / record["path"]
+    assert hashlib.sha256(current.read_bytes()).hexdigest() != record["sha256"]
+
+    resolved = resolve_preregistered_frozen_input(
+        ROOT,
+        "pr271_statistical_foundations",
+        record,
+    )
+    assert resolved == ROOT / (
+        "docs/research_program/vector_tensor/frozen_sources/"
+        "pr272_vector_tensor_statistical_foundations.py"
+    )
+    assert hashlib.sha256(resolved.read_bytes()).hexdigest() == record["sha256"]
+
+    relocation = json.loads(
+        (
+            ROOT
+            / "docs/research_program/vector_tensor/integration/"
+            "PR282_PR272_V1_RELOCATION.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert relocation == {
+        "schema": "htt.pr282.frozen_source_relocation.v1",
+        "relocation_id": "PR282-PR272-STATISTICAL-FOUNDATIONS-V1",
+        "source_pr": "PR-272",
+        "successor_pr": "PR-282",
+        "entries": [
+            {
+                "frozen_input": "pr271_statistical_foundations",
+                "original_path": record["path"],
+                "relocated_path": (
+                    "docs/research_program/vector_tensor/frozen_sources/"
+                    "pr272_vector_tensor_statistical_foundations.py"
+                ),
+                "sha256": record["sha256"],
+                "allowed_use": "exact historical PR-272 replay only",
+                "caveat": (
+                    "PR-282 exact-sign hardening is the current implementation; "
+                    "this relocation cannot promote or reseal the PR-272 result"
+                ),
+            }
+        ],
+    }
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        (
+            "relocated_path",
+            "docs/research_program/vector_tensor/frozen_sources/duplicate.py",
+        ),
+        ("caveat", "historical replay"),
+    ],
+)
+def test_pr282_relocation_rejects_weakened_binding(
+    design,
+    tmp_path: Path,
+    field: str,
+    value: str,
+) -> None:
+    record = design["frozen_inputs"]["pr271_statistical_foundations"]
+    repo = tmp_path / "repo"
+    original = repo / record["path"]
+    original.parent.mkdir(parents=True)
+    original.write_text("successor bytes\n", encoding="utf-8")
+
+    frozen = repo / (
+        "docs/research_program/vector_tensor/frozen_sources/"
+        "pr272_vector_tensor_statistical_foundations.py"
+    )
+    frozen.parent.mkdir(parents=True)
+    canonical_frozen = ROOT / (
+        "docs/research_program/vector_tensor/frozen_sources/"
+        "pr272_vector_tensor_statistical_foundations.py"
+    )
+    frozen.write_bytes(canonical_frozen.read_bytes())
+
+    manifest_source = ROOT / (
+        "docs/research_program/vector_tensor/integration/"
+        "PR282_PR272_V1_RELOCATION.json"
+    )
+    manifest = json.loads(manifest_source.read_text(encoding="utf-8"))
+    manifest["entries"][0][field] = value
+    if field == "relocated_path":
+        duplicate = repo / value
+        duplicate.parent.mkdir(parents=True, exist_ok=True)
+        duplicate.write_bytes(canonical_frozen.read_bytes())
+    manifest_path = repo / manifest_source.relative_to(ROOT)
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(PillarSInferenceError, match="relocation binding drifted"):
+        resolve_preregistered_frozen_input(
+            repo,
+            "pr271_statistical_foundations",
+            record,
+        )
+
+
+def test_pr283_relocation_preserves_pr272_frozen_open_set_response(design) -> None:
+    record = design["frozen_inputs"]["open_set_response"]
+    current = ROOT / record["path"]
+    assert hashlib.sha256(current.read_bytes()).hexdigest() != record["sha256"]
+
+    resolved = resolve_preregistered_frozen_input(
+        ROOT,
+        "open_set_response",
+        record,
+    )
+    expected_path = ROOT / (
+        "docs/research_program/vector_tensor/frozen_sources/"
+        "pr272_open_set_response_classes.py"
+    )
+    assert resolved == expected_path
+    assert hashlib.sha256(resolved.read_bytes()).hexdigest() == record["sha256"]
+
+    relocation = json.loads(
+        (
+            ROOT
+            / "docs/research_program/vector_tensor/integration/"
+            "PR283_PR272_OPEN_SET_V1_RELOCATION.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert relocation == {
+        "schema": "htt.pr283.frozen_source_relocation.v1",
+        "relocation_id": "PR283-PR272-OPEN-SET-RESPONSE-V1",
+        "source_pr": "PR-272",
+        "successor_pr": "PR-283",
+        "entries": [
+            {
+                "frozen_input": "open_set_response",
+                "original_path": record["path"],
+                "relocated_path": (
+                    "docs/research_program/vector_tensor/frozen_sources/"
+                    "pr272_open_set_response_classes.py"
+                ),
+                "sha256": record["sha256"],
+                "allowed_use": "exact historical PR-272 replay only",
+                "caveat": (
+                    "PR-283 weak-identification precedence is the current "
+                    "implementation; this relocation cannot promote or reseal "
+                    "the PR-272 result"
+                ),
+            }
+        ],
+    }
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        (
+            "relocated_path",
+            "docs/research_program/vector_tensor/frozen_sources/duplicate.py",
+        ),
+        ("caveat", "historical replay"),
+    ],
+)
+def test_pr283_relocation_rejects_weakened_binding(
+    design,
+    tmp_path: Path,
+    field: str,
+    value: str,
+) -> None:
+    record = design["frozen_inputs"]["open_set_response"]
+    repo = tmp_path / "repo"
+    original = repo / record["path"]
+    original.parent.mkdir(parents=True)
+    original.write_text("successor bytes\n", encoding="utf-8")
+
+    frozen_relative = (
+        "docs/research_program/vector_tensor/frozen_sources/"
+        "pr272_open_set_response_classes.py"
+    )
+    frozen = repo / frozen_relative
+    frozen.parent.mkdir(parents=True)
+    canonical_frozen = ROOT / frozen_relative
+    frozen.write_bytes(canonical_frozen.read_bytes())
+
+    manifest_source = ROOT / (
+        "docs/research_program/vector_tensor/integration/"
+        "PR283_PR272_OPEN_SET_V1_RELOCATION.json"
+    )
+    manifest = json.loads(manifest_source.read_text(encoding="utf-8"))
+    manifest["entries"][0][field] = value
+    if field == "relocated_path":
+        duplicate = repo / value
+        duplicate.parent.mkdir(parents=True, exist_ok=True)
+        duplicate.write_bytes(canonical_frozen.read_bytes())
+    manifest_path = repo / manifest_source.relative_to(ROOT)
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(PillarSInferenceError, match="relocation binding drifted"):
+        resolve_preregistered_frozen_input(
+            repo,
+            "open_set_response",
+            record,
+        )
 
 
 def test_registry_has_exact_nine_rows_without_source_promotion(registry) -> None:

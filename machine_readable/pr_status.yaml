@@ -273,8 +273,8 @@ stacked_pr_execution:
   - PR-292
   prs:
     PR-283:
-      lifecycle: ACTIVE
-      lifecycle_history: [PLANNED, ACTIVE]
+      lifecycle: IMPLEMENTED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
       base_sha: ff9ef9f45747e559c5343b463cf010dfc3a7432a
       predecessor_pr: null
       predecessor_sealed_sha: null
@@ -285,11 +285,11 @@ stacked_pr_execution:
       dependency_hashes: {}
       gate_dispositions:
         eligibility: PASS
-        implementation: DEFERRED
+        implementation: PASS
         validation: DEFERRED
         review: DEFERRED
         seal: DEFERRED
-      assurance_budget: {maximum: 16, consumed: 0}
+      assurance_budget: {maximum: 16, consumed: 5}
     PR-284:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
