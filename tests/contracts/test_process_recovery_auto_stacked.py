@@ -127,6 +127,41 @@ def test_future_pr_before_predecessor_open_is_ineligible_without_budget_cost() -
     assert any("PR_OPEN" in item for item in result["errors"])
 
 
+@pytest.mark.parametrize(
+    "lifecycle",
+    ("ACTIVE", "IMPLEMENTED", "VALIDATED", "REVIEWED", "SEALED", "PUSHED"),
+)
+def test_current_pr_remains_eligible_through_pre_open_lifecycle(
+    lifecycle: str,
+) -> None:
+    evaluate = _api("evaluate_stack_eligibility")
+    states = list(_harness.LIFECYCLE_STATES)
+    history = states[: states.index(lifecycle) + 1]
+    lifecycle_index = states.index(lifecycle)
+    status = _status(
+        active_pr="PR-283",
+        pr283=_pr(
+            lifecycle,
+            history=history,
+            base_sha=SHA_A,
+            sealed_head=(
+                SHA_B if lifecycle_index >= states.index("SEALED") else None
+            ),
+            pushed_ref=(
+                "refs/heads/recovery/pr283"
+                if lifecycle_index >= states.index("PUSHED")
+                else None
+            ),
+        ),
+        pr284=_pr("PLANNED", history=["PLANNED"], predecessor_pr="PR-283"),
+    )
+
+    result = evaluate(status, work_unit_id="PR-283", candidate_sha=SHA_A)
+
+    assert result["eligible"] is True
+    assert result["disposition"] == "PASS"
+
+
 def test_second_active_implementation_pr_is_refused() -> None:
     evaluate = _api("evaluate_stack_eligibility")
     status = _status(
@@ -400,10 +435,13 @@ def test_status_loader_requires_synchronized_execution_mirrors() -> None:
 
 def test_run_execution_fields_bind_the_active_status_authority() -> None:
     validate = _api("validate_run_execution_fields")
+    status = _api("load_stacked_execution_status")(ROOT)
+    authority = status["stacked_pr_execution"]["prs"]["PR-283"]
+    authority_budget = authority["assurance_budget"]
     plan = {
         "work_unit_id": "PR-283",
         "execution_mode": "AUTO_STACKED_PR",
-        "lifecycle_state": "ACTIVE",
+        "lifecycle_state": authority["lifecycle"],
         "stack_id": "PROCESS_INFLATION_RECOVERY_PHASE2",
         "activation_base_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
         "predecessor_pr": None,
@@ -411,10 +449,20 @@ def test_run_execution_fields_bind_the_active_status_authority() -> None:
         "production_hash": None,
         "dependency_hashes": {},
         "gate_disposition": "PASS",
-        "assurance_budget": {"maximum": 16, "consumed": 0},
+        "assurance_budget": dict(authority_budget),
     }
 
     assert validate(plan, repo=ROOT) == []
+
+    stale_budget = dict(plan)
+    stale_budget["assurance_budget"] = {
+        **authority_budget,
+        "consumed": authority_budget["consumed"] + 1,
+    }
+    assert any(
+        "assurance_budget differs" in item
+        for item in validate(stale_budget, repo=ROOT)
+    )
 
     future = dict(plan)
     future.update(

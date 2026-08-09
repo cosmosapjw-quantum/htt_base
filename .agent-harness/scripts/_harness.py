@@ -543,8 +543,10 @@ def evaluate_stack_eligibility(
     record = prs[work_unit_id]
     if not isinstance(record, Mapping):
         return _stack_result([*errors, f"{work_unit_id} execution record is malformed"])
-    if record.get("lifecycle") != "ACTIVE":
-        errors.append(f"{work_unit_id} lifecycle must be ACTIVE before implementation")
+    if record.get("lifecycle") not in LIFECYCLE_STATES[1:-1]:
+        errors.append(
+            f"{work_unit_id} lifecycle must be an active pre-PR_OPEN state"
+        )
     history = record.get("lifecycle_history")
     if not isinstance(history, list) or not history:
         errors.append(f"{work_unit_id} lifecycle history is missing")
