@@ -119,6 +119,11 @@ def main() -> None:
             seal_path=args.seal,
             seal_file_sha256=bytes_sha256(data),
         )
+        plan["production_hash"] = seal.get("production_hash")
+        plan["evidence_key"] = {
+            "production_hash": seal.get("production_hash"),
+            "dependency_hashes": dict(plan.get("dependency_hashes") or {}),
+        }
         plan["status"] = "candidate_frozen"
     except PublicationIntegrityError as exc:
         raise SystemExit(f"candidate binding refused: {exc}") from None

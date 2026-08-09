@@ -1053,6 +1053,138 @@ def _changed_files(repo: Path, start: str, end: str) -> list[dict[str, str]]:
     return rows
 
 
+def _stable_patch_id(repo: Path, commit: str) -> str | None:
+    shown = subprocess.run(
+        [
+            "git",
+            "show",
+            "--pretty=format:",
+            "--binary",
+            "--full-index",
+            commit,
+        ],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+    )
+    if not shown.stdout:
+        return None
+    computed = subprocess.run(
+        ["git", "patch-id", "--stable"],
+        cwd=repo,
+        input=shown.stdout,
+        check=True,
+        capture_output=True,
+    ).stdout.decode("ascii").strip()
+    return computed.split()[0] if computed else None
+
+
+def _nonmerge_commits(repo: Path, revision: str) -> list[str]:
+    output = str(git(repo, "rev-list", "--reverse", "--no-merges", revision))
+    return [line for line in output.splitlines() if line]
+
+
+def reject_duplicate_stable_patch_ids(
+    repo: str | Path,
+    *,
+    base_sha: str,
+    candidate_sha: str,
+) -> list[dict[str, str]]:
+    """Return the unique candidate patch inventory or refuse a reintroduction."""
+
+    root = resolve_repo_root(repo)
+    history_ids = {
+        patch_id
+        for commit in _nonmerge_commits(root, base_sha)
+        if (patch_id := _stable_patch_id(root, commit)) is not None
+    }
+    rows: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for commit in _nonmerge_commits(root, f"{base_sha}..{candidate_sha}"):
+        patch_id = _stable_patch_id(root, commit)
+        if patch_id is None:
+            continue
+        if patch_id in history_ids or patch_id in seen:
+            raise PublicationIntegrityError(
+                f"candidate reintroduces existing stable patch ID {patch_id}"
+            )
+        seen.add(patch_id)
+        rows.append({"commit": commit, "stable_patch_id": patch_id})
+    return rows
+
+
+def _candidate_path_category(path: str) -> str:
+    parts = Path(path).parts
+    lowered = path.lower()
+    name = Path(path).name.lower()
+    if (
+        path.startswith(".agent-harness/runs/")
+        or path.startswith(".prguard/runtime/")
+        or path.startswith("docs/PR_DELTAS/")
+        or any(token in name for token in ("receipt", "seal", "review_envelope"))
+    ):
+        return "receipts"
+    if (
+        path.startswith("docs/generated/")
+        or path.startswith("figures/generated/")
+        or path.startswith(".agent-harness/generated/")
+    ):
+        return "generated"
+    if (
+        path.startswith("tests/")
+        or "tests" in parts
+        or name.startswith("test_")
+        or name.endswith("_test.py")
+    ):
+        return "tests"
+    if (
+        path.startswith("scripts/")
+        or path.startswith(".agent-harness/")
+        or path.startswith("docs/codex_handoff/")
+        or path.startswith("machine_readable/")
+        or path.startswith("docs/research_program/")
+        or path in {"AGENTS.md", "AGENTS.md.fragment"}
+        or lowered.endswith(("_policy.json", "_spec.yaml"))
+    ):
+        return "runners"
+    return "production"
+
+
+def _candidate_diff_identity(
+    repo: Path,
+    *,
+    candidate_sha: str,
+    changed_files: Sequence[Mapping[str, str]],
+) -> tuple[str, dict[str, int]]:
+    categories = {
+        "production": 0,
+        "tests": 0,
+        "runners": 0,
+        "receipts": 0,
+        "generated": 0,
+    }
+    production_rows: list[dict[str, Any]] = []
+    for row in changed_files:
+        path = str(row["path"])
+        status = str(row["status"])
+        category = _candidate_path_category(path)
+        categories[category] += 1
+        if category != "production":
+            continue
+        blob_hash = None
+        if status != "D":
+            data = git(repo, "show", f"{candidate_sha}:{path}", binary=True)
+            assert isinstance(data, bytes)
+            blob_hash = bytes_sha256(data)
+        production_rows.append(
+            {"path": path, "status": status, "blob_sha256": blob_hash}
+        )
+    production_hash = bytes_sha256(
+        canonical_json_bytes({"files": production_rows})
+    )
+    return production_hash, categories
+
+
 def build_candidate_seal(
     repo: str | Path,
     *,
@@ -1118,6 +1250,18 @@ def build_candidate_seal(
     ]
     if not commits or any(GIT_OID_RE.fullmatch(item) is None for item in commits):
         raise PublicationIntegrityError("candidate commit set is empty or malformed")
+    stable_patch_ids = reject_duplicate_stable_patch_ids(
+        root,
+        base_sha=merge_base,
+        candidate_sha=candidate_sha,
+    )
+    if not stable_patch_ids:
+        raise PublicationIntegrityError("candidate has no non-merge stable patch IDs")
+    production_hash, diff_stat = _candidate_diff_identity(
+        root,
+        candidate_sha=candidate_sha,
+        changed_files=changed_files,
+    )
     policy_data, policy = load_publication_policy(root, integration_policy_path)
     validate_declared_policy_identity(
         policy,
@@ -1162,6 +1306,12 @@ def build_candidate_seal(
         "candidate_commits_sha256": bytes_sha256(
             canonical_json_bytes({"commits": commits})
         ),
+        "stable_patch_ids": stable_patch_ids,
+        "stable_patch_ids_sha256": bytes_sha256(
+            canonical_json_bytes({"stable_patch_ids": stable_patch_ids})
+        ),
+        "production_hash": production_hash,
+        "diff_stat": diff_stat,
         "diff_sha256": bytes_sha256(diff),
         "changed_files": changed_files,
         "changed_files_sha256": bytes_sha256(
@@ -1224,6 +1374,7 @@ def candidate_binding_from_payload(
         "candidate_tree_sha",
         "diff_sha256",
         "changed_files_sha256",
+        "production_hash",
     )
     binding = {
         "state": "frozen",
@@ -1252,6 +1403,7 @@ def mutable_candidate_binding() -> dict[str, Any]:
         "candidate_tree_sha": None,
         "diff_sha256": None,
         "changed_files_sha256": None,
+        "production_hash": None,
     }
 
 

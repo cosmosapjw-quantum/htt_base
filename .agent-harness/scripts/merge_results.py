@@ -165,6 +165,7 @@ def main() -> None:
             {
                 "assignment_id": assignment_id,
                 "status": value.get("status"),
+                "gate_disposition": value.get("gate_disposition"),
                 "claim_results": value.get("claim_results", []),
                 "reported_errors": value.get("errors", []),
                 "launch_evidence": validation.launch_evidence,

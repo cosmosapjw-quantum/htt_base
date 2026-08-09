@@ -9,10 +9,15 @@ from _harness import (
     cli_active_run_id,
     confined_repo_file,
     dump_json,
+    evaluate_stack_eligibility,
     is_safe_identifier,
+    load_stacked_execution_status,
     load_json,
+    resolve_candidate_activation_base,
     root,
+    shared_active_stack_runs,
     utc_now,
+    validate_execution_mode,
     validate_run_plan_payload,
     write_active_run_id,
 )
@@ -60,6 +65,16 @@ def main() -> None:
         ),
     )
     parser.add_argument(
+        "--execution-mode",
+        choices=["MANUAL_PR", "AUTO_STACKED_PR", "AUTO_MERGE"],
+        default="MANUAL_PR",
+    )
+    parser.add_argument(
+        "--stack-id",
+        default=None,
+        help="required status-authority stack identifier for AUTO_STACKED_PR",
+    )
+    parser.add_argument(
         "--review-rereview-exception-assignment",
         action="append",
         default=[],
@@ -93,6 +108,18 @@ def main() -> None:
         ),
     )
     args = parser.parse_args()
+    try:
+        execution_mode = validate_execution_mode(args.execution_mode)
+    except PublicationIntegrityError as exc:
+        raise SystemExit(f"run initialization refused: {exc}") from None
+    if execution_mode == "AUTO_STACKED_PR" and not is_safe_identifier(args.stack_id):
+        raise SystemExit(
+            "run initialization refused: AUTO_STACKED_PR requires a safe --stack-id"
+        )
+    if execution_mode == "MANUAL_PR" and args.stack_id is not None:
+        raise SystemExit(
+            "run initialization refused: MANUAL_PR must not name --stack-id"
+        )
     if not is_safe_identifier(args.work_unit):
         raise SystemExit("work-unit must be a safe 1-128 character identifier")
     exception_assignment_ids = args.review_rereview_exception_assignment
@@ -145,6 +172,23 @@ def main() -> None:
         raise SystemExit(
             f"Active run already exists: {active}. Close it with close_run.py first."
         )
+    if execution_mode == "AUTO_STACKED_PR":
+        try:
+            shared_active = shared_active_stack_runs(
+                repo,
+                stack_id=str(args.stack_id),
+            )
+        except PublicationIntegrityError as exc:
+            raise SystemExit(f"run initialization refused: {exc}") from None
+        if shared_active:
+            details = ", ".join(
+                f"{item['work_unit_id']}:{item['run_id']}@{item['worktree']}"
+                for item in shared_active
+            )
+            raise SystemExit(
+                "run initialization refused: second active implementation run "
+                f"for stack {args.stack_id}: {details}"
+            )
     run_id = args.run_id or datetime.now(timezone.utc).strftime("run-%Y%m%dT%H%M%SZ")
     if not is_safe_identifier(run_id):
         raise SystemExit("run-id must be a safe 1-128 character identifier")
@@ -180,6 +224,41 @@ def main() -> None:
             target_ref=f"{target_remote}/{target_branch}",
             target_sha=base_sha,
         )
+        activation_base_sha = str(
+            git(repo, "rev-parse", "--verify", f"{args.candidate_ref}^{{commit}}")
+        ).strip()
+        execution_record = None
+        eligibility = {
+            "eligible": True,
+            "disposition": "PASS",
+            "retry_budget_cost": 1,
+            "assurance_budget_cost": 1,
+            "errors": [],
+        }
+        if execution_mode == "AUTO_STACKED_PR":
+            status = load_stacked_execution_status(repo)
+            stack = status["stacked_pr_execution"]
+            if stack.get("stack_id") != args.stack_id:
+                raise PublicationIntegrityError(
+                    "AUTO_STACKED_PR stack_id differs from status authority"
+                )
+            activation_base_sha = resolve_candidate_activation_base(
+                repo,
+                status,
+                work_unit_id=args.work_unit,
+                candidate_ref=args.candidate_ref,
+            )
+            eligibility = evaluate_stack_eligibility(
+                status,
+                work_unit_id=args.work_unit,
+                candidate_sha=activation_base_sha,
+            )
+            if not eligibility["eligible"]:
+                raise PublicationIntegrityError(
+                    "INELIGIBLE/DEFERRED retry_budget=0 assurance_budget=0: "
+                    + "; ".join(str(item) for item in eligibility["errors"])
+                )
+            execution_record = stack["prs"][args.work_unit]
     except (
         OSError,
         PublicationIntegrityError,
@@ -219,6 +298,40 @@ def main() -> None:
                 )
             },
             "context_version": version,
+            "execution_mode": execution_mode,
+            "lifecycle_state": (
+                execution_record["lifecycle"]
+                if execution_record is not None
+                else "ACTIVE"
+            ),
+            "stack_id": args.stack_id,
+            "activation_base_sha": activation_base_sha,
+            "predecessor_pr": (
+                execution_record["predecessor_pr"]
+                if execution_record is not None
+                else None
+            ),
+            "predecessor_sealed_sha": (
+                execution_record["predecessor_sealed_sha"]
+                if execution_record is not None
+                else None
+            ),
+            "production_hash": (
+                execution_record["production_hash"]
+                if execution_record is not None
+                else None
+            ),
+            "dependency_hashes": (
+                execution_record["dependency_hashes"]
+                if execution_record is not None
+                else {}
+            ),
+            "gate_disposition": eligibility["disposition"],
+            "assurance_budget": (
+                execution_record["assurance_budget"]
+                if execution_record is not None
+                else {"maximum": 16, "consumed": 0}
+            ),
         }
     )
     if exception_assignment_ids:
