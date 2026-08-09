@@ -249,6 +249,33 @@ def create_receipt(
             merged_tree = str(
                 git(worktree, "write-tree", env=environment)
             ).strip()
+            git(
+                worktree,
+                "-c",
+                "user.name=HTT Publication Rehearsal",
+                "-c",
+                "user.email=invalid@example.invalid",
+                "-c",
+                f"core.hooksPath={os.devnull}",
+                "commit",
+                "--no-gpg-sign",
+                "--no-verify",
+                "--allow-empty",
+                "-m",
+                "HTT integration rehearsal merged candidate",
+                env=environment,
+            )
+            committed_tree = str(
+                git(worktree, "write-tree", env=environment)
+            ).strip()
+            if committed_tree != merged_tree:
+                raise PublicationIntegrityError(
+                    "temporary integration commit changed the merged tree"
+                )
+            if str(git(worktree, "status", "--porcelain", env=environment)).strip():
+                raise PublicationIntegrityError(
+                    "temporary integration command root is not clean"
+                )
             rows, passed = _run_required_commands(
                 worktree,
                 list(policy["required_commands"]),

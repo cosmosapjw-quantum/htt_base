@@ -939,6 +939,37 @@ def test_integration_rehearsal_binds_merged_tree_and_command_logs(
     )
 
 
+def test_integration_rehearsal_runs_commands_from_a_clean_merged_tree(
+    tmp_path: Path,
+) -> None:
+    repo, _ = _make_candidate_repo(tmp_path)
+    policy = _policy()
+    policy["required_commands"][0]["argv"] = [
+        PYTHON_EXECUTABLE_TOKEN,
+        "-c",
+        "import subprocess; "
+        "status = subprocess.run("
+        "['git', 'status', '--porcelain'], "
+        "check=True, capture_output=True, text=True); "
+        "assert status.stdout == ''",
+    ]
+    _write_json(repo / POLICY_REL, policy)
+    _git(repo, "add", POLICY_REL)
+    _git(repo, "commit", "-qm", "require clean integration command root")
+    seal = _seal(repo)
+    seal_rel = ".prguard/runtime/CLEAN_CANDIDATE_SEAL.json"
+    write_json_exclusive(repo / seal_rel, seal)
+
+    receipt = create_receipt(
+        repo,
+        seal_path=seal_rel,
+        output_path=".prguard/runtime/CLEAN_INTEGRATION_RECEIPT.json",
+    )
+
+    assert receipt["status"] == "PASS"
+    assert receipt["commands"][0]["returncode"] == 0
+
+
 def _inventory(seal: dict, *, rows: list[dict] | None = None) -> dict:
     value = {
         "schema_version": 1,
