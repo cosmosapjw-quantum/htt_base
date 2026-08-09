@@ -31,7 +31,9 @@ scientific_status_effect: OPEN_UNCHANGED
 historical_boundary:
   immutable_predecessor: PR-274
   v1_registry: docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml
+  v1_registry_sha256: 92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9
   v1_result: docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json
+  v1_result_sha256: e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea
   rule: >-
     PR-274 v1 bytes and its zero-admission conclusion remain immutable.
     Every PR-289 record has a v2 identity and a separate authorization
@@ -40,9 +42,14 @@ historical_boundary:
 data_identity_record_v2:
   schema: common.data_identity_record.v2
   factory_only: true
-  content_address: sha256_of_canonical_payload
+  content_address:
+    record_id: sha256_of_stable_identity_payload_excluding_record_id_inspection_time_and_local_path
+    inspection_receipt_id: sha256_of_full_record_payload_excluding_inspection_receipt_id
+    source_locator_rule: serialize a content-addressed root descriptor identity, never the machine-local absolute path
+    component_inventory_rule: sha256 of the ordered component_id byte_size content_sha256 tuples
   required_fields:
     - record_id
+    - inspection_receipt_id
     - lane_id
     - product_id
     - component_id
@@ -60,12 +67,21 @@ data_identity_record_v2:
     - completeness_status
     - units_contract_id
     - coordinate_frame_id
-    - directional_or_harmonic_convention_id
-    - mask_or_selection_id
+    - sign_orientation_convention_id
+    - directional_convention_id
+    - harmonic_convention_id
+    - mask_id
+    - selection_id
+    - sky_support_id
     - covariance_id
+    - covariance_status
     - null_ensemble_id
+    - null_ensemble_status
     - transfer_source
+    - transfer_function_spec_id
+    - transfer_provenance_status
     - sky_support_status
+    - license_status
     - acquisition_status
     - inspected_at_utc
   exact_file_rules:
@@ -76,10 +92,26 @@ data_identity_record_v2:
     - duplicate inode aliases and hard-linked out-of-root aliases are rejected
     - component order and completeness are content-addressed
   semantic_rules:
-    - release and license identities are mandatory and nonempty
-    - units frame conventions mask selection covariance null and sky support are typed
-    - transfer provenance remains observer-side none or an explicit external-transfer identity
+    - source identities use a registered resolvable scheme with a nonempty authority payload
+    - release versions contain both alphabetic and numeric version material and are bound by the typed evidence object
+    - license identities use a registered SPDX DOI URL URN repository or docs scheme and resolve through the typed evidence object
+    - duplicate keys nonfinite constants placeholder schemes one-character releases and missing evidence are rejected
+    - units frame sign directional harmonic mask selection covariance null and sky support identities and statuses are independently typed
+    - transfer provenance remains observer-side none with NOT_APPLICABLE status or binds an explicit external TransferFunctionSpec identity
     - an admitted identity is not an execution authorization
+
+stable_identity_evidence:
+  schema: common.data_identity_evidence.v2
+  required_bindings:
+    - lane_id
+    - product_id
+    - source_locator_identity
+    - release_name
+    - release_version
+    - release_identity
+    - license_identity
+    - license_status
+  evidence_rule: exact regular non-symlink JSON with duplicate-key and nonfinite-value rejection and a frozen SHA-256
 
 candidate_root_contract:
   source: caller-supplied local roots descriptor outside Git
@@ -98,6 +130,8 @@ candidate_root_contract:
     machine-specific authorization.
 
 lane_registry:
+  machine_registry: docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json
+  machine_registry_rule: exact content-addressed lane product component cardinality semantic convention and human-gate authority
   order: [PLANCK, CF4, HSC_KIDS, ACT, DESI, JWST_SN]
   lanes:
     PLANCK:
@@ -160,10 +194,28 @@ admission_decision_contract:
     ADMITTED_IDENTITY_ONLY means exact product bytes and semantic identities
     passed the registered preflight. It authorizes no feature extraction,
     likelihood, observed statistic, figure, or scientific claim.
+  canonical_status_precedence:
+    - BLOCKED_PATH_ESCAPE_OR_MUTATION
+    - BLOCKED_PR151_INCOMPLETE
+    - REJECTED_NAME_ONLY
+    - REJECTED_NOT_PRESENT
+    - REJECTED_NOT_REGULAR_FILE
+    - REJECTED_SYMLINK_OR_ALIAS
+    - REJECTED_IDENTITY_MISMATCH
+    - REJECTED_MISSING_RELEASE_OR_LICENSE
+    - REJECTED_MISSING_SEMANTIC_CONTRACT
+    - REJECTED_INCOMPLETE_COMPONENT_SET
+    - ADMITTED_IDENTITY_ONLY
+  reason_rule: every applicable reason is preserved but exactly one status is selected by precedence
+  lane_admission_rule: only a complete machine-registry lane bundle counts as one admitted lane; admitted components or products never count as an admitted lane
   aggregate_statuses:
     - NO_ADMITTED_IDENTITIES
     - PARTIAL_LANE_ADMISSION
     - ADMITTED_IDENTITIES_AWAITING_SEPARATE_AUTHORIZATION
+  aggregate_semantics:
+    NO_ADMITTED_IDENTITIES: zero complete lanes admitted
+    PARTIAL_LANE_ADMISSION: at least one whole lane admitted and at least one whole lane refused; authorizes nothing
+    ADMITTED_IDENTITIES_AWAITING_SEPARATE_AUTHORIZATION: every registered lane is completely admitted and every execution receipt remains NOT_AUTHORIZED
 
 execution_authorization_receipt:
   schema: common.execution_authorization_receipt.v1
@@ -174,18 +226,35 @@ execution_authorization_receipt:
     - authorization_id
     - lane_id
     - exact_admission_record_ids
+    - lane_admission_bundle_id
     - analysis_plan_id
-    - human_gate_id
+    - required_human_gate_id
+    - human_gate_receipt_id
     - human_authority_identity
     - authorized_scope
     - issued_at_utc
     - expires_at_utc
     - status
   statuses: [NOT_AUTHORIZED, AUTHORIZED, EXPIRED, REVOKED]
+  state_machine:
+    NOT_AUTHORIZED:
+      exact_admission_record_ids: empty unless a complete lane bundle exists
+      human_gate_receipt_id: null
+      human_authority_identity: null
+      authorized_scope: null
+      issued_at_utc: null
+      expires_at_utc: null
+    AUTHORIZED:
+      availability: forbidden_to_PR-289
+      requires: complete lane bundle plus external lane-specific human gate receipt authority scope issue and expiry identities
   authorization_rule: >-
     PR-289 may define and emit NOT_AUTHORIZED receipts only. AUTHORIZED needs
     a later lane-specific human gate and cannot be inferred from admission,
     backlog state, user-wide overnight permission, or a process PASS.
+  workflow_authorization_boundary: >-
+    The backlog execution_authorization field is workflow-only permission to
+    implement this PR. authorization_domain must equal workflow_only and is
+    never a lane data-execution token.
 
 receipt_contract:
   output_path: docs/generated/pr289_data_identity_v2_receipt.json
@@ -222,11 +291,20 @@ mutation_registry:
   - {mutation_id: MU289-HASH, intended_defect: content digest differs from the frozen identity}
   - {mutation_id: MU289-INVENTORY, intended_defect: component is missing duplicated or reordered}
   - {mutation_id: MU289-RELEASE-LICENSE, intended_defect: release or license identity is absent}
+  - {mutation_id: MU289-PLACEHOLDER-PROVENANCE, intended_defect: bare identity scheme one-character release or unresolved evidence is accepted}
+  - {mutation_id: MU289-EVIDENCE-JSON, intended_defect: duplicate key or nonfinite evidence value is accepted}
   - {mutation_id: MU289-SEMANTIC-FIELD, intended_defect: units frame mask selection covariance null or sky support is absent}
+  - {mutation_id: MU289-SEMANTIC-STATUS, intended_defect: covariance null license transfer or sky status contradicts its identity}
+  - {mutation_id: MU289-RECORD-ID-STABILITY, intended_defect: local path or inspection time changes stable record_id}
+  - {mutation_id: MU289-INVENTORY-ID, intended_defect: ordered component inventory cannot be independently recomputed}
   - {mutation_id: MU289-NAME-ONLY, intended_defect: name-only HSC or KiDS input is admitted}
   - {mutation_id: MU289-DESI-PARTIAL, intended_defect: PR151 partial or aria2 part file is admitted}
   - {mutation_id: MU289-AUTODOWNLOAD, intended_defect: missing input triggers a network or download side effect}
   - {mutation_id: MU289-MUTATION-OMISSION, intended_defect: returned mutation evidence is incomplete or hardcoded}
+  - {mutation_id: MU289-GATE-ID-ALIAS, intended_defect: H-HSC slash KiDS is normalized to H-HSC-KiDS}
+  - {mutation_id: MU289-WORKFLOW-AUTH-LAUNDERING, intended_defect: workflow permission constructs a lane AUTHORIZED receipt}
+  - {mutation_id: MU289-STATUS-PRECEDENCE, intended_defect: overlapping refusal reasons select a lower-priority canonical status}
+  - {mutation_id: MU289-PARTIAL-LANE-AGGREGATE, intended_defect: one component or incomplete product counts as an admitted lane}
   - {mutation_id: MU289-CLAIM-PROMOTION, intended_defect: admission pass becomes observed native public or family evidence}
 
 allowed_uses:

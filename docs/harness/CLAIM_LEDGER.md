@@ -2,6 +2,14 @@
 
 Each claim needs owner, status, evidence, transfer source, claim tier, and caveats.
 
+## PR-289 - data identity v2 preflight
+
+| Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |
+|---|---|---|---|---|---|---|
+| PR-289 specifies a stable, content-addressed external-data identity preflight with machine-readable lane completeness and a separate execution-authorization lifecycle. | COMMON | SPECIFIED | `docs/research_program/post_pr275/pr289_spec.yaml`; `docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json` | none | `roadmap_rescue_v1:C2`; diagnostic_only | Specification and process evidence only until implementation, exact receipt replay, immutable review, and latest-target integration pass. |
+| A complete admitted identity authorizes feature extraction, likelihood evaluation, observed statistics, figures, or public scientific use. | COMMON | FORBIDDEN / NOT_GRANTED | PR-289 authorization state machine and admission-status precedence | none | blocked | Admission binds bytes and semantic identities only. Every lane remains `NOT_AUTHORIZED` without a separate lane-specific human gate receipt. |
+| PR-289 validates a native solver, computes Q/Pi/F/G_F or Bayesian evidence, establishes morphology compatibility, or identifies a Bianchi geometry or family. | COMMON | FORBIDDEN / NOT_EVALUATED | pre-native family gate; MIO/HTT ownership boundary; claim-language gate | none | blocked | No observed data are executed and PR-151 partial acquisition is excluded. |
+
 ## PR-277 - evidence-conditioned capability authority
 
 | Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |

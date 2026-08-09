@@ -68,7 +68,7 @@
     },
     {
       "id": "pr289-claim-language",
-      "argv": ["{python}", "-B", "scripts/check_claim_language.py", "--strict-missing", "htt/src/common/data_identity.py", "tests/contracts/test_data_identity_registry_v2.py", "docs/research_program/post_pr275/pr289_spec.yaml", "docs/generated/pr289_data_identity_v2_receipt.json", "docs/PR_DELTAS/pr-289.md"],
+      "argv": ["{python}", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "htt/src/common/data_identity.py", "tests/contracts/test_data_identity_registry_v2.py", "docs/research_program/post_pr275/pr289_spec.yaml", "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json", "docs/research_program/post_pr275/data_runbooks.yaml", "docs/harness/CLAIM_LEDGER.md", "docs/generated/pr289_data_identity_v2_receipt.json", "docs/PR_DELTAS/pr-289.md"],
       "timeout_seconds": 300
     }
   ],
@@ -77,6 +77,9 @@
     "pr280_terminal_receipt_without_success_promotion",
     "immutable_pr274_v1",
     "v2_factory_and_content_address",
+    "stable_record_and_inspection_identities",
+    "typed_provenance_evidence",
+    "machine_lane_cardinality_and_gate_identity",
     "regular_file_and_no_symlink_boundary",
     "hardlink_and_root_confinement",
     "size_hash_and_component_inventory",
@@ -88,6 +91,8 @@
     "name_only_hsc_kids_refusal",
     "pr151_partial_desi_refusal",
     "admission_authorization_separation",
+    "authorization_state_machine_and_workflow_domain",
+    "refusal_status_precedence_and_lane_aggregation",
     "no_download_or_repository_copy",
     "registered_mutation_completeness",
     "receipt_recomputation_and_content_address",
