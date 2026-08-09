@@ -300,15 +300,15 @@ stacked_pr_execution:
         publication: PASS
       assurance_budget: {maximum: 16, consumed: 14}
     PR-284:
-      lifecycle: IMPLEMENTED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
+      lifecycle: VALIDATED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
       base_sha: b6b6952d52f59bbe05477ef3b02292a98fe92baa
       predecessor_pr: PR-283
       predecessor_sealed_sha: b6b6952d52f59bbe05477ef3b02292a98fe92baa
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: 4126069eaf7aa93fc8f4ec3799a33800fefd0614926691a1301e543a2a229861
+      production_hash: adfbf6216e0a2566edeacc12f555110edea7811d7dc2309e737d7933d230f411
       dependency_hashes:
         predecessor_sealed_head: b6b6952d52f59bbe05477ef3b02292a98fe92baa
         common_depth_path: 41ffe054645c00a36158688b55a0aab390919d3759283b9d5e2f33d69ec8f247
@@ -319,14 +319,9 @@ stacked_pr_execution:
       gate_dispositions:
         eligibility: PASS
         implementation: PASS
-        validation: FAIL
-        code: PASS
-        physics: FAIL
-        statistics: FAIL
-        claim: PASS
-        harness: PASS
-        portability_replay: PASS
-        review: FAIL
+        validation: PASS
+        review: DEFERRED
+        seal: DEFERRED
       assurance_budget: {maximum: 16, consumed: 8}
     PR-285:
       lifecycle: PLANNED
