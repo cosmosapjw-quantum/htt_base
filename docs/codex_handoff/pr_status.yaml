@@ -319,9 +319,17 @@ stacked_pr_execution:
         eligibility: PASS
         implementation: PASS
         validation: PASS
-        review: DEFERRED
-        seal: DEFERRED
-      assurance_budget: {maximum: 16, consumed: 8}
+        code: FAIL
+        physics: FAIL
+        statistics: FAIL
+        claim: PASS
+        harness: PASS
+        portability_replay: PASS
+        review: FAIL
+        seal: INELIGIBLE
+        push: INELIGIBLE
+        publication: INELIGIBLE
+      assurance_budget: {maximum: 16, consumed: 12}
     PR-285:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
