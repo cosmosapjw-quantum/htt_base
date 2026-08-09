@@ -1,0 +1,293 @@
+schema_version: 1
+pr_id: PR-291
+title: CF4 typed velocity-field observed-lane reboot
+owner: HTT
+contributors: [OBSSTAT, COMMON]
+change_set_id: CS-PR291-CF4-REBOOT
+publication_group_id: PG-PR291-CF4-REBOOT
+current_phase: PREACTIVATION_SPEC_AND_ROOT_CAUSE
+
+scientific_boundary:
+  claim_tier: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  scientific_artifact_mode: observed_data_conditional
+  transfer_source: none
+  observed_data_executed: false
+  public_use: false
+  family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
+  maximum_future_result: COVARIANCE_AND_NUISANCE_CONDITIONAL_MORPHOLOGY_COMPATIBILITY
+  rule: >-
+    Preactivation, synthetic operator tests, identity admission, and any later
+    attended CF4 execution do not establish a cosmological anomaly, global
+    tilt, source identity, native transfer result, or Bianchi family.
+
+dependency_contract:
+  required_success_prs: [PR-201, PR-287, PR-289]
+  required_terminals:
+    PR-287: PASS_FRESH_BLIND_TYPED_REPLAY
+    PR-289: PASS_DATA_IDENTITY_V2_PREFLIGHT
+  terminal_receipt_paths:
+    PR-287: docs/generated/pr287_fresh_blind_typed_replay_receipt.json
+    PR-289: docs/generated/pr289_data_identity_v2_receipt.json
+  current_expected_state: BLOCKED_PREDECESSOR_FINAL_SUCCESS
+  fail_closed_rule: >-
+    Missing canonical success, missing or non-replaying terminal evidence, or
+    a failed predecessor keeps every observed CF4 reader unreachable and
+    writes no numerical result.
+
+data_identity_contract:
+  lane_id: CF4
+  product_id: CF4_GROUP_CATALOGUE_BUNDLE
+  registry_path: docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json
+  registry_content_id: sha256:64127c7dc7f1842d45cce715a5ba53180f553c994c44fb7c607ee89677f4e5e9
+  required_source_binding_paths:
+    - docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json
+    - docs/research_program/post_pr275/pr289_publication_policy.json
+    - docs/research_program/post_pr275/pr289_spec.yaml
+    - docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json
+    - docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml
+    - htt/src/common/data_identity.py
+    - scripts/codex_harness/run_pr289_data_identity_v2.py
+    - tests/contracts/test_data_identity_registry_v2.py
+  preflight_receipt_path: docs/generated/pr289_data_identity_v2_receipt.json
+  required_admission_status: ADMITTED_IDENTITY_ONLY
+  required_components: [catalogue, selection, covariance]
+  required_analysis_plan_id: plan:PR291-CF4-TOMOGRAPHY-V1
+  forbidden_admission_shortcuts:
+    - catalogue_name_or_release_label_only
+    - symlink_hardlink_or_root_alias
+    - grouping_without_exact_row_and_selection_identity
+    - covariance_label_without_exact_component_identity
+    - admission_inferred_as_execution_authorization
+
+human_execution_gate:
+  gate_id: H-CF4
+  canonical_status_path: docs/codex_handoff/pr_status.yaml
+  current_status: NOT_AUTHORIZED
+  authorization_mode: distinct_human_execution_receipt
+  receipt_path: docs/research_program/post_pr275/data_runs/cf4/H_CF4_EXECUTION_AUTHORIZATION.json
+  receipt_schema: common.human_execution_authorization.v1
+  authorized_scope: admitted_cf4_observed_execution
+  authorization_domain: lane_data_execution
+  authority_key_id: H-CF4-OWNER-HMAC-V1
+  key_path_environment_variable: HTT_H_CF4_AUTHORITY_KEY_FILE
+  trusted_hmac_key_sha256: null
+  max_authorization_ttl_seconds: 1800
+  authenticity_contract:
+    method: external_owner_hmac_sha256
+    canonicalization: sorted_compact_ascii_json_without_authorization_hmac_sha256
+    status_alignment_required: true
+    exact_admission_bundle_and_record_ids_required: true
+    ordinary_agent_can_mint: false
+    current_trust_anchor_state: UNPROVISIONED
+  freshness_contract:
+    issued_at_and_expires_at_utc_required: true
+    evaluated_at_must_be_in_half_open_interval: '[issued_at_utc, expires_at_utc)'
+    nonce_required: true
+    future_executor_must_consume_nonce_once: true
+  preactivation_rule: >-
+    Synthetic operator composition is allowed, but no ordinary-agent path may
+    mint H-CF4 authorization or open an observed catalogue root.
+
+pipeline_contract:
+  exact_estimand_order:
+    - release_row_group_selection_identity
+    - distance_velocity_frame_and_sign_conventions
+    - radial_monopole_plus_bulk_and_shear_design
+    - full_joint_covariance_and_finite_rank_check
+    - depth_and_zone_of_avoidance_nested_support_path
+    - orbit_invariant_and_eigenspace_drift
+    - shared_nuisance_structural_identified_set
+    - registered_weak_identification_abstention
+    - matched_mock_or_proved_path_calibration
+    - source_separation_unidentified_directions
+    - legacy_projection_without_p0_rescue
+  required_identity_fields:
+    - pipeline_id
+    - catalogue_product_id
+    - grouping_id
+    - row_identity_id
+    - selection_id
+    - coordinate_frame_id
+    - sign_orientation_convention_id
+    - distance_scale_id
+    - velocity_estimator_id
+    - estimand_id
+    - depth_path_id
+    - zone_of_avoidance_mask_id
+    - covariance_id
+    - nuisance_box_id
+    - response_id
+    - units_id
+    - feature_order_id
+    - null_or_matched_mock_id
+  units_and_sign_contract:
+    distance_unit: Mpc
+    radial_velocity_unit: km_per_s
+    bulk_vector_unit: km_per_s
+    shear_tensor_unit: km_per_s_per_Mpc
+    monopole_unit: km_per_s
+    coordinate_frame: Galactic_cartesian_right_handed
+    radial_velocity_sign: positive_receding
+    distance_velocity_conversion_identity_required: true
+  full_covariance_contract:
+    diagonal_shortcut_allowed: false
+    same_catalogue_cross_estimand_dependence_required: true
+    covariance_positive_definite_or_registered_rank_reduction: true
+    feature_order_and_effective_rank_required: true
+    current_status: BLOCKED_ADMITTED_COVARIANCE_UNAVAILABLE
+  depth_and_zoa_contract:
+    support_order: nested_near_to_far
+    shared_row_identity_required: true
+    transport_identity_required: true
+    zoa_mask_identity_required: true
+    arbitrary_shell_reordering_forbidden: true
+    current_status: SYNTHETIC_CONTRACT_ONLY
+  weak_identification_contract:
+    weak_status: WEAKLY_IDENTIFIED
+    required_action: RESPONSE_EQUIVALENCE_ABSTENTION
+    favourable_endpoint_as_point_estimate_forbidden: true
+    pipeline_spread_as_statistical_confidence_forbidden: true
+    local_global_point_identification_forbidden: true
+  gate_receipts:
+    G4: weak_identification_produces_abstention
+    G5: depth_path_carries_nested_support_and_transport_identities
+    G6: path_calibration_has_proved_premise_or_matched_mock_fallback
+    G7: source_separation_preserves_covariance_supported_unidentified_directions
+  legacy_disposition:
+    old_p0_headline_status: RETIRED_NO_RESCUE
+    velocity_shape_headline_status: RETIRED_NO_RESCUE
+    wf_curl_div_ratio: 0.0089
+    wf_curl_div_status: STABLE_LEGACY_STENCIL_LIMITED_SELF_CONSISTENCY
+    physical_vorticity_claim: FORBIDDEN
+    rule: >-
+      Preserve the registered 0.0089 diagnostic as a reconstruction and
+      stencil self-consistency no-go, not as a measurement of physical cosmic
+      vorticity or evidence for potential flow in the Universe.
+  implementation_readiness:
+    exact_admitted_catalogue: BLOCKED_DATA_IDENTITY_ADMISSION
+    full_covariance: BLOCKED_ADMITTED_COVARIANCE_UNAVAILABLE
+    shared_nuisance_identified_set: SYNTHETIC_OPERATOR_CONTRACT_ONLY
+    depth_zoa_path: SYNTHETIC_OPERATOR_CONTRACT_ONLY
+    orbit_and_eigenspace_drift: SYNTHETIC_OPERATOR_CONTRACT_ONLY
+    local_global_rank: NOT_MEASURED
+  synthetic_contract_fixture:
+    fixture_id: PR291-SYNTHETIC-CF4-TYPED-PIPELINE-V1
+    purpose: shape_units_rank_covariance_depth_and_abstention_tests_only
+    cannot_support: [observed_number, p_value, anomaly, global_tilt, public_figure]
+
+output_contract:
+  preactivation_receipt: docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json
+  observed_result_directory: docs/research_program/post_pr275/data_runs/cf4/results
+  current_allowed_outputs: [preactivation_nonexecution_receipt, synthetic_operator_test_evidence]
+  current_forbidden_outputs:
+    - observed_monopole_bulk_or_shear
+    - observed_covariance_or_significance
+    - observed_depth_zoa_path
+    - observed_orbit_or_eigenspace_drift
+    - observed_identified_set_or_endpoint
+    - p0_or_velocity_shape_rescue
+    - claim_bearing_figure
+  output_containment:
+    preflight_before_payload_generation: true
+    existing_parents_must_be_regular_directories: true
+    receipt_must_be_regular_single_link_or_absent: true
+    symlink_hardlink_nonregular_and_escape_refused: true
+    same_directory_temporary_then_atomic_replace: true
+    observed_result_directory_must_remain_absent_while_blocked: true
+  future_observed_result_contract:
+    current_status: DISABLED_PREACTIVATION
+    schema: htt.pr291.cf4_observed_result.v1
+    required_metadata:
+      - artifact_owner
+      - scope
+      - claim_tier
+      - claim_level
+      - scientific_artifact_mode
+      - transfer_source
+      - allowed_uses
+      - forbidden_uses
+      - exact_admitted_record_ids
+      - lane_admission_bundle_id
+      - human_authorization_receipt_sha256
+      - catalogue_product_id
+      - grouping_id
+      - row_identity_id
+      - selection_id
+      - coordinate_frame_id
+      - sign_orientation_convention_id
+      - units_id
+      - covariance_id
+      - covariance_status
+      - depth_path_id
+      - zone_of_avoidance_mask_id
+      - nuisance_box_id
+      - response_id
+      - feature_order_id
+      - null_or_matched_mock_id
+      - generating_procedure
+      - source_bindings
+      - git_commit_or_external_candidate_seal_id
+      - worktree_state
+      - caveats
+      - receipt_content_sha256
+    activation_rule: unreachable_until_validator_negative_tests_and_all_external_gates_exist
+
+artifact_ownership:
+  delivery_orchestration: HTT
+  observable_velocity_features_covariance_and_null_features: OBSSTAT
+  activation_manifests_provenance_and_semantic_guards: COMMON
+  model_dependent_likelihood_posterior_evidence: HTT_NOT_EXECUTED_BY_PREACTIVATION
+  mio_diagnostic_crosscheck: NOT_AN_ACTIVE_PR291_ESTIMAND
+  tsc_teff: LEGACY_ONLY
+
+terminal_precedence:
+  - BLOCKED_CONTRACT_INVALID
+  - BLOCKED_PREDECESSOR_FINAL_SUCCESS
+  - BLOCKED_DATA_IDENTITY_ADMISSION
+  - BLOCKED_HUMAN_EXECUTION_AUTHORIZATION
+  - BLOCKED_OPERATOR_IMPLEMENTATION
+  - READY_FOR_ATTENDED_CF4_EXECUTION
+  - PASS_CF4_OBSERVED_LANE_REBOOT
+
+mutation_registry:
+  - {mutation_id: MU291-DEPENDENCY-SUBSTITUTION, intended_defect: failed or missing predecessor is treated as success}
+  - {mutation_id: MU291-ADMISSION-AS-AUTHORIZATION, intended_defect: identity admission substitutes for H-CF4}
+  - {mutation_id: MU291-REGISTRY-SOURCE-FORGERY, intended_defect: self-consistent receipt bypasses canonical PR-289 provenance}
+  - {mutation_id: MU291-GATE-ID-ALIAS, intended_defect: a different human gate authorizes CF4}
+  - {mutation_id: MU291-GROUP-ROW-SELECTION-COLLAPSE, intended_defect: catalogue label substitutes for exact grouped rows and selection}
+  - {mutation_id: MU291-DIAGONAL-COVARIANCE, intended_defect: full covariance is silently diagonalized}
+  - {mutation_id: MU291-DEPTH-SUPPORT-DRIFT, intended_defect: depth rows are reordered or not nested}
+  - {mutation_id: MU291-ZOA-MASK-DRIFT, intended_defect: observation and calibration use different ZoA masks}
+  - {mutation_id: MU291-WEAK-ID-POINT-ESTIMATE, intended_defect: weak identification emits a unique point or label}
+  - {mutation_id: MU291-FAVOURABLE-ENDPOINT, intended_defect: an identified-set endpoint is reported as the estimate}
+  - {mutation_id: MU291-PIPELINE-SPREAD-AS-CONFIDENCE, intended_defect: robustness spread is labelled statistical confidence}
+  - {mutation_id: MU291-P0-RESURRECTION, intended_defect: retired monopole or velocity-shape headline is revived}
+  - {mutation_id: MU291-CURL-PHYSICS-OVERCLAIM, intended_defect: the 0.0089 stencil diagnostic is called physical vorticity evidence}
+  - {mutation_id: MU291-BLOCKED-NUMERIC-WRITE, intended_defect: blocked preactivation writes an observed number}
+  - {mutation_id: MU291-OUTPUT-ALIAS, intended_defect: receipt write mutates an external inode or path}
+  - {mutation_id: MU291-CLAIM-PROMOTION, intended_defect: process or morphology compatibility becomes anomaly global tilt or family language}
+
+allowed_uses:
+  - typed CF4 operator composition on explicitly synthetic fixtures
+  - fail-closed dependency identity and authorization preflight
+  - future attended execution planning after distinct admission and H-CF4 authorization
+forbidden_uses:
+  - automatic observed execution
+  - P0 or velocity-shape headline rescue
+  - diagonal covariance or favourable-endpoint shortcut
+  - physical-vorticity or global-tilt claim from the WF curl diagnostic
+  - native solver or transfer validation
+  - anisotropy source or Bianchi-family identification
+  - public or manuscript claim from preactivation evidence
+
+assumptions:
+  - PR-289 CF4 admission and H-CF4 authorization remain separate receipts.
+  - Full covariance and the exact grouped-row selection are part of the estimand.
+  - Synthetic fixtures validate operators only and cannot stand in for the CF4 catalogue.
+caveats:
+  - PR-287 and PR-289 are not canonically completed on this cumulative preactivation candidate.
+  - The PR-289 CF4 lane is REJECTED_NOT_PRESENT and H-CF4 is NOT_AUTHORIZED.
+  - The H-CF4 trust anchor is unprovisioned.
+  - No observed CF4 bytes are read, downloaded, transformed, or summarized in this phase.
+  - The preserved 0.0089 ratio is a legacy stencil-limited WF self-consistency diagnostic, not a new execution or physical claim.
