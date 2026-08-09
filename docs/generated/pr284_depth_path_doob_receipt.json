@@ -104,6 +104,15 @@
       "activated": true,
       "executed": true,
       "killed": true,
+      "mutation_id": "MU284-REPORT-BUILDER-BYPASS",
+      "mutation_kind": "caller_supplied_proved_report_bypasses_replay",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "CALLER_SUPPLIED_PROVED_REPORT_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
       "mutation_id": "MU284-PREPROCESSING-DRIFT",
       "mutation_kind": "preprocessing identity differs across rungs or calibration",
       "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
@@ -405,7 +414,7 @@
     }
   },
   "public_use": false,
-  "receipt_content_sha256": "2c4dab87a7dc2a475a608e59ed24110ef45d33ed1e466527ffeb832509abeebf",
+  "receipt_content_sha256": "6cd68c1082a00a3db1385650ef7e2db785889dc9b2f2d24cb8d9835000f64213",
   "schema": "htt.pr284.depth_path_doob_artifact.v1",
   "scientific_artifact_mode": "synthetic_diagnostic",
   "scope": "synthetic premise-bound finite depth-path calibration",
@@ -413,7 +422,7 @@
   "source_bindings": [
     {
       "path": "docs/research_program/post_pr275/pr284_spec.yaml",
-      "sha256": "ee357f7c99e9cf1beb8805328ba724faee16cf4c9f72fcc399c852bc7bf75743"
+      "sha256": "3a5784ea33b45d6d73cb4e8c1602d121702dd8aea206b8e625abe0f24d364e85"
     },
     {
       "path": "htt/src/common/depth_path.py",
@@ -421,7 +430,7 @@
     },
     {
       "path": "htt/src/common/depth_path_calibration.py",
-      "sha256": "f72885524bcb4e8fbe47755693d561b249210447790a9953fc171182d4dac46d"
+      "sha256": "89874115f583120d9b5c62cc9697e33dedbc30c3cba3e9c51a97a82701d2dfa3"
     },
     {
       "path": "htt/src/common/vector_tensor_statistical_foundations.py",
@@ -445,7 +454,7 @@
     },
     {
       "path": "scripts/codex_harness/run_pr284_depth_path_doob.py",
-      "sha256": "59d26868c91551b8d5655cc6f6b9e3b81f4d4ec683950435e43cfe2ac42398b5"
+      "sha256": "b2a2f25db76fb60e0d1fa32870331cf6c3b20174008398e8df6907f339af5af1"
     },
     {
       "path": "tests/contracts/test_depth_path.py",
@@ -453,7 +462,7 @@
     },
     {
       "path": "tests/contracts/test_depth_path_doob_calibration.py",
-      "sha256": "7f9a0540ab1cdb95d0e53bbd7c41045c838f5e31e60a915e9a5610e77d309eb3"
+      "sha256": "53038dcd3235d5de124e3b5fb10987dfa65b2396eea0b478ec2a28d44e719bc3"
     },
     {
       "path": "tests/contracts/test_pillar_s_core.py",

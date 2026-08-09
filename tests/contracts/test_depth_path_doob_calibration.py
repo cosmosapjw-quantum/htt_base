@@ -218,6 +218,49 @@ def test_exact_finite_centered_tower_produces_premise_bound_doob_report() -> Non
     assert calibration.matched_mock_plan_id is None
 
 
+def test_common_report_builder_cannot_mint_proved_status_without_replay() -> None:
+    from common import depth_path_calibration as contracts
+
+    path = _path()
+    threshold = _threshold()
+    law = _finite_law(target=(0, 1, 2, 3))
+    selection = _selection(law)
+
+    with pytest.raises(DepthPathError, match="centered|decreasing filtration"):
+        contracts._build_depth_path_reverse_martingale_report_contract(
+            report_id="PR284-FORGED-PROVED-REPORT",
+            path_content_id=path.content_id,
+            stratum_content_ids=tuple(
+                stratum.content_id for stratum in path.strata
+            ),
+            threshold_contract=threshold,
+            filtration_id="sha256:forged-filtration",
+            filtration_direction="DECREASING",
+            preprocessing_id="sha256:common-preprocessing-v1",
+            estimator_id="sha256:conditional-estimator-v1",
+            premise_evidence_id="sha256:caller-supplied-proof",
+            premise_status=(
+                ReverseMartingalePremiseStatus.PROVED_FINITE_REGISTERED_PATH
+            ),
+            finite_target_law=law,
+            selection_contract=selection,
+            path_partitions=(
+                ("left", "left", "right", "right"),
+                ("x", "y", "x", "y"),
+                ("all", "all", "all", "all"),
+            ),
+            sigma_field_ids=("sigma-1", "sigma-2", "sigma-3"),
+            path_values=(Fraction(0), Fraction(0), Fraction(0)),
+            path_maximum_abs=Fraction(0),
+            path_maximum_content_id="sha256:caller-supplied-maximum",
+            target_second_moment=Fraction(1),
+            exact_tower_equalities=(True, True),
+            exact_tower_report_content_id="sha256:caller-supplied-tower",
+            unresolved_reasons=(),
+            matched_mock_plan=None,
+        )
+
+
 def test_selected_atom_path_is_recomputed_from_exact_conditionals() -> None:
     report = _proved_report(selected_atom_index=3)
     assert report.path_values == (Fraction(3), Fraction(2), Fraction(0))

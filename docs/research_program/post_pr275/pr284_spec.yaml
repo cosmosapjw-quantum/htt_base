@@ -196,6 +196,10 @@ mutation_registry:
     mutation_kind: one common-target value changes after report sealing
     intended_defect: rung expectations no longer share the sealed target
     expected_kill: report replay rejects target identity drift
+  - mutation_id: MU284-REPORT-BUILDER-BYPASS
+    mutation_kind: caller_supplied_proved_report_bypasses_replay
+    intended_defect: an importable internal builder mints a proved report from caller-supplied premises
+    expected_kill: common report construction independently replays centering, tower, path values, second moment, and identities
   - mutation_id: MU284-PREPROCESSING-DRIFT
     mutation_kind: preprocessing identity differs across rungs or calibration
     intended_defect: independently normalized rungs receive a free bound

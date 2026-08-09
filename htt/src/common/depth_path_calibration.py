@@ -16,6 +16,10 @@ from numbers import Integral, Rational
 from typing import Sequence
 
 from common.depth_path import DepthPathError
+from common.vector_tensor_statistical_foundations import (
+    VectorTensorStatisticalFoundationError,
+    certify_finite_partition_tower,
+)
 
 
 class _StringEnum(str, Enum):
@@ -130,6 +134,23 @@ def _nonnegative_int(value: object, name: str) -> int:
     if isinstance(value, bool) or not isinstance(value, Integral) or int(value) < 0:
         raise DepthPathError(f"{name} must be a non-negative integer")
     return int(value)
+
+
+def _conditional_values(
+    *,
+    weights: tuple[Fraction, ...],
+    target: tuple[Fraction, ...],
+    labels: tuple[str, ...],
+) -> tuple[Fraction, ...]:
+    mass: dict[str, Fraction] = {}
+    weighted: dict[str, Fraction] = {}
+    for probability, value, label in zip(weights, target, labels, strict=True):
+        mass[label] = mass.get(label, Fraction()) + probability
+        weighted[label] = weighted.get(label, Fraction()) + probability * value
+    if any(value <= 0 for value in mass.values()):
+        raise DepthPathError("every conditional cell must have positive mass")
+    conditional = {label: weighted[label] / mass[label] for label in mass}
+    return tuple(conditional[label] for label in labels)
 
 
 @dataclass(frozen=True)
@@ -636,6 +657,7 @@ class DepthPathReverseMartingaleReport:
         object.__setattr__(self, "sigma_field_ids", sigma_fields)
         object.__setattr__(self, "path_values", path_values)
         object.__setattr__(self, "unresolved_reasons", reasons)
+        self._assert_proved_premise_replay()
         object.__setattr__(
             self,
             "_identity_seal",
@@ -666,6 +688,106 @@ class DepthPathReverseMartingaleReport:
     @property
     def matched_mock_plan_id(self) -> str | None:
         return None if self.matched_mock_plan is None else self.matched_mock_plan.plan_id
+
+    def _assert_proved_premise_replay(self) -> None:
+        if (
+            self.premise_status
+            is not ReverseMartingalePremiseStatus.PROVED_FINITE_REGISTERED_PATH
+        ):
+            return
+        if type(self.finite_target_law) is not DepthPathFiniteTargetLaw:
+            raise DepthPathError(
+                "proved report requires an exact finite target law"
+            )
+        if type(self.selection_contract) is not DepthPathSelectionContract:
+            raise DepthPathError(
+                "proved report requires an exact selection contract"
+            )
+        law = revalidate_depth_path_finite_target_law(self.finite_target_law)
+        selection = revalidate_depth_path_selection_contract(
+            self.selection_contract
+        )
+        mean = sum(
+            probability * value
+            for probability, value in zip(
+                law.weights, law.common_target, strict=True
+            )
+        )
+        if mean != 0:
+            raise DepthPathError("common target must be exactly centered")
+        second_moment = sum(
+            probability * value * value
+            for probability, value in zip(
+                law.weights, law.common_target, strict=True
+            )
+        )
+        if second_moment <= 0:
+            raise DepthPathError("common target requires a positive second moment")
+        if self.target_second_moment != second_moment:
+            raise DepthPathError(
+                "target second moment does not match exact finite-law replay"
+            )
+        try:
+            tower = certify_finite_partition_tower(
+                weights=law.weights,
+                common_target=law.common_target,
+                partitions=tuple(reversed(self.path_partitions)),
+            )
+        except VectorTensorStatisticalFoundationError as exc:
+            raise DepthPathError(
+                "path partitions do not form the required decreasing filtration: "
+                f"{exc}"
+            ) from exc
+        conditionals = tuple(
+            _conditional_values(
+                weights=law.weights,
+                target=law.common_target,
+                labels=partition,
+            )
+            for partition in self.path_partitions
+        )
+        expected_path_values = tuple(
+            row[selection.selected_atom_index] for row in conditionals
+        )
+        if self.path_values != expected_path_values:
+            raise DepthPathError(
+                "path values do not match exact conditional-expectation replay"
+            )
+        expected_maximum = max(abs(value) for value in expected_path_values)
+        if self.path_maximum_abs != expected_maximum:
+            raise DepthPathError(
+                "path maximum does not match exact conditional-expectation replay"
+            )
+        expected_equalities = tuple(tower.exact_equalities)
+        if self.exact_tower_equalities != expected_equalities:
+            raise DepthPathError("tower equalities do not match exact replay")
+        expected_tower_content_id = _sha256_payload(
+            {
+                "atom_count": tower.atom_count,
+                "conditional_expectations": [
+                    list(row) for row in tower.conditional_expectations
+                ],
+                "exact_equalities": list(tower.exact_equalities),
+                "rung_count": tower.rung_count,
+                "schema": "PR284_EXACT_FINITE_TOWER_REPLAY_V1",
+            }
+        )
+        if self.exact_tower_report_content_id != expected_tower_content_id:
+            raise DepthPathError("tower report identity does not match exact replay")
+        expected_path_maximum_content_id = _sha256_payload(
+            {
+                "path_values": [
+                    _fraction_text(value) for value in expected_path_values
+                ],
+                "selected_atom_id": selection.selected_atom_id,
+                "selection_contract_content_id": selection.content_id,
+                "value": _fraction_text(expected_maximum),
+            }
+        )
+        if self.path_maximum_content_id != expected_path_maximum_content_id:
+            raise DepthPathError(
+                "path maximum identity does not match exact replay"
+            )
 
     def _payload_unchecked(self) -> dict[str, object]:
         return {
@@ -732,6 +854,7 @@ class DepthPathReverseMartingaleReport:
             self._identity_seal,
             name="reverse-martingale report",
         )
+        self._assert_proved_premise_replay()
 
     def as_payload(self) -> dict[str, object]:
         self._assert_identity_sealed()

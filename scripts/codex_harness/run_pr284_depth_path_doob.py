@@ -46,6 +46,7 @@ _MUTATIONS = (
     ("MU284-SUPPORT-NESTING-AS-PROOF", "nested_support_substituted_for_partition_tower"),
     ("MU284-NONNESTED-SUPPORT", "one path support is not a subset of its predecessor"),
     ("MU284-TARGET-DRIFT", "one common-target value changes after report sealing"),
+    ("MU284-REPORT-BUILDER-BYPASS", "caller_supplied_proved_report_bypasses_replay"),
     ("MU284-PREPROCESSING-DRIFT", "preprocessing identity differs across rungs or calibration"),
     ("MU284-FILTRATION-DIRECTION-DRIFT", "non-coarsening partition is inserted"),
     ("MU284-THRESHOLD-DRIFT", "threshold changes after report construction"),
@@ -61,6 +62,7 @@ _REASONS = {
     "MU284-SUPPORT-NESTING-AS-PROOF": "FINITE_LAW_AND_PARTITION_EVIDENCE_REQUIRED",
     "MU284-NONNESTED-SUPPORT": "NONNESTED_SUPPORT_REJECTED",
     "MU284-TARGET-DRIFT": "FINITE_TARGET_IDENTITY_REJECTED",
+    "MU284-REPORT-BUILDER-BYPASS": "CALLER_SUPPLIED_PROVED_REPORT_REJECTED",
     "MU284-PREPROCESSING-DRIFT": "PREPROCESSING_IDENTITY_REJECTED",
     "MU284-FILTRATION-DIRECTION-DRIFT": "DECREASING_FILTRATION_REJECTED",
     "MU284-THRESHOLD-DRIFT": "THRESHOLD_CONTRACT_REJECTED",
@@ -76,6 +78,7 @@ _ERROR_MARKERS = {
     "MU284-SUPPORT-NESTING-AS-PROOF": "exact DepthPathFiniteTargetLaw",
     "MU284-NONNESTED-SUPPORT": "non-nested",
     "MU284-TARGET-DRIFT": "identity drifted",
+    "MU284-REPORT-BUILDER-BYPASS": "exactly centered",
     "MU284-PREPROCESSING-DRIFT": "preprocessing identity",
     "MU284-FILTRATION-DIRECTION-DRIFT": "decreasing filtration",
     "MU284-THRESHOLD-DRIFT": "threshold contract",
@@ -570,6 +573,8 @@ def _run_mutations() -> list[dict[str, object]]:
     )
     from common.depth_path_calibration import (
         ReverseMartingalePremiseStatus,
+        _build_depth_path_reverse_martingale_report_contract,
+        build_depth_path_finite_target_law,
         revalidate_depth_path_finite_target_law,
         revalidate_depth_path_reverse_martingale_report,
         revalidate_depth_path_selection_contract,
@@ -628,6 +633,53 @@ def _run_mutations() -> list[dict[str, object]]:
         return revalidate_depth_path_finite_target_law(law)
 
     operations["MU284-TARGET-DRIFT"] = target_drift
+
+    def report_builder_bypass() -> object:
+        path = _path()
+        threshold = _threshold()
+        law = build_depth_path_finite_target_law(
+            law_id="MU284-FORGED-LAW",
+            common_target_id="MU284-NONCENTERED-TARGET",
+            atom_ids=("atom-a", "atom-b", "atom-c", "atom-d"),
+            weights=(Fraction(1, 4),) * 4,
+            common_target=(0, 1, 2, 3),
+            registration_id="sha256:mutation-forged-law",
+        )
+        selection = _selection(law)
+        return _build_depth_path_reverse_martingale_report_contract(
+            report_id="MU284-FORGED-PROVED-REPORT",
+            path_content_id=path.content_id,
+            stratum_content_ids=tuple(
+                stratum.content_id for stratum in path.strata
+            ),
+            threshold_contract=threshold,
+            filtration_id="sha256:mutation-forged-filtration",
+            filtration_direction="DECREASING",
+            preprocessing_id="sha256:common-preprocessing-v1",
+            estimator_id="sha256:conditional-estimator-v1",
+            premise_evidence_id="sha256:caller-supplied-proof",
+            premise_status=(
+                ReverseMartingalePremiseStatus.PROVED_FINITE_REGISTERED_PATH
+            ),
+            finite_target_law=law,
+            selection_contract=selection,
+            path_partitions=(
+                ("left", "left", "right", "right"),
+                ("x", "y", "x", "y"),
+                ("all", "all", "all", "all"),
+            ),
+            sigma_field_ids=("sigma-1", "sigma-2", "sigma-3"),
+            path_values=(Fraction(0), Fraction(0), Fraction(0)),
+            path_maximum_abs=Fraction(0),
+            path_maximum_content_id="sha256:caller-supplied-maximum",
+            target_second_moment=Fraction(1),
+            exact_tower_equalities=(True, True),
+            exact_tower_report_content_id="sha256:caller-supplied-tower",
+            unresolved_reasons=(),
+            matched_mock_plan=None,
+        )
+
+    operations["MU284-REPORT-BUILDER-BYPASS"] = report_builder_bypass
 
     def preprocessing_drift() -> object:
         fixture = _proved_fixture()
