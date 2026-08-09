@@ -48,7 +48,10 @@ BOUND_SOURCES = (
 )
 _MUTATIONS = (
     ("MU283-WEAK-AS-SEPARABLE", "weak_status_promoted_to_separable"),
-    ("MU283-ANGLE-THRESHOLD-DRIFT", "threshold_changed_after_geometry_measurement"),
+    (
+        "MU283-THRESHOLD-IDENTITY-DRIFT",
+        "registered_threshold_contract_identity_changed",
+    ),
     ("MU283-COVARIANCE-DRIFT", "source_gate_covariance_identity_changed"),
     ("MU283-ANGLE-IDENTITY-DRIFT", "principal_angle_bytes_changed_without_report_reseal"),
     ("MU283-SINGULAR-IDENTITY-DRIFT", "joint_singular_value_bytes_changed_without_report_reseal"),
@@ -60,7 +63,9 @@ _MUTATIONS = (
 )
 _EXPECTED_REASONS = {
     "MU283-WEAK-AS-SEPARABLE": "MUTANT_FORCED_RESPONSE_CLASS_CANDIDATE",
-    "MU283-ANGLE-THRESHOLD-DRIFT": "ANGLE_THRESHOLD_NOT_BOUND_TO_GEOMETRY",
+    "MU283-THRESHOLD-IDENTITY-DRIFT": (
+        "THRESHOLD_CONTRACT_IDENTITY_REJECTED"
+    ),
     "MU283-COVARIANCE-DRIFT": "COVARIANCE_QUOTIENT_BINDING_REJECTED",
     "MU283-ANGLE-IDENTITY-DRIFT": "PRINCIPAL_ANGLE_IDENTITY_REJECTED",
     "MU283-SINGULAR-IDENTITY-DRIFT": "JOINT_SINGULAR_IDENTITY_REJECTED",
@@ -122,6 +127,7 @@ _FORBIDDEN_USES = (
     "Observed-data source attribution, global-tilt detection, or physical parameter inference.",
     "Native solver validation, geometry detection, or Bianchi family identification.",
     "HTT posterior/evidence production or MIO truth certification.",
+    "PR-153 artifacts are forbidden input.",
 )
 _CAVEATS = (
     "Thresholds define a registered diagnostic operating point, not a "
@@ -131,6 +137,7 @@ _CAVEATS = (
     "Synthetic fixtures do not establish observed-sky covariance, mask, or null validity.",
     "WEAKLY_IDENTIFIED is an abstention state, not partial evidence for either source hypothesis.",
     "PR-151 partial/background data is forbidden input.",
+    "PR-153 artifacts are forbidden input.",
 )
 
 
@@ -702,6 +709,7 @@ def _mutation_row(
 
 def _run_mutations(contexts: Mapping[str, Mapping[str, Any]]) -> list[dict[str, object]]:
     from common.open_set_response_classes import (
+        OpenSetClassificationStatus,
         OpenSetResponseError,
         ResponseClassSourceSemantics,
         SourceSeparationGateStatus,
@@ -728,22 +736,45 @@ def _run_mutations(contexts: Mapping[str, Mapping[str, Any]]) -> list[dict[str, 
     assert decision is not None
     rows = []
 
-    forced_candidate = "response-class-local"
+    weak_status_mutant = copy(gate)
+    object.__setattr__(
+        weak_status_mutant,
+        "status",
+        SourceSeparationGateStatus.SEPARABLE_CANDIDATE,
+    )
+    forced_candidate = classify_open_set_response(
+        observation=[-3.0, 0.0],
+        classes=weak["classes"],
+        equivalence_report=weak["equivalence"],
+        covariance=weak["covariance"],
+        nuisance_tangent=None,
+        unknown_squared_distance_threshold=4.0,
+        decision_squared_margin=0.5,
+        covariance_null_tolerance=1.0e-10,
+        absolute_tolerance=1.0e-12,
+        relative_tolerance=1.0e-12,
+        source_separation_gate=weak_status_mutant,
+    )
     rows.append(
         _mutation_row(
             *_MUTATIONS[0],
-            activated=forced_candidate is not None,
+            activated=(
+                forced_candidate.status
+                is OpenSetClassificationStatus.RESPONSE_CLASS_CANDIDATE
+                and forced_candidate.candidate_class_id is not None
+            ),
             killed=(
                 weak["classified"].candidate_class_id is None
                 and gate.status is SourceSeparationGateStatus.WEAKLY_IDENTIFIED
+                and forced_candidate.candidate_class_id is not None
             ),
             reason=_EXPECTED_REASONS[_MUTATIONS[0][0]],
         )
     )
 
     drifted_threshold = build_weak_identification_threshold_contract(
-        minimum_principal_angle_radians=0.1,
-        minimum_normalizer_bound_relative_joint_singular_value=0.01,
+        minimum_principal_angle_radians=0.2,
+        minimum_normalizer_bound_relative_joint_singular_value=0.001,
         parameter_coordinate_units=UNITS,
     )
     try:
@@ -937,12 +968,40 @@ def _run_mutations(contexts: Mapping[str, Mapping[str, Any]]) -> list[dict[str, 
         relative_tolerance=1.0e-12,
         source_separation_gate=gate,
     )
+    far_precedence_mutant = classify_open_set_response(
+        observation=[100.0, 0.0],
+        classes=weak["classes"],
+        equivalence_report=weak["equivalence"],
+        covariance=weak["covariance"],
+        nuisance_tangent=None,
+        unknown_squared_distance_threshold=4.0,
+        decision_squared_margin=0.5,
+        covariance_null_tolerance=1.0e-10,
+        absolute_tolerance=1.0e-12,
+        relative_tolerance=1.0e-12,
+        source_separation_gate=weak_status_mutant,
+    )
+    equivalent_precedence_mutant = classify_open_set_response(
+        observation=[-3.0, 0.0],
+        classes=weak["classes"],
+        equivalence_report=broad_equivalence,
+        covariance=weak["covariance"],
+        nuisance_tangent=None,
+        unknown_squared_distance_threshold=4.0,
+        decision_squared_margin=0.5,
+        covariance_null_tolerance=1.0e-10,
+        absolute_tolerance=1.0e-12,
+        relative_tolerance=1.0e-12,
+        source_separation_gate=weak_status_mutant,
+    )
     rows.append(
         _mutation_row(
             *_MUTATIONS[6],
             activated=(
-                far_classified.best_squared_distance is not None
-                and far_classified.best_squared_distance >= 4.0
+                far_precedence_mutant.status
+                is OpenSetClassificationStatus.UNKNOWN_CLASS
+                and equivalent_precedence_mutant.status
+                is OpenSetClassificationStatus.EQUIVALENCE_CLASS
                 and len(broad_equivalence.components[0]) > 1
             ),
             killed=(
@@ -950,6 +1009,10 @@ def _run_mutations(contexts: Mapping[str, Mapping[str, Any]]) -> list[dict[str, 
                 and far_classified.candidate_class_id is None
                 and equivalent_classified.status.value == "TYPE_UNIDENTIFIED"
                 and equivalent_classified.candidate_class_id is None
+                and far_precedence_mutant.status
+                is OpenSetClassificationStatus.UNKNOWN_CLASS
+                and equivalent_precedence_mutant.status
+                is OpenSetClassificationStatus.EQUIVALENCE_CLASS
             ),
             reason=_EXPECTED_REASONS[_MUTATIONS[6][0]],
         )

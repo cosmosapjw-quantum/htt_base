@@ -160,10 +160,10 @@ mutation_registry:
     mutation_kind: weak_status_promoted_to_separable
     intended_defect: a full-rank small-angle case emits a point candidate
     expected_kill: mandatory abstention assertion fails
-  - mutation_id: MU283-ANGLE-THRESHOLD-DRIFT
-    mutation_kind: threshold_changed_after_geometry_measurement
-    intended_defect: the same measured angles are evaluated against unbound policy
-    expected_kill: threshold identity mismatch blocks evaluation
+  - mutation_id: MU283-THRESHOLD-IDENTITY-DRIFT
+    mutation_kind: registered_threshold_contract_identity_changed
+    intended_defect: the same measured geometry is regraded with a relaxed singular threshold
+    expected_kill: exact registered threshold-contract identity blocks evaluation
   - mutation_id: MU283-COVARIANCE-DRIFT
     mutation_kind: source_gate_covariance_identity_changed
     intended_defect: weak-ID decision is replayed on a different quotient
@@ -252,9 +252,11 @@ forbidden_uses:
   - Observed-data source attribution, global-tilt detection, or physical parameter inference.
   - Native solver validation, geometry detection, or Bianchi family identification.
   - HTT posterior/evidence production or MIO truth certification.
+  - PR-153 artifacts are forbidden input.
 caveats:
   - Thresholds define a registered diagnostic operating point, not a universal physical constant.
   - The singular-value threshold is conditional on the exact registered dimensionless-beta normalizer and is not coordinate-rescaling invariant.
   - Synthetic fixtures do not establish observed-sky covariance, mask, or null validity.
   - WEAKLY_IDENTIFIED is an abstention state, not partial evidence for either source hypothesis.
   - PR-151 partial/background data is forbidden input.
+  - PR-153 artifacts are forbidden input.

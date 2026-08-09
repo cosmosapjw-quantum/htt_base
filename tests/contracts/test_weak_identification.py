@@ -479,6 +479,22 @@ def test_threshold_must_match_the_geometry_measurement() -> None:
         )
 
 
+def test_threshold_contract_must_match_registered_pr283_identity() -> None:
+    report, classes, _, _, covariance = _source_fixture(
+        global_amplitude=0.005,
+    )
+
+    with pytest.raises(OpenSetResponseError, match="registered PR-283"):
+        source_separation_gate_from_pr256(
+            report,
+            classes=classes,
+            covariance=covariance,
+            nuisance_tangent=None,
+            normalizer=_normalizer(),
+            threshold_contract=_thresholds(relative_singular=0.001),
+        )
+
+
 def test_source_geometry_is_replayed_before_pr283_projection() -> None:
     report, classes, _, _, covariance = _source_fixture(angle=0.1)
     mutant = copy(report)
@@ -583,6 +599,14 @@ def test_generated_receipt_replays_and_records_complete_mutation_evidence() -> N
     assert payload["mathematical_boundary"]["pr283_effect"] == (
         "runtime_execution_without_proof_promotion"
     )
+    forbidden_pr153 = "PR-153 artifacts are forbidden input."
+    assert forbidden_pr153 in spec["forbidden_uses"]
+    assert forbidden_pr153 in spec["caveats"]
+    assert forbidden_pr153 in json.loads(POLICY.read_text(encoding="utf-8"))[
+        "forbidden_inputs"
+    ]
+    assert forbidden_pr153 in payload["forbidden_uses"]
+    assert forbidden_pr153 in payload["caveats"]
     unsigned = dict(payload)
     recorded = unsigned.pop("artifact_content_sha256")
     assert recorded == hashlib.sha256(
@@ -593,6 +617,34 @@ def test_generated_receipt_replays_and_records_complete_mutation_evidence() -> N
             ensure_ascii=True,
         ).encode("utf-8")
     ).hexdigest()
+
+
+def test_registered_mutants_execute_the_forbidden_code_paths(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from common import open_set_response_classes as open_set_module
+
+    original = open_set_module.classify_open_set_response
+    mutant_calls: list[tuple[str, str]] = []
+
+    def observe_mutant_execution(**kwargs):
+        gate = kwargs["source_separation_gate"]
+        decision = gate.source_separation_decision
+        if decision is not None:
+            mutant_calls.append((gate.status.value, decision.status.value))
+        return original(**kwargs)
+
+    monkeypatch.setattr(
+        open_set_module,
+        "classify_open_set_response",
+        observe_mutant_execution,
+    )
+    _, threshold_contract = pr283_runner._load_contract()
+    _, contexts = pr283_runner._build_cases(threshold_contract)
+    rows = pr283_runner._run_mutations(contexts)
+
+    assert not pr283_runner._validate_mutation_results(rows)
+    assert mutant_calls.count(("SEPARABLE_CANDIDATE", "WEAKLY_IDENTIFIED")) == 3
 
 
 def test_runner_refuses_hardlinked_output_before_build(

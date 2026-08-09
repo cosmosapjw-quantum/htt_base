@@ -4,7 +4,7 @@
     "Mandatory abstention before later multi-probe and claim-capability integration.",
     "Diagnostic reporting of the measured rank, angle, and conditioning ladder."
   ],
-  "artifact_content_sha256": "fc5d2a5522d87bc744a3c95296c211821baa29f4e15062190a15e048ea74765b",
+  "artifact_content_sha256": "064040026f23717e06d4c9efaa30f02ff00ec4d34551081d4c5d3c8b75ed932a",
   "artifact_id": "PR283-WEAK-IDENTIFICATION-ABSTENTION",
   "assumptions": [
     "PR-256 response providers and geometry report are factory-derived and replay-bound.",
@@ -325,7 +325,8 @@
     "The singular-value threshold is conditional on the exact registered dimensionless-beta normalizer and is not coordinate-rescaling invariant.",
     "Synthetic fixtures do not establish observed-sky covariance, mask, or null validity.",
     "WEAKLY_IDENTIFIED is an abstention state, not partial evidence for either source hypothesis.",
-    "PR-151 partial/background data is forbidden input."
+    "PR-151 partial/background data is forbidden input.",
+    "PR-153 artifacts are forbidden input."
   ],
   "claim_level": {
     "level": "C2",
@@ -342,7 +343,8 @@
     "A point estimate or nearest response-class fallback under weak identification.",
     "Observed-data source attribution, global-tilt detection, or physical parameter inference.",
     "Native solver validation, geometry detection, or Bianchi family identification.",
-    "HTT posterior/evidence production or MIO truth certification."
+    "HTT posterior/evidence production or MIO truth certification.",
+    "PR-153 artifacts are forbidden input."
   ],
   "generating_command": "python3 -B scripts/codex_harness/run_pr283_weak_identification.py build",
   "generation_identity": {
@@ -438,10 +440,10 @@
       "activated": true,
       "executed": true,
       "killed": true,
-      "mutation_id": "MU283-ANGLE-THRESHOLD-DRIFT",
-      "mutation_kind": "threshold_changed_after_geometry_measurement",
+      "mutation_id": "MU283-THRESHOLD-IDENTITY-DRIFT",
+      "mutation_kind": "registered_threshold_contract_identity_changed",
       "observed_outcome": "BLOCKED_WEAK_IDENTIFICATION_CONTRACT",
-      "observed_reason": "ANGLE_THRESHOLD_NOT_BOUND_TO_GEOMETRY"
+      "observed_reason": "THRESHOLD_CONTRACT_IDENTITY_REJECTED"
     },
     {
       "activated": true,
@@ -527,11 +529,11 @@
   "source_bindings": [
     {
       "path": "docs/research_program/post_pr275/pr283_spec.yaml",
-      "sha256": "eef9e10ccb7503c485171b153732c63b1e735cc80c475b220920757bb0e95239"
+      "sha256": "339033d489ad7c77e389021a580271ebc1594416b0975e006f034dca4e8097de"
     },
     {
       "path": "docs/research_program/post_pr275/pr283_publication_policy.json",
-      "sha256": "1adf3fb4e6509c0d015d96783e6e878f740312579d123ea84342473756c06e6d"
+      "sha256": "f731d4be56fb80fc953d6d11c0f5af63257e53402a952e1dcd291b877a085b42"
     },
     {
       "path": "htt/src/common/source_separation.py",
@@ -575,15 +577,15 @@
     },
     {
       "path": "htt/htt/htt/statistics/open_set_response_classes.py",
-      "sha256": "9f426751ab200e0eee46579f816f192798e335554994e2c8bc19b269bf476869"
+      "sha256": "106b3b0f9c3c77abfa3b4a542b5732c9a2ddabd1752057355485038ff7312540"
     },
     {
       "path": "scripts/codex_harness/run_pr283_weak_identification.py",
-      "sha256": "323721e41eaa835d7e5602d7f7ed349fad74f3f432d8fd2786bb625e62156a60"
+      "sha256": "3e34581f9b1c8afbfeeae02d479c20f49fd703d968847320e78f0885c525e6ab"
     },
     {
       "path": "tests/contracts/test_weak_identification.py",
-      "sha256": "1f165eb757e10549615eca8bdf9e0b449e61f3b55af26cba0195c001f70ed086"
+      "sha256": "f84787c285b13448428113588855cf428701df94f5427b25404b85efb3f5e1f1"
     },
     {
       "path": "tests/contracts/test_pillar_t_cas.py",

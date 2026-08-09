@@ -91,6 +91,13 @@ def source_separation_gate_from_pr256(
         raise OpenSetResponseError(
             "threshold_contract must be a factory-derived PR-283 contract"
         )
+    if (
+        threshold_contract.contract_id
+        != PR283_DEFAULT_THRESHOLD_CONTRACT.contract_id
+    ):
+        raise OpenSetResponseError(
+            "threshold_contract must equal the registered PR-283 contract"
+        )
     encoded = json.dumps(
         report.as_payload(),
         sort_keys=True,
