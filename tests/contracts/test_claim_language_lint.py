@@ -259,6 +259,33 @@ def test_cli_skips_missing_paths_but_scans_existing_clean_path(tmp_path: Path) -
     assert "skipped missing path" in completed.stderr
 
 
+def test_cli_strict_missing_path_fails_before_a_partial_scan(tmp_path: Path) -> None:
+    clean = tmp_path / "clean.md"
+    clean.write_text(
+        "This is a diagnostic-only transfer-conditional result.\n",
+        encoding="utf-8",
+    )
+
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "scripts/check_claim_language.py",
+            str(clean),
+            str(tmp_path / "missing"),
+            "--strict-missing",
+            "--dry-run",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert completed.returncode == 2
+    assert "strict missing-path check failed" in completed.stderr
+    assert completed.stdout == ""
+
+
 def test_cli_all_missing_roots_returns_usage_error(tmp_path: Path) -> None:
     completed = subprocess.run(
         [

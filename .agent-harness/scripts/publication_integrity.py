@@ -56,6 +56,8 @@ EXTERNAL_PUBLISHER_AUTHORIZATION_MODE = "external_publisher"
 ATTENDED_PUBLISHER_AUTHORIZATION_MODE = "attended_explicit_user"
 ATTENDED_PUBLICATION_TRANSACTION = "sealed_sha_push_then_single_pr_create"
 ATTENDED_NONCE_LEDGER_BINDING = "authorization_hmac_frozen_external_inode_v1"
+REGISTERED_CLAIM_CEILINGS = {"diagnostic_only", "theorem_candidate"}
+PRE_NATIVE_FAMILY_GATE = "BLOCKED_PRE_NATIVE_ATLAS"
 NON_PUBLISHING_GIT_SUBCOMMANDS = {
     "add",
     "am",
@@ -706,6 +708,71 @@ def load_publication_policy(
     if value.get("schema_version") != 1:
         raise PublicationIntegrityError("publication policy schema_version must equal 1")
     require_safe_id(value.get("policy_id"), field="policy_id")
+    identity_fields = {
+        "change_set_id",
+        "publication_group_id",
+        "target_ref",
+        "target_sha",
+    }
+    present_identity_fields = identity_fields.intersection(value)
+    if present_identity_fields and present_identity_fields != identity_fields:
+        raise PublicationIntegrityError(
+            "publication policy identity metadata must be complete when declared"
+        )
+    if present_identity_fields:
+        require_change_set_id(value.get("change_set_id"))
+        require_publication_group_id(value.get("publication_group_id"))
+        target_ref = value.get("target_ref")
+        if (
+            not isinstance(target_ref, str)
+            or "/" not in target_ref
+            or target_ref != target_ref.strip()
+        ):
+            raise PublicationIntegrityError(
+                "target_ref must be a canonical remote-tracking branch"
+            )
+        remote_name, target_branch = target_ref.split("/", 1)
+        require_safe_id(remote_name, field="target_ref remote")
+        require_branch_name(target_branch, field="target_ref branch")
+        target_sha = value.get("target_sha")
+        if (
+            not isinstance(target_sha, str)
+            or GIT_OID_RE.fullmatch(target_sha) is None
+        ):
+            raise PublicationIntegrityError(
+                "target_sha must be a Git object identity"
+            )
+    if (
+        "claim_ceiling" in value
+        and value.get("claim_ceiling") not in REGISTERED_CLAIM_CEILINGS
+    ):
+        raise PublicationIntegrityError(
+            "claim_ceiling is not a registered safe value"
+        )
+    if (
+        "family_identification_gate" in value
+        and value.get("family_identification_gate") != PRE_NATIVE_FAMILY_GATE
+    ):
+        raise PublicationIntegrityError(
+            "family_identification_gate must remain blocked before the native atlas"
+        )
+    for field in (
+        "ordinary_agent_push_forbidden",
+        "ordinary_agent_pr_mutation_forbidden",
+    ):
+        if field in value and value.get(field) is not True:
+            raise PublicationIntegrityError(f"{field} must remain true")
+    if "invalidates_review" in value:
+        invalidations = value.get("invalidates_review")
+        if (
+            not isinstance(invalidations, list)
+            or not invalidations
+            or any(not isinstance(item, str) or not item for item in invalidations)
+            or len(invalidations) != len(set(invalidations))
+        ):
+            raise PublicationIntegrityError(
+                "invalidates_review must be a non-empty unique string list"
+            )
     for field, minimum, maximum in (
         ("max_open_prs", 1, 1000),
         ("max_direct_to_target_prs", 0, 1000),
@@ -875,6 +942,31 @@ def load_publication_policy(
     return data, value
 
 
+def validate_declared_policy_identity(
+    policy: Mapping[str, Any],
+    *,
+    change_set_id: str,
+    publication_group_id: str,
+    target_ref: str,
+    target_sha: str,
+) -> None:
+    """Cross-bind optional policy identity metadata to live seal inputs."""
+
+    expected = {
+        "change_set_id": change_set_id,
+        "publication_group_id": publication_group_id,
+        "target_ref": target_ref,
+        "target_sha": target_sha,
+    }
+    if not any(field in policy for field in expected):
+        return
+    for field, expected_value in expected.items():
+        if policy.get(field) != expected_value:
+            raise PublicationIntegrityError(
+                f"publication policy {field} differs from the candidate seal"
+            )
+
+
 def _candidate_branch(repo: Path, candidate_ref: str) -> tuple[str, str, str]:
     candidate_sha = str(
         git(repo, "rev-parse", "--verify", f"{candidate_ref}^{{commit}}")
@@ -1027,6 +1119,13 @@ def build_candidate_seal(
     if not commits or any(GIT_OID_RE.fullmatch(item) is None for item in commits):
         raise PublicationIntegrityError("candidate commit set is empty or malformed")
     policy_data, policy = load_publication_policy(root, integration_policy_path)
+    validate_declared_policy_identity(
+        policy,
+        change_set_id=change_set,
+        publication_group_id=publication_group,
+        target_ref=f"{remote}/{target_branch}",
+        target_sha=base_sha,
+    )
     fetch_urls = remote_urls(root, remote, push=False)
     push_urls = remote_urls(root, remote, push=True)
     publication_host, publication_slug = publication_repository_identity(

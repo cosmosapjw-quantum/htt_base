@@ -1,0 +1,344 @@
+{
+  "artifact_content_sha256": "6637b4c99d3835cf5838d6f6bb3e16a823f031f800050e1faf37212b3b63b784",
+  "artifact_id": "PR282-EXACT-PARITY-READINESS",
+  "assumptions": [
+    "Each sigma fixture is exactly symmetric and trace-free.",
+    "The registered P is an orientation-reversing orthogonal involution.",
+    "Arithmetic e-value merging is conditional on every input being a valid e-value under one common null.",
+    "Convex merge weights are frozen before any execution output is viewed."
+  ],
+  "caveats": [
+    "H1 and H3 remain separate unestablished premises",
+    "mask deconvolution is not executed",
+    "synthetic method readiness only; no observed data or family claim"
+  ],
+  "claim_level": {
+    "level": "C2",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "diagnostic_only",
+  "contributors": [
+    "COMMON"
+  ],
+  "covariance_status": "not_used_by_exact_h2_execution",
+  "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+  "generating_command": "python3 -B scripts/codex_harness/run_pr282_exact_parity_readiness.py build",
+  "generation_identity": {
+    "git_or_worktree_identity": "EXTERNAL_CANDIDATE_SEAL_REQUIRED",
+    "mode": "EXACT_BOUND_SOURCE_HASHES",
+    "reason": "Embedding the commit or tree that contains this artifact would be circular; acceptance binds the candidate in the external seal and review run plan."
+  },
+  "mask_status": "synthetic_fixed_under_registered_reflection",
+  "null_mock_status": "not_used_by_exact_h2_execution",
+  "observed_data_executed": false,
+  "owner": "OBSSTAT",
+  "public_use": false,
+  "readiness_receipt": {
+    "allowed_uses": [
+      "Synthetic method-readiness evidence for the registered estimator path.",
+      "A prerequisite receipt for later separately admitted and authorized PR-290 execution.",
+      "Arbitrary-dependence arithmetic e-value combination of individually valid e-values."
+    ],
+    "assumptions": [
+      "Each sigma fixture is exactly symmetric and trace-free.",
+      "The registered P is an orientation-reversing orthogonal involution.",
+      "Arithmetic e-value merging is conditional on every input being a valid e-value under one common null.",
+      "Convex merge weights are frozen before any execution output is viewed."
+    ],
+    "caveats": [
+      "H1 and H3 remain separate premises and are not established by a G3 pass.",
+      "Mask deconvolution is not executed; H2 is closed only for the registered fixed-mask synthetic path.",
+      "The fixture is synthetic and exercises one registered estimator, mask, weighting, and convention path.",
+      "PR-151 partial/background data is forbidden input."
+    ],
+    "claim_level": {
+      "level": "C2",
+      "scheme": "roadmap_rescue_v1"
+    },
+    "claim_tier": "diagnostic_only",
+    "clean_execution": {
+      "baseline": {
+        "denominator": 3,
+        "numerator": -115
+      },
+      "baseline_components": [
+        {
+          "denominator": 1,
+          "numerator": 2
+        },
+        {
+          "denominator": 1,
+          "numerator": -32
+        },
+        {
+          "denominator": 1,
+          "numerator": 40
+        },
+        {
+          "denominator": 1,
+          "numerator": -140
+        }
+      ],
+      "mask_equivariant": true,
+      "relation_passed": true,
+      "relation_residual": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "transformed": {
+        "denominator": 3,
+        "numerator": 115
+      },
+      "transformed_components": [
+        {
+          "denominator": 1,
+          "numerator": 32
+        },
+        {
+          "denominator": 1,
+          "numerator": -2
+        },
+        {
+          "denominator": 1,
+          "numerator": 140
+        },
+        {
+          "denominator": 1,
+          "numerator": -40
+        }
+      ],
+      "weighting_equivariant": true
+    },
+    "content_bindings": {
+      "convention_content_sha256": "b52c6dc9548fc4ccfa750b0d85db2d79ff64c1b5492c9a35fd47bcebb2e53dd5",
+      "estimator_content_sha256": "22a3af0047e0abb59022081341032f46dea927203940f47e953935db47f0f056",
+      "fixture_content_sha256": "fd32534c218caa47030e6fc956ee7f4136b49d241b0a1c7044375fe46269d245",
+      "mask_content_sha256": "5799e9697bab158066592906cc23e71862b0073ef5aaef0524980916cd266102",
+      "mutation_registry_content_sha256": "eb4ce7308aa5070ac78042eac2eeec39e65f130c08df3732c6092754c519bbb2",
+      "receipt_contract_content_sha256": "b6f0a55a18d8133038ec9405a5b414c95eb514cd1717d870a88cb569bfba62dc",
+      "spec_semantic_sha256": "27de9b171c5275d90966572f7fed5effbe33727ca7036fb6c463fd12adbdf26f",
+      "weighting_content_sha256": "5aba34aeaac1ab20db762bf8b431752b5c3cb53dd37aa0febffac8e21fab5b63"
+    },
+    "contributors": [
+      "COMMON"
+    ],
+    "covariance_status": "not_used_by_exact_h2_execution",
+    "dependent_evalue_merge": {
+      "combination_rule": "CONVEX_ARITHMETIC_MEAN",
+      "common_null_id": "pr282.synthetic.common-null.v1",
+      "common_null_required": true,
+      "dependence_class": "ARBITRARY_OR_DEPENDENT",
+      "independence_assumed": false,
+      "input_validity_status": "CONDITIONAL_ON_EACH_INPUT_BEING_A_VALID_EVALUE_UNDER_COMMON_NULL",
+      "inputs": [
+        {
+          "e_value": {
+            "denominator": 2,
+            "numerator": 1
+          },
+          "vector_id": "nested-mask-rung-a",
+          "weight": {
+            "denominator": 2,
+            "numerator": 1
+          }
+        },
+        {
+          "e_value": {
+            "denominator": 2,
+            "numerator": 3
+          },
+          "vector_id": "nested-mask-rung-b",
+          "weight": {
+            "denominator": 2,
+            "numerator": 1
+          }
+        }
+      ],
+      "merge_id": "pr282.synthetic.dependent-sign-vectors.v1",
+      "merged_e_value": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "pooled_sign_count": null,
+      "prespecified_weights_required": true,
+      "validity_scope": "ARITHMETIC_ONLY_CONDITIONAL_ON_VALID_INPUT_EVALUES",
+      "weight_registration_status": "FIXED_IN_SPEC_BEFORE_EXECUTION"
+    },
+    "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    "forbidden_uses": [
+      "Observed-sky inference or Planck execution.",
+      "Caller-supplied readiness or post-result threshold changes.",
+      "Binomial pooling of dependent or nested sign vectors.",
+      "Physical parity validation, native solver validation, geometry detection, or family identification.",
+      "HTT likelihood, posterior, evidence, or MIO certificate production."
+    ],
+    "generating_procedure": "obsstat.exact_parity_readiness.build_parity_readiness_receipt from frozen exact primitives",
+    "mask_status": "synthetic_fixed_under_registered_reflection",
+    "mutations": [
+      {
+        "activated": true,
+        "executed": true,
+        "killed": true,
+        "mutation_id": "MU282-ESTIMATOR-ABSOLUTE",
+        "mutation_kind": "absolute_krylov_value",
+        "observed_outcome": "BLOCKED_P_EQUIVARIANCE",
+        "observed_reasons": [
+          "ESTIMATOR_RELATION_FAILED"
+        ],
+        "relation_residual": {
+          "denominator": 3,
+          "numerator": 394
+        }
+      },
+      {
+        "activated": true,
+        "executed": true,
+        "killed": true,
+        "mutation_id": "MU282-MASK-PAIR-DROP",
+        "mutation_kind": "drop_first_support_only",
+        "observed_outcome": "BLOCKED_P_EQUIVARIANCE",
+        "observed_reasons": [
+          "MASK_NOT_FIXED_BY_P",
+          "ESTIMATOR_RELATION_FAILED"
+        ],
+        "relation_residual": {
+          "denominator": 5,
+          "numerator": -34
+        }
+      },
+      {
+        "activated": true,
+        "executed": true,
+        "killed": true,
+        "mutation_id": "MU282-WEIGHT-PAIR-SKEW",
+        "mutation_kind": "increment_first_weight_only",
+        "observed_outcome": "BLOCKED_P_EQUIVARIANCE",
+        "observed_reasons": [
+          "WEIGHTING_NOT_FIXED_BY_P",
+          "ESTIMATOR_RELATION_FAILED"
+        ],
+        "relation_residual": {
+          "denominator": 7,
+          "numerator": 34
+        }
+      }
+    ],
+    "null_mock_status": "not_used_by_exact_h2_execution",
+    "observed_data_executed": false,
+    "owner": "OBSSTAT",
+    "public_use": false,
+    "receipt_content_sha256": "ca2d2f92f87f9816d386cabdeb614820761a6815a7771771cbac418d5ad9c5a0",
+    "relation": {
+      "coordinate_frame": "synthetic_registered_cartesian_right_handed",
+      "estimator_id": "weighted_krylov_pseudoscalar_mean.v1",
+      "expected_output_sign": -1,
+      "handedness": "right_handed_input_frame_with_orientation_reversing_P",
+      "mask_action": "fixed_under_registered_support_permutation",
+      "numeric_contract": "exact_rational_arithmetic_no_tolerance",
+      "parity_exponent": 1,
+      "reflection_matrix": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "relation_class": "ANTI_EQUIVARIANT",
+      "relation_id": "PR282-P-EQUIVARIANCE-001",
+      "support_permutation": [
+        1,
+        0,
+        3,
+        2
+      ],
+      "weighting_action": "fixed_under_registered_support_permutation"
+    },
+    "schema": "obsstat.exact_parity_readiness.v1",
+    "scientific_artifact_mode": "synthetic_diagnostic",
+    "scope": "synthetic executable P-equivariance method readiness",
+    "sky_support_status": "synthetic_reflection_paired_support",
+    "terminal": {
+      "g3_outcome": "PASS_EXECUTABLE_P_EQUIVARIANCE",
+      "gate_id": "G3",
+      "mutation_survivors": [],
+      "reasons": [],
+      "scientific_status": "OPEN_UNCHANGED"
+    },
+    "theorem_boundary": {
+      "h1_reflection_symmetric_null": "NOT_EVALUATED_METHOD_ONLY",
+      "h2_executed_scope": "weighted Krylov estimator with a fixed selection mask and fixed weights",
+      "h2_not_executed": [
+        "mask_deconvolution",
+        "observed_selection_function",
+        "point_source_hole_correction"
+      ],
+      "h2_p_equivariant_estimator": "EXECUTED_REGISTERED_SYNTHETIC_PATH_ONLY",
+      "h3_no_atom_at_zero": "CONDITIONAL_AND_NOT_ESTABLISHED_BY_G3",
+      "source_obligation": "TF-09-PARITY-SIGN-EXACTNESS",
+      "source_obligation_record": {
+        "claim_ceiling": "diagnostic_only",
+        "evidence_grade": "EXACT_ANALYTIC",
+        "obligation_id": "TF-09-PARITY-SIGN-EXACTNESS",
+        "registry_path": "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+        "registry_sha256": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e",
+        "relation_to_source": "EXACT_REGISTERED_ORACLE_STATEMENT",
+        "source_proof_adjudication_status": "NOT_ADJUDICATED",
+        "source_statement_identity_sha256": "011104cca223a99b1238262bd291bbe7083d44e21672298bdee58488ffc1a5e4",
+        "source_status": "ORACLE_VERIFIED",
+        "verdict": "PROVED_ANALYTIC_UNDER_TYPED_PREMISES"
+      }
+    },
+    "transfer_source": "none",
+    "weighting_status": "synthetic_fixed_under_registered_reflection"
+  },
+  "schema": "htt.pr282.exact_parity_execution_artifact.v1",
+  "scientific_artifact_mode": "synthetic_diagnostic",
+  "scope": "synthetic executable P-equivariance method readiness",
+  "sky_support_status": "synthetic_reflection_paired_support",
+  "source_bindings": [
+    {
+      "path": "docs/research_program/post_pr275/pr282_spec.yaml",
+      "sha256": "fe9293936e25bd79fcceb5cbb4f9874435eb1f704b90638430823fe38f37f73f"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+      "sha256": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e"
+    },
+    {
+      "path": "htt/obsstat/exact_parity_readiness.py",
+      "sha256": "786de82e3ac3c8879ca9515fa13f4240b5c3e37c6001721f8f6d352e64fb886f"
+    },
+    {
+      "path": "htt/obsstat/egs3_evalue_merge.py",
+      "sha256": "e6c136933269256030e835932c6f5cd142bb056a2441a586facc3df53d4a903f"
+    },
+    {
+      "path": "htt/src/common/vector_tensor_statistical_foundations.py",
+      "sha256": "1a69c6b2bdd65b49b49c9383086b5f303c651b0aaf95bed41fdde53a97d2d215"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr282_exact_parity_readiness.py",
+      "sha256": "6a3825eafe51b545f7819cb58f665d2fe1a39efdbb268efb426a2fbcf3499923"
+    },
+    {
+      "path": "tests/obsstat/test_exact_parity_readiness.py",
+      "sha256": "754656e7000df3d4fd13be275de27f75dc5cfdee501edb7f292bcaa5bfbec7c7"
+    },
+    {
+      "path": "tests/contracts/test_pillar_s_core.py",
+      "sha256": "f110c7b89b52a292c333b6babe02f361e565144f26943af074121dc03f07ecda"
+    }
+  ],
+  "transfer_source": "none",
+  "weighting_status": "synthetic_fixed_under_registered_reflection"
+}

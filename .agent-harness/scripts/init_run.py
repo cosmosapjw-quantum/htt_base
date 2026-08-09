@@ -26,6 +26,7 @@ from publication_integrity import (
     remote_target_sha,
     require_change_set_id,
     require_publication_group_id,
+    validate_declared_policy_identity,
 )
 
 
@@ -171,6 +172,13 @@ def main() -> None:
             )
         policy_bytes, policy = load_publication_policy(
             repo, args.integration_policy
+        )
+        validate_declared_policy_identity(
+            policy,
+            change_set_id=change_set_id,
+            publication_group_id=publication_group_id,
+            target_ref=f"{target_remote}/{target_branch}",
+            target_sha=base_sha,
         )
     except (
         OSError,

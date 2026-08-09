@@ -304,6 +304,77 @@ def test_integration_policy_rejects_publication_capable_argv(
         load_publication_policy(repo, POLICY_REL)
 
 
+@pytest.mark.parametrize(
+    ("field", "replacement", "message"),
+    [
+        ("claim_ceiling", "unbounded", "claim_ceiling"),
+        ("family_identification_gate", "PASS", "family_identification_gate"),
+        ("ordinary_agent_push_forbidden", False, "ordinary_agent_push_forbidden"),
+        (
+            "ordinary_agent_pr_mutation_forbidden",
+            False,
+            "ordinary_agent_pr_mutation_forbidden",
+        ),
+        ("invalidates_review", [], "invalidates_review"),
+    ],
+)
+def test_policy_nonrelaxable_metadata_fails_closed(
+    tmp_path: Path,
+    field: str,
+    replacement: object,
+    message: str,
+) -> None:
+    repo, _ = _make_candidate_repo(tmp_path)
+    policy = _policy()
+    policy.update(
+        {
+            "claim_ceiling": "diagnostic_only",
+            "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+            "ordinary_agent_push_forbidden": True,
+            "ordinary_agent_pr_mutation_forbidden": True,
+            "invalidates_review": ["candidate_sha_changed"],
+        }
+    )
+    policy[field] = replacement
+    _write_json(repo / POLICY_REL, policy)
+
+    with pytest.raises(PublicationIntegrityError, match=message):
+        load_publication_policy(repo, POLICY_REL)
+
+
+@pytest.mark.parametrize(
+    ("field", "replacement"),
+    [
+        ("change_set_id", "CS-WRONG"),
+        ("publication_group_id", "PG-WRONG"),
+        ("target_ref", "origin/not-the-target"),
+        ("target_sha", "0" * 40),
+    ],
+)
+def test_candidate_seal_cross_binds_declared_policy_identity(
+    tmp_path: Path,
+    field: str,
+    replacement: str,
+) -> None:
+    repo, _ = _make_candidate_repo(tmp_path)
+    policy = _policy()
+    policy.update(
+        {
+            "change_set_id": CHANGE_SET,
+            "publication_group_id": PUBLICATION_GROUP,
+            "target_ref": f"origin/{TARGET_BRANCH}",
+            "target_sha": _git(repo, "rev-parse", f"origin/{TARGET_BRANCH}"),
+        }
+    )
+    policy[field] = replacement
+    _write_json(repo / POLICY_REL, policy)
+    _git(repo, "add", POLICY_REL)
+    _git(repo, "commit", "-qm", f"mutate policy {field}")
+
+    with pytest.raises(PublicationIntegrityError, match=field):
+        _seal(repo)
+
+
 def test_pr247_policy_uses_portable_receipted_python() -> None:
     relative = (
         "docs/research_program/long_horizon_rescue/"

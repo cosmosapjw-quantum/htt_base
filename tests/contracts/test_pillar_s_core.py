@@ -764,6 +764,21 @@ def test_tf09_global_symmetry_or_parity_erasure_refuses() -> None:
         )
 
 
+def test_tf09_preserves_exact_rational_signs_below_float_range() -> None:
+    tiny = Fraction(1, 10**400)
+    report = exact_parity_sign_test(
+        (tiny, -tiny),
+        parity_odd=True,
+        uniform_conditional_sign_vector=True,
+    )
+
+    assert report.positive_count == 1
+    assert report.negative_count == 1
+    assert report.tie_count == 0
+    assert report.conditioned_nonzero_count == 2
+    assert report.two_sided_p_value == Fraction(1, 1)
+
+
 def test_tf11_exact_finite_partition_tower() -> None:
     report = certify_finite_partition_tower(
         weights=(Fraction(1, 4),) * 4,

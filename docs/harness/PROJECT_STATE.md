@@ -9,33 +9,34 @@ runs.
 ## Baseline
 
 - Canonical target: `research/pr04-multicomponent`.
-- Verified merge HEAD: `0525bbda30311ebc99b5085c895139407de25536`.
-- That remote merge contains the reviewed PR-280 terminal inventory, the
-  PR-151 acquisition-path repair, and the successful PR-295, PR-296, and
-  PR-297 active-core repairs; PR-281 started only after their ancestry and
-  GitHub merge state were verified.
+- Verified merge HEAD: `feeb89387d949f41276bec56a6becc08af613214`.
+- That remote merge contains the reviewed PR-281 orbit/type acceptance
+  closure together with the PR-280 terminal inventory, PR-151
+  acquisition-path repair, and successful PR-295, PR-296, and PR-297
+  active-core repairs. PR-282 started only after PR-281 ancestry and GitHub
+  merge state were verified.
 - PR-190 is `COMPLETED_FAILED_WITH_RECEIPT`. Its registered full typed
   attainability statement is refuted; `success_dependency_satisfied=false`.
 - PR-280 is likewise a historical `COMPLETED_FAILED_WITH_RECEIPT` with
   `success_dependency_satisfied=false`. PR-295, PR-296, and PR-297 satisfy the
   separate downstream stop-release condition without rewriting that receipt.
 - Work proceeds in the isolated branch
-  `changeset/pr281-orbit-type-acceptance`. The main user checkout and
+  `changeset/pr282-exact-parity-readiness`. The main user checkout and
   all user-owned untracked inputs remain untouched.
 
 ## Canonical orchestration state
 
 - DAG: 244 cards; validation passes.
-- Completed: 178/244 = 72.95%.
-- Dependency-weighted completion: 76.33%.
+- Completed: 179/244 = 73.36%.
+- Dependency-weighted completion: 76.65%.
 - Critical-path completion: 98.70%.
 - In progress: none.
-- Pending: 34.
+- Pending: 33.
 - Blocked terminal receipts: PR-190, PR-172, and PR-280.
 - Dormant external/native: 28.
 - Background acquisition: PR-151 only.
-- PR-282, PR-283, PR-284, PR-285, PR-286, PR-288, and PR-289 are
-  dependency-ready. Canonical topological order selects PR-282 first.
+- PR-283, PR-284, PR-285, PR-286, PR-288, and PR-289 are dependency-ready.
+  Canonical topological order selects PR-283 first.
 
 The lower count percentage reflects atomic registration through PR-297; it is
 bookkeeping, not scientific regression or readiness evidence.
@@ -267,3 +268,42 @@ PR-151 remains acquisition-only on the external volume. At the checkpoint,
 Abacus was 0/25. Partial files remain forbidden for scientific use. The
 recent five-batch median implies roughly 59 hours for the remaining EZmock
 batches; no restart-from-zero condition is present.
+
+## PR-282 exact parity method readiness (2026-08-09)
+
+PR-282 content commit `73e1582d...` executes a closed synthetic
+parity-equivariance contract with exact rational arithmetic. The registered
+orientation-reversing orthogonal action is explicitly checked to satisfy
+`P^2=I`; the weighted Krylov estimator maps exactly from `-115/3` to `115/3`
+with zero relation residual. All registered mutation results must be complete,
+ordered, executed, activated, killed, and internally consistent before G3 can
+return `PASS_EXECUTABLE_P_EQUIVARIANCE`.
+
+The receipt resolves the authoritative Pillar-S
+`TF-09-PARITY-SIGN-EXACTNESS` record while preserving its
+`NOT_ADJUDICATED` source status. It also registers only an exact convex
+arithmetic e-value merge conditional on individually valid e-values under one
+common null and prespecified weights. H1 and H3 remain unestablished; observed
+masks, mask deconvolution, covariance/null execution, physical parity, native
+transfer, and family identification remain outside the result.
+
+The first immutable candidate is retained as FAIL because its terminal could
+accept missing or inconsistent mutation evidence, its reflection parser did
+not enforce the involution, and its source/provenance binding was incomplete.
+The repaired R2 code, harness, physics/stat, and claim reviews all pass the
+16-cell policy matrix; the frozen R2 run summary is
+`.agent-harness/runs/pr282-candidate-review-r2-20260809/RUN_SUMMARY.json`.
+
+Canonical status now records 179/244 completed (73.36%),
+dependency-weighted completion 76.65%, and critical-path completion 98.70%.
+No five-PR checkpoint is due until 180 completions. PR-283 is first among six
+dependency-ready cards.
+
+The PR-282 artifact is OBSSTAT-owned C2 `diagnostic_only`
+`synthetic_diagnostic` with `transfer_source=none`, observed-data execution
+false, public use false, scientific status `OPEN_UNCHANGED`, and family gate
+`BLOCKED_PRE_NATIVE_ATLAS`. PR-290 retains separate data-execution authority.
+PR-151 remains acquisition-only: 600/1000 EZmocks were authenticated at the
+latest read-only probe, batch 61 was actively growing, and Abacus remained
+0/25. No restart-from-zero condition is present, and partial data remains
+forbidden for science.

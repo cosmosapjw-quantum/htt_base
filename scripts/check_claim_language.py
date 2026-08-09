@@ -33,6 +33,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Files or directories to scan. Missing paths are reported and skipped.",
     )
     parser.add_argument(
+        "--strict-missing",
+        action="store_true",
+        help="Return usage error before scanning when any requested path is missing.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Scan and report without writing files. Forbidden production claims still fail.",
@@ -57,6 +62,13 @@ def main(argv: list[str] | None = None) -> int:
     missing: list[Path] = []
     for path in args.paths:
         (existing if path.exists() else missing).append(path)
+    if missing and args.strict_missing:
+        print(
+            "strict missing-path check failed: "
+            + ", ".join(str(path) for path in missing),
+            file=sys.stderr,
+        )
+        return 2
     for path in missing:
         print(f"skipped missing path: {path}", file=sys.stderr)
     if not existing:
