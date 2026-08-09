@@ -46,6 +46,14 @@ from download_inventory import (
 )
 from dl_fits_utils import format_fits_size, inspect_fits_file
 
+# These scripts are run as files and are also loaded by path from repo-root
+# tests, so the sibling import needs this directory on sys.path either way.
+_SCRIPTS_DIR = str(Path(__file__).resolve().parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+
+from external_store import ensure_data_dir
+
 
 # ??????????????????????????????????????????????????????????????????????????
 # Paths and constants
@@ -112,7 +120,7 @@ def download(url: str, dst: Path, log: Logger, force: bool = False,
         log(f"  [skip] {dst.name} ({sz / 1024:.1f} KB already present)")
         return True
 
-    dst.parent.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(dst.parent)
     log(f"  [download] {url}")
     log(f"             -> {dst}")
 
@@ -203,7 +211,7 @@ def stage_planck_pr3(root: Path, sources: dict, log: Logger, **opts):
     """Download Planck PR3 spectra/maps/masks, then run extract_htt_data.py."""
     s = sources["planck_pr3"]
     raw_dir = root / "raw" / "planck_data"
-    raw_dir.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(raw_dir)
 
     skip_maps = opts.get("skip_large_maps", False)
 
@@ -254,7 +262,7 @@ def stage_planck_pr3(root: Path, sources: dict, log: Logger, **opts):
     # Extract
     out_dir = root / "htt_extracted"
     act_dir = root / "raw" / "act_data"
-    act_dir.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(act_dir)
     extract_args = ["--planck-dir", str(raw_dir),
                     "--act-dir", str(act_dir),
                     "--out", str(out_dir),
@@ -359,7 +367,7 @@ def _extract_act_dr6_only(root: Path, log: Logger, **opts) -> None:
 def stage_act_dr6(root: Path, sources: dict, log: Logger, **opts):
     """ACT DR6.02 SACC acquisition + ACT-only extraction."""
     act_dir = root / "raw" / "act_data"
-    act_dir.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(act_dir)
     target = act_dir / "dr6_data.fits"
     found = _act_dr6_sacc_path(act_dir)
     if found is not None:
@@ -429,7 +437,7 @@ def _download_act_sims(root: Path, sources: dict, log: Logger, **opts):
         nvme = Path("/mnt/sn850x2t/htt_base_e2e/act_dr6_lensing_sims")
         target = nvme if nvme.parent.exists() else root / "downloads" / "act_dr6_lensing_sims"
     target = Path(target)
-    target.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(target)
     variant = spec.get("variant", "baseline")
     first = int(spec.get("first_index", 1))
     count = int(spec.get("count", 400))
@@ -464,7 +472,7 @@ def _download_act_sims(root: Path, sources: dict, log: Logger, **opts):
 def stage_act_dr6_lensing(root: Path, sources: dict, log: Logger, **opts):
     """ACT DR6 lensing release acquisition; no inference is run here."""
     out_dir = root / "raw" / "act_dr6_lensing"
-    out_dir.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(out_dir)
     if opts.get("act_sims"):
         _download_act_sims(root, sources, log, **opts)
         return
@@ -495,7 +503,7 @@ def stage_act_dr6_lensing(root: Path, sources: dict, log: Logger, **opts):
 
 def stage_bicep_keck(root: Path, sources: dict, log: Logger, **opts):
     pkg = root / "cobaya_packages"
-    pkg.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(pkg)
     out = root / "obs_extra" / "bicep_keck_2018_BB.npz"
     if out.exists() and not opts.get("force"):
         log(f"  [skip] {out.name} already present")
@@ -515,7 +523,7 @@ def stage_bicep_keck(root: Path, sources: dict, log: Logger, **opts):
 
 def stage_planck_lensing(root: Path, sources: dict, log: Logger, **opts):
     pkg = root / "cobaya_packages"
-    pkg.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(pkg)
     out = root / "obs_extra" / "planck_2018_lensing.npz"
     if out.exists() and not opts.get("force"):
         log(f"  [skip] {out.name} already present")
@@ -558,7 +566,7 @@ def stage_spt3g_y1(root: Path, sources: dict, log: Logger, **opts):
 def stage_desi_y1(root: Path, sources: dict, log: Logger, **opts):
     s = sources["desi_y1"]
     raw = root / "raw" / "desi"
-    raw.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(raw)
     for fname in s["files"]:
         download(f"{s['base']}/{fname}", raw / fname, log)
     if opts.get("desi_randoms"):
@@ -599,7 +607,7 @@ def stage_jwst_anchors(root: Path, sources: dict, log: Logger, **opts):
 def stage_cf4(root: Path, sources: dict, log: Logger, **opts):
     s = sources["cf4"]
     cf4_dir = root / "raw" / "cf4"
-    cf4_dir.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(cf4_dir)
     grid_file = cf4_dir / s["expected_filename"]
 
     # Try to fetch the grid from the canonical URL unless the env var overrides it.
@@ -616,7 +624,7 @@ def stage_cf4(root: Path, sources: dict, log: Logger, **opts):
         return
 
     out_dir = root / "compact_products" / "cf4"
-    out_dir.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(out_dir)
 
     # Single-point query
     args_single = [a.replace("{out}", str(root)) for a in s["queries"][0]["args"]]
@@ -769,7 +777,7 @@ def stage_planck_npipe(root: Path, sources: dict, log: Logger, **opts):
     url = os.environ.get(s.get("env_url_var", "PLANCK_NPIPE_URL"))
     out_dir = root / "raw" / "planck_npipe"
     if url:
-        out_dir.mkdir(parents=True, exist_ok=True)
+        ensure_data_dir(out_dir)
         download(url, out_dir / Path(url).name, log, optional=True)
         log("  [note] NPIPE map fetched; LR-06E boost calibration still needs the E2E sim ensemble.")
     else:

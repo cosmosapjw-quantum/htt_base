@@ -37,6 +37,14 @@ from typing import Iterable
 
 import numpy as np
 
+# These scripts are run as files and are also loaded by path from repo-root
+# tests, so the sibling import needs this directory on sys.path either way.
+_SCRIPTS_DIR = str(Path(__file__).resolve().parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+
+from external_store import ensure_data_dir
+
 EZ_BASE = (
     "https://data.desi.lbl.gov/public/dr1/survey/catalogs/dr1/mocks/"
     "EZmock/bright/v1"
@@ -145,7 +153,7 @@ def family_contract(family: str, realization: int) -> dict:
 
 
 def _atomic_json(path: Path, payload: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(path.parent)
     temp = path.with_suffix(path.suffix + ".tmp")
     with temp.open("w", encoding="utf-8") as handle:
         json.dump(payload, handle, indent=2, sort_keys=True)
@@ -157,7 +165,7 @@ def _atomic_json(path: Path, payload: dict) -> None:
 
 def _aria_input(path: Path, entries: Iterable[dict]) -> int:
     entries = list(entries)
-    path.parent.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(path.parent)
     with path.open("w", encoding="utf-8") as handle:
         for row in entries:
             handle.write(row["url"] + "\n")
@@ -372,7 +380,7 @@ def compact_random_pair(directory: Path, names: tuple[str, str], expected: dict[
     loaded = {"NGC": random_pixel_counts(directory / names[0]),
               "SGC": random_pixel_counts(directory / names[1])}
     temp = npz_path.with_suffix(npz_path.suffix + ".tmp")
-    npz_path.parent.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(npz_path.parent)
     with temp.open("wb") as handle:
         np.savez_compressed(
             handle, NGC=loaded["NGC"]["counts"], SGC=loaded["SGC"]["counts"],
@@ -726,7 +734,7 @@ def main(argv=None) -> int:
         raise SystemExit("aria2c is required for the resumable DESI stage")
 
     target = args.target.expanduser().resolve()
-    target.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(target)
     started = time.time()
     if args.skip_observed:
         observed_path = target / "observed/v1.5/acquisition_record.json"

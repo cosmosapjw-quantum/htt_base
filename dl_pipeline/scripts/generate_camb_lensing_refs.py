@@ -3,6 +3,14 @@ from __future__ import annotations
 import argparse, json, sys
 from pathlib import Path
 import numpy as np
+
+# These scripts are run as files and are also loaded by path from repo-root
+# tests, so the sibling import needs this directory on sys.path either way.
+_SCRIPTS_DIR = str(Path(__file__).resolve().parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+
+from external_store import ensure_data_dir
 try:
     import camb
 except Exception as e:
@@ -14,7 +22,7 @@ def main():
     ap.add_argument('--outdir', default='./workdir/compact_products')
     args = ap.parse_args()
     outdir = Path(args.outdir).expanduser().resolve()
-    outdir.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(outdir)
     pars = json.loads(Path(args.params_json).read_text())
     cp = camb.CAMBparams()
     cp.set_cosmology(H0=pars['H0'], ombh2=pars['ombh2'], omch2=pars['omch2'], tau=pars['tau'], mnu=pars.get('mnu',0.06), omk=pars.get('omk',0.0), TCMB=pars.get('T_CMB',2.7255))

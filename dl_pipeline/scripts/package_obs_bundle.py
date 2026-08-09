@@ -28,6 +28,14 @@ import sys
 import zipfile
 from pathlib import Path
 
+# These scripts are run as files and are also loaded by path from repo-root
+# tests, so the sibling import needs this directory on sys.path either way.
+_SCRIPTS_DIR = str(Path(__file__).resolve().parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+
+from external_store import ensure_data_dir
+
 # Mapping table: (source_relative_path_under_workdir, dest_relative_path_under_obs_bundle)
 # `source` paths use placeholders that get expanded:
 #   {htt}     → workdir/htt_extracted
@@ -165,7 +173,7 @@ def main():
     print(f"  out          = {out}")
     print()
 
-    out.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(out)
     log = []
     counts = {"copy": 0, "skip": 0, "missing": 0}
 

@@ -23,6 +23,14 @@ import sys
 
 import numpy as np
 
+# These scripts are run as files and are also loaded by path from repo-root
+# tests, so the sibling import needs this directory on sys.path either way.
+_SCRIPTS_DIR = str(Path(__file__).resolve().parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+
+from external_store import ensure_data_dir
+
 BASE = "https://cdsarc.cds.unistra.fr/ftp/J/ApJ/944/94"
 TABLES = ("table2.dat", "table3.dat", "table4.dat")
 
@@ -72,7 +80,7 @@ def main(argv=None) -> int:
     ap.add_argument("--out", type=Path, required=True, help="output npz path")
     args = ap.parse_args(argv)
     raw = args.raw_dir
-    raw.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(raw)
 
     _download(f"{BASE}/ReadMe", raw / "ReadMe")
     for t in TABLES:

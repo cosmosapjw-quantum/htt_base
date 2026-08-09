@@ -133,6 +133,37 @@ The expected NPZ keys are listed in `config/sources.json` under `cf4.expected_ke
 
 ---
 
+## Where the data physically lands
+
+Every stage still addresses its outputs as `<workdir>/...`, but bulk data is
+written to an external volume and linked back, so the repository checkout (on
+the system NVMe, inside a Dropbox tree) never carries hundreds of gigabytes.
+
+The redirect is applied by `scripts/external_store.py` when a directory is
+first created, on the children of `workdir/` and of `workdir/raw/`:
+
+```
+workdir/raw/planck_data  ->  /mnt/sn850x2t/htt_base_e2e/workdir/raw/planck_data
+```
+
+`workdir/` and `workdir/raw/` themselves stay real directories: the former
+carries the `com.dropbox.ignored` attribute that keeps the Dropbox daemon out,
+and the latter holds acquisitions that are deliberately not exposed to the
+repository. `workdir/logs/` also stays local.
+
+| variable | effect |
+| --- | --- |
+| `HTT_EXTERNAL_DATA_ROOT=<path>` | use `<path>` as the external store |
+| `HTT_EXTERNAL_DATA_ROOT=` (empty, or `off`) | disable; write inside the repo |
+| unset | use `/mnt/sn850x2t/htt_base_e2e/workdir` if that volume is mounted, else write inside the repo |
+
+A checkout on a machine without the external volume therefore behaves exactly
+as it did before. If a redirect link exists but its target is unreachable — an
+unmounted volume — the pipeline fails closed instead of silently refilling the
+system disk.
+
+---
+
 ## Layout of `dl_pipeline/`
 
 ```
@@ -145,6 +176,7 @@ dl_pipeline/
 │   └── planck2018_camb_params.json     ← Planck 2018 best-fit cosmology for CAMB
 ├── scripts/
 │   ├── fetch.py                        ← orchestrator (reads sources.json, runs stages)
+│   ├── external_store.py               ← places bulk data on the external NVMe, links it back
 │   ├── extract_htt_data.py             ← Planck PR3 + ACT DR6 → compact NPZ (440 lines, validated)
 │   ├── extract_cmb_like_products.py    ← ACT DR4 + SPT-3G Y1 → compact NPZ
 │   ├── extract_desi_compact.py         ← DESI clustering FITS → minimal NPZ

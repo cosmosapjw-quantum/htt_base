@@ -69,6 +69,10 @@ mkdir -p "$WORKDIR"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo " BASS data pipeline"
 echo " workdir : $WORKDIR"
+# Bulk data is redirected onto an external volume and linked back; see
+# scripts/external_store.py and the README section "Where the data physically
+# lands". Empty HTT_EXTERNAL_DATA_ROOT disables the redirect.
+echo " store   : $("$VENV_PY" -c 'import sys; sys.path.insert(0, sys.argv[1]); import external_store as e; print(e.external_store_root() or "(in-repo)")' "$PIPELINE_DIR/scripts")"
 echo " python  : $VENV_PY"
 echo " flags   : ${FLAGS[*]:-(none)}"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

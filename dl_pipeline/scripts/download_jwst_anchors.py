@@ -26,9 +26,18 @@ import csv
 import hashlib
 import json
 from pathlib import Path
+import sys
 import shutil
 import subprocess
 import tarfile
+
+# These scripts are run as files and are also loaded by path from repo-root
+# tests, so the sibling import needs this directory on sys.path either way.
+_SCRIPTS_DIR = str(Path(__file__).resolve().parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+
+from external_store import ensure_data_dir
 
 REPO = Path(__file__).resolve().parents[2]
 SEED = REPO / "dl_pipeline/data/jwst_distances_seed.csv"
@@ -97,7 +106,7 @@ def _sha256(path: Path) -> str:
 def _download(url: str, dst: Path) -> bool:
     if dst.exists() and dst.stat().st_size > 0:
         return True
-    dst.parent.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(dst.parent)
     if shutil.which("curl"):
         part = dst.with_name(dst.name + ".part")
         rc = subprocess.run(["curl", "-sS", "-L", "--fail", "--retry", "4",
@@ -220,7 +229,7 @@ def main(argv=None) -> int:
     ap.add_argument("--raw-dir", type=Path, default=REPO / "workdir/raw/jwst_anchors")
     args = ap.parse_args(argv)
     raw = args.raw_dir
-    raw.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(raw)
 
     fetched, missing = [], []
     for target in TARGETS:

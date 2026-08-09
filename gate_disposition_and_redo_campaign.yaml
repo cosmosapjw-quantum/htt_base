@@ -1,0 +1,270 @@
+schema: htt.gate_disposition_and_redo_campaign.v1
+document_id: HARNESS-GATE-REDO-v1
+date: "2026-08-02"
+audited_revision: 7214ef7
+companion: HARNESS_GATE_REDO_CAMPAIGN_20260802.md
+
+# Machine-readable mirror. Governance metadata; proposes deltas only. Owning
+# code, contracts, CAS adjudications and AGENTS.md remain authoritative. Every
+# gate discharge is a FROZEN_DECISIONS-style meta-finding requiring four fields:
+# gate_id, discharge_evidence, new_state, authorizing_review.
+
+claim_posture: >-
+  No item is a detection, Bianchi-family identification, geometry measurement, or
+  native-solver validation. Every Tier-B discharge turns a synthetic stand-in into
+  a calibrated measurement and authorizes no family/geometry/native claim.
+
+governance_brake:
+  source: AGENTS.md:145
+  rule: >-
+    After two consecutive assurance-only PRs the next PR must deliver a named
+    downstream scientific capability, data execution/integration, experiment, or
+    interpretable result.
+  status: OPEN
+  consecutive_assurance_prs: [PR-268, PR-269, PR-270, PR-271, PR-272, PR-273, PR-274, PR-275]
+  count: 8
+  implication: >-
+    Wave R0+R1 of the re-execution campaign is the mandated next unit of work;
+    further proof/registry/governance cards are brake-blocked until a scientific
+    capability lands.
+
+# ---------------------------------------------------------------------------
+part_I_incorporation_audit:
+  verdict: LANDED-FAITHFUL with defensible hardening; six small gaps remain
+  faithful:
+    - oracle_byte_exact: tensor_foundations_oracle.py (diff empty; TF-01..TF-12 present)
+    - two_pillar_registry: proof_registry_two_pillars.yaml hash-bound in theorem_signatures_v3.py
+    - three_layer_state: joint_anisotropy_state.py (+GeometryState 4th layer, +normalization cross-check)
+    - functional_family: tensor_functionals.py (PR-262) + tensor_departure_statistics.py (PR-264)
+    - conditional_exceedance: conditional_exceedance.py (PR-265; Bauer trap closed)
+    - eps_g_unregistered: placeholder-only, gradient_regularity_registered=false (correct)
+    - conservative_deviation: generic_orbit_separation_status kept UNPROVEN despite CAS pass
+  gaps:
+    - id: GAP-1
+      title: WEAKLY_IDENTIFIED never wired into the runtime SourceSeparationGateStatus enum
+      site: "open_set_response_classes.py:76-81 lacks the member (NOT_APPLICABLE occupies the slot); statistical_foundations.py:64 has zero runtime call sites. NB the oracle DOES name it (tensor_foundations_oracle.py:984,1009) — gap is runtime wiring, not the idea"
+      blocks: greenfield G8 (real local/global separation)
+      brake_note: closing it counts as scientific-capability work (unblocks G8)
+    - id: GAP-2
+      title: no Jacobian-rank (9/12/15) acceptance test gates catalogue-v3 construction
+      site: orbit_catalogue_v3.py (rank only reported in oracle TF-06)
+    - id: GAP-3
+      title: uncovered_directions missing from AnisotropyTypeReport
+      site: anisotropy_type_report.py (null-space available in orbit_nonlinearity.py); blocks G7
+    - id: GAP-4
+      title: no reverse-martingale/Doob object binds to DepthPath
+      site: depth_path.py (PR-271 tower identity is exact-Fraction, not Doob-bounded); blocks G4 free calibration
+    - id: GAP-5
+      title: parity-sign combination refuses dependent case instead of e-value merge
+      site: vector_tensor_statistical_foundations.py:1484 (egs3_evalue_merge.py not wired to lane)
+      note: defensible (conservative) but leaves cross-rung power unused
+    - id: GAP-6
+      title: no (H2) estimator P-equivariance audit (caller-asserted boolean)
+      blocks: G3 (parity-sign on real a_lm) until audited
+  hygiene:
+    - pr270_cas_adjudication_outside_docs_generated
+    - pr-270.md:3 stale header REPAIRED_CANDIDATE_PENDING_FINAL_BOUND_REVIEW vs :256 COMPLETED_SUCCESS
+  disposition: fold the six gaps into Wave R0/R1 (each is a greenfield prerequisite), not a standalone assurance PR
+
+# ---------------------------------------------------------------------------
+part_II_harness_realignment:
+  edits:
+    - id: H1
+      surface: CLAUDE.md sec1 line 23, sec5 lines 55-60
+      defect: presents x_C as THE comparator; historical anchors untyped
+      fix: retag x_C as BC1 legacy projection pointing to JointAnisotropyState/functional family; retag sec5 values BC1_LEGACY_PROJECTION forbidden=claim-tier-promotion
+      class: stale_text_edit
+    - id: H2
+      surface: docs/codex_handoff/02_long_range_PR_backlog.md:426-427,440,820-837,946 (+docs/ twin)
+      defect: x_C kill rule weaker than LegacyProjectionReport immutability; scalar Q/F/Pi framing
+      fix: point to LegacyProjectionReport BC1/BC2; mark Wave-9 full-cov MES line superseded by PR-255/271
+      class: stale_text_edit
+    - id: H3
+      surface: .agent-harness/context/SYMBOLS.md
+      defect: injected symbol table lists zero PR-248..261 types
+      fix: add MESAnchorSpec, DepartureState, JointAnisotropyState, SectorStress, IdentifiedDepartureSet, LegacyProjectionReport, AnisotropyTypeReport, ConditionalExceedanceSurface
+      class: symbol_gap
+      justification_basis: AGENTS.md:144 carve-out (consuming decision + prevented failure), not the :145 brake
+    - id: H4
+      surface: .agent-harness/context/FROZEN_DECISIONS.md
+      defect: no PR-248..275 decision row
+      fix: add D-TYPED-FOUNDATION (reopen=proof BC1 violated) and D-GOVERNANCE-BRAKE-2026-08
+      class: decision_gap
+      justification_basis: AGENTS.md:144 carve-out (consuming decision + prevented failure), not the :145 brake
+    - id: H5
+      surface: .agent-harness/context/CONTEXT_INDEX.json (built_at 2026-07-23)
+      defect: context pack predates PR-248..275
+      fix: re-run build_context_pack.py after H3/H4
+      class: rebuild
+    - id: H6
+      surface: docs/generated/claim_ledger.json + status_matrix.md (source_commit 60022d7a = PR-252)
+      defect: 199 rows end at PR-252; these GENERATED MIRRORS omit PR-253..275
+      scope_correction: "canonical pr_status.yaml already carries COMPLETED_SUCCESS for PR-253..275; adjudication/science waves read canonical ledgers. H6 specifically affects publication/audit consumers (check_publication_claim_freeze.py, audit-package builders)"
+      fix: regenerate at HEAD from pr_backlog.yaml + pr_status.yaml before any publication-freeze or audit-package step
+      class: regeneration
+      priority: before Part III/IV REPORTING, not before their execution
+  optional_low_priority:
+    - prune redundant string blacklists now covered by type-level forbidden_use (test-backed; not urgent)
+
+# ---------------------------------------------------------------------------
+part_III_gate_protocol:
+  meta_rule:
+    required_fields: [gate_id, discharge_evidence, new_state, authorizing_review]
+    strengthening_C_ladder_requires: separate claim-firewall review (roadmap preamble)
+    principle: never weakens a gate; records when a gate's own exit condition is met
+  never_relax_structural:
+    - egs_oneway 26-phrase converse ban (sealed counterexample family)
+    - P36 / T2p retractions
+    - refuted non-geodesic MES triples (3/4,2,2/7),(3/4,1,3/14)
+    - LegacyProjectionReport BC1/BC2 immutability
+    - MIO/HTT/OBSSTAT ownership forbidden_use lists
+    - ANISOTROPY_TYPE_FAMILY_GATE = BLOCKED_PRE_NATIVE_ATLAS
+    - ORBIT_V3_{GENERIC_SEPARATION,DEGREE_COMPLETENESS,GLOBAL_CHART}_UNPROVEN (x3)
+    - _state_payload content-addressing
+    - CAS five-state / no-majority-vote rule
+    - pdf_claim_lint 12 STRICT_FAIL_PATTERN_NAMES
+    - CLAIM_GATES rows 1,3,4,6 (scalar->family; MIO-as-odds; curl-suppressed vorticity; old-Rust-as-native)
+    - the 24 anti-laundering kill rules of PR-248..275
+  tier0_now:
+    - gate: 9.25e-6 active cross-sector denominator
+      discharge_evidence: PR-248 F2 removed active cross-sector filling; typed LEGACY_S2A_CATWISE_SIGMA2
+      new_state: retire surrounding redundant string blacklist
+    - gate: filling_fraction._FORBIDDEN_F_METADATA_TERMS
+      discharge_evidence: LEGACY_REPRODUCTION_ONLY + LegacyProjectionReport.forbidden_use supersede it
+      new_state: mark redundant-with-type
+    - gate: BLOCKED_PLATFORM_OR_LICENSE / BLOCKED_{SAGE,WOLFRAM,LEAN,CAMB}_* (~110 sites)
+      discharge_evidence: AGENTS.md:253 classifies engine non-install as platform blocker
+      new_state: install toolchain -> mechanical discharge (no claim-firewall review)
+    - gate: harness staleness H1-H6
+      discharge_evidence: Part II
+      new_state: edit/regenerate
+    - gate: 2 open pdf_claim_lint findings
+      discharge_evidence: BLOCKERS.md:88 (manuscript text or hash-bound exemption)
+      new_state: manuscript-text fix
+    - gate: 6 stale-generated-artifact contract failures
+      discharge_evidence: BLOCKERS.md:75-92 (drop git_commit_or_worktree_state from emitted artifacts)
+      new_state: one-shot refactor card
+  tier_A_per_lane_adjudication:
+    name: PR-157 per-lane split (highest leverage; no data, no solver)
+    basis:
+      - adjudication_ledger: 20 families PROMOTABLE_ON_SINGLE_INDEPENDENCE_ADJUDICATION
+      - dual_axis_claim_ledger: 62 rows EVIDENCE_READY, independence_gate open, "capacity spend-limited"
+      - pr_backlog.yaml:3887 kill rule: a lane lacking terminal receipt stays 미판정, does NOT block other lanes
+    action: commission independent non-author panel on {families with terminal receipts AND independence_gate open}
+    expected_unlock: up to 20 families EVIDENCE_READY/independence:open -> conditional (or validated candidate where C-ladder permits)
+    stays_put: ["D-DESI (PR-151)", "3x BLOCKED_ON_NATIVE_SOLVER", "3x GENUINELY_INCOMPLETE", "M-DUALAXIS (PROCESS_GATE_NO_LITERATURE_AXIS)"]
+    stays_put_count: 8
+    receipt_precondition_verified: "the 20 promotable families' upstream cards (PR-125..152,177..227) are COMPLETED_SUCCESS in pr_status.yaml (only PR-192 of T-OMK's three lacks one; other two terminal); independent of pending PR-151/155/156"
+    pr157_node_still_blocked: "PR-157 as a monolithic DAG node needs terminal receipts from all 14 upstreams; the action here is a per-lane process step the kill rule authorizes, not completion of PR-157"
+    guard: panel genuinely non-author; blocked/abandoned receipt ends aggregation but is never a rescue vote; CF4-P0 lanes stay 0-rescued
+  tier_B_event_gated:
+    - event: PR-151 terminal (1025 mocks checksum+auth+rehash)
+      discharges: [D-DESI, BLOCKED_ON_PR151_TERMINAL, DESI official-mock lane, unpins PR-155->156->157]
+      note: estimand BGS_BRIGHT-21.5 0.1<=z<=0.4 is a DIFFERENT sample from measured BGS_ANY -> new result
+    - event: CF4 P0 five-way conjunction
+      discharges: [BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP, BLOCKED_UPSTREAM/PR08-006, cf4_p0_quarantine, 5x QUARANTINED_OPEN_P0, obs_defaults channel-c, CLAIM_GATES row2]
+      conjunctive: true
+    - event: CF4 WF residual covariance/operator
+      discharges: [BLOCKED_MISSING_FIELD_REALIZATIONS (K6 definitive)]
+    - event: native low-ell Bianchi-Boltzmann solver + atlas (PR10)
+      discharges: [AWAITING_NATIVE_LOWELL_SOLVER, BLOCKED_PRE_NATIVE_ATLAS, BLOCKED_NATIVE_REQUIRED x83, PR-159..166+183, C5/C6, 3x BLOCKED_ON_NATIVE_SOLVER]
+      note: EGS3-B1 is a partial one-mode discharge; also gates FOUND-EQUIV
+    - event: reviewed write to PR274_DATA_IDENTITY_REGISTRY.yaml + execution authorization
+      discharges: [PR-274 NO_ADMITTED_DATA_PILOT -> admits real dataset; unlocks G1-G11]
+    - event: PR4/NPIPE authenticated inputs + explicit user direction (D-PR4-SKIP reopen)
+      discharges: [residual half of BLOCKED_MISSING_PR4_E2E_ACCESS]
+    - event: B-projector repair
+      discharges: [PR-172 BLOCKED_METAMORPHIC_RELATION_VIOLATION]
+  does_not_do:
+    - lower any claim-tier ceiling
+    - weaken any forbidden_use
+    - promote any UNPROVEN status
+    - rehabilitate refuted MES triple
+    - authorize a family label without the native atlas
+
+# ---------------------------------------------------------------------------
+part_IV_redo_campaign:
+  structural_prerequisites:
+    - legacy/ and workdir/ are untracked and absent from checkout; CF4 P0 + E2E artifacts exist only as hashes -> re-acquire before any REDO
+    - typed lane holds zero real-data results (PR-274 admitted 0/6; PR-275 5 synthetic cases)
+  classification_totals: {REDO_REQUIRED: "~20", REDO_UPGRADE: "~14", PRESERVE: "~5", BLOCKED: "~6", note: "~45 artifacts back-traced; enumerated by wave below, not as a single disposition table"}
+  waves:
+    R0_prerequisites:
+      brake_compliant: true
+      items:
+        - regenerate claim_ledger.json/status_matrix.md at HEAD (H6)
+        - re-acquire/re-verify legacy/+workdir/ against committed hashes
+        - close upgrade gaps GAP-1..6 (each gates a specific greenfield analysis)
+        - populate PR274_DATA_IDENTITY_REGISTRY.yaml for R1's first dataset (reviewed authority change)
+    R1_redo_upgrade:
+      note: sound results recomputed under typed contracts; BC1 preserves legacy numbers; produces typed lane's FIRST real numbers
+      items:
+        - result: "K1 PR-150 pooled rank p=0.039 (boot [0.0263,0.0532]); BipoSH p=0.681/0.649; even-L p=0.195; PR-180 boost p=0.854"
+          typed: "per-sector s_sigma/s_omega/s_beta + exact parity-sign"
+          rides: "G1+G3"
+        - result: "DESI dipole D=9.49e-3 / 13.55sigma / p=0.90"
+          typed: "amplitude SectorStress + Fieller interval"
+        - result: "ACT DR6 p=0.35 / UL<3.28e-6"
+          typed: "exceedance surface"
+        - result: "PR-179 H-only 2/20000; PR-153 JWST Delta=-0.008+-0.018 mag"
+          typed: "conditioning"
+        - result: "K6 per-cell CR -> correlated CR (rev-r198)"
+          typed: "s_omega; PRESERVE curl/div=0.0089 no-go"
+        - result: "result packs A/B/C"
+          typed: "x_phi/Q_phi/Pi_phi + SectorStress crosswalk"
+    R2_redo_required:
+      gating_defect: "D-STAT-BAYES-SEMANTICS (fitted logL diff shipped +29.7, reproduces -1035.461; degenerate nulls -3893..-3899; plug-in residuals mislabeled PPC/LOOCV)"
+      R2a_fix_estimator: "register normalized priors+likelihoods; reproduce marginal evidence with two independent engines"
+      R2b_recompute_lane:
+        scope_note: "the finding's literal impact_object is the shared-cause Bayes factor; extending 'condemned' to the whole V1 chain is a methodological inference (same nested-sampling/fitted-likelihood machinery), not a second finding. Conservative disposition (legacy-only pending fix) follows regardless."
+        typed_successor: "SectorStress + ConditionalExceedanceSurface + partial-ID envelope + AnisotropyTypeReport abstention (NOT a Bayes factor)"
+        condemned_until_fixed:
+          - "ln B=+26.40"
+          - "beta=1.360e-3"
+          - "F_Bayes=0.093+-0.025"
+          - "Q-bar=0.092 [0.035,0.19]"
+          - "Pi_HTT table"
+          - "ch07/ch08 evidence/decomposition/scenario/PPC/robustness tables"
+      also: "lowell_morphology_real_map_report.json (diagonal_fiducial_cl_only + no mask deconvolution + look-elsewhere tracked) -> recompute with proper covariance + mask deconvolution"
+    R3_greenfield:
+      gate: "PR-274 admission (R0 item d)"
+      items:
+        - "G1 per-sector stress on real Planck multipoles"
+        - "G2 conditional exceedance envelope"
+        - "G3 exact parity-sign on real a_lm"
+        - "G4 depth-path coherence on CF4"
+        - "G5 orbit-invariant catalogue on real (sigma,omega,beta)"
+        - "G6 Fieller partial-ID on real estimand"
+        - "G7 abstaining AnisotropyTypeReport"
+        - "G8 typed local/global separation on real CF4+DESI"
+      ride_R1_planck: [G1, G2, G3]
+      wait_tierB: [G4, G5, G6, G7, G8]
+    R4_blocked:
+      items:
+        - result: "CF4 amplitude/fsigma8/global-tilt chain"
+          event: "CF4 5-way conjunction"
+        - result: "PR-151 official-mock DESI"
+          event: "PR-151 terminal"
+          note: "new sample not recalibration"
+        - result: "ACT RDN0"
+          event: "QE pipeline"
+        - result: "K6 definitive ensemble"
+          event: "WF residual operator"
+        - result: "PR-179 q_cat block"
+          event: "response-identifiability gate"
+        - result: "PR08-006 join"
+          event: "upstream CF4 P0 closure"
+  preserve_no_recompute:
+    - "K6 curl/div=0.0089 structural no-go"
+    - "Teff U4/U4-v9 synthetic seals"
+    - "ACT injection-law separability"
+    - "MES algebraic bounds"
+    - "PR-153 linkage half"
+
+sequencing:
+  order: >-
+    R0 (prereqs) -> {R1 typed real numbers | R2a fix evidence estimator -> R2b | R3 greenfield on R0d};
+    Tier-A per-lane adjudication runs in parallel (needs no data); Tier-B events feed R4 as they fire.
+  brake_pivot: R0+R1 is the mandated next scientific-capability unit ahead of any further proof/registry card
+  highest_value_correctness_fix: R2a (condemns or rescues the entire evidence lane)
+  highest_value_no_data_move: Tier-A per-lane adjudication (up to 20 families)

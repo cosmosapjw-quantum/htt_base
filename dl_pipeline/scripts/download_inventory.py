@@ -16,11 +16,20 @@ import json
 import os
 import subprocess
 from pathlib import Path
+import sys
 import tarfile
 from typing import Any, Iterable
 from urllib.parse import urljoin
 import urllib.error
 import urllib.request
+
+# These scripts are run as files and are also loaded by path from repo-root
+# tests, so the sibling import needs this directory on sys.path either way.
+_SCRIPTS_DIR = str(Path(__file__).resolve().parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+
+from external_store import ensure_data_dir
 
 
 DEFAULT_DOWNLOAD_CAP_BYTES = 50 * 1024**3
@@ -375,7 +384,7 @@ def build_download_inventory(
 
 
 def write_inventory_outputs(inventory: dict[str, Any], json_path: Path) -> tuple[Path, Path]:
-    json_path.parent.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(json_path.parent)
     md_path = json_path.with_suffix(".md")
     json_path.write_text(json.dumps(inventory, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
@@ -409,7 +418,7 @@ def write_inventory_outputs(inventory: dict[str, Any], json_path: Path) -> tuple
 
 
 def safe_extract_tar(archive: Path, dst: Path) -> list[Path]:
-    dst.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(dst)
     extracted: list[Path] = []
     with tarfile.open(archive, "r:*") as tf:
         for member in tf.getmembers():
@@ -462,6 +471,6 @@ def write_acquisition_manifest(
         "source_items": source_items,
         "local_files": files,
     }
-    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(manifest_path.parent)
     manifest_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return manifest_path

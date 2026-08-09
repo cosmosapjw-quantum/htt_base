@@ -3,7 +3,16 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import sys
 import numpy as np
+
+# These scripts are run as files and are also loaded by path from repo-root
+# tests, so the sibling import needs this directory on sys.path either way.
+_SCRIPTS_DIR = str(Path(__file__).resolve().parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+
+from external_store import ensure_data_dir
 
 try:
     from astropy.io import fits
@@ -12,7 +21,7 @@ except Exception as e:
 
 
 def ensure_dir(p: Path) -> None:
-    p.mkdir(parents=True, exist_ok=True)
+    ensure_data_dir(p)
 
 
 def lower_map(names):
