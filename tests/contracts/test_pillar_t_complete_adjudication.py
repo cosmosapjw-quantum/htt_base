@@ -201,6 +201,48 @@ def test_generated_mutation_results_are_complete_and_killed(payload):
     assert all(item["survivor"] is False for item in results)
 
 
+def test_build_executes_every_registered_mutation_in_exact_order(monkeypatch, runner):
+    calls = []
+    original = runner.apply_registered_mutation
+
+    def recording_apply(payload, mutation_id):
+        calls.append(mutation_id)
+        return original(payload, mutation_id)
+
+    monkeypatch.setattr(runner, "apply_registered_mutation", recording_apply)
+    built = runner.build_complete_adjudication_receipt()
+    expected = [item["mutation_id"] for item in built["mutation_registry"]]
+    assert calls == expected
+
+
+@pytest.mark.parametrize(
+    "corruption", ["missing", "duplicate", "reordered", "unexecuted", "empty_marker"]
+)
+def test_build_rejects_forged_mutation_execution(monkeypatch, runner, corruption):
+    original = runner._run_registered_mutations
+
+    def corrupt(payload):
+        results = original(payload)
+        if corruption == "missing":
+            return results[:-1]
+        if corruption == "duplicate":
+            return [*results[:-1], deepcopy(results[-2])]
+        if corruption == "reordered":
+            return [results[1], results[0], *results[2:]]
+        if corruption == "unexecuted":
+            results[0]["executed"] = False
+            return results
+        results[0]["kill_marker"] = ""
+        return results
+
+    monkeypatch.setattr(runner, "_run_registered_mutations", corrupt)
+    with pytest.raises(
+        runner.PillarTAdjudicationError,
+        match="MUTATION_RESULTS_INCOMPLETE|MUTATION_RESULT_INVALID",
+    ):
+        runner.build_complete_adjudication_receipt()
+
+
 def test_tracked_receipt_is_exact_replay(payload):
     assert RECEIPT.is_file()
     assert json.loads(RECEIPT.read_text(encoding="utf-8")) == payload
@@ -215,3 +257,23 @@ def test_check_is_portable_from_tmp():
         check=False,
     )
     assert completed.returncode == 0, completed.stdout + completed.stderr
+
+
+def test_build_refuses_hardlinked_output_before_payload_generation(
+    monkeypatch, tmp_path, runner
+):
+    generated = tmp_path / "generated"
+    generated.mkdir()
+    outside = tmp_path / "outside.json"
+    outside.write_text("preserve\n", encoding="utf-8")
+    destination = generated / "receipt.json"
+    destination.hardlink_to(outside)
+    monkeypatch.setattr(runner, "ROOT", tmp_path)
+    monkeypatch.setattr(runner, "OUTPUT", destination, raising=False)
+
+    def must_not_build():
+        raise AssertionError("builder ran before destination preflight")
+
+    monkeypatch.setattr(runner, "build_complete_adjudication_receipt", must_not_build)
+    assert runner.main(["build"]) == 1
+    assert outside.read_text(encoding="utf-8") == "preserve\n"
