@@ -197,6 +197,7 @@ def test_exact_finite_centered_tower_produces_premise_bound_doob_report() -> Non
     assert replay.content_id == report.content_id
     assert report.premise_status is ReverseMartingalePremiseStatus.PROVED_FINITE_REGISTERED_PATH
     assert report.filtration_direction == "DECREASING"
+    assert report.path.content_id == _path().content_id
     assert report.path_values == (Fraction(-3), Fraction(-2), Fraction(0))
     assert report.path_maximum_abs == Fraction(3)
     assert report.target_second_moment == Fraction(5)
@@ -228,6 +229,7 @@ def test_common_report_builder_cannot_mint_proved_status_without_replay() -> Non
 
     with pytest.raises(DepthPathError, match="centered|decreasing filtration"):
         contracts._build_depth_path_reverse_martingale_report_contract(
+            path=path,
             report_id="PR284-FORGED-PROVED-REPORT",
             path_content_id=path.content_id,
             stratum_content_ids=tuple(
@@ -258,6 +260,50 @@ def test_common_report_builder_cannot_mint_proved_status_without_replay() -> Non
             exact_tower_report_content_id="sha256:caller-supplied-tower",
             unresolved_reasons=(),
             matched_mock_plan=None,
+        )
+
+
+def test_common_report_builder_requires_exact_replayed_depth_path_identity() -> None:
+    from common import depth_path_calibration as contracts
+
+    path = _path()
+    authentic = _proved_report()
+    kwargs = {
+        "report_id": "PR284-INVENTED-PATH-IDENTITY",
+        "path_content_id": "sha256:no-registered-depth-path",
+        "stratum_content_ids": (
+            "sha256:no-registered-stratum-1",
+            "sha256:no-registered-stratum-2",
+            "sha256:no-registered-stratum-3",
+        ),
+        "threshold_contract": authentic.threshold_contract,
+        "filtration_id": authentic.filtration_id,
+        "filtration_direction": authentic.filtration_direction,
+        "preprocessing_id": authentic.preprocessing_id,
+        "estimator_id": authentic.estimator_id,
+        "premise_evidence_id": "sha256:invented-premise-evidence",
+        "premise_status": authentic.premise_status,
+        "finite_target_law": authentic.finite_target_law,
+        "selection_contract": authentic.selection_contract,
+        "path_partitions": authentic.path_partitions,
+        "sigma_field_ids": authentic.sigma_field_ids,
+        "path_values": authentic.path_values,
+        "path_maximum_abs": authentic.path_maximum_abs,
+        "path_maximum_content_id": authentic.path_maximum_content_id,
+        "target_second_moment": authentic.target_second_moment,
+        "exact_tower_equalities": authentic.exact_tower_equalities,
+        "exact_tower_report_content_id": authentic.exact_tower_report_content_id,
+        "unresolved_reasons": (),
+        "matched_mock_plan": None,
+    }
+
+    with pytest.raises(DepthPathError, match="exact DepthPath"):
+        contracts._build_depth_path_reverse_martingale_report_contract(**kwargs)
+
+    with pytest.raises(DepthPathError, match="path content identity"):
+        contracts._build_depth_path_reverse_martingale_report_contract(
+            path=path,
+            **kwargs,
         )
 
 

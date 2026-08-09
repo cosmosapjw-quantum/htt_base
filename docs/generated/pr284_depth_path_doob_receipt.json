@@ -216,7 +216,7 @@
       ],
       "calibration_id": "PR284-DOOB-CALIBRATION-V1",
       "claim_tier": "diagnostic_only",
-      "content_id": "sha256:7b31db87fd8b75b86eff1808a529c551ad60ddfd32f62c0fac9cbdfd962113f4",
+      "content_id": "sha256:663d72b1eb2c6e251eb73a5bea4c3d0a496e6de524238a12f2af1e09ef29ff21",
       "event_comparison": "GREATER_THAN_OR_EQUAL_EXACT_SQUARES",
       "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
       "forbidden_use": [
@@ -234,7 +234,7 @@
       "preprocessing_id": "sha256:common-preprocessing-v1",
       "probability_upper_bound": "25/36",
       "public_use": false,
-      "report_content_id": "sha256:1cdf1b2991ccce06d55e61ccc3ec994686ccdf7c68607c9410ced2c8ec864d2f",
+      "report_content_id": "sha256:0f2cec5597cbda2ab864b7ed5f1d5eb50f1831ccf5e0cc30aafdb2ec508c0584",
       "schema": "HTT_DEPTH_PATH_DOOB_CALIBRATION_V1",
       "status": "BOUND_AVAILABLE_CONDITIONAL_PROVED_PREMISE",
       "target_second_moment": "5/1",
@@ -277,7 +277,7 @@
         "routing to a content-addressed matched-mock plan when the premise is unproved"
       ],
       "claim_tier": "diagnostic_only",
-      "content_id": "sha256:1cdf1b2991ccce06d55e61ccc3ec994686ccdf7c68607c9410ced2c8ec864d2f",
+      "content_id": "sha256:0f2cec5597cbda2ab864b7ed5f1d5eb50f1831ccf5e0cc30aafdb2ec508c0584",
       "exact_tower_equalities": [
         true,
         true
@@ -321,6 +321,190 @@
       "matched_mock_plan": null,
       "observed_data_executed": false,
       "owner": "HTT",
+      "path": {
+        "allowed_use": [
+          "observer-side feature transport across explicitly nested sky supports",
+          "MIO depth-coherence diagnostic",
+          "HTT model-conditional likelihood input through its separate adapter",
+          "depth-scramble negative control"
+        ],
+        "claim_ceiling": "diagnostic_only",
+        "content_id": "sha256:c51d03d2f66e2d02b05aac74cd3ed0b73b65f0f2cc0760704f8cd59ffc02d95a",
+        "forbidden_use": [
+          "silent pooling of incompatible sky supports",
+          "global-tilt evidence from coherence alone",
+          "native solver or native morphology-atlas result",
+          "geometry detection or Bianchi family identification"
+        ],
+        "kernels": [
+          {
+            "assumptions": [
+              "synthetic scalar identity transport"
+            ],
+            "component_transport_ids": [],
+            "content_id": "sha256:73eb2b60987683e717daf66fd924cf1639716ab3f6a681d0af668de284463567",
+            "covariance_transport_id": "sha256:covariance-k12",
+            "mask_transport_id": "sha256:mask-k12",
+            "matrix_hex": [
+              [
+                "0x1.0000000000000p+0"
+              ]
+            ],
+            "method_id": "PR284-IDENTITY-TRANSPORT-V1",
+            "schema": "HTT_TRANSPORT_KERNEL_V1",
+            "selection_transport_id": "sha256:selection-k12",
+            "source_feature_names": [
+              "centered_scalar"
+            ],
+            "source_stratum_content_id": "sha256:bbe77645b9004ddccfc3f065d4f1635e89b539f26df12beed6ee409a30b04256",
+            "source_stratum_id": "PR284-D1",
+            "target_feature_names": [
+              "centered_scalar"
+            ],
+            "target_stratum_content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "target_stratum_id": "PR284-D2",
+            "transport_id": "PR284-K12"
+          },
+          {
+            "assumptions": [
+              "synthetic scalar identity transport"
+            ],
+            "component_transport_ids": [],
+            "content_id": "sha256:d95c0c7d7b8265e3761edb648c00fc58da845d84f9c4bb623ae1c2d988e5f204",
+            "covariance_transport_id": "sha256:covariance-k23",
+            "mask_transport_id": "sha256:mask-k23",
+            "matrix_hex": [
+              [
+                "0x1.0000000000000p+0"
+              ]
+            ],
+            "method_id": "PR284-IDENTITY-TRANSPORT-V1",
+            "schema": "HTT_TRANSPORT_KERNEL_V1",
+            "selection_transport_id": "sha256:selection-k23",
+            "source_feature_names": [
+              "centered_scalar"
+            ],
+            "source_stratum_content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "source_stratum_id": "PR284-D2",
+            "target_feature_names": [
+              "centered_scalar"
+            ],
+            "target_stratum_content_id": "sha256:60ad84eaa9c8adce48f7a30adadfe2731aad08e39970dd00f7f1f8f4bc059ba5",
+            "target_stratum_id": "PR284-D3",
+            "transport_id": "PR284-K23"
+          }
+        ],
+        "nesting_rule": "TARGET_SUPPORT_SUBSET_OF_SOURCE",
+        "path_id": "PR284-NESTED-PATH-V1",
+        "schema": "HTT_DEPTH_PATH_V1",
+        "strata": [
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:bbe77645b9004ddccfc3f065d4f1635e89b539f26df12beed6ee409a30b04256",
+            "covariance_id": "sha256:covariance-D1",
+            "depth_coordinate_hex": "0x1.999999999999ap-4",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D1",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:705b0075d908c6ea5b8bf82785272bf0b10398a5f9f12298c51c9c5845278c2d",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D1",
+              "sky_fraction": 1.0,
+              "sky_support_hash": "sha256:d18c48f3f8cc66387c7933e8dccfbb402d744fc41b5c155f422acebf9d802902"
+            },
+            "source_artifact_id": "sha256:source-D1",
+            "stratum_id": "PR284-D1",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1",
+              "pixel-2",
+              "pixel-3"
+            ],
+            "support_universe_size": 4
+          },
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "covariance_id": "sha256:covariance-D2",
+            "depth_coordinate_hex": "0x1.999999999999ap-3",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D2",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:5f646be0e0acec63605249a2e704f2447cc054909cfd9a3504f6a464d8b0067a",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D2",
+              "sky_fraction": 0.75,
+              "sky_support_hash": "sha256:32021fded3125d7401ea026bd0ca51080f8caa04b4c1472b8df3da0d333706c1"
+            },
+            "source_artifact_id": "sha256:source-D2",
+            "stratum_id": "PR284-D2",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1",
+              "pixel-2"
+            ],
+            "support_universe_size": 4
+          },
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:60ad84eaa9c8adce48f7a30adadfe2731aad08e39970dd00f7f1f8f4bc059ba5",
+            "covariance_id": "sha256:covariance-D3",
+            "depth_coordinate_hex": "0x1.3333333333333p-2",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D3",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:45fc5a122e570862112521f8dd251021ff7482ab5febd5529e6c5547ffba4884",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D3",
+              "sky_fraction": 0.5,
+              "sky_support_hash": "sha256:8f8b5d5fb3a3f03b81dd26d0c948a50260104705f7ef46afd5e76f131080e2ad"
+            },
+            "source_artifact_id": "sha256:source-D3",
+            "stratum_id": "PR284-D3",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1"
+            ],
+            "support_universe_size": 4
+          }
+        ]
+      },
       "path_content_id": "sha256:c51d03d2f66e2d02b05aac74cd3ed0b73b65f0f2cc0760704f8cd59ffc02d95a",
       "path_maximum_abs": "3/1",
       "path_maximum_content_id": "sha256:bff9edddb9beeec6c3358f9a58a25a1e7e502dac131fbc9b94b550f987aef257",
@@ -414,7 +598,7 @@
     }
   },
   "public_use": false,
-  "receipt_content_sha256": "6cd68c1082a00a3db1385650ef7e2db785889dc9b2f2d24cb8d9835000f64213",
+  "receipt_content_sha256": "5baa74553ac7e300bb0b0c40cac41f49d8249c41a5a4e1b3abd5cd5d22ffe849",
   "schema": "htt.pr284.depth_path_doob_artifact.v1",
   "scientific_artifact_mode": "synthetic_diagnostic",
   "scope": "synthetic premise-bound finite depth-path calibration",
@@ -422,7 +606,7 @@
   "source_bindings": [
     {
       "path": "docs/research_program/post_pr275/pr284_spec.yaml",
-      "sha256": "3a5784ea33b45d6d73cb4e8c1602d121702dd8aea206b8e625abe0f24d364e85"
+      "sha256": "c33bd811d7d4b2db6ec0b12dbad0a7f0451b04881ffbc2f174201d4ffa0389b9"
     },
     {
       "path": "htt/src/common/depth_path.py",
@@ -430,7 +614,7 @@
     },
     {
       "path": "htt/src/common/depth_path_calibration.py",
-      "sha256": "89874115f583120d9b5c62cc9697e33dedbc30c3cba3e9c51a97a82701d2dfa3"
+      "sha256": "e54b429418c7c20a9b2bfce74b1c3513afe79ddeddb7e1b88743a5af079d88d1"
     },
     {
       "path": "htt/src/common/vector_tensor_statistical_foundations.py",
@@ -442,7 +626,7 @@
     },
     {
       "path": "htt/htt/htt/infer/depth_path_calibration.py",
-      "sha256": "6fe34f03694a63f285c0a933bd75ae8854ff40974e7299be336a2f4c1884c86f"
+      "sha256": "7bc2c3ac0550f71242fbea30f9a90a5daeb30915c6b9aa80935e229479ef4bf1"
     },
     {
       "path": "docs/research_program/vector_tensor/proof_registry_two_pillars.yaml",
@@ -454,7 +638,7 @@
     },
     {
       "path": "scripts/codex_harness/run_pr284_depth_path_doob.py",
-      "sha256": "b2a2f25db76fb60e0d1fa32870331cf6c3b20174008398e8df6907f339af5af1"
+      "sha256": "306a66019279c37eceec870f3a2f079fa6d88bced8eedf1a5503d298bf3fbf7e"
     },
     {
       "path": "tests/contracts/test_depth_path.py",
@@ -462,7 +646,7 @@
     },
     {
       "path": "tests/contracts/test_depth_path_doob_calibration.py",
-      "sha256": "53038dcd3235d5de124e3b5fb10987dfa65b2396eea0b478ec2a28d44e719bc3"
+      "sha256": "a6b1bc2dce61a1d7c097eb5c4bd2be7b4a737a1f0ac0489b07d5a24ddcb11447"
     },
     {
       "path": "tests/contracts/test_pillar_s_core.py",
@@ -480,7 +664,7 @@
       ],
       "calibration_id": "PR284-MOCK-FALLBACK-V1",
       "claim_tier": "diagnostic_only",
-      "content_id": "sha256:c728ec25996224701ba61d86db9103b78b47c59e24e3e631c73351e7d8f27804",
+      "content_id": "sha256:dcbd08987cd4e5db0ae38d944f96185bd7fccda1523df9f46683765203c12bfd",
       "event_comparison": "GREATER_THAN_OR_EQUAL_EXACT_SQUARES",
       "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
       "forbidden_use": [
@@ -498,7 +682,7 @@
       "preprocessing_id": "sha256:common-preprocessing-v1",
       "probability_upper_bound": null,
       "public_use": false,
-      "report_content_id": "sha256:37b91b496137d8826051d4239a7bfd4210b9bd92431610b83ab3c701fe25774b",
+      "report_content_id": "sha256:cab8fe5e7c705f75af53c14ea0ee26cdd61f796040e781484dee7e3049400587",
       "schema": "HTT_DEPTH_PATH_DOOB_CALIBRATION_V1",
       "status": "MATCHED_MOCKS_REQUIRED",
       "target_second_moment": null,
@@ -538,7 +722,7 @@
         "routing to a content-addressed matched-mock plan when the premise is unproved"
       ],
       "claim_tier": "diagnostic_only",
-      "content_id": "sha256:37b91b496137d8826051d4239a7bfd4210b9bd92431610b83ab3c701fe25774b",
+      "content_id": "sha256:cab8fe5e7c705f75af53c14ea0ee26cdd61f796040e781484dee7e3049400587",
       "exact_tower_equalities": [],
       "exact_tower_report_content_id": null,
       "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
@@ -577,6 +761,190 @@
       },
       "observed_data_executed": false,
       "owner": "HTT",
+      "path": {
+        "allowed_use": [
+          "observer-side feature transport across explicitly nested sky supports",
+          "MIO depth-coherence diagnostic",
+          "HTT model-conditional likelihood input through its separate adapter",
+          "depth-scramble negative control"
+        ],
+        "claim_ceiling": "diagnostic_only",
+        "content_id": "sha256:c51d03d2f66e2d02b05aac74cd3ed0b73b65f0f2cc0760704f8cd59ffc02d95a",
+        "forbidden_use": [
+          "silent pooling of incompatible sky supports",
+          "global-tilt evidence from coherence alone",
+          "native solver or native morphology-atlas result",
+          "geometry detection or Bianchi family identification"
+        ],
+        "kernels": [
+          {
+            "assumptions": [
+              "synthetic scalar identity transport"
+            ],
+            "component_transport_ids": [],
+            "content_id": "sha256:73eb2b60987683e717daf66fd924cf1639716ab3f6a681d0af668de284463567",
+            "covariance_transport_id": "sha256:covariance-k12",
+            "mask_transport_id": "sha256:mask-k12",
+            "matrix_hex": [
+              [
+                "0x1.0000000000000p+0"
+              ]
+            ],
+            "method_id": "PR284-IDENTITY-TRANSPORT-V1",
+            "schema": "HTT_TRANSPORT_KERNEL_V1",
+            "selection_transport_id": "sha256:selection-k12",
+            "source_feature_names": [
+              "centered_scalar"
+            ],
+            "source_stratum_content_id": "sha256:bbe77645b9004ddccfc3f065d4f1635e89b539f26df12beed6ee409a30b04256",
+            "source_stratum_id": "PR284-D1",
+            "target_feature_names": [
+              "centered_scalar"
+            ],
+            "target_stratum_content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "target_stratum_id": "PR284-D2",
+            "transport_id": "PR284-K12"
+          },
+          {
+            "assumptions": [
+              "synthetic scalar identity transport"
+            ],
+            "component_transport_ids": [],
+            "content_id": "sha256:d95c0c7d7b8265e3761edb648c00fc58da845d84f9c4bb623ae1c2d988e5f204",
+            "covariance_transport_id": "sha256:covariance-k23",
+            "mask_transport_id": "sha256:mask-k23",
+            "matrix_hex": [
+              [
+                "0x1.0000000000000p+0"
+              ]
+            ],
+            "method_id": "PR284-IDENTITY-TRANSPORT-V1",
+            "schema": "HTT_TRANSPORT_KERNEL_V1",
+            "selection_transport_id": "sha256:selection-k23",
+            "source_feature_names": [
+              "centered_scalar"
+            ],
+            "source_stratum_content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "source_stratum_id": "PR284-D2",
+            "target_feature_names": [
+              "centered_scalar"
+            ],
+            "target_stratum_content_id": "sha256:60ad84eaa9c8adce48f7a30adadfe2731aad08e39970dd00f7f1f8f4bc059ba5",
+            "target_stratum_id": "PR284-D3",
+            "transport_id": "PR284-K23"
+          }
+        ],
+        "nesting_rule": "TARGET_SUPPORT_SUBSET_OF_SOURCE",
+        "path_id": "PR284-NESTED-PATH-V1",
+        "schema": "HTT_DEPTH_PATH_V1",
+        "strata": [
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:bbe77645b9004ddccfc3f065d4f1635e89b539f26df12beed6ee409a30b04256",
+            "covariance_id": "sha256:covariance-D1",
+            "depth_coordinate_hex": "0x1.999999999999ap-4",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D1",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:705b0075d908c6ea5b8bf82785272bf0b10398a5f9f12298c51c9c5845278c2d",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D1",
+              "sky_fraction": 1.0,
+              "sky_support_hash": "sha256:d18c48f3f8cc66387c7933e8dccfbb402d744fc41b5c155f422acebf9d802902"
+            },
+            "source_artifact_id": "sha256:source-D1",
+            "stratum_id": "PR284-D1",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1",
+              "pixel-2",
+              "pixel-3"
+            ],
+            "support_universe_size": 4
+          },
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "covariance_id": "sha256:covariance-D2",
+            "depth_coordinate_hex": "0x1.999999999999ap-3",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D2",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:5f646be0e0acec63605249a2e704f2447cc054909cfd9a3504f6a464d8b0067a",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D2",
+              "sky_fraction": 0.75,
+              "sky_support_hash": "sha256:32021fded3125d7401ea026bd0ca51080f8caa04b4c1472b8df3da0d333706c1"
+            },
+            "source_artifact_id": "sha256:source-D2",
+            "stratum_id": "PR284-D2",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1",
+              "pixel-2"
+            ],
+            "support_universe_size": 4
+          },
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:60ad84eaa9c8adce48f7a30adadfe2731aad08e39970dd00f7f1f8f4bc059ba5",
+            "covariance_id": "sha256:covariance-D3",
+            "depth_coordinate_hex": "0x1.3333333333333p-2",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D3",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:45fc5a122e570862112521f8dd251021ff7482ab5febd5529e6c5547ffba4884",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D3",
+              "sky_fraction": 0.5,
+              "sky_support_hash": "sha256:8f8b5d5fb3a3f03b81dd26d0c948a50260104705f7ef46afd5e76f131080e2ad"
+            },
+            "source_artifact_id": "sha256:source-D3",
+            "stratum_id": "PR284-D3",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1"
+            ],
+            "support_universe_size": 4
+          }
+        ]
+      },
       "path_content_id": "sha256:c51d03d2f66e2d02b05aac74cd3ed0b73b65f0f2cc0760704f8cd59ffc02d95a",
       "path_maximum_abs": null,
       "path_maximum_content_id": null,

@@ -78,7 +78,7 @@ _ERROR_MARKERS = {
     "MU284-SUPPORT-NESTING-AS-PROOF": "exact DepthPathFiniteTargetLaw",
     "MU284-NONNESTED-SUPPORT": "non-nested",
     "MU284-TARGET-DRIFT": "identity drifted",
-    "MU284-REPORT-BUILDER-BYPASS": "exactly centered",
+    "MU284-REPORT-BUILDER-BYPASS": "path content identity",
     "MU284-PREPROCESSING-DRIFT": "preprocessing identity",
     "MU284-FILTRATION-DIRECTION-DRIFT": "decreasing filtration",
     "MU284-THRESHOLD-DRIFT": "threshold contract",
@@ -574,7 +574,6 @@ def _run_mutations() -> list[dict[str, object]]:
     from common.depth_path_calibration import (
         ReverseMartingalePremiseStatus,
         _build_depth_path_reverse_martingale_report_contract,
-        build_depth_path_finite_target_law,
         revalidate_depth_path_finite_target_law,
         revalidate_depth_path_reverse_martingale_report,
         revalidate_depth_path_selection_contract,
@@ -635,46 +634,34 @@ def _run_mutations() -> list[dict[str, object]]:
     operations["MU284-TARGET-DRIFT"] = target_drift
 
     def report_builder_bypass() -> object:
-        path = _path()
-        threshold = _threshold()
-        law = build_depth_path_finite_target_law(
-            law_id="MU284-FORGED-LAW",
-            common_target_id="MU284-NONCENTERED-TARGET",
-            atom_ids=("atom-a", "atom-b", "atom-c", "atom-d"),
-            weights=(Fraction(1, 4),) * 4,
-            common_target=(0, 1, 2, 3),
-            registration_id="sha256:mutation-forged-law",
-        )
-        selection = _selection(law)
+        fixture = _proved_fixture()
+        report = fixture["report"]
         return _build_depth_path_reverse_martingale_report_contract(
+            path=fixture["path"],
             report_id="MU284-FORGED-PROVED-REPORT",
-            path_content_id=path.content_id,
-            stratum_content_ids=tuple(
-                stratum.content_id for stratum in path.strata
+            path_content_id="sha256:no-registered-depth-path",
+            stratum_content_ids=(
+                "sha256:no-registered-stratum-1",
+                "sha256:no-registered-stratum-2",
+                "sha256:no-registered-stratum-3",
             ),
-            threshold_contract=threshold,
-            filtration_id="sha256:mutation-forged-filtration",
-            filtration_direction="DECREASING",
-            preprocessing_id="sha256:common-preprocessing-v1",
-            estimator_id="sha256:conditional-estimator-v1",
-            premise_evidence_id="sha256:caller-supplied-proof",
-            premise_status=(
-                ReverseMartingalePremiseStatus.PROVED_FINITE_REGISTERED_PATH
-            ),
-            finite_target_law=law,
-            selection_contract=selection,
-            path_partitions=(
-                ("left", "left", "right", "right"),
-                ("x", "y", "x", "y"),
-                ("all", "all", "all", "all"),
-            ),
-            sigma_field_ids=("sigma-1", "sigma-2", "sigma-3"),
-            path_values=(Fraction(0), Fraction(0), Fraction(0)),
-            path_maximum_abs=Fraction(0),
-            path_maximum_content_id="sha256:caller-supplied-maximum",
-            target_second_moment=Fraction(1),
-            exact_tower_equalities=(True, True),
-            exact_tower_report_content_id="sha256:caller-supplied-tower",
+            threshold_contract=report.threshold_contract,
+            filtration_id=report.filtration_id,
+            filtration_direction=report.filtration_direction,
+            preprocessing_id=report.preprocessing_id,
+            estimator_id=report.estimator_id,
+            premise_evidence_id="sha256:invented-premise-evidence",
+            premise_status=report.premise_status,
+            finite_target_law=report.finite_target_law,
+            selection_contract=report.selection_contract,
+            path_partitions=report.path_partitions,
+            sigma_field_ids=report.sigma_field_ids,
+            path_values=report.path_values,
+            path_maximum_abs=report.path_maximum_abs,
+            path_maximum_content_id=report.path_maximum_content_id,
+            target_second_moment=report.target_second_moment,
+            exact_tower_equalities=report.exact_tower_equalities,
+            exact_tower_report_content_id=report.exact_tower_report_content_id,
             unresolved_reasons=(),
             matched_mock_plan=None,
         )

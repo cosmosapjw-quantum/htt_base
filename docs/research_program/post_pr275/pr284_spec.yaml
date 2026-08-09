@@ -198,8 +198,8 @@ mutation_registry:
     expected_kill: report replay rejects target identity drift
   - mutation_id: MU284-REPORT-BUILDER-BYPASS
     mutation_kind: caller_supplied_proved_report_bypasses_replay
-    intended_defect: an importable internal builder mints a proved report from caller-supplied premises
-    expected_kill: common report construction independently replays centering, tower, path values, second moment, and identities
+    intended_defect: an importable internal builder mints a proved report with invented path and stratum identities
+    expected_kill: common report construction independently replays the exact DepthPath, centering, tower, path values, and second moment
   - mutation_id: MU284-PREPROCESSING-DRIFT
     mutation_kind: preprocessing identity differs across rungs or calibration
     intended_defect: independently normalized rungs receive a free bound

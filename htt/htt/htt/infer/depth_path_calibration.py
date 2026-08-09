@@ -226,6 +226,7 @@ def build_depth_path_reverse_martingale_report(
         }
     )
     return _build_depth_path_reverse_martingale_report_contract(
+        path=resolved_path,
         report_id=report_id,
         path_content_id=resolved_path.content_id,
         stratum_content_ids=tuple(value.content_id for value in resolved_path.strata),
@@ -288,6 +289,7 @@ def build_unproved_depth_path_reverse_martingale_report(
     ):
         raise DepthPathError("matched_mock_plan is not bound to the unproved report")
     return _build_depth_path_reverse_martingale_report_contract(
+        path=resolved_path,
         report_id=report_id,
         path_content_id=resolved_path.content_id,
         stratum_content_ids=tuple(value.content_id for value in resolved_path.strata),

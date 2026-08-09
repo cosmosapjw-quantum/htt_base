@@ -15,7 +15,7 @@ import json
 from numbers import Integral, Rational
 from typing import Sequence
 
-from common.depth_path import DepthPathError
+from common.depth_path import DepthPath, DepthPathError, revalidate_depth_path
 from common.vector_tensor_statistical_foundations import (
     VectorTensorStatisticalFoundationError,
     certify_finite_partition_tower,
@@ -517,6 +517,7 @@ def revalidate_depth_path_matched_mock_plan(
 @dataclass(frozen=True)
 class DepthPathReverseMartingaleReport:
     report_id: str
+    path: DepthPath
     path_content_id: str
     stratum_content_ids: tuple[str, ...]
     threshold_contract: DepthPathThresholdContract
@@ -657,6 +658,7 @@ class DepthPathReverseMartingaleReport:
         object.__setattr__(self, "sigma_field_ids", sigma_fields)
         object.__setattr__(self, "path_values", path_values)
         object.__setattr__(self, "unresolved_reasons", reasons)
+        object.__setattr__(self, "path", self._replay_exact_path_binding())
         self._assert_proved_premise_replay()
         object.__setattr__(
             self,
@@ -688,6 +690,22 @@ class DepthPathReverseMartingaleReport:
     @property
     def matched_mock_plan_id(self) -> str | None:
         return None if self.matched_mock_plan is None else self.matched_mock_plan.plan_id
+
+    def _replay_exact_path_binding(self) -> DepthPath:
+        if type(self.path) is not DepthPath:
+            raise DepthPathError("report requires an exact DepthPath")
+        resolved_path = revalidate_depth_path(self.path)
+        if self.path_content_id != resolved_path.content_id:
+            raise DepthPathError(
+                "path content identity does not match exact DepthPath replay"
+            )
+        if self.stratum_content_ids != tuple(
+            stratum.content_id for stratum in resolved_path.strata
+        ):
+            raise DepthPathError(
+                "stratum identities do not match exact DepthPath replay"
+            )
+        return resolved_path
 
     def _assert_proved_premise_replay(self) -> None:
         if (
@@ -808,6 +826,7 @@ class DepthPathReverseMartingaleReport:
             ),
             "observed_data_executed": self.observed_data_executed,
             "owner": self.owner,
+            "path": self.path.as_payload(),
             "path_content_id": self.path_content_id,
             "path_maximum_abs": (
                 None if self.path_maximum_abs is None else _fraction_text(self.path_maximum_abs)
@@ -842,6 +861,7 @@ class DepthPathReverseMartingaleReport:
         }
 
     def _assert_identity_sealed(self) -> None:
+        self._replay_exact_path_binding()
         self.threshold_contract.as_payload()
         if self.finite_target_law is not None:
             self.finite_target_law.as_payload()
@@ -862,9 +882,16 @@ class DepthPathReverseMartingaleReport:
 
 
 def _build_depth_path_reverse_martingale_report_contract(
+    *,
+    path: DepthPath | None = None,
     **kwargs: object,
 ) -> DepthPathReverseMartingaleReport:
+    if type(path) is not DepthPath:
+        raise DepthPathError(
+            "report construction requires an exact DepthPath"
+        )
     return DepthPathReverseMartingaleReport(
+        path=revalidate_depth_path(path),
         **kwargs,
         _construction_token=_REPORT_TOKEN,
     )
