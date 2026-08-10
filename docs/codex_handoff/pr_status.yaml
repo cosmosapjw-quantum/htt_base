@@ -332,17 +332,44 @@ stacked_pr_execution:
         publication: PASS
       assurance_budget: {maximum: 16, consumed: 16}
     PR-285:
-      lifecycle: IMPLEMENTED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
+      lifecycle: VALIDATED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
       base_sha: 0b3680a03f325e3f1fa1699528a5a59303ddb8b4
       predecessor_pr: PR-284
       predecessor_sealed_sha: 0b3680a03f325e3f1fa1699528a5a59303ddb8b4
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: null
-      dependency_hashes: {}
-      gate_dispositions: {eligibility: PASS, implementation: PASS, validation: DEFERRED}
+      production_hash: 602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2
+      dependency_hashes:
+        theorem_signatures: d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b
+        vt_proof_program: 055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9
+        pr269_spec: 510e7513ee058d9d20aa6a399a431cc24e013f721a5af6d3a794c7690d4164e7
+        pr270_spec: 439b331d6b8e8c0d51ef2a75bd22dbea4a3699ee9e6afbbe88b66bb4be11da8d
+        pillar_t_core_proofs: 808c69ca1111591a6d6b52079b6caa7889a838009540ef9959a077640dcdc1d6
+        pillar_s_core_proofs: 8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e
+        pillar_t_cas_proofs: 8f2faf3847f21d2a903bd143ba35ee123ad24256da42e3e1444ad991ade7a27e
+        cas_contract: 2d2ceb84603b24ab0b34db8b69715483061428ee36d6b2f5952494a9bb8108b4
+        cas_run_spec: fc8b55a6a56cb0744a6f815c12f758df63122061070adb46f9a6f45930ca5904
+        cas_adjudication: a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275
+        pr190_spec: 74872439326b0973ab69de3628f279dd3fad46bf83aa17641e49477aa167b73f
+        pr190_receipt: 580aa9e36ac5419c7364ca6b295dece08c39c8ca1f91962d25c63d32fd3cf426
+        pr285_spec: 475b42f32e0e28880be532986008f97ae9675e887db1e349b457ede3f85d2a9d
+        publication_policy: 973b1b1521d6a9ff4fd783839719fb3866ee0078a325f5ef968cf9c9aedf55b8
+        pr285_runner: 3fbfba3285523659dcbc48de90c542090ce4d582afcbb1bb1fb30366aa166f64
+        pr285_contract_test: 2866c589379f16bb3641facd802ca78697aa876d2aba247561194f838fbb8693
+        adjudication_receipt: 1a6aa668d9aea071dd712a9143fea0fdf88d0523f3b4e41e8ca4e9002c927b82
+      gate_dispositions:
+        eligibility: PASS
+        implementation: PASS
+        validation: PASS
+        harness: PASS
+        portability_replay: PASS
+        cas: INCONCLUSIVE
+        review: DEFERRED
+        seal: INELIGIBLE
+        push: INELIGIBLE
+        publication: INELIGIBLE
       assurance_budget: {maximum: 16, consumed: 0}
     PR-286:
       lifecycle: PLANNED
