@@ -713,6 +713,15 @@ class DepthPathReverseMartingaleReport:
             is not ReverseMartingalePremiseStatus.PROVED_FINITE_REGISTERED_PATH
         ):
             return
+        for source, target in zip(
+            self.path.strata[:-1],
+            self.path.strata[1:],
+            strict=True,
+        ):
+            if not set(target.support_unit_ids) < set(source.support_unit_ids):
+                raise DepthPathError(
+                    "proved report requires strictly nested sky supports"
+                )
         if type(self.finite_target_law) is not DepthPathFiniteTargetLaw:
             raise DepthPathError(
                 "proved report requires an exact finite target law"

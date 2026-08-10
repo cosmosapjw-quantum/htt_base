@@ -192,6 +192,10 @@ mutation_registry:
     mutation_kind: one path support is not a subset of its predecessor
     intended_defect: incompatible masks enter one path
     expected_kill: DepthPath construction fails closed
+  - mutation_id: MU284-NONSTRICT-SUPPORT
+    mutation_kind: one path support equals its predecessor
+    intended_defect: a proved path emits a bound without proper support reduction
+    expected_kill: proved report replay rejects equality before calibration
   - mutation_id: MU284-TARGET-DRIFT
     mutation_kind: one common-target value changes after report sealing
     intended_defect: rung expectations no longer share the sealed target

@@ -45,6 +45,7 @@ BOUND_SOURCES = (
 _MUTATIONS = (
     ("MU284-SUPPORT-NESTING-AS-PROOF", "nested_support_substituted_for_partition_tower"),
     ("MU284-NONNESTED-SUPPORT", "one path support is not a subset of its predecessor"),
+    ("MU284-NONSTRICT-SUPPORT", "one path support equals its predecessor"),
     ("MU284-TARGET-DRIFT", "one common-target value changes after report sealing"),
     ("MU284-REPORT-BUILDER-BYPASS", "caller_supplied_proved_report_bypasses_replay"),
     ("MU284-PREPROCESSING-DRIFT", "preprocessing identity differs across rungs or calibration"),
@@ -61,6 +62,7 @@ _MUTATIONS = (
 _REASONS = {
     "MU284-SUPPORT-NESTING-AS-PROOF": "FINITE_LAW_AND_PARTITION_EVIDENCE_REQUIRED",
     "MU284-NONNESTED-SUPPORT": "NONNESTED_SUPPORT_REJECTED",
+    "MU284-NONSTRICT-SUPPORT": "NONSTRICT_SUPPORT_REJECTED",
     "MU284-TARGET-DRIFT": "FINITE_TARGET_IDENTITY_REJECTED",
     "MU284-REPORT-BUILDER-BYPASS": "CALLER_SUPPLIED_PROVED_REPORT_REJECTED",
     "MU284-PREPROCESSING-DRIFT": "PREPROCESSING_IDENTITY_REJECTED",
@@ -77,6 +79,7 @@ _REASONS = {
 _ERROR_MARKERS = {
     "MU284-SUPPORT-NESTING-AS-PROOF": "exact DepthPathFiniteTargetLaw",
     "MU284-NONNESTED-SUPPORT": "non-nested",
+    "MU284-NONSTRICT-SUPPORT": "strictly nested sky supports",
     "MU284-TARGET-DRIFT": "identity drifted",
     "MU284-REPORT-BUILDER-BYPASS": "path content identity",
     "MU284-PREPROCESSING-DRIFT": "preprocessing identity",
@@ -407,6 +410,42 @@ def _path():
     )
 
 
+def _equal_support_path():
+    from common.depth_path import build_depth_path, build_transport_kernel
+
+    strata = (
+        _stratum("E1", depth=0.1, kept=(0, 1, 2, 3)),
+        _stratum("E2", depth=0.2, kept=(0, 1, 2, 3)),
+        _stratum("E3", depth=0.3, kept=(0, 1)),
+    )
+    kernels = tuple(
+        build_transport_kernel(
+            transport_id=f"PR284-EK{index}{index + 1}",
+            source=source,
+            target=target,
+            matrix=((1.0,),),
+            mask_transport_id=f"sha256:equal-mask-k{index}{index + 1}",
+            selection_transport_id=(
+                f"sha256:equal-selection-k{index}{index + 1}"
+            ),
+            covariance_transport_id=(
+                f"sha256:equal-covariance-k{index}{index + 1}"
+            ),
+            method_id="PR284-EQUAL-SUPPORT-TRANSPORT-V1",
+            assumptions=("synthetic scalar identity transport",),
+        )
+        for index, (source, target) in enumerate(
+            zip(strata[:-1], strata[1:], strict=True),
+            start=1,
+        )
+    )
+    return build_depth_path(
+        path_id="PR284-EQUAL-SUPPORT-PATH-V1",
+        strata=strata,
+        kernels=kernels,
+    )
+
+
 def _threshold(multiplier: Fraction = Fraction(6, 5)):
     from common.depth_path_calibration import build_depth_path_threshold_contract
 
@@ -625,6 +664,28 @@ def _run_mutations() -> list[dict[str, object]]:
         )
 
     operations["MU284-NONNESTED-SUPPORT"] = nonnested
+
+    def nonstrict() -> object:
+        law = _law()
+        return build_depth_path_reverse_martingale_report(
+            report_id="MU284-NONSTRICT-SUPPORT",
+            path=_equal_support_path(),
+            threshold_contract=_threshold(),
+            finite_target_law=law,
+            selection_contract=_selection(law),
+            path_partitions=(
+                ("a", "b", "c", "d"),
+                ("left", "left", "right", "right"),
+                ("all", "all", "all", "all"),
+            ),
+            sigma_field_ids=("sha256:F1", "sha256:F2", "sha256:F3"),
+            filtration_id="sha256:decreasing-filtration-v1",
+            preprocessing_id="sha256:common-preprocessing-v1",
+            estimator_id="sha256:conditional-estimator-v1",
+            premise_evidence_id="sha256:pr271-finite-tower-v1",
+        )
+
+    operations["MU284-NONSTRICT-SUPPORT"] = nonstrict
 
     def target_drift() -> object:
         law = copy(_law())

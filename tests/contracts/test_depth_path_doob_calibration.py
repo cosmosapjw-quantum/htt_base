@@ -100,6 +100,40 @@ def _path():
     )
 
 
+def _equal_support_path():
+    strata = (
+        _stratum("E1", depth=0.1, kept=(0, 1, 2, 3)),
+        _stratum("E2", depth=0.2, kept=(0, 1, 2, 3)),
+        _stratum("E3", depth=0.3, kept=(0, 1)),
+    )
+    kernels = tuple(
+        build_transport_kernel(
+            transport_id=f"PR284-EK{index}{index + 1}",
+            source=source,
+            target=target,
+            matrix=((1.0,),),
+            mask_transport_id=f"sha256:equal-mask-k{index}{index + 1}",
+            selection_transport_id=(
+                f"sha256:equal-selection-k{index}{index + 1}"
+            ),
+            covariance_transport_id=(
+                f"sha256:equal-covariance-k{index}{index + 1}"
+            ),
+            method_id="PR284-EQUAL-SUPPORT-TRANSPORT-V1",
+            assumptions=("synthetic scalar identity transport",),
+        )
+        for index, (source, target) in enumerate(
+            zip(strata[:-1], strata[1:], strict=True),
+            start=1,
+        )
+    )
+    return build_depth_path(
+        path_id="PR284-EQUAL-SUPPORT-PATH-V1",
+        strata=strata,
+        kernels=kernels,
+    )
+
+
 def _threshold(multiplier: Fraction = Fraction(2, 1)):
     return build_depth_path_threshold_contract(
         contract_id="PR284-DOOB-THRESHOLD-V1",
@@ -348,6 +382,50 @@ def test_support_nesting_alone_routes_to_matched_mocks_without_bound() -> None:
     assert calibration.path_exceeds_threshold is None
     assert calibration.matched_mock_plan_id == "PR284-MATCHED-MOCK-PLAN-V1"
     assert calibration.matched_mock_plan_content_id == report.matched_mock_plan.content_id
+
+
+def test_proved_report_requires_proper_support_reduction_but_unproved_abstains() -> None:
+    path = _equal_support_path()
+    threshold = _threshold()
+    law = _finite_law()
+
+    with pytest.raises(DepthPathError, match="strictly nested sky supports"):
+        build_depth_path_reverse_martingale_report(
+            report_id="PR284-EQUAL-SUPPORT-PROVED",
+            path=path,
+            threshold_contract=threshold,
+            finite_target_law=law,
+            selection_contract=_selection(law),
+            path_partitions=(
+                ("a", "b", "c", "d"),
+                ("left", "left", "right", "right"),
+                ("all", "all", "all", "all"),
+            ),
+            sigma_field_ids=("sha256:F1", "sha256:F2", "sha256:F3"),
+            filtration_id="sha256:decreasing-filtration-v1",
+            preprocessing_id="sha256:common-preprocessing-v1",
+            estimator_id="sha256:conditional-estimator-v1",
+            premise_evidence_id="sha256:pr271-finite-tower-v1",
+        )
+
+    report = build_unproved_depth_path_reverse_martingale_report(
+        report_id="PR284-EQUAL-SUPPORT-UNPROVED",
+        path=path,
+        threshold_contract=threshold,
+        filtration_id="sha256:unproved-filtration-v1",
+        preprocessing_id="sha256:common-preprocessing-v1",
+        estimator_id="sha256:conditional-estimator-v1",
+        premise_evidence_id="sha256:support-nesting-only-v1",
+        unresolved_reasons=("strict support reduction is not proved",),
+        matched_mock_plan=_mock_plan(path=path, threshold=threshold),
+    )
+    calibration = build_depth_path_doob_calibration(
+        calibration_id="PR284-EQUAL-SUPPORT-FALLBACK",
+        report=report,
+        threshold_contract=threshold,
+    )
+    assert calibration.status is DepthPathCalibrationStatus.MATCHED_MOCKS_REQUIRED
+    assert calibration.probability_upper_bound is None
 
 
 def test_proved_factory_rejects_noncentered_or_degenerate_target() -> None:
