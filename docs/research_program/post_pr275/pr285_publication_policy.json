@@ -3,13 +3,13 @@
   "policy_id": "PR285-PUBLICATION-POLICY",
   "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
   "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
-  "target_ref": "origin/research/pr04-multicomponent",
-  "target_sha": "feeb89387d949f41276bec56a6becc08af613214",
-  "max_open_prs": 1,
+  "target_ref": "origin/changeset/pr284-finite-depth-law-recovery-20260810",
+  "target_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+  "max_open_prs": 3,
   "max_direct_to_target_prs": 1,
   "max_prs_per_change_set": 1,
-  "max_stack_depth": 1,
-  "max_file_overlap_prs": 0,
+  "max_stack_depth": 3,
+  "max_file_overlap_prs": 2,
   "max_inventory_age_seconds": 300,
   "max_receipt_age_seconds": 1800,
   "max_authorization_ttl_seconds": 1800,
@@ -58,7 +58,7 @@
     },
     {
       "id": "pr285-publication-policy-cross-binding",
-      "argv": ["{python}", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"],
+      "argv": ["{python}", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity or pr285_policy_allows_two_open_predecessors_and_bounds_next_slots"],
       "timeout_seconds": 300
     },
     {

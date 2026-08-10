@@ -1080,6 +1080,97 @@ def test_pr284_policy_allows_one_open_predecessor_and_bounds_next_slots(
     )
 
 
+def test_pr285_policy_allows_two_open_predecessors_and_bounds_next_slots(
+    tmp_path: Path,
+) -> None:
+    repo, _ = _make_candidate_repo(tmp_path)
+    seal = _seal(repo)
+    _, policy = load_publication_policy(
+        REPO_ROOT,
+        "docs/research_program/post_pr275/pr285_publication_policy.json",
+    )
+    assert {
+        "max_open_prs": policy["max_open_prs"],
+        "max_stack_depth": policy["max_stack_depth"],
+        "max_file_overlap_prs": policy["max_file_overlap_prs"],
+    } == {
+        "max_open_prs": 3,
+        "max_stack_depth": 3,
+        "max_file_overlap_prs": 2,
+    }
+
+    first = _open_pr(seal)
+    first.update(
+        {
+            "number": 380,
+            "head_branch": "changeset/pr283-weak-identification-recovery-20260810",
+            "head_sha": "1" * 40,
+            "base_branch": "canonical/base",
+            "changed_files": ["feature.txt"],
+            "stack_depth": 1,
+        }
+    )
+    second = _open_pr(seal)
+    second.update(
+        {
+            "number": 381,
+            "head_branch": seal["target_branch"],
+            "head_sha": seal["base_sha"],
+            "base_branch": first["head_branch"],
+            "changed_files": ["feature.txt"],
+            "stack_depth": 2,
+        }
+    )
+    assert validate_pr_inventory_payload(
+        _inventory(seal, rows=[first, second]),
+        seal=seal,
+        policy=policy,
+    ) == []
+
+    third_open = _open_pr(seal)
+    third_open.update(
+        {
+            "number": 382,
+            "head_branch": "changeset/unrelated-open-pr",
+            "head_sha": "2" * 40,
+            "changed_files": ["unrelated.txt"],
+        }
+    )
+    assert any(
+        "open-PR budget" in error
+        for error in validate_pr_inventory_payload(
+            _inventory(seal, rows=[first, second, third_open]),
+            seal=seal,
+            policy=policy,
+        )
+    )
+
+    too_deep = copy.deepcopy(second)
+    too_deep["stack_depth"] = 3
+    assert any(
+        "stack-depth budget" in error
+        for error in validate_pr_inventory_payload(
+            _inventory(seal, rows=[first, too_deep]),
+            seal=seal,
+            policy=policy,
+        )
+    )
+
+    third_overlap = copy.deepcopy(third_open)
+    third_overlap["changed_files"] = ["feature.txt"]
+    overlap_probe_policy = copy.deepcopy(policy)
+    overlap_probe_policy["max_open_prs"] = 4
+    overlap_probe_policy["max_stack_depth"] = 4
+    assert any(
+        "overlaps open PR" in error
+        for error in validate_pr_inventory_payload(
+            _inventory(seal, rows=[first, second, third_overlap]),
+            seal=seal,
+            policy=overlap_probe_policy,
+        )
+    )
+
+
 def test_inventory_rejects_aliases_duplicates_overlap_and_bool_counts(
     tmp_path: Path,
 ) -> None:
