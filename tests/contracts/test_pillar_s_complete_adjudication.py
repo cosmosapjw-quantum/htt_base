@@ -246,6 +246,18 @@ def test_source_bindings_and_content_address(payload, runner):
     assert payload["receipt_content_sha256"] == runner.receipt_content_sha256(payload)
 
 
+def test_mutable_orchestration_is_validated_but_not_claim_source_bound(payload, runner):
+    mutable_orchestration = {
+        runner.BACKLOG_PATH,
+        runner.BACKLOG_MIRROR_PATH,
+        runner.BACKLOG_JSON_PATH,
+        runner.BACKLOG_JSON_MIRROR_PATH,
+        runner.DAG_VALIDATOR_PATH,
+    }
+    assert mutable_orchestration.isdisjoint(payload["source_binding_map"])
+    assert runner._future_consumer_contract()["consumer"] == "PR-287"
+
+
 @pytest.mark.parametrize(
     ("mutation_id", "marker"),
     [
