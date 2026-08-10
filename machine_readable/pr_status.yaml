@@ -332,8 +332,8 @@ stacked_pr_execution:
         publication: PASS
       assurance_budget: {maximum: 16, consumed: 16}
     PR-285:
-      lifecycle: VALIDATED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
+      lifecycle: REVIEWED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
       base_sha: 0b3680a03f325e3f1fa1699528a5a59303ddb8b4
       predecessor_pr: PR-284
       predecessor_sealed_sha: 0b3680a03f325e3f1fa1699528a5a59303ddb8b4
@@ -366,14 +366,18 @@ stacked_pr_execution:
         eligibility: PASS
         implementation: PASS
         validation: PASS
+        code: PASS
+        physics: PASS
+        statistics: PASS
+        claim: PASS
         harness: PASS
         portability_replay: PASS
         cas: INCONCLUSIVE
-        review: DEFERRED
-        seal: INELIGIBLE
+        review: PASS
+        seal: DEFERRED
         push: INELIGIBLE
         publication: INELIGIBLE
-      assurance_budget: {maximum: 16, consumed: 11}
+      assurance_budget: {maximum: 16, consumed: 13}
     PR-286:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
