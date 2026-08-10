@@ -28,6 +28,45 @@
     "publisher_entrypoint": ".agent-harness/scripts/attended_pr_publisher.py",
     "forbidden_actions": ["force_push", "approve", "merge", "ruleset_mutation"]
   },
+  "logical_patch_lineage": {
+    "schema_version": 1,
+    "authority": {
+      "document_id": "HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md",
+      "sha256": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+    },
+    "groups": [
+      {
+        "group_id": "G20",
+        "disposition": "INCLUDE",
+        "representative_commit": "53b924233bc4285a4dbf7d2fda9666ddb16617a4",
+        "duplicate_alias_commits": [
+          "6a7139e2a53234023da4808884188b489279161e",
+          "e972edfcf3fed34070e6e670d648a66e40e73c81",
+          "50c3fb52c3f31d173922c41712ba6276fa633e99"
+        ],
+        "stable_patch_id": "ec4535b0ffb7a461583d8f2f17821d14be86be80",
+        "candidate_commit": "e0dc7d73ecbf25930daa0ff22871c86d99b00a40"
+      },
+      {
+        "group_id": "G21",
+        "disposition": "INCLUDE",
+        "representative_commit": "63faaa51a764bb93ac3ddf550c3d437642d9d81e",
+        "duplicate_alias_commits": [
+          "87356190621427655f66d9466e94ab72ab7147a7"
+        ],
+        "stable_patch_id": "42b0834deccf5abbbbf7cb033b48fe01de8c1bf5",
+        "candidate_commit": "ca5c6117f9d028809616dbdd604ceb8da05e50cb"
+      },
+      {
+        "group_id": "G22",
+        "disposition": "EXCLUDE_OBSOLETE",
+        "representative_commit": "6e289afdba12b8a92f74c2d5de9beb123f7cf1e4",
+        "duplicate_alias_commits": [],
+        "stable_patch_id": "24fc17b06f91db9f4850fc665cd0a47c8996ce81",
+        "candidate_commit": null
+      }
+    ]
+  },
   "claim_ceiling": "diagnostic_only",
   "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
   "required_commands": [
@@ -58,7 +97,7 @@
     },
     {
       "id": "pr285-publication-policy-cross-binding",
-      "argv": ["{python}", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity or pr285_policy_allows_two_open_predecessors_and_bounds_next_slots"],
+      "argv": ["{python}", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity or pr285_policy_allows_two_open_predecessors_and_bounds_next_slots or pr285_policy_binds_exact_g20_g21_include_and_g22_exclude_lineage or verified_logical_patch_lineage or invalid_logical_patch_lineage"],
       "timeout_seconds": 300
     },
     {

@@ -79,9 +79,11 @@ statement_identity_contract:
   legacy_rows:
     source_statement_kind: TITLE_ONLY
     rule: >-
-      Preserve the exact source title and statement identity. Because the
-      source supplies neither typed premises nor a typed domain, even a
-      resolved reference cannot be promoted to PASS.
+      Preserve the exact source title, statement identity, premise values,
+      premise status, domain values, and domain status. Twelve source rows
+      declare premise and domain metadata while 53 record SOURCE_NOT_TYPED;
+      neither status turns a title-only source row into an adjudicated typed
+      theorem or permits promotion to PASS.
     terminal: INCONCLUSIVE_WITH_RECEIPT
   vector_tensor_rows:
     analytic_source: docs/research_program/vector_tensor/pr269_spec.yaml
@@ -212,6 +214,9 @@ mutation_registry:
   - mutation_id: MU285-WEAKEN-STATEMENT
     mutation_kind: alter_statement_without_matching_source_identity
     expected_kill: statement identity replay rejection
+  - mutation_id: MU285-LEGACY-STATUS-FLATTENED
+    mutation_kind: replace_a_declared_legacy_premise_and_domain_status_with_source_not_typed
+    expected_kill: exact source premise and domain status replay rejection
   - mutation_id: MU285-CAS-AXIS-OMITTED
     mutation_kind: delete_one_required_axis
     expected_kill: four-axis aggregate rejection
@@ -238,7 +243,8 @@ mutation_registry:
     expected_kill: claim firewall rejection
 
 assumptions:
-  - Source title-only rows do not contain enough information for a proof verdict.
+  - Title-only source rows do not receive a proof verdict merely because premise or domain metadata are declared.
+  - Legacy premise and domain values and statuses are preserved exactly from the source registry.
   - PR-269 and PR-270 proof artifacts are frozen evidence, not mutable authority.
   - The current CAS contract covers exact registered algebraic cores only.
   - A terminal process receipt does not imply every row passed.

@@ -85,12 +85,27 @@ def test_every_row_has_required_receipt_fields(payload):
         }
 
 
-def test_legacy_titles_never_promote_without_typed_premises(payload):
-    rows = [r for r in payload["rows"] if r["source_group"] == "legacy_signature_inventory"]
+def test_legacy_titles_preserve_source_status_without_promotion(payload, runner):
+    rows = [
+        r
+        for r in payload["rows"]
+        if r["source_group"] == "legacy_signature_inventory"
+    ]
+    source_rows = runner._load_yaml(runner.SIGNATURES_PATH)["source_groups"][
+        "legacy_signature_inventory"
+    ]["entries"]
+    expected = {
+        row["entry_id"]: (row["assumption_status"], row["domain_status"])
+        for row in source_rows
+    }
     assert len(rows) == 65
     assert {r["verdict"] for r in rows} == {"INCONCLUSIVE_WITH_RECEIPT"}
-    assert {r["premise_status"] for r in rows} == {"SOURCE_NOT_TYPED"}
-    assert {r["domain_status"] for r in rows} == {"SOURCE_NOT_TYPED"}
+    assert {
+        r["row_id"]: (r["premise_status"], r["domain_status"])
+        for r in rows
+    } == expected
+    assert sum(r["premise_status"] == "DECLARED" for r in rows) == 12
+    assert sum(r["domain_status"] == "DECLARED" for r in rows) == 12
 
 
 def test_vector_tensor_dispositions_preserve_restricted_boundaries(payload):
@@ -176,6 +191,10 @@ def test_content_address_recomputes(payload, runner):
         ("MU285-DROP-VT-ROW", "VT_INVENTORY_MISMATCH"),
         ("MU285-BARE-NOT-ADJUDICATED", "TERMINAL_VOCABULARY_INVALID"),
         ("MU285-WEAKEN-STATEMENT", "STATEMENT_IDENTITY_DRIFT"),
+        (
+            "MU285-LEGACY-STATUS-FLATTENED",
+            "LEGACY_PREMISE_DOMAIN_STATUS_DRIFT",
+        ),
         ("MU285-CAS-AXIS-OMITTED", "CAS_REQUIRED_AXES_MISMATCH"),
         ("MU285-CAS-MAJORITY-VOTE", "CAS_AGGREGATE_INVALID"),
         ("MU285-CAS-CONTRACT-DRIFT", "CAS_CONTRACT_DRIFT"),

@@ -32,7 +32,8 @@
   "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
   "metadata": {
     "assumptions": [
-      "frozen source titles do not imply typed premises or domains",
+      "frozen title-only source rows do not become proved merely because premise or domain metadata are declared",
+      "legacy premise and domain status fields are preserved exactly from the source registry",
       "PR-269 and PR-270 proof artifacts remain immutable evidence",
       "CAS evidence applies only to the registered algebraic core",
       "process success means terminal coverage rather than universal proof"
@@ -54,7 +55,7 @@
     "generation_identity": {
       "git_commit": null,
       "mode": "external_candidate_seal_required",
-      "source_binding_set_sha256": "f1a9b56d51e5a3d0de5cff393e588eb47d3d69ad3285c94bdf2509e8aa350401",
+      "source_binding_set_sha256": "b8a9b1e05049e1f32162ac3ee330ed698851128118597a33e49ef914f580a286",
       "worktree_state": "external_seal_bound"
     },
     "observed_data_executed": false,
@@ -83,6 +84,11 @@
       "expected_kill": "statement identity replay rejection",
       "mutation_id": "MU285-WEAKEN-STATEMENT",
       "mutation_kind": "alter_statement_without_matching_source_identity"
+    },
+    {
+      "expected_kill": "exact source premise and domain status replay rejection",
+      "mutation_id": "MU285-LEGACY-STATUS-FLATTENED",
+      "mutation_kind": "replace_a_declared_legacy_premise_and_domain_status_with_source_not_typed"
     },
     {
       "expected_kill": "four-axis aggregate rejection",
@@ -161,6 +167,14 @@
     {
       "activated": true,
       "executed": true,
+      "kill_marker": "LEGACY_PREMISE_DOMAIN_STATUS_DRIFT",
+      "killed": true,
+      "mutation_id": "MU285-LEGACY-STATUS-FLATTENED",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
       "kill_marker": "CAS_REQUIRED_AXES_MISMATCH",
       "killed": true,
       "mutation_id": "MU285-CAS-AXIS-OMITTED",
@@ -225,7 +239,7 @@
   ],
   "pr_id": "PR-285",
   "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
-  "receipt_content_sha256": "923fc5eefa6055bfb2b483755877dce6faec46f291bd1940e5708970c704b32c",
+  "receipt_content_sha256": "3e70058559c8926d52ae97147d163c808bdf4223b0ae0462b0c8bf3148e4da53",
   "rows": [
     {
       "adjudicated_statement": "Signed comparator identity and Domain-checked semantics",
@@ -254,7 +268,7 @@
       "source_statement_identity_sha256": "491a24ee5397886ffd1d0c72d02cb16641b0dd9bc93bab402c382bc19a5e6778",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Diagnostic variables Q, F, Pi, G_F, and P_post are distinct",
@@ -283,7 +297,7 @@
       "source_statement_identity_sha256": "50227383aa6f260a8aa16df45a27ee46bfad67f9799a0d61d00048793d25e8f1",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Diagonal MES three-bound hierarchy",
@@ -292,12 +306,12 @@
       "counterexample_boundary": [
         "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "strictly positive multipole triples satisfying the hierarchy ordering"
       ],
       "frame_convention": "covariant CMB-frame multipole bounds (MES convention)",
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "linearized almost-EGS covariant multipole hierarchy",
         "diagonal (uncorrelated) bound combination",
@@ -346,7 +360,7 @@
       "source_statement_identity_sha256": "6d0944cc64657deda7cabb87fa78566b1deee9a0f483c8316473bac8cfadcdf6",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Conditional Bianchi V momentum-response formula",
@@ -374,7 +388,7 @@
       "source_statement_identity_sha256": "307ea01ec9cb887164561670ec3553b0c633f2e111fe91319049a6b3f544d00b",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Flat-FLRW first jet",
@@ -402,7 +416,7 @@
       "source_statement_identity_sha256": "9073bbea90cd6a8f00df21c7b747505f4a3b0457f054b0b477562db670fb7f32",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Non-collinear boost composition and first-jet separation",
@@ -430,7 +444,7 @@
       "source_statement_identity_sha256": "570af4956379820f7d96aa49e67954980b5b15a83f555ed01b31634f99ff8c39",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Response rank and duplicated channels",
@@ -459,7 +473,7 @@
       "source_statement_identity_sha256": "76faae226e63f7fb9a181e03b6e5fa9964d64968630e2d947bbdb1249e962b0e",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Radial-vorticity blindness",
@@ -487,7 +501,7 @@
       "source_statement_identity_sha256": "f21f61cfe40a209485c0e5d0dc70682ec6c36ca19581e3382f638454a61702d9",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Single-shell degeneracy and broad-depth rank recovery",
@@ -516,7 +530,7 @@
       "source_statement_identity_sha256": "d190f9bcfa5cb7198e19d6ccad994f8cdf716085948eff9a00d18dc66988a157",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "PSD second-moment cone",
@@ -525,12 +539,12 @@
       "counterexample_boundary": [
         "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "PSD cone with registered ceiling intersections"
       ],
       "frame_convention": "comparator scalar sector (no sky frame)",
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "M = diag(g) is positive semidefinite on the genuine second-moment sectors {Sigma2, W2, Omega_tilt}; the signed Delta Omega_k component rides a separate signed carrier (global M >= 0 is NOT asserted)",
         "x_C = tr(C M) is linear in M (bit-identical to the scalar comparator)",
@@ -578,7 +592,7 @@
       "source_statement_identity_sha256": "4fef058a0342ef79cdb60ff3cdfe5e2890e297ece24abc4934726e2fe7a8b0da",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Shear memory of anisotropic stress",
@@ -606,7 +620,7 @@
       "source_statement_identity_sha256": "b574b98d9aabb5b15313adae62ff8e849354dbdfa21dda2c7a1478fbf2711def",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Dust-FLRW oracle",
@@ -634,7 +648,7 @@
       "source_statement_identity_sha256": "04d2374c14cb995702e1452b563f0bbcba57b001b488da35abb331e3942a2851",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Quadrupole filling under registered closure",
@@ -662,7 +676,7 @@
       "source_statement_identity_sha256": "e38173585a3261bf339aee16619413b442ea063d820468b2060ec37ee9216792",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Single-sky sampling dispersion",
@@ -691,7 +705,7 @@
       "source_statement_identity_sha256": "260c4c86bc225e2fc80a1365184cd665f9187054aab51807afd60174d17609a7",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Multi-ell Fisher floor and transfer-profile refinement",
@@ -720,7 +734,7 @@
       "source_statement_identity_sha256": "ea3c1e1cad7b62193f06f64edd0c340cd4c449fe8e0be61eafa6148af4d0da6d",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Graded rank-2 comparator",
@@ -730,12 +744,12 @@
         "source CHECKED status is not a PR-271 proof verdict",
         "tensor reduction does not widen the scalar source domain"
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "registered response map on the graded comparator"
       ],
       "frame_convention": null,
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "the registered response map only is used (no transfer/mask extension)",
         "reachable eigen-directions have rank 2",
@@ -785,7 +799,7 @@
       "source_statement_identity_sha256": "0211e62b19d57f1764981d700668024123aeaad5fd19b1b5957c8798c874e5b3",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Rao-Blackwell reachable-sector domination",
@@ -814,7 +828,7 @@
       "source_statement_identity_sha256": "66c405e9998ddd78e0d2f0f019c8e8f01deff22cadae285de657ef83bfd4c685",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Volterra depth-memory representation",
@@ -842,7 +856,7 @@
       "source_statement_identity_sha256": "70e7b6d6cd417813618e5f96629827bb7ecf952118e40f7c145a5634c81f553d",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Transverse reopening of the vorticity sector",
@@ -870,7 +884,7 @@
       "source_statement_identity_sha256": "a5bf59b2873d07f3865184c9b10827d32aeea4da16cf3acafac277fa1b1be26f",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Diagonal covariance compression loses morphology",
@@ -899,7 +913,7 @@
       "source_statement_identity_sha256": "3848fe99214bbbcfa6b86a84fa1274cb7dd7b4086cba68b41c61ebb84440f858",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Full-covariance MES tightening",
@@ -928,7 +942,7 @@
       "source_statement_identity_sha256": "77b91c26b74fe86db1c90d0ea8bcedf269ff60e38a5366e92598f4b615ac612a",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Rank-failure no-result and morphology information gain",
@@ -957,7 +971,7 @@
       "source_statement_identity_sha256": "9d3144235524f45645b4cf2c660f666961439121f30095178833edb9d64eebcd",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Partial-identification interval for x_C (one-sided nonnegative cone)",
@@ -986,7 +1000,7 @@
       "source_statement_identity_sha256": "ae10c1393f3684214d40f749ba32c308293282042cc4e09eda1f9a52c93e3915",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "MES-rank route reconciliation",
@@ -1014,7 +1028,7 @@
       "source_statement_identity_sha256": "449a7b0b4242264c26c7a6246a2ea655c7c6813fe1954c7c4f66b38369e65f6a",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Posterior prior-exposure under null directions",
@@ -1043,7 +1057,7 @@
       "source_statement_identity_sha256": "8090ccd29c68314d34918b954e738d5baa0e12203f33bc41f03bd91048febb2e",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Finite-cover e-value combination",
@@ -1072,7 +1086,7 @@
       "source_statement_identity_sha256": "13ebff00302dd8e3c7e1591ed8ce373878039673a881496d35688a63046edc18",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Parameter duplication versus observation duplication",
@@ -1101,7 +1115,7 @@
       "source_statement_identity_sha256": "254ca71739ab4ca88f9ae9622e09862519ecf2fb5555ef5ee74eaab736eb3921",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Identified-set sharpness over PSD and ceiling cones",
@@ -1130,7 +1144,7 @@
       "source_statement_identity_sha256": "f214cf4e9dbe8684c6292c52be8c803c676739bd6da8d42a1146ee2073db9e1f",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Optical ansatz branch identifiability",
@@ -1158,7 +1172,7 @@
       "source_statement_identity_sha256": "d9f1a1622ce3317b56548548dfc8bb4a4d2ebdc573c33ee916f6bca549825f4b",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Depth-gap delta-method propagation",
@@ -1187,7 +1201,7 @@
       "source_statement_identity_sha256": "e4e683dfc7511a084ed72e9af0ad524217cea53da5909f704fd7132d24cafffd",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Vector-g response covariance propagation",
@@ -1216,7 +1230,7 @@
       "source_statement_identity_sha256": "91deda6cfa56638ed561e10cecefbecc3c76de2b6faf394621fa155ec4434698",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Two-stage identified-set coverage with Imbens-Manski endpoint correction",
@@ -1245,7 +1259,7 @@
       "source_statement_identity_sha256": "fff15f6840f3bc27e6f53b0b5e87e67b92d766e6bc2130b072f9269cb7d3d304",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Joint-feasible-set depth-gap interval propagation (\"strict whenever\")",
@@ -1274,7 +1288,7 @@
       "source_statement_identity_sha256": "bfd792651193429bd0b8f16ee97cbb73ee6cca3a2511cb2f5e9728cabc3ed0fe",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Signed-box two-branch identified interval (curvature signed, two-sided)",
@@ -1284,12 +1298,12 @@
         "source CHECKED status is not a PR-271 proof verdict",
         "tensor reduction does not widen the scalar source domain"
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "registered box bounds; branch intervals [11/100,17/100] and [9/100,17/100]"
       ],
       "frame_convention": null,
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "signed-box component model for the comparator budget",
         "two-branch split by curvature sign (open vs all-curvature)",
@@ -1320,12 +1334,12 @@
         "source CHECKED status is not a PR-271 proof verdict",
         "tensor reduction does not widen the scalar source domain"
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "nonnegative curvature ceilings"
       ],
       "frame_convention": null,
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "all-curvature branch lower endpoint x_lo(U_k_max) = x_lo(0) - |c_k| U_k_max",
         "upper endpoints of the two branches coincide"
@@ -1355,12 +1369,12 @@
         "source CHECKED status is not a PR-271 proof verdict",
         "tensor reduction does not widen the scalar source domain"
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "registered coefficient domain excluding zero denominators"
       ],
       "frame_convention": null,
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "existence-level statement only: some endpoint is strict iff a registered sign condition holds",
         "the retracted per-endpoint iff (T2p) is not implied"
@@ -1409,7 +1423,7 @@
       "source_statement_identity_sha256": "c1f13d1f4d91158e5c148d0884c3cea02a07cbd9836ae72677a18c251017b184",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Signed-numerator domain repair of the fixed-pairing quotient interval",
@@ -1438,7 +1452,7 @@
       "source_statement_identity_sha256": "c2e60921a3211fbb2760d46311e2d21400e1e131c5619c9715da6324092cdb7c",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Linearized realization of the identified-interval endpoints",
@@ -1466,7 +1480,7 @@
       "source_statement_identity_sha256": "a0827ccb07ac17624b1df5f7dfb560852e5ed861079b2b1d5e53c9e2c062a9d2",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Exact constraint-surface endpoint witnesses (homogeneous initial-data candidates)",
@@ -1494,7 +1508,7 @@
       "source_statement_identity_sha256": "5cb875c0f74c8b62c438c9b5ecd6b822e5cee64dfab97c6ae9cc5129434b93ed",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Interior x_C-value family (two-segment exact sweep)",
@@ -1522,7 +1536,7 @@
       "source_statement_identity_sha256": "3b6fa634cebc354f19a50dd7687d642fe9abe184641c946add07b3abedfd9bfb",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Estimated-covariance residual test is Hotelling T^2 / F",
@@ -1551,7 +1565,7 @@
       "source_statement_identity_sha256": "ab4bb64439686714d0bf310acccc6ca2d7be218935faafd0b10807b99afd091d",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Exact deterministic-width Imbens-Manski endpoint coverage (special model)",
@@ -1580,7 +1594,7 @@
       "source_statement_identity_sha256": "0ecb19f8d4082a22055569b13005b6fb27ec530dd568067c8145549e99822af5",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Noncentral-chi-square power monotonicity",
@@ -1609,7 +1623,7 @@
       "source_statement_identity_sha256": "0d0238ea2dfe90c644bab190f9de0d6b2ec2fd6904208965afb48ec448321ffb",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Multi-component tilt composition",
@@ -1637,7 +1651,7 @@
       "source_statement_identity_sha256": "d1963648f636e25a2f440c8ab667483430d773494391f25cfcac697f61840b55",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "MES coefficient provenance (sigma rederived bit-exact; omega/accel primary-sourced print-only; SAG1997 discrepancy documented)",
@@ -1646,12 +1660,12 @@
       "counterexample_boundary": [
         "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "MESa raw bound term lists as archived"
       ],
       "frame_convention": "covariant CMB-frame multipole bounds (MES convention)",
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "transcription authority of the SHA-archived MESa raw bounds (eq 51/52)",
         "C1: a spatial-gradient bound is <= the same-order time-derivative bound",
@@ -1699,7 +1713,7 @@
       "source_statement_identity_sha256": "cef8c494d7da66641b6a33382d63988d3039843f334018bb6d928efde141ce10",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Fingerprint envelope ceilings at eps1 (exact rationals)",
@@ -1727,7 +1741,7 @@
       "source_statement_identity_sha256": "60ca69f1e0d69ec450f4fb1e0fd11a5ab2e186136526eee452a5d480d79f2e21",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Rank-2 response schema correspondence (comparator and Teff lanes)",
@@ -1756,7 +1770,7 @@
       "source_statement_identity_sha256": "24348ddc0f4d9bdad335983db0c87340c929937f26abb5368367e30ed4d0f602",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Teff fingerprint statistical closure (IM coverage + Hotelling calibration)",
@@ -1785,7 +1799,7 @@
       "source_statement_identity_sha256": "28d5837b338f7539070d11fb2d8d4b29a0509cf18a2ca90af459d699b5bf58b4",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "General fractional-program interval theorem (product relaxation; per-endpoint diagonal-attainment iff; argmin/argmax corollary)",
@@ -1795,12 +1809,12 @@
         "source CHECKED status is not a PR-271 proof verdict",
         "tensor reduction does not widen the scalar source domain"
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "S = [0, 1] with strictly positive denominator"
       ],
       "frame_convention": null,
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "product relaxation of the fractional program",
         "diagonal-attainment criterion",
@@ -1830,12 +1844,12 @@
       "counterexample_boundary": [
         "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "s in [0, 1]"
       ],
       "frame_convention": "Teff fingerprint lane (no sky frame)",
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "fingerprint ratios R3, R5 from the registered two-temperature family",
         "equality holds iff s = 0"
@@ -1883,7 +1897,7 @@
       "source_statement_identity_sha256": "8cd844a8753091b030abfdd63737a5b2372624f9468cdc2aa5579b381bdc96ff",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "MES coefficient branch registry (MES-G verified geodesic / MES-NG unverified non-geodesic / ACCEL withheld) + eps1 attribution triple",
@@ -1892,12 +1906,12 @@
       "counterexample_boundary": [
         "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "registered branch table (geodesic verified; non-geodesic print-only)"
       ],
       "frame_convention": "covariant CMB-frame multipole bounds (MES convention)",
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "frozen registry values unchanged (byte-identity guard)",
         "ceiling map W2_max = (3/2) B_omega^2 under the registered convention W2 = omega^2/(6 H^2)",
@@ -1945,7 +1959,7 @@
       "source_statement_identity_sha256": "455e8b01219ce39c1f2f73dcac3ef2ebf6fdb04c1145a8de5a8d1f6ecd58c07d",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "K5/CF4 identified-interval card v9 (three labeled W^2 ceiling branches x two curvature branches)",
@@ -1974,7 +1988,7 @@
       "source_statement_identity_sha256": "6b3ef14ac365d658d5b78d1c82e66430c417b0be5cb95a40680fae42b1f805f0",
       "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "King-Ellis tilted-congruence frame kinematics + constraint algebra (items 1-7 of the rotating-congruence program)",
@@ -2002,7 +2016,7 @@
       "source_statement_identity_sha256": "986735c02f5d2b6dde851d70a884234a67a125db4829291f8add5d1dbdc39ea0",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Exact vorticity classification of group-invariant tilted congruences (corrects the blanket Omega_k=0 irrotationality reading)",
@@ -2030,7 +2044,7 @@
       "source_statement_identity_sha256": "9fa2733a1679eaa20f4c9d3d91c8f6865c0cdb96e174ce259e5a2ed6e6dd21e7",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Rotating perfect-fluid development at Omega_k>0 + the double Omega_k=0 obstruction (items 8-10)",
@@ -2058,7 +2072,7 @@
       "source_statement_identity_sha256": "461c4f0d3ea296df98409c16f67259758924687cd2ac71a0db43b7b0b25ad494",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "Higher-order anisotropic-Omega_k re-opening transfer (curvature-shear slaving) + finite attribution/class-conditional ceilings",
@@ -2086,7 +2100,7 @@
       "source_statement_identity_sha256": "f3ebe67e5d5c86ae8d87a1c1f98b69e02811f006efc40d8aa8fab65d275921c8",
       "statement_relation": "SOURCE_SIGNATURE_MISSING",
       "verdict": "INCONCLUSIVE_WITH_RECEIPT",
-      "verdict_reason": "The frozen source supplies a title but no typed premises or domain; inventing a stronger signature is forbidden."
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
     },
     {
       "adjudicated_statement": "MES geodesic derivation + re-freeze of the vorticity-ceiling anchor (W2_max 1.3087e-6 -> 3.3789e-13)",
@@ -2095,12 +2109,12 @@
       "counterexample_boundary": [
         "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "geodesic branch at the registered eps values"
       ],
       "frame_convention": "covariant CMB-frame multipole bounds, SAG observer-motion convention",
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "geodesic congruence u_dot = 0 (MESa p.123)",
         "SAG observer-motion convention eps1 = 0 (the observed dipole is observer motion)",
@@ -2129,12 +2143,12 @@
       "counterexample_boundary": [
         "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
       ],
-      "domain_status": "SOURCE_NOT_TYPED",
+      "domain_status": "DECLARED",
       "domains": [
         "accessible-source claims about the MESb branch"
       ],
       "frame_convention": "covariant CMB-frame multipole bounds (MES convention)",
-      "premise_status": "SOURCE_NOT_TYPED",
+      "premise_status": "DECLARED",
       "premises": [
         "only accessible, SHA-archived primary sources ground coefficient attributions",
         "the in-house non-geodesic omega/accel reconstruction is refuted (appears in no accessible source; exceeds the companion's faithful cap at eps1 = 0)",
@@ -2717,8 +2731,8 @@
   "scientific_status_effect": "ROW_LEVEL_TERMINAL_DISPOSITION_ONLY",
   "source_binding_map": {
     "docs/generated/pr190_attainability/attainability_report.json": "580aa9e36ac5419c7364ca6b295dece08c39c8ca1f91962d25c63d32fd3cf426",
-    "docs/research_program/post_pr275/pr285_publication_policy.json": "973b1b1521d6a9ff4fd783839719fb3866ee0078a325f5ef968cf9c9aedf55b8",
-    "docs/research_program/post_pr275/pr285_spec.yaml": "475b42f32e0e28880be532986008f97ae9675e887db1e349b457ede3f85d2a9d",
+    "docs/research_program/post_pr275/pr285_publication_policy.json": "20c16524a86ca61ef33a5f3894c7ebc48eeeebe708eb7556725c025185cfe878",
+    "docs/research_program/post_pr275/pr285_spec.yaml": "481aba93390cf8aa0fe79f17036197bf76b7e98bc4b821cc198adea4deee98ee",
     "docs/research_program/strengthening/pr190_spec.yaml": "74872439326b0973ab69de3628f279dd3fad46bf83aa17641e49477aa167b73f",
     "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml": "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
     "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml": "055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9",
@@ -2730,17 +2744,17 @@
     "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e",
     "docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml": "8f2faf3847f21d2a903bd143ba35ee123ad24256da42e3e1444ad991ade7a27e",
     "docs/research_program/vector_tensor/proofs/PILLAR_T_CORE_PROOFS_V1.yaml": "808c69ca1111591a6d6b52079b6caa7889a838009540ef9959a077640dcdc1d6",
-    "scripts/codex_harness/run_pr285_pillar_t_adjudication.py": "3fbfba3285523659dcbc48de90c542090ce4d582afcbb1bb1fb30366aa166f64",
-    "tests/contracts/test_pillar_t_complete_adjudication.py": "2866c589379f16bb3641facd802ca78697aa876d2aba247561194f838fbb8693"
+    "scripts/codex_harness/run_pr285_pillar_t_adjudication.py": "4cae2b46b32ca4aa7bd0f5833044617202baaab485877213615abe2b31570312",
+    "tests/contracts/test_pillar_t_complete_adjudication.py": "991dca1420c97971a9979275832e4f38d50f2979647cbe3e5c711c61ebae6801"
   },
   "source_bindings": [
     {
       "path": "docs/research_program/post_pr275/pr285_spec.yaml",
-      "sha256": "475b42f32e0e28880be532986008f97ae9675e887db1e349b457ede3f85d2a9d"
+      "sha256": "481aba93390cf8aa0fe79f17036197bf76b7e98bc4b821cc198adea4deee98ee"
     },
     {
       "path": "docs/research_program/post_pr275/pr285_publication_policy.json",
-      "sha256": "973b1b1521d6a9ff4fd783839719fb3866ee0078a325f5ef968cf9c9aedf55b8"
+      "sha256": "20c16524a86ca61ef33a5f3894c7ebc48eeeebe708eb7556725c025185cfe878"
     },
     {
       "path": "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
@@ -2792,11 +2806,11 @@
     },
     {
       "path": "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
-      "sha256": "3fbfba3285523659dcbc48de90c542090ce4d582afcbb1bb1fb30366aa166f64"
+      "sha256": "4cae2b46b32ca4aa7bd0f5833044617202baaab485877213615abe2b31570312"
     },
     {
       "path": "tests/contracts/test_pillar_t_complete_adjudication.py",
-      "sha256": "2866c589379f16bb3641facd802ca78697aa876d2aba247561194f838fbb8693"
+      "sha256": "991dca1420c97971a9979275832e4f38d50f2979647cbe3e5c711c61ebae6801"
     }
   ],
   "success_dependency_satisfied": true,

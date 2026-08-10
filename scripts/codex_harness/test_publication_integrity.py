@@ -235,6 +235,96 @@ def _seal(repo: Path) -> dict:
     )
 
 
+def _test_stable_patch_id(repo: Path, commit: str) -> str:
+    shown = subprocess.run(
+        ["git", "show", "--pretty=format:", "--binary", "--full-index", commit],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+    )
+    computed = subprocess.run(
+        ["git", "patch-id", "--stable"],
+        cwd=repo,
+        input=shown.stdout,
+        check=True,
+        capture_output=True,
+        text=False,
+    ).stdout.decode("ascii").strip()
+    assert computed
+    return computed.split()[0]
+
+
+def _install_test_logical_patch_lineage(
+    repo: Path, *, corruption: str | None = None
+) -> dict:
+    candidate_branch = _git(repo, "branch", "--show-current")
+    included_commit = _git(repo, "rev-parse", "HEAD")
+    included_parent = _git(repo, "rev-parse", "HEAD^")
+    included_tree = _git(repo, "rev-parse", "HEAD^{tree}")
+    included_alias = _git(
+        repo,
+        "commit-tree",
+        included_tree,
+        "-p",
+        included_parent,
+        "-m",
+        "duplicate source alias",
+    )
+
+    _git(repo, "switch", "-q", "-c", "source/excluded", f"origin/{TARGET_BRANCH}")
+    (repo / "excluded.txt").write_text("obsolete\n", encoding="utf-8")
+    _git(repo, "add", "excluded.txt")
+    _git(repo, "commit", "-qm", "obsolete source patch")
+    excluded_commit = _git(repo, "rev-parse", "HEAD")
+    _git(repo, "switch", "-q", candidate_branch)
+
+    included_patch_id = _test_stable_patch_id(repo, included_commit)
+    excluded_patch_id = _test_stable_patch_id(repo, excluded_commit)
+    authority_sha = hashlib.sha256((repo / "SPEC.md").read_bytes()).hexdigest()
+    lineage = {
+        "schema_version": 1,
+        "authority": {
+            "document_id": "SPEC.md",
+            "sha256": authority_sha,
+        },
+        "groups": [
+            {
+                "group_id": "G20",
+                "disposition": "INCLUDE",
+                "representative_commit": included_commit,
+                "duplicate_alias_commits": [included_alias],
+                "stable_patch_id": included_patch_id,
+                "candidate_commit": included_commit,
+            },
+            {
+                "group_id": "G22",
+                "disposition": "EXCLUDE_OBSOLETE",
+                "representative_commit": excluded_commit,
+                "duplicate_alias_commits": [],
+                "stable_patch_id": excluded_patch_id,
+                "candidate_commit": None,
+            },
+        ],
+    }
+    if corruption == "wrong_representative":
+        lineage["groups"][0]["representative_commit"] = excluded_commit
+    elif corruption == "wrong_alias":
+        lineage["groups"][0]["duplicate_alias_commits"] = [excluded_commit]
+    elif corruption == "missing_candidate":
+        lineage["groups"][0]["candidate_commit"] = excluded_commit
+    elif corruption == "duplicate_group":
+        lineage["groups"].append(copy.deepcopy(lineage["groups"][0]))
+    elif corruption is not None:
+        raise AssertionError(f"unknown corruption: {corruption}")
+
+    policy = json.loads((repo / POLICY_REL).read_text(encoding="utf-8"))
+    policy["logical_patch_lineage"] = lineage
+    _write_json(repo / POLICY_REL, policy)
+    _git(repo, "add", POLICY_REL)
+    _git(repo, "commit", "-qm", "bind logical patch lineage")
+    return lineage
+
+
 @pytest.mark.parametrize(
     "command",
     [
@@ -580,6 +670,40 @@ def test_candidate_seal_binds_diff_remote_policy_and_clean_state(
             runtime_output_path(
                 repo, escaped, field="test runtime output"
             )
+
+
+def test_candidate_seal_binds_verified_logical_patch_lineage(
+    tmp_path: Path,
+) -> None:
+    repo, _ = _make_candidate_repo(tmp_path)
+    lineage = _install_test_logical_patch_lineage(repo)
+
+    seal = _seal(repo)
+
+    assert seal["logical_patch_lineage"] == lineage
+    assert seal["logical_patch_lineage_sha256"] == bytes_sha256(
+        json.dumps(
+            lineage,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+        ).encode("utf-8")
+    )
+    assert validate_candidate_seal_payload(seal, repo=repo) == []
+
+
+@pytest.mark.parametrize(
+    "corruption",
+    ["wrong_representative", "wrong_alias", "missing_candidate", "duplicate_group"],
+)
+def test_candidate_seal_rejects_invalid_logical_patch_lineage(
+    tmp_path: Path, corruption: str
+) -> None:
+    repo, _ = _make_candidate_repo(tmp_path)
+    _install_test_logical_patch_lineage(repo, corruption=corruption)
+
+    with pytest.raises(PublicationIntegrityError, match="logical patch lineage"):
+        _seal(repo)
 
 
 def test_candidate_seal_rejects_embedded_remote_credentials(
@@ -1169,6 +1293,54 @@ def test_pr285_policy_allows_two_open_predecessors_and_bounds_next_slots(
             policy=overlap_probe_policy,
         )
     )
+
+
+def test_pr285_policy_binds_exact_g20_g21_include_and_g22_exclude_lineage() -> None:
+    _, policy = load_publication_policy(
+        REPO_ROOT,
+        "docs/research_program/post_pr275/pr285_publication_policy.json",
+    )
+    lineage = policy["logical_patch_lineage"]
+    groups = {item["group_id"]: item for item in lineage["groups"]}
+    assert lineage["authority"] == {
+        "document_id": "HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md",
+        "sha256": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436",
+    }
+    assert {key: value["disposition"] for key, value in groups.items()} == {
+        "G20": "INCLUDE",
+        "G21": "INCLUDE",
+        "G22": "EXCLUDE_OBSOLETE",
+    }
+
+    candidate_commits = set(
+        _git(
+            REPO_ROOT,
+            "rev-list",
+            "--no-merges",
+            f"{policy['target_sha']}..HEAD",
+        ).splitlines()
+    )
+    candidate_patch_ids = {
+        _test_stable_patch_id(REPO_ROOT, commit) for commit in candidate_commits
+    }
+    for group in groups.values():
+        source_commits = [
+            group["representative_commit"],
+            *group["duplicate_alias_commits"],
+        ]
+        assert {
+            _test_stable_patch_id(REPO_ROOT, commit) for commit in source_commits
+        } == {group["stable_patch_id"]}
+        if group["disposition"] == "INCLUDE":
+            assert group["candidate_commit"] in candidate_commits
+            assert (
+                _test_stable_patch_id(REPO_ROOT, group["candidate_commit"])
+                == group["stable_patch_id"]
+            )
+            assert group["stable_patch_id"] in candidate_patch_ids
+        else:
+            assert group["candidate_commit"] is None
+            assert group["stable_patch_id"] not in candidate_patch_ids
 
 
 def test_inventory_rejects_aliases_duplicates_overlap_and_bool_counts(

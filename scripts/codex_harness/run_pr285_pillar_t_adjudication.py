@@ -98,6 +98,7 @@ MUTATION_KILL_MARKERS = {
     "MU285-DROP-VT-ROW": "VT_INVENTORY_MISMATCH",
     "MU285-BARE-NOT-ADJUDICATED": "TERMINAL_VOCABULARY_INVALID",
     "MU285-WEAKEN-STATEMENT": "STATEMENT_IDENTITY_DRIFT",
+    "MU285-LEGACY-STATUS-FLATTENED": "LEGACY_PREMISE_DOMAIN_STATUS_DRIFT",
     "MU285-CAS-AXIS-OMITTED": "CAS_REQUIRED_AXES_MISMATCH",
     "MU285-CAS-MAJORITY-VOTE": "CAS_AGGREGATE_INVALID",
     "MU285-CAS-CONTRACT-DRIFT": "CAS_CONTRACT_DRIFT",
@@ -309,15 +310,28 @@ def _legacy_rows() -> list[dict[str, Any]]:
         proof_statement = proof.get("statement")
         if not isinstance(proof_statement, str) or not proof_statement:
             proof_statement = source["statement"]
-        domains = _as_list(proof.get("domain", proof.get("domains")))
+        source_premises = _as_list(source.get("assumptions"))
+        source_domains = _as_list(source.get("domains"))
+        proof_premises = _as_list(proof.get("assumptions"))
+        proof_domains = _as_list(proof.get("domain", proof.get("domains")))
+        if proof_premises != source_premises or proof_domains != source_domains:
+            raise PillarTAdjudicationError("LEGACY_PREMISE_DOMAIN_SOURCE_DRIFT")
+        premise_status = str(source.get("assumption_status", ""))
+        domain_status = str(source.get("domain_status", ""))
+        if premise_status not in {"SOURCE_NOT_TYPED", "DECLARED"} or domain_status not in {
+            "SOURCE_NOT_TYPED",
+            "DECLARED",
+        }:
+            raise PillarTAdjudicationError("LEGACY_PREMISE_DOMAIN_STATUS_INVALID")
         boundaries = _as_list(
             proof.get("counterexample_boundary", proof.get("counterexample_boundaries"))
         )
         proof_verdict = str(proof.get("verdict", "INCONCLUSIVE_MISSING_SIGNATURE"))
         if proof_verdict == "INCONCLUSIVE_MISSING_SIGNATURE":
             reason = (
-                "The frozen source supplies a title but no typed premises or domain; "
-                "inventing a stronger signature is forbidden."
+                "The frozen source row remains title-only; its exact premise and "
+                "domain metadata are preserved, but do not establish an adjudicated "
+                "typed theorem."
             )
         else:
             reason = (
@@ -336,10 +350,10 @@ def _legacy_rows() -> list[dict[str, Any]]:
                 "source_record_sha256": source["source_record_sha256"],
                 "adjudicated_statement": proof_statement,
                 "statement_relation": relation,
-                "premises": _as_list(proof.get("assumptions")),
-                "premise_status": "SOURCE_NOT_TYPED",
-                "domains": domains,
-                "domain_status": "SOURCE_NOT_TYPED",
+                "premises": source_premises,
+                "premise_status": premise_status,
+                "domains": source_domains,
+                "domain_status": domain_status,
                 "frame_convention": proof.get("frame_convention"),
                 "branch_convention": proof.get("branch_convention"),
                 "proof_evidence": _record_evidence(
@@ -613,7 +627,8 @@ def _base_payload() -> dict[str, Any]:
                 "run_pr285_pillar_t_adjudication.py build"
             ),
             "assumptions": [
-                "frozen source titles do not imply typed premises or domains",
+                "frozen title-only source rows do not become proved merely because premise or domain metadata are declared",
+                "legacy premise and domain status fields are preserved exactly from the source registry",
                 "PR-269 and PR-270 proof artifacts remain immutable evidence",
                 "CAS evidence applies only to the registered algebraic core",
                 "process success means terminal coverage rather than universal proof",
@@ -655,6 +670,15 @@ def apply_registered_mutation(
         rows[0]["verdict"] = "NOT_ADJUDICATED"
     elif mutation_id == "MU285-WEAKEN-STATEMENT":
         rows[0]["source_statement"] += " after weakening"
+    elif mutation_id == "MU285-LEGACY-STATUS-FLATTENED":
+        row = next(
+            item
+            for item in rows
+            if item.get("source_group") == "legacy_signature_inventory"
+            and item.get("premise_status") == "DECLARED"
+        )
+        row["premise_status"] = "SOURCE_NOT_TYPED"
+        row["domain_status"] = "SOURCE_NOT_TYPED"
     elif mutation_id == "MU285-CAS-AXIS-OMITTED":
         payload["cas_evidence"]["required_axes"].pop()
         payload["cas_evidence"]["axis_statuses"].pop("lean", None)
@@ -729,8 +753,15 @@ def _validate_core(payload: dict[str, Any]) -> None:
             raise PillarTAdjudicationError("STATEMENT_IDENTITY_DRIFT")
         if actual.get("verdict") != "INCONCLUSIVE_WITH_RECEIPT":
             raise PillarTAdjudicationError("LEGACY_TITLE_ONLY_PROMOTION")
-        if actual.get("premise_status") != "SOURCE_NOT_TYPED" or actual.get("domain_status") != "SOURCE_NOT_TYPED":
-            raise PillarTAdjudicationError("LEGACY_PREMISE_DOMAIN_LAUNDERING")
+        if (
+            actual.get("premises") != expected["premises"]
+            or actual.get("premise_status") != expected["premise_status"]
+            or actual.get("domains") != expected["domains"]
+            or actual.get("domain_status") != expected["domain_status"]
+        ):
+            raise PillarTAdjudicationError(
+                "LEGACY_PREMISE_DOMAIN_STATUS_DRIFT"
+            )
 
     for actual, expected in zip(vt, expected_vt, strict=True):
         if (
