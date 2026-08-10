@@ -425,29 +425,33 @@ def test_status_loader_requires_synchronized_execution_mirrors() -> None:
     load = _api("load_stacked_execution_status")
 
     status = load(ROOT)
+    stack = status["stacked_pr_execution"]
+    active_pr = stack["active_implementation_pr"]
 
-    assert status["in_progress"] == "PR-283"
-    assert (
-        status["stacked_pr_execution"]["execution_mode"]
-        == "AUTO_STACKED_PR"
-    )
+    assert active_pr is not None
+    assert status["in_progress"] == active_pr
+    assert active_pr in stack["prs"]
+    assert stack["execution_mode"] == "AUTO_STACKED_PR"
 
 
 def test_run_execution_fields_bind_the_active_status_authority() -> None:
     validate = _api("validate_run_execution_fields")
     status = _api("load_stacked_execution_status")(ROOT)
-    authority = status["stacked_pr_execution"]["prs"]["PR-283"]
+    stack = status["stacked_pr_execution"]
+    active_pr = stack["active_implementation_pr"]
+    assert active_pr is not None
+    authority = stack["prs"][active_pr]
     authority_budget = authority["assurance_budget"]
     plan = {
-        "work_unit_id": "PR-283",
+        "work_unit_id": active_pr,
         "execution_mode": "AUTO_STACKED_PR",
         "lifecycle_state": authority["lifecycle"],
-        "stack_id": "PROCESS_INFLATION_RECOVERY_PHASE2",
-        "activation_base_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
-        "predecessor_pr": None,
-        "predecessor_sealed_sha": None,
-        "production_hash": None,
-        "dependency_hashes": {},
+        "stack_id": stack["stack_id"],
+        "activation_base_sha": authority["base_sha"],
+        "predecessor_pr": authority["predecessor_pr"],
+        "predecessor_sealed_sha": authority["predecessor_sealed_sha"],
+        "production_hash": authority["production_hash"],
+        "dependency_hashes": dict(authority["dependency_hashes"]),
         "gate_disposition": "PASS",
         "assurance_budget": dict(authority_budget),
     }
@@ -464,12 +468,23 @@ def test_run_execution_fields_bind_the_active_status_authority() -> None:
         for item in validate(stale_budget, repo=ROOT)
     )
 
+    active_index = stack["pr_order"].index(active_pr)
+    assert active_index + 1 < len(stack["pr_order"])
+    future_pr = stack["pr_order"][active_index + 1]
+    future_authority = stack["prs"][future_pr]
     future = dict(plan)
     future.update(
         {
-            "work_unit_id": "PR-284",
-            "lifecycle_state": "PLANNED",
-            "predecessor_pr": "PR-283",
+            "work_unit_id": future_pr,
+            "lifecycle_state": future_authority["lifecycle"],
+            "activation_base_sha": future_authority["base_sha"],
+            "predecessor_pr": future_authority["predecessor_pr"],
+            "predecessor_sealed_sha": future_authority[
+                "predecessor_sealed_sha"
+            ],
+            "production_hash": future_authority["production_hash"],
+            "dependency_hashes": dict(future_authority["dependency_hashes"]),
+            "assurance_budget": dict(future_authority["assurance_budget"]),
         }
     )
     errors = validate(future, repo=ROOT)
@@ -477,6 +492,13 @@ def test_run_execution_fields_bind_the_active_status_authority() -> None:
 
 
 def test_dag_cli_reports_selected_eligibility_separately() -> None:
+    status = _api("load_stacked_execution_status")(ROOT)
+    stack = status["stacked_pr_execution"]
+    active_pr = stack["active_implementation_pr"]
+    assert active_pr is not None
+    active_index = stack["pr_order"].index(active_pr)
+    assert active_index + 1 < len(stack["pr_order"])
+    future_pr = stack["pr_order"][active_index + 1]
     command = [
         sys.executable,
         "scripts/codex_harness/validate_pr_dag.py",
@@ -484,7 +506,7 @@ def test_dag_cli_reports_selected_eligibility_separately() -> None:
         "--status",
         "docs/codex_handoff/pr_status.yaml",
         "--work-unit",
-        "PR-283",
+        active_pr,
         "--candidate-ref",
         "HEAD",
     ]
@@ -498,7 +520,7 @@ def test_dag_cli_reports_selected_eligibility_separately() -> None:
     assert eligible.returncode == 0, eligible.stdout + eligible.stderr
     assert "eligibility=ELIGIBLE" in eligible.stdout
 
-    command[command.index("PR-283")] = "PR-284"
+    command[command.index(active_pr)] = future_pr
     deferred = subprocess.run(
         command,
         cwd=ROOT,
