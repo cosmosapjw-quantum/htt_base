@@ -505,17 +505,33 @@ stacked_pr_execution:
         publication: PASS
       assurance_budget: {maximum: 16, consumed: 7}
     PR-289:
-      lifecycle: IMPLEMENTED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
+      lifecycle: VALIDATED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
       base_sha: 27df5da040e27eeaad44873ba3424ff73fb4bb09
       predecessor_pr: PR-288
       predecessor_sealed_sha: 27df5da040e27eeaad44873ba3424ff73fb4bb09
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: null
-      dependency_hashes: {}
-      gate_dispositions: {eligibility: PASS, implementation: PASS, validation: DEFERRED}
+      production_hash: cd8aebca49820d989bf805173f20ac65093181f541920f5adee74ce8e8fce413
+      dependency_hashes:
+        pr289_spec: 75c466e103941b2a3592644718a9b88c4f48391196ada08c7610c760eea924fc
+        publication_policy: 16f8f3c37340d7a11ec3961825b626a43942ceced6e2db812b55738cbeb8b302
+        lane_registry: e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f
+        data_runbooks: b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de
+        claim_ledger: 86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b
+        pr289_runner: 27f7d531515910ed6758780b029e4c1c7bb2299585d4b51a85ea5340151c86b4
+        pr289_contract_test: df17c8c6d5e02298ae53c367a2919872e5ceea9d3e837d31193b1bf5a6ecb971
+        pr274_registry: 92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9
+        pr274_result: e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea
+        data_identity_receipt: 15caa3ea64b302736e01261942173e08d85c7197545d299d7bb5582763623d5b
+        publication_integrity: 56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec
+        dag_validator: 126ccf63e3a6d835584426e4c3d157be5482b1f7df39d0985638370366b40afc
+        claim_linter: b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677
+        salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
+      gate_dispositions: {eligibility: PASS, implementation: PASS, validation: PASS,
+        code: DEFERRED, physics: DEFERRED, statistics: DEFERRED, claim: DEFERRED,
+        harness: DEFERRED, portability_replay: PASS, review: DEFERRED}
       assurance_budget: {maximum: 16, consumed: 0}
     PR-290:
       lifecycle: PLANNED
