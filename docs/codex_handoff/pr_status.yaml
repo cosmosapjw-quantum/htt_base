@@ -505,8 +505,8 @@ stacked_pr_execution:
         publication: PASS
       assurance_budget: {maximum: 16, consumed: 7}
     PR-289:
-      lifecycle: VALIDATED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
+      lifecycle: REVIEWED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
       base_sha: 27df5da040e27eeaad44873ba3424ff73fb4bb09
       predecessor_pr: PR-288
       predecessor_sealed_sha: 27df5da040e27eeaad44873ba3424ff73fb4bb09
@@ -530,9 +530,9 @@ stacked_pr_execution:
         claim_linter: b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677
         salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
       gate_dispositions: {eligibility: PASS, implementation: PASS, validation: PASS,
-        code: FAIL, physics: FAIL, statistics: FAIL, claim: PASS,
-        harness: FAIL, portability_replay: PASS, review: FAIL}
-      assurance_budget: {maximum: 16, consumed: 12}
+        code: PASS, physics: PASS, statistics: PASS, claim: PASS,
+        harness: PASS, portability_replay: PASS, review: PASS}
+      assurance_budget: {maximum: 16, consumed: 14}
     PR-290:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
