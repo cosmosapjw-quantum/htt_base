@@ -423,19 +423,37 @@ stacked_pr_execution:
         publication: PASS
       assurance_budget: {maximum: 16, consumed: 12}
     PR-287:
-      lifecycle: IMPLEMENTED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
+      lifecycle: VALIDATED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
       base_sha: b955a050f19db853a93779506e8acb4e4a5352a9
       predecessor_pr: PR-286
       predecessor_sealed_sha: b955a050f19db853a93779506e8acb4e4a5352a9
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: null
-      dependency_hashes: {}
+      production_hash: 6d0963dfdc66dcd2bf80ef3dde6fd84d87f455f0c6db5199250b06b2c51e873a
+      dependency_hashes:
+        pr287_spec: dbd0d6fe29a45e51a6850102ed4587ac38f8da7cfb52453552aa0a4ba704ac09
+        publication_policy: 30e24d1f9e77c5c206a64e7d8b639cfccd4c6bd9455a6893cbc69ae55ea1d155
+        pr287_runner: 23c46e3f55cf384ecee6f8409919e233df8c4ed8edcf695257f3573a4fa01a7c
+        pr287_contract_test: 9a659feb3f5f00eabe42a9da4ee5fc7c8345b46e3c8e30cbe548baf17ba7e02b
+        pillar_t_adjudication: 270b80e94767b48d58032d96d48f829138f6d5ffa301e9c8eb48bbd72b5c7e66
+        pillar_s_adjudication: b5ea12647f1d7818da3702b3da8d127f490a15cdef8e37fa8958cfe803b3ee5a
+        publication_integrity: 56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec
+        profile_registry: 4070ab33a9834c5e71960baab90bb45b1b2cbeedaf1214be09489588978538e2
+        harness_kernel: 388f66e208bc460fb916eeca8603fc6f5ebfd914e448e59e93382152fde3f6ce
+        strict_result_validation: 8c288e2d23899f07f11dce4a3bf7647a382adeed91f13a6c2c56dbf9cc4c4106
+        salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
       gate_dispositions:
         eligibility: PASS
         implementation: PASS
+        validation: PASS
+        code: PASS
+        physics_contract: PASS
+        statistics_contract: PASS
+        claim: PASS
+        harness: PASS
+        portability_replay: PASS
         fresh_execution: INCONCLUSIVE
       execution_blocker: BLOCKED_CAPABILITY_ISOLATED_EXECUTOR_NOT_INSTALLED
       assurance_budget: {maximum: 16, consumed: 0}
