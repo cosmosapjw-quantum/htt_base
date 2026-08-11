@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from copy import copy
+from copy import copy, deepcopy
 import importlib.util
 import inspect
 from pathlib import Path
@@ -10,6 +10,7 @@ from types import SimpleNamespace
 
 import numpy as np
 import pytest
+import yaml
 
 from htt.infer.bayesian_semantics import (
     BayesianSemanticsReceipt,
@@ -82,6 +83,38 @@ def test_registered_fixtures_freeze_normalization_rank_and_negative_control() ->
     assert negative.negative_control_terminal == (
         "MISSPECIFIED_NEGATIVE_CONTROL_VISIBLE"
     )
+
+
+@pytest.mark.parametrize(
+    ("mutate", "message"),
+    (
+        (
+            lambda payload: payload.update({"claim_tier": "scientific"}),
+            "claim boundary",
+        ),
+        (
+            lambda payload: payload.update(
+                {"family_identification_gate": "PASS"}
+            ),
+            "claim boundary",
+        ),
+        (
+            lambda payload: payload["receipt_contract"][
+                "required_metadata"
+            ].remove("caveats"),
+            "receipt metadata",
+        ),
+    ),
+)
+def test_frozen_spec_claim_and_receipt_contracts_fail_closed(
+    tmp_path, mutate, message
+) -> None:
+    payload = deepcopy(yaml.safe_load(SPEC.read_text(encoding="utf-8")))
+    mutate(payload)
+    mutated = tmp_path / "pr288_spec.yaml"
+    mutated.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
+    with pytest.raises(BayesianSemanticsError, match=message):
+        load_registered_fixtures(mutated)
 
 
 def test_scrambled_sobol_is_independent_linear_z_ensemble_with_accuracy() -> None:

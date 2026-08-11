@@ -43,6 +43,43 @@ _LOOCV_TOKEN = object()
 _MUTATION_TOKEN = object()
 _RECEIPT_TOKEN = object()
 _SHA256_PREFIX = "sha256:"
+_FROZEN_CLAIM_BOUNDARY = {
+    "owner": "HTT",
+    "scope": "preregistered synthetic and analytic Bayesian-method diagnostics",
+    "claim_tier": "diagnostic_only",
+    "claim_level": {"scheme": "roadmap_rescue_v1", "level": "C2"},
+    "scientific_artifact_mode": "synthetic_diagnostic",
+    "transfer_source": "none",
+    "observed_data_executed": False,
+    "public_use": False,
+    "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    "scientific_status_effect": "OPEN_UNCHANGED",
+}
+_FROZEN_RECEIPT_METADATA = (
+    "owner",
+    "scope",
+    "claim_tier",
+    "transfer_source",
+    "fixture_and_config_identities",
+    "posterior_draw_and_fold_identities",
+    "covariance_and_null_status",
+    "assumptions",
+    "caveats",
+    "generating_procedure",
+    "git_commit_or_worktree_state",
+    "claim_level",
+    "scientific_artifact_mode",
+    "observed_data_executed",
+    "public_use",
+    "family_identification_gate",
+    "scientific_status_effect",
+    "allowed_uses",
+    "forbidden_uses",
+    "legacy_disposition",
+    "engine_versions_and_seed_inventories",
+    "analytic_accuracy_and_null_status",
+    "negative_control_status",
+)
 
 
 def _json_ready(value: object) -> object:
@@ -203,6 +240,44 @@ def _load_spec(spec_path: Path) -> dict[str, object]:
         raise BayesianSemanticsError("PR-288 spec cannot be parsed") from exc
     if not isinstance(value, dict) or value.get("pr_id") != "PR-288":
         raise BayesianSemanticsError("not the registered PR-288 spec")
+    if any(
+        value.get(key) != expected
+        for key, expected in _FROZEN_CLAIM_BOUNDARY.items()
+    ):
+        raise BayesianSemanticsError("PR-288 frozen claim boundary drifted")
+    if value.get("dependencies") != ["PR-280"]:
+        raise BayesianSemanticsError("PR-288 dependency boundary drifted")
+    dependency = value.get("dependency_contract")
+    if not isinstance(dependency, dict) or any(
+        dependency.get(key) != expected
+        for key, expected in {
+            "upstream_id": "PR-280",
+            "mode": "requires_terminal_receipt",
+            "accepted_terminal": "COMPLETED_FAILED_WITH_RECEIPT",
+            "success_dependency_required": False,
+        }.items()
+    ):
+        raise BayesianSemanticsError("PR-288 dependency boundary drifted")
+    receipt_contract = value.get("receipt_contract")
+    if not isinstance(receipt_contract, dict) or tuple(
+        receipt_contract.get("required_metadata", ())
+    ) != _FROZEN_RECEIPT_METADATA:
+        raise BayesianSemanticsError("PR-288 frozen receipt metadata drifted")
+    if (
+        receipt_contract.get("output_path")
+        != "docs/generated/pr288_bayesian_semantics_receipt.json"
+        or receipt_contract.get("pass_token")
+        != "PASS_BAYESIAN_SEMANTICS_REPAIR"
+        or tuple(receipt_contract.get("terminal_precedence", ()))
+        != (
+            "BLOCKED_DEPENDENCY_OR_ENGINE",
+            "BLOCKED_EVIDENCE_CROSSCHECK",
+            "BLOCKED_PPC_OR_LOOCV_CONTRACT",
+            "BLOCKED_REGISTERED_MUTATION",
+            "PASS_BAYESIAN_SEMANTICS_REPAIR",
+        )
+    ):
+        raise BayesianSemanticsError("PR-288 frozen receipt contract drifted")
     return value
 
 
@@ -1857,69 +1932,74 @@ def _expected_claim_metadata(
         "UNIT_TEST_DOUBLE_NOT_ACCEPTANCE_EVIDENCE",
     }:
         raise BayesianSemanticsError("generation identity is not registered")
-    return MappingProxyType(
-        {
-            "owner": spec["owner"],
-            "scope": spec["scope"],
-            "claim_tier": spec["claim_tier"],
-            "claim_level": spec["claim_level"],
-            "scientific_artifact_mode": spec["scientific_artifact_mode"],
-            "transfer_source": spec["transfer_source"],
-            "observed_data_executed": spec["observed_data_executed"],
-            "public_use": spec["public_use"],
-            "family_identification_gate": spec["family_identification_gate"],
-            "scientific_status_effect": spec["scientific_status_effect"],
-            "allowed_uses": list(spec["allowed_uses"]),
-            "forbidden_uses": list(spec["forbidden_uses"]),
-            "legacy_disposition": spec["legacy_disposition"],
-            "fixture_and_config_identities": {
-                key: value.fixture_content_id for key, value in fixtures.items()
-            },
-            "posterior_draw_and_fold_identities": {
-                "posterior_draw_content_id": draws.draw_content_id,
-                "posterior_predictive_receipt_content_id": ppc.receipt_content_id,
-                "loocv_receipt_content_id": loocv.receipt_content_id,
-                "fold_posterior_draw_content_ids": [
-                    row.posterior_draw_identity for row in loocv.fold_results
-                ],
-            },
-            "covariance_and_null_status": {
-                "sky_support_status": "synthetic_no_observed_sky",
-                "covariance_status": "registered_synthetic_full_and_misspecified_control",
-                "null_status": null_control.status,
-            },
-            "assumptions": [
-                "normalized registered Gaussian likelihoods and priors",
-                "frozen analytic and synthetic fixtures only",
-                "independent Dynesty and scrambled Sobol estimates",
-                "foldwise nuisance refit with registered conditional covariance",
+    metadata = {
+        "owner": spec["owner"],
+        "scope": spec["scope"],
+        "claim_tier": spec["claim_tier"],
+        "claim_level": spec["claim_level"],
+        "scientific_artifact_mode": spec["scientific_artifact_mode"],
+        "transfer_source": spec["transfer_source"],
+        "observed_data_executed": spec["observed_data_executed"],
+        "public_use": spec["public_use"],
+        "family_identification_gate": spec["family_identification_gate"],
+        "scientific_status_effect": spec["scientific_status_effect"],
+        "allowed_uses": list(spec["allowed_uses"]),
+        "forbidden_uses": list(spec["forbidden_uses"]),
+        "legacy_disposition": spec["legacy_disposition"],
+        "fixture_and_config_identities": {
+            key: value.fixture_content_id for key, value in fixtures.items()
+        },
+        "posterior_draw_and_fold_identities": {
+            "posterior_draw_content_id": draws.draw_content_id,
+            "posterior_predictive_receipt_content_id": ppc.receipt_content_id,
+            "loocv_receipt_content_id": loocv.receipt_content_id,
+            "fold_posterior_draw_content_ids": [
+                row.posterior_draw_identity for row in loocv.fold_results
             ],
-            "caveats": list(spec["caveats"]),
-            "generating_procedure": (
-                "scripts/codex_harness/run_pr288_bayesian_semantics.py engines"
+        },
+        "covariance_and_null_status": {
+            "sky_support_status": "synthetic_no_observed_sky",
+            "covariance_status": (
+                "registered_synthetic_full_and_misspecified_control"
             ),
-            "git_commit_or_worktree_state": generation_identity,
-            "engine_versions_and_seed_inventories": [
-                {
-                    "engine_id": row.engine_id,
-                    "fixture_id": row.fixture_id,
-                    "engine_version": row.engine_version,
-                    "seed_inventory": list(row.scramble_or_seed_inventory),
-                }
-                for row in engine_results
+            "null_status": null_control.status,
+        },
+        "assumptions": [
+            "normalized registered Gaussian likelihoods and priors",
+            "frozen analytic and synthetic fixtures only",
+            "independent Dynesty and scrambled Sobol estimates",
+            "foldwise nuisance refit with registered conditional covariance",
+        ],
+        "caveats": list(spec["caveats"]),
+        "generating_procedure": (
+            "scripts/codex_harness/run_pr288_bayesian_semantics.py engines"
+        ),
+        "git_commit_or_worktree_state": generation_identity,
+        "engine_versions_and_seed_inventories": [
+            {
+                "engine_id": row.engine_id,
+                "fixture_id": row.fixture_id,
+                "engine_version": row.engine_version,
+                "seed_inventory": list(row.scramble_or_seed_inventory),
+            }
+            for row in engine_results
+        ],
+        "analytic_accuracy_and_null_status": {
+            "crosscheck_statuses": [
+                row.status
+                for row in _build_crosschecks(
+                    engine_results, spec_path=spec_path
+                )
             ],
-            "analytic_accuracy_and_null_status": {
-                "crosscheck_statuses": [
-                    row.status
-                    for row in _build_crosschecks(
-                        engine_results, spec_path=spec_path
-                    )
-                ],
-                "null_control_status": null_control.status,
-            },
-            "negative_control_status": negative_control.status,
-        }
-    )
+            "null_control_status": null_control.status,
+        },
+        "negative_control_status": negative_control.status,
+    }
+    if set(metadata) != set(_FROZEN_RECEIPT_METADATA):
+        raise BayesianSemanticsError(
+            "generated receipt metadata inventory drifted"
+        )
+    return MappingProxyType(metadata)
 
 
 def _validate_claim_metadata(
