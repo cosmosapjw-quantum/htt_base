@@ -423,8 +423,8 @@ stacked_pr_execution:
         publication: PASS
       assurance_budget: {maximum: 16, consumed: 12}
     PR-287:
-      lifecycle: VALIDATED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
+      lifecycle: REVIEWED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
       base_sha: b955a050f19db853a93779506e8acb4e4a5352a9
       predecessor_pr: PR-286
       predecessor_sealed_sha: b955a050f19db853a93779506e8acb4e4a5352a9
@@ -455,8 +455,9 @@ stacked_pr_execution:
         harness: PASS
         portability_replay: PASS
         fresh_execution: INCONCLUSIVE
+        review: PASS
       execution_blocker: BLOCKED_CAPABILITY_ISOLATED_EXECUTOR_NOT_INSTALLED
-      assurance_budget: {maximum: 16, consumed: 0}
+      assurance_budget: {maximum: 16, consumed: 6}
     PR-288:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
