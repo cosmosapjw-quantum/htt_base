@@ -124,22 +124,22 @@
     "native or family claim promotion"
   ],
   "generating_procedure": [
-    "/usr/bin/python3",
+    "python3",
     "-B",
     "scripts/codex_harness/run_pr289_data_identity_v2.py",
     "build"
   ],
   "generation_identity": {
     "generating_procedure": [
-      "/usr/bin/python3",
+      "python3",
       "-B",
       "scripts/codex_harness/run_pr289_data_identity_v2.py",
       "build"
     ],
-    "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:sha256:b3bfa0de8ce6bf3ec796754cc3ff55a0ea0be789314120384d38eca44ac33df3",
+    "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:sha256:55960f92e2dedec4ea04283e679785cc7cd39988dfe3bbf70d9108e467924654",
     "schema": "common.source_bound_generation_identity.v1"
   },
-  "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:sha256:b3bfa0de8ce6bf3ec796754cc3ff55a0ea0be789314120384d38eca44ac33df3",
+  "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:sha256:55960f92e2dedec4ea04283e679785cc7cd39988dfe3bbf70d9108e467924654",
   "lane_and_product_identities": [
     {
       "lane_admission_bundle_id": null,
@@ -392,7 +392,21 @@
       "executed": true,
       "killed": true,
       "mutation_id": "MU289-NATIVE-REPLAY",
-      "observed_marker": "native identity profile_id drifted"
+      "observed_marker": "source_locator_identity drifted"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-EXPORTED-SEMANTIC-REPLAY",
+      "observed_marker": "license_status must be BOUND"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-REPEATED-ROLE-ORDINAL",
+      "observed_marker": "admitted native record ordinal inventory drifted"
     },
     {
       "activated": true,
@@ -461,7 +475,7 @@
   "observed_data_executed": false,
   "owner": "COMMON",
   "public_use": false,
-  "receipt_content_id": "sha256:6d2ed14a21e1045b88bc91020a65d346873b2f9344dac91e9cc9c490cb067ab2",
+  "receipt_content_id": "sha256:13f9c96512eb9ab8855bfab5d281a17b4bcda3ac3ec888ec2c98320b987024d1",
   "registry_content_id": "sha256:78e3ec41833db433b560ebf839e0ee9375f77879a629e4ce70900bfb959bbef0",
   "schema": "common.data_identity_v2_preflight_receipt.v1",
   "scientific_status_effect": "OPEN_UNCHANGED",
@@ -496,13 +510,13 @@
     "docs/harness/CLAIM_LEDGER.md": "sha256:86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
     "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json": "sha256:e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
     "docs/research_program/post_pr275/data_runbooks.yaml": "sha256:b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de",
-    "docs/research_program/post_pr275/pr289_publication_policy.json": "sha256:16f8f3c37340d7a11ec3961825b626a43942ceced6e2db812b55738cbeb8b302",
-    "docs/research_program/post_pr275/pr289_spec.yaml": "sha256:75c466e103941b2a3592644718a9b88c4f48391196ada08c7610c760eea924fc",
+    "docs/research_program/post_pr275/pr289_publication_policy.json": "sha256:4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9",
+    "docs/research_program/post_pr275/pr289_spec.yaml": "sha256:4880be4cd760b0ee5b664ada93d4b90f251280148f27d5fa9f3942256544f4f2",
     "docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json": "sha256:e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea",
     "docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml": "sha256:92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9",
-    "htt/src/common/data_identity.py": "sha256:91a148a67ff0b338cd5aedef5efc81039607302f8473e93ddf37fa70ed399539",
-    "scripts/codex_harness/run_pr289_data_identity_v2.py": "sha256:27f7d531515910ed6758780b029e4c1c7bb2299585d4b51a85ea5340151c86b4",
-    "tests/contracts/test_data_identity_registry_v2.py": "sha256:df17c8c6d5e02298ae53c367a2919872e5ceea9d3e837d31193b1bf5a6ecb971"
+    "htt/src/common/data_identity.py": "sha256:2533d42d1fa7aa8305adfeda5165f50f0a907a49c68e13583f85587740033ee5",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py": "sha256:6c3e4bcdbfbcd91f2d09917d232b67a331fb7881f4317c6a36938cdd78ca2c92",
+    "tests/contracts/test_data_identity_registry_v2.py": "sha256:238cd65e19b9400bcadecb62b932cd62ea74348d3d7f97e52f63f30dc332c243"
   },
   "terminal": "PASS_DATA_IDENTITY_V2_PREFLIGHT",
   "transfer_source": "none"
