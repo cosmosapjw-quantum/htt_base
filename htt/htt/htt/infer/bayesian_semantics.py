@@ -55,6 +55,54 @@ _FROZEN_CLAIM_BOUNDARY = {
     "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
     "scientific_status_effect": "OPEN_UNCHANGED",
 }
+_FROZEN_ALLOWED_USES = (
+    "analytic and synthetic model-dependent Bayesian method diagnostics",
+    "bounded engine-agreement and uncertainty-calibration evidence",
+    "posterior-draw PPC and fold-wise nuisance-refit LOOCV receipts",
+)
+_FROZEN_FORBIDDEN_USES = (
+    "observed-data evidence or PR-151 partial-data use",
+    "legacy number reuse as current evidence",
+    "MIO posterior or MIO evidence",
+    "native solver validation geometry detection or Bianchi family identification",
+)
+_FROZEN_LEGACY_DISPOSITION = {
+    "legacy_fields": ["ln_B", "beta", "F_Bayes", "Qbar", "Pi_HTT", "chapter_tables"],
+    "status": "LEGACY_REPRODUCTION_ONLY",
+    "promotion_precondition": (
+        "A PR-288 process pass may create new synthetic method evidence, but legacy "
+        "numerical values remain legacy-only until separately regenerated from "
+        "admitted inputs under an authorized downstream observed-data PR."
+    ),
+    "forbidden_roles": [
+        "engine_anchor",
+        "tolerance_anchor",
+        "posterior_draw",
+        "fold_result",
+        "observed_claim",
+    ],
+}
+_FROZEN_PROCESS_SUCCESS_SEMANTICS = (
+    "PASS means the registered analytic/synthetic cross-check, posterior-draw PPC, "
+    "fold-wise-refit LOOCV, and mutations executed as specified. It is not observed "
+    "evidence, native validation, a geometry result, or family identification."
+)
+_FROZEN_CAVEATS = (
+    "Dynesty is an optional dependency but is mandatory for the registered two-engine terminal pass.",
+    "Sobol randomization uncertainty is conditional on the frozen scramble ensemble and power-of-two sample counts.",
+    "Analytic and synthetic method success does not authorize observed-data inference.",
+    "PR-280 remains a completed failed receipt and is not relabeled successful.",
+)
+_FROZEN_GENERATING_PROCEDURE = (
+    "{python}",
+    "-B",
+    "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+    "build",
+)
+_NON_ACCEPTANCE_GENERATION_IDENTITIES = {
+    "SYSTEM_REQUIRED_ENGINE_PROBE",
+    "UNIT_TEST_DOUBLE_NOT_ACCEPTANCE_EVIDENCE",
+}
 _FROZEN_RECEIPT_METADATA = (
     "owner",
     "scope",
@@ -278,6 +326,15 @@ def _load_spec(spec_path: Path) -> dict[str, object]:
         )
     ):
         raise BayesianSemanticsError("PR-288 frozen receipt contract drifted")
+    if (
+        tuple(value.get("allowed_uses", ())) != _FROZEN_ALLOWED_USES
+        or tuple(value.get("forbidden_uses", ())) != _FROZEN_FORBIDDEN_USES
+        or value.get("legacy_disposition") != _FROZEN_LEGACY_DISPOSITION
+        or tuple(value.get("caveats", ())) != _FROZEN_CAVEATS
+        or receipt_contract.get("process_success_semantics")
+        != _FROZEN_PROCESS_SUCCESS_SEMANTICS
+    ):
+        raise BayesianSemanticsError("PR-288 frozen claim policy drifted")
     return value
 
 
@@ -530,7 +587,7 @@ def _engine_config(spec_path: Path, engine_id: str) -> dict[str, object]:
 def _release_tuple(value: object) -> tuple[int, int, int]:
     if not isinstance(value, str):
         raise BayesianSemanticsError("engine version is unavailable")
-    match = re.match(r"^(\d+)\.(\d+)\.(\d+)", value)
+    match = re.fullmatch(r"(\d+)\.(\d+)\.(\d+)", value)
     if match is None:
         raise BayesianSemanticsError("engine version is not a semantic release")
     return tuple(int(component) for component in match.groups())
@@ -1559,6 +1616,7 @@ class BayesianSemanticsReceipt:
     loocv: LOOCVReceipt
     mutation_results: tuple[RegisteredMutationResult, ...]
     source_bindings: tuple[Mapping[str, str], ...]
+    dependency_receipt: Mapping[str, object]
     metadata: Mapping[str, object]
     generation_identity: str
     terminal: str
@@ -1607,6 +1665,7 @@ class BayesianSemanticsReceipt:
                 for row in self.mutation_results
             ],
             "source_bindings": [dict(row) for row in self.source_bindings],
+            "dependency_receipt": dict(self.dependency_receipt),
             "metadata": dict(self.metadata),
             "generation_identity": self.generation_identity,
             "terminal": self.terminal,
@@ -1637,6 +1696,136 @@ def _sha256_regular_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+_PR280_STATUS_PROJECTION = {
+    "resolution": "COMPLETED_FAILED_WITH_RECEIPT",
+    "receipt": "docs/PR_DELTAS/pr-280.md",
+    "candidate_sha": "2f5d2b61da30c72594aece60e9e601066378a7c3",
+    "inventory_receipt": (
+        "docs/research_program/post_pr275/full_inventory_v4_receipt.json"
+    ),
+    "inventory_receipt_sha256": (
+        "66630487b08aa03c374fb05f11b6007bc53336974ed6a8f1970205e139a2123e"
+    ),
+    "active_core_count": 3,
+    "observed_data_executed": False,
+    "public_use": False,
+    "success_dependency_satisfied": False,
+}
+
+
+def _status_projection(path: Path) -> Mapping[str, object] | None:
+    if path.is_symlink() or not path.is_file():
+        return None
+    try:
+        payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError):
+        return None
+    if not isinstance(payload, Mapping):
+        return None
+    resolutions = payload.get("execution_resolutions")
+    if not isinstance(resolutions, Mapping):
+        return None
+    row = resolutions.get("PR-280")
+    if not isinstance(row, Mapping):
+        return None
+    return MappingProxyType(
+        {key: row.get(key) for key in _PR280_STATUS_PROJECTION}
+    )
+
+
+def _load_pr280_dependency_receipt(
+    repository_root: Path,
+) -> Mapping[str, object]:
+    root = repository_root.resolve(strict=True)
+    canonical = _status_projection(root / "docs/codex_handoff/pr_status.yaml")
+    mirror = _status_projection(root / "machine_readable/pr_status.yaml")
+    reasons: list[str] = []
+    observed = dict(canonical or {})
+    for key, expected in _PR280_STATUS_PROJECTION.items():
+        if observed.get(key) != expected:
+            reasons.append(key)
+    if canonical is None:
+        reasons.append("canonical_status_missing_or_invalid")
+    if mirror is None:
+        reasons.append("status_mirror_missing_or_invalid")
+    elif dict(mirror) != observed:
+        reasons.append("status_mirror_drift")
+
+    inventory_path = root / str(_PR280_STATUS_PROJECTION["inventory_receipt"])
+    inventory_sha256: str | None = None
+    inventory_summary: Mapping[str, object] | None = None
+    if inventory_path.is_symlink() or not inventory_path.is_file():
+        reasons.append("inventory_receipt_missing_or_nonregular")
+    else:
+        try:
+            inventory_sha256 = _sha256_regular_file(inventory_path)
+            inventory_payload = json.loads(inventory_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError, BayesianSemanticsError):
+            inventory_payload = None
+            reasons.append("inventory_receipt_unreadable")
+        if inventory_sha256 != _PR280_STATUS_PROJECTION["inventory_receipt_sha256"]:
+            reasons.append("inventory_receipt_sha256")
+        if isinstance(inventory_payload, Mapping):
+            inventory_summary = MappingProxyType(
+                {
+                    "schema_version": inventory_payload.get("schema_version"),
+                    "execution_completed": inventory_payload.get("execution_completed"),
+                    "active_core_count": inventory_payload.get("active_core_count"),
+                    "unknown_count": inventory_payload.get("unknown_count"),
+                    "claim_ceiling": inventory_payload.get("claim_ceiling"),
+                    "scientific_status": inventory_payload.get("scientific_status"),
+                }
+            )
+            expected_inventory = {
+                "schema_version": "htt.full_inventory_receipt.v4",
+                "execution_completed": True,
+                "active_core_count": 3,
+                "unknown_count": 0,
+                "claim_ceiling": "diagnostic_only",
+                "scientific_status": "OPEN_UNCHANGED",
+            }
+            if dict(inventory_summary) != expected_inventory:
+                reasons.append("inventory_receipt_semantics")
+        elif "inventory_receipt_unreadable" not in reasons:
+            reasons.append("inventory_receipt_unreadable")
+
+    delta_path = root / "docs/PR_DELTAS/pr-280.md"
+    delta_sha256: str | None = None
+    if delta_path.is_symlink() or not delta_path.is_file():
+        reasons.append("pr280_delta_missing_or_nonregular")
+    else:
+        try:
+            delta_sha256 = _sha256_regular_file(delta_path)
+        except BayesianSemanticsError:
+            reasons.append("pr280_delta_unreadable")
+
+    unsigned = {
+        "schema": "HTT_PR288_PR280_DEPENDENCY_RECEIPT_V1",
+        "upstream_id": "PR-280",
+        "required_terminal": "COMPLETED_FAILED_WITH_RECEIPT",
+        "resolution": observed.get("resolution"),
+        "success_dependency_satisfied": observed.get(
+            "success_dependency_satisfied"
+        ),
+        "candidate_sha": observed.get("candidate_sha"),
+        "status_projection_content_id": (
+            canonical_content_id(observed) if canonical is not None else None
+        ),
+        "inventory_receipt_sha256": inventory_sha256,
+        "inventory_summary": dict(inventory_summary or {}),
+        "pr280_delta_sha256": delta_sha256,
+        "status": (
+            "PASS_REQUIRED_TERMINAL_RECEIPT"
+            if not reasons
+            else "BLOCKED_REQUIRED_TERMINAL_RECEIPT"
+        ),
+        "reasons": sorted(set(reasons)),
+    }
+    return MappingProxyType(
+        {**unsigned, "receipt_content_id": canonical_content_id(unsigned)}
+    )
+
+
 def _registered_source_bindings(
     *, spec_path: Path, repository_root: Path
 ) -> tuple[Mapping[str, str], ...]:
@@ -1646,9 +1835,12 @@ def _registered_source_bindings(
         raise BayesianSemanticsError("receipt contract is missing")
     expected = (
         "docs/research_program/post_pr275/pr288_spec.yaml",
+        "docs/research_program/post_pr275/pr288_publication_policy.json",
         "htt/htt/htt/infer/bayesian_semantics.py",
         "scripts/codex_harness/run_pr288_bayesian_semantics.py",
         "tests/htt/test_bayesian_semantics_repair.py",
+        "docs/PR_DELTAS/pr-280.md",
+        "docs/research_program/post_pr275/full_inventory_v4_receipt.json",
     )
     if tuple(contract.get("source_bindings_required", ())) != expected:
         raise BayesianSemanticsError("source binding inventory drifted")
@@ -1666,6 +1858,27 @@ def _registered_source_bindings(
             )
         )
     return tuple(bindings)
+
+
+def _bound_source_generation_identity(
+    bindings: Sequence[Mapping[str, str]],
+) -> str:
+    return "BOUND_SOURCE_WORKTREE:" + canonical_content_id(
+        [dict(row) for row in bindings]
+    )
+
+
+def _validate_generation_identity(
+    generation_identity: str,
+    *,
+    source_bindings: Sequence[Mapping[str, str]],
+) -> None:
+    if generation_identity in _NON_ACCEPTANCE_GENERATION_IDENTITIES:
+        return
+    if generation_identity != _bound_source_generation_identity(source_bindings):
+        raise BayesianSemanticsError(
+            "generation identity is not bound to the registered source worktree"
+        )
 
 
 def _expected_sobol_seeds(
@@ -1926,11 +2139,10 @@ def _expected_claim_metadata(
     negative_control: NegativeControlResult,
     generation_identity: str,
 ) -> Mapping[str, object]:
-    if generation_identity not in {
-        "EXTERNAL_CANDIDATE_SEAL_OR_SOURCE_HASHES",
-        "SYSTEM_REQUIRED_ENGINE_PROBE",
-        "UNIT_TEST_DOUBLE_NOT_ACCEPTANCE_EVIDENCE",
-    }:
+    if (
+        generation_identity not in _NON_ACCEPTANCE_GENERATION_IDENTITIES
+        and not generation_identity.startswith("BOUND_SOURCE_WORKTREE:sha256:")
+    ):
         raise BayesianSemanticsError("generation identity is not registered")
     metadata = {
         "owner": spec["owner"],
@@ -1971,9 +2183,7 @@ def _expected_claim_metadata(
             "foldwise nuisance refit with registered conditional covariance",
         ],
         "caveats": list(spec["caveats"]),
-        "generating_procedure": (
-            "scripts/codex_harness/run_pr288_bayesian_semantics.py engines"
-        ),
+        "generating_procedure": list(_FROZEN_GENERATING_PROCEDURE),
         "git_commit_or_worktree_state": generation_identity,
         "engine_versions_and_seed_inventories": [
             {
@@ -2363,6 +2573,7 @@ def _validate_registered_ppc(
 
 def _derive_terminal(
     *,
+    dependency_receipt: Mapping[str, object],
     engine_results: Sequence[EngineEvidenceResult],
     crosschecks: Sequence[EvidenceCrosscheck],
     null_control: DegenerateNullControl,
@@ -2371,6 +2582,10 @@ def _derive_terminal(
     loocv: LOOCVReceipt,
     mutation_results: Sequence[RegisteredMutationResult],
 ) -> tuple[str, tuple[str, ...]]:
+    if dependency_receipt.get("status") != "PASS_REQUIRED_TERMINAL_RECEIPT":
+        return "BLOCKED_DEPENDENCY_OR_ENGINE", (
+            "PR-280 required terminal receipt unavailable or invalid",
+        )
     if any(row.status is not EngineRunStatus.PASS for row in engine_results):
         return "BLOCKED_DEPENDENCY_OR_ENGINE", (
             "required Dynesty engine unavailable or incomplete",
@@ -2404,11 +2619,20 @@ def build_bayesian_semantics_receipt(
     spec_path: Path,
     *,
     repository_root: Path,
-    generation_identity: str = "EXTERNAL_CANDIDATE_SEAL_OR_SOURCE_HASHES",
+    generation_identity: str | None = None,
 ) -> BayesianSemanticsReceipt:
     spec_path = spec_path.resolve(strict=True)
     root = repository_root.resolve(strict=True)
     spec = _load_spec(spec_path)
+    source_bindings = _registered_source_bindings(
+        spec_path=spec_path, repository_root=root
+    )
+    if generation_identity is None:
+        generation_identity = _bound_source_generation_identity(source_bindings)
+    _validate_generation_identity(
+        generation_identity, source_bindings=source_bindings
+    )
+    dependency_receipt = _load_pr280_dependency_receipt(root)
     fixtures = load_registered_fixtures(spec_path)
     engine_results_list: list[EngineEvidenceResult] = []
     for fixture in fixtures.values():
@@ -2470,6 +2694,7 @@ def build_bayesian_semantics_receipt(
         spec_path=spec_path,
     )
     terminal, reasons = _derive_terminal(
+        dependency_receipt=dependency_receipt,
         engine_results=engine_results,
         crosschecks=crosschecks,
         null_control=null_control,
@@ -2477,9 +2702,6 @@ def build_bayesian_semantics_receipt(
         ppc=ppc,
         loocv=loocv,
         mutation_results=mutations,
-    )
-    source_bindings = _registered_source_bindings(
-        spec_path=spec_path, repository_root=root
     )
     unsigned = {
         "schema": "HTT_PR288_BAYESIAN_SEMANTICS_RECEIPT_V1",
@@ -2513,6 +2735,7 @@ def build_bayesian_semantics_receipt(
             for row in mutations
         ],
         "source_bindings": [dict(row) for row in source_bindings],
+        "dependency_receipt": dict(dependency_receipt),
         "metadata": dict(metadata),
         "generation_identity": generation_identity,
         "terminal": terminal,
@@ -2528,6 +2751,7 @@ def build_bayesian_semantics_receipt(
         loocv=loocv,
         mutation_results=mutations,
         source_bindings=source_bindings,
+        dependency_receipt=dependency_receipt,
         metadata=metadata,
         generation_identity=generation_identity,
         terminal=terminal,
@@ -2597,7 +2821,14 @@ def validate_bayesian_semantics_receipt(
         dict(row) for row in expected_bindings
     ):
         raise BayesianSemanticsError("source binding bytes drifted")
+    _validate_generation_identity(
+        receipt.generation_identity, source_bindings=expected_bindings
+    )
+    expected_dependency = _load_pr280_dependency_receipt(repository_root)
+    if dict(receipt.dependency_receipt) != dict(expected_dependency):
+        raise BayesianSemanticsError("PR-280 dependency receipt drifted")
     terminal, reasons = _derive_terminal(
+        dependency_receipt=receipt.dependency_receipt,
         engine_results=receipt.engine_results,
         crosschecks=receipt.evidence_crosschecks,
         null_control=receipt.null_control,

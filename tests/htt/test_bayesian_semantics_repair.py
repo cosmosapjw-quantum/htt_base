@@ -3,9 +3,14 @@
 from __future__ import annotations
 
 from copy import copy, deepcopy
+from io import BytesIO
 import importlib.util
 import inspect
 from pathlib import Path
+import shutil
+import sys
+import tarfile
+from types import ModuleType
 from types import SimpleNamespace
 
 import numpy as np
@@ -104,6 +109,30 @@ def test_registered_fixtures_freeze_normalization_rank_and_negative_control() ->
             ].remove("caveats"),
             "receipt metadata",
         ),
+        (
+            lambda payload: payload["allowed_uses"].append(
+                "observed-data evidence and Bianchi family ranking"
+            ),
+            "claim policy",
+        ),
+        (
+            lambda payload: payload["forbidden_uses"].remove(
+                "observed-data evidence or PR-151 partial-data use"
+            ),
+            "claim policy",
+        ),
+        (
+            lambda payload: payload["legacy_disposition"].update(
+                {"status": "CURRENT_ENGINE_ANCHOR"}
+            ),
+            "claim policy",
+        ),
+        (
+            lambda payload: payload["receipt_contract"].update(
+                {"process_success_semantics": "PASS authorizes observed evidence"}
+            ),
+            "claim policy",
+        ),
     ),
 )
 def test_frozen_spec_claim_and_receipt_contracts_fail_closed(
@@ -164,6 +193,28 @@ def test_dynesty_below_registered_version_floor_blocks(monkeypatch) -> None:
     result = run_dynesty_evidence(fixture, spec_path=SPEC)
     assert result.status is EngineRunStatus.BLOCKED_REQUIRED_ENGINE_UNAVAILABLE
     assert result.engine_version == "dynesty-2.1.5"
+
+
+@pytest.mark.parametrize("version", ("3.0.0rc1", "3.0.0.dev1"))
+def test_dynesty_prerelease_does_not_satisfy_stable_floor(
+    monkeypatch, version
+) -> None:
+    fixture = load_registered_fixtures(SPEC)["PR288-NORMAL-MEAN-ANALYTIC"]
+    original_import = bayesian_semantics.importlib.import_module
+
+    def import_module(name: str):
+        if name == "dynesty":
+            return SimpleNamespace(__version__=version)
+        return original_import(name)
+
+    monkeypatch.setattr(
+        bayesian_semantics.importlib,
+        "import_module",
+        import_module,
+    )
+    result = run_dynesty_evidence(fixture, spec_path=SPEC)
+    assert result.status is EngineRunStatus.BLOCKED_REQUIRED_ENGINE_UNAVAILABLE
+    assert result.engine_version == f"dynesty-{version}"
 
 
 def test_engine_crosscheck_rejects_shared_estimate_or_identity_drift() -> None:
@@ -318,7 +369,7 @@ def _independent_test_dynesty(fixture, *, spec_path):
     sobol = run_scrambled_sobol_evidence(fixture, spec_path=spec_path)
     result = copy(sobol)
     object.__setattr__(result, "engine_id", "DYNESTY_NESTED")
-    object.__setattr__(result, "engine_version", "dynesty-3.0.0-test-double")
+    object.__setattr__(result, "engine_version", "dynesty-3.0.0")
     object.__setattr__(result, "termination_status", "COMPLETED_DLOGZ_THRESHOLD")
     registered_seed = bayesian_semantics._engine_config(
         spec_path, "DYNESTY_NESTED"
@@ -456,6 +507,139 @@ def test_runner_rejects_hardlinked_destination_before_computation(
     monkeypatch.setattr(runner, "_build", must_not_build)
     assert runner._write() == 1
     assert outside.read_text(encoding="utf-8") == "preserve"
+
+
+def test_runner_replaces_preloaded_bayesian_module_with_bound_source(
+    monkeypatch,
+) -> None:
+    runner = _load_runner_module()
+    fake = ModuleType("htt.infer.bayesian_semantics")
+
+    def fail_if_executed(*args, **kwargs):
+        del args, kwargs
+        raise RuntimeError("PR288_FAKE_PRELOADED_MODULE_EXECUTED")
+
+    fake.build_bayesian_semantics_receipt = fail_if_executed
+    fake.validate_bayesian_semantics_receipt = fail_if_executed
+    monkeypatch.setitem(sys.modules, "htt.infer.bayesian_semantics", fake)
+    loaded = runner._load_bound_bayesian_module(ROOT)
+    assert loaded is not fake
+    assert Path(loaded.__file__).resolve() == (
+        ROOT / "htt/htt/htt/infer/bayesian_semantics.py"
+    ).resolve()
+
+
+def test_runner_safe_archive_extraction_is_python310_compatible_and_hostile(
+    tmp_path,
+) -> None:
+    runner = _load_runner_module()
+    safe_bytes = BytesIO()
+    with tarfile.open(fileobj=safe_bytes, mode="w") as archive:
+        info = tarfile.TarInfo("nested/value.txt")
+        payload = b"bound"
+        info.size = len(payload)
+        archive.addfile(info, BytesIO(payload))
+    safe_bytes.seek(0)
+    destination = tmp_path / "safe"
+    destination.mkdir()
+    with tarfile.open(fileobj=safe_bytes, mode="r:") as archive:
+        runner._safe_extract_archive(archive, destination)
+    assert (destination / "nested/value.txt").read_bytes() == b"bound"
+
+    hostile_bytes = BytesIO()
+    with tarfile.open(fileobj=hostile_bytes, mode="w") as archive:
+        info = tarfile.TarInfo("../escape.txt")
+        payload = b"escape"
+        info.size = len(payload)
+        archive.addfile(info, BytesIO(payload))
+    hostile_bytes.seek(0)
+    hostile_destination = tmp_path / "hostile"
+    hostile_destination.mkdir()
+    with tarfile.open(fileobj=hostile_bytes, mode="r:") as archive:
+        with pytest.raises(RuntimeError, match="unsafe archive member"):
+            runner._safe_extract_archive(archive, hostile_destination)
+    assert not (tmp_path / "escape.txt").exists()
+
+
+def test_pr280_terminal_receipt_is_operationally_replayed(tmp_path) -> None:
+    current = bayesian_semantics._load_pr280_dependency_receipt(ROOT)
+    assert current["status"] == "PASS_REQUIRED_TERMINAL_RECEIPT"
+    assert current["resolution"] == "COMPLETED_FAILED_WITH_RECEIPT"
+    assert current["success_dependency_satisfied"] is False
+
+    for relative in (
+        "docs/codex_handoff/pr_status.yaml",
+        "machine_readable/pr_status.yaml",
+        "docs/PR_DELTAS/pr-280.md",
+        "docs/research_program/post_pr275/full_inventory_v4_receipt.json",
+    ):
+        source = ROOT / relative
+        destination = tmp_path / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+    for relative in (
+        "docs/codex_handoff/pr_status.yaml",
+        "machine_readable/pr_status.yaml",
+    ):
+        path = tmp_path / relative
+        payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+        payload["execution_resolutions"]["PR-280"]["resolution"] = (
+            "COMPLETED_SUCCESS"
+        )
+        path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
+    blocked = bayesian_semantics._load_pr280_dependency_receipt(tmp_path)
+    assert blocked["status"] == "BLOCKED_REQUIRED_TERMINAL_RECEIPT"
+    assert "resolution" in blocked["reasons"]
+
+
+def test_pr280_dependency_block_precedes_engine_success(monkeypatch) -> None:
+    monkeypatch.setattr(
+        bayesian_semantics,
+        "run_dynesty_evidence",
+        _independent_test_dynesty,
+    )
+    current = dict(bayesian_semantics._load_pr280_dependency_receipt(ROOT))
+    current.update(
+        {
+            "status": "BLOCKED_REQUIRED_TERMINAL_RECEIPT",
+            "reasons": ["resolution"],
+        }
+    )
+    current["receipt_content_id"] = canonical_content_id(
+        {key: value for key, value in current.items() if key != "receipt_content_id"}
+    )
+    monkeypatch.setattr(
+        bayesian_semantics,
+        "_load_pr280_dependency_receipt",
+        lambda repository_root: current,
+    )
+    receipt = build_bayesian_semantics_receipt(SPEC, repository_root=ROOT)
+    assert receipt.terminal == "BLOCKED_DEPENDENCY_OR_ENGINE"
+    assert receipt.dependency_receipt["status"] == (
+        "BLOCKED_REQUIRED_TERMINAL_RECEIPT"
+    )
+    assert "PR-280" in receipt.reasons[0]
+
+
+def test_default_receipt_provenance_is_bound_to_sources_and_build_argv(
+    monkeypatch,
+) -> None:
+    monkeypatch.setattr(
+        bayesian_semantics,
+        "run_dynesty_evidence",
+        _independent_test_dynesty,
+    )
+    receipt = build_bayesian_semantics_receipt(SPEC, repository_root=ROOT)
+    assert receipt.generation_identity.startswith("BOUND_SOURCE_WORKTREE:sha256:")
+    assert receipt.metadata["git_commit_or_worktree_state"] == (
+        receipt.generation_identity
+    )
+    assert receipt.metadata["generating_procedure"] == [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+        "build",
+    ]
 
 
 def test_aggregate_receipt_blocks_when_required_dynesty_is_unavailable() -> None:

@@ -281,9 +281,12 @@ receipt_contract:
     - negative_control_status
   source_bindings_required:
     - docs/research_program/post_pr275/pr288_spec.yaml
+    - docs/research_program/post_pr275/pr288_publication_policy.json
     - htt/htt/htt/infer/bayesian_semantics.py
     - scripts/codex_harness/run_pr288_bayesian_semantics.py
     - tests/htt/test_bayesian_semantics_repair.py
+    - docs/PR_DELTAS/pr-280.md
+    - docs/research_program/post_pr275/full_inventory_v4_receipt.json
   content_id_algorithm: sha256_of_canonical_json_excluding_own_content_id
   process_success_semantics: >-
     PASS means the registered analytic/synthetic cross-check, posterior-draw

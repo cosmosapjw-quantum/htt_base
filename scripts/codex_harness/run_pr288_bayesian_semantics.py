@@ -5,10 +5,11 @@ from __future__ import annotations
 
 from io import BytesIO
 import hashlib
+import importlib
 from importlib import metadata as importlib_metadata
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import subprocess
 import sys
 import tarfile
@@ -36,20 +37,51 @@ def _activate_sources(root: Path = ROOT) -> None:
             sys.path.insert(0, value)
 
 
-def _build(root: Path = ROOT):
+def _load_bound_bayesian_module(root: Path = ROOT):
     _activate_sources(root)
-    from htt.infer.bayesian_semantics import (
-        build_bayesian_semantics_receipt,
-        validate_bayesian_semantics_receipt,
-    )
+    module_name = "htt.infer.bayesian_semantics"
+    expected = (root / "htt/htt/htt/infer/bayesian_semantics.py").resolve()
+    sys.modules.pop(module_name, None)
+    importlib.invalidate_caches()
+    module = importlib.import_module(module_name)
+    origin = getattr(module, "__file__", None)
+    spec = getattr(module, "__spec__", None)
+    spec_origin = getattr(spec, "origin", None)
+    loader = getattr(spec, "loader", None)
+    if (
+        not isinstance(origin, str)
+        or Path(origin).resolve() != expected
+        or not isinstance(spec_origin, str)
+        or Path(spec_origin).resolve() != expected
+        or loader is None
+        or not hasattr(loader, "get_data")
+    ):
+        raise RuntimeError("PR-288 Bayesian module origin escaped candidate root")
+    loaded_bytes = loader.get_data(str(expected))
+    expected_bytes = expected.read_bytes()
+    if (
+        hashlib.sha256(loaded_bytes).digest()
+        != hashlib.sha256(expected_bytes).digest()
+    ):
+        raise RuntimeError("PR-288 Bayesian module byte provenance drifted")
+    for name in (
+        "build_bayesian_semantics_receipt",
+        "validate_bayesian_semantics_receipt",
+    ):
+        function = getattr(module, name, None)
+        if function is None or getattr(function, "__module__", None) != module_name:
+            raise RuntimeError("PR-288 Bayesian factory origin drifted")
+    return module
 
+
+def _build(root: Path = ROOT):
+    module = _load_bound_bayesian_module(root)
     spec = root / SPEC.relative_to(ROOT)
-    receipt = build_bayesian_semantics_receipt(
+    receipt = module.build_bayesian_semantics_receipt(
         spec,
         repository_root=root,
-        generation_identity="EXTERNAL_CANDIDATE_SEAL_OR_SOURCE_HASHES",
     )
-    return validate_bayesian_semantics_receipt(
+    return module.validate_bayesian_semantics_receipt(
         receipt,
         spec_path=spec,
         repository_root=root,
@@ -286,6 +318,23 @@ def _manifest(root: Path, paths: tuple[str, ...]) -> dict[str, object]:
     }
 
 
+def _safe_extract_archive(archive: tarfile.TarFile, destination: Path) -> None:
+    root = destination.resolve(strict=True)
+    members = archive.getmembers()
+    for member in members:
+        relative = PurePosixPath(member.name)
+        target = root.joinpath(*relative.parts)
+        if (
+            relative.is_absolute()
+            or not relative.parts
+            or any(part in {"", ".", ".."} for part in relative.parts)
+            or (target != root and root not in target.resolve().parents)
+            or not (member.isfile() or member.isdir())
+        ):
+            raise RuntimeError(f"unsafe archive member: {member.name}")
+    archive.extractall(destination, members=members)
+
+
 def _versions() -> dict[str, str]:
     values = {"python": sys.version.split()[0]}
     for distribution in ("numpy", "scipy", "dynesty", "PyYAML", "pytest"):
@@ -322,7 +371,7 @@ def _portable() -> int:
         clean_root = Path(directory) / "source"
         clean_root.mkdir()
         with tarfile.open(fileobj=BytesIO(archived.stdout), mode="r:") as archive:
-            archive.extractall(clean_root, filter="data")
+            _safe_extract_archive(archive, clean_root)
         clean_before = _manifest(clean_root, tracked)
         if clean_before != source_before:
             print("clean archive manifest differs from source", file=sys.stderr)
