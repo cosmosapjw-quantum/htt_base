@@ -1992,6 +1992,23 @@ def _validate_post275_slice(cards: dict[str, Any]) -> None:
         expected_contracts = []
         for upstream_id, mode in expected["dependencies"]:
             contract = {"upstream_id": upstream_id, "mode": mode}
+            if pr_id == "PR-287" and upstream_id == "PR-285":
+                contract.update(
+                    {
+                        "required_terminal": (
+                            "PASS_COMPLETE_PILLAR_T_ADJUDICATION"
+                        ),
+                        "success_semantics": "PROCESS_COMPLETION_ONLY",
+                        "downstream_row_contract": {
+                            "preserve_row_verdicts": True,
+                            "preserve_fail_inconclusive_and_blocked": True,
+                            "preserve_exact_row_semantics": True,
+                            "synthetic_validation_effect": (
+                                "NO_THEOREM_SOURCE_OBSERVED_OR_EXACTNESS_PROMOTION"
+                            ),
+                        },
+                    }
+                )
             if pr_id == "PR-287" and upstream_id == "PR-286":
                 contract.update(
                     {

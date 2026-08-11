@@ -15608,7 +15608,15 @@
         },
         {
           "upstream_id": "PR-285",
-          "mode": "requires_success"
+          "mode": "requires_success",
+          "required_terminal": "PASS_COMPLETE_PILLAR_T_ADJUDICATION",
+          "success_semantics": "PROCESS_COMPLETION_ONLY",
+          "downstream_row_contract": {
+            "preserve_row_verdicts": true,
+            "preserve_fail_inconclusive_and_blocked": true,
+            "preserve_exact_row_semantics": true,
+            "synthetic_validation_effect": "NO_THEOREM_SOURCE_OBSERVED_OR_EXACTNESS_PROMOTION"
+          }
         },
         {
           "upstream_id": "PR-286",
