@@ -150,8 +150,10 @@ statistical_receipt_contract:
     applicability, and local-versus-global rank scope are typed fields. Exact
     or irrelevant cells use NOT_APPLICABLE_* tokens; missing statistical
     inputs use UNAVAILABLE. VT-S11 is one registered linear cell only. VT-S14
-    must bind joint design rank two and a positive whitened principal angle;
-    proportional designs abstain as ABSTAIN_NON_IDENTIFIED.
+    must bind column-normalized covariance-whitened joint design rank two and
+    a positive scale-stable whitened principal angle; proportional designs
+    abstain as ABSTAIN_NON_IDENTIFIED, and any non-finite GLS output is
+    refused.
   negative_control_terminal_rule:
     expected_control_failure: EXPECTED_NEGATIVE_CONTROL_KILLED
     unexpected_control_survival: UNEXPECTED_NEGATIVE_CONTROL_SURVIVED
@@ -208,6 +210,7 @@ mutation_registry:
   - {mutation_id: MU286-SEMANTIC-TYPE-DRIFT, mutation_kind: units_sign_prior_or_rank_scope_changed, expected_kill: semantic_type_replay}
   - {mutation_id: MU286-NEGATIVE-CONTROL-SURVIVES, mutation_kind: expected_negative_control_unexpectedly_passes, expected_kill: negative_control_terminal_rule}
   - {mutation_id: MU286-VTS14-PROPORTIONAL-DESIGN, mutation_kind: local_global_design_rank_or_angle_collapses, expected_kill: local_global_rank_gate}
+  - {mutation_id: MU286-VTS14-NUMERIC-GUARD-DRIFT, mutation_kind: finite_gls_refusal_or_whitened_rank_control_changes, expected_kill: semantic_type_replay}
 
 assumptions:
   - PR-271 exact proof rows and PR-272 preregistration bytes remain frozen.

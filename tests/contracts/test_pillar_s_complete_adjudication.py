@@ -189,6 +189,30 @@ def test_implementation_and_semantic_types_are_byte_bound(payload):
     )
 
 
+def test_vts14_rank_contract_uses_whitened_normalized_design(runner):
+    contract = runner._vts14_rank_contract(
+        {
+            "covariance": [[1.0, 0.0], [0.0, 1.0e-32]],
+            "local_design": [1.0, 0.0],
+            "global_design": [1.0, 1.0e-16],
+            "mask_path_id": "anisotropic-rank-probe",
+        }
+    )
+    assert contract["joint_design_rank"] == 2
+    assert contract["rank_metric"] == (
+        "COLUMN_NORMALIZED_COVARIANCE_WHITENED_DESIGN"
+    )
+    assert contract["hostile_numeric_controls"] == {
+        "extreme_spd_finite_gls": "TYPED_REFUSAL",
+        "large_scale_finite_gls": "TYPED_REFUSAL",
+        "whitened_rank_probe": {
+            "selected_candidate": "LOCAL",
+            "status": "VALIDATED_REGISTERED_SYNTHETIC",
+        },
+        "zero_design": "TYPED_REFUSAL",
+    }
+
+
 def test_pr287_consumer_binding_preserves_row_level_nonpromotion(payload):
     contract = payload["future_consumer_contract"]
     assert contract["consumer"] == "PR-287"
@@ -279,6 +303,7 @@ def test_mutable_orchestration_is_validated_but_not_claim_source_bound(payload, 
         ("MU286-SEMANTIC-TYPE-DRIFT", "SEMANTIC_TYPE_DRIFT"),
         ("MU286-NEGATIVE-CONTROL-SURVIVES", "NEGATIVE_CONTROL_TERMINAL_DRIFT"),
         ("MU286-VTS14-PROPORTIONAL-DESIGN", "VTS14_LOCAL_GLOBAL_RANK_GATE"),
+        ("MU286-VTS14-NUMERIC-GUARD-DRIFT", "SEMANTIC_TYPE_DRIFT"),
     ],
 )
 def test_each_registered_mutation_is_killed(payload, runner, mutation_id, marker):

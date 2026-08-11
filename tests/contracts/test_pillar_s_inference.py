@@ -742,6 +742,66 @@ def test_depth_local_global_abstains_for_proportional_designs() -> None:
     assert near_overlap.selected_candidate is ModelCandidate.INDETERMINATE
 
 
+def test_depth_local_global_refuses_nonfinite_large_scale_fit() -> None:
+    local = np.asarray((1.0e200, 1.0e200))
+    global_ = np.asarray((1.0e200, 1.0e200 + 2.0e185))
+    with pytest.raises(PillarSInferenceError, match="finite GLS"):
+        evaluate_depth_local_global(
+            local,
+            covariance=np.eye(2),
+            covariance_id="identity",
+            local_design=local,
+            global_design=global_,
+            mask_path_id="nested-mask",
+            transfer_source="none",
+            principal_angle_floor_radians=1.0e-12,
+        )
+
+
+def test_depth_local_global_refuses_nonfinite_extreme_covariance_fit() -> None:
+    local = np.asarray((0.25, 0.5, 0.75, 1.0))
+    global_ = np.ones(4)
+    with pytest.raises(PillarSInferenceError, match="finite GLS"):
+        evaluate_depth_local_global(
+            local,
+            covariance=np.diag((1.0e-320, 1.0, 2.0, 3.0)),
+            covariance_id="extreme-spd",
+            local_design=local,
+            global_design=global_,
+            mask_path_id="nested-mask",
+            transfer_source="none",
+        )
+
+
+def test_depth_local_global_rank_uses_covariance_whitened_design() -> None:
+    local = np.asarray((1.0, 0.0))
+    global_ = np.asarray((1.0, 1.0e-16))
+    report = evaluate_depth_local_global(
+        local,
+        covariance=np.diag((1.0, 1.0e-32)),
+        covariance_id="anisotropic",
+        local_design=local,
+        global_design=global_,
+        mask_path_id="nested-mask",
+        transfer_source="none",
+    )
+    assert report.status is ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC
+    assert report.selected_candidate is ModelCandidate.LOCAL
+
+
+def test_depth_local_global_refuses_zero_design_with_typed_error() -> None:
+    with pytest.raises(PillarSInferenceError, match="design must be nonzero"):
+        evaluate_depth_local_global(
+            (0.0, 0.0),
+            covariance=np.eye(2),
+            covariance_id="identity",
+            local_design=(0.0, 0.0),
+            global_design=(1.0, 0.0),
+            mask_path_id="nested-mask",
+            transfer_source="none",
+        )
+
+
 def test_public_facades_enforce_owner_boundary() -> None:
     import htt.infer.vector_tensor_validation as htt_surface
     import mio.formalism.vector_tensor_validation as mio_surface

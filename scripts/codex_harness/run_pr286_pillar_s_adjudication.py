@@ -662,15 +662,47 @@ def _vts14_rank_contract(config: dict[str, Any]) -> dict[str, Any]:
     covariance = np.asarray(config["covariance"], dtype=float)
     local = np.asarray(config["local_design"], dtype=float)
     global_ = np.asarray(config["global_design"], dtype=float)
-    whitening = np.linalg.inv(np.linalg.cholesky(covariance))
-    whitened_local = whitening @ local
-    whitened_global = whitening @ global_
-    cosine = abs(float(whitened_local @ whitened_global)) / (
-        float(np.linalg.norm(whitened_local))
-        * float(np.linalg.norm(whitened_global))
+    cholesky = np.linalg.cholesky(covariance)
+    whitened_local = np.linalg.solve(cholesky, local)
+    whitened_global = np.linalg.solve(cholesky, global_)
+
+    def normalized_direction(values: np.ndarray) -> np.ndarray:
+        scale = float(np.max(np.abs(values)))
+        if not math.isfinite(scale) or scale == 0.0:
+            raise PillarSAdjudicationError("VTS14_LOCAL_GLOBAL_RANK_GATE")
+        scaled = values / scale
+        norm = float(np.linalg.norm(scaled))
+        if not math.isfinite(norm) or norm == 0.0:
+            raise PillarSAdjudicationError("VTS14_LOCAL_GLOBAL_RANK_GATE")
+        return scaled / norm
+
+    local_direction = normalized_direction(whitened_local)
+    global_direction = normalized_direction(whitened_global)
+    alignment = (
+        1.0
+        if float(local_direction @ global_direction) >= 0.0
+        else -1.0
     )
-    angle = float(math.acos(min(1.0, max(0.0, cosine))))
-    rank = int(np.linalg.matrix_rank(np.column_stack((local, global_))))
+    angle = float(
+        2.0
+        * math.atan2(
+            float(
+                np.linalg.norm(
+                    local_direction - alignment * global_direction
+                )
+            ),
+            float(
+                np.linalg.norm(
+                    local_direction + alignment * global_direction
+                )
+            ),
+        )
+    )
+    rank = int(
+        np.linalg.matrix_rank(
+            np.column_stack((local_direction, global_direction))
+        )
+    )
     floor = 1.0e-12
     if rank != 2 or angle <= floor:
         raise PillarSAdjudicationError("VTS14_LOCAL_GLOBAL_RANK_GATE")
@@ -681,6 +713,7 @@ def _vts14_rank_contract(config: dict[str, Any]) -> dict[str, Any]:
             sys.path.insert(0, value)
     from common.vector_tensor_statistical_inference import (
         ModelCandidate,
+        PillarSInferenceError,
         ValidationStatus,
         evaluate_depth_local_global,
     )
@@ -700,10 +733,64 @@ def _vts14_rank_contract(config: dict[str, Any]) -> dict[str, Any]:
         or proportional.selected_candidate is not ModelCandidate.INDETERMINATE
     ):
         raise PillarSAdjudicationError("VTS14_PROPORTIONAL_DESIGN_SURVIVED")
+
+    def require_typed_refusal(**kwargs: Any) -> str:
+        try:
+            evaluate_depth_local_global(**kwargs)
+        except PillarSInferenceError:
+            return "TYPED_REFUSAL"
+        raise PillarSAdjudicationError("VTS14_NUMERIC_GUARD_SURVIVED")
+
+    large_local = np.asarray((1.0e200, 1.0e200))
+    large_global = np.asarray((1.0e200, 1.0e200 + 2.0e185))
+    large_scale_refusal = require_typed_refusal(
+        data=large_local,
+        covariance=np.eye(2),
+        covariance_id="pr286-large-scale-control",
+        local_design=large_local,
+        global_design=large_global,
+        mask_path_id="pr286-hostile-mask",
+        transfer_source="none",
+        principal_angle_floor_radians=floor,
+    )
+    extreme_local = np.asarray((0.25, 0.5, 0.75, 1.0))
+    extreme_spd_refusal = require_typed_refusal(
+        data=extreme_local,
+        covariance=np.diag((1.0e-320, 1.0, 2.0, 3.0)),
+        covariance_id="pr286-extreme-spd-control",
+        local_design=extreme_local,
+        global_design=np.ones(4),
+        mask_path_id="pr286-hostile-mask",
+        transfer_source="none",
+    )
+    zero_design_refusal = require_typed_refusal(
+        data=np.zeros(2),
+        covariance=np.eye(2),
+        covariance_id="pr286-zero-design-control",
+        local_design=np.zeros(2),
+        global_design=np.asarray((1.0, 0.0)),
+        mask_path_id="pr286-hostile-mask",
+        transfer_source="none",
+    )
+    rank_probe = evaluate_depth_local_global(
+        np.asarray((1.0, 0.0)),
+        covariance=np.diag((1.0, 1.0e-32)),
+        covariance_id="pr286-whitened-rank-control",
+        local_design=np.asarray((1.0, 0.0)),
+        global_design=np.asarray((1.0, 1.0e-16)),
+        mask_path_id="pr286-hostile-mask",
+        transfer_source="none",
+    )
+    if (
+        rank_probe.status is not ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC
+        or rank_probe.selected_candidate is not ModelCandidate.LOCAL
+    ):
+        raise PillarSAdjudicationError("VTS14_WHITENED_RANK_CONTROL_FAILED")
     return {
         "scope": "REGISTERED_LOCAL_GLOBAL_DESIGN_CELL_ONLY",
         "joint_design_rank": rank,
         "required_joint_design_rank": 2,
+        "rank_metric": "COLUMN_NORMALIZED_COVARIANCE_WHITENED_DESIGN",
         "whitened_principal_angle_radians": angle,
         "principal_angle_floor_radians": floor,
         "global_orbit_separation_claimed": False,
@@ -711,6 +798,15 @@ def _vts14_rank_contract(config: dict[str, Any]) -> dict[str, Any]:
             "status": proportional.status.value,
             "selected_candidate": proportional.selected_candidate.value,
             "expected_terminal": "EXPECTED_NEGATIVE_CONTROL_KILLED",
+        },
+        "hostile_numeric_controls": {
+            "extreme_spd_finite_gls": extreme_spd_refusal,
+            "large_scale_finite_gls": large_scale_refusal,
+            "whitened_rank_probe": {
+                "selected_candidate": rank_probe.selected_candidate.value,
+                "status": rank_probe.status.value,
+            },
+            "zero_design": zero_design_refusal,
         },
     }
 
@@ -1083,7 +1179,7 @@ def receipt_content_sha256(payload: dict[str, Any]) -> str:
 
 def _expected_mutation_registry() -> list[dict[str, Any]]:
     registry = _load_yaml(SPEC_PATH).get("mutation_registry")
-    if not isinstance(registry, list) or len(registry) != 18:
+    if not isinstance(registry, list) or len(registry) != 19:
         raise PillarSAdjudicationError("MUTATION_REGISTRY_INVALID")
     return deepcopy(registry)
 
@@ -1265,6 +1361,10 @@ def apply_registered_mutation(
         row_map["VT-S14"]["rank_and_identification_scope"][
             "joint_design_rank"
         ] = 1
+    elif mutation_id == "MU286-VTS14-NUMERIC-GUARD-DRIFT":
+        row_map["VT-S14"]["rank_and_identification_scope"][
+            "hostile_numeric_controls"
+        ]["large_scale_finite_gls"] = "MUTATED_ACCEPTED"
     else:
         raise PillarSAdjudicationError(f"UNKNOWN_MUTATION:{mutation_id}")
     return payload

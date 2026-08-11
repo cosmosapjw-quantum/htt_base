@@ -1382,15 +1382,69 @@ class MioDepthDiagnosticCrossCheck:
 def _gls_fit(
     data: np.ndarray, design: np.ndarray, covariance: np.ndarray
 ) -> tuple[float, float, np.ndarray]:
-    inverse_data = np.linalg.solve(covariance, data)
-    inverse_design = np.linalg.solve(covariance, design)
-    information = float(design @ inverse_design)
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        inverse_data = np.linalg.solve(covariance, data)
+        inverse_design = np.linalg.solve(covariance, design)
+        information = float(design @ inverse_design)
+    if not math.isfinite(information):
+        raise PillarSInferenceError("finite GLS outputs are required")
     if information <= 0.0:
         raise PillarSInferenceError("GLS design information must be positive")
-    amplitude = float(design @ inverse_data) / information
-    residual = data - amplitude * design
-    chi_square = float(residual @ np.linalg.solve(covariance, residual))
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        amplitude = float(design @ inverse_data) / information
+        residual = data - amplitude * design
+        chi_square = float(residual @ np.linalg.solve(covariance, residual))
+    if not (
+        math.isfinite(amplitude)
+        and math.isfinite(chi_square)
+        and np.all(np.isfinite(residual))
+    ):
+        raise PillarSInferenceError("finite GLS outputs are required")
     return amplitude, chi_square, residual
+
+
+def _unit_direction(values: np.ndarray, name: str) -> np.ndarray:
+    scale = float(np.max(np.abs(values)))
+    if scale == 0.0:
+        raise PillarSInferenceError(f"{name} design must be nonzero")
+    if not math.isfinite(scale):
+        raise PillarSInferenceError(f"{name} whitened design must be finite")
+    scaled = values / scale
+    norm = float(np.linalg.norm(scaled))
+    if not math.isfinite(norm) or norm == 0.0:
+        raise PillarSInferenceError(f"{name} whitened design must be finite")
+    return scaled / norm
+
+
+def _whitened_design_geometry(
+    covariance: np.ndarray,
+    local: np.ndarray,
+    global_: np.ndarray,
+) -> tuple[int, float]:
+    cholesky = np.linalg.cholesky(covariance)
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        whitened_local = np.linalg.solve(cholesky, local)
+        whitened_global = np.linalg.solve(cholesky, global_)
+    local_direction = _unit_direction(whitened_local, "local")
+    global_direction = _unit_direction(whitened_global, "global")
+    alignment = (
+        1.0
+        if float(local_direction @ global_direction) >= 0.0
+        else -1.0
+    )
+    difference_norm = float(
+        np.linalg.norm(local_direction - alignment * global_direction)
+    )
+    sum_norm = float(
+        np.linalg.norm(local_direction + alignment * global_direction)
+    )
+    principal_angle = 2.0 * math.atan2(difference_norm, sum_norm)
+    design_rank = int(
+        np.linalg.matrix_rank(
+            np.column_stack((local_direction, global_direction))
+        )
+    )
+    return design_rank, principal_angle
 
 
 def evaluate_depth_local_global(
@@ -1422,16 +1476,10 @@ def evaluate_depth_local_global(
         raise PillarSInferenceError(
             "principal_angle_floor_radians must lie in [0, pi/2)"
         )
-    whitening = np.linalg.inv(np.linalg.cholesky(covariance_matrix))
-    whitened_local = whitening @ local
-    whitened_global = whitening @ global_
-    cosine = abs(float(whitened_local @ whitened_global)) / (
-        float(np.linalg.norm(whitened_local))
-        * float(np.linalg.norm(whitened_global))
-    )
-    principal_angle = math.acos(min(1.0, max(0.0, cosine)))
-    design_rank = int(
-        np.linalg.matrix_rank(np.column_stack((local, global_)))
+    design_rank, principal_angle = _whitened_design_geometry(
+        covariance_matrix,
+        local,
+        global_,
     )
     local_amplitude, local_chi2, _ = _gls_fit(
         values, local, covariance_matrix
