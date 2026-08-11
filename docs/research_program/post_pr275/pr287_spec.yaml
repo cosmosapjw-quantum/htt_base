@@ -1,0 +1,244 @@
+schema: htt.pr287.post275_blind_replay_spec.v1
+pr_id: PR-287
+title: Current typed replay and fresh blind synthetic challenge
+owner: HTT
+contributors: [COMMON, OBSSTAT, MIO]
+change_set_id: CS-PR287-FRESH-BLIND-REPLAY
+publication_group_id: PG-PR287-FRESH-BLIND-REPLAY
+
+dependencies: [PR-281, PR-282, PR-283, PR-284, PR-285, PR-286]
+dependency_contracts:
+  - upstream_id: PR-281
+    mode: requires_success
+  - upstream_id: PR-282
+    mode: requires_success
+  - upstream_id: PR-283
+    mode: requires_success
+  - upstream_id: PR-284
+    mode: requires_success
+  - upstream_id: PR-285
+    mode: requires_success
+  - upstream_id: PR-286
+    mode: requires_success
+    required_terminal: PASS_COMPLETE_PILLAR_S_ADJUDICATION
+    success_semantics: PROCESS_COMPLETION_ONLY
+    downstream_row_contract:
+      preserve_row_verdicts: true
+      preserve_inconclusive_and_blocked: true
+      synthetic_validation_effect: NO_OBSERVED_OR_SOURCE_PROOF_PROMOTION
+
+activation_contract:
+  current_state: ACTIVE_PREDECESSOR_PR_OPEN
+  canonical_status_source: docs/codex_handoff/pr_status.yaml
+  required_predecessor_state: PR_OPEN
+  required_predecessor_sealed_sha: b955a050f19db853a93779506e8acb4e4a5352a9
+  predecessor_pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/383
+  pre_activation_allowed:
+    - frozen design and publication-policy review
+    - typed interface mapping and fail-first contract tests
+    - dependency-stack replay without held-out generation or result inspection
+  pre_activation_forbidden:
+    - fresh seed generation
+    - challenge or truth-vault generation
+    - blind analyst execution
+    - held-out truth inspection or adjudication
+    - result-pack generation
+  rule: >-
+    Fresh challenge execution is eligible only because all six canonical
+    predecessor rows satisfy their registered dependency contracts and PR-286
+    is OPEN at its exact sealed head. A moving target tip, merge state, or a
+    different predecessor commit cannot substitute for that recorded head.
+
+capability: current_vector_tensor_spine_replay_and_held_out_challenge
+scope: pre-solver fresh synthetic integration and historical replay
+claim_tier: diagnostic_only
+claim_level: {scheme: roadmap_rescue_v1, level: C2}
+scientific_artifact_mode: synthetic_diagnostic
+transfer_source: none
+observed_data_executed: false
+public_use: false
+family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
+scientific_status_effect: OPEN_UNCHANGED
+
+lane_separation:
+  historical_replay:
+    source_pr: PR-273
+    source_pack: docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json
+    mode: EXACT_HISTORICAL_REPLAY_ONLY
+    execution_order: after_fresh_submission_is_content_frozen
+    allowed_use:
+      - reproduce historical typed-pipeline behavior and archived failure boundaries
+      - BC1-tagged compatibility projection into a separate comparison appendix
+    forbidden_use:
+      - seed, threshold, normalizer, case design, expected label, or truth anchor for the fresh challenge
+      - replacement for current-spine execution
+      - proof, observed, native, geometry, or family promotion
+  fresh_challenge:
+    mode: NEW_CHALLENGE_AND_NEW_TRUTH_VAULT
+    case_ids: [D01, D02, D03, D04, H01, H02, H03, H04, H05, H06, H07, H08]
+    development_ids: [D01, D02, D03, D04]
+    held_out_ids: [H01, H02, H03, H04, H05, H06, H07, H08]
+    hidden_scenario_bank:
+      - scalar_limit
+      - tensor_only
+      - missing_channel
+      - covariance_misspecification
+      - multiplicity_stress
+      - coverage_failure
+      - weak_local_global_overlap
+      - separated_local_global
+      - open_set_unknown
+      - mask_depth_confounding
+      - proved_depth_path
+      - premise_missing_depth_path
+    mapping_visibility: truth_vault_and_adjudicator_only
+
+seed_contract:
+  generation_time: after_dependency_activation_and_before_challenge_generation
+  generator: operating_system_cryptographic_random_256_bits
+  seed_visibility_before_submission: truth_designer_only
+  challenge_binding: sha256_commitment_only
+  disclosure_time: registered_adjudication_after_submission_content_freeze
+  forbidden_derivations:
+    - PR-273 seeds or case values
+    - legacy result-pack numbers
+    - current expected labels, thresholds, or reviewer outputs
+
+analysis_protocol:
+  - stage: SPEC_AND_DEPENDENCY_FREEZE
+    readable: [this specification, predecessor terminal receipts, typed interfaces]
+    forbidden: [fresh seed, fresh truth, held-out mapping, fresh result packs]
+    output: dependency activation receipt
+  - stage: CHALLENGE_DESIGN
+    role: challenge_designer
+    readable: [this specification, activated typed interfaces]
+    forbidden: [analyst output, reviewer verdicts, historical result numbers as design inputs]
+    output: fresh challenge, sealed truth vault, seed commitment
+  - stage: BLIND_ANALYSIS
+    role: blind_analyst
+    readable: [fresh challenge, current typed runtime, frozen thresholds]
+    forbidden:
+      - fresh truth vault and seed
+      - held-out scenario mapping and expected outcomes
+      - PR-273 truth, adjudication, analyst submission, and diagnostic pack
+      - sibling reviewer results
+    output: content-addressed analyst submission
+  - stage: REGISTERED_ADJUDICATION
+    role: independent_adjudicator
+    precondition: analyst submission content identity is frozen
+    readable: [fresh truth vault, frozen analyst submission, mutation registry]
+    output: adjudication, packs A/B/C, terminal receipt
+  - stage: HISTORICAL_REPLAY
+    role: replay_auditor
+    precondition: fresh analyst submission content identity is frozen
+    readable: [frozen PR-273 pack and replay sources]
+    output: separate historical replay receipt
+
+current_pipeline_contract:
+  semantic_order:
+    - JointAnisotropyStateV2 orbit acceptance
+    - exact parity P-equivariance readiness
+    - covariance-supported weak-identification decision
+    - open-set mandatory abstention
+    - premise-bound DepthPath calibration
+    - Pillar T row-level adjudication projection
+    - Pillar S row-level adjudication projection
+    - BC1-only scalar compatibility projection
+    - result-pack composition
+  required_diagnostics:
+    - x_phi, Q_phi, Pi_phi, F_phi, and G_F typed crosswalk
+    - SectorStress and support utilization
+    - partial-identification and simultaneous coverage
+    - multiplicity and covariance-misspecification outcomes
+    - local/global rank, principal angle, weak-ID, and abstention
+    - open-set unknown-class behavior
+    - depth-path premise and matched-mock fallback status
+  pr286_row_rule:
+    preserve_row_verdicts: true
+    preserve_inconclusive_and_blocked: true
+    exact_rows_require_exact_evidence: true
+    synthetic_replay_cannot_promote_source_status: true
+
+legacy_bc1_contract:
+  label: BC1_LEGACY_PROJECTION
+  allowed_fields: [legacy_source_path, legacy_content_id, projected_field_name, projected_value]
+  required_output_flag: legacy_reproduction_only
+  forbidden_roles: [seed, threshold, normalizer, case_truth, expected_outcome, inference_anchor]
+
+result_pack_contract:
+  pack_A:
+    owner: COMMON
+    scope: current typed scalar-to-morphology diagnostic crosswalk
+    required_surfaces: [x_phi, Q_phi, Pi_phi, SectorStress, support_utilization, partial_identification]
+  pack_B:
+    owner: HTT
+    scope: local/global, weak-ID, open-set, covariance, multiplicity, and depth diagnostic gate report
+    required_surfaces: [rank, principal_angles, covariance_status, weak_identification, abstention, depth_calibration, coverage]
+  pack_C:
+    owner: MIO
+    scope: family-independent x-Q-Pi-F-G diagnostic report
+    required_surfaces: [x, Q, Pi, F, G, direction_coherence, depth_coherence]
+    forbidden_surfaces: [likelihood, posterior, Bayes_factor, evidence, family_label, truth_certificate]
+  shared_metadata:
+    - owner
+    - scope
+    - claim_tier
+    - transfer_source
+    - config_and_input_identities
+    - synthetic_sky_mask_status
+    - covariance_and_null_status
+    - seed_commitment_and_disclosure_status
+    - assumptions
+    - caveats
+    - generating_procedure
+    - git_commit_or_worktree_state
+
+mutation_registry:
+  - {mutation_id: MU287-TRUTH-IN-CHALLENGE, intended_defect: held-out truth field enters analyst challenge}
+  - {mutation_id: MU287-TRUTH-IN-SUBMISSION, intended_defect: analyst submission carries truth or expected label}
+  - {mutation_id: MU287-LEGACY-SEED, intended_defect: PR-273 or legacy pack value seeds fresh execution}
+  - {mutation_id: MU287-CHALLENGE-AFTER-SUBMISSION, intended_defect: challenge changes after submission freeze}
+  - {mutation_id: MU287-SUBMISSION-AFTER-SEAL, intended_defect: submission changes after its content identity freezes}
+  - {mutation_id: MU287-SEED-COMMITMENT, intended_defect: disclosed seed does not match challenge commitment}
+  - {mutation_id: MU287-CASE-PARTITION, intended_defect: case is missing duplicated reordered or assigned to two partitions}
+  - {mutation_id: MU287-COVARIANCE-BYPASS, intended_defect: misspecified covariance is treated as calibrated}
+  - {mutation_id: MU287-MULTIPLICITY-BYPASS, intended_defect: unadjusted pointwise result replaces simultaneous control}
+  - {mutation_id: MU287-COVERAGE-SUPPRESS, intended_defect: registered coverage failure is hidden}
+  - {mutation_id: MU287-WEAK-ID-LABEL, intended_defect: weakly identified case emits a point label}
+  - {mutation_id: MU287-OPEN-SET-FALLBACK, intended_defect: unknown case is forced to nearest registered class}
+  - {mutation_id: MU287-DEPTH-PREMISE, intended_defect: bound emitted when reverse-martingale premise is absent}
+  - {mutation_id: MU287-PR286-PROMOTION, intended_defect: inconclusive or blocked PR-286 row is promoted by simulation}
+  - {mutation_id: MU287-MIO-INFERENCE, intended_defect: pack C contains posterior odds evidence or truth certificate}
+  - {mutation_id: MU287-PACK-CLAIM-PROMOTION, intended_defect: any fresh pack exceeds diagnostic-only synthetic scope}
+  - {mutation_id: MU287-MUTATION-OMISSION, intended_defect: returned mutation battery is incomplete or reordered}
+
+terminal_contract:
+  pass_token: PASS_FRESH_BLIND_TYPED_REPLAY
+  block_token: BLOCKED_FRESH_BLIND_TYPED_REPLAY
+  precedence:
+    - BLOCKED_PREDECESSOR_FINAL_SUCCESS
+    - BLOCKED_BLINDNESS_OR_IDENTITY
+    - BLOCKED_REGISTERED_MUTATION
+    - BLOCKED_STATISTICAL_OR_TYPED_CONTRACT
+    - PASS_FRESH_BLIND_TYPED_REPLAY
+  process_success_semantics: >-
+    A pass means the preregistered synthetic pipeline, blind protocol, and
+    mutations executed as specified. It does not promote any theorem row,
+    observed result, physical source, geometry, native-solver, or family claim.
+
+allowed_uses:
+  - synthetic current-spine integration and mutation evidence
+  - diagnostic-only typed result packs for later separately authorized consumers
+  - exact historical replay kept separate from fresh evidence
+forbidden_uses:
+  - observed-data inference or PR-151 partial-data use
+  - legacy-number copying into current inference or challenge design
+  - MIO likelihood posterior Bayes factor or evidence
+  - native solver validation geometry detection or Bianchi family identification
+  - synthetic promotion of an inconclusive blocked or source-unproved row
+caveats:
+  - All fresh outputs are synthetic and conditional on the registered challenge generator.
+  - Historical PR-273 replay is reproducibility evidence only and is not fresh validation.
+  - PR-285 current CAS reexecution remains platform-blocked on Wolfram even though its frozen historical aggregate is CAS_4AXIS_PASS.
+  - PR-286 process completion preserves its row-level inconclusive and blocked dispositions.
+  - Bare source-layout smoke requires the repository's declared PYTHONPATH and remains separate packaging debt.
