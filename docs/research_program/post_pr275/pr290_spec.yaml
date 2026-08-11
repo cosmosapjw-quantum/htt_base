@@ -1,0 +1,183 @@
+schema_version: 1
+pr_id: PR-290
+title: Planck typed low-ell observed-lane reboot
+owner: HTT
+contributors: [OBSSTAT, COMMON]
+change_set_id: CS-PR290-PLANCK-REBOOT
+publication_group_id: PG-PR290-PLANCK-REBOOT
+current_phase: ACTIVE_IMPLEMENTATION
+
+scientific_boundary:
+  claim_tier: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  scientific_artifact_mode: observed_data_conditional
+  transfer_source: none
+  observed_data_executed: false
+  public_use: false
+  family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
+  maximum_future_result: OBSERVED_DESCRIPTIVE_OR_PIPELINE_CONDITIONAL_MORPHOLOGY_COMPATIBILITY
+  rule: >-
+    Process readiness, synthetic operator tests, and a future observed-lane
+    execution never imply a native transfer result, anisotropy detection,
+    source identification, or Bianchi-family identification.
+
+dependency_contract:
+  required_success_prs: [PR-202, PR-287, PR-288, PR-289]
+  required_terminals:
+    PR-287: ACTIVATED_PREDECESSOR_FINAL_SUCCESS
+    PR-288: PASS_BAYESIAN_SEMANTICS_REPAIR
+    PR-289: PASS_DATA_IDENTITY_V2_PREFLIGHT
+  current_expected_state: BLOCKED_DATA_IDENTITY_ADMISSION
+  fail_closed_rule: >-
+    Missing completion, missing execution resolution, a failed or blocked
+    predecessor, or a receipt that does not replay keeps the observed executor
+    unreachable and writes no numerical output.
+
+data_identity_contract:
+  lane_id: PLANCK
+  product_id: PLANCK_PR3_LOWELL_BUNDLE
+  registry_path: docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json
+  preflight_receipt_path: docs/generated/pr289_data_identity_v2_receipt.json
+  required_admission_status: ADMITTED_IDENTITY_ONLY
+  required_components:
+    - smica_map
+    - commander_map
+    - smica_mask
+    - commander_mask
+    - smica_beam
+    - commander_beam
+    - smica_window_operator
+    - commander_window_operator
+    - smica_covariance
+    - commander_covariance
+    - pixelization
+    - native_selection
+    - ffp10_null_inventory
+  required_native_identity_schema: common.planck_native_identity.v1
+  canonical_record_replay: required
+  required_analysis_plan_id: plan:PR290-PLANCK-LOWELL-V1
+  forbidden_admission_shortcuts:
+    - name_only_product
+    - symlink_or_hardlink_alias
+    - source_locator_without_exact_component_identity
+    - record_id_without_full_record_replay
+    - incomplete_or_string_only_native_profile
+    - admission_inferred_as_execution_authorization
+
+human_execution_gate:
+  gate_id: H-PLANCK
+  canonical_status_path: docs/codex_handoff/pr_status.yaml
+  current_status: NOT_AUTHORIZED
+  authorization_mode: distinct_human_execution_receipt
+  authorized_scope: admitted_planck_observed_execution
+  preactivation_rule: >-
+    This PR may define and test typed operators on registered synthetic fixtures,
+    but the repository implementation contains no ordinary-agent path that can
+    mint H-PLANCK authorization or execute observed Planck inputs.
+  current_terminal: BLOCKED_HUMAN_EXECUTION_AUTHORIZATION
+
+pipeline_contract:
+  observation_products: [SMICA, Commander]
+  null_family: FFP10
+  exact_common_operator_order:
+    - release_and_component_identity
+    - beam_and_pixel_window_normalization
+    - registered_mask_application_and_deconvolution
+    - harmonic_convention_validation
+    - low_ell_alm_and_cl
+    - power_tensor_axes_and_multipole_vectors
+    - biposh_and_parity
+    - sector_stress_and_response_projection
+    - covariance_and_null_calibration
+    - observation_inclusive_look_elsewhere_correction
+    - component_separation_comparison
+    - legacy_scalar_projection
+  required_identity_fields:
+    - pipeline_id
+    - map_product_id
+    - mask_id
+    - beam_id
+    - harmonic_convention_id
+    - estimator_family_id
+    - covariance_id
+    - null_ensemble_id
+    - look_elsewhere_family_id
+    - response_id
+  identical_observation_null_pipeline: true
+  mask_deconvolution_required: true
+  diagonal_covariance_forbidden: true
+  synthetic_contract_fixture:
+    fixture_id: PR290-SYNTHETIC-LOWELL-OPERATOR-V1
+    purpose: operator_identity_shape_sign_and_permutation_tests_only
+    cannot_support: [observed_number, p_value, morphology_claim, public_figure]
+
+output_contract:
+  preactivation_receipt: docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json
+  observed_result_directory: docs/research_program/post_pr275/data_runs/planck/results
+  current_allowed_outputs: [preactivation_nonexecution_receipt, synthetic_operator_test_evidence]
+  current_forbidden_outputs:
+    - observed_alm_or_cl
+    - observed_power_tensor_or_poles
+    - observed_biposh_or_parity
+    - observed_sector_stress_or_response
+    - observed_p_value_or_exceedance
+    - observed_component_separation_comparison
+    - claim_bearing_figure
+  nonexecution_receipt_required_fields:
+    - schema
+    - pr_id
+    - terminal
+    - reasons
+    - dependency_snapshot
+    - data_identity_snapshot
+    - human_gate_snapshot
+    - numeric_outputs_written
+    - observed_data_executed
+    - network_or_download_side_effect
+    - owner_scope_and_claim_boundary
+    - source_bindings
+    - receipt_content_sha256
+
+terminal_precedence:
+  - BLOCKED_CONTRACT_INVALID
+  - BLOCKED_PREDECESSOR_FINAL_SUCCESS
+  - BLOCKED_DATA_IDENTITY_ADMISSION
+  - BLOCKED_HUMAN_EXECUTION_AUTHORIZATION
+  - READY_FOR_ATTENDED_PLANCK_EXECUTION
+  - PASS_PLANCK_OBSERVED_LANE_REBOOT
+
+mutation_registry:
+  - {mutation_id: MU290-DEPENDENCY-PASS-SUBSTITUTION, intended_defect: pending predecessor is rewritten as completed}
+  - {mutation_id: MU290-ADMISSION-AS-AUTHORIZATION, intended_defect: ADMITTED_IDENTITY_ONLY is treated as H-PLANCK authorization}
+  - {mutation_id: MU290-GATE-ID-ALIAS, intended_defect: a different human gate authorizes Planck}
+  - {mutation_id: MU290-NAME-ONLY-PRODUCT, intended_defect: a product label substitutes for exact component identities}
+  - {mutation_id: MU290-OBS-NULL-PIPELINE-DRIFT, intended_defect: observation and FFP10 use different operators}
+  - {mutation_id: MU290-MASK-DECONVOLUTION-OMITTED, intended_defect: masked pseudo-alm is treated as deconvolved output}
+  - {mutation_id: MU290-DIAGONAL-COVARIANCE, intended_defect: full covariance is silently diagonalized}
+  - {mutation_id: MU290-LOOK-ELSEWHERE-OMITTED, intended_defect: selected statistic is reported without family correction}
+  - {mutation_id: MU290-COMPONENT-PIPELINE-COLLAPSE, intended_defect: SMICA alone is generalized to Planck}
+  - {mutation_id: MU290-NUMERIC-WRITE-WHILE-BLOCKED, intended_defect: blocked preactivation writes observed numerical output}
+  - {mutation_id: MU290-CLAIM-PROMOTION, intended_defect: process readiness becomes detection native or family language}
+
+allowed_uses:
+  - typed Planck operator composition on explicitly synthetic fixtures
+  - fail-closed dependency admission and authorization preflight
+  - future attended execution planning after a distinct human authorization
+forbidden_uses:
+  - automatic observed execution
+  - use of PR-151 partial acquisition
+  - SMICA-only generalization
+  - diagonal covariance or undeconvolved-mask headline
+  - native solver or transfer validation
+  - anisotropy source or Bianchi-family identification
+  - public or manuscript claim from preactivation evidence
+
+assumptions:
+  - PR-289 admission and H-PLANCK authorization remain separate receipts.
+  - FFP10 null products must traverse the byte-identical observation operator.
+  - A synthetic fixture validates code contracts only, not the observed sky.
+caveats:
+  - PR-289 is PR_OPEN at exact sealed head 45da1bf54149864fb9d87be3a828df202ee1df7f.
+  - The current PR-289 receipt admits no external Planck root.
+  - H-PLANCK is NOT_AUTHORIZED at specification freeze.
+  - No observed Planck bytes are read, downloaded, transformed, or summarized by this phase.
