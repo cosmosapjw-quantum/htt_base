@@ -1,5 +1,6 @@
 generated_on: '2026-08-11'
 completed:
+- PR-289
 - PR-288
 - PR-287
 - PR-286
@@ -211,7 +212,6 @@ pending:
 - PR-206
 - PR-207
 - PR-208
-- PR-290
 - PR-291
 - PR-292
 - PR-293
@@ -245,7 +245,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-289
+in_progress: PR-290
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -259,7 +259,7 @@ stacked_pr_execution:
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
   target_sha: ff9ef9f45747e559c5343b463cf010dfc3a7432a
-  active_implementation_pr: PR-289
+  active_implementation_pr: PR-290
   pr_order:
   - PR-283
   - PR-284
@@ -505,14 +505,15 @@ stacked_pr_execution:
         publication: PASS
       assurance_budget: {maximum: 16, consumed: 7}
     PR-289:
-      lifecycle: REVIEWED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      lifecycle: PR_OPEN
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED, SEALED,
+        PUSHED, PR_OPEN]
       base_sha: 27df5da040e27eeaad44873ba3424ff73fb4bb09
       predecessor_pr: PR-288
       predecessor_sealed_sha: 27df5da040e27eeaad44873ba3424ff73fb4bb09
-      sealed_head: null
-      pushed_ref: null
-      pr_url: null
+      sealed_head: 45da1bf54149864fb9d87be3a828df202ee1df7f
+      pushed_ref: refs/heads/changeset/pr289-native-data-identity-recovery-20260811
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/386
       production_hash: c638eaea433bcce5a5b00140a916108d5c23b64d079c94bbb7456a343acf0d48
       dependency_hashes:
         pr289_spec: f4a8e89e603a1f6e4fe9cb99c422ef83407fd264328b3adaf927aafdcfb6636f
@@ -531,21 +532,35 @@ stacked_pr_execution:
         salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
       gate_dispositions: {eligibility: PASS, implementation: PASS, validation: PASS,
         code: PASS, physics: PASS, statistics: PASS, claim: PASS,
-        harness: PASS, portability_replay: PASS, review: PASS}
-      assurance_budget: {maximum: 16, consumed: 14}
+        harness: PASS, portability_replay: PASS, review: PASS, seal: PASS,
+        push: PASS, publication: PASS}
+      assurance_budget: {maximum: 16, consumed: 15}
     PR-290:
-      lifecycle: PLANNED
-      lifecycle_history: [PLANNED]
-      base_sha: null
+      lifecycle: REVIEWED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      base_sha: 45da1bf54149864fb9d87be3a828df202ee1df7f
       predecessor_pr: PR-289
-      predecessor_sealed_sha: null
+      predecessor_sealed_sha: 45da1bf54149864fb9d87be3a828df202ee1df7f
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: null
-      dependency_hashes: {}
-      gate_dispositions: {eligibility: INELIGIBLE}
-      assurance_budget: {maximum: 16, consumed: 0}
+      production_hash: b9b62e081f702f6b2b1918e5b3f1b599d651bdfa2fb0261e878d7a669d94beaf
+      dependency_hashes:
+        pr290_spec: 1ec571a1de15d6b0addc608e2eb5db1dc9df7ae6e3bdd7f66160cf56ebeb5f9a
+        publication_policy: 45655b62f02f2d422283aa99780c78e80a022fbd1fd371e8ee7a450ddad320cd
+        pr289_data_identity_receipt: 92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34
+        pr289_registry: e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f
+        pr288_terminal_receipt: 622dadbcdf4a5d616a78f485fd6a772d1c7823ed8d77e808aa2bfc8f66169b0c
+        pr289_data_identity_module: 145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2
+        pr290_runner: abaddb4980839f3b368337e9c800bed7a15c78b8fb7ae78c4a0708dc9e250466
+        pr290_contract_test: 58e59dd6f9f89b744757c3b2e87392c22972f531bf844ab8fd51eb1bb5e8f7f9
+        claim_ledger: 86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b
+        salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
+      gate_dispositions: {eligibility: PASS, implementation: PASS, validation: PASS,
+        code: PASS, physics: PASS, statistics: PASS, claim: PASS,
+        harness: PASS, portability_replay: PASS, review: PASS,
+        rereview: PASS}
+      assurance_budget: {maximum: 16, consumed: 7}
     PR-291:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
@@ -705,6 +720,25 @@ execution_lane:
   PR-296: defensible
   PR-297: defensible
 execution_resolutions:
+  PR-289:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-289.md
+    review_receipt: .agent-harness/runs/pr289-final-seal-closeout-20260811/RUN_SUMMARY.json
+    review_receipt_sha256: cda6807ddfe0690f55c071f36c069b8904df1e23dffd027146c00005af44ce20
+    publication_receipt_sha256: dff6fd99bd45ffd1f92a65c8fddd8dbb4bb47a400d73c15ee655c0576399c44f
+    candidate_sha: 45da1bf54149864fb9d87be3a828df202ee1df7f
+    sealed_head: 45da1bf54149864fb9d87be3a828df202ee1df7f
+    pushed_ref: refs/heads/changeset/pr289-native-data-identity-recovery-20260811
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/386
+    resolved_on: '2026-08-11'
+    scientific_status_effect: native_data_identity_and_not_authorized_execution_firewall_recovered
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: external_data_identity_preflight
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    assurance_budget_consumed: 15
+    success_dependency_satisfied: true
   PR-288:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-288.md

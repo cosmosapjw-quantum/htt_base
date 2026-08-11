@@ -1,0 +1,228 @@
+{
+  "data_identity_content_id": "sha256:92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+  "data_identity_snapshot": {
+    "admission_status": "REJECTED_NOT_PRESENT",
+    "aggregate_status": "NO_ADMITTED_IDENTITIES",
+    "analysis_plan_id": "plan:PR290-PLANCK-LOWELL-V1",
+    "canonical_record_replay": true,
+    "component_ids": [],
+    "lane_admission_bundle_id": null,
+    "lane_id": "PLANCK",
+    "native_identity_profile_ids": [],
+    "pr289_authorization_status": "NOT_AUTHORIZED",
+    "product_id": "PLANCK_PR3_LOWELL_BUNDLE",
+    "reasons": [
+      "PLANCK identity is not ADMITTED_IDENTITY_ONLY",
+      "PLANCK exact admission record IDs are absent"
+    ],
+    "receipt_schema": "common.data_identity_v2_preflight_receipt.v1",
+    "record_count": 0,
+    "record_ids": [],
+    "required_human_gate_id": "H-PLANCK",
+    "satisfied": false
+  },
+  "dependency_snapshot": [
+    {
+      "candidate_sha": null,
+      "canonical_terminal": null,
+      "observed_data_executed": null,
+      "pr_id": "PR-202",
+      "public_use": null,
+      "reasons": [
+        "PR-202: not in canonical completed set",
+        "PR-202: completion resolution is not success",
+        "PR-202: success dependency is not satisfied",
+        "PR-202: observed-data boundary is not false",
+        "PR-202: public-use boundary is not false",
+        "PR-202: candidate SHA is missing or invalid"
+      ],
+      "required_terminal": null,
+      "resolution": null,
+      "satisfied": false,
+      "success_dependency_satisfied": null,
+      "terminal_receipt": null
+    },
+    {
+      "candidate_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+      "canonical_terminal": null,
+      "observed_data_executed": false,
+      "pr_id": "PR-287",
+      "public_use": false,
+      "reasons": [
+        "PR-287: canonical terminal token mismatch",
+        "PR-287: authoritative terminal receipt is unavailable or invalid"
+      ],
+      "required_terminal": "PASS_FRESH_BLIND_TYPED_REPLAY",
+      "resolution": "COMPLETED_SUCCESS",
+      "satisfied": false,
+      "success_dependency_satisfied": true,
+      "terminal_receipt": {
+        "content_id": null,
+        "file_sha256": null,
+        "path": "docs/generated/pr287_fresh_blind_typed_replay_receipt.json",
+        "satisfied": false,
+        "schema": null,
+        "terminal": null
+      }
+    },
+    {
+      "candidate_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+      "canonical_terminal": null,
+      "observed_data_executed": false,
+      "pr_id": "PR-288",
+      "public_use": false,
+      "reasons": [
+        "PR-288: canonical terminal token mismatch"
+      ],
+      "required_terminal": "PASS_BAYESIAN_SEMANTICS_REPAIR",
+      "resolution": "COMPLETED_SUCCESS",
+      "satisfied": false,
+      "success_dependency_satisfied": true,
+      "terminal_receipt": {
+        "content_id": "sha256:68f439f31327c6894fe9bd9bf4269c216bec3a6832165dc71d35885320f7e518",
+        "file_sha256": "sha256:622dadbcdf4a5d616a78f485fd6a772d1c7823ed8d77e808aa2bfc8f66169b0c",
+        "path": "docs/generated/pr288_bayesian_semantics_receipt.json",
+        "satisfied": true,
+        "schema": "HTT_PR288_BAYESIAN_SEMANTICS_RECEIPT_V1",
+        "terminal": "PASS_BAYESIAN_SEMANTICS_REPAIR"
+      }
+    },
+    {
+      "candidate_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+      "canonical_terminal": null,
+      "observed_data_executed": false,
+      "pr_id": "PR-289",
+      "public_use": false,
+      "reasons": [
+        "PR-289: canonical terminal token mismatch"
+      ],
+      "required_terminal": "PASS_DATA_IDENTITY_V2_PREFLIGHT",
+      "resolution": "COMPLETED_SUCCESS",
+      "satisfied": false,
+      "success_dependency_satisfied": true,
+      "terminal_receipt": {
+        "content_id": "sha256:4e2aa483abfa1c63777bad1b678058ae17a6e7108ad43475176367b634b8f74e",
+        "file_sha256": "sha256:92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+        "path": "docs/generated/pr289_data_identity_v2_receipt.json",
+        "satisfied": true,
+        "schema": "common.data_identity_v2_preflight_receipt.v1",
+        "terminal": "PASS_DATA_IDENTITY_V2_PREFLIGHT"
+      }
+    }
+  ],
+  "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+  "generating_procedure": "python3 -B scripts/codex_harness/run_pr290_planck_lane.py build",
+  "generation_identity": {
+    "exact_replay_environment": "repository_python_contract",
+    "source_commit_or_external_candidate_seal_id": "sha256:5975d5632f0871bacd56888cd4bdcdeb4fcfb6cf62b5db2ea605276561976687",
+    "worktree_state": "source_hash_bound_dirty_or_committed"
+  },
+  "human_gate_snapshot": {
+    "canonical_status": "NOT_AUTHORIZED",
+    "gate_id": "H-PLANCK",
+    "reasons": [
+      "PLANCK admission must precede authorization"
+    ],
+    "receipt_path": "docs/research_program/post_pr275/data_runs/planck/H_PLANCK_EXECUTION_AUTHORIZATION.json",
+    "receipt_sha256": null,
+    "satisfied": false,
+    "status": "NOT_AUTHORIZED"
+  },
+  "network_or_download_side_effect": false,
+  "numeric_outputs_written": [],
+  "observed_data_executed": false,
+  "operator_snapshot": {
+    "beam_pixel_normalization": "BLOCKED_IMPLEMENTATION_UNAVAILABLE",
+    "global_response": "BLOCKED_UNBOUND_GLOBAL_RESPONSE",
+    "joint_covariance": "BLOCKED_FEATURE_VECTOR_UNREGISTERED",
+    "mask_deconvolution": "BLOCKED_UNDECONVOLVED",
+    "multipole_vectors": "BLOCKED_EXTRACTOR_UNAVAILABLE",
+    "response_and_active_estimand_status": {
+      "F": "BLOCKED_NO_SIGN_CLEAN_XC_AND_CEILING",
+      "G_F": "NOT_APPLICABLE_NO_DEPTH_AXIS",
+      "Pi": "BLOCKED_NO_Q_OR_F_MEASURE",
+      "Q": "BLOCKED_NO_DEPARTURE_BUNDLE_BUDGET",
+      "global_tilt": "BLOCKED_UNBOUND_GLOBAL_RESPONSE",
+      "likelihood_prior_posterior_evidence": "NOT_APPLICABLE_DIAGNOSTIC_ONLY",
+      "local_boost": "synthetic_operator_contract_only",
+      "local_global_rank": "NOT_MEASURED"
+    },
+    "satisfied": false,
+    "status": "BLOCKED_OPERATOR_IMPLEMENTATION"
+  },
+  "owner_scope_and_claim_boundary": {
+    "allowed_uses": [
+      "fail-closed preactivation diagnostics",
+      "synthetic contract tests"
+    ],
+    "artifact_owners": {
+      "activation_manifests_and_semantic_guards": "COMMON",
+      "model_dependent_inference": "HTT_NOT_EXECUTED",
+      "observable_features_and_null_features": "OBSSTAT"
+    },
+    "caveats": [
+      "identity admission and H-PLANCK authorization are separate",
+      "mask deconvolution and multipole-vector extraction remain blocked",
+      "PR-151 partial acquisition is not an input"
+    ],
+    "claim_level": {
+      "level": "C2",
+      "scheme": "roadmap_rescue_v1"
+    },
+    "claim_tier": "diagnostic_only",
+    "covariance_status": "NOT_EVALUATED",
+    "delivery_owner": "HTT",
+    "forbidden_uses": [
+      "observed numerical result",
+      "public scientific use",
+      "native transfer or solver validation",
+      "anisotropy source or Bianchi-family claim"
+    ],
+    "null_mock_status": "NOT_EXECUTED",
+    "scientific_artifact_mode": "preactivation_nonexecution",
+    "scope": "Planck preactivation nonexecution only",
+    "sky_support_status": "NOT_READ",
+    "transfer_source": "none"
+  },
+  "pr_id": "PR-290",
+  "public_use": false,
+  "reasons": [
+    "PR-202: not in canonical completed set",
+    "PR-202: completion resolution is not success",
+    "PR-202: success dependency is not satisfied",
+    "PR-202: observed-data boundary is not false",
+    "PR-202: public-use boundary is not false",
+    "PR-202: candidate SHA is missing or invalid",
+    "PR-287: canonical terminal token mismatch",
+    "PR-287: authoritative terminal receipt is unavailable or invalid",
+    "PR-288: canonical terminal token mismatch",
+    "PR-289: canonical terminal token mismatch"
+  ],
+  "receipt_content_sha256": "sha256:d9adea0d169b0e27d8a61abf6263ff57be48be7d471f6628b3c5790ad9d4af19",
+  "schema": "htt.pr290.planck_nonexecution_receipt.v1",
+  "source_bindings": {
+    "docs/codex_handoff/pr_status.yaml": "sha256:03feaaf86abb3d5c12767d168b7f169740e911d11f525543b9fffabbc42360e8",
+    "docs/generated/pr288_bayesian_semantics_receipt.json": "sha256:622dadbcdf4a5d616a78f485fd6a772d1c7823ed8d77e808aa2bfc8f66169b0c",
+    "docs/generated/pr289_data_identity_v2_receipt.json": "sha256:92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+    "docs/harness/CLAIM_LEDGER.md": "sha256:86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json": "sha256:e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+    "docs/research_program/post_pr275/data_runbooks.yaml": "sha256:b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de",
+    "docs/research_program/post_pr275/pr289_publication_policy.json": "sha256:4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9",
+    "docs/research_program/post_pr275/pr289_spec.yaml": "sha256:f4a8e89e603a1f6e4fe9cb99c422ef83407fd264328b3adaf927aafdcfb6636f",
+    "docs/research_program/post_pr275/pr290_publication_policy.json": "sha256:45655b62f02f2d422283aa99780c78e80a022fbd1fd371e8ee7a450ddad320cd",
+    "docs/research_program/post_pr275/pr290_spec.yaml": "sha256:1ec571a1de15d6b0addc608e2eb5db1dc9df7ae6e3bdd7f66160cf56ebeb5f9a",
+    "docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json": "sha256:e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea",
+    "docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml": "sha256:92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9",
+    "htt/obsstat/boost_biposh_residual.py": "sha256:8a8e95e7a1ffb97213bc9463cbdd78e3c4a0fd67a1cfc89756fa1fd4d62233d8",
+    "htt/obsstat/planck_post275_lane.py": "sha256:84a326a2f7cb9ba10101a723ac14377e778260d06035b0435e94192459351959",
+    "htt/src/common/data_identity.py": "sha256:145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2",
+    "htt/src/common/observed_lane_activation.py": "sha256:79066a85eeb7515a9435a15963f26b2fcef02b8eabd11d59fde6ecfd8941d397",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py": "sha256:14ed58a68f4a628644219f6df0b966d5e2cedddef0a7c32f10ce1c94a85e6ad5",
+    "scripts/codex_harness/run_pr290_planck_lane.py": "sha256:abaddb4980839f3b368337e9c800bed7a15c78b8fb7ae78c4a0708dc9e250466",
+    "tests/contracts/test_data_identity_registry_v2.py": "sha256:1ee3fb1541a911abfd686d5cd78f75380b8847dfe5d1fd076cd48153a4f1c3c3",
+    "tests/integration/test_planck_post275_lane.py": "sha256:58e59dd6f9f89b744757c3b2e87392c22972f531bf844ab8fd51eb1bb5e8f7f9"
+  },
+  "spec_content_id": "sha256:1ec571a1de15d6b0addc608e2eb5db1dc9df7ae6e3bdd7f66160cf56ebeb5f9a",
+  "status_content_id": "sha256:03feaaf86abb3d5c12767d168b7f169740e911d11f525543b9fffabbc42360e8",
+  "terminal": "BLOCKED_PREDECESSOR_FINAL_SUCCESS"
+}
