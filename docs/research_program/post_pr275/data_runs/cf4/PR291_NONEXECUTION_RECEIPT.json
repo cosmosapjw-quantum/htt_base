@@ -1,0 +1,231 @@
+{
+  "allowed_uses": [
+    "typed CF4 operator composition on explicitly synthetic fixtures",
+    "fail-closed dependency identity and authorization preflight",
+    "future attended execution planning after distinct admission and H-CF4 authorization"
+  ],
+  "caveats": [
+    "PR-201, PR-287, and PR-289 are not canonically completed-success dependencies.",
+    "The PR-289 CF4 identity row is REJECTED_NOT_PRESENT.",
+    "H-CF4 has no provisioned trusted HMAC key and accepts no authorization.",
+    "No observed CF4 catalogue bytes are read, transformed, or summarized.",
+    "The 0.0089 legacy ratio is not evidence for physical vorticity or cosmic potential flow."
+  ],
+  "claim_level": {
+    "level": "C2",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "diagnostic_only",
+  "contributors": [
+    "OBSSTAT",
+    "COMMON"
+  ],
+  "decision": {
+    "data_identity_snapshot": {
+      "admission_status": "REJECTED_NOT_PRESENT",
+      "aggregate_status": "NO_ADMITTED_IDENTITIES",
+      "analysis_plan_id": "plan:PR291-CF4-TOMOGRAPHY-V1",
+      "canonical_record_replay": true,
+      "component_ids": [],
+      "lane_admission_bundle_id": null,
+      "lane_id": "CF4",
+      "native_identity_profile": null,
+      "native_identity_profile_ids": [],
+      "pr289_authorization_status": "NOT_AUTHORIZED",
+      "product_id": "CF4_GROUP_CATALOGUE_BUNDLE",
+      "reasons": [
+        "CF4 identity is not ADMITTED_IDENTITY_ONLY",
+        "CF4 exact nine-role admission records are absent"
+      ],
+      "receipt_schema": "common.data_identity_v2_preflight_receipt.v1",
+      "record_count": 0,
+      "record_ids": [],
+      "required_human_gate_id": "H-CF4",
+      "satisfied": false
+    },
+    "decision_content_id": "sha256:e2988315b28d6e83b8b06a17168fe0b596170780fdb9784df936fde74303d140",
+    "dependency_snapshot": [
+      {
+        "candidate_sha": null,
+        "canonical_terminal": null,
+        "observed_data_executed": null,
+        "pr_id": "PR-201",
+        "public_use": null,
+        "reasons": [
+          "PR-201: not in canonical completed set",
+          "PR-201: completion resolution is not success",
+          "PR-201: success dependency is not satisfied",
+          "PR-201: observed-data boundary is not false",
+          "PR-201: public-use boundary is not false",
+          "PR-201: candidate SHA is missing or invalid"
+        ],
+        "required_terminal": null,
+        "resolution": null,
+        "satisfied": false,
+        "success_dependency_satisfied": null,
+        "terminal_receipt": null
+      },
+      {
+        "candidate_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+        "canonical_terminal": null,
+        "observed_data_executed": false,
+        "pr_id": "PR-287",
+        "public_use": false,
+        "reasons": [
+          "PR-287: canonical terminal token mismatch",
+          "PR-287: authoritative terminal receipt is unavailable or invalid"
+        ],
+        "required_terminal": "PASS_FRESH_BLIND_TYPED_REPLAY",
+        "resolution": "COMPLETED_SUCCESS",
+        "satisfied": false,
+        "success_dependency_satisfied": true,
+        "terminal_receipt": {
+          "content_id": null,
+          "file_sha256": null,
+          "path": "docs/generated/pr287_fresh_blind_typed_replay_receipt.json",
+          "satisfied": false,
+          "schema": null,
+          "terminal": null
+        }
+      },
+      {
+        "candidate_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+        "canonical_terminal": null,
+        "observed_data_executed": false,
+        "pr_id": "PR-289",
+        "public_use": false,
+        "reasons": [
+          "PR-289: canonical terminal token mismatch"
+        ],
+        "required_terminal": "PASS_DATA_IDENTITY_V2_PREFLIGHT",
+        "resolution": "COMPLETED_SUCCESS",
+        "satisfied": false,
+        "success_dependency_satisfied": true,
+        "terminal_receipt": {
+          "content_id": "sha256:4e2aa483abfa1c63777bad1b678058ae17a6e7108ad43475176367b634b8f74e",
+          "file_sha256": "sha256:92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+          "path": "docs/generated/pr289_data_identity_v2_receipt.json",
+          "satisfied": true,
+          "schema": "common.data_identity_v2_preflight_receipt.v1",
+          "terminal": "PASS_DATA_IDENTITY_V2_PREFLIGHT"
+        }
+      }
+    ],
+    "evaluated_at_utc": "2026-08-09T00:00:00+00:00",
+    "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    "human_authorization_snapshot": {
+      "authentication_mode": "external_owner_hmac_sha256",
+      "authority_key_id": "H-CF4-OWNER-HMAC-V1",
+      "authorized": false,
+      "canonical_status": "NOT_AUTHORIZED",
+      "gate_id": "H-CF4",
+      "ordinary_agent_can_mint": false,
+      "reasons": [
+        "H-CF4 trusted HMAC key is unprovisioned and no authorization is accepted"
+      ],
+      "receipt_file_sha256": null,
+      "receipt_path": "docs/research_program/post_pr275/data_runs/cf4/H_CF4_EXECUTION_AUTHORIZATION.json",
+      "receipt_present": false,
+      "status": "NOT_EVALUATED_PREDECESSOR_BLOCKED",
+      "trusted_hmac_key_sha256": null
+    },
+    "network_or_download_side_effect": false,
+    "numeric_outputs_written": [],
+    "observed_data_executed": false,
+    "operator_snapshot": {
+      "claim_tier": "diagnostic_only",
+      "depth_zoa_path": "SYNTHETIC_OPERATOR_CONTRACT_ONLY",
+      "exact_admitted_catalogue": "BLOCKED_DATA_IDENTITY_ADMISSION",
+      "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+      "full_covariance": "BLOCKED_ADMITTED_COVARIANCE_UNAVAILABLE",
+      "local_global_rank": "NOT_MEASURED",
+      "observed_data_executed": false,
+      "observed_operator_ready": false,
+      "orbit_and_eigenspace_drift": "SYNTHETIC_OPERATOR_CONTRACT_ONLY",
+      "reasons": [
+        "exact_admitted_catalogue: BLOCKED_DATA_IDENTITY_ADMISSION",
+        "full_covariance: BLOCKED_ADMITTED_COVARIANCE_UNAVAILABLE",
+        "local_global_rank: NOT_MEASURED"
+      ],
+      "shared_nuisance_identified_set": "SYNTHETIC_OPERATOR_CONTRACT_ONLY"
+    },
+    "public_use": false,
+    "reasons": [
+      "PR-201: not in canonical completed set",
+      "PR-201: completion resolution is not success",
+      "PR-201: success dependency is not satisfied",
+      "PR-201: observed-data boundary is not false",
+      "PR-201: public-use boundary is not false",
+      "PR-201: candidate SHA is missing or invalid",
+      "PR-287: canonical terminal token mismatch",
+      "PR-287: authoritative terminal receipt is unavailable or invalid",
+      "PR-289: canonical terminal token mismatch"
+    ],
+    "schema": "common.cf4_observed_lane_activation.v1",
+    "terminal": "BLOCKED_PREDECESSOR_FINAL_SUCCESS"
+  },
+  "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+  "forbidden_uses": [
+    "automatic observed execution",
+    "P0 or velocity-shape headline use is forbidden",
+    "diagonal covariance or favourable-endpoint shortcut",
+    "physical-vorticity or global-tilt claim from the WF curl diagnostic",
+    "potential-flow claim from the WF curl diagnostic",
+    "native solver or transfer validation",
+    "anisotropy source or Bianchi-family identification",
+    "public or manuscript claim from preactivation evidence"
+  ],
+  "generation_identity": {
+    "exact_replay_environment": "repository_python_contract",
+    "source_commit_or_external_candidate_seal_id": "sha256:36cb61d77b361164f222f9d821cd6f968d575f35abfd972d90fd69e329783be2",
+    "worktree_state": "source_hash_bound_dirty_or_committed"
+  },
+  "network_or_download_side_effect": false,
+  "numeric_outputs_written": [],
+  "observed_data_executed": false,
+  "owner": "HTT",
+  "pr_id": "PR-291",
+  "public_use": false,
+  "reasons": [
+    "PR-201: not in canonical completed set",
+    "PR-201: completion resolution is not success",
+    "PR-201: success dependency is not satisfied",
+    "PR-201: observed-data boundary is not false",
+    "PR-201: public-use boundary is not false",
+    "PR-201: candidate SHA is missing or invalid",
+    "PR-287: canonical terminal token mismatch",
+    "PR-287: authoritative terminal receipt is unavailable or invalid",
+    "PR-289: canonical terminal token mismatch"
+  ],
+  "receipt_content_sha256": "sha256:3689322f4c389545ddd7e2539442953ad34b79f4c775ff57888369a01aa4e0e8",
+  "schema": "htt.pr291.cf4_nonexecution_receipt.v1",
+  "scientific_artifact_mode": "observed_data_conditional",
+  "scientific_status_effect": "OPEN_UNCHANGED",
+  "scope": "CF4 observed-lane preactivation and synthetic operator contract",
+  "source_bindings": {
+    "docs/codex_handoff/pr_status.yaml": "sha256:25835edf4f6dcf10b228ce3f4375d90155d7e8ef6e6e20a31beeaa061a420fc9",
+    "docs/generated/pr289_data_identity_v2_receipt.json": "sha256:92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+    "docs/harness/CLAIM_LEDGER.md": "sha256:86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json": "sha256:e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+    "docs/research_program/post_pr275/data_runbooks.yaml": "sha256:b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de",
+    "docs/research_program/post_pr275/pr289_publication_policy.json": "sha256:4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9",
+    "docs/research_program/post_pr275/pr289_spec.yaml": "sha256:f4a8e89e603a1f6e4fe9cb99c422ef83407fd264328b3adaf927aafdcfb6636f",
+    "docs/research_program/post_pr275/pr291_publication_policy.json": "sha256:2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835",
+    "docs/research_program/post_pr275/pr291_spec.yaml": "sha256:f30762a1c56678c749f22734e31357119d1c736c1c3de742dabf7a330ecf77bc",
+    "docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json": "sha256:e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea",
+    "docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml": "sha256:92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9",
+    "htt/obsstat/cf4_post275_lane.py": "sha256:dbde6106ec52c58c3f8df80149f973bd9e3c2201ff39683bf6bb5ad87bd5a8b2",
+    "htt/src/common/cf4_observed_lane_activation.py": "sha256:4b15529947ea6269bc0ff38b7a58e5433fc6e767e34b732e2ee37cfac07bbeb0",
+    "htt/src/common/data_identity.py": "sha256:145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2",
+    "htt/src/common/depth_path.py": "sha256:41ffe054645c00a36158688b55a0aab390919d3759283b9d5e2f33d69ec8f247",
+    "htt/src/common/observed_lane_activation.py": "sha256:79066a85eeb7515a9435a15963f26b2fcef02b8eabd11d59fde6ecfd8941d397",
+    "htt/src/common/sky_support.py": "sha256:81d136376ac4df5d398e50faaacc67bebdb774132ab6cf101eeccf7f5384c849",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py": "sha256:14ed58a68f4a628644219f6df0b966d5e2cedddef0a7c32f10ce1c94a85e6ad5",
+    "scripts/codex_harness/run_pr290_planck_lane.py": "sha256:abaddb4980839f3b368337e9c800bed7a15c78b8fb7ae78c4a0708dc9e250466",
+    "scripts/codex_harness/run_pr291_cf4_lane.py": "sha256:59529780548ae35be9926a79f6efb0211c81bdaf8a3834d1d4a0f05d0653a056",
+    "tests/contracts/test_data_identity_registry_v2.py": "sha256:1ee3fb1541a911abfd686d5cd78f75380b8847dfe5d1fd076cd48153a4f1c3c3",
+    "tests/integration/test_cf4_post275_lane.py": "sha256:956bbe88fffe92ea1619c4473df8bcb853b883ea2e0c6c4856dd264b23762bd3"
+  },
+  "terminal": "BLOCKED_PREDECESSOR_FINAL_SUCCESS",
+  "transfer_source": "none"
+}

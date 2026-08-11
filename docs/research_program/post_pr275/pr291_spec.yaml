@@ -29,6 +29,9 @@ dependency_contract:
   terminal_receipt_paths:
     PR-287: docs/generated/pr287_fresh_blind_typed_replay_receipt.json
     PR-289: docs/generated/pr289_data_identity_v2_receipt.json
+  expected_receipt_content_ids:
+    PR-287: null
+    PR-289: sha256:4e2aa483abfa1c63777bad1b678058ae17a6e7108ad43475176367b634b8f74e
   current_expected_state: BLOCKED_PREDECESSOR_FINAL_SUCCESS
   fail_closed_rule: >-
     Missing canonical success, missing or non-replaying terminal evidence, or
@@ -41,7 +44,9 @@ data_identity_contract:
   registry_path: docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json
   registry_content_id: sha256:78e3ec41833db433b560ebf839e0ee9375f77879a629e4ce70900bfb959bbef0
   required_source_binding_paths:
+    - docs/harness/CLAIM_LEDGER.md
     - docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json
+    - docs/research_program/post_pr275/data_runbooks.yaml
     - docs/research_program/post_pr275/pr289_publication_policy.json
     - docs/research_program/post_pr275/pr289_spec.yaml
     - docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json
@@ -146,17 +151,32 @@ pipeline_contract:
     same_catalogue_cross_estimand_dependence_required: true
     covariance_positive_definite_or_registered_rank_reduction: true
     feature_order_and_effective_rank_required: true
+    rank_method: covariance_whitened_column_normalized_svd
+    relative_singular_floor: 1.0e-12
+    covariance_condition_limit: 1.0e+12
+    unregistered_rank_reduction: REJECT
     current_status: BLOCKED_ADMITTED_COVARIANCE_UNAVAILABLE
   depth_and_zoa_contract:
     support_order: nested_near_to_far
     shared_row_identity_required: true
     transport_identity_required: true
     zoa_mask_identity_required: true
+    native_role_cross_binding_required:
+      - catalogue
+      - row_selection
+      - covariance
+      - grouping_definition
+      - depth_definition
+      - zoa_definition
     arbitrary_shell_reordering_forbidden: true
     current_status: SYNTHETIC_CONTRACT_ONLY
   weak_identification_contract:
     weak_status: WEAKLY_IDENTIFIED
     required_action: RESPONSE_EQUIVALENCE_ABSTENTION
+    response_rank_method: covariance_whitened_column_normalized_svd
+    relative_singular_floor: 1.0e-12
+    eigengap_method: spectral_scale_relative
+    relative_eigengap_floor: 1.0e-10
     favourable_endpoint_as_point_estimate_forbidden: true
     pipeline_spread_as_statistical_confidence_forbidden: true
     local_global_point_identification_forbidden: true
@@ -171,6 +191,7 @@ pipeline_contract:
     wf_curl_div_ratio: 0.0089
     wf_curl_div_status: STABLE_LEGACY_STENCIL_LIMITED_SELF_CONSISTENCY
     physical_vorticity_claim: FORBIDDEN
+    potential_flow_claim: FORBIDDEN
     rule: >-
       Preserve the registered 0.0089 diagnostic as a reconstruction and
       stencil self-consistency no-go, not as a measurement of physical cosmic
@@ -209,6 +230,12 @@ output_contract:
   future_observed_result_contract:
     current_status: DISABLED_PREACTIVATION
     schema: htt.pr291.cf4_observed_result.v1
+    canonicalization: sorted_compact_ascii_json_without_receipt_content_sha256
+    content_binding_rule: >-
+      receipt_content_sha256 must equal SHA-256 over the complete unsigned
+      result payload, including predecessor receipt identities, admitted
+      record and bundle identities, authorization identity, and all source
+      bindings.
     required_metadata:
       - artifact_owner
       - scope
@@ -216,6 +243,10 @@ output_contract:
       - claim_level
       - scientific_artifact_mode
       - transfer_source
+      - observed_data_executed
+      - public_use
+      - family_identification_gate
+      - scientific_status_effect
       - allowed_uses
       - forbidden_uses
       - exact_admitted_record_ids
@@ -227,9 +258,14 @@ output_contract:
       - selection_id
       - coordinate_frame_id
       - sign_orientation_convention_id
+      - distance_scale_id
+      - velocity_estimator_id
+      - estimand_id
       - units_id
       - covariance_id
       - covariance_status
+      - sky_support_status
+      - null_mock_status
       - depth_path_id
       - zone_of_avoidance_mask_id
       - nuisance_box_id
@@ -242,6 +278,23 @@ output_contract:
       - worktree_state
       - caveats
       - receipt_content_sha256
+    status_value_contract:
+      sky_support_status:
+        allowed_values: [VALIDATED_REGISTERED_SKY_SUPPORT]
+        missing_unknown_or_not_evaluated: REJECT
+      null_mock_status:
+        allowed_values: [VALIDATED_REGISTERED_NULL_OR_MATCHED_MOCK]
+        missing_unknown_or_not_evaluated: REJECT
+    fixed_firewall_values:
+      artifact_owner: OBSSTAT
+      claim_tier: diagnostic_only
+      claim_level: {scheme: roadmap_rescue_v1, level: C2}
+      scientific_artifact_mode: observed_data_conditional
+      transfer_source: none
+      observed_data_executed: true
+      public_use: false
+      family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
+      scientific_status_effect: OPEN_UNCHANGED
     activation_rule: unreachable_until_validator_negative_tests_and_all_external_gates_exist
 
 artifact_ownership:
@@ -275,6 +328,9 @@ mutation_registry:
   - {mutation_id: MU291-PIPELINE-SPREAD-AS-CONFIDENCE, intended_defect: robustness spread is labelled statistical confidence}
   - {mutation_id: MU291-P0-RESURRECTION, intended_defect: retired monopole or velocity-shape headline is revived}
   - {mutation_id: MU291-CURL-PHYSICS-OVERCLAIM, intended_defect: the 0.0089 stencil diagnostic is called physical vorticity evidence}
+  - {mutation_id: MU291-POTENTIAL-FLOW-OVERCLAIM, intended_defect: the 0.0089 stencil diagnostic is called evidence for a cosmic potential flow}
+  - {mutation_id: MU291-NATIVE-ROLE-REPLAY, intended_defect: record count or labels substitute for exact nine-role native identity replay}
+  - {mutation_id: MU291-UNREGISTERED-RANK-REDUCTION, intended_defect: ill-conditioned covariance or unit-dependent rank is silently accepted}
   - {mutation_id: MU291-BLOCKED-NUMERIC-WRITE, intended_defect: blocked preactivation writes an observed number}
   - {mutation_id: MU291-OUTPUT-ALIAS, intended_defect: receipt write mutates an external inode or path}
   - {mutation_id: MU291-CLAIM-PROMOTION, intended_defect: process or morphology compatibility becomes anomaly global tilt or family language}
@@ -285,9 +341,10 @@ allowed_uses:
   - future attended execution planning after distinct admission and H-CF4 authorization
 forbidden_uses:
   - automatic observed execution
-  - P0 or velocity-shape headline rescue
+  - P0 or velocity-shape headline use is forbidden
   - diagonal covariance or favourable-endpoint shortcut
   - physical-vorticity or global-tilt claim from the WF curl diagnostic
+  - potential-flow claim from the WF curl diagnostic
   - native solver or transfer validation
   - anisotropy source or Bianchi-family identification
   - public or manuscript claim from preactivation evidence

@@ -563,8 +563,8 @@ stacked_pr_execution:
         rereview: PASS, seal: PASS, push: PASS, publication: PASS}
       assurance_budget: {maximum: 16, consumed: 8}
     PR-291:
-      lifecycle: ACTIVE
-      lifecycle_history: [PLANNED, ACTIVE]
+      lifecycle: IMPLEMENTED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
       base_sha: 06ac20605ebc371b0f97ad6e91c802a51a9bf764
       predecessor_pr: PR-290
       predecessor_sealed_sha: 06ac20605ebc371b0f97ad6e91c802a51a9bf764
@@ -573,7 +573,7 @@ stacked_pr_execution:
       pr_url: null
       production_hash: null
       dependency_hashes: {}
-      gate_dispositions: {eligibility: PASS, implementation: DEFERRED}
+      gate_dispositions: {eligibility: PASS, implementation: PASS, validation: DEFERRED}
       assurance_budget: {maximum: 16, consumed: 0}
     PR-292:
       lifecycle: PLANNED
