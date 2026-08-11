@@ -664,6 +664,26 @@ def test_planck_native_relationship_mutations_fail_closed(
     assert not decision.records
 
 
+@pytest.mark.parametrize("field", ("covariance_status", "sky_support_status"))
+def test_planck_applicable_native_roles_reject_not_applicable_status(
+    tmp_path: Path, field: str
+) -> None:
+    registry = load_lane_registry(REGISTRY_PATH)
+    descriptor = _valid_descriptor(tmp_path / field, "PLANCK")
+    _rewrite_evidence(
+        descriptor,
+        lambda evidence: evidence.__setitem__(field, "NOT_APPLICABLE"),
+    )
+    decision = evaluate_lane_identity(
+        registry=registry,
+        lane_id="PLANCK",
+        descriptor=descriptor,
+        inspected_at_utc=STAMP_A,
+    )
+    assert decision.status is AdmissionStatus.REJECTED_MISSING_SEMANTIC_CONTRACT
+    assert not decision.records
+
+
 @pytest.mark.parametrize(
     "field",
     ("catalogue_component_id", "row_selection_id", "covariance_id", "frame"),
@@ -1321,6 +1341,85 @@ def test_runner_output_parent_replacement_fails_closed(
         with pytest.raises(RuntimeError, match="parent|directory"):
             runner._write()
     assert not (outside / "receipt.json").exists()
+
+
+def test_runner_late_build_parent_replacement_fails_closed(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    from scripts.codex_harness import run_pr289_data_identity_v2 as runner
+
+    root = tmp_path / "repo"
+    generated = root / "docs/generated"
+    detached = root / "docs/generated-detached"
+    generated.mkdir(parents=True)
+    output = generated / "receipt.json"
+    payload = {
+        "terminal": "PASS_DATA_IDENTITY_V2_PREFLIGHT",
+        "receipt_content_id": "sha256:" + "0" * 64,
+    }
+    real_replace = runner.os.replace
+
+    def replace_after_precheck(
+        source,
+        destination,
+        *,
+        src_dir_fd=None,
+        dst_dir_fd=None,
+    ):
+        generated.rename(detached)
+        generated.mkdir()
+        return real_replace(
+            source,
+            destination,
+            src_dir_fd=src_dir_fd,
+            dst_dir_fd=dst_dir_fd,
+        )
+
+    monkeypatch.setattr(runner, "ROOT", root)
+    monkeypatch.setattr(runner, "OUTPUT", output)
+    monkeypatch.setattr(runner, "_build", lambda root=root: payload)
+    monkeypatch.setattr(runner.os, "replace", replace_after_precheck)
+    with contextlib.redirect_stdout(StringIO()):
+        with pytest.raises(RuntimeError, match="parent|directory"):
+            runner._write()
+    assert not output.exists()
+
+
+def test_runner_late_check_parent_replacement_fails_closed(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    from scripts.codex_harness import run_pr289_data_identity_v2 as runner
+
+    root = tmp_path / "repo"
+    generated = root / "docs/generated"
+    detached = root / "docs/generated-detached"
+    generated.mkdir(parents=True)
+    output = generated / "receipt.json"
+    payload = {
+        "terminal": "PASS_DATA_IDENTITY_V2_PREFLIGHT",
+        "receipt_content_id": "sha256:" + "0" * 64,
+    }
+    output.write_bytes(runner._encoded(payload))
+    real_read = runner._read_bound_output
+    calls = 0
+
+    def read_after_precheck(*, output: Path, parent_fd: int) -> bytes:
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            generated.rename(detached)
+            generated.mkdir()
+            (generated / output.name).write_bytes(b"replacement\n")
+        return real_read(output=output, parent_fd=parent_fd)
+
+    monkeypatch.setattr(runner, "ROOT", root)
+    monkeypatch.setattr(runner, "OUTPUT", output)
+    monkeypatch.setattr(runner, "_build", lambda root=root: payload)
+    monkeypatch.setattr(runner, "_read_bound_output", read_after_precheck)
+    with contextlib.redirect_stdout(StringIO()):
+        with pytest.raises(RuntimeError, match="parent|directory"):
+            runner._check(root=root)
+    assert output.read_bytes() == b"replacement\n"
 
 
 def test_receipt_generation_identity_is_interpreter_alias_independent() -> None:

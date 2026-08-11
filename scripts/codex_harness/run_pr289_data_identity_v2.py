@@ -273,7 +273,10 @@ def _open_bound_output_parent(
 def _assert_bound_parent(
     *, output: Path, parent_identity: os.stat_result
 ) -> None:
-    observed = os.stat(output.parent, follow_symlinks=False)
+    try:
+        observed = os.stat(output.parent, follow_symlinks=False)
+    except OSError as exc:
+        raise RuntimeError("receipt parent directory identity changed") from exc
     if (
         not stat.S_ISDIR(observed.st_mode)
         or (observed.st_dev, observed.st_ino)
@@ -342,6 +345,10 @@ def _atomic_write(
         )
         os.fsync(parent_fd)
         temporary_name = ""
+        _assert_bound_parent(
+            output=output,
+            parent_identity=parent_identity,
+        )
     finally:
         os.close(descriptor)
         if temporary_name:
@@ -396,6 +403,10 @@ def _check(root: Path = ROOT) -> int:
             parent_identity=parent_identity,
         )
         observed = _read_bound_output(output=output, parent_fd=parent_fd)
+        _assert_bound_parent(
+            output=output,
+            parent_identity=parent_identity,
+        )
     finally:
         os.close(parent_fd)
     if observed != expected:

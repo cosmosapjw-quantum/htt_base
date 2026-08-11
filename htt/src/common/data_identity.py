@@ -793,6 +793,14 @@ def _validate_planck_native_profile(
     available: frozenset[str],
 ) -> None:
     bindings = profile["component_bindings"]
+    if evidence["covariance_status"] != "REGISTERED":
+        raise DataIdentityError(
+            "Planck covariance roles require REGISTERED covariance status"
+        )
+    if evidence["sky_support_status"] != "REGISTERED":
+        raise DataIdentityError(
+            "Planck same-sky roles require REGISTERED sky support status"
+        )
     pipelines = _exact_mapping(
         profile["pipelines"],
         field_name="Planck pipelines",
@@ -2435,12 +2443,28 @@ def _probe_mutation(
             f"{mutation_id} rejected as {decision.status.value}",
         )
         return
+    if mutation_id == "MU289-SEMANTIC-STATUS":
+        statuses = []
+        for field_name in ("covariance_status", "sky_support_status"):
+            value = descriptor(f"{mutation_id}-{field_name}")
+            _rewrite_mutation_evidence(
+                value,
+                {field_name: "NOT_APPLICABLE"},
+            )
+            statuses.append(evaluate("PLANCK", value).status)
+        _kill_when(
+            all(
+                status is AdmissionStatus.REJECTED_MISSING_SEMANTIC_CONTRACT
+                for status in statuses
+            ),
+            "allowed status values cannot contradict bound Planck roles",
+        )
+        return
     if mutation_id in {
         "MU289-RELEASE-LICENSE",
         "MU289-PLACEHOLDER-PROVENANCE",
         "MU289-EVIDENCE-JSON",
         "MU289-SEMANTIC-FIELD",
-        "MU289-SEMANTIC-STATUS",
     }:
         value = descriptor(mutation_id)
         if mutation_id == "MU289-RELEASE-LICENSE":
@@ -2456,10 +2480,8 @@ def _probe_mutation(
                     b'"schema":"common.data_identity_evidence.v2"}\n'
                 ),
             )
-        elif mutation_id == "MU289-SEMANTIC-FIELD":
-            _rewrite_mutation_evidence(value, {}, remove=("units_contract_id",))
         else:
-            _rewrite_mutation_evidence(value, {"covariance_status": "VALID"})
+            _rewrite_mutation_evidence(value, {}, remove=("units_contract_id",))
         decision = evaluate("PLANCK", value)
         _kill_when(
             decision.status is not AdmissionStatus.ADMITTED_IDENTITY_ONLY,
