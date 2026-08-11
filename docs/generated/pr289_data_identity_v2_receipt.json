@@ -136,10 +136,10 @@
       "scripts/codex_harness/run_pr289_data_identity_v2.py",
       "build"
     ],
-    "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:sha256:c1561999fcfe8f0d115a8759bfb5dfff3a6f9358eedb6a3c3aea4dfcfe22a3db",
+    "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:sha256:1f432551cebca70a548a4385afc5b197072e145a3b794937f9632198a4a0d51d",
     "schema": "common.source_bound_generation_identity.v1"
   },
-  "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:sha256:c1561999fcfe8f0d115a8759bfb5dfff3a6f9358eedb6a3c3aea4dfcfe22a3db",
+  "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:sha256:1f432551cebca70a548a4385afc5b197072e145a3b794937f9632198a4a0d51d",
   "lane_and_product_identities": [
     {
       "lane_admission_bundle_id": null,
@@ -260,6 +260,13 @@
       "killed": true,
       "mutation_id": "MU289-ADMISSION-AUTH-COLLAPSE",
       "observed_marker": "PR-289 cannot construct authorization"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-AUTH-LANE-BINDING",
+      "observed_marker": "authorization lane decision identity drifted"
     },
     {
       "activated": true,
@@ -475,7 +482,7 @@
   "observed_data_executed": false,
   "owner": "COMMON",
   "public_use": false,
-  "receipt_content_id": "sha256:be5bbde983422219a077fd899b653d21e31863b2ac40914076a62a649535486a",
+  "receipt_content_id": "sha256:4e2aa483abfa1c63777bad1b678058ae17a6e7108ad43475176367b634b8f74e",
   "registry_content_id": "sha256:78e3ec41833db433b560ebf839e0ee9375f77879a629e4ce70900bfb959bbef0",
   "schema": "common.data_identity_v2_preflight_receipt.v1",
   "scientific_status_effect": "OPEN_UNCHANGED",
@@ -511,12 +518,12 @@
     "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json": "sha256:e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
     "docs/research_program/post_pr275/data_runbooks.yaml": "sha256:b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de",
     "docs/research_program/post_pr275/pr289_publication_policy.json": "sha256:4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9",
-    "docs/research_program/post_pr275/pr289_spec.yaml": "sha256:4880be4cd760b0ee5b664ada93d4b90f251280148f27d5fa9f3942256544f4f2",
+    "docs/research_program/post_pr275/pr289_spec.yaml": "sha256:f4a8e89e603a1f6e4fe9cb99c422ef83407fd264328b3adaf927aafdcfb6636f",
     "docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json": "sha256:e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea",
     "docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml": "sha256:92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9",
-    "htt/src/common/data_identity.py": "sha256:248844f22c3b6971e09d58aaae52dcbe74deaeb3327b6f9144f4445ac2c9e647",
+    "htt/src/common/data_identity.py": "sha256:145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2",
     "scripts/codex_harness/run_pr289_data_identity_v2.py": "sha256:14ed58a68f4a628644219f6df0b966d5e2cedddef0a7c32f10ce1c94a85e6ad5",
-    "tests/contracts/test_data_identity_registry_v2.py": "sha256:5bb59b4341a47060aad4655d41eeca8a311fb5c2dcdd117411a88bcf4fd361cd"
+    "tests/contracts/test_data_identity_registry_v2.py": "sha256:1ee3fb1541a911abfd686d5cd78f75380b8847dfe5d1fd076cd48153a4f1c3c3"
   },
   "terminal": "PASS_DATA_IDENTITY_V2_PREFLIGHT",
   "transfer_source": "none"

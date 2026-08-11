@@ -24,6 +24,7 @@ from common.data_identity import (
     AggregateStatus,
     AuthorizationStatus,
     DataIdentityError,
+    build_not_authorized_receipt,
     build_data_identity_v2_receipt,
     canonical_sha256,
     compute_source_locator_identity,
@@ -904,6 +905,22 @@ def test_records_and_authorizations_are_factory_only(tmp_path: Path) -> None:
             status=AuthorizationStatus.AUTHORIZED,
             _construction_token=contracts._AUTH_TOKEN,
         )
+
+
+def test_authorization_receipt_rejects_cross_lane_admission(
+    tmp_path: Path,
+) -> None:
+    registry = load_lane_registry(REGISTRY_PATH)
+    planck = registry.lane("PLANCK")
+    cf4_decision = evaluate_lane_identity(
+        registry=registry,
+        lane_id="CF4",
+        descriptor=_valid_descriptor(tmp_path / "cf4", "CF4"),
+        inspected_at_utc=STAMP_A,
+    )
+    assert cf4_decision.status is AdmissionStatus.ADMITTED_IDENTITY_ONLY
+    with pytest.raises(DataIdentityError, match="lane decision identity"):
+        build_not_authorized_receipt(planck, cf4_decision)
 
 
 @pytest.mark.parametrize(

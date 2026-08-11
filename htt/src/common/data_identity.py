@@ -2162,6 +2162,61 @@ class ExecutionAuthorizationReceipt:
 def build_not_authorized_receipt(
     lane: LaneSpec, decision: LaneAdmissionDecision
 ) -> ExecutionAuthorizationReceipt:
+    if (
+        decision.lane_id != lane.lane_id
+        or decision.product_id != lane.product_id
+    ):
+        raise DataIdentityError("authorization lane decision identity drifted")
+    if decision.complete:
+        if decision.reasons:
+            raise DataIdentityError(
+                "admitted authorization decision retained refusal reasons"
+            )
+        expected_roles: list[tuple[str, int]] = []
+        role_ordinals: dict[str, int] = {}
+        for component_id in lane.expected_component_sequence:
+            ordinal = role_ordinals.get(component_id, 0)
+            role_ordinals[component_id] = ordinal + 1
+            expected_roles.append((component_id, ordinal))
+        observed_roles = tuple(
+            (record.component_id, record.component_ordinal)
+            for record in decision.records
+        )
+        if observed_roles != tuple(expected_roles) or any(
+            record.lane_id != lane.lane_id
+            or record.product_id != lane.product_id
+            for record in decision.records
+        ):
+            raise DataIdentityError(
+                "authorization admission record inventory drifted"
+            )
+        for record in decision.records:
+            record.as_payload()
+        inventory_ids = {
+            record.component_inventory_id for record in decision.records
+        }
+        if len(inventory_ids) != 1:
+            raise DataIdentityError(
+                "authorization admission inventory identity drifted"
+            )
+        expected_bundle = canonical_sha256(
+            {
+                "lane_id": lane.lane_id,
+                "product_id": lane.product_id,
+                "component_inventory_id": next(iter(inventory_ids)),
+                "record_ids": [
+                    record.record_id for record in decision.records
+                ],
+            }
+        )
+        if decision.lane_admission_bundle_id != expected_bundle:
+            raise DataIdentityError(
+                "authorization admission bundle identity drifted"
+            )
+    elif decision.records or decision.lane_admission_bundle_id is not None:
+        raise DataIdentityError(
+            "refused authorization decision retained admitted identity"
+        )
     record_ids = (
         tuple(record.record_id for record in decision.records)
         if decision.complete
@@ -2390,6 +2445,13 @@ def _probe_mutation(
         )
         mutated[target] = "0" * 64
         _validated_source_bindings(spec_path, mutated)
+        return
+    if mutation_id == "MU289-AUTH-LANE-BINDING":
+        cf4 = registry.lane("CF4")
+        decision = evaluate(
+            "CF4", descriptor(mutation_id, cf4)
+        )
+        build_not_authorized_receipt(planck, decision)
         return
     if mutation_id in {
         "MU289-ADMISSION-AUTH-COLLAPSE",
