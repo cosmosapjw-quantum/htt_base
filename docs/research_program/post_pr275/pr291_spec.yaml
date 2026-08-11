@@ -39,7 +39,7 @@ data_identity_contract:
   lane_id: CF4
   product_id: CF4_GROUP_CATALOGUE_BUNDLE
   registry_path: docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json
-  registry_content_id: sha256:64127c7dc7f1842d45cce715a5ba53180f553c994c44fb7c607ee89677f4e5e9
+  registry_content_id: sha256:78e3ec41833db433b560ebf839e0ee9375f77879a629e4ce70900bfb959bbef0
   required_source_binding_paths:
     - docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json
     - docs/research_program/post_pr275/pr289_publication_policy.json
@@ -51,13 +51,24 @@ data_identity_contract:
     - tests/contracts/test_data_identity_registry_v2.py
   preflight_receipt_path: docs/generated/pr289_data_identity_v2_receipt.json
   required_admission_status: ADMITTED_IDENTITY_ONLY
-  required_components: [catalogue, selection, covariance]
+  required_components:
+    - catalogue
+    - row_selection
+    - covariance
+    - frame_definition
+    - sign_convention
+    - units_contract
+    - grouping_definition
+    - depth_definition
+    - zoa_definition
   required_analysis_plan_id: plan:PR291-CF4-TOMOGRAPHY-V1
   forbidden_admission_shortcuts:
     - catalogue_name_or_release_label_only
     - symlink_hardlink_or_root_alias
     - grouping_without_exact_row_and_selection_identity
     - covariance_label_without_exact_component_identity
+    - frame_sign_or_units_label_without_exact_component_identity
+    - grouping_depth_or_zoa_label_without_exact_component_identity
     - admission_inferred_as_execution_authorization
 
 human_execution_gate:
@@ -286,8 +297,8 @@ assumptions:
   - Full covariance and the exact grouped-row selection are part of the estimand.
   - Synthetic fixtures validate operators only and cannot stand in for the CF4 catalogue.
 caveats:
-  - PR-287 and PR-289 are not canonically completed on this cumulative preactivation candidate.
-  - The PR-289 CF4 lane is REJECTED_NOT_PRESENT and H-CF4 is NOT_AUTHORIZED.
+  - PR-287 and PR-289 are process-published, but the required PR-287 fresh-execution terminal receipt remains absent.
+  - The PR-289 validator now defines the complete native CF4 identity contract; no external CF4 root is admitted and H-CF4 is NOT_AUTHORIZED.
   - The H-CF4 trust anchor is unprovisioned.
   - No observed CF4 bytes are read, downloaded, transformed, or summarized in this phase.
   - The preserved 0.0089 ratio is a legacy stencil-limited WF self-consistency diagnostic, not a new execution or physical claim.
