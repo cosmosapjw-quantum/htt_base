@@ -1242,6 +1242,14 @@ _STACKED_OPEN_HISTORY = (
     "PR_OPEN",
 )
 _STACKED_OPEN_IDS = ("PR-283", "PR-284", "PR-285", "PR-286")
+_STACKED_ACTIVE_IMPLEMENTATION_STAGES = (
+    "ACTIVE",
+    "IMPLEMENTED",
+    "VALIDATED",
+    "REVIEWED",
+    "SEALED",
+    "PUSHED",
+)
 _STACKED_REQUIRED_PASS_GATES = (
     "eligibility",
     "implementation",
@@ -1317,7 +1325,8 @@ def _stacked_pr_open_activation_reasons(
     active_rows = [
         pr_id
         for pr_id, row in rows.items()
-        if isinstance(row, Mapping) and row.get("lifecycle") == "ACTIVE"
+        if isinstance(row, Mapping)
+        and row.get("lifecycle") in _STACKED_ACTIVE_IMPLEMENTATION_STAGES
     ]
     if active_rows != ["PR-287"]:
         global_reasons.append("PR-287 is not the only active implementation")
@@ -1390,9 +1399,16 @@ def _stacked_pr_open_activation_reasons(
             "PR-286: sealed head differs from required predecessor sealed head"
         )
     current = rows.get("PR-287")
+    current_lifecycle = (
+        current.get("lifecycle") if isinstance(current, Mapping) else None
+    )
+    expected_current_history = ()
+    if current_lifecycle in _STACKED_ACTIVE_IMPLEMENTATION_STAGES:
+        stage_index = _STACKED_OPEN_HISTORY.index(str(current_lifecycle))
+        expected_current_history = _STACKED_OPEN_HISTORY[: stage_index + 1]
     if not isinstance(current, Mapping) or (
-        current.get("lifecycle") != "ACTIVE"
-        or tuple(current.get("lifecycle_history", ())) != ("PLANNED", "ACTIVE")
+        current_lifecycle not in _STACKED_ACTIVE_IMPLEMENTATION_STAGES
+        or tuple(current.get("lifecycle_history", ())) != expected_current_history
         or current.get("base_sha") != required_predecessor
         or current.get("predecessor_pr") != "PR-286"
         or current.get("predecessor_sealed_sha") != required_predecessor

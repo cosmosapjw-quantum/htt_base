@@ -636,8 +636,8 @@ def _promote_to_stacked_pr_open_authority(
         previous_id = pr_id
         previous_sha = sealed[pr_id]
     rows["PR-287"] = {
-        "lifecycle": "ACTIVE",
-        "lifecycle_history": ["PLANNED", "ACTIVE"],
+        "lifecycle": "IMPLEMENTED",
+        "lifecycle_history": ["PLANNED", "ACTIVE", "IMPLEMENTED"],
         "base_sha": sealed["PR-286"],
         "predecessor_pr": "PR-286",
         "predecessor_sealed_sha": sealed["PR-286"],
