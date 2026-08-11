@@ -5,11 +5,14 @@ from __future__ import annotations
 
 from io import BytesIO
 import hashlib
-import importlib
+import importlib.machinery
+import importlib.util
 from importlib import metadata as importlib_metadata
 import json
 import os
 from pathlib import Path, PurePosixPath
+import secrets
+import stat
 import subprocess
 import sys
 import tarfile
@@ -105,7 +108,7 @@ def _generation_identity(source_bindings: dict[str, str]) -> dict[str, object]:
             ).encode("ascii")
         ).hexdigest(),
         "generating_procedure": [
-            sys.executable,
+            "python3",
             "-B",
             "scripts/codex_harness/run_pr289_data_identity_v2.py",
             "build",
@@ -117,32 +120,56 @@ def _load_bound_data_identity_module(root: Path = ROOT):
     _activate(root)
     module_name = "common.data_identity"
     expected = (root / MODULE.relative_to(ROOT)).resolve()
+    expected_bytes = expected.read_bytes()
+    expected_sha256 = hashlib.sha256(expected_bytes).hexdigest()
     sys.modules.pop(module_name, None)
-    importlib.invalidate_caches()
-    module = importlib.import_module(module_name)
+    loader = importlib.machinery.SourceFileLoader(module_name, str(expected))
+    spec = importlib.util.spec_from_file_location(
+        module_name,
+        expected,
+        loader=loader,
+    )
+    if spec is None or spec.loader is not loader:
+        raise RuntimeError("PR-289 data-identity module loader is unavailable")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    try:
+        code = compile(
+            expected_bytes,
+            str(expected),
+            "exec",
+            dont_inherit=True,
+        )
+        exec(code, module.__dict__)
+    except BaseException:
+        sys.modules.pop(module_name, None)
+        raise
     origin = getattr(module, "__file__", None)
-    spec = getattr(module, "__spec__", None)
-    spec_origin = getattr(spec, "origin", None)
-    loader = getattr(spec, "loader", None)
+    loaded_spec = getattr(module, "__spec__", None)
+    spec_origin = getattr(loaded_spec, "origin", None)
+    loaded_loader = getattr(loaded_spec, "loader", None)
     if (
         not isinstance(origin, str)
         or Path(origin).resolve() != expected
         or not isinstance(spec_origin, str)
         or Path(spec_origin).resolve() != expected
-        or loader is None
-        or not hasattr(loader, "get_data")
+        or loaded_loader is not loader
+        or not isinstance(loader, importlib.machinery.SourceFileLoader)
     ):
         raise RuntimeError("PR-289 data-identity module escaped candidate root")
-    loaded_bytes = loader.get_data(str(expected))
-    expected_bytes = expected.read_bytes()
-    if hashlib.sha256(loaded_bytes).digest() != hashlib.sha256(
-        expected_bytes
-    ).digest():
+    if hashlib.sha256(expected.read_bytes()).hexdigest() != expected_sha256:
         raise RuntimeError("PR-289 data-identity module byte provenance drifted")
     for name in ("build_data_identity_v2_receipt", "load_lane_registry"):
         function = getattr(module, name, None)
-        if function is None or getattr(function, "__module__", None) != module_name:
+        code_object = getattr(function, "__code__", None)
+        if (
+            function is None
+            or getattr(function, "__module__", None) != module_name
+            or code_object is None
+            or Path(code_object.co_filename).resolve() != expected
+        ):
             raise RuntimeError("PR-289 data-identity factory origin drifted")
+    module.__pr289_loaded_sha256__ = expected_sha256
     return module
 
 
@@ -150,6 +177,11 @@ def _build(root: Path = ROOT) -> dict[str, object]:
     module = _load_bound_data_identity_module(root)
 
     source_bindings = _source_bindings(root)
+    module_relative = MODULE.relative_to(ROOT).as_posix()
+    if source_bindings[module_relative] != module.__pr289_loaded_sha256__:
+        raise RuntimeError(
+            "PR-289 executed module bytes differ from the source binding"
+        )
     receipt = module.build_data_identity_v2_receipt(
         registry=module.load_lane_registry(
             root / REGISTRY.relative_to(ROOT)
@@ -210,38 +242,133 @@ def _validate_output_destination(
         raise RuntimeError("receipt output must be a single-link regular file")
 
 
-def _atomic_write(payload: bytes) -> None:
-    with tempfile.NamedTemporaryFile(
-        mode="wb",
-        dir=OUTPUT.parent,
-        prefix=f".{OUTPUT.name}.",
-        delete=False,
-    ) as handle:
-        temporary = Path(handle.name)
-        try:
+def _open_bound_output_parent(
+    *, root: Path, output: Path, require_existing: bool
+) -> tuple[int, os.stat_result]:
+    _validate_output_destination(
+        root=root,
+        output=output,
+        require_existing=require_existing,
+    )
+    before = os.stat(output.parent, follow_symlinks=False)
+    flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0)
+    flags |= getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    parent_fd = os.open(output.parent, flags)
+    try:
+        observed = os.fstat(parent_fd)
+        if (
+            not stat.S_ISDIR(observed.st_mode)
+            or (observed.st_dev, observed.st_ino)
+            != (before.st_dev, before.st_ino)
+        ):
+            raise RuntimeError("receipt parent directory identity changed")
+        if require_existing:
+            _read_bound_output(output=output, parent_fd=parent_fd)
+        return parent_fd, observed
+    except BaseException:
+        os.close(parent_fd)
+        raise
+
+
+def _assert_bound_parent(
+    *, output: Path, parent_identity: os.stat_result
+) -> None:
+    observed = os.stat(output.parent, follow_symlinks=False)
+    if (
+        not stat.S_ISDIR(observed.st_mode)
+        or (observed.st_dev, observed.st_ino)
+        != (parent_identity.st_dev, parent_identity.st_ino)
+    ):
+        raise RuntimeError("receipt parent directory identity changed")
+
+
+def _read_bound_output(*, output: Path, parent_fd: int) -> bytes:
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0)
+    flags |= getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(output.name, flags, dir_fd=parent_fd)
+    try:
+        observed = os.fstat(descriptor)
+        if not stat.S_ISREG(observed.st_mode) or observed.st_nlink != 1:
+            raise RuntimeError(
+                "receipt output must be a single-link regular file"
+            )
+        with os.fdopen(descriptor, "rb", closefd=False) as handle:
+            return handle.read()
+    finally:
+        os.close(descriptor)
+
+
+def _validate_bound_output_if_present(*, output: Path, parent_fd: int) -> None:
+    try:
+        _read_bound_output(output=output, parent_fd=parent_fd)
+    except FileNotFoundError:
+        return
+
+
+def _atomic_write(
+    payload: bytes,
+    *,
+    output: Path,
+    parent_fd: int,
+    parent_identity: os.stat_result,
+) -> None:
+    temporary_name = f".{output.name}.{secrets.token_hex(16)}"
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    flags |= getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(
+        temporary_name,
+        flags,
+        0o600,
+        dir_fd=parent_fd,
+    )
+    try:
+        with os.fdopen(descriptor, "wb", closefd=False) as handle:
             handle.write(payload)
             handle.flush()
-            os.fsync(handle.fileno())
-        except BaseException:
-            temporary.unlink(missing_ok=True)
-            raise
-    try:
-        os.replace(temporary, OUTPUT)
-    except BaseException:
-        temporary.unlink(missing_ok=True)
-        raise
+            os.fsync(descriptor)
+        _assert_bound_parent(
+            output=output,
+            parent_identity=parent_identity,
+        )
+        _validate_bound_output_if_present(
+            output=output,
+            parent_fd=parent_fd,
+        )
+        os.replace(
+            temporary_name,
+            output.name,
+            src_dir_fd=parent_fd,
+            dst_dir_fd=parent_fd,
+        )
+        os.fsync(parent_fd)
+        temporary_name = ""
+    finally:
+        os.close(descriptor)
+        if temporary_name:
+            try:
+                os.unlink(temporary_name, dir_fd=parent_fd)
+            except FileNotFoundError:
+                pass
 
 
 def _write() -> int:
     try:
-        _validate_output_destination(
+        parent_fd, parent_identity = _open_bound_output_parent(
             root=ROOT, output=OUTPUT, require_existing=False
         )
     except RuntimeError as exc:
         print(exc, file=sys.stderr)
         return 1
-    payload = _build()
-    _atomic_write(_encoded(payload))
+    try:
+        payload = _build()
+        _atomic_write(
+            _encoded(payload),
+            output=OUTPUT,
+            parent_fd=parent_fd,
+            parent_identity=parent_identity,
+        )
+    finally:
+        os.close(parent_fd)
     print(
         json.dumps(
             {
@@ -257,11 +384,20 @@ def _write() -> int:
 
 def _check(root: Path = ROOT) -> int:
     output = root / OUTPUT.relative_to(ROOT)
-    _validate_output_destination(
-        root=root, output=output, require_existing=True
+    parent_fd, parent_identity = _open_bound_output_parent(
+        root=root,
+        output=output,
+        require_existing=True,
     )
-    expected = _encoded(_build(root))
-    observed = output.read_bytes()
+    try:
+        expected = _encoded(_build(root))
+        _assert_bound_parent(
+            output=output,
+            parent_identity=parent_identity,
+        )
+        observed = _read_bound_output(output=output, parent_fd=parent_fd)
+    finally:
+        os.close(parent_fd)
     if observed != expected:
         raise RuntimeError("frozen PR-289 receipt drifted; rerun build")
     print(

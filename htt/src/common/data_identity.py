@@ -676,7 +676,13 @@ def component_inventory_id(components: Sequence[Mapping[str, object]]) -> str:
 
 
 _NATIVE_BINDING_FIELDS = frozenset(
-    {"component_id", "ordinal", "byte_size", "content_sha256"}
+    {
+        "component_id",
+        "ordinal",
+        "relative_path",
+        "byte_size",
+        "content_sha256",
+    }
 )
 
 
@@ -701,6 +707,9 @@ def _native_component_bindings(
             {
                 "component_id": component_id,
                 "ordinal": ordinal,
+                "relative_path": _relative_path(
+                    checked["relative_path"], "native component relative_path"
+                ).as_posix(),
                 "byte_size": byte_size,
                 "content_sha256": "sha256:"
                 + _raw_sha(
@@ -1112,6 +1121,9 @@ def validate_native_identity_profile(
             {
                 "component_id": _text(row["component_id"], "component_id"),
                 "ordinal": ordinal,
+                "relative_path": _relative_path(
+                    row["relative_path"], "native component relative_path"
+                ).as_posix(),
                 "byte_size": byte_size,
                 "content_sha256": "sha256:"
                 + _raw_sha(row["content_sha256"], "native content_sha256"),
@@ -1906,31 +1918,33 @@ def validate_data_identity_record_payload(
         replay_components.append(
             {
                 "component_id": row["component_id"],
-                "relative_path": f"replay/{index:04d}.bin",
+                "relative_path": row["relative_path"],
                 "byte_size": row["byte_size"],
                 "content_sha256": row["content_sha256"],
             }
         )
+    if checked["source_locator_kind"] != "absolute_local_root":
+        raise DataIdentityError("record source locator kind drifted")
+    for field_name, expected in (
+        ("regular_file_status", "REGULAR_FILE_VERIFIED"),
+        ("symlink_status", "NO_SYMLINK_OR_ALIAS"),
+        ("completeness_status", "COMPLETE_LANE_COMPONENT"),
+        ("acquisition_status", "COMPLETE"),
+    ):
+        if checked[field_name] != expected:
+            raise DataIdentityError(f"record {field_name} drifted")
     evidence = {
-        field_name: checked[field_name]
-        for field_name in (
-            "sky_support_id",
-            "harmonic_convention_id",
-            "null_ensemble_id",
-            "null_ensemble_status",
-            "selection_id",
-            "covariance_id",
-            "covariance_status",
-            "coordinate_frame_id",
-            "sign_orientation_convention_id",
-            "units_contract_id",
-        )
+        "schema": DATA_IDENTITY_EVIDENCE_SCHEMA,
+        "lane_id": lane.lane_id,
+        "product_id": lane.product_id,
+        **{
+            field_name: checked[field_name]
+            for field_name in _EVIDENCE_FIELDS
+            if field_name not in {"schema", "lane_id", "product_id"}
+        },
     }
-    normalized_profile = validate_native_identity_profile(
-        lane=lane,
-        profile=profile,
-        components=replay_components,
-        evidence=evidence,
+    normalized_profile = _validate_evidence(
+        lane, evidence, components=replay_components
     )
     if checked["native_identity_profile_id"] != normalized_profile["profile_id"]:
         raise DataIdentityError("record native identity profile_id drifted")
@@ -2011,6 +2025,41 @@ def replay_lane_admission_decision(
             raise DataIdentityError("admitted native record inventory drifted")
         if len({record.native_identity_profile_id for record in records}) != 1:
             raise DataIdentityError("admitted native profiles disagree")
+        profile_bindings = records[0].native_identity_profile[
+            "component_bindings"
+        ]
+        expected_role_ordinals = tuple(
+            (row["component_id"], row["ordinal"])
+            for row in profile_bindings
+        )
+        observed_role_ordinals = tuple(
+            (record.component_id, record.component_ordinal)
+            for record in records
+        )
+        if observed_role_ordinals != expected_role_ordinals:
+            raise DataIdentityError(
+                "admitted native record ordinal inventory drifted"
+            )
+        shared_fields = tuple(
+            name
+            for name in DataIdentityRecordV2.__dataclass_fields__
+            if not name.startswith("_")
+            and name
+            not in {
+                "record_id",
+                "inspection_receipt_id",
+                "component_id",
+                "component_ordinal",
+                "byte_size",
+                "content_sha256",
+            }
+        )
+        reference = tuple(getattr(records[0], name) for name in shared_fields)
+        if any(
+            tuple(getattr(record, name) for name in shared_fields) != reference
+            for record in records[1:]
+        ):
+            raise DataIdentityError("admitted native record semantics disagree")
         inventory_ids = {record.component_inventory_id for record in records}
         if len(inventory_ids) != 1:
             raise DataIdentityError("admitted component inventories disagree")
@@ -2277,6 +2326,31 @@ def _probe_mutation(
             inspected_at_utc="2026-08-09T00:00:00+00:00",
         )
 
+    def resign_record(record: dict[str, object]) -> None:
+        stable = dict(record)
+        for key in ("record_id", "inspection_receipt_id", "inspected_at_utc"):
+            stable.pop(key)
+        record["record_id"] = canonical_sha256(stable)
+        inspection = dict(record)
+        inspection.pop("inspection_receipt_id")
+        record["inspection_receipt_id"] = canonical_sha256(inspection)
+
+    def resign_bundle(payload: dict[str, object]) -> None:
+        records = payload["records"]
+        if not isinstance(records, list) or not records:
+            raise DataIdentityError("mutation requires admitted record rows")
+        first = records[0]
+        if not isinstance(first, Mapping):
+            raise DataIdentityError("mutation record row is malformed")
+        payload["lane_admission_bundle_id"] = canonical_sha256(
+            {
+                "lane_id": payload["lane_id"],
+                "product_id": payload["product_id"],
+                "component_inventory_id": first["component_inventory_id"],
+                "record_ids": [row["record_id"] for row in records],
+            }
+        )
+
     def rewrite_native_profile(
         value: dict[str, object], mutate
     ) -> None:
@@ -2520,6 +2594,55 @@ def _probe_mutation(
             "map_component_id"
         ] = "commander_map"
         replay_lane_admission_decision(payload, registry=registry)
+        return
+    if mutation_id == "MU289-EXPORTED-SEMANTIC-REPLAY":
+        decision = evaluate("PLANCK", descriptor(mutation_id))
+        payload = decision.as_payload()
+        record = payload["records"][0]
+        record["license_status"] = "UNBOUND"
+        resign_record(record)
+        resign_bundle(payload)
+        replay_lane_admission_decision(payload, registry=registry)
+        return
+    if mutation_id == "MU289-REPEATED-ROLE-ORDINAL":
+        desi = registry.lane("DESI")
+        bounded_cardinality = tuple(
+            (
+                component_id,
+                2 if component_id == "ezmock_inventory" else 1,
+            )
+            for component_id, _ in desi.component_cardinality
+        )
+        bounded_desi = replace(
+            desi,
+            component_cardinality=bounded_cardinality,
+        )
+        bounded_registry = LaneRegistryV2(
+            lanes=tuple(
+                bounded_desi if lane.lane_id == "DESI" else lane
+                for lane in registry.lanes
+            ),
+            universal_semantic_fields=registry.universal_semantic_fields,
+            _construction_token=_REGISTRY_TOKEN,
+        )
+        decision = evaluate_lane_identity(
+            registry=bounded_registry,
+            lane_id="DESI",
+            descriptor=descriptor(mutation_id, bounded_desi),
+            inspected_at_utc="2026-08-09T00:00:00+00:00",
+        )
+        payload = decision.as_payload()
+        records = payload["records"]
+        positions = [
+            index
+            for index, record in enumerate(records)
+            if record["component_id"] == "ezmock_inventory"
+        ][:2]
+        records[positions[0]] = json.loads(
+            _canonical_bytes(records[positions[1]]).decode("ascii")
+        )
+        resign_bundle(payload)
+        replay_lane_admission_decision(payload, registry=bounded_registry)
         return
     if mutation_id == "MU289-NAME-ONLY":
         hsc = registry.lane("HSC_KIDS")
@@ -2846,8 +2969,7 @@ def _validated_generation_identity(
         isinstance(procedure, (str, bytes))
         or not isinstance(procedure, Sequence)
         or len(procedure) != 4
-        or not isinstance(procedure[0], str)
-        or not procedure[0]
+        or procedure[0] != "python3"
         or list(procedure[1:])
         != [
             "-B",

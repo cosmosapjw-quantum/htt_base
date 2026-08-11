@@ -2,11 +2,16 @@
 
 from __future__ import annotations
 
+import contextlib
+import copy
 from dataclasses import replace
 import hashlib
-from io import BytesIO
+import importlib.abc
+import importlib.machinery
+from io import BytesIO, StringIO
 import json
 from pathlib import Path
+import subprocess
 import sys
 import tarfile
 import types
@@ -124,6 +129,7 @@ def _binding_rows(components: list[dict[str, object]]) -> list[dict[str, object]
             {
                 "component_id": component_id,
                 "ordinal": ordinal,
+                "relative_path": component["relative_path"],
                 "byte_size": component["byte_size"],
                 "content_sha256": "sha256:"
                 + str(component["content_sha256"]).removeprefix("sha256:"),
@@ -355,6 +361,29 @@ def _resign_nested(
     )[identity_field]
 
 
+def _resign_record(record: dict[str, object]) -> None:
+    stable = dict(record)
+    for key in ("record_id", "inspection_receipt_id", "inspected_at_utc"):
+        stable.pop(key)
+    record["record_id"] = canonical_sha256(stable)
+    inspection = dict(record)
+    inspection.pop("inspection_receipt_id")
+    record["inspection_receipt_id"] = canonical_sha256(inspection)
+
+
+def _resign_bundle(payload: dict[str, object]) -> None:
+    records = payload["records"]
+    assert isinstance(records, list) and records
+    payload["lane_admission_bundle_id"] = canonical_sha256(
+        {
+            "lane_id": payload["lane_id"],
+            "product_id": payload["product_id"],
+            "component_inventory_id": records[0]["component_inventory_id"],
+            "record_ids": [row["record_id"] for row in records],
+        }
+    )
+
+
 def _receipt(descriptors: dict[str, dict[str, object]]):
     source_bindings = _source_bindings()
     normalized_bindings = {
@@ -507,6 +536,65 @@ def test_exported_record_component_ordinal_fails_closed(tmp_path: Path) -> None:
     payload = decision.as_payload()
     payload["records"][0]["component_ordinal"] = 1
     with pytest.raises(DataIdentityError, match="one native component role"):
+        replay_lane_admission_decision(payload, registry=registry)
+
+
+def test_exported_record_replay_revalidates_all_semantic_fields(
+    tmp_path: Path,
+) -> None:
+    registry = load_lane_registry(REGISTRY_PATH)
+    decision = evaluate_lane_identity(
+        registry=registry,
+        lane_id="PLANCK",
+        descriptor=_valid_descriptor(tmp_path / "planck", "PLANCK"),
+        inspected_at_utc=STAMP_A,
+    )
+    payload = decision.as_payload()
+    payload["records"][0].update(
+        {
+            "source_locator_kind": "unregistered_locator_kind",
+            "regular_file_status": "NOT_VERIFIED",
+            "symlink_status": "ALIAS_PRESENT",
+            "license_status": "UNBOUND",
+            "units_contract_id": "",
+            "coordinate_frame_id": "",
+            "sign_orientation_convention_id": "",
+            "directional_convention_id": "",
+            "mask_id": "",
+            "selection_id": "",
+            "covariance_id": "",
+            "covariance_status": "INVALID",
+            "transfer_source": "native_bass",
+            "transfer_function_spec_id": "unregistered-native-spec",
+            "transfer_provenance_status": "NATIVE_VALIDATED",
+            "sky_support_status": "INVALID",
+        }
+    )
+    _resign_record(payload["records"][0])
+    _resign_bundle(payload)
+    with pytest.raises(DataIdentityError):
+        replay_lane_admission_decision(payload, registry=registry)
+
+
+def test_repeated_role_replay_requires_each_ordinal_once(tmp_path: Path) -> None:
+    registry = load_lane_registry(REGISTRY_PATH)
+    decision = evaluate_lane_identity(
+        registry=registry,
+        lane_id="DESI",
+        descriptor=_valid_descriptor(tmp_path / "desi", "DESI"),
+        inspected_at_utc=STAMP_A,
+    )
+    payload = decision.as_payload()
+    positions = [
+        index
+        for index, record in enumerate(payload["records"])
+        if record["component_id"] == "ezmock_inventory"
+    ][:2]
+    payload["records"][positions[0]] = copy.deepcopy(
+        payload["records"][positions[1]]
+    )
+    _resign_bundle(payload)
+    with pytest.raises(DataIdentityError, match="ordinal|inventory"):
         replay_lane_admission_decision(payload, registry=registry)
 
 
@@ -951,6 +1039,16 @@ def test_mutation_execution_cannot_be_omitted_or_hardcoded(
             ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "check"],
             "generation procedure is not the exact build argv",
         ),
+        (
+            "generating_procedure",
+            [
+                "/usr/bin/python3",
+                "-B",
+                "scripts/codex_harness/run_pr289_data_identity_v2.py",
+                "build",
+            ],
+            "generation procedure is not the exact build argv",
+        ),
     ),
 )
 def test_claim_receipt_generation_identity_fails_closed(
@@ -1141,6 +1239,111 @@ def test_runner_reloads_exact_candidate_module_over_preloaded_replacement(
     assert payload["terminal"] == "PASS_DATA_IDENTITY_V2_PREFLIGHT"
     loaded = sys.modules["common.data_identity"]
     assert Path(loaded.__file__).resolve() == MODULE.resolve()
+
+
+def test_runner_executes_only_the_verified_candidate_module_bytes(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from scripts.codex_harness import run_pr289_data_identity_v2 as runner
+
+    module_name = "common.data_identity"
+    expected = MODULE.resolve()
+
+    class InconsistentLoader(importlib.abc.Loader):
+        def exec_module(self, module) -> None:
+            module.__file__ = str(expected)
+
+            class Receipt:
+                def as_payload(self):
+                    return {
+                        "terminal": "INCONSISTENT_LOADER_EXECUTED",
+                        "aggregate_status": "NO_ADMITTED_IDENTITIES",
+                        "authorization_receipts": [
+                            {"status": "NOT_AUTHORIZED"} for _ in range(6)
+                        ],
+                    }
+
+            def load_lane_registry(_path):
+                return object()
+
+            def build_data_identity_v2_receipt(**_kwargs):
+                return Receipt()
+
+            load_lane_registry.__module__ = module_name
+            build_data_identity_v2_receipt.__module__ = module_name
+            module.load_lane_registry = load_lane_registry
+            module.build_data_identity_v2_receipt = build_data_identity_v2_receipt
+
+        def get_data(self, _path: str) -> bytes:
+            return expected.read_bytes()
+
+    loader = InconsistentLoader()
+
+    class Finder(importlib.abc.MetaPathFinder):
+        def find_spec(self, fullname, _path, _target=None):
+            if fullname != module_name:
+                return None
+            spec = importlib.machinery.ModuleSpec(
+                fullname, loader, origin=str(expected)
+            )
+            spec.has_location = True
+            return spec
+
+    monkeypatch.setattr(sys, "meta_path", [Finder(), *sys.meta_path])
+    payload = runner._build()
+    assert payload["terminal"] == "PASS_DATA_IDENTITY_V2_PREFLIGHT"
+
+
+def test_runner_output_parent_replacement_fails_closed(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    from scripts.codex_harness import run_pr289_data_identity_v2 as runner
+
+    root = tmp_path / "repo"
+    generated = root / "docs/generated"
+    outside = tmp_path / "outside"
+    generated.mkdir(parents=True)
+    outside.mkdir()
+    output = generated / "receipt.json"
+
+    def replace_parent_during_build(root: Path = root):
+        generated.rename(root / "docs/generated-before-build")
+        generated.symlink_to(outside, target_is_directory=True)
+        return {
+            "terminal": "PASS_DATA_IDENTITY_V2_PREFLIGHT",
+            "receipt_content_id": "sha256:" + "0" * 64,
+        }
+
+    monkeypatch.setattr(runner, "ROOT", root)
+    monkeypatch.setattr(runner, "OUTPUT", output)
+    monkeypatch.setattr(runner, "_build", replace_parent_during_build)
+    with contextlib.redirect_stdout(StringIO()):
+        with pytest.raises(RuntimeError, match="parent|directory"):
+            runner._write()
+    assert not (outside / "receipt.json").exists()
+
+
+def test_receipt_generation_identity_is_interpreter_alias_independent() -> None:
+    from scripts.codex_harness import run_pr289_data_identity_v2 as runner
+
+    identity = runner._generation_identity(runner._source_bindings())
+    assert identity["generating_procedure"][0] == "python3"
+    for executable in (Path("/usr/bin/python"), Path("/usr/bin/python3")):
+        if not executable.exists():
+            continue
+        completed = subprocess.run(
+            [
+                str(executable),
+                "-B",
+                "scripts/codex_harness/run_pr289_data_identity_v2.py",
+                "check",
+            ],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert completed.returncode == 0, completed.stderr
 
 
 @pytest.mark.parametrize("kind", ("traversal", "symlink"))
