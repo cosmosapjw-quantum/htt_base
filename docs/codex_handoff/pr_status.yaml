@@ -463,8 +463,8 @@ stacked_pr_execution:
       execution_blocker: BLOCKED_CAPABILITY_ISOLATED_EXECUTOR_NOT_INSTALLED
       assurance_budget: {maximum: 16, consumed: 7}
     PR-288:
-      lifecycle: ACTIVE
-      lifecycle_history: [PLANNED, ACTIVE]
+      lifecycle: IMPLEMENTED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
       base_sha: 319835cc4b4e2e3270a0b27787ce5d5a44ea16b7
       predecessor_pr: PR-287
       predecessor_sealed_sha: 319835cc4b4e2e3270a0b27787ce5d5a44ea16b7
@@ -473,8 +473,8 @@ stacked_pr_execution:
       pr_url: null
       production_hash: null
       dependency_hashes: {}
-      gate_dispositions: {eligibility: PASS, implementation: DEFERRED}
-      assurance_budget: {maximum: 16, consumed: 0}
+      gate_dispositions: {eligibility: PASS, implementation: PASS}
+      assurance_budget: {maximum: 16, consumed: 2}
     PR-289:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
