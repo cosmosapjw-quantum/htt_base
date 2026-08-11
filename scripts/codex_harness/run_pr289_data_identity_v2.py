@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from io import BytesIO
 import hashlib
+import importlib
 from importlib import metadata as importlib_metadata
 import json
 import os
@@ -24,6 +25,8 @@ REGISTRY = (
 )
 SPEC = ROOT / "docs/research_program/post_pr275/pr289_spec.yaml"
 POLICY = ROOT / "docs/research_program/post_pr275/pr289_publication_policy.json"
+RUNBOOKS = ROOT / "docs/research_program/post_pr275/data_runbooks.yaml"
+CLAIM_LEDGER = ROOT / "docs/harness/CLAIM_LEDGER.md"
 PR274_REGISTRY = (
     ROOT
     / "docs/research_program/vector_tensor/data_admission/"
@@ -43,11 +46,20 @@ BOUND_SOURCES = (
     REGISTRY,
     SPEC,
     POLICY,
+    RUNBOOKS,
+    CLAIM_LEDGER,
     PR274_REGISTRY,
     PR274_RESULT,
     MODULE,
     TEST,
     RUNNER,
+)
+PR274_REPLAY_COMMIT = "ff9ef9f45747e559c5343b463cf010dfc3a7432a"
+PR274_LIVE_COMPATIBILITY_EXCLUSIONS = (
+    "test_frozen_inputs_match_bytes_and_live_pr151_semantics",
+    "test_committed_result_is_deterministic_and_source_bound",
+    "test_live_status_self_closeout_does_not_mutate_result_provenance",
+    "test_live_status_semantic_drift_still_fails_closed",
 )
 
 
@@ -76,27 +88,70 @@ def _source_bindings(root: Path = ROOT) -> dict[str, str]:
 
 
 def _generation_identity(source_bindings: dict[str, str]) -> dict[str, object]:
+    normalized = {
+        path: "sha256:" + digest.removeprefix("sha256:")
+        for path, digest in source_bindings.items()
+    }
     return {
-        "source_commit_or_external_candidate_seal_id": hashlib.sha256(
+        "schema": "common.source_bound_generation_identity.v1",
+        "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:sha256:"
+        + hashlib.sha256(
             json.dumps(
-                source_bindings,
+                normalized,
                 sort_keys=True,
                 separators=(",", ":"),
+                ensure_ascii=True,
+                allow_nan=False,
             ).encode("ascii")
         ).hexdigest(),
-        "worktree_state": "source_hash_bound_dirty_or_committed",
-        "exact_replay_environment": "repository_python_contract",
+        "generating_procedure": [
+            sys.executable,
+            "-B",
+            "scripts/codex_harness/run_pr289_data_identity_v2.py",
+            "build",
+        ],
     }
 
 
-def _build(root: Path = ROOT) -> dict[str, object]:
+def _load_bound_data_identity_module(root: Path = ROOT):
     _activate(root)
-    from common.data_identity import build_data_identity_v2_receipt
-    from common.data_identity import load_lane_registry
+    module_name = "common.data_identity"
+    expected = (root / MODULE.relative_to(ROOT)).resolve()
+    sys.modules.pop(module_name, None)
+    importlib.invalidate_caches()
+    module = importlib.import_module(module_name)
+    origin = getattr(module, "__file__", None)
+    spec = getattr(module, "__spec__", None)
+    spec_origin = getattr(spec, "origin", None)
+    loader = getattr(spec, "loader", None)
+    if (
+        not isinstance(origin, str)
+        or Path(origin).resolve() != expected
+        or not isinstance(spec_origin, str)
+        or Path(spec_origin).resolve() != expected
+        or loader is None
+        or not hasattr(loader, "get_data")
+    ):
+        raise RuntimeError("PR-289 data-identity module escaped candidate root")
+    loaded_bytes = loader.get_data(str(expected))
+    expected_bytes = expected.read_bytes()
+    if hashlib.sha256(loaded_bytes).digest() != hashlib.sha256(
+        expected_bytes
+    ).digest():
+        raise RuntimeError("PR-289 data-identity module byte provenance drifted")
+    for name in ("build_data_identity_v2_receipt", "load_lane_registry"):
+        function = getattr(module, name, None)
+        if function is None or getattr(function, "__module__", None) != module_name:
+            raise RuntimeError("PR-289 data-identity factory origin drifted")
+    return module
+
+
+def _build(root: Path = ROOT) -> dict[str, object]:
+    module = _load_bound_data_identity_module(root)
 
     source_bindings = _source_bindings(root)
-    receipt = build_data_identity_v2_receipt(
-        registry=load_lane_registry(
+    receipt = module.build_data_identity_v2_receipt(
+        registry=module.load_lane_registry(
             root / REGISTRY.relative_to(ROOT)
         ),
         root_descriptors={},
@@ -224,7 +279,12 @@ def _check(root: Path = ROOT) -> int:
     return 0
 
 
-def _pytest(paths: tuple[str, ...], root: Path = ROOT) -> int:
+def _pytest(
+    paths: tuple[str, ...],
+    root: Path = ROOT,
+    *,
+    extra: tuple[str, ...] = (),
+) -> int:
     _activate(root)
     import pytest
 
@@ -234,6 +294,7 @@ def _pytest(paths: tuple[str, ...], root: Path = ROOT) -> int:
                 "-p",
                 "no:cacheprovider",
                 "-q",
+                *extra,
                 *(str(root / path) for path in paths),
             ]
         )
@@ -325,6 +386,82 @@ def _safe_extract_archive(archive: tarfile.TarFile, destination: Path) -> None:
         ):
             raise RuntimeError(f"unsafe archive member: {member.name}")
     archive.extractall(destination, members=members)
+
+
+def _adjacent() -> int:
+    selector = " and ".join(
+        f"not {name}" for name in PR274_LIVE_COMPATIBILITY_EXCLUSIONS
+    )
+    current_exit = _pytest(
+        ("tests/contracts/test_vector_tensor_data_admission.py",),
+        extra=("-k", selector),
+    )
+    if current_exit != 0:
+        return current_exit
+
+    archive = subprocess.check_output(
+        ["git", "archive", PR274_REPLAY_COMMIT], cwd=ROOT
+    )
+    with tempfile.TemporaryDirectory(prefix="pr289-pr274-replay-") as temporary:
+        replay_root = Path(temporary) / "repo"
+        replay_root.mkdir()
+        with tarfile.open(fileobj=BytesIO(archive), mode="r:") as handle:
+            _safe_extract_archive(handle, replay_root)
+        environment = {
+            key: value
+            for key, value in os.environ.items()
+            if key
+            not in {
+                "PYTHONHOME",
+                "PYTHONPATH",
+                "PYTHONSTARTUP",
+                "PYTEST_ADDOPTS",
+                "PYTEST_PLUGINS",
+            }
+        }
+        environment["PYTHONPATH"] = os.pathsep.join(
+            (
+                str(replay_root),
+                str(replay_root / "htt/src"),
+                str(replay_root / "htt"),
+            )
+        )
+        command = [
+            sys.executable,
+            "-B",
+            "-m",
+            "pytest",
+            "-p",
+            "no:cacheprovider",
+            "-q",
+            "tests/contracts/test_vector_tensor_data_admission.py",
+        ]
+        completed = subprocess.run(
+            command,
+            cwd=replay_root,
+            env=environment,
+            text=True,
+            capture_output=True,
+            check=False,
+            timeout=300,
+        )
+        if completed.returncode != 0:
+            print(completed.stdout + completed.stderr, file=sys.stderr)
+            return completed.returncode
+        print(completed.stdout, end="")
+    print(
+        json.dumps(
+            {
+                "terminal": "PASS_PR274_IMMUTABLE_AND_LIVE_COMPATIBILITY",
+                "historical_replay_commit": PR274_REPLAY_COMMIT,
+                "live_source_bound_tests_replayed_only_in_historical_context": list(
+                    PR274_LIVE_COMPATIBILITY_EXCLUSIONS
+                ),
+            },
+            sort_keys=True,
+        )
+    )
+    return 0
 
 
 def _portable() -> int:
@@ -455,7 +592,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.mode == "preflight":
         return _preflight()
     if args.mode == "adjacent":
-        return _pytest(("tests/contracts/test_vector_tensor_data_admission.py",))
+        return _adjacent()
     if args.mode == "check":
         return _check()
     return _portable()

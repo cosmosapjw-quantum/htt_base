@@ -30,12 +30,15 @@ scientific_status_effect: OPEN_UNCHANGED
 
 historical_boundary:
   immutable_predecessor: PR-274
+  v1_replay_commit: ff9ef9f45747e559c5343b463cf010dfc3a7432a
   v1_registry: docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml
   v1_registry_sha256: 92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9
   v1_result: docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json
   v1_result_sha256: e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea
   rule: >-
     PR-274 v1 bytes and its zero-admission conclusion remain immutable.
+    Source-bound PR-274 replay runs in its exact canonical commit context;
+    later repaired PR-273 pack bytes are not substituted into the old receipt.
     Every PR-289 record has a v2 identity and a separate authorization
     lifecycle; no v1 record is edited, promoted, or silently migrated.
 
@@ -53,6 +56,7 @@ data_identity_record_v2:
     - lane_id
     - product_id
     - component_id
+    - component_ordinal
     - source_locator_kind
     - source_locator_identity
     - release_name
@@ -82,6 +86,8 @@ data_identity_record_v2:
     - transfer_provenance_status
     - sky_support_status
     - license_status
+    - native_identity_profile_id
+    - native_identity_profile
     - acquisition_status
     - inspected_at_utc
   exact_file_rules:
@@ -98,6 +104,8 @@ data_identity_record_v2:
     - duplicate keys nonfinite constants placeholder schemes one-character releases and missing evidence are rejected
     - units frame sign directional harmonic mask selection covariance null and sky support identities and statuses are independently typed
     - transfer provenance remains observer-side none with NOT_APPLICABLE status or binds an explicit external TransferFunctionSpec identity
+    - Planck CF4 and HSC/KiDS admission requires a complete content-bound native profile whose child identities and relationships replay from the exact component inventory
+    - generic strings record IDs or component counts cannot substitute for native selection operator catalogue covariance or survey-child roles
     - an admitted identity is not an execution authorization
 
 stable_identity_evidence:
@@ -132,28 +140,30 @@ candidate_root_contract:
 lane_registry:
   machine_registry: docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json
   machine_registry_rule: exact content-addressed lane product component cardinality semantic convention and human-gate authority
+  native_profile_rule: exact per-lane schema plus content-bound component relationships replayed by the existing data-identity evaluator
   order: [PLANCK, CF4, HSC_KIDS, ACT, DESI, JWST_SN]
   lanes:
     PLANCK:
       first_candidate: true
       required_products:
-        - PR3 temperature or polarization map product
-        - matching mask and beam identities
-        - frozen harmonic convention
-        - FFP10 null ensemble or explicit unavailable status
-        - covariance identity
+        - distinct PR3 SMICA and Commander map identities
+        - per-pipeline mask beam covariance and window/operator identities
+        - exact same-sky pixelization and native-selection pairing
+        - content-bound FFP10 null inventory and null-ensemble identity
       downstream_gate: H-PLANCK
     CF4:
       required_products:
         - raw group catalogue
-        - selection and zone-of-avoidance definition
-        - units and coordinate frame
-        - full covariance identity
+        - exact row-selection and zone-of-avoidance definitions
+        - exact units coordinate-frame and radial-sign definitions
+        - full covariance grouping and depth-definition identities
       downstream_gate: H-CF4
     HSC_KIDS:
       required_products:
         - separate HSC and KiDS product identities
-        - masks randoms PSF n_z shear calibration and covariance
+        - separate masks randoms PSF and n_z child identities
+        - separate HSC calibration and KiDS response identities
+        - separate auto-covariances and one content-bound cross-covariance
       name_only_status: REJECTED_NAME_ONLY
       downstream_gate: H-HSC-KiDS
     ACT:
@@ -298,6 +308,12 @@ mutation_registry:
   - {mutation_id: MU289-SEMANTIC-STATUS, intended_defect: covariance null license transfer or sky status contradicts its identity}
   - {mutation_id: MU289-RECORD-ID-STABILITY, intended_defect: local path or inspection time changes stable record_id}
   - {mutation_id: MU289-INVENTORY-ID, intended_defect: ordered component inventory cannot be independently recomputed}
+  - {mutation_id: MU289-NATIVE-PROFILE-OMISSION, intended_defect: generic record IDs or strings replace a complete native profile}
+  - {mutation_id: MU289-NATIVE-REGISTRY-ROLE, intended_defect: one exact native component role is renamed aliased or removed}
+  - {mutation_id: MU289-PLANCK-NATIVE-RELATIONSHIP, intended_defect: SMICA and Commander collapse or lose same-sky FFP10 operator relationships}
+  - {mutation_id: MU289-CF4-NATIVE-RELATIONSHIP, intended_defect: catalogue selection covariance frame sign units grouping depth or ZoA role drifts}
+  - {mutation_id: MU289-HSC-KIDS-CHILD-IDENTITY, intended_defect: HSC and KiDS share a PSF n_z calibration response or covariance child}
+  - {mutation_id: MU289-NATIVE-REPLAY, intended_defect: exported native record payload bypasses full profile replay}
   - {mutation_id: MU289-NAME-ONLY, intended_defect: name-only HSC or KiDS input is admitted}
   - {mutation_id: MU289-DESI-PARTIAL, intended_defect: PR151 partial or aria2 part file is admitted}
   - {mutation_id: MU289-AUTODOWNLOAD, intended_defect: missing input triggers a network or download side effect}

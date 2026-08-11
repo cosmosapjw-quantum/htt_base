@@ -48,6 +48,79 @@ _EXPECTED_LANE_GATES = {
     "DESI": "H-DESI",
     "JWST_SN": "H-JWST",
 }
+_EXPECTED_NATIVE_SCHEMAS = {
+    "PLANCK": "common.planck_native_identity.v1",
+    "CF4": "common.cf4_native_identity.v1",
+    "HSC_KIDS": "common.hsc_kids_native_identity.v1",
+    "ACT": "common.registered_product_native_identity.v1",
+    "DESI": "common.registered_product_native_identity.v1",
+    "JWST_SN": "common.registered_product_native_identity.v1",
+}
+_EXPECTED_UNIVERSAL_SEMANTIC_FIELDS = (
+    "units_contract_id",
+    "coordinate_frame_id",
+    "sign_orientation_convention_id",
+    "directional_convention_id",
+    "harmonic_convention_id",
+    "mask_id",
+    "selection_id",
+    "sky_support_id",
+    "covariance_id",
+    "covariance_status",
+    "null_ensemble_id",
+    "null_ensemble_status",
+    "transfer_source",
+    "transfer_function_spec_id",
+    "transfer_provenance_status",
+    "sky_support_status",
+    "license_status",
+    "native_identity_profile",
+)
+_EXPECTED_NATIVE_COMPONENT_IDS = {
+    "PLANCK": (
+        "smica_map",
+        "commander_map",
+        "smica_mask",
+        "commander_mask",
+        "smica_beam",
+        "commander_beam",
+        "smica_window_operator",
+        "commander_window_operator",
+        "smica_covariance",
+        "commander_covariance",
+        "pixelization",
+        "native_selection",
+        "ffp10_null_inventory",
+    ),
+    "CF4": (
+        "catalogue",
+        "row_selection",
+        "covariance",
+        "frame_definition",
+        "sign_convention",
+        "units_contract",
+        "grouping_definition",
+        "depth_definition",
+        "zoa_definition",
+    ),
+    "HSC_KIDS": (
+        "hsc_product",
+        "kids_product",
+        "hsc_mask",
+        "kids_mask",
+        "hsc_randoms",
+        "kids_randoms",
+        "hsc_psf",
+        "kids_psf",
+        "hsc_n_z",
+        "kids_n_z",
+        "hsc_shear_calibration",
+        "kids_shear_response",
+        "hsc_covariance",
+        "kids_covariance",
+        "hsc_kids_cross_covariance",
+    ),
+}
 _STATUS_PRECEDENCE = (
     "BLOCKED_PATH_ESCAPE_OR_MUTATION",
     "BLOCKED_PR151_INCOMPLETE",
@@ -88,6 +161,7 @@ _EVIDENCE_FIELDS = frozenset(
         "transfer_function_spec_id",
         "transfer_provenance_status",
         "sky_support_status",
+        "native_identity_profile",
     }
 )
 _DESCRIPTOR_FIELDS = frozenset(
@@ -364,6 +438,7 @@ class LaneSpec:
     product_id: str
     required_component_ids: tuple[str, ...]
     component_cardinality: tuple[tuple[str, int], ...]
+    native_identity_schema: str
     required_human_gate_id: str
     analysis_plan_id: str
     allowed_transfer_sources: tuple[str, ...]
@@ -387,6 +462,7 @@ class LaneSpec:
             "product_id": self.product_id,
             "required_component_ids": list(self.required_component_ids),
             "component_cardinality": dict(self.component_cardinality),
+            "native_identity_schema": self.native_identity_schema,
             "required_human_gate_id": self.required_human_gate_id,
             "analysis_plan_id": self.analysis_plan_id,
             "allowed_transfer_sources": list(self.allowed_transfer_sources),
@@ -476,6 +552,8 @@ def lane_registry_from_mapping(payload: Mapping[str, object]) -> LaneRegistryV2:
         set(semantic_tuple)
     ):
         raise DataIdentityError("lane registry contains duplicate identities")
+    if semantic_tuple != _EXPECTED_UNIVERSAL_SEMANTIC_FIELDS:
+        raise DataIdentityError("lane registry semantic field inventory drifted")
     lanes: list[LaneSpec] = []
     expected_lane_fields = frozenset(
         {
@@ -483,6 +561,7 @@ def lane_registry_from_mapping(payload: Mapping[str, object]) -> LaneRegistryV2:
             "product_id",
             "required_component_ids",
             "component_cardinality",
+            "native_identity_schema",
             "required_human_gate_id",
             "analysis_plan_id",
             "allowed_transfer_sources",
@@ -512,6 +591,12 @@ def lane_registry_from_mapping(payload: Mapping[str, object]) -> LaneRegistryV2:
         )
         if len(component_tuple) != len(set(component_tuple)):
             raise DataIdentityError(f"{lane_id} components are duplicated")
+        expected_native_components = _EXPECTED_NATIVE_COMPONENT_IDS.get(lane_id)
+        if (
+            expected_native_components is not None
+            and component_tuple != expected_native_components
+        ):
+            raise DataIdentityError(f"{lane_id} native component roles drifted")
         if set(cardinality) != set(component_tuple):
             raise DataIdentityError(f"{lane_id} component cardinality drifted")
         pairs: list[tuple[str, int]] = []
@@ -525,6 +610,11 @@ def lane_registry_from_mapping(payload: Mapping[str, object]) -> LaneRegistryV2:
         )
         if human_gate != _EXPECTED_LANE_GATES.get(lane_id):
             raise DataIdentityError(f"{lane_id} human gate identity drifted")
+        native_schema = _text(
+            row["native_identity_schema"], "native_identity_schema"
+        )
+        if native_schema != _EXPECTED_NATIVE_SCHEMAS.get(lane_id):
+            raise DataIdentityError(f"{lane_id} native identity schema drifted")
         if type(row["name_only_forbidden"]) is not bool:
             raise DataIdentityError(f"{lane_id} name_only_forbidden must be boolean")
         source_tuple = tuple(
@@ -538,6 +628,7 @@ def lane_registry_from_mapping(payload: Mapping[str, object]) -> LaneRegistryV2:
                 product_id=_text(row["product_id"], "product_id"),
                 required_component_ids=component_tuple,
                 component_cardinality=tuple(pairs),
+                native_identity_schema=native_schema,
                 required_human_gate_id=human_gate,
                 analysis_plan_id=_text(row["analysis_plan_id"], "analysis_plan_id"),
                 allowed_transfer_sources=source_tuple,
@@ -584,6 +675,611 @@ def component_inventory_id(components: Sequence[Mapping[str, object]]) -> str:
     return canonical_sha256(rows)
 
 
+_NATIVE_BINDING_FIELDS = frozenset(
+    {"component_id", "ordinal", "byte_size", "content_sha256"}
+)
+
+
+def _native_component_bindings(
+    components: Sequence[Mapping[str, object]],
+) -> list[dict[str, object]]:
+    ordinals: dict[str, int] = {}
+    rows: list[dict[str, object]] = []
+    for component in components:
+        checked = _exact_mapping(
+            component,
+            field_name="native component descriptor",
+            expected=_COMPONENT_FIELDS,
+        )
+        component_id = _text(checked["component_id"], "component_id")
+        ordinal = ordinals.get(component_id, 0)
+        ordinals[component_id] = ordinal + 1
+        byte_size = checked["byte_size"]
+        if type(byte_size) is not int or byte_size <= 0:
+            raise DataIdentityError("native component byte_size is invalid")
+        rows.append(
+            {
+                "component_id": component_id,
+                "ordinal": ordinal,
+                "byte_size": byte_size,
+                "content_sha256": "sha256:"
+                + _raw_sha(
+                    checked["content_sha256"], "native component content_sha256"
+                ),
+            }
+        )
+    return rows
+
+
+def _validate_profile_id(profile: Mapping[str, object]) -> None:
+    profile_id = profile.get("profile_id")
+    unsigned = dict(profile)
+    unsigned.pop("profile_id", None)
+    if profile_id != canonical_sha256(unsigned):
+        raise DataIdentityError("native identity profile_id drifted")
+
+
+def _validate_nested_identity(
+    value: object,
+    *,
+    field_name: str,
+    expected_fields: frozenset[str],
+    identity_field: str,
+    component_bindings: Sequence[Mapping[str, object]] | None = None,
+) -> Mapping[str, object]:
+    row = _exact_mapping(
+        value, field_name=field_name, expected=expected_fields | {identity_field}
+    )
+    unsigned = dict(row)
+    observed = unsigned.pop(identity_field)
+    expected_identity = _relationship_content_identity(
+        unsigned, component_bindings=component_bindings
+    )
+    if observed != expected_identity:
+        raise DataIdentityError(f"{field_name} {identity_field} drifted")
+    return row
+
+
+def _relationship_content_identity(
+    payload: Mapping[str, object],
+    *,
+    component_bindings: Sequence[Mapping[str, object]] | None,
+) -> str:
+    if component_bindings is None:
+        return canonical_sha256(payload)
+    referenced = {
+        value
+        for key, value in payload.items()
+        if (key == "component_id" or key.endswith("_component_id"))
+        and isinstance(value, str)
+    }
+    selected = [
+        dict(row)
+        for row in component_bindings
+        if row.get("component_id") in referenced
+    ]
+    if len({row.get("component_id") for row in selected}) != len(referenced):
+        raise DataIdentityError("native relationship component binding is incomplete")
+    return canonical_sha256(
+        {"relationship": dict(payload), "component_bindings": selected}
+    )
+
+
+def _validate_component_reference(
+    value: object,
+    *,
+    field_name: str,
+    expected: str,
+    available: frozenset[str],
+) -> None:
+    component_id = _text(value, field_name)
+    if component_id != expected or component_id not in available:
+        raise DataIdentityError(f"{field_name} does not bind the native role")
+
+
+def _validate_planck_native_profile(
+    profile: Mapping[str, object],
+    *,
+    evidence: Mapping[str, object],
+    available: frozenset[str],
+) -> None:
+    bindings = profile["component_bindings"]
+    pipelines = _exact_mapping(
+        profile["pipelines"],
+        field_name="Planck pipelines",
+        expected=frozenset({"SMICA", "COMMANDER"}),
+    )
+    pipeline_fields = frozenset(
+        {
+            "pipeline",
+            "map_component_id",
+            "mask_component_id",
+            "beam_component_id",
+            "window_operator_component_id",
+            "covariance_component_id",
+            "pixelization_component_id",
+            "native_selection_component_id",
+            "sky_support_id",
+            "harmonic_convention_id",
+        }
+    )
+    for name, prefix in (("SMICA", "smica"), ("COMMANDER", "commander")):
+        row = _validate_nested_identity(
+            pipelines[name],
+            field_name=f"Planck {name} pipeline",
+            expected_fields=pipeline_fields,
+            identity_field="pipeline_identity",
+            component_bindings=bindings,
+        )
+        if row["pipeline"] != name:
+            raise DataIdentityError(f"Planck {name} pipeline identity drifted")
+        for field_name, expected in (
+            ("map_component_id", f"{prefix}_map"),
+            ("mask_component_id", f"{prefix}_mask"),
+            ("beam_component_id", f"{prefix}_beam"),
+            ("window_operator_component_id", f"{prefix}_window_operator"),
+            ("covariance_component_id", f"{prefix}_covariance"),
+            ("pixelization_component_id", "pixelization"),
+            ("native_selection_component_id", "native_selection"),
+        ):
+            _validate_component_reference(
+                row[field_name],
+                field_name=f"Planck {name} {field_name}",
+                expected=expected,
+                available=available,
+            )
+        if (
+            row["sky_support_id"] != evidence["sky_support_id"]
+            or row["harmonic_convention_id"]
+            != evidence["harmonic_convention_id"]
+        ):
+            raise DataIdentityError(
+                f"Planck {name} sky or harmonic identity drifted"
+            )
+    pair = _validate_nested_identity(
+        profile["same_sky_pair"],
+        field_name="Planck same-sky pair",
+        expected_fields=frozenset(
+            {
+                "smica_map_component_id",
+                "commander_map_component_id",
+                "sky_support_id",
+                "pixelization_component_id",
+            }
+        ),
+        identity_field="pair_id",
+        component_bindings=bindings,
+    )
+    for field_name, expected in (
+        ("smica_map_component_id", "smica_map"),
+        ("commander_map_component_id", "commander_map"),
+        ("pixelization_component_id", "pixelization"),
+    ):
+        _validate_component_reference(
+            pair[field_name],
+            field_name=f"Planck pair {field_name}",
+            expected=expected,
+            available=available,
+        )
+    if pair["sky_support_id"] != evidence["sky_support_id"]:
+        raise DataIdentityError("Planck SMICA/Commander are not same-sky paired")
+    null = _validate_nested_identity(
+        profile["ffp10_null"],
+        field_name="Planck FFP10 null",
+        expected_fields=frozenset(
+            {"ensemble_kind", "inventory_component_id", "null_ensemble_id"}
+        ),
+        identity_field="null_identity",
+        component_bindings=bindings,
+    )
+    if null["ensemble_kind"] != "FFP10":
+        raise DataIdentityError("Planck null ensemble must be FFP10")
+    _validate_component_reference(
+        null["inventory_component_id"],
+        field_name="Planck FFP10 inventory_component_id",
+        expected="ffp10_null_inventory",
+        available=available,
+    )
+    if (
+        null["null_ensemble_id"] != evidence["null_ensemble_id"]
+        or evidence["null_ensemble_status"] != "REGISTERED"
+    ):
+        raise DataIdentityError("Planck FFP10 null identity drifted")
+
+
+def _validate_cf4_native_profile(
+    profile: Mapping[str, object],
+    *,
+    evidence: Mapping[str, object],
+    available: frozenset[str],
+) -> None:
+    bindings = profile["component_bindings"]
+    catalogue = _validate_nested_identity(
+        profile["catalogue"],
+        field_name="CF4 catalogue",
+        expected_fields=frozenset(
+            {
+                "catalogue_component_id",
+                "row_selection_component_id",
+                "covariance_component_id",
+                "row_selection_id",
+                "covariance_id",
+            }
+        ),
+        identity_field="catalogue_identity",
+        component_bindings=bindings,
+    )
+    for field_name, expected in (
+        ("catalogue_component_id", "catalogue"),
+        ("row_selection_component_id", "row_selection"),
+        ("covariance_component_id", "covariance"),
+    ):
+        _validate_component_reference(
+            catalogue[field_name],
+            field_name=f"CF4 {field_name}",
+            expected=expected,
+            available=available,
+        )
+    if (
+        catalogue["row_selection_id"] != evidence["selection_id"]
+        or catalogue["covariance_id"] != evidence["covariance_id"]
+        or evidence["covariance_status"] != "REGISTERED"
+    ):
+        raise DataIdentityError("CF4 selection or covariance identity drifted")
+    semantics = _validate_nested_identity(
+        profile["semantics"],
+        field_name="CF4 semantic roles",
+        expected_fields=frozenset(
+            {
+                "frame_component_id",
+                "sign_component_id",
+                "units_component_id",
+                "grouping_component_id",
+                "depth_component_id",
+                "zoa_component_id",
+                "coordinate_frame_id",
+                "sign_orientation_convention_id",
+                "units_contract_id",
+            }
+        ),
+        identity_field="semantics_identity",
+        component_bindings=bindings,
+    )
+    for field_name, expected in (
+        ("frame_component_id", "frame_definition"),
+        ("sign_component_id", "sign_convention"),
+        ("units_component_id", "units_contract"),
+        ("grouping_component_id", "grouping_definition"),
+        ("depth_component_id", "depth_definition"),
+        ("zoa_component_id", "zoa_definition"),
+    ):
+        _validate_component_reference(
+            semantics[field_name],
+            field_name=f"CF4 {field_name}",
+            expected=expected,
+            available=available,
+        )
+    for field_name in (
+        "coordinate_frame_id",
+        "sign_orientation_convention_id",
+        "units_contract_id",
+    ):
+        if semantics[field_name] != evidence[field_name]:
+            raise DataIdentityError(f"CF4 {field_name} drifted")
+
+
+def _validate_hsc_kids_native_profile(
+    profile: Mapping[str, object],
+    *,
+    evidence: Mapping[str, object],
+    available: frozenset[str],
+) -> None:
+    bindings = profile["component_bindings"]
+    children = _exact_mapping(
+        profile["children"],
+        field_name="HSC/KiDS children",
+        expected=frozenset({"HSC", "KIDS"}),
+    )
+    child_fields = frozenset(
+        {
+            "survey_id",
+            "product_component_id",
+            "mask_component_id",
+            "randoms_component_id",
+            "psf_component_id",
+            "n_z_component_id",
+            "calibration_or_response_component_id",
+            "covariance_component_id",
+        }
+    )
+    checked_children: dict[str, Mapping[str, object]] = {}
+    for survey, prefix, calibration in (
+        ("HSC", "hsc", "hsc_shear_calibration"),
+        ("KIDS", "kids", "kids_shear_response"),
+    ):
+        row = _validate_nested_identity(
+            children[survey],
+            field_name=f"{survey} child identity",
+            expected_fields=child_fields,
+            identity_field="child_identity_id",
+            component_bindings=bindings,
+        )
+        if row["survey_id"] != survey:
+            raise DataIdentityError(f"{survey} child survey identity drifted")
+        for field_name, expected in (
+            ("product_component_id", f"{prefix}_product"),
+            ("mask_component_id", f"{prefix}_mask"),
+            ("randoms_component_id", f"{prefix}_randoms"),
+            ("psf_component_id", f"{prefix}_psf"),
+            ("n_z_component_id", f"{prefix}_n_z"),
+            ("calibration_or_response_component_id", calibration),
+            ("covariance_component_id", f"{prefix}_covariance"),
+        ):
+            _validate_component_reference(
+                row[field_name],
+                field_name=f"{survey} {field_name}",
+                expected=expected,
+                available=available,
+            )
+        checked_children[survey] = row
+    for field_name in (
+        "product_component_id",
+        "mask_component_id",
+        "randoms_component_id",
+        "psf_component_id",
+        "n_z_component_id",
+        "calibration_or_response_component_id",
+        "covariance_component_id",
+    ):
+        if checked_children["HSC"][field_name] == checked_children["KIDS"][field_name]:
+            raise DataIdentityError(f"HSC and KiDS share forbidden {field_name}")
+    cross = _validate_nested_identity(
+        profile["cross_covariance"],
+        field_name="HSC/KiDS cross covariance",
+        expected_fields=frozenset(
+            {
+                "component_id",
+                "hsc_child_identity_id",
+                "kids_child_identity_id",
+                "covariance_id",
+            }
+        ),
+        identity_field="cross_covariance_identity",
+        component_bindings=bindings,
+    )
+    _validate_component_reference(
+        cross["component_id"],
+        field_name="HSC/KiDS cross covariance component_id",
+        expected="hsc_kids_cross_covariance",
+        available=available,
+    )
+    if (
+        cross["hsc_child_identity_id"]
+        != checked_children["HSC"]["child_identity_id"]
+        or cross["kids_child_identity_id"]
+        != checked_children["KIDS"]["child_identity_id"]
+        or cross["covariance_id"] != evidence["covariance_id"]
+        or evidence["covariance_status"] != "REGISTERED"
+    ):
+        raise DataIdentityError("HSC/KiDS cross-covariance relationship drifted")
+
+
+def validate_native_identity_profile(
+    *,
+    lane: LaneSpec,
+    profile: Mapping[str, object],
+    components: Sequence[Mapping[str, object]],
+    evidence: Mapping[str, object],
+) -> dict[str, object]:
+    if not isinstance(profile, Mapping):
+        raise DataIdentityError("native identity profile must be a mapping")
+    common = {"schema", "lane_id", "product_id", "component_bindings", "profile_id"}
+    lane_specific = {
+        "PLANCK": {"pipelines", "same_sky_pair", "ffp10_null"},
+        "CF4": {"catalogue", "semantics"},
+        "HSC_KIDS": {"children", "cross_covariance"},
+    }.get(lane.lane_id, set())
+    checked = _exact_mapping(
+        profile,
+        field_name=f"{lane.lane_id} native identity profile",
+        expected=frozenset(common | lane_specific),
+    )
+    if (
+        checked["schema"] != lane.native_identity_schema
+        or checked["lane_id"] != lane.lane_id
+        or checked["product_id"] != lane.product_id
+    ):
+        raise DataIdentityError("native identity profile authority drifted")
+    raw_bindings = checked["component_bindings"]
+    if isinstance(raw_bindings, (str, bytes)) or not isinstance(
+        raw_bindings, Sequence
+    ):
+        raise DataIdentityError("native component bindings must be a sequence")
+    normalized_bindings: list[dict[str, object]] = []
+    for index, value in enumerate(raw_bindings):
+        row = _exact_mapping(
+            value,
+            field_name=f"native component binding {index}",
+            expected=_NATIVE_BINDING_FIELDS,
+        )
+        ordinal = row["ordinal"]
+        byte_size = row["byte_size"]
+        if type(ordinal) is not int or ordinal < 0:
+            raise DataIdentityError("native component ordinal is invalid")
+        if type(byte_size) is not int or byte_size <= 0:
+            raise DataIdentityError("native component byte_size is invalid")
+        normalized_bindings.append(
+            {
+                "component_id": _text(row["component_id"], "component_id"),
+                "ordinal": ordinal,
+                "byte_size": byte_size,
+                "content_sha256": "sha256:"
+                + _raw_sha(row["content_sha256"], "native content_sha256"),
+            }
+        )
+    expected_bindings = _native_component_bindings(components)
+    if normalized_bindings != expected_bindings:
+        raise DataIdentityError("native component bindings drifted")
+    expected_ids = tuple(row["component_id"] for row in expected_bindings)
+    if expected_ids != lane.expected_component_sequence:
+        raise DataIdentityError("native component role inventory drifted")
+    available = frozenset(expected_ids)
+    _validate_profile_id(checked)
+    if lane.lane_id == "PLANCK":
+        _validate_planck_native_profile(checked, evidence=evidence, available=available)
+    elif lane.lane_id == "CF4":
+        _validate_cf4_native_profile(checked, evidence=evidence, available=available)
+    elif lane.lane_id == "HSC_KIDS":
+        _validate_hsc_kids_native_profile(
+            checked, evidence=evidence, available=available
+        )
+    return json.loads(_canonical_bytes(checked).decode("ascii"))
+
+
+def _with_content_identity(
+    payload: Mapping[str, object],
+    identity_field: str,
+    *,
+    component_bindings: Sequence[Mapping[str, object]] | None = None,
+) -> dict[str, object]:
+    unsigned = dict(payload)
+    return {
+        **unsigned,
+        identity_field: _relationship_content_identity(
+            unsigned, component_bindings=component_bindings
+        ),
+    }
+
+
+def _build_registered_native_profile(
+    lane: LaneSpec,
+    components: Sequence[Mapping[str, object]],
+    evidence: Mapping[str, object],
+) -> dict[str, object]:
+    common: dict[str, object] = {
+        "schema": lane.native_identity_schema,
+        "lane_id": lane.lane_id,
+        "product_id": lane.product_id,
+        "component_bindings": _native_component_bindings(components),
+    }
+    bindings = common["component_bindings"]
+    if lane.lane_id == "PLANCK":
+        pipelines = {}
+        for name, prefix in (("SMICA", "smica"), ("COMMANDER", "commander")):
+            pipelines[name] = _with_content_identity(
+                {
+                    "pipeline": name,
+                    "map_component_id": f"{prefix}_map",
+                    "mask_component_id": f"{prefix}_mask",
+                    "beam_component_id": f"{prefix}_beam",
+                    "window_operator_component_id": f"{prefix}_window_operator",
+                    "covariance_component_id": f"{prefix}_covariance",
+                    "pixelization_component_id": "pixelization",
+                    "native_selection_component_id": "native_selection",
+                    "sky_support_id": evidence["sky_support_id"],
+                    "harmonic_convention_id": evidence["harmonic_convention_id"],
+                },
+                "pipeline_identity",
+                component_bindings=bindings,
+            )
+        pair = _with_content_identity(
+            {
+                "smica_map_component_id": "smica_map",
+                "commander_map_component_id": "commander_map",
+                "sky_support_id": evidence["sky_support_id"],
+                "pixelization_component_id": "pixelization",
+            },
+            "pair_id",
+            component_bindings=bindings,
+        )
+        ffp10 = _with_content_identity(
+            {
+                "ensemble_kind": "FFP10",
+                "inventory_component_id": "ffp10_null_inventory",
+                "null_ensemble_id": evidence["null_ensemble_id"],
+            },
+            "null_identity",
+            component_bindings=bindings,
+        )
+        return _with_content_identity(
+            {
+                **common,
+                "pipelines": pipelines,
+                "same_sky_pair": pair,
+                "ffp10_null": ffp10,
+            },
+            "profile_id",
+        )
+    if lane.lane_id == "CF4":
+        catalogue = _with_content_identity(
+            {
+                "catalogue_component_id": "catalogue",
+                "row_selection_component_id": "row_selection",
+                "covariance_component_id": "covariance",
+                "row_selection_id": evidence["selection_id"],
+                "covariance_id": evidence["covariance_id"],
+            },
+            "catalogue_identity",
+            component_bindings=bindings,
+        )
+        semantics = _with_content_identity(
+            {
+                "frame_component_id": "frame_definition",
+                "sign_component_id": "sign_convention",
+                "units_component_id": "units_contract",
+                "grouping_component_id": "grouping_definition",
+                "depth_component_id": "depth_definition",
+                "zoa_component_id": "zoa_definition",
+                "coordinate_frame_id": evidence["coordinate_frame_id"],
+                "sign_orientation_convention_id": evidence[
+                    "sign_orientation_convention_id"
+                ],
+                "units_contract_id": evidence["units_contract_id"],
+            },
+            "semantics_identity",
+            component_bindings=bindings,
+        )
+        return _with_content_identity(
+            {**common, "catalogue": catalogue, "semantics": semantics},
+            "profile_id",
+        )
+    if lane.lane_id == "HSC_KIDS":
+        children = {}
+        for survey, prefix, calibration in (
+            ("HSC", "hsc", "hsc_shear_calibration"),
+            ("KIDS", "kids", "kids_shear_response"),
+        ):
+            children[survey] = _with_content_identity(
+                {
+                    "survey_id": survey,
+                    "product_component_id": f"{prefix}_product",
+                    "mask_component_id": f"{prefix}_mask",
+                    "randoms_component_id": f"{prefix}_randoms",
+                    "psf_component_id": f"{prefix}_psf",
+                    "n_z_component_id": f"{prefix}_n_z",
+                    "calibration_or_response_component_id": calibration,
+                    "covariance_component_id": f"{prefix}_covariance",
+                },
+                "child_identity_id",
+                component_bindings=bindings,
+            )
+        cross = _with_content_identity(
+            {
+                "component_id": "hsc_kids_cross_covariance",
+                "hsc_child_identity_id": children["HSC"]["child_identity_id"],
+                "kids_child_identity_id": children["KIDS"]["child_identity_id"],
+                "covariance_id": evidence["covariance_id"],
+            },
+            "cross_covariance_identity",
+            component_bindings=bindings,
+        )
+        return _with_content_identity(
+            {**common, "children": children, "cross_covariance": cross},
+            "profile_id",
+        )
+    return _with_content_identity(common, "profile_id")
+
+
 def compute_source_locator_identity(
     *,
     lane_id: str,
@@ -599,6 +1295,7 @@ def compute_source_locator_identity(
             "release_identity",
             "license_identity",
             "license_status",
+            "native_identity_profile",
         )
     }
     component_rows = []
@@ -640,6 +1337,7 @@ class DataIdentityRecordV2:
     lane_id: str
     product_id: str
     component_id: str
+    component_ordinal: int
     source_locator_kind: str
     source_locator_identity: str
     release_name: str
@@ -669,6 +1367,8 @@ class DataIdentityRecordV2:
     transfer_provenance_status: str
     sky_support_status: str
     license_status: str
+    native_identity_profile_id: str
+    native_identity_profile: Mapping[str, object]
     acquisition_status: str
     inspected_at_utc: str
     _construction_token: InitVar[object] = None
@@ -685,6 +1385,13 @@ class DataIdentityRecordV2:
             raise DataIdentityError(
                 "inspection_receipt_id does not bind the inspection"
             )
+        if (
+            not isinstance(self.native_identity_profile, Mapping)
+            or self.native_identity_profile_id
+            != self.native_identity_profile.get("profile_id")
+        ):
+            raise DataIdentityError("record native identity profile drifted")
+        _canonical_bytes(self.native_identity_profile)
         object.__setattr__(self, "_seal", canonical_sha256(self.as_payload()))
 
     def _stable_payload(self) -> dict[str, object]:
@@ -719,14 +1426,17 @@ def _build_record(
     *,
     lane: LaneSpec,
     component: Mapping[str, object],
+    component_ordinal: int,
     evidence: Mapping[str, object],
     inventory_id: str,
+    native_profile: Mapping[str, object],
     inspected_at_utc: str,
 ) -> DataIdentityRecordV2:
     shared = {
         "lane_id": lane.lane_id,
         "product_id": lane.product_id,
         "component_id": _text(component["component_id"], "component_id"),
+        "component_ordinal": component_ordinal,
         "source_locator_kind": "absolute_local_root",
         "source_locator_identity": _text(
             evidence["source_locator_identity"], "source_locator_identity"
@@ -769,6 +1479,10 @@ def _build_record(
             )
         },
         "acquisition_status": "COMPLETE",
+        "native_identity_profile_id": native_profile["profile_id"],
+        "native_identity_profile": json.loads(
+            _canonical_bytes(native_profile).decode("ascii")
+        ),
         "inspected_at_utc": inspected_at_utc,
     }
     provisional = {
@@ -848,7 +1562,7 @@ def _validate_evidence(
     evidence: Mapping[str, object],
     *,
     components: Sequence[Mapping[str, object]],
-) -> None:
+) -> dict[str, object]:
     _exact_mapping(
         evidence, field_name="identity evidence", expected=_EVIDENCE_FIELDS
     )
@@ -913,6 +1627,12 @@ def _validate_evidence(
     )
     if evidence["source_locator_identity"] != expected_locator:
         raise DataIdentityError("source_locator_identity drifted")
+    return validate_native_identity_profile(
+        lane=lane,
+        profile=evidence["native_identity_profile"],
+        components=components,
+        evidence=evidence,
+    )
 
 
 def evaluate_lane_identity(
@@ -1110,7 +1830,9 @@ def evaluate_lane_identity(
         evidence = _strict_json_bytes(
             evidence_raw, field_name="identity evidence"
         )
-        _validate_evidence(lane, evidence, components=normalized_components)
+        native_profile = _validate_evidence(
+            lane, evidence, components=normalized_components
+        )
     except DataIdentityError as exc:
         text = str(exc)
         if "symlink" in text or "hardlink" in text:
@@ -1120,16 +1842,24 @@ def evaluate_lane_identity(
         else:
             status_value = AdmissionStatus.REJECTED_MISSING_SEMANTIC_CONTRACT
         return _decision(lane, ((status_value, text),))
-    records = tuple(
-        _build_record(
-            lane=lane,
-            component=row,
-            evidence=evidence,
-            inventory_id=inventory_id,
-            inspected_at_utc=inspected,
+    role_ordinals: dict[str, int] = {}
+    record_rows = []
+    for row in normalized_components:
+        component_id = _text(row["component_id"], "component_id")
+        component_ordinal = role_ordinals.get(component_id, 0)
+        role_ordinals[component_id] = component_ordinal + 1
+        record_rows.append(
+            _build_record(
+                lane=lane,
+                component=row,
+                component_ordinal=component_ordinal,
+                evidence=evidence,
+                inventory_id=inventory_id,
+                native_profile=native_profile,
+                inspected_at_utc=inspected,
+            )
         )
-        for row in normalized_components
-    )
+    records = tuple(record_rows)
     bundle_id = canonical_sha256(
         {
             "lane_id": lane.lane_id,
@@ -1139,6 +1869,171 @@ def evaluate_lane_identity(
         }
     )
     return _decision(lane, (), records, bundle_id)
+
+
+def validate_data_identity_record_payload(
+    payload: Mapping[str, object], *, registry: LaneRegistryV2
+) -> DataIdentityRecordV2:
+    public_fields = frozenset(
+        name
+        for name in DataIdentityRecordV2.__dataclass_fields__
+        if not name.startswith("_")
+    )
+    checked = _exact_mapping(
+        payload,
+        field_name="data identity record payload",
+        expected=public_fields | {"schema"},
+    )
+    if checked["schema"] != DATA_IDENTITY_RECORD_SCHEMA:
+        raise DataIdentityError("data identity record schema drifted")
+    lane_id = _text(checked["lane_id"], "lane_id")
+    lane = registry.lane(lane_id)
+    if checked["product_id"] != lane.product_id:
+        raise DataIdentityError("data identity record product drifted")
+    profile = checked["native_identity_profile"]
+    if not isinstance(profile, Mapping):
+        raise DataIdentityError("record native identity profile is malformed")
+    bindings = profile.get("component_bindings")
+    if isinstance(bindings, (str, bytes)) or not isinstance(bindings, Sequence):
+        raise DataIdentityError("record native component bindings are malformed")
+    replay_components: list[dict[str, object]] = []
+    for index, value in enumerate(bindings):
+        row = _exact_mapping(
+            value,
+            field_name=f"record native binding {index}",
+            expected=_NATIVE_BINDING_FIELDS,
+        )
+        replay_components.append(
+            {
+                "component_id": row["component_id"],
+                "relative_path": f"replay/{index:04d}.bin",
+                "byte_size": row["byte_size"],
+                "content_sha256": row["content_sha256"],
+            }
+        )
+    evidence = {
+        field_name: checked[field_name]
+        for field_name in (
+            "sky_support_id",
+            "harmonic_convention_id",
+            "null_ensemble_id",
+            "null_ensemble_status",
+            "selection_id",
+            "covariance_id",
+            "covariance_status",
+            "coordinate_frame_id",
+            "sign_orientation_convention_id",
+            "units_contract_id",
+        )
+    }
+    normalized_profile = validate_native_identity_profile(
+        lane=lane,
+        profile=profile,
+        components=replay_components,
+        evidence=evidence,
+    )
+    if checked["native_identity_profile_id"] != normalized_profile["profile_id"]:
+        raise DataIdentityError("record native identity profile_id drifted")
+    expected_inventory_id = component_inventory_id(replay_components)
+    if checked["component_inventory_id"] != expected_inventory_id:
+        raise DataIdentityError("record component inventory identity drifted")
+    component_ordinal = checked["component_ordinal"]
+    if type(component_ordinal) is not int or component_ordinal < 0:
+        raise DataIdentityError("record component ordinal is invalid")
+    own_matches = [
+        row
+        for row in bindings
+        if row["component_id"] == checked["component_id"]
+        and row["ordinal"] == component_ordinal
+        and row["byte_size"] == checked["byte_size"]
+        and "sha256:"
+        + _raw_sha(row["content_sha256"], "record binding content_sha256")
+        == "sha256:"
+        + _raw_sha(checked["content_sha256"], "record content_sha256")
+    ]
+    if len(own_matches) != 1:
+        raise DataIdentityError("record does not bind one native component role")
+    _utc(checked["inspected_at_utc"], "inspected_at_utc")
+    kwargs = {
+        name: checked[name]
+        for name in public_fields
+    }
+    kwargs["native_identity_profile"] = normalized_profile
+    return DataIdentityRecordV2(
+        **kwargs,
+        _construction_token=_RECORD_TOKEN,
+    )
+
+
+def replay_lane_admission_decision(
+    payload: Mapping[str, object], *, registry: LaneRegistryV2
+) -> LaneAdmissionDecision:
+    checked = _exact_mapping(
+        payload,
+        field_name="lane admission decision payload",
+        expected=frozenset(
+            {
+                "lane_id",
+                "product_id",
+                "status",
+                "reasons",
+                "records",
+                "lane_admission_bundle_id",
+            }
+        ),
+    )
+    lane = registry.lane(_text(checked["lane_id"], "lane_id"))
+    if checked["product_id"] != lane.product_id:
+        raise DataIdentityError("lane admission product identity drifted")
+    try:
+        status_value = AdmissionStatus(_text(checked["status"], "status"))
+    except ValueError as exc:
+        raise DataIdentityError("lane admission status is unregistered") from exc
+    reasons_value = checked["reasons"]
+    records_value = checked["records"]
+    if (
+        isinstance(reasons_value, (str, bytes))
+        or not isinstance(reasons_value, Sequence)
+        or isinstance(records_value, (str, bytes))
+        or not isinstance(records_value, Sequence)
+    ):
+        raise DataIdentityError("lane admission sequences are malformed")
+    reasons = tuple(_text(value, "lane admission reason") for value in reasons_value)
+    records = tuple(
+        validate_data_identity_record_payload(value, registry=registry)
+        for value in records_value
+    )
+    bundle_id = checked["lane_admission_bundle_id"]
+    if status_value is AdmissionStatus.ADMITTED_IDENTITY_ONLY:
+        if reasons or tuple(record.component_id for record in records) != (
+            lane.expected_component_sequence
+        ):
+            raise DataIdentityError("admitted native record inventory drifted")
+        if len({record.native_identity_profile_id for record in records}) != 1:
+            raise DataIdentityError("admitted native profiles disagree")
+        inventory_ids = {record.component_inventory_id for record in records}
+        if len(inventory_ids) != 1:
+            raise DataIdentityError("admitted component inventories disagree")
+        expected_bundle = canonical_sha256(
+            {
+                "lane_id": lane.lane_id,
+                "product_id": lane.product_id,
+                "component_inventory_id": next(iter(inventory_ids)),
+                "record_ids": [record.record_id for record in records],
+            }
+        )
+        if bundle_id != expected_bundle:
+            raise DataIdentityError("lane admission bundle identity drifted")
+    elif records or bundle_id is not None:
+        raise DataIdentityError("refused lane retained admitted native records")
+    return LaneAdmissionDecision(
+        lane_id=lane.lane_id,
+        product_id=lane.product_id,
+        status=status_value,
+        reasons=reasons,
+        records=records,
+        lane_admission_bundle_id=bundle_id,
+    )
 
 
 @dataclass(frozen=True)
@@ -1313,6 +2208,9 @@ def _mutation_descriptor(root: Path, lane: LaneSpec) -> dict[str, object]:
         "transfer_provenance_status": "NOT_APPLICABLE",
         "sky_support_status": "REGISTERED",
     }
+    evidence["native_identity_profile"] = _build_registered_native_profile(
+        lane, components, evidence
+    )
     evidence["source_locator_identity"] = compute_source_locator_identity(
         lane_id=lane.lane_id,
         product_id=lane.product_id,
@@ -1378,6 +2276,30 @@ def _probe_mutation(
             descriptor=value,
             inspected_at_utc="2026-08-09T00:00:00+00:00",
         )
+
+    def rewrite_native_profile(
+        value: dict[str, object], mutate
+    ) -> None:
+        root = Path(str(value["root"]))
+        evidence_path = root / str(value["evidence_relative_path"])
+        evidence = dict(
+            _strict_json(evidence_path, field_name="native mutation evidence")
+        )
+        profile = json.loads(
+            _canonical_bytes(evidence["native_identity_profile"]).decode("ascii")
+        )
+        mutate(profile)
+        unsigned_profile = dict(profile)
+        unsigned_profile.pop("profile_id", None)
+        profile["profile_id"] = canonical_sha256(unsigned_profile)
+        evidence["native_identity_profile"] = profile
+        evidence["source_locator_identity"] = compute_source_locator_identity(
+            lane_id=str(evidence["lane_id"]),
+            product_id=str(evidence["product_id"]),
+            components=value["components"],  # type: ignore[arg-type]
+            evidence_bindings=evidence,
+        )
+        _rewrite_mutation_evidence(value, evidence)
 
     if mutation_id == "MU289-PR274-MUTATION":
         mutated = dict(source_bindings)
@@ -1499,6 +2421,106 @@ def _probe_mutation(
             "component inventory identity independently recomputed",
         )
         return
+    if mutation_id == "MU289-NATIVE-PROFILE-OMISSION":
+        value = descriptor(mutation_id)
+        _rewrite_mutation_evidence(
+            value, {}, remove=("native_identity_profile",)
+        )
+        decision = evaluate("PLANCK", value)
+        _kill_when(
+            decision.status is AdmissionStatus.REJECTED_MISSING_SEMANTIC_CONTRACT,
+            "generic record IDs cannot replace a native identity profile",
+        )
+        return
+    if mutation_id == "MU289-NATIVE-REGISTRY-ROLE":
+        payload = json.loads(json.dumps(registry._payload()))
+        planck_row = next(
+            row for row in payload["lanes"] if row["lane_id"] == "PLANCK"
+        )
+        planck_row["required_component_ids"][0] = "generic_map"
+        cardinality = planck_row["component_cardinality"]
+        cardinality["generic_map"] = cardinality.pop("smica_map")
+        lane_registry_from_mapping(payload)
+        return
+    if mutation_id == "MU289-PLANCK-NATIVE-RELATIONSHIP":
+        value = descriptor(mutation_id)
+
+        def collapse(profile: dict[str, object]) -> None:
+            pipeline = profile["pipelines"]["COMMANDER"]  # type: ignore[index]
+            pipeline["map_component_id"] = "smica_map"  # type: ignore[index]
+            unsigned = dict(pipeline)  # type: ignore[arg-type]
+            unsigned.pop("pipeline_identity")
+            pipeline["pipeline_identity"] = _relationship_content_identity(  # type: ignore[index]
+                unsigned,
+                component_bindings=profile["component_bindings"],  # type: ignore[arg-type]
+            )
+
+        rewrite_native_profile(value, collapse)
+        decision = evaluate("PLANCK", value)
+        _kill_when(
+            decision.status is AdmissionStatus.REJECTED_MISSING_SEMANTIC_CONTRACT,
+            "SMICA and Commander native roles cannot collapse",
+        )
+        return
+    if mutation_id == "MU289-CF4-NATIVE-RELATIONSHIP":
+        cf4 = registry.lane("CF4")
+        value = descriptor(mutation_id, cf4)
+
+        def drift_cf4(profile: dict[str, object]) -> None:
+            semantics = profile["semantics"]  # type: ignore[index]
+            semantics["frame_component_id"] = "sign_convention"  # type: ignore[index]
+            unsigned = dict(semantics)  # type: ignore[arg-type]
+            unsigned.pop("semantics_identity")
+            semantics["semantics_identity"] = _relationship_content_identity(  # type: ignore[index]
+                unsigned,
+                component_bindings=profile["component_bindings"],  # type: ignore[arg-type]
+            )
+
+        rewrite_native_profile(value, drift_cf4)
+        decision = evaluate("CF4", value)
+        _kill_when(
+            decision.status is AdmissionStatus.REJECTED_MISSING_SEMANTIC_CONTRACT,
+            "CF4 exact frame and sign roles cannot alias",
+        )
+        return
+    if mutation_id == "MU289-HSC-KIDS-CHILD-IDENTITY":
+        lane = registry.lane("HSC_KIDS")
+        value = descriptor(mutation_id, lane)
+
+        def share_psf(profile: dict[str, object]) -> None:
+            kids = profile["children"]["KIDS"]  # type: ignore[index]
+            kids["psf_component_id"] = "hsc_psf"  # type: ignore[index]
+            unsigned = dict(kids)  # type: ignore[arg-type]
+            unsigned.pop("child_identity_id")
+            kids["child_identity_id"] = _relationship_content_identity(  # type: ignore[index]
+                unsigned,
+                component_bindings=profile["component_bindings"],  # type: ignore[arg-type]
+            )
+            cross = profile["cross_covariance"]  # type: ignore[index]
+            cross["kids_child_identity_id"] = kids["child_identity_id"]  # type: ignore[index]
+            unsigned_cross = dict(cross)  # type: ignore[arg-type]
+            unsigned_cross.pop("cross_covariance_identity")
+            cross["cross_covariance_identity"] = _relationship_content_identity(  # type: ignore[index]
+                unsigned_cross,
+                component_bindings=profile["component_bindings"],  # type: ignore[arg-type]
+            )
+
+        rewrite_native_profile(value, share_psf)
+        decision = evaluate("HSC_KIDS", value)
+        _kill_when(
+            decision.status is AdmissionStatus.REJECTED_MISSING_SEMANTIC_CONTRACT,
+            "HSC and KiDS require separate PSF child identities",
+        )
+        return
+    if mutation_id == "MU289-NATIVE-REPLAY":
+        decision = evaluate("PLANCK", descriptor(mutation_id))
+        payload = decision.as_payload()
+        record = payload["records"][0]
+        record["native_identity_profile"]["pipelines"]["SMICA"][  # type: ignore[index]
+            "map_component_id"
+        ] = "commander_map"
+        replay_lane_admission_decision(payload, registry=registry)
+        return
     if mutation_id == "MU289-NAME-ONLY":
         hsc = registry.lane("HSC_KIDS")
         value = descriptor(mutation_id, hsc)
@@ -1581,14 +2603,25 @@ def _probe_mutation(
             build_not_authorized_receipt(lane, decision)
             for lane, decision in zip(registry.lanes, decisions, strict=True)
         )
+        probe_bindings = {"probe": "sha256:" + "0" * 64}
         receipt = DataIdentityPreflightReceipt(
             registry_content_id=registry.content_id,
             aggregate_status=AggregateStatus.NO_ADMITTED_IDENTITIES,
             lane_decisions=decisions,
             authorization_receipts=authorizations,
             mutation_results=(),
-            source_bindings={"probe": "sha256:" + "0" * 64},
-            generation_identity={"probe": "mutation"},
+            source_bindings=probe_bindings,
+            generation_identity={
+                "schema": "common.source_bound_generation_identity.v1",
+                "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:"
+                + canonical_sha256(probe_bindings),
+                "generating_procedure": [
+                    "python3",
+                    "-B",
+                    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+                    "build",
+                ],
+            },
             terminal=PASS_TOKEN,
             _construction_token=_PREFLIGHT_TOKEN,
         ).as_payload()
@@ -1740,6 +2773,32 @@ def _validated_source_bindings(
         "docs/research_program/post_pr275/pr289_spec.yaml": _stream_sha256(
             spec_path
         ),
+        "docs/research_program/post_pr275/pr289_publication_policy.json": _stream_sha256(
+            repository_root
+            / "docs/research_program/post_pr275/pr289_publication_policy.json"
+        ),
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json": _stream_sha256(
+            repository_root
+            / "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
+        ),
+        "docs/research_program/post_pr275/data_runbooks.yaml": _stream_sha256(
+            repository_root
+            / "docs/research_program/post_pr275/data_runbooks.yaml"
+        ),
+        "docs/harness/CLAIM_LEDGER.md": _stream_sha256(
+            repository_root / "docs/harness/CLAIM_LEDGER.md"
+        ),
+        "htt/src/common/data_identity.py": _stream_sha256(
+            repository_root / "htt/src/common/data_identity.py"
+        ),
+        "scripts/codex_harness/run_pr289_data_identity_v2.py": _stream_sha256(
+            repository_root
+            / "scripts/codex_harness/run_pr289_data_identity_v2.py"
+        ),
+        "tests/contracts/test_data_identity_registry_v2.py": _stream_sha256(
+            repository_root
+            / "tests/contracts/test_data_identity_registry_v2.py"
+        ),
         "docs/research_program/vector_tensor/data_admission/"
         "PR274_DATA_IDENTITY_REGISTRY.yaml": str(
             spec.get("historical_boundary", {}).get("v1_registry_sha256", "")
@@ -1757,6 +2816,51 @@ def _validated_source_bindings(
                 f"required source binding missing or stale: {relative}"
             )
     return checked
+
+
+def _validated_generation_identity(
+    generation_identity: Mapping[str, object],
+    *,
+    source_bindings: Mapping[str, str],
+) -> dict[str, object]:
+    checked = _exact_mapping(
+        generation_identity,
+        field_name="generation identity",
+        expected=frozenset(
+            {
+                "schema",
+                "git_commit_or_worktree_state",
+                "generating_procedure",
+            }
+        ),
+    )
+    if checked["schema"] != "common.source_bound_generation_identity.v1":
+        raise DataIdentityError("generation identity schema drifted")
+    expected_state = "BOUND_SOURCE_WORKTREE:" + canonical_sha256(
+        dict(source_bindings)
+    )
+    if checked["git_commit_or_worktree_state"] != expected_state:
+        raise DataIdentityError("generation identity source binding drifted")
+    procedure = checked["generating_procedure"]
+    if (
+        isinstance(procedure, (str, bytes))
+        or not isinstance(procedure, Sequence)
+        or len(procedure) != 4
+        or not isinstance(procedure[0], str)
+        or not procedure[0]
+        or list(procedure[1:])
+        != [
+            "-B",
+            "scripts/codex_harness/run_pr289_data_identity_v2.py",
+            "build",
+        ]
+    ):
+        raise DataIdentityError("generation procedure is not the exact build argv")
+    return {
+        "schema": checked["schema"],
+        "git_commit_or_worktree_state": checked["git_commit_or_worktree_state"],
+        "generating_procedure": list(procedure),
+    }
 
 
 @dataclass(frozen=True)
@@ -1791,6 +2895,10 @@ class DataIdentityPreflightReceipt:
             raise DataIdentityError(
                 "preflight receipt cannot authorize execution"
             )
+        _validated_generation_identity(
+            self.generation_identity,
+            source_bindings=self.source_bindings,
+        )
         object.__setattr__(
             self, "_seal", canonical_sha256(self._unsigned_payload())
         )
@@ -1820,6 +2928,11 @@ class DataIdentityPreflightReceipt:
                     "lane_id": value.lane_id,
                     "product_id": value.product_id,
                     "lane_admission_bundle_id": value.lane_admission_bundle_id,
+                    "native_identity_profile_id": (
+                        value.records[0].native_identity_profile_id
+                        if value.complete
+                        else None
+                    ),
                     "status": value.status.value,
                 }
                 for value in self.lane_decisions
@@ -1843,6 +2956,9 @@ class DataIdentityPreflightReceipt:
             ],
             "source_bindings": dict(self.source_bindings),
             "generation_identity": dict(self.generation_identity),
+            "git_commit_or_worktree_state": self.generation_identity[
+                "git_commit_or_worktree_state"
+            ],
             "assumptions": [
                 "candidate roots, when supplied, are read-only local directories",
                 "identity admission is separate from lane execution authorization",
@@ -1862,9 +2978,8 @@ class DataIdentityPreflightReceipt:
                 "admission inferred as execution authorization",
                 "native or family claim promotion",
             ],
-            "generating_procedure": (
-                "python3 -B scripts/codex_harness/"
-                "run_pr289_data_identity_v2.py build"
+            "generating_procedure": list(
+                self.generation_identity["generating_procedure"]
             ),
         }
 
@@ -1937,7 +3052,10 @@ def build_data_identity_v2_receipt(
         raise DataIdentityError("preflight receipt requires source bindings")
     if not isinstance(generation_identity, Mapping) or not generation_identity:
         raise DataIdentityError("generation identity is required")
-    _canonical_bytes(generation_identity)
+    checked_generation_identity = _validated_generation_identity(
+        generation_identity,
+        source_bindings=checked_bindings,
+    )
     return DataIdentityPreflightReceipt(
         registry_content_id=registry.content_id,
         aggregate_status=aggregate,
@@ -1945,7 +3063,7 @@ def build_data_identity_v2_receipt(
         authorization_receipts=authorizations,
         mutation_results=mutations,
         source_bindings=checked_bindings,
-        generation_identity=dict(generation_identity),
+        generation_identity=checked_generation_identity,
         terminal=PASS_TOKEN,
         _construction_token=_PREFLIGHT_TOKEN,
     )
@@ -1971,6 +3089,9 @@ __all__ = [
     "evaluate_lane_identity",
     "lane_registry_from_mapping",
     "load_lane_registry",
+    "replay_lane_admission_decision",
     "registered_mutation_ids",
+    "validate_data_identity_record_payload",
+    "validate_native_identity_profile",
     "validate_mutation_results",
 ]

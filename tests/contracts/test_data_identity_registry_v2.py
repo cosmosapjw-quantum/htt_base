@@ -4,8 +4,12 @@ from __future__ import annotations
 
 from dataclasses import replace
 import hashlib
+from io import BytesIO
 import json
 from pathlib import Path
+import sys
+import tarfile
+import types
 
 import pytest
 import yaml
@@ -16,9 +20,11 @@ from common.data_identity import (
     AuthorizationStatus,
     DataIdentityError,
     build_data_identity_v2_receipt,
+    canonical_sha256,
     compute_source_locator_identity,
     evaluate_lane_identity,
     load_lane_registry,
+    replay_lane_admission_decision,
     registered_mutation_ids,
 )
 
@@ -33,6 +39,7 @@ SPEC = ROOT / "docs/research_program/post_pr275/pr289_spec.yaml"
 POLICY = ROOT / "docs/research_program/post_pr275/pr289_publication_policy.json"
 BACKLOG = ROOT / "docs/codex_handoff/pr_backlog.yaml"
 RUNBOOKS = ROOT / "docs/research_program/post_pr275/data_runbooks.yaml"
+CLAIM_LEDGER = ROOT / "docs/harness/CLAIM_LEDGER.md"
 PR274_REGISTRY = (
     ROOT
     / "docs/research_program/vector_tensor/data_admission/"
@@ -43,6 +50,9 @@ PR274_RESULT = (
     / "docs/research_program/vector_tensor/data_admission/"
     "PR274_ADMISSION_RESULT.json"
 )
+MODULE = ROOT / "htt/src/common/data_identity.py"
+RUNNER = ROOT / "scripts/codex_harness/run_pr289_data_identity_v2.py"
+TEST_FILE = Path(__file__).resolve()
 STAMP_A = "2026-08-09T00:00:00+00:00"
 STAMP_B = "2026-08-09T00:01:00+00:00"
 
@@ -57,8 +67,14 @@ def _source_bindings() -> dict[str, str]:
         for path in (
             REGISTRY_PATH,
             SPEC,
+            POLICY,
+            RUNBOOKS,
+            CLAIM_LEDGER,
             PR274_REGISTRY,
             PR274_RESULT,
+            MODULE,
+            RUNNER,
+            TEST_FILE,
         )
     }
 
@@ -93,6 +109,170 @@ def _base_evidence(lane_id: str, product_id: str) -> dict[str, object]:
     }
 
 
+def _signed(payload: dict[str, object]) -> dict[str, object]:
+    return {**payload, "profile_id": canonical_sha256(payload)}
+
+
+def _binding_rows(components: list[dict[str, object]]) -> list[dict[str, object]]:
+    ordinals: dict[str, int] = {}
+    rows = []
+    for component in components:
+        component_id = str(component["component_id"])
+        ordinal = ordinals.get(component_id, 0)
+        ordinals[component_id] = ordinal + 1
+        rows.append(
+            {
+                "component_id": component_id,
+                "ordinal": ordinal,
+                "byte_size": component["byte_size"],
+                "content_sha256": "sha256:"
+                + str(component["content_sha256"]).removeprefix("sha256:"),
+            }
+        )
+    return rows
+
+
+def _with_identity(
+    payload: dict[str, object],
+    field: str,
+    bindings: list[dict[str, object]] | None = None,
+) -> dict[str, object]:
+    if bindings is None:
+        identity = canonical_sha256(payload)
+    else:
+        component_ids = {
+            value
+            for key, value in payload.items()
+            if (key == "component_id" or key.endswith("_component_id"))
+            and isinstance(value, str)
+        }
+        selected = [
+            row for row in bindings if row["component_id"] in component_ids
+        ]
+        identity = canonical_sha256(
+            {"relationship": payload, "component_bindings": selected}
+        )
+    return {**payload, field: identity}
+
+
+def _native_profile(
+    lane_id: str,
+    product_id: str,
+    components: list[dict[str, object]],
+    evidence: dict[str, object],
+) -> dict[str, object]:
+    registry = load_lane_registry(REGISTRY_PATH)
+    lane = registry.lane(lane_id)
+    common: dict[str, object] = {
+        "schema": lane.native_identity_schema,
+        "lane_id": lane_id,
+        "product_id": product_id,
+        "component_bindings": _binding_rows(components),
+    }
+    bindings = common["component_bindings"]
+    if lane_id == "PLANCK":
+        pipelines = {}
+        for name, prefix in (("SMICA", "smica"), ("COMMANDER", "commander")):
+            unsigned = {
+                "pipeline": name,
+                "map_component_id": f"{prefix}_map",
+                "mask_component_id": f"{prefix}_mask",
+                "beam_component_id": f"{prefix}_beam",
+                "window_operator_component_id": f"{prefix}_window_operator",
+                "covariance_component_id": f"{prefix}_covariance",
+                "pixelization_component_id": "pixelization",
+                "native_selection_component_id": "native_selection",
+                "sky_support_id": evidence["sky_support_id"],
+                "harmonic_convention_id": evidence["harmonic_convention_id"],
+            }
+            pipelines[name] = _with_identity(
+                unsigned, "pipeline_identity", bindings
+            )
+        pair = _with_identity(
+            {
+                "smica_map_component_id": "smica_map",
+                "commander_map_component_id": "commander_map",
+                "sky_support_id": evidence["sky_support_id"],
+                "pixelization_component_id": "pixelization",
+            },
+            "pair_id",
+            bindings,
+        )
+        ffp10 = _with_identity(
+            {
+                "ensemble_kind": "FFP10",
+                "inventory_component_id": "ffp10_null_inventory",
+                "null_ensemble_id": evidence["null_ensemble_id"],
+            },
+            "null_identity",
+            bindings,
+        )
+        return _signed(
+            {**common, "pipelines": pipelines, "same_sky_pair": pair, "ffp10_null": ffp10}
+        )
+    if lane_id == "CF4":
+        catalogue = _with_identity(
+            {
+                "catalogue_component_id": "catalogue",
+                "row_selection_component_id": "row_selection",
+                "covariance_component_id": "covariance",
+                "row_selection_id": evidence["selection_id"],
+                "covariance_id": evidence["covariance_id"],
+            },
+            "catalogue_identity",
+            bindings,
+        )
+        semantics = _with_identity(
+            {
+                "frame_component_id": "frame_definition",
+                "sign_component_id": "sign_convention",
+                "units_component_id": "units_contract",
+                "grouping_component_id": "grouping_definition",
+                "depth_component_id": "depth_definition",
+                "zoa_component_id": "zoa_definition",
+                "coordinate_frame_id": evidence["coordinate_frame_id"],
+                "sign_orientation_convention_id": evidence[
+                    "sign_orientation_convention_id"
+                ],
+                "units_contract_id": evidence["units_contract_id"],
+            },
+            "semantics_identity",
+            bindings,
+        )
+        return _signed({**common, "catalogue": catalogue, "semantics": semantics})
+    if lane_id == "HSC_KIDS":
+        children = {}
+        for survey, prefix, calibration in (
+            ("HSC", "hsc", "hsc_shear_calibration"),
+            ("KIDS", "kids", "kids_shear_response"),
+        ):
+            unsigned = {
+                "survey_id": survey,
+                "product_component_id": f"{prefix}_product",
+                "mask_component_id": f"{prefix}_mask",
+                "randoms_component_id": f"{prefix}_randoms",
+                "psf_component_id": f"{prefix}_psf",
+                "n_z_component_id": f"{prefix}_n_z",
+                "calibration_or_response_component_id": calibration,
+                "covariance_component_id": f"{prefix}_covariance",
+            }
+            children[survey] = _with_identity(
+                unsigned, "child_identity_id", bindings
+            )
+        cross = _with_identity(
+            {
+                "component_id": "hsc_kids_cross_covariance",
+                "hsc_child_identity_id": children["HSC"]["child_identity_id"],
+                "kids_child_identity_id": children["KIDS"]["child_identity_id"],
+                "covariance_id": evidence["covariance_id"],
+            },
+            "cross_covariance_identity",
+            bindings,
+        )
+        return _signed({**common, "children": children, "cross_covariance": cross})
+    return _signed(common)
+
+
 def _valid_descriptor(
     root: Path,
     lane_id: str = "PLANCK",
@@ -119,6 +299,9 @@ def _valid_descriptor(
             }
         )
     evidence = _base_evidence(lane_id, lane.product_id)
+    evidence["native_identity_profile"] = _native_profile(
+        lane_id, lane.product_id, components, evidence
+    )
     evidence["source_locator_identity"] = compute_source_locator_identity(
         lane_id=lane_id,
         product_id=lane.product_id,
@@ -140,16 +323,60 @@ def _valid_descriptor(
     }
 
 
+def _rewrite_evidence(
+    descriptor: dict[str, object],
+    mutate,
+) -> None:
+    root = Path(str(descriptor["root"]))
+    evidence_path = root / str(descriptor["evidence_relative_path"])
+    evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+    mutate(evidence)
+    evidence["source_locator_identity"] = compute_source_locator_identity(
+        lane_id=evidence["lane_id"],
+        product_id=evidence["product_id"],
+        components=descriptor["components"],
+        evidence_bindings=evidence,
+    )
+    evidence_path.write_text(
+        json.dumps(evidence, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    descriptor["evidence_sha256"] = _sha(evidence_path)
+
+
+def _resign_nested(
+    profile: dict[str, object], row: dict[str, object], identity_field: str
+) -> None:
+    unsigned = dict(row)
+    unsigned.pop(identity_field)
+    row[identity_field] = _with_identity(
+        unsigned,
+        identity_field,
+        profile["component_bindings"],
+    )[identity_field]
+
+
 def _receipt(descriptors: dict[str, dict[str, object]]):
+    source_bindings = _source_bindings()
+    normalized_bindings = {
+        path: "sha256:" + digest.removeprefix("sha256:")
+        for path, digest in source_bindings.items()
+    }
     return build_data_identity_v2_receipt(
         registry=load_lane_registry(REGISTRY_PATH),
         root_descriptors=descriptors,
         inspected_at_utc=STAMP_A,
         spec_path=SPEC,
-        source_bindings=_source_bindings(),
+        source_bindings=source_bindings,
         generation_identity={
-            "source_commit_or_external_candidate_seal_id": "a" * 40,
-            "worktree_state": "external_candidate_seal",
+            "schema": "common.source_bound_generation_identity.v1",
+            "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:"
+            + canonical_sha256(normalized_bindings),
+            "generating_procedure": [
+                "python3",
+                "-B",
+                "scripts/codex_harness/run_pr289_data_identity_v2.py",
+                "build",
+            ],
         },
     )
 
@@ -179,8 +406,307 @@ def test_registry_spec_policy_and_pr274_boundary_are_exact() -> None:
         PR274_REGISTRY
     )
     assert spec["historical_boundary"]["v1_result_sha256"] == _sha(PR274_RESULT)
+    assert spec["historical_boundary"]["v1_replay_commit"] == (
+        "ff9ef9f45747e559c5343b463cf010dfc3a7432a"
+    )
     assert policy["claim_ceiling"] == "diagnostic_only"
     assert policy["family_identification_gate"] == "BLOCKED_PRE_NATIVE_ATLAS"
+    assert {
+        "planck_native_profile_and_same_sky_replay",
+        "cf4_native_catalogue_selection_covariance_replay",
+        "hsc_kids_separate_child_and_cross_covariance_replay",
+        "native_profile_export_replay_and_string_only_refusal",
+    } <= set(policy["required_review_cells"])
+    assert "generic record-id or string-only native admission" in policy[
+        "forbidden_inputs"
+    ]
+    runbook_by_lane = {row["lane"]: row for row in runbooks["runbooks"]}
+    assert "SMICA and Commander" in runbook_by_lane["PLANCK"][
+        "required_input_contract"
+    ]
+    assert "row selection" in runbook_by_lane["CF4"][
+        "required_input_contract"
+    ]
+    assert "cross-covariance" in runbook_by_lane["HSC_KIDS"][
+        "required_input_contract"
+    ]
+
+
+def test_native_lane_registry_roles_are_exact_and_survey_specific() -> None:
+    registry = load_lane_registry(REGISTRY_PATH)
+    assert registry.lane("PLANCK").required_component_ids == (
+        "smica_map",
+        "commander_map",
+        "smica_mask",
+        "commander_mask",
+        "smica_beam",
+        "commander_beam",
+        "smica_window_operator",
+        "commander_window_operator",
+        "smica_covariance",
+        "commander_covariance",
+        "pixelization",
+        "native_selection",
+        "ffp10_null_inventory",
+    )
+    assert registry.lane("CF4").required_component_ids == (
+        "catalogue",
+        "row_selection",
+        "covariance",
+        "frame_definition",
+        "sign_convention",
+        "units_contract",
+        "grouping_definition",
+        "depth_definition",
+        "zoa_definition",
+    )
+    hsc_kids = registry.lane("HSC_KIDS")
+    assert {"hsc_psf", "kids_psf", "hsc_n_z", "kids_n_z"} <= set(
+        hsc_kids.required_component_ids
+    )
+    assert {
+        "hsc_shear_calibration",
+        "kids_shear_response",
+        "hsc_covariance",
+        "kids_covariance",
+        "hsc_kids_cross_covariance",
+    } <= set(hsc_kids.required_component_ids)
+
+
+@pytest.mark.parametrize("lane_id", ("PLANCK", "CF4", "HSC_KIDS"))
+def test_complete_native_profiles_admit_and_replay_exactly(
+    tmp_path: Path, lane_id: str
+) -> None:
+    registry = load_lane_registry(REGISTRY_PATH)
+    decision = evaluate_lane_identity(
+        registry=registry,
+        lane_id=lane_id,
+        descriptor=_valid_descriptor(tmp_path / lane_id.lower(), lane_id),
+        inspected_at_utc=STAMP_A,
+    )
+    assert decision.status is AdmissionStatus.ADMITTED_IDENTITY_ONLY
+    assert decision.records
+    profile_ids = {row.native_identity_profile_id for row in decision.records}
+    assert profile_ids == {
+        decision.records[0].native_identity_profile["profile_id"]
+    }
+    replayed = replay_lane_admission_decision(
+        decision.as_payload(), registry=registry
+    )
+    assert replayed.as_payload() == decision.as_payload()
+
+
+def test_exported_record_component_ordinal_fails_closed(tmp_path: Path) -> None:
+    registry = load_lane_registry(REGISTRY_PATH)
+    decision = evaluate_lane_identity(
+        registry=registry,
+        lane_id="PLANCK",
+        descriptor=_valid_descriptor(tmp_path / "planck", "PLANCK"),
+        inspected_at_utc=STAMP_A,
+    )
+    payload = decision.as_payload()
+    payload["records"][0]["component_ordinal"] = 1
+    with pytest.raises(DataIdentityError, match="one native component role"):
+        replay_lane_admission_decision(payload, registry=registry)
+
+
+def test_generic_record_id_or_string_profile_cannot_admit_planck(
+    tmp_path: Path,
+) -> None:
+    registry = load_lane_registry(REGISTRY_PATH)
+    descriptor = _valid_descriptor(tmp_path / "planck")
+
+    def mutate(evidence: dict[str, object]) -> None:
+        evidence["native_identity_profile"] = {
+            "schema": "common.planck_native_identity.v1",
+            "record_ids": ["generic-record-id"],
+        }
+
+    _rewrite_evidence(descriptor, mutate)
+    decision = evaluate_lane_identity(
+        registry=registry,
+        lane_id="PLANCK",
+        descriptor=descriptor,
+        inspected_at_utc=STAMP_A,
+    )
+    assert decision.status is AdmissionStatus.REJECTED_MISSING_SEMANTIC_CONTRACT
+    assert not decision.records
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    ("pipeline_collapse", "different_sky", "missing_ffp10", "operator_alias"),
+)
+def test_planck_native_relationship_mutations_fail_closed(
+    tmp_path: Path, mutation: str
+) -> None:
+    registry = load_lane_registry(REGISTRY_PATH)
+    descriptor = _valid_descriptor(tmp_path / mutation)
+
+    def mutate(evidence: dict[str, object]) -> None:
+        profile = evidence["native_identity_profile"]
+        if mutation == "pipeline_collapse":
+            pipeline = profile["pipelines"]["COMMANDER"]
+            pipeline["map_component_id"] = "smica_map"
+            _resign_nested(profile, pipeline, "pipeline_identity")
+        elif mutation == "different_sky":
+            pair = profile["same_sky_pair"]
+            pair["sky_support_id"] = "sky:other-release:v1"
+            _resign_nested(profile, pair, "pair_id")
+        elif mutation == "missing_ffp10":
+            null = profile["ffp10_null"]
+            null["inventory_component_id"] = "native_selection"
+            _resign_nested(profile, null, "null_identity")
+        else:
+            pipeline = profile["pipelines"]["COMMANDER"]
+            pipeline["window_operator_component_id"] = "smica_window_operator"
+            _resign_nested(profile, pipeline, "pipeline_identity")
+        unsigned_profile = dict(profile)
+        unsigned_profile.pop("profile_id")
+        profile["profile_id"] = canonical_sha256(unsigned_profile)
+
+    _rewrite_evidence(descriptor, mutate)
+    decision = evaluate_lane_identity(
+        registry=registry,
+        lane_id="PLANCK",
+        descriptor=descriptor,
+        inspected_at_utc=STAMP_A,
+    )
+    assert decision.status is AdmissionStatus.REJECTED_MISSING_SEMANTIC_CONTRACT
+    assert not decision.records
+
+
+@pytest.mark.parametrize(
+    "field",
+    ("catalogue_component_id", "row_selection_id", "covariance_id", "frame"),
+)
+def test_cf4_exact_catalogue_and_semantic_roles_fail_closed(
+    tmp_path: Path, field: str
+) -> None:
+    registry = load_lane_registry(REGISTRY_PATH)
+    descriptor = _valid_descriptor(tmp_path / field, "CF4")
+
+    def mutate(evidence: dict[str, object]) -> None:
+        profile = evidence["native_identity_profile"]
+        if field == "frame":
+            row = profile["semantics"]
+            row["coordinate_frame_id"] = "frame:wrong:v1"
+            identity_field = "semantics_identity"
+        else:
+            row = profile["catalogue"]
+            row[field] = "row_selection" if field.endswith("component_id") else "wrong:v1"
+            identity_field = "catalogue_identity"
+        _resign_nested(profile, row, identity_field)
+        unsigned_profile = dict(profile)
+        unsigned_profile.pop("profile_id")
+        profile["profile_id"] = canonical_sha256(unsigned_profile)
+
+    _rewrite_evidence(descriptor, mutate)
+    decision = evaluate_lane_identity(
+        registry=registry,
+        lane_id="CF4",
+        descriptor=descriptor,
+        inspected_at_utc=STAMP_A,
+    )
+    assert decision.status is AdmissionStatus.REJECTED_MISSING_SEMANTIC_CONTRACT
+    assert not decision.records
+
+
+@pytest.mark.parametrize("field", ("psf", "n_z", "calibration", "cross_covariance"))
+def test_hsc_and_kids_child_identities_remain_separate(
+    tmp_path: Path, field: str
+) -> None:
+    registry = load_lane_registry(REGISTRY_PATH)
+    descriptor = _valid_descriptor(tmp_path / field, "HSC_KIDS")
+
+    def mutate(evidence: dict[str, object]) -> None:
+        profile = evidence["native_identity_profile"]
+        if field == "cross_covariance":
+            cross = profile["cross_covariance"]
+            cross["component_id"] = "hsc_covariance"
+            _resign_nested(profile, cross, "cross_covariance_identity")
+        else:
+            kids = profile["children"]["KIDS"]
+            source = {
+                "psf": "hsc_psf",
+                "n_z": "hsc_n_z",
+                "calibration": "hsc_shear_calibration",
+            }[field]
+            target = {
+                "psf": "psf_component_id",
+                "n_z": "n_z_component_id",
+                "calibration": "calibration_or_response_component_id",
+            }[field]
+            kids[target] = source
+            _resign_nested(profile, kids, "child_identity_id")
+            cross = profile["cross_covariance"]
+            cross["kids_child_identity_id"] = kids["child_identity_id"]
+            _resign_nested(profile, cross, "cross_covariance_identity")
+        unsigned_profile = dict(profile)
+        unsigned_profile.pop("profile_id")
+        profile["profile_id"] = canonical_sha256(unsigned_profile)
+
+    _rewrite_evidence(descriptor, mutate)
+    decision = evaluate_lane_identity(
+        registry=registry,
+        lane_id="HSC_KIDS",
+        descriptor=descriptor,
+        inspected_at_utc=STAMP_A,
+    )
+    assert decision.status is AdmissionStatus.REJECTED_MISSING_SEMANTIC_CONTRACT
+    assert not decision.records
+
+
+@pytest.mark.parametrize(
+    ("lane_id", "component_id", "identity_path", "unchanged_path"),
+    (
+        (
+            "PLANCK",
+            "smica_map",
+            ("pipelines", "SMICA", "pipeline_identity"),
+            ("pipelines", "COMMANDER", "pipeline_identity"),
+        ),
+        (
+            "CF4",
+            "catalogue",
+            ("catalogue", "catalogue_identity"),
+            ("semantics", "semantics_identity"),
+        ),
+        (
+            "HSC_KIDS",
+            "hsc_psf",
+            ("children", "HSC", "child_identity_id"),
+            ("children", "KIDS", "child_identity_id"),
+        ),
+    ),
+)
+def test_native_child_identities_bind_exact_component_bytes(
+    tmp_path: Path,
+    lane_id: str,
+    component_id: str,
+    identity_path: tuple[str, ...],
+    unchanged_path: tuple[str, ...],
+) -> None:
+    descriptor = _valid_descriptor(tmp_path / lane_id.lower(), lane_id)
+    components = descriptor["components"]
+    root = Path(descriptor["root"])
+    evidence = json.loads(
+        (root / descriptor["evidence_relative_path"]).read_text(encoding="utf-8")
+    )
+    before = evidence["native_identity_profile"]
+    changed = json.loads(json.dumps(components))
+    row = next(value for value in changed if value["component_id"] == component_id)
+    row["content_sha256"] = "f" * 64
+    after = _native_profile(lane_id, evidence["product_id"], changed, evidence)
+
+    def value_at(payload: dict[str, object], path: tuple[str, ...]):
+        value = payload
+        for key in path:
+            value = value[key]
+        return value
+
+    assert value_at(before, identity_path) != value_at(after, identity_path)
+    assert value_at(before, unchanged_path) == value_at(after, unchanged_path)
 
 
 def test_clean_checkout_no_roots_is_explicit_pass_with_zero_admissions() -> None:
@@ -412,6 +938,81 @@ def test_mutation_execution_cannot_be_omitted_or_hardcoded(
         _receipt({})
 
 
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    (
+        (
+            "git_commit_or_worktree_state",
+            "BOUND_SOURCE_WORKTREE:sha256:" + "0" * 64,
+            "generation identity source binding drifted",
+        ),
+        (
+            "generating_procedure",
+            ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "check"],
+            "generation procedure is not the exact build argv",
+        ),
+    ),
+)
+def test_claim_receipt_generation_identity_fails_closed(
+    field: str, value: object, message: str
+) -> None:
+    source_bindings = _source_bindings()
+    generation_identity = {
+        "schema": "common.source_bound_generation_identity.v1",
+        "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:"
+        + canonical_sha256(
+            {
+                path: "sha256:" + digest.removeprefix("sha256:")
+                for path, digest in source_bindings.items()
+            }
+        ),
+        "generating_procedure": [
+            "python3",
+            "-B",
+            "scripts/codex_harness/run_pr289_data_identity_v2.py",
+            "build",
+        ],
+    }
+    generation_identity[field] = value
+    with pytest.raises(DataIdentityError, match=message):
+        build_data_identity_v2_receipt(
+            registry=load_lane_registry(REGISTRY_PATH),
+            root_descriptors={},
+            inspected_at_utc=STAMP_A,
+            spec_path=SPEC,
+            source_bindings=source_bindings,
+            generation_identity=generation_identity,
+        )
+
+
+def test_claim_receipt_requires_runbook_and_claim_ledger_bindings() -> None:
+    source_bindings = _source_bindings()
+    source_bindings.pop(str(CLAIM_LEDGER.relative_to(ROOT)))
+    normalized = {
+        path: "sha256:" + digest.removeprefix("sha256:")
+        for path, digest in source_bindings.items()
+    }
+    with pytest.raises(DataIdentityError, match="required source binding missing"):
+        build_data_identity_v2_receipt(
+            registry=load_lane_registry(REGISTRY_PATH),
+            root_descriptors={},
+            inspected_at_utc=STAMP_A,
+            spec_path=SPEC,
+            source_bindings=source_bindings,
+            generation_identity={
+                "schema": "common.source_bound_generation_identity.v1",
+                "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:"
+                + canonical_sha256(normalized),
+                "generating_procedure": [
+                    "python3",
+                    "-B",
+                    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+                    "build",
+                ],
+            },
+        )
+
+
 def test_mutation_receipt_uses_the_live_rejection_path(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -521,3 +1122,49 @@ def test_runner_check_rejects_hardlinked_receipt(
 
     with pytest.raises(RuntimeError, match="single-link regular"):
         runner._check(root=tmp_path)
+
+
+def test_runner_reloads_exact_candidate_module_over_preloaded_replacement(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from scripts.codex_harness import run_pr289_data_identity_v2 as runner
+
+    fake = types.ModuleType("common.data_identity")
+
+    def must_not_execute(*_args, **_kwargs):
+        raise AssertionError("preloaded replacement module executed")
+
+    fake.build_data_identity_v2_receipt = must_not_execute
+    fake.load_lane_registry = must_not_execute
+    monkeypatch.setitem(sys.modules, "common.data_identity", fake)
+    payload = runner._build()
+    assert payload["terminal"] == "PASS_DATA_IDENTITY_V2_PREFLIGHT"
+    loaded = sys.modules["common.data_identity"]
+    assert Path(loaded.__file__).resolve() == MODULE.resolve()
+
+
+@pytest.mark.parametrize("kind", ("traversal", "symlink"))
+def test_portable_archive_extraction_rejects_unsafe_members(
+    tmp_path: Path, kind: str
+) -> None:
+    from scripts.codex_harness import run_pr289_data_identity_v2 as runner
+
+    archive_bytes = BytesIO()
+    with tarfile.open(fileobj=archive_bytes, mode="w") as archive:
+        if kind == "traversal":
+            info = tarfile.TarInfo("../escape.txt")
+            raw = b"escape"
+            info.size = len(raw)
+            archive.addfile(info, BytesIO(raw))
+        else:
+            info = tarfile.TarInfo("linked")
+            info.type = tarfile.SYMTYPE
+            info.linkname = "outside"
+            archive.addfile(info)
+    archive_bytes.seek(0)
+    destination = tmp_path / "clean"
+    destination.mkdir()
+    with tarfile.open(fileobj=archive_bytes, mode="r:") as archive:
+        with pytest.raises(RuntimeError, match="unsafe archive member"):
+            runner._safe_extract_archive(archive, destination)
+    assert not (tmp_path / "escape.txt").exists()
