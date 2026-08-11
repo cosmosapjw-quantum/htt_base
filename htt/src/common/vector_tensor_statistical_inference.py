@@ -1536,23 +1536,38 @@ def build_mio_depth_cross_check(
         raise PillarSInferenceError(
             "MIO diagnostic designs must match the depth path"
         )
-    local_scale = float(local @ local)
-    global_scale = float(global_ @ global_)
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        local_scale = float(local @ local)
+        global_scale = float(global_ @ global_)
+    if not (math.isfinite(local_scale) and math.isfinite(global_scale)):
+        raise PillarSInferenceError(
+            "finite MIO diagnostic outputs are required"
+        )
     if min(local_scale, global_scale) <= 0.0:
         raise PillarSInferenceError("MIO diagnostic design must be nonzero")
-    local_residual = values - (float(local @ values) / local_scale) * local
-    global_residual = (
-        values - (float(global_ @ values) / global_scale) * global_
-    )
-    local_norm = float(np.linalg.norm(local_residual))
-    global_norm = float(np.linalg.norm(global_residual))
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        local_residual = values - (float(local @ values) / local_scale) * local
+        global_residual = (
+            values - (float(global_ @ values) / global_scale) * global_
+        )
+        local_norm = float(np.linalg.norm(local_residual))
+        global_norm = float(np.linalg.norm(global_residual))
+        norm_difference = global_norm - local_norm
+    if not (
+        np.all(np.isfinite(local_residual))
+        and np.all(np.isfinite(global_residual))
+        and math.isfinite(local_norm)
+        and math.isfinite(global_norm)
+        and math.isfinite(norm_difference)
+    ):
+        raise PillarSInferenceError(
+            "finite MIO diagnostic outputs are required"
+        )
     return MioDepthDiagnosticCrossCheck(
         status=ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC,
         local_residual_norm=local_norm,
         global_residual_norm=global_norm,
-        residual_norm_difference_global_minus_local=(
-            global_norm - local_norm
-        ),
+        residual_norm_difference_global_minus_local=norm_difference,
         mask_path_id=_text(mask_path_id, "mask_path_id"),
     )
 

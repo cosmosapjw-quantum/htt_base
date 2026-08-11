@@ -205,6 +205,7 @@ def test_vts14_rank_contract_uses_whitened_normalized_design(runner):
     assert contract["hostile_numeric_controls"] == {
         "extreme_spd_finite_gls": "TYPED_REFUSAL",
         "large_scale_finite_gls": "TYPED_REFUSAL",
+        "mio_large_scale_residual": "TYPED_REFUSAL",
         "whitened_rank_probe": {
             "selected_candidate": "LOCAL",
             "status": "VALIDATED_REGISTERED_SYNTHETIC",
@@ -304,6 +305,7 @@ def test_mutable_orchestration_is_validated_but_not_claim_source_bound(payload, 
         ("MU286-NEGATIVE-CONTROL-SURVIVES", "NEGATIVE_CONTROL_TERMINAL_DRIFT"),
         ("MU286-VTS14-PROPORTIONAL-DESIGN", "VTS14_LOCAL_GLOBAL_RANK_GATE"),
         ("MU286-VTS14-NUMERIC-GUARD-DRIFT", "SEMANTIC_TYPE_DRIFT"),
+        ("MU286-VTS14-MIO-NUMERIC-GUARD-DRIFT", "SEMANTIC_TYPE_DRIFT"),
     ],
 )
 def test_each_registered_mutation_is_killed(payload, runner, mutation_id, marker):

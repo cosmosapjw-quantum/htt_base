@@ -98,7 +98,7 @@
     "generation_identity": {
       "git_commit": null,
       "mode": "external_candidate_seal_required",
-      "source_binding_set_sha256": "0e7b487613c998782cc8f904cceefc52282757b6e8a69754604695fd479fa73d",
+      "source_binding_set_sha256": "fc1057abfc7d1d82c5c2313f31cc0d504abbc96b440225cc1353dcf19f647398",
       "worktree_state": "external_seal_bound"
     },
     "observed_data_executed": false,
@@ -209,6 +209,11 @@
       "expected_kill": "semantic_type_replay",
       "mutation_id": "MU286-VTS14-NUMERIC-GUARD-DRIFT",
       "mutation_kind": "finite_gls_refusal_or_whitened_rank_control_changes"
+    },
+    {
+      "expected_kill": "semantic_type_replay",
+      "mutation_id": "MU286-VTS14-MIO-NUMERIC-GUARD-DRIFT",
+      "mutation_kind": "finite_MIO_residual_refusal_changes"
     }
   ],
   "mutation_results": [
@@ -382,6 +387,15 @@
       "killed": true,
       "mutation_id": "MU286-VTS14-NUMERIC-GUARD-DRIFT",
       "survivor": false
+    },
+    {
+      "activated": true,
+      "evidence_fingerprint": "448af64e4255bb3bd6527aa38c959bd6da4ca11835fd104157f20b18d90df111",
+      "executed": true,
+      "kill_marker": "SEMANTIC_TYPE_DRIFT",
+      "killed": true,
+      "mutation_id": "MU286-VTS14-MIO-NUMERIC-GUARD-DRIFT",
+      "survivor": false
     }
   ],
   "negative_control_terminal_contract": {
@@ -398,7 +412,7 @@
   },
   "pr_id": "PR-286",
   "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
-  "receipt_content_sha256": "fd042fdb58575ebc8d23c3a2707dababa73d1098ccee7dd7ed6fc0fe5cd6ea7e",
+  "receipt_content_sha256": "00948067d29adfcc3cb1c931642cc11ff2bf4df5c85cb2be8087064beb810b76",
   "rows": [
     {
       "adjudicated_statement": "Under sigma -> R sigma R^T, beta -> R beta, omega -> det(R) R omega, the axial Krylov determinant det[omega, sigma omega, sigma^2 omega] is an O(3) scalar; the polar analogue is a pseudoscalar.",
@@ -3529,7 +3543,7 @@
         "held_out_integration_pack": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
         "held_out_pack_content_id": "sha256:9053bbc6680a6aa560ffeac4dcaf26fb6f681048a90206606ea1a9034a17017a",
         "implementation_bundle": {
-          "bundle_identity_sha256": "d27fd947c015b157c72eb9a1a13b8044642dfeedb9090aea089cf2e248997ea8",
+          "bundle_identity_sha256": "bbf276ae5b4ebb6a5558a50005de8df33cb82b2070689d28642c14bca339ad42",
           "numpy_version": "2.4.2",
           "provenance_grade": "CURRENT_REPLAY_BOUND_NOT_PRE_RESULT_EXTERNAL_SEAL",
           "python": {
@@ -3541,7 +3555,7 @@
           "source_hashes": {
             "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
             "htt/src/common/sbc_ppc.py": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
-            "htt/src/common/vector_tensor_statistical_inference.py": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c",
+            "htt/src/common/vector_tensor_statistical_inference.py": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
             "htt/src/common/weak_id_coverage.py": "087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
             "scripts/codex_harness/build_pr272_pillar_s_inference.py": "95111423b60d611974b470274ff4596f5be58c3c32b76e45dfb7d36dff97b4a9"
           }
@@ -3824,7 +3838,7 @@
         "held_out_integration_pack": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
         "held_out_pack_content_id": "sha256:9053bbc6680a6aa560ffeac4dcaf26fb6f681048a90206606ea1a9034a17017a",
         "implementation_bundle": {
-          "bundle_identity_sha256": "d27fd947c015b157c72eb9a1a13b8044642dfeedb9090aea089cf2e248997ea8",
+          "bundle_identity_sha256": "bbf276ae5b4ebb6a5558a50005de8df33cb82b2070689d28642c14bca339ad42",
           "numpy_version": "2.4.2",
           "provenance_grade": "CURRENT_REPLAY_BOUND_NOT_PRE_RESULT_EXTERNAL_SEAL",
           "python": {
@@ -3836,7 +3850,7 @@
           "source_hashes": {
             "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
             "htt/src/common/sbc_ppc.py": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
-            "htt/src/common/vector_tensor_statistical_inference.py": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c",
+            "htt/src/common/vector_tensor_statistical_inference.py": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
             "htt/src/common/weak_id_coverage.py": "087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
             "scripts/codex_harness/build_pr272_pillar_s_inference.py": "95111423b60d611974b470274ff4596f5be58c3c32b76e45dfb7d36dff97b4a9"
           }
@@ -3951,7 +3965,7 @@
         "held_out_integration_pack": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
         "held_out_pack_content_id": "sha256:9053bbc6680a6aa560ffeac4dcaf26fb6f681048a90206606ea1a9034a17017a",
         "implementation_bundle": {
-          "bundle_identity_sha256": "d27fd947c015b157c72eb9a1a13b8044642dfeedb9090aea089cf2e248997ea8",
+          "bundle_identity_sha256": "bbf276ae5b4ebb6a5558a50005de8df33cb82b2070689d28642c14bca339ad42",
           "numpy_version": "2.4.2",
           "provenance_grade": "CURRENT_REPLAY_BOUND_NOT_PRE_RESULT_EXTERNAL_SEAL",
           "python": {
@@ -3963,7 +3977,7 @@
           "source_hashes": {
             "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
             "htt/src/common/sbc_ppc.py": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
-            "htt/src/common/vector_tensor_statistical_inference.py": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c",
+            "htt/src/common/vector_tensor_statistical_inference.py": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
             "htt/src/common/weak_id_coverage.py": "087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
             "scripts/codex_harness/build_pr272_pillar_s_inference.py": "95111423b60d611974b470274ff4596f5be58c3c32b76e45dfb7d36dff97b4a9"
           }
@@ -4180,7 +4194,7 @@
         "held_out_integration_pack": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
         "held_out_pack_content_id": "sha256:9053bbc6680a6aa560ffeac4dcaf26fb6f681048a90206606ea1a9034a17017a",
         "implementation_bundle": {
-          "bundle_identity_sha256": "d27fd947c015b157c72eb9a1a13b8044642dfeedb9090aea089cf2e248997ea8",
+          "bundle_identity_sha256": "bbf276ae5b4ebb6a5558a50005de8df33cb82b2070689d28642c14bca339ad42",
           "numpy_version": "2.4.2",
           "provenance_grade": "CURRENT_REPLAY_BOUND_NOT_PRE_RESULT_EXTERNAL_SEAL",
           "python": {
@@ -4192,7 +4206,7 @@
           "source_hashes": {
             "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
             "htt/src/common/sbc_ppc.py": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
-            "htt/src/common/vector_tensor_statistical_inference.py": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c",
+            "htt/src/common/vector_tensor_statistical_inference.py": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
             "htt/src/common/weak_id_coverage.py": "087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
             "scripts/codex_harness/build_pr272_pillar_s_inference.py": "95111423b60d611974b470274ff4596f5be58c3c32b76e45dfb7d36dff97b4a9"
           }
@@ -4299,7 +4313,7 @@
         "held_out_integration_pack": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
         "held_out_pack_content_id": "sha256:9053bbc6680a6aa560ffeac4dcaf26fb6f681048a90206606ea1a9034a17017a",
         "implementation_bundle": {
-          "bundle_identity_sha256": "d27fd947c015b157c72eb9a1a13b8044642dfeedb9090aea089cf2e248997ea8",
+          "bundle_identity_sha256": "bbf276ae5b4ebb6a5558a50005de8df33cb82b2070689d28642c14bca339ad42",
           "numpy_version": "2.4.2",
           "provenance_grade": "CURRENT_REPLAY_BOUND_NOT_PRE_RESULT_EXTERNAL_SEAL",
           "python": {
@@ -4311,7 +4325,7 @@
           "source_hashes": {
             "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
             "htt/src/common/sbc_ppc.py": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
-            "htt/src/common/vector_tensor_statistical_inference.py": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c",
+            "htt/src/common/vector_tensor_statistical_inference.py": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
             "htt/src/common/weak_id_coverage.py": "087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
             "scripts/codex_harness/build_pr272_pillar_s_inference.py": "95111423b60d611974b470274ff4596f5be58c3c32b76e45dfb7d36dff97b4a9"
           }
@@ -4456,7 +4470,7 @@
         "held_out_integration_pack": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
         "held_out_pack_content_id": "sha256:9053bbc6680a6aa560ffeac4dcaf26fb6f681048a90206606ea1a9034a17017a",
         "implementation_bundle": {
-          "bundle_identity_sha256": "d27fd947c015b157c72eb9a1a13b8044642dfeedb9090aea089cf2e248997ea8",
+          "bundle_identity_sha256": "bbf276ae5b4ebb6a5558a50005de8df33cb82b2070689d28642c14bca339ad42",
           "numpy_version": "2.4.2",
           "provenance_grade": "CURRENT_REPLAY_BOUND_NOT_PRE_RESULT_EXTERNAL_SEAL",
           "python": {
@@ -4468,7 +4482,7 @@
           "source_hashes": {
             "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
             "htt/src/common/sbc_ppc.py": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
-            "htt/src/common/vector_tensor_statistical_inference.py": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c",
+            "htt/src/common/vector_tensor_statistical_inference.py": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
             "htt/src/common/weak_id_coverage.py": "087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
             "scripts/codex_harness/build_pr272_pillar_s_inference.py": "95111423b60d611974b470274ff4596f5be58c3c32b76e45dfb7d36dff97b4a9"
           }
@@ -4578,7 +4592,7 @@
         "held_out_integration_pack": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
         "held_out_pack_content_id": "sha256:9053bbc6680a6aa560ffeac4dcaf26fb6f681048a90206606ea1a9034a17017a",
         "implementation_bundle": {
-          "bundle_identity_sha256": "d27fd947c015b157c72eb9a1a13b8044642dfeedb9090aea089cf2e248997ea8",
+          "bundle_identity_sha256": "bbf276ae5b4ebb6a5558a50005de8df33cb82b2070689d28642c14bca339ad42",
           "numpy_version": "2.4.2",
           "provenance_grade": "CURRENT_REPLAY_BOUND_NOT_PRE_RESULT_EXTERNAL_SEAL",
           "python": {
@@ -4590,7 +4604,7 @@
           "source_hashes": {
             "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
             "htt/src/common/sbc_ppc.py": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
-            "htt/src/common/vector_tensor_statistical_inference.py": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c",
+            "htt/src/common/vector_tensor_statistical_inference.py": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
             "htt/src/common/weak_id_coverage.py": "087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
             "scripts/codex_harness/build_pr272_pillar_s_inference.py": "95111423b60d611974b470274ff4596f5be58c3c32b76e45dfb7d36dff97b4a9"
           }
@@ -4676,7 +4690,7 @@
         "held_out_integration_pack": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
         "held_out_pack_content_id": "sha256:9053bbc6680a6aa560ffeac4dcaf26fb6f681048a90206606ea1a9034a17017a",
         "implementation_bundle": {
-          "bundle_identity_sha256": "d27fd947c015b157c72eb9a1a13b8044642dfeedb9090aea089cf2e248997ea8",
+          "bundle_identity_sha256": "bbf276ae5b4ebb6a5558a50005de8df33cb82b2070689d28642c14bca339ad42",
           "numpy_version": "2.4.2",
           "provenance_grade": "CURRENT_REPLAY_BOUND_NOT_PRE_RESULT_EXTERNAL_SEAL",
           "python": {
@@ -4688,7 +4702,7 @@
           "source_hashes": {
             "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
             "htt/src/common/sbc_ppc.py": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
-            "htt/src/common/vector_tensor_statistical_inference.py": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c",
+            "htt/src/common/vector_tensor_statistical_inference.py": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
             "htt/src/common/weak_id_coverage.py": "087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
             "scripts/codex_harness/build_pr272_pillar_s_inference.py": "95111423b60d611974b470274ff4596f5be58c3c32b76e45dfb7d36dff97b4a9"
           }
@@ -4816,7 +4830,7 @@
         "held_out_integration_pack": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
         "held_out_pack_content_id": "sha256:9053bbc6680a6aa560ffeac4dcaf26fb6f681048a90206606ea1a9034a17017a",
         "implementation_bundle": {
-          "bundle_identity_sha256": "d27fd947c015b157c72eb9a1a13b8044642dfeedb9090aea089cf2e248997ea8",
+          "bundle_identity_sha256": "bbf276ae5b4ebb6a5558a50005de8df33cb82b2070689d28642c14bca339ad42",
           "numpy_version": "2.4.2",
           "provenance_grade": "CURRENT_REPLAY_BOUND_NOT_PRE_RESULT_EXTERNAL_SEAL",
           "python": {
@@ -4828,7 +4842,7 @@
           "source_hashes": {
             "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
             "htt/src/common/sbc_ppc.py": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
-            "htt/src/common/vector_tensor_statistical_inference.py": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c",
+            "htt/src/common/vector_tensor_statistical_inference.py": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
             "htt/src/common/weak_id_coverage.py": "087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
             "scripts/codex_harness/build_pr272_pillar_s_inference.py": "95111423b60d611974b470274ff4596f5be58c3c32b76e45dfb7d36dff97b4a9"
           }
@@ -4885,6 +4899,7 @@
         "hostile_numeric_controls": {
           "extreme_spd_finite_gls": "TYPED_REFUSAL",
           "large_scale_finite_gls": "TYPED_REFUSAL",
+          "mio_large_scale_residual": "TYPED_REFUSAL",
           "whitened_rank_probe": {
             "selected_candidate": "LOCAL",
             "status": "VALIDATED_REGISTERED_SYNTHETIC"
@@ -4905,7 +4920,7 @@
       },
       "row_id": "VT-S14",
       "sampling_law": "registered synthetic Gaussian depth-covariance local/global laws",
-      "semantic_type_identity_sha256": "3404406d0d249d949bca8faf7adfd7b672cdb8e5a1b52b0f5596b395ca4c9475",
+      "semantic_type_identity_sha256": "91b46bf16c8360c153b91a3f74445c87783b67b29c532b72c4941b7901e533c0",
       "sign_orientation_convention": "CHI_SQUARE_AND_RESIDUAL_DIFFERENCE_GLOBAL_MINUS_LOCAL",
       "singular_value_and_principal_angle_status": {
         "joint_rank": 2,
@@ -4939,7 +4954,7 @@
     "docs/generated/pr257_lowell_morphology/CAS_ADJUDICATION_PR257_ORBIT_V2.json": "fcadad2609e68f01fbac2bc8621fd044a833a3ae8655b8e0bac09fbca47aeb2c",
     "docs/generated/pr257_lowell_morphology/CAS_CONTRACT_PR257_ORBIT_V2.json": "1d3e0c76a3833dd72cb5e74dcd3ddedfe91a538902950df603587e77ad6c0e56",
     "docs/research_program/post_pr275/pr286_publication_policy.json": "768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d",
-    "docs/research_program/post_pr275/pr286_spec.yaml": "7b359af0818766860b4bfecc4eae36fa2b31580636d3dfea99a6ed280c4e4989",
+    "docs/research_program/post_pr275/pr286_spec.yaml": "6fca230213eea5c914842c63513a9047cb3221d0646564692464a82d7a03fc05",
     "docs/research_program/premise_anchor/pr254_spec.yaml": "4e2e497e0a3f13b9b9bbed02088072230315848a8669beb4b1901894d7fafe40",
     "docs/research_program/premise_anchor/pr257_spec.yaml": "f2c3fdba9d9b7852e885e2166be5f2237c725a3da8be40cef5760158412915e2",
     "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml": "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
@@ -4955,22 +4970,22 @@
     "htt/src/common/anchor_geometry.py": "dc7f2496ff0c96e34847c7b13e2e8d989722cdf1457525f311d0d21b0d5dfbb9",
     "htt/src/common/orbit_catalogue_v2.py": "838d946b2c975396b416836db7dc9cd69e29e5ef554b86306279bef71075d376",
     "htt/src/common/sbc_ppc.py": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
-    "htt/src/common/vector_tensor_statistical_inference.py": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c",
+    "htt/src/common/vector_tensor_statistical_inference.py": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
     "htt/src/common/weak_id_coverage.py": "087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
     "scripts/codex_harness/build_pr271_pillar_s_core.py": "6853854897f227775271d1c8248bcb5e66d47f96852b387687fac31f7db00a87",
     "scripts/codex_harness/build_pr272_pillar_s_inference.py": "95111423b60d611974b470274ff4596f5be58c3c32b76e45dfb7d36dff97b4a9",
     "scripts/codex_harness/build_pr273_blind_synthetic.py": "1cd0a431c48f2774af2e766d21636ceba1b71f19f8ba0056e608f915e1a50e5d",
     "scripts/codex_harness/run_pr254_counterexamples.py": "b99cd66c0515bcad0989618cb428d24de322b9e731ab70538dab9d361069d00a",
-    "scripts/codex_harness/run_pr286_pillar_s_adjudication.py": "7da531e70160a751e45348db7eeb4d2ee3fe129a31cbca01315c242a38f5557e",
-    "tests/contracts/test_pillar_s_complete_adjudication.py": "00d78ac6793535f64e2858a07e0ce1e22d8bfbd2725313723f46eb023b3a5172",
+    "scripts/codex_harness/run_pr286_pillar_s_adjudication.py": "a4a5243e13bc46503a16904c5f26a670a077d575220f16ebdae0c5d206493732",
+    "tests/contracts/test_pillar_s_complete_adjudication.py": "5e544fdbbe564765092a8c4f60b4f39a6bd3a32d42467f7dc6c9ac34f6754bef",
     "tests/contracts/test_pillar_s_core.py": "f110c7b89b52a292c333b6babe02f361e565144f26943af074121dc03f07ecda",
-    "tests/contracts/test_pillar_s_inference.py": "9c8e985dbce011403780c0561b207863c603004335499d8160dfafe1c6df05b0",
+    "tests/contracts/test_pillar_s_inference.py": "f1daf4bf081a0eadf9cb6443b5580282cffae6a03937506d9ec1350f8b8999a3",
     "tests/integration/test_vector_tensor_blind_synthetic.py": "a3994466767515c721a400fed7a86814b756f6ed201784801427ab83ff80ea10"
   },
   "source_bindings": [
     {
       "path": "docs/research_program/post_pr275/pr286_spec.yaml",
-      "sha256": "7b359af0818766860b4bfecc4eae36fa2b31580636d3dfea99a6ed280c4e4989"
+      "sha256": "6fca230213eea5c914842c63513a9047cb3221d0646564692464a82d7a03fc05"
     },
     {
       "path": "docs/research_program/post_pr275/pr286_publication_policy.json",
@@ -5062,11 +5077,11 @@
     },
     {
       "path": "tests/contracts/test_pillar_s_inference.py",
-      "sha256": "9c8e985dbce011403780c0561b207863c603004335499d8160dfafe1c6df05b0"
+      "sha256": "f1daf4bf081a0eadf9cb6443b5580282cffae6a03937506d9ec1350f8b8999a3"
     },
     {
       "path": "htt/src/common/vector_tensor_statistical_inference.py",
-      "sha256": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c"
+      "sha256": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254"
     },
     {
       "path": "htt/src/common/sbc_ppc.py",
@@ -5094,11 +5109,11 @@
     },
     {
       "path": "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
-      "sha256": "7da531e70160a751e45348db7eeb4d2ee3fe129a31cbca01315c242a38f5557e"
+      "sha256": "a4a5243e13bc46503a16904c5f26a670a077d575220f16ebdae0c5d206493732"
     },
     {
       "path": "tests/contracts/test_pillar_s_complete_adjudication.py",
-      "sha256": "00d78ac6793535f64e2858a07e0ce1e22d8bfbd2725313723f46eb023b3a5172"
+      "sha256": "5e544fdbbe564765092a8c4f60b4f39a6bd3a32d42467f7dc6c9ac34f6754bef"
     }
   ],
   "statement_identity_contract": {
@@ -5139,7 +5154,7 @@
     "vector_tensor_rows": 14
   },
   "synthetic_implementation_bundle": {
-    "bundle_identity_sha256": "d27fd947c015b157c72eb9a1a13b8044642dfeedb9090aea089cf2e248997ea8",
+    "bundle_identity_sha256": "bbf276ae5b4ebb6a5558a50005de8df33cb82b2070689d28642c14bca339ad42",
     "numpy_version": "2.4.2",
     "provenance_grade": "CURRENT_REPLAY_BOUND_NOT_PRE_RESULT_EXTERNAL_SEAL",
     "python": {
@@ -5151,7 +5166,7 @@
     "source_hashes": {
       "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
       "htt/src/common/sbc_ppc.py": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
-      "htt/src/common/vector_tensor_statistical_inference.py": "a7f2f9d69151c335b9cdebe5ee2b3c522de31f254f5cb912244a5b7c1e84d47c",
+      "htt/src/common/vector_tensor_statistical_inference.py": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
       "htt/src/common/weak_id_coverage.py": "087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
       "scripts/codex_harness/build_pr272_pillar_s_inference.py": "95111423b60d611974b470274ff4596f5be58c3c32b76e45dfb7d36dff97b4a9"
     }

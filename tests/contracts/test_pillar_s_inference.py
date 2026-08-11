@@ -758,6 +758,20 @@ def test_depth_local_global_refuses_nonfinite_large_scale_fit() -> None:
         )
 
 
+def test_mio_depth_cross_check_refuses_nonfinite_large_scale_fit() -> None:
+    import mio.formalism.vector_tensor_validation as mio_surface
+
+    local = np.asarray((1.0e200, 1.0e200))
+    global_ = np.asarray((1.0e200, 1.0e200 + 2.0e185))
+    with pytest.raises(PillarSInferenceError, match="finite MIO diagnostic"):
+        mio_surface.build_mio_depth_cross_check(
+            local,
+            local_design=local,
+            global_design=global_,
+            mask_path_id="nested-mask",
+        )
+
+
 def test_depth_local_global_refuses_nonfinite_extreme_covariance_fit() -> None:
     local = np.asarray((0.25, 0.5, 0.75, 1.0))
     global_ = np.ones(4)

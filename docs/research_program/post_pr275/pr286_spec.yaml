@@ -211,6 +211,7 @@ mutation_registry:
   - {mutation_id: MU286-NEGATIVE-CONTROL-SURVIVES, mutation_kind: expected_negative_control_unexpectedly_passes, expected_kill: negative_control_terminal_rule}
   - {mutation_id: MU286-VTS14-PROPORTIONAL-DESIGN, mutation_kind: local_global_design_rank_or_angle_collapses, expected_kill: local_global_rank_gate}
   - {mutation_id: MU286-VTS14-NUMERIC-GUARD-DRIFT, mutation_kind: finite_gls_refusal_or_whitened_rank_control_changes, expected_kill: semantic_type_replay}
+  - {mutation_id: MU286-VTS14-MIO-NUMERIC-GUARD-DRIFT, mutation_kind: finite_MIO_residual_refusal_changes, expected_kill: semantic_type_replay}
 
 assumptions:
   - PR-271 exact proof rows and PR-272 preregistration bytes remain frozen.

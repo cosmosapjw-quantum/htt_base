@@ -715,6 +715,7 @@ def _vts14_rank_contract(config: dict[str, Any]) -> dict[str, Any]:
         ModelCandidate,
         PillarSInferenceError,
         ValidationStatus,
+        build_mio_depth_cross_check,
         evaluate_depth_local_global,
     )
 
@@ -753,6 +754,17 @@ def _vts14_rank_contract(config: dict[str, Any]) -> dict[str, Any]:
         transfer_source="none",
         principal_angle_floor_radians=floor,
     )
+    try:
+        build_mio_depth_cross_check(
+            large_local,
+            local_design=large_local,
+            global_design=large_global,
+            mask_path_id="pr286-hostile-mask",
+        )
+    except PillarSInferenceError:
+        mio_large_scale_refusal = "TYPED_REFUSAL"
+    else:
+        raise PillarSAdjudicationError("VTS14_NUMERIC_GUARD_SURVIVED")
     extreme_local = np.asarray((0.25, 0.5, 0.75, 1.0))
     extreme_spd_refusal = require_typed_refusal(
         data=extreme_local,
@@ -802,6 +814,7 @@ def _vts14_rank_contract(config: dict[str, Any]) -> dict[str, Any]:
         "hostile_numeric_controls": {
             "extreme_spd_finite_gls": extreme_spd_refusal,
             "large_scale_finite_gls": large_scale_refusal,
+            "mio_large_scale_residual": mio_large_scale_refusal,
             "whitened_rank_probe": {
                 "selected_candidate": rank_probe.selected_candidate.value,
                 "status": rank_probe.status.value,
@@ -1179,7 +1192,7 @@ def receipt_content_sha256(payload: dict[str, Any]) -> str:
 
 def _expected_mutation_registry() -> list[dict[str, Any]]:
     registry = _load_yaml(SPEC_PATH).get("mutation_registry")
-    if not isinstance(registry, list) or len(registry) != 19:
+    if not isinstance(registry, list) or len(registry) != 20:
         raise PillarSAdjudicationError("MUTATION_REGISTRY_INVALID")
     return deepcopy(registry)
 
@@ -1365,6 +1378,10 @@ def apply_registered_mutation(
         row_map["VT-S14"]["rank_and_identification_scope"][
             "hostile_numeric_controls"
         ]["large_scale_finite_gls"] = "MUTATED_ACCEPTED"
+    elif mutation_id == "MU286-VTS14-MIO-NUMERIC-GUARD-DRIFT":
+        row_map["VT-S14"]["rank_and_identification_scope"][
+            "hostile_numeric_controls"
+        ]["mio_large_scale_residual"] = "MUTATED_ACCEPTED"
     else:
         raise PillarSAdjudicationError(f"UNKNOWN_MUTATION:{mutation_id}")
     return payload
