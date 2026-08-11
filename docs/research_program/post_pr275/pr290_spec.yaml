@@ -24,10 +24,14 @@ scientific_boundary:
 dependency_contract:
   required_success_prs: [PR-202, PR-287, PR-288, PR-289]
   required_terminals:
-    PR-287: ACTIVATED_PREDECESSOR_FINAL_SUCCESS
+    PR-287: PASS_FRESH_BLIND_TYPED_REPLAY
     PR-288: PASS_BAYESIAN_SEMANTICS_REPAIR
     PR-289: PASS_DATA_IDENTITY_V2_PREFLIGHT
-  current_expected_state: BLOCKED_DATA_IDENTITY_ADMISSION
+  terminal_receipt_paths:
+    PR-287: docs/generated/pr287_fresh_blind_typed_replay_receipt.json
+    PR-288: docs/generated/pr288_bayesian_semantics_receipt.json
+    PR-289: docs/generated/pr289_data_identity_v2_receipt.json
+  current_expected_state: BLOCKED_PREDECESSOR_FINAL_SUCCESS
   fail_closed_rule: >-
     Missing completion, missing execution resolution, a failed or blocked
     predecessor, or a receipt that does not replay keeps the observed executor
@@ -37,6 +41,18 @@ data_identity_contract:
   lane_id: PLANCK
   product_id: PLANCK_PR3_LOWELL_BUNDLE
   registry_path: docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json
+  registry_content_id: sha256:78e3ec41833db433b560ebf839e0ee9375f77879a629e4ce70900bfb959bbef0
+  required_source_binding_paths:
+    - docs/harness/CLAIM_LEDGER.md
+    - docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json
+    - docs/research_program/post_pr275/data_runbooks.yaml
+    - docs/research_program/post_pr275/pr289_publication_policy.json
+    - docs/research_program/post_pr275/pr289_spec.yaml
+    - docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json
+    - docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml
+    - htt/src/common/data_identity.py
+    - scripts/codex_harness/run_pr289_data_identity_v2.py
+    - tests/contracts/test_data_identity_registry_v2.py
   preflight_receipt_path: docs/generated/pr289_data_identity_v2_receipt.json
   required_admission_status: ADMITTED_IDENTITY_ONLY
   required_components:
@@ -69,7 +85,26 @@ human_execution_gate:
   canonical_status_path: docs/codex_handoff/pr_status.yaml
   current_status: NOT_AUTHORIZED
   authorization_mode: distinct_human_execution_receipt
+  receipt_path: docs/research_program/post_pr275/data_runs/planck/H_PLANCK_EXECUTION_AUTHORIZATION.json
+  receipt_schema: common.human_execution_authorization.v1
   authorized_scope: admitted_planck_observed_execution
+  authorization_domain: lane_data_execution
+  authority_key_id: H-PLANCK-OWNER-HMAC-V1
+  key_path_environment_variable: HTT_H_PLANCK_AUTHORITY_KEY_FILE
+  trusted_hmac_key_sha256: null
+  max_authorization_ttl_seconds: 1800
+  authenticity_contract:
+    method: external_owner_hmac_sha256
+    canonicalization: sorted_compact_ascii_json_without_authorization_hmac_sha256
+    status_alignment_required: true
+    exact_admission_bundle_and_record_ids_required: true
+    ordinary_agent_can_mint: false
+    current_trust_anchor_state: UNPROVISIONED
+  freshness_contract:
+    issued_at_and_expires_at_utc_required: true
+    evaluated_at_must_be_in_half_open_interval: '[issued_at_utc, expires_at_utc)'
+    nonce_required: true
+    future_executor_must_consume_nonce_once: true
   preactivation_rule: >-
     This PR may define and test typed operators on registered synthetic fixtures,
     but the repository implementation contains no ordinary-agent path that can
@@ -78,6 +113,9 @@ human_execution_gate:
 
 pipeline_contract:
   observation_products: [SMICA, Commander]
+  map_product_ids:
+    SMICA: planck:pr3:smica:lowell:v1
+    Commander: planck:pr3:commander:lowell:v1
   null_family: FFP10
   exact_common_operator_order:
     - release_and_component_identity
@@ -103,12 +141,83 @@ pipeline_contract:
     - null_ensemble_id
     - look_elsewhere_family_id
     - response_id
+    - units_id
+    - pixel_window_id
+    - feature_order_id
+    - mask_deconvolution_id
   identical_observation_null_pipeline: true
   mask_deconvolution_required: true
   diagonal_covariance_forbidden: true
+  implementation_readiness:
+    beam_pixel_normalization: BLOCKED_IMPLEMENTATION_UNAVAILABLE
+    mask_deconvolution: BLOCKED_UNDECONVOLVED
+    multipole_vectors: BLOCKED_EXTRACTOR_UNAVAILABLE
+    joint_covariance: BLOCKED_FEATURE_VECTOR_UNREGISTERED
+    global_response: BLOCKED_UNBOUND_GLOBAL_RESPONSE
+  harmonic_and_unit_contract:
+    map_unit: microK_CMB
+    frame: Galactic
+    scalar_harmonics: orthonormal_Condon_Shortley
+    reality_condition: a_l_minus_m_equals_minus_one_pow_m_conjugate_a_lm
+    alm_units: microK_CMB
+    cl_units: microK_CMB^2
+    biposh_A_units: microK_CMB^2
+    biposh_D_units: microK_CMB^4
+    s_one_half_units: microK_CMB^4
+    normalized_power_tensor_parity_and_axis_units: dimensionless
+  mask_beam_contract:
+    required_order:
+      - convert_units_and_frame
+      - remove_registered_weighted_monopole_and_dipole
+      - commonize_beam_and_pixel_window_to_frozen_target
+      - apply_registered_mask
+      - execute_registered_mask_coupling_inverse
+    target_beam_id: null
+    target_pixel_window_id: null
+    mask_coupling_inverse_id: null
+    regularization_id: null
+    condition_threshold: null
+    current_status: BLOCKED_UNDECONVOLVED
+    rule: masked pseudo-alm can never be relabelled as deconvolved output
+  multipole_vector_contract:
+    convention_id: null
+    degeneracy_rule: null
+    ordering_and_sign_canonicalization: null
+    current_status: BLOCKED_EXTRACTOR_UNAVAILABLE
+    rule: a power-tensor pole is not a multipole vector
+  covariance_contract:
+    feature_order_id: null
+    estimator_id: null
+    dimension_reduction_id: null
+    regularization_id: null
+    effective_rank_rule: null
+    condition_threshold: null
+    finite_mock_correction_id: null
+    component_pairing: matched_SMICA_Commander_rows_same_sky_not_independent
+    diagonal_shortcut_allowed: false
+    current_status: BLOCKED_FEATURE_VECTOR_UNREGISTERED
+  global_rank_contract:
+    estimator: observation_inclusive_leave_one_out_pooled_max_rank
+    row_unit: one_observation_or_matched_null_complete_registered_scan
+    local_tail_transform: leave_one_out_per_statistic
+    global_reducer: row_wise_max_negative_log_tail_rank
+    pooled_rank: count_all_rows_greater_or_equal_over_total_rows
+    tie_policy: conservative_greater_or_equal
+    finite_resolution: one_over_null_count_plus_one
+    forbidden_estimator: legacy_lowell_global_calibration_calibrate_max_scan
+  response_and_active_estimand_status:
+    local_boost: synthetic_operator_contract_only
+    global_tilt: BLOCKED_UNBOUND_GLOBAL_RESPONSE
+    local_global_rank: NOT_MEASURED
+    Q: BLOCKED_NO_DEPARTURE_BUNDLE_BUDGET
+    F: BLOCKED_NO_SIGN_CLEAN_XC_AND_CEILING
+    Pi: BLOCKED_NO_Q_OR_F_MEASURE
+    G_F: NOT_APPLICABLE_NO_DEPTH_AXIS
+    likelihood_prior_posterior_evidence: NOT_APPLICABLE_DIAGNOSTIC_ONLY
   synthetic_contract_fixture:
     fixture_id: PR290-SYNTHETIC-LOWELL-OPERATOR-V1
     purpose: operator_identity_shape_sign_and_permutation_tests_only
+    required_component_rows: [SMICA, Commander]
     cannot_support: [observed_number, p_value, morphology_claim, public_figure]
 
 output_contract:
@@ -137,12 +246,65 @@ output_contract:
     - owner_scope_and_claim_boundary
     - source_bindings
     - receipt_content_sha256
+  output_containment:
+    preflight_before_payload_generation: true
+    existing_parents_must_be_regular_directories: true
+    receipt_must_be_regular_single_link_or_absent: true
+    symlink_hardlink_nonregular_and_escape_refused: true
+    same_directory_temporary_then_atomic_replace: true
+    observed_result_directory_must_remain_absent_while_blocked: true
+  future_observed_result_contract:
+    current_status: DISABLED_PREACTIVATION
+    schema: htt.pr290.planck_observed_result.v1
+    required_metadata:
+      - artifact_owner
+      - scope
+      - claim_tier
+      - claim_level
+      - scientific_artifact_mode
+      - transfer_source
+      - allowed_uses
+      - forbidden_uses
+      - exact_admitted_record_ids
+      - lane_admission_bundle_id
+      - human_authorization_receipt_sha256
+      - sky_support_status
+      - mask_id
+      - beam_id
+      - pixel_window_id
+      - harmonic_convention_id
+      - units_id
+      - covariance_id
+      - covariance_status
+      - null_ensemble_id
+      - null_mock_status
+      - feature_order_id
+      - look_elsewhere_family_id
+      - response_id
+      - generating_procedure
+      - source_bindings
+      - git_commit_or_external_candidate_seal_id
+      - worktree_state
+      - caveats
+      - receipt_content_sha256
+    source_binding_rule: repo_relative_regular_single_link_path_to_sha256_digest
+    content_hash_rule: sha256_of_sorted_compact_ascii_json_without_receipt_content_sha256
+    activation_rule: unreachable until the schema validator and negative tests are implemented
+
+artifact_ownership:
+  delivery_orchestration: HTT
+  observable_features_morphology_axes_and_null_features: OBSSTAT
+  activation_manifests_provenance_and_semantic_guards: COMMON
+  model_dependent_likelihood_posterior_evidence: HTT_NOT_EXECUTED_BY_PREACTIVATION
+  mio_diagnostic_crosscheck: NOT_AN_ACTIVE_PR290_ESTIMAND
+  tsc_teff: LEGACY_ONLY
 
 terminal_precedence:
   - BLOCKED_CONTRACT_INVALID
   - BLOCKED_PREDECESSOR_FINAL_SUCCESS
   - BLOCKED_DATA_IDENTITY_ADMISSION
   - BLOCKED_HUMAN_EXECUTION_AUTHORIZATION
+  - BLOCKED_OPERATOR_IMPLEMENTATION
   - READY_FOR_ATTENDED_PLANCK_EXECUTION
   - PASS_PLANCK_OBSERVED_LANE_REBOOT
 
@@ -157,6 +319,12 @@ mutation_registry:
   - {mutation_id: MU290-LOOK-ELSEWHERE-OMITTED, intended_defect: selected statistic is reported without family correction}
   - {mutation_id: MU290-COMPONENT-PIPELINE-COLLAPSE, intended_defect: SMICA alone is generalized to Planck}
   - {mutation_id: MU290-NUMERIC-WRITE-WHILE-BLOCKED, intended_defect: blocked preactivation writes observed numerical output}
+  - {mutation_id: MU290-AUTH-HMAC-FORGERY, intended_defect: caller-authored receipt substitutes for external human authority}
+  - {mutation_id: MU290-AUTH-STALE-OR-WRONG-BUNDLE, intended_defect: stale or differently admitted records receive authorization}
+  - {mutation_id: MU290-OUTPUT-ALIAS, intended_defect: allowed receipt path clobbers an external inode through a symlink or hardlink}
+  - {mutation_id: MU290-OBSERVATION-EXCLUDED-RANK, intended_defect: each null is scored against a pool that excludes the observation but includes itself}
+  - {mutation_id: MU290-BIPOSH-UNIT-DRIFT, intended_defect: quadratic or quartic features are labelled with linear map units}
+  - {mutation_id: MU290-ZERO-BOOST-NONFINITE, intended_defect: beta zero yields nonfinite directions or Doppler factors}
   - {mutation_id: MU290-CLAIM-PROMOTION, intended_defect: process readiness becomes detection native or family language}
 
 allowed_uses:
@@ -178,6 +346,10 @@ assumptions:
   - A synthetic fixture validates code contracts only, not the observed sky.
 caveats:
   - PR-289 is PR_OPEN at exact sealed head 45da1bf54149864fb9d87be3a828df202ee1df7f.
+  - PR-287 process publication is open, but its capability-isolated fresh execution remains INCONCLUSIVE and no terminal receipt is present.
   - The current PR-289 receipt admits no external Planck root.
   - H-PLANCK is NOT_AUTHORIZED at specification freeze.
+  - The H-PLANCK trust anchor is unprovisioned, so even a syntactically valid receipt cannot authorize execution.
+  - Beam and pixel-window normalization, mask deconvolution, multipole-vector extraction, the joint feature covariance, and the global-tilt response remain explicitly unavailable.
+  - The active Planck finite-null p-value must use observation-inclusive leave-one-out pooled max ranking; the legacy max-scan calibrator is forbidden for PR-290.
   - No observed Planck bytes are read, downloaded, transformed, or summarized by this phase.
