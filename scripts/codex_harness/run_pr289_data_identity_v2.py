@@ -5,13 +5,15 @@ from __future__ import annotations
 
 from io import BytesIO
 import hashlib
+from importlib import metadata as importlib_metadata
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import subprocess
 import sys
 import tarfile
 import tempfile
+import time
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -127,18 +129,64 @@ def _encoded(payload: dict[str, object]) -> bytes:
     ).encode("ascii")
 
 
+def _validate_output_destination(
+    *, root: Path, output: Path, require_existing: bool
+) -> None:
+    if root.is_symlink() or not root.is_dir():
+        raise RuntimeError("receipt root must be a regular directory")
+    try:
+        relative = output.relative_to(root)
+    except ValueError as exc:
+        raise RuntimeError("receipt output escaped repository root") from exc
+    cursor = root
+    for part in relative.parent.parts:
+        cursor /= part
+        if cursor.is_symlink() or not cursor.is_dir():
+            raise RuntimeError(
+                f"receipt parent must be an existing regular directory: {cursor}"
+            )
+    if output.is_symlink():
+        raise RuntimeError("receipt output must be a single-link regular file")
+    if require_existing and not output.is_file():
+        raise RuntimeError("receipt output must be a single-link regular file")
+    if output.exists() and (
+        not output.is_file() or output.stat().st_nlink != 1
+    ):
+        raise RuntimeError("receipt output must be a single-link regular file")
+
+
+def _atomic_write(payload: bytes) -> None:
+    with tempfile.NamedTemporaryFile(
+        mode="wb",
+        dir=OUTPUT.parent,
+        prefix=f".{OUTPUT.name}.",
+        delete=False,
+    ) as handle:
+        temporary = Path(handle.name)
+        try:
+            handle.write(payload)
+            handle.flush()
+            os.fsync(handle.fileno())
+        except BaseException:
+            temporary.unlink(missing_ok=True)
+            raise
+    try:
+        os.replace(temporary, OUTPUT)
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise
+
+
 def _write() -> int:
+    try:
+        _validate_output_destination(
+            root=ROOT, output=OUTPUT, require_existing=False
+        )
+    except RuntimeError as exc:
+        print(exc, file=sys.stderr)
+        return 1
     payload = _build()
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    if OUTPUT.is_symlink():
-        raise RuntimeError("receipt output must not be a symlink")
-    if OUTPUT.exists() and OUTPUT.stat().st_nlink != 1:
-        raise RuntimeError("receipt output must not be a hardlink")
-    temporary = OUTPUT.with_suffix(".json.tmp")
-    if temporary.exists() or temporary.is_symlink():
-        raise RuntimeError("receipt temporary path already exists")
-    temporary.write_bytes(_encoded(payload))
-    os.replace(temporary, OUTPUT)
+    _atomic_write(_encoded(payload))
     print(
         json.dumps(
             {
@@ -154,8 +202,9 @@ def _write() -> int:
 
 def _check(root: Path = ROOT) -> int:
     output = root / OUTPUT.relative_to(ROOT)
-    if output.is_symlink() or not output.is_file():
-        raise RuntimeError("frozen PR-289 receipt is missing or nonregular")
+    _validate_output_destination(
+        root=root, output=output, require_existing=True
+    )
     expected = _encoded(_build(root))
     observed = output.read_bytes()
     if observed != expected:
@@ -213,21 +262,69 @@ def _preflight() -> int:
     return 0
 
 
-def _tracked_manifest(root: Path) -> tuple[str, int]:
-    paths = subprocess.check_output(
-        ["git", "ls-files", "-z"], cwd=root
-    ).split(b"\0")
-    digest = hashlib.sha256()
-    count = 0
-    for raw in paths:
-        if not raw:
-            continue
-        relative = raw.decode("utf-8")
-        data = (root / relative).read_bytes()
-        digest.update(relative.encode("utf-8") + b"\0")
-        digest.update(hashlib.sha256(data).digest())
-        count += 1
-    return digest.hexdigest(), count
+def _tracked_paths(root: Path) -> tuple[str, ...]:
+    completed = subprocess.run(
+        ["git", "ls-files", "-z"],
+        cwd=root,
+        check=False,
+        capture_output=True,
+    )
+    if completed.returncode != 0:
+        raise RuntimeError("tracked-file inventory failed")
+    return tuple(
+        item.decode("utf-8")
+        for item in completed.stdout.split(b"\0")
+        if item
+    )
+
+
+def _tracked_manifest(root: Path, paths: tuple[str, ...]) -> dict[str, object]:
+    identities: dict[str, str] = {}
+    for relative in paths:
+        path = root / relative
+        if path.is_symlink() or not path.is_file():
+            raise RuntimeError(f"tracked member is not regular: {relative}")
+        identities[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
+    encoded = json.dumps(
+        identities, sort_keys=True, separators=(",", ":")
+    ).encode("ascii")
+    return {
+        "file_count": len(identities),
+        "manifest_sha256": hashlib.sha256(encoded).hexdigest(),
+        "path_inventory_sha256": hashlib.sha256(
+            "\0".join(identities).encode("utf-8")
+        ).hexdigest(),
+        "content_identity_inventory_sha256": hashlib.sha256(
+            "\0".join(identities.values()).encode("ascii")
+        ).hexdigest(),
+    }
+
+
+def _versions() -> dict[str, str]:
+    values = {"python": sys.version.split()[0]}
+    for distribution in ("PyYAML", "pytest"):
+        try:
+            values[distribution] = importlib_metadata.version(distribution)
+        except importlib_metadata.PackageNotFoundError:
+            values[distribution] = "UNAVAILABLE"
+    return values
+
+
+def _safe_extract_archive(archive: tarfile.TarFile, destination: Path) -> None:
+    root = destination.resolve(strict=True)
+    members = archive.getmembers()
+    for member in members:
+        relative = PurePosixPath(member.name)
+        target = root.joinpath(*relative.parts)
+        if (
+            relative.is_absolute()
+            or not relative.parts
+            or any(part in {"", ".", ".."} for part in relative.parts)
+            or (target != root and root not in target.resolve().parents)
+            or not (member.isfile() or member.isdir())
+        ):
+            raise RuntimeError(f"unsafe archive member: {member.name}")
+    archive.extractall(destination, members=members)
 
 
 def _portable() -> int:
@@ -242,13 +339,17 @@ def _portable() -> int:
         text=True,
     ):
         raise RuntimeError("portable replay requires a clean committed candidate")
-    source_manifest, source_count = _tracked_manifest(ROOT)
+    tracked = _tracked_paths(ROOT)
+    source_before = _tracked_manifest(ROOT, tracked)
     archive = subprocess.check_output(["git", "archive", "HEAD"], cwd=ROOT)
     with tempfile.TemporaryDirectory(prefix="pr289-portable-") as temporary:
         clean = Path(temporary) / "repo"
         clean.mkdir()
         with tarfile.open(fileobj=BytesIO(archive), mode="r:") as handle:
-            handle.extractall(clean, filter="data")
+            _safe_extract_archive(handle, clean)
+        clean_before = _tracked_manifest(clean, tracked)
+        if clean_before != source_before:
+            raise RuntimeError("clean archive manifest differs from source")
         environment = {
             key: value
             for key, value in os.environ.items()
@@ -264,13 +365,15 @@ def _portable() -> int:
         environment["PYTHONPATH"] = os.pathsep.join(
             (str(clean), str(clean / "htt/src"), str(clean / "htt"))
         )
+        command = [
+            sys.executable,
+            "-B",
+            "scripts/codex_harness/run_pr289_data_identity_v2.py",
+            "check",
+        ]
+        started = time.perf_counter()
         completed = subprocess.run(
-            [
-                sys.executable,
-                "-B",
-                "scripts/codex_harness/run_pr289_data_identity_v2.py",
-                "check",
-            ],
+            command,
             cwd=clean,
             env=environment,
             text=True,
@@ -278,33 +381,47 @@ def _portable() -> int:
             check=False,
             timeout=300,
         )
+        elapsed = time.perf_counter() - started
         if completed.returncode != 0:
             raise RuntimeError(
                 "clean portable replay failed: "
                 + (completed.stderr or completed.stdout)
             )
-        clean_paths = sorted(
-            path
-            for path in clean.rglob("*")
-            if path.is_file() and "__pycache__" not in path.parts
-        )
-        clean_digest = hashlib.sha256()
-        for path in clean_paths:
-            relative = path.relative_to(clean).as_posix()
-            clean_digest.update(relative.encode("utf-8") + b"\0")
-            clean_digest.update(hashlib.sha256(path.read_bytes()).digest())
+        clean_after = _tracked_manifest(clean, tracked)
+        source_after = _tracked_manifest(ROOT, tracked)
+        if clean_after != clean_before or source_after != source_before:
+            raise RuntimeError("portable replay changed tracked bytes")
         print(
             json.dumps(
                 {
-                    "schema": "PR289_PORTABLE_CLEAN_EVIDENCE_V1",
+                    "schema": "PR289_PORTABLE_CLEAN_EVIDENCE_V2",
+                    "tracked_source_manifest": source_before,
+                    "interpreter_and_dependency_versions": _versions(),
+                    "scrubbed_environment_keys": {
+                        "PYTHONHOME": "PYTHONHOME" not in environment,
+                        "PYTHONPATH": "CLEAN_ROOT_ONLY",
+                        "PYTHONSTARTUP": "PYTHONSTARTUP" not in environment,
+                        "PYTEST_ADDOPTS": "PYTEST_ADDOPTS" not in environment,
+                        "PYTEST_PLUGINS": "PYTEST_PLUGINS" not in environment,
+                    },
+                    "exact_command": command,
+                    "exact_command_runtime_seconds": elapsed,
                     "nested_exit_code": completed.returncode,
                     "nested_stdout_sha256": hashlib.sha256(
                         completed.stdout.encode("utf-8")
                     ).hexdigest(),
-                    "source_tracked_manifest_sha256": source_manifest,
-                    "source_tracked_file_count": source_count,
-                    "clean_extracted_file_count": len(clean_paths),
-                    "clean_extracted_content_sha256": clean_digest.hexdigest(),
+                    "source_tracked_manifest_sha256": source_before[
+                        "manifest_sha256"
+                    ],
+                    "source_tracked_file_count": source_before["file_count"],
+                    "clean_extracted_file_count": clean_before["file_count"],
+                    "clean_extracted_content_sha256": clean_before[
+                        "manifest_sha256"
+                    ],
+                    "source_root_pre_hash": source_before["manifest_sha256"],
+                    "source_root_post_hash": source_after["manifest_sha256"],
+                    "clean_root_pre_hash": clean_before["manifest_sha256"],
+                    "clean_root_post_hash": clean_after["manifest_sha256"],
                     "source_root_differs_from_execution_root": clean != ROOT,
                     "external_roots_supplied": False,
                     "network_or_download_side_effect": False,

@@ -479,3 +479,45 @@ def test_unknown_lane_and_noncanonical_descriptor_fail_closed(tmp_path: Path) ->
         inspected_at_utc=STAMP_A,
     )
     assert decision.status is AdmissionStatus.REJECTED_IDENTITY_MISMATCH
+
+
+def test_runner_refuses_hardlinked_output_before_payload_generation(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    from scripts.codex_harness import run_pr289_data_identity_v2 as runner
+
+    generated = tmp_path / "docs/generated"
+    generated.mkdir(parents=True)
+    outside = tmp_path / "outside.json"
+    outside.write_text("preserve\n", encoding="utf-8")
+    destination = generated / "receipt.json"
+    destination.hardlink_to(outside)
+    monkeypatch.setattr(runner, "ROOT", tmp_path)
+    monkeypatch.setattr(runner, "OUTPUT", destination)
+
+    def must_not_build(*_args, **_kwargs):
+        raise AssertionError("payload generation ran before destination preflight")
+
+    monkeypatch.setattr(runner, "_build", must_not_build)
+    assert runner._write() == 1
+    assert outside.read_text(encoding="utf-8") == "preserve\n"
+
+
+def test_runner_check_rejects_hardlinked_receipt(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    from scripts.codex_harness import run_pr289_data_identity_v2 as runner
+
+    generated = tmp_path / "docs/generated"
+    generated.mkdir(parents=True)
+    payload = {"terminal": "PASS_DATA_IDENTITY_V2_PREFLIGHT"}
+    outside = tmp_path / "outside.json"
+    outside.write_bytes(runner._encoded(payload))
+    destination = generated / "receipt.json"
+    destination.hardlink_to(outside)
+    monkeypatch.setattr(runner, "ROOT", tmp_path)
+    monkeypatch.setattr(runner, "OUTPUT", destination)
+    monkeypatch.setattr(runner, "_build", lambda root=tmp_path: payload)
+
+    with pytest.raises(RuntimeError, match="single-link regular"):
+        runner._check(root=tmp_path)
