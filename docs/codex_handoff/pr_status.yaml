@@ -544,22 +544,23 @@ stacked_pr_execution:
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: f3a75833210278e15847731fa8f12183babb45ba0ea4409e75119960c9f5573f
+      production_hash: b9b62e081f702f6b2b1918e5b3f1b599d651bdfa2fb0261e878d7a669d94beaf
       dependency_hashes:
-        pr290_spec: e26580613babf85c6f68794bd4038538f9f916531428401d0fb951fef9b0b5cc
+        pr290_spec: 1ec571a1de15d6b0addc608e2eb5db1dc9df7ae6e3bdd7f66160cf56ebeb5f9a
         publication_policy: 45655b62f02f2d422283aa99780c78e80a022fbd1fd371e8ee7a450ddad320cd
         pr289_data_identity_receipt: 92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34
         pr289_registry: e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f
         pr288_terminal_receipt: 622dadbcdf4a5d616a78f485fd6a772d1c7823ed8d77e808aa2bfc8f66169b0c
         pr289_data_identity_module: 145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2
         pr290_runner: abaddb4980839f3b368337e9c800bed7a15c78b8fb7ae78c4a0708dc9e250466
-        pr290_contract_test: 548ee625e75264f46593358db1201c7bd28df71843ca3bcd6779135944fd8a61
+        pr290_contract_test: 58e59dd6f9f89b744757c3b2e87392c22972f531bf844ab8fd51eb1bb5e8f7f9
         claim_ledger: 86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b
         salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
-      gate_dispositions: {eligibility: PASS, implementation: PASS, validation: PASS,
+      gate_dispositions: {eligibility: PASS, implementation: PASS, validation: DEFERRED,
         code: DEFERRED, physics: DEFERRED, statistics: DEFERRED, claim: DEFERRED,
-        harness: PASS, portability_replay: PASS, review: DEFERRED}
-      assurance_budget: {maximum: 16, consumed: 0}
+        harness: DEFERRED, portability_replay: DEFERRED, review: DEFERRED,
+        rereview: DEFERRED}
+      assurance_budget: {maximum: 16, consumed: 4}
     PR-291:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]

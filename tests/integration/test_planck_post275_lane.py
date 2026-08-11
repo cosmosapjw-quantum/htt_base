@@ -767,6 +767,71 @@ def test_r2_structured_output_and_pipeline_mutations_fail_closed(
 @pytest.mark.parametrize(
     "mutation",
     (
+        "legacy_rank_estimator",
+        "anti_conservative_ties",
+        "wrong_finite_floor",
+        "independent_component_pairing",
+        "diagonal_covariance",
+        "linear_biposh_units",
+        "mask_ready",
+        "multipole_ready",
+        "operator_order",
+        "wrong_null_family",
+        "mask_deconvolution_optional",
+        "diagonal_covariance_allowed",
+    ),
+)
+def test_science_critical_pipeline_relaxations_fail_closed(
+    tmp_path: Path, mutation: str
+) -> None:
+    root = _copy_activation_inputs(tmp_path / mutation)
+    path = root / SPEC_REL
+    payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+    pipeline = payload["pipeline_contract"]
+    if mutation == "legacy_rank_estimator":
+        pipeline["global_rank_contract"]["estimator"] = (
+            "legacy_lowell_global_calibration_calibrate_max_scan"
+        )
+    elif mutation == "anti_conservative_ties":
+        pipeline["global_rank_contract"]["tie_policy"] = "strict_greater"
+    elif mutation == "wrong_finite_floor":
+        pipeline["global_rank_contract"]["finite_resolution"] = (
+            "one_over_null_count"
+        )
+    elif mutation == "independent_component_pairing":
+        pipeline["covariance_contract"]["component_pairing"] = (
+            "independent_SMICA_Commander_rows"
+        )
+    elif mutation == "diagonal_covariance":
+        pipeline["covariance_contract"]["diagonal_shortcut_allowed"] = True
+    elif mutation == "linear_biposh_units":
+        pipeline["harmonic_and_unit_contract"]["biposh_A_units"] = "microK_CMB"
+    elif mutation == "mask_ready":
+        pipeline["mask_beam_contract"]["current_status"] = "READY_UNDECONVOLVED"
+    elif mutation == "multipole_ready":
+        pipeline["multipole_vector_contract"]["current_status"] = (
+            "READY_FAKE_POLE"
+        )
+    elif mutation == "operator_order":
+        pipeline["exact_common_operator_order"] = list(
+            reversed(pipeline["exact_common_operator_order"])
+        )
+    elif mutation == "wrong_null_family":
+        pipeline["null_family"] = "UNREGISTERED_NULLS"
+    elif mutation == "mask_deconvolution_optional":
+        pipeline["mask_deconvolution_required"] = False
+    else:
+        pipeline["diagonal_covariance_forbidden"] = False
+    path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
+
+    decision = build_planck_activation_decision(repository_root=root)
+    assert decision.terminal == "BLOCKED_CONTRACT_INVALID"
+    assert "pipeline contract drifted" in decision.reasons[0]
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    (
         "registry_content_id",
         "registry_source_binding",
         "nonregistry_source_binding",

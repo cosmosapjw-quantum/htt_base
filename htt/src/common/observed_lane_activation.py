@@ -209,6 +209,77 @@ _EXPECTED_OPERATOR_IDENTITY_FIELDS = (
     "feature_order_id",
     "mask_deconvolution_id",
 )
+_EXPECTED_COMMON_OPERATOR_ORDER = (
+    "release_and_component_identity",
+    "beam_and_pixel_window_normalization",
+    "registered_mask_application_and_deconvolution",
+    "harmonic_convention_validation",
+    "low_ell_alm_and_cl",
+    "power_tensor_axes_and_multipole_vectors",
+    "biposh_and_parity",
+    "sector_stress_and_response_projection",
+    "covariance_and_null_calibration",
+    "observation_inclusive_look_elsewhere_correction",
+    "component_separation_comparison",
+    "legacy_scalar_projection",
+)
+_EXPECTED_HARMONIC_AND_UNIT_CONTRACT = {
+    "map_unit": "microK_CMB",
+    "frame": "Galactic",
+    "scalar_harmonics": "orthonormal_Condon_Shortley",
+    "reality_condition": "a_l_minus_m_equals_minus_one_pow_m_conjugate_a_lm",
+    "alm_units": "microK_CMB",
+    "cl_units": "microK_CMB^2",
+    "biposh_A_units": "microK_CMB^2",
+    "biposh_D_units": "microK_CMB^4",
+    "s_one_half_units": "microK_CMB^4",
+    "normalized_power_tensor_parity_and_axis_units": "dimensionless",
+}
+_EXPECTED_MASK_BEAM_CONTRACT = {
+    "required_order": [
+        "convert_units_and_frame",
+        "remove_registered_weighted_monopole_and_dipole",
+        "commonize_beam_and_pixel_window_to_frozen_target",
+        "apply_registered_mask",
+        "execute_registered_mask_coupling_inverse",
+    ],
+    "target_beam_id": None,
+    "target_pixel_window_id": None,
+    "mask_coupling_inverse_id": None,
+    "regularization_id": None,
+    "condition_threshold": None,
+    "current_status": "BLOCKED_UNDECONVOLVED",
+    "rule": "masked pseudo-alm can never be relabelled as deconvolved output",
+}
+_EXPECTED_MULTIPOLE_VECTOR_CONTRACT = {
+    "convention_id": None,
+    "degeneracy_rule": None,
+    "ordering_and_sign_canonicalization": None,
+    "current_status": "BLOCKED_EXTRACTOR_UNAVAILABLE",
+    "rule": "a power-tensor pole is not a multipole vector",
+}
+_EXPECTED_COVARIANCE_CONTRACT = {
+    "feature_order_id": None,
+    "estimator_id": None,
+    "dimension_reduction_id": None,
+    "regularization_id": None,
+    "effective_rank_rule": None,
+    "condition_threshold": None,
+    "finite_mock_correction_id": None,
+    "component_pairing": "matched_SMICA_Commander_rows_same_sky_not_independent",
+    "diagonal_shortcut_allowed": False,
+    "current_status": "BLOCKED_FEATURE_VECTOR_UNREGISTERED",
+}
+_EXPECTED_GLOBAL_RANK_CONTRACT = {
+    "estimator": "observation_inclusive_leave_one_out_pooled_max_rank",
+    "row_unit": "one_observation_or_matched_null_complete_registered_scan",
+    "local_tail_transform": "leave_one_out_per_statistic",
+    "global_reducer": "row_wise_max_negative_log_tail_rank",
+    "pooled_rank": "count_all_rows_greater_or_equal_over_total_rows",
+    "tie_policy": "conservative_greater_or_equal",
+    "finite_resolution": "one_over_null_count_plus_one",
+    "forbidden_estimator": "legacy_lowell_global_calibration_calibrate_max_scan",
+}
 _EXPECTED_IMPLEMENTATION_READINESS = {
     "beam_pixel_normalization": "BLOCKED_IMPLEMENTATION_UNAVAILABLE",
     "mask_deconvolution": "BLOCKED_UNDECONVOLVED",
@@ -471,11 +542,23 @@ def _validate_spec(spec: Mapping[str, object]) -> None:
         tuple(pipeline.get("observation_products", ()))
         != _EXPECTED_OBSERVATION_PRODUCTS
         or pipeline.get("map_product_ids") != _EXPECTED_MAP_PRODUCT_IDS
+        or pipeline.get("null_family") != "FFP10"
+        or tuple(pipeline.get("exact_common_operator_order", ()))
+        != _EXPECTED_COMMON_OPERATOR_ORDER
         or pipeline.get("identical_observation_null_pipeline") is not True
+        or pipeline.get("mask_deconvolution_required") is not True
+        or pipeline.get("diagonal_covariance_forbidden") is not True
         or tuple(pipeline.get("required_identity_fields", ()))
         != _EXPECTED_OPERATOR_IDENTITY_FIELDS
         or pipeline.get("implementation_readiness")
         != _EXPECTED_IMPLEMENTATION_READINESS
+        or pipeline.get("harmonic_and_unit_contract")
+        != _EXPECTED_HARMONIC_AND_UNIT_CONTRACT
+        or pipeline.get("mask_beam_contract") != _EXPECTED_MASK_BEAM_CONTRACT
+        or pipeline.get("multipole_vector_contract")
+        != _EXPECTED_MULTIPOLE_VECTOR_CONTRACT
+        or pipeline.get("covariance_contract") != _EXPECTED_COVARIANCE_CONTRACT
+        or pipeline.get("global_rank_contract") != _EXPECTED_GLOBAL_RANK_CONTRACT
         or pipeline.get("response_and_active_estimand_status")
         != _EXPECTED_ACTIVE_ESTIMAND_STATUS
         or pipeline.get("synthetic_contract_fixture")
