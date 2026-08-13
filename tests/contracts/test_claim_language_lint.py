@@ -121,6 +121,16 @@ def test_plural_determiner_and_scalar_family_variants_are_errors() -> None:
     for text in forbidden:
         assert _rules(text), text
 
+    for auxiliary in (
+        "has already been",
+        "was formally",
+        "has once again been",
+        "is hereby",
+        "was unambiguously",
+    ):
+        text = f"Every registered candidate family {auxiliary} identified as Bianchi VII_h."
+        assert _rules(text), text
+
     safe = (
         "The analysis does not identify both Bianchi families.",
         "Both Bianchi families are not identified by this analysis.",
@@ -145,6 +155,13 @@ def test_quantified_and_possessive_family_variants_are_errors() -> None:
         "The scalar implies identification of every Bianchi family.",
         "Identification of multiple Bianchi families follows from the scalar.",
         "The analysis is not public but identifies every Bianchi family.",
+        "All candidate families have now been identified as Bianchi VII_h.",
+        "Every candidate family is hereby identified as Bianchi VII_h.",
+        "Each viable family has conclusively now been identified as Bianchi VII_h.",
+        "Identification of every candidate family as Bianchi VII_h follows from the scalar.",
+        "The scalar implies identification of every candidate family as Bianchi VII_h.",
+        "Every candidate family is identified by the scalar as Bianchi VII_h.",
+        "All candidate families have\nnow been identified as Bianchi VII_h.",
     )
     for text in forbidden:
         assert _rules(text), text
@@ -154,6 +171,8 @@ def test_quantified_and_possessive_family_variants_are_errors() -> None:
         "This analysis's output does not identify its Bianchi family.",
         "The scalar does not imply identification of every Bianchi family.",
         "Identification of multiple Bianchi families does not follow from the scalar.",
+        "All candidate families have not been identified as Bianchi VII_h.",
+        "Identification of every candidate family as Bianchi VII_h does not follow from the scalar.",
     )
     for text in safe:
         assert _rules(text) == [], text

@@ -89,6 +89,17 @@ _BIANCHI_FAMILY_PHRASE = (
     rf"{_POSITIVE_NOUN_MODIFIERS}Bianchi\s+famil(?:y|ies)"
 )
 _FAMILY_PHRASE = rf"{_POSITIVE_NOUN_MODIFIERS}famil(?:y|ies)"
+_BIANCHI_TYPE_PHRASE = r"Bianchi(?:\s+(?:type\s+)?[A-Za-z0-9_-]+)?"
+_FAMILY_AS_BIANCHI_PHRASE = (
+    rf"{_FAMILY_PHRASE}\s+as\s+{_BIANCHI_TYPE_PHRASE}"
+)
+# Passive identification may contain ordinary auxiliaries and positive
+# adverbs.  Negators are intentionally absent, so ``have not been identified``
+# cannot enter a positive match and still remains a permitted downclaim.
+_POSITIVE_IDENTIFICATION_AUX = (
+    r"(?:(?:is|are|was|were|has|have|had|been|being|now|hereby|already|"
+    r"once|again|[A-Za-z]+ly)\s+){0,7}"
+)
 _ANALYSIS_ACTOR = (
     r"(?:we|(?:(?:the|this|that|our|your|their|a|an)\s+)?"
     r"analys(?:is|es)(?:(?:'s|')\s+(?:output|outputs))?)"
@@ -130,9 +141,9 @@ RULES: tuple[ClaimLanguageRule, ...] = (
             rf"{_FAMILY_PHRASE}\s+as\s+Bianchi"
             r"(?:\s+(?:type\s+)?[A-Za-z0-9_-]+)?|"
             rf"{_FAMILY_PHRASE}\s+"
-            r"(?:(?:is|are|was|were|has|have|been|being|conclusively|"
-            r"directly|uniquely|definitively)\s+){0,5}"
-            r"identified\s+as\s+Bianchi(?:\s+(?:type\s+)?[A-Za-z0-9_-]+)?|"
+            rf"{_POSITIVE_IDENTIFICATION_AUX}identified"
+            r"(?:\s+by\s+[^.!?\n]{1,80})?\s+as\s+"
+            rf"{_BIANCHI_TYPE_PHRASE}|"
             r"(?:we\s+)?detect(?:s|ed)?\s+(?:a\s+|the\s+)?Bianchi geometry"
             r")\b",
             re.IGNORECASE,
@@ -152,13 +163,14 @@ RULES: tuple[ClaimLanguageRule, ...] = (
             r").{0,160}\b("
             r"family identification|identif(?:y|ies|ied).{0,40}famil|"
             r"identification\s+of\s+"
-            rf"{_BIANCHI_FAMILY_PHRASE}|"
+            rf"(?:{_BIANCHI_FAMILY_PHRASE}|{_FAMILY_AS_BIANCHI_PHRASE})|"
             r"prov(?:e|es|ed).{0,40}Bianchi type|"
             r"certif(?:y|ies|ied).{0,40}Bianchi geometry|"
             r"Bianchi geometry|geometry detected"
             r")|"
             r"(?:Bianchi family identification|identification\s+of\s+"
-            rf"{_BIANCHI_FAMILY_PHRASE})[^.!?\n]{{0,160}}\b"
+            rf"(?:{_BIANCHI_FAMILY_PHRASE}|{_FAMILY_AS_BIANCHI_PHRASE}))"
+            r"[^.!?\n]{0,160}\b"
             r"(?:follows?|results?)\s+from\s+(?:the\s+)?("
             r"scalar|D[_\\\-\s]?(?:\\ell|ell|l)|x\s*[,/]\s*Q|"
             r"F\s*[,/]\s*G|low[- ]ell feature|direction coherence|"
