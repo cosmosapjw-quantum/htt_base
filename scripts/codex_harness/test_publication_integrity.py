@@ -2032,7 +2032,7 @@ def test_reviewer_rereview_budget_exception_cannot_raise_the_ordinary_limit(
         )
 
 
-def test_reviewer_rereview_reauthorization_is_exactly_the_second_wave(
+def test_reviewer_rereview_reauthorization_is_exactly_bound_to_its_wave(
 ) -> None:
     run_id = "run-pr254-rereview-r2"
     allowed = ["A-PR254-R2-HARNESS", "A-PR254-R2-PHYSSTAT"]
@@ -2091,9 +2091,24 @@ def test_reviewer_rereview_reauthorization_is_exactly_the_second_wave(
     early["budget_exception"]["cumulative_start"] = 17
     with pytest.raises(
         PublicationIntegrityError,
-        match="must begin at cumulative assignment 18",
+        match="two-assignment wave boundary.*18",
     ):
         validate_review_rereview_budget_exception(early, run_id=run_id)
+
+    later = copy.deepcopy(plan)
+    later["budget_exception"]["cumulative_start"] = 20
+    assert (
+        validate_review_rereview_budget_exception(later, run_id=run_id)
+        == later["budget_exception"]
+    )
+    enforce_work_unit_assignment_budget(
+        later,
+        run_id=run_id,
+        assignment_id=allowed[0],
+        workflow_role="reviewer",
+        cumulative_count=20,
+        current_run_assignment_ids=set(),
+    )
 
 
 def test_init_run_records_exact_second_wave_reauthorization(

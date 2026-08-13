@@ -77,6 +77,23 @@ SOURCE_OBSERVABLE_CONFLATION_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
+# Match the grammatical roles around a forbidden family-identification
+# predicate instead of enumerating an ever-growing list of determiners.  The
+# bounded modifier fragment deliberately excludes lexical negators; semantic
+# negation of the predicate itself is handled by
+# ``_match_sentence_has_guardrail`` below.
+_POSITIVE_NOUN_MODIFIERS = (
+    r"(?:(?!(?:no|not|non)\b)[A-Za-z][A-Za-z'-]{0,31}\s+){0,3}"
+)
+_BIANCHI_FAMILY_PHRASE = (
+    rf"{_POSITIVE_NOUN_MODIFIERS}Bianchi\s+famil(?:y|ies)"
+)
+_FAMILY_PHRASE = rf"{_POSITIVE_NOUN_MODIFIERS}famil(?:y|ies)"
+_ANALYSIS_ACTOR = (
+    r"(?:we|(?:(?:the|this|that|our|your|their|a|an)\s+)?"
+    r"analys(?:is|es)(?:(?:'s|')\s+(?:output|outputs))?)"
+)
+
 
 @dataclass(frozen=True)
 class ClaimLanguageRule:
@@ -105,18 +122,14 @@ RULES: tuple[ClaimLanguageRule, ...] = (
             r"Bianchi famil(?:y|ies)\b[^.!?\n]{0,96}\bidentif(?:y|ies|ied)|"
             r"identified Bianchi family|"  # forbidden-rule literal
             r"family identified as|"  # forbidden-rule literal
-            r"(?:we|(?:(?:the|this|that|our|your|their|a|an)\s+)?"
-            r"analys(?:is|es))\b[^.!?\n]{0,96}\b"
+            rf"{_ANALYSIS_ACTOR}\b[^.!?\n]{{0,96}}\b"
             r"identif(?:y|ies|ied)\s+"
-            r"(?:(?:a|an|the|this|that|those|these|both|several)\s+)?"
-            r"Bianchi famil(?:y|ies)|"
-            r"(?:we|(?:(?:the|this|that|our|your|their|a|an)\s+)?"
-            r"analys(?:is|es))\b[^.!?\n]{0,96}\b"
+            rf"{_BIANCHI_FAMILY_PHRASE}|"
+            rf"{_ANALYSIS_ACTOR}\b[^.!?\n]{{0,96}}\b"
             r"identif(?:y|ies|ied)\s+"
-            r"(?:(?:the|this|that|those|these|both|several)\s+)?"
-            r"famil(?:y|ies)\s+as\s+Bianchi"
+            rf"{_FAMILY_PHRASE}\s+as\s+Bianchi"
             r"(?:\s+(?:type\s+)?[A-Za-z0-9_-]+)?|"
-            r"(?:the\s+)?famil(?:y|ies)\s+"
+            rf"{_FAMILY_PHRASE}\s+"
             r"(?:(?:is|are|was|were|has|have|been|being|conclusively|"
             r"directly|uniquely|definitively)\s+){0,5}"
             r"identified\s+as\s+Bianchi(?:\s+(?:type\s+)?[A-Za-z0-9_-]+)?|"
@@ -139,15 +152,13 @@ RULES: tuple[ClaimLanguageRule, ...] = (
             r").{0,160}\b("
             r"family identification|identif(?:y|ies|ied).{0,40}famil|"
             r"identification\s+of\s+"
-            r"(?:(?:a|an|the|those|these|both|several)\s+)?"
-            r"Bianchi famil(?:y|ies)|"
+            rf"{_BIANCHI_FAMILY_PHRASE}|"
             r"prov(?:e|es|ed).{0,40}Bianchi type|"
             r"certif(?:y|ies|ied).{0,40}Bianchi geometry|"
             r"Bianchi geometry|geometry detected"
             r")|"
             r"(?:Bianchi family identification|identification\s+of\s+"
-            r"(?:(?:a|an|the|those|these|both|several)\s+)?"
-            r"Bianchi famil(?:y|ies))[^.!?\n]{0,160}\b"
+            rf"{_BIANCHI_FAMILY_PHRASE})[^.!?\n]{{0,160}}\b"
             r"(?:follows?|results?)\s+from\s+(?:the\s+)?("
             r"scalar|D[_\\\-\s]?(?:\\ell|ell|l)|x\s*[,/]\s*Q|"
             r"F\s*[,/]\s*G|low[- ]ell feature|direction coherence|"

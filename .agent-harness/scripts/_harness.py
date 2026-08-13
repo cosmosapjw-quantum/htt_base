@@ -34,7 +34,7 @@ ACTIVE_RUN_RELATIVE_PATH = Path(".agent-harness/runtime/ACTIVE_RUN")
 LEGACY_ACTIVE_RUN_RELATIVE_PATH = Path(".agent-harness/ACTIVE_RUN")
 DEFAULT_MAX_TOTAL_PER_WORK_UNIT = 16
 MAX_REVIEW_REREVIEW_EXCEPTION_ASSIGNMENTS = 2
-REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START = (
+FIRST_REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START = (
     DEFAULT_MAX_TOTAL_PER_WORK_UNIT
     + MAX_REVIEW_REREVIEW_EXCEPTION_ASSIGNMENTS
 )
@@ -1437,10 +1437,11 @@ def validate_review_rereview_budget_exception(
 
     The ordinary cumulative work-unit ceiling remains 16.  An exception may
     authorize at most two named reviewer assignments in exactly one run after
-    that ceiling has been exhausted.  One explicit reauthorization may begin
-    only after the first two named assignments have been consumed.  Neither
-    form can authorize implementers, adjudicators, arbitrary assignment IDs,
-    a third review wave, or a reusable/global increase.
+    that ceiling has been exhausted.  A later reauthorization may begin only
+    after all earlier two-assignment waves have been consumed.  Every wave must
+    carry a fresh human authorization, name at most two reviewers, and bind its
+    exact cumulative start.  No form authorizes implementers, adjudicators,
+    arbitrary assignment IDs, or a reusable/global increase.
     """
 
     value = plan.get("budget_exception")
@@ -1545,12 +1546,18 @@ def validate_review_rereview_budget_exception(
         if (
             type(cumulative_start) is not int
             or cumulative_start
-            != REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START
+            < FIRST_REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START
+            or (
+                cumulative_start
+                - FIRST_REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START
+            )
+            % MAX_REVIEW_REREVIEW_EXCEPTION_ASSIGNMENTS
+            != 0
         ):
             raise PublicationIntegrityError(
-                "RUN_PLAN reviewer rereview reauthorization must begin at "
-                f"cumulative assignment "
-                f"{REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START}"
+                "RUN_PLAN reviewer rereview reauthorization must begin at an "
+                "exact two-assignment wave boundary at or after cumulative "
+                f"assignment {FIRST_REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START}"
             )
     return value
 

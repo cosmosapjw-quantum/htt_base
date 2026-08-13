@@ -103,8 +103,8 @@ def main() -> None:
         type=int,
         default=None,
         help=(
-            "exact cumulative assignment count for the single owner-authorized "
-            "second review wave; only the registered value 18 is accepted"
+            "exact cumulative assignment count for an owner-authorized later "
+            "two-reviewer wave; values must be even and at least 18"
         ),
     )
     args = parser.parse_args()

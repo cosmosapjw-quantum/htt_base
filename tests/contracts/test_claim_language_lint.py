@@ -131,6 +131,34 @@ def test_plural_determiner_and_scalar_family_variants_are_errors() -> None:
         assert _rules(text) == [], text
 
 
+def test_quantified_and_possessive_family_variants_are_errors() -> None:
+    forbidden = (
+        "The analysis identifies every Bianchi family in the result.",
+        "The analysis identifies each Bianchi family in the result.",
+        "The analyses identify multiple Bianchi families in the result.",
+        "Their analyses identify many Bianchi families in the result.",
+        "The analysis identifies all Bianchi families in the result.",
+        "This analysis's output identifies its Bianchi family.",
+        "The analyses' outputs identify all Bianchi families.",
+        "Every Bianchi family is identified by the analysis.",
+        "The analyses identify\nmultiple Bianchi families in the result.",
+        "The scalar implies identification of every Bianchi family.",
+        "Identification of multiple Bianchi families follows from the scalar.",
+        "The analysis is not public but identifies every Bianchi family.",
+    )
+    for text in forbidden:
+        assert _rules(text), text
+
+    safe = (
+        "The analysis does not identify every Bianchi family.",
+        "This analysis's output does not identify its Bianchi family.",
+        "The scalar does not imply identification of every Bianchi family.",
+        "Identification of multiple Bianchi families does not follow from the scalar.",
+    )
+    for text in safe:
+        assert _rules(text) == [], text
+
+
 def test_claim_scoped_geometry_downclaims_remain_allowed() -> None:
     safe = (
         "Do not claim Bianchi geometry detected in the CF4 result.\n"
