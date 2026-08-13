@@ -97,8 +97,9 @@ _FAMILY_AS_BIANCHI_PHRASE = (
 # adverbs.  Negators are intentionally absent, so ``have not been identified``
 # cannot enter a positive match and still remains a permitted downclaim.
 _POSITIVE_IDENTIFICATION_AUX = (
-    r"(?:(?:is|are|was|were|has|have|had|been|being|now|hereby|already|"
-    r"once|again|[A-Za-z]+ly)\s+){0,7}"
+    r"(?:(?:is|are|was|were|has|have|had|be|been|being|can|could|may|"
+    r"might|must|shall|should|will|would|now|hereby|already|once|again|"
+    r"[A-Za-z]+ly)\s+){0,8}"
 )
 _ANALYSIS_ACTOR = (
     r"(?:we|(?:(?:the|this|that|our|your|their|a|an)\s+)?"
@@ -133,6 +134,8 @@ RULES: tuple[ClaimLanguageRule, ...] = (
             r"Bianchi famil(?:y|ies)\b[^.!?\n]{0,96}\bidentif(?:y|ies|ied)|"
             r"identified Bianchi family|"  # forbidden-rule literal
             r"family identified as|"  # forbidden-rule literal
+            r"identif(?:y|ies|ied)\s+"
+            rf"(?:{_BIANCHI_FAMILY_PHRASE}|{_FAMILY_AS_BIANCHI_PHRASE})|"
             rf"{_ANALYSIS_ACTOR}\b[^.!?\n]{{0,96}}\b"
             r"identif(?:y|ies|ied)\s+"
             rf"{_BIANCHI_FAMILY_PHRASE}|"
@@ -683,6 +686,53 @@ def _match_sentence_has_guardrail(text: str, match: re.Match[str]) -> bool:
     relative_start = match.start() - start
     relative_end = match.end() - start
     matched_claim = sentence[relative_start:relative_end]
+    predicate_forms = (
+        r"detect(?:s|ed)?|identif(?:y|ies|ied)|support(?:s|ed)?|"
+        r"establish(?:es|ed)?|prov(?:e|es|ed)|certif(?:y|ies|ied)|"
+        r"validat(?:e|es|ed)|rescu(?:e|es|ed)|impl(?:y|ies|ied)|"
+        r"promot(?:e|es|ed)|claim(?:s|ed)?|follow(?:s|ed)?|result(?:s|ed)?"
+    )
+    positive_adverbs = r"(?:[a-z]+ly\s+){0,3}"
+    # Active predicate negation immediately before the match.  This handles
+    # contractions and positive adverbs without letting an unrelated earlier
+    # qualifier such as ``not public but`` suppress a later positive claim.
+    prefix = sentence[:relative_start]
+    if re.search(
+        rf"(?:\bcannot|\bnever|\b(?:ca|wo|sha)n['’]t|"
+        rf"\b(?:can|could|may|might|must|shall|should|will|"
+        rf"would|do|does|did)n['’]t|\b(?:can|could|may|might|must|shall|"
+        rf"should|will|would|do|does|did)\s+not)\s+{positive_adverbs}$",
+        prefix,
+    ):
+        return True
+    # Passive predicate negation is contained inside the matched family
+    # clause.  Permit only auxiliaries and adverbs between ``not`` and the
+    # predicate, so ``not public but ... identified`` is not exempted.
+    if re.search(
+        rf"\b(?:is|are|was|were|has|have|had|can|could|may|might|must|"
+        rf"shall|should|will|would)\s+{positive_adverbs}(?:not|never)\s+"
+        rf"(?:(?:be|been|being|have|has|had|[a-z]+ly)\s+){{0,4}}"
+        rf"(?:{predicate_forms})\b",
+        matched_claim,
+    ):
+        return True
+    if re.search(
+        rf"\b(?:is|are|was|were|has|have|had|can|could|may|might|must|"
+        rf"shall|should|will|would)n['’]t\s+"
+        rf"(?:(?:be|been|being|have|has|had|[a-z]+ly)\s+){{0,4}}"
+        rf"(?:{predicate_forms})\b",
+        matched_claim,
+    ):
+        return True
+    if re.search(
+        rf"(?:\bcannot|\bnever|\b(?:ca|wo|sha)n['’]t|"
+        rf"\b(?:can|could|may|might|must|shall|should|will|"
+        rf"would|do|does|did)n['’]t|\b(?:can|could|may|might|must|shall|"
+        rf"should|will|would|do|does|did)\s+not)\s+{positive_adverbs}"
+        rf"(?:{predicate_forms})\b",
+        matched_claim,
+    ):
+        return True
     if re.search(
         r"\b(?:is|are|was|were|has|have)\s+not\s+"
         r"(?:(?:conclusively|directly|uniquely|definitively)\s+){0,3}"
@@ -713,12 +763,11 @@ def _match_sentence_has_guardrail(text: str, match: re.Match[str]) -> bool:
     ):
         return True
 
-    prefix = sentence[:relative_start].rstrip()
     if re.search(
         r"(?:\b(?:do|does|did|must|should|can|could|may)\s+not\s+"
         r"(?:claim|assert|conclude|infer|report|say)(?:\s+that)?|"
         r"\bno)$",
-        prefix,
+        prefix.rstrip(),
     ):
         return True
 
