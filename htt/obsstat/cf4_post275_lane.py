@@ -771,7 +771,6 @@ def analyze_synthetic_shear(
     *,
     covariance_id: str,
     response_id: str,
-    eigengap_floor: float = RELATIVE_EIGENGAP_FLOOR,
 ) -> Cf4SyntheticShearReport:
     matrix = _finite_matrix(shear_tensor, "shear_tensor")
     if matrix.shape != (3, 3):
@@ -780,14 +779,11 @@ def analyze_synthetic_shear(
         raise Cf4Post275Error("shear tensor must be symmetric")
     if not math.isclose(float(np.trace(matrix)), 0.0, rel_tol=0.0, abs_tol=1e-12):
         raise Cf4Post275Error("shear tensor must be trace-free")
-    if isinstance(eigengap_floor, bool) or not isinstance(eigengap_floor, Real):
-        raise Cf4Post275Error("eigengap_floor must be real")
-    floor = float(eigengap_floor)
-    if not math.isfinite(floor) or floor <= 0.0:
-        raise Cf4Post275Error("eigengap_floor must be finite and positive")
     values = np.linalg.eigvalsh(matrix)
     gaps = np.diff(values)
-    weak = float(np.min(gaps)) <= _relative_eigengap_threshold(values, floor)
+    weak = float(np.min(gaps)) <= _relative_eigengap_threshold(
+        values, RELATIVE_EIGENGAP_FLOOR
+    )
     return Cf4SyntheticShearReport(
         eigenvalues=tuple(float(value) for value in values),  # type: ignore[arg-type]
         eigengaps=tuple(float(value) for value in gaps),  # type: ignore[arg-type]
@@ -933,7 +929,6 @@ def analyze_synthetic_eigenspace_drift(
     depth_path_content_id: str,
     covariance_id: str,
     response_id: str,
-    eigengap_floor: float = RELATIVE_EIGENGAP_FLOOR,
 ) -> Cf4EigenspaceDriftReport:
     """Compare path-rung STF eigenspaces using sign/basis-invariant projectors."""
 
@@ -943,11 +938,7 @@ def analyze_synthetic_eigenspace_drift(
     candidate = _validated_stf_tensor(
         candidate_shear_tensor, "candidate_shear_tensor"
     )
-    if isinstance(eigengap_floor, bool) or not isinstance(eigengap_floor, Real):
-        raise Cf4Post275Error("eigengap_floor must be real")
-    floor = float(eigengap_floor)
-    if not math.isfinite(floor) or floor <= 0.0:
-        raise Cf4Post275Error("eigengap_floor must be finite and positive")
+    floor = RELATIVE_EIGENGAP_FLOOR
 
     reference_values, reference_vectors = np.linalg.eigh(reference)
     candidate_values, candidate_vectors = np.linalg.eigh(candidate)
@@ -1019,8 +1010,13 @@ def analyze_synthetic_eigenspace_drift(
 class Cf4ResponseNullReport:
     response_id: str
     covariance_id: str
+    covariance_content_id: str
     parameter_labels: tuple[str, ...]
     parameter_roles: tuple[str, ...]
+    covariance_whitened_response: tuple[tuple[float, ...], ...]
+    column_scales: tuple[float, ...]
+    normalized_response_content_id: str
+    singular_values: tuple[float, ...]
     normalizer_id: str
     response_rank: int
     response_dimension: int
@@ -1028,12 +1024,22 @@ class Cf4ResponseNullReport:
     nullity: int
     right_null_basis: tuple[tuple[float, ...], ...]
     relative_singular_floor: float
+    null_residual_norm: float
+    null_residual_bound: float
     status: str
     _construction_token: InitVar[object] = None
+    content_id: str = field(init=False)
 
     def __post_init__(self, _construction_token: object) -> None:
         if _construction_token is not _RESPONSE_TOKEN:
             raise Cf4Post275Error("Cf4ResponseNullReport must be factory-built")
+        self._validate_contract()
+        object.__setattr__(self, "content_id", _content_id(self._payload()))
+
+    def _validate_contract(self) -> None:
+        _text(self.response_id, "response_id")
+        _text(self.covariance_id, "covariance_id")
+        _text(self.covariance_content_id, "covariance_content_id")
         if self.nullity <= 0 or self.status != "COVARIANCE_SUPPORTED_UNIDENTIFIED_DIRECTIONS":
             raise Cf4Post275Error("response report must preserve an unidentified direction")
         if (
@@ -1045,7 +1051,189 @@ class Cf4ResponseNullReport:
             or "GLOBAL" not in self.parameter_roles
         ):
             raise Cf4Post275Error("response parameter labels or roles drifted")
-        _text(self.normalizer_id, "normalizer_id")
+        if (
+            type(self.response_rank) is not int
+            or type(self.response_dimension) is not int
+            or type(self.parameter_dimension) is not int
+            or type(self.nullity) is not int
+            or self.response_dimension < 1
+            or self.parameter_dimension < 2
+            or self.response_rank < 1
+            or self.response_rank
+            > min(self.response_dimension, self.parameter_dimension)
+            or self.nullity != self.parameter_dimension - self.response_rank
+        ):
+            raise Cf4Post275Error("response rank/nullity contract drifted")
+        if self.relative_singular_floor != RELATIVE_SINGULAR_FLOOR:
+            raise Cf4Post275Error("registered response singular floor drifted")
+
+        whitened = _finite_matrix(
+            self.covariance_whitened_response,
+            "covariance_whitened_response",
+        )
+        if whitened.shape != (self.response_dimension, self.parameter_dimension):
+            raise Cf4Post275Error("whitened response dimensions drifted")
+        scales = _finite_vector(self.column_scales, "column_scales")
+        if scales.shape != (self.parameter_dimension,) or np.any(scales <= 0.0):
+            raise Cf4Post275Error("response column scales drifted")
+        normalized = whitened / scales
+        expected_normalized_id = _matrix_content_id(
+            "htt.obsstat.cf4_normalized_response.v1", normalized
+        )
+        if self.normalized_response_content_id != expected_normalized_id:
+            raise Cf4Post275Error("normalized response identity drifted")
+
+        singular = _finite_vector(self.singular_values, "singular_values")
+        if singular.size == 0 or any(
+            left < right for left, right in zip(singular, singular[1:])
+        ):
+            raise Cf4Post275Error("response singular-value inventory drifted")
+        derived_singular = np.linalg.svd(normalized, compute_uv=False)
+        if derived_singular.shape != singular.shape or not np.allclose(
+            derived_singular,
+            singular,
+            rtol=64.0 * np.finfo(float).eps,
+            atol=64.0 * np.finfo(float).eps,
+        ):
+            raise Cf4Post275Error("response singular values failed exact replay")
+        derived_rank = int(
+            np.count_nonzero(
+                derived_singular
+                > RELATIVE_SINGULAR_FLOOR * float(derived_singular[0])
+            )
+        )
+        if derived_rank != self.response_rank:
+            raise Cf4Post275Error("response rank failed registered replay")
+
+        basis = _finite_matrix(self.right_null_basis, "right_null_basis")
+        if basis.shape != (self.nullity, self.parameter_dimension):
+            raise Cf4Post275Error("right-null basis dimensions drifted")
+        residual = whitened @ basis.T
+        residual_norm = _finite_operator_norm(residual, "right-null residual")
+        residual_bound = _null_replay_bound(whitened, basis)
+        if (
+            residual_norm != self.null_residual_norm
+            or residual_bound != self.null_residual_bound
+            or residual_norm > residual_bound
+        ):
+            raise Cf4Post275Error("right-null basis failed numerical replay")
+
+        expected_normalizer = _response_normalizer_id(
+            response_id=self.response_id,
+            covariance_id=self.covariance_id,
+            covariance_content_id=self.covariance_content_id,
+            parameter_labels=self.parameter_labels,
+            parameter_roles=self.parameter_roles,
+            column_scales=self.column_scales,
+            normalized_response_content_id=self.normalized_response_content_id,
+            singular_values=self.singular_values,
+            response_rank=self.response_rank,
+            nullity=self.nullity,
+        )
+        if self.normalizer_id != expected_normalizer:
+            raise Cf4Post275Error("response normalizer identity drifted")
+
+    def _payload(self) -> dict[str, object]:
+        return {
+            "schema": "htt.obsstat.cf4_response_null.v2",
+            "response_id": self.response_id,
+            "covariance_id": self.covariance_id,
+            "covariance_content_id": self.covariance_content_id,
+            "parameter_labels": list(self.parameter_labels),
+            "parameter_roles": list(self.parameter_roles),
+            "covariance_whitened_response_hex": [
+                [value.hex() for value in row]
+                for row in self.covariance_whitened_response
+            ],
+            "column_scales_hex": [value.hex() for value in self.column_scales],
+            "normalized_response_content_id": self.normalized_response_content_id,
+            "singular_values_hex": [value.hex() for value in self.singular_values],
+            "normalizer_id": self.normalizer_id,
+            "response_rank": self.response_rank,
+            "response_dimension": self.response_dimension,
+            "parameter_dimension": self.parameter_dimension,
+            "nullity": self.nullity,
+            "right_null_basis_hex": [
+                [value.hex() for value in row] for row in self.right_null_basis
+            ],
+            "relative_singular_floor": self.relative_singular_floor,
+            "relative_singular_floor_hex": self.relative_singular_floor.hex(),
+            "null_residual_norm_hex": self.null_residual_norm.hex(),
+            "null_residual_bound_hex": self.null_residual_bound.hex(),
+            "status": self.status,
+            "claim_tier": CLAIM_TIER,
+            "family_identification_gate": FAMILY_GATE,
+            "observed_data_executed": False,
+        }
+
+    def as_payload(self) -> dict[str, object]:
+        self._validate_contract()
+        payload = self._payload()
+        if _content_id(payload) != self.content_id:
+            raise Cf4Post275Error("response report identity drifted")
+        return {**payload, "content_id": self.content_id}
+
+
+def _matrix_content_id(schema: str, matrix: np.ndarray) -> str:
+    return _content_id(
+        {
+            "schema": schema,
+            "values_hex": [
+                [float(value).hex() for value in row] for row in matrix
+            ],
+        }
+    )
+
+
+def _finite_operator_norm(matrix: np.ndarray, name: str) -> float:
+    value = float(np.linalg.norm(matrix, ord=2))
+    if not math.isfinite(value):
+        raise Cf4Post275Error(f"{name} is numerically non-finite")
+    return value
+
+
+def _null_replay_bound(whitened: np.ndarray, basis: np.ndarray) -> float:
+    bound = (
+        128.0
+        * np.finfo(float).eps
+        * max(whitened.shape)
+        * max(1.0, _finite_operator_norm(whitened, "whitened response"))
+        * max(1.0, _finite_operator_norm(basis, "right-null basis"))
+    )
+    if not math.isfinite(bound):
+        raise Cf4Post275Error("right-null replay bound is non-finite")
+    return bound
+
+
+def _response_normalizer_id(
+    *,
+    response_id: str,
+    covariance_id: str,
+    covariance_content_id: str,
+    parameter_labels: tuple[str, ...],
+    parameter_roles: tuple[str, ...],
+    column_scales: tuple[float, ...],
+    normalized_response_content_id: str,
+    singular_values: tuple[float, ...],
+    response_rank: int,
+    nullity: int,
+) -> str:
+    return _content_id(
+        {
+            "schema": "htt.obsstat.cf4_response_normalizer.v2",
+            "response_id": response_id,
+            "covariance_id": covariance_id,
+            "covariance_content_id": covariance_content_id,
+            "parameter_labels": list(parameter_labels),
+            "parameter_roles": list(parameter_roles),
+            "column_scales_hex": [value.hex() for value in column_scales],
+            "normalized_response_content_id": normalized_response_content_id,
+            "relative_singular_floor_hex": RELATIVE_SINGULAR_FLOOR.hex(),
+            "singular_values_hex": [value.hex() for value in singular_values],
+            "response_rank": response_rank,
+            "nullity": nullity,
+        }
+    )
 
 
 def analyze_synthetic_response_nullspace(
@@ -1056,7 +1244,6 @@ def analyze_synthetic_response_nullspace(
     response_id: str,
     parameter_labels: Sequence[str],
     parameter_roles: Sequence[str],
-    rank_tolerance: float = RELATIVE_SINGULAR_FLOOR,
 ) -> Cf4ResponseNullReport:
     response = _finite_matrix(response_matrix, "response_matrix")
     if response.shape[0] < 1 or response.shape[1] < 2:
@@ -1066,18 +1253,15 @@ def analyze_synthetic_response_nullspace(
         dimension=response.shape[0],
         diagonal_forbidden=response.shape[0] > 1,
     )
-    if isinstance(rank_tolerance, bool) or not isinstance(rank_tolerance, Real):
-        raise Cf4Post275Error("rank_tolerance must be real")
-    tolerance = float(rank_tolerance)
-    if not math.isfinite(tolerance) or tolerance <= 0.0:
-        raise Cf4Post275Error("rank_tolerance must be finite and positive")
     labels = tuple(_text(value, "parameter_label") for value in parameter_labels)
     roles = tuple(_text(value, "parameter_role").upper() for value in parameter_roles)
     if len(labels) != response.shape[1] or len(roles) != response.shape[1]:
         raise Cf4Post275Error("response labels and roles must match parameter columns")
     whitened = np.linalg.solve(np.linalg.cholesky(cov), response)
     scales, singular_values, rank = _column_normalized_svd(
-        whitened, name="covariance-whitened response", relative_floor=tolerance
+        whitened,
+        name="covariance-whitened response",
+        relative_floor=RELATIVE_SINGULAR_FLOOR,
     )
     normalized = whitened / scales
     _, _, right = np.linalg.svd(normalized, full_matrices=True)
@@ -1093,35 +1277,54 @@ def analyze_synthetic_response_nullspace(
     if np.any(basis_norms <= 0.0) or not np.all(np.isfinite(basis_norms)):
         raise Cf4Post275Error("right-null basis normalization failed")
     basis = rescaled_basis / basis_norms[:, None]
-    residual = response @ basis.T
-    response_scale = float(np.linalg.norm(response, ord=2))
-    if (
-        not np.all(np.isfinite(residual))
-        or float(np.linalg.norm(residual, ord=2))
-        > 10.0 * tolerance * response_scale
-    ):
-        raise Cf4Post275Error("right-null basis failed exact response replay")
-    return Cf4ResponseNullReport(
-        response_id=_text(response_id, "response_id"),
-        covariance_id=_text(covariance_id, "covariance_id"),
+    residual = whitened @ basis.T
+    residual_norm = _finite_operator_norm(residual, "right-null residual")
+    residual_bound = _null_replay_bound(whitened, basis)
+    if residual_norm > residual_bound:
+        raise Cf4Post275Error("right-null basis failed numerical replay")
+    covariance_content_id = _matrix_content_id(
+        "htt.obsstat.cf4_covariance.v1", cov
+    )
+    normalized_response_content_id = _matrix_content_id(
+        "htt.obsstat.cf4_normalized_response.v1", normalized
+    )
+    column_scales = tuple(float(value) for value in scales)
+    singular = tuple(float(value) for value in singular_values)
+    response_identity = _text(response_id, "response_id")
+    covariance_identity = _text(covariance_id, "covariance_id")
+    normalizer_id = _response_normalizer_id(
+        response_id=response_identity,
+        covariance_id=covariance_identity,
+        covariance_content_id=covariance_content_id,
         parameter_labels=labels,
         parameter_roles=roles,
-        normalizer_id=_content_id(
-            {
-                "schema": "htt.obsstat.cf4_response_normalizer.v1",
-                "response_id": response_id,
-                "covariance_id": covariance_id,
-                "parameter_labels": list(labels),
-                "parameter_roles": list(roles),
-                "column_scales_hex": [float(value).hex() for value in scales],
-            }
+        column_scales=column_scales,
+        normalized_response_content_id=normalized_response_content_id,
+        singular_values=singular,
+        response_rank=rank,
+        nullity=nullity,
+    )
+    return Cf4ResponseNullReport(
+        response_id=response_identity,
+        covariance_id=covariance_identity,
+        covariance_content_id=covariance_content_id,
+        parameter_labels=labels,
+        parameter_roles=roles,
+        covariance_whitened_response=tuple(
+            tuple(float(value) for value in row) for row in whitened
         ),
+        column_scales=column_scales,
+        normalized_response_content_id=normalized_response_content_id,
+        singular_values=singular,
+        normalizer_id=normalizer_id,
         response_rank=rank,
         response_dimension=response.shape[0],
         parameter_dimension=response.shape[1],
         nullity=nullity,
         right_null_basis=tuple(tuple(float(value) for value in row) for row in basis),
-        relative_singular_floor=tolerance,
+        relative_singular_floor=RELATIVE_SINGULAR_FLOOR,
+        null_residual_norm=residual_norm,
+        null_residual_bound=residual_bound,
         status="COVARIANCE_SUPPORTED_UNIDENTIFIED_DIRECTIONS",
         _construction_token=_RESPONSE_TOKEN,
     )
@@ -1131,9 +1334,9 @@ def build_structural_identified_set(
     *,
     lower: object,
     upper: object,
-    identification_status: str,
     nuisance_box_id: str,
-    response_id: str,
+    response: Cf4ResponseNullReport,
+    source_separation: SourceSeparationDecision,
 ) -> dict[str, object]:
     if isinstance(lower, bool) or isinstance(upper, bool) or not isinstance(
         lower, Real
@@ -1141,9 +1344,12 @@ def build_structural_identified_set(
         raise Cf4Post275Error("identified-set bounds must be real")
     lo = float(lower)
     hi = float(upper)
-    if not math.isfinite(lo) or not math.isfinite(hi) or lo > hi:
-        raise Cf4Post275Error("identified-set bounds must be finite and ordered")
-    if identification_status != "WEAKLY_IDENTIFIED":
+    if not math.isfinite(lo) or not math.isfinite(hi) or lo >= hi:
+        raise Cf4Post275Error(
+            "identified-set bounds must be finite and strictly ordered"
+        )
+    decision = _replay_response_source_binding(response, source_separation)
+    if decision.status is not SourceSeparationDecisionStatus.WEAKLY_IDENTIFIED:
         raise Cf4Post275Error("structural identified set requires weak identification")
     return {
         "schema": "htt.obsstat.cf4_structural_identified_set.v1",
@@ -1152,13 +1358,54 @@ def build_structural_identified_set(
         "reported_point": None,
         "confidence_level": None,
         "nuisance_box_id": _text(nuisance_box_id, "nuisance_box_id"),
-        "response_id": _text(response_id, "response_id"),
+        "response_id": response.response_id,
+        "response_content_id": response.content_id,
+        "covariance_id": response.covariance_id,
+        "covariance_content_id": response.covariance_content_id,
+        "response_normalizer_id": response.normalizer_id,
+        "response_rank": response.response_rank,
+        "response_nullity": response.nullity,
+        "relative_singular_floor": response.relative_singular_floor,
+        "source_separation_decision_id": decision.decision_id,
+        "source_geometry_report_id": decision.source_geometry_report_id,
+        "threshold_contract_id": decision.threshold_contract.contract_id,
         "required_action": "RESPONSE_EQUIVALENCE_ABSTENTION",
         "favourable_endpoint_reporting": "FORBIDDEN",
         "pipeline_spread_as_confidence": "FORBIDDEN",
         "claim_tier": CLAIM_TIER,
         "family_identification_gate": FAMILY_GATE,
     }
+
+
+def _replay_response_source_binding(
+    response: Cf4ResponseNullReport,
+    source_separation: SourceSeparationDecision,
+) -> SourceSeparationDecision:
+    if (
+        type(response) is not Cf4ResponseNullReport
+        or type(source_separation) is not SourceSeparationDecision
+    ):
+        raise TypeError("response/source decision must be exact factory objects")
+    response.as_payload()
+    decision = revalidate_source_separation_decision(source_separation)
+    if (
+        decision.covariance_id != response.covariance_id
+        or decision.normalizer_id != response.normalizer_id
+        or decision.local_parameter_count
+        != response.parameter_roles.count("LOCAL")
+        or decision.global_parameter_count
+        != response.parameter_roles.count("GLOBAL")
+    ):
+        raise Cf4Post275Error("source-response identity drifted")
+    if (
+        decision.local_rank != decision.local_parameter_count
+        or decision.global_rank != decision.global_parameter_count
+        or decision.joint_rank != response.response_rank
+        or response.nullity
+        != response.parameter_dimension - decision.joint_rank
+    ):
+        raise Cf4Post275Error("source-response rank/nullity drifted")
+    return decision
 
 
 def build_cf4_gate_snapshot(
@@ -1182,7 +1429,7 @@ def build_cf4_gate_snapshot(
     design.as_payload()
     depth.path.as_payload()
     eigenspace_drift.as_payload()
-    decision = revalidate_source_separation_decision(source_separation)
+    decision = _replay_response_source_binding(response, source_separation)
     identity = design.operator_identity
     if identity["feature_order_id"] != CF4_FEATURE_ORDER_ID:
         raise Cf4Post275Error("G7 feature-order identity drifted")

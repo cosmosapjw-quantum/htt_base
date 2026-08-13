@@ -109,7 +109,14 @@ RULES: tuple[ClaimLanguageRule, ...] = (
             r"directly|uniquely|definitively)\s+){0,5}identified|"
             r"identified Bianchi family|"  # forbidden-rule literal
             r"family identified as|"  # forbidden-rule literal
-            r"(?:we\s+)?identif(?:y|ies|ied)\s+(?:a\s+|the\s+)?Bianchi family|"
+            r"(?:we|the\s+analysis)\s+"
+            r"(?:(?:conclusively|directly|uniquely|definitively)\s+){0,3}"
+            r"identif(?:y|ies|ied)\s+"
+            r"(?:(?:a|the|those|several)\s+)?Bianchi famil(?:y|ies)|"
+            r"(?:the\s+)?famil(?:y|ies)\s+"
+            r"(?:(?:is|are|was|were|has|have|been|being|conclusively|"
+            r"directly|uniquely|definitively)\s+){0,5}"
+            r"identified\s+as\s+Bianchi(?:\s+(?:type\s+)?[A-Za-z0-9_-]+)?|"
             r"(?:we\s+)?detect(?:s|ed)?\s+(?:a\s+|the\s+)?Bianchi geometry"
             r")\b",
             re.IGNORECASE,
@@ -634,7 +641,34 @@ def _match_sentence_has_guardrail(text: str, match: re.Match[str]) -> bool:
     relative_start = match.start() - start
     relative_end = match.end() - start
     matched_claim = sentence[relative_start:relative_end]
-    if re.search(r"\b(?:no|not|never|cannot)\b", matched_claim):
+    if re.search(
+        r"\b(?:is|are|was|were|has|have)\s+not\s+"
+        r"(?:(?:conclusively|directly|uniquely|definitively)\s+){0,3}"
+        r"(?:detected|identified|supported|established|proved|certified|"
+        r"validated|evidence\s+for|a\s+truth\s+certificate|"
+        r"truth\s+certificates?|a\s+native\s+solver\s+result|"
+        r"native\s+solver\s+results?)\b",
+        matched_claim,
+    ):
+        return True
+    if re.search(
+        r"\b(?:do|does|did|can|could|may|must|should|will|would)\s+not\s+"
+        r"(?:detect|identify|support|establish|prove|certify|validate|"
+        r"rescue|imply|promote|claim)\b",
+        matched_claim,
+    ):
+        return True
+    if re.search(
+        r"\b(?:never|cannot)\s+(?:detect|identify|support|establish|prove|"
+        r"certify|validate|rescue|imply|promote|claim)\b",
+        matched_claim,
+    ):
+        return True
+    if re.search(
+        r"\bnot\s+as\s+(?:a\s+|an\s+)?(?:measurement|evidence|proof|"
+        r"detection|identification)\s+(?:of|for)\b",
+        matched_claim,
+    ):
         return True
 
     prefix = sentence[:relative_start].rstrip()

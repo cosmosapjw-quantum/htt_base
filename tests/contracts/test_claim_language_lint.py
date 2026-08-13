@@ -71,6 +71,10 @@ def test_direct_geometry_detection_claim_is_blocked() -> None:
         "Bianchi families were identified in the CF4 result.",
         "The Bianchi family was conclusively identified in the CF4 result.",
         "The Bianchi geometry\nwas detected in the CF4 result.",
+        "We identified those Bianchi families from the CF4 statistic.",
+        "The analysis identified several Bianchi families from the CF4 statistic.",
+        "The family was conclusively identified as Bianchi VII_h.",
+        "We identified those Bianchi\nfamilies from the CF4 statistic.",
     ):
         assert _rules(text) == ["geometry_detected"], text
 
@@ -193,6 +197,8 @@ Cosmic potential flow
 is not established by
 the WF curl-div ratio.
 PR-291 does not rescue the retired P0 velocity-shape headline.
+The 0.0089 diagnostic is a self-consistency no-go, not as a measurement of
+physical cosmic vorticity or evidence for potential flow in the Universe.
 """
 
     assert scan_text(safe, path=Path("cf4_downclaim.md")) == ()
@@ -204,6 +210,9 @@ def test_unrelated_negation_cannot_hide_positive_cf4_or_geometry_claims() -> Non
         "The pipeline is not public. Bianchi geometry detected in the CF4 result.",
         "Without observed execution, this is synthetic. Cosmic potential flow is established by the WF curl-div ratio.",
         "No posterior is computed.\nPhysical cosmic vorticity is supported by\nthe 0.0089 curl diagnostic.",
+        "The 0.0089 curl diagnostic is not public but is evidence for physical cosmic vorticity.",
+        "PR-291 is not public but rescues the retired P0 velocity-shape headline.",
+        "The scalar result is not public but establishes Bianchi family identification.",
     )
 
     for text in cases:

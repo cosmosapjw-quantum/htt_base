@@ -16,6 +16,7 @@ import shutil
 import sys
 import tarfile
 import types
+import copy
 
 import numpy as np
 import pytest
@@ -599,24 +600,96 @@ def test_depth_path_identity_is_derived_from_each_native_role(
 
 
 def test_degenerate_shear_and_structural_set_abstain() -> None:
+    identity = _identity()
     shear = analyze_synthetic_shear(
         np.diag([1.0, 1.0, -2.0]),
-        covariance_id="covariance:synthetic:v1",
-        response_id="response:synthetic:v1",
-        eigengap_floor=1e-8,
+        covariance_id=identity["covariance_id"],
+        response_id=identity["response_id"],
     )
+    response = analyze_synthetic_response_nullspace(
+        [[1.0, 0.0, 1.0], [0.0, 1.0, 1.0]],
+        [[1.0, 0.2], [0.2, 1.0]],
+        covariance_id=identity["covariance_id"],
+        response_id=identity["response_id"],
+        parameter_labels=("local", "global", "nuisance"),
+        parameter_roles=("LOCAL", "GLOBAL", "NUISANCE"),
+    )
+    source_decision = _weak_source_decision(identity, response)
     assert shear.identification_status == "WEAKLY_IDENTIFIED"
     assert shear.required_action == "RESPONSE_EQUIVALENCE_ABSTENTION"
     identified = build_structural_identified_set(
         lower=-2.0,
         upper=4.0,
-        identification_status=shear.identification_status,
         nuisance_box_id="nuisance:synthetic:v1",
-        response_id=shear.response_id,
+        response=response,
+        source_separation=source_decision,
     )
     assert identified["status"] == "BOUNDED_BUT_NOT_POINT_IDENTIFIED"
     assert identified["reported_point"] is None
     assert identified["confidence_level"] is None
+    assert identified["response_content_id"] == response.content_id
+    assert identified["source_separation_decision_id"] == source_decision.decision_id
+
+
+def test_registered_thresholds_cannot_be_overridden_by_callers() -> None:
+    identity = _identity()
+    with pytest.raises(TypeError, match="eigengap_floor"):
+        analyze_synthetic_shear(
+            np.diag([-2.0, 0.5, 1.5]),
+            covariance_id=identity["covariance_id"],
+            response_id=identity["response_id"],
+            eigengap_floor=2.0,
+        )
+    with pytest.raises(TypeError, match="eigengap_floor"):
+        analyze_synthetic_eigenspace_drift(
+            np.diag([-2.0, 0.5, 1.5]),
+            np.diag([-2.0, 0.5, 1.5]),
+            reference_depth_id="near",
+            candidate_depth_id="far",
+            depth_path_content_id="depth-path",
+            covariance_id=identity["covariance_id"],
+            response_id=identity["response_id"],
+            eigengap_floor=2.0,
+        )
+    with pytest.raises(TypeError, match="rank_tolerance"):
+        analyze_synthetic_response_nullspace(
+            np.eye(2),
+            [[1.0, 0.2], [0.2, 1.0]],
+            covariance_id=identity["covariance_id"],
+            response_id=identity["response_id"],
+            parameter_labels=("local", "global"),
+            parameter_roles=("LOCAL", "GLOBAL"),
+            rank_tolerance=2.0,
+        )
+
+
+def test_structural_identified_set_rejects_singleton_and_untyped_evidence() -> None:
+    identity = _identity()
+    response = analyze_synthetic_response_nullspace(
+        [[1.0, 0.0, 1.0], [0.0, 1.0, 1.0]],
+        [[1.0, 0.2], [0.2, 1.0]],
+        covariance_id=identity["covariance_id"],
+        response_id=identity["response_id"],
+        parameter_labels=("local", "global", "nuisance"),
+        parameter_roles=("LOCAL", "GLOBAL", "NUISANCE"),
+    )
+    decision = _weak_source_decision(identity, response)
+    with pytest.raises(Cf4Post275Error, match="strictly ordered"):
+        build_structural_identified_set(
+            lower=3.0,
+            upper=3.0,
+            nuisance_box_id="nuisance:synthetic:v1",
+            response=response,
+            source_separation=decision,
+        )
+    with pytest.raises(TypeError, match="unexpected keyword"):
+        build_structural_identified_set(
+            lower=-2.0,
+            upper=4.0,
+            identification_status="WEAKLY_IDENTIFIED",
+            nuisance_box_id="nuisance:synthetic:v1",
+            response_id=response.response_id,
+        )
 
 
 @pytest.mark.parametrize("scale", (1.0e-100, 1.0e100))
@@ -657,6 +730,13 @@ def test_response_rank_is_whitened_column_scale_invariant_and_roles_are_typed() 
         rescaled.nullity,
         rescaled.status,
     )
+    payload = baseline.as_payload()
+    assert payload["relative_singular_floor"] == 1.0e-12
+    assert payload["response_rank"] == 2
+    assert payload["nullity"] == 1
+    assert payload["normalized_response_content_id"].startswith("sha256:")
+    assert payload["covariance_content_id"].startswith("sha256:")
+    assert payload["content_id"] == baseline.content_id
     with pytest.raises(Cf4Post275Error, match="labels or roles"):
         analyze_synthetic_response_nullspace(
             response,
@@ -678,11 +758,78 @@ def test_response_rank_is_whitened_column_scale_invariant_and_roles_are_typed() 
         )
 
 
+def test_gate_replays_null_basis_and_exact_source_rank() -> None:
+    directions, distances = _directions_and_distances()
+    identity = _identity()
+    depth = build_synthetic_depth_zoa_path(
+        _depth_rows(), operator_identity=identity
+    )
+    design = build_cf4_moment_design(directions, distances, identity)
+    shear = analyze_synthetic_shear(
+        np.diag([2.0, -0.5, -1.5]),
+        covariance_id=identity["covariance_id"],
+        response_id=identity["response_id"],
+    )
+    eigenspace = analyze_synthetic_eigenspace_drift(
+        np.diag([1.0, 1.0 + 1e-11, -2.0 - 1e-11]),
+        np.diag([1.0 + 1e-11, 1.0, -2.0 - 1e-11]),
+        reference_depth_id=depth.path.strata[0].stratum_id,
+        candidate_depth_id=depth.path.strata[1].stratum_id,
+        depth_path_content_id=depth.path.content_id,
+        covariance_id=identity["covariance_id"],
+        response_id=identity["response_id"],
+    )
+    response = analyze_synthetic_response_nullspace(
+        [[1.0, 0.0, 1.0], [0.0, 1.0, 1.0]],
+        [[1.0, 0.2], [0.2, 1.0]],
+        covariance_id=identity["covariance_id"],
+        response_id=identity["response_id"],
+        parameter_labels=("local", "global", "nuisance"),
+        parameter_roles=("LOCAL", "GLOBAL", "NUISANCE"),
+    )
+    decision = _weak_source_decision(identity, response)
+
+    forged_basis = copy.deepcopy(response)
+    object.__setattr__(
+        forged_basis,
+        "right_null_basis",
+        ((1.0, 0.0, 0.0),),
+    )
+    with pytest.raises(Cf4Post275Error, match="null basis|identity drifted"):
+        build_cf4_gate_snapshot(
+            design=design,
+            depth=depth,
+            shear=shear,
+            eigenspace_drift=eigenspace,
+            response=forged_basis,
+            source_separation=decision,
+        )
+
+    rank_one = analyze_synthetic_response_nullspace(
+        [[1.0, 1.0, 1.0], [2.0, 2.0, 2.0]],
+        [[1.0, 0.2], [0.2, 1.0]],
+        covariance_id=identity["covariance_id"],
+        response_id=identity["response_id"],
+        parameter_labels=("local", "global", "nuisance"),
+        parameter_roles=("LOCAL", "GLOBAL", "NUISANCE"),
+    )
+    assert (rank_one.response_rank, rank_one.nullity) == (1, 2)
+    with pytest.raises(Cf4Post275Error, match="rank/nullity"):
+        build_cf4_gate_snapshot(
+            design=design,
+            depth=depth,
+            shear=shear,
+            eigenspace_drift=eigenspace,
+            response=rank_one,
+            source_separation=_weak_source_decision(identity, rank_one),
+        )
+
+
 def test_eigenspace_drift_uses_path_bound_projectors_not_basis_vectors() -> None:
     depth = build_synthetic_depth_zoa_path(
         _depth_rows(), operator_identity=_identity()
     )
-    epsilon = 1e-9
+    epsilon = 1e-11
     reference = np.diag([1.0, 1.0 + epsilon, -2.0 - epsilon])
     angle = np.pi / 4.0
     within_cluster = np.asarray(
@@ -701,7 +848,6 @@ def test_eigenspace_drift_uses_path_bound_projectors_not_basis_vectors() -> None
         depth_path_content_id=depth.path.content_id,
         covariance_id=_identity()["covariance_id"],
         response_id=_identity()["response_id"],
-        eigengap_floor=1e-8,
     )
     assert report.identification_status == "WEAKLY_IDENTIFIED"
     assert report.required_action == "EIGENSPACE_EQUIVALENCE_ABSTENTION"
@@ -714,7 +860,7 @@ def test_eigenspace_drift_detects_rotation_of_the_degenerate_subspace() -> None:
     depth = build_synthetic_depth_zoa_path(
         _depth_rows(), operator_identity=_identity()
     )
-    epsilon = 1e-9
+    epsilon = 1e-11
     reference = np.diag([1.0, 1.0 + epsilon, -2.0 - epsilon])
     angle = np.pi / 6.0
     rotate_plane = np.asarray(
@@ -733,7 +879,6 @@ def test_eigenspace_drift_detects_rotation_of_the_degenerate_subspace() -> None:
         depth_path_content_id=depth.path.content_id,
         covariance_id=_identity()["covariance_id"],
         response_id=_identity()["response_id"],
-        eigengap_floor=1e-8,
     )
     assert report.maximum_subspace_angle_radians == pytest.approx(angle)
     assert max(report.projector_frobenius_distances) > 0.0
