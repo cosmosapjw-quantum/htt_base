@@ -1,0 +1,194 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-mio-nonfinite-r3-rereview-20260811",
+  "assignment_id": "A-PR286-R3-REPLAY",
+  "assignment_sha256": "009c63d5f5181a7a4955e3c0ff75910a619a3cabeab0b4d785cfec72712d45ce",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "d95f5a26bab5be25afb550e64d75ce4f8419fca8b61b232682c960e9e5e1fc95",
+    "seal_sha256": "26b24258bfec78ccbd0dad9382fc6ae8e9b9ba9a417b81753f84ca68b30c6f0f",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "0b1a8ef76df47b0b42e972bb47c9bc294e80aa7c",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "c92883d3500aff9a7fa07e561ad43bf4088feb9d",
+    "diff_sha256": "a07284aa230f991286ac4b3ed11e5201f70af2a49ae8bf79cf5191d5af3cc4d1",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "99ad99e15ff863b63945663c112767d1f6dc90e8f697a407798c281cb39c2b30"
+  },
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-REPLAY.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-11T03:50:00+00:00",
+  "completed_at": "2026-08-11T04:12:00+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "numpy": "2.4.2",
+    "PyYAML": "6.0.1",
+    "git": "system git with stable patch-id"
+  },
+  "commands": [
+    {
+      "argv": ["git", "rev-parse", "HEAD", "and registered SHA-256 checks"],
+      "returncode": 0,
+      "summary": "Exact base, head, tree, merge base, required-input hashes, seal digest, diff digest, production hash, and clean tracked state matched."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "focused"],
+      "returncode": 0,
+      "summary": "45 passed in 111.73s, including mutation order, destination containment, and atomic-write preservation."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "adjacent"],
+      "returncode": 0,
+      "summary": "90 passed in 7.80s."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "check"],
+      "returncode": 0,
+      "summary": "ok=true."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/build_pr271_pillar_s_core.py", "--check"],
+      "returncode": 0,
+      "summary": "Exact-core replay passed."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/build_pr272_pillar_s_inference.py", "--check"],
+      "returncode": 0,
+      "summary": "PR-272 validation registry is current."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/build_pr273_blind_synthetic.py", "--check"],
+      "returncode": 0,
+      "summary": "Five cases, two held out, and five mutations killed."
+    },
+    {
+      "argv": ["python3", "-B", "-m", "pytest", "scripts/codex_harness/test_publication_integrity.py", "selected PR-286 cross-binding tests"],
+      "returncode": 0,
+      "summary": "3 passed, 74 deselected."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "returncode": 0,
+      "summary": "244 PRs; DAG valid."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "PR-286 scope"],
+      "returncode": 0,
+      "summary": "No forbidden claim language detected."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "portable"],
+      "returncode": 0,
+      "summary": "Distinct clean root, 5,887 tracked files, nested exact check exit 0, and identical source/clean pre/post manifest d7d0cc0722d43175568a4269629e272e79610d44598301ed53d174648d5dee8e."
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-REPLAY_oracle.py"],
+      "returncode": 0,
+      "summary": "Exact candidate and lineage, 33 current bindings, 72-row exact rebuild, ordered 20/20 mutation activation/execution/kills, public MIO typed refusal, and lifecycle/downstream invariants passed."
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-REPLAY_coverage.json", "--risk-tier", "R3"],
+      "returncode": 0,
+      "summary": "Coverage validation ok=true with no errors."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-REPLAY_oracle.py",
+      "sha256": "d5332ef9aefb598c3a06640a2c5f4a0402728959183ac1a690d5ff08dbb0c55c",
+      "bytes": 8942,
+      "producer": "A-PR286-R3-REPLAY",
+      "command_fingerprint": "9d363a3e709bcf186ce38f85533e68113c44a126a1dbffe04032655e473b4c4b"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-REPLAY_coverage.json",
+      "sha256": "1ef2dad4979b7cbddb7e75a547252e0ef71c7a760960cbbeb534d5fd1c401e79",
+      "bytes": 8747,
+      "producer": "A-PR286-R3-REPLAY"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-REPLAY_coverage.json",
+  "review_coverage_sha256": "1ef2dad4979b7cbddb7e75a547252e0ef71c7a760960cbbeb534d5fd1c401e79",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/assignments/A-PR286-R3-REPLAY.json",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/RUN_PLAN.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/review_coverage.py",
+    "docs/PR_DELTAS/pr-286.md",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/research_program/post_pr275/pr286_spec.yaml",
+    "docs/research_program/post_pr275/pr286_publication_policy.json",
+    "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+    "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+    "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml",
+    "docs/research_program/vector_tensor/proof_registry_two_pillars.yaml",
+    "docs/research_program/premise_anchor/pr254_spec.yaml",
+    "docs/generated/pr254_anchor_geometry/CAS_CONTRACT_PR254_ANCHOR_GEOMETRY.json",
+    "docs/generated/pr254_anchor_geometry/CAS_ADJUDICATION_PR254_ANCHOR_GEOMETRY.json",
+    "htt/src/common/anchor_geometry.py",
+    "scripts/codex_harness/run_pr254_counterexamples.py",
+    "docs/generated/pr254_anchor_geometry/counterexample_oracle.json",
+    "docs/research_program/premise_anchor/pr257_spec.yaml",
+    "docs/generated/pr257_lowell_morphology/CAS_CONTRACT_PR257_ORBIT_V2.json",
+    "docs/generated/pr257_lowell_morphology/CAS_ADJUDICATION_PR257_ORBIT_V2.json",
+    "htt/src/common/orbit_catalogue_v2.py",
+    "docs/research_program/vector_tensor/pr271_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+    "docs/research_program/vector_tensor/proofs/PR271_PILLAR_S_CORE.md",
+    "scripts/codex_harness/build_pr271_pillar_s_core.py",
+    "tests/contracts/test_pillar_s_core.py",
+    "docs/research_program/vector_tensor/pr272_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+    "scripts/codex_harness/build_pr272_pillar_s_inference.py",
+    "tests/contracts/test_pillar_s_inference.py",
+    "htt/src/common/vector_tensor_statistical_inference.py",
+    "htt/mio/formalism/vector_tensor_validation.py",
+    "htt/src/common/sbc_ppc.py",
+    "htt/src/common/weak_id_coverage.py",
+    "docs/research_program/vector_tensor/pr273_spec.yaml",
+    "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+    "scripts/codex_harness/build_pr273_blind_synthetic.py",
+    "tests/integration/test_vector_tensor_blind_synthetic.py",
+    "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+    "tests/contracts/test_pillar_s_complete_adjudication.py",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "scripts/codex_harness/validate_pr_dag.py"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-REPLAY_oracle.py",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-REPLAY_coverage.json",
+        "PR-273 check: five cases, two held out, five mutations killed"
+      ],
+      "evidence_fingerprint": "PR286-R3-REPLAY-C-PR273-BLIND-INTEGRATION-0B1A8EF",
+      "summary": "The exact frozen candidate replays the held-out PR-273 pack and the PR-286 72-row receipt without promotion; all 20 ordered mutations are activated, executed, and killed, including the public MIO non-finite numerical guard. No blocking replay, harness, portability, publication-policy, lifecycle, or claim-ceiling finding was reproduced."
+    }
+  ],
+  "errors": []
+}

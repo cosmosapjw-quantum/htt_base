@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "policy_id": "PHASE2-BOOTSTRAP-POLICY",
+  "change_set_id": "CS-PROCESS-RECOVERY-PR283",
+  "publication_group_id": "PG-PROCESS-RECOVERY-PR283",
+  "target_ref": "origin/research/pr04-multicomponent",
+  "target_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+  "max_open_prs": 10,
+  "max_direct_to_target_prs": 1,
+  "max_prs_per_change_set": 1,
+  "max_stack_depth": 10,
+  "max_file_overlap_prs": 9,
+  "max_inventory_age_seconds": 300,
+  "max_receipt_age_seconds": 1800,
+  "max_authorization_ttl_seconds": 1800,
+  "ordinary_agent_push_forbidden": true,
+  "ordinary_agent_pr_mutation_forbidden": true,
+  "claim_ceiling": "diagnostic_only",
+  "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+  "required_review_cells": [
+    "process_recovery_bootstrap"
+  ],
+  "required_commands": [
+    {
+      "id": "phase2-bootstrap-hostile-fixtures",
+      "argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/contracts/test_process_recovery_auto_stacked.py"
+      ],
+      "timeout_seconds": 300
+    }
+  ]
+}

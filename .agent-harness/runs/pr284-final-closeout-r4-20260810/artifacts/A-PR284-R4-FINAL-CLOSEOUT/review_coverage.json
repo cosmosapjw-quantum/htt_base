@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-final-closeout-r4-20260810",
+  "assignment_id": "A-PR284-R4-FINAL-CLOSEOUT",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "5aaba833e7d5884add6c79338ec6396ccc7c0eab0c5c0090376f9edc8b68a4d1",
+  "candidate_sha": "30bf45339cf517ff77606c3f8abcdeb2949b36e9",
+  "candidate_tree_sha": "d8352d6ca5286a6b1f364429c218d307b3dea28d",
+  "diff_sha256": "f766850981d30717d366441d4b114b5ac429b93bc7d2c459ed12eac9978110c2",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-10T03:16:22+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R4_FINAL_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle_output.json#/checks"
+      ],
+      "rationale": "Final HEAD, tree, exact base, diff, changed-file inventory, seal checksum, eleven commits, and eleven stable patch IDs independently replay."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-final-closeout-r4-20260810/assignments/A-PR284-R4-FINAL-CLOSEOUT.json#/required_inputs",
+        "docs/research_program/post_pr275/pr284_spec.yaml"
+      ],
+      "rationale": "The assignment, context, and all thirteen immutable input hashes were verified before closeout checks."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-PHYSCODE.json",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/finite_target_law"
+      ],
+      "rationale": "Carried by the exact hash-bound R4 physics/code PASS; production and dependency evidence are unchanged."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-PHYSCODE.json",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/report/target_second_moment"
+      ],
+      "rationale": "The immutable R4 PASS independently reproduced centering and second moment; no production byte changed afterward."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-PHYSCODE.json",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-REPLAY.json"
+      ],
+      "rationale": "The three hash-bound R4 reviews cover proper support reduction separately from the exact partition tower; only review prose/status changed."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-PHYSCODE.json",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/MERGED_RESULTS.json"
+      ],
+      "rationale": "Exact tower evidence is preserved in the validated no-finding R4 result and structurally valid aggregate."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-PHYSCODE.json",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-CLAIM.json"
+      ],
+      "rationale": "Prior independent PASS results bind the proper-subset premise and abstaining equal-support route; the final commit contains no runtime change."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-REPLAY.json",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/mutations"
+      ],
+      "rationale": "The hash-bound replay PASS covers all fifteen ordered mutations, including preprocessing and estimator identity."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-PHYSCODE.json",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/report/path_maximum_content_id"
+      ],
+      "rationale": "The prior physics/code oracle independently reproduced the selected path and maximum; the evidence key is unchanged."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-PHYSCODE.json",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/calibration"
+      ],
+      "rationale": "The immutable prior result independently reproduced the inclusive event and Doob bound; closeout does not rerun it."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-PHYSCODE.json",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-CLAIM.json"
+      ],
+      "rationale": "Both prior independent lanes confirm equal-support unproved status requires matched mocks and emits no bound."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-REPLAY.json",
+        ".prguard/runtime/PR284_R4_FINAL_INTEGRATION_REHEARSAL.json#/commands"
+      ],
+      "rationale": "The exact R4 replay result records 15/15 kills, and the final integration receipt records receipt check exit zero against unchanged production bytes."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-REPLAY.json",
+        ".prguard/runtime/PR284_R4_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "rationale": "The immutable R4 result binds twelve sources and the final rehearsal records receipt replay exit zero under the final seal."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R4_FINAL_INTEGRATION_REHEARSAL.json#/commands/3",
+        ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle_output.json#/checks/merged_tree_equals_candidate_tree"
+      ],
+      "rationale": "The final receipt records portable replay exit zero, latest target unchanged, and rehearsal merged tree equal to candidate tree."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R4_FINAL_CANDIDATE_SEAL.json#/integration_policy",
+        ".prguard/runtime/PR284_R4_FINAL_INTEGRATION_REHEARSAL.json#/integration_policy_sha256"
+      ],
+      "rationale": "The final seal and rehearsal bind identical policy bytes; all seven policy commands record zero exit."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-CLAIM.json",
+        "docs/research_program/post_pr275/pr284_spec.yaml"
+      ],
+      "rationale": "The immutable claim PASS remains applicable because post-review changes are only PR prose and synchronized lifecycle status."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R4_FINAL_INTEGRATION_REHEARSAL.json",
+        ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle_output.json#/checks"
+      ],
+      "rationale": "Rehearsal is PASS against exact latest predecessor and identical merged/candidate trees. No merge, push, PR, or publication action is authorized or recorded."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "oracle_id": "PR284-R4-FINAL-CLOSEOUT",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle.py",
+        "--output",
+        ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle_output.json"
+      ],
+      "command_fingerprint": "6e7f670ac8e0efa1c133c06ec6c2d36de77ec4720a098386764c04c218c047b2",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-10T03:16:09+00:00",
+      "completed_at": "2026-08-10T03:16:12+00:00",
+      "artifact_path": ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle_output.json",
+      "artifact_sha256": "9903aa8a69af78e8180672298712a12d23196b4828b3b13db56daec45075c045",
+      "artifact_bytes": 2033,
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle.py",
+        ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle_output.json"
+      ]
+    }
+  ],
+  "coverage_sha256": "ddc0b3c4239be96b7edc9e19185319f4c68de8b92c3a788efdddf89ae54e818e"
+}

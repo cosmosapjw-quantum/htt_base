@@ -1,0 +1,122 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-bounded-repair-r2-review-20260811",
+  "assignment_id": "A-PR289-R2-REPLAY",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "98b8f692fb9e8933b4972430d33f89da4a0b0bf0498bb9af3b7c354b27fcc5d9",
+    "seal_sha256": "b87547b5c86fb27fb63c6ba2f62639733295efe0b7ddf91ed82685a6c6cbba90",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "e7affa4302f60cb02a664b315693b22e2372ef33",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "1d25895f229c87723797c73018fed8783466541f",
+    "diff_sha256": "124822f8c20278b307447150dcd0a8aa357048f6a9526e8feb976c14a2715ae1",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "6752f1f52dccb2ca4768e127666a160bce8f826340d1b26d6bf70b3abca3220f"
+  },
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.json",
+  "assignment_sha256": "ecd5546b5fd099b393377e714d94626a222d79ac93e67ce3cd3e2652b56ee79d",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/assignments/A-PR289-R2-REPLAY.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr289_spec.yaml",
+    "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "htt/src/common/data_identity.py",
+    "tests/contracts/test_data_identity_registry_v2.py",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/research_program/post_pr275/data_runbooks.yaml",
+    "docs/harness/CLAIM_LEDGER.md",
+    "docs/PR_DELTAS/pr-289.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T19:24:00+09:00",
+  "completed_at": "2026-08-11T19:40:00+09:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "2.43.0",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {"id": "pr289-focused", "argv": ["python", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "focused"], "exit_code": 0, "summary": "55 passed in 42.87s"},
+    {"id": "pr289-readonly-preflight", "argv": ["python", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "preflight"], "exit_code": 0, "summary": "six REJECTED_NOT_PRESENT, six NOT_AUTHORIZED, no network/download side effect"},
+    {"id": "pr289-adjacent", "argv": ["python", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "adjacent"], "exit_code": 0, "summary": "current PR-274 50 passed and 4 source-bound deselected; exact ff9ef9 replay 54 passed"},
+    {"id": "pr289-receipt-replay", "argv": ["python", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "check"], "exit_code": 0, "summary": "receipt fd0ed213... replayed with zero admission, observed false and public false"},
+    {"id": "pr289-portable-clean-replay", "argv": ["python", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "portable"], "exit_code": 0, "summary": "distinct clean root; 5911 files; pre/post/source/archive hash f4f41cfe...; no external root or network"},
+    {"id": "pr289-publication-policy-cross-binding", "argv": ["python", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"], "exit_code": 0, "summary": "9 passed, 68 deselected"},
+    {"id": "pr289-dag-strict", "argv": ["python", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"], "exit_code": 0, "summary": "244 PRs, DAG valid"},
+    {"id": "pr289-claim-language", "argv": ["python", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "htt/src/common/data_identity.py", "tests/contracts/test_data_identity_registry_v2.py", "docs/research_program/post_pr275/pr289_spec.yaml", "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json", "docs/research_program/post_pr275/data_runbooks.yaml", "docs/harness/CLAIM_LEDGER.md", "docs/generated/pr289_data_identity_v2_receipt.json", "docs/PR_DELTAS/pr-289.md"], "exit_code": 0, "summary": "No forbidden claim language detected"},
+    {"id": "supplemental-containment", "argv": ["PYTHONPATH=htt/src", "python", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_data_identity_registry_v2.py", "-k", "runner_reloads_exact_candidate_module_over_preloaded_replacement or runner_executes_only_the_verified_candidate_module_bytes or runner_output_parent_replacement_fails_closed or receipt_generation_identity_is_interpreter_alias_independent"], "exit_code": 0, "summary": "4 passed, 51 deselected"},
+    {"id": "supplemental-interpreter-aliases", "argv": ["/usr/bin/python|/usr/bin/python3|/usr/bin/python3.10", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "check"], "exit_code": 0, "summary": "all three aliases reproduced receipt SHA fd0ed213..."},
+    {"id": "assignment-local-oracle", "argv": [".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.oracle.py"], "exit_code": 0, "summary": "70 independent structural, lineage, hash, mutation, mirror, lifecycle and coverage checks passed"}
+  ],
+  "artifacts": [
+    {"path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.oracle.py", "sha256": "da70898b384ac1a62b3f4fc60e005e3a468dab26a4b80b13109cdf189d264118", "description": "executable read-only oracle"},
+    {"path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.review_coverage.json", "sha256": "00601790c876ae29b084a12b6d31f95f9fb5c5027a8720b5084dcb0f760b6d01", "description": "exact ordered 36-cell publication-policy coverage"}
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.review_coverage.json",
+  "review_coverage_sha256": "00601790c876ae29b084a12b6d31f95f9fb5c5027a8720b5084dcb0f760b6d01",
+  "findings": [
+    {
+      "finding_id": "F-PR289-R2-REPLAY-PASS",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "Frozen PR-289 passes the blind R2 replay, lineage, portability, containment, hash, status-mirror, lifecycle, and claim-ceiling review; this process result grants no data admission or execution authorization and does not supersede the preserved R1 FAIL until main-thread adjudication.",
+      "assumptions_used": [
+        "The exact registered assignment and frozen candidate seal define the review boundary.",
+        "Named validators are treated as black boxes; independent checks use Git objects, hashes, receipt/spec parsing, and assignment-local oracle logic.",
+        "The canonical salvage audit is read-only authority at SHA-256 c42b4464... ."
+      ],
+      "evidence_refs": [
+        ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.oracle.py#sha256=da70898b384ac1a62b3f4fc60e005e3a468dab26a4b80b13109cdf189d264118",
+        ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.review_coverage.json#sha256=00601790c876ae29b084a12b6d31f95f9fb5c5027a8720b5084dcb0f760b6d01",
+        "docs/generated/pr289_data_identity_v2_receipt.json#sha256=fd0ed2139903c7e47d4478a53e2e5054348801b427e9fb5250039324df5996d7",
+        "docs/codex_handoff/pr_status.yaml#PR-289-PR-290",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md#sha256=c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+      ],
+      "evidence_fingerprint": "sha256:18ea9a4d26ff46a18ac7f8b4ac5948c24a2d2b2b55c096a23629e223b9961b3b",
+      "counterevidence_refs": [
+        "docs/codex_handoff/pr_status.yaml#preserved-R1-code-and-harness-FAIL"
+      ],
+      "reproduction": [
+        "python -B .agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.oracle.py",
+        "python -B .agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.oracle.py --run-policy"
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Main-thread adjudication, status transition, seal, publication and any later human authorization remain outside this assignment."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "pass",
+      "finding_ids": ["F-PR289-R2-REPLAY-PASS"],
+      "summary": "R2 replay/harness gate passes for the frozen candidate. Scientific and lane-execution state remains unchanged: zero identities admitted, all six execution receipts NOT_AUTHORIZED, PR-289 VALIDATED with preserved R1 FAIL pending adjudication, and PR-290 INELIGIBLE."
+    }
+  ],
+  "errors": []
+}

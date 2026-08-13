@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-authorized-r5-review-20260813",
+  "generated_at": "2026-08-13T07:46:15+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 2,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR291-R5-CODE-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "The frozen R5 candidate passed code, harness, replay, containment, portable-clean, policy, rank/nullity, exact source-geometry identity, and hostile claim-language review. No substantive defect was reproduced.",
+          "evidence_refs": [
+            ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-CODE-REPLAY-REVIEW_COVERAGE.json",
+            ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-CODE-REPLAY-oracle.py",
+            "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"
+          ],
+          "evidence_fingerprint": "5bd7e8d7655d20243cb79f841b35a8d7fdf257d44319016cf81394e379ddb44f"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR291-R5-PHYSSTAT",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR135-FINITE-NULL-RANK",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "Covariance-whitened, column-normalized finite rank and right-null replay satisfy the fixed-threshold, units/scale, permutation, covariance, rank-deficient, nuisance-lift, and machine-null controls. No likelihood, prior-distribution, Q/F/G, source, or family claim is minted by this diagnostic.",
+          "evidence_refs": [
+            "htt/obsstat/cf4_post275_lane.py:116",
+            "htt/obsstat/cf4_post275_lane.py:1009",
+            "htt/obsstat/cf4_post275_lane.py:1195",
+            "htt/obsstat/cf4_post275_lane.py:1239",
+            ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py",
+            "command:pr291-focused-62-passed",
+            "command:pr291-adjacent-189-passed"
+          ],
+          "evidence_fingerprint": "sha256:b83f384f95c43f333df6fb1f82523345fc580c9b47df53e0df961b321dada834"
+        },
+        {
+          "claim_id": "C-PR136-IDENTIFIED-SET",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "The structural set is strictly non-singleton, point/confidence-free, requires an exact WEAKLY_IDENTIFIED decision, recomputes LOCAL/GLOBAL joint geometry with NUISANCE excluded, rejects sub-tolerance content drift, reconciles G4/G7, and remains diagnostic-only with family identification blocked.",
+          "evidence_refs": [
+            "htt/obsstat/cf4_post275_lane.py:1333",
+            "htt/obsstat/cf4_post275_lane.py:1389",
+            "htt/obsstat/cf4_post275_lane.py:1450",
+            "htt/obsstat/cf4_post275_lane.py:1489",
+            "htt/src/common/source_separation.py:315",
+            ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py",
+            "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:1"
+          ],
+          "evidence_fingerprint": "sha256:c1d9b5b5d33c45fa2356ac26f356aafbe4cdd085e933fc17ddb8523554a656d6"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "assignment_count": 2,
+  "validated_result_count": 2,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/RUN_PLAN.json",
+      "sha256": "431246b80103fe8372229b0c57fa6e4ff564477a203e55f3a08204eac06a4168",
+      "bytes": 5458
+    },
+    {
+      "path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/assignments/A-PR291-R5-CODE-REPLAY.json",
+      "sha256": "98eed96c22045b2cc79562470938624c7c03013387e3dbd9cfc41751df857c04",
+      "bytes": 5248
+    },
+    {
+      "path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/assignments/A-PR291-R5-PHYSSTAT.json",
+      "sha256": "7d0accd0b28c9a51265331854af94280b8a138687ade0adac8109b3f8599f113",
+      "bytes": 4577
+    },
+    {
+      "path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json",
+      "sha256": "7ed84261bd6cc28d4bc66f22a2e5c36e503ed35ea7fd660545b762ceec383ce6",
+      "bytes": 6844
+    },
+    {
+      "path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json",
+      "sha256": "52217e596fff19d74e6389929d188ba040a6e3ae363375fbde41652b19453de6",
+      "bytes": 8130
+    }
+  ],
+  "merge_input_sha256": "6919f0926148187e734781e2d4f421c8d1cb02695227795abf4b7f82f3fa6fbf"
+}

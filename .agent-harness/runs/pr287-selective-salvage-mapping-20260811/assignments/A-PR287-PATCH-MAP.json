@@ -1,0 +1,62 @@
+{
+  "schema_version": 3,
+  "run_id": "pr287-selective-salvage-mapping-20260811",
+  "assignment_id": "A-PR287-PATCH-MAP",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-287",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "independence_mode": "shared-core",
+  "discovery_mode": "independent",
+  "independence_rationale": "Independent commit-object and stable-patch inventory is required to prevent duplicate or whole-tip transplant.",
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Read this assignment first. Perform independent forensic mapping only; write no tracked/shared files. Use the authoritative audit at /home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md and commit objects G28=e64f7ac5, reviewed G29=2d8bcfe3, G31=cad9afc8, G32=d4c878e0, G33=23790d1a, G34=68454021, G35=e1b7119a, G36=e0c0f90a, G37=aedd2164. Prove G30/G38 and old dirty overlay exclusion. Return exact full SHAs, stable patch IDs, per-group files/hunks, dependencies, generated/stale glue to drop, and whether any patch ID already occurs from exact PR286 base through current candidate. Recommend a selective application order; do not inspect sibling results.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/post_pr275/pr287_spec.yaml",
+      "sha256": "e07cf9e68ecf44493e3f3e3c694d334a87560184a992eb9e28ebbe50f071f3dc"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr287_publication_policy.json",
+      "sha256": "533a55d88c8eac40b3150c18e2818af78e5113ac445b71569a082b9af1b68fd0"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "23ef2d4b8a7871dd0ed91f782ad9617003e1ec73d3e038af2e7556a4bc99c2fd"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell"
+  ],
+  "required_outputs": [
+    "registered-result-envelope"
+  ],
+  "result_path": ".agent-harness/runs/pr287-selective-salvage-mapping-20260811/results/A-PR287-PATCH-MAP.json",
+  "status": "registered",
+  "assignment_sha256": "02218fad0482832e54d7f28e8e6cf56487d3fdfec9ad01beb26ecd2966f40c78"
+}

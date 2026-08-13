@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR283-R2-PHYSMATH",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "candidate_seal_sha256": "a74c8b6c8eea857af899ac23e43eecaf2755b48b48fb7ccb37f50a3650915955",
+  "candidate_sha": "6fa98399dfe8b0a0735f9938063420457cda7688",
+  "candidate_tree_sha": "101ff1d291a4368cffcff80b4cef0e7f4092f3f0",
+  "diff_sha256": "0c898eb6fe199071eb5d7021a690cfec3591aa202d4b3e134cf6fe7e267e1afe",
+  "changed_files_sha256": "7a71a99b7b63012071701c4af1acf33719e01ff76e8ba0316eca7adc4103ebf6",
+  "completed_at": "2026-08-09T20:03:00Z",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR283_R2_CANDIDATE_SEAL.json", "validate_candidate_seal_payload: []"],
+      "rationale": "Required input hashes and live HEAD/tree match the frozen R2 seal."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml:25", ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-PHYSMATH.json"],
+      "rationale": "The controlling G4 and prior failed findings were read before the R2 executions."
+    },
+    {
+      "cell": "covariance_supported_rank_ladder",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:421", "python -B scripts/codex_harness/run_pr283_weak_identification.py focused: 25 passed"],
+      "rationale": "The unchanged ladder retains covariance support before rank and threshold decisions."
+    },
+    {
+      "cell": "full_rank_small_angle_status",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_weak_identification.py:264", "python -B scripts/codex_harness/run_pr283_weak_identification.py focused: 25 passed"],
+      "rationale": "The full-rank small-angle fixture remains WEAKLY_IDENTIFIED."
+    },
+    {
+      "cell": "full_rank_small_singular_value_status",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_weak_identification.py:316", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-PHYSMATH/pr283_r2_physmath_oracle.json"],
+      "rationale": "The 0.005 relative-singular fixture abstains under the exact 0.01 contract."
+    },
+    {
+      "cell": "rank_deficiency_distinct_from_weak_identification",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:421", "tests/contracts/test_weak_identification.py:330"],
+      "rationale": "Component deficiency, joint-rank deficiency, and full-rank weak conditioning remain distinct terminal states."
+    },
+    {
+      "cell": "threshold_contract_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:93", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-PHYSMATH/pr283_r2_physmath_oracle.json"],
+      "rationale": "The former relaxed singular-threshold bypass is rejected by exact registered contract identity."
+    },
+    {
+      "cell": "exact_source_geometry_report_replay",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:81", "python -B scripts/codex_harness/run_pr283_weak_identification.py focused: 25 passed"],
+      "rationale": "Projection still revalidates the PR-256 report before threshold comparison."
+    },
+    {
+      "cell": "exact_normalizer_spec_binding",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:86", "htt/src/common/source_separation.py:347"],
+      "rationale": "The registered dimensionless-beta units and normalizer map identity remain bound to the decision."
+    },
+    {
+      "cell": "mandatory_threshold_contract_enforcement",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_weak_identification.py:482", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-PHYSMATH/pr283_r2_physmath_oracle.json"],
+      "rationale": "Omitted or content-different threshold contracts fail closed."
+    },
+    {
+      "cell": "all_source_gate_callers_migrated",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This bounded rereview covers only the three repaired findings and does not reaccredit the earlier caller-migration review."
+    },
+    {
+      "cell": "principal_angle_and_singular_value_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:263", "python -B scripts/codex_harness/run_pr283_weak_identification.py focused: 25 passed"],
+      "rationale": "Angle and singular arrays remain separately content-addressed and replay-checked."
+    },
+    {
+      "cell": "mandatory_open_set_abstention",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/open_set_response_classes.py:2529", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-PHYSMATH/pr283_r2_physmath_oracle.json"],
+      "rationale": "Production WEAKLY_IDENTIFIED gates return TYPE_UNIDENTIFIED before unknown-distance and equivalence labels."
+    },
+    {
+      "cell": "no_point_estimate_or_nearest_fallback",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/open_set_response_classes.py:2529", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "Weak cases retain null candidate IDs and only exact response-class IDs in the abstention payload."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr283_weak_identification.py:739", "scripts/codex_harness/run_pr283_weak_identification.py:971", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-PHYSMATH/pr283_r2_physmath_oracle.json"],
+      "rationale": "The repaired weak-status and precedence mutants execute candidate, unknown-class, and equivalence-class paths before being distinguished and killed."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["python -B scripts/codex_harness/run_pr283_weak_identification.py check: exit 0", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "The checked-in receipt exactly replays under the frozen R2 candidate."
+    },
+    {
+      "cell": "pr272_predecessor_replay_preservation",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Predecessor-wide replay is outside this repaired-findings rereview."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Publication-policy adjudication belongs to the separate claim-gate reviewer."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml:15", "docs/research_program/post_pr275/pr283_spec.yaml:23", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "The artifact remains synthetic diagnostic C2, transfer_source none, public_use false, and blocked pre-native atlas."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "A clean-archive integration rerun was not assigned for this narrow repair audit."
+    },
+    {
+      "cell": "serial_stack_bootstrap_integrity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Stack bootstrap integrity is outside the physics/statistics repaired-findings slice."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Latest-target integration is a downstream integration-stage responsibility."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR283-R2-PHYSMATH-ORACLE",
+      "kind": "mutation_test",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-PHYSMATH/pr283_r2_physmath_oracle.py"],
+      "command_fingerprint": "f5a161791699351ea95619ccc74e92624d795f21021b0bf03e4ededcb93b8733",
+      "started_at": "2026-08-09T20:00:52Z",
+      "completed_at": "2026-08-09T20:00:52Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-PHYSMATH/pr283_r2_physmath_oracle.json",
+      "artifact_sha256": "87073300ec16a2e5ea3d06b0d03079386261e4578cba3d9d3c50e5264d3ef601",
+      "artifact_bytes": 1818,
+      "evidence_refs": [
+        "htt/htt/htt/statistics/open_set_response_classes.py:93",
+        "scripts/codex_harness/run_pr283_weak_identification.py:739",
+        "scripts/codex_harness/run_pr283_weak_identification.py:971"
+      ]
+    }
+  ],
+  "coverage_sha256": "4cc54e22dcbeb74ae94cad08320eab179d2aa63834fc41bd1aedc1a0d0412582"
+}

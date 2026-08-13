@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-salvage-validation-r2-20260810",
+  "generated_at": "2026-08-09T18:59:37+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 1,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR283-PREFREEZE-R2-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR280-HERMETIC-HARNESS",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_fingerprint": "9bb12c6b3815d684344083b74d84111544dda71127c49b79067dc60c9eda5b87",
+          "evidence_refs": [
+            "docs/research_program/post_pr275/pr283_publication_policy.json:75",
+            "docs/research_program/post_pr275/pr283_publication_policy.json:80",
+            "scripts/codex_harness/run_pr283_weak_identification.py:1183",
+            "scripts/codex_harness/run_pr283_weak_identification.py:1324",
+            "scripts/codex_harness/run_pr283_weak_identification.py:1332",
+            "tests/contracts/test_weak_identification.py:237",
+            "scripts/codex_harness/run_pr280_harness.py:40",
+            "docs/generated/pr283_weak_identification_receipt.json sha256:10d28620cd709585cf9444dbde72e19d7baced9ef2da901c005bcbeb3a85fedf"
+          ],
+          "summary": "The repaired exact policy lanes are hermetic with ambient PYTHONPATH unset, selectors are bound by regression, current receipt bytes deterministically recompute and bind the policy/runner/test sources, stale receipt bytes are rejected, and no stale prior result is used as acceptance. Portable clean replay remains correctly deferred for the mutable candidate."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-283",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "assignment_count": 1,
+  "validated_result_count": 1,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr283-salvage-validation-r2-20260810/RUN_PLAN.json",
+      "sha256": "ceb39f1a453fdb6ba2bdc8402bae9db0d8b0e643b31d132cdf71eafe8651bfe8",
+      "bytes": 2242
+    },
+    {
+      "path": ".agent-harness/runs/pr283-salvage-validation-r2-20260810/assignments/A-PR283-PREFREEZE-R2-REPLAY.json",
+      "sha256": "496cde28ba5c422886031d3cfb9efee881ee1ec133295a47f9fdb7bd16927aa7",
+      "bytes": 3274
+    },
+    {
+      "path": ".agent-harness/runs/pr283-salvage-validation-r2-20260810/results/A-PR283-PREFREEZE-R2-REPLAY.json",
+      "sha256": "5ffc0378b0c6d9f7a1eb3653e4a44e32cb871b0c14a59170e8636ac41770c97b",
+      "bytes": 7489
+    }
+  ],
+  "merge_input_sha256": "63defbba6281808675fb1d4f3ee6fa4a0cfd607226ede3e24ea71ee3eeb61edf"
+}

@@ -1,0 +1,163 @@
+{
+  "schema_version": 3,
+  "run_id": "pr285-candidate-review-20260810",
+  "assignment_id": "A-PR285-FROZEN-REPLAY",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "work_unit_id": "PR-285",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "7baf4ec6b941c0a29b247604b71cd94f43cb18de007afda9d1c2cc77d59e5d21",
+    "seal_sha256": "8e2c2e72cca0d018441a91368ded4a3f898df12c36de5e8104352119ab4d2629",
+    "base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_sha": "be8392d0fb3d13fefdf6bce89a1c89ef11890080",
+    "merge_base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_tree_sha": "f74d8f8b550d2351d21a8db5021e0f8566d9ecc2",
+    "diff_sha256": "9a50ef58e647f018e98e81f1868ffc271499984fdb0f73a0465098ce9a7a1183",
+    "changed_files_sha256": "bb335983aab436ac3ca9e949e3bd118d1812d2d040465372166641fb1f899be4",
+    "production_hash": "602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2"
+  },
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr285-candidate-review-20260810/results/A-PR285-FROZEN-REPLAY.json",
+  "assignment_sha256": "c33e681184b92da8e221e46a139ba6d03667034e2a23b3c840ace6799f264cad",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr285-candidate-review-20260810/assignments/A-PR285-FROZEN-REPLAY.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json",
+    ".prguard/runtime/PR285_IMPLEMENTATION_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr285_spec.yaml",
+    "docs/research_program/post_pr275/pr285_publication_policy.json",
+    "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+    "tests/contracts/test_pillar_t_complete_adjudication.py",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+    "docs/PR_DELTAS/pr-285.md",
+    "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+    "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml",
+    "docs/research_program/vector_tensor/pr269_spec.yaml",
+    "docs/research_program/vector_tensor/pr270_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_T_CORE_PROOFS_V1.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml",
+    "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+    "docs/research_program/vector_tensor/cas/CAS_RUN_SPEC.json",
+    "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+    "docs/research_program/strengthening/pr190_spec.yaml",
+    "docs/generated/pr190_attainability/attainability_report.json",
+    "tests/pr_cards/test_pr_190_strengthen.py",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-10T06:20:00+00:00",
+  "completed_at": "2026-08-10T06:36:00+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "system git with stable patch-id"
+  },
+  "commands": [
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle.py"],
+      "purpose": "frozen seal, patch-id, receipt, source, mutation, destination, atomicity, integration, and provenance replay",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle_output.json"
+    },
+    {
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_pillar_t_complete_adjudication.py", "scripts/codex_harness/test_publication_integrity.py", "-k", "build_refuses_hardlinked_output_before_payload_generation or pr285_policy_allows_two_open_predecessors_and_bounds_next_slots"],
+      "purpose": "bounded destination and publication-policy discriminators",
+      "returncode": 0,
+      "timed_out": false,
+      "summary": "2 passed, 100 deselected in 0.23s",
+      "artifact_path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/focused_pytest.txt"
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/review_coverage.json", "--seal", ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json", "--run-id", "pr285-candidate-review-20260810", "--assignment-id", "A-PR285-FROZEN-REPLAY", "--risk-tier", "R3", "--structural-only"],
+      "purpose": "strict structural R3 coverage validation for blocking first verdict",
+      "returncode": 0,
+      "timed_out": false,
+      "summary": "ok=true, errors=[]"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle.py",
+      "sha256": "a49e5001c4d8e804c3ee9dfeba42f8c9b0fcbd2986321a1895c76d3308cd507d",
+      "bytes": 11059,
+      "producer": "A-PR285-FROZEN-REPLAY"
+    },
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle_output.json",
+      "sha256": "126634762a55b9f8bce0e211e44cdb48258d6acd71ff6bb5d682cf67e7f2daa8",
+      "bytes": 2380,
+      "producer": "A-PR285-FROZEN-REPLAY",
+      "command_fingerprint": "5dd1006c24b9fb33e78b4bf6e313c82e95268b37d07886fd2e3e6373013c2635"
+    },
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/focused_pytest.txt",
+      "sha256": "b51586931533b7588adbad0aa8559308fd2cea5d826fa6a14795325b924cdc2a",
+      "bytes": 114,
+      "producer": "A-PR285-FROZEN-REPLAY"
+    },
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/review_coverage.json",
+      "sha256": "6dbd3a3951f1f61523375f0a43ef1db7b5ec012dd021708b58ff1133bae71dba",
+      "bytes": 9025,
+      "producer": "A-PR285-FROZEN-REPLAY"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/review_coverage.json",
+  "review_coverage_sha256": "6dbd3a3951f1f61523375f0a43ef1db7b5ec012dd021708b58ff1133bae71dba",
+  "findings": [
+    {
+      "finding_id": "F-PR285-LINEAGE-MAP-MISSING",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The registered frozen evidence cannot independently verify the required selective recovery proposition that G20 and G21 were included while G22 and all aliases were excluded: the candidate seal binds five unique stable patch IDs but contains no mapping from logical recovery groups G20/G21/G22 to source commits or patch IDs, and the only named-group statement is self-authored PR-delta prose.",
+      "assumptions_used": [
+        "Selective-transplant provenance requires a resolvable mapping from named source groups to immutable source commit or stable patch identities.",
+        "A candidate's own narrative delta is not independent evidence of its source lineage."
+      ],
+      "evidence_refs": [
+        ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle_output.json",
+        "docs/PR_DELTAS/pr-285.md:147"
+      ],
+      "evidence_fingerprint": "pr285-lineage-map:seal-8e2c2e72:named-groups-g20-g21-g22:map-absent",
+      "counterevidence_refs": [
+        "The seal's five stable patch IDs recompute exactly and are unique, proving no duplicate patch ID within the candidate range."
+      ],
+      "reproduction": [
+        "Inspect .prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json keys and observe candidate_commits/stable_patch_ids but no logical_patch_groups, source_patch_groups, or recovery_groups mapping.",
+        "Recompute git patch-id --stable for every base..candidate commit and confirm all five identities are unique.",
+        "Search registered candidate inputs for G20, G21, and G22; the names occur only in docs/PR_DELTAS/pr-285.md prose, not an immutable source-group identity map."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Provide a candidate-seal-bound source lineage map naming G20/G21/G22 source commits and stable patch IDs, then verify included and excluded groups against that map."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR285-LINEAGE-MAP-MISSING"],
+      "summary": "All replay, containment, source-binding, mutation, policy, and integration checks passed, but the named selective G20/G21/no-G22 lineage proposition lacks independent immutable mapping evidence and blocks the frozen review."
+    }
+  ],
+  "errors": []
+}

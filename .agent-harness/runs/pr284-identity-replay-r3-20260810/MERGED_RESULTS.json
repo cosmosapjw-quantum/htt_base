@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-identity-replay-r3-20260810",
+  "generated_at": "2026-08-09T23:34:31+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 4,
+  "raw_finding_count": 2,
+  "unique_finding_count": 2,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR284-R3-CLAIM",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+            "docs/research_program/post_pr275/pr284_spec.yaml",
+            "docs/research_program/post_pr275/pr284_publication_policy.json",
+            "docs/generated/pr284_depth_path_doob_receipt.json",
+            "docs/PR_DELTAS/pr-284.md",
+            ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CLAIM/claim_identity_oracle.py",
+            ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CLAIM/review_coverage.json"
+          ],
+          "evidence_fingerprint": "pr284-r3-claim:d54ff22d:f845a047:5baa7455:exact-depthpath-replay:c2-ceiling-pass",
+          "summary": "No claim, ownership, or provenance defect was found in this frozen bounded lane. Exact DepthPath embedding and replay close the assigned identity-forgery class; support nesting remains insufficient, unproved paths emit no bound, and the artifacts remain HTT-owned C2 diagnostic-only with transfer none, observed/public false, and family identification blocked. This pass does not independently certify portable/latest-target integration, full aggregate review, publication, or scientific claim promotion."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR284-R3-CODE",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR284-R3-CODE-001"
+          ],
+          "summary": "The historical invented path/stratum relabeling is repaired without breaking the public factories, but the strict sky-support premise remains bypassable through equal adjacent supports, so the frozen G6 candidate is not admissible."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR284-R3-PHYSMATH",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR284-R3-PHYSMATH-001"
+          ],
+          "summary": "The identity-replay repair closes the historical absent/invented path and stratum bypass and preserves exact Fraction/Doob/matched-mock semantics, but G6 cannot pass while an equal-support path receives a bound contrary to the frozen strict-nesting premise. Priors, likelihood semantics, Q/Pi/F/G, local/global rank, transfers, and family identification are not invoked; the family gate remains blocked."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR284-R3-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json#/checks/exact_predecessor_base_sha",
+            ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json"
+          ],
+          "evidence_fingerprint": "PR284-R3 exact predecessor and frozen candidate identity replay",
+          "summary": "Exact PR-283 predecessor, candidate ancestry, diff identity, and seven unique stable patch IDs replay with no duplicate patch against predecessor history. Review performs no integration or publication mutation."
+        },
+        {
+          "claim_id": "C-PR280-HERMETIC-HARNESS",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/review_coverage.json",
+            ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json"
+          ],
+          "evidence_fingerprint": "PR284-R3 seven-command portable receipt mutation and policy replay",
+          "summary": "All seven policy commands pass; distinct clean-archive replay is byte-invariant; twelve receipt bindings, canonical content address, fourteen mutation kills, and strengthened builder-bypass identity rejection independently replay."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR284-R3-CODE-001",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr284.strict-depth-path.equal-adjacent-support.bound-bypass.v1",
+      "statement": "The exact path/stratum identity-replay repair closes the historical relabeling bypass, but G6 still accepts a non-strict DepthPath: `DepthPath` checks only `target_support.issubset(source_support)`, so equal adjacent supports can be factory-built, revalidated, marked `PROVED_FINITE_REGISTERED_PATH`, and assigned a 1/4 Doob bound even though the governing PR-284 premise requires strictly nested sky supports.",
+      "assumptions_used": [
+        "The PR-284 spec's phrase `strictly nested sky supports` is a mandatory G6 bound premise, not merely descriptive language.",
+        "A proper depth-support reduction requires each adjacent target support to be a proper subset of its predecessor; equality is not strict nesting.",
+        "The generic historical DepthPath contract may remain non-strict for compatibility, but PR-284's proved factory must independently enforce its stronger premise before emitting a bound."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/pr284_r3_code_oracle.py",
+        "docs/generated/pr284_depth_path_doob_receipt.json:85",
+        "docs/research_program/post_pr275/pr284_spec.yaml:32",
+        "docs/research_program/post_pr275/pr284_spec.yaml:54",
+        "docs/research_program/post_pr275/pr284_spec.yaml:89",
+        "htt/htt/htt/infer/depth_path_calibration.py:142",
+        "htt/htt/htt/infer/depth_path_calibration.py:228",
+        "htt/htt/htt/infer/depth_path_calibration.py:318",
+        "htt/src/common/depth_path.py:588",
+        "htt/src/common/depth_path.py:612",
+        "htt/src/common/depth_path_calibration.py:694",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py:45"
+      ],
+      "counterevidence_refs": [
+        "htt/src/common/depth_path_calibration.py:694 exact path and stratum identity replay",
+        "htt/src/common/depth_path_calibration.py:863 later identity replay before serialization",
+        "tests/contracts/test_depth_path_doob_calibration.py:266 invented identity regression test",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 22 passed",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py adjacent: 41 passed",
+        "oracle: missing path, invented identity, and post-build path drift were rejected",
+        "oracle: proved and unproved public factories remained functional"
+      ],
+      "reproduction": [
+        "Run `python -B .agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/pr284_r3_code_oracle.py` from candidate d54ff22dac780d3b159394237416d28b2bd15dc8.",
+        "Observe `strict_support_bypass_survived.adjacent_supports_equal` is true.",
+        "Observe the equal-support report has `PROVED_FINITE_REGISTERED_PATH` and the calibration has probability upper bound `1/4`.",
+        "Contrast the registered mutation inventory: `MU284-NONNESTED-SUPPORT` checks only a non-subset support and has no equal-adjacent-support case."
+      ],
+      "unresolved": [
+        "Before G6 can pass, require a proper support subset on every adjacent PR-284 proved path edge, preferably in the PR-284 premise evaluator/replay if the frozen generic DepthPath contract intentionally permits equality.",
+        "Add a discriminating equal-adjacent-support mutation that must route to no-bound matched mocks or reject construction.",
+        "Regenerate the receipt and frozen candidate/review identities after the repair."
+      ],
+      "confidence": 0.99,
+      "source_finding_ids": [
+        "F-PR284-R3-CODE-001"
+      ],
+      "supporting_assignments": [
+        "A-PR284-R3-CODE"
+      ],
+      "supporting_agent_types": [
+        "code_cartographer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR284-R3-PHYSMATH-001",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "medium",
+      "evidence_fingerprint": "pr284.strict-support-nesting.equal-support-bound.v1",
+      "statement": "The named absent/invented DepthPath and stratum identity bypass is closed, and the exact reverse-martingale arithmetic is valid, but the frozen G6 premise still says every bound requires strictly nested sky supports while the historical DepthPath validator accepts equality with `issubset`; an exact three-rung path with identical support sets therefore passes the proved factory and emits a 25/36 probability upper bound outside the declared strict-support premise.",
+      "assumptions_used": [
+        "The current PR-284 specification and its required-for-bound list are authoritative for G6 acceptance.",
+        "The phrase `strictly nested sky supports` means each next support is a proper subset of its predecessor, not merely a subset allowing equality.",
+        "The equal-support oracle keeps the finite law, exact centering, second moment, decreasing atom partition tower, selected atom, threshold, and every report identity mathematically authentic so the support relation is the only changed premise.",
+        "The underlying Doob inequality remains mathematically conservative in the equal-support case; the defect is a runtime/spec acceptance-boundary mismatch, not a counterexample to the inequality."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-PHYSMATH/pr284_r3_physmath_oracle.py",
+        "docs/research_program/post_pr275/pr284_spec.yaml:54",
+        "docs/research_program/post_pr275/pr284_spec.yaml:56",
+        "htt/src/common/depth_path.py:612",
+        "htt/src/common/depth_path.py:613",
+        "htt/src/common/depth_path.py:616",
+        "htt/src/common/depth_path_calibration.py:694",
+        "htt/src/common/depth_path_calibration.py:710"
+      ],
+      "counterevidence_refs": [
+        "htt/src/common/depth_path_calibration.py:695",
+        "htt/src/common/depth_path_calibration.py:698",
+        "htt/src/common/depth_path_calibration.py:702",
+        "tests/contracts/test_depth_path_doob_calibration.py:277",
+        "tests/contracts/test_depth_path_doob_calibration.py:300",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 22 passed",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+      ],
+      "reproduction": [
+        "Run `python -B .agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-PHYSMATH/pr284_r3_physmath_oracle.py` from the frozen candidate root.",
+        "Observe that absent paths, invented path content IDs, invented ordered stratum IDs, nonnested supports, and post-construction support drift are rejected before calibration.",
+        "Observe independent exact results mean=0, E[X^2]=5, selected path=(-3,-2,0), maximum=3, threshold^2=36/5, inclusive law-level event probability=1/2, and Doob upper bound=25/36.",
+        "Observe `strict_nesting_spec_gap_bound_emitted` is true for three identical consecutive support sets."
+      ],
+      "unresolved": [
+        "If strict nesting is intended, add a proper-subset check for proved reports in `DepthPathReverseMartingaleReport._assert_proved_premise_replay` or the HTT proved factory without rejecting equal-support paths from the honest unproved/matched-mock lane.",
+        "Add a discriminating equal-successive-support test in `tests/contracts/test_depth_path_doob_calibration.py` and a registered `MU284-NONSTRICT-SUPPORT` mutation in the spec/runner; regenerate the receipt and repeat frozen review.",
+        "If equality is scientifically intended, change the governing spec from `strictly nested` to an explicit non-increasing/subset relation and rerun the invalidated spec-bound review rather than silently treating ordinary subset as strict."
+      ],
+      "confidence": 0.98,
+      "source_finding_ids": [
+        "F-PR284-R3-PHYSMATH-001"
+      ],
+      "supporting_assignments": [
+        "A-PR284-R3-PHYSMATH"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "assignment_count": 4,
+  "validated_result_count": 4,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/RUN_PLAN.json",
+      "sha256": "3e76d4d747abdbd3aca9168a26d99af94e0ffc83b03c8d88b2e2e99cf261ef50",
+      "bytes": 4068
+    },
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/assignments/A-PR284-R3-CLAIM.json",
+      "sha256": "76717a62f195b826a946416d34cbc297e9036681eb319ddc8361a8fc951cc3cb",
+      "bytes": 4062
+    },
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/assignments/A-PR284-R3-CODE.json",
+      "sha256": "c9dcf04f636a16ec85434ed47884518cb33c7d9e222c5126a0bd8ef08ff8a491",
+      "bytes": 4053
+    },
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/assignments/A-PR284-R3-PHYSMATH.json",
+      "sha256": "ecb2118b7d8476be72aae874eacb2bd27a1d77f25f932020e3597c86ee1e03ff",
+      "bytes": 4132
+    },
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/assignments/A-PR284-R3-REPLAY.json",
+      "sha256": "63323d4a562900f6ee332b3445368ecc4e2c90869c4a0655ea7ed7ed5980c35a",
+      "bytes": 4189
+    },
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/results/A-PR284-R3-CLAIM.json",
+      "sha256": "2ce4c789b34919ead723586176d440f54f8883848adac6b7060109354b7c4ab0",
+      "bytes": 8201
+    },
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/results/A-PR284-R3-CODE.json",
+      "sha256": "bbe9e1c328a176b7547bef17c02e4f97d64675af4262521042e52d86b3bdd501",
+      "bytes": 11049
+    },
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/results/A-PR284-R3-PHYSMATH.json",
+      "sha256": "bd69b6a044b877ff760b6c4bad521a6d63e9bcd251f52dcfb5bfe1c7f6f7b2cf",
+      "bytes": 12295
+    },
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/results/A-PR284-R3-REPLAY.json",
+      "sha256": "a61cbe0d43ebc30f55e07c1f0d0807f0a8742ec2a197c7e3306cc0dc1149cc1a",
+      "bytes": 10113
+    }
+  ],
+  "merge_input_sha256": "999c92dd2e23a9d511917410153268b8bdf572316398b5d599de7d25e52bac09"
+}

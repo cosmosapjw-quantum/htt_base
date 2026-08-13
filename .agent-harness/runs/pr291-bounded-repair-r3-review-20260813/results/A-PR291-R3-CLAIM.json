@@ -1,0 +1,194 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-bounded-repair-r3-review-20260813",
+  "assignment_id": "A-PR291-R3-CLAIM",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "agent_type": "claim_lane_reviewer",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "verdict": "FAIL",
+  "candidate_binding": {
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "1af0db69da0a190b268d6765e334b05023dd04e7",
+    "candidate_tree_sha": "d5f3a1199932eb1b66b403e74287e003c941191f",
+    "seal_sha256": "28a2bda8a600cf5ccb0dab4dbb9525105004c469f628d1e392d261beee5a32d1",
+    "required_input_hashes_validated": true,
+    "context_version_validated": true,
+    "worktree_was_clean_before_assignment_artifacts": true
+  },
+  "summary": "Blocking claim-firewall false negatives remain. Static claim metadata, ownership, nonexecution, R2 chronology, HUMAN_ONLY, and PR-292 INELIGIBLE/0 boundaries are consistent, and the repository claim suite plus exact policy command pass. A fresh 24-case oracle nevertheless reports 7 false negatives in active-plural/reordered family language and unrelated in-span negation handling, so claim_and_family_ceiling and the assigned claim verdict fail.",
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "FAIL",
+      "status": "CONDITIONAL_BOUNDARY_CORRECT_ENFORCEMENT_INCOMPLETE",
+      "owner": "COMMON",
+      "evidence_type": "test",
+      "transfer_source": "none",
+      "claim_tier": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "assumptions": [
+        "Positive statements that identify one or more Bianchi families or detect Bianchi geometry remain forbidden before the native atlas gate.",
+        "Negation is safe only when it semantically negates the matched scientific promotion, not merely another property in the same sentence."
+      ],
+      "evidence_refs": [
+        "htt/src/common/semantic_guards/no_overclaim.py:100",
+        "htt/src/common/semantic_guards/no_overclaim.py:625",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CLAIM/claim_oracle.py",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CLAIM/REVIEW_COVERAGE.json"
+      ],
+      "caveats": [
+        "This verdict concerns claim-firewall completeness; it does not reject the underlying synthetic numerical operators.",
+        "No observed CF4 data were executed and no public or family claim is granted."
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR291-CLAIM-GRAMMAR",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "severity": "BLOCKER",
+      "verdict": "FAIL",
+      "title": "Active-plural and predicate-reordered family-identification claims bypass the scanner",
+      "evidence_fingerprint": "sha256:e377086eacd6d0d7e03ccff69b49207cb692c3e9ccdcc32c890831966dd69efe",
+      "evidence": [
+        "htt/src/common/semantic_guards/no_overclaim.py:100-115 accepts active `identify` only before singular `Bianchi family` with a narrow determiner set and accepts `family identified as` without passive/reordered auxiliaries.",
+        "Fresh oracle false negatives: `We identified those Bianchi families from the CF4 statistic.`; `The analysis identified several Bianchi families from the CF4 statistic.`; `The family was conclusively identified as Bianchi VII_h.`; and the active-plural multiline form.",
+        "The same oracle's singular/passive determiner controls are detected, so this is a scoped grammar hole rather than an import or execution failure."
+      ],
+      "file_targets": [
+        "htt/src/common/semantic_guards/no_overclaim.py",
+        "tests/contracts/test_claim_language_lint.py"
+      ],
+      "required_fix": "Extend the existing geometry_detected rule narrowly to cover active plural/quantified Bianchi-family objects and passive/reordered `family ... identified as Bianchi` syntax; ensure multiline folding exercises the same forms without creating a second scanner framework.",
+      "tests": [
+        "Add the four quoted false negatives as exact production-scanner regression cases.",
+        "Retain determiner singular/passive, exact downclaim, YAML guardrail, and Markdown forbidden-column/status controls."
+      ]
+    },
+    {
+      "finding_id": "F-PR291-CLAIM-NEGATION-SCOPE",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "severity": "BLOCKER",
+      "verdict": "FAIL",
+      "title": "Any `not` inside a broad regex match is treated as claim-scoped negation",
+      "evidence_fingerprint": "sha256:e4374a3eb816917d2ae16a2812a3a9a4c0994a4cfb9726db23ae135d14cb98c6",
+      "evidence": [
+        "htt/src/common/semantic_guards/no_overclaim.py:633-637 returns guardrail true whenever `no|not|never|cannot` occurs anywhere inside matched_claim.",
+        "Fresh oracle false negatives: `The 0.0089 curl diagnostic is not public but is evidence for physical cosmic vorticity.`; `PR-291 is not public but rescues the retired P0 velocity-shape headline.`; `The scalar result is not public but establishes Bianchi family identification.`",
+        "Same-sentence prefix controls using unrelated `not`, `no`, and `without` are correctly detected, while exact geometry/curl/P0 downclaims remain allowed. This localizes the defect to in-span negation scope."
+      ],
+      "file_targets": [
+        "htt/src/common/semantic_guards/no_overclaim.py",
+        "tests/contracts/test_claim_language_lint.py"
+      ],
+      "required_fix": "Replace the blanket in-match negation exemption with promotion-predicate-scoped negative forms (for example, `was not detected`, `is not evidence`, `is not supported`, and `does not rescue`) while leaving unrelated properties such as `not public` non-suppressing.",
+      "tests": [
+        "Add the three quoted in-span unrelated-negation cases as positive detections.",
+        "Retain the exact matched-sentence geometry, curl, reverse-curl, multiline-curl, and P0 negative controls."
+      ]
+    }
+  ],
+  "claim_audit": {
+    "evidence_read": [
+      ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json",
+      "docs/research_program/post_pr275/pr291_spec.yaml",
+      "docs/research_program/post_pr275/pr291_publication_policy.json",
+      "docs/PR_DELTAS/pr-291.md",
+      "docs/codex_handoff/pr_status.yaml",
+      "machine_readable/pr_status.yaml",
+      "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+      "htt/src/common/cf4_observed_lane_activation.py",
+      "htt/obsstat/cf4_post275_lane.py",
+      "htt/src/common/semantic_guards/no_overclaim.py",
+      "tests/contracts/test_claim_language_lint.py",
+      "tests/integration/test_cf4_post275_lane.py",
+      "docs/harness/CLAIM_LEDGER.md"
+    ],
+    "upgraded_claims": [],
+    "downgraded_claims": [],
+    "forbidden_drift_detected": [
+      "Enforcement gaps permit forbidden family/geometry, curl-physics, retired-P0, and scalar-family positive prose variants to pass undetected."
+    ],
+    "proposed_changes": [
+      "Narrowly repair the existing geometry grammar and negation scoping in common.semantic_guards.no_overclaim.",
+      "Add exact adversarial regressions to tests/contracts/test_claim_language_lint.py; do not create a new scanner or new permanent gate."
+    ],
+    "tests_to_run": [
+      "PYTHONPATH=htt/src python3 -B -m pytest -p no:cacheprovider -q tests/contracts/test_claim_language_lint.py",
+      "PYTHONPATH=htt/src python3 -B scripts/check_claim_language.py --strict-missing --include-archives docs/research_program/post_pr275/pr291_spec.yaml htt/src/common/cf4_observed_lane_activation.py htt/obsstat/cf4_post275_lane.py tests/integration/test_cf4_post275_lane.py docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json docs/PR_DELTAS/pr-291.md",
+      "PYTHONPATH=htt/src python3 -B .agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CLAIM/claim_oracle.py"
+    ],
+    "risks_and_kill_switches": [
+      "Do not mark PR-291 REVIEWED while either fresh-oracle false-negative class remains.",
+      "Do not broaden structured YAML/Markdown exemptions; exact negative contexts currently pass and positive neighboring contexts remain detected.",
+      "Any candidate, test, spec, status, receipt, or claim-ceiling byte change invalidates this review and requires a new frozen review."
+    ],
+    "artifacts_status_updates_needed": [
+      "Keep PR-291 lifecycle at VALIDATED with claim/review FAIL until repair and fresh review.",
+      "Keep PR-292 PLANNED/INELIGIBLE with assurance consumed 0.",
+      "No claim-ledger promotion or public/manuscript artifact is authorized."
+    ]
+  },
+  "commands": [
+    {
+      "command": "git rev-parse HEAD HEAD^{tree}; git merge-base <base> <candidate>; git diff --check <base> <candidate>",
+      "exit_code": 0,
+      "result": "candidate, tree, and merge base match the seal; diff check passed"
+    },
+    {
+      "command": "PYTHONPATH=htt/src python3 -B -m pytest -p no:cacheprovider -q tests/contracts/test_claim_language_lint.py",
+      "exit_code": 0,
+      "result": "28 passed"
+    },
+    {
+      "command": "PYTHONPATH=htt/src python3 -B scripts/check_claim_language.py --strict-missing --include-archives <six exact policy paths>",
+      "exit_code": 0,
+      "result": "No forbidden claim language detected."
+    },
+    {
+      "command": "PYTHONPATH=htt/src:htt python3 -B -m pytest -p no:cacheprovider -q tests/integration/test_cf4_post275_lane.py -k 'gate_snapshot_and_legacy_curl_preserve_claim_ceiling or nonexecution_receipt_is_content_bound_and_has_no_numbers or spec_relaxations_fail_closed'",
+      "exit_code": 0,
+      "result": "21 passed, 36 deselected"
+    },
+    {
+      "command": "PYTHONPATH=htt/src python3 -B .agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CLAIM/claim_oracle.py",
+      "exit_code": 1,
+      "result": "17 passed, 7 false negatives"
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1"
+  },
+  "required_outputs": {
+    "review_coverage": {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CLAIM/REVIEW_COVERAGE.json",
+      "sha256": "172a632950280ac09baded5253ce44c31325e2801d1e1ce8f5c9025908dd7308",
+      "cell_count": 16
+    },
+    "executable_oracle": {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CLAIM/claim_oracle.py",
+      "sha256": "b3b71fa80bc554edb71828074ae29b3b405e2f0693ed5e1f3fd5478d44a19c67",
+      "case_count": 24,
+      "passed": 17,
+      "failed": 7
+    }
+  },
+  "files_written": [
+    ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CLAIM/claim_oracle.py",
+    ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CLAIM/REVIEW_COVERAGE.json",
+    ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/results/A-PR291-R3-CLAIM.json"
+  ],
+  "limitations": [
+    "Blind-results independence was preserved; no sibling or historical result, CONTEXT_PACK, process listing, or aggregate validator was inspected.",
+    "Latest-target status was reviewed only against the frozen target binding declared by the seal and policy; no network fetch was performed.",
+    "Production/shared candidate files were not edited."
+  ]
+}

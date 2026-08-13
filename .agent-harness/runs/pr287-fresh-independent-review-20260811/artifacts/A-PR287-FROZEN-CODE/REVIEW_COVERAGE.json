@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "run_id": "pr287-fresh-independent-review-20260811",
+  "assignment_id": "A-PR287-FROZEN-CODE",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "candidate_seal_sha256": "486a8f7e75c04467e2c65a083529eff5f65e622f935b3346ada8ea7243cd456e",
+  "candidate_sha": "06ee728054fd62423fa90bc6a5d714b9be8631e3",
+  "candidate_tree_sha": "dd909b5d35a385b251547f6224b657346d7688f6",
+  "diff_sha256": "83ef2581a3a1afdf5459ad64730783f6f7e905a3cda155236ec44971b160912f",
+  "changed_files_sha256": "b522232b4e7f07fe03b297f33a07dfcce4f7eb80cdd0bbd94b9fd06a20b73198",
+  "completed_at": "2026-08-11T05:22:46.052319+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json", "git HEAD=06ee728054fd62423fa90bc6a5d714b9be8631e3 tree=dd909b5d35a385b251547f6224b657346d7688f6"],
+      "rationale": "HEAD, tree, merge base, seal file, and all assigned source hashes match the frozen binding."
+    },
+    {
+      "cell": "spec_and_dependency_freeze",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml:dependencies", "htt/src/common/post275_blind_replay.py:build_dependency_activation_receipt"],
+      "rationale": "The canonical dependency inventory and canonical paths are exact and order-sensitive."
+    },
+    {
+      "cell": "predecessor_terminal_receipts_and_pure_activation",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:build_dependency_activation_receipt", "oracle.py:activation_rebuilt_and_side_effect_free"],
+      "rationale": "Activation recomputes registered terminals and created no fresh artifact."
+    },
+    {
+      "cell": "fresh_seed_and_commitment",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml:seed_contract", "scripts/codex_harness/run_pr287_post275_blind_replay.py:_assert_no_fresh_outputs"],
+      "rationale": "The frozen code exposes identity contracts only and performs no entropy access or seed disclosure."
+    },
+    {
+      "cell": "challenge_truth_threshold_and_submission_identity_chain",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:build_fresh_challenge", "htt/src/common/post275_blind_replay.py:build_frozen_submission"],
+      "rationale": "Challenge, threshold, inventory, and submission identities are recomputed and cross-bound."
+    },
+    {
+      "cell": "challenge_truth_separation",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:_CHALLENGE_FORBIDDEN_KEYS", "tests/integration/test_post275_blind_replay.py:test_fresh_challenge_is_content_addressed_and_recursively_truth_free"],
+      "rationale": "Exact positive schemas and recursive forbidden-key scanning exclude truth and seed aliases."
+    },
+    {
+      "cell": "analyst_adjudicator_separation",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/infer/post275_blind_replay.py:analyze_fresh_challenge", "tests/integration/test_post275_blind_replay.py:test_analyst_receives_only_public_case_payloads"],
+      "rationale": "The analyst surface rejects ambient callbacks and has no adjudicator or pack authority."
+    },
+    {
+      "cell": "role_capability_and_recursive_forbidden_fields",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml:fresh_artifact_contracts", "oracle.py:recursive_forbidden_alias"],
+      "rationale": "Capabilities are role-scoped and recursive aliases are rejected."
+    },
+    {
+      "cell": "stage_order_and_content_id_trace",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:_STAGE_LAYOUT", "htt/src/common/post275_blind_replay.py:build_stage_trace"],
+      "rationale": "The exact five-stage order and all adjacent identity links are validated."
+    },
+    {
+      "cell": "historical_fresh_lane_separation",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml:lane_separation", "htt/src/common/post275_blind_replay.py:build_historical_replay_receipt"],
+      "rationale": "Historical replay has a distinct receipt and cannot populate fresh packs."
+    },
+    {
+      "cell": "historical_replay_after_submission_freeze",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:build_historical_replay_receipt", "tests/integration/test_post275_blind_replay.py:test_historical_replay_receipt_requires_a_frozen_fresh_submission"],
+      "rationale": "Historical access requires the factory-derived submission freeze receipt."
+    },
+    {
+      "cell": "no_legacy_seed_or_anchor",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml:legacy_bc1_contract", "scripts/codex_harness/run_pr287_post275_blind_replay.py:_verify_activated_blocker"],
+      "rationale": "The current blocked runtime neither reads legacy values nor constructs fresh state."
+    },
+    {
+      "cell": "current_typed_pipeline_order",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml:current_pipeline_contract", "python -B scripts/codex_harness/run_pr287_post275_blind_replay.py adjacent: 188 passed"],
+      "rationale": "All adjacent typed predecessor contracts pass in the registered semantic order."
+    },
+    {
+      "cell": "typed_scenario_bank_and_mc_precision",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:build_typed_scenario_bank", "htt/src/common/post275_blind_replay.py:_exact_binomial_interval"],
+      "rationale": "Scenario fields, exact or 512-cell evidence modes, and precision terminals fail closed."
+    },
+    {
+      "cell": "raw_coverage_and_simultaneous_multiplicity",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:build_registered_case_analysis_results", "tests/integration/test_post275_blind_replay.py:test_case_results_bind_covariance_rank_angle_and_raw_coverage_cells"],
+      "rationale": "Raw cells are content-bound and held-out p-values receive ordered Holm adjustment."
+    },
+    {
+      "cell": "paired_covariance_misspecification",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:build_typed_scenario_bank", "tests/integration/test_post275_blind_replay.py:test_scenario_bank_enforces_bijection_and_paired_covariance_contract"],
+      "rationale": "Paired rows require shared latent inventory and distinct positive-definite analysis covariance."
+    },
+    {
+      "cell": "weak_id_open_set_precedence_and_abstention",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:_classifier_terminal", "tests/integration/test_post275_blind_replay.py:test_case_results_derive_precedence_holm_coverage_and_depth_fail_closed"],
+      "rationale": "Unsupported, missing-provider, weak-ID, unknown, equivalence, and candidate terminals preserve precedence."
+    },
+    {
+      "cell": "depth_premise_fallback_and_identity_chain",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:build_registered_case_analysis_results", "docs/research_program/post_pr275/pr287_spec.yaml:depth_path_projection_contract"],
+      "rationale": "A missing premise cannot emit a finite bound and requires matched mocks."
+    },
+    {
+      "cell": "pr285_row_verdict_and_semantic_preservation",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:build_pillar_row_projection", "tests/integration/test_post275_blind_replay.py:test_pillar_row_projection_preserves_exact_inventory_and_negative_rows"],
+      "rationale": "All 80 Pillar T rows and their negative terminals remain content-bound."
+    },
+    {
+      "cell": "pr286_row_verdict_preservation",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:build_pillar_row_projection", "tests/integration/test_post275_blind_replay.py:test_pillar_row_projection_preserves_exact_inventory_and_negative_rows"],
+      "rationale": "All 72 Pillar S rows preserve blocked and inconclusive states."
+    },
+    {
+      "cell": "pillar_t_and_s_exact_inventory",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:_PILLAR_AUTHORITY", "docs/research_program/post_pr275/pr287_spec.yaml:row_projection_contract"],
+      "rationale": "Both source files are regular, byte-bound, order-sensitive, and fixed at 80 and 72 rows."
+    },
+    {
+      "cell": "result_pack_A_contract",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:build_common_pack_a", "htt/src/common/post275_blind_replay.py:_validate_pack_surfaces"],
+      "rationale": "Pack A composes owner-preserving indexes and cannot derive COMMON numeric diagnostics."
+    },
+    {
+      "cell": "result_pack_B_contract",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/infer/post275_blind_replay.py:build_htt_pack_b", "htt/src/common/post275_blind_replay.py:_validate_pack_surfaces"],
+      "rationale": "Pack B remains HTT diagnostic-only and checks rank, angle, open-set, and weak-ID consistency."
+    },
+    {
+      "cell": "result_pack_C_mio_boundary",
+      "status": "PASS",
+      "evidence_refs": ["htt/mio/reports/post275_blind_replay.py:build_mio_pack_c", "htt/src/common/post275_blind_replay.py:_PACK_FORBIDDEN_KEYS"],
+      "rationale": "Pack C is MIO-owned and rejects posterior, evidence, truth, and family aliases."
+    },
+    {
+      "cell": "x_q_pi_f_gf_semantics",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:_validate_surface_semantics", "docs/research_program/post_pr275/pr287_spec.yaml:canonical_surface_semantics"],
+      "rationale": "Signs, denominators, thresholds, admissibility, depth, covariance, and null semantics are explicit."
+    },
+    {
+      "cell": "owner_factories_and_pack_local_metadata",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:_owner_factory_provenance", "oracle.py:owner_factory_origin_and_bytes_bound"],
+      "rationale": "Module origin, loader origin, code filename, source bytes, and exact call site are all bound."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml:mutation_registry", "python -B scripts/codex_harness/run_pr287_post275_blind_replay.py focused: 40 passed"],
+      "rationale": "The focused battery exercises activation, identity, payload, owner, claim, and provenance mutations."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py:_validate_pack_metadata", "oracle.py:runtime_claim_variant"],
+      "rationale": "C2 diagnostic-only synthetic metadata and recursive runtime language checks block promotion."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr287_post275_blind_replay.py:_portable", "portable command: source and clean manifest 594b74801784f599b5e112ca0602a62a12aa95dc0b8786a957ca9044e8051025"],
+      "rationale": "The archive replay passed with clean-only imports, scrubbed environment, identical manifests, and zero fresh artifacts."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_publication_policy.json:target_sha", "git refs/remotes/origin/changeset/pr286-pillar-s-adjudication-recovery-20260810=b955a050f19db853a93779506e8acb4e4a5352a9"],
+      "rationale": "The local remote-tracking target and merge base both equal the sealed target SHA."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "invariant_checker",
+      "oracle_id": "PR287-FROZEN-CODE-INVARIANT-ORACLE",
+      "status": "PASS",
+      "argv": ["/usr/bin/python", "-B", ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-CODE/oracle.py"],
+      "command_fingerprint": "f9c40a307f6f6545649f1c0032a3c88c140226634758cb699f64de39e15771a7",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T05:22:34.581453+00:00",
+      "completed_at": "2026-08-11T05:22:46.052319+00:00",
+      "artifact_path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-CODE/oracle.py",
+      "artifact_sha256": "a04fc55172c2e3a228399c2ed7faf8d12d2f7f1caff54c54f4e3453aa8881b9e",
+      "artifact_bytes": 5467,
+      "evidence_refs": ["oracle.py stdout status PASS", "htt/src/common/post275_blind_replay.py", "htt/obsstat/exact_parity_readiness.py"]
+    }
+  ],
+  "coverage_sha256": "0f3df7796fbc219a544952edc5b9194f71c0d6b3c90acfe1ce2d26ad3f77eff8"
+}

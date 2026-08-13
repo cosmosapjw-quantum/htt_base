@@ -1,0 +1,121 @@
+{
+  "schema_version": 3,
+  "run_id": "pr290-portable-prose-r3-closeout-20260811",
+  "assignment_id": "A-PR290-R3-METADATA-CLOSEOUT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-290",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR290_R3_METADATA_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "7878f8797787955287b9aff665910727ae9c7b41071d7be95acbdd9ca7867a29",
+    "seal_sha256": "e7df87ce9d0d24b70fc4e1bc6866d5406aa344167cd25087f3fff4d8b6b7fa9b",
+    "base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_sha": "d73648b01f86333c94c82051415c58cbccbf54d2",
+    "merge_base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_tree_sha": "f472f7c244bf137bda34c9fc356e200ead2295f7",
+    "diff_sha256": "e362011c8edd3aa5f39adf8d1020d2fa4f6f05f0d9e52d1bdded612d47196eb0",
+    "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+    "production_hash": "b9b62e081f702f6b2b1918e5b3f1b599d651bdfa2fb0261e878d7a669d94beaf"
+  },
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Metadata-only closeout of PR-290 at exact frozen HEAD d73648b0 after R2 replay/claim exposed a self-referential portable manifest digest in docs/PR_DELTAS/pr-290.md. Read only registered inputs and the explicitly allowed R2 result envelopes/aggregate. Verify the final commit changes only that PR delta; production hash b9b62e081f702f6b2b1918e5b3f1b599d651bdfa2fb0261e878d7a669d94beaf and all relevant dependency hashes are unchanged from R2; R2 science/code PASS and replay/claim FAIL chronology is preserved; the exact digest literal was removed without weakening the portable facts. Freshly execute only the affected portable-clean and claim-language commands, confirming a distinct clean archive over 5,919 tracked files, identical source/archive pre/post manifests, no observed input/network/observed execution, and no forbidden claims. Carry the other 13 substantive cells without rerunning them. Verify lifecycle remains VALIDATED, assurance pre-assignment 6/16 and projected 7/16, PR-291 PLANNED/INELIGIBLE with zero budget, predecessor exact PR-289 sealed SHA, HUMAN_ONLY merge and no push/PR/merge. Write no tracked/shared files; produce only an assignment-local executable oracle, exact 15-cell REVIEW_COVERAGE, and one strict-valid schema-v3 result using the single-result loader, never aggregate validation.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR290_R3_METADATA_CANDIDATE_SEAL.json",
+      "sha256": "7878f8797787955287b9aff665910727ae9c7b41071d7be95acbdd9ca7867a29"
+    },
+    {
+      "path": ".prguard/runtime/PR290_R2_CANDIDATE_SEAL.json",
+      "sha256": "db394a9cb3b243b438062d1769e2f1b11722966d34c45fa531890f08e8ff3ac7"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json",
+      "sha256": "8a7c48f0c348ca917083f8d05cfabc547716a0bd12cc2b3e1700a1268bff8851"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-REPLAYCLAIM.json",
+      "sha256": "ea0525991e68c536789824d9eadc1529a0c5b0ff2616913b557596ca2dc92904"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/MERGED_RESULTS.json",
+      "sha256": "75fe0dff5abf2a052663f26f0ab26676232b53f503e19b3be0d720e4895e2ac2"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/RUN_SUMMARY.json",
+      "sha256": "b90bab618404de6f32e474b598139e75d8ecd01d315f1edd64fa77d3bdd6b4b3"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr290_spec.yaml",
+      "sha256": "1ec571a1de15d6b0addc608e2eb5db1dc9df7ae6e3bdd7f66160cf56ebeb5f9a"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr290_publication_policy.json",
+      "sha256": "45655b62f02f2d422283aa99780c78e80a022fbd1fd371e8ee7a450ddad320cd"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+      "sha256": "64501ed3467290e46bd687ab137ad461257e269925c5e8b235f2237778e19aba"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-290.md",
+      "sha256": "a0c9ccc47521b9e72c082b1e38377ee0ebcf3c25be90fd1cdc9136047d411848"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "a56c459bb3d7f0fb3a91f589f3b44d1ffb2464f3f2ebdfe44880bcd10a9f7414"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "a56c459bb3d7f0fb3a91f589f3b44d1ffb2464f3f2ebdfe44880bcd10a9f7414"
+    },
+    {
+      "path": "htt/src/common/observed_lane_activation.py",
+      "sha256": "79066a85eeb7515a9435a15963f26b2fcef02b8eabd11d59fde6ecfd8941d397"
+    },
+    {
+      "path": "htt/obsstat/planck_post275_lane.py",
+      "sha256": "84a326a2f7cb9ba10101a723ac14377e778260d06035b0435e94192459351959"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr290_planck_lane.py",
+      "sha256": "abaddb4980839f3b368337e9c800bed7a15c78b8fb7ae78c4a0708dc9e250466"
+    },
+    {
+      "path": "tests/integration/test_planck_post275_lane.py",
+      "sha256": "58e59dd6f9f89b744757c3b2e87392c22972f531bf844ab8fd51eb1bb5e8f7f9"
+    }
+  ],
+  "allowed_sibling_results": [
+    ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json",
+    ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-REPLAYCLAIM.json"
+  ],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/results/A-PR290-R3-METADATA-CLOSEOUT.json",
+  "status": "registered",
+  "assignment_sha256": "ef8d671417f431b58e01095ec3f0fb3f80ba7edb7c5e47ebb42afca14f822e09"
+}

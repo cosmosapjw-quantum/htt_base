@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-final-seal-closeout-20260811",
+  "generated_at": "2026-08-11T03:57:02+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 0,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR286-FINAL-SEAL-CLOSEOUT",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/final_closeout_oracle_report.json",
+            ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/review_coverage.json",
+            ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/MERGED_RESULTS.json",
+            ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/RUN_SUMMARY.json",
+            ".prguard/runtime/PR286_FINAL_CANDIDATE_SEAL.json",
+            ".prguard/runtime/PR286_FINAL_INTEGRATION_REHEARSAL.json"
+          ],
+          "evidence_fingerprint": "C-PR273-BLIND-INTEGRATION|final=b955a050|seal=f9907e83|review=cb7cdafe|receipt=43b1e070",
+          "summary": "The exact PR-286 final candidate preserves the registered held-out synthetic integration review without promotion: the immutable rereview retains three PASS results and the isolated claim ERROR as non-acceptance chronology, while final metadata-only commits leave the production/evidence key unchanged. The final seal and ten-command integration receipt validate exactly; PR-286 remains REVIEWED, and PR-287 remains PLANNED/INELIGIBLE with zero budget."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "assignment_count": 1,
+  "validated_result_count": 1,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr286-final-seal-closeout-20260811/RUN_PLAN.json",
+      "sha256": "187275fa652d6ad1b4d5978128e7304bb8e2ab64e69ef84d8558795a59317f31",
+      "bytes": 6151
+    },
+    {
+      "path": ".agent-harness/runs/pr286-final-seal-closeout-20260811/assignments/A-PR286-FINAL-SEAL-CLOSEOUT.json",
+      "sha256": "aec9de8b3a93c7dbacda5d7e9c1a556af2dd99f4d6fb88ca4954bfe9d55a08e4",
+      "bytes": 5766
+    },
+    {
+      "path": ".agent-harness/runs/pr286-final-seal-closeout-20260811/results/A-PR286-FINAL-SEAL-CLOSEOUT.json",
+      "sha256": "9b26e71c2a96163227df7e2373b4c1cb1712daa1aea144916c5c51b07accd44d",
+      "bytes": 7780
+    }
+  ],
+  "merge_input_sha256": "491552f333250295687490299155ae9ba3f74e3027ce7ae962fa463fba9fe96a"
+}

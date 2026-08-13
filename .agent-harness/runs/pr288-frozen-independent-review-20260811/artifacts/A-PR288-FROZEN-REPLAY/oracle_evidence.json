@@ -1,0 +1,77 @@
+{
+  "checks": {
+    "archive_extraction": {
+      "hostile_cases_rejected": [
+        "../escape:0",
+        "/absolute:0",
+        "nested/../../escape:0",
+        "link:2",
+        "hard:1",
+        "fifo:6",
+        "preexisting_destination_symlink"
+      ],
+      "python310_compatible_call": "extractall_without_filter_keyword",
+      "safe_regular_member_extracted": true,
+      "status": "PASS_SAFE_ARCHIVE_EXTRACTION"
+    },
+    "atomic_destination": {
+      "failed_replace_preserved_destination": true,
+      "failed_replace_removed_temporary": true,
+      "preflight_rejections": [
+        "hardlinked_destination",
+        "symlink_destination",
+        "symlink_parent"
+      ],
+      "status": "PASS_ATOMIC_DESTINATION_DEFENSES",
+      "successful_replace_single_link": true
+    },
+    "lineage": {
+      "audit_blob": "9d312f3d3f5ebc6d2fa14e90a5de5edbd92ef0dd",
+      "audit_sha256": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436",
+      "base_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+      "candidate_patch_ids": {
+        "35def97004dde564c7aa8704f72f58b84c75dfe3": "01744e26c5778b7de631931d7777033d340c041e",
+        "5b8869f28744db93fd0c88ff391ce7bf4c784d86": "b0e70786c51ff19c2e0816ef0e155742a5f5db1e",
+        "5c20df43241f5156e17b1c25b2fcf38592d99ca0": "c1e5a1a892220c4644339be3a060fa157fc2dc0f",
+        "5fe66791c42b682e5a0d3b869fa420847cca287e": "5e07ee4556b903f60685513e314e3e4902a0c1ac",
+        "82d19ce140a82b968ea492702923183da2cf1f93": "57bec212833698e335e6839ec26afd2386f160aa",
+        "cdf77aa691663d2035f3329c07c94d034d1aeb39": "90570b253c13317f5de03e5452ee01c7d972377b",
+        "dcde762d1ce3027e01edcf2744398f7588bb5fb1": "5097158e6053314a2893d6631d81d4bf51b985db",
+        "fe41d6edc5f61b5b52124b1dfcfa857e2f839de3": "41ab8d8e1f1921b2f1a727e0fd771ae7b1dfa93c"
+      },
+      "candidate_patch_ids_unique": true,
+      "candidate_sha": "dcde762d1ce3027e01edcf2744398f7588bb5fb1",
+      "candidate_tree_sha": "69d9f00aa1b8a43dfb9287ffbc9103f350fba80e",
+      "excluded_group_patch_ids": {
+        "G39": "0f83cc42c8302cdc310b41fba1796ee2b92ca7f1",
+        "G40": "ea6506d4c96862c10739f75eff9bb1e1afad225d",
+        "G42": "5901a425c0f7c2b748d4517a6c06f3bb3fb4a85e"
+      },
+      "included_groups": {
+        "G41": "01744e26c5778b7de631931d7777033d340c041e",
+        "G43": "b0e70786c51ff19c2e0816ef0e155742a5f5db1e",
+        "G44_production_test_subset": "360d13d5ffbff70ba7e0827cf8b7c3bb28c0dad8"
+      },
+      "latest_target_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7"
+    },
+    "preloaded_module": {
+      "hostile_preload_executed": false,
+      "loaded_origin": "htt/htt/htt/infer/bayesian_semantics.py",
+      "status": "PASS_BOUND_SOURCE_REPLACED_HOSTILE_PRELOAD"
+    },
+    "receipt_and_status": {
+      "pr280_resolution": "COMPLETED_FAILED_WITH_RECEIPT",
+      "pr280_success_dependency_satisfied": false,
+      "pr288_lifecycle": "VALIDATED",
+      "pr288_review": "DEFERRED",
+      "pr289_eligibility": "INELIGIBLE",
+      "receipt_content_id": "sha256:68f439f31327c6894fe9bd9bf4269c216bec3a6832165dc71d35885320f7e518",
+      "receipt_sha256": "622dadbcdf4a5d616a78f485fd6a772d1c7823ed8d77e808aa2bfc8f66169b0c",
+      "status": "PASS_RECEIPT_STATUS_BINDINGS",
+      "status_mirrors_byte_identical": true
+    }
+  },
+  "python": "3.10.20",
+  "schema": "PR288_FROZEN_REPLAY_ORACLE_V1",
+  "terminal": "PASS_PR288_FROZEN_REPLAY_ORACLE"
+}

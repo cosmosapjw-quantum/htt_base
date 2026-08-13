@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "run_id": "pr289-bounded-repair-r2-review-20260811",
+  "assignment_id": "A-PR289-R2-CLAIM",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "candidate_seal_sha256": "b87547b5c86fb27fb63c6ba2f62639733295efe0b7ddf91ed82685a6c6cbba90",
+  "candidate_sha": "e7affa4302f60cb02a664b315693b22e2372ef33",
+  "candidate_tree_sha": "1d25895f229c87723797c73018fed8783466541f",
+  "diff_sha256": "124822f8c20278b307447150dcd0a8aa357048f6a9526e8feb976c14a2715ae1",
+  "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+  "completed_at": "2026-08-11T10:34:43Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "HEAD and tree exactly match the frozen candidate seal."
+    },
+    {
+      "cell": "pr280_terminal_receipt_without_success_promotion",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:dependency_contract", "docs/PR_DELTAS/pr-289.md:scope-and-claim-boundary"],
+      "rationale": "PR-280 terminal receipt is accepted only for bounded non-executing work and is not promoted to success or data admission."
+    },
+    {
+      "cell": "immutable_pr274_v1",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:historical_boundary", "docs/generated/pr289_data_identity_v2_receipt.json:source_bindings", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "The receipt source-binds the exact immutable PR-274 registry and result hashes; the oracle recomputed every source binding."
+    },
+    {
+      "cell": "v2_factory_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:DataIdentityPreflightReceipt", "tests/contracts/test_data_identity_registry_v2.py", "command:python -B scripts/codex_harness/run_pr289_data_identity_v2.py focused -> 55 passed"],
+      "rationale": "Factory-only construction and content-address checks passed the complete focused suite."
+    },
+    {
+      "cell": "stable_record_and_inspection_identities",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:stable_identity_evidence", "tests/contracts/test_data_identity_registry_v2.py:test_planck_admission_is_stable_across_root_and_inspection_time", "command:python -B scripts/codex_harness/run_pr289_data_identity_v2.py focused -> 55 passed"],
+      "rationale": "Stable record identity remains separate from inspection identity and excludes the machine-local root."
+    },
+    {
+      "cell": "typed_provenance_evidence",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:stable_identity_evidence", "docs/generated/pr289_data_identity_v2_receipt.json:source_bindings", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "Typed evidence, exact source bindings, and generation identity are present and independently recomputed."
+    },
+    {
+      "cell": "machine_lane_cardinality_and_gate_identity",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json", "docs/research_program/post_pr275/data_runbooks.yaml", "command:python -B scripts/codex_harness/run_pr289_data_identity_v2.py focused -> 55 passed"],
+      "rationale": "The six-lane order, component cardinalities, and exact human-gate spellings are machine-bound and tested."
+    },
+    {
+      "cell": "regular_file_and_no_symlink_boundary",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Detailed filesystem race and symlink review belongs to the separately registered code and harness lanes; this assignment is claim/provenance-only."
+    },
+    {
+      "cell": "hardlink_and_root_confinement",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Detailed hardlink and root-confinement implementation review is outside this claim/provenance assignment."
+    },
+    {
+      "cell": "size_hash_and_component_inventory",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Byte-inspection implementation correctness is outside this claim/provenance assignment."
+    },
+    {
+      "cell": "release_and_license_identity",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:semantic_rules", "docs/harness/CLAIM_LEDGER.md:PR-289", "command:python -B scripts/codex_harness/run_pr289_data_identity_v2.py focused -> 55 passed"],
+      "rationale": "Release and license identities are typed preflight evidence only and are not represented as authorization or validation."
+    },
+    {
+      "cell": "units_frame_convention",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:semantic_rules", "docs/generated/pr289_data_identity_v2_receipt.json:sky_mask_selection_covariance_null_status"],
+      "rationale": "Units/frame/convention fields are independent identity metadata; absent lanes remain explicitly not evaluated."
+    },
+    {
+      "cell": "mask_selection_covariance_null",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:semantic_rules", "docs/generated/pr289_data_identity_v2_receipt.json:sky_mask_selection_covariance_null_status"],
+      "rationale": "The receipt does not pretend missing-lane mask, selection, covariance, or null status is bound."
+    },
+    {
+      "cell": "transfer_and_sky_support",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:transfer_source", "docs/generated/pr289_data_identity_v2_receipt.json:transfer_source", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "Transfer is exactly none; sky support remains typed identity metadata and no external or native transfer claim is made."
+    },
+    {
+      "cell": "planck_first_candidate",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Planck admission mechanics are outside the claim/provenance-only assignment; no Planck root was supplied or executed."
+    },
+    {
+      "cell": "planck_native_profile_and_same_sky_replay",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Native-profile relationship implementation is assigned to code/physics-statistics review, not this claim lane."
+    },
+    {
+      "cell": "cf4_native_catalogue_selection_covariance_replay",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "CF4 native-profile relationship implementation is outside this claim lane."
+    },
+    {
+      "cell": "hsc_kids_separate_child_and_cross_covariance_replay",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "HSC/KiDS child-identity implementation is outside this claim lane."
+    },
+    {
+      "cell": "native_profile_export_replay_and_string_only_refusal",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Export-replay implementation is outside this claim lane."
+    },
+    {
+      "cell": "exported_record_full_semantic_replay",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Full exported-record replay implementation is outside this claim lane."
+    },
+    {
+      "cell": "repeated_role_ordinal_completeness",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Repeated-role ordinal implementation is outside this claim lane."
+    },
+    {
+      "cell": "verified_bytes_equal_executed_module",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr289_data_identity_v2.py:_load_bound_data_identity_module", "docs/generated/pr289_data_identity_v2_receipt.json:source_bindings", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "The executed module digest equals the source binding, which the oracle independently recomputed from the frozen candidate bytes."
+    },
+    {
+      "cell": "output_parent_identity_pinning",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Output-parent race correctness is outside this claim/provenance lane."
+    },
+    {
+      "cell": "interpreter_alias_invariant_receipt",
+      "status": "PASS",
+      "evidence_refs": ["docs/generated/pr289_data_identity_v2_receipt.json:generation_identity", "tests/contracts/test_data_identity_registry_v2.py:test_receipt_generation_identity_is_interpreter_alias_independent", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "The exact generating argv uses stable python3 identity and is content-bound independently of an absolute interpreter alias."
+    },
+    {
+      "cell": "name_only_hsc_kids_refusal",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Specific refusal implementation is outside this claim lane."
+    },
+    {
+      "cell": "pr151_partial_desi_refusal",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:forbidden_uses", "docs/generated/pr289_data_identity_v2_receipt.json:caveats", "docs/harness/CLAIM_LEDGER.md:PR-289"],
+      "rationale": "PR-151 partial acquisition is explicitly forbidden input and cannot support admission or a claim."
+    },
+    {
+      "cell": "admission_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:build_not_authorized_receipt", "docs/generated/pr289_data_identity_v2_receipt.json:authorization_receipts", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "All six lane-data receipts are factory-built NOT_AUTHORIZED and admission never creates execution authority."
+    },
+    {
+      "cell": "authorization_state_machine_and_workflow_domain",
+      "status": "PASS",
+      "evidence_refs": ["docs/codex_handoff/pr_backlog.yaml:PR-289", "docs/research_program/post_pr275/pr289_spec.yaml:workflow_authorization_boundary", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "Backlog authorization is workflow_only; lane receipts stay in lane_data_execution and cannot contain human authority under PR-289."
+    },
+    {
+      "cell": "refusal_status_precedence_and_lane_aggregation",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Detailed refusal precedence implementation is outside this claim lane; its no-admission consequence was separately checked."
+    },
+    {
+      "cell": "no_download_or_repository_copy",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:candidate_root_contract", "command:python -B scripts/codex_harness/run_pr289_data_identity_v2.py preflight -> network_or_download_side_effect false", "docs/generated/pr289_data_identity_v2_receipt.json:forbidden_uses"],
+      "rationale": "The clean preflight is read-only and reports no network/download side effect; the contract forbids acquisition and repository copy."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:mutation_registry", "docs/generated/pr289_data_identity_v2_receipt.json:mutation_results", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "Receipt contains all 32 registered killed mutations; the independent oracle reran the admission/auth-collapse, workflow-laundering, and claim-promotion mutants."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["docs/generated/pr289_data_identity_v2_receipt.json", "command:python -B scripts/codex_harness/run_pr289_data_identity_v2.py check -> fd0ed2139903c7e47d4478a53e2e5054348801b427e9fb5250039324df5996d7", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "Frozen bytes replay and both source-bound generation identity and receipt content ID independently recompute exactly."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_publication_policy.json", ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "Policy change-set, publication-group, target, candidate seal, and claim ceiling identities agree."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml", "docs/generated/pr289_data_identity_v2_receipt.json", "docs/harness/CLAIM_LEDGER.md:PR-289", "command:python -B scripts/check_claim_language.py --strict-missing --include-archives [PR-289 paths] -> no forbidden claim language", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json"],
+      "rationale": "COMMON ownership, C2 diagnostic-only ceiling, transfer none, observed/public false, OPEN_UNCHANGED status, and BLOCKED_PRE_NATIVE_ATLAS are exact and mutation-tested."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Portable integration is a separate harness-review concern and was not independently rerun by this claim reviewer."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Latest-target integration occurs after read-only review and is not authorized or performed by this assignment."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "ORACLE-PR289-R2-CLAIM-001",
+      "kind": "mutation_test",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.py"],
+      "command_fingerprint": "f036da49b62cbddee12a5d54bee33ce72b4347551a6fa609f2981fb475287304",
+      "started_at": "2026-08-11T10:34:32Z",
+      "completed_at": "2026-08-11T10:34:43Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-CLAIM_oracle.json",
+      "artifact_sha256": "be826eeb3715a6ca6cab86252e193c03b80a80d85de8d2f1e819fc61b66e7664",
+      "artifact_bytes": 1080,
+      "evidence_refs": ["htt/src/common/data_identity.py:_run_registered_mutations", "docs/generated/pr289_data_identity_v2_receipt.json", "docs/codex_handoff/pr_backlog.yaml:PR-289,PR-290", "docs/codex_handoff/pr_status.yaml:stacked_pr_execution"]
+    }
+  ],
+  "coverage_sha256": "4adf2f8b0a68a194ff3295304f1f2ba885448b870fc155978c9fc4a6d190f326"
+}

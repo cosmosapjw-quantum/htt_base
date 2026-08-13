@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "candidate_seal_sha256": "d9e88f01afb6ffe4eb8af0206d30cae7f12494e498914528ed22ccfcd76a26bb",
+  "candidate_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+  "candidate_tree_sha": "e03b17661c1b5bc74ab0bbecbc31a82948f32bc9",
+  "diff_sha256": "bbf20c198dd4e4d55bcf4e5bf6b4f35906fc9a5ffa07ba595eab649f55c9fdf7",
+  "changed_files_sha256": "b522232b4e7f07fe03b297f33a07dfcce4f7eb80cdd0bbd94b9fd06a20b73198",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr286-pillar-s-adjudication-recovery-20260810",
+  "latest_target_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+  "integration_policy_sha256": "30e24d1f9e77c5c206a64e7d8b639cfccd4c6bd9455a6893cbc69ae55ea1d155",
+  "merged_tree_sha": "e03b17661c1b5bc74ab0bbecbc31a82948f32bc9",
+  "started_at": "2026-08-11T06:19:38+00:00",
+  "completed_at": "2026-08-11T06:23:29+00:00",
+  "status": "PASS",
+  "commands": [
+    {
+      "id": "pr287-focused",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+        "focused"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+        "focused"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T06:19:40+00:00",
+      "completed_at": "2026-08-11T06:20:23+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "8fee904cb5575446a3c80a5fa07b5be85b108e6da4485fb582123dca4904d65a",
+      "stdout_bytes": 100,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr287-adjacent",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+        "adjacent"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+        "adjacent"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T06:20:23+00:00",
+      "completed_at": "2026-08-11T06:23:18+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "436b7557d5096b06e1dd7ce48158ca1ffe854836893ca2da8f1018da463ea1a0",
+      "stdout_bytes": 272,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr287-fresh-receipt-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+        "check"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+        "check"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 600,
+      "started_at": "2026-08-11T06:23:18+00:00",
+      "completed_at": "2026-08-11T06:23:20+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "4f0247660c4badcd81a2450740eb2d16b34fbfd8d0c4a1184e6da108d9943e7d",
+      "stdout_bytes": 349,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr287-historical-pr273-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+        "historical"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+        "historical"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 600,
+      "started_at": "2026-08-11T06:23:20+00:00",
+      "completed_at": "2026-08-11T06:23:21+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "f70b3e6853a3e398c65cf5a8b6140f19226a3272d3d4c3684ca16332c55dccb5",
+      "stdout_bytes": 354,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr287-portable-clean-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+        "portable"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+        "portable"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1200,
+      "started_at": "2026-08-11T06:23:21+00:00",
+      "completed_at": "2026-08-11T06:23:25+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "3f3ea5273f9172cb5234f25b5285485da400dfb9d25c3a530eb139a5e5b6faea",
+      "stdout_bytes": 1838,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr287-publication-policy-cross-binding",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "-k",
+        "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "-k",
+        "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T06:23:25+00:00",
+      "completed_at": "2026-08-11T06:23:27+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "89b9ef4271d425511be9f8cf9b5a0533fd796f485fbddae7a919f5a9d84c804c",
+      "stdout_bytes": 113,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr287-dag-strict",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T06:23:27+00:00",
+      "completed_at": "2026-08-11T06:23:28+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "954bccce10cfc35cf06b7aa16b931d748ff4f55af6a9350c833855bdafcf44ee",
+      "stdout_bytes": 1749,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr287-claim-language",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "docs/research_program/post_pr275/pr287_spec.yaml",
+        "docs/research_program/post_pr275/blind_replay",
+        "tests/integration/test_post275_blind_replay.py",
+        "docs/PR_DELTAS/pr-287.md"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "docs/research_program/post_pr275/pr287_spec.yaml",
+        "docs/research_program/post_pr275/blind_replay",
+        "tests/integration/test_post275_blind_replay.py",
+        "docs/PR_DELTAS/pr-287.md"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T06:23:28+00:00",
+      "completed_at": "2026-08-11T06:23:28+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "19a00c56f80d1c997ad754ec812ae264d0469fe074b69c56b34594caa22f1164",
+      "stdout_bytes": 38,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    }
+  ],
+  "receipt_sha256": "5a3a5395d8271f46c36f43d0a51f2714a1c45aeb10a2fd487a47b75a433fae09"
+}

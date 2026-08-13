@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-frozen-independent-review-r2-20260813",
+  "assignment_id": "A-PR291-R2-PHYSSTAT",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "b277e46ee54781f8b1a9aa666e833f377b6052f9863a8d330d5cb6cb1b271045",
+  "candidate_sha": "67076abbfce5e6bf549f1282c95729bfe89b4be8",
+  "candidate_tree_sha": "e53869e5122189bd0d00d3a54c14e182396e3df3",
+  "diff_sha256": "f3e6bd5f3a6771e7655eaa5ba65b6c4f01bfefa14609b2d825f3a0a51aa5a81a",
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "completed_at": "2026-08-13T04:58:00+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {"cell":"candidate_identity","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"spec_before_execution","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"dependency_terminal_replay","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"data_identity_and_human_authorization_separation","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"preflight_before_first_write","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"synthetic_estimand_identity","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"group_row_selection_and_frame_conventions","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"full_covariance_and_effective_rank","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"depth_zoa_nested_support_and_transport","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"weak_identification_and_identified_set_abstention","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"legacy_p0_and_curl_disposition","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"blocked_no_numeric_output","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"portable_clean_integration","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"publication_policy_cross_binding","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"claim_and_family_ceiling","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."},
+    {"cell":"latest_target_integration","status":"NOT_APPLICABLE","evidence_refs":[],"rationale":"Review halted before a candidate verdict after shared-worktree candidate drift."}
+  ],
+  "independent_oracles": [
+    {
+      "kind": "differential_implementation",
+      "oracle_id": "pr291_physstat_synthetic_oracle",
+      "status": "PASS",
+      "argv": ["python3", ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-PHYSSTAT/independent_physstat_oracle.py"],
+      "command_fingerprint": "dd8b803afa6d079dac47ac117a053d8cf9c85df4d6c054e06b7b4b721ff4fc10",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T04:56:00+00:00",
+      "completed_at": "2026-08-13T04:56:01+00:00",
+      "artifact_path": ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-PHYSSTAT/independent_physstat_oracle.py",
+      "artifact_sha256": "5dd155490213a21b3cd350fbfcfe3eb9351e2b56acd440ac3181998e92f750b8",
+      "artifact_bytes": 4560,
+      "evidence_refs": ["assignment-local executable hostile oracle; PASS output recorded before main-directed review halt"]
+    }
+  ],
+  "coverage_sha256": "2b7df4d47c77cd90e2145d00efdcd555706ec9aa9b4a326eecfede81bef45348"
+}

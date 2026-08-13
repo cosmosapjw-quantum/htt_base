@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "run_id": "pr285-candidate-review-20260810",
+  "assignment_id": "A-PR285-FROZEN-CLAIM",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "candidate_seal_sha256": "8e2c2e72cca0d018441a91368ded4a3f898df12c36de5e8104352119ab4d2629",
+  "candidate_sha": "be8392d0fb3d13fefdf6bce89a1c89ef11890080",
+  "candidate_tree_sha": "f74d8f8b550d2351d21a8db5021e0f8566d9ecc2",
+  "diff_sha256": "9a50ef58e647f018e98e81f1868ffc271499984fdb0f73a0465098ce9a7a1183",
+  "changed_files_sha256": "bb335983aab436ac3ca9e949e3bd118d1812d2d040465372166641fb1f899be4",
+  "completed_at": "2026-08-10T06:34:30Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-CLAIM/claim_lifecycle_oracle.py#candidate_identity"],
+      "rationale": "Seal bytes, internal seal, HEAD, tree, base, diff, file inventory, and production hash match the frozen assignment."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml", ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "The sealed rehearsal binds the declared PR-285 policy and spec-governed command set."
+    },
+    {
+      "cell": "legacy_65_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#rows", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-CLAIM/claim_lifecycle_oracle.py#complete_disposition_not_universal_proof"],
+      "rationale": "Exactly 65 legacy rows are present with the frozen 31 T and 34 S partition."
+    },
+    {
+      "cell": "vector_tensor_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml#expected_vector_tensor_dispositions", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#rows"],
+      "rationale": "All and only VT-T1 through VT-T14 appear with their predeclared dispositions."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml#statement_identity_contract", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#mutation_results"],
+      "rationale": "Rows retain source identity and the statement-weakening mutation is executed and killed."
+    },
+    {
+      "cell": "premise_and_domain_specificity",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml#gate", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#rows"],
+      "rationale": "Verdicts are scoped to recorded premises and domains; missing typed information is not invented."
+    },
+    {
+      "cell": "legacy_title_only_inconclusive_boundary",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml#statement_identity_contract", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-CLAIM/claim_lifecycle_oracle.py#complete_disposition_not_universal_proof"],
+      "rationale": "All 65 title-only legacy rows remain INCONCLUSIVE_WITH_RECEIPT."
+    },
+    {
+      "cell": "analytic_and_conditional_proof_replay",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json#commands", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#source_bindings"],
+      "rationale": "The sealed focused, adjacent, receipt, and portable replay commands passed against content-addressed proof sources."
+    },
+    {
+      "cell": "four_axis_cas_shared_contract",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.logs/pr285-cas-four-axis-terminal-evidence.stdout", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#cas_evidence"],
+      "rationale": "The shared contract is preserved and majority vote remains forbidden. Current replay is CAS_BLOCKED because Wolfram/xAct is unavailable; the historical four-axis pass remains component-only provenance and is not a current pass or claim promotion."
+    },
+    {
+      "cell": "restricted_and_partial_scope_boundary",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml#expected_vector_tensor_dispositions", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#rows"],
+      "rationale": "VT-T8 and VT-T13 remain inconclusive rather than promoting local or partial results to global or full-dynamics claims."
+    },
+    {
+      "cell": "native_geometry_blocked_boundary",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml#family_identification_gate", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#metadata"],
+      "rationale": "VT-T14 and family identification remain blocked before admitted native geometry and atlas evidence."
+    },
+    {
+      "cell": "pr190_counterexample_preservation",
+      "status": "PASS",
+      "evidence_refs": ["docs/generated/pr190_attainability/attainability_report.json", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#rows"],
+      "rationale": "The exact PR-190 failed candidate remains FAIL and its laundering mutation is killed."
+    },
+    {
+      "cell": "terminal_vocabulary_and_zero_bare_statuses",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml#receipt_contract", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#summary"],
+      "rationale": "All 80 rows use the four terminal verdicts and the bare-status count is zero."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#receipt_content_sha256", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-CLAIM/claim_lifecycle_oracle.py#receipt_content_and_source_bindings"],
+      "rationale": "Canonical receipt hashing and every declared source-binding hash recompute exactly."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json", ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.logs/pr285-portable-clean-replay.stdout"],
+      "rationale": "The content-addressed clean integration rehearsal passed all eight commands without timeout."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_publication_policy.json", ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json#integration_policy"],
+      "rationale": "Policy identity, target, seal, rehearsal, and required command inventory are cross-bound."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#metadata", "docs/PR_DELTAS/pr-285.md"],
+      "rationale": "Ownership is COMMON; the artifact remains C2 diagnostic-only, transfer none, unobserved, non-public, and pre-native family-blocked. Complete adjudication is terminal row coverage, not universal proof."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json#latest_target_sha", "docs/codex_handoff/pr_status.yaml#stacked_pr_execution"],
+      "rationale": "The rehearsal uses the sealed PR-284 predecessor as latest target; status mirrors agree at PR-285 VALIDATED, PR-286 remains INELIGIBLE with zero budget, and merge remains HUMAN_ONLY."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "invariant_checker",
+      "oracle_id": "pr285-claim-lifecycle-oracle",
+      "status": "PASS",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-CLAIM/claim_lifecycle_oracle.py"],
+      "command_fingerprint": "9bee4fc95e057b54a37cf7bce7bf199987dff1deaf9ec7137090b85f5c7dd7a6",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-10T06:33:47Z",
+      "completed_at": "2026-08-10T06:33:55Z",
+      "artifact_path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-CLAIM/claim_lifecycle_oracle.py",
+      "artifact_sha256": "b97a35bde68cc554380b7b1f45e512cb3e524ad5358b4b350d500c474f3cee7c",
+      "artifact_bytes": 11992,
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml", "docs/research_program/post_pr275/pr285_publication_policy.json", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json", ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json", "docs/codex_handoff/pr_status.yaml"]
+    }
+  ],
+  "coverage_sha256": "d394d813f8f2e57fb3f93b0c3971d841ff6a08c24340adb6b345378968980622"
+}

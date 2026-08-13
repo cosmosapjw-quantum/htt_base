@@ -1,0 +1,81 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-candidate-review-20260810",
+  "assignment_id": "A-PR284-PHYSMATH",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "61005c410caea0e96d36f2e62ed32b83fa60c73a3db3f069560da83733435014",
+    "seal_sha256": "ba5335bffb3c75d866027339d37660f068140ff2926967abed09550344a4205e",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "029f8cedd044cc5967bc12dc695230ca69cf3308",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "e09d127212ba3173377ea2442be1661107f2963a",
+    "diff_sha256": "24dc3ec9ef99a6f914e3466883dd722af520d053fc2bf0e46be2f8c99ec4aeba",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "c50c270cb71d9421ddac9ffc6471c893ab0fa5434413c54ce703e079b8a1c32c"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Frozen-candidate independent physics/statistics/mathematics review. Read assignment first; do not read CONTEXT_PACK or sibling results. Verify Fraction-exact law, centering, second moment, decreasing filtration and tower direction, inclusive exact threshold, Doob bound, selected-atom path maximum, and matched-mock abstention. Check premise/claim limits. No shared edits; write assignment-local coverage, executable oracle, and registered result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+      "sha256": "61005c410caea0e96d36f2e62ed32b83fa60c73a3db3f069560da83733435014"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_spec.yaml",
+      "sha256": "ee357f7c99e9cf1beb8805328ba724faee16cf4c9f72fcc399c852bc7bf75743"
+    },
+    {
+      "path": "htt/src/common/depth_path_calibration.py",
+      "sha256": "f72885524bcb4e8fbe47755693d561b249210447790a9953fc171182d4dac46d"
+    },
+    {
+      "path": "htt/htt/htt/infer/depth_path_calibration.py",
+      "sha256": "6fe34f03694a63f285c0a933bd75ae8854ff40974e7299be336a2f4c1884c86f"
+    },
+    {
+      "path": "tests/contracts/test_depth_path_doob_calibration.py",
+      "sha256": "7f9a0540ab1cdb95d0e53bbd7c41045c838f5e31e60a915e9a5610e77d309eb3"
+    },
+    {
+      "path": "docs/generated/pr284_depth_path_doob_receipt.json",
+      "sha256": "0ac4fdec9dc8e7d36707a0bf24cc9bab2f709f57d1007205495d323a9f42af8c"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+      "sha256": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-PHYSMATH.json",
+  "status": "registered",
+  "assignment_sha256": "0eabb1de00991cc1722e00f6bdfe847977d7929f2641cbeb38f9f3a635525295"
+}

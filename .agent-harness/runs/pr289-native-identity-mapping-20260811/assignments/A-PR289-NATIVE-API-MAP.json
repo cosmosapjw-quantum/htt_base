@@ -1,0 +1,80 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-native-identity-mapping-20260811",
+  "assignment_id": "A-PR289-NATIVE-API-MAP",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "code_cartographer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "independence_mode": "shared-core",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Bounded PR-289 implementation mapping in the isolated recovery worktree. Read assignment first. Use authoritative salvage audit /home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md only for G45-G48/PR-289, and inspect exact source objects 7f9ac031, 834e15d7, 91d8b8ad, dde54a71. Map the current data_identity.py public factories, records, validators, runner, and tests. Identify the smallest existing-schema changes that replace generic record-id/string admission with complete typed native-record replay for Planck, CF4, HSC, and KiDS. Include concrete symbols, fields, invariants, compatibility risks, and patch/test order. No tracked/shared edits, no sibling results, no broad rediscovery; write only the registered result envelope.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/post_pr275/pr289_spec.yaml",
+      "sha256": "6cf4e981efaae5d691826038eae662cae8bfbd34501cb4543165c5aa96054169"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr289_publication_policy.json",
+      "sha256": "7e63bfcdfca1fce4e1affc16f82817a67db21cf5c0b7ade0bcb0007d8229b50f"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+      "sha256": "28d07d8c53cc434b279cd4bbccd31709d26106349a302236ec1481145c7fb8ae"
+    },
+    {
+      "path": "htt/src/common/data_identity.py",
+      "sha256": "7d6cadae649a66f5a3ecb3424ec7e3c49717ec6a57a7b9a7026c3996987b3647"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr289_data_identity_v2.py",
+      "sha256": "b70400ceb49a8d946985d9bb0bc7b45cf75ec7dbc2350f1950902d8de283ab08"
+    },
+    {
+      "path": "tests/contracts/test_data_identity_registry_v2.py",
+      "sha256": "1cc7a740a0dddfe9f21f53e79eea03cdd7342fc7b5c2a1c6aba0005cc045478d"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-289.md",
+      "sha256": "e8de65e0598d41ea3b2eb6902c2ffb074fc6a3c9e181b66b9efb5e307b92d3f3"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "registered-result-envelope"
+  ],
+  "result_path": ".agent-harness/runs/pr289-native-identity-mapping-20260811/results/A-PR289-NATIVE-API-MAP.json",
+  "status": "registered",
+  "assignment_sha256": "b8406b27e76bc05bd9d10317ec4a14f3b63300aa3aa56e81d33519e712ea84e2"
+}

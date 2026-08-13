@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR284-R2-CODE",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "911cfed58698d97a88585a664c6ad46db8df92d46f3a23cfdc2bac74c24bdc65",
+  "candidate_sha": "49a8f697c8d7985ec637e70aca3b9271d6f0da7f",
+  "candidate_tree_sha": "702db54b4ce5ee0904352b2b507faffe5ef5d876",
+  "diff_sha256": "c9563b2e9e7bd45436aceb5a744e8fc6f7f8da7a818088b0d9426a37d7f59aea",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-09T21:45:01Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+        "git rev-parse HEAD HEAD^{tree}: 49a8f697c8d7985ec637e70aca3b9271d6f0da7f 702db54b4ce5ee0904352b2b507faffe5ef5d876"
+      ],
+      "rationale": "Context version, required inputs, HEAD, tree, and clean worktree match the frozen repair assignment."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-CODE.json",
+        "docs/research_program/post_pr275/pr284_spec.yaml:199"
+      ],
+      "rationale": "The historical finding and registered repair mutation were read before executing the rereview."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:698",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CODE/proved_report_replay_oracle.json"
+      ],
+      "rationale": "COMMON requires exact finite-law and selection types and revalidates both before semantic replay."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:710",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CODE/proved_report_replay_oracle.json"
+      ],
+      "rationale": "Construction rejects a non-centered law and a wrong second moment; deliberately resealed second-moment drift is independently rejected during revalidation."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:730",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CODE/proved_report_replay_oracle.json"
+      ],
+      "rationale": "COMMON reruns the exact tower verifier on reversed partitions at construction and revalidation; a non-coarsening path fails both."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:761",
+        "htt/src/common/depth_path_calibration.py:764",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CODE/proved_report_replay_oracle.json"
+      ],
+      "rationale": "Tower equalities and tower content identity are recomputed; a resealed caller-supplied tower identity is rejected semantically."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This affected-cell rereview is limited to F-PR284-CODE-001 semantic report replay; the unchanged DepthPath construction and support binding were not reopened."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Preprocessing and estimator binding code was unchanged by the repair and is outside the registered affected-cell scope."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:741",
+        "htt/src/common/depth_path_calibration.py:749",
+        "htt/src/common/depth_path_calibration.py:756",
+        "htt/src/common/depth_path_calibration.py:777",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CODE/proved_report_replay_oracle.json"
+      ],
+      "rationale": "COMMON recomputes selected-atom conditional values, their maximum, and the maximum identity; selected-atom, value, maximum, and resealed-identity mutations all fail closed."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/htt/htt/infer/depth_path_calibration.py:316",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CODE/proved_report_replay_oracle.json"
+      ],
+      "rationale": "The authentic public API remains compatible and returns the registered exact second moment 5, maximum 3, and probability bound 1/4 only after repaired report revalidation."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "The matched-mock fallback was unchanged and is not directly affected by the proved-report builder bypass repair."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:199",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py:637",
+        "docs/generated/pr284_depth_path_doob_receipt.json:107"
+      ],
+      "rationale": "MU284-REPORT-BUILDER-BYPASS now exercises the historical path; the receipt contains fourteen ordered mutations and all are executed, activated, and killed."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION",
+        "docs/generated/pr284_depth_path_doob_receipt.json"
+      ],
+      "rationale": "The repaired receipt exactly replays after the new mutation and source changes."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Portable clean-root integration is owned by the separate final replay lane."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Publication-policy cross-binding is unchanged and outside this single-finding affected-cell rereview."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Claim and family ceilings were unchanged by the code repair and are owned by the claim lane."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Latest-target integration is owned by the final integration lane."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR284-R2-PROVED-REPORT-REPLAY",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": [
+        "python",
+        "-B",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CODE/proved_report_replay_oracle.py"
+      ],
+      "command_fingerprint": "d81fe1fe7bb78d240cdaf1f76385bd4278f55e8ee212dd75be451b1bc71790f0",
+      "started_at": "2026-08-09T21:45:00Z",
+      "completed_at": "2026-08-09T21:45:01Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CODE/proved_report_replay_oracle.json",
+      "artifact_sha256": "7b9a3a90c0ef0f35537b36ef142b52d82704e94c0f2b1e2c2b78c922b20c1677",
+      "artifact_bytes": 2941,
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:692",
+        "htt/src/common/depth_path_calibration.py:844"
+      ]
+    }
+  ],
+  "coverage_sha256": "92c9bdc92d5e3eb1f559f1a8f4e14c44fea4f5f1ef844e059092d516bbc5a555"
+}

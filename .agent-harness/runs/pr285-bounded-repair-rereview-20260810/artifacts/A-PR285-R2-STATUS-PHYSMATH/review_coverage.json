@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "run_id": "pr285-bounded-repair-rereview-20260810",
+  "assignment_id": "A-PR285-R2-STATUS-PHYSMATH",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "candidate_seal_sha256": "7739a04d155d895f6dd4f5952b2e8f65387adc579d728af0c47eb0debe3fd2bb",
+  "candidate_sha": "8682a13e8df75c48f6150af555ee231f62e7d9bc",
+  "candidate_tree_sha": "11abc914111064c9f8384dad3fdc88108763e43c",
+  "diff_sha256": "4e26387391037bb3b5e3b79bd4199dd98f2eb9f7c3e5a6cd8094f50c55c0f734",
+  "changed_files_sha256": "27d7bc58a8663e2a4573abe14386ced8a19a9c18db0f3c8469c03c5a2d6f1788",
+  "completed_at": "2026-08-10T11:59:39Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR285_R2_FINAL_REVIEW_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "Frozen SHA, tree, diff, changed-file inventory, production hash, and required input hashes replay exactly."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr285_spec.yaml"
+      ],
+      "rationale": "The controlling G7 contract and exact statement boundaries were read before execution."
+    },
+    {
+      "cell": "legacy_65_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "Independent source replay proves 65 exact rows, partitioned T=31 and S=34."
+    },
+    {
+      "cell": "vector_tensor_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "Independent replay finds exactly VT-T1 through VT-T14 with the declared dispositions."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+        "docs/research_program/strengthening/pr190_spec.yaml",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "Every legacy title and identity and the full PR-190 statement replay without weakening."
+    },
+    {
+      "cell": "premise_and_domain_specificity",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "All premise values, premise statuses, domain values, and domain statuses replay exactly: 12 DECLARED pairs and 53 SOURCE_NOT_TYPED pairs."
+    },
+    {
+      "cell": "legacy_title_only_inconclusive_boundary",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "All 65 title-only legacy rows remain INCONCLUSIVE_WITH_RECEIPT."
+    },
+    {
+      "cell": "analytic_and_conditional_proof_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py"
+      ],
+      "rationale": "The frozen implementation rehearsal records focused and adjacent exact replay; the final delta contains no substantive proof or runner changes."
+    },
+    {
+      "cell": "four_axis_cas_shared_contract",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "Historical CAS_4AXIS_PASS remains hash-bound to one contract; current preflight is CAS_BLOCKED on Wolfram/xAct and grants no fresh promotion."
+    },
+    {
+      "cell": "restricted_and_partial_scope_boundary",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "VT-T8 retains only a generic local chart and VT-T13 retains only the exact chain-rule core; both remain inconclusive."
+    },
+    {
+      "cell": "native_geometry_blocked_boundary",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "VT-T14 remains BLOCKED_WITH_RECEIPT under EXTERNAL_GATE_REFUSAL."
+    },
+    {
+      "cell": "pr190_counterexample_preservation",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/strengthening/pr190_spec.yaml",
+        "docs/generated/pr190_attainability/attainability_report.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "The two exact same-frame Frobenius contradictions remain FAIL with terminal COMPLETED_FAILED_WITH_RECEIPT and the dependency closed."
+    },
+    {
+      "cell": "terminal_vocabulary_and_zero_bare_statuses",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "The exact 80-row counts are PASS 11, FAIL 1, INCONCLUSIVE 67, BLOCKED 1, with zero bare statuses."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "Independent canonical content hashing and the exact runner check both pass."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "The implementation rehearsal records a clean portable replay; the final metadata-only delta leaves production identity unchanged."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr285_publication_policy.json",
+        ".prguard/runtime/PR285_R2_FINAL_REVIEW_CANDIDATE_SEAL.json",
+        ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json"
+      ],
+      "rationale": "Policy, seal, lineage map, changed-file inventory, and implementation integration receipt identities are exact and mutually consistent."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr285_spec.yaml",
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "COMMON diagnostic-only C2, no transfer or observed execution, and BLOCKED_PRE_NATIVE_ATLAS remain exact; no Q/Pi/F/G, likelihood, prior, or response-rank claim is introduced."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json",
+        ".prguard/runtime/PR285_R2_FINAL_REVIEW_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json"
+      ],
+      "rationale": "Latest-target implementation integration passed; the final review candidate adds only recorded delta/status metadata and preserves production and changed-file identities, so redundant substantive reruns are not triggered."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR285-R2-STATUS-PHYSMATH-INVARIANTS",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.py"
+      ],
+      "command_fingerprint": "99b65eac5923cc806cac33ec7e38e4a0e7077bf47c4c9406c9ec62656a7172e9",
+      "started_at": "2026-08-10T11:59:20Z",
+      "completed_at": "2026-08-10T11:59:29Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json",
+      "artifact_sha256": "81510340f332e605fa094ca6175bed13ed03505faafdd2960abe2bd2bd0f5b12",
+      "artifact_bytes": 2964,
+      "evidence_refs": [
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        "docs/research_program/strengthening/pr190_spec.yaml",
+        "docs/generated/pr190_attainability/attainability_report.json",
+        ".prguard/runtime/PR285_R2_FINAL_REVIEW_CANDIDATE_SEAL.json",
+        ".prguard/runtime/PR285_R2_IMPLEMENTATION_CANDIDATE_SEAL.json"
+      ]
+    }
+  ],
+  "coverage_sha256": "5f00859d21823aa0b5de7aac96a42cdc402aa36e0a22e60277df0170f9daacd5"
+}

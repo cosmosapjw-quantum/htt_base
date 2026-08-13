@@ -1,0 +1,131 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-bounded-repair-r4-review-20260813",
+  "assignment_id": "A-PR291-R4-CLAIM",
+  "assignment_sha256": "48661483c506a2358eb91d5e9e9be7016d7344bd61881a875245434b14999e90",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_lane_reviewer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "0e8da2b416792c62897b6beb686e28f705d8a82cc299513dd3f5e905109d2c5b",
+    "seal_sha256": "a226e0df027907b105bdb454ff5a5f50b60adb1a98663bcb22d70e14b7760ec1",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "02714ff26f8e6414edd1ef456065bf73e0f27374",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "2b425d29ca48c8baa776aa5521ecf3795d64562a",
+    "diff_sha256": "df0950da457bf62acd1c2d2215daa27f6c39f9ede67bdcdd242c22f8cbda9906",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "1dc0fc6010d0f99f586aa7e34dae9f5eced9110962d36a68af61727029c7507c"
+  },
+  "result_path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/results/A-PR291-R4-CLAIM.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "started_at": "2026-08-13T06:34:00+00:00",
+  "completed_at": "2026-08-13T06:46:00+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    "sha256sum required assignment inputs; git rev-parse HEAD HEAD^{tree}; git merge-base base HEAD",
+    "python3 -B scripts/check_claim_language.py --strict-missing --include-archives <exact policy paths>",
+    "PYTHONPATH=htt/src python3 -B -m pytest -p no:cacheprovider -q tests/contracts/test_claim_language_lint.py",
+    "PYTHONPATH=htt/src python3 -B .agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-oracle.py",
+    "python3 -B .agent-harness/scripts/review_coverage.py --coverage <coverage> --seal .prguard/runtime/PR291_R4_CANDIDATE_SEAL.json --run-id pr291-bounded-repair-r4-review-20260813 --assignment-id A-PR291-R4-CLAIM --risk-tier R3 --structural-only"
+  ],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/assignments/A-PR291-R4-CLAIM.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/RUN_PLAN.json",
+    ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    "docs/harness/CLAIM_LEDGER.md",
+    "htt/obsstat/cf4_post275_lane.py",
+    "htt/src/common/cf4_observed_lane_activation.py",
+    "htt/src/common/semantic_guards/no_overclaim.py",
+    "tests/contracts/test_claim_language_lint.py",
+    "tests/integration/test_cf4_post275_lane.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-oracle.py",
+      "sha256": "cf2ef8613abb931e956ac4e768331ed1a552e4922d4c60f5a7e8b8e2bfd5b0cf",
+      "bytes": 3815,
+      "producer": "A-PR291-R4-CLAIM",
+      "command_fingerprint": "e701268facff05c3b17659725147f069d829d82013e01508b20e52157caf9738"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-REVIEW_COVERAGE.json",
+      "sha256": "eedd63ffdfb82a896583e1c4e7b19b31ec82e175c450260a8926513e3fd7217a",
+      "bytes": 7488,
+      "producer": "A-PR291-R4-CLAIM"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "eedd63ffdfb82a896583e1c4e7b19b31ec82e175c450260a8926513e3fd7217a",
+  "findings": [
+    {
+      "finding_id": "F-PR291-R4-CLAIM-GRAMMAR",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr291-r4-claim-grammar:false-negative:family-geometry-reordered-multiline-unrelated-negation:v1",
+      "statement": "The frozen claim scanner still permits positive Bianchi family or geometry promotion under reordered as-Bianchi syntax, same-clause unrelated not, and multiline or reversed scalar-family forms, so PR-291 does not satisfy its claim-and-family ceiling gate.",
+      "assumptions_used": [
+        "Pre-native family identification remains forbidden regardless of observed/public status.",
+        "Only negation scoped to the forbidden predicate may downclaim a match.",
+        "The scanner is an enforcement boundary, so a reproducible positive false negative is blocking even when checked-in examples pass."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-oracle.py",
+        "htt/src/common/semantic_guards/no_overclaim.py:100",
+        "htt/src/common/semantic_guards/no_overclaim.py:130",
+        "htt/src/common/semantic_guards/no_overclaim.py:632",
+        "tests/contracts/test_claim_language_lint.py:59",
+        "docs/research_program/post_pr275/pr291_spec.yaml:336"
+      ],
+      "counterevidence_refs": [
+        "Exact claim policy command passed.",
+        "Focused checked-in claim suite passed 28 tests.",
+        "Oracle confirmed active plural, passive as-Bianchi, direct multiline family, curl, P0, scalar unrelated-negation cases are caught and predicate-scoped downclaims remain allowed."
+      ],
+      "reproduction": [
+        "PYTHONPATH=htt/src python3 -B .agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-oracle.py",
+        "Observe candidate_pass=false and missed_positive_cases containing reordered_active_as_bianchi, multiline_scalar_family, reordered_scalar_family, unrelated_not_family, and unrelated_not_geometry."
+      ],
+      "unresolved": [
+        "Add focused hostile tests for all five missed forms before altering the existing bounded grammar.",
+        "Re-run the exact claim policy, focused suite, and an independent oracle on newly frozen bytes."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR291-R4-CLAIM-GRAMMAR"],
+      "summary": "Blocking claim-firewall false negatives remain; the R4 claim gate fails despite correct ownership/provenance metadata and passing checked-in tests."
+    }
+  ],
+  "errors": []
+}

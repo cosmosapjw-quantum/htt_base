@@ -1,0 +1,24 @@
+{
+  "artifact": "PR291_REVIEW_COVERAGE_V1",
+  "assignment_id": "A-PR291-R2-CLAIM",
+  "coverage": [
+    {"cell": "candidate_identity", "status": "pass", "evidence": ".prguard/runtime/PR291_VALIDATED_CANDIDATE_SEAL.json; candidate_sha/base_sha/tree/diff agree with assignment"},
+    {"cell": "spec_before_execution", "status": "pass", "evidence": "pr291_spec.yaml: observed_data_executed=false, public_use=false, H-CF4 NOT_AUTHORIZED"},
+    {"cell": "dependency_terminal_replay", "status": "pass", "evidence": "PR291_NONEXECUTION_RECEIPT.json terminal BLOCKED_PREDECESSOR_FINAL_SUCCESS with PR-287 replay absent"},
+    {"cell": "data_identity_and_human_authorization_separation", "status": "pass", "evidence": "PR-289 CF4 is REJECTED_NOT_PRESENT and H-CF4 is separately NOT_AUTHORIZED"},
+    {"cell": "preflight_before_first_write", "status": "pass", "evidence": "pr291_spec.yaml output_containment preflight_before_payload_generation=true"},
+    {"cell": "synthetic_estimand_identity", "status": "pass", "evidence": "pr291_spec.yaml synthetic fixture is operator-only and cannot support observed outputs"},
+    {"cell": "group_row_selection_and_frame_conventions", "status": "pass", "evidence": "pr291_spec.yaml requires ordered nine-role CF4 identity inventory"},
+    {"cell": "full_covariance_and_effective_rank", "status": "pass", "evidence": "pr291_spec.yaml rejects diagonal shortcut and requires covariance-whitened normalized SVD"},
+    {"cell": "depth_zoa_nested_support_and_transport", "status": "pass", "evidence": "pr291_spec.yaml requires nested support, transport, and ZoA identities"},
+    {"cell": "weak_identification_and_identified_set_abstention", "status": "pass", "evidence": "pr291_spec.yaml declares WEAKLY_IDENTIFIED and RESPONSE_EQUIVALENCE_ABSTENTION"},
+    {"cell": "legacy_p0_and_curl_disposition", "status": "pass", "evidence": "pr291_spec.yaml retires P0 and marks physical-vorticity/potential-flow claims FORBIDDEN"},
+    {"cell": "blocked_no_numeric_output", "status": "pass", "evidence": "PR291_NONEXECUTION_RECEIPT.json numeric_outputs_written=[] and observed_data_executed=false"},
+    {"cell": "portable_clean_integration", "status": "pass", "evidence": "sealed candidate records dirty=false; PR delta records portable checks"},
+    {"cell": "publication_policy_cross_binding", "status": "pass", "evidence": "seal binds policy path/hash; policy says ordinary_agent_push_forbidden=true"},
+    {"cell": "claim_and_family_ceiling", "status": "fail", "evidence": "hostile_claim_oracle.py demonstrates four unblocked positive forbidden-claim variants"},
+    {"cell": "latest_target_integration", "status": "pass", "evidence": "seal base_sha and merge_base_sha are 06ac20605ebc371b0f97ad6e91c802a51a9bf764"}
+  ],
+  "coverage_count": 16,
+  "failing_cells": ["claim_and_family_ceiling"]
+}

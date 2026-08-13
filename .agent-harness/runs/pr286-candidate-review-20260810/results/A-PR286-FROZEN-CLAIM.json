@@ -1,0 +1,154 @@
+{
+  "agent_type": "claim_gate_reviewer",
+  "artifacts": [
+    {
+      "bytes": 7113,
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/REVIEW_COVERAGE.json",
+      "producer": "A-PR286-FROZEN-CLAIM",
+      "sha256": "3674af8ad048c613de867ec5a995193792c00298dee6ca3e66f6cb59d4390c58"
+    },
+    {
+      "bytes": 10650,
+      "command_fingerprint": "1f26a86194617b222c9ea8c2e7d2f043c515ac490f7f0f4a24c4d3011a47d612",
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json",
+      "producer": "A-PR286-FROZEN-CLAIM",
+      "sha256": "d724c64330183bf4c092cac41e8e18dc84bdf0f1877c4c41841eb915cd20d226"
+    },
+    {
+      "bytes": 11515,
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.py",
+      "producer": "A-PR286-FROZEN-CLAIM",
+      "sha256": "1502421de20be54c37eb330edc12a950513686dee894bec63e7339a15325d0d6"
+    }
+  ],
+  "assignment_id": "A-PR286-FROZEN-CLAIM",
+  "assignment_sha256": "d21693bfa7ff3b651c90f544bbc2cb1d6891e5ccae734ee47ca46de0551f50c9",
+  "candidate_binding": {
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+    "candidate_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "diff_sha256": "80f2057dc690aaacf0258e1603dac0fcf4a455f343564d80717709afd615071d",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "production_hash": "d3307adde069f7bfb422d290d14204cd1d67778a66cace303f0a962d56cca818",
+    "seal_file_sha256": "0376ec83567e3ad8a005500110961f8b5df5ec275fc2c4ded9ad67eb12e12bd5",
+    "seal_path": ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+    "seal_sha256": "d9241a26060fbdd09d0f1f77b3a47bec422525cb7d016b33b089bf232c03068d",
+    "state": "frozen"
+  },
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "evidence_fingerprint": "bd1cf7cfe547b34c37ae482236336ade37612f01e1eee9675eee874cf7774e99",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#downstream_nonpromotion",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/REVIEW_COVERAGE.json"
+      ],
+      "finding_ids": [],
+      "outcome": "examined_no_findings",
+      "summary": "The held-out PR-273 path remains synthetic, diagnostic-only, non-observed, and unable to promote row or source verdicts."
+    },
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "evidence_fingerprint": "932798d75788cfd58ce9c84f6a42ad46786335b3f22ae6269c77c9130219a984",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#forbidden_sources_absent",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#row_terminal_contract",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/REVIEW_COVERAGE.json"
+      ],
+      "finding_ids": [],
+      "outcome": "examined_no_findings",
+      "summary": "VT-S14 remains blocked before admitted data; observed/public/native inputs and PR-151 partial acquisition are not admitted."
+    }
+  ],
+  "commands": [
+    [
+      "python3",
+      "-B",
+      ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.py",
+      "--out",
+      ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json"
+    ],
+    [
+      "python3",
+      "-B",
+      "scripts/check_claim_language.py",
+      "--strict-missing",
+      "--include-archives",
+      "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+      "tests/contracts/test_pillar_s_complete_adjudication.py",
+      "docs/research_program/post_pr275/pr286_spec.yaml",
+      "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+      "docs/PR_DELTAS/pr-286.md"
+    ],
+    [
+      "PYTHONPATH=htt/src:htt",
+      "python3",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-q",
+      "tests/contracts/test_pillar_s_complete_adjudication.py"
+    ],
+    [
+      "PYTHONPATH=htt/src:htt",
+      "python3",
+      "-B",
+      "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+      "check"
+    ]
+  ],
+  "completed_at": "2026-08-10T13:29:24+00:00",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "errors": [],
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr286-candidate-review-20260810/RUN_PLAN.json",
+    ".agent-harness/runs/pr286-candidate-review-20260810/assignments/A-PR286-FROZEN-CLAIM.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR286_CANDIDATE_INTEGRATION_REHEARSAL.json",
+    "docs/research_program/post_pr275/pr286_spec.yaml",
+    "docs/research_program/post_pr275/pr286_publication_policy.json",
+    "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+    "docs/PR_DELTAS/pr-286.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "machine_readable/pr_backlog.yaml",
+    "htt/src/common/vector_tensor_statistical_inference.py",
+    "tests/contracts/test_pillar_s_complete_adjudication.py",
+    "tests/contracts/test_pillar_s_inference.py",
+    "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+    "scripts/codex_harness/test_publication_integrity.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "findings": [],
+  "gate_disposition": "PASS",
+  "independence_mode": "blind-results",
+  "launch_evidence": "unverified",
+  "launch_id": null,
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "result_path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-CLAIM.json",
+  "review_coverage_path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "3674af8ad048c613de867ec5a995193792c00298dee6ca3e66f6cb59d4390c58",
+  "run_id": "pr286-candidate-review-20260810",
+  "schema_version": 3,
+  "started_at": "2026-08-10T13:24:52+00:00",
+  "status": "pass",
+  "tool_versions": {
+    "PyYAML": "6.0.1",
+    "git": "2.43.0",
+    "pytest": "9.1.1",
+    "python": "3.12.3"
+  },
+  "work_unit_id": "PR-286",
+  "workflow_role": "reviewer"
+}

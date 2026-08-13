@@ -1,0 +1,120 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-final-r4-replacement-review-20260811",
+  "assignment_id": "A-PR289-R4-FINAL-REVIEW",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_R4_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "16dcc00e36562eaf94c8cb83389f02b0203e79db318805915f5caf9bf5360efb",
+    "seal_sha256": "179ccf2b01acd049ae06435dce846d1adfd02194b858ccb6f2d22efed153bdfa",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "c76a306dc4d9bc69367c735ff8f65eebbbbad03f",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "3f20452c893f8ca5cb2ac51a6d77994977ea1c19",
+    "diff_sha256": "bd81cdb4ffbd41e15a3685185e4a9841614500da855c939785558fa5c38ca5f7",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "8c835d608a5ac07d2cb620f3721ec16e2347fde491d5d44d5c2f64957de3c2bf"
+  },
+  "independence_mode": "blind-results",
+  "status": "error",
+  "gate_disposition": "INCONCLUSIVE",
+  "result_path": ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/results/A-PR289-R4-FINAL-REVIEW.json",
+  "assignment_sha256": "75190ee4a6ebae427d980e8b430cd3e42dc51459c8919d1592ee348968a125f1",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/assignments/A-PR289-R4-FINAL-REVIEW.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".prguard/runtime/PR289_R4_CANDIDATE_SEAL.json",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-transfer-provenance/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+    ".agent-harness/README.md",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    "docs/research_program/post_pr275/pr289_spec.yaml",
+    "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "htt/src/common/data_identity.py",
+    "tests/contracts/test_data_identity_registry_v2.py",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/research_program/post_pr275/data_runbooks.yaml",
+    "docs/harness/CLAIM_LEDGER.md",
+    "docs/PR_DELTAS/pr-289.md",
+    "docs/PR_DELTAS/pr-288.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "tests/integration/test_post275_blind_replay.py",
+    "HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md",
+    ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-CLAIM.json",
+    ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-REPLAY.json",
+    ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-CODE.json",
+    ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-DOMAIN.json",
+    ".agent-harness/runs/pr289-final-r3-review-20260811/results/A-PR289-R3-REPLAYCLAIM.json",
+    ".agent-harness/runs/pr289-frozen-independent-review-20260811/results/A-PR289-FROZEN-CLAIM.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T11:20:00+00:00",
+  "completed_at": "2026-08-11T11:44:52+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "focused"],
+    ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "preflight"],
+    ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "adjacent"],
+    ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "check"],
+    ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "portable"],
+    ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"],
+    ["python3", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+    ["python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "htt/src/common/data_identity.py", "tests/contracts/test_data_identity_registry_v2.py", "docs/research_program/post_pr275/pr289_spec.yaml", "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json", "docs/research_program/post_pr275/data_runbooks.yaml", "docs/harness/CLAIM_LEDGER.md", "docs/generated/pr289_data_identity_v2_receipt.json", "docs/PR_DELTAS/pr-289.md"],
+    ["python3", "-B", ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/artifacts/A-PR289-R4-FINAL-REVIEW/A-PR289-R4-FINAL-REVIEW_ORACLE.py"]
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/artifacts/A-PR289-R4-FINAL-REVIEW/A-PR289-R4-FINAL-REVIEW_REVIEW_COVERAGE.json",
+      "sha256": "7a7bde43900668422ce7307dd8e75b75a87afe0ef0e6ba2103fdab8c04f64a8c",
+      "bytes": 16736,
+      "producer": "A-PR289-R4-FINAL-REVIEW"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/artifacts/A-PR289-R4-FINAL-REVIEW/A-PR289-R4-FINAL-REVIEW_ORACLE.py",
+      "sha256": "f0021612aaf0487b4b7ddefe1ef13ddf6da1af465d2b4b02d1569dd3c8e69529",
+      "bytes": 8535,
+      "producer": "A-PR289-R4-FINAL-REVIEW"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/artifacts/A-PR289-R4-FINAL-REVIEW/A-PR289-R4-FINAL-REVIEW_REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "7a7bde43900668422ce7307dd8e75b75a87afe0ef0e6ba2103fdab8c04f64a8c",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "not_examined",
+      "finding_ids": [],
+      "summary": "No clean blind verdict issued: after the independent oracle had reproduced a cross-lane NOT_AUTHORIZED receipt misbinding, an overbroad result-schema search exposed historical result path and command metadata. The reproduction is preserved only as pre-exposure chronology, not as this assignment's claim disposition."
+    }
+  ],
+  "errors": [
+    "INDEPENDENCE_BREACH: after the oracle's successful pre-exposure reproduction, an overbroad rg over .agent-harness exposed historical result path names and two command-array lines; no historical verdict or finding text was read, but blind-results acceptance is invalidated.",
+    "PRE_EXPOSURE_REPRODUCTION_ONLY: exact frozen module SHA-256 248844f22c3b6971e09d58aaae52dcbe74deaeb3327b6f9144f4445ac2c9e647; fresh valid CF4 decision with 9 records and bundle sha256:c792cf5c46ad6ec5c5b943fe386e477c95bff40af0c08022f425cf217efa3d87 passed to build_not_authorized_receipt(PLANCK_lane, CF4_decision); output authorization sha256:1ed83934187e2da9de9c29fba7e0af0f1ef67449adbc988990e44d10e15239ff labeled lane PLANCK, plan PR290-PLANCK-LOWELL-V1, gate H-PLANCK, status NOT_AUTHORIZED, while binding the CF4 bundle and first CF4 record sha256:7e786ed5a9e4c2c0b27633209abe504d49b6e9a636776108c03bc01f8d3c615c. Immediate execution remained unauthorized."
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "schema_version": 3,
+  "run_id": "pr283-candidate-review-20260810",
+  "assignment_id": "A-PR283-FROZEN-PHYSMATH",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "work_unit_id": "PR-283",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR283_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "274d32ef70dcefb0ad1128b22b5226285d5bafe4670e1a66ba9bcdade7eae6f3",
+    "seal_sha256": "89c44d46574c4e268789ab2d623f966bd46e63c8b12f36fade1075d449f03e08",
+    "base_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+    "candidate_sha": "6ee9048ffd80f25337f405d8c6a39fd3b7f489eb",
+    "merge_base_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+    "candidate_tree_sha": "6c5c55dee52aaf7c7649dd23d386e0f85782fd32",
+    "diff_sha256": "5c5e5abd22a509fca7681d1decb0a3ac3b4288c89d4f2a63a4fdc37bcb918ff2",
+    "changed_files_sha256": "7a71a99b7b63012071701c4af1acf33719e01ff76e8ba0316eca7adc4103ebf6",
+    "production_hash": "2bd9aa31b5c6fb2ddcab970fe4e616f7b6acdbf7840f2fefa75b69a9368a10f7"
+  },
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-PHYSMATH.json",
+  "assignment_sha256": "3a0d0fedf4704ad6674106f07559e3176e0416cf963aace3972efc154e340c5b",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr283-candidate-review-20260810/RUN_PLAN.json",
+    ".agent-harness/runs/pr283-candidate-review-20260810/assignments/A-PR283-FROZEN-PHYSMATH.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".prguard/runtime/PR283_CANDIDATE_SEAL.json",
+    "docs/generated/pr283_weak_identification_receipt.json",
+    "docs/research_program/post_pr275/pr283_publication_policy.json",
+    "docs/research_program/post_pr275/pr283_spec.yaml",
+    "htt/htt/htt/departure/velocity_frame_decomposition.py",
+    "htt/htt/htt/statistics/open_set_response_classes.py",
+    "htt/src/common/anchored_response_geometry.py",
+    "htt/src/common/open_set_response_classes.py",
+    "htt/src/common/source_separation.py",
+    "scripts/codex_harness/run_pr283_weak_identification.py",
+    "tests/contracts/test_weak_identification.py",
+    "tests/pr_cards/test_pr_256_velocity_frame_decomposition.py",
+    ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/REVIEW_COVERAGE.json",
+    ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/threshold_registration_oracle.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-09T19:06:00Z",
+  "completed_at": "2026-08-09T19:26:40Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {
+      "command": "validate_candidate_seal_payload(PR283_CANDIDATE_SEAL.json, repo=.)",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "returncode": 0,
+      "output": "[]"
+    },
+    {
+      "command": "python -B scripts/codex_harness/run_pr283_weak_identification.py focused",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "returncode": 0,
+      "output": "23 passed in 1.57s"
+    },
+    {
+      "command": "python -B scripts/codex_harness/run_pr283_weak_identification.py adjacent",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "returncode": 0,
+      "output": "62 passed in 5.92s"
+    },
+    {
+      "command": "python -B scripts/codex_harness/run_pr283_weak_identification.py check",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "returncode": 0,
+      "output": "receipt exact replay sha256=10d28620cd709585cf9444dbde72e19d7baced9ef2da901c005bcbeb3a85fedf"
+    },
+    {
+      "command": "env PYTHONPATH=htt/src:htt python -B -",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "returncode": 0,
+      "output": "default WEAKLY_IDENTIFIED/TYPE_UNIDENTIFIED/null; relaxed singular threshold SEPARABLE_CANDIDATE/RESPONSE_CLASS_CANDIDATE/response-class-local"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/REVIEW_COVERAGE.json",
+      "sha256": "65ebcc9efb304d1df432129e522cf4030f5d0240680438a55f58ad1e7f0be5e6",
+      "bytes": 10327,
+      "producer": "A-PR283-FROZEN-PHYSMATH"
+    },
+    {
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/threshold_registration_oracle.json",
+      "sha256": "56b305e5d275252904a474bf1cbf18969e47ca71ba2f452a62a6e73f7e582761",
+      "bytes": 1700,
+      "producer": "A-PR283-FROZEN-PHYSMATH",
+      "command_fingerprint": "ef81ee1fffc68adc116a3d4a572a33cfa96c439b701b8f10e826bdb04c1ed018"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "65ebcc9efb304d1df432129e522cf4030f5d0240680438a55f58ad1e7f0be5e6",
+  "findings": [
+    {
+      "finding_id": "F-PR283-THRESHOLD-REGISTRATION-BYPASS",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The frozen PR-283 projection accepts any factory-derived relative-singular threshold whose angle and units match the PR-256 report; it does not require the specified PR-283 threshold identity. Replaying the exact same full-rank report with relative singular value 0.005 under threshold 0.001 changes the default WEAKLY_IDENTIFIED abstention into SEPARABLE_CANDIDATE and returns a point response-class candidate, contradicting the fixed/pre-result threshold and mandatory-abstention contract.",
+      "assumptions_used": [
+        "The threshold_contract section of pr283_spec.yaml is the controlling fixed PR-283 operating contract.",
+        "A content identity for an arbitrary caller-created contract does not establish preregistration or equality to the specified contract.",
+        "Response-class candidate eligibility remains diagnostic-only and is not interpreted as physical source or family identification."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_spec.yaml:68",
+        "htt/htt/htt/statistics/open_set_response_classes.py:90",
+        ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/threshold_registration_oracle.json"
+      ],
+      "evidence_fingerprint": "sha256:56b305e5d275252904a474bf1cbf18969e47ca71ba2f452a62a6e73f7e582761",
+      "counterevidence_refs": [
+        "tests/contracts/test_weak_identification.py:469 verifies only angle-threshold mismatch",
+        "tests/contracts/test_weak_identification.py:503 verifies omission but not alternate singular-threshold identity",
+        "python -B scripts/codex_harness/run_pr283_weak_identification.py focused: 23 passed"
+      ],
+      "reproduction": [
+        "Build the registered orthogonal full-rank fixture with global amplitude 0.005 and the default 0.01 relative-singular threshold; observe WEAKLY_IDENTIFIED, TYPE_UNIDENTIFIED, candidate null.",
+        "Build a factory-derived threshold contract with the same angle 0.2 and units but relative-singular threshold 0.001.",
+        "Call source_separation_gate_from_pr256 with the exact same report, classes, covariance, nuisance, and normalizer, then classify the exact same observation.",
+        "Observe SEPARABLE_CANDIDATE, RESPONSE_CLASS_CANDIDATE, response-class-local; executable details are in threshold_registration_oracle.json."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "A compliant fix must bind the projection to a preregistered/fixed threshold contract identity without falsely making the representation-dependent threshold universal."
+      ]
+    },
+    {
+      "finding_id": "F-PR283-MUTATION-EVIDENCE-NONEXECUTION",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The generated receipt claims every registered mutation executed and was killed, but MU283-WEAK-AS-SEPARABLE and MU283-WEAK-PRECEDENCE-DRIFT do not execute the registered mutant defects. The first assigns an unused forced candidate and checks unchanged production output; the second runs unchanged production cases and labels their expected abstention as a killed precedence mutant. Therefore the PASS receipt does not satisfy its own execute-and-kill mutation rule.",
+      "assumptions_used": [
+        "The spec's mutation_rule uses execute and killed literally, requiring the intended defect to be activated in an executable path.",
+        "A positive control against unchanged production behavior is not mutation execution."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_spec.yaml:158",
+        "docs/research_program/post_pr275/pr283_spec.yaml:224",
+        "scripts/codex_harness/run_pr283_weak_identification.py:731",
+        "scripts/codex_harness/run_pr283_weak_identification.py:906",
+        "docs/generated/pr283_weak_identification_receipt.json"
+      ],
+      "evidence_fingerprint": "source:scripts/codex_harness/run_pr283_weak_identification.py@6ee9048f:731-742,906-955",
+      "counterevidence_refs": [
+        "python -B scripts/codex_harness/run_pr283_weak_identification.py check exits 0 and exactly replays the receipt",
+        "The other eight mutation rows exercise actual rejected alternate inputs or forged replay fields"
+      ],
+      "reproduction": [
+        "Inspect _run_mutations lines 731-742: forced_candidate is never injected into classification or gate logic, while killed is derived from the unmodified classified result.",
+        "Inspect _run_mutations lines 906-955: far and broad-equivalence classifications run the unmodified weak gate; no after-open-set precedence mutation is injected.",
+        "Run the receipt check and inspect its mutations array; both rows nevertheless report executed=true, activated=true, killed=true."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Replace these rows with executable mutants or downgrade the receipt language/status; add a real singular-threshold identity/registration mutation covering the reproduced bypass."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR283-THRESHOLD-REGISTRATION-BYPASS",
+        "F-PR283-MUTATION-EVIDENCE-NONEXECUTION"
+      ],
+      "summary": "Frozen-candidate physics/statistics review fails: core whitening, nuisance quotient, rank ladder, equality semantics, replay, and claim ceiling are sound, but the fixed singular-threshold registration can be bypassed to restore a point candidate and two receipt mutation rows overstate non-executed mutants as killed."
+    }
+  ],
+  "errors": []
+}

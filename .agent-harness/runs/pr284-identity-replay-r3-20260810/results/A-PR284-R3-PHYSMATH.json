@@ -1,0 +1,237 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-identity-replay-r3-20260810",
+  "assignment_id": "A-PR284-R3-PHYSMATH",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "assignment_sha256": "e392f50753c02f2bc85e43ac0e81ef056b79a58cb8f118baa25d9923867ac108",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "da4a16d506e8adbfa5232ab95ca202cf2009e5f1304d6732fb0c92c3cb343b9a",
+    "seal_sha256": "f845a04769749a7b27a836ecb921da76509313221add64cd36ba0071b5e6e5f2",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "d54ff22dac780d3b159394237416d28b2bd15dc8",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "5fe16f62eb7246c455d116d79d2d422b35dee7b7",
+    "diff_sha256": "198de84c15f37c2d3c2edde8b2cdfbf06e5fe353aa2dd893462ae6bc3382e55f",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "adfbf6216e0a2566edeacc12f555110edea7811d7dc2309e737d7933d230f411"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/results/A-PR284-R3-PHYSMATH.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-09T23:13:00Z",
+  "completed_at": "2026-08-09T23:30:00Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "arithmetic": "fractions.Fraction exact rational"
+  },
+  "commands": [
+    {
+      "argv": [
+        "sha256sum",
+        ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-PHYSMATH.json",
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "htt/src/common/depth_path.py",
+        "htt/src/common/depth_path_calibration.py",
+        "htt/htt/htt/infer/depth_path_calibration.py",
+        "tests/contracts/test_depth_path_doob_calibration.py",
+        "docs/generated/pr284_depth_path_doob_receipt.json"
+      ],
+      "returncode": 0,
+      "summary": "Every registered required-input hash matched; HEAD/tree/merge-base also matched the frozen binding and the worktree was clean before assignment-local artifacts."
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py",
+        "focused"
+      ],
+      "returncode": 0,
+      "summary": "22 passed in 1.87s."
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py",
+        "check"
+      ],
+      "returncode": 0,
+      "summary": "PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION. This registered receipt replay does not exercise equal successive sky supports."
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-PHYSMATH/pr284_r3_physmath_oracle.py"
+      ],
+      "returncode": 0,
+      "summary": "Exact arithmetic, tower, selected path, inclusive event, Doob bound, identity-forgery rejection, support-drift rejection, matched-mock abstention, and the equal-support strict-nesting gap were all reproduced."
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_depth_path_doob_calibration.py"
+      ],
+      "returncode": 2,
+      "summary": "Direct invocation failed during collection with ModuleNotFoundError: common because the repository package roots were absent from PYTHONPATH; this is preserved and was not treated as a scientific failure."
+    },
+    {
+      "argv": [
+        "env",
+        "PYTHONPATH=htt/src:htt",
+        "python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_depth_path_doob_calibration.py"
+      ],
+      "returncode": 0,
+      "summary": "22 passed in 1.94s with the repository package roots supplied explicitly."
+    },
+    {
+      "argv": [
+        "python",
+        ".agent-harness/scripts/review_coverage.py",
+        "--coverage",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-PHYSMATH/review_coverage.json",
+        "--seal",
+        ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+        "--run-id",
+        "pr284-identity-replay-r3-20260810",
+        "--assignment-id",
+        "A-PR284-R3-PHYSMATH",
+        "--risk-tier",
+        "R3",
+        "--structural-only"
+      ],
+      "returncode": 0,
+      "summary": "Assignment-local affected-cell coverage validated structurally with the path-and-sky-support cell marked FAIL."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-PHYSMATH/pr284_r3_physmath_oracle.py",
+      "sha256": "a3d75968e6777470cee32771a835b77d1339f41a5ee4ff4fbcfa69a8c15cac39",
+      "bytes": 16108,
+      "producer": "A-PR284-R3-PHYSMATH",
+      "command_fingerprint": "5b868e374c374d1e9f1f9f2cd86cfa4034a6ee7450581e9147335c634969fcc2"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-PHYSMATH/review_coverage.json",
+      "sha256": "e2f6c4811af98eaea044aa375dedd5b8c0fdef24e4c64e7d7b6c96bdb18031f6",
+      "bytes": 8954,
+      "producer": "A-PR284-R3-PHYSMATH"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-PHYSMATH/review_coverage.json",
+  "review_coverage_sha256": "e2f6c4811af98eaea044aa375dedd5b8c0fdef24e4c64e7d7b6c96bdb18031f6",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr284-identity-replay-r3-20260810/assignments/A-PR284-R3-PHYSMATH.json",
+    ".agent-harness/runs/pr284-identity-replay-r3-20260810/RUN_PLAN.json",
+    ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-PHYSMATH.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+    ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-284.md",
+    "docs/generated/pr284_depth_path_doob_receipt.json",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/research_program/post_pr275/pr284_spec.yaml",
+    "htt/htt/htt/infer/depth_path_calibration.py",
+    "htt/src/common/depth_path.py",
+    "htt/src/common/depth_path_calibration.py",
+    "htt/src/common/vector_tensor_statistical_foundations.py",
+    "tests/contracts/test_depth_path_doob_calibration.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR284-R3-PHYSMATH-001",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "medium",
+      "evidence_fingerprint": "pr284.strict-support-nesting.equal-support-bound.v1",
+      "statement": "The named absent/invented DepthPath and stratum identity bypass is closed, and the exact reverse-martingale arithmetic is valid, but the frozen G6 premise still says every bound requires strictly nested sky supports while the historical DepthPath validator accepts equality with `issubset`; an exact three-rung path with identical support sets therefore passes the proved factory and emits a 25/36 probability upper bound outside the declared strict-support premise.",
+      "assumptions_used": [
+        "The current PR-284 specification and its required-for-bound list are authoritative for G6 acceptance.",
+        "The phrase `strictly nested sky supports` means each next support is a proper subset of its predecessor, not merely a subset allowing equality.",
+        "The equal-support oracle keeps the finite law, exact centering, second moment, decreasing atom partition tower, selected atom, threshold, and every report identity mathematically authentic so the support relation is the only changed premise.",
+        "The underlying Doob inequality remains mathematically conservative in the equal-support case; the defect is a runtime/spec acceptance-boundary mismatch, not a counterexample to the inequality."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:54",
+        "docs/research_program/post_pr275/pr284_spec.yaml:56",
+        "htt/src/common/depth_path.py:612",
+        "htt/src/common/depth_path.py:613",
+        "htt/src/common/depth_path.py:616",
+        "htt/src/common/depth_path_calibration.py:694",
+        "htt/src/common/depth_path_calibration.py:710",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-PHYSMATH/pr284_r3_physmath_oracle.py"
+      ],
+      "counterevidence_refs": [
+        "htt/src/common/depth_path_calibration.py:695",
+        "htt/src/common/depth_path_calibration.py:698",
+        "htt/src/common/depth_path_calibration.py:702",
+        "tests/contracts/test_depth_path_doob_calibration.py:277",
+        "tests/contracts/test_depth_path_doob_calibration.py:300",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 22 passed",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+      ],
+      "reproduction": [
+        "Run `python -B .agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-PHYSMATH/pr284_r3_physmath_oracle.py` from the frozen candidate root.",
+        "Observe that absent paths, invented path content IDs, invented ordered stratum IDs, nonnested supports, and post-construction support drift are rejected before calibration.",
+        "Observe independent exact results mean=0, E[X^2]=5, selected path=(-3,-2,0), maximum=3, threshold^2=36/5, inclusive law-level event probability=1/2, and Doob upper bound=25/36.",
+        "Observe `strict_nesting_spec_gap_bound_emitted` is true for three identical consecutive support sets."
+      ],
+      "unresolved": [
+        "If strict nesting is intended, add a proper-subset check for proved reports in `DepthPathReverseMartingaleReport._assert_proved_premise_replay` or the HTT proved factory without rejecting equal-support paths from the honest unproved/matched-mock lane.",
+        "Add a discriminating equal-successive-support test in `tests/contracts/test_depth_path_doob_calibration.py` and a registered `MU284-NONSTRICT-SUPPORT` mutation in the spec/runner; regenerate the receipt and repeat frozen review.",
+        "If equality is scientifically intended, change the governing spec from `strictly nested` to an explicit non-increasing/subset relation and rerun the invalidated spec-bound review rather than silently treating ordinary subset as strict."
+      ],
+      "confidence": 0.98
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR284-R3-PHYSMATH-001"
+      ],
+      "summary": "The identity-replay repair closes the historical absent/invented path and stratum bypass and preserves exact Fraction/Doob/matched-mock semantics, but G6 cannot pass while an equal-support path receives a bound contrary to the frozen strict-nesting premise. Priors, likelihood semantics, Q/Pi/F/G, local/global rank, transfers, and family identification are not invoked; the family gate remains blocked."
+    }
+  ],
+  "errors": []
+}

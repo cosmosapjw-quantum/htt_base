@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-mio-nonfinite-r3-rereview-20260811",
+  "generated_at": "2026-08-11T03:32:34+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 4,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR286-R3-CLAIM-REPLACEMENT",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "The PR-273 input remains a held-out synthetic integration diagnostic. It is not observed evidence, does not promote source proof, and cannot seed PR-287 observed inference.",
+          "evidence_refs": [
+            "docs/research_program/post_pr275/pr286_spec.yaml#assumptions",
+            "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#future_consumer_contract",
+            ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/claim_invariant_oracle.py"
+          ],
+          "evidence_fingerprint": "C-PR273-BLIND-INTEGRATION|candidate=0b1a8ef7|receipt=b5ea1264|synthetic-only-no-promotion"
+        },
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "No admitted or observed data are claimed. VT-S14 remains BLOCKED_WITH_RECEIPT before admitted data; the 21/0/50/1 row disposition and C2 diagnostic-only ceiling are preserved.",
+          "evidence_refs": [
+            "docs/research_program/post_pr275/pr286_spec.yaml#vector_tensor_evidence.admitted_data_gate",
+            "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14",
+            ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/claim_invariant_oracle.py"
+          ],
+          "evidence_fingerprint": "C-PR274-DATA-ADMISSION|candidate=0b1a8ef7|VT-S14=BLOCKED|observed=false"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR286-R3-CLAIM",
+      "status": "error",
+      "gate_disposition": "INCONCLUSIVE",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "not_examined",
+          "finding_ids": [],
+          "summary": "No claim verdict issued because the blind-results isolation contract was contaminated before review completion."
+        },
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "not_examined",
+          "finding_ids": [],
+          "summary": "No claim verdict issued because the blind-results isolation contract was contaminated before review completion."
+        }
+      ],
+      "reported_errors": [
+        "BLIND_RESULTS_ISOLATION_BREACH: a schema-discovery rg command used an ineffective exclusion glob and emitted scattered matching lines from historical result envelopes. The review stopped immediately after detection; no scientific claim verdict, merge authority, PR-287 activation, or assurance-budget extension is asserted."
+      ],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR286-R3-MIO-PHYSCODE",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "The held-out PR-273 synthetic integration pack remains current and explicitly synthetic; exact registered MIO local/global diagnostics replay unchanged, and no likelihood, posterior, evidence, observed-data, or family-identification semantics enter MIO.",
+          "evidence_refs": [
+            "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+            "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S14",
+            ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py"
+          ],
+          "evidence_fingerprint": "PR286-MIO-EXACT-REPLAY-0b1a8ef76df47b0b"
+        },
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "Finite-input non-finite MIO arithmetic now fails closed through PillarSInferenceError at the exported facade, all adjacent HTT controls remain intact, and VT-S14 stays a finite preregistered synthetic diagnostic blocked before admitted data and the native family gate.",
+          "evidence_refs": [
+            "htt/mio/formalism/vector_tensor_validation.py",
+            "htt/src/common/vector_tensor_statistical_inference.py",
+            "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14",
+            ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py"
+          ],
+          "evidence_fingerprint": "PR286-MIO-NONFINITE-GATE-0b1a8ef76df47b0b"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR286-R3-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-REPLAY_oracle.py",
+            ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-REPLAY_coverage.json",
+            "PR-273 check: five cases, two held out, five mutations killed"
+          ],
+          "evidence_fingerprint": "PR286-R3-REPLAY-C-PR273-BLIND-INTEGRATION-0B1A8EF",
+          "summary": "The exact frozen candidate replays the held-out PR-273 pack and the PR-286 72-row receipt without promotion; all 20 ordered mutations are activated, executed, and killed, including the public MIO non-finite numerical guard. No blocking replay, harness, portability, publication-policy, lifecycle, or claim-ceiling finding was reproduced."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "assignment_count": 4,
+  "validated_result_count": 4,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/RUN_PLAN.json",
+      "sha256": "184ee4aaad103a2d6bdaa3eaf96083a4e24fbf80022b9a90f6d0476db91a8375",
+      "bytes": 6158
+    },
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/assignments/A-PR286-R3-CLAIM-REPLACEMENT.json",
+      "sha256": "ebe453f533a7a8fa93672ee96118989b927680611d541ec89a3d10132ab8932f",
+      "bytes": 5325
+    },
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/assignments/A-PR286-R3-CLAIM.json",
+      "sha256": "ab104bb8735c11fc26d35391ad0d8ccfc474c8862a3aa3619ec77aebea063953",
+      "bytes": 5149
+    },
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/assignments/A-PR286-R3-MIO-PHYSCODE.json",
+      "sha256": "f89a6ee2ec4c4825113fae0eb4ed6a92be59fd7ac1f93c62df96ed63481ec6bc",
+      "bytes": 4826
+    },
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/assignments/A-PR286-R3-REPLAY.json",
+      "sha256": "dde766f1af49e1762ce836ade57d7b18acedfa9a60d292ea90c6a4497844acf2",
+      "bytes": 5520
+    },
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-CLAIM-REPLACEMENT.json",
+      "sha256": "e4ca970913b33a7c12f8a279ffadcd35778ef1369d4bc2d4de69b4147ec4a851",
+      "bytes": 8904
+    },
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-CLAIM.json",
+      "sha256": "2d585f6eada9756508dd71594480e8c12e1a088fb70aff2748e2d7578bb33d0f",
+      "bytes": 6679
+    },
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-MIO-PHYSCODE.json",
+      "sha256": "b1d5f3504dc2752a8dbdade1e464864ea985f147a8258671159e7779c5188617",
+      "bytes": 9766
+    },
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-REPLAY.json",
+      "sha256": "a9448fef082115cf74df6f2be04460571939e4019fbb130af3a0129d7e18e326",
+      "bytes": 10123
+    }
+  ],
+  "merge_input_sha256": "e9f4db6c99d12a998d7eb0bff0f9630a591d62568990fde3792d4571ce5ba2d5"
+}

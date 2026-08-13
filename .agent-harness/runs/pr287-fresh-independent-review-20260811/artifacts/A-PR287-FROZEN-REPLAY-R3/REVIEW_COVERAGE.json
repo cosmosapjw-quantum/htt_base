@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "run_id": "pr287-fresh-independent-review-20260811",
+  "assignment_id": "A-PR287-FROZEN-REPLAY-R3",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "candidate_seal_sha256": "486a8f7e75c04467e2c65a083529eff5f65e622f935b3346ada8ea7243cd456e",
+  "candidate_sha": "06ee728054fd62423fa90bc6a5d714b9be8631e3",
+  "candidate_tree_sha": "dd909b5d35a385b251547f6224b657346d7688f6",
+  "diff_sha256": "83ef2581a3a1afdf5459ad64730783f6f7e905a3cda155236ec44971b160912f",
+  "changed_files_sha256": "b522232b4e7f07fe03b297f33a07dfcce4f7eb80cdd0bbd94b9fd06a20b73198",
+  "completed_at": "2026-08-11T05:48:10Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json", "FROZEN_REPLAY_ORACLE.json: candidate_seal_self_hash and linear_unique_stable_patch_inventory"],
+      "rationale": "Frozen head, base, tree, diff, changed files, production hash, linear commit chain, and five unique stable patch IDs recomputed without candidate mutation."
+    },
+    {
+      "cell": "spec_and_dependency_freeze",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml", "run_pr287_post275_blind_replay.py check: exit 0"],
+      "rationale": "Canonical spec hash is assignment-bound and activation resolves the declared completed predecessor contracts."
+    },
+    {
+      "cell": "predecessor_terminal_receipts_and_pure_activation",
+      "status": "PASS",
+      "evidence_refs": ["run_pr287_post275_blind_replay.py check: ACTIVATED_PREDECESSOR_FINAL_SUCCESS", "tests/integration/test_post275_blind_replay.py focused: 40 passed"],
+      "rationale": "Exact registered terminal paths and serial PR_OPEN authority activate before side effects; hostile decoy and substitution cases pass."
+    },
+    {
+      "cell": "fresh_seed_and_commitment",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml: seed_contract", "tests/integration/test_post275_blind_replay.py focused: 40 passed"],
+      "rationale": "Cryptographic seed derivation and commitment are specified while current replay remains blocked before entropy or fresh writes."
+    },
+    {
+      "cell": "challenge_truth_threshold_and_submission_identity_chain",
+      "status": "PASS",
+      "evidence_refs": ["tests/integration/test_post275_blind_replay.py focused: 40 passed", "htt/src/common/post275_blind_replay.py"],
+      "rationale": "Factory-only content identities and validation bind challenge, truth reference, threshold, submission, and freeze chronology."
+    },
+    {
+      "cell": "challenge_truth_separation",
+      "status": "PASS",
+      "evidence_refs": ["test_fresh_challenge_is_content_addressed_and_recursively_truth_free", "test_submission_rejects_truth_and_challenge_identity_drift"],
+      "rationale": "Positive public schemas and recursive forbidden-field checks reject truth aliases and drift."
+    },
+    {
+      "cell": "analyst_adjudicator_separation",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml: role_capabilities", "run_pr287_post275_blind_replay.py check: typed isolated-executor blocker"],
+      "rationale": "The analyst cannot receive truth-vault or adjudicator authority, and ambient in-process analysis is refused."
+    },
+    {
+      "cell": "role_capability_and_recursive_forbidden_fields",
+      "status": "PASS",
+      "evidence_refs": ["tests/integration/test_post275_blind_replay.py focused: 40 passed", "docs/research_program/post_pr275/pr287_spec.yaml: recursive_forbidden_fields"],
+      "rationale": "Registered role surfaces and recursive payload rejection are executable and fail closed."
+    },
+    {
+      "cell": "stage_order_and_content_id_trace",
+      "status": "PASS",
+      "evidence_refs": ["test_stage_trace_is_exact_ordered_and_identity_linked", "docs/research_program/post_pr275/pr287_spec.yaml: stage_trace_contract"],
+      "rationale": "All five stages and input/output identities are ordered and linked exactly."
+    },
+    {
+      "cell": "historical_fresh_lane_separation",
+      "status": "PASS",
+      "evidence_refs": ["run_pr287_post275_blind_replay.py historical: exit 0, requested_lane historical", "docs/research_program/post_pr275/pr287_spec.yaml: lane_separation"],
+      "rationale": "Historical replay remains a separate compatibility lane and does not become fresh evidence."
+    },
+    {
+      "cell": "historical_replay_after_submission_freeze",
+      "status": "PASS",
+      "evidence_refs": ["test_historical_replay_receipt_requires_a_frozen_fresh_submission", "docs/research_program/post_pr275/pr287_spec.yaml: historical replay precondition"],
+      "rationale": "The historical receipt requires frozen fresh submission identity and cannot run earlier."
+    },
+    {
+      "cell": "no_legacy_seed_or_anchor",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml: forbidden_derivations and legacy_bc1_contract", "tests/integration/test_post275_blind_replay.py focused: 40 passed"],
+      "rationale": "PR-273 and legacy numbers are forbidden as fresh seed, threshold, normalizer, truth, or inference anchor."
+    },
+    {
+      "cell": "current_typed_pipeline_order",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml: current_pipeline_contract", "tests/integration/test_post275_blind_replay.py focused: 40 passed"],
+      "rationale": "The current orbit, parity, weak-ID, open-set, depth, Pillar-T/S, and pack order is frozen and exercised."
+    },
+    {
+      "cell": "typed_scenario_bank_and_mc_precision",
+      "status": "PASS",
+      "evidence_refs": ["test_scenario_bank_enforces_bijection_and_paired_covariance_contract", "test_case_results_derive_precedence_holm_coverage_and_depth_fail_closed"],
+      "rationale": "Twelve typed scenarios, exact 4/8 partition, bijection, 512-replicate contract, and precision status are enforced."
+    },
+    {
+      "cell": "raw_coverage_and_simultaneous_multiplicity",
+      "status": "PASS",
+      "evidence_refs": ["test_case_results_bind_covariance_rank_angle_and_raw_coverage_cells", "tests/integration/test_post275_blind_replay.py focused: 40 passed"],
+      "rationale": "Raw coverage cells are content-bound and Holm-adjusted multiplicity cannot be replaced by pointwise inference."
+    },
+    {
+      "cell": "paired_covariance_misspecification",
+      "status": "PASS",
+      "evidence_refs": ["test_scenario_bank_enforces_bijection_and_paired_covariance_contract", "htt/src/common/post275_blind_replay.py: covariance identity validation"],
+      "rationale": "Correct and misspecified covariance cases share latent draws and preserve the registered negative-control terminal."
+    },
+    {
+      "cell": "weak_id_open_set_precedence_and_abstention",
+      "status": "PASS",
+      "evidence_refs": ["test_case_results_derive_precedence_holm_coverage_and_depth_fail_closed", "tests/integration/test_post275_blind_replay.py focused: 40 passed"],
+      "rationale": "Rank/angle weak identification precedes open-set and equivalence classification, preserving mandatory abstention."
+    },
+    {
+      "cell": "depth_premise_fallback_and_identity_chain",
+      "status": "PASS",
+      "evidence_refs": ["test_case_results_derive_precedence_holm_coverage_and_depth_fail_closed", "run_pr287_post275_blind_replay.py adjacent: 188 passed"],
+      "rationale": "Missing premise yields matched mocks required with no finite bound, and adjacent PR-284 identities remain green."
+    },
+    {
+      "cell": "pr285_row_verdict_and_semantic_preservation",
+      "status": "PASS",
+      "evidence_refs": ["test_pillar_row_projection_preserves_exact_inventory_and_negative_rows", "run_pr287_post275_blind_replay.py adjacent: 188 passed"],
+      "rationale": "Pillar-T failed, inconclusive, and blocked rows and semantic identities remain unpromoted."
+    },
+    {
+      "cell": "pr286_row_verdict_preservation",
+      "status": "PASS",
+      "evidence_refs": ["test_pillar_row_projection_preserves_exact_inventory_and_negative_rows", "run_pr287_post275_blind_replay.py adjacent: 188 passed"],
+      "rationale": "Pillar-S blocked dispositions and exact evidence requirements survive downstream projection."
+    },
+    {
+      "cell": "pillar_t_and_s_exact_inventory",
+      "status": "PASS",
+      "evidence_refs": ["test_pillar_row_projection_preserves_exact_inventory_and_negative_rows", "docs/research_program/post_pr275/pr287_spec.yaml: exact_inventory 80 and 72"],
+      "rationale": "Order-sensitive 80-row Pillar-T and 72-row Pillar-S inventories are exact and source-hash bound."
+    },
+    {
+      "cell": "result_pack_A_contract",
+      "status": "PASS",
+      "evidence_refs": ["test_owner_specific_packs_enforce_claim_firewall_and_surface_identity", "htt/src/common/post275_blind_replay.py: build_common_pack_a"],
+      "rationale": "COMMON Pack A composes owner-preserving surfaces without deriving MIO numerical diagnostics or inference."
+    },
+    {
+      "cell": "result_pack_B_contract",
+      "status": "PASS",
+      "evidence_refs": ["test_owner_specific_packs_enforce_claim_firewall_and_surface_identity", "htt/src/common/post275_blind_replay.py: Pack B semantic validation"],
+      "rationale": "HTT Pack B binds rank, angles, covariance, weak-ID, abstention, depth, and coverage with no posterior/evidence surface."
+    },
+    {
+      "cell": "result_pack_C_mio_boundary",
+      "status": "PASS",
+      "evidence_refs": ["test_owner_specific_packs_enforce_claim_firewall_and_surface_identity", "docs/research_program/post_pr275/pr287_spec.yaml: pack_C"],
+      "rationale": "MIO Pack C remains diagnostic-only and rejects likelihood, posterior, evidence, truth, and family claims."
+    },
+    {
+      "cell": "x_q_pi_f_gf_semantics",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/post275_blind_replay.py: _validate_surface_semantics", "tests/integration/test_post275_blind_replay.py focused: 40 passed"],
+      "rationale": "Sign, denominator, threshold, admissible ceiling, ordered depth, covariance, and null semantics are executable."
+    },
+    {
+      "cell": "owner_factories_and_pack_local_metadata",
+      "status": "PASS",
+      "evidence_refs": ["FROZEN_REPLAY_ORACLE.json: transitive_harness_and_owner_factory_origin", "test_owner_specific_packs_enforce_claim_firewall_and_surface_identity"],
+      "rationale": "Canonical module, spec origin, loader path, function code origin, call-site globals, source hash, and local C2 metadata are bound."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr287_spec.yaml: mutation_registry", "tests/integration/test_post275_blind_replay.py focused: 40 passed"],
+      "rationale": "The ordered 30-mutation registry is exercised and omission/reordering fails closed."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["check_claim_language.py strict scan: No forbidden claim language detected", "docs/research_program/post_pr275/pr287_spec.yaml: diagnostic_only and BLOCKED_PRE_NATIVE_ATLAS"],
+      "rationale": "Outputs remain synthetic diagnostic C2 with no observed/native/family promotion."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["run_pr287_post275_blind_replay.py portable: exit 0", "portable manifest 594b74801784f599b5e112ca0602a62a12aa95dc0b8786a957ca9044e8051025 before and after"],
+      "rationale": "A clean archive of 5896 tracked files used only clean-root PYTHONPATH, preserved identical source/clean manifests, and observed zero fresh inputs."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["FROZEN_REPLAY_ORACLE.json: head_target_tree_and_clean_status and status_mirror_and_exact_pr_open_chain", "validate_pr_dag.py --strict-rescue-slice: 244 PRs valid"],
+      "rationale": "Candidate starts at the exact current PR-286 sealed/open target b955a050, canonical and compatibility status mirrors agree, and PR-287 is the only active implementation."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "invariant_checker",
+      "oracle_id": "PR287-FROZEN-REPLAY-INVARIANT-ORACLE-V1",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY-R3/frozen_replay_oracle.py"],
+      "command_fingerprint": "e82bbcf40f2bf363346b4646125fe5bb2463c83716a125b654fdc0cdcac9472c",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T05:48:08Z",
+      "completed_at": "2026-08-11T05:48:10Z",
+      "artifact_path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY-R3/FROZEN_REPLAY_ORACLE.json",
+      "artifact_sha256": "c93fa2dfcd1345d46ba0b5886199adb2130923975f40e6a88a63f46f272dc1d4",
+      "artifact_bytes": 1120,
+      "evidence_refs": ["Independent recomputation of required hashes, frozen seal, exact diff, production hash, unique patch IDs, PR_OPEN chain, module origins, owner factories, typed blocker, and authorized salvage lineage"]
+    }
+  ],
+  "coverage_sha256": "7e7d835b13c7fb54324696bd0eac517a116a1491c17fef8a5cb478c651fd8c38"
+}

@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr290-planck-native-replay-recovery-20260811",
+  "target_ref": "refs/remotes/origin/changeset/pr290-planck-native-replay-recovery-20260811",
+  "remote_fetch_urls": [
+    "https://github.com/cosmosapjw-quantum/htt_base.git"
+  ],
+  "remote_push_urls": [
+    "https://github.com/cosmosapjw-quantum/htt_base.git"
+  ],
+  "publication_repository_host": "github.com",
+  "publication_repository_slug": "cosmosapjw-quantum/htt_base",
+  "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+  "candidate_branch": "changeset/pr291-cf4-native-replay-recovery-20260812",
+  "candidate_ref": "refs/heads/changeset/pr291-cf4-native-replay-recovery-20260812",
+  "candidate_sha": "67076abbfce5e6bf549f1282c95729bfe89b4be8",
+  "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+  "candidate_tree_sha": "e53869e5122189bd0d00d3a54c14e182396e3df3",
+  "candidate_commits": [
+    "580b362a87c8cb0179b740238ec8e3b5e241ef2f",
+    "ae57f11ae3c9ac1dbda05dc9e5c0f7353341a84f",
+    "36a1d70c72d31d7f481c3320a1e6c76be9429fd9",
+    "a242ea4c50c990da4cd70ef5f4222f66ba87788d",
+    "67076abbfce5e6bf549f1282c95729bfe89b4be8"
+  ],
+  "candidate_commits_sha256": "278b82fac3f19cb13c36161d9c665e3e5b8a1f77b158957f4bee9b285ffa41b1",
+  "stable_patch_ids": [
+    {
+      "commit": "580b362a87c8cb0179b740238ec8e3b5e241ef2f",
+      "stable_patch_id": "3019d84bc9c604186f9f55bcceef52099e7b5c18"
+    },
+    {
+      "commit": "ae57f11ae3c9ac1dbda05dc9e5c0f7353341a84f",
+      "stable_patch_id": "867031ceb149c1ed096c1bfc7715442f5247fe35"
+    },
+    {
+      "commit": "36a1d70c72d31d7f481c3320a1e6c76be9429fd9",
+      "stable_patch_id": "745defbb03d44747866f2525b1f83946e6f9710b"
+    },
+    {
+      "commit": "a242ea4c50c990da4cd70ef5f4222f66ba87788d",
+      "stable_patch_id": "98f93fc599ae70af706ffd30aebb7a7af3d19cae"
+    },
+    {
+      "commit": "67076abbfce5e6bf549f1282c95729bfe89b4be8",
+      "stable_patch_id": "89aa1c08d997f681212c8ecbc8b83cda75fac2e0"
+    }
+  ],
+  "stable_patch_ids_sha256": "d41f4a0e8f033e08295cb0b1f8825c5dd354c8ddd3e0ad890133ec35fe3372dc",
+  "production_hash": "66a34981e03da2bb0146687c6a2f9871a09f1e28432e234355ea46bfafdf3744",
+  "diff_stat": {
+    "production": 3,
+    "tests": 2,
+    "runners": 5,
+    "receipts": 3,
+    "generated": 0
+  },
+  "diff_sha256": "f3e6bd5f3a6771e7655eaa5ba65b6c4f01bfefa14609b2d825f3a0a51aa5a81a",
+  "changed_files": [
+    {
+      "status": "M",
+      "path": "docs/PR_DELTAS/pr-290.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/PR_DELTAS/pr-291.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/codex_handoff/pr_status.yaml"
+    },
+    {
+      "status": "A",
+      "path": "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/research_program/post_pr275/pr291_publication_policy.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/research_program/post_pr275/pr291_spec.yaml"
+    },
+    {
+      "status": "A",
+      "path": "htt/obsstat/cf4_post275_lane.py"
+    },
+    {
+      "status": "A",
+      "path": "htt/src/common/cf4_observed_lane_activation.py"
+    },
+    {
+      "status": "M",
+      "path": "htt/src/common/semantic_guards/no_overclaim.py"
+    },
+    {
+      "status": "M",
+      "path": "machine_readable/pr_status.yaml"
+    },
+    {
+      "status": "A",
+      "path": "scripts/codex_harness/run_pr291_cf4_lane.py"
+    },
+    {
+      "status": "M",
+      "path": "tests/contracts/test_claim_language_lint.py"
+    },
+    {
+      "status": "A",
+      "path": "tests/integration/test_cf4_post275_lane.py"
+    }
+  ],
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "integration_policy": {
+    "path": "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "sha256": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835",
+    "policy_id": "PR291-PUBLICATION-POLICY"
+  },
+  "dirty": false,
+  "seal_sha256": "b277e46ee54781f8b1a9aa666e833f377b6052f9863a8d330d5cb6cb1b271045"
+}

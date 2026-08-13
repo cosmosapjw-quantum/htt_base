@@ -1,0 +1,188 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-frozen-independent-review-20260811",
+  "assignment_id": "A-PR289-FROZEN-CODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "8aa29e14dcd7e704235a524634dcab219c46728df47da7b9ba8d5885f27271d5",
+    "seal_sha256": "0347f2f5011309909423c4e27e090556c95c2a237e7d9c7a5ab3781087407a47",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "1ad54d3c5a484816128a1df93d54953589780520",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "67ec8432a6557bb460dfe8015b361fe9f6c00d1d",
+    "diff_sha256": "ce6c09a90ccb0e3f50929591a074d4947eb094288b2720d863bc0f3516e44f6e",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "cd8aebca49820d989bf805173f20ac65093181f541920f5adee74ce8e8fce413"
+  },
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/results/A-PR289-FROZEN-CODE.json",
+  "assignment_sha256": "ee6c2370a2479b2cbd5040ae24946e6c21dd804882e198c9ac521ac92b5c2912",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr289-frozen-independent-review-20260811/assignments/A-PR289-FROZEN-CODE.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR289_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr289_spec.yaml",
+    "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "htt/src/common/data_identity.py",
+    "tests/contracts/test_data_identity_registry_v2.py",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/research_program/post_pr275/data_runbooks.yaml",
+    "docs/harness/CLAIM_LEDGER.md",
+    "docs/PR_DELTAS/pr-289.md",
+    "docs/codex_handoff/pr_status.yaml",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T08:55:00Z",
+  "completed_at": "2026-08-11T09:40:00Z",
+  "tool_versions": {
+    "git": "2.43.0",
+    "python": "3.12.3",
+    "python3.10": "3.10.20",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    "sha256sum on all registered required inputs; all matched assignment",
+    "git rev-parse HEAD HEAD^{tree}; sealed candidate and tree matched",
+    "python -B scripts/codex_harness/run_pr289_data_identity_v2.py focused; exit 0, 49 passed",
+    "python -B scripts/codex_harness/run_pr289_data_identity_v2.py preflight; exit 0",
+    "python -B scripts/codex_harness/run_pr289_data_identity_v2.py adjacent; exit 0, 50 current plus 54 historical passed",
+    "python -B scripts/codex_harness/run_pr289_data_identity_v2.py check; exit 1, frozen receipt drift",
+    "python3 -B scripts/codex_harness/run_pr289_data_identity_v2.py check; exit 0",
+    "python -B scripts/codex_harness/run_pr289_data_identity_v2.py portable; exit 1",
+    "python3 -B scripts/codex_harness/run_pr289_data_identity_v2.py portable; exit 0",
+    "python3.10 -B scripts/codex_harness/run_pr289_data_identity_v2.py preflight; exit 0",
+    "python3.10 -B scripts/codex_harness/run_pr289_data_identity_v2.py check; exit 1, interpreter-path receipt drift",
+    "python -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_publication_integrity.py -k policy_nonrelaxable_metadata_fails_closed-or-candidate_seal_cross_binds_declared_policy_identity; exit 0, 9 passed",
+    "python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice; exit 0",
+    "python -B scripts/check_claim_language.py --strict-missing --include-archives on the policy file set; exit 0",
+    "python -B assignment-local A-PR289-FROZEN-CODE-oracle.py; exit 0 and reproduced four independent validation/containment defects plus interpreter-path drift",
+    "python -B .agent-harness/scripts/review_coverage.py --structural-only; exit 0"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CODE-oracle.py",
+      "sha256": "9595ee6f6cef3c62e777748792900d3a3eb83a756d77a2bb07be3f5351025ace",
+      "bytes": 13911,
+      "producer": "A-PR289-FROZEN-CODE",
+      "command_fingerprint": "92f4f29d6be3584146b2c4d71350325e3b1df42c7d9b9b52888914cc89bb7fe1"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CODE-oracle-result.json",
+      "sha256": "8089b4e10bd11685d80d7e7ad8420a8b8c49fd12b9cd7fa3a1041077ab65880e",
+      "bytes": 3540,
+      "producer": "A-PR289-FROZEN-CODE",
+      "command_fingerprint": "92f4f29d6be3584146b2c4d71350325e3b1df42c7d9b9b52888914cc89bb7fe1"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CODE-REVIEW_COVERAGE.json",
+      "sha256": "081ec589852c49228dabb092a63237d51d61ba8cff5154ffaf2e7b49bbb2995d",
+      "bytes": 12964,
+      "producer": "A-PR289-FROZEN-CODE"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CODE-REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "081ec589852c49228dabb092a63237d51d61ba8cff5154ffaf2e7b49bbb2995d",
+  "findings": [
+    {
+      "finding_id": "F-PR289-CODE-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "Export replay reconstructs content IDs but does not revalidate the full DataIdentityRecordV2 semantic contract; an admitted Planck record with invalid locator, file, license, units/frame/sign/direction, mask/selection/covariance, transfer, and sky-support values was accepted after record and bundle IDs were recomputed.",
+      "assumptions_used": ["Export replay is required to enforce the same typed semantic invariants claimed for admitted records.", "Content addressing authenticates payload identity, not semantic validity."],
+      "evidence_refs": ["htt/src/common/data_identity.py:1874", "htt/src/common/data_identity.py:1914", ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CODE-oracle-result.json", "docs/PR_DELTAS/pr-289.md:75"],
+      "evidence_fingerprint": "pr289:export-replay:omitted-record-semantic-validation:v1",
+      "counterevidence_refs": ["Focused suite passed 49 tests.", "Native profile-specific Planck, CF4, and HSC/KiDS relationship mutations are rejected."],
+      "reproduction": ["Run the assignment-local oracle.", "Inspect record_replay.semantic_record_replay_accepted and semantic_fields_accepted in the oracle result."],
+      "confidence": 0.99,
+      "unresolved": ["Add full exported-record field validation and cross-record shared-field consistency before reconstructing DataIdentityRecordV2."]
+    },
+    {
+      "finding_id": "F-PR289-CODE-002",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "Repeated component ordinals are not validated as a complete ordered sequence during lane replay; the canonical DESI bundle accepted duplicate ezmock ordinal 1 with ordinal 0 missing after the bundle ID was recomputed.",
+      "assumptions_used": ["For a cardinality-N component role, replay must contain each ordinal exactly once in canonical order."],
+      "evidence_refs": ["htt/src/common/data_identity.py:1940", "htt/src/common/data_identity.py:2007", ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CODE-oracle-result.json", "docs/research_program/post_pr275/pr289_spec.yaml:99"],
+      "evidence_fingerprint": "pr289:lane-replay:duplicate-repeated-role-ordinal:v1",
+      "counterevidence_refs": ["The focused test mutating a unique Planck component ordinal is rejected at tests/contracts/test_data_identity_registry_v2.py:499."],
+      "reproduction": ["Run the assignment-local oracle.", "Inspect duplicate_ordinal_replay_accepted, duplicate_component_id, and duplicate_ordinals."],
+      "confidence": 0.99,
+      "unresolved": ["Validate record (component_id, component_ordinal) pairs exactly against native component bindings and lane cardinality before bundle recomputation."]
+    },
+    {
+      "finding_id": "F-PR289-CODE-003",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "Exact module loading trusts loader-reported origin and get_data bytes without binding those bytes to executed code; an inconsistent import loader reported the sealed file and its exact bytes while different factory functions executed and passed the runner's shallow receipt checks.",
+      "assumptions_used": ["The exact-module review cell requires executed factory code to be derived from the verified candidate bytes."],
+      "evidence_refs": ["scripts/codex_harness/run_pr289_data_identity_v2.py:116", "scripts/codex_harness/run_pr289_data_identity_v2.py:149", ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CODE-oracle-result.json", "docs/PR_DELTAS/pr-289.md:76"],
+      "evidence_fingerprint": "pr289:module-load:reported-bytes-not-bound-to-executed-code:v1",
+      "counterevidence_refs": ["The focused preloaded sys.modules replacement test passes because the runner pops that exact module entry.", "The reported source SHA-256 in the independent probe equals the sealed module SHA-256."],
+      "reproduction": ["Run the assignment-local oracle.", "Inspect module_loading.inconsistent_loader_accepted and the reported source digest."],
+      "confidence": 0.98,
+      "unresolved": ["Load through a controlled SourceFileLoader or compile/execute the already-verified bytes in a fresh module namespace, and validate the full receipt schema." ]
+    },
+    {
+      "finding_id": "F-PR289-CODE-004",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "Receipt output containment is checked before the long payload build but the later temporary-file creation and replace resolve the parent path again; replacing the validated parent with a link during build caused the runner to return success after writing the receipt outside the validated root.",
+      "assumptions_used": ["The output path must remain confined to the repository throughout payload generation and atomic replacement."],
+      "evidence_refs": ["scripts/codex_harness/run_pr289_data_identity_v2.py:187", "scripts/codex_harness/run_pr289_data_identity_v2.py:213", "scripts/codex_harness/run_pr289_data_identity_v2.py:235", ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CODE-oracle-result.json"],
+      "evidence_fingerprint": "pr289:receipt-write:parent-replacement-containment:v1",
+      "counterevidence_refs": ["Existing and assignment-local archive traversal/link/device probes reject correctly.", "Existing hardlinked output tests reject the alias when it is present before validation."],
+      "reproduction": ["Run the assignment-local oracle.", "Inspect output_containment.parent_replacement_accepted and outside_output_created."],
+      "confidence": 0.99,
+      "unresolved": ["Hold and use a no-follow directory file descriptor for temporary creation and final rename, then fsync and verify the bound directory identity."]
+    },
+    {
+      "finding_id": "F-PR289-CODE-005",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "medium",
+      "statement": "Frozen receipt replay is tied to the absolute interpreter spelling stored from sys.executable: the same sealed source passes under /usr/bin/python3 but fails under /usr/bin/python, and Python 3.10 preflight succeeds while frozen check fails; the PR delta also records a portable manifest digest different from the live sealed manifest.",
+      "assumptions_used": ["A portable source-bound receipt must not drift solely because an equivalent or supported interpreter path is selected.", "Current implementation evidence in the PR delta must match the sealed candidate being reviewed."],
+      "evidence_refs": ["scripts/codex_harness/run_pr289_data_identity_v2.py:90", "scripts/codex_harness/run_pr289_data_identity_v2.py:258", "scripts/codex_harness/run_pr289_data_identity_v2.py:467", ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CODE-oracle-result.json", "docs/PR_DELTAS/pr-289.md:97"],
+      "evidence_fingerprint": "pr289:portable-replay:absolute-interpreter-and-stale-manifest:v1",
+      "counterevidence_refs": ["python3 portable replay passes with 5,911 tracked files and unchanged manifests.", "Python 3.10 preflight exits zero, confirming core syntax/runtime compatibility when no frozen-byte comparison is made."],
+      "reproduction": ["Run /usr/bin/python -B scripts/codex_harness/run_pr289_data_identity_v2.py check; observe exit 1.", "Run /usr/bin/python3 -B the same check; observe exit 0.", "Run the assignment-local oracle for both receipts and Python 3.10 preflight."],
+      "confidence": 0.99,
+      "unresolved": ["Canonicalize the generating procedure independently of interpreter alias or bind a declared interpreter identity without embedding machine-specific absolute paths.", "Refresh the PR delta's current manifest evidence after the final candidate is frozen."]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR289-CODE-001", "F-PR289-CODE-002", "F-PR289-CODE-003", "F-PR289-CODE-004", "F-PR289-CODE-005"],
+      "summary": "FAIL: the sealed PR-289 candidate has reproducible exported-record semantic and ordinal replay gaps, executed-module byte-binding and output-containment gaps, plus interpreter-dependent frozen replay. Admission-time file checks, native-profile relationships, authorization separation, archive path validation, policy cross-binding, DAG, and claim scan otherwise passed."
+    }
+  ],
+  "errors": [
+    "Post-verdict metadata incident: after all five substantive findings, the executable oracle and result, exact review coverage, and the substantive FAIL envelope bytes were complete, a final assignment-artifact inventory command unintentionally printed sibling artifact filenames and byte sizes. No sibling content, derivation, verdict, or result envelope was read. The current envelope differs only by this incident record; the substantive chronology and FAIL verdict are unchanged."
+  ]
+}

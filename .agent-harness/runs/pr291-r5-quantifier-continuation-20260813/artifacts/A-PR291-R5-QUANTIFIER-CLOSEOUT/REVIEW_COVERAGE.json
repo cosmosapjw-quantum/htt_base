@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-quantifier-continuation-20260813",
+  "assignment_id": "A-PR291-R5-QUANTIFIER-CLOSEOUT",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "5e4dbf2852e7c4418bb86755aeaf4889cc28e65642f46b3f0c0bbafcb06fdbb5",
+  "candidate_sha": "38802323415fe7dc88f63e58d53b316ec9b52c04",
+  "candidate_tree_sha": "602a35f0e6e5063ff6677cf2913521975126f588",
+  "diff_sha256": "d4a4154b5fe1b65476942e2d41204332a75bcee7605fe139f6ee1176384cf2c3",
+  "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+  "completed_at": "2026-08-13T09:05:04+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLOSEOUT/metadata_closeout_oracle.py"
+      ],
+      "rationale": "Exact seal bytes, HEAD, tree, base, merge-base, clean tracked state, commit list, and unique stable patch IDs match."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml",
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"
+      ],
+      "rationale": "The sealed specification predates and governs a retained nonexecution receipt."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json"
+      ],
+      "rationale": "Carried replay PASS and the current receipt retain BLOCKED_PREDECESSOR_FINAL_SUCCESS without numerical execution."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"
+      ],
+      "rationale": "Data identity remains unadmitted and H-CF4 remains externally authenticated and unauthorized."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json"
+      ],
+      "rationale": "The retained preactivation path fails before observed or numeric writes; no substantive rerun was performed in closeout."
+    },
+    {
+      "cell": "synthetic_estimand_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"
+      ],
+      "rationale": "The carried physics/statistics PASS remains bound to unchanged numerical modules and synthetic diagnostic mechanics only."
+    },
+    {
+      "cell": "group_row_selection_and_frame_conventions",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json",
+        ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/RUN_PLAN.json"
+      ],
+      "rationale": "Carried source-geometry review is preserved; current dependency hashes show no numerical-module drift."
+    },
+    {
+      "cell": "full_covariance_and_effective_rank",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"
+      ],
+      "rationale": "Carried covariance-whitened rank and right-null controls passed under unchanged numerical hashes."
+    },
+    {
+      "cell": "depth_zoa_nested_support_and_transport",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"
+      ],
+      "rationale": "The carried review covers the synthetic depth and ZoA contract without observed-data promotion."
+    },
+    {
+      "cell": "weak_identification_and_identified_set_abstention",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"
+      ],
+      "rationale": "The carried result preserves strict non-singleton identified-set abstention and blocks family identification."
+    },
+    {
+      "cell": "legacy_p0_and_curl_disposition",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"
+      ],
+      "rationale": "The carried physics/statistics review found no defect in the registered legacy/curl disposition."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+        ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLOSEOUT/metadata_closeout_oracle.py"
+      ],
+      "rationale": "Receipt remains blocked with observed_data_executed false, no numeric outputs, no network side effect, and no public use."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json",
+        ".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json"
+      ],
+      "rationale": "Carried portable replay remains applicable because current changes exclude every declared numerical file; the frozen tracked tree is clean."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_publication_policy.json",
+        ".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/RUN_PLAN.json"
+      ],
+      "rationale": "Policy, seal, run plan, change-set, publication group, and exact input hashes remain cross-bound."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "FAIL",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/results/A-PR291-R5-QUANTIFIER-CLAIM.json"
+      ],
+      "rationale": "Fresh strict claim review reproduced seven passive/adverb/scalar family-as-Bianchi false negatives, so REVIEWED and SEALED are blocked."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "rationale": "The frozen candidate remains based on the exact sealed PR-290 predecessor and has not been pushed, opened, or merged."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "pr291-r5-quantifier-failed-closeout-metadata",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLOSEOUT/metadata_closeout_oracle.py"
+      ],
+      "command_fingerprint": "75d4337263acc1ab4b06eb7ec490d345cf84c3598f0532f88ce400932e5e9bc3",
+      "started_at": "2026-08-13T09:04:20+00:00",
+      "completed_at": "2026-08-13T09:05:04+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLOSEOUT/metadata_closeout_oracle.py",
+      "artifact_sha256": "47de0fc6db04db0380a412b793ce8afa469414687a46d79546a81d38398b006d",
+      "artifact_bytes": 13366,
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/results/A-PR291-R5-QUANTIFIER-CLAIM.json",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/RUN_SUMMARY.json",
+        ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/RUN_SUMMARY.json",
+        ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/RUN_SUMMARY.json"
+      ]
+    }
+  ],
+  "coverage_sha256": "22c63bba359400dc7224959e78d9b728ad225d1bbd664f91b3938654d0da5d0e"
+}

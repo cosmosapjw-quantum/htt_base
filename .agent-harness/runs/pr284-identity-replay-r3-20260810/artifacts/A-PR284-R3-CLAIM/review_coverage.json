@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-identity-replay-r3-20260810",
+  "assignment_id": "A-PR284-R3-CLAIM",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "f845a04769749a7b27a836ecb921da76509313221add64cd36ba0071b5e6e5f2",
+  "candidate_sha": "d54ff22dac780d3b159394237416d28b2bd15dc8",
+  "candidate_tree_sha": "5fe16f62eb7246c455d116d79d2d422b35dee7b7",
+  "diff_sha256": "198de84c15f37c2d3c2edde8b2cdfbf06e5fe353aa2dd893462ae6bc3382e55f",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-09T23:23:14Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+        "sha256sum required inputs; git rev-parse HEAD HEAD^{tree}; clean git status"
+      ],
+      "rationale": "Required input hashes and the checked-out commit/tree match the frozen assignment binding."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/assignments/A-PR284-R3-CLAIM.json"
+      ],
+      "rationale": "The registered specification was read and hash-verified before gates and the independent oracle were executed."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CLAIM/claim_identity_oracle.py"
+      ],
+      "rationale": "The receipt replay and independent two-atom exact-rational construction bind one finite law and common target."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/htt/htt/infer/depth_path_calibration.py:149",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CLAIM/claim_identity_oracle.py"
+      ],
+      "rationale": "The independent exact target has zero mean and positive finite second moment, and the HTT factory checks both."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CLAIM/claim_identity_oracle.py"
+      ],
+      "rationale": "The oracle proves nested supports alone cannot construct a proved report and confirms the unproved route instead."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:694",
+        "python3 -B scripts/codex_harness/run_pr284_depth_path_doob.py check"
+      ],
+      "rationale": "The receipt gate replays the exact tower and emits the registered G6 pass token."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:694",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CLAIM/claim_identity_oracle.py"
+      ],
+      "rationale": "The embedded DepthPath owns strata, supports, masks, and kernels; alternate or missing path identities fail closed."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "htt/htt/htt/infer/depth_path_calibration.py:331"
+      ],
+      "rationale": "Exact report-to-calibration identity checks and killed registered drift mutations bind both identities."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:694",
+        "docs/generated/pr284_depth_path_doob_receipt.json"
+      ],
+      "rationale": "Revalidation recomputes selected-atom conditional path values and maximum; the registered path-maximum mutation is killed."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/htt/htt/infer/depth_path_calibration.py:321",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CLAIM/claim_identity_oracle.py"
+      ],
+      "rationale": "The independent oracle obtains the exact 1/4 conservative bound from multiplier 2 and rejects free calibration."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CLAIM/claim_identity_oracle.py"
+      ],
+      "rationale": "The unproved route is MATCHED_MOCKS_REQUIRED with no probability bound and required_not_executed mock status."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "python3 -B scripts/codex_harness/run_pr284_depth_path_doob.py check"
+      ],
+      "rationale": "All fourteen uniquely registered mutations are executed, activated, killed, and receipt-replayed."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CLAIM/claim_identity_oracle.py"
+      ],
+      "rationale": "The registered gate and independent canonical-JSON/source-hash recomputation both pass."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This bounded claim/provenance assignment does not independently certify the portable integration lane."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+        "docs/research_program/post_pr275/pr284_publication_policy.json"
+      ],
+      "rationale": "The frozen seal binds the exact policy path, SHA-256, policy id, target branch, and predecessor SHA."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "python3 -B scripts/check_claim_language.py --strict-missing --include-archives [registered PR-284 inputs]"
+      ],
+      "rationale": "HTT owns calibration, COMMON contracts, OBSSTAT inputs only, and MIO diagnostic consumption only; C2 diagnostic-only, transfer none, nonobserved, nonpublic, and blocked family status agree and forbidden-language scanning passes."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Latest-target integration is outside this blind bounded claim/provenance assignment and is not promoted by this pass."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR284-R3-CLAIM-IDENTITY-ORACLE",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": [
+        "env",
+        "PYTHONPATH=.:htt/src:htt",
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CLAIM/claim_identity_oracle.py"
+      ],
+      "command_fingerprint": "e02db5b258cee0450b8f300dee6a2322453b1148e84528ea2f7410e956603bb1",
+      "started_at": "2026-08-09T23:22:55Z",
+      "completed_at": "2026-08-09T23:23:14Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CLAIM/claim_identity_oracle.py",
+      "artifact_sha256": "d3b9f2053b4e9262a797f636cfecdc947b4a81849d4713ea54bf3ddfdbc79f7c",
+      "artifact_bytes": 12037,
+      "evidence_refs": [
+        "oracle stdout status PASS with nine named checks",
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "htt/src/common/depth_path_calibration.py",
+        "htt/htt/htt/infer/depth_path_calibration.py"
+      ]
+    }
+  ],
+  "coverage_sha256": "038f6fe2a15fb9a3d3350470c2ae1e9b213a36baa559c5f139a73dac891c1c7c"
+}

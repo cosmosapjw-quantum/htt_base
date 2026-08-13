@@ -1,0 +1,147 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-stacked-publication-policy-review-20260810",
+  "assignment_id": "A-PR284-STACK-CLOSEOUT",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_gate_reviewer",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "ec986572ee5f5e7854e962004b40e7f3cd6d9527798bb13baa111c88f8bc8476",
+    "seal_sha256": "8bfbdaff6af64436924580463f9ec2554279a1bc6a1486750cb0c32b6266bf5b",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "0db8394f751dc88d8fd5f83c399c672ab87fcbd6",
+    "diff_sha256": "404c50c3fdba1f92c6483cfc7829b9d0e836f5e385fe6db27b6f402ed3128f03",
+    "changed_files_sha256": "2ee57a82a18f93585636383adacae5cf34d753841adf5587c087d50f851e66f7",
+    "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034"
+  },
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/results/A-PR284-STACK-CLOSEOUT.json",
+  "assignment_sha256": "0bb141c70f8a263976a2052dea6a47b05df92ac04c8729e3192e6aeba849f0b8",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/assignments/A-PR284-STACK-CLOSEOUT.json",
+    ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/RUN_PLAN.json",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-reviewer-mode-pre-submission/SKILL.md",
+    ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR284_STACK_POLICY_INTEGRATION_REHEARSAL.json",
+    ".prguard/runtime/PR284_PUBLICATION_BLOCKER.json",
+    "docs/research_program/post_pr275/pr284_spec.yaml",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/generated/pr284_depth_path_doob_receipt.json",
+    "docs/PR_DELTAS/pr-284.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-10T05:27:00Z",
+  "completed_at": "2026-08-10T05:35:33Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0",
+    "PyYAML": "6.0.1",
+    "gh": "read-only live queries"
+  },
+  "commands": [
+    {
+      "argv": ["sha256sum", "<nine required inputs>"],
+      "returncode": 0,
+      "outcome": "all registered required-input hashes matched"
+    },
+    {
+      "argv": ["git", "rev-parse", "HEAD", "HEAD^{tree}"],
+      "returncode": 0,
+      "outcome": "candidate commit and tree matched frozen closeout binding"
+    },
+    {
+      "argv": ["cmp", "--silent", "docs/codex_handoff/pr_status.yaml", "machine_readable/pr_status.yaml"],
+      "returncode": 0,
+      "outcome": "status mirrors byte-identical"
+    },
+    {
+      "argv": ["python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "<registered PR-284 inputs>"],
+      "returncode": 0,
+      "outcome": "No forbidden claim language detected."
+    },
+    {
+      "argv": ["git", "ls-remote", "--heads", "origin", "refs/heads/changeset/pr284-finite-depth-law-recovery-20260810"],
+      "returncode": 0,
+      "outcome": "no PR-284 remote branch"
+    },
+    {
+      "argv": ["gh", "pr", "list", "--repo", "cosmosapjw-quantum/htt_base", "--head", "changeset/pr284-finite-depth-law-recovery-20260810", "--state", "all", "--json", "number,state,headRefName,baseRefName,url"],
+      "returncode": 0,
+      "outcome": "empty list; no PR-284 pull request"
+    },
+    {
+      "argv": ["gh", "pr", "view", "380", "--repo", "cosmosapjw-quantum/htt_base", "--json", "number,state,headRefName,headRefOid,baseRefName,mergeStateStatus,url"],
+      "returncode": 0,
+      "outcome": "predecessor OPEN/BLOCKED at exact b6b6952d target SHA"
+    },
+    {
+      "argv": ["env", "PYTHONPATH=.:htt/src:htt", "python3", "-B", ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-CLOSEOUT/closeout_freshness_oracle.py"],
+      "returncode": 0,
+      "outcome": "PASS with ten evidence-freshness, claim, budget, and publication checks"
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-CLOSEOUT/review_coverage.json", "--seal", ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json", "--run-id", "pr284-stacked-publication-policy-review-20260810", "--assignment-id", "A-PR284-STACK-CLOSEOUT", "--risk-tier", "R3"],
+      "returncode": 0,
+      "outcome": "strict review coverage validation ok=true"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-CLOSEOUT/closeout_freshness_oracle.py",
+      "sha256": "0c772f3d4aa6a16d16dd1ec9da8c19264e65b03166c541e3bb4bfd071c347fe8",
+      "bytes": 10342,
+      "producer": "A-PR284-STACK-CLOSEOUT",
+      "command_fingerprint": "09060335e3f74b90e5e5f89801d55c3a9fa7a9dfff1e6db9ee5c213071ddf53e"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-CLOSEOUT/review_coverage.json",
+      "sha256": "f60a782129fdc061fef306d687a5afb68ee58503c34bc4f79e8b10f57de11fb6",
+      "bytes": 7882,
+      "producer": "A-PR284-STACK-CLOSEOUT"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-CLOSEOUT/review_coverage.json",
+  "review_coverage_sha256": "f60a782129fdc061fef306d687a5afb68ee58503c34bc4f79e8b10f57de11fb6",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json",
+        ".prguard/runtime/PR284_STACK_POLICY_INTEGRATION_REHEARSAL.json",
+        "docs/research_program/post_pr275/pr284_publication_policy.json",
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "docs/codex_handoff/pr_status.yaml",
+        "machine_readable/pr_status.yaml",
+        ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/RUN_PLAN.json",
+        ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-CLOSEOUT/closeout_freshness_oracle.py",
+        ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-CLOSEOUT/review_coverage.json"
+      ],
+      "evidence_fingerprint": "pr284-stack-closeout:0b3680a0:8bfbdaff:2fdefdb2:policy-6b19c380:16-to-18-single-use:no-publication-auth",
+      "summary": "No evidence-freshness, claim, or publication-closeout defect was found in this frozen bounded lane. The fresh integration rehearsal is content-addressed, within policy age, bound to the same seal and exact live target, and records all seven commands at zero. Production and dependency evidence keys are unchanged, so substantive science was not redundantly revalidated. Claim status remains HTT-owned C2 diagnostic-only with transfer none, observed/public false, and family identification blocked. Status mirrors agree; PR-285 remains PLANNED/INELIGIBLE with zero budget. The assurance exception is exactly two named reviewer assignments over a single-use 16-to-18 window and grants no reusable budget, push, PR mutation, approval, merge, force-push, ruleset, or publication authority. Live lookup confirms no PR-284 remote branch or PR; predecessor PR 380 remains OPEN/BLOCKED at the exact target SHA. This pass is not merge or publication authorization."
+    }
+  ],
+  "errors": []
+}

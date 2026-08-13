@@ -1,0 +1,100 @@
+{
+  "assignment_id": "A-PR284-R2-CLAIM",
+  "checks": [
+    {
+      "check_id": "registered-inputs-and-context",
+      "detail": "The R2 assignment context and all six registered input byte identities match.",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/assignments/A-PR284-R2-CLAIM.json",
+        "required_inputs[*].sha256"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "r2-candidate-and-policy-binding",
+      "detail": "The affected-cell rereview is bound to the repaired candidate and unchanged predecessor policy.",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+        "docs/research_program/post_pr275/pr284_publication_policy.json"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "htt-owner-common-contract-replay",
+      "detail": "COMMON performs fail-closed contract replay while HTT retains public premise-evaluation and calibration ownership.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:4-8,140-166",
+        "htt/src/common/depth_path_calibration.py:42-64,660-864,1087-1102",
+        "htt/htt/htt/infer/depth_path_calibration.py:1,126-380",
+        "docs/generated/pr284_depth_path_doob_receipt.json:20-29,207-230"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "c2-diagnostic-transfer-and-family-firewall",
+      "detail": "The repair preserves HTT ownership, C2 diagnostic-only scope, transfer none, non-observed/non-public status, and the blocked family gate at every artifact layer.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:16-24",
+        "docs/research_program/post_pr275/pr284_publication_policy.json:31-32",
+        "docs/generated/pr284_depth_path_doob_receipt.json:20-37,207-230,416-473,474-619",
+        "htt/src/common/depth_path_calibration.py:42-64,541-654,898-985"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "finite-path-only-no-theorem-promotion",
+      "detail": "The new replay is a finite registered contract check, not an adjudicated, convergence, optional-stopping, or general theorem promotion.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:39-52",
+        "docs/generated/pr284_depth_path_doob_receipt.json:54-74",
+        "docs/PR_DELTAS/pr-284.md:77-89,100-119"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "bounded-builder-bypass-mutation-language",
+      "detail": "The new mutation records rejection of a forged constructor path; it does not promote the repaired replay into scientific validation.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:186-242",
+        "docs/generated/pr284_depth_path_doob_receipt.json:75-201",
+        "docs/PR_DELTAS/pr-284.md:100-119"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "matched-mocks-remain-unexecuted",
+      "detail": "Neither the repair nor its mutation kill claims mock execution, an unproved bound, or observed significance.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:117-138,290-316",
+        "docs/generated/pr284_depth_path_doob_receipt.json:474-619",
+        "docs/PR_DELTAS/pr-284.md:86-89"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "repair-prose-no-forbidden-promotion",
+      "detail": "Added repair prose preserves the failed historical verdict and lifecycle limits without positive theorem, native, observed, geometry, family, or mock-execution claims.",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-284.md:100-162",
+        "git diff 029f8cedd044cc5967bc12dc695230ca69cf3308..49a8f697c8d7985ec637e70aca3b9271d6f0da7f"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "receipt-content-address-and-bindings",
+      "detail": "The repaired receipt content identity and every declared source binding recompute exactly.",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json:416-473"
+      ],
+      "status": "PASS"
+    }
+  ],
+  "completed_at": "2026-08-09T21:47:15Z",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "failures": [],
+  "oracle_id": "PR284-R2-CLAIM-REPAIR-INVARIANTS-V1",
+  "run_id": "pr284-frozen-findings-rereview-20260810",
+  "schema_version": 1,
+  "started_at": "2026-08-09T21:47:15Z",
+  "status": "PASS"
+}

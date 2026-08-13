@@ -1,0 +1,151 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-claim-reauthorization-20260813",
+  "assignment_id": "A-PR291-R5-FINAL-REAUTH-CLOSEOUT",
+  "assignment_sha256": "73c4686dd1e0c7bbd1d2bd207e8aa7888aff854804227e2d49ca920bc6b0a79a",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "adjudication",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "7d79f1858b8e3bb63d7dbcd1af51e3d480d76ab9a3c8170d702980d0cd0cb9d1",
+    "seal_sha256": "c9e2b7a8ee86f8951b5bf90175033d5a45824a5487542f1cd9ef5b7c56b8b348",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "82532a2a71abc385f1176dce4b99a4917929155d",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "68e3a83249ada011f984b67078c003086b1fc6aa",
+    "diff_sha256": "5343db9b69375145eea9e51624b3ac9246f868f6482beae316e4eb456b0f8100",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "0dd1b5b383ae2befc3f06aa7254b1926d37d3d6a8ede0a0f1052b95a5a04ce18"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-FINAL-REAUTH-CLOSEOUT.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-13T08:31:30+00:00",
+  "completed_at": "2026-08-13T08:35:02.971936+00:00",
+  "tool_versions": {
+    "git": "2.43.0",
+    "python": "3.12.3",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {
+      "id": "metadata-oracle-bootstrap-root",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-oracle.py"],
+      "returncode": 1,
+      "status": "assignment_local_bootstrap_error",
+      "summary": "Initial assignment-local oracle used one excess parent for the repository root; corrected before any closeout evidence was accepted."
+    },
+    {
+      "id": "metadata-oracle-status-root",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-oracle.py"],
+      "returncode": 1,
+      "status": "assignment_local_bootstrap_error",
+      "summary": "The first corrected oracle addressed the status document at its top level instead of stacked_pr_execution.prs; corrected before verdict."
+    },
+    {
+      "id": "metadata-oracle-byte-hash",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-oracle.py"],
+      "returncode": 1,
+      "status": "assignment_local_bootstrap_error",
+      "summary": "Text-mode git output stripped a terminal newline during old-byte hashing; replaced with raw-byte hashing before verdict."
+    },
+    {
+      "id": "metadata-failed-closeout-oracle-final",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-oracle.py"],
+      "returncode": 0,
+      "status": "completed_closeout_fail",
+      "summary": "Metadata oracle passed: final closeout disposition FAIL; ordinary assurance 16/16, first extension 2/2, reauthorization 2/2; lifecycle remains VALIDATED and PR-292 remains PLANNED/INELIGIBLE."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-oracle.py",
+      "sha256": "eccb92ee9aab2a11cce94950846823ae350989773d2397c79c36a14f34ea63de",
+      "bytes": 7947,
+      "producer": "A-PR291-R5-FINAL-REAUTH-CLOSEOUT",
+      "command_fingerprint": "93aba64b2413db3d89fbd7256761599fdfea76cab3b3291bafbf70443f1a762a"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-REVIEW_COVERAGE.json",
+      "sha256": "59d19f48e37f06be582a954b052543aab548c3b46e71f40d94a43a6311d60a13",
+      "bytes": 8634,
+      "producer": "A-PR291-R5-FINAL-REAUTH-CLOSEOUT"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "59d19f48e37f06be582a954b052543aab548c3b46e71f40d94a43a6311d60a13",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/assignments/A-PR291-R5-FINAL-REAUTH-CLOSEOUT.json",
+    ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/RUN_PLAN.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR291_R5_FINAL_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/RUN_SUMMARY.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/MERGED_RESULTS.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/RUN_SUMMARY.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/MERGED_RESULTS.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-CLAIM.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-FINAL-CLOSEOUT.json",
+    ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-CLAIM-CODE-REVIEW.json",
+    ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-CLAIM-CODE-REVIEW-REVIEW_COVERAGE.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "findings": [
+    {
+      "finding_id": "F-PR291-R5-FINAL-REAUTH-CLOSEOUT-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "sha256:7043d93966920746e493f8c341b9e67c450acbabbbcdbb01a195e5a8e51ab67e",
+      "statement": "The fresh reauthorized claim/code review is strict-valid FAIL on F-PR291-R5-CLAIM-QUANTIFIER-FN, so PR-291 cannot advance from VALIDATED to REVIEWED or SEALED despite carried code/replay and physics/statistics PASS results.",
+      "assumptions_used": [
+        "A required fresh claim/code FAIL blocks lifecycle promotion even when earlier ordinary code/replay and physics/statistics lanes passed.",
+        "The reauthorization permits exactly two reviewer assignments and does not authorize candidate mutation, substantive rerun, sealing, publication, or merge."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-CLAIM-CODE-REVIEW.json",
+        ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-oracle.py",
+        ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-REVIEW_COVERAGE.json"
+      ],
+      "counterevidence_refs": [
+        "Ordinary R5 code/replay status PASS.",
+        "Ordinary R5 physics/statistics status PASS.",
+        "Only claim guard, its contract tests, status mirrors, blocked receipt, and PR delta prose changed after the first R5 seal; numerical CF4 module, activation, runner, and integration-test hashes are unchanged."
+      ],
+      "reproduction": [
+        "Run python3 -B .agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-oracle.py.",
+        "Observe status PASS for metadata consistency, closeout_disposition FAIL, blocking_finding F-PR291-R5-CLAIM-QUANTIFIER-FN, and lifecycle_advance false."
+      ],
+      "unresolved": [
+        "The quantifier and possessive-object family-identification false negatives require a separately authorized candidate repair and fresh claim/code review; current reauthorization is consumed 2/2."
+      ],
+      "confidence": 1.0
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR291-R5-FINAL-REAUTH-CLOSEOUT-001"],
+      "summary": "Metadata-only failed closeout: ordinary assurance is 16/16, first extension 2/2, and reauthorization 2/2. Carried code/replay and physics/statistics results remain PASS, but fresh claim/code is FAIL on F-PR291-R5-CLAIM-QUANTIFIER-FN. PR-291 remains VALIDATED; PR-292 remains PLANNED/INELIGIBLE at zero budget; merge remains HUMAN_ONLY; no seal, push, PR creation, or merge occurred."
+    }
+  ],
+  "errors": []
+}

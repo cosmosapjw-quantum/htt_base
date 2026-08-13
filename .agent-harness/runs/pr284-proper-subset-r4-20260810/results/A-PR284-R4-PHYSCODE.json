@@ -1,0 +1,221 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-proper-subset-r4-20260810",
+  "assignment_id": "A-PR284-R4-PHYSCODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "assignment_sha256": "fda16cdc8a2a5375109e9fb75952b047570f100145a3388c6e01f02b9fc9435a",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "93c3dadced3fec69db081092e66f96eac5632b4713f652642d470cc2f6fdacd4",
+    "seal_sha256": "3666dd8f920c46021ebb2823680cf397f37db810e1c1ebda9f4cd70cc46deaa0",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "50fea58d2bd4d33dfac017f46bf22df5ccd289d1",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "6104ff701c82c78b113002131dec3bd493a54795",
+    "diff_sha256": "3205f94a1970082b88bec45fdfa33ec7eba829bed0710754e72d32b5bdd13386",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034"
+  },
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-PHYSCODE.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-10T02:46:00Z",
+  "completed_at": "2026-08-10T02:55:00Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "arithmetic": "fractions.Fraction exact rational"
+  },
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "validate_assignment_payload",
+        "A-PR284-R4-PHYSCODE"
+      ],
+      "returncode": 0,
+      "summary": "Canonical schema-v3 assignment validation passed with matching context version and assignment_sha256."
+    },
+    {
+      "argv": [
+        "sha256sum",
+        ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "docs/PR_DELTAS/pr-284.md",
+        "htt/src/common/depth_path.py",
+        "htt/src/common/depth_path_calibration.py",
+        "htt/htt/htt/infer/depth_path_calibration.py",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py",
+        "tests/contracts/test_depth_path_doob_calibration.py",
+        "docs/generated/pr284_depth_path_doob_receipt.json"
+      ],
+      "returncode": 0,
+      "summary": "Every registered R4 required-input hash matched; HEAD/tree/merge-base matched the frozen seal and generic DepthPath remained byte-identical."
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py",
+        "focused"
+      ],
+      "returncode": 0,
+      "summary": "23 passed in 2.06s."
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py",
+        "check"
+      ],
+      "returncode": 0,
+      "summary": "PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION."
+    },
+    {
+      "argv": [
+        "env",
+        "PYTHONPATH=htt/src:htt",
+        "python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_depth_path_doob_calibration.py",
+        "-k",
+        "proper_support or exact_finite_centered_tower or selected_atom_path or exact_squared_threshold or support_nesting_alone"
+      ],
+      "returncode": 0,
+      "summary": "5 discriminating tests passed; 18 deselected."
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-PHYSCODE/pr284_r4_physcode_oracle.py"
+      ],
+      "returncode": 0,
+      "summary": "Generic equal-support DepthPath construction, public/private proved rejection, sealed legacy report and calibration revalidation rejection, identity seam rejection, equal-support matched-mock abstention, exact tower arithmetic, inclusive threshold law, and Doob bound all passed."
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py",
+        "adjacent"
+      ],
+      "returncode": 0,
+      "summary": "41 adjacent tests passed in 3.14s."
+    },
+    {
+      "argv": [
+        "python",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "htt/src/common/depth_path.py",
+        "htt/src/common/depth_path_calibration.py",
+        "htt/htt/htt/infer/depth_path.py",
+        "htt/htt/htt/infer/depth_path_calibration.py",
+        "tests/contracts/test_depth_path_doob_calibration.py",
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "docs/PR_DELTAS/pr-284.md"
+      ],
+      "returncode": 0,
+      "summary": "No forbidden claim language detected."
+    },
+    {
+      "argv": [
+        "python",
+        ".agent-harness/scripts/review_coverage.py",
+        "--coverage",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-PHYSCODE/review_coverage.json",
+        "--seal",
+        ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+        "--run-id",
+        "pr284-proper-subset-r4-20260810",
+        "--assignment-id",
+        "A-PR284-R4-PHYSCODE",
+        "--risk-tier",
+        "R3"
+      ],
+      "returncode": 0,
+      "summary": "Assignment-local ready-mode review coverage validated with no errors."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-PHYSCODE/pr284_r4_physcode_oracle.py",
+      "sha256": "577b272a8222671a3df7972ce1cd08a76f15c3882440574f62710b578a307a41",
+      "bytes": 16721,
+      "producer": "A-PR284-R4-PHYSCODE",
+      "command_fingerprint": "e39d34f19ae5db3cbe1af9998308a13e71da13f2894e40b998a5f6a8477d91f3"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-PHYSCODE/review_coverage.json",
+      "sha256": "93ac2fd9538c12d3ac8112f621fee50e4bee39449cc526d2b2506ae1183ce02a",
+      "bytes": 9575,
+      "producer": "A-PR284-R4-PHYSCODE"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-PHYSCODE/review_coverage.json",
+  "review_coverage_sha256": "93ac2fd9538c12d3ac8112f621fee50e4bee39449cc526d2b2506ae1183ce02a",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr284-proper-subset-r4-20260810/assignments/A-PR284-R4-PHYSCODE.json",
+    ".agent-harness/runs/pr284-proper-subset-r4-20260810/RUN_PLAN.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-284.md",
+    "docs/generated/pr284_depth_path_doob_receipt.json",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/research_program/post_pr275/pr284_spec.yaml",
+    "htt/htt/htt/infer/depth_path_calibration.py",
+    "htt/src/common/depth_path.py",
+    "htt/src/common/depth_path_calibration.py",
+    "scripts/codex_harness/run_pr284_depth_path_doob.py",
+    "tests/contracts/test_depth_path_doob_calibration.py"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:694",
+        "htt/src/common/depth_path_calibration.py:710",
+        "htt/src/common/depth_path_calibration.py:716",
+        "htt/src/common/depth_path_calibration.py:721",
+        "htt/src/common/depth_path_calibration.py:951",
+        "htt/htt/htt/infer/depth_path_calibration.py:318",
+        "tests/contracts/test_depth_path_doob_calibration.py:387",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py:668",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-PHYSCODE/pr284_r4_physcode_oracle.py"
+      ],
+      "evidence_fingerprint": "pr284.r4.proper-subset.physcode.pass.v1",
+      "summary": "Fresh blind review found no residual defect in the R4 proper-subset repair. Generic DepthPath bytes and inclusive subset semantics remain unchanged, but PROVED_FINITE_REGISTERED_PATH construction, the private COMMON seam, later sealed-report revalidation, and calibration revalidation all require proper support reduction. Equal-support unproved reports remain bound to a not-executed matched-mock plan and emit no bound. Exact Fraction centering, E[X^2]=5, decreasing tower, selected path (-3,-2,0), inclusive event probability 1/2, and Doob bound 25/36 independently reproduce. No priors, likelihood/posterior semantics, Q/Pi/F/G promotion, local/global rank inference, transfer claim, or family-identification gate drift occurs."
+    }
+  ],
+  "errors": []
+}

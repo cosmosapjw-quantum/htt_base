@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-numerical-repair-rereview-20260811",
+  "assignment_id": "A-PR286-R2-CLAIM",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "candidate_seal_sha256": "0667a86aea43de3ab892489053a0f1c39697107fc3a8d25b8bc0113fca2e806f",
+  "candidate_sha": "7ad8176282554670909c28306b3e14e83662a42b",
+  "candidate_tree_sha": "d14eedaa79f902f5b47b507fa3951e5a22cbe9b7",
+  "diff_sha256": "12137112ed5ea688cd4c36ab0a4c3f301bb9a1d95629314356f113585393e06f",
+  "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+  "completed_at": "2026-08-11T01:52:55.451588+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-CLAIM-oracle-output.json#checks/candidate-head"],
+      "rationale": "Clean HEAD, tree, merge base, canonical seal hash, normalized diff digest, and assignment binding match."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/assignments/A-PR286-R2-CLAIM.json"],
+      "rationale": "The registered spec hash matches the assignment and its C2 diagnostic ceiling is unchanged."
+    },
+    {
+      "cell": "source_58_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#summary.source_rows", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-CLAIM-oracle-output.json#checks/receipt-58-plus-14"],
+      "rationale": "The oracle independently recounts 58 source rows."
+    },
+    {
+      "cell": "vt_s_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#summary.vector_tensor_rows", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-CLAIM-oracle-output.json#checks/receipt-58-plus-14"],
+      "rationale": "The oracle independently recounts all 14 VT-S rows."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr286_pillar_s_adjudication.py#_validate_core", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#statement_identity_contract"],
+      "rationale": "Exact replay validation passes and the statement-drift mutation remains killed."
+    },
+    {
+      "cell": "exact_proof_not_simulation",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml#source_disposition_policy", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py#SOURCE_PASS_ROWS"],
+      "rationale": "Only bound exact rows pass as proof; simulation and routing labels cannot promote exact propositions."
+    },
+    {
+      "cell": "estimand_and_sampling_law_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml#statistical_receipt_contract", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#rows"],
+      "rationale": "Every statistical row carries typed estimand and sampling-law replay identities."
+    },
+    {
+      "cell": "covariance_and_null_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml#statistical_receipt_contract.coverage_rule", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#negative_control_terminal_contract"],
+      "rationale": "Covariance assumptions and visible negative-control terminals remain explicit."
+    },
+    {
+      "cell": "exact_vs_asymptotic_status",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml#statistical_receipt_contract.exactness_rule", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py#_validate_core"],
+      "rationale": "Exact proof and finite synthetic validation are separately typed and enforced."
+    },
+    {
+      "cell": "preregistration_seed_and_tolerance_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml#statistical_receipt_contract.coverage_rule", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#rows"],
+      "rationale": "Registered seed, tolerance, and preregistration identities replay without claim promotion."
+    },
+    {
+      "cell": "coverage_and_failure_map_replay",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#mutation_results", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-CLAIM-oracle-output.json#checks/all-19-mutations-killed"],
+      "rationale": "All 19 ordered mutations execute and are killed, including the repaired numerical guard."
+    },
+    {
+      "cell": "negative_controls_visible",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#negative_control_terminal_contract", "docs/research_program/post_pr275/pr286_spec.yaml#negative_control_terminal_rule"],
+      "rationale": "Expected kills remain visible and unexpected survival remains terminal failure."
+    },
+    {
+      "cell": "source_status_not_authority",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml#source_disposition_policy.rule", "docs/PR_DELTAS/pr-286.md#Resolution"],
+      "rationale": "Fifty source rows remain inconclusive; routing status is not proof authority."
+    },
+    {
+      "cell": "vts14_admitted_data_gate",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#rows/VT-S14", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-CLAIM-oracle-output.json#checks/vts14-blocked"],
+      "rationale": "VT-S14 stays BLOCKED_WITH_RECEIPT before admitted data despite synthetic validation."
+    },
+    {
+      "cell": "htt_mio_obsstat_ownership",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#ownership", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-CLAIM-oracle-output.json#checks/mio-diagnostic-only-firewall"],
+      "rationale": "HTT owns model-dependent inference, OBSSTAT inputs, and MIO only residual/coherence diagnostics."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr286_pillar_s_adjudication.py#check", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-CLAIM-oracle-output.json#commands"],
+      "rationale": "Exact receipt reconstruction check exits zero and the required receipt hash matches."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json#dirty", "docs/PR_DELTAS/pr-286.md#Authorized-bounded-numerical-repair"],
+      "rationale": "Candidate is clean and the current delta records a distinct clean-archive replay without promoting that replay to scientific authority."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_publication_policy.json", ".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json#integration_policy"],
+      "rationale": "Policy identity, target ref/SHA, claim ceiling, and seal binding agree."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-CLAIM-oracle-output.json#claim_audit"],
+      "rationale": "C2 diagnostic-only, transfer none, observed/public false, and BLOCKED_PRE_NATIVE_ATLAS hold; strict claim-language check passes."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["docs/codex_handoff/pr_status.yaml#stacked_pr_execution.prs.PR-286", ".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json#base_sha"],
+      "rationale": "The candidate binds exact sealed PR-285 head 16bc6db as base, merge base, policy target, and predecessor seal; merge remains HUMAN_ONLY."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "pr286-r2-claim-invariants",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-CLAIM-oracle.py"],
+      "command_fingerprint": "952d540299dd4fc592d9c672d1afe42576c28ca1e4704184c15cea92a7817a05",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T01:52:37.514853+00:00",
+      "completed_at": "2026-08-11T01:52:55.451588+00:00",
+      "artifact_path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-CLAIM-oracle-output.json",
+      "artifact_sha256": "e70df36b21ccca7edbd03d85bb55455551c15db1041435693dfa18cc8fc27110",
+      "artifact_bytes": 4445,
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json", "docs/codex_handoff/pr_status.yaml", "docs/codex_handoff/pr_backlog.yaml"]
+    }
+  ],
+  "coverage_sha256": "db1ad91eb7b07c42ae778457e8462e90c555281e7de698b26b2901e6c5dee332"
+}

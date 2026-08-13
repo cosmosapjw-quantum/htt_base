@@ -1,0 +1,158 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-mio-nonfinite-r3-rereview-20260811",
+  "assignment_id": "A-PR286-R3-CLAIM-REPLACEMENT",
+  "assignment_sha256": "12dbb5880f34aa838c733ff0b4f6fd8e5907dd350ea9767678f25e9e11857ab9",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_gate_reviewer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "d95f5a26bab5be25afb550e64d75ce4f8419fca8b61b232682c960e9e5e1fc95",
+    "seal_sha256": "26b24258bfec78ccbd0dad9382fc6ae8e9b9ba9a417b81753f84ca68b30c6f0f",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "0b1a8ef76df47b0b42e972bb47c9bc294e80aa7c",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "c92883d3500aff9a7fa07e561ad43bf4088feb9d",
+    "diff_sha256": "a07284aa230f991286ac4b3ed11e5201f70af2a49ae8bf79cf5191d5af3cc4d1",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "99ad99e15ff863b63945663c112767d1f6dc90e8f697a407798c281cb39c2b30"
+  },
+  "result_path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-CLAIM-REPLACEMENT.json",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-11T03:10:00Z",
+  "completed_at": "2026-08-11T03:24:51Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "pyyaml": "6.0.1",
+    "pytest": "9.1.1"
+  },
+  "commands": [
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/claim_invariant_oracle.py"],
+      "returncode": 1,
+      "classification": "ORACLE_IMPLEMENTATION_DEFECT_COUNTER_OMITTED_ZERO_FAIL_KEY",
+      "candidate_effect": "none"
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/claim_invariant_oracle.py"],
+      "returncode": 0,
+      "classification": "PASS_AFTER_ORACLE_CORRECTION"
+    },
+    {
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_pillar_s_inference.py", "tests/contracts/test_pillar_s_complete_adjudication.py"],
+      "returncode": 2,
+      "classification": "COLLECTION_ENVIRONMENT_MISSING_DOCUMENTED_PYTHONPATH",
+      "tests_executed": false,
+      "candidate_effect": "none"
+    },
+    {
+      "argv": ["env", "PYTHONPATH=htt/src:htt", "python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_pillar_s_inference.py", "tests/contracts/test_pillar_s_complete_adjudication.py"],
+      "returncode": 0,
+      "classification": "PASS"
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "check"],
+      "returncode": 0,
+      "stdout_summary": "ok=true"
+    },
+    {
+      "argv": ["python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "tests/contracts/test_pillar_s_complete_adjudication.py", "docs/research_program/post_pr275/pr286_spec.yaml", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json", "docs/PR_DELTAS/pr-286.md"],
+      "returncode": 0,
+      "stdout_summary": "No forbidden claim language detected."
+    },
+    {
+      "argv": ["python3", "validate_review_coverage_payload"],
+      "returncode": 1,
+      "classification": "REVIEWER_VALIDATION_PROBE_RUN_ID_TYPO",
+      "candidate_effect": "none"
+    },
+    {
+      "argv": ["python3", "validate_review_coverage_payload"],
+      "returncode": 0,
+      "classification": "PASS_WITH_REGISTERED_RUN_ID"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/claim_invariant_oracle.py",
+      "sha256": "f55bd421fc2bf85d015db36ea7a73a1d623a415a07c8ff60bd49103dbbc94f0a",
+      "bytes": 13131,
+      "producer": "A-PR286-R3-CLAIM-REPLACEMENT",
+      "command_fingerprint": "b557568ce2ab107da89a1f0abc7cfda80ade8aca3084c2d2f87d67429369f11b"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/review_coverage.json",
+      "sha256": "9c91e412744b65b400312cdebf67b07bb88e0ea24ee169abcc5d6759c09508d4",
+      "bytes": 9867,
+      "producer": "A-PR286-R3-CLAIM-REPLACEMENT"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/review_coverage.json",
+  "review_coverage_sha256": "9c91e412744b65b400312cdebf67b07bb88e0ea24ee169abcc5d6759c09508d4",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/assignments/A-PR286-R3-CLAIM-REPLACEMENT.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-286.md",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+    "docs/research_program/post_pr275/pr286_publication_policy.json",
+    "docs/research_program/post_pr275/pr286_spec.yaml",
+    "htt/mio/formalism/vector_tensor_validation.py",
+    "htt/src/common/vector_tensor_statistical_inference.py",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+    "tests/contracts/test_pillar_s_complete_adjudication.py",
+    "tests/contracts/test_pillar_s_inference.py",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/claim_invariant_oracle.py",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/review_coverage.json"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "The PR-273 input remains a held-out synthetic integration diagnostic. It is not observed evidence, does not promote source proof, and cannot seed PR-287 observed inference.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr286_spec.yaml#assumptions",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#future_consumer_contract",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/claim_invariant_oracle.py"
+      ],
+      "evidence_fingerprint": "C-PR273-BLIND-INTEGRATION|candidate=0b1a8ef7|receipt=b5ea1264|synthetic-only-no-promotion"
+    },
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "No admitted or observed data are claimed. VT-S14 remains BLOCKED_WITH_RECEIPT before admitted data; the 21/0/50/1 row disposition and C2 diagnostic-only ceiling are preserved.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr286_spec.yaml#vector_tensor_evidence.admitted_data_gate",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/claim_invariant_oracle.py"
+      ],
+      "evidence_fingerprint": "C-PR274-DATA-ADMISSION|candidate=0b1a8ef7|VT-S14=BLOCKED|observed=false"
+    }
+  ],
+  "errors": [],
+  "summary": "PASS: exact frozen PR-286 candidate preserves HTT model-dependent inference ownership, COMMON contract ownership, OBSSTAT input ownership, MIO diagnostic-only ownership, C2 diagnostic-only/no-transfer/no-observed/no-public/family-blocked claim boundaries, exact 21 PASS/0 FAIL/50 INCONCLUSIVE/1 BLOCKED row ceiling, VT-S14 admitted-data block, bounded repair authority, VALIDATED 7/16 lifecycle state, PR-287 INELIGIBLE zero-budget routing, exact PR-285 predecessor, and HUMAN_ONLY merge authority. No production or shared tracked files were changed."
+}

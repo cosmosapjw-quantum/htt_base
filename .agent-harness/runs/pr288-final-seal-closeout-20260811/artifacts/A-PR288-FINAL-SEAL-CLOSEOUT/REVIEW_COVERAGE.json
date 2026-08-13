@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "run_id": "pr288-final-seal-closeout-20260811",
+  "assignment_id": "A-PR288-FINAL-SEAL-CLOSEOUT",
+  "change_set_id": "CS-PR288-BAYES-SEMANTICS",
+  "publication_group_id": "PG-PR288-BAYES-SEMANTICS",
+  "candidate_seal_sha256": "3650528494b927678836a8a14abeab6840d88e4a0a24f0ae311aa79fe143c330",
+  "candidate_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+  "candidate_tree_sha": "93ead987a1a750a5dd34cbe9e98baf8fc7b48746",
+  "diff_sha256": "846174d4a8996732dbfb38e477b5dfd39f8dccf45d150f2f25ef998bd2bf8c6f",
+  "changed_files_sha256": "0daebf3fcd581e6308cf2772ba9fd8762d4d47115e79bff10b730c852f4f1fa9",
+  "completed_at": "2026-08-11T08:30:52Z",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR288_FINAL_CANDIDATE_SEAL.json", ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle_evidence.json"],
+      "rationale": "Exact HEAD, tree, PR-287 base, clean worktree, nine commits, unique stable patch IDs, and sealed digests were independently recomputed."
+    },
+    {
+      "cell": "pr280_terminal_receipt_without_success_promotion",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-PHYSCODE.json", ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-CLAIM-R2.json"],
+      "rationale": "The immutable prior reviews preserve the failed-terminal dependency without promotion, and the metadata-only range cannot alter that evidence key."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This bounded closeout did not execute scientific work; it verified only immutable prior evidence and final metadata freshness."
+    },
+    {
+      "cell": "analytic_fixture_accuracy",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Substantive analytic fixtures were intentionally not rerun or re-adjudicated in this metadata closeout."
+    },
+    {
+      "cell": "dynesty_sobol_independence",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Engine independence was outside this bounded closeout and remains covered by the immutable physics/code review."
+    },
+    {
+      "cell": "combined_uncertainty_preregistration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Uncertainty semantics were not changed by the two metadata-only commits and were not substantively rerun."
+    },
+    {
+      "cell": "degenerate_null_control",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Null-control execution was intentionally excluded from this bounded closeout."
+    },
+    {
+      "cell": "sobol_scramble_uncertainty",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Sobol uncertainty execution was intentionally excluded from this bounded closeout."
+    },
+    {
+      "cell": "posterior_draw_ppc",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "PPC execution was intentionally excluded from this bounded closeout."
+    },
+    {
+      "cell": "ppc_tail_and_equality_semantics",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "PPC semantic re-adjudication was intentionally excluded from this bounded closeout."
+    },
+    {
+      "cell": "foldwise_nuisance_refit",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "LOOCV refit execution was intentionally excluded from this bounded closeout."
+    },
+    {
+      "cell": "integrated_heldout_predictive_density",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Held-out predictive-density execution was intentionally excluded from this bounded closeout."
+    },
+    {
+      "cell": "complete_fold_inventory",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Fold inventory execution was intentionally excluded from this bounded closeout."
+    },
+    {
+      "cell": "covariance_misspecification_visibility",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "The covariance negative control was intentionally not rerun in this metadata closeout."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Scientific mutation execution was intentionally not rerun in this metadata closeout."
+    },
+    {
+      "cell": "legacy_value_quarantine",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-CLAIM-R2.json", "docs/research_program/post_pr275/pr288_spec.yaml"],
+      "rationale": "The replacement claim review passed the legacy quarantine, and the final metadata-only range leaves the governing spec unchanged."
+    },
+    {
+      "cell": "htt_mio_ownership_boundary",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-PHYSCODE.json", "docs/research_program/post_pr275/pr288_spec.yaml"],
+      "rationale": "HTT ownership and no MIO posterior are preserved by the unchanged production/dependency evidence key."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR288_FINAL_INTEGRATION_REHEARSAL.json", ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle_evidence.json"],
+      "rationale": "The final receipt canonical checksum, seal binding, prior-receipt hash, five exact carried rows, and three fresh rows were independently recomputed."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr288_publication_policy.json", ".prguard/runtime/PR288_FINAL_CANDIDATE_SEAL.json"],
+      "rationale": "The final seal binds the exact registered publication policy and retains external-publisher and human-only authority."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-CLAIM.json", ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-CLAIM-R2.json", "docs/research_program/post_pr275/pr288_spec.yaml"],
+      "rationale": "The first contaminated review remains not examined, the replacement passed, and the C2 diagnostic-only non-public family-blocked ceiling is unchanged."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR288_FINAL_INTEGRATION_REHEARSAL.json", ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle_evidence.json"],
+      "rationale": "The final receipt identifies portable clean replay as one of exactly three fresh metadata-sensitive cells with return code zero."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR288_FINAL_CANDIDATE_SEAL.json", ".prguard/runtime/PR288_FINAL_INTEGRATION_REHEARSAL.json", "docs/codex_handoff/pr_status.yaml"],
+      "rationale": "Seal, receipt, target ref, and status agree on PR-287 sealed head 319835cc as the exact base; no candidate publication or merge is recorded."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR288-FINAL-SEAL-CLOSEOUT-INVARIANTS",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle.py", "--output", ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle_evidence.json"],
+      "command_fingerprint": "e1b4d83087080d8f8e6276df12dcd115ecd9baf52b1ebee7de092d3bd5f0577d",
+      "started_at": "2026-08-11T08:30:51Z",
+      "completed_at": "2026-08-11T08:30:52Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle_evidence.json",
+      "artifact_sha256": "4ff3b11efe7425a5f9ba40e67e33863266c207e6d281169cc21688ba943db20b",
+      "artifact_bytes": 20435,
+      "evidence_refs": [".prguard/runtime/PR288_FINAL_CANDIDATE_SEAL.json", ".prguard/runtime/PR288_FINAL_INTEGRATION_REHEARSAL.json", "docs/codex_handoff/pr_status.yaml"]
+    }
+  ],
+  "coverage_sha256": "654c8780bec1eb492d44ea344a1453116e971014d733385f5827adac607097a2"
+}

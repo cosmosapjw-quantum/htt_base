@@ -1,0 +1,100 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-quantifier-continuation-20260813",
+  "assignment_id": "A-PR291-R5-QUANTIFIER-CLOSEOUT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "4f9119ff3e38f2faea43086bb4276aa116cb2d47f830d13dfa8e7886d2df4071",
+    "seal_sha256": "5e4dbf2852e7c4418bb86755aeaf4889cc28e65642f46b3f0c0bbafcb06fdbb5",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "38802323415fe7dc88f63e58d53b316ec9b52c04",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "602a35f0e6e5063ff6677cf2913521975126f588",
+    "diff_sha256": "d4a4154b5fe1b65476942e2d41204332a75bcee7605fe139f6ee1176384cf2c3",
+    "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+    "production_hash": "01a620679c8ae134752cd92f0a8863254b1ac3d8abb16888c3860bdfa47fa9e7"
+  },
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Final metadata-only adjudication after A-PR291-R5-QUANTIFIER-CLAIM. Start only after coordinator confirms that assignment is strict-valid PASS. Read assignment first. Inspect only explicitly allowed results. Verify exact final seal, predecessor/base, clean tree, unique stable patch IDs, blocked nonexecution receipt, all prior FAIL/INCONCLUSIVE chronology, carried code/replay and physics/statistics PASS under unchanged numerical hashes, fresh claim PASS, ordinary 16/16 plus earlier extensions 2/2 and 2/2 plus current continuation 2/2, eligibility for REVIEWED then SEALED, PR-292 remains INELIGIBLE until PR-291 PR_OPEN, HUMAN_ONLY, and no push/PR/merge yet. Rerun no substantive evidence and edit no shared files; produce only metadata oracle, exact 16-cell coverage, and strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json",
+      "sha256": "4f9119ff3e38f2faea43086bb4276aa116cb2d47f830d13dfa8e7886d2df4071"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_spec.yaml",
+      "sha256": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_publication_policy.json",
+      "sha256": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-291.md",
+      "sha256": "2255e7764f6a14cc67da29f6b2e706dc104b7bf662172fc4d787520b65cbd271"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "01bad28ab094812487a2f385b8aba4e03ff38b5efe78d284ea1582c36542cc05"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "01bad28ab094812487a2f385b8aba4e03ff38b5efe78d284ea1582c36542cc05"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+      "sha256": "e8dd1f72a87ed7937836784e3495db8a6f3aeb2b983a532d8bd0e119311150d6"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/RUN_SUMMARY.json",
+      "sha256": "c7d6e35b85d8cb89ee4e7fa75b48c920a264655edac63c85f852d7457237f96a"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/RUN_SUMMARY.json",
+      "sha256": "2dbc371052f7e95b7fef911a69cdacd20baf4833073c0984e4f7056d771c3805"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/RUN_SUMMARY.json",
+      "sha256": "39c378ed9029d338ec929cb6f690d7f4c6f6ddd2945856b5c2b21f607279ff6b"
+    }
+  ],
+  "allowed_sibling_results": [
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-CLAIM.json",
+    ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-CLAIM-CODE-REVIEW.json",
+    ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/results/A-PR291-R5-QUANTIFIER-CLAIM.json"
+  ],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact 16-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable metadata oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/results/A-PR291-R5-QUANTIFIER-CLOSEOUT.json",
+  "status": "registered",
+  "assignment_sha256": "b9fbc3332ea81b34fc53a17b0ab3fb3b8ad1e00f8683959b2113167c40904a42"
+}

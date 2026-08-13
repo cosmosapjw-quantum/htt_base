@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-proper-subset-r4-20260810",
+  "assignment_id": "A-PR284-R4-PHYSCODE",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "3666dd8f920c46021ebb2823680cf397f37db810e1c1ebda9f4cd70cc46deaa0",
+  "candidate_sha": "50fea58d2bd4d33dfac017f46bf22df5ccd289d1",
+  "candidate_tree_sha": "6104ff701c82c78b113002131dec3bd493a54795",
+  "diff_sha256": "3205f94a1970082b88bec45fdfa33ec7eba829bed0710754e72d32b5bdd13386",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-10T02:53:00Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+        "git rev-parse HEAD^{commit} HEAD^{tree}: 50fea58d / 6104ff70"
+      ],
+      "rationale": "Canonical assignment validation, HEAD/tree/merge-base, candidate seal, and all registered required-input hashes matched."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:26",
+        "docs/research_program/post_pr275/pr284_spec.yaml:54"
+      ],
+      "rationale": "The registered assignment and controlling G6 premise were read before repair execution."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:156",
+        "htt/src/common/depth_path_calibration.py:172",
+        "pr284_r4_physcode_oracle.py: exact finite law replay"
+      ],
+      "rationale": "The law seals aligned positive Fraction weights summing to one and one common target."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:737",
+        "htt/src/common/depth_path_calibration.py:745",
+        "pr284_r4_physcode_oracle.py: mean 0/1 and E[X^2] 5/1"
+      ],
+      "rationale": "Exact independent arithmetic reproduces centering and positive finite second moment."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:716",
+        "htt/src/common/depth_path_calibration.py:757",
+        "htt/htt/htt/infer/depth_path_calibration.py:191",
+        "pr284_r4_physcode_oracle.py: independent partition coarsening replay"
+      ],
+      "rationale": "Proper support reduction and decreasing atomic partitions are enforced as distinct premises."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:757",
+        "htt/src/common/depth_path_calibration.py:788",
+        "pr284_r4_physcode_oracle.py: exact iterated conditional expectations"
+      ],
+      "rationale": "The production replay and an independent Fraction implementation reproduce every tower equality."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:56",
+        "htt/src/common/depth_path_calibration.py:694",
+        "htt/src/common/depth_path_calibration.py:716",
+        "htt/src/common/depth_path_calibration.py:721",
+        "pr284_r4_physcode_oracle.py: construction and later-revalidation proper-subset kills"
+      ],
+      "rationale": "The exact path and ordered strata replay, every proved edge requires a proper support subset, public/private construction reject equality, and a sealed legacy equal-support report is rejected on later report and calibration revalidation. Generic DepthPath remains byte-identical and equal-support unproved routing remains available."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:955",
+        "htt/src/common/depth_path_calibration.py:957",
+        "tests/contracts/test_depth_path_doob_calibration.py:581"
+      ],
+      "rationale": "Calibration replays the report and rejects preprocessing or estimator identity drift."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:768",
+        "htt/src/common/depth_path_calibration.py:783",
+        "pr284_r4_physcode_oracle.py: selected path -3,-2,0 and maximum 3"
+      ],
+      "rationale": "The preregistered selected atom's path and maximum are recomputed from exact conditionals at construction and revalidation."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:979",
+        "htt/htt/htt/infer/depth_path_calibration.py:351",
+        "pr284_r4_physcode_oracle.py: threshold^2 36/5, event probability 1/2, bound 25/36"
+      ],
+      "rationale": "All threshold and process quantities have consistent target-squared units, the absolute-square event removes sign convention dependence, equality is included, and the exact event probability is below the conservative Doob bound."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:619",
+        "htt/src/common/depth_path_calibration.py:995",
+        "tests/contracts/test_depth_path_doob_calibration.py:387",
+        "pr284_r4_physcode_oracle.py: equal-support matched-mock abstention"
+      ],
+      "rationale": "Equal-support paths remain admissible only in the unproved lane, which requires a content-addressed not-executed mock plan and emits no probability bound, moments, threshold, maximum, or event decision."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:195",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py:668",
+        "docs/generated/pr284_depth_path_doob_receipt.json: registered MU284-NONSTRICT-SUPPORT killed",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 23 passed"
+      ],
+      "rationale": "The new nonstrict-support mutation is registered, executed, activated, killed, and covered by the complete mutation-order checks."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+      ],
+      "rationale": "The regenerated receipt binds the repair sources and replays with all fifteen registered mutations killed."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This bounded combined physics/code reviewer did not own the portable integration cell; no portability verdict is inferred."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This assignment did not own publication-harness cross-binding."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:42",
+        "htt/src/common/depth_path_calibration.py:45",
+        "docs/research_program/post_pr275/pr284_spec.yaml:16",
+        "python -B scripts/check_claim_language.py: No forbidden claim language detected"
+      ],
+      "rationale": "Outputs remain HTT-owned C2 diagnostic-only, transfer none, nonobserved, public_use false, and family identification blocked. No priors, likelihood, Q/Pi/F/G, local/global rank inference, native transfer, or family claim is introduced."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This frozen-candidate reviewer did not perform target integration or publication actions."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR284-R4-PROPER-SUBSET-PHYSCODE-V1",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": [
+        "python",
+        "-B",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-PHYSCODE/pr284_r4_physcode_oracle.py"
+      ],
+      "command_fingerprint": "e39d34f19ae5db3cbe1af9998308a13e71da13f2894e40b998a5f6a8477d91f3",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-10T02:51:41Z",
+      "completed_at": "2026-08-10T02:51:42Z",
+      "artifact_path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-PHYSCODE/pr284_r4_physcode_oracle.py",
+      "artifact_sha256": "577b272a8222671a3df7972ce1cd08a76f15c3882440574f62710b578a307a41",
+      "artifact_bytes": 16721,
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:54",
+        "htt/src/common/depth_path.py:612",
+        "htt/src/common/depth_path_calibration.py:710",
+        "htt/htt/htt/infer/depth_path_calibration.py:318"
+      ]
+    }
+  ],
+  "coverage_sha256": "3920ffa80e9d54e490b388e43b5a52a7781941b7c606bd7ca9a65d0cc6443dec"
+}

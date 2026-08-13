@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-candidate-review-20260810",
+  "assignment_id": "A-PR284-CLAIM",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "ba5335bffb3c75d866027339d37660f068140ff2926967abed09550344a4205e",
+  "candidate_sha": "029f8cedd044cc5967bc12dc695230ca69cf3308",
+  "candidate_tree_sha": "e09d127212ba3173377ea2442be1661107f2963a",
+  "diff_sha256": "24dc3ec9ef99a6f914e3466883dd722af520d053fc2bf0e46be2f8c99ec4aeba",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-09T21:12:22Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json:checks.candidate-identity"
+      ],
+      "rationale": "Candidate commit, tree, merge base, seal checksum, and assignment binding recompute exactly."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr284_depth_path_doob.py:256-330,873-874",
+        "docs/generated/pr284_depth_path_doob_receipt.json:413-417"
+      ],
+      "rationale": "The runner loads and validates the content-bound specification before building or checking the receipt."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Independent finite-law mathematics is assigned to the physics/statistics review lane; this review checks only its claim ceiling and provenance."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Independent centering and square-integrability verification is outside the claim/provenance assignment."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "The filtration derivation is outside this lane; only the explicit support-nesting-is-insufficient language was audited here."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Independent tower replay is assigned to the replay and physics/statistics lanes."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Path and sky-support mechanics are outside the claim/provenance lane."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Runtime identity mutation testing is outside this claim/provenance lane."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Independent numerical recomputation is outside this assignment."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Independent threshold and bound arithmetic is outside this assignment."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:117-138,286-298",
+        "docs/generated/pr284_depth_path_doob_receipt.json:465-609",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json:checks.matched-mocks-required-not-executed"
+      ],
+      "rationale": "The unproved branch carries a bound-null MATCHED_MOCKS_REQUIRED status and a preregistered plan explicitly marked required_not_executed."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Mutation execution completeness is assigned to code and replay reviewers, not this claim/provenance lane."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json:408-464",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json:checks.receipt-content-address-and-source-bindings",
+        "python3 -B scripts/codex_harness/run_pr284_depth_path_doob.py check => PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+      ],
+      "rationale": "The receipt content address and source hashes recompute, and the repository replay command exits zero with the exact pass token."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Portable clean execution is assigned to the replay/integration lane and is not claimed by this review."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_publication_policy.json:1-32",
+        ".prguard/runtime/PR284_CANDIDATE_SEAL.json:integration_policy",
+        "pytest policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity => 9 passed"
+      ],
+      "rationale": "Policy identity, bytes, target SHA, and candidate seal are cross-bound; all selected publication-integrity tests pass."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:4-24,39-52,162-166,294-314",
+        "docs/generated/pr284_depth_path_doob_receipt.json:20-36,54-74,194-235,407-464,465-609",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json",
+        "scripts/check_claim_language.py => No forbidden claim language detected"
+      ],
+      "rationale": "HTT ownership, contributor roles, C2 diagnostic-only ceiling, transfer none, non-observed/non-public status, finite-only theorem boundary, mock non-execution, and blocked family gate are consistent across code, spec, policy, receipt, and delta."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "The exact current local target ref and PR-283 predecessor SHA were verified, but an integration rehearsal is a separate lane and is not claimed here."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR284-CLAIM-PROVENANCE-INVARIANTS-V1",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.py",
+        "--repo",
+        ".",
+        "--output",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json"
+      ],
+      "command_fingerprint": "11f3ee419f9470cd00ce0469a58b110eb05bda4cfd925f06883735e43e0abdd1",
+      "started_at": "2026-08-09T21:11:14Z",
+      "completed_at": "2026-08-09T21:11:14Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json",
+      "artifact_sha256": "afcb8548f9d3ec27e27d43e7a376b19f35983135e937215e758a8639a477780d",
+      "artifact_bytes": 4397,
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-candidate-review-20260810/assignments/A-PR284-CLAIM.json",
+        ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "docs/research_program/post_pr275/pr284_publication_policy.json",
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "docs/PR_DELTAS/pr-284.md",
+        "htt/src/common/depth_path_calibration.py",
+        "htt/htt/htt/infer/depth_path_calibration.py"
+      ]
+    }
+  ],
+  "coverage_sha256": "cc2a4b0355a00b557bfe6f644f9d1960bf299e2718387382253f6c581202fdf6"
+}

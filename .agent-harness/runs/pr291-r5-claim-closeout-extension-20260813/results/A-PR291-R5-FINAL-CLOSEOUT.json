@@ -1,0 +1,86 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-claim-closeout-extension-20260813",
+  "assignment_id": "A-PR291-R5-FINAL-CLOSEOUT",
+  "assignment_sha256": "e0263c6de534d2a12a063b7de143eef8ad207b10d7f937c2f220ffb84ff73874",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "adjudication",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f5f10b379bc83f5baba8cf1f36765720a788477f37900f914dc4a545cdeb0121",
+    "seal_sha256": "8345974c09e968095cce4a8cac5014e3d08f42ed68e56004a2e3cd56ce3edf5a",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "5395853386b08b1fbf0b56a9e6c7a2a6e104ae5a",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "4a1bdbecae5767768b4e8d5beb3a00b41b437c1f",
+    "diff_sha256": "d4e14e08a51067fdffa696ea694b4d1a61bafb7db740da3fd0246bcda5951862",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "964135d7398a1c699a16885eb5050a8ec3cf9bcdddd6ff1640d299ab6757d298"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-FINAL-CLOSEOUT.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-13T08:02:38Z",
+  "completed_at": "2026-08-13T08:04:38Z",
+  "tool_versions": {"python":"3.12.3","git":"2.43.0","PyYAML":"6.0.1"},
+  "commands": [
+    {"id":"metadata-closeout-oracle","argv":["python3","-B",".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-FINAL-CLOSEOUT-oracle.py"],"returncode":0,"summary":"Metadata oracle passed: closeout disposition FAIL; ordinary assurance 16/16 and extension 2/2; no lifecycle advance; PR-292 remains PLANNED/INELIGIBLE."}
+  ],
+  "artifacts": [
+    {"path":".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-FINAL-CLOSEOUT-oracle.py","sha256":"d6bb6b1f84a977a55a5296e683d593fb1ed6b4641b5169dceeb57d77e3874361","bytes":4830,"producer":"A-PR291-R5-FINAL-CLOSEOUT","command_fingerprint":"6e52a6f25be0a8966a9fda3fcf71b97024e3e26045e9d28d0dc8c125bafe49de"},
+    {"path":".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-FINAL-CLOSEOUT-REVIEW_COVERAGE.json","sha256":"48ce4176b9f8390808430fb94f0068c50751c21a783dad7aff31ef365ae74def","bytes":6320,"producer":"A-PR291-R5-FINAL-CLOSEOUT"}
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-FINAL-CLOSEOUT-REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "48ce4176b9f8390808430fb94f0068c50751c21a783dad7aff31ef365ae74def",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/assignments/A-PR291-R5-FINAL-CLOSEOUT.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/RUN_PLAN.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/RUN_SUMMARY.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/MERGED_RESULTS.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-CLAIM.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py"
+  ],
+  "findings": [
+    {
+      "finding_id":"F-PR291-R5-FINAL-CLOSEOUT-001",
+      "claim_id":"C-PR274-DATA-ADMISSION",
+      "verdict":"fail",
+      "severity":"high",
+      "evidence_fingerprint":"sha256:a49cd02ba0953fda19795c5e493b29eaeb62b8c0632124e92384528f1d694aef#eight-family-promotion-false-negatives",
+      "statement":"The registered R5 claim-lane FAIL blocks final closeout despite PASS results from code/replay and physics/statistics; PR-291 cannot advance to REVIEWED or SEALED.",
+      "assumptions_used":["Any substantive FAIL in a required R5 lane blocks lifecycle advancement.","A passing mutation reproducer confirms the claim defect rather than candidate acceptance."],
+      "evidence_refs":[".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-CLAIM.json",".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-FINAL-CLOSEOUT-oracle.py"],
+      "counterevidence_refs":["R5 code/replay status PASS.","R5 physics/statistics status PASS."],
+      "reproduction":["Run the assignment-local metadata oracle and observe closeout_disposition FAIL with claim FAIL and lifecycle_advance false."],
+      "unresolved":["Repair the eight family-promotion scanner false-negative classes under a separately authorized candidate mutation and review path."],
+      "confidence":1.0
+    }
+  ],
+  "claim_results": [
+    {"claim_id":"C-PR274-DATA-ADMISSION","outcome":"findings_present","finding_ids":["F-PR291-R5-FINAL-CLOSEOUT-001"],"summary":"R5 code/replay and physstat pass, but claim FAIL blocks closeout. Ordinary assurance is 16/16 and the single-use extension is 2/2. PR-291 remains VALIDATED, PR-292 remains PLANNED/INELIGIBLE at zero budget, merge is HUMAN_ONLY, and no push, PR creation, or merge occurred."}
+  ],
+  "errors": [],
+  "summary": "FAIL. Strict bounded closeout only: no REVIEWED or SEALED transition, no publication, and no downstream activation. R4 FAIL chronology remains preserved."
+}

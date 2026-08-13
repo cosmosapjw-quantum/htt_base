@@ -1,0 +1,188 @@
+{
+  "schema_version": 3,
+  "run_id": "pr288-selective-salvage-implementation-20260811",
+  "assignment_id": "A-PR288-PREFLIGHT-PHYSCODE",
+  "assignment_sha256": "f5ea4ebbc90b88f2b4a1c7cdc7c107d8d4d9be4b3dbe36cce4a12c9292c0136b",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "shared-core",
+  "work_unit_id": "PR-288",
+  "change_set_id": "CS-PR288-BAYES-SEMANTICS",
+  "publication_group_id": "PG-PR288-BAYES-SEMANTICS",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "result_path": ".agent-harness/runs/pr288-selective-salvage-implementation-20260811/results/A-PR288-PREFLIGHT-PHYSCODE.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "started_at": "2026-08-11T06:56:00Z",
+  "completed_at": "2026-08-11T07:03:06Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "PyYAML": "6.0.1",
+    "pytest": "9.1.1",
+    "dynesty": "UNAVAILABLE"
+  },
+  "commands": [
+    "sha256sum <seven registered required inputs> => all matched assignment hashes",
+    "python -B scripts/codex_harness/run_pr288_bayesian_semantics.py focused => exit 0; 19 passed in 10.81s",
+    "python -B scripts/codex_harness/run_pr288_bayesian_semantics.py adjacent => exit 0; 54 passed in 1.09s",
+    "python -B scripts/codex_harness/run_pr288_bayesian_semantics.py engines => exit 2; typed BLOCKED_DEPENDENCY_OR_ENGINE because Dynesty is unavailable",
+    "python -B scripts/check_claim_language.py --strict-missing --include-archives <implementation tests spec receipt delta> => exit 2; frozen receipt missing",
+    "python -B scripts/codex_harness/run_pr288_bayesian_semantics.py check => exit 1; frozen receipt missing",
+    "in-memory independent scipy multivariate-normal and exact conjugate LOOCV probe => five logZ residuals <= 8.9e-16; four fold MC-minus-exact residuals max abs 0.00883",
+    "in-memory structured-policy mutation probe => build and validation accepted promoted allowed_uses/reduced forbidden_uses; terminal blocked only by absent Dynesty",
+    "in-memory version-floor probe => 3.0.0rc1 and 3.0.0.dev1 both compared >= 3.0.0"
+  ],
+  "artifacts": [],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr288-selective-salvage-implementation-20260811/RUN_PLAN.json",
+    ".agent-harness/runs/pr288-selective-salvage-implementation-20260811/assignments/A-PR288-PREFLIGHT-PHYSCODE.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+    "docs/PR_DELTAS/pr-288.md",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/research_program/post_pr275/pr280_spec.yaml",
+    "docs/research_program/post_pr275/pr288_publication_policy.json",
+    "docs/research_program/post_pr275/pr288_spec.yaml",
+    "htt/htt/htt/infer/bayesian_semantics.py",
+    "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+    "tests/htt/test_bayesian_semantics_repair.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR288-G44-STRUCTURED-PROMOTION-BYPASS",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr288:g44:structured-policy-fields-not-frozen:v1",
+      "statement": "G44 freezes top-level tier, ownership, public-use, and family-gate fields but does not freeze allowed_uses, forbidden_uses, or process-success semantics; a structured promotion survives both receipt construction and validation.",
+      "assumptions_used": [
+        "The registered specification is policy-bearing input, so semantic promotion must fail closed rather than merely become content-addressed.",
+        "A blocked engine terminal does not cure metadata that would be promoted when the engine later becomes available."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr288_spec.yaml:288",
+        "docs/research_program/post_pr275/pr288_spec.yaml:311",
+        "docs/research_program/post_pr275/pr288_spec.yaml:315",
+        "htt/htt/htt/infer/bayesian_semantics.py:46",
+        "htt/htt/htt/infer/bayesian_semantics.py:1946",
+        "htt/htt/htt/infer/bayesian_semantics.py:2326",
+        "tests/htt/test_bayesian_semantics_repair.py:88"
+      ],
+      "counterevidence_refs": [
+        "htt/htt/htt/infer/bayesian_semantics.py:243",
+        "htt/htt/htt/infer/bayesian_semantics.py:2005"
+      ],
+      "reproduction": [
+        "Load the registered YAML in memory; append 'observed-data evidence and Bianchi family ranking' to allowed_uses; remove the observed-data/family prohibition entries; change receipt_contract.process_success_semantics to an identifying claim; leave all _FROZEN_CLAIM_BOUNDARY fields unchanged.",
+        "Monkeypatch only bayesian_semantics.yaml.safe_load to return that in-memory mapping, then call load_registered_fixtures, build_bayesian_semantics_receipt, and validate_bayesian_semantics_receipt.",
+        "Observed: MUTATED_SPEC_ACCEPTED 5 BLOCKED_DEPENDENCY_OR_ENGINE; accepted metadata retained the promoted allowed use and reduced forbidden inventory."
+      ],
+      "unresolved": [
+        "Freeze the exact allowed/forbidden/legacy/process-success policy or bind a canonical semantic-policy content identity independent of mutable spec wording.",
+        "Add hostile mutations for allowed-use addition, forbidden-use deletion, and process-success promotion."
+      ],
+      "confidence": 0.99
+    },
+    {
+      "finding_id": "F-PR288-PR280-DEPENDENCY-NOT-ADMITTED",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr288:pr280-terminal-receipt-not-runtime-bound:v1",
+      "statement": "The code validates only the text of the PR-280 dependency declaration; it never reads or content-binds the required terminal receipt, so a future two-engine PASS does not prove that the requires_terminal_receipt precondition was admitted.",
+      "assumptions_used": [
+        "dependency_contract.mode=requires_terminal_receipt requires operational evidence admission, not only a YAML literal.",
+        "The preserved failed scientific status must remain distinguishable from a successful dependency."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr288_spec.yaml:10",
+        "docs/research_program/post_pr275/pr288_publication_policy.json:77",
+        "docs/codex_handoff/pr_status.yaml:828",
+        "htt/htt/htt/infer/bayesian_semantics.py:248",
+        "htt/htt/htt/infer/bayesian_semantics.py:1647",
+        "htt/htt/htt/infer/bayesian_semantics.py:2403"
+      ],
+      "counterevidence_refs": [
+        "docs/codex_handoff/pr_status.yaml:829",
+        "docs/codex_handoff/pr_status.yaml:830"
+      ],
+      "reproduction": [
+        "Search the implementation, runner, and focused tests for PR-280/COMPLETED_FAILED_WITH_RECEIPT.",
+        "Observed executable references are confined to _load_spec literal checks; the source-binding tuple contains only the PR-288 spec, implementation, runner, and test.",
+        "Inspect build_bayesian_semantics_receipt from line 2403: it executes fixtures and engines without loading the registered PR-280 receipt or status record."
+      ],
+      "unresolved": [
+        "Add a typed immutable PR-280 receipt/status identity and verify exact terminal plus success_dependency_satisfied=false before engine execution.",
+        "Add missing, wrong-terminal, wrong-candidate, and false-success mutation tests that derive BLOCKED_DEPENDENCY_OR_ENGINE."
+      ],
+      "confidence": 0.98
+    },
+    {
+      "finding_id": "F-PR288-DYNESTY-PRERELEASE-FLOOR",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "medium",
+      "evidence_fingerprint": "pr288:dynesty-version-floor-prerelease-accepted:v1",
+      "statement": "The Dynesty version-floor parser ignores prerelease and development suffixes, accepting 3.0.0rc1 and 3.0.0.dev1 as satisfying the frozen >=3.0.0 requirement.",
+      "assumptions_used": [
+        "A version floor of 3.0.0 excludes prereleases below the final 3.0.0 release under standard Python version semantics."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr288_spec.yaml:31",
+        "htt/htt/htt/infer/bayesian_semantics.py:530",
+        "htt/htt/htt/infer/bayesian_semantics.py:627",
+        "tests/htt/test_bayesian_semantics_repair.py:150"
+      ],
+      "counterevidence_refs": [
+        "htt/htt/htt/infer/bayesian_semantics.py:632"
+      ],
+      "reproduction": [
+        "Evaluate _release_tuple('3.0.0rc1') >= _release_tuple('3.0.0') and the corresponding 3.0.0.dev1 expression.",
+        "Observed: both expressions return True."
+      ],
+      "unresolved": [
+        "Use a PEP 440-aware comparison or explicitly reject any suffix for this final-release floor.",
+        "Add rc, dev, post, malformed, missing, below-floor, and exact-floor tests."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR288-G44-STRUCTURED-PROMOTION-BYPASS",
+        "F-PR288-PR280-DEPENDENCY-NOT-ADMITTED",
+        "F-PR288-DYNESTY-PRERELEASE-FLOOR"
+      ],
+      "summary": "The Gaussian evidence, replicated PPC, conditional foldwise LOOCV, covariance negative control, HTT ownership, Q/F/G quarantine, full local synthetic rank, and pre-native family-ID ceiling are internally coherent on the registered bytes, but G44 has a reproduced structured-policy promotion bypass, the PR-280 terminal dependency is not operationally admitted, and the mandatory Dynesty version floor accepts prereleases. Current execution is additionally and correctly blocked because Dynesty and the frozen receipt are absent."
+    }
+  ],
+  "errors": []
+}

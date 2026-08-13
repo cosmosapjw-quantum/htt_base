@@ -1,0 +1,71 @@
+{
+  "schema_version": 2,
+  "run_id": "pr289-native-identity-mapping-20260811",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "created_at": "2026-08-11T08:48:02+00:00",
+  "spec_ref": "docs/research_program/post_pr275/pr289_spec.yaml",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr288-bayesian-evidence-recovery-20260811",
+  "target_ref": "refs/remotes/origin/changeset/pr288-bayesian-evidence-recovery-20260811",
+  "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+  "candidate_ref": "HEAD",
+  "integration_policy": {
+    "path": "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "sha256": "7e63bfcdfca1fce4e1affc16f82817a67db21cf5c0b7ade0bcb0007d8229b50f",
+    "policy_id": "PR289-PUBLICATION-POLICY"
+  },
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "budget": {
+    "max_concurrent": 4,
+    "max_total": 8,
+    "max_total_per_work_unit": 16,
+    "max_depth": 2
+  },
+  "publication_budget": {
+    "max_open_prs": 7,
+    "max_direct_to_target_prs": 1,
+    "max_prs_per_change_set": 1,
+    "max_stack_depth": 7,
+    "max_file_overlap_prs": 6
+  },
+  "stages": [
+    "context-build",
+    "work-unit-implementation",
+    "candidate-freeze",
+    "read-only-review",
+    "latest-target-integration",
+    "external-publisher-authorization"
+  ],
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "status": "initialized",
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "ACTIVE",
+  "stack_id": "PROCESS_INFLATION_RECOVERY_PHASE2",
+  "activation_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+  "predecessor_pr": "PR-288",
+  "predecessor_sealed_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+  "production_hash": null,
+  "dependency_hashes": {},
+  "evidence_key": null,
+  "gate_disposition": "PASS",
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 0
+  }
+}

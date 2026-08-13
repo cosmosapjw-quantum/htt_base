@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "run_id": "pr288-frozen-independent-review-20260811",
+  "generated_at": "2026-08-11T08:08:36+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 4,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR288-FROZEN-CLAIM-R2",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-REVIEW_COVERAGE.json",
+            ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-oracle-output.json"
+          ],
+          "evidence_fingerprint": "d488e6c74b3a41a9d9764e803cd1d9a3336f91102acda6075a46fa71c2840447",
+          "summary": "The exact frozen PR-288 candidate preserves HTT ownership and the C2 synthetic diagnostic ceiling, transfer source none, observed/public false, blocked family identification, exact use restrictions, legacy quarantine, nonpromoting process success, and PR-280's failed terminal provenance. No positive MIO posterior, native-transfer, geometry, or Bianchi-family claim was found."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR288-FROZEN-CLAIM",
+      "status": "error",
+      "gate_disposition": "INCONCLUSIVE",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "not_examined",
+          "finding_ids": [],
+          "summary": "Not examined: the blind-results isolation breach invalidated this review before a claim/provenance verdict could be completed."
+        }
+      ],
+      "reported_errors": [
+        "BLIND_RESULTS_ISOLATION_BREACH: a schema-discovery rg command used incomplete exclusions and emitted matching lines from historical merged-result and oracle artifacts. The review stopped immediately; all policy cells are WAIVED and no candidate, scientific, claim-promotion, publication, merge, or readiness verdict is asserted."
+      ],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR288-FROZEN-PHYSCODE",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "The exact frozen PR-288 candidate satisfies the registered synthetic Bayesian-semantics slice: normalized Gaussian evidence and priors, real Dynesty 3.0.0 plus independent scrambled Sobol crosschecks, preregistered uncertainties, equal-model null, replicated equality-tail PPC, foldwise conditional LOOCV refit, covariance negative control, PR-280 failed-terminal precedence, finite content addresses, HTT ownership, legacy quarantine, and C2 family gate. System-Python engine absence remains typed INCONCLUSIVE environment evidence and does not alter this required-engine PASS.",
+          "evidence_refs": [
+            ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json",
+            ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/REVIEW_COVERAGE.json",
+            "docs/generated/pr288_bayesian_semantics_receipt.json",
+            "htt/htt/htt/infer/bayesian_semantics.py",
+            "tests/htt/test_bayesian_semantics_repair.py"
+          ],
+          "evidence_fingerprint": "pr288-physcode:dcde762d:oracle-766030927ab2:receipt-622dadbcdf4a"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR288-FROZEN-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR280-HERMETIC-HARNESS",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "The frozen PR-288 candidate passed independent lineage, hermetic source binding, exact receipt replay, portability, policy, status, and hostile containment review without a blocking finding.",
+          "evidence_refs": [
+            ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-REPLAY/REVIEW_COVERAGE.json",
+            ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-REPLAY/oracle_evidence.json"
+          ]
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-288",
+  "change_set_id": "CS-PR288-BAYES-SEMANTICS",
+  "publication_group_id": "PG-PR288-BAYES-SEMANTICS",
+  "assignment_count": 4,
+  "validated_result_count": 4,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/RUN_PLAN.json",
+      "sha256": "1551ced7e5a17024785cb35daf09a33261899ba6eb921c17dd858ff3d6807b82",
+      "bytes": 5471
+    },
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/assignments/A-PR288-FROZEN-CLAIM-R2.json",
+      "sha256": "e249ba0b8af5596646db4a966195402dab6e1879f226f63c4cb2e7a14ae56d46",
+      "bytes": 4724
+    },
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/assignments/A-PR288-FROZEN-CLAIM.json",
+      "sha256": "9560401cecbf71eef001666c8228ddeaa92c5744c556029bff14bfa562e537f0",
+      "bytes": 4209
+    },
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/assignments/A-PR288-FROZEN-PHYSCODE.json",
+      "sha256": "da4e35b10bf2f2b3c258a43fc9f9a9d7b46fd209295ffd55fefb1c2f2b5c8c2d",
+      "bytes": 4294
+    },
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/assignments/A-PR288-FROZEN-REPLAY.json",
+      "sha256": "44bc50c7f9ba03d312bd18f98880bbaea2bb9b31be65e0a1198c2bea8556344f",
+      "bytes": 4345
+    },
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-CLAIM-R2.json",
+      "sha256": "136de5cc22cb5b420b8fead290301c28717c720f3eab256642ba0867e0d51540",
+      "bytes": 5770
+    },
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-CLAIM.json",
+      "sha256": "213f4437dcf2ade61b6973760dbf3cfa8f8aaef6376dbaea790be60a20d580d9",
+      "bytes": 6854
+    },
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-PHYSCODE.json",
+      "sha256": "36f74aee7c15fbf9c2a3cd4fd8ebe56cdd0fb714389e5bc728fbba9f423aebdd",
+      "bytes": 8361
+    },
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-REPLAY.json",
+      "sha256": "42f69c5a75af3e2489372f663a3b755ecc71d5aea30dbcf0cda0c97f2357a75b",
+      "bytes": 7888
+    }
+  ],
+  "merge_input_sha256": "15eef3838edfa9ef7b9c0f00c6295ca95f1bb5947618e504102c1ccc80b40fa2"
+}

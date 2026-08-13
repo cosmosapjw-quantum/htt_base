@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-10T03:27:26Z",
+  "work_unit_id": "PR-284",
+  "lifecycle_reached": "SEALED",
+  "disposition": "BLOCKED_ASSURANCE_BUDGET_EXHAUSTED",
+  "blocking_gate": "publication_inventory",
+  "blocking_error": "repository open-PR budget is exhausted",
+  "candidate_sha": "30bf45339cf517ff77606c3f8abcdeb2949b36e9",
+  "sealed_head": "30bf45339cf517ff77606c3f8abcdeb2949b36e9",
+  "candidate_tree_sha": "d8352d6ca5286a6b1f364429c218d307b3dea28d",
+  "predecessor_sealed_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+  "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034",
+  "candidate_seal": {
+    "path": ".prguard/runtime/PR284_R4_FINAL_CANDIDATE_SEAL.json",
+    "file_sha256": "f98552fabd7062a76093bcbc7a2d700ed7d588cf12b3cf4d71bb5f853217241e",
+    "seal_sha256": "5aaba833e7d5884add6c79338ec6396ccc7c0eab0c5c0090376f9edc8b68a4d1"
+  },
+  "final_closeout": {
+    "result_path": ".agent-harness/runs/pr284-final-closeout-r4-20260810/results/A-PR284-R4-FINAL-CLOSEOUT.json",
+    "result_sha256": "5fc8c065ba879bc368faa4a389c389e8a521568c5be37f22cb44e468215ae088",
+    "run_summary_sha256": "5b6989bdac325140a4046187d82271c67bd7f36b83c6832d2882e28df7627893",
+    "status": "PASS"
+  },
+  "integration_rehearsal": {
+    "path": ".prguard/runtime/PR284_R4_FINAL_INTEGRATION_REHEARSAL.json",
+    "file_sha256": "6efc73e5bcdc3b0e3134396696fc1d006b74b7f412172cbf72154d7dfc1ad504",
+    "status": "PASS",
+    "required_commands_passed": 7
+  },
+  "live_inventory": {
+    "external_path": "/tmp/htt-pr284-publish-20260810-tuOKua/inventory.json",
+    "file_sha256": "34a0fc220bd72035b14a8a4242cb69c6d2481c44a371d7fece14ca875591d508",
+    "observed_at": "2026-08-10T03:25:58+00:00",
+    "open_pr_count": 1,
+    "blocking_pr_number": 380,
+    "blocking_pr_head": "changeset/pr283-weak-identification-recovery-20260810",
+    "blocking_pr_head_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa"
+  },
+  "policy_limits": {
+    "max_open_prs": 1,
+    "max_stack_depth": 1,
+    "max_file_overlap_prs": 0
+  },
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 16,
+    "remaining": 0
+  },
+  "actions_not_executed": [
+    "git_push",
+    "pull_request_create",
+    "merge",
+    "approve",
+    "force_push",
+    "ruleset_mutation"
+  ],
+  "required_human_decision": [
+    "merge_or_close_predecessor_pr_380_then_refresh_inventory",
+    "or_authorize_a_bounded_stacked-publication-policy_repair_and_assurance_extension"
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "run_id": "pr290-frozen-independent-review-20260811",
+  "assignment_id": "A-PR290-FROZEN-PHYSSTAT",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "candidate_seal_sha256": "f7c226fdc53408bb10defeabbd7a23a5e17c38dd2a3a2359640aeacf3678b3ed",
+  "candidate_sha": "27c83a1a12369b4b563667ff5145ae9a717b24f0",
+  "candidate_tree_sha": "344dfb920b26c0207432b6acd9625bf2dacf50da",
+  "diff_sha256": "d10438bad740b2c81a4198655a647b5d7ca021f9f9cf8a3e196e22a5576dbd23",
+  "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+  "completed_at": "2026-08-11T13:31:43Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+        "git rev-parse HEAD HEAD^{tree}"
+      ],
+      "rationale": "HEAD, tree, base, merge base, and all assignment-required input hashes match the frozen binding."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr290_spec.yaml:10",
+        "htt/src/common/observed_lane_activation.py:1140"
+      ],
+      "rationale": "The current frozen spec is read and validated before dependency or execution evaluation."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json:24",
+        "python3 -B scripts/codex_harness/run_pr290_planck_lane.py check"
+      ],
+      "rationale": "Exact predecessor receipt replay keeps the terminal BLOCKED_PREDECESSOR_FINAL_SUCCESS."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr290_spec.yaml:83",
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json:120"
+      ],
+      "rationale": "Identity admission and external H-PLANCK authorization remain distinct unsatisfied gates."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/integration/test_planck_post275_lane.py:1014",
+        "python3 -B scripts/codex_harness/run_pr290_planck_lane.py focused"
+      ],
+      "rationale": "Focused tests exercise output alias and preflight-before-payload containment."
+    },
+    {
+      "cell": "synthetic_operator_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/obsstat/planck_post275_lane.py:192",
+        "tests/integration/test_planck_post275_lane.py:889"
+      ],
+      "rationale": "Synthetic operator rows require exact field inventories and distinct frozen SMICA and Commander products."
+    },
+    {
+      "cell": "observation_null_pipeline_equivalence",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/obsstat/planck_post275_lane.py:192",
+        "htt/src/common/observed_lane_activation.py:469"
+      ],
+      "rationale": "Current identities require exact observation-null equality and the top-level identical-pipeline flag is frozen."
+    },
+    {
+      "cell": "mask_beam_harmonic_conventions",
+      "status": "FAIL",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-PHYSSTAT-oracle.py",
+        "htt/src/common/observed_lane_activation.py:469"
+      ],
+      "rationale": "The activation validator accepts linear BiPoSH-A units and READY relabelling of blocked mask deconvolution and multipole vectors."
+    },
+    {
+      "cell": "full_covariance_and_null_contract",
+      "status": "FAIL",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-PHYSSTAT-oracle.py",
+        "docs/research_program/post_pr275/pr290_spec.yaml:188"
+      ],
+      "rationale": "The numerical SPD helper is correct, but the activation validator accepts diagonal covariance and independent SMICA/Commander pairing relaxations."
+    },
+    {
+      "cell": "look_elsewhere_and_component_replication",
+      "status": "FAIL",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-PHYSSTAT-oracle.py",
+        "docs/research_program/post_pr275/pr290_spec.yaml:199"
+      ],
+      "rationale": "The exact rank implementation passes exhaustive checks, but the activation validator accepts the forbidden legacy estimator, strict ties, and the wrong finite-resolution rule."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json:131",
+        "python3 -B scripts/codex_harness/run_pr290_planck_lane.py check"
+      ],
+      "rationale": "The live check reports zero numerical outputs, observed execution false, and no network or download side effect."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "The physics/statistics assignment required focused, adjacent, check, and a bounded independent oracle; portable replay belongs to the replay reviewer."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+        "docs/research_program/post_pr275/pr290_publication_policy.json"
+      ],
+      "rationale": "The seal and assignment bind the exact publication-policy hash and identifier."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr290_spec.yaml:10",
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json:153"
+      ],
+      "rationale": "Current output is C2 diagnostic-only, transfer none, observed/public false, with priors/likelihood/posterior/evidence and family ranking absent and the family gate blocked."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Latest-target integration is a later integration-stage responsibility and is outside this blind frozen physics/statistics assignment."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "pr290-physstat-exact-rank-and-spec-mutation",
+      "kind": "differential_implementation",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-PHYSSTAT-oracle.py"
+      ],
+      "command_fingerprint": "47c5902f1a6b5a04dc0d4526e78a8022077b1c3f5a73e4e520d40efc12c7a4df",
+      "started_at": "2026-08-11T13:31:40Z",
+      "completed_at": "2026-08-11T13:31:43Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-PHYSSTAT-oracle.py",
+      "artifact_sha256": "6b78cfba137c00fcac481ed85c6ccb538cc7d02d51d54bd0b84eeebd1835a966",
+      "artifact_bytes": 9643,
+      "evidence_refs": [
+        "htt/obsstat/planck_post275_lane.py:53",
+        "htt/src/common/observed_lane_activation.py:430",
+        "htt/obsstat/boost_biposh_residual.py:96"
+      ]
+    }
+  ],
+  "coverage_sha256": "6ee3440d24a866f3ab6373520da0ab570a49729871c7039665070f8d96e327e4"
+}

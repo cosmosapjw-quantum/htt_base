@@ -1,0 +1,211 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-r5-authorized-review-extension-20260811",
+  "assignment_id": "A-PR289-R5-REPLAYCLAIM",
+  "assignment_sha256": "f017ddc8780880aa526531f3c3bf043c478daf1280c3e4b8c62a48b78ea13079",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_gate_reviewer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_R5_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "a2681b6259aa6ac98929122b0fd4bfdceef21d18e818e43552f5e09b109c4e7a",
+    "seal_sha256": "301be2d0d73f18c109b71f36c43e8c8d033bd7fcfb01a6d04142b7493e30cf01",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "eec048d4cf19989983986d139c7d0a797b1363e0",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "27251a5b9e28685b23473f23d7d0b960b039d375",
+    "diff_sha256": "bebb8bc4ba55b67c42b0a879f63137fe240f8fb8cc82528d9b7c8fff9e99b71f",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "c638eaea433bcce5a5b00140a916108d5c23b64d079c94bbb7456a343acf0d48"
+  },
+  "result_path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "started_at": "2026-08-11T11:58:07Z",
+  "completed_at": "2026-08-11T12:13:19Z",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read_evidence": "self_declared",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1",
+    "git": "2.43.0",
+    "python3.10": "3.10.12"
+  },
+  "commands": [
+    {
+      "id": "pr289-focused",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "focused"],
+      "returncode": 0,
+      "summary": "60 passed in 43.21s"
+    },
+    {
+      "id": "pr289-readonly-preflight",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "preflight"],
+      "returncode": 0,
+      "summary": "NO_ADMITTED_IDENTITIES; six REJECTED_NOT_PRESENT; six NOT_AUTHORIZED; no network/download side effect"
+    },
+    {
+      "id": "pr289-adjacent",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "adjacent"],
+      "returncode": 0,
+      "summary": "50 current-tree tests plus 54 exact ff9ef9f4 historical-context tests passed"
+    },
+    {
+      "id": "pr289-receipt-replay",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "check"],
+      "returncode": 0,
+      "summary": "Receipt file SHA-256 92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34 replayed"
+    },
+    {
+      "id": "pr289-portable-clean-replay",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "portable"],
+      "returncode": 0,
+      "summary": "Distinct 5,911-file archive root; stable pre/post hashes; nested exit 0; no external roots or side effect"
+    },
+    {
+      "id": "pr289-publication-policy-cross-binding",
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"],
+      "returncode": 0,
+      "summary": "9 passed, 68 deselected"
+    },
+    {
+      "id": "pr289-dag-strict",
+      "argv": ["python3", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "returncode": 0,
+      "summary": "244 PRs; strict rescue DAG valid"
+    },
+    {
+      "id": "pr289-claim-language",
+      "argv": ["python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "htt/src/common/data_identity.py", "tests/contracts/test_data_identity_registry_v2.py", "docs/research_program/post_pr275/pr289_spec.yaml", "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json", "docs/research_program/post_pr275/data_runbooks.yaml", "docs/harness/CLAIM_LEDGER.md", "docs/generated/pr289_data_identity_v2_receipt.json", "docs/PR_DELTAS/pr-289.md"],
+      "returncode": 0,
+      "summary": "No forbidden claim language detected"
+    },
+    {
+      "id": "interpreter-alias-replay",
+      "argv": ["/usr/bin/python", "/usr/bin/python3", "/usr/bin/python3.10", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "check"],
+      "returncode": 0,
+      "summary": "All three interpreters reproduced the identical receipt file SHA-256"
+    },
+    {
+      "id": "oracle-draft-prose-anchor",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py"],
+      "returncode": 1,
+      "summary": "Assignment-local draft assertion was line-wrap-sensitive; candidate evidence passed up to that authoring assertion, which was narrowed to the exact wrapped text"
+    },
+    {
+      "id": "independent-replay-claim-oracle",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py"],
+      "returncode": 0,
+      "summary": "Independent invariant oracle PASS"
+    },
+    {
+      "id": "review-coverage-only",
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/REVIEW_COVERAGE.json", "--seal", ".prguard/runtime/PR289_R5_CANDIDATE_SEAL.json", "--run-id", "pr289-r5-authorized-review-extension-20260811", "--assignment-id", "A-PR289-R5-REPLAYCLAIM", "--risk-tier", "R3"],
+      "returncode": 0,
+      "summary": "Exact 36-cell R3 coverage valid"
+    }
+  ],
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/context/FROZEN_DECISIONS.md",
+    ".agent-harness/context/SYMBOLS.md",
+    ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/RUN_PLAN.json",
+    ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/assignments/A-PR289-R5-REPLAYCLAIM.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/new_assignment.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-adversarial-review-loop/SKILL.md",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".prguard/runtime/PR289_R5_CANDIDATE_SEAL.json",
+    "HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md",
+    "docs/PR_DELTAS/pr-280.md",
+    "docs/PR_DELTAS/pr-289.md",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/harness/CLAIM_LEDGER.md",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "docs/research_program/post_pr275/data_runbooks.yaml",
+    "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "docs/research_program/post_pr275/pr289_spec.yaml",
+    "docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json",
+    "docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml",
+    "htt/src/common/data_identity.py",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "tests/contracts/test_data_identity_registry_v2.py",
+    ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/REVIEW_COVERAGE.json",
+    ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/REVIEW_COVERAGE.json",
+      "sha256": "8e596a7e5f0560f0c574e93992fcabeceb243473e7faa93f445eaa6d88a7f396",
+      "bytes": 16551,
+      "producer": "A-PR289-R5-REPLAYCLAIM"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py",
+      "sha256": "4e51e6ba51f414e4e652123adf1f9855639470b43854bd6ec779d213045ce656",
+      "bytes": 13179,
+      "producer": "A-PR289-R5-REPLAYCLAIM",
+      "command_fingerprint": "c7f7174d5a8fb82029121e3609f9f9496100704dea09cf10d0d0ecd9ad0cdb3f"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "8e596a7e5f0560f0c574e93992fcabeceb243473e7faa93f445eaa6d88a7f396",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "Frozen PR-289 passes the bounded R5 replay/claim review at COMMON C2 diagnostic_only: exact PR-288 predecessor and selective lineage, immutable PR-274 replay, source-bound receipt, 33 ordered mutation kills, cross-lane authorization rejection, interpreter and clean-archive replay, and strict claim/lifecycle boundaries all hold. This is not data admission, execution authorization, public/scientific validation, native transfer, geometry, or family identification.",
+      "evidence_refs": [
+        ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/REVIEW_COVERAGE.json",
+        ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py",
+        "docs/generated/pr289_data_identity_v2_receipt.json",
+        "docs/PR_DELTAS/pr-289.md",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "evidence_fingerprint": "301be2d0d73f18c109b71f36c43e8c8d033bd7fcfb01a6d04142b7493e30cf01"
+    }
+  ],
+  "errors": [],
+  "review_summary": {
+    "evidence_read": "Frozen candidate, governing spec/policy/registry, implementation/tests/runner/receipt, runbooks/ledger/delta/status mirrors, exact PR-274 and PR-288 identities, registered assurance exception, and the repo-relative salvage audit solely for independent lineage reconstruction.",
+    "proposed_changes": [],
+    "tests_run": "All eight policy commands, three interpreter aliases, independent invariant oracle, and exact coverage validation.",
+    "risks_and_kill_switches": [
+      "Any candidate SHA/tree/diff/test/spec/schema/registry/mutation/receipt/claim-ceiling change invalidates this review.",
+      "R1/R2/R3/R4 failures and incidents remain preserved; this fresh R5 pass does not rewrite them.",
+      "No external roots were present, so no lane was admitted; every lane execution receipt remains NOT_AUTHORIZED.",
+      "PR-290 remains PLANNED, INELIGIBLE, and zero-consumed until PR-289 completes the separate review/seal/publish lifecycle.",
+      "Merge remains HUMAN_ONLY."
+    ],
+    "artifacts_status_updates_needed": "No candidate/shared update by this reviewer. Main writer may consume this registered PASS only within the existing lifecycle and human-only publication policy.",
+    "claim_audit": {
+      "owner": "COMMON",
+      "status": "IMPLEMENTED_DIAGNOSTIC_CONTRACT",
+      "evidence_type": "test_and_source_bound_artifact",
+      "transfer_source": "none",
+      "claim_tier": "C2 diagnostic_only",
+      "forbidden_drift_detected": false,
+      "upgraded_claims": [],
+      "downgraded_claims": [],
+      "ledger_updates_needed": []
+    }
+  }
+}

@@ -1,0 +1,466 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-selective-salvage-mapping-20260812",
+  "generated_at": "2026-08-11T15:20:21+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 2,
+  "raw_finding_count": 8,
+  "unique_finding_count": 8,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR291-CF4-DOMAIN-MAP",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR291-LINEAGE",
+            "F-PR291-ADMISSION",
+            "F-PR291-NUMERICS",
+            "F-PR291-DEPTH",
+            "F-PR291-SEMANTICS"
+          ],
+          "summary": "Selective salvage is implementable on 06ac2060: retain the synthetic CF4 numerical/containment/claim-hostile core, replace record-count and stale hash glue with full current PR-289 nine-role native-profile replay, repair unit-covariant covariance/rank/depth provenance, and keep the live lane nonexecuted, weak-ID abstaining, likelihood-free, Q/F/G-free, and family-blocked."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR291-CLAIM-GUARD-MAP",
+      "status": "inconclusive",
+      "gate_disposition": "INCONCLUSIVE",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR291-CG-001",
+            "F-PR291-CG-002",
+            "F-PR291-CG-003"
+          ],
+          "summary": "A bounded G57-G61 claim-guard salvage is well specified, but the broad nearby negation suppression is a blocking fail-open and no mutable candidate acceptance verdict is issued."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR291-LINEAGE",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "G56/G57 must be selectively reimplemented on 06ac2060, not cherry-picked: cb99df8f and 1417804b descend from f3349f67, their merge base with the sealed predecessor is 412d5d39, and 06ac2060 is not an ancestor.",
+      "assumptions_used": [
+        "docs/codex_handoff/pr_status.yaml and the publication policy identify 06ac2060 as the exact sealed PR-290 predecessor."
+      ],
+      "evidence_refs": [
+        "docs/codex_handoff/pr_status.yaml:538-576",
+        "docs/research_program/post_pr275/pr291_publication_policy.json:6-7",
+        "git:1417804ba7274ef2cc5088be11c920d158d7990f parent=cb99df8f83bf2372be91879f13ba8dfb331693ac",
+        "git:cb99df8f83bf2372be91879f13ba8dfb331693ac parent=f3349f67557a28f9d38475f0fe2d43c7b0ea5c52",
+        "git:merge-base(06ac2060,cb99df8f)=412d5d3945ea658494fb786c3c7d574596f23e44"
+      ],
+      "evidence_fingerprint": "git:06ac2060-cb99df8f-1417804b-lineage",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "git merge-base --is-ancestor 06ac2060 cb99df8f; expect exit 1",
+        "git rev-list --left-right --count 06ac2060...cb99df8f; observed 84 44"
+      ],
+      "confidence": 1.0,
+      "unresolved": [],
+      "source_finding_ids": [
+        "F-PR291-LINEAGE"
+      ],
+      "supporting_assignments": [
+        "A-PR291-CF4-DOMAIN-MAP"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR291-ADMISSION",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "critical",
+      "statement": "The historical activation admission is unsalvageable as written because it counts at least three record IDs. Current PR-289 authority requires exact replay of all nine CF4 native roles, one native profile, exact role order/ordinals, and the admission bundle; the live receipt currently has no CF4 admission and no execution authorization.",
+      "assumptions_used": [
+        "The named current PR-289 registry, module, tests, and receipt are authoritative inputs.",
+        "Identity admission and H-CF4 execution authorization are non-substitutable."
+      ],
+      "evidence_refs": [
+        "1417804b:htt/src/common/cf4_observed_lane_activation.py:633-711",
+        "docs/generated/pr289_data_identity_v2_receipt.json:143-206",
+        "docs/generated/pr289_data_identity_v2_receipt.json:482-529",
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json:75-105",
+        "htt/src/common/data_identity.py:1084-1156",
+        "htt/src/common/data_identity.py:1990-2068",
+        "htt/src/common/data_identity.py:907-985",
+        "tests/contracts/test_data_identity_registry_v2.py:482-526",
+        "tests/contracts/test_data_identity_registry_v2.py:688-721"
+      ],
+      "evidence_fingerprint": "source:cf4-nine-role-native-profile-replay-v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Construct a decision with three valid-looking record_id digests but no native profile; historical _identity_snapshot can satisfy its count while current replay_lane_admission_decision must reject.",
+        "Mutate each of the nine role component bytes and re-sign outer IDs; current nested/profile replay must still reject the mismatched authority relationship."
+      ],
+      "confidence": 1.0,
+      "unresolved": [
+        "No observed CF4 candidate root is present, so scientific contents of the nine external components are not evaluated here."
+      ],
+      "source_finding_ids": [
+        "F-PR291-ADMISSION"
+      ],
+      "supporting_assignments": [
+        "A-PR291-CF4-DOMAIN-MAP"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR291-NUMERICS",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "The synthetic CF4 algebra is the valuable salvage core, including the corrected STF signs and projector-based eigenspace drift, but it needs unit-covariant normalized rank/eigengap decisions, an ill-conditioning or registered-rank-reduction path, and common-response provenance before its rank/weak-ID outputs are coherent.",
+      "assumptions_used": [
+        "Metric signature is irrelevant to this observer-side Euclidean velocity design; Galactic Cartesian coordinates are right-handed.",
+        "The radial model is v_r=m+B.n+r n_i S_ij n_j with S trace-free, positive v_r receding, r in Mpc, velocity in km/s.",
+        "All evaluated numerical fixtures remain synthetic."
+      ],
+      "evidence_refs": [
+        "1417804b:htt/obsstat/cf4_post275_lane.py:214-329",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:346-401",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:38-120",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:421-535",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:559-598",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:601-800",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:803-898",
+        "docs/research_program/post_pr275/pr291_spec.yaml:103-188",
+        "htt/src/common/source_separation.py:315-479"
+      ],
+      "evidence_fingerprint": "source:cf4-synthetic-numerics-rank-units-repair-v1",
+      "counterevidence_refs": [
+        "1417804b:tests/integration/test_cf4_post275_lane.py:344-445",
+        "1417804b:tests/integration/test_cf4_post275_lane.py:447-628"
+      ],
+      "reproduction": [
+        "Analytic sign check: with Szz=-Sxx-Syy, n^T S n=Sxx(x^2-z^2)+Syy(y^2-z^2)+2Sxyxy+2Sxzxz+2Syzyz; the 1417804b design matches this.",
+        "Rescale shear coordinates and distance units while preserving the physical response; current absolute eigengap_floor and mixed-coordinate matrix-rank paths are not contractually invariant.",
+        "Supply an extremely ill-conditioned positive-definite covariance; eigenvalue>0 alone can pass before direct inversion, so a registered conditioning/rank-reduction decision is required."
+      ],
+      "confidence": 0.98,
+      "unresolved": [
+        "The exact registered parameter normalizer/coordinate map for future observed local/global response remains unavailable and must not be invented in PR-291."
+      ],
+      "source_finding_ids": [
+        "F-PR291-NUMERICS"
+      ],
+      "supporting_assignments": [
+        "A-PR291-CF4-DOMAIN-MAP"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR291-DEPTH",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "Historical depth/ZoA mechanics correctly enforce increasing depth, nested support, one ZoA identity, and explicit transports, but their row/selection/covariance/transport identifiers are caller text. Retain the mechanics only after every rung is derived from and cross-bound to the replayed grouping/depth/ZoA native components and the current data-identity profile.",
+      "assumptions_used": [
+        "common.depth_path's canonical nesting rule TARGET_SUPPORT_SUBSET_OF_SOURCE governs this salvage unless the admitted native depth-definition component defines a different estimand."
+      ],
+      "evidence_refs": [
+        "1417804b:htt/obsstat/cf4_post275_lane.py:421-535",
+        "docs/research_program/post_pr275/pr291_spec.yaml:150-167",
+        "htt/src/common/data_identity.py:946-985",
+        "htt/src/common/depth_path.py:1-12",
+        "htt/src/common/depth_path.py:567-644"
+      ],
+      "evidence_fingerprint": "source:cf4-depth-zoa-native-profile-cross-binding-v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Mutate row identity, grouping, selection, covariance, depth, ZoA, or transport source/target independently and require refusal.",
+        "Test increasing depth with nonnested support and nested support with reordered depths; both must refuse."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "No admitted depth-definition bytes are present, so near-to-far scientific selection semantics remain unevaluated."
+      ],
+      "source_finding_ids": [
+        "F-PR291-DEPTH"
+      ],
+      "supporting_assignments": [
+        "A-PR291-CF4-DOMAIN-MAP"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR291-SEMANTICS",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "PR-291 remains correctly outside priors, likelihoods, posteriors, Q/Pi/F/G_F, observed execution, and family identification. The legacy 0.0089 curl/divergence value is only a dimensionless stencil-limited reconstruction self-check; the G57 claim rules are useful but the historical nearby-line negation window must be narrowed to matched sentence or structured Markdown/YAML context.",
+      "assumptions_used": [
+        "HTT owns model-dependent likelihoods, while this PR's OBSSTAT module owns only synthetic observable mechanics.",
+        "Absence of a native low-ell atlas fixes the family ceiling below family identification."
+      ],
+      "evidence_refs": [
+        "1417804b:htt/obsstat/cf4_post275_lane.py:1-7",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:901-1010",
+        "1417804b:htt/src/common/semantic_guards/no_overclaim.py:187-215",
+        "1417804b:htt/src/common/semantic_guards/no_overclaim.py:393-413",
+        "1417804b:tests/contracts/test_claim_language_lint.py:114-146",
+        "docs/research_program/post_pr275/pr291_publication_policy.json:117-128",
+        "docs/research_program/post_pr275/pr291_publication_policy.json:31-32",
+        "docs/research_program/post_pr275/pr291_spec.yaml:10-22",
+        "docs/research_program/post_pr275/pr291_spec.yaml:168-188",
+        "docs/research_program/post_pr275/pr291_spec.yaml:247-253",
+        "docs/research_program/post_pr275/pr291_spec.yaml:282-304"
+      ],
+      "evidence_fingerprint": "source:cf4-claim-ceiling-and-sentence-scope-v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Scan a positive physical-vorticity sentence preceded by an unrelated sentence containing not/no/without; historical +/-2-line guard context suppresses it and the repaired scanner must report it.",
+        "Scan same-sentence explicit negation and existing forbidden Markdown/YAML cells; they must remain allowed.",
+        "Assert production modules expose no likelihood/prior/posterior/Q/Pi/F/G_F output and every live artifact says observed_data_executed=false and BLOCKED_PRE_NATIVE_ATLAS."
+      ],
+      "confidence": 1.0,
+      "unresolved": [],
+      "source_finding_ids": [
+        "F-PR291-SEMANTICS"
+      ],
+      "supporting_assignments": [
+        "A-PR291-CF4-DOMAIN-MAP"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR291-CG-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "BLOCKING: the current scanner, and the G61 historical scanner proposed for salvage, suppress any matched forbidden claim when any broad marker such as 'not ', 'no ', or 'without' occurs on an unrelated nearby line. scan_text calls _is_guardrail_context before recording an issue; that helper concatenates two preceding lines, the match line, and one following line and returns true on a substring marker. The same helper is also applied independently to both source-observable window lines and every touched multiline-CF4 line. On Markdown table rows it scans the whole row before the existing exact forbidden-column helper runs. Therefore unrelated caveat prose or another table cell can hide a positive production claim.",
+      "assumptions_used": [
+        "The audit's requested 'matched sentence/structured Markdown context' ceiling governs the salvage repair.",
+        "A forbidden claim and a distinct caveat sentence or Markdown cell are semantically independent even when source-adjacent.",
+        "The mutable candidate has no acceptance standing and was not evaluated."
+      ],
+      "evidence_refs": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:161-164",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:450-454",
+        "git show 1c8e742f:htt/src/common/semantic_guards/no_overclaim.py#L280-L305",
+        "git show 1c8e742f:htt/src/common/semantic_guards/no_overclaim.py#L328-L335",
+        "git show 1c8e742f:htt/src/common/semantic_guards/no_overclaim.py#L400-L412",
+        "git show 1c8e742f:htt/src/common/semantic_guards/no_overclaim.py#L576-L596",
+        "htt/src/common/semantic_guards/no_overclaim.py:213-225",
+        "htt/src/common/semantic_guards/no_overclaim.py:364-384",
+        "htt/src/common/semantic_guards/no_overclaim.py:38-61"
+      ],
+      "evidence_fingerprint": "PR291:no-overclaim:nearby-negation-window-suppression:v1",
+      "counterevidence_refs": [
+        "htt/src/common/semantic_guards/no_overclaim.py:387-419 preserves exact YAML guardrail sections",
+        "htt/src/common/semantic_guards/no_overclaim.py:422-468 already provides an exact forbidden-Markdown-column helper",
+        "tests/contracts/test_claim_language_lint.py:140-151 proves the YAML exemption is intended not to leak"
+      ],
+      "reproduction": [
+        "Static current-path proof: for text 'No observed bytes were read.\\nBianchi family identified in this artifact.', geometry_detected matches line 2; scan_text calls _is_guardrail_context; its [index-2,index+2) window contains 'no '; the function returns true and scan_text continues without an issue.",
+        "Static same-line proof: 'No observed bytes were read. Bianchi family identified in this artifact.' is likewise suppressed even though the negative sentence and positive claim sentence are distinct.",
+        "Static G61 proof after CF4 salvage: 'The observed lane is not authorized.\\nPhysical cosmic vorticity is supported by the 0.0089 curl diagnostic.' reaches the historical legacy_curl_physics_promotion match, then the same nearby-window helper suppresses it.",
+        "Static table proof: a positive match in an Allowed cell is suppressed if a different cell in the same row contains 'do not', because the whole-row marker return occurs before _match_is_in_forbidden_markdown_column."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "No patched or sealed candidate was provided, so the repaired behavior remains unexecuted and unreviewed."
+      ],
+      "source_finding_ids": [
+        "F-PR291-CG-001"
+      ],
+      "supporting_assignments": [
+        "A-PR291-CLAIM-GUARD-MAP"
+      ],
+      "supporting_agent_types": [
+        "claim_lane_reviewer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR291-CG-002",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "inconclusive",
+      "severity": "medium",
+      "statement": "Selective salvage map: reimplement, rather than cherry-pick, the two narrow CF4 rules from G57/G58 and the bounded multiline/CommonMark behavior from G59-G61 in htt/src/common/semantic_guards/no_overclaim.py; port their hostile and control cases into tests/contracts/test_claim_language_lint.py. G57 contributes diagnostic-first curl promotion, retired-P0 rescue, and matched downclaims. G58 adds physics-first/reordered forms. G59 adds ordinary wrapped prose and distinct-list/fence boundaries. G60 adds repeated/nested blockquotes, quoted lists, quote-depth boundaries, and quoted fences. G61 adds lazy blockquote continuations plus fence state scoped to the opening quote container. Preserve the current direct geometry determiner/verb-inflection cases and existing YAML/table structured exemptions. Do not import unrelated CF4 lane code, extract a scanner framework, alter RULES ontology, or promote PR-291 status.",
+      "assumptions_used": [
+        "The historical commits are evidence sources, not independently accepted candidates.",
+        "Only no_overclaim.py and its focused contract tests belong in this claim-guard salvage slice.",
+        "The PR-291 scientific ceiling remains diagnostic_only with observed_data_executed=false and family identification blocked."
+      ],
+      "evidence_refs": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:540-544",
+        "docs/research_program/post_pr275/pr291_spec.yaml:10-22",
+        "docs/research_program/post_pr275/pr291_spec.yaml:169-188",
+        "docs/research_program/post_pr275/pr291_spec.yaml:264-293",
+        "git show 1417804b:htt/src/common/semantic_guards/no_overclaim.py and tests/contracts/test_claim_language_lint.py",
+        "git show 1c8e742f:htt/src/common/semantic_guards/no_overclaim.py#L187-L223,#L235-L305,#L352-L493",
+        "git show 1c8e742f:tests/contracts/test_claim_language_lint.py#L114-L267",
+        "git show 5c2a8025:htt/src/common/semantic_guards/no_overclaim.py and tests/contracts/test_claim_language_lint.py",
+        "git show e54b2050:htt/src/common/semantic_guards/no_overclaim.py and tests/contracts/test_claim_language_lint.py",
+        "git show e5e45420:htt/src/common/semantic_guards/no_overclaim.py and tests/contracts/test_claim_language_lint.py",
+        "tests/contracts/test_claim_language_lint.py:59-72"
+      ],
+      "evidence_fingerprint": "PR291:no-overclaim:G57-G61-selective-salvage-map:v1",
+      "counterevidence_refs": [
+        "The audit marks G60's R5 candidate claim cases FAIL and G61 post-R5 unreviewed with a residual gap; neither commit can be adopted as accepted wholesale.",
+        "The current required-input hashes contain none of the CF4-specific legacy_curl_physics_promotion or retired_p0_rescue rules."
+      ],
+      "reproduction": [
+        "Compare git show 1417804b..1c8e742f for only htt/src/common/semantic_guards/no_overclaim.py and tests/contracts/test_claim_language_lint.py; the sequence is additive and each review-driven commit closes a distinct syntax/container escape.",
+        "Compare the required current no_overclaim.py hash 195e69421de46facb7bffa9f1abd4cfd3fe266ecc3139d9e37aa92232a907c16 with G61; the current file retains generic guards but lacks the two PR-291 CF4 rules and multiline helper."
+      ],
+      "confidence": 0.97,
+      "unresolved": [
+        "The final exact hunk must be reviewed against the actual implementation candidate because the assignment candidate is mutable and unsealed."
+      ],
+      "source_finding_ids": [
+        "F-PR291-CG-002"
+      ],
+      "supporting_assignments": [
+        "A-PR291-CLAIM-GUARD-MAP"
+      ],
+      "supporting_agent_types": [
+        "claim_lane_reviewer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR291-CG-003",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "inconclusive",
+      "severity": "high",
+      "statement": "Smallest repair and discriminating test contract: change _is_guardrail_context so ordinary prose exemption is evaluated only on the sentence containing the regex match, while retaining exact YAML guardrail-section ancestry and the existing matched forbidden-Markdown-column helper. Add only a tiny exact structured-list check for list items governed by an explicit 'Forbidden examples:' label so the existing negative-example fixture remains valid; do not retain the generic nearby-line window. Pass match/span information from scan_text, _scan_source_observable_windows, and _scan_multiline_legacy_curl_windows so all three paths share the same scope. Remove the whole-row table marker shortcut and let the existing cell-aware helper decide. For multiline CF4 matches, evaluate the folded match-bearing sentence once, not every touched source line. Positive regressions must flag a geometry or CF4 promotion despite unrelated 'not', 'no', and 'without' sentences both before and after it, including one same-source-line two-sentence case and an Allowed table cell whose neighboring cell says 'do not'. Negative controls must allow true same-sentence downclaims, the exact YAML keys, explicit Forbidden-examples list items, forbidden-reading cells, proper fences, distinct list items, quote-depth changes, and lazy blockquote downclaims. Preserve current determiner/verb-inflection geometry cases plus every G57-G61 reordered/wrapped/blockquote positive case.",
+      "assumptions_used": [
+        "Sentence punctuation plus the scanner's existing Markdown container boundaries is sufficient for this bounded repair.",
+        "An exact structured-list label is narrower than generic marker proximity and does not constitute a new scanner framework."
+      ],
+      "evidence_refs": [
+        "git show 1c8e742f:tests/contracts/test_claim_language_lint.py#L114-L267",
+        "htt/src/common/semantic_guards/no_overclaim.py:198-238",
+        "htt/src/common/semantic_guards/no_overclaim.py:241-281",
+        "htt/src/common/semantic_guards/no_overclaim.py:364-468",
+        "tests/contracts/test_claim_language_lint.py:114-163",
+        "tests/contracts/test_semantic_guards.py:249-268"
+      ],
+      "evidence_fingerprint": "PR291:no-overclaim:matched-sentence-structured-context-test-contract:v1",
+      "counterevidence_refs": [
+        "A sentence-only change without the exact Forbidden-examples list container would regress tests/contracts/test_claim_language_lint.py:114-124.",
+        "A main scan_text-only change would leave _scan_source_observable_windows and the G59-G61 multiline helper with the same broad suppression defect."
+      ],
+      "reproduction": [
+        "Required focused command after implementation: python -m pytest tests/contracts/test_claim_language_lint.py tests/contracts/test_semantic_guards.py -q",
+        "Required direct positive fixtures: unrelated 'not', 'no', and 'without' in preceding/following sentences must each yield exactly the intended rule_id.",
+        "Required direct negative fixtures: same-sentence 'is not supported', 'does not establish', and 'does not rescue' must yield no issues.",
+        "Required CommonMark fixture set: retain G59 ordinary wraps/list boundaries, G60 repeated and nested blockquotes/quoted fences, and G61 lazy blockquote plus quote-container fence transitions.",
+        "Required CLI smoke after focused tests: python scripts/check_claim_language.py docs --dry-run --format json; inspect nonzero output rather than weakening rules if existing production text is exposed."
+      ],
+      "confidence": 0.95,
+      "unresolved": [
+        "Sentence-boundary implementation must avoid abbreviations or decimal 0.0089 being treated as sentence terminators.",
+        "Kill switch: stop if the patch requires a general Markdown parser/framework, changes rule ontology, or makes an existing forbidden positive case pass.",
+        "Kill switch: stop on any regression in YAML exact-section scoping, forbidden-column cell scoping, fences, list boundaries, or negative downclaims.",
+        "No CLAIM_LEDGER, PR status, or claim-tier update is warranted from this read-only map; a future tested and independently reviewed candidate may update only its PR delta/status evidence."
+      ],
+      "source_finding_ids": [
+        "F-PR291-CG-003"
+      ],
+      "supporting_assignments": [
+        "A-PR291-CLAIM-GUARD-MAP"
+      ],
+      "supporting_agent_types": [
+        "claim_lane_reviewer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "assignment_count": 2,
+  "validated_result_count": 2,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/RUN_PLAN.json",
+      "sha256": "0df7c8e116bb196a5f6566fb0ac25097526b6cf407c638ea15b066d7a6bd9498",
+      "bytes": 2320
+    },
+    {
+      "path": ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/assignments/A-PR291-CF4-DOMAIN-MAP.json",
+      "sha256": "e755ed50b694feac9b989301465b5462368a5e54251b04f0a88833a3dd626d4f",
+      "bytes": 3615
+    },
+    {
+      "path": ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/assignments/A-PR291-CLAIM-GUARD-MAP.json",
+      "sha256": "35ee5a7caccf1ec985c7e23268bb675ae9c9c92818d605358d9acc78e7312e0d",
+      "bytes": 3147
+    },
+    {
+      "path": ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/results/A-PR291-CF4-DOMAIN-MAP.json",
+      "sha256": "8b2254f2cf6a9d1ab79c628e6d3b5653a5dfc128cf7deb108d86b93e88a24eca",
+      "bytes": 23512
+    },
+    {
+      "path": ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/results/A-PR291-CLAIM-GUARD-MAP.json",
+      "sha256": "c790411d7d3ef03ffc8d092b2cddb3684c13fba015579d9ac4f3240b22e6f8ba",
+      "bytes": 15149
+    }
+  ],
+  "merge_input_sha256": "b1bd0f108c27dd1f27fe9417d57706be5c69345dfd725f71f529edcd9e659011"
+}

@@ -1,0 +1,98 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-clause-continuation-20260813",
+  "assignment_id": "A-PR291-R5-CLAUSE-CLAIM",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_lane_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_CLAUSE_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "035e67d7239778b553e3475b2bfd3aae782c4fe3a36f7d15d4523788b7482c19",
+    "seal_sha256": "ad585eb8f93a6bef8cbad27c4ef27ca20253e786f226101a8774cf6beb07d070",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "6c9d86a22394f512211cb42f9ef60d248f10ce20",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "4e40985666c5ea82d8d1bed3009f179e22aa12db",
+    "diff_sha256": "0338828d09aa6698dd3464a6e7eecb226a90444260a98a5dfc439f0f8e43672a",
+    "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+    "production_hash": "264931c49f4cd6d0850f1e46b3ba9b441596f7486067e25361cf4aca96a61695"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "independent",
+  "independence_rationale": "fresh independent clause and negation derivation is required after the predicate-continuation review exposed actor and scoped-negation defects",
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Blind final claim/code review of the frozen clause-scoped predicate repair. Read assignment first; never inspect sibling or historical result envelopes, CONTEXT_PACK, process listings, or broad harness paths. Independently construct an assignment-local grammar oracle beyond registered tests covering arbitrary actors, active/passive/modal forms, multiple positive-adverb orders, determiners and possessives, Bianchi-family and family-as-Bianchi objects, scalar forward/reverse/direct attribution, multiline clauses, predicate-local not/never/cannot/contractions including irregular cant/wont/shant spellings, unrelated negation controls, and exact Markdown/YAML guardrails. Verify all seven registered policy commands, exact frozen seal, unchanged CF4 numerical/admission hashes, and PR292 ineligibility. Write only assignment-local oracle, exact 16-cell coverage, and schema-v3 result. Validate only your own result with python3 -B .agent-harness/scripts/strict_result_validation.py RESULT_PATH. No shared edits, push, PR, merge, or observed execution.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR291_R5_CLAUSE_FINAL_CANDIDATE_SEAL.json",
+      "sha256": "035e67d7239778b553e3475b2bfd3aae782c4fe3a36f7d15d4523788b7482c19"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_spec.yaml",
+      "sha256": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_publication_policy.json",
+      "sha256": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835"
+    },
+    {
+      "path": "htt/src/common/semantic_guards/no_overclaim.py",
+      "sha256": "7df85c7ed17c9205583edcbb5f23c42ba6d924f4af2755aa395a107b79ebbe37"
+    },
+    {
+      "path": "tests/contracts/test_claim_language_lint.py",
+      "sha256": "6ccdca03fd493297b904d1ba8dbbf5f73c569f3ac074dddb8f9f36bdecaabedd"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-291.md",
+      "sha256": "fd7dda5e7a511f32305161b225a9eca0bd5737b3537a130bc9d204edd8c68481"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "7e931173b3310306a1b03b259ef8414d1a24c2c465649894d80a0134571138e5"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "7e931173b3310306a1b03b259ef8414d1a24c2c465649894d80a0134571138e5"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+      "sha256": "cb5e2ddbd4c7e8ad1b11fea0a79b17164aeb6dd8eba4cfd20c18d26af5a2f076"
+    },
+    {
+      "path": "htt/obsstat/cf4_post275_lane.py",
+      "sha256": "6a3ae13200b381af4502ef0ec0f001c039727a9dcfc1dd49e239a9f0c64e56bb"
+    },
+    {
+      "path": "htt/src/common/cf4_observed_lane_activation.py",
+      "sha256": "4b15529947ea6269bc0ff38b7a58e5433fc6e767e34b732e2ee37cfac07bbeb0"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact 16-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable grammar oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM.json",
+  "status": "registered",
+  "assignment_sha256": "4fdb4d95d4b39474e881ac8ef74e6b72231b1fde8a24dd6a50059165e9ed3b6c"
+}

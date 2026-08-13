@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-candidate-review-20260810",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "created_at": "2026-08-10T13:09:40+00:00",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "0376ec83567e3ad8a005500110961f8b5df5ec275fc2c4ded9ad67eb12e12bd5",
+    "seal_sha256": "d9241a26060fbdd09d0f1f77b3a47bec422525cb7d016b33b089bf232c03068d",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+    "diff_sha256": "80f2057dc690aaacf0258e1603dac0fcf4a455f343564d80717709afd615071d",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "d3307adde069f7bfb422d290d14204cd1d67778a66cace303f0a962d56cca818"
+  },
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "VALIDATED",
+  "evidence_key": {
+    "production_hash": "d3307adde069f7bfb422d290d14204cd1d67778a66cace303f0a962d56cca818",
+    "dependency_hashes": {
+      "theorem_signatures": "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
+      "vt_proof_program": "055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9",
+      "proof_registry_two_pillars": "01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201",
+      "pillar_s_core_proofs": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e",
+      "pillar_s_inference_validation": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
+      "pr273_diagnostic_pack": "36783932f540d4a4e26cc0d66f1f8bb5692623664deda7106e97326576f041bc",
+      "pr286_spec": "db4fc3d3d00cbeb239a437380d646a889ede519f671641cdf0f72e35a13ae413",
+      "publication_policy": "768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d",
+      "pr286_runner": "9aa189a082b5e8d1702f2d09cf1be301f7f183f86958c42b850d80c2f3a84834",
+      "pr286_contract_test": "1f7bf9cb48c0b650cbc766dce8a0f4298892bb30e9e4e4ef593a3630416c87a2",
+      "statistical_inference": "3bd16869f569c035d26950e77db3861c61c30206413ff101da8821cad7a1675e",
+      "adjudication_receipt": "1eb3a52de178443ed6a14dbff425c7630c93f37a8e3af66c8e348162d46df32d",
+      "publication_integrity_test": "b58ac958ac5c6aafb6de768a68813665fd233540cb328ede98240a933373d9cc",
+      "pr_backlog": "73553b6056e5111c1047b80f79c35cdb8e898e0a7b8a7e7e28f97731b5cc699e",
+      "dag_validator": "1382c9d5d8e096efbcd90cf804ae8c32b2de1ce5c47d67be75ab282b45361120",
+      "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+    }
+  },
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 0
+  },
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "publication_state": "NOT_PUBLISHED_BY_HARNESS",
+  "assignment_count": 4,
+  "results": [
+    {
+      "assignment_id": "A-PR286-FROZEN-CLAIM",
+      "agent_type": "claim_gate_reviewer",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-CLAIM.json",
+      "sha256": "cce38f596beaef4ab363d479bc45ae9ff13e0771e7af6ed6635773bee68b386f",
+      "bytes": 6971
+    },
+    {
+      "assignment_id": "A-PR286-FROZEN-CODE",
+      "agent_type": "code_cartographer",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-CODE.json",
+      "sha256": "4023e251739d66a8d6082606ebb7b494d1da5b1bcdde296ec270f918c9009ebe",
+      "bytes": 10081
+    },
+    {
+      "assignment_id": "A-PR286-FROZEN-PHYSSTAT",
+      "agent_type": "physics_stat_auditor",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-PHYSSTAT.json",
+      "sha256": "dc20591369dcb5556f4d26d3f80a2680399057c50d1e10c32198549fbf3dc710",
+      "bytes": 13265
+    },
+    {
+      "assignment_id": "A-PR286-FROZEN-REPLAY",
+      "agent_type": "harness_engineer",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-REPLAY.json",
+      "sha256": "27ef3f426398b84c5d8baae53053e1b55e2e9a6abce764e5350a338a1a0e3c82",
+      "bytes": 6740
+    }
+  ],
+  "merged_results": {
+    "path": ".agent-harness/runs/pr286-candidate-review-20260810/MERGED_RESULTS.json",
+    "sha256": "c82f4ded922a3d1db044267afa49934139d7d01ee5e6c701bc124ce0a1385bde",
+    "bytes": 19327
+  },
+  "disposition": "summarized_discardable",
+  "closed_at": "2026-08-10T13:43:19+00:00"
+}

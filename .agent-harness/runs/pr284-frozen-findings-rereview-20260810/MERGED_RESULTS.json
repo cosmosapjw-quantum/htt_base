@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-frozen-findings-rereview-20260810",
+  "generated_at": "2026-08-09T21:57:07+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 4,
+  "raw_finding_count": 1,
+  "unique_finding_count": 1,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR284-R2-CLAIM",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json",
+            ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/REVIEW_COVERAGE.json",
+            "docs/research_program/post_pr275/pr284_spec.yaml",
+            "docs/research_program/post_pr275/pr284_publication_policy.json",
+            "docs/generated/pr284_depth_path_doob_receipt.json",
+            "docs/PR_DELTAS/pr-284.md",
+            "htt/src/common/depth_path_calibration.py"
+          ],
+          "evidence_fingerprint": "sha256:83da131405e04b6e54f2c208b9451359e6aa73a123dfbf6a6c60773dd85045da",
+          "summary": "No affected claim/provenance defect found after the constructor-bypass repair. New replay/mutation language remains a finite registered contract check and does not promote theorem status, matched-mock execution, observed/public use, native transfer, geometry, or family identification; HTT ownership and C2 diagnostic-only boundaries remain cross-bound. The bare-source pytest collection failure is preserved separately from the passing source-root execution."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR284-R2-CODE",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "htt/src/common/depth_path_calibration.py:692",
+            "htt/src/common/depth_path_calibration.py:844",
+            ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CODE/proved_report_replay_oracle.json",
+            "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 21 passed",
+            "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+          ],
+          "evidence_fingerprint": "sha256:7b9a3a90c0ef0f35537b36ef142b52d82704e94c0f2b1e2c2b78c922b20c1677",
+          "summary": "The frozen repair closes F-PR284-CODE-001: COMMON construction and revalidation independently replay all affected finite-law, tower, selected-path, maximum, and identity premises; the historical bypass now fails closed, its registered mutation is killed, and the authentic public API remains compatible."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR284-R2-PHYSMATH",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR284-R2-PHYSMATH-001"
+          ],
+          "summary": "R2 correctly repairs the affected exact arithmetic and filtration replay, but the original caller-proof finding remains open at the DepthPath/sky-support binding layer; G6 cannot pass while a bound can be attached to invented path identities."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR284-R2-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "exact PR-283 target/base/merge-base replay",
+            "three sealed patch IDs unique across all refs",
+            "portable clean-root replay",
+            "AUTO_MERGE refused and HUMAN_ONLY preserved"
+          ],
+          "evidence_fingerprint": "pr284-r2:blind-integration:49a8f697:b6b6952d:three-patchids-unique:portable-pass:human-only",
+          "summary": "The repaired frozen candidate remains based exactly on sealed PR-283, introduces no duplicate stable patch identity, replays portably, and grants no agent merge authority."
+        },
+        {
+          "claim_id": "C-PR280-HERMETIC-HARNESS",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "all seven policy commands exit 0",
+            "fresh 14-row mutation execution",
+            "MU284-REPORT-BUILDER-BYPASS killed",
+            "historical forged report rejected before calibration",
+            "17-cell R3 coverage validates"
+          ],
+          "evidence_fingerprint": "pr284-r2:hermetic-replay:14-mutations:builder-bypass-precalibration-kill:coverage-pass",
+          "summary": "The repaired report constructor independently replays the premise and kills the historical caller-supplied proved-report bypass before calibration; receipt, mutation, and portability evidence are fresh."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR284-R2-PHYSMATH-001",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr284.importable-contract-builder.unbound-depth-path-residual.v2",
+      "statement": "R2 closes the non-centering, false-second-moment, nonfiltration, tower, and selected-path-value portions of F-PR284-PHYSMATH-001, but the importable builder still mints a proved report with invented `path_content_id`, stratum IDs, sigma-field IDs, and premise identity because COMMON never revalidates a `DepthPath`; the public calibration then emits a 1/4 Doob bound despite the spec requiring an exact strictly nested DepthPath premise.",
+      "assumptions_used": [
+        "The spec's exact DepthPath identity and strictly nested sky-support premise is mandatory for any bound, not descriptive metadata.",
+        "Python callers can directly import the underscore builder, as demonstrated by the registered mutation itself.",
+        "Exact finite-law arithmetic is necessary but does not substitute for binding the probability construction to the claimed DepthPath and sky supports."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-PHYSMATH/pr284_r2_physmath_oracle.py",
+        "docs/research_program/post_pr275/pr284_spec.yaml:32",
+        "docs/research_program/post_pr275/pr284_spec.yaml:54",
+        "docs/research_program/post_pr275/pr284_spec.yaml:89",
+        "htt/htt/htt/infer/depth_path_calibration.py:316",
+        "htt/src/common/depth_path_calibration.py:557",
+        "htt/src/common/depth_path_calibration.py:692",
+        "htt/src/common/depth_path_calibration.py:864"
+      ],
+      "counterevidence_refs": [
+        "htt/src/common/depth_path_calibration.py:710",
+        "htt/src/common/depth_path_calibration.py:718",
+        "htt/src/common/depth_path_calibration.py:730",
+        "htt/src/common/depth_path_calibration.py:741",
+        "tests/contracts/test_depth_path_doob_calibration.py:221",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 21 passed",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+      ],
+      "reproduction": [
+        "Run `python -B .agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-PHYSMATH/pr284_r2_physmath_oracle.py` from the frozen R2 candidate root.",
+        "Observe non-centered, false-second-moment, and nonfiltration constructions are rejected.",
+        "Observe the authentic receipt recomputes mean zero, E[X^2]=5, event probability 1/2, and Doob bound 25/36, with mock abstention.",
+        "Observe a mathematically consistent raw report carrying `sha256:no-registered-depth-path` and invented stratum IDs is accepted and public calibration emits probability bound 1/4."
+      ],
+      "unresolved": [
+        "Bind the proved report to a revalidated exact DepthPath object or an independently verifiable path-to-strata/support content commitment before premise status can be accepted.",
+        "Split MU284-REPORT-BUILDER-BYPASS into discriminating mutations so an invented path/strata/support identity with otherwise valid exact mathematics must also be killed before receipt PASS."
+      ],
+      "confidence": 0.99,
+      "source_finding_ids": [
+        "F-PR284-R2-PHYSMATH-001"
+      ],
+      "supporting_assignments": [
+        "A-PR284-R2-PHYSMATH"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "assignment_count": 4,
+  "validated_result_count": 4,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/RUN_PLAN.json",
+      "sha256": "c2599f5fb57332e20a6492bcea28bb393890832ceb0b2eeb407861bc5faa3fcd",
+      "bytes": 3059
+    },
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/assignments/A-PR284-R2-CLAIM.json",
+      "sha256": "174d095e3572124db29d6f051bf553e756c036ebdd3cac4cef9307d421544182",
+      "bytes": 3478
+    },
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/assignments/A-PR284-R2-CODE.json",
+      "sha256": "f792dfeabc4c616f82edcae296139df219b2fa0234b80eaeffd1d06776a9eefa",
+      "bytes": 3597
+    },
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/assignments/A-PR284-R2-PHYSMATH.json",
+      "sha256": "274bd69cab3db3e9668f867895aff8663c8e3869404ea21a8a5a7f7acf9ba83c",
+      "bytes": 3759
+    },
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/assignments/A-PR284-R2-REPLAY.json",
+      "sha256": "8628e4d14b1a66fce567051bcdf061d311041d8d4f636aaec2f3a9db0e458f93",
+      "bytes": 3736
+    },
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-CLAIM.json",
+      "sha256": "ab2a520403e507f3db1d95ef6d782ff3c5ff89986add7388d47ed8a0a9a60510",
+      "bytes": 9683
+    },
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-CODE.json",
+      "sha256": "e645823e2d2658be9167aaaef4bc169bf576d8961ad4b2d49d33b375859a15ad",
+      "bytes": 7717
+    },
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-PHYSMATH.json",
+      "sha256": "b39b11cd780784d715b869ef02ae5315817f1e64bd7cf2bedd64a8bbee3af895",
+      "bytes": 9364
+    },
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-REPLAY.json",
+      "sha256": "b0da580d1ef08cad37f82670953048e13d0e57c1c1825f46bf35ce377b745f64",
+      "bytes": 11132
+    }
+  ],
+  "merge_input_sha256": "d7419eb2bbefd91c583d794de4276e9f9efcfc3b5842b0f386d1007be5d87109"
+}

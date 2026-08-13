@@ -1,0 +1,70 @@
+{
+  "assignment_id": "A-PR285-R2-LINEAGE-REPLAY",
+  "candidate_sha": "8682a13e8df75c48f6150af555ee231f62e7d9bc",
+  "hostile_guard_replay": {
+    "lineage_mutations_killed": {
+      "duplicate_group": "logical patch lineage repeats group G20",
+      "include_without_candidate": "logical patch lineage group G22 is not included exactly once",
+      "obsolete_candidate_nonnull": "logical patch lineage group G22 obsolete patch is present",
+      "wrong_alias": "logical patch lineage group G20 source patch ID drifted",
+      "wrong_candidate": "logical patch lineage group G20 is not included exactly once",
+      "wrong_declared_patch_id": "logical patch lineage group G20 source patch ID drifted"
+    },
+    "unconditional_duplicate_guard_without_declaration": "candidate reintroduces existing stable patch ID 84b86a76aed3c24a2710736948dc233408e74635"
+  },
+  "lineage_replay": {
+    "audit_sha256": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436",
+    "candidate_nonmerge_commits": 8,
+    "groups": {
+      "G20": {
+        "candidate_count": 1,
+        "disposition": "INCLUDE",
+        "source_commit_count": 4,
+        "stable_patch_id": "ec4535b0ffb7a461583d8f2f17821d14be86be80"
+      },
+      "G21": {
+        "candidate_count": 1,
+        "disposition": "INCLUDE",
+        "source_commit_count": 2,
+        "stable_patch_id": "42b0834deccf5abbbbf7cb033b48fe01de8c1bf5"
+      },
+      "G22": {
+        "candidate_count": 0,
+        "disposition": "EXCLUDE_OBSOLETE",
+        "source_commit_count": 1,
+        "stable_patch_id": "24fc17b06f91db9f4850fc665cd0a47c8996ce81"
+      }
+    },
+    "unique_candidate_patch_ids": 8
+  },
+  "receipt_and_write_boundary": {
+    "portable_check_from_tmp": true,
+    "receipt_content_sha256": "3e70058559c8926d52ae97147d163c808bdf4223b0ae0462b0c8bf3148e4da53",
+    "registered_mutations_killed": 13,
+    "rows": 80,
+    "source_bindings": 16,
+    "write_boundary_cases": [
+      "atomic_regular_replace",
+      "hardlink_refused_before_build",
+      "symlink_destination_refused",
+      "path_escape_refused",
+      "symlink_parent_refused"
+    ]
+  },
+  "run_id": "pr285-bounded-repair-rereview-20260810",
+  "schema_version": 1,
+  "seal_receipt_and_bounded_rereview": {
+    "assurance_consumed": 11,
+    "dependency_hash_count_unchanged": 20,
+    "final_only_commit": "8682a13e8df75c48f6150af555ee231f62e7d9bc",
+    "final_only_paths": [
+      "docs/PR_DELTAS/pr-285.md",
+      "docs/codex_handoff/pr_status.yaml",
+      "machine_readable/pr_status.yaml"
+    ],
+    "implementation_receipt_commands": 8,
+    "implementation_receipt_sha256": "ff45e9222b1d8190c9204bcf8acdb9907847b23e6b51faea61ddc5725c1ccbfa",
+    "production_hash_unchanged": "602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2"
+  },
+  "status": "PASS"
+}

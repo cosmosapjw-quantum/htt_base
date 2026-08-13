@@ -1,0 +1,148 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-final-seal-closeout-20260811",
+  "assignment_id": "A-PR289-FINAL-SEAL-CLOSEOUT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "8181b235f21ef20f9cacdaafd00cb9dda8009d2ac28aac5554bea406da0e4722",
+    "seal_sha256": "69c1c25c127d0563a158a784cde7e58dc287a87e363dbca4bb8cf8e1903857da",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "b398078201964aa2c43acff5eb7bc2b6f2d601df",
+    "diff_sha256": "47613de9436a0c434dd1376c93d0aed47c5f075cc877f7c3c68bfaca7f0881ff",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "c638eaea433bcce5a5b00140a916108d5c23b64d079c94bbb7456a343acf0d48"
+  },
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Final bounded metadata-only closeout of PR-289 at exact reviewed HEAD 45da1bf5. Inspect only registered result paths and aggregates explicitly allowed. Verify final candidate seal and freshness-aware final integration receipt; exact PR-288 predecessor/base, clean worktree, 17 linear unique candidate patch IDs, and that eec048d4..45da1bf5 changes only PR delta plus synchronized status mirrors. Validate immutable chronology: R3 replay/claim FAIL on stale header, R3 physics/code ERROR/INCONCLUSIVE after blind exposure, R4 ERROR/INCONCLUSIVE after blind exposure with pre-incident cross-lane observation, then exact R5 physics/code PASS and replay/claim PASS after the bounded repair. Verify production/dependency key unchanged between R5 and final seal; five substantive command cells carried byte-for-byte and only portable, DAG/status and claim-language cells rerun. Confirm lifecycle REVIEWED, assurance pre-closeout 14/16 and projected 15/16 after this assignment, registered reauthorization is bounded to this single closeout, PR-290 remains PLANNED/INELIGIBLE at 0/16, and no push, PR or merge occurred. Do not rerun substantive assurance. Write no tracked/shared files; produce only assignment-local oracle, exact 36-cell coverage and one strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR289_FINAL_CANDIDATE_SEAL.json",
+      "sha256": "8181b235f21ef20f9cacdaafd00cb9dda8009d2ac28aac5554bea406da0e4722"
+    },
+    {
+      "path": ".prguard/runtime/PR289_FINAL_INTEGRATION_REHEARSAL.json",
+      "sha256": "b641ed58c60838e35d48524656fc6c314e2ef4b18587e523ea0836ea5a23a926"
+    },
+    {
+      "path": ".prguard/runtime/PR289_FINAL_EVIDENCE_CARRY_FORWARD.py",
+      "sha256": "1751be9602f110fe21de371204cb2fd8449acdabdd198a067f3a0466526b2da9"
+    },
+    {
+      "path": ".prguard/runtime/PR289_R5_CANDIDATE_SEAL.json",
+      "sha256": "a2681b6259aa6ac98929122b0fd4bfdceef21d18e818e43552f5e09b109c4e7a"
+    },
+    {
+      "path": ".prguard/runtime/PR289_R5_INTEGRATION_REHEARSAL.json",
+      "sha256": "82dac5eeb2664c095fd7c01f99d11230e0a036f24e589e6d4d8f7c95dae54d73"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r3-review-20260811/results/A-PR289-R3-PHYSCODE.json",
+      "sha256": "710edb35fd5035b78a67f50f8f6823e3462ac86da028b794770640d37abf4de7"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r3-review-20260811/results/A-PR289-R3-REPLAYCLAIM.json",
+      "sha256": "5345730035fd3e54bf0392b411954786c6bf06423265a1175ddc0420e4eaed90"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/results/A-PR289-R4-FINAL-REVIEW.json",
+      "sha256": "9334d78a617ad5b3b7519151bcb632597f87983e73423d3e0e37d14abaede581"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json",
+      "sha256": "62491e365993e4c9bfab25a5c636a4d731f87f844201a1bcd8cd9a769b99351a"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json",
+      "sha256": "dab4508faa380e639fd9b2b099a8cead674931c6faeb132665d37c149f58a60d"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r3-review-20260811/MERGED_RESULTS.json",
+      "sha256": "2543b21e7703e001f44b7b19f86f95895c2adcfacd0fb51322b968570c663f49"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r3-review-20260811/RUN_SUMMARY.json",
+      "sha256": "ed63b1ef343d19afa689417e8934cd77a35e4fc7aa2d42716bfce8e8685ce93a"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/MERGED_RESULTS.json",
+      "sha256": "adb753546b24ecd79eec59a8b0f6938510db58089004e13970fe97b23f2ab0ea"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/RUN_SUMMARY.json",
+      "sha256": "3c9b890fbd0869bd1af43f7323188d2611c66076e5223f4618ad8d0f7c853cf8"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/MERGED_RESULTS.json",
+      "sha256": "4e4a1077ae7b73a242f647e2829fd98590ef49b180171ed024095002b51d2021"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/RUN_SUMMARY.json",
+      "sha256": "e7375f5bccf0bc50fbd454bbaef63f7f665ad5aec4491ef918bdde5e5fe13658"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr289_spec.yaml",
+      "sha256": "f4a8e89e603a1f6e4fe9cb99c422ef83407fd264328b3adaf927aafdcfb6636f"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr289_publication_policy.json",
+      "sha256": "4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-289.md",
+      "sha256": "bf490fc07bbc0145f123272ba21f838465cdc4dee42f56662654dca76951b77c"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "de432e416f64359b5865fd68602205e65ba5821bfe223eafb92995f20ccf46e0"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "de432e416f64359b5865fd68602205e65ba5821bfe223eafb92995f20ccf46e0"
+    },
+    {
+      "path": ".agent-harness/scripts/_harness.py",
+      "sha256": "388f66e208bc460fb916eeca8603fc6f5ebfd914e448e59e93382152fde3f6ce"
+    }
+  ],
+  "allowed_sibling_results": [
+    ".agent-harness/runs/pr289-final-r3-review-20260811/results/A-PR289-R3-PHYSCODE.json",
+    ".agent-harness/runs/pr289-final-r3-review-20260811/results/A-PR289-R3-REPLAYCLAIM.json",
+    ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/results/A-PR289-R4-FINAL-REVIEW.json",
+    ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json",
+    ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json"
+  ],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr289-final-seal-closeout-20260811/results/A-PR289-FINAL-SEAL-CLOSEOUT.json",
+  "status": "registered",
+  "assignment_sha256": "8947fe49cf08efb34f3357036e45354ca0831212086ad059034bcdb2e4a4ca45"
+}

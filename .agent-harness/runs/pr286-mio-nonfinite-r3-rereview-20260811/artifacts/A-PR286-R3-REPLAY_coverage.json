@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-mio-nonfinite-r3-rereview-20260811",
+  "assignment_id": "A-PR286-R3-REPLAY",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "candidate_seal_sha256": "26b24258bfec78ccbd0dad9382fc6ae8e9b9ba9a417b81753f84ca68b30c6f0f",
+  "candidate_sha": "0b1a8ef76df47b0b42e972bb47c9bc294e80aa7c",
+  "candidate_tree_sha": "c92883d3500aff9a7fa07e561ad43bf4088feb9d",
+  "diff_sha256": "a07284aa230f991286ac4b3ed11e5201f70af2a49ae8bf79cf5191d5af3cc4d1",
+  "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+  "completed_at": "2026-08-11T04:08:00+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json", "A-PR286-R3-REPLAY oracle: exact base/head/tree/diff and 13 unique stable patch IDs"],
+      "rationale": "The live branch, merge base, tree, binary diff, changed-file digest, production hash, and seal recomputation match the frozen candidate."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml sha256 6fca230213eea5c914842c63513a9047cb3221d0646564692464a82d7a03fc05", "registered assignment required_inputs"],
+      "rationale": "The governing spec is a required, hash-bound input and the executed receipt and tests replay its current bytes."
+    },
+    {
+      "cell": "source_58_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["tracked receipt summary: source_rows=58 with partitions 30/24/4", "focused gate: 45 passed"],
+      "rationale": "The independent oracle and focused contracts reproduce the exact source inventory."
+    },
+    {
+      "cell": "vt_s_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["tracked receipt summary: vector_tensor_rows=14", "focused gate: 45 passed"],
+      "rationale": "The independent oracle and focused contracts reproduce all fourteen successor rows."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "PASS",
+      "evidence_refs": ["receipt source_replay_identity_sha256 fields", "MU286-STATEMENT-DRIFT killed with STATEMENT_IDENTITY_DRIFT"],
+      "rationale": "Null-safe statement replay identities are recomputed and a statement mutation is killed."
+    },
+    {
+      "cell": "exact_proof_not_simulation",
+      "status": "PASS",
+      "evidence_refs": ["PR-271 exact-core replay exit 0", "MU286-EXACT-BY-SIMULATION and MU286-ORACLE-LABEL-AS-PROOF killed"],
+      "rationale": "Exact rows retain typed proof bindings and simulation or source labels cannot promote them."
+    },
+    {
+      "cell": "estimand_and_sampling_law_binding",
+      "status": "PASS",
+      "evidence_refs": ["PR-272 preregistration replay: current", "MU286-ESTIMAND-DRIFT and MU286-LAW-COVARIANCE-DRIFT killed"],
+      "rationale": "The frozen statistical identities replay and post-registration mutations are refused."
+    },
+    {
+      "cell": "covariance_and_null_binding",
+      "status": "PASS",
+      "evidence_refs": ["33 current regular-file source bindings verified by independent oracle", "adjacent gate: 90 passed"],
+      "rationale": "Current covariance, null, generator, and implementation identities remain content-bound."
+    },
+    {
+      "cell": "exact_vs_asymptotic_status",
+      "status": "PASS",
+      "evidence_refs": ["72-row receipt exact replay ok=true", "focused gate: 45 passed"],
+      "rationale": "Every row retains its evidence-class-specific finite, asymptotic, or exact status."
+    },
+    {
+      "cell": "preregistration_seed_and_tolerance_binding",
+      "status": "PASS",
+      "evidence_refs": ["PR-272 validation registry is current", "MU286-SEED-TOLERANCE-DRIFT killed with PREREGISTRATION_DRIFT"],
+      "rationale": "Seed and tolerance identity is frozen and the registered drift mutation is killed."
+    },
+    {
+      "cell": "coverage_and_failure_map_replay",
+      "status": "PASS",
+      "evidence_refs": ["PR-273 replay: 5 cases, 2 held out, 5 mutations killed", "MU286-HIDE-NEGATIVE-CONTROL killed"],
+      "rationale": "Coverage cells and visible failure maps replay without hiding registered failures."
+    },
+    {
+      "cell": "negative_controls_visible",
+      "status": "PASS",
+      "evidence_refs": ["MU286-NEGATIVE-CONTROL-SURVIVES killed", "receipt terminal counts PASS 21 INCONCLUSIVE 50 BLOCKED 1 FAIL 0"],
+      "rationale": "Expected negative-control kills remain distinct from positive-cell failure and all non-passing rows remain visible."
+    },
+    {
+      "cell": "source_status_not_authority",
+      "status": "PASS",
+      "evidence_refs": ["MU286-BARE-SOURCE-STATUS killed with TERMINAL_VOCABULARY_INVALID", "receipt exact source bindings"],
+      "rationale": "Source status is routing metadata and cannot independently satisfy a terminal proof disposition."
+    },
+    {
+      "cell": "vts14_admitted_data_gate",
+      "status": "PASS",
+      "evidence_refs": ["VT-S14 verdict BLOCKED_WITH_RECEIPT", "MU286-VTS14-DATA-PROMOTION killed"],
+      "rationale": "Synthetic validation does not satisfy the admitted-data gate or promote the VT-S14 row."
+    },
+    {
+      "cell": "htt_mio_obsstat_ownership",
+      "status": "PASS",
+      "evidence_refs": ["public MIO 1e200 counterexample raises PillarSInferenceError", "MU286-MIO-POSTERIOR and MU286-VTS14-MIO-NUMERIC-GUARD-DRIFT killed"],
+      "rationale": "MIO remains diagnostic-only and the repaired public facade fails closed on non-finite residual arithmetic."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["receipt check: ok=true", "independent rebuild equals tracked 72-row receipt at content id 00948067d29adfcc3cb1c931642cc11ff2bf4df5c85cb2be8087064beb810b76"],
+      "rationale": "All 20 mutations execute, activate, and die in order; focused tests also exercise destination containment and atomic failure preservation."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["portable replay: distinct clean root, 5887 tracked files, nested check exit 0", "source and clean pre/post manifest d7d0cc0722d43175568a4269629e272e79610d44598301ed53d174648d5dee8e"],
+      "rationale": "The exact receipt replay is portable and leaves both source and clean archive manifests invariant."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["publication-integrity selector: 3 passed, 74 deselected", "docs/research_program/post_pr275/pr286_publication_policy.json"],
+      "rationale": "Policy, candidate seal, target, open-stack bounds, and publication-capable command rejection cross-bind."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["strict claim-language lint: no forbidden claim language", "receipt diagnostic_only and BLOCKED_PRE_NATIVE_ATLAS metadata"],
+      "rationale": "The candidate remains diagnostic-only, non-public, non-observed, and below family identification."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["candidate seal target 16bc6db511b8b7228e5c4dcb95c65074fe519f24 equals merge base and live remote target", "strict rescue DAG: 244 PRs valid"],
+      "rationale": "The candidate is based on the exact PR-285 target and the normalized PR-287 dependency remains fail-closed."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "invariant_checker",
+      "oracle_id": "PR286-R3-REPLAY-ORACLE",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-REPLAY_oracle.py"
+      ],
+      "command_fingerprint": "9d363a3e709bcf186ce38f85533e68113c44a126a1dbffe04032655e473b4c4b",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T04:07:00+00:00",
+      "completed_at": "2026-08-11T04:08:00+00:00",
+      "artifact_path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-REPLAY_oracle.py",
+      "artifact_sha256": "d5332ef9aefb598c3a06640a2c5f4a0402728959183ac1a690d5ff08dbb0c55c",
+      "artifact_bytes": 8942,
+      "evidence_refs": [
+        "exact candidate seal recomputation",
+        "independent receipt rebuild and 20-mutation replay",
+        "public MIO non-finite typed-refusal probe"
+      ]
+    }
+  ],
+  "coverage_sha256": "bdc138e04b16c588bf2c6b97951ec728dca035ce10a76d81fb110a15142cbd0e"
+}

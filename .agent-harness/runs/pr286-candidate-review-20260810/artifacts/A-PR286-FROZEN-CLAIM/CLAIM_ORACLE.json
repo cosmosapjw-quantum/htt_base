@@ -1,0 +1,253 @@
+{
+  "assignment_id": "A-PR286-FROZEN-CLAIM",
+  "candidate_sha": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+  "candidate_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+  "checks": [
+    {
+      "check_id": "required_input_hashes",
+      "evidence": {
+        ".prguard/runtime/PR286_CANDIDATE_INTEGRATION_REHEARSAL.json": "78f13f54bebf60df6781fd8fec7576bb78e20075715e2783eed86bb469e46465",
+        ".prguard/runtime/PR286_CANDIDATE_SEAL.json": "0376ec83567e3ad8a005500110961f8b5df5ec275fc2c4ded9ad67eb12e12bd5",
+        "docs/PR_DELTAS/pr-286.md": "d94c3fb1b613f8c074b6d97a7a8adeb90ad6fa8091fde71c2d34a6fc023be1be",
+        "docs/codex_handoff/pr_backlog.yaml": "73553b6056e5111c1047b80f79c35cdb8e898e0a7b8a7e7e28f97731b5cc699e",
+        "docs/codex_handoff/pr_status.yaml": "952e56d715cf740381ddfa701b2e82a4cb7f828036a13088d760fb4cefcb376c",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json": "1eb3a52de178443ed6a14dbff425c7630c93f37a8e3af66c8e348162d46df32d",
+        "docs/research_program/post_pr275/pr286_publication_policy.json": "768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d",
+        "docs/research_program/post_pr275/pr286_spec.yaml": "db4fc3d3d00cbeb239a437380d646a889ede519f671641cdf0f72e35a13ae413",
+        "machine_readable/pr_status.yaml": "952e56d715cf740381ddfa701b2e82a4cb7f828036a13088d760fb4cefcb376c"
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "context_version",
+      "evidence": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+      "status": "PASS"
+    },
+    {
+      "check_id": "candidate_identity",
+      "evidence": {
+        "head": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+        "merge_base": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+        "tree": "1d6ca231d3137b95372da18087741531f9cc0b0b"
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "integration_rehearsal_identity",
+      "evidence": {
+        "latest_target_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+        "merged_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+        "status": "PASS"
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "claim_ceiling_and_provenance",
+      "evidence": {
+        "assumptions": [
+          "PR-271 exact proof rows and PR-272 preregistration bytes remain frozen.",
+          "PR-272 simulation evidence is synthetic and diagnostic-only.",
+          "PR-273 is a held-out synthetic integration diagnostic, not observed evidence.",
+          "Process success means complete evidence-specific disposition, not universal proof."
+        ],
+        "caveats": [
+          "Many source rows remain inconclusive because their required evidence class is absent.",
+          "Synthetic coverage is conditional on the registered DGP, covariance, seed family, and tolerance.",
+          "VT-S14 remains blocked before admitted data despite synthetic adapter validation.",
+          "No native solver, observed sky, physical family ranking, or MIO posterior is produced.",
+          "PR-272 code bytes are bound as current replay provenance, not retroactively labelled preregistered before result inspection."
+        ],
+        "claim_level": {
+          "level": "C2",
+          "scheme": "roadmap_rescue_v1"
+        },
+        "claim_tier": "diagnostic_only",
+        "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+        "generating_command": "python3 -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py build",
+        "generation_identity": {
+          "git_commit": null,
+          "mode": "external_candidate_seal_required",
+          "source_binding_set_sha256": "9307c754366b728eaecf240377ef9bd74dcc2bcbcb7e1b2b7586d28795465c68",
+          "worktree_state": "external_seal_bound"
+        },
+        "observed_data_executed": false,
+        "owner": "HTT",
+        "public_use": false,
+        "scientific_artifact_mode": "proof_adjudication_diagnostic",
+        "scope": "pre-solver complete Pillar-S row-level evidence disposition",
+        "transfer_source": "none"
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "ownership_firewall",
+      "evidence": {
+        "mio_forbidden_outputs": [
+          "likelihood",
+          "posterior",
+          "Bayes_factor",
+          "evidence"
+        ],
+        "ownership": {
+          "COMMON": "exact contracts and proof identities",
+          "HTT": "model-dependent calibration coverage and inference diagnostics",
+          "MIO": "diagnostic residual and coherence consumers only",
+          "OBSSTAT": "observable estimands features nulls and covariance inputs"
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "row_terminal_contract",
+      "evidence": {
+        "row_count": 72,
+        "terminal_counts": {
+          "BLOCKED_WITH_RECEIPT": 1,
+          "INCONCLUSIVE_WITH_RECEIPT": 50,
+          "PASS": 21
+        },
+        "vts14": "BLOCKED_WITH_RECEIPT"
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "complete_is_not_universal_proof",
+      "evidence": {
+        "scientific_status_effect": "ROW_LEVEL_EVIDENCE_SPECIFIC_DISPOSITION_ONLY",
+        "success_semantics": "PROCESS_COMPLETION_ONLY",
+        "terminal": "PASS_COMPLETE_PILLAR_S_ADJUDICATION"
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "downstream_nonpromotion",
+      "evidence": {
+        "consumer": "PR-287",
+        "preserve_inconclusive_and_blocked": true,
+        "preserve_row_verdicts": true,
+        "required_row_fields": [
+          "row_id",
+          "verdict",
+          "evidence_class",
+          "statement_relation",
+          "claim_ceiling"
+        ],
+        "rule": "Consume exact row-level verdicts and evidence grades. A process PASS cannot convert INCONCLUSIVE_WITH_RECEIPT or BLOCKED_WITH_RECEIPT into proposition success, and synthetic validation cannot seed observed inference.",
+        "synthetic_validation_effect": "NO_OBSERVED_OR_SOURCE_PROOF_PROMOTION",
+        "upstream_success_semantics": "PROCESS_COMPLETION_ONLY",
+        "upstream_terminal_required": "PASS_COMPLETE_PILLAR_S_ADJUDICATION"
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "forbidden_input_mutations",
+      "evidence": {
+        "count": 18,
+        "survivors": []
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "forbidden_sources_absent",
+      "evidence": [
+        "docs/generated/pr254_anchor_geometry/CAS_ADJUDICATION_PR254_ANCHOR_GEOMETRY.json",
+        "docs/generated/pr254_anchor_geometry/CAS_CONTRACT_PR254_ANCHOR_GEOMETRY.json",
+        "docs/generated/pr254_anchor_geometry/counterexample_oracle.json",
+        "docs/generated/pr257_lowell_morphology/CAS_ADJUDICATION_PR257_ORBIT_V2.json",
+        "docs/generated/pr257_lowell_morphology/CAS_CONTRACT_PR257_ORBIT_V2.json",
+        "docs/research_program/post_pr275/pr286_publication_policy.json",
+        "docs/research_program/post_pr275/pr286_spec.yaml",
+        "docs/research_program/premise_anchor/pr254_spec.yaml",
+        "docs/research_program/premise_anchor/pr257_spec.yaml",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+        "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml",
+        "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+        "docs/research_program/vector_tensor/pr271_spec.yaml",
+        "docs/research_program/vector_tensor/pr272_spec.yaml",
+        "docs/research_program/vector_tensor/pr273_spec.yaml",
+        "docs/research_program/vector_tensor/proof_registry_two_pillars.yaml",
+        "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+        "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+        "docs/research_program/vector_tensor/proofs/PR271_PILLAR_S_CORE.md",
+        "htt/src/common/anchor_geometry.py",
+        "htt/src/common/orbit_catalogue_v2.py",
+        "htt/src/common/sbc_ppc.py",
+        "htt/src/common/vector_tensor_statistical_inference.py",
+        "htt/src/common/weak_id_coverage.py",
+        "scripts/codex_harness/build_pr271_pillar_s_core.py",
+        "scripts/codex_harness/build_pr272_pillar_s_inference.py",
+        "scripts/codex_harness/build_pr273_blind_synthetic.py",
+        "scripts/codex_harness/run_pr254_counterexamples.py",
+        "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+        "tests/contracts/test_pillar_s_complete_adjudication.py",
+        "tests/contracts/test_pillar_s_core.py",
+        "tests/contracts/test_pillar_s_inference.py",
+        "tests/integration/test_vector_tensor_blind_synthetic.py"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "receipt_content_address",
+      "evidence": "bfeae06a5cc0bd6eaf3efa025ec0738bc5bb6183b6fe781dd175e16b0af133ea",
+      "status": "PASS"
+    },
+    {
+      "check_id": "status_mirrors_and_lifecycle",
+      "evidence": {
+        "PR-286": "VALIDATED",
+        "PR-287": {
+          "assurance_budget": {
+            "consumed": 0,
+            "maximum": 16
+          },
+          "base_sha": null,
+          "dependency_hashes": {},
+          "gate_dispositions": {
+            "eligibility": "INELIGIBLE"
+          },
+          "lifecycle": "PLANNED",
+          "lifecycle_history": [
+            "PLANNED"
+          ],
+          "pr_url": null,
+          "predecessor_pr": "PR-286",
+          "predecessor_sealed_sha": null,
+          "production_hash": null,
+          "pushed_ref": null,
+          "sealed_head": null
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "predecessor_exactness_and_human_merge",
+      "evidence": {
+        "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+        "merge_policy": "HUMAN_ONLY",
+        "predecessor_sealed_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24"
+      },
+      "status": "PASS"
+    },
+    {
+      "check_id": "backlog_consumer_edge",
+      "evidence": {
+        "downstream_row_contract": {
+          "preserve_inconclusive_and_blocked": true,
+          "preserve_row_verdicts": true,
+          "synthetic_validation_effect": "NO_OBSERVED_OR_SOURCE_PROOF_PROMOTION"
+        },
+        "mode": "requires_success",
+        "required_terminal": "PASS_COMPLETE_PILLAR_S_ADJUDICATION",
+        "success_semantics": "PROCESS_COMPLETION_ONLY",
+        "upstream_id": "PR-286"
+      },
+      "status": "PASS"
+    }
+  ],
+  "completed_at": "2026-08-10T13:24:53+00:00",
+  "oracle_id": "PR286-FROZEN-CLAIM-ORACLE",
+  "run_id": "pr286-candidate-review-20260810",
+  "schema_version": 1,
+  "started_at": "2026-08-10T13:24:52+00:00",
+  "status": "PASS"
+}

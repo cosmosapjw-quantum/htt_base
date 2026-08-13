@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-claim-closeout-extension-20260813",
+  "assignment_id": "A-PR291-R5-FINAL-CLOSEOUT",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "8345974c09e968095cce4a8cac5014e3d08f42ed68e56004a2e3cd56ce3edf5a",
+  "candidate_sha": "5395853386b08b1fbf0b56a9e6c7a2a6e104ae5a",
+  "candidate_tree_sha": "4a1bdbecae5767768b4e8d5beb3a00b41b437c1f",
+  "diff_sha256": "d4e14e08a51067fdffa696ea694b4d1a61bafb7db740da3fd0246bcda5951862",
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "completed_at": "2026-08-13T08:03:28Z",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "coverage_cells": [
+    {"cell":"candidate_identity","status":"PASS","evidence_refs":[".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json",".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-FINAL-CLOSEOUT-oracle.py"],"rationale":"Exact frozen candidate, tree, base, merge-base, seal, clean tracked state, and 13 unique stable patch IDs matched."},
+    {"cell":"spec_before_execution","status":"PASS","evidence_refs":["docs/research_program/post_pr275/pr291_spec.yaml"],"rationale":"Frozen preactivation spec hash matched; no substantive execution was rerun."},
+    {"cell":"dependency_terminal_replay","status":"PASS","evidence_refs":["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"],"rationale":"Deterministic receipt remains BLOCKED_PREDECESSOR_FINAL_SUCCESS."},
+    {"cell":"data_identity_and_human_authorization_separation","status":"PASS","evidence_refs":["docs/research_program/post_pr275/pr291_spec.yaml","docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"],"rationale":"Identity admission and H-CF4 authorization remain separate and unsatisfied."},
+    {"cell":"preflight_before_first_write","status":"PASS","evidence_refs":[".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json"],"rationale":"Registered replay lane passed containment and blocked-write checks."},
+    {"cell":"synthetic_estimand_identity","status":"PASS","evidence_refs":[".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"],"rationale":"Registered physics/statistics lane passed the synthetic diagnostic mechanics."},
+    {"cell":"group_row_selection_and_frame_conventions","status":"PASS","evidence_refs":[".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"],"rationale":"R5 physstat result reports exact source-geometry and convention controls passed."},
+    {"cell":"full_covariance_and_effective_rank","status":"PASS","evidence_refs":[".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"],"rationale":"R5 physstat result reports covariance-whitened fixed-threshold rank/null controls passed."},
+    {"cell":"depth_zoa_nested_support_and_transport","status":"PASS","evidence_refs":[".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"],"rationale":"Registered physstat review found no substantive defect in nested-support mechanics."},
+    {"cell":"weak_identification_and_identified_set_abstention","status":"PASS","evidence_refs":[".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"],"rationale":"WEAKLY_IDENTIFIED and non-singleton abstention controls passed without family promotion."},
+    {"cell":"legacy_p0_and_curl_disposition","status":"PASS","evidence_refs":["docs/research_program/post_pr275/pr291_spec.yaml",".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json"],"rationale":"Legacy 0.0089 remains non-physical diagnostic-only evidence."},
+    {"cell":"blocked_no_numeric_output","status":"PASS","evidence_refs":["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"],"rationale":"Receipt records no observed execution, numeric output, or network side effect."},
+    {"cell":"portable_clean_integration","status":"PASS","evidence_refs":[".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json"],"rationale":"Registered code/replay lane passed portable-clean replay over 5927 tracked files."},
+    {"cell":"publication_policy_cross_binding","status":"PASS","evidence_refs":["docs/research_program/post_pr275/pr291_publication_policy.json",".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json"],"rationale":"Frozen policy identity and candidate cross-binding matched."},
+    {"cell":"claim_and_family_ceiling","status":"FAIL","evidence_refs":[".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-CLAIM.json"],"rationale":"High-severity F-PR291-R5-CLAIM-001 reproduced eight family-promotion scanner false negatives; closeout is blocked."},
+    {"cell":"latest_target_integration","status":"PASS","evidence_refs":["docs/codex_handoff/pr_status.yaml",".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json"],"rationale":"Base and predecessor sealed SHA remain exact PR-290 head 06ac2060; PR-292 remains PLANNED and INELIGIBLE."}
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "pr291-r5-final-fail-closeout",
+      "kind": "static_analyzer",
+      "status": "PASS",
+      "argv": ["python3","-B",".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-FINAL-CLOSEOUT-oracle.py"],
+      "command_fingerprint": "6e52a6f25be0a8966a9fda3fcf71b97024e3e26045e9d28d0dc8c125bafe49de",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T08:03:28Z",
+      "completed_at": "2026-08-13T08:03:28Z",
+      "artifact_path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-FINAL-CLOSEOUT-oracle.py",
+      "artifact_sha256": "d6bb6b1f84a977a55a5296e683d593fb1ed6b4641b5169dceeb57d77e3874361",
+      "artifact_bytes": 4830,
+      "evidence_refs": [".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-CLAIM.json",".agent-harness/runs/pr291-authorized-r5-review-20260813/RUN_SUMMARY.json"]
+    }
+  ],
+  "coverage_sha256": "785f5f7de408e717a59ee765409973cbf0f6df1d4395073f6da7f8dbaec01ec3"
+}

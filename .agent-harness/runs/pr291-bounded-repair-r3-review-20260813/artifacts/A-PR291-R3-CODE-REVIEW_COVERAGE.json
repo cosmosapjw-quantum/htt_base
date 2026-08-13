@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-bounded-repair-r3-review-20260813",
+  "assignment_id": "A-PR291-R3-CODE",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "28a2bda8a600cf5ccb0dab4dbb9525105004c469f628d1e392d261beee5a32d1",
+  "candidate_sha": "1af0db69da0a190b268d6765e334b05023dd04e7",
+  "candidate_tree_sha": "d5f3a1199932eb1b66b403e74287e003c941191f",
+  "diff_sha256": "fefd37043d724282ea1fbc3cf6a7de72c02d30bc9f3dff712c6bca564aef4cf3",
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "completed_at": "2026-08-13T05:28:28+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json#candidate_identity"
+      ],
+      "rationale": "Canonical seal verification reproduced the exact base, merge-base, candidate, tree, diff, changed-file, production, and policy bindings."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml:1",
+        "htt/src/common/cf4_observed_lane_activation.py:346",
+        "scripts/codex_harness/run_pr291_cf4_lane.py:324"
+      ],
+      "rationale": "The complete fail-closed specification is validated before runner payload construction or output mutation."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/cf4_observed_lane_activation.py:568",
+        "tests/integration/test_cf4_post275_lane.py:359",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json#policy_commands/pr291-preactivation"
+      ],
+      "rationale": "PR-201, PR-287, and PR-289 completion state and registered terminal receipts replay fail closed to BLOCKED_PREDECESSOR_FINAL_SUCCESS."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/cf4_observed_lane_activation.py:672",
+        "htt/src/common/cf4_observed_lane_activation.py:816",
+        "tests/integration/test_cf4_post275_lane.py:300",
+        "tests/integration/test_cf4_post275_lane.py:413"
+      ],
+      "rationale": "Canonical PR-289 admission replay and the unprovisioned H-CF4 gate remain non-substitutable."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr291_cf4_lane.py:111",
+        "scripts/codex_harness/run_pr291_cf4_lane.py:324",
+        "scripts/codex_harness/run_pr290_planck_lane.py:214",
+        "scripts/codex_harness/run_pr290_planck_lane.py:263",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json#oracle"
+      ],
+      "rationale": "Exact transaction origin is checked before payload creation; the outside-root oracle killed preloaded, parent-race, alias, FIFO, traversal, archive, and blocked-result paths."
+    },
+    {
+      "cell": "synthetic_estimand_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml:86",
+        "htt/obsstat/cf4_post275_lane.py:187",
+        "tests/integration/test_cf4_post275_lane.py:441"
+      ],
+      "rationale": "The synthetic-only operator requires the exact nonempty estimand identity and cannot stand in for observed CF4 execution."
+    },
+    {
+      "cell": "group_row_selection_and_frame_conventions",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+        "htt/src/common/cf4_observed_lane_activation.py:68",
+        "tests/integration/test_cf4_post275_lane.py:300",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json#oracle"
+      ],
+      "rationale": "The ordered nine-role catalogue, row-selection, covariance, frame, sign, units, grouping, depth, and ZoA inventory is exact and replayed."
+    },
+    {
+      "cell": "full_covariance_and_effective_rank",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:116",
+        "htt/obsstat/cf4_post275_lane.py:342",
+        "tests/integration/test_cf4_post275_lane.py:450",
+        "tests/integration/test_cf4_post275_lane.py:501"
+      ],
+      "rationale": "Focused and adjacent suites pass full-covariance Cholesky whitening, finite-rank, condition, correlated-estimand, and unit-rescaling invariants."
+    },
+    {
+      "cell": "depth_zoa_nested_support_and_transport",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:518",
+        "tests/integration/test_cf4_post275_lane.py:538",
+        "tests/integration/test_cf4_post275_lane.py:586"
+      ],
+      "rationale": "Depth and ZoA rows derive their native-role identities from the bound operator and reject nonnested or caller-glued identity drift."
+    },
+    {
+      "cell": "weak_identification_and_identified_set_abstention",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:1019",
+        "htt/obsstat/cf4_post275_lane.py:1130",
+        "tests/integration/test_cf4_post275_lane.py:601",
+        "tests/integration/test_cf4_post275_lane.py:636"
+      ],
+      "rationale": "Whitened response-null rank and typed LOCAL/GLOBAL/NUISANCE roles preserve weak-identification abstention rather than emitting a point source."
+    },
+    {
+      "cell": "legacy_p0_and_curl_disposition",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml:183",
+        "htt/obsstat/cf4_post275_lane.py:1277",
+        "tests/integration/test_cf4_post275_lane.py:742"
+      ],
+      "rationale": "P0 and velocity-shape headlines remain retired; 0.0089 remains a stencil-limited self-consistency diagnostic only."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+        "htt/src/common/cf4_observed_lane_activation.py:990",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json#oracle"
+      ],
+      "rationale": "Deterministic replay emits only the content-bound nonexecution receipt with no observed execution, numeric output, network side effect, or results directory."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr291_cf4_lane.py:437",
+        "scripts/codex_harness/run_pr291_cf4_lane.py:454",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json#policy_commands/pr291-portable-clean"
+      ],
+      "rationale": "A scrubbed clean git archive replay passed with identical pre/post manifests across 5927 tracked files."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_publication_policy.json",
+        ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json#policy_commands/pr291-policy-cross-binding"
+      ],
+      "rationale": "The seal binds the exact nonrelaxable PR-291 policy identity and the dedicated cross-binding tests pass."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml:8",
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json#policy_commands/pr291-claim-language"
+      ],
+      "rationale": "The result remains diagnostic_only, transfer source none, nonpublic, and BLOCKED_PRE_NATIVE_ATLAS; strict claim scanning passes."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json",
+        "docs/PR_DELTAS/pr-291.md:18",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json#lineage"
+      ],
+      "rationale": "The candidate is a linear seven-commit child of the exact sealed PR-290 target; G55 shares its historical stable patch ID and G56-G61 capability was selectively reconstructed."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR291-R3-CODE-INVARIANT-ORACLE",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-oracle.py"
+      ],
+      "command_fingerprint": "8b6b6a499bb531e5ef1298ccf30f0f2b000a281818a8b6aa06cfddd651d5a423",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T05:24:02.197596+00:00",
+      "completed_at": "2026-08-13T05:24:02.995165+00:00",
+      "artifact_path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json",
+      "artifact_sha256": "ce8f06a5e03fdf0067803f3903e36d4f60670d89bf883d6f3c2b9edc89a16848",
+      "artifact_bytes": 5073,
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-oracle.py",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json#oracle"
+      ]
+    }
+  ],
+  "coverage_sha256": "796768327b94a17777c48d79dfd0c1df871259cb8f278ee7025c3a6b77cc6f5a"
+}

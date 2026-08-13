@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "run_id": "pr289-r5-authorized-review-extension-20260811",
+  "generated_at": "2026-08-11T12:17:23+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 2,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR289-R5-PHYSCODE",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "The frozen R5 candidate closes the CF4-decision/PLANCK-lane mismatch before receipt construction, revalidates role ordinals, record seals, component inventory and bundle identity, preserves authentic same-lane replay, kills all 33 registered mutations, and maintains diagnostic-only no-execution/no-family-promotion boundaries.",
+          "evidence_refs": [
+            "htt/src/common/data_identity.py: replay_lane_admission_decision and build_not_authorized_receipt",
+            "tests/contracts/test_data_identity_registry_v2.py: 60-test focused suite",
+            ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-PHYSCODE/pr289_r5_physcode_oracle.py",
+            ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-PHYSCODE/REVIEW_COVERAGE.json"
+          ],
+          "evidence_fingerprint": "PR289-R5-PHYSCODE-C-PR274-DATA-ADMISSION-eec048d4"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR289-R5-REPLAYCLAIM",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "Frozen PR-289 passes the bounded R5 replay/claim review at COMMON C2 diagnostic_only: exact PR-288 predecessor and selective lineage, immutable PR-274 replay, source-bound receipt, 33 ordered mutation kills, cross-lane authorization rejection, interpreter and clean-archive replay, and strict claim/lifecycle boundaries all hold. This is not data admission, execution authorization, public/scientific validation, native transfer, geometry, or family identification.",
+          "evidence_refs": [
+            ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/REVIEW_COVERAGE.json",
+            ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py",
+            "docs/generated/pr289_data_identity_v2_receipt.json",
+            "docs/PR_DELTAS/pr-289.md",
+            "docs/codex_handoff/pr_status.yaml"
+          ],
+          "evidence_fingerprint": "301be2d0d73f18c109b71f36c43e8c8d033bd7fcfb01a6d04142b7493e30cf01"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "assignment_count": 2,
+  "validated_result_count": 2,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/RUN_PLAN.json",
+      "sha256": "4be99429654d02831a999e4ba21895e39006d431b2e107ccdf3b4ef84e38f57b",
+      "bytes": 6175
+    },
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/assignments/A-PR289-R5-PHYSCODE.json",
+      "sha256": "c49e14b0f5a0d485f96429d7febe655415038415c86700f12e7b559a2e0b02a9",
+      "bytes": 5075
+    },
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/assignments/A-PR289-R5-REPLAYCLAIM.json",
+      "sha256": "b7795f8072f40f54d2b6139d5610055c2b9ee6f5be8f442f6dfaaa94425f6694",
+      "bytes": 5157
+    },
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json",
+      "sha256": "62491e365993e4c9bfab25a5c636a4d731f87f844201a1bcd8cd9a769b99351a",
+      "bytes": 9655
+    },
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json",
+      "sha256": "dab4508faa380e639fd9b2b099a8cead674931c6faeb132665d37c149f58a60d",
+      "bytes": 12009
+    }
+  ],
+  "merge_input_sha256": "fa0b318b5331d35d62e9dfff4a68669be536f7840dc8c8020d7252fcd90a6ab2"
+}

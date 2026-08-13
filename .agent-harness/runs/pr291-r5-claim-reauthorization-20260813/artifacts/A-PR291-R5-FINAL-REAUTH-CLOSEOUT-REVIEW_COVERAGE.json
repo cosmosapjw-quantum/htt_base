@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-claim-reauthorization-20260813",
+  "assignment_id": "A-PR291-R5-FINAL-REAUTH-CLOSEOUT",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "c9e2b7a8ee86f8951b5bf90175033d5a45824a5487542f1cd9ef5b7c56b8b348",
+  "candidate_sha": "82532a2a71abc385f1176dce4b99a4917929155d",
+  "candidate_tree_sha": "68e3a83249ada011f984b67078c003086b1fc6aa",
+  "diff_sha256": "5343db9b69375145eea9e51624b3ac9246f868f6482beae316e4eb456b0f8100",
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "completed_at": "2026-08-13T08:33:37.295391+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "closeout_disposition": "FAIL",
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR291_R5_FINAL_CANDIDATE_SEAL.json", "git rev-parse HEAD", "git status --porcelain=v2 --untracked-files=all", ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-oracle.py"],
+      "rationale": "Final seal file/content hashes, HEAD, tree, base, merge base, clean state, 15 candidate commits, and 15 unique stable patch IDs match exactly."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"],
+      "rationale": "The hash-bound preactivation spec and blocked receipt remain unchanged; no observed-data execution was authorized."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json"],
+      "rationale": "The carried ordinary code/replay result is PASS and the exact receipt remains BLOCKED_PREDECESSOR_FINAL_SUCCESS."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", "docs/research_program/post_pr275/pr291_spec.yaml"],
+      "rationale": "CF4 identity remains REJECTED_NOT_PRESENT, H-CF4 remains not authorized, and an ordinary agent cannot mint authorization."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"],
+      "rationale": "Carried code/replay evidence records preflight/containment PASS and the receipt records no numerical writes."
+    },
+    {
+      "cell": "synthetic_estimand_identity",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json", "htt/obsstat/cf4_post275_lane.py"],
+      "rationale": "The numerical CF4 module is byte-identical to the first R5 seal and the carried physics/statistics review remains PASS for synthetic diagnostic-only use."
+    },
+    {
+      "cell": "group_row_selection_and_frame_conventions",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json", "htt/src/common/cf4_observed_lane_activation.py"],
+      "rationale": "The activation module is byte-identical to the first R5 seal, so the carried PASS chronology is preserved without substantive rerun."
+    },
+    {
+      "cell": "full_covariance_and_effective_rank",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json", "htt/obsstat/cf4_post275_lane.py"],
+      "rationale": "The carried physics/statistics PASS covers covariance whitening, effective rank, and nullity; relevant numerical bytes did not change."
+    },
+    {
+      "cell": "depth_zoa_nested_support_and_transport",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json", "htt/obsstat/cf4_post275_lane.py"],
+      "rationale": "Nested support, transport, and ZoA contracts retain the carried PASS because the numerical module is unchanged."
+    },
+    {
+      "cell": "weak_identification_and_identified_set_abstention",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"],
+      "rationale": "The carried review remains PASS for weak-identification abstention and diagnostic-only identified sets; no numerical or estimand bytes changed."
+    },
+    {
+      "cell": "legacy_p0_and_curl_disposition",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json"],
+      "rationale": "The receipt still forbids P0, vorticity, and potential-flow promotion; current failure is a broader family-claim grammar defect."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"],
+      "rationale": "The exact receipt records false network/download side effect, false observed execution, and an empty numeric output list."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json", "git status --porcelain=v2 --untracked-files=all"],
+      "rationale": "Portable-clean evidence is carried from the unchanged numerical candidate, and the current final candidate worktree is clean."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_publication_policy.json", ".prguard/runtime/PR291_R5_FINAL_CANDIDATE_SEAL.json"],
+      "rationale": "The policy and final seal identities match; ordinary-agent push and PR mutation remain forbidden and merge remains prohibited to this closeout."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "FAIL",
+      "evidence_refs": [".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-CLAIM-CODE-REVIEW.json", ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-CLAIM-CODE-REVIEW-REVIEW_COVERAGE.json"],
+      "rationale": "Fresh claim/code review is strict-valid FAIL: F-PR291-R5-CLAIM-QUANTIFIER-FN reproduces 11 false negatives for ordinary quantifier and possessive family-identification promotions."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["git rev-parse refs/remotes/origin/changeset/pr290-planck-native-replay-recovery-20260811", "git merge-base refs/remotes/origin/changeset/pr290-planck-native-replay-recovery-20260811 HEAD", "docs/codex_handoff/pr_status.yaml"],
+      "rationale": "PR-290 target and merge base equal the exact predecessor seal. PR-291 remains VALIDATED, while PR-292 remains PLANNED/INELIGIBLE."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR291_R5_FINAL_REAUTH_FAILED_CLOSEOUT_METADATA_ORACLE",
+      "kind": "metadata_consistency",
+      "status": "PASS",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-oracle.py"],
+      "command_fingerprint": "93aba64b2413db3d89fbd7256761599fdfea76cab3b3291bafbf70443f1a762a",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T08:33:36.900000+00:00",
+      "completed_at": "2026-08-13T08:33:37.295391+00:00",
+      "artifact_path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-FINAL-REAUTH-CLOSEOUT-oracle.py",
+      "artifact_sha256": "eccb92ee9aab2a11cce94950846823ae350989773d2397c79c36a14f34ea63de",
+      "artifact_bytes": 7947,
+      "evidence_refs": ["oracle status PASS", "closeout_disposition FAIL", "ordinary assurance 16/16", "first extension 2/2", "reauthorization 2/2", "fresh claim/code FAIL", "lifecycle advance false"]
+    }
+  ],
+  "coverage_sha256": "039778fd9707cf80407004cc0ff91828e98fe9a06c3c053dae9efc8bdafb6dde"
+}

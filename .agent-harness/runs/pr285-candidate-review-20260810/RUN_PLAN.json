@@ -1,0 +1,110 @@
+{
+  "schema_version": 2,
+  "run_id": "pr285-candidate-review-20260810",
+  "work_unit_id": "PR-285",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "created_at": "2026-08-10T06:16:45+00:00",
+  "spec_ref": "docs/research_program/post_pr275/pr285_spec.yaml",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr284-finite-depth-law-recovery-20260810",
+  "target_ref": "refs/remotes/origin/changeset/pr284-finite-depth-law-recovery-20260810",
+  "base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+  "candidate_ref": "changeset/pr285-pillar-t-adjudication-recovery-20260810",
+  "integration_policy": {
+    "path": "docs/research_program/post_pr275/pr285_publication_policy.json",
+    "sha256": "973b1b1521d6a9ff4fd783839719fb3866ee0078a325f5ef968cf9c9aedf55b8",
+    "policy_id": "PR285-PUBLICATION-POLICY"
+  },
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "7baf4ec6b941c0a29b247604b71cd94f43cb18de007afda9d1c2cc77d59e5d21",
+    "seal_sha256": "8e2c2e72cca0d018441a91368ded4a3f898df12c36de5e8104352119ab4d2629",
+    "base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_sha": "be8392d0fb3d13fefdf6bce89a1c89ef11890080",
+    "merge_base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_tree_sha": "f74d8f8b550d2351d21a8db5021e0f8566d9ecc2",
+    "diff_sha256": "9a50ef58e647f018e98e81f1868ffc271499984fdb0f73a0465098ce9a7a1183",
+    "changed_files_sha256": "bb335983aab436ac3ca9e949e3bd118d1812d2d040465372166641fb1f899be4",
+    "production_hash": "602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2"
+  },
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "budget": {
+    "max_concurrent": 4,
+    "max_total": 8,
+    "max_total_per_work_unit": 16,
+    "max_depth": 2
+  },
+  "publication_budget": {
+    "max_open_prs": 3,
+    "max_direct_to_target_prs": 1,
+    "max_prs_per_change_set": 1,
+    "max_stack_depth": 3,
+    "max_file_overlap_prs": 2
+  },
+  "stages": [
+    "context-build",
+    "work-unit-implementation",
+    "candidate-freeze",
+    "read-only-review",
+    "latest-target-integration",
+    "external-publisher-authorization"
+  ],
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "status": "candidate_frozen",
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "VALIDATED",
+  "stack_id": "PROCESS_INFLATION_RECOVERY_PHASE2",
+  "activation_base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+  "predecessor_pr": "PR-284",
+  "predecessor_sealed_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+  "production_hash": "602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2",
+  "dependency_hashes": {
+    "theorem_signatures": "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
+    "vt_proof_program": "055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9",
+    "pr269_spec": "510e7513ee058d9d20aa6a399a431cc24e013f721a5af6d3a794c7690d4164e7",
+    "pr270_spec": "439b331d6b8e8c0d51ef2a75bd22dbea4a3699ee9e6afbbe88b66bb4be11da8d",
+    "pillar_t_core_proofs": "808c69ca1111591a6d6b52079b6caa7889a838009540ef9959a077640dcdc1d6",
+    "pillar_s_core_proofs": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e",
+    "pillar_t_cas_proofs": "8f2faf3847f21d2a903bd143ba35ee123ad24256da42e3e1444ad991ade7a27e",
+    "cas_contract": "2d2ceb84603b24ab0b34db8b69715483061428ee36d6b2f5952494a9bb8108b4",
+    "cas_run_spec": "fc8b55a6a56cb0744a6f815c12f758df63122061070adb46f9a6f45930ca5904",
+    "cas_adjudication": "a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275",
+    "pr190_spec": "74872439326b0973ab69de3628f279dd3fad46bf83aa17641e49477aa167b73f",
+    "pr190_receipt": "580aa9e36ac5419c7364ca6b295dece08c39c8ca1f91962d25c63d32fd3cf426",
+    "pr285_spec": "475b42f32e0e28880be532986008f97ae9675e887db1e349b457ede3f85d2a9d",
+    "publication_policy": "973b1b1521d6a9ff4fd783839719fb3866ee0078a325f5ef968cf9c9aedf55b8",
+    "pr285_runner": "3fbfba3285523659dcbc48de90c542090ce4d582afcbb1bb1fb30366aa166f64",
+    "pr285_contract_test": "2866c589379f16bb3641facd802ca78697aa876d2aba247561194f838fbb8693",
+    "adjudication_receipt": "1a6aa668d9aea071dd712a9143fea0fdf88d0523f3b4e41e8ca4e9002c927b82"
+  },
+  "evidence_key": {
+    "production_hash": "602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2",
+    "dependency_hashes": {
+      "theorem_signatures": "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
+      "vt_proof_program": "055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9",
+      "pr269_spec": "510e7513ee058d9d20aa6a399a431cc24e013f721a5af6d3a794c7690d4164e7",
+      "pr270_spec": "439b331d6b8e8c0d51ef2a75bd22dbea4a3699ee9e6afbbe88b66bb4be11da8d",
+      "pillar_t_core_proofs": "808c69ca1111591a6d6b52079b6caa7889a838009540ef9959a077640dcdc1d6",
+      "pillar_s_core_proofs": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e",
+      "pillar_t_cas_proofs": "8f2faf3847f21d2a903bd143ba35ee123ad24256da42e3e1444ad991ade7a27e",
+      "cas_contract": "2d2ceb84603b24ab0b34db8b69715483061428ee36d6b2f5952494a9bb8108b4",
+      "cas_run_spec": "fc8b55a6a56cb0744a6f815c12f758df63122061070adb46f9a6f45930ca5904",
+      "cas_adjudication": "a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275",
+      "pr190_spec": "74872439326b0973ab69de3628f279dd3fad46bf83aa17641e49477aa167b73f",
+      "pr190_receipt": "580aa9e36ac5419c7364ca6b295dece08c39c8ca1f91962d25c63d32fd3cf426",
+      "pr285_spec": "475b42f32e0e28880be532986008f97ae9675e887db1e349b457ede3f85d2a9d",
+      "publication_policy": "973b1b1521d6a9ff4fd783839719fb3866ee0078a325f5ef968cf9c9aedf55b8",
+      "pr285_runner": "3fbfba3285523659dcbc48de90c542090ce4d582afcbb1bb1fb30366aa166f64",
+      "pr285_contract_test": "2866c589379f16bb3641facd802ca78697aa876d2aba247561194f838fbb8693",
+      "adjudication_receipt": "1a6aa668d9aea071dd712a9143fea0fdf88d0523f3b4e41e8ca4e9002c927b82"
+    }
+  },
+  "gate_disposition": "PASS",
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 0
+  }
+}

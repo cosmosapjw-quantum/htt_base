@@ -1,0 +1,98 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-quantifier-continuation-20260813",
+  "assignment_id": "A-PR291-R5-QUANTIFIER-CLAIM",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_lane_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "4f9119ff3e38f2faea43086bb4276aa116cb2d47f830d13dfa8e7886d2df4071",
+    "seal_sha256": "5e4dbf2852e7c4418bb86755aeaf4889cc28e65642f46b3f0c0bbafcb06fdbb5",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "38802323415fe7dc88f63e58d53b316ec9b52c04",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "602a35f0e6e5063ff6677cf2913521975126f588",
+    "diff_sha256": "d4a4154b5fe1b65476942e2d41204332a75bcee7605fe139f6ee1176384cf2c3",
+    "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+    "production_hash": "01a620679c8ae134752cd92f0a8863254b1ac3d8abb16888c3860bdfa47fa9e7"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "independent",
+  "independence_rationale": "fresh hostile grammar review is epistemically required after prior oracle exposed an unregistered quantifier class",
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Blind final claim/code review of the frozen quantified-family repair. Read assignment first; do not inspect sibling or historical result envelopes except named required inputs. Verify exact candidate seal and hashes, run an assignment-local hostile oracle covering the 20 prior forbidden variants plus novel bounded modifiers, possessives, passive/reordered/multiline/scalar directions, predicate-scoped downclaims, and exact Markdown/YAML guardrails. Run the seven registered policy commands. Confirm numerical CF4 source bytes are unchanged and carry physics/statistics evidence without rerun. Write only assignment-local oracle, exact 16-cell coverage, and strict-valid schema-v3 result. No shared edits, push, PR, merge, observed execution, or PR-292 activation.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json",
+      "sha256": "4f9119ff3e38f2faea43086bb4276aa116cb2d47f830d13dfa8e7886d2df4071"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_spec.yaml",
+      "sha256": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_publication_policy.json",
+      "sha256": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835"
+    },
+    {
+      "path": "htt/src/common/semantic_guards/no_overclaim.py",
+      "sha256": "9e12e29806ead8f2b3ca456978dba3b7c2b29b49b8db88a0f71553217f2f8d19"
+    },
+    {
+      "path": "tests/contracts/test_claim_language_lint.py",
+      "sha256": "dc089dd105565912f400d17cc9dcd9dfe41f326856c411a00b4fce69332a2bfa"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-291.md",
+      "sha256": "2255e7764f6a14cc67da29f6b2e706dc104b7bf662172fc4d787520b65cbd271"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "01bad28ab094812487a2f385b8aba4e03ff38b5efe78d284ea1582c36542cc05"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "01bad28ab094812487a2f385b8aba4e03ff38b5efe78d284ea1582c36542cc05"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+      "sha256": "e8dd1f72a87ed7937836784e3495db8a6f3aeb2b983a532d8bd0e119311150d6"
+    },
+    {
+      "path": "htt/obsstat/cf4_post275_lane.py",
+      "sha256": "6a3ae13200b381af4502ef0ec0f001c039727a9dcfc1dd49e239a9f0c64e56bb"
+    },
+    {
+      "path": "htt/src/common/cf4_observed_lane_activation.py",
+      "sha256": "4b15529947ea6269bc0ff38b7a58e5433fc6e767e34b732e2ee37cfac07bbeb0"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact 16-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable hostile oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/results/A-PR291-R5-QUANTIFIER-CLAIM.json",
+  "status": "registered",
+  "assignment_sha256": "23584eb3b0ba685dbf524c4b6d5b2adfcda3a07cec7842abe627ef20e6bb1e9c"
+}

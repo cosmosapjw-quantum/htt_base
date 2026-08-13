@@ -1,0 +1,184 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-mio-nonfinite-r3-rereview-20260811",
+  "assignment_id": "A-PR286-R3-MIO-PHYSCODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "assignment_sha256": "c3a4722bfc5c8f67a7528046de0624d7b32979c6ba620f83ecb89dea756cb024",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-MIO-PHYSCODE.json",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "d95f5a26bab5be25afb550e64d75ce4f8419fca8b61b232682c960e9e5e1fc95",
+    "seal_sha256": "26b24258bfec78ccbd0dad9382fc6ae8e9b9ba9a417b81753f84ca68b30c6f0f",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "0b1a8ef76df47b0b42e972bb47c9bc294e80aa7c",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "c92883d3500aff9a7fa07e561ad43bf4088feb9d",
+    "diff_sha256": "a07284aa230f991286ac4b3ed11e5201f70af2a49ae8bf79cf5191d5af3cc4d1",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "99ad99e15ff863b63945663c112767d1f6dc90e8f697a407798c281cb39c2b30"
+  },
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-11T03:00:00Z",
+  "completed_at": "2026-08-11T03:20:36Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {
+      "argv": ["sha256sum", "assignment-required-inputs"],
+      "returncode": 0,
+      "summary": "Context version, candidate HEAD, seal, and all ten required-input hashes matched."
+    },
+    {
+      "argv": ["python", "-B", ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py"],
+      "returncode": 0,
+      "summary": "PASS: exact and adjacent MIO/HTT numerical, semantic, receipt, and mutation checks."
+    },
+    {
+      "argv": ["python", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_pillar_s_inference.py", "tests/contracts/test_pillar_s_complete_adjudication.py"],
+      "returncode": 2,
+      "summary": "Preserved invocation-environment collection failure: common was not importable without repository source roots."
+    },
+    {
+      "argv": ["env", "PYTHONPATH=htt/src:htt", "python", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_pillar_s_inference.py", "tests/contracts/test_pillar_s_complete_adjudication.py"],
+      "returncode": 0,
+      "summary": "80 passed in 122.66s."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "focused"],
+      "returncode": 0,
+      "summary": "45 passed in 114.84s."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "adjacent"],
+      "returncode": 0,
+      "summary": "90 passed in 8.52s."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "check"],
+      "returncode": 0,
+      "summary": "ok=true."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "portable"],
+      "returncode": 0,
+      "summary": "Portable clean-root replay passed with identical pre/post manifests."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/build_pr272_pillar_s_inference.py", "--check"],
+      "returncode": 0,
+      "summary": "PR-272 validation registry is current."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/build_pr273_blind_synthetic.py", "--check"],
+      "returncode": 0,
+      "summary": "PASS: 5 cases, 2 held out, 5 mutations killed."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "returncode": 0,
+      "summary": "OK: 244 PRs, DAG valid."
+    },
+    {
+      "argv": ["python", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-review-coverage.json", "--seal", ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json", "--run-id", "pr286-mio-nonfinite-r3-rereview-20260811", "--assignment-id", "A-PR286-R3-MIO-PHYSCODE", "--risk-tier", "R3"],
+      "returncode": 0,
+      "summary": "ok=true, errors empty."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py",
+      "sha256": "6dc80a2e7ffaa36a04594967eb863034152fc98e5207ec846c691e30a18e071c",
+      "bytes": 16487,
+      "producer": "A-PR286-R3-MIO-PHYSCODE",
+      "command_fingerprint": "27060e9cf464efcbcf90a17eb5aca60a7f12d5a035ff01a92beef919cf66f154"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-review-coverage.json",
+      "sha256": "518cd413efc2931ef8aecf257af4ae7893640c5eb6aafcc001e344e71c81c16b",
+      "bytes": 10257,
+      "producer": "A-PR286-R3-MIO-PHYSCODE"
+    }
+  ],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/RUN_PLAN.json",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/assignments/A-PR286-R3-MIO-PHYSCODE.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+    ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+    "docs/research_program/post_pr275/pr286_publication_policy.json",
+    "docs/research_program/post_pr275/pr286_spec.yaml",
+    "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+    "docs/research_program/vector_tensor/pr272_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+    "htt/mio/formalism/vector_tensor_validation.py",
+    "htt/src/common/vector_tensor_statistical_inference.py",
+    "scripts/codex_harness/build_pr272_pillar_s_inference.py",
+    "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+    "tests/contracts/test_pillar_s_complete_adjudication.py",
+    "tests/contracts/test_pillar_s_inference.py",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-review-coverage.json"
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-review-coverage.json",
+  "review_coverage_sha256": "518cd413efc2931ef8aecf257af4ae7893640c5eb6aafcc001e344e71c81c16b",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "The held-out PR-273 synthetic integration pack remains current and explicitly synthetic; exact registered MIO local/global diagnostics replay unchanged, and no likelihood, posterior, evidence, observed-data, or family-identification semantics enter MIO.",
+      "evidence_refs": [
+        "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+        "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S14",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py"
+      ],
+      "evidence_fingerprint": "PR286-MIO-EXACT-REPLAY-0b1a8ef76df47b0b"
+    },
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "Finite-input non-finite MIO arithmetic now fails closed through PillarSInferenceError at the exported facade, all adjacent HTT controls remain intact, and VT-S14 stays a finite preregistered synthetic diagnostic blocked before admitted data and the native family gate.",
+      "evidence_refs": [
+        "htt/mio/formalism/vector_tensor_validation.py",
+        "htt/src/common/vector_tensor_statistical_inference.py",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py"
+      ],
+      "evidence_fingerprint": "PR286-MIO-NONFINITE-GATE-0b1a8ef76df47b0b"
+    }
+  ],
+  "errors": []
+}

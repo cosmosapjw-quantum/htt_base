@@ -1,0 +1,251 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-native-identity-mapping-20260811",
+  "assignment_id": "A-PR289-NATIVE-API-MAP",
+  "assignment_sha256": "b8406b27e76bc05bd9d10317ec4a14f3b63300aa3aa56e81d33519e712ea84e2",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "code_cartographer",
+  "independence_mode": "shared-core",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "result_path": ".agent-harness/runs/pr289-native-identity-mapping-20260811/results/A-PR289-NATIVE-API-MAP.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T08:45:00Z",
+  "completed_at": "2026-08-11T08:55:00Z",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "tool_versions": {
+    "git": "2.43.0",
+    "python": "3.12.3",
+    "ripgrep": "repository shell installation"
+  },
+  "commands": [
+    "sha256sum <seven assignment-required inputs>",
+    "git show and git diff-tree for 7f9ac031 834e15d7 91d8b8ad dde54a71",
+    "rg targeted symbols/imports and nl -ba targeted source/spec/registry/runner/tests",
+    "git status --short; git rev-parse HEAD; git branch --show-current"
+  ],
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr289-native-identity-mapping-20260811/assignments/A-PR289-NATIVE-API-MAP.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    "docs/PR_DELTAS/pr-289.md",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "docs/research_program/post_pr275/pr289_spec.yaml",
+    "htt/src/common/data_identity.py",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+    "tests/contracts/test_data_identity_registry_v2.py"
+  ],
+  "artifacts": [],
+  "findings": [
+    {
+      "finding_id": "F-PR289-NATIVE-PROFILE-GAP",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "high",
+      "evidence_fingerprint": "pr289-native-profile-gap:data-identity-sha256-7d6cadae:registry-sha256-28d07d8c",
+      "statement": "The recovered PR-289 implementation preserves strong generic byte, path, inode, content-address, authorization, mutation, and receipt controls, but admission is under-typed: one lane-wide evidence mapping is copied onto every generic component record, so complete native Planck, CF4, HSC, and KiDS roles and inter-record relationships are neither represented nor replay-validated. The smallest repair is an in-place extension of LaneSpec, DataIdentityRecordV2, the existing registry/evidence exact mappings, and evaluate_lane_identity; a parallel admission API is unnecessary.",
+      "assumptions_used": [
+        "The salvage audit is authoritative only for PR-289/G45-G48 as directed by the assignment.",
+        "Existing schema names may remain v2 while their exact mapping is strengthened in this unreleased mutable candidate.",
+        "ACT, DESI, and JWST_SN semantics remain unchanged except for parser compatibility with the strengthened registry shape.",
+        "No external lane is executed or admitted during this mapping task."
+      ],
+      "evidence_refs": [
+        "HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:149-155 requires typed Planck, CF4, and separate HSC/KiDS native roles; lines 438-443 require the repair inside the existing data_identity.py/registry.",
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json:31-107 defines only generic component IDs/cardinalities; Planck has one map and HSC_KIDS shares one psf, n_z, shear_calibration, and covariance.",
+        "htt/src/common/data_identity.py:361-394 LaneSpec has only generic component inventory and gate fields.",
+        "htt/src/common/data_identity.py:443-553 lane_registry_from_mapping validates generic component IDs/cardinality but no native role or relationship graph.",
+        "htt/src/common/data_identity.py:636-793 DataIdentityRecordV2/_build_record copy one lane-wide evidence mapping into each component record.",
+        "htt/src/common/data_identity.py:846-915 _validate_evidence checks universal string/status fields but no lane-native profile.",
+        "htt/src/common/data_identity.py:918-1141 evaluate_lane_identity admits after generic sequence/file checks plus one evidence object and hashes only component record IDs into the bundle.",
+        "tests/contracts/test_data_identity_registry_v2.py:66-140 _base_evidence/_valid_descriptor fabricate generic lane strings for every positive fixture.",
+        "tests/contracts/test_data_identity_registry_v2.py:218-255 tests only generic Planck record stability/admission, not native-record replay.",
+        "git objects 7f9ac031, 834e15d7, 91d8b8ad, dde54a71: G45 supplies objective, G46 registry, G47 core/runner/tests, and G48 runner replay hardening; current core and registry bytes equal G47/G46 respectively."
+      ],
+      "counterevidence_refs": [
+        "docs/research_program/post_pr275/pr289_spec.yaml:42-101 already requires factory-only content-addressed records and independently typed universal semantics.",
+        "htt/src/common/data_identity.py:918-1141 already provides the correct fail-closed chokepoint for strengthening admission without replacing public entry points.",
+        "htt/src/common/data_identity.py:1272-1668 already runs live scratch mutations through evaluate_lane_identity and can host native-profile mutations."
+      ],
+      "reproduction": [
+        "Load LANE_REGISTRY_V2.json and inspect PLANCK required_component_ids: only map/mask/beam/covariance exist, so separate SMICA, Commander, FFP10, pixelization, window, and operator identities cannot be represented.",
+        "Inspect HSC_KIDS required_component_ids: hsc_product/kids_product, masks, and randoms are separate, but psf/n_z/shear_calibration/covariance each have cardinality one, so survey-specific child identity cannot be replayed.",
+        "Follow evaluate_lane_identity from normalized_components to _validate_evidence and _build_record: the same evidence object supplies all semantic fields to every record; no native relationship validation occurs."
+      ],
+      "unresolved": [
+        "Exact external release identifiers and production filenames must come from later supplied native descriptors; PR-289 should type roles and relationships without inventing those identities.",
+        "Downstream PR-290 through PR-292 consumers are outside this bounded G45-G48 mapping and must be updated after PR-289 freezes its extended record payload."
+      ],
+      "confidence": 0.98
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR289-NATIVE-PROFILE-GAP"
+      ],
+      "summary": "Targeted mapping confirms that the current admission API is the correct reusable shell but cannot yet prove complete lane-native identity. The concrete in-place schema/factory/test extension below closes that specific gap while preserving zero-execution and NOT_AUTHORIZED semantics."
+    }
+  ],
+  "mapping": {
+    "package_and_import_path": {
+      "module": "htt/src/common/data_identity.py",
+      "import_root": "htt/src",
+      "runtime_import": "common.data_identity",
+      "direct_consumers_in_current_tree": [
+        "scripts/codex_harness/run_pr289_data_identity_v2.py:_build imports build_data_identity_v2_receipt and load_lane_registry",
+        "tests/contracts/test_data_identity_registry_v2.py imports the public evaluator/factories/statuses"
+      ],
+      "generated_consumer": "scripts/codex_harness/run_pr289_data_identity_v2.py writes/checks docs/generated/pr289_data_identity_v2_receipt.json"
+    },
+    "current_public_api": {
+      "records": [
+        "LaneSpec",
+        "LaneRegistryV2",
+        "DataIdentityRecordV2",
+        "LaneAdmissionDecision",
+        "ExecutionAuthorizationReceipt",
+        "MutationResult",
+        "DataIdentityPreflightReceipt"
+      ],
+      "factories_and_validators": [
+        "lane_registry_from_mapping",
+        "load_lane_registry",
+        "component_inventory_id",
+        "compute_source_locator_identity",
+        "evaluate_lane_identity",
+        "build_not_authorized_receipt",
+        "registered_mutation_ids",
+        "validate_mutation_results",
+        "build_data_identity_v2_receipt"
+      ],
+      "private_chokepoints": [
+        "_validate_evidence",
+        "_build_record",
+        "_decision",
+        "_mutation_descriptor",
+        "_probe_mutation",
+        "_run_registered_mutations",
+        "_validated_source_bindings",
+        "_aggregate_status"
+      ]
+    },
+    "smallest_existing_schema_extension": {
+      "registry": [
+        "Add ordered native_record_specs and native_relationship_specs to LaneSpec and each lane row; parse them in lane_registry_from_mapping with exact-key, uniqueness, endpoint, acyclicity/allowed-cycle, and component-coverage checks.",
+        "Keep required_component_ids/component_cardinality as the physical-byte inventory authority, but require a one-to-one native record spec for every affected-lane component and reject untyped extra records.",
+        "Leave public evaluator signatures and the ACT/DESI/JWST_SN component semantics intact."
+      ],
+      "evidence_and_records": [
+        "Add ordered native_records and native_relationships to the exact evidence mapping. Each native record must bind record key, lane, survey/profile owner, typed native role, component_id, required semantic identity fields, and a content-derived native_record_id.",
+        "Extend DataIdentityRecordV2 with native_profile_id, native_record_id, native_role, survey_id, and relationship_ids; include all of them in _stable_payload so record_id changes on any semantic or relationship change.",
+        "Include the full canonical native profile in compute_source_locator_identity and lane_admission_bundle_id; otherwise semantic children can be swapped while component bytes/release/license remain unchanged.",
+        "Have _validate_evidence perform exact full-profile replay against LaneSpec before _build_record; verify ordered coverage, role-specific required fields, relationship endpoints/types, no cross-lane/survey substitution, and recomputed child/profile IDs."
+      ],
+      "required_native_profiles": {
+        "PLANCK": {
+          "records": [
+            "smica_map",
+            "commander_map",
+            "ffp10_null",
+            "native_selection",
+            "pixelization",
+            "smica_beam",
+            "commander_beam",
+            "mask",
+            "window",
+            "operator"
+          ],
+          "invariants": [
+            "SMICA and Commander are distinct records and form an explicit same-sky pair.",
+            "Both map records bind the same registered selection, pixelization, mask/window sky support, and the appropriate beam/operator roles.",
+            "FFP10/null is a typed record or an explicit registered unavailable status; a generic null_ensemble_id string is insufficient."
+          ]
+        },
+        "CF4": {
+          "records": [
+            "catalogue",
+            "row_selection",
+            "covariance",
+            "coordinate_frame",
+            "sign_orientation",
+            "units",
+            "grouping",
+            "depth_definition",
+            "zone_of_avoidance"
+          ],
+          "invariants": [
+            "The admitted catalogue record explicitly depends on the exact row selection and full covariance.",
+            "Frame, sign, units, grouping, depth, and ZoA are typed roles linked to that exact catalogue/profile, not interchangeable lane-wide strings."
+          ]
+        },
+        "HSC_KIDS": {
+          "records": [
+            "hsc_product",
+            "kids_product",
+            "hsc_mask",
+            "kids_mask",
+            "hsc_randoms",
+            "kids_randoms",
+            "hsc_psf",
+            "kids_psf",
+            "hsc_n_z",
+            "kids_n_z",
+            "hsc_shear_calibration",
+            "kids_shear_calibration",
+            "hsc_response",
+            "kids_response",
+            "hsc_covariance",
+            "kids_covariance",
+            "hsc_kids_cross_covariance"
+          ],
+          "invariants": [
+            "Every HSC child is owned by HSC and every KiDS child by KiDS; cross-survey substitution is rejected even when bytes and generic role names are otherwise valid.",
+            "PSF, n(z), calibration, response, and covariance are separate per survey.",
+            "Cross-covariance is a distinct typed relationship/record with both survey profile endpoints and cannot replace either within-survey covariance."
+          ]
+        }
+      }
+    },
+    "compatibility_risks": [
+      "Changing exact registry/evidence keys intentionally rejects old generic fixtures; this is required fail-closed behavior but all positive helpers must migrate atomically.",
+      "Adding native payload to stable identities changes record_id, source_locator_identity, lane_admission_bundle_id, authorization_id, registry content_id, receipt_content_id, and the frozen generated receipt.",
+      "Expanding affected component sequences changes record counts and invalidates downstream record-ID-count fixtures in PR-290 through PR-292; those consumers must replay full canonical payloads instead of pinning counts alone.",
+      "The current _base_evidence and _mutation_descriptor generate placeholder lane-derived strings and will otherwise create false-positive complete admissions after parser changes.",
+      "Keeping universal lane-wide fields while adding native children risks contradictory duplicate authorities; validators must require equality where both are retained or migrate affected semantics exclusively to the typed child profile.",
+      "The runner's clean-root build still uses root_descriptors={}, so behavioral output remains zero-admission, but all bound source hashes and generated receipt bytes necessarily change."
+    ],
+    "patch_and_test_order": [
+      "1. Registry/spec first: declare affected-lane native record/relationship profiles and exact required roles; add native-profile mutation IDs while preserving claim/authorization ceilings.",
+      "2. Core registry types/parser: extend LaneSpec and lane_registry_from_mapping; add parser-only tests for duplicate roles, missing endpoints, unknown relationship types, cross-lane children, and incomplete coverage.",
+      "3. Evidence and stable identity: extend _EVIDENCE_FIELDS, compute_source_locator_identity, DataIdentityRecordV2, _build_record, and _validate_evidence; test recomputation and rejection of role/child/relationship tampering.",
+      "4. Admission chokepoint: make evaluate_lane_identity require complete canonical native replay before record construction and bind profile identity into lane_admission_bundle_id; add full positive Planck, CF4, HSC/KiDS fixtures plus a cross-lane negative matrix.",
+      "5. Mutation harness: migrate _mutation_descriptor and _probe_mutation to full typed Planck fixtures, add omissions/swaps/relationship-endpoint/survey-owner mutations, and retain all existing byte/path/inode/TOCTOU/authorization mutations.",
+      "6. Compatibility assertions: retain factory-only construction, root/time stability, no-root six-lane refusal, NOT_AUTHORIZED receipts, canonical refusal precedence, and ACT/DESI/JWST_SN regression behavior.",
+      "7. Runner/generated artifact last: focused tests, preflight, adjacent immutable PR-274 tests, receipt build/check, portable clean-archive replay; regenerate docs/generated/pr289_data_identity_v2_receipt.json and update PR delta only after executable semantics pass."
+    ]
+  },
+  "errors": []
+}

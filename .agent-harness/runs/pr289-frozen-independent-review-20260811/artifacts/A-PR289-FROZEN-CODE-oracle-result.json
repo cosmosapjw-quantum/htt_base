@@ -1,0 +1,93 @@
+{
+  "archive_validation": {
+    "all_rejected": true,
+    "unsafe_members_rejected": {
+      "absolute": true,
+      "fifo": true,
+      "hardlink": true,
+      "parent_traversal": true,
+      "symlink": true
+    }
+  },
+  "candidate_sha": "1ad54d3c5a484816128a1df93d54953589780520",
+  "interpreter_alias_replays": [
+    {
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "check"
+      ],
+      "returncode": 1,
+      "stderr_sha256": "536885c3bea2fbedd1e03cd1240be4080ea5e37774551ee1443f1eb0ccd3165a",
+      "stderr_tail": "                   ^^^^^^\n  File \"/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810/scripts/codex_harness/run_pr289_data_identity_v2.py\", line 597, in main\n    return _check()\n           ^^^^^^^^\n  File \"/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810/scripts/codex_harness/run_pr289_data_identity_v2.py\", line 266, in _check\n    raise RuntimeError(\"frozen PR-289 receipt drifted; rerun build\")\nRuntimeError: frozen PR-289 receipt drifted; rerun build\n",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "check"
+      ],
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": "",
+      "stdout_sha256": "99f126caf14055278563566b5bae5ba821ba60e3bed7173b1530321bed928eb0"
+    }
+  ],
+  "interpreter_alias_returncodes_differ": true,
+  "module_loading": {
+    "inconsistent_loader_accepted": true,
+    "reported_origin": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810/htt/src/common/data_identity.py",
+    "reported_source_sha256": "91a148a67ff0b338cd5aedef5efc81039607302f8473e93ddf37fa70ed399539"
+  },
+  "oracle_status": "PASS",
+  "output_containment": {
+    "outside_output_created": true,
+    "parent_replacement_accepted": true,
+    "returncode": 0
+  },
+  "python310_preflight": {
+    "argv": [
+      "/usr/bin/python3.10",
+      "-B",
+      "scripts/codex_harness/run_pr289_data_identity_v2.py",
+      "preflight"
+    ],
+    "returncode": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_tail": "",
+    "stdout_sha256": "286c694134f80f1ef492b17f1df82b6b2844bfedb923226e5958a749231138bf"
+  },
+  "record_replay": {
+    "desi_record_count": 1028,
+    "duplicate_component_id": "ezmock_inventory",
+    "duplicate_ordinal_replay_accepted": true,
+    "duplicate_ordinals": [
+      1,
+      1
+    ],
+    "module_token_constructor_copy_accepted": true,
+    "semantic_fields_accepted": {
+      "coordinate_frame_id": "",
+      "covariance_id": "",
+      "covariance_status": "INVALID",
+      "directional_convention_id": "",
+      "license_status": "UNBOUND",
+      "mask_id": "",
+      "regular_file_status": "NOT_VERIFIED",
+      "selection_id": "",
+      "sign_orientation_convention_id": "",
+      "sky_support_status": "INVALID",
+      "source_locator_kind": "unregistered_locator_kind",
+      "symlink_status": "ALIAS_PRESENT",
+      "transfer_function_spec_id": "unregistered-native-spec",
+      "transfer_provenance_status": "NATIVE_VALIDATED",
+      "transfer_source": "native_bass",
+      "units_contract_id": ""
+    },
+    "semantic_record_replay_accepted": true
+  },
+  "schema": "htt.pr289.frozen_code_independent_oracle.v1"
+}

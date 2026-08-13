@@ -1,0 +1,214 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-numerical-repair-rereview-20260811",
+  "assignment_id": "A-PR286-R2-REPLAY",
+  "assignment_sha256": "d737d91f6ff78015c63b46c6f37512f5c768ab3480412213da2df46933571d30",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "217f4c0cd8da2c6b40c15257ea1954352704fbb01757ccf9d7ff9addd6165509",
+    "seal_sha256": "0667a86aea43de3ab892489053a0f1c39697107fc3a8d25b8bc0113fca2e806f",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "7ad8176282554670909c28306b3e14e83662a42b",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "d14eedaa79f902f5b47b507fa3951e5a22cbe9b7",
+    "diff_sha256": "12137112ed5ea688cd4c36ab0a4c3f301bb9a1d95629314356f113585393e06f",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "6a5a82ed5c563f646be7815e334c5e119569a20c8594c62264e70d3b2de05e34"
+  },
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/results/A-PR286-R2-REPLAY.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-11T01:45:00Z",
+  "completed_at": "2026-08-11T01:59:30Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0",
+    "pytest": "9.1.1",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-oracle.py"],
+      "returncode": 1,
+      "status": "authoring_error",
+      "summary": "First oracle draft compared the policy seal to canonicalized JSON instead of the required raw-file SHA-256; no candidate check failed."
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-oracle.py"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "Eleven bounded invariants passed, including lineage, patch IDs, deterministic receipt, protected records, mirrors, and scratch-only destination attacks."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "focused"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "44 passed in 114.61 seconds."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "adjacent"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "89 passed in 8.56 seconds."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "check"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "Exact receipt replay returned ok=true."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "portable"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "Git-archive replay passed for 5887 files; source and clean manifest SHA-256 remained f53d03d09be36bbebd0bbc6f94526de363a6c95cad860da0b476e096a3583c59."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/build_pr271_pillar_s_core.py", "--check"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "PR-271 exact core replay passed."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/build_pr272_pillar_s_inference.py", "--check"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "PR-272 validation registry is current."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/build_pr273_blind_synthetic.py", "--check"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "PR-273 blind synthetic build passed with 5 cases, 2 held out, and 5 mutations killed."
+    },
+    {
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "test_integration_policy_rejects_publication_capable_argv or test_candidate_seal_binds_diff_remote_policy_and_clean_state or test_pr286_policy_allows_three_open_predecessors_and_bounds_next_slots"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "3 passed and 74 deselected."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "244 PRs; strict rescue DAG valid."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "tests/contracts/test_pillar_s_complete_adjudication.py", "docs/research_program/post_pr275/pr286_spec.yaml", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json", "docs/PR_DELTAS/pr-286.md"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "No forbidden claim language detected."
+    },
+    {
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_pillar_s_inference.py", "-k", "five repaired numerical selectors"],
+      "returncode": 2,
+      "status": "environment_error",
+      "summary": "Initial direct selector invocation omitted the repository PYTHONPATH and failed collection with ModuleNotFoundError: common."
+    },
+    {
+      "argv": ["env", "PYTHONPATH=$PWD:$PWD/htt/src:$PWD/htt", "python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_pillar_s_inference.py", "-k", "five repaired numerical selectors"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "5 repaired numerical selectors passed; 29 deselected."
+    },
+    {
+      "argv": ["git", "merge-tree", "--write-tree", "--no-messages", "16bc6db511b8b7228e5c4dcb95c65074fe519f24", "7ad8176282554670909c28306b3e14e83662a42b"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "Exact target/candidate merge produced sealed tree d14eedaa79f902f5b47b507fa3951e5a22cbe9b7."
+    },
+    {
+      "argv": ["python3", "validate_review_coverage_payload"],
+      "returncode": 0,
+      "status": "pass",
+      "summary": "Review coverage strict validation returned no errors."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-oracle.py",
+      "sha256": "b5f72275f1c84f5d14c08bef2f107a484daebb710fdb8c1efe0858bc7f34264c",
+      "bytes": 16617,
+      "producer": "A-PR286-R2-REPLAY"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-oracle-report.json",
+      "sha256": "4c30f3ac3c778e1e6ab25fe283445fb058fc0b0ed9b797c8295da578901ae3a3",
+      "bytes": 2537,
+      "producer": "A-PR286-R2-REPLAY",
+      "command_fingerprint": "0300a95b377eeb69702e1e67c593deb091b5c1dbd8ef6ec7c6533abaef0a2670"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-review-coverage.json",
+      "sha256": "89632e2a2484ce1988e61b3751891538b30e6fa75400af16c78bade12b5900d8",
+      "bytes": 8819,
+      "producer": "A-PR286-R2-REPLAY"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-review-coverage.json",
+  "review_coverage_sha256": "89632e2a2484ce1988e61b3751891538b30e6fa75400af16c78bade12b5900d8",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/assignments/A-PR286-R2-REPLAY.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR286_REPAIR_IMPLEMENTATION_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR285_R2_FINAL_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr286_spec.yaml",
+    "docs/research_program/post_pr275/pr286_publication_policy.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+    "tests/contracts/test_pillar_s_complete_adjudication.py",
+    "tests/contracts/test_pillar_s_inference.py",
+    "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+    "docs/PR_DELTAS/pr-286.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "machine_readable/pr_backlog.yaml",
+    "docs/codex_handoff/pr_backlog.json",
+    "machine_readable/pr_backlog.json",
+    "scripts/codex_harness/validate_pr_dag.py",
+    "docs/research_program/vector_tensor/pr271_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+    "docs/research_program/vector_tensor/proofs/PR271_PILLAR_S_CORE.md",
+    "scripts/codex_harness/build_pr271_pillar_s_core.py",
+    "docs/research_program/vector_tensor/pr272_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+    "scripts/codex_harness/build_pr272_pillar_s_inference.py",
+    "docs/research_program/vector_tensor/pr273_spec.yaml",
+    "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+    "scripts/codex_harness/build_pr273_blind_synthetic.py"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-oracle-report.json",
+        ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-review-coverage.json",
+        "exact PR-286 policy command set: 10 of 10 exit zero"
+      ],
+      "evidence_fingerprint": "7e7b848115b9c30470999b20484d18876383696c1bf52607b470ab8973fa281e",
+      "summary": "No blocking defect was found in the repaired PR-286 candidate lineage, receipt, numerical mutation guard, portable replay, frozen PR-271/272/273 record boundary, status mirrors, or publication/DAG cross-binding. This pass is process and diagnostic evidence only; it grants no publication, observed-data, native-solver, or family-identification authority."
+    }
+  ],
+  "errors": []
+}

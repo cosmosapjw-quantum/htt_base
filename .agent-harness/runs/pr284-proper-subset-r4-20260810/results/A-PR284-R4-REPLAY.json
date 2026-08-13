@@ -1,0 +1,177 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-proper-subset-r4-20260810",
+  "assignment_id": "A-PR284-R4-REPLAY",
+  "assignment_sha256": "2d4938bd77b31289a04c29ac0d93b3b3ca5b8af9a1f2d20c35da4015a397fc89",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "93c3dadced3fec69db081092e66f96eac5632b4713f652642d470cc2f6fdacd4",
+    "seal_sha256": "3666dd8f920c46021ebb2823680cf397f37db810e1c1ebda9f4cd70cc46deaa0",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "50fea58d2bd4d33dfac017f46bf22df5ccd289d1",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "6104ff701c82c78b113002131dec3bd493a54795",
+    "diff_sha256": "3205f94a1970082b88bec45fdfa33ec7eba829bed0710754e72d32b5bdd13386",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034"
+  },
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-REPLAY.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-10T02:45:00+00:00",
+  "completed_at": "2026-08-10T02:53:44+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0"
+  },
+  "commands": [
+    {
+      "id": "pr284-focused",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "focused"],
+      "returncode": 0,
+      "observed": "23 passed in 2.17s"
+    },
+    {
+      "id": "pr284-adjacent",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "adjacent"],
+      "returncode": 0,
+      "observed": "41 passed in 3.23s"
+    },
+    {
+      "id": "pr284-receipt-replay",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "check"],
+      "returncode": 0,
+      "observed": "PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+    },
+    {
+      "id": "pr284-portable-clean-replay",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "portable"],
+      "returncode": 0,
+      "observed": "distinct clean archive; source and clean pre/post manifest fe7f35ec59e61d5ade8aff1c6913392e8dbdbeabeae43a92e90e0c16a98cfb51; 5875 files; nested check exit 0"
+    },
+    {
+      "id": "pr284-publication-policy-cross-binding",
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"],
+      "returncode": 0,
+      "observed": "9 passed, 59 deselected in 1.05s"
+    },
+    {
+      "id": "pr284-dag-strict",
+      "argv": ["python3", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "returncode": 0,
+      "observed": "OK: 244 PRs, DAG valid"
+    },
+    {
+      "id": "pr284-claim-language",
+      "argv": ["python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "htt/src/common/depth_path.py", "htt/src/common/depth_path_calibration.py", "htt/htt/htt/infer/depth_path.py", "htt/htt/htt/infer/depth_path_calibration.py", "tests/contracts/test_depth_path_doob_calibration.py", "docs/research_program/post_pr275/pr284_spec.yaml", "docs/generated/pr284_depth_path_doob_receipt.json", "docs/PR_DELTAS/pr-284.md"],
+      "returncode": 0,
+      "observed": "No forbidden claim language detected."
+    },
+    {
+      "id": "pr284-r4-proper-subset-oracle",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle.py", "--output", ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json"],
+      "returncode": 0,
+      "observed": "PR284_R4_PROPER_SUBSET_ORACLE_PASS e31c880225d01dbaea250d87a40eaea320f8e0317d083986b426754998ab9dea"
+    },
+    {
+      "id": "review-coverage-strict",
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/review_coverage.json", "--seal", ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json", "--run-id", "pr284-proper-subset-r4-20260810", "--assignment-id", "A-PR284-R4-REPLAY", "--risk-tier", "R3"],
+      "returncode": 0,
+      "observed": "ok=true; errors=[]"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle.py",
+      "sha256": "dffe2c03cb95d95031c4ad7a652f846757e6d5bf426d28e5fc19e4d69de32391",
+      "bytes": 14611,
+      "producer": "A-PR284-R4-REPLAY",
+      "command_fingerprint": "64c42ce3cd81b9a62d0b8f0329ff5780fc00ee392a78eca4470d0d9f05b9a955"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json",
+      "sha256": "e31c880225d01dbaea250d87a40eaea320f8e0317d083986b426754998ab9dea",
+      "bytes": 1989,
+      "producer": "A-PR284-R4-REPLAY",
+      "command_fingerprint": "64c42ce3cd81b9a62d0b8f0329ff5780fc00ee392a78eca4470d0d9f05b9a955"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/review_coverage.json",
+      "sha256": "4fc012d16a4e2bba3fbff896772593a820f5d29ef3a6bac4fd3c99a3075575c4",
+      "bytes": 9770,
+      "producer": "A-PR284-R4-REPLAY"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/review_coverage.json",
+  "review_coverage_sha256": "4fc012d16a4e2bba3fbff896772593a820f5d29ef3a6bac4fd3c99a3075575c4",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr284-proper-subset-r4-20260810/RUN_PLAN.json",
+    ".agent-harness/runs/pr284-proper-subset-r4-20260810/assignments/A-PR284-R4-REPLAY.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-284.md",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/generated/pr284_depth_path_doob_receipt.json",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/research_program/post_pr275/pr284_spec.yaml",
+    "htt/src/common/depth_path.py",
+    "htt/src/common/depth_path_calibration.py",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/run_pr284_depth_path_doob.py",
+    "tests/contracts/test_depth_path_doob_calibration.py"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR280-HERMETIC-HARNESS",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/review_coverage.json",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json"
+      ],
+      "evidence_fingerprint": "PR284-R4 seven-command proper-subset receipt mutation and portability replay",
+      "summary": "All seven policy commands pass. A fresh discriminator confirms equal support is accepted by the generic path contract, rejected for proved status, and routed without a bound to matched mocks when unproved; all fifteen ordered mutations and twelve source bindings replay."
+    }
+  ],
+  "errors": [],
+  "summary": "PASS for the bounded frozen R4 harness/replay review. This result authorizes no merge, push, PR mutation, approval, publication, or lifecycle promotion.",
+  "proposed_changes": [],
+  "tests_run": [
+    "seven required PR-284 publication-policy commands",
+    "assignment-local independent proper-subset mutation oracle",
+    "strict R3 review coverage validator"
+  ],
+  "risks_and_kill_switches": [
+    "Any candidate SHA, tree, diff, changed-file, base, spec, receipt, mutation-registry, or claim-ceiling drift invalidates this review.",
+    "An equal-support proved path, or an unproved equal-support path with a non-null bound, blocks G6.",
+    "Any surviving, missing, duplicated, reordered, inactive, or unexecuted mutation blocks G6.",
+    "Any non-distinct portable root or pre/post manifest drift blocks replay.",
+    "No merge or publication action is authorized by this reviewer result."
+  ],
+  "artifacts_status_updates_needed": [
+    "Coordinator may consume this strict-valid result for adjudication only after independent sibling results are complete.",
+    "No shared status, seal, integration receipt, push, or PR publication update was made by this assignment."
+  ]
+}

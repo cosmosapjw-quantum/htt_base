@@ -1,0 +1,117 @@
+{
+  "schema_version": 3,
+  "run_id": "pr287-final-seal-closeout-20260811",
+  "assignment_id": "A-PR287-FINAL-SEAL-CLOSEOUT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-287",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR287_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "65f84c67c1cd327fb1456c0139433af925dc44075177d1401e7d86d87d3942bf",
+    "seal_sha256": "d9e88f01afb6ffe4eb8af0206d30cae7f12494e498914528ed22ccfcd76a26bb",
+    "base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+    "merge_base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_tree_sha": "e03b17661c1b5bc74ab0bbecbc31a82948f32bc9",
+    "diff_sha256": "bbf20c198dd4e4d55bcf4e5bf6b4f35906fc9a5ffa07ba595eab649f55c9fdf7",
+    "changed_files_sha256": "b522232b4e7f07fe03b297f33a07dfcce4f7eb80cdd0bbd94b9fd06a20b73198",
+    "production_hash": "6d0963dfdc66dcd2bf80ef3dde6fd84d87f455f0c6db5199250b06b2c51e873a"
+  },
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Final bounded closeout of PR-287 at exact reviewed HEAD 319835cc. This adjudication assignment may inspect only the explicitly registered prior-run review results and aggregate named as required inputs; do not inspect any other historical verdict envelopes. Verify final candidate seal and final integration receipt exactly, exact PR-286 predecessor/base, clean worktree, six unique candidate stable patch IDs, and that 06ee7280 through 319835cc changes only PR delta plus synchronized status mirrors. Validate the closed review immutably: preserve the initial replay ERROR and R2 INCONCLUSIVE as not_examined contamination chronology; require code PASS, claim PASS, physstat typed INCONCLUSIVE only for isolated executor, and final replacement replay PASS. Confirm production/dependency evidence key unchanged, lifecycle REVIEWED, assurance becomes 7 of 16 after this assignment, PR-288 remains PLANNED INELIGIBLE zero budget, and no push PR or merge occurred. Do not rerun substantive scientific assurance; use focused metadata seal and receipt checks only. Write no tracked/shared files; produce only assignment-local executable oracle, coverage, and one strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR287_FINAL_CANDIDATE_SEAL.json",
+      "sha256": "65f84c67c1cd327fb1456c0139433af925dc44075177d1401e7d86d87d3942bf"
+    },
+    {
+      "path": ".prguard/runtime/PR287_FINAL_INTEGRATION_REHEARSAL.json",
+      "sha256": "0595630dbde8e636f9eff108ef6e8cb56679461fd982296c7df90f22c389f9b6"
+    },
+    {
+      "path": ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+      "sha256": "fbe4787a82f650ec050fab020ae2c9545e9f7fe778ec2d6f5d4550470537712b"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-CODE.json",
+      "sha256": "5347f35327c5042327461c61a2b65129f0c84f994bfbc7d767bc6a1d9b8c54b5"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-PHYSSTAT.json",
+      "sha256": "8ec81c6e83933bdb77e4dd9aaa6dca5142502ba50e84279b5f393ba03339f226"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-CLAIM.json",
+      "sha256": "eed958709bbe998666a8d061545479b99df968b07bf0c1e1d5ed499cfc282b63"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY.json",
+      "sha256": "829486feed1918ce3a55c4756f8af55e31affb2810b4a7c54b5018553ba7d425"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY-R2.json",
+      "sha256": "953e011c4bf924e7dc48d6e21c13c40b9536c88f2b08edb0f02bac735d61af84"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY-R3.json",
+      "sha256": "b50bb1418e421bc1f38fbc8783e3424be272f73b5012d4da88dbee52ec4b3e1a"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/MERGED_RESULTS.json",
+      "sha256": "4d6b3039662e90529a7e3d10cce95e7d9b3adf139e1d658d8f471787dd1b0d39"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/RUN_SUMMARY.json",
+      "sha256": "c71049dc9f170feebd7786b60f29b9c66ed4199486fb273b07735fd07adae5b8"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr287_publication_policy.json",
+      "sha256": "30e24d1f9e77c5c206a64e7d8b639cfccd4c6bd9455a6893cbc69ae55ea1d155"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr287_spec.yaml",
+      "sha256": "dbd0d6fe29a45e51a6850102ed4587ac38f8da7cfb52453552aa0a4ba704ac09"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-287.md",
+      "sha256": "3d437477ab6a59e92aa64e58076158771f6039fe2c1c10419c926f2b208c4492"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "8afe832fc507e1d4fe27c8579068132859fb64192db67aaaf32d9147ca61131c"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "8afe832fc507e1d4fe27c8579068132859fb64192db67aaaf32d9147ca61131c"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr287-final-seal-closeout-20260811/results/A-PR287-FINAL-SEAL-CLOSEOUT.json",
+  "status": "registered",
+  "assignment_sha256": "6527d6e2755f611906de51b38197303a97e4336f428fcb58888395d5d7b0b95f"
+}

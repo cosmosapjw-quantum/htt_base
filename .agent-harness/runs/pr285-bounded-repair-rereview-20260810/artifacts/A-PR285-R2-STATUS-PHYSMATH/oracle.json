@@ -1,0 +1,83 @@
+{
+  "candidate_delta": {
+    "changed_files_inventory_unchanged": true,
+    "final_review_sha": "8682a13e8df75c48f6150af555ee231f62e7d9bc",
+    "implementation_sha": "8640cb23c78a2eea9dddf6fb21a1e3176d449c95",
+    "paths": [
+      "M\tdocs/PR_DELTAS/pr-285.md",
+      "M\tdocs/codex_handoff/pr_status.yaml",
+      "M\tmachine_readable/pr_status.yaml"
+    ],
+    "production_hash_unchanged": true,
+    "substantive_rerun_required": false
+  },
+  "cas": {
+    "claim_promotion_from_current_run": false,
+    "current_aggregate_status": "CAS_BLOCKED",
+    "current_axis_statuses": {
+      "lean": "PASS",
+      "sage_singular": "PASS",
+      "sympy": "PASS",
+      "wolfram_xact": "BLOCKED_PLATFORM_OR_LICENSE"
+    },
+    "historical_aggregate_status": "CAS_4AXIS_PASS",
+    "historical_contract_sha256": "2d2ceb84603b24ab0b34db8b69715483061428ee36d6b2f5952494a9bb8108b4"
+  },
+  "disposition": {
+    "rows": 80,
+    "terminal_counts": {
+      "BLOCKED_WITH_RECEIPT": 1,
+      "FAIL": 1,
+      "INCONCLUSIVE_WITH_RECEIPT": 67,
+      "PASS": 11
+    }
+  },
+  "flattening_mutation": {
+    "error": "legacy exact replay mismatch: SIG-P3:premise_status",
+    "killed": true
+  },
+  "independent_of_candidate_runner": true,
+  "input_sha256": {
+    "cas_adjudication": "a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275",
+    "cas_contract": "2d2ceb84603b24ab0b34db8b69715483061428ee36d6b2f5952494a9bb8108b4",
+    "final_seal": "641c72f627cb9a221dab61751bd971513bb1a2623f2d4b7281cd78dc7226060e",
+    "implementation_seal": "02773cca24cdf455df4e96bd069c7abde4f186964aefa77c031bd2217534f149",
+    "pr190_receipt": "580aa9e36ac5419c7364ca6b295dece08c39c8ca1f91962d25c63d32fd3cf426",
+    "pr190_spec": "74872439326b0973ab69de3628f279dd3fad46bf83aa17641e49477aa167b73f",
+    "receipt": "270b80e94767b48d58032d96d48f829138f6d5ffa301e9c8eb48bbd72b5c7e66",
+    "source": "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b"
+  },
+  "legacy": {
+    "partitions": {
+      "S": 34,
+      "T": 31
+    },
+    "rows": 65,
+    "status_pairs": {
+      "DECLARED/DECLARED": 12,
+      "SOURCE_NOT_TYPED/SOURCE_NOT_TYPED": 53
+    },
+    "verdict": "INCONCLUSIVE_WITH_RECEIPT"
+  },
+  "physics_boundary": {
+    "comparator": "x_C=Sigma2-W2+Omega_tilt+DeltaOmega_k",
+    "exact_target_checks": 3,
+    "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    "local_global_rank": "NO_CLAIM_VT_T8_GLOBAL_SEPARATION_WITHHELD",
+    "metric_signature": "(-,+,+,+)",
+    "priors_likelihood_q_pi_f_g": "NOT_APPLICABLE_NO_PRODUCTION_OR_INFERENCE_CHANGE",
+    "units_convention": "EXPLICIT_C_THETA_NORMALIZED"
+  },
+  "pr190": {
+    "success_dependency_satisfied": false,
+    "terminal": "COMPLETED_FAILED_WITH_RECEIPT",
+    "verdict": "FAIL"
+  },
+  "restricted_boundaries": {
+    "VT-T13": "INCONCLUSIVE_WITH_RECEIPT",
+    "VT-T14": "BLOCKED_WITH_RECEIPT",
+    "VT-T8": "INCONCLUSIVE_WITH_RECEIPT"
+  },
+  "schema": "A_PR285_R2_STATUS_PHYSMATH_ORACLE_V1",
+  "status": "PASS"
+}

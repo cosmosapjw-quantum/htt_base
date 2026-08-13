@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-candidate-review-20260810",
+  "assignment_id": "A-PR283-FROZEN-CLAIM",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "candidate_seal_sha256": "89c44d46574c4e268789ab2d623f966bd46e63c8b12f36fade1075d449f03e08",
+  "candidate_sha": "6ee9048ffd80f25337f405d8c6a39fd3b7f489eb",
+  "candidate_tree_sha": "6c5c55dee52aaf7c7649dd23d386e0f85782fd32",
+  "diff_sha256": "5c5e5abd22a509fca7681d1decb0a3ac3b4288c89d4f2a63a4fdc37bcb918ff2",
+  "changed_files_sha256": "7a71a99b7b63012071701c4af1acf33719e01ff76e8ba0316eca7adc4103ebf6",
+  "completed_at": "2026-08-09T19:22:42Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR283_CANDIDATE_SEAL.json",
+        "git:HEAD=6ee9048ffd80f25337f405d8c6a39fd3b7f489eb",
+        "git:HEAD-tree=6c5c55dee52aaf7c7649dd23d386e0f85782fd32"
+      ],
+      "rationale": "The assignment-listed seal file hash, candidate SHA, tree SHA, diff digest, changed-files digest, and production hash match the frozen binding; the target ref still resolves to the sealed base."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_spec.yaml",
+        "docs/generated/pr283_weak_identification_receipt.json:source_bindings"
+      ],
+      "rationale": "The frozen receipt exactly binds the governing spec bytes and the fresh check reconstructs the same receipt."
+    },
+    {
+      "cell": "covariance_supported_rank_ladder",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "full_rank_small_angle_status",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "full_rank_small_singular_value_status",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "rank_deficiency_distinct_from_weak_identification",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "threshold_contract_identity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "exact_source_geometry_report_replay",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "exact_normalizer_spec_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "mandatory_threshold_contract_enforcement",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "all_source_gate_callers_migrated",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "principal_angle_and_singular_value_identity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "mandatory_open_set_abstention",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "no_point_estimate_or_nearest_fallback",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_spec.yaml:runtime_contract.weak_branch_output",
+        "docs/generated/pr283_weak_identification_receipt.json:forbidden_uses"
+      ],
+      "rationale": "The spec and exact receipt forbid a weak-identification point estimate and nearest-class fallback."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        "command:python3 -B scripts/codex_harness/run_pr283_weak_identification.py check exit=0",
+        "docs/generated/pr283_weak_identification_receipt.json sha256=10d28620cd709585cf9444dbde72e19d7baced9ef2da901c005bcbeb3a85fedf"
+      ],
+      "rationale": "Fresh reconstruction matched the checked-in receipt byte for byte; every declared source binding also matched its current file hash."
+    },
+    {
+      "cell": "pr272_predecessor_replay_preservation",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "FAIL",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-283.md:92",
+        "docs/research_program/post_pr275/pr283_publication_policy.json:133",
+        "docs/research_program/post_pr275/pr283_spec.yaml:255",
+        "scripts/codex_harness/run_pr283_weak_identification.py:123",
+        "docs/generated/pr283_weak_identification_receipt.json:323"
+      ],
+      "rationale": "The delta declares both PR-151 and PR-153 forbidden, but the governing policy, spec caveats, generator caveats, and frozen receipt encode only PR-151. PR-153 is therefore not cross-bound as a forbidden input."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "FAIL",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_spec.yaml:4",
+        "docs/generated/pr283_weak_identification_receipt.json:323",
+        "docs/PR_DELTAS/pr-283.md:81",
+        ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-CLAIM/CLAIM_LANGUAGE_ORACLE.log"
+      ],
+      "rationale": "HTT ownership, COMMON/MIO contributor roles, C2 diagnostic-only ceiling, transfer none, observed/public false, no posterior/truth/family promotion, and the pre-native atlas block are consistent. The overall cell fails because the delta's PR-153 forbidden-input claim is absent from the governing and generated claim artifacts."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "serial_stack_bootstrap_integrity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Outside this assignment's claim and provenance review scope."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        "git:refs/remotes/origin/research/pr04-multicomponent=ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+        ".prguard/runtime/PR283_CANDIDATE_SEAL.json:target_ref"
+      ],
+      "rationale": "The local controlling remote-tracking target still equals the seal's target SHA."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR283-CLAIM-LANGUAGE-STRICT",
+      "kind": "static_analyzer",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "htt/src/common/source_separation.py",
+        "htt/src/common/open_set_response_classes.py",
+        "htt/src/common/vector_tensor_statistical_inference.py",
+        "htt/htt/htt/statistics/open_set_response_classes.py",
+        "tests/contracts/test_weak_identification.py",
+        "tests/contracts/test_pillar_s_inference.py",
+        "docs/research_program/vector_tensor/integration/PR283_PR272_OPEN_SET_V1_RELOCATION.json",
+        "docs/research_program/post_pr275/pr283_spec.yaml",
+        "docs/generated/pr283_weak_identification_receipt.json",
+        "docs/PR_DELTAS/pr-283.md"
+      ],
+      "command_fingerprint": "39caabb813ab8e7b2519f2fbc52d7141802b34707f2542600a4bd2dc94d30f8e",
+      "started_at": "2026-08-09T19:22:41Z",
+      "completed_at": "2026-08-09T19:22:42Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-CLAIM/CLAIM_LANGUAGE_ORACLE.log",
+      "artifact_sha256": "e746923b0e4e56ef318dc93197cbf0542e82a48e3d244363ad2398e0e98383b4",
+      "artifact_bytes": 772,
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-CLAIM/CLAIM_LANGUAGE_ORACLE.log",
+        "docs/research_program/post_pr275/pr283_publication_policy.json:required_commands.pr283-claim-language"
+      ]
+    }
+  ],
+  "coverage_sha256": "50bea87802b9fc07e09fbe4fa557c8e8632e4496e9a716c5bb1df608a40321de"
+}

@@ -1,0 +1,103 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-frozen-independent-review-20260811",
+  "assignment_id": "A-PR289-FROZEN-CLAIM",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_gate_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "8aa29e14dcd7e704235a524634dcab219c46728df47da7b9ba8d5885f27271d5",
+    "seal_sha256": "0347f2f5011309909423c4e27e090556c95c2a237e7d9c7a5ab3781087407a47",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "1ad54d3c5a484816128a1df93d54953589780520",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "67ec8432a6557bb460dfe8015b361fe9f6c00d1d",
+    "diff_sha256": "ce6c09a90ccb0e3f50929591a074d4947eb094288b2720d863bc0f3516e44f6e",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "cd8aebca49820d989bf805173f20ac65093181f541920f5adee74ce8e8fce413"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Blind independent frozen claim and provenance review of PR-289. Verify COMMON ownership, C2 diagnostic-only ceiling, transfer none, observed and public false, pre-native family gate blocked, admission distinct from lane execution authorization, generic record IDs and strings never grant positive admission, PR-151 exclusion, policy spec registry runbook ledger receipt and delta consistency, and exact source-bound generation provenance. Do not read sibling or historical result envelopes or edit tracked/shared files.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR289_CANDIDATE_SEAL.json",
+      "sha256": "8aa29e14dcd7e704235a524634dcab219c46728df47da7b9ba8d5885f27271d5"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr289_spec.yaml",
+      "sha256": "75c466e103941b2a3592644718a9b88c4f48391196ada08c7610c760eea924fc"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr289_publication_policy.json",
+      "sha256": "16f8f3c37340d7a11ec3961825b626a43942ceced6e2db812b55738cbeb8b302"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+      "sha256": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f"
+    },
+    {
+      "path": "htt/src/common/data_identity.py",
+      "sha256": "91a148a67ff0b338cd5aedef5efc81039607302f8473e93ddf37fa70ed399539"
+    },
+    {
+      "path": "tests/contracts/test_data_identity_registry_v2.py",
+      "sha256": "df17c8c6d5e02298ae53c367a2919872e5ceea9d3e837d31193b1bf5a6ecb971"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr289_data_identity_v2.py",
+      "sha256": "27f7d531515910ed6758780b029e4c1c7bb2299585d4b51a85ea5340151c86b4"
+    },
+    {
+      "path": "docs/generated/pr289_data_identity_v2_receipt.json",
+      "sha256": "15caa3ea64b302736e01261942173e08d85c7197545d299d7bb5582763623d5b"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runbooks.yaml",
+      "sha256": "b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de"
+    },
+    {
+      "path": "docs/harness/CLAIM_LEDGER.md",
+      "sha256": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-289.md",
+      "sha256": "20ef5426fe50b5cb42980b177b3e4aba16cf0af007076a4a7ab68a860e4cf2e9"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "64b72e89b95ba595543bcebe53906524755e941e6610c5419a7637afb88c1e3b"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact policy-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/results/A-PR289-FROZEN-CLAIM.json",
+  "status": "registered",
+  "assignment_sha256": "c7d075be33439d9be2364a2d542060f93ed9c5d92324bbfd5dfe7e0dbc0901c3"
+}

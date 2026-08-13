@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "run_id": "pr289-final-r4-replacement-review-20260811",
+  "generated_at": "2026-08-11T11:50:53+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 1,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR289-R4-FINAL-REVIEW",
+      "status": "error",
+      "gate_disposition": "INCONCLUSIVE",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "not_examined",
+          "finding_ids": [],
+          "summary": "No clean blind verdict issued: after the independent oracle had reproduced a cross-lane NOT_AUTHORIZED receipt misbinding, an overbroad result-schema search exposed historical result path and command metadata. The reproduction is preserved only as pre-exposure chronology, not as this assignment's claim disposition."
+        }
+      ],
+      "reported_errors": [
+        "INDEPENDENCE_BREACH: after the oracle's successful pre-exposure reproduction, an overbroad rg over .agent-harness exposed historical result path names and two command-array lines; no historical verdict or finding text was read, but blind-results acceptance is invalidated.",
+        "PRE_EXPOSURE_REPRODUCTION_ONLY: exact frozen module SHA-256 248844f22c3b6971e09d58aaae52dcbe74deaeb3327b6f9144f4445ac2c9e647; fresh valid CF4 decision with 9 records and bundle sha256:c792cf5c46ad6ec5c5b943fe386e477c95bff40af0c08022f425cf217efa3d87 passed to build_not_authorized_receipt(PLANCK_lane, CF4_decision); output authorization sha256:1ed83934187e2da9de9c29fba7e0af0f1ef67449adbc988990e44d10e15239ff labeled lane PLANCK, plan PR290-PLANCK-LOWELL-V1, gate H-PLANCK, status NOT_AUTHORIZED, while binding the CF4 bundle and first CF4 record sha256:7e786ed5a9e4c2c0b27633209abe504d49b6e9a636776108c03bc01f8d3c615c. Immediate execution remained unauthorized."
+      ],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "assignment_count": 1,
+  "validated_result_count": 1,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/RUN_PLAN.json",
+      "sha256": "f176d4e06ccd1fa41b382f4c07a11afcd03813af97e57441898438c60631e4ac",
+      "bytes": 5591
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/assignments/A-PR289-R4-FINAL-REVIEW.json",
+      "sha256": "5ec22b76f398ce95483fc88f9c32f44d8b17fca64cd47704753920cb5332363c",
+      "bytes": 5647
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r4-replacement-review-20260811/results/A-PR289-R4-FINAL-REVIEW.json",
+      "sha256": "9334d78a617ad5b3b7519151bcb632597f87983e73423d3e0e37d14abaede581",
+      "bytes": 8133
+    }
+  ],
+  "merge_input_sha256": "2c10e1d401aadff431a1505880c481781195905a1f60734351613c04dcbaaf32"
+}

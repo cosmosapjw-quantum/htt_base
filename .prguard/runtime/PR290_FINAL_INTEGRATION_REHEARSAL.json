@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "candidate_seal_sha256": "77e07224080bcea620674881ebe9aee78e6172b1692f8dfededa7e00a600cc3f",
+  "candidate_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+  "candidate_tree_sha": "6c24b0eea0971badd30662473c68e91f1bbe9072",
+  "diff_sha256": "fc6552ed00b4183c1dcbfb7b15566c22253af5d5634d835ea199cf1277026afc",
+  "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr289-native-data-identity-recovery-20260811",
+  "latest_target_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+  "integration_policy_sha256": "45655b62f02f2d422283aa99780c78e80a022fbd1fd371e8ee7a450ddad320cd",
+  "merged_tree_sha": "6c24b0eea0971badd30662473c68e91f1bbe9072",
+  "started_at": "2026-08-11T14:41:28+00:00",
+  "completed_at": "2026-08-11T14:42:32+00:00",
+  "status": "PASS",
+  "commands": [
+    {
+      "id": "pr290-focused",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr290_planck_lane.py",
+        "focused"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr290_planck_lane.py",
+        "focused"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T14:41:29+00:00",
+      "completed_at": "2026-08-11T14:41:39+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "d0b6207232a768b160b04a08bb869debe21d26cfe29438e74b3fdfbf29b5cf4b",
+      "stdout_bytes": 99,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr290-preactivation",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr290_planck_lane.py",
+        "check"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr290_planck_lane.py",
+        "check"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 600,
+      "started_at": "2026-08-11T14:41:39+00:00",
+      "completed_at": "2026-08-11T14:41:39+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "406ee427308a922359ffd0a086e95c21eb01ea58b971307e1722fd750051fda8",
+      "stdout_bytes": 242,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr290-adjacent",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr290_planck_lane.py",
+        "adjacent"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr290_planck_lane.py",
+        "adjacent"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T14:41:39+00:00",
+      "completed_at": "2026-08-11T14:42:25+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "cf5281845996850b236699e602f8f9f76cc7a9408b1b2285079ad0ac91fd47ec",
+      "stdout_bytes": 192,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr290-portable-clean",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr290_planck_lane.py",
+        "portable"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr290_planck_lane.py",
+        "portable"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T14:42:25+00:00",
+      "completed_at": "2026-08-11T14:42:28+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "6454acd8c2af2b8ab117e90ce6db81850405a1fcc91084fddaec4d6a0d626c27",
+      "stdout_bytes": 1513,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr290-policy-cross-binding",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "-k",
+        "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "-k",
+        "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T14:42:28+00:00",
+      "completed_at": "2026-08-11T14:42:30+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "89b9ef4271d425511be9f8cf9b5a0533fd796f485fbddae7a919f5a9d84c804c",
+      "stdout_bytes": 113,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr290-dag-strict",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T14:42:30+00:00",
+      "completed_at": "2026-08-11T14:42:31+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "954bccce10cfc35cf06b7aa16b931d748ff4f55af6a9350c833855bdafcf44ee",
+      "stdout_bytes": 1749,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr290-claim-language",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "docs/research_program/post_pr275/pr290_spec.yaml",
+        "htt/src/common/observed_lane_activation.py",
+        "htt/obsstat/planck_post275_lane.py",
+        "tests/integration/test_planck_post275_lane.py",
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+        "docs/PR_DELTAS/pr-290.md"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "docs/research_program/post_pr275/pr290_spec.yaml",
+        "htt/src/common/observed_lane_activation.py",
+        "htt/obsstat/planck_post275_lane.py",
+        "tests/integration/test_planck_post275_lane.py",
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+        "docs/PR_DELTAS/pr-290.md"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T14:42:31+00:00",
+      "completed_at": "2026-08-11T14:42:31+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "19a00c56f80d1c997ad754ec812ae264d0469fe074b69c56b34594caa22f1164",
+      "stdout_bytes": 38,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    }
+  ],
+  "receipt_sha256": "10c186186f0ddcaf99b0826d478bf09bbc4e594c624b5ac8ed3d262645908950"
+}

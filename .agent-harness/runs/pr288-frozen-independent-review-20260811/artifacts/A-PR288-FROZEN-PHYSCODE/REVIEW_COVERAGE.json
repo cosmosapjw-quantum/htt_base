@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "run_id": "pr288-frozen-independent-review-20260811",
+  "assignment_id": "A-PR288-FROZEN-PHYSCODE",
+  "change_set_id": "CS-PR288-BAYES-SEMANTICS",
+  "publication_group_id": "PG-PR288-BAYES-SEMANTICS",
+  "candidate_seal_sha256": "f48b634025993d4edd6cb4e3da0838b7d5be1c9b70cbbbf309bdeacdd70666c0",
+  "candidate_sha": "dcde762d1ce3027e01edcf2744398f7588bb5fb1",
+  "candidate_tree_sha": "69d9f00aa1b8a43dfb9287ffbc9103f350fba80e",
+  "diff_sha256": "530985dfda2c66cba6ec7769bcf151f1ba087a2c9b69add8faa51508225db136",
+  "changed_files_sha256": "0daebf3fcd581e6308cf2772ba9fd8762d4d47115e79bff10b730c852f4f1fa9",
+  "completed_at": "2026-08-11T07:40:30+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR288_VALIDATED_CANDIDATE_SEAL.json",
+        "git rev-parse HEAD HEAD^{tree}"
+      ],
+      "rationale": "HEAD and tree equal the frozen assignment; every required input hash matches and the worktree was clean before assignment-local outputs."
+    },
+    {
+      "cell": "pr280_terminal_receipt_without_success_promotion",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-280.md:172",
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json"
+      ],
+      "rationale": "The accepted dependency is exactly COMPLETED_FAILED_WITH_RECEIPT with success_dependency_satisfied false; an independent hostile dependency mutation wins terminal precedence."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr288_spec.yaml:31",
+        "htt/htt/htt/infer/bayesian_semantics.py:2624"
+      ],
+      "rationale": "The builder loads and validates the frozen claim, dependency, engine, fixture, PPC, LOOCV, receipt, and mutation contracts before emitting a receipt."
+    },
+    {
+      "cell": "analytic_fixture_accuracy",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json",
+        "htt/htt/htt/infer/bayesian_semantics.py:451"
+      ],
+      "rationale": "An independent scipy multivariate-normal evaluation reproduces all five normalized Gaussian marginal log evidences within 2e-13."
+    },
+    {
+      "cell": "dynesty_sobol_independence",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json",
+        "htt/htt/htt/infer/bayesian_semantics.py:596",
+        "htt/htt/htt/infer/bayesian_semantics.py:658"
+      ],
+      "rationale": "Real Dynesty 3.0.0 and eight independently scrambled Sobol estimates use distinct sample/node and estimate content identities for every fixture."
+    },
+    {
+      "cell": "combined_uncertainty_preregistration",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr288_spec.yaml:78",
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json"
+      ],
+      "rationale": "Every crosscheck threshold independently equals max(0.02, 3 times the quadrature sum of declared log-evidence uncertainties)."
+    },
+    {
+      "cell": "degenerate_null_control",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr288_bayesian_semantics_receipt.json",
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json"
+      ],
+      "rationale": "Independent A/B engine runs for identical models give log Bayes factors 0.060015 and 0.00000645, both within their frozen uncertainty thresholds."
+    },
+    {
+      "cell": "sobol_scramble_uncertainty",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/htt/htt/infer/bayesian_semantics.py:614",
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json"
+      ],
+      "rationale": "For every fixture the oracle recomputes log(mean linear Z) and sample-SD/sqrt(8)/mean from eight positive finite independent scramble estimates."
+    },
+    {
+      "cell": "posterior_draw_ppc",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/htt/htt/infer/bayesian_semantics.py:936",
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json"
+      ],
+      "rationale": "PPC derives its p-value and summaries from content-addressed weighted posterior draws and one registered replicate per draw; no scalar caller p-value is accepted."
+    },
+    {
+      "cell": "ppc_tail_and_equality_semantics",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json",
+        "htt/htt/htt/infer/bayesian_semantics.py:984"
+      ],
+      "rationale": "A nonuniform-weight hostile oracle separates >= from > and obtains the exact registered weighted >= tail probability."
+    },
+    {
+      "cell": "foldwise_nuisance_refit",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/htt/htt/infer/bayesian_semantics.py:1234",
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json"
+      ],
+      "rationale": "Each unique fold rebuilds the full conjugate parameter posterior from its training subproblem with a unique seed and draw identity."
+    },
+    {
+      "cell": "integrated_heldout_predictive_density",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/htt/htt/infer/bayesian_semantics.py:1255",
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json"
+      ],
+      "rationale": "The independent exact Gaussian conditional-posterior predictive calculation agrees with all 512-draw fold estimates to at most 0.00883 log units."
+    },
+    {
+      "cell": "complete_fold_inventory",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr288_spec.yaml:209",
+        "docs/generated/pr288_bayesian_semantics_receipt.json"
+      ],
+      "rationale": "CHANNEL-1 through CHANNEL-4 appear exactly once, in registered order, with unique training, held-out, refit, and posterior-draw identities."
+    },
+    {
+      "cell": "covariance_misspecification_visibility",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json",
+        "htt/htt/htt/infer/bayesian_semantics.py:2072"
+      ],
+      "rationale": "Full and diagonal covariance identities differ and the independently recomputed analytic evidence shift is 0.074559, above the preregistered 0.05 minimum."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr288_spec.yaml:297",
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json"
+      ],
+      "rationale": "The exact ordered 15-row registry is content addressed; every row executed, activated, and was killed, and the aggregate independently revalidates it."
+    },
+    {
+      "cell": "legacy_value_quarantine",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr288_spec.yaml:239",
+        "docs/generated/pr288_bayesian_semantics_receipt.json"
+      ],
+      "rationale": "ln_B, beta, F_Bayes, Qbar, Pi_HTT, and chapter tables remain LEGACY_REPRODUCTION_ONLY and forbidden as engines, tolerances, posterior draws, folds, or observed claims."
+    },
+    {
+      "cell": "htt_mio_ownership_boundary",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/htt/htt/infer/bayesian_semantics.py:46",
+        "docs/generated/pr288_bayesian_semantics_receipt.json"
+      ],
+      "rationale": "Model-dependent evidence, posterior draws, PPC, and LOOCV remain HTT-owned; MIO posterior or evidence is explicitly forbidden."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json",
+        "docs/generated/pr288_bayesian_semantics_receipt.json"
+      ],
+      "rationale": "Fresh required-engine recomputation is byte-exact with the frozen receipt, all numerical leaves are finite, and every component and top-level canonical identity recomputes."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR288_VALIDATED_CANDIDATE_SEAL.json",
+        "docs/research_program/post_pr275/pr288_publication_policy.json"
+      ],
+      "rationale": "The frozen seal binds the exact policy ID, path, SHA-256, change set, publication group, target, claim ceiling, and required review cells."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr288_spec.yaml:20",
+        "docs/generated/pr288_bayesian_semantics_receipt.json"
+      ],
+      "rationale": "The result is synthetic C2 diagnostic-only, transfer none, observed false, public false, OPEN_UNCHANGED, and BLOCKED_PRE_NATIVE_ATLAS; scalar Q/F/Pi legacy values cannot promote it."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This assignment is the frozen physics/statistics/code review slice; archive portability and containment replay belong to the separately registered replay scope and are not used for this scientific verdict."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This assignment verifies the exact candidate/base binding but does not claim the separately registered live integration rehearsal cell."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR288-INDEPENDENT-PHYSCODE-ORACLE",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": [
+        "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+        "-B",
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle.py",
+        "--output",
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json"
+      ],
+      "command_fingerprint": "6b649f2f70702e2864394d75d23defd4b30fd848942d8b3c0fd14c8c26394285",
+      "started_at": "2026-08-11T07:39:40.425477+00:00",
+      "completed_at": "2026-08-11T07:40:09.425477+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-PHYSCODE/independent_physcode_oracle_report.json",
+      "artifact_sha256": "766030927ab2b6a35cea6829e4522bcc90a3662dc096a017be2824e1cffa9b18",
+      "artifact_bytes": 3104,
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr288_spec.yaml",
+        "htt/htt/htt/infer/bayesian_semantics.py",
+        "docs/generated/pr288_bayesian_semantics_receipt.json"
+      ]
+    }
+  ],
+  "coverage_sha256": "0c38dbe070d9cdc4df13c8247d70cf71ea4c57f20af8a6eb450ef90c4d701427"
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-numerical-repair-rereview-20260811",
+  "assignment_id": "A-PR286-R2-CLAIM",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_gate_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "217f4c0cd8da2c6b40c15257ea1954352704fbb01757ccf9d7ff9addd6165509",
+    "seal_sha256": "0667a86aea43de3ab892489053a0f1c39697107fc3a8d25b8bc0113fca2e806f",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "7ad8176282554670909c28306b3e14e83662a42b",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "d14eedaa79f902f5b47b507fa3951e5a22cbe9b7",
+    "diff_sha256": "12137112ed5ea688cd4c36ab0a4c3f301bb9a1d95629314356f113585393e06f",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "6a5a82ed5c563f646be7815e334c5e119569a20c8594c62264e70d3b2de05e34"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION",
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Fresh blind bounded rereview of the repaired PR-286 claim, ownership, provenance, and lifecycle boundary. Read this assignment first; do not read CONTEXT_PACK, sibling results, or historical review/result envelopes. Verify C2 diagnostic-only, transfer none, observed/public false, BLOCKED_PRE_NATIVE_ATLAS, HTT likelihood ownership, OBSSTAT input ownership, MIO diagnostic-only behavior, exact 21 PASS 0 FAIL 50 INCONCLUSIVE 1 BLOCKED row disposition, VT-S14 blocked-before-admitted-data status, current receipt/spec/policy/delta consistency, VALIDATED with rereview DEFERRED, assurance 4 of 16, PR-287 INELIGIBLE with zero budget, exact predecessor binding, and HUMAN_ONLY merge. Ensure the numerical repair does not promote any claim or reuse historical result envelopes as acceptance evidence. Write no tracked/shared files; produce only assignment-local executable oracle, coverage, and one strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json",
+      "sha256": "217f4c0cd8da2c6b40c15257ea1954352704fbb01757ccf9d7ff9addd6165509"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr286_spec.yaml",
+      "sha256": "7b359af0818766860b4bfecc4eae36fa2b31580636d3dfea99a6ed280c4e4989"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr286_publication_policy.json",
+      "sha256": "768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+      "sha256": "7da531e70160a751e45348db7eeb4d2ee3fe129a31cbca01315c242a38f5557e"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+      "sha256": "ff2fe5f92cc3a6470500905f742dd788d63fd17a53ac00ffb7560cf3c1c503c2"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-286.md",
+      "sha256": "3553f2994a77172b83b553c034f9cc44e1736924878c2b3f425d2f734209b441"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "9d9a7d2f2f6a7362ef81314c816f3338d76ca66f0bcf2e19efaf472d61c4ed6d"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "9d9a7d2f2f6a7362ef81314c816f3338d76ca66f0bcf2e19efaf472d61c4ed6d"
+    },
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256": "73553b6056e5111c1047b80f79c35cdb8e898e0a7b8a7e7e28f97731b5cc699e"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/results/A-PR286-R2-CLAIM.json",
+  "status": "registered",
+  "assignment_sha256": "3f37580e9ba3ed47fada89c6b91bd3ddd5026249e21bfb9b00a13431e980bb67"
+}

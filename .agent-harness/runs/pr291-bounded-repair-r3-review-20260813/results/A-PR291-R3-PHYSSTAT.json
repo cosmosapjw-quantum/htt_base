@@ -1,0 +1,200 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-bounded-repair-r3-review-20260813",
+  "assignment_id": "A-PR291-R3-PHYSSTAT",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "verdict": "FAIL",
+  "summary": "Frozen candidate identity and required regressions pass, but the registered rank/eigengap contract is bypassable and the structural identified-set constructor admits a mathematically singleton set as non-point-identified. The rank bypass creates a false null basis, survives G4/G7, and conflicts with the paired source decision rank.",
+  "candidate_binding": {
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "1af0db69da0a190b268d6765e334b05023dd04e7",
+    "candidate_tree_sha": "d5f3a1199932eb1b66b403e74287e003c941191f",
+    "diff_sha256": "fefd37043d724282ea1fbc3cf6a7de72c02d30bc9f3dff712c6bca564aef4cf3",
+    "production_hash": "7545b0cbc5e6e0ae572b4c8b7e9efebeafc9b41a25e90da82d407b0ecec8813b",
+    "seal_sha256": "28a2bda8a600cf5ccb0dab4dbb9525105004c469f628d1e392d261beee5a32d1",
+    "validated": true
+  },
+  "claim_results": [
+    {
+      "claim_id": "C-PR135-FINITE-NULL-RANK",
+      "verdict": "FAIL",
+      "evidence_fingerprint": "sha256:258d172d1afe25b7eeba46ad424c9e9113a1489c17a78e857324d540faf8f852",
+      "summary": "Caller-controlled rank_tolerance can override the registered 1e-12 floor, loosen the null replay residual bound, and pass G4/G7 with a false null space and inconsistent source-decision rank."
+    },
+    {
+      "claim_id": "C-PR136-IDENTIFIED-SET",
+      "verdict": "FAIL",
+      "evidence_fingerprint": "sha256:c0ae680278d08668521851754c75c512e6f0b0ed747759992a768c3651e95775",
+      "summary": "The identified-set constructor is not bound to the typed response/source decision and accepts equal endpoints while asserting BOUNDED_BUT_NOT_POINT_IDENTIFIED."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR291-R3-PHYSSTAT-001",
+      "claim_id": "C-PR135-FINITE-NULL-RANK",
+      "severity": "BLOCKING",
+      "verdict": "FAIL",
+      "title": "Unregistered response/eigengap floors manufacture weak identification and a false null basis",
+      "evidence_fingerprint": "sha256:258d172d1afe25b7eeba46ad424c9e9113a1489c17a78e857324d540faf8f852",
+      "evidence": [
+        {
+          "path": "docs/research_program/post_pr275/pr291_spec.yaml",
+          "lines": "170-181",
+          "fact": "The governing weak-identification contract fixes relative_singular_floor=1e-12 and relative_eigengap_floor=1e-10."
+        },
+        {
+          "path": "htt/obsstat/cf4_post275_lane.py",
+          "lines": "1051-1125",
+          "fact": "rank_tolerance accepts any positive real; it controls both rank classification and the residual acceptance bound, while normalizer_id omits the tolerance, singular values, and rank."
+        },
+        {
+          "path": "htt/obsstat/cf4_post275_lane.py",
+          "lines": "1164-1274",
+          "fact": "The gate cross-checks identities and parameter counts but does not require response_rank to agree with the source decision's joint rank or revalidate the response floor."
+        },
+        {
+          "path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-PHYSSTAT_oracle.py",
+          "sha256": "954a2bce306bc406647f1763a55b12b96f90fa8d744380f925a62a5aac57941b",
+          "fact": "Independent synthetic oracle reproduces matrix rank 2 -> reported rank 0/nullity 2, purported-null residual norm 1.0, and PASS_SYNTHETIC G4/G7 with source decision joint_rank=2. It also flips a well-separated shear to WEAKLY_IDENTIFIED via eigengap_floor=2."
+        }
+      ],
+      "assumptions": [
+        "The numerical APIs are public synthetic operator contracts, so caller-supplied values must not silently replace the spec-registered floors.",
+        "A right-null basis must satisfy R N^T approximately zero under a tolerance independent of a caller's desired rank classification.",
+        "G4/G7 cannot be a coherent rank gate when the response report says rank 0 and its paired source decision says joint rank 2."
+      ],
+      "reproduction": {
+        "command": "PYTHONPATH=htt:htt/src python -B .agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-PHYSSTAT_oracle.py",
+        "exit_code": 0,
+        "observed": "false_null_reproduced=true; false_null_passes_gate_snapshot=true; classification_flip_reproduced=true"
+      },
+      "required_fix": [
+        "Remove public floor overrides or require an exact pre-registered threshold contract and reject mismatch with the PR-291 fixed floors.",
+        "Bind the applied floor, singular values, resulting rank/nullity, and covariance/response identities into the response artifact identity.",
+        "Validate null replay with a fixed machine/numerical bound that cannot be relaxed by the classification floor.",
+        "At G4/G7, reconcile response rank/nullity with source-decision local/global/joint ranks and fail closed on inconsistency.",
+        "Apply the same registration rule to shear/eigenspace eigengap floors."
+      ],
+      "required_tests": [
+        "A full-rank identity response with any unregistered rank_tolerance must reject before artifact construction.",
+        "Every returned right-null basis must meet a fixed residual criterion; demonstrate failure for the oracle matrix.",
+        "G4/G7 must reject response_rank=0 paired with source-decision joint_rank=2.",
+        "Well-separated eigenvalues must not become weakly identified through an unregistered eigengap floor."
+      ]
+    },
+    {
+      "finding_id": "F-PR291-R3-PHYSSTAT-002",
+      "claim_id": "C-PR136-IDENTIFIED-SET",
+      "severity": "MAJOR",
+      "verdict": "FAIL",
+      "title": "Structural identified set accepts a singleton while asserting non-point identification",
+      "evidence_fingerprint": "sha256:c0ae680278d08668521851754c75c512e6f0b0ed747759992a768c3651e95775",
+      "evidence": [
+        {
+          "path": "htt/obsstat/cf4_post275_lane.py",
+          "lines": "1130-1161",
+          "fact": "The constructor accepts lower==upper, accepts a bare status string rather than a typed response/source decision, and unconditionally emits BOUNDED_BUT_NOT_POINT_IDENTIFIED."
+        },
+        {
+          "path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-PHYSSTAT_oracle.py",
+          "sha256": "954a2bce306bc406647f1763a55b12b96f90fa8d744380f925a62a5aac57941b",
+          "fact": "The oracle constructs bounds [3.0,3.0] and receives status BOUNDED_BUT_NOT_POINT_IDENTIFIED."
+        }
+      ],
+      "assumptions": [
+        "A closed real interval with equal endpoints is a singleton and therefore point identified as a set.",
+        "A structural identified-set artifact should be derived from or cross-bound to the response/null/nuisance contract it reports."
+      ],
+      "reproduction": {
+        "command": "PYTHONPATH=htt:htt/src python -B .agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-PHYSSTAT_oracle.py",
+        "exit_code": 0,
+        "observed": "singleton_mislabeled_nonpoint=true"
+      },
+      "required_fix": [
+        "Require lower < upper for BOUNDED_BUT_NOT_POINT_IDENTIFIED, or emit a distinct singleton/point-identified status without presenting a weak-ID abstention as non-point identification.",
+        "Accept an exact typed response/source-separation decision and bind its response, covariance, normalizer, nuisance, rank, and threshold identities into the identified-set payload."
+      ],
+      "required_tests": [
+        "Equal endpoints cannot emit BOUNDED_BUT_NOT_POINT_IDENTIFIED.",
+        "A caller-supplied WEAKLY_IDENTIFIED string without a matching typed response/source decision cannot construct the artifact.",
+        "Identified-set response/nuisance identities must reject drift."
+      ]
+    }
+  ],
+  "positive_findings": [
+    "The STF radial design has the correct sign/units structure for v_r = monopole + n dot bulk + r n_i S_ij n_j with Szz=-Sxx-Syy; declared units are km/s and km/s/Mpc in the Galactic right-handed positive-receding convention.",
+    "GLS uses the complete positive-definite covariance and Cholesky whitening; diagonal shortcut and covariance condition above 1e12 fail closed.",
+    "The exact nine-role CF4 identity order is replayed; catalogue/group/row/selection/covariance/frame/sign/units/depth/ZoA roles remain separate from H-CF4 authorization.",
+    "Depth and ZoA artifacts derive row, selection, covariance, stratum, and transport identities from the bound operator identity and enforce nested ordered support.",
+    "No prior, likelihood, posterior, Bayes factor, evidence, p-value, family ranking, or observed CF4 execution is produced. Residual/correlated chi-square values remain synthetic diagnostics, not likelihood claims.",
+    "The target does not emit MIO x/Q/Pi/F/G_F objects; G4-G7 are gate labels only. The 0.0089 curl/divergence number remains a dimensionless legacy stencil/reconstruction self-check with physical-vorticity and potential-flow claims forbidden.",
+    "Claim tier remains C2 diagnostic_only, transfer_source=none, public_use=false, and family_identification_gate=BLOCKED_PRE_NATIVE_ATLAS."
+  ],
+  "commands": [
+    {
+      "command": "python -B scripts/codex_harness/run_pr291_cf4_lane.py focused",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "exit_code": 0,
+      "result": "57 passed in 2.99s"
+    },
+    {
+      "command": "python -B scripts/codex_harness/run_pr291_cf4_lane.py adjacent",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "exit_code": 0,
+      "result": "189 passed in 54.33s"
+    },
+    {
+      "command": "python -B scripts/codex_harness/run_pr291_cf4_lane.py check",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "exit_code": 0,
+      "result": "BLOCKED_PREDECESSOR_FINAL_SUCCESS; observed_data_executed=false; numeric_outputs_written=[]; network_or_download_side_effect=false"
+    },
+    {
+      "command": "PYTHONPATH=htt:htt/src python -B .agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-PHYSSTAT_oracle.py",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "exit_code": 0,
+      "result": "All three hostile counterexamples reproduced"
+    },
+    {
+      "command": "assignment-local Python single-result assignment/schema/claim/coverage/artifact validation",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "exit_code": 0,
+      "result": "PASS single-result assignment/schema/claim/coverage/artifact validation"
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "pytest": "9.1.1"
+  },
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-PHYSSTAT_oracle.py",
+      "sha256": "954a2bce306bc406647f1763a55b12b96f90fa8d744380f925a62a5aac57941b",
+      "type": "executable_oracle"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-PHYSSTAT_REVIEW_COVERAGE.json",
+      "sha256": "1525ac68966627369f825192caddc49c430a2a2ed5b985e485a781f67f323bc7",
+      "type": "REVIEW_COVERAGE",
+      "cell_count": 16
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-PHYSSTAT_REVIEW_COVERAGE.json",
+  "limitations": [
+    "Portable-clean and publication policy subprocesses were not independently rerun in this role; their hashes and relevant candidate bindings were checked, and the exact focused/adjacent/check commands required by this assignment were executed.",
+    "No observed CF4 data, external transfer output, sibling result, historical result, CONTEXT_PACK, process list, aggregate validator, or web source was inspected."
+  ],
+  "independence_attestation": {
+    "sibling_results_read": false,
+    "historical_results_read": false,
+    "context_pack_read": false,
+    "process_listing_used": false,
+    "aggregate_validator_used": false,
+    "candidate_or_shared_files_modified": false,
+    "writes_limited_to_assignment_result_and_artifacts": true
+  }
+}

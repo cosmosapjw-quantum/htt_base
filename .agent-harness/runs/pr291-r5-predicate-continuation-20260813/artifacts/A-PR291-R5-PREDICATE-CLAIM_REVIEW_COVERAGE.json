@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-predicate-continuation-20260813",
+  "assignment_id": "A-PR291-R5-PREDICATE-CLAIM",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "977f96e2b21d07caf31d9176244afddcac5893156e78ac6d71cd13fc52479d27",
+  "candidate_sha": "c39e57e5638a63e023783fb962521799ce87866b",
+  "candidate_tree_sha": "62026afc31a915dc7f96c718fcc654c71a8ed53a",
+  "diff_sha256": "ef5b9f7477cf91308db87caadfd96a5f53073649ea8feb20b4dd9f93af75e4c0",
+  "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+  "completed_at": "2026-08-13T09:31:30+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {"cell": "candidate_identity", "status": "PASS", "evidence_refs": ["candidate seal and binding validators returned zero errors", "HEAD=c39e57e5638a63e023783fb962521799ce87866b"], "rationale": "Exact frozen candidate verified."},
+    {"cell": "spec_before_execution", "status": "PASS", "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml sha256:7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec"], "rationale": "Required spec read before policy execution."},
+    {"cell": "dependency_terminal_replay", "status": "PASS", "evidence_refs": ["run_pr291_cf4_lane.py check: BLOCKED_PREDECESSOR_FINAL_SUCCESS"], "rationale": "Fail-closed predecessor terminal replayed."},
+    {"cell": "data_identity_and_human_authorization_separation", "status": "PASS", "evidence_refs": ["PR291_NONEXECUTION_RECEIPT.json sha256:f1d3c5b187e90dc5c2b703b0fd195068d999d838fb96dbdfb3164a79703bcfc3"], "rationale": "Observed execution remained unauthorized and false."},
+    {"cell": "preflight_before_first_write", "status": "PASS", "evidence_refs": ["run_pr291_cf4_lane.py check emitted no numeric outputs"], "rationale": "Blocked check performed no numerical write."},
+    {"cell": "synthetic_estimand_identity", "status": "PASS", "evidence_refs": ["focused policy: 62 passed"], "rationale": "Focused typed synthetic suite passed."},
+    {"cell": "group_row_selection_and_frame_conventions", "status": "PASS", "evidence_refs": ["focused policy: 62 passed"], "rationale": "Covered by focused registered suite."},
+    {"cell": "full_covariance_and_effective_rank", "status": "PASS", "evidence_refs": ["adjacent policy: 189 passed"], "rationale": "Adjacent numerical contract suite passed; numerical module hash unchanged."},
+    {"cell": "depth_zoa_nested_support_and_transport", "status": "PASS", "evidence_refs": ["adjacent policy: 189 passed"], "rationale": "Adjacent depth and transport contracts passed."},
+    {"cell": "weak_identification_and_identified_set_abstention", "status": "PASS", "evidence_refs": ["focused policy: 62 passed"], "rationale": "Focused abstention checks passed."},
+    {"cell": "legacy_p0_and_curl_disposition", "status": "PASS", "evidence_refs": ["production claim command: no forbidden claim language detected"], "rationale": "Declared production paths retain the registered downclaim."},
+    {"cell": "blocked_no_numeric_output", "status": "PASS", "evidence_refs": ["observed_data_executed=false", "numeric_outputs_written=[]"], "rationale": "Preactivation stayed nonexecuting."},
+    {"cell": "portable_clean_integration", "status": "PASS", "evidence_refs": ["portable nested_exit_code=0", "portable manifest sha256:d0a6492de69a0a6781f851b643d0e0bc245d9aa5cef0c0fb590a62b7312f77dd"], "rationale": "Clean-root replay passed without source mutation."},
+    {"cell": "publication_policy_cross_binding", "status": "PASS", "evidence_refs": ["policy selector: 9 passed", "strict DAG: 244 PRs valid"], "rationale": "Policy and candidate identities cross-bind."},
+    {"cell": "claim_and_family_ceiling", "status": "FAIL", "evidence_refs": ["A-PR291-R5-PREDICATE-CLAIM_ORACLE.py sha256:200fe2b9806ba752e08cd3125d30204af014585bfb75975367fdd7a5959803f7", "oracle reproduced 2 false negatives and 5 false positives"], "rationale": "The predicate normalizer misses forbidden generic-actor/modal forms and rejects predicate-scoped negative controls."},
+    {"cell": "latest_target_integration", "status": "PASS", "evidence_refs": ["base_sha and merge_base_sha=06ac20605ebc371b0f97ad6e91c802a51a9bf764", "portable replay passed"], "rationale": "Candidate remains based on the declared PR-290 target."}
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "pr291-predicate-grammar-oracle-v1",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/artifacts/A-PR291-R5-PREDICATE-CLAIM_ORACLE.py"],
+      "command_fingerprint": "410faee16e25bef82b3b7235fce94dd956379ca5e7264d4beef8fa54909c9659",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T09:30:00+00:00",
+      "completed_at": "2026-08-13T09:30:01+00:00",
+      "artifact_path": ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/artifacts/A-PR291-R5-PREDICATE-CLAIM_ORACLE.py",
+      "artifact_sha256": "200fe2b9806ba752e08cd3125d30204af014585bfb75975367fdd7a5959803f7",
+      "artifact_bytes": 5194,
+      "evidence_refs": ["25 bounded active/passive/scalar/negation/Markdown/YAML cases", "7 exact reproduced scanner mismatches"]
+    }
+  ],
+  "coverage_sha256": "90226a2daab919a13708e1dbc377f9b1e7831ac4b8b408696b026b809f932591"
+}

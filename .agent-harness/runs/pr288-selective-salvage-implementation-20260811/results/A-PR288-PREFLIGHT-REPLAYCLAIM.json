@@ -1,0 +1,251 @@
+{
+  "schema_version": 3,
+  "run_id": "pr288-selective-salvage-implementation-20260811",
+  "assignment_id": "A-PR288-PREFLIGHT-REPLAYCLAIM",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "work_unit_id": "PR-288",
+  "change_set_id": "CS-PR288-BAYES-SEMANTICS",
+  "publication_group_id": "PG-PR288-BAYES-SEMANTICS",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "independence_mode": "shared-core",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr288-selective-salvage-implementation-20260811/results/A-PR288-PREFLIGHT-REPLAYCLAIM.json",
+  "assignment_sha256": "c5f535c67519cf47b71fc625d850865e437e4ef8abd96cbeb85a21a518ec007e",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr288-selective-salvage-implementation-20260811/RUN_PLAN.json",
+    ".agent-harness/runs/pr288-selective-salvage-implementation-20260811/assignments/A-PR288-PREFLIGHT-REPLAYCLAIM.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    "docs/PR_DELTAS/pr-288.md",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/research_program/post_pr275/pr288_publication_policy.json",
+    "docs/research_program/post_pr275/pr288_spec.yaml",
+    "htt/htt/htt/infer/bayesian_semantics.py",
+    "htt/pyproject.toml",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "tests/htt/test_bayesian_semantics_repair.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T15:48:00+09:00",
+  "completed_at": "2026-08-11T16:03:01+09:00",
+  "tool_versions": {
+    "git": "2.43.0",
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1",
+    "dynesty": "UNAVAILABLE"
+  },
+  "commands": [
+    "sha256sum <eight registered required inputs>",
+    "git show -s --format=%H%n%P%n%s fe41d6ed",
+    "git rev-parse refs/remotes/origin/changeset/pr287-entropy-truth-recovery-20260811",
+    "git rev-parse <commit>:<PR-288 path> for G41/G43/G44 and candidate commits",
+    "git merge-base --is-ancestor <G39|G40|G42|G41|G43|G44 commit> HEAD",
+    "python -B scripts/codex_harness/run_pr288_bayesian_semantics.py focused",
+    "python -B scripts/codex_harness/run_pr288_bayesian_semantics.py engines",
+    "python -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_publication_integrity.py -k 'policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity'",
+    "python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+    "python -B scripts/check_claim_language.py --strict-missing --include-archives htt/htt/htt/infer/bayesian_semantics.py tests/htt/test_bayesian_semantics_repair.py docs/research_program/post_pr275/pr288_spec.yaml docs/generated/pr288_bayesian_semantics_receipt.json docs/PR_DELTAS/pr-288.md",
+    "python runpy probe with preloaded sys.modules['htt.infer.bayesian_semantics']",
+    "cmp -s docs/codex_handoff/pr_status.yaml machine_readable/pr_status.yaml"
+  ],
+  "artifacts": [],
+  "review_coverage_path": null,
+  "review_coverage_sha256": null,
+  "findings": [
+    {
+      "finding_id": "F-PR288-IMPORT-ORIGIN",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "Direct PR-288 build, check, and engines modes do not bind the imported htt.infer.bayesian_semantics module to the candidate root or registered source bytes; a preloaded replacement in sys.modules is executed despite _activate_sources(), so receipt recomputation can use code other than the source later hashed into the receipt.",
+      "assumptions_used": [
+        "Runner containment requires the computation implementation and validator to originate from the candidate being attested.",
+        "A cached Python module remains authoritative to import even after candidate source directories are prepended to sys.path."
+      ],
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py:30-55",
+        "htt/htt/htt/infer/bayesian_semantics.py:1640-1668",
+        "probe-output:RuntimeError:PR288_FAKE_PRELOADED_MODULE_EXECUTED"
+      ],
+      "evidence_fingerprint": "pr288:runner-import-origin:7fa00791b3f039d8683684616382bfeb63be2f7bf67e79c66425a89dbd0cdd10",
+      "counterevidence_refs": [
+        "The focused pytest subprocess replaces PYTHONPATH and portable mode scrubs it, but direct build/check/engines modes execute in the current interpreter and remain vulnerable to preloaded modules."
+      ],
+      "reproduction": [
+        "Preload package-shaped htt, htt.infer, and htt.infer.bayesian_semantics objects in sys.modules; give the replacement builder a RuntimeError marker; set sys.argv to runner plus engines; execute the runner with runpy.run_path(..., run_name='__main__').",
+        "Observed exact marker: RuntimeError:PR288_FAKE_PRELOADED_MODULE_EXECUTED."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Repair by importing only after rejecting cached modules or by validating module __file__, regular-file status, root containment, and SHA-256 against the registered candidate source before any builder or validator call; add a hostile preloaded-module regression."
+      ]
+    },
+    {
+      "finding_id": "F-PR288-RECEIPT-PROVENANCE",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The claim-bearing receipt metadata cannot record an exact candidate identity or exact generating command: the runner hard-codes generation_identity=EXTERNAL_CANDIDATE_SEAL_OR_SOURCE_HASHES, the validator whitelists only three placeholder literals, and generating_procedure says engines even though build writes the receipt.",
+      "assumptions_used": [
+        "The governing minimum metadata requires git commit or worktree state and the generating procedure for a claim-bearing frozen numerical artifact.",
+        "A label promising an external seal or source hashes is not itself the identity of either."
+      ],
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py:39-55",
+        "htt/htt/htt/infer/bayesian_semantics.py:1927-1934",
+        "htt/htt/htt/infer/bayesian_semantics.py:1973-1977",
+        "htt/htt/htt/infer/bayesian_semantics.py:2403-2410",
+        "docs/research_program/post_pr275/pr288_spec.yaml:248-290",
+        "historical-G42-receipt:generation_identity=EXTERNAL_CANDIDATE_SEAL_OR_SOURCE_HASHES;receipt_content_id=sha256:4cf7570d81da1c5002ca930a1221141747571e09087043d5f91f445551ed337d"
+      ],
+      "evidence_fingerprint": "pr288:receipt-provenance:fb2ec607ed535e65e32fb7665b865c93df058cf5906185cddf266b3449c8d344",
+      "counterevidence_refs": [
+        "The receipt separately binds four source-file hashes, but git_commit_or_worktree_state still contains only the placeholder and generating_procedure remains factually wrong."
+      ],
+      "reproduction": [
+        "Inspect runner _build(): every build passes EXTERNAL_CANDIDATE_SEAL_OR_SOURCE_HASHES.",
+        "Inspect _expected_claim_metadata(): any exact candidate SHA is rejected as an unregistered generation identity, while the stored generating procedure is the non-writing engines mode."
+      ],
+      "confidence": 1.0,
+      "unresolved": [
+        "Accept an exact sealed candidate/tree/source-binding identity, validate its syntax and relationship to the source bindings, record the exact build argv, and regenerate the receipt only after the final candidate and real mandatory Dynesty execution are fixed."
+      ]
+    },
+    {
+      "finding_id": "F-PR288-PY310-PORTABILITY",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "medium",
+      "statement": "Portable replay uses tarfile.extractall(..., filter='data') even though the package advertises Python >=3.10; this interface is available in the audited Python 3.12 runtime, but the runner has no compatibility path or minimum-version guard for supported 3.10/3.11 environments.",
+      "assumptions_used": [
+        "Portable semantics must cover every supported Python minor or explicitly narrow the supported floor.",
+        "Safe extraction cannot be restored by blindly dropping the filter argument."
+      ],
+      "evidence_refs": [
+        "htt/pyproject.toml:5",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py:310-326",
+        "runtime-probe:Python 3.12.3 TarFile.extractall signature includes keyword-only filter"
+      ],
+      "evidence_fingerprint": "pr288:python310-portability:7fa00791b3f039d8683684616382bfeb63be2f7bf67e79c66425a89dbd0cdd10",
+      "counterevidence_refs": [
+        "The current Python 3.12.3 environment accepts the call; no Python 3.10 or 3.11 execution evidence was available in this assignment."
+      ],
+      "reproduction": [
+        "Compare htt/pyproject.toml requires-python >=3.10 with the unconditional filter='data' call in portable mode.",
+        "Run the portable extraction path under the declared minimum Python versions after implementing a version-compatible safe extractor or raising the supported floor."
+      ],
+      "confidence": 0.96,
+      "unresolved": [
+        "Add a safe 3.10/3.11 extraction implementation and minimum-version CI, or explicitly raise requires-python and all installation metadata consistently."
+      ]
+    },
+    {
+      "finding_id": "F-PR288-SELECTIVE-LINEAGE",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "The candidate is a selective reconstruction on exact sealed PR-287 base 319835cc: G41 production/test/runner/spec content was preserved, G43 policy intent and G44 claim-contract changes were reapplied, G39/G40/G42 commit objects are not ancestors, and the stale G42 generated receipt is absent.",
+      "assumptions_used": [
+        "Selective salvage is established by exact base parentage plus path-level blob/content equivalence, not by historical commit ancestry.",
+        "Generated receipt bytes must be regenerated and therefore must not be copied from G42."
+      ],
+      "evidence_refs": [
+        "candidate:cdf77aa691663d2035f3329c07c94d034d1aeb39;tree=04b2af2491687b1899041caabfc8bccb8838c981",
+        "fe41d6ed parent=319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+        "G41=97aad7dc06a8cb63864304e5cada994ece0b87c8;G43=051d35a4bed094aca1fae84d96711b2255a3c033;G44=eb6bc1b0f8ec9fb8587d6ed1e94b4e8805682802",
+        "G39=44091dea7341e96cbf152b1e42d072de977f8522;G40=a757eeee6c97e532a740a67909703d5ad394ab4a;G42=c2037e8ae1163db0f57b36355da24cf20ceea320 all ancestor_rc=1",
+        "candidate-path:docs/generated/pr288_bayesian_semantics_receipt.json=ABSENT",
+        "external-authoritative-audit:/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:119,145-147,200,238,433-436"
+      ],
+      "evidence_fingerprint": "pr288:selective-lineage:cdf77aa691663d2035f3329c07c94d034d1aeb39",
+      "counterevidence_refs": [
+        "No historical G41/G43/G44 commit is an ancestor of the reconstructed candidate; preservation was therefore checked at the path/blob level."
+      ],
+      "reproduction": [
+        "Verify fe41d6ed parent and current origin PR-287 ref both equal 319835cc4b4e2e3270a0b27787ce5d5a44ea16b7.",
+        "Compare git rev-parse <G41|G43|G44>:<path> with 35def970, 5b8869f2, and 5fe66791 path blobs; then verify G39/G40/G42 ancestry is false and the generated receipt path is absent at HEAD."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Candidate binding is mutable; repeat identity checks after repairs and before review/seal."
+      ]
+    },
+    {
+      "finding_id": "F-PR288-CLAIM-BLOCKER",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "The current spec and implementation freeze HTT ownership, C2 diagnostic-only synthetic mode, transfer_source none, observed_data_executed false, public_use false, OPEN_UNCHANGED, and BLOCKED_PRE_NATIVE_ATLAS; absent Dynesty is exposed per engine as BLOCKED_REQUIRED_ENGINE_UNAVAILABLE and aggregates to exit 2 without invented evidence.",
+      "assumptions_used": [
+        "A typed required-engine blocker is correct non-success behavior and is not acceptance evidence.",
+        "Claim ceiling fields must be checked in executable loading code as well as prose."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr288_spec.yaml:20-28",
+        "htt/htt/htt/infer/bayesian_semantics.py:31-50",
+        "htt/htt/htt/infer/bayesian_semantics.py:601-651",
+        "htt/htt/htt/infer/bayesian_semantics.py:1916-1947",
+        "engine-probe:five Dynesty rows BLOCKED_REQUIRED_ENGINE_UNAVAILABLE; terminal BLOCKED_DEPENDENCY_OR_ENGINE; exit=2",
+        "focused-probe:19 passed in 10.80s",
+        "policy-probe:9 passed,68 deselected in 0.90s",
+        "dag-probe:OK 244 PRs,DAG valid"
+      ],
+      "evidence_fingerprint": "pr288:claim-ceiling-and-engine-block:e7f531354a02e1e6b66dc0293049579843a72ef303684fe7ea55293dbec47bc4",
+      "counterevidence_refs": [
+        "No Dynesty terminal pass or current receipt exists; strict claim scan exits 2 because docs/generated/pr288_bayesian_semantics_receipt.json is intentionally absent pending regeneration."
+      ],
+      "reproduction": [
+        "Run python -B scripts/codex_harness/run_pr288_bayesian_semantics.py focused: 19 passed.",
+        "Run python -B scripts/codex_harness/run_pr288_bayesian_semantics.py engines without Dynesty: exact per-engine blocker, aggregate blocker, and exit 2.",
+        "Mutate any frozen core claim field and call load_registered_fixtures; focused parametrized tests confirm fail-closed rejection for claim-tier and family-gate promotion."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "A final candidate still requires real Dynesty 3.0.0 or newer, regenerated content-addressed receipt, exact claim scan including that receipt, portable replay, and independent postimplementation review."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR288-IMPORT-ORIGIN",
+        "F-PR288-RECEIPT-PROVENANCE",
+        "F-PR288-PY310-PORTABILITY",
+        "F-PR288-SELECTIVE-LINEAGE",
+        "F-PR288-CLAIM-BLOCKER"
+      ],
+      "summary": "Selective PR-288 salvage, current target binding, core claim ceiling, and typed missing-Dynesty behavior are supported, but mutable candidate cdf77aa is not review-ready: imported-module origin is unbound, receipt provenance uses placeholders and the wrong generating command, and Python 3.10/3.11 portable replay is unproven. Regenerate the receipt and rerun all policy commands only after these repairs and final candidate freeze."
+    }
+  ],
+  "errors": []
+}

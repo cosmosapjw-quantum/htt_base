@@ -1,0 +1,101 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-stacked-publication-policy-review-20260810",
+  "assignment_id": "A-PR284-STACK-POLICY",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "ec986572ee5f5e7854e962004b40e7f3cd6d9527798bb13baa111c88f8bc8476",
+    "seal_sha256": "8bfbdaff6af64436924580463f9ec2554279a1bc6a1486750cb0c32b6266bf5b",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "0db8394f751dc88d8fd5f83c399c672ab87fcbd6",
+    "diff_sha256": "404c50c3fdba1f92c6483cfc7829b9d0e836f5e385fe6db27b6f402ed3128f03",
+    "changed_files_sha256": "2ee57a82a18f93585636383adacae5cf34d753841adf5587c087d50f851e66f7",
+    "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR280-HERMETIC-HARNESS"
+  ],
+  "task": "Fresh bounded stacked-publication policy review. Read this registered assignment first; do not read CONTEXT_PACK, sibling results, or historical verdict envelopes. Verify the frozen candidate and updated policy admit exactly the one live open predecessor at exact sealed head and one predecessor file-overlap while retaining fail-closed rejection for a second open slot, depth three, a second overlap, more than one direct-to-target PR, duplicate change-set publication, ordinary-agent push or PR mutation, merge, force-push, approval, and ruleset mutation. Reproduce the synthetic upper-bound probes and obtain a fresh read-only live inventory into assignment-local artifacts. Verify the registered assurance exception is single-run, reviewer-only, limited to the two named assignments at baseline 16, with no global maximum increase. Confirm the integration rehearsal is bound to the same seal/policy and all seven commands passed. Do not edit tracked/shared files; produce only assignment-local coverage, executable oracle, and a strict-valid registered result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json",
+      "sha256": "ec986572ee5f5e7854e962004b40e7f3cd6d9527798bb13baa111c88f8bc8476"
+    },
+    {
+      "path": ".prguard/runtime/PR284_STACK_POLICY_INTEGRATION_REHEARSAL.json",
+      "sha256": "479364e525cf8c6d759abe9dde90a711094ae15fe21a6feb5fe03ae607bd98e6"
+    },
+    {
+      "path": ".prguard/runtime/PR284_PUBLICATION_BLOCKER.json",
+      "sha256": "86ccc2382d64b8779f0a99d008ed4188f6dbc2c4d07dff9c32160a85db99c6aa"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_publication_policy.json",
+      "sha256": "6b19c380a96ddac1f98f0bcb774519d3fe3b555d4411a6f8e8f72876c0758446"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-284.md",
+      "sha256": "84b670343fdb6d8b2ccb4407f43d565f76a69cf3ffaa0e85ea099211bbf3ccee"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "dd7a5d3e073c7962a289787d246e1e8a462f7dce7f52e946ec99e6560e5fc60b"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "dd7a5d3e073c7962a289787d246e1e8a462f7dce7f52e946ec99e6560e5fc60b"
+    },
+    {
+      "path": "scripts/codex_harness/test_publication_integrity.py",
+      "sha256": "3fc869ccee5f07f1a452c332e6efc9183e33441f5314ab603178a0f368185fee"
+    },
+    {
+      "path": "tests/contracts/test_process_recovery_auto_stacked.py",
+      "sha256": "6444df9fe33aa2707ca4685d633f373ef30957dc03dac9e1255f8b8982a35921"
+    },
+    {
+      "path": ".agent-harness/scripts/publication_integrity.py",
+      "sha256": "7a59e185c535a00abfa2e6effdb9e34535b4adca76e546691906e7ef814a9a8b"
+    },
+    {
+      "path": ".agent-harness/scripts/_harness.py",
+      "sha256": "388f66e208bc460fb916eeca8603fc6f5ebfd914e448e59e93382152fde3f6ce"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/RUN_PLAN.json",
+      "sha256": "5f9420b40491b3cbf6965c4ff7365317a0ad445cd223e3c7674d78e0e3b6f37b"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/results/A-PR284-STACK-POLICY.json",
+  "status": "registered",
+  "assignment_sha256": "441b0d0caabbe267ce5a0368ad614e844391a33287c91313e7d49372953e9cb0"
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-final-integration-closeout-20260810",
+  "generated_at": "2026-08-09T20:41:46+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 0,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR283-FINAL-CLOSEOUT",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "Final frozen-candidate closeout found no remaining integration, portability, lifecycle, publication-refusal, production-freshness, or generated-artifact integrity defect. The historical rehearsal FAIL is preserved; the repaired receipt covers all 11 policy commands at exact target ff9; scientific PASS cells remain bound to the unchanged production hash; this review does not authorize push, PR creation, approval, merge, or claim promotion.",
+          "evidence_refs": [
+            ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/EXECUTABLE_ORACLE.json",
+            ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/REVIEW_COVERAGE.json",
+            ".prguard/runtime/PR283_FINAL_INTEGRATION_REHEARSAL.json"
+          ],
+          "evidence_fingerprint": "sha256:203403f0c095b0608d4ea32e8c7d19dea0c8e6417bfbcff4cec8758b2f2f6088"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-283",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "assignment_count": 1,
+  "validated_result_count": 1,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr283-final-integration-closeout-20260810/RUN_PLAN.json",
+      "sha256": "9606d9340992e8ae1b26e5acd4ef2538ea1eab7c2130b002068ddd16f77cdd51",
+      "bytes": 2944
+    },
+    {
+      "path": ".agent-harness/runs/pr283-final-integration-closeout-20260810/assignments/A-PR283-FINAL-CLOSEOUT.json",
+      "sha256": "56dcf794f999a8ec7590f778d140e9f0b69114f39f5c9b4f1b014378314f0d3a",
+      "bytes": 5518
+    },
+    {
+      "path": ".agent-harness/runs/pr283-final-integration-closeout-20260810/results/A-PR283-FINAL-CLOSEOUT.json",
+      "sha256": "69ea006466c465a682f9fc8b471a2f61697f926546241fcbfb1d46be8779e1d5",
+      "bytes": 8454
+    }
+  ],
+  "merge_input_sha256": "40d3d6d3c16c71bfe065f05190d933b6e80c3c001132cb28de02953abc6fbfe5"
+}

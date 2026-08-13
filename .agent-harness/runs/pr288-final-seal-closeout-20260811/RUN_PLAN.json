@@ -1,0 +1,102 @@
+{
+  "schema_version": 2,
+  "run_id": "pr288-final-seal-closeout-20260811",
+  "work_unit_id": "PR-288",
+  "change_set_id": "CS-PR288-BAYES-SEMANTICS",
+  "publication_group_id": "PG-PR288-BAYES-SEMANTICS",
+  "created_at": "2026-08-11T08:20:38+00:00",
+  "spec_ref": "docs/research_program/post_pr275/pr288_spec.yaml",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr287-entropy-truth-recovery-20260811",
+  "target_ref": "refs/remotes/origin/changeset/pr287-entropy-truth-recovery-20260811",
+  "base_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+  "candidate_ref": "HEAD",
+  "integration_policy": {
+    "path": "docs/research_program/post_pr275/pr288_publication_policy.json",
+    "sha256": "c1e088fa12716ef9bc9870bad0213b8d37ae28e0dc96edec6e2cc66f1f81910b",
+    "policy_id": "PR288-PUBLICATION-POLICY"
+  },
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR288_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "a0823a01fdcccf0d854652507ab35861ffe9fb2e042cf4a32403e5668a199f12",
+    "seal_sha256": "3650528494b927678836a8a14abeab6840d88e4a0a24f0ae311aa79fe143c330",
+    "base_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+    "candidate_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "merge_base_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+    "candidate_tree_sha": "93ead987a1a750a5dd34cbe9e98baf8fc7b48746",
+    "diff_sha256": "846174d4a8996732dbfb38e477b5dfd39f8dccf45d150f2f25ef998bd2bf8c6f",
+    "changed_files_sha256": "0daebf3fcd581e6308cf2772ba9fd8762d4d47115e79bff10b730c852f4f1fa9",
+    "production_hash": "7d2ce119e4f176aacaa870f0c7bc0dc1e5e0aa843bf2984f6ac7af7d4d148a79"
+  },
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "budget": {
+    "max_concurrent": 4,
+    "max_total": 8,
+    "max_total_per_work_unit": 16,
+    "max_depth": 2
+  },
+  "publication_budget": {
+    "max_open_prs": 6,
+    "max_direct_to_target_prs": 1,
+    "max_prs_per_change_set": 1,
+    "max_stack_depth": 6,
+    "max_file_overlap_prs": 5
+  },
+  "stages": [
+    "context-build",
+    "work-unit-implementation",
+    "candidate-freeze",
+    "read-only-review",
+    "latest-target-integration",
+    "external-publisher-authorization"
+  ],
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "status": "candidate_frozen",
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "REVIEWED",
+  "stack_id": "PROCESS_INFLATION_RECOVERY_PHASE2",
+  "activation_base_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+  "predecessor_pr": "PR-287",
+  "predecessor_sealed_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+  "production_hash": "7d2ce119e4f176aacaa870f0c7bc0dc1e5e0aa843bf2984f6ac7af7d4d148a79",
+  "dependency_hashes": {
+    "pr288_spec": "994603817e0546a1abb10b026cb3fcb31ebf5bee829c4e452798a808e19d4233",
+    "publication_policy": "c1e088fa12716ef9bc9870bad0213b8d37ae28e0dc96edec6e2cc66f1f81910b",
+    "pr288_runner": "b5a5ebd1ed6d4bd9b3a2220945f980f4b3e3722218d5f3add43b4c33876d1917",
+    "pr288_contract_test": "a6e136f2dea787c91c89e1f82991c0265a18e2d006f47deddcf857d3494f6753",
+    "pr280_delta": "46b46e1d3937600118cb2670d9788e2424ee4fc26f4ee1e9ac993e1b497b978b",
+    "pr280_inventory_receipt": "66630487b08aa03c374fb05f11b6007bc53336974ed6a8f1970205e139a2123e",
+    "pr280_dependency_receipt": "83d2292151c88d2ad8245fbbae47eb20da0436d4cf4795722af0903ffd74cdbf",
+    "bayesian_semantics_receipt": "622dadbcdf4a5d616a78f485fd6a772d1c7823ed8d77e808aa2bfc8f66169b0c",
+    "publication_integrity": "56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec",
+    "integration_rehearsal": "5a918e733fe744c3d1f74d47c38ea316de1e61f51b6ec106dc7ae9674c14c9e2",
+    "dag_validator": "126ccf63e3a6d835584426e4c3d157be5482b1f7df39d0985638370366b40afc",
+    "claim_linter": "b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677",
+    "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+  },
+  "evidence_key": {
+    "production_hash": "7d2ce119e4f176aacaa870f0c7bc0dc1e5e0aa843bf2984f6ac7af7d4d148a79",
+    "dependency_hashes": {
+      "pr288_spec": "994603817e0546a1abb10b026cb3fcb31ebf5bee829c4e452798a808e19d4233",
+      "publication_policy": "c1e088fa12716ef9bc9870bad0213b8d37ae28e0dc96edec6e2cc66f1f81910b",
+      "pr288_runner": "b5a5ebd1ed6d4bd9b3a2220945f980f4b3e3722218d5f3add43b4c33876d1917",
+      "pr288_contract_test": "a6e136f2dea787c91c89e1f82991c0265a18e2d006f47deddcf857d3494f6753",
+      "pr280_delta": "46b46e1d3937600118cb2670d9788e2424ee4fc26f4ee1e9ac993e1b497b978b",
+      "pr280_inventory_receipt": "66630487b08aa03c374fb05f11b6007bc53336974ed6a8f1970205e139a2123e",
+      "pr280_dependency_receipt": "83d2292151c88d2ad8245fbbae47eb20da0436d4cf4795722af0903ffd74cdbf",
+      "bayesian_semantics_receipt": "622dadbcdf4a5d616a78f485fd6a772d1c7823ed8d77e808aa2bfc8f66169b0c",
+      "publication_integrity": "56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec",
+      "integration_rehearsal": "5a918e733fe744c3d1f74d47c38ea316de1e61f51b6ec106dc7ae9674c14c9e2",
+      "dag_validator": "126ccf63e3a6d835584426e4c3d157be5482b1f7df39d0985638370366b40afc",
+      "claim_linter": "b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677",
+      "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+    }
+  },
+  "gate_disposition": "PASS",
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 6
+  }
+}

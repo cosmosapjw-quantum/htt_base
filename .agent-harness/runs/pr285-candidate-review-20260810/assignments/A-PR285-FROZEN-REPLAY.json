@@ -1,0 +1,81 @@
+{
+  "schema_version": 3,
+  "run_id": "pr285-candidate-review-20260810",
+  "assignment_id": "A-PR285-FROZEN-REPLAY",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-285",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "7baf4ec6b941c0a29b247604b71cd94f43cb18de007afda9d1c2cc77d59e5d21",
+    "seal_sha256": "8e2c2e72cca0d018441a91368ded4a3f898df12c36de5e8104352119ab4d2629",
+    "base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_sha": "be8392d0fb3d13fefdf6bce89a1c89ef11890080",
+    "merge_base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_tree_sha": "f74d8f8b550d2351d21a8db5021e0f8566d9ecc2",
+    "diff_sha256": "9a50ef58e647f018e98e81f1868ffc271499984fdb0f73a0465098ce9a7a1183",
+    "changed_files_sha256": "bb335983aab436ac3ca9e949e3bd118d1812d2d040465372166641fb1f899be4",
+    "production_hash": "602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Fresh frozen code, harness, and portability review of PR-285. Read this assignment first; do not read CONTEXT_PACK, sibling results, or historical verdict envelopes. Verify the exact candidate seal and integration receipt, selective G20/G21 lineage with no G22 or duplicate patch-id, complete 80-row reconstruction, exact source bindings, deterministic content address, all ordered hostile mutations, destination preflight including FIFO/symlink/multilink containment, atomic output, clean portable replay, and publication-policy/DAG cross-binding. Run bounded discriminating commands; do not rerun substantive evidence merely because only receipt prose changed. Write no tracked/shared files; produce only assignment-local coverage, executable oracle, and one strict-valid registered result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json",
+      "sha256": "7baf4ec6b941c0a29b247604b71cd94f43cb18de007afda9d1c2cc77d59e5d21"
+    },
+    {
+      "path": ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json",
+      "sha256": "14f95ba8ab1b2f5dd39dbaa89c17f808ecb44be98aed0bdc56b3a0901ddd4d18"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr285_spec.yaml",
+      "sha256": "475b42f32e0e28880be532986008f97ae9675e887db1e349b457ede3f85d2a9d"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr285_publication_policy.json",
+      "sha256": "973b1b1521d6a9ff4fd783839719fb3866ee0078a325f5ef968cf9c9aedf55b8"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+      "sha256": "3fbfba3285523659dcbc48de90c542090ce4d582afcbb1bb1fb30366aa166f64"
+    },
+    {
+      "path": "tests/contracts/test_pillar_t_complete_adjudication.py",
+      "sha256": "2866c589379f16bb3641facd802ca78697aa876d2aba247561194f838fbb8693"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+      "sha256": "1a6aa668d9aea071dd712a9143fea0fdf88d0523f3b4e41e8ca4e9002c927b82"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr285-candidate-review-20260810/results/A-PR285-FROZEN-REPLAY.json",
+  "status": "registered",
+  "assignment_sha256": "c33e681184b92da8e221e46a139ba6d03667034e2a23b3c840ace6799f264cad"
+}

@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-bounded-repair-r4-review-20260813",
+  "assignment_id": "A-PR291-R4-CLAIM",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "a226e0df027907b105bdb454ff5a5f50b60adb1a98663bcb22d70e14b7760ec1",
+  "candidate_sha": "02714ff26f8e6414edd1ef456065bf73e0f27374",
+  "candidate_tree_sha": "2b425d29ca48c8baa776aa5521ecf3795d64562a",
+  "diff_sha256": "df0950da457bf62acd1c2d2215daa27f6c39f9ede67bdcdd242c22f8cbda9906",
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "completed_at": "2026-08-13T06:42:55+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json", "git rev-parse HEAD HEAD^{tree}"],
+      "rationale": "Clean HEAD and tree match the frozen seal and assignment binding."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:8", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:185"],
+      "rationale": "The phase remains preactivation and records no observed execution."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:35", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:229"],
+      "rationale": "Missing predecessor terminals remain fail closed at BLOCKED_PREDECESSOR_FINAL_SUCCESS."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:22", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:116"],
+      "rationale": "Rejected identity admission and NOT_AUTHORIZED H-CF4 remain distinct blockers."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:223", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:133"],
+      "rationale": "The declared containment contract precedes payload generation and the receipt records no numeric outputs."
+    },
+    {
+      "cell": "synthetic_estimand_identity",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:202", "docs/PR_DELTAS/pr-291.md:46"],
+      "rationale": "Synthetic fixtures remain operator-only and cannot support an observed or public claim."
+    },
+    {
+      "cell": "group_row_selection_and_frame_conventions",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:108", "docs/research_program/post_pr275/pr291_spec.yaml:130"],
+      "rationale": "Exact identity fields and Galactic right-handed frame/sign/unit conventions are declared."
+    },
+    {
+      "cell": "full_covariance_and_effective_rank",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:137", "docs/PR_DELTAS/pr-291.md:140"],
+      "rationale": "Full covariance and fixed effective-rank semantics remain explicit; no diagonal shortcut is claimed."
+    },
+    {
+      "cell": "depth_zoa_nested_support_and_transport",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:162", "docs/PR_DELTAS/pr-291.md:59"],
+      "rationale": "Nested support, transport identity, and ZoA identity remain required."
+    },
+    {
+      "cell": "weak_identification_and_identified_set_abstention",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:175", "docs/PR_DELTAS/pr-291.md:52"],
+      "rationale": "Weak identification remains an abstention surface, not a point, posterior, source, or family result."
+    },
+    {
+      "cell": "legacy_p0_and_curl_disposition",
+      "status": "FAIL",
+      "evidence_refs": [".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-oracle.py", "htt/src/common/semantic_guards/no_overclaim.py:100"],
+      "rationale": "Curl and retired-P0 unrelated-negation cases are caught, but the same predicate-scoping defect affects direct family and geometry promotion grammar; this blocks the combined claim-lane acceptance cell."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:133", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:184"],
+      "rationale": "The frozen receipt records no observed execution, numeric outputs, or network/download side effect."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["docs/PR_DELTAS/pr-291.md:153", ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json"],
+      "rationale": "The frozen candidate records clean portable replay evidence and the current tracked worktree remains clean."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_publication_policy.json", ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json"],
+      "rationale": "Policy identity and digest match the frozen seal and assignment."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "FAIL",
+      "evidence_refs": [".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-oracle.py", "tests/contracts/test_claim_language_lint.py:59", "htt/src/common/semantic_guards/no_overclaim.py:632"],
+      "rationale": "The declared C2 diagnostic-only, transfer-none, observed/public-false, blocked-family ceiling is correct, but the production linter permits five independently derived positive family/geometry promotion variants."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json", "docs/codex_handoff/pr_status.yaml:565"],
+      "rationale": "Candidate base and merge base equal the sealed PR-290 target; merge remains HUMAN_ONLY and PR-292 remains ineligible."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "property_test",
+      "oracle_id": "pr291-r4-claim-grammar-v1",
+      "status": "PASS",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-oracle.py"],
+      "command_fingerprint": "e701268facff05c3b17659725147f069d829d82013e01508b20e52157caf9738",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T06:41:00+00:00",
+      "completed_at": "2026-08-13T06:41:01+00:00",
+      "artifact_path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-oracle.py",
+      "artifact_sha256": "cf2ef8613abb931e956ac4e768331ed1a552e4922d4c60f5a7e8b8e2bfd5b0cf",
+      "artifact_bytes": 3815,
+      "evidence_refs": ["htt/src/common/semantic_guards/no_overclaim.py", "tests/contracts/test_claim_language_lint.py"]
+    }
+  ],
+  "coverage_sha256": "ef318b6bbc567adc7dfc9646ee6dca67e706bcfa143dd0af0aa5a1e395e5d893"
+}

@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "run_id": "pr285-candidate-review-20260810",
+  "assignment_id": "A-PR285-FROZEN-REPLAY",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "candidate_seal_sha256": "8e2c2e72cca0d018441a91368ded4a3f898df12c36de5e8104352119ab4d2629",
+  "candidate_sha": "be8392d0fb3d13fefdf6bce89a1c89ef11890080",
+  "candidate_tree_sha": "f74d8f8b550d2351d21a8db5021e0f8566d9ecc2",
+  "diff_sha256": "9a50ef58e647f018e98e81f1868ffc271499984fdb0f73a0465098ce9a7a1183",
+  "changed_files_sha256": "bb335983aab436ac3ca9e949e3bd118d1812d2d040465372166641fb1f899be4",
+  "completed_at": "2026-08-10T06:35:17+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "FAIL",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle_output.json", "docs/PR_DELTAS/pr-285.md"],
+      "rationale": "Exact SHA/tree/diff and five unique recomputed patch IDs pass, but the seal has no logical source-group mapping that independently binds G20/G21 inclusion and G22 exclusion; the named lineage exists only as self-authored delta prose."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml", "scripts/codex_harness/run_pr285_pillar_t_adjudication.py"],
+      "rationale": "The runner derives the inventory, mutation registry, and terminal constraints from the frozen spec."
+    },
+    {
+      "cell": "legacy_65_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle_output.json"],
+      "rationale": "Independent exact reconstruction contains 65 legacy rows with the declared 31 T and 34 S partition."
+    },
+    {
+      "cell": "vector_tensor_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle_output.json"],
+      "rationale": "Independent exact reconstruction contains all 14 VT-T rows and one preserved failed candidate for 80 total rows."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle_output.json"],
+      "rationale": "The rebuilt receipt is byte-equivalent as JSON and the statement-weakening hostile mutation is killed."
+    },
+    {
+      "cell": "premise_and_domain_specificity",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"],
+      "rationale": "All 80 rebuilt rows carry the required premise, domain, statement, boundary, and verdict fields."
+    },
+    {
+      "cell": "legacy_title_only_inconclusive_boundary",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"],
+      "rationale": "All 65 title-only rows remain INCONCLUSIVE_WITH_RECEIPT with untyped source premises and domains."
+    },
+    {
+      "cell": "analytic_and_conditional_proof_replay",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json", ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "Exact receipt reconstruction and the seal-bound focused/adjacent/CAS terminal commands preserve the registered analytic and conditional evidence boundary."
+    },
+    {
+      "cell": "four_axis_cas_shared_contract",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/vector_tensor/cas/CAS_CONTRACT.json", "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json", ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "The receipt binds one canonical four-axis contract and forbids majority voting; the current terminal CAS command is recorded separately without claim promotion."
+    },
+    {
+      "cell": "restricted_and_partial_scope_boundary",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"],
+      "rationale": "VT-T8 and VT-T13 remain inconclusive under their restricted local and partial chain-rule scopes, and both promotion mutations are killed."
+    },
+    {
+      "cell": "native_geometry_blocked_boundary",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"],
+      "rationale": "VT-T14 remains BLOCKED_WITH_RECEIPT and the native-promotion mutation is killed."
+    },
+    {
+      "cell": "pr190_counterexample_preservation",
+      "status": "PASS",
+      "evidence_refs": ["docs/generated/pr190_attainability/attainability_report.json", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"],
+      "rationale": "The failed PR-190 full-interval candidate remains FAIL with success dependency false and its laundering mutation is killed."
+    },
+    {
+      "cell": "terminal_vocabulary_and_zero_bare_statuses",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle_output.json"],
+      "rationale": "The 80-row reconstruction has zero bare statuses and the bare-status mutation is killed."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle_output.json", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"],
+      "rationale": "All 16 source hashes, exact JSON replay, canonical content address, 12 ordered mutation kills, destination preflight, and atomic replacement pass."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "The frozen integration receipt validates its logs and records portable clean replay with zero exit and no timeout."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_publication_policy.json", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/focused_pytest.txt", ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "Policy bytes bind the seal and receipt; the focused upper-bound policy probe passes."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_publication_policy.json", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"],
+      "rationale": "Artifact and policy remain diagnostic_only, non-public, non-observed, and blocked before native family identification."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json", ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "The receipt latest-target SHA equals the sealed base and the rehearsed merged tree equals the frozen candidate tree."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR285-FROZEN-REPLAY-ORACLE",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle.py"],
+      "command_fingerprint": "5dd1006c24b9fb33e78b4bf6e313c82e95268b37d07886fd2e3e6373013c2635",
+      "started_at": "2026-08-10T06:33:58+00:00",
+      "completed_at": "2026-08-10T06:34:27+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle_output.json",
+      "artifact_sha256": "126634762a55b9f8bce0e211e44cdb48258d6acd71ff6bb5d682cf67e7f2daa8",
+      "artifact_bytes": 2380,
+      "evidence_refs": [".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle.py", ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json"]
+    }
+  ],
+  "coverage_sha256": "3cbbf7d58d05ad48cc32f26330559abe7853a8b291d5bbccd920ac0b31dd5b65"
+}

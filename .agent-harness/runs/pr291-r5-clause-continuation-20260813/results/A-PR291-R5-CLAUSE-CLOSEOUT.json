@@ -1,0 +1,100 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-clause-continuation-20260813",
+  "assignment_id": "A-PR291-R5-CLAUSE-CLOSEOUT",
+  "assignment_sha256": "f78c0d7b5d5d30b3c5b8b03bfe48af6646d38d7a1132bdab925e4256229a09ee",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "adjudication",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_CLAUSE_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "035e67d7239778b553e3475b2bfd3aae782c4fe3a36f7d15d4523788b7482c19",
+    "seal_sha256": "ad585eb8f93a6bef8cbad27c4ef27ca20253e786f226101a8774cf6beb07d070",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "6c9d86a22394f512211cb42f9ef60d248f10ce20",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "4e40985666c5ea82d8d1bed3009f179e22aa12db",
+    "diff_sha256": "0338828d09aa6698dd3464a6e7eecb226a90444260a98a5dfc439f0f8e43672a",
+    "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+    "production_hash": "264931c49f4cd6d0850f1e46b3ba9b441596f7486067e25361cf4aca96a61695"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLOSEOUT.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-13T10:09:00Z",
+  "completed_at": "2026-08-13T10:17:05Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pyyaml": "6.0.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    "SHA-256 verification of the five registered required inputs",
+    "read-only git HEAD, tree, merge-base, and tracked-clean metadata checks",
+    "python3 -B assignment-local metadata oracle: PASS",
+    "strict_result_validation.py validation of only this registered result"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLOSEOUT-metadata-oracle.py",
+      "sha256": "1cf612c2eb793b9cb7e5d6e5ea33841766953ea57da1b522ebb6f1a5c0061f9b",
+      "bytes": 6335,
+      "producer": "A-PR291-R5-CLAUSE-CLOSEOUT",
+      "command_fingerprint": "cc361c70794a9a99cb2e4da97e89f7c3d66aad547d0337bbefc067e55f851956"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLOSEOUT-REVIEW_COVERAGE.json",
+      "sha256": "b4a4ff144f260e02149e567f2ee58956bddc80617d02db03314755bdf2245266",
+      "bytes": 7772,
+      "producer": "A-PR291-R5-CLAUSE-CLOSEOUT"
+    }
+  ],
+  "files_read": [
+    ".agent-harness/runs/pr291-r5-clause-continuation-20260813/assignments/A-PR291-R5-CLAUSE-CLOSEOUT.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR291_R5_CLAUSE_FINAL_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "review_coverage_path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLOSEOUT-REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "b4a4ff144f260e02149e567f2ee58956bddc80617d02db03314755bdf2245266",
+  "findings": [
+    {
+      "finding_id": "F-PR291-CLAUSE-NEGATION-ORDER",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "sha256:51821f3446e411f9c0262d202fd6e015c5d70e2891290848d1907c4c84f50bf4",
+      "statement": "The frozen clause-scoped repair still falsely emits geometry_detected for the predicate-local downclaim using auxiliary plus positive adverb plus not plus predicate; this sole claim-lane finding blocks acceptance.",
+      "assumptions_used": ["The permitted sibling result is the authorized substantive verdict for this metadata-only adjudication.", "Predicate-local family-identification negation is allowed downclaim language."],
+      "evidence_refs": [".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM.json"],
+      "counterevidence_refs": ["The sibling reports the other 30 grammar cases and all seven registered policy commands passed."],
+      "reproduction": ["Use the reproduction recorded in A-PR291-R5-CLAUSE-CLAIM.json; no substantive rerun was authorized for this closeout."],
+      "unresolved": ["Repair the bounded positive-adverb predicate-negation order without allowing unrelated modifiers."],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR291-CLAUSE-NEGATION-ORDER"],
+      "summary": "Strict-valid failed closeout: one predicate-local negation-order false positive remains; all other 15 review cells retain PASS under unchanged frozen bindings."
+    }
+  ],
+  "errors": []
+}

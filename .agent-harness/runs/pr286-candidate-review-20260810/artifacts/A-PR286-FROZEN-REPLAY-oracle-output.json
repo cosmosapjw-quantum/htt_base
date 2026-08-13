@@ -1,0 +1,195 @@
+{
+  "assignment_id": "A-PR286-FROZEN-REPLAY",
+  "checks": {
+    "candidate_and_predecessor_identity": {
+      "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+      "candidate_sha": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+      "candidate_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+      "linear_commit_count": 7,
+      "seal_sha256": "d9241a26060fbdd09d0f1f77b3a47bec422525cb7d016b33b089bf232c03068d",
+      "status": "PASS"
+    },
+    "containment_atomic_and_determinism": {
+      "checks": [
+        "lexical_escape_rejected",
+        "symlink_parent_rejected",
+        "hardlink_destination_rejected_before_write",
+        "same_directory_atomic_replace",
+        "replace_failure_preserves_destination_and_cleans_temp"
+      ],
+      "deterministic_receipt_sha256": "1eb3a52de178443ed6a14dbff425c7630c93f37a8e3af66c8e348162d46df32d",
+      "status": "PASS"
+    },
+    "context_binding": {
+      "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+      "status": "PASS"
+    },
+    "external_audit_identity": {
+      "sha256": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436",
+      "status": "PASS"
+    },
+    "integration_rehearsal": {
+      "latest_target_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+      "merged_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+      "ordered_command_count": 10,
+      "receipt_sha256": "b5a9dcc83d4e64b2128182c56c539738a4729145ffe42780b3399b63fa89811b",
+      "status": "PASS"
+    },
+    "mutation_execution": {
+      "mutation_ids": [
+        "MU286-DROP-SOURCE-ROW",
+        "MU286-DROP-VTS-ROW",
+        "MU286-BARE-SOURCE-STATUS",
+        "MU286-STATEMENT-DRIFT",
+        "MU286-EXACT-BY-SIMULATION",
+        "MU286-ORACLE-LABEL-AS-PROOF",
+        "MU286-ESTIMAND-DRIFT",
+        "MU286-LAW-COVARIANCE-DRIFT",
+        "MU286-SEED-TOLERANCE-DRIFT",
+        "MU286-HIDE-NEGATIVE-CONTROL",
+        "MU286-VTS14-DATA-PROMOTION",
+        "MU286-MIO-POSTERIOR",
+        "MU286-CLAIM-PROMOTION",
+        "MU286-CAS-BINDING-DRIFT",
+        "MU286-IMPLEMENTATION-BINDING-DRIFT",
+        "MU286-SEMANTIC-TYPE-DRIFT",
+        "MU286-NEGATIVE-CONTROL-SURVIVES",
+        "MU286-VTS14-PROPORTIONAL-DESIGN"
+      ],
+      "ordered_kills": 18,
+      "status": "PASS"
+    },
+    "portable_clean_replay": {
+      "clean_pre_equals_post": true,
+      "source_pre_equals_post": true,
+      "source_root_differs_from_execution_root": true,
+      "status": "PASS",
+      "tracked_manifest": {
+        "content_identity_inventory_sha256": "0323e50557e1159b709a78a5676eccde223aa1a749eaa9a100aab1640cdd1763",
+        "file_count": 5887,
+        "manifest_sha256": "404df19fa8cb117e4d8135bb0e2d70e280ae2afa5ea71b066c4348194a2c7a41",
+        "path_inventory_sha256": "69c206cf5da264d4fda1e11c8a25841c1c7dff991687db9b226c13605a25dd95"
+      }
+    },
+    "predecessor_and_dag_replays": {
+      "all_returncodes_zero": true,
+      "command_count": 4,
+      "pr287_consumer": "PR-287",
+      "pr287_success_semantics": "PROCESS_COMPLETION_ONLY",
+      "status": "PASS"
+    },
+    "receipt_reconstruction": {
+      "receipt_content_sha256": "bfeae06a5cc0bd6eaf3efa025ec0738bc5bb6183b6fe781dd175e16b0af133ea",
+      "row_count": 72,
+      "source_binding_count": 33,
+      "source_row_count": 58,
+      "status": "PASS",
+      "vector_tensor_row_count": 14
+    },
+    "selective_salvage_and_patch_ids": {
+      "candidate_patch_ids_unique_from_predecessor": true,
+      "g23_patch_id": "421304fe944235f8f87a21e3d03500714a4dcff3",
+      "g24_patch_id_excluded": "6ff47e6bbbd19775ea47cc1b9e9f4ab1febc53a1",
+      "g25_patch_id": "20e5903afde8adf08810b1a404381f3addf5fe95",
+      "g26_patch_id_excluded": "557612e77a4504b02c72317bd35c3ff8582db721",
+      "g27_narrow_diff_sha256": "6de78587fe649fb9a56bdb1a69d39ab09752631c9f8da22930e5722152315263",
+      "g27_narrow_paths": [
+        "docs/research_program/post_pr275/pr286_spec.yaml",
+        "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+        "tests/contracts/test_pillar_s_complete_adjudication.py"
+      ],
+      "status": "PASS"
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+        "check"
+      ],
+      "completed_at": "2026-08-10T13:31:04.682386+00:00",
+      "returncode": 0,
+      "started_at": "2026-08-10T13:30:51.715752+00:00",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 8,
+      "stdout_sha256": "0b6531f987965bdbbeeb6bbb91b99be3bfa9f42efc785f388bbbf3f871ce989b",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/build_pr271_pillar_s_core.py",
+        "--check"
+      ],
+      "completed_at": "2026-08-10T13:31:05.683865+00:00",
+      "returncode": 0,
+      "started_at": "2026-08-10T13:31:05.310959+00:00",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/build_pr272_pillar_s_inference.py",
+        "--check"
+      ],
+      "completed_at": "2026-08-10T13:31:07.503521+00:00",
+      "returncode": 0,
+      "started_at": "2026-08-10T13:31:05.683891+00:00",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 38,
+      "stdout_sha256": "89aa228e9e250989dba70a7e7191020909d97ebce1651b701b22a9e21d6f76e7",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/build_pr273_blind_synthetic.py",
+        "--check"
+      ],
+      "completed_at": "2026-08-10T13:31:08.652095+00:00",
+      "returncode": 0,
+      "started_at": "2026-08-10T13:31:07.503548+00:00",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 75,
+      "stdout_sha256": "476972be09864ec1c04fd52b6bd8eb908e104b5ebf3847f119ff96b677e7bdf3",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "completed_at": "2026-08-10T13:31:10.123089+00:00",
+      "returncode": 0,
+      "started_at": "2026-08-10T13:31:08.652127+00:00",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 1749,
+      "stdout_sha256": "954bccce10cfc35cf06b7aa16b931d748ff4f55af6a9350c833855bdafcf44ee",
+      "timed_out": false
+    }
+  ],
+  "completed_at": "2026-08-10T13:31:10.123132+00:00",
+  "oracle_id": "PR286-FROZEN-REPLAY-INDEPENDENT-ORACLE",
+  "run_id": "pr286-candidate-review-20260810",
+  "schema_version": 1,
+  "started_at": "2026-08-10T13:30:20.361626+00:00",
+  "status": "PASS"
+}

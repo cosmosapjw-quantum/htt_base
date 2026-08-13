@@ -1,0 +1,153 @@
+{
+  "schema_version": 3,
+  "run_id": "pr287-fresh-independent-review-20260811",
+  "assignment_id": "A-PR287-FROZEN-REPLAY",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "assignment_sha256": "da606b47a01ecd98f426d5de28402bb4a73a5be2c1bbddba59486b6518e0abfa",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-287",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "fbe4787a82f650ec050fab020ae2c9545e9f7fe778ec2d6f5d4550470537712b",
+    "seal_sha256": "486a8f7e75c04467e2c65a083529eff5f65e622f935b3346ada8ea7243cd456e",
+    "base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_sha": "06ee728054fd62423fa90bc6a5d714b9be8631e3",
+    "merge_base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_tree_sha": "dd909b5d35a385b251547f6224b657346d7688f6",
+    "diff_sha256": "83ef2581a3a1afdf5459ad64730783f6f7e905a3cda155236ec44971b160912f",
+    "changed_files_sha256": "b522232b4e7f07fe03b297f33a07dfcce4f7eb80cdd0bbd94b9fd06a20b73198",
+    "production_hash": "6d0963dfdc66dcd2bf80ef3dde6fd84d87f455f0c6db5199250b06b2c51e873a"
+  },
+  "status": "error",
+  "gate_disposition": "INCONCLUSIVE",
+  "started_at": "2026-08-11T05:03:00+00:00",
+  "completed_at": "2026-08-11T05:30:30+00:00",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "focused"],
+      "returncode": 0,
+      "summary": "Registered focused lane completed before the isolation incident; it is preserved as non-acceptance process evidence."
+    },
+    {
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "adjacent"],
+      "returncode": 0,
+      "summary": "Registered adjacent lane completed before the isolation incident; it is preserved as non-acceptance process evidence."
+    },
+    {
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "check"],
+      "returncode": 0,
+      "summary": "Returned ACTIVATED with INCONCLUSIVE and BLOCKED_CAPABILITY_ISOLATED_EXECUTOR_NOT_INSTALLED; no fresh artifacts present."
+    },
+    {
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "historical"],
+      "returncode": 0,
+      "summary": "Returned the same exact activation identity and typed blocker; no fresh artifacts present."
+    },
+    {
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "portable"],
+      "returncode": 0,
+      "summary": "Portable lane reported 5,896 tracked files, identical source/clean pre/post manifests, distinct clean root, and zero untracked fresh inputs."
+    },
+    {
+      "argv": ["/usr/bin/python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"],
+      "returncode": 0,
+      "summary": "9 passed and 68 deselected before the isolation incident."
+    },
+    {
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "returncode": 0,
+      "summary": "244 PRs; DAG valid before the isolation incident."
+    },
+    {
+      "argv": ["/usr/bin/python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "docs/research_program/post_pr275/pr287_spec.yaml", "docs/research_program/post_pr275/blind_replay", "tests/integration/test_post275_blind_replay.py", "docs/PR_DELTAS/pr-287.md"],
+      "returncode": 0,
+      "summary": "No forbidden claim language detected before the isolation incident."
+    },
+    {
+      "argv": ["/usr/bin/python3", "-B", ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY/blind_isolation_oracle.py", "--output", ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY/blind_isolation_report.json", "--coverage-output", ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY/review_coverage.json"],
+      "returncode": 0,
+      "summary": "Fail-closed isolation incident and non-acceptance containment receipt emitted."
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY/review_coverage.json", "--seal", ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json", "--run-id", "pr287-fresh-independent-review-20260811", "--assignment-id", "A-PR287-FROZEN-REPLAY", "--risk-tier", "R3", "--structural-only"],
+      "returncode": 0,
+      "summary": "Structural-only coverage validation returned ok=true with no errors."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY/blind_isolation_oracle.py",
+      "sha256": "e03bdd71121c3ba1a23d5c05982343c9456cdf7a2c96359bc1841932f7473fbc",
+      "bytes": 6450,
+      "producer": "A-PR287-FROZEN-REPLAY"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY/blind_isolation_report.json",
+      "sha256": "82e1e4a7bdbaffef8646c024caef66cf48662d71bfd5229b39c8ff0822d0a020",
+      "bytes": 1649,
+      "producer": "A-PR287-FROZEN-REPLAY",
+      "command_fingerprint": "524441f8b037272755a3473c9ba8986b84231e39b8c2fea8b7cb486f1692474e"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY/review_coverage.json",
+      "sha256": "722068e6946e18abeb057f56320626e9e0251351c24bae7420b219551b2cce38",
+      "bytes": 22106,
+      "producer": "A-PR287-FROZEN-REPLAY"
+    }
+  ],
+  "files_read": [
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/assignments/A-PR287-FROZEN-REPLAY.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/RUN_PLAN.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/candidate_seal.py",
+    ".agent-harness/scripts/profile_registry.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr287_spec.yaml",
+    "docs/research_program/post_pr275/pr287_publication_policy.json",
+    "docs/PR_DELTAS/pr-287.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+    "scripts/codex_harness/validate_pr_dag.py",
+    "tests/integration/test_post275_blind_replay.py",
+    "htt/src/common/post275_blind_replay.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "review_coverage_path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY/review_coverage.json",
+  "review_coverage_sha256": "722068e6946e18abeb057f56320626e9e0251351c24bae7420b219551b2cce38",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "not_examined",
+      "finding_ids": [],
+      "summary": "No claim or candidate acceptance verdict is issued because sibling PR-287 verdict metadata became visible before this blind reviewer submitted. The sibling result file itself was not opened."
+    }
+  ],
+  "errors": [
+    "BLIND_RESULTS_ISOLATION_BREACH: a scoped process-status check for the assignment-local oracle unexpectedly exposed a live sibling PR-287 result path and gate_disposition=PASS write command before this reviewer submitted. The sibling result file was not opened, but sibling verdict metadata was visible, so no claim or acceptance verdict is issued."
+  ],
+  "result_path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY.json"
+}

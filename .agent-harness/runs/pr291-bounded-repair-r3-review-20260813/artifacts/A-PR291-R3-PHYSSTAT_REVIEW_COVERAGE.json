@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "artifact_type": "REVIEW_COVERAGE",
+  "run_id": "pr291-bounded-repair-r3-review-20260813",
+  "assignment_id": "A-PR291-R3-PHYSSTAT",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "candidate_sha": "1af0db69da0a190b268d6765e334b05023dd04e7",
+  "cells": [
+    {
+      "cell": "candidate_identity",
+      "verdict": "PASS",
+      "evidence": ["assignment required-input hashes", ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json", "git rev-parse HEAD HEAD^{tree}"]
+    },
+    {
+      "cell": "spec_before_execution",
+      "verdict": "PASS",
+      "evidence": ["htt/src/common/cf4_observed_lane_activation.py:912", "python -B scripts/codex_harness/run_pr291_cf4_lane.py check"]
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "verdict": "PASS",
+      "evidence": ["htt/src/common/cf4_observed_lane_activation.py:568", "htt/src/common/cf4_observed_lane_activation.py:615"]
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "verdict": "PASS",
+      "evidence": ["htt/src/common/cf4_observed_lane_activation.py:672", "htt/src/common/cf4_observed_lane_activation.py:816", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"]
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "verdict": "PASS",
+      "evidence": ["tests/integration/test_cf4_post275_lane.py:925", "tests/integration/test_cf4_post275_lane.py:981", "focused: 57 passed"]
+    },
+    {
+      "cell": "synthetic_estimand_identity",
+      "verdict": "PASS",
+      "evidence": ["htt/obsstat/cf4_post275_lane.py:187", "htt/obsstat/cf4_post275_lane.py:268"]
+    },
+    {
+      "cell": "group_row_selection_and_frame_conventions",
+      "verdict": "PASS",
+      "evidence": ["docs/research_program/post_pr275/pr291_spec.yaml:119", "htt/src/common/cf4_observed_lane_activation.py:438", "htt/obsstat/cf4_post275_lane.py:283"]
+    },
+    {
+      "cell": "full_covariance_and_effective_rank",
+      "verdict": "FAIL",
+      "evidence": ["htt/obsstat/cf4_post275_lane.py:1051", "htt/obsstat/cf4_post275_lane.py:1096", ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-PHYSSTAT_oracle.py"]
+    },
+    {
+      "cell": "depth_zoa_nested_support_and_transport",
+      "verdict": "PASS",
+      "evidence": ["htt/obsstat/cf4_post275_lane.py:555", "tests/integration/test_cf4_post275_lane.py:538", "adjacent: 189 passed"]
+    },
+    {
+      "cell": "weak_identification_and_identified_set_abstention",
+      "verdict": "FAIL",
+      "evidence": ["htt/obsstat/cf4_post275_lane.py:1130", "htt/obsstat/cf4_post275_lane.py:1164", ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-PHYSSTAT_oracle.py"]
+    },
+    {
+      "cell": "legacy_p0_and_curl_disposition",
+      "verdict": "PASS",
+      "evidence": ["htt/obsstat/cf4_post275_lane.py:1277", "docs/research_program/post_pr275/pr291_spec.yaml:187"]
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "verdict": "PASS",
+      "evidence": ["check terminal BLOCKED_PREDECESSOR_FINAL_SUCCESS, numeric_outputs_written=[]", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"]
+    },
+    {
+      "cell": "portable_clean_integration",
+      "verdict": "COVERED_NOT_RERUN_ROLE_BOUNDARY",
+      "evidence": ["docs/research_program/post_pr275/pr291_publication_policy.json required command", "adjacent: 189 passed"]
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "verdict": "PASS",
+      "evidence": ["assignment policy SHA-256 matched", ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json"]
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "verdict": "PASS",
+      "evidence": ["htt/obsstat/cf4_post275_lane.py:1", "htt/obsstat/cf4_post275_lane.py:1277", "docs/research_program/post_pr275/pr291_spec.yaml:10"]
+    },
+    {
+      "cell": "latest_target_integration",
+      "verdict": "PASS",
+      "evidence": ["candidate base and merge-base both 06ac20605ebc371b0f97ad6e91c802a51a9bf764", ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json"]
+    }
+  ],
+  "cell_count": 16,
+  "overall_verdict": "FAIL"
+}

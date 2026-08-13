@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-candidate-review-20260810",
+  "assignment_id": "A-PR284-REPLAY",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "ba5335bffb3c75d866027339d37660f068140ff2926967abed09550344a4205e",
+  "candidate_sha": "029f8cedd044cc5967bc12dc695230ca69cf3308",
+  "candidate_tree_sha": "e09d127212ba3173377ea2442be1661107f2963a",
+  "diff_sha256": "24dc3ec9ef99a6f914e3466883dd722af520d053fc2bf0e46be2f8c99ec4aeba",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-09T21:19:08.980Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR284_CANDIDATE_SEAL.json", "A-PR284-REPLAY.oracle.json#frozen_candidate_and_exact_pr283_target"],
+      "rationale": "HEAD, tree, base, merge-base, policy identity, and tracked cleanliness match the frozen seal."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr284_spec.yaml", "assignment required_inputs SHA-256 preflight"],
+      "rationale": "The exact registered spec bytes were verified before executing candidate tests."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "PASS",
+      "evidence_refs": ["pr284-focused: 20 passed", "docs/generated/pr284_depth_path_doob_receipt.json#proved_fixture"],
+      "rationale": "The exact finite law and one common target replay through focused contract tests."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_depth_path_doob_calibration.py::test_proved_factory_rejects_noncentered_or_degenerate_target", "pr284-focused: 20 passed"],
+      "rationale": "Noncentered and zero-second-moment targets fail closed while the registered centered target has second moment five."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_depth_path_doob_calibration.py::test_decreasing_filtration_is_distinct_from_nested_support", "pr284-focused: 20 passed"],
+      "rationale": "A non-coarsening partition is rejected independently of DepthPath support nesting."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "PASS",
+      "evidence_refs": ["docs/generated/pr284_depth_path_doob_receipt.json#proved_fixture.report.exact_tower_equalities", "pr284-receipt-replay: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"],
+      "rationale": "Both registered exact tower equalities replay and content addressing remains stable."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "PASS",
+      "evidence_refs": ["pr284-adjacent: 41 passed", "docs/generated/pr284_depth_path_doob_receipt.json#proved_fixture.report.path_content_id"],
+      "rationale": "Path, ordered strata, synthetic mask supports, and transport contracts pass focused and adjacent replay."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "PASS",
+      "evidence_refs": ["A-PR284-REPLAY.oracle.json#fresh_receipt_source_and_thirteen_mutations", "MU284-PREPROCESSING-DRIFT", "MU284-ESTIMATOR-IDENTITY-DRIFT"],
+      "rationale": "Fresh mutation execution kills preprocessing and estimator identity drift."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_depth_path_doob_calibration.py::test_selected_atom_path_is_recomputed_from_exact_conditionals", "MU284-PATH-MAXIMUM-DRIFT"],
+      "rationale": "The selected atom path maximum is recomputed from exact conditionals and stale maxima fail closed."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_depth_path_doob_calibration.py::test_exact_squared_threshold_includes_equality_without_float_sqrt", "pr284-focused: 20 passed"],
+      "rationale": "Exact rational squared comparisons, inclusive equality, and the conservative bound recompute without floating tolerance."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_depth_path_doob_calibration.py::test_support_nesting_alone_routes_to_matched_mocks_without_bound", "MU284-MATCHED-MOCK-PLAN-OMITTED", "MU284-MATCHED-MOCK-PLAN-DRIFT"],
+      "rationale": "An unproved premise yields no probability bound and requires the preregistered content-addressed matched-mock plan."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": ["A-PR284-REPLAY.oracle.json#fresh_receipt_source_and_thirteen_mutations"],
+      "rationale": "All thirteen registry rows freshly executed in exact order and were activated, executed, and killed."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["pr284-receipt-replay: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION", "A-PR284-REPLAY.oracle.json#fresh_receipt_source_and_thirteen_mutations"],
+      "rationale": "The checked-in receipt equals a fresh build, its canonical digest verifies, and all twelve source hashes match."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["pr284-portable-clean-replay exit 0", "portable source/clean pre/post manifest f6aaf55d82515ad7f3b5f9e1066ecc362cadb50271521d921658391d537e7fef", "A-PR284-REPLAY.oracle.json#fifo_hardlink_and_atomic_write_defenses"],
+      "rationale": "A distinct clean git-archive root replayed unchanged with scrubbed Python state; FIFO, hardlink, atomic success, and injected atomic failure discriminators passed."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["pr284-publication-policy-cross-binding: 9 passed", "A-PR284-REPLAY.oracle.json#human_only_merge_refusal"],
+      "rationale": "Candidate and policy identities cross-bind; ordinary PR mutation and every merge path remain forbidden to the agent."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["pr284-claim-language: No forbidden claim language detected", "docs/generated/pr284_depth_path_doob_receipt.json#family_identification_gate"],
+      "rationale": "The artifact remains diagnostic-only, synthetic, transfer-free, non-public, and blocked for family identification."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["A-PR284-REPLAY.oracle.json#frozen_candidate_and_exact_pr283_target", "A-PR284-REPLAY.oracle.json#stable_patch_id_uniqueness"],
+      "rationale": "The exact remote PR-283 ref resolves to the sealed base and merge-base; both candidate commit patch IDs occur exactly once across all refs."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR284-REPLAY-ORACLE-V1",
+      "kind": "mutation_test",
+      "status": "PASS",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-REPLAY/oracle.py"],
+      "command_fingerprint": "8b665d79978f0382e67532d522bf4bbadc3e79e83067220d177bfd926191a784",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-09T21:19:04.100Z",
+      "completed_at": "2026-08-09T21:19:08.980Z",
+      "artifact_path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-REPLAY/oracle.json",
+      "artifact_sha256": "29eb36a524cae0c8fdd020df19e6c687308c23da5f83dc8a6d43dde16c7c251f",
+      "artifact_bytes": 3257,
+      "evidence_refs": ["fresh 13-mutation execution", "FIFO/hardlink/atomic discriminators", "global stable-patch-ID scan", "AUTO_MERGE refusal"]
+    }
+  ],
+  "coverage_sha256": "290aa01cf1d91b158bce60f0a05d53b97551d0f68a4475d9538a52cb5812adc1"
+}

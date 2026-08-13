@@ -1,0 +1,122 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-predicate-continuation-20260813",
+  "assignment_id": "A-PR291-R5-PREDICATE-CLAIM",
+  "assignment_sha256": "4a256aa5b27a3d18691f84da070ae4ad8c94607a10428b13a2b96b5602eb7951",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_lane_reviewer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_PREDICATE_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "be541b2933e7283cf5c0759bdf2eba8e22c75983d75f2e5edfc3f9dd7d6b6812",
+    "seal_sha256": "977f96e2b21d07caf31d9176244afddcac5893156e78ac6d71cd13fc52479d27",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "c39e57e5638a63e023783fb962521799ce87866b",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "62026afc31a915dc7f96c718fcc654c71a8ed53a",
+    "diff_sha256": "ef5b9f7477cf91308db87caadfd96a5f53073649ea8feb20b4dd9f93af75e4c0",
+    "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+    "production_hash": "ba3cec1bec67dbbec36903374d00155467e8623af7aa07dfb2fb47b32e90000b"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/results/A-PR291-R5-PREDICATE-CLAIM.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-13T09:19:00+00:00",
+  "completed_at": "2026-08-13T09:32:00+00:00",
+  "tool_versions": {"python": "3.12.3", "pytest": "9.1.1", "git": "2.43.0"},
+  "commands": [
+    {"id": "pr291-focused", "status": "pass", "evidence": "62 passed"},
+    {"id": "pr291-preactivation", "status": "pass", "evidence": "BLOCKED_PREDECESSOR_FINAL_SUCCESS; no observed or numeric output"},
+    {"id": "pr291-adjacent", "status": "pass", "evidence": "189 passed"},
+    {"id": "pr291-portable-clean", "status": "pass", "evidence": "nested_exit_code=0; source and clean manifests unchanged"},
+    {"id": "pr291-policy-cross-binding", "status": "pass", "evidence": "9 passed"},
+    {"id": "pr291-dag-strict", "status": "pass", "evidence": "244 PRs; DAG valid"},
+    {"id": "pr291-claim-language", "status": "pass", "evidence": "No forbidden claim language detected on declared production paths"},
+    {"id": "independent-predicate-oracle", "status": "pass", "evidence": "25 cases; exact 7-mismatch observation reproduced"},
+    {"id": "candidate-seal-validation", "status": "pass", "evidence": "seal_errors=[]; binding_errors=[]"}
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/artifacts/A-PR291-R5-PREDICATE-CLAIM_ORACLE.py",
+      "sha256": "200fe2b9806ba752e08cd3125d30204af014585bfb75975367fdd7a5959803f7",
+      "bytes": 5194,
+      "producer": "A-PR291-R5-PREDICATE-CLAIM",
+      "command_fingerprint": "410faee16e25bef82b3b7235fce94dd956379ca5e7264d4beef8fa54909c9659"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/artifacts/A-PR291-R5-PREDICATE-CLAIM_REVIEW_COVERAGE.json",
+      "sha256": "a3f5de8b69112c0c6e266ea4249aecc716e1ff4d1ddb63f52ce549a05071ae45",
+      "bytes": 5416,
+      "producer": "A-PR291-R5-PREDICATE-CLAIM"
+    }
+  ],
+  "files_read": [
+    ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/assignments/A-PR291-R5-PREDICATE-CLAIM.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agents/skills/htt-claim-lane-auditor/SKILL.md",
+    ".prguard/runtime/PR291_R5_PREDICATE_FINAL_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "htt/src/common/semantic_guards/no_overclaim.py",
+    "tests/contracts/test_claim_language_lint.py",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    "htt/obsstat/cf4_post275_lane.py",
+    "htt/src/common/cf4_observed_lane_activation.py",
+    ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/RUN_PLAN.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "review_coverage_path": ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/artifacts/A-PR291-R5-PREDICATE-CLAIM_REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "a3f5de8b69112c0c6e266ea4249aecc716e1ff4d1ddb63f52ce549a05071ae45",
+  "findings": [
+    {
+      "finding_id": "F-PR291-PREDICATE-FALSE-NEGATIVE",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "sha256:200fe2b9806ba752e08cd3125d30204af014585bfb75975367fdd7a5959803f7:active-generic-modal-fn",
+      "statement": "Blocking: the geometry/family rule misses ordinary positive identification when the actor is a report rather than the closed analysis actor grammar, and misses passive identification with an ordinary modal auxiliary.",
+      "assumptions_used": ["Positive family-identification claims are forbidden independent of which document-like actor performs the attribution.", "Modal auxiliary could does not negate the positive predicate."],
+      "evidence_refs": ["oracle case active_generic_actor: expected geometry_detected, observed none", "oracle case passive_modal_auxiliary: expected geometry_detected, observed none", "htt/src/common/semantic_guards/no_overclaim.py:99", "htt/src/common/semantic_guards/no_overclaim.py:102"],
+      "counterevidence_refs": ["All seven registered policy commands passed.", "Existing analysis-actor and registered passive-adverb cases are detected."],
+      "reproduction": ["PYTHONPATH=htt/src:htt python3 -B .agent-harness/runs/pr291-r5-predicate-continuation-20260813/artifacts/A-PR291-R5-PREDICATE-CLAIM_ORACLE.py", "Inspect active_generic_actor and passive_modal_auxiliary rows."],
+      "unresolved": ["Generalize actor/auxiliary grammar without widening structured guardrail exemptions or introducing negation false positives."],
+      "confidence": 0.99
+    },
+    {
+      "finding_id": "F-PR291-PREDICATE-FALSE-POSITIVE",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "sha256:200fe2b9806ba752e08cd3125d30204af014585bfb75975367fdd7a5959803f7:predicate-negation-fp",
+      "statement": "Blocking: five semantically predicate-scoped negative controls are reported as forbidden claims when negation is separated by a positive adverb, expressed with cannot plus an adverb, contracted, or used in the scalar implication form.",
+      "assumptions_used": ["Predicate-scoped downclaims must remain allowed.", "Negation scope is semantic and cannot be limited to an exact adjacent token list."],
+      "evidence_refs": ["oracle cases negative_aux_not, negative_adverb_before_not, negative_cannot_adverb, negative_contraction, and negative_scalar", "htt/src/common/semantic_guards/no_overclaim.py:675", "htt/src/common/semantic_guards/no_overclaim.py:701"],
+      "counterevidence_refs": ["Exact does not and never predicate controls pass.", "Exact Markdown forbidden-column and YAML forbidden-use guardrails pass."],
+      "reproduction": ["PYTHONPATH=htt/src:htt python3 -B .agent-harness/runs/pr291-r5-predicate-continuation-20260813/artifacts/A-PR291-R5-PREDICATE-CLAIM_ORACLE.py", "Inspect the five negative_* mismatch rows."],
+      "unresolved": ["Normalize bounded predicate negation before claim matching while preserving unrelated-negation detection."],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR291-PREDICATE-FALSE-NEGATIVE", "F-PR291-PREDICATE-FALSE-POSITIVE"],
+      "summary": "Candidate identity, seven policy commands, blocked CF4 nonexecution, numerical/admission immutability, and PR-292 ineligibility pass, but the claim predicate has reproducible false negatives and false positives, so claim/review acceptance fails."
+    }
+  ],
+  "errors": []
+}

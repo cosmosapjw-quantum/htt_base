@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-candidate-review-20260810",
+  "generated_at": "2026-08-09T21:24:53+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 4,
+  "raw_finding_count": 2,
+  "unique_finding_count": 2,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR284-CLAIM",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json",
+            ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/REVIEW_COVERAGE.json",
+            "docs/research_program/post_pr275/pr284_spec.yaml",
+            "docs/research_program/post_pr275/pr284_publication_policy.json",
+            "docs/generated/pr284_depth_path_doob_receipt.json",
+            "docs/PR_DELTAS/pr-284.md"
+          ],
+          "evidence_fingerprint": "sha256:afcb8548f9d3ec27e27d43e7a376b19f35983135e937215e758a8639a477780d",
+          "summary": "No claim/provenance defect found: HTT ownership and bounded contributor roles, C2 diagnostic-only ceiling, transfer none, non-observed/non-public status, finite-path-only theorem boundary, matched-mocks-not-executed status, blocked family gate, and exact PR-283 predecessor/policy provenance are mutually consistent. Numerical derivation, mutation execution, portable replay, and integration-rehearsal cells remain explicitly outside this lane."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR284-CODE",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR284-CODE-001"
+          ],
+          "summary": "PR-284 is not review-ready: the public factory behaves correctly, but a reachable common-layer construction path bypasses the proved-premise replay and emits a bound; the registered mutation suite does not cover it."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR284-PHYSMATH",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR284-PHYSMATH-001"
+          ],
+          "summary": "The exact finite arithmetic and stated claim ceiling are sound on the shipped fixture, but the premise-enforcement boundary is bypassable and the G6 candidate cannot be admitted until the surviving constructor-forgery path is closed and receipt evidence regenerated."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR284-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "exact PR-283 remote target/base/merge-base replay",
+            "two sealed stable patch IDs unique across all refs",
+            "portable clean-root replay exit 0",
+            "AUTO_MERGE refusal and HUMAN_ONLY status"
+          ],
+          "evidence_fingerprint": "pr284:blind-integration:029f8ced:b6b6952d:patchids-unique:portable-pass:human-only",
+          "summary": "The frozen PR-284 candidate is based exactly on the sealed PR-283 target, has no duplicate stable patch identity across refs, replays from a distinct clean archive, and cannot authorize merge."
+        },
+        {
+          "claim_id": "C-PR280-HERMETIC-HARNESS",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "all seven policy commands exit 0",
+            "fresh 13-row mutation execution",
+            "FIFO and hardlink preflight rejection",
+            "atomic success and injected-failure preservation",
+            "17-cell R3 coverage strict validation"
+          ],
+          "evidence_fingerprint": "pr284:hermetic-replay:13-mutations:fifo-hardlink-atomic:coverage-pass",
+          "summary": "Receipt/source binding, mutation completeness, nonregular destination defense, atomic replacement behavior, and portable replay all pass without shared or tracked mutation."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR284-CODE-001",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "critical",
+      "statement": "The common-layer `_build_depth_path_reverse_martingale_report_contract` is importable and accepts caller-supplied proved status, non-centered law, non-decreasing partitions, tower equalities, second moment, and path values without replay; its result passes revalidation and causes the public calibration factory to emit a probability bound.",
+      "assumptions_used": [
+        "An importable module attribute is reachable by an in-process caller even when omitted from __all__.",
+        "The specification's factory-only and no-caller-supplied-proved-status requirements apply to all reachable construction paths, not only names exported by htt.infer.__all__."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json",
+        "htt/htt/htt/infer/depth_path_calibration.py:316",
+        "htt/src/common/depth_path_calibration.py:560",
+        "htt/src/common/depth_path_calibration.py:590",
+        "htt/src/common/depth_path_calibration.py:741",
+        "htt/src/common/depth_path_calibration.py:750"
+      ],
+      "evidence_fingerprint": "sha256:61a2a324d68376df9c793cac49be613cb244347b71988f0c9801b48a8028bbf0",
+      "counterevidence_refs": [
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 20 passed",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+      ],
+      "reproduction": [
+        "python -B .agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.py",
+        "Observe report_revalidation_accepted=true and public calibration status BOUND_AVAILABLE_CONDITIONAL_PROVED_PREMISE with probability_upper_bound=1/4."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Make report revalidation independently replay centering, second moment, filtration refinement, conditional expectations, selected path values, and path maximum, so no reachable builder can mint proof premises.",
+        "Add a registered mutation and contract test that invokes the common builder/revalidator bypass path and requires fail-closed rejection."
+      ],
+      "source_finding_ids": [
+        "F-PR284-CODE-001"
+      ],
+      "supporting_assignments": [
+        "A-PR284-CODE"
+      ],
+      "supporting_agent_types": [
+        "code_cartographer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR284-PHYSMATH-001",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr284.importable-contract-builder.forged-proved-report.v1",
+      "statement": "The candidate's caller-proof firewall is bypassable: a caller can import `_build_depth_path_reverse_martingale_report_contract`, supply `PROVED_FINITE_REGISTERED_PATH`, arbitrary path/tower identities and equality flags, a non-centered law, and a false second moment; COMMON seals the report and the public HTT calibration emits a Doob bound.",
+      "assumptions_used": [
+        "Python underscore names are conventions, not access control, and can be imported directly.",
+        "The stated gate requires every bound-bearing report to be derived by exact finite-law replay rather than merely produced through the intended public export surface.",
+        "Downstream code accepts exact `DepthPathReverseMartingaleReport` instances after content-seal revalidation."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py",
+        "docs/research_program/post_pr275/pr284_spec.yaml:32",
+        "htt/htt/htt/infer/depth_path_calibration.py:21",
+        "htt/htt/htt/infer/depth_path_calibration.py:316",
+        "htt/src/common/depth_path_calibration.py:560",
+        "htt/src/common/depth_path_calibration.py:741"
+      ],
+      "counterevidence_refs": [
+        "htt/htt/htt/infer/depth_path_calibration.py:126",
+        "tests/contracts/test_depth_path_doob_calibration.py:194",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 20 passed",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+      ],
+      "reproduction": [
+        "Run `python -B .agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py` from the candidate repository root.",
+        "Observe true mean 2 and true second moment 5 for the supplied non-centered law.",
+        "Observe the sealed report claims second moment 1 and premise status PROVED_FINITE_REGISTERED_PATH.",
+        "Observe public `build_depth_path_doob_calibration` returns status BOUND_AVAILABLE_CONDITIONAL_PROVED_PREMISE and probability bound 1/4."
+      ],
+      "unresolved": [
+        "A fix should remove the importable token-bearing construction seam or make COMMON revalidation recompute the law, centering, tower, path binding, conditional path values, and second moment before accepting any proved report.",
+        "Add the constructor-bypass mutation to the registered mutation set and require it to be killed before regenerating the receipt."
+      ],
+      "confidence": 0.99,
+      "source_finding_ids": [
+        "F-PR284-PHYSMATH-001"
+      ],
+      "supporting_assignments": [
+        "A-PR284-PHYSMATH"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "assignment_count": 4,
+  "validated_result_count": 4,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/RUN_PLAN.json",
+      "sha256": "2deabc417b797c6cf7146b6fc788d9148f7d85483e7e6f4922fbd9acd6085b14",
+      "bytes": 3048
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/assignments/A-PR284-CLAIM.json",
+      "sha256": "3de23ab14b9fec1f2d35d90e9278b0b520ea3becc078014e340ddaecf8b9350e",
+      "bytes": 3595
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/assignments/A-PR284-CODE.json",
+      "sha256": "c8de06b55650aa5161110dbac4a1c94f255b4f753b28fd97b510947b0088deb8",
+      "bytes": 3531
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/assignments/A-PR284-PHYSMATH.json",
+      "sha256": "f76ca9eb6c1e12657861cf8cec6ccc740e0bf0d22cd69959192c94772b99bdfe",
+      "bytes": 3639
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/assignments/A-PR284-REPLAY.json",
+      "sha256": "3d6da05681c1b1d89b2c034522bf29f37fea879ba9c616270c44757bbb93f166",
+      "bytes": 3682
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-CLAIM.json",
+      "sha256": "2cd543dc6517d23b65d661564ad79503d40010ef1ddf74dae4906f9fdd9b1bc7",
+      "bytes": 10227
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-CODE.json",
+      "sha256": "9d6e573b4e899d71f32e54bd07fde19601d80abcacf9be13c0a376a9963e5f3a",
+      "bytes": 9566
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-PHYSMATH.json",
+      "sha256": "b36b2465afba5eef24f34522cf4f925046bec55bc1f592a092ea3e584ec5b7e6",
+      "bytes": 9263
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-REPLAY.json",
+      "sha256": "61b68f105ff42c2913b67dd3d6f6ec5acd2c32593d8176df42a67ee74bd3a3cc",
+      "bytes": 10784
+    }
+  ],
+  "merge_input_sha256": "12b579f318fa1f7634e77f9a8f56aa601fd1f9c240d3dd74e12d512a7a4e00f1"
+}

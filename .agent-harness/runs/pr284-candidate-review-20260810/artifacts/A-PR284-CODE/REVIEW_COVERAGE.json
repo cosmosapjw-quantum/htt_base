@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-candidate-review-20260810",
+  "assignment_id": "A-PR284-CODE",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "ba5335bffb3c75d866027339d37660f068140ff2926967abed09550344a4205e",
+  "candidate_sha": "029f8cedd044cc5967bc12dc695230ca69cf3308",
+  "candidate_tree_sha": "e09d127212ba3173377ea2442be1661107f2963a",
+  "diff_sha256": "24dc3ec9ef99a6f914e3466883dd722af520d053fc2bf0e46be2f8c99ec4aeba",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-09T21:09:57Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+        "git rev-parse HEAD HEAD^{tree}: 029f8cedd044cc5967bc12dc695230ca69cf3308 e09d127212ba3173377ea2442be1661107f2963a"
+      ],
+      "rationale": "The live context, required input hashes, HEAD, tree, and clean worktree matched the frozen assignment and seal."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:25",
+        "docs/research_program/post_pr275/pr284_spec.yaml:48"
+      ],
+      "rationale": "The G6 derivation rule and complete premise list were read before executing tests and the independent oracle."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "FAIL",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:560",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json"
+      ],
+      "rationale": "Report construction revalidates the finite-law seal but the reachable common-layer builder can mark a caller-supplied non-centered law as proved."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "FAIL",
+      "evidence_refs": [
+        "htt/htt/htt/infer/depth_path_calibration.py:148",
+        "htt/src/common/depth_path_calibration.py:560",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json"
+      ],
+      "rationale": "The public HTT factory checks centering and second moment, but the importable contract builder and report revalidator do not recompute either premise."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "FAIL",
+      "evidence_refs": [
+        "htt/htt/htt/infer/depth_path_calibration.py:191",
+        "htt/src/common/depth_path_calibration.py:569",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json"
+      ],
+      "rationale": "Only the public factory invokes the finite tower verifier; the common report constructor accepts a non-coarsening partition sequence with caller-supplied true equality flags."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "FAIL",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:590",
+        "htt/src/common/depth_path_calibration.py:750",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json"
+      ],
+      "rationale": "Revalidation checks only that the supplied equality tuple contains true values and that the content seal matches; it does not replay conditional expectations."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "FAIL",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:497",
+        "htt/src/common/depth_path_calibration.py:741",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json"
+      ],
+      "rationale": "The reachable builder accepts caller-supplied path and stratum content identifiers without receiving or revalidating an exact DepthPath."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/htt/htt/infer/depth_path_calibration.py:326",
+        "htt/src/common/depth_path_calibration.py:792"
+      ],
+      "rationale": "Calibration revalidates the report and enforces exact preprocessing and estimator string equality."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "FAIL",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:581",
+        "htt/htt/htt/infer/depth_path_calibration.py:349",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json"
+      ],
+      "rationale": "The report constructor compares the maximum only to caller-supplied path values; it does not recompute those values from the sealed law and partitions."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/htt/htt/infer/depth_path_calibration.py:345",
+        "htt/src/common/depth_path_calibration.py:820"
+      ],
+      "rationale": "Given a report, threshold square, inclusive event, and 1/lambda squared bound are recomputed exactly, though the report-premise bypass makes that bound unsafe."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/htt/htt/infer/depth_path_calibration.py:254",
+        "tests/contracts/test_depth_path_doob_calibration.py:227",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 20 passed"
+      ],
+      "rationale": "The explicit unproved factory requires a bound plan and the focused tests confirm no bound fields are emitted."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "FAIL",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:178",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py:566",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json"
+      ],
+      "rationale": "All thirteen declared mutations execute, but none reaches the common-layer proved-report builder that bypasses public premise evaluation."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION",
+        "docs/generated/pr284_depth_path_doob_receipt.json"
+      ],
+      "rationale": "The frozen receipt exactly replays, but its mutation set does not cover the reproduced bypass."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Portable clean-root execution is owned by the separate replay assignment, not this targeted code/API assignment."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_publication_policy.json",
+        ".prguard/runtime/PR284_CANDIDATE_SEAL.json"
+      ],
+      "rationale": "The seal binds the exact publication policy identified by the run plan."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:38",
+        "htt/src/common/depth_path_calibration.py:623"
+      ],
+      "rationale": "Payload construction fixes HTT ownership, diagnostic-only scope, no transfer, no observed/public use, and the blocked family gate."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Latest-target integration and publication rehearsal are owned by the separate replay assignment."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR284-CODE-FACTORY-BYPASS",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": [
+        "python",
+        "-B",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.py"
+      ],
+      "command_fingerprint": "048c863a79dec33a34c31d5e599460701bce08c84abd2e024a4ee7d228a537d4",
+      "started_at": "2026-08-09T21:09:56Z",
+      "completed_at": "2026-08-09T21:09:57Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json",
+      "artifact_sha256": "61a2a324d68376df9c793cac49be613cb244347b71988f0c9801b48a8028bbf0",
+      "artifact_bytes": 1033,
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:741",
+        "htt/htt/htt/infer/depth_path_calibration.py:316"
+      ]
+    }
+  ],
+  "coverage_sha256": "da2e9c16baaec509abcea3eb4549787307673cc1dd9fccf3c0cd914cee4315a4"
+}

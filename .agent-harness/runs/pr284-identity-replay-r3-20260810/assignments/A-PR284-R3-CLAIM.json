@@ -1,0 +1,85 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-identity-replay-r3-20260810",
+  "assignment_id": "A-PR284-R3-CLAIM",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_gate_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "da4a16d506e8adbfa5232ab95ca202cf2009e5f1304d6732fb0c92c3cb343b9a",
+    "seal_sha256": "f845a04769749a7b27a836ecb921da76509313221add64cd36ba0071b5e6e5f2",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "d54ff22dac780d3b159394237416d28b2bd15dc8",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "5fe16f62eb7246c455d116d79d2d422b35dee7b7",
+    "diff_sha256": "198de84c15f37c2d3c2edde8b2cdfbf06e5fe353aa2dd893462ae6bc3382e55f",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "adfbf6216e0a2566edeacc12f555110edea7811d7dc2309e737d7933d230f411"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Fresh bounded frozen claim, ownership, and provenance review of PR-284 after exact DepthPath identity replay. Read this assignment first and do not read CONTEXT_PACK or current sibling results. Check HTT/COMMON/OBSSTAT/MIO ownership, C2 diagnostic-only ceiling, transfer none, observed/public false, blocked family gate, forbidden inputs, current spec-policy-delta-receipt consistency, and that embedding the exact path does not promote support nesting into proof or reuse historical review evidence. Run the registered claim and receipt gates plus an independent narrow oracle. Write no tracked/shared files; produce only assignment-local coverage, executable oracle, and a strict-valid registered result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+      "sha256": "da4a16d506e8adbfa5232ab95ca202cf2009e5f1304d6732fb0c92c3cb343b9a"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_spec.yaml",
+      "sha256": "c33bd811d7d4b2db6ec0b12dbad0a7f0451b04881ffbc2f174201d4ffa0389b9"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_publication_policy.json",
+      "sha256": "83fe6c6eeda8661e54e52e77c69e851bc09224a36f5747d45fa938949c781583"
+    },
+    {
+      "path": "docs/generated/pr284_depth_path_doob_receipt.json",
+      "sha256": "863129c2ee19e5bda5dc74fbf3d92423fd50ff891ff851b9776579b8e78dd126"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-284.md",
+      "sha256": "1296ced06d9acd879b92ca556835580ca6a73f0cd55dfb9ad07feb274d9e1573"
+    },
+    {
+      "path": "htt/src/common/depth_path_calibration.py",
+      "sha256": "e54b429418c7c20a9b2bfce74b1c3513afe79ddeddb7e1b88743a5af079d88d1"
+    },
+    {
+      "path": "htt/htt/htt/infer/depth_path_calibration.py",
+      "sha256": "7bc2c3ac0550f71242fbea30f9a90a5daeb30915c6b9aa80935e229479ef4bf1"
+    },
+    {
+      "path": "tests/contracts/test_depth_path_doob_calibration.py",
+      "sha256": "a6b1bc2dce61a1d7c097eb5c4bd2be7b4a737a1f0ac0489b07d5a24ddcb11447"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/results/A-PR284-R3-CLAIM.json",
+  "status": "registered",
+  "assignment_sha256": "3912aa2dd4bf04ae658706b448026c537fe857b8d672963c84540b1ab9a4cd60"
+}

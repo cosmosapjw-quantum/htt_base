@@ -1,0 +1,73 @@
+{
+  "candidate": {
+    "commit_count": 5,
+    "sha": "be8392d0fb3d13fefdf6bce89a1c89ef11890080",
+    "stable_patch_ids": [
+      "ae91b4b1e6bb405677f82a2249dd90018b9de358",
+      "ec4535b0ffb7a461583d8f2f17821d14be86be80",
+      "42b0834deccf5abbbbf7cb033b48fe01de8c1bf5",
+      "e566a8a7a5ad8049cc59d02104978e46ecf1e016",
+      "0486cdfc63fa31813936a9cdd139fff6ec1831e3"
+    ],
+    "tree": "f74d8f8b550d2351d21a8db5021e0f8566d9ecc2",
+    "unique_patch_ids": true
+  },
+  "destination_controls": {
+    "atomic_write": "PASS",
+    "rejections": {
+      "fifo": "OUTPUT_DESTINATION_NOT_SINGLE_LINK_FILE",
+      "multilink": "OUTPUT_DESTINATION_NOT_SINGLE_LINK_FILE",
+      "parent_symlink": "OUTPUT_PARENT_NOT_REGULAR",
+      "symlink": "OUTPUT_DESTINATION_SYMLINK"
+    }
+  },
+  "integration": {
+    "passed_commands": [
+      "pr285-focused",
+      "pr285-adjacent",
+      "pr285-receipt-replay",
+      "pr285-portable-clean-replay",
+      "pr285-cas-four-axis-terminal-evidence",
+      "pr285-publication-policy-cross-binding",
+      "pr285-dag-strict",
+      "pr285-claim-language"
+    ],
+    "receipt_sha256": "635d668b011578505968de8da97b5d3594ce4f5936c7590da249e206f9a7af50"
+  },
+  "lineage_provenance": {
+    "named_group_map_present": false,
+    "seal_lineage_like_fields": [
+      "publication_group_id"
+    ],
+    "verdict": "G20_G21_INCLUDED_AND_G22_EXCLUDED_NOT_INDEPENDENTLY_VERIFIABLE"
+  },
+  "policy": {
+    "claim_ceiling": "diagnostic_only",
+    "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    "max_file_overlap_prs": 2,
+    "max_open_prs": 3,
+    "max_stack_depth": 3,
+    "sha256": "973b1b1521d6a9ff4fd783839719fb3866ee0078a325f5ef968cf9c9aedf55b8"
+  },
+  "receipt_replay": {
+    "all_mutations_killed": true,
+    "content_sha256": "923fc5eefa6055bfb2b483755877dce6faec46f291bd1940e5708970c704b32c",
+    "mutation_order": [
+      "MU285-DROP-SOURCE-ROW",
+      "MU285-DROP-VT-ROW",
+      "MU285-BARE-NOT-ADJUDICATED",
+      "MU285-WEAKEN-STATEMENT",
+      "MU285-CAS-AXIS-OMITTED",
+      "MU285-CAS-MAJORITY-VOTE",
+      "MU285-CAS-CONTRACT-DRIFT",
+      "MU285-T8-GLOBAL-PROMOTION",
+      "MU285-T13-FULL-DYNAMICS-PROMOTION",
+      "MU285-T14-NATIVE-PROMOTION",
+      "MU285-PR190-REFUTATION-LAUNDERED",
+      "MU285-CLAIM-CEILING-PROMOTION"
+    ],
+    "rows": 80,
+    "source_bindings": 16
+  },
+  "status": "FAIL_LINEAGE_PROVENANCE_UNVERIFIABLE"
+}

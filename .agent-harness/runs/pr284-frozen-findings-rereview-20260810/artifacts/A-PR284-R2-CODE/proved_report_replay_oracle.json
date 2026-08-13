@@ -1,0 +1,90 @@
+{
+  "authentic_public_api": {
+    "factory_export_identity": true,
+    "path_maximum_abs": "3",
+    "path_values": [
+      "-3",
+      "-2",
+      "0"
+    ],
+    "probability_upper_bound": "1/4",
+    "report_export_identity": true,
+    "report_revalidated": true,
+    "target_second_moment": "5"
+  },
+  "constructor_cases": {
+    "decreasing_filtration": {
+      "accepted": false,
+      "error": "path partitions do not form the required decreasing filtration: finer partition does not refine the preceding rung",
+      "error_type": "DepthPathError"
+    },
+    "noncentered_target": {
+      "accepted": false,
+      "error": "common target must be exactly centered",
+      "error_type": "DepthPathError"
+    },
+    "path_maximum": {
+      "accepted": false,
+      "error": "path maximum does not match exact path values",
+      "error_type": "DepthPathError"
+    },
+    "path_maximum_identity": {
+      "accepted": false,
+      "error": "path maximum identity does not match exact replay",
+      "error_type": "DepthPathError"
+    },
+    "path_values": {
+      "accepted": false,
+      "error": "path values do not match exact conditional-expectation replay",
+      "error_type": "DepthPathError"
+    },
+    "second_moment": {
+      "accepted": false,
+      "error": "target second moment does not match exact finite-law replay",
+      "error_type": "DepthPathError"
+    },
+    "selected_atom_path": {
+      "accepted": false,
+      "error": "path values do not match exact conditional-expectation replay",
+      "error_type": "DepthPathError"
+    },
+    "tower_identity": {
+      "accepted": false,
+      "error": "tower report identity does not match exact replay",
+      "error_type": "DepthPathError"
+    }
+  },
+  "resealed_revalidation_cases": {
+    "resealed_filtration": {
+      "accepted": false,
+      "error": "path partitions do not form the required decreasing filtration: finer partition does not refine the preceding rung",
+      "error_type": "DepthPathError"
+    },
+    "resealed_path_maximum": {
+      "accepted": false,
+      "error": "path maximum does not match exact conditional-expectation replay",
+      "error_type": "DepthPathError"
+    },
+    "resealed_path_maximum_identity": {
+      "accepted": false,
+      "error": "path maximum identity does not match exact replay",
+      "error_type": "DepthPathError"
+    },
+    "resealed_path_values": {
+      "accepted": false,
+      "error": "path values do not match exact conditional-expectation replay",
+      "error_type": "DepthPathError"
+    },
+    "resealed_second_moment": {
+      "accepted": false,
+      "error": "target second moment does not match exact finite-law replay",
+      "error_type": "DepthPathError"
+    },
+    "resealed_tower_identity": {
+      "accepted": false,
+      "error": "tower report identity does not match exact replay",
+      "error_type": "DepthPathError"
+    }
+  },
+  "schema": "htt.pr284.r2_code_proved_report_replay_oracle.v1"
+}

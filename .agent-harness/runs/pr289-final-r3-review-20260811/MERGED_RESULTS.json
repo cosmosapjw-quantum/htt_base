@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "run_id": "pr289-final-r3-review-20260811",
+  "generated_at": "2026-08-11T11:28:19+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 2,
+  "raw_finding_count": 1,
+  "unique_finding_count": 1,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR289-R3-PHYSCODE",
+      "status": "error",
+      "gate_disposition": "INCONCLUSIVE",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "not_examined",
+          "finding_ids": [],
+          "summary": "No acceptance verdict: aggregate validation exposed sibling result status before final submission, violating blind-results independence. Substantive oracle and coverage had completed beforehand and are retained only as chronology, not acceptance."
+        }
+      ],
+      "reported_errors": [
+        "INDEPENDENCE_VIOLATION: aggregate harness output exposed sibling result status before final submission; fail-closed status=error, gate_disposition=INCONCLUSIVE, claim outcome=not_examined."
+      ],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR289-R3-REPLAYCLAIM",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR289-R3-REPLAYCLAIM-001"
+          ],
+          "summary": "Lineage, replay, portability, identity, authorization, and scientific claim ceilings passed; current lifecycle prose has one bounded stale-status finding."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR289-R3-REPLAYCLAIM-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "medium",
+      "statement": "The current PR-289 delta status header is stale: it says the bounded repair is awaiting R2, while the same frozen candidate records that R2 completed with two blocking FAIL lanes, the second bounded repair landed, and fresh R3 acceptance is required.",
+      "assumptions_used": [
+        "The top-level Status field in a PR delta describes the current candidate lifecycle rather than a historical snapshot."
+      ],
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-289.md:138",
+        "docs/PR_DELTAS/pr-289.md:147",
+        "docs/PR_DELTAS/pr-289.md:3",
+        "docs/codex_handoff/pr_status.yaml:506"
+      ],
+      "evidence_fingerprint": "sha256:fffe581b1939f4c5a96d8aa910a745132728af26d2467533ff1a0896ac23616c",
+      "counterevidence_refs": [
+        "docs/PR_DELTAS/pr-289.md:152",
+        "docs/codex_handoff/pr_status.yaml:507"
+      ],
+      "reproduction": [
+        "sed -n '1,5p;122,155p' docs/PR_DELTAS/pr-289.md",
+        "sed -n '506,539p' docs/codex_handoff/pr_status.yaml"
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Update only the current status summary to preserve R1 and R2 FAIL chronology and state that the second repair awaits fresh R3 adjudication; do not relabel historical review evidence."
+      ],
+      "source_finding_ids": [
+        "F-PR289-R3-REPLAYCLAIM-001"
+      ],
+      "supporting_assignments": [
+        "A-PR289-R3-REPLAYCLAIM"
+      ],
+      "supporting_agent_types": [
+        "claim_gate_reviewer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "assignment_count": 2,
+  "validated_result_count": 2,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr289-final-r3-review-20260811/RUN_PLAN.json",
+      "sha256": "e306cd8cb57bc44422f6d180ad622bc1d36301ac620b15dc492e45c16856b76d",
+      "bytes": 5578
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r3-review-20260811/assignments/A-PR289-R3-PHYSCODE.json",
+      "sha256": "7c46464ce23c60651c233c76b7c8cf1059d8f6b24624b6864c67e09900a9228e",
+      "bytes": 5239
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r3-review-20260811/assignments/A-PR289-R3-REPLAYCLAIM.json",
+      "sha256": "d984ade1e949de66e45ec92b3125222b671e88aeebd90a1c165b200e48b87f91",
+      "bytes": 5230
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r3-review-20260811/results/A-PR289-R3-PHYSCODE.json",
+      "sha256": "710edb35fd5035b78a67f50f8f6823e3462ac86da028b794770640d37abf4de7",
+      "bytes": 4985
+    },
+    {
+      "path": ".agent-harness/runs/pr289-final-r3-review-20260811/results/A-PR289-R3-REPLAYCLAIM.json",
+      "sha256": "5345730035fd3e54bf0392b411954786c6bf06423265a1175ddc0420e4eaed90",
+      "bytes": 7951
+    }
+  ],
+  "merge_input_sha256": "8b017543a839090df732441e9dcb0415fcc6ab0bd852fad6ddda1b0ba815aa30"
+}

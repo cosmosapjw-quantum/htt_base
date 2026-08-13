@@ -1,0 +1,88 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-bounded-repair-r4-review-20260813",
+  "assignment_id": "A-PR291-R4-PHYSSTAT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "0e8da2b416792c62897b6beb686e28f705d8a82cc299513dd3f5e905109d2c5b",
+    "seal_sha256": "a226e0df027907b105bdb454ff5a5f50b60adb1a98663bcb22d70e14b7760ec1",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "02714ff26f8e6414edd1ef456065bf73e0f27374",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "2b425d29ca48c8baa776aa5521ecf3795d64562a",
+    "diff_sha256": "df0950da457bf62acd1c2d2215daa27f6c39f9ede67bdcdd242c22f8cbda9906",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "1dc0fc6010d0f99f586aa7e34dae9f5eced9110962d36a68af61727029c7507c"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "independent",
+  "independence_rationale": "R3 numerical counterexamples require a fresh independent derivation against repaired bytes.",
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR135-FINITE-NULL-RANK",
+    "C-PR136-IDENTIFIED-SET"
+  ],
+  "task": "Blind frozen R4 physics and statistics audit of PR-291. Read assignment first; verify context, all hashes, clean frozen HEAD, exact base and seal. Independently derive and execute hostile probes for fixed registered rank and eigengap floors, covariance-whitened column-normalized SVD, scale invariance, content binding, null-basis numerical residual bound independent of classification threshold, exact response versus source decision rank-nullity reconciliation, and strict non-singleton typed structural identified sets. Check units, signs, covariance conditioning, source separation status, abstention, ownership and family ceiling. Run focused and adjacent registered tests plus an assignment-local oracle. Candidate/shared read-only. Write only assignment-local artifacts and declared result. Do not inspect siblings/history result envelopes, CONTEXT_PACK, process listings, broad .agent-harness searches, or aggregate validators; single-result validation only.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json",
+      "sha256": "0e8da2b416792c62897b6beb686e28f705d8a82cc299513dd3f5e905109d2c5b"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_spec.yaml",
+      "sha256": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-291.md",
+      "sha256": "45e81cf92f4e13910d2153e2ebbc7ac3a812f7b348068f1d316eb8ba2fe375fe"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "deb7a490e300d4c35e8d70830dc105102c638cb43dcf9f379c62419530d8f86f"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+      "sha256": "4c7953e136371be26977e3d902f49a17b3327a6f3cec3480345e0ad40ea8c3ad"
+    },
+    {
+      "path": "htt/obsstat/cf4_post275_lane.py",
+      "sha256": "54f802baffa26e30c2b354e90578a6b012c8f77d8a49b5e80c59e206bb827840"
+    },
+    {
+      "path": "htt/src/common/source_separation.py",
+      "sha256": "4b14fd716ff6b13b5624b0a7af50fc2c5a87a513a398ff352d31800c6bb4851e"
+    },
+    {
+      "path": "tests/integration/test_cf4_post275_lane.py",
+      "sha256": "8167e669927505b9121bbb09a98976755cdbcbd452f20c398f6b80d298990468"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact 16-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/results/A-PR291-R4-PHYSSTAT.json",
+  "status": "registered",
+  "assignment_sha256": "ed8a589cee46bb1585bde0728e64a15b5ae99a9297595ae03577d3b31ffcbf35"
+}

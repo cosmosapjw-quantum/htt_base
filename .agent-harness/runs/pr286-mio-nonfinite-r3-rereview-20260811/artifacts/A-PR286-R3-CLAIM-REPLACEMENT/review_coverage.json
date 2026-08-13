@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-mio-nonfinite-r3-rereview-20260811",
+  "assignment_id": "A-PR286-R3-CLAIM-REPLACEMENT",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "candidate_seal_sha256": "26b24258bfec78ccbd0dad9382fc6ae8e9b9ba9a417b81753f84ca68b30c6f0f",
+  "candidate_sha": "0b1a8ef76df47b0b42e972bb47c9bc294e80aa7c",
+  "candidate_tree_sha": "c92883d3500aff9a7fa07e561ad43bf4088feb9d",
+  "diff_sha256": "a07284aa230f991286ac4b3ed11e5201f70af2a49ae8bf79cf5191d5af3cc4d1",
+  "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+  "completed_at": "2026-08-11T03:22:59Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json", "git:0b1a8ef76df47b0b42e972bb47c9bc294e80aa7c"],
+      "rationale": "All named input hashes, sealed candidate identity, tree, diff, base, and production hash matched."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml@6fca230213eea5c914842c63513a9047cb3221d0646564692464a82d7a03fc05"],
+      "rationale": "The frozen governing specification was read and hash-verified before the executable oracle and tests."
+    },
+    {
+      "cell": "source_58_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#summary.source_rows"],
+      "rationale": "Receipt reconstruction and the independent oracle both require exactly 58 source rows."
+    },
+    {
+      "cell": "vt_s_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#summary.vector_tensor_rows"],
+      "rationale": "Receipt reconstruction and the independent oracle both require exactly 14 VT-S rows and 72 rows total."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml#inventory_contract.statement_identity_replay", "tests/contracts/test_pillar_s_complete_adjudication.py"],
+      "rationale": "Null-safe statement replay is frozen and the complete contract suite passed."
+    },
+    {
+      "cell": "exact_proof_not_simulation",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml#source_disposition_policy", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#rows"],
+      "rationale": "Only eight source CAS rows and five typed VT-S proof rows pass as exact; synthetic rows retain diagnostic-only evidence grades."
+    },
+    {
+      "cell": "estimand_and_sampling_law_binding",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_pillar_s_complete_adjudication.py::test_preregistered_statistical_fields_and_negative_controls"],
+      "rationale": "All registered statistical rows retain explicit estimands, sampling laws, and finite preregistered status."
+    },
+    {
+      "cell": "covariance_and_null_binding",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/vector_tensor_statistical_inference.py@61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254", "tests/contracts/test_pillar_s_inference.py"],
+      "rationale": "The named inference contracts and no-cache contract suite preserve covariance and visible null-control behavior."
+    },
+    {
+      "cell": "exact_vs_asymptotic_status",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#rows"],
+      "rationale": "Exact rows are typed EXACT and statistical rows are typed FINITE_PREREGISTERED_SYNTHETIC."
+    },
+    {
+      "cell": "preregistration_seed_and_tolerance_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml#statistical_receipt_contract.coverage_rule", "tests/contracts/test_pillar_s_complete_adjudication.py"],
+      "rationale": "Seed, tolerance, law, covariance, and implementation drift mutations are all activated and killed."
+    },
+    {
+      "cell": "coverage_and_failure_map_replay",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr286_pillar_s_adjudication.py check", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#mutation_results"],
+      "rationale": "Receipt replay returned ok=true and all 20 ordered mutations executed, activated, and were killed."
+    },
+    {
+      "cell": "negative_controls_visible",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml#statistical_receipt_contract.negative_control_terminal_rule", "tests/contracts/test_pillar_s_complete_adjudication.py"],
+      "rationale": "Expected kills remain visible, while a surviving control or failed positive cell remains terminally blocking."
+    },
+    {
+      "cell": "source_status_not_authority",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#summary.terminal_counts"],
+      "rationale": "Fifty non-proof source rows remain INCONCLUSIVE_WITH_RECEIPT; source labels do not self-promote."
+    },
+    {
+      "cell": "vts14_admitted_data_gate",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml#vector_tensor_evidence.admitted_data_gate", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14"],
+      "rationale": "VT-S14 remains BLOCKED_WITH_RECEIPT because admitted data are absent despite its synthetic adapter cell."
+    },
+    {
+      "cell": "htt_mio_obsstat_ownership",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/vector_tensor_statistical_inference.py", "htt/mio/formalism/vector_tensor_validation.py", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#ownership"],
+      "rationale": "COMMON owns contracts, OBSSTAT inputs, HTT model-dependent inference, and MIO diagnostic residual/coherence only; the public MIO facade exposes no HTT or posterior builder."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json@b5ea12647f1d7818da3702b3da8d127f490a15cdef8e37fa8958cfe803b3ee5a", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py check"],
+      "rationale": "The independent oracle recomputed the content address and strict receipt replay passed."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json#dirty", "docs/PR_DELTAS/pr-286.md#Standing-bounded-repair-approval-and-MIO-remediation"],
+      "rationale": "The seal records a clean exact candidate and the current delta records the repaired portable replay without promoting its authority."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_publication_policy.json@768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d", "docs/codex_handoff/pr_status.yaml#stacked_pr_execution"],
+      "rationale": "Policy binds the exact PR-285 target and forbids ordinary push/PR mutation and merge; merge authority remains HUMAN_ONLY."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml", "docs/research_program/post_pr275/pr286_publication_policy.json", "python3 -B scripts/check_claim_language.py --strict-missing --include-archives"],
+      "rationale": "C2 diagnostic_only, transfer none, observed/public false, no MIO posterior/evidence, and family gate blocked; strict claim-language scan passed."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["docs/codex_handoff/pr_status.yaml#stacked_pr_execution.prs.PR-286", "docs/codex_handoff/pr_backlog.yaml#PR-287", ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json"],
+      "rationale": "PR-286 is VALIDATED at 7/16 on exact sealed PR-285; PR-287 is PLANNED/INELIGIBLE at zero budget and cannot consume row-level nonpromotion away."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR286-CLAIM-INVARIANT-ORACLE",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/claim_invariant_oracle.py"
+      ],
+      "command_fingerprint": "b557568ce2ab107da89a1f0abc7cfda80ade8aca3084c2d2f87d67429369f11b",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T03:22:00Z",
+      "completed_at": "2026-08-11T03:22:20Z",
+      "artifact_path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-CLAIM-REPLACEMENT/claim_invariant_oracle.py",
+      "artifact_sha256": "f55bd421fc2bf85d015db36ea7a73a1d623a415a07c8ff60bd49103dbbc94f0a",
+      "artifact_bytes": 13131,
+      "evidence_refs": [
+        "oracle stdout status=PASS candidate=0b1a8ef76df47b0b42e972bb47c9bc294e80aa7c",
+        "receipt replay ok=true",
+        "contract suites exit=0"
+      ]
+    }
+  ],
+  "coverage_sha256": "712a228a8f14e77fa9f44a6024ac5a3bd39cf14e26b67bdb8072a5893051e299"
+}

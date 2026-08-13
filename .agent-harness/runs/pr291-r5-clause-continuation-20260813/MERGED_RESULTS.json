@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-clause-continuation-20260813",
+  "generated_at": "2026-08-13T10:11:29+00:00",
+  "process_status": "INVALID_ENVELOPES",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 0,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [],
+  "findings": [],
+  "conflicts": [],
+  "errors": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM-REVIEW_COVERAGE.json",
+      "error": "registered assignment path is missing or not a regular file: .agent-harness/runs/pr291-r5-clause-continuation-20260813/assignments/A-PR291-R5-CLAUSE-CLAIM-REVIEW_COVERAGE.json"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM.json",
+      "error": "artifact 0 blind-results violation: unallowed sibling result '.agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM-oracle.py'; artifact 1 blind-results violation: unallowed sibling result '.agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM-REVIEW_COVERAGE.json'; independent_oracles[0] has unsupported kind"
+    }
+  ],
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "assignment_count": 1,
+  "validated_result_count": 0,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/RUN_PLAN.json",
+      "sha256": "98aec556f58203d23ef8738f09c0b04f59b20b6208bc0b4ad8c7e667888f87cb",
+      "bytes": 6642
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/assignments/A-PR291-R5-CLAUSE-CLAIM.json",
+      "sha256": "a74163dbd6045ffc32e21022becd0651e63af37f1dbb70e8607149291ea3e7da",
+      "bytes": 5081
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/assignments/A-PR291-R5-CLAUSE-CLOSEOUT.json",
+      "sha256": "3332c88b92dfb28c8744ee2fc01c3d835ad7c178fd28cfd235d4ebf41e4f45df",
+      "bytes": 3747
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM-REVIEW_COVERAGE.json",
+      "sha256": "adfc6cac50471efbdc216f254df4417cb6fbec2c7dd869ddb8041c0c838a130d",
+      "bytes": 5660
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM.json",
+      "sha256": "1f3415a0f1309f2288998691120de0d9e3586948290d567510526a6432fa9883",
+      "bytes": 7061
+    }
+  ],
+  "merge_input_sha256": "6e407683a2dd14260753bef624c123917ae5bfc82384cf34e74f37b22dde358d"
+}

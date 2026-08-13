@@ -1,0 +1,188 @@
+{
+  "schema_version": 3,
+  "run_id": "pr290-frozen-independent-review-20260811",
+  "assignment_id": "A-PR290-FROZEN-REPLAYCLAIM",
+  "assignment_sha256": "b92504308b1eb0a58c6d8d5797b08b02e5e9a97cb0ad9562a4783bbe9119cf48",
+  "agent_type": "claim_lane_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-290",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "workflow_role": "reviewer",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-REPLAYCLAIM.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-11T13:23:40+00:00",
+  "completed_at": "2026-08-11T13:42:28+00:00",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "025809afa9b9760e39a2c21023193d2c0b1920fc86bf0e24e05b6f44b340141a",
+    "seal_sha256": "f7c226fdc53408bb10defeabbd7a23a5e17c38dd2a3a2359640aeacf3678b3ed",
+    "base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_sha": "27c83a1a12369b4b563667ff5145ae9a717b24f0",
+    "merge_base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_tree_sha": "344dfb920b26c0207432b6acd9625bf2dacf50da",
+    "diff_sha256": "d10438bad740b2c81a4198655a647b5d7ca021f9f9cf8a3e196e22a5576dbd23",
+    "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+    "production_hash": "f3a75833210278e15847731fa8f12183babb45ba0ea4409e75119960c9f5573f"
+  },
+  "tool_versions": {
+    "python": "3.12.3",
+    "PyYAML": "6.0.1",
+    "numpy": "2.4.2",
+    "healpy": "1.19.0",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "id": "pr290-focused",
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr290_planck_lane.py", "focused"],
+      "exit_code": 0,
+      "summary": "40 passed in 8.98s"
+    },
+    {
+      "id": "pr290-preactivation",
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr290_planck_lane.py", "check"],
+      "exit_code": 0,
+      "summary": "BLOCKED_PREDECESSOR_FINAL_SUCCESS; zero numerical outputs; observed execution false; network/download false"
+    },
+    {
+      "id": "pr290-adjacent",
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr290_planck_lane.py", "adjacent"],
+      "exit_code": 0,
+      "summary": "111 passed, 3 skipped in 45.78s"
+    },
+    {
+      "id": "pr290-portable-clean",
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr290_planck_lane.py", "portable"],
+      "exit_code": 0,
+      "summary": "5919 tracked files; identical clean/source pre/post manifest 1229fc371f66ebf6495a7f35e5f6549b0df5d7f86fece6b60bbb193b08535f95; no external roots, network/download, or observed execution"
+    },
+    {
+      "id": "pr290-policy-cross-binding",
+      "argv": ["/usr/bin/python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"],
+      "exit_code": 0,
+      "summary": "9 passed, 68 deselected in 1.11s"
+    },
+    {
+      "id": "pr290-dag-strict",
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "exit_code": 0,
+      "summary": "244 PRs, DAG valid"
+    },
+    {
+      "id": "pr290-claim-language",
+      "argv": ["/usr/bin/python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "docs/research_program/post_pr275/pr290_spec.yaml", "htt/src/common/observed_lane_activation.py", "htt/obsstat/planck_post275_lane.py", "tests/integration/test_planck_post275_lane.py", "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json", "docs/PR_DELTAS/pr-290.md"],
+      "exit_code": 0,
+      "summary": "No forbidden claim language detected"
+    },
+    {
+      "id": "assignment-local-oracle",
+      "argv": ["/usr/bin/python3", "-B", ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-REPLAYCLAIM_oracle.py"],
+      "exit_code": 0,
+      "summary": "15 required review cells PASS"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-REPLAYCLAIM_REVIEW_COVERAGE.json",
+      "sha256": "54cdd84b93ddf3b8dc72467dccafd8e75d0aedb831f15be5f1e362ac128dfe72",
+      "bytes": 9492,
+      "producer": "A-PR290-FROZEN-REPLAYCLAIM"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-REPLAYCLAIM_oracle.py",
+      "sha256": "96ff35fa9d929b6cd580e11441f61e33c547024a8b4743c8502715b6006eadc1",
+      "bytes": 16967,
+      "producer": "A-PR290-FROZEN-REPLAYCLAIM",
+      "command_fingerprint": "f7795b4bec846795b8a3b485e71e0e76911206290728952a4fa0428f312b4a42"
+    }
+  ],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr290-frozen-independent-review-20260811/assignments/A-PR290-FROZEN-REPLAYCLAIM.json",
+    ".agent-harness/scripts/merge_results.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/validate_harness.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-lane-auditor/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-290.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/generated/pr288_bayesian_semantics_receipt.json",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+    "docs/research_program/post_pr275/pr290_publication_policy.json",
+    "docs/research_program/post_pr275/pr290_spec.yaml",
+    "htt/obsstat/boost_biposh_residual.py",
+    "htt/obsstat/planck_post275_lane.py",
+    "htt/src/common/data_identity.py",
+    "htt/src/common/observed_lane_activation.py",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/run_pr290_planck_lane.py",
+    "tests/integration/test_planck_post275_lane.py"
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-REPLAYCLAIM_REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "54cdd84b93ddf3b8dc72467dccafd8e75d0aedb831f15be5f1e362ac128dfe72",
+  "findings": [
+    {
+      "finding_id": "PR290-GROUP-LABEL-TRACEABILITY",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "low",
+      "evidence_fingerprint": "sha256:18818c118c6564be8ba40f60205288972df2ea2480e17a8d0abbb7cf85a2b3c1",
+      "statement": "The frozen candidate passes, with a low nonblocking traceability limitation: G49/G50/G51/G52/G53 selection and G54 exclusion are stated in the PR delta, while no required input independently maps those historical labels to source commits.",
+      "assumptions_used": [
+        "Historical G labels are explanatory recovery provenance, not candidate acceptance evidence.",
+        "Current commit, tree, changed-file inventory, stable patch IDs, seal, source bindings, and executed policy commands are the controlling frozen-candidate evidence."
+      ],
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-290.md:23",
+        "docs/PR_DELTAS/pr-290.md:26",
+        ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json"
+      ],
+      "counterevidence_refs": [
+        "The exact current changed-file inventory and four stable patch IDs independently bind the reconstructed candidate even though they do not encode G labels."
+      ],
+      "reproduction": [
+        "Read docs/PR_DELTAS/pr-290.md lines 23-27.",
+        "Compare the statement with the required_inputs inventory in the sealed assignment; no independent G-label source map is registered.",
+        "Recompute the seal, HEAD/tree/merge-base, changed-file inventory, and candidate stable patch IDs with the assignment-local oracle."
+      ],
+      "unresolved": [
+        "No required input independently maps G49-G54 labels to historical source commits."
+      ],
+      "confidence": 0.98
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "PR290-GROUP-LABEL-TRACEABILITY"
+      ],
+      "summary": "PASS: PR-290 preserves the admitted-identity versus human-authorization boundary, writes no observed numerical output, keeps the claim/family ceiling blocked, and has one low nonblocking historical G-label traceability limitation."
+    }
+  ],
+  "errors": [],
+  "summary": "No blocking replay or claim-lane finding. The exact frozen PR-290 candidate passes all 15 required coverage cells and all seven policy commands; PR-287 fresh execution remains typed INCONCLUSIVE, and PR-290 remains C2 diagnostic_only with transfer source none, observed/public false, and BLOCKED_PRE_NATIVE_ATLAS.",
+  "independence_attestation": {
+    "sibling_results_read": false,
+    "historical_result_envelopes_read": false,
+    "context_pack_reread": false,
+    "process_listings_read": false,
+    "aggregate_validators_run": false
+  }
+}

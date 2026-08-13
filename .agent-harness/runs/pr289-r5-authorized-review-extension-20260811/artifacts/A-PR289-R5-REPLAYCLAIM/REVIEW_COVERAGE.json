@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "run_id": "pr289-r5-authorized-review-extension-20260811",
+  "assignment_id": "A-PR289-R5-REPLAYCLAIM",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "candidate_seal_sha256": "301be2d0d73f18c109b71f36c43e8c8d033bd7fcfb01a6d04142b7493e30cf01",
+  "candidate_sha": "eec048d4cf19989983986d139c7d0a797b1363e0",
+  "candidate_tree_sha": "27251a5b9e28685b23473f23d7d0b960b039d375",
+  "diff_sha256": "bebb8bc4ba55b67c42b0a879f63137fe240f8fb8cc82528d9b7c8fff9e99b71f",
+  "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+  "completed_at": "2026-08-11T12:10:24Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR289_R5_CANDIDATE_SEAL.json", ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py"],
+      "rationale": "Frozen seal, HEAD, tree, diff, changed-file inventory, production hash, and clean worktree were independently rebound."
+    },
+    {
+      "cell": "pr280_terminal_receipt_without_success_promotion",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:10", "docs/codex_handoff/pr_status.yaml:892", "docs/PR_DELTAS/pr-280.md:174"],
+      "rationale": "PR-280 remains COMPLETED_FAILED_WITH_RECEIPT with success dependency false; PR-289 consumes only the explicitly non-success terminal contract."
+    },
+    {
+      "cell": "immutable_pr274_v1",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:30", "scripts/codex_harness/run_pr289_data_identity_v2.py:550", "docs/PR_DELTAS/pr-289.md:65"],
+      "rationale": "Both v1 bytes rehash to the frozen identities in the exact ff9ef9f4 replay commit and the current tree; adjacent replay passed 50 plus 54 tests."
+    },
+    {
+      "cell": "v2_factory_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:383", "htt/src/common/data_identity.py:1282", "tests/contracts/test_data_identity_registry_v2.py:892"],
+      "rationale": "Registry, records, authorization receipts, and preflight receipt are token-gated factory products with canonical content identities."
+    },
+    {
+      "cell": "stable_record_and_inspection_identities",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:1282", "tests/contracts/test_data_identity_registry_v2.py:853"],
+      "rationale": "Stable record identity excludes root and inspection time while the inspection receipt binds the time-varying inspection payload."
+    },
+    {
+      "cell": "typed_provenance_evidence",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:112", "htt/src/common/data_identity.py:247", "tests/contracts/test_data_identity_registry_v2.py:978"],
+      "rationale": "Strict evidence parsing rejects duplicate keys, nonfinite values, placeholder identities, and unbound release or license claims."
+    },
+    {
+      "cell": "machine_lane_cardinality_and_gate_identity",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json", "htt/src/common/data_identity.py:458", "tests/contracts/test_data_identity_registry_v2.py:465"],
+      "rationale": "The six-lane order, component cardinalities, native schemas, and exact human-gate spellings are registry-enforced."
+    },
+    {
+      "cell": "regular_file_and_no_symlink_boundary",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:302", "htt/src/common/data_identity.py:358", "tests/contracts/test_data_identity_registry_v2.py:938"],
+      "rationale": "No-follow descriptor reads and component-wise lstat confinement reject nonregular files, roots, parents, or components involving symlinks."
+    },
+    {
+      "cell": "hardlink_and_root_confinement",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:358", "tests/contracts/test_data_identity_registry_v2.py:938", "docs/generated/pr289_data_identity_v2_receipt.json:159"],
+      "rationale": "Single-link inode checks, root-relative paths, resolved-root equality, and duplicate-inode rejection fail closed."
+    },
+    {
+      "cell": "size_hash_and_component_inventory",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:567", "htt/src/common/data_identity.py:1800", "tests/contracts/test_data_identity_registry_v2.py:938"],
+      "rationale": "Positive byte size, streamed SHA-256, exact ordered roles/cardinality, and independently recomputed inventory identity are required."
+    },
+    {
+      "cell": "release_and_license_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:234", "docs/research_program/post_pr275/pr289_spec.yaml:102", "tests/contracts/test_data_identity_registry_v2.py:978"],
+      "rationale": "Resolvable typed release and license identities plus version material are mandatory and mutation-tested."
+    },
+    {
+      "cell": "units_frame_convention",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:62", "htt/src/common/data_identity.py:941", "tests/contracts/test_data_identity_registry_v2.py:692"],
+      "rationale": "Units, coordinate frame, sign, direction, and harmonic conventions are independently typed and replayed."
+    },
+    {
+      "cell": "mask_selection_covariance_null",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:62", "htt/src/common/data_identity.py:815", "tests/contracts/test_data_identity_registry_v2.py:669"],
+      "rationale": "Mask, selection, covariance, null, and their statuses are bound independently; applicable Planck roles cannot use NOT_APPLICABLE status."
+    },
+    {
+      "cell": "transfer_and_sky_support",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:23", "htt/src/common/data_identity.py:31", "docs/generated/pr289_data_identity_v2_receipt.json:506"],
+      "rationale": "The receipt is observer-side transfer none with explicit sky-support status and does not launder external transfer into native provenance."
+    },
+    {
+      "cell": "planck_first_candidate",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:146", "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json:7"],
+      "rationale": "PLANCK is first in the exact lane order and its product/native schema is explicitly registered."
+    },
+    {
+      "cell": "planck_native_profile_and_same_sky_replay",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:732", "tests/contracts/test_data_identity_registry_v2.py:629", "docs/PR_DELTAS/pr-289.md:72"],
+      "rationale": "Distinct SMICA/Commander children bind per-pipeline operators, common sky/pixelization, native selection, and FFP10 inventory."
+    },
+    {
+      "cell": "cf4_native_catalogue_selection_covariance_replay",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:865", "tests/contracts/test_data_identity_registry_v2.py:692", "docs/PR_DELTAS/pr-289.md:78"],
+      "rationale": "CF4 catalogue, row selection, covariance, frame, sign, units, grouping, depth, and ZoA roles are content-bound and replayed."
+    },
+    {
+      "cell": "hsc_kids_separate_child_and_cross_covariance_replay",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:965", "tests/contracts/test_data_identity_registry_v2.py:725", "docs/PR_DELTAS/pr-289.md:82"],
+      "rationale": "HSC and KiDS child identities remain separate and the cross-covariance binds both child identities."
+    },
+    {
+      "cell": "native_profile_export_replay_and_string_only_refusal",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:1063", "htt/src/common/data_identity.py:1894", "tests/contracts/test_data_identity_registry_v2.py:602"],
+      "rationale": "Exported profiles replay the typed lane contract and generic record IDs or string-only profiles cannot substitute for it."
+    },
+    {
+      "cell": "exported_record_full_semantic_replay",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:1894", "tests/contracts/test_data_identity_registry_v2.py:543"],
+      "rationale": "Every exported semantic field is reconstructed through the typed evidence validator before the record seal is accepted."
+    },
+    {
+      "cell": "repeated_role_ordinal_completeness",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:1990", "tests/contracts/test_data_identity_registry_v2.py:580"],
+      "rationale": "Admitted record roles and ordinals must exactly equal the profile binding sequence, including repeated DESI roles."
+    },
+    {
+      "cell": "verified_bytes_equal_executed_module",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr289_data_identity_v2.py:150", "tests/contracts/test_data_identity_registry_v2.py:1262", "tests/contracts/test_data_identity_registry_v2.py:1281"],
+      "rationale": "The runner compiles verified candidate bytes, checks factory origins, and binds the executed module digest to the receipt source binding."
+    },
+    {
+      "cell": "output_parent_identity_pinning",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr289_data_identity_v2.py:240", "tests/contracts/test_data_identity_registry_v2.py:1334", "tests/contracts/test_data_identity_registry_v2.py:1405"],
+      "rationale": "Build/check pin the output parent inode before and after operations and use no-follow directory-relative replacement."
+    },
+    {
+      "cell": "interpreter_alias_invariant_receipt",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_data_identity_registry_v2.py:1442", ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py"],
+      "rationale": "/usr/bin/python, python3, and python3.10 independently reproduced the same receipt file SHA-256."
+    },
+    {
+      "cell": "name_only_hsc_kids_refusal",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:1675", "tests/contracts/test_data_identity_registry_v2.py:1035", "docs/generated/pr289_data_identity_v2_receipt.json:298"],
+      "rationale": "Name-only HSC/KiDS descriptors produce the explicit registered refusal and cannot be admitted."
+    },
+    {
+      "cell": "pr151_partial_desi_refusal",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:1738", "tests/contracts/test_data_identity_registry_v2.py:1014", "docs/generated/pr289_data_identity_v2_receipt.json:304"],
+      "rationale": "Incomplete or mutable PR-151/DESI inputs, including part/session forms, take BLOCKED_PR151_INCOMPLETE precedence."
+    },
+    {
+      "cell": "admission_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:2162", "tests/contracts/test_data_identity_registry_v2.py:910", "docs/generated/pr289_data_identity_v2_receipt.json:11"],
+      "rationale": "An independently constructed complete CF4 decision was rejected when paired with PLANCK; all committed receipts remain NOT_AUTHORIZED."
+    },
+    {
+      "cell": "authorization_state_machine_and_workflow_domain",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:232", "htt/src/common/data_identity.py:2097", "docs/PR_DELTAS/pr-289.md:16"],
+      "rationale": "PR-289 can construct only lane_data_execution NOT_AUTHORIZED receipts; backlog workflow authorization is explicitly workflow_only."
+    },
+    {
+      "cell": "refusal_status_precedence_and_lane_aggregation",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:113", "htt/src/common/data_identity.py:3257", "tests/contracts/test_data_identity_registry_v2.py:1014"],
+      "rationale": "Canonical refusal precedence is exact and only a complete lane, never a component or partial product, contributes to aggregate admission."
+    },
+    {
+      "cell": "no_download_or_repository_copy",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:1", "docs/research_program/post_pr275/pr289_spec.yaml:125", "scripts/codex_harness/run_pr289_data_identity_v2.py:2"],
+      "rationale": "Missing roots return deterministic refusals, and both live and clean-archive executions report no network/download side effect."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml:296", "htt/src/common/data_identity.py:3050", "docs/generated/pr289_data_identity_v2_receipt.json:152"],
+      "rationale": "Exactly 33 unique mutations appear in spec order and every receipt row is executed, activated, killed, and marked by the live rejection path."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py:3140", "docs/generated/pr289_data_identity_v2_receipt.json", ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py"],
+      "rationale": "All ten source bindings rehash, generation identity recomputes, canonical receipt content ID recomputes, and the frozen file replay passes."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_publication_policy.json", ".prguard/runtime/PR289_R5_CANDIDATE_SEAL.json", "scripts/codex_harness/test_publication_integrity.py"],
+      "rationale": "The frozen seal binds the exact policy identity and the two policy/candidate nonrelaxation selectors passed 9 tests."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/harness/CLAIM_LEDGER.md:5", "docs/generated/pr289_data_identity_v2_receipt.json:492", "docs/PR_DELTAS/pr-289.md:5"],
+      "rationale": "COMMON C2 diagnostic_only, transfer none, observed/public false, OPEN_UNCHANGED, and BLOCKED_PRE_NATIVE_ATLAS are consistent; claim lint passed."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr289_data_identity_v2.py:625", ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py"],
+      "rationale": "A distinct 5,911-file archive root preserved pre/post manifests, supplied no external roots, emitted no side effect, and passed nested replay."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR289_R5_CANDIDATE_SEAL.json", "docs/codex_handoff/pr_status.yaml:465", ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py"],
+      "rationale": "The frozen/local target ref resolves exactly to the recorded PR-288 sealed and pushed head, which is the candidate merge base and activation base."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR289-R5-REPLAY-CLAIM-INVARIANT",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py"],
+      "command_fingerprint": "c7f7174d5a8fb82029121e3609f9f9496100704dea09cf10d0d0ecd9ad0cdb3f",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T12:10:19Z",
+      "completed_at": "2026-08-11T12:10:24Z",
+      "artifact_path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-REPLAYCLAIM/replay_claim_oracle.py",
+      "artifact_sha256": "4e51e6ba51f414e4e652123adf1f9855639470b43854bd6ec779d213045ce656",
+      "artifact_bytes": 13179,
+      "evidence_refs": ["oracle stdout status PASS", "docs/generated/pr289_data_identity_v2_receipt.json", "docs/codex_handoff/pr_status.yaml", "HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md"]
+    }
+  ],
+  "coverage_sha256": "25ccf3b598b041304a5eea04e1e1d4cac0956728e6cb1ea7df03ea1cf4aa69c4"
+}

@@ -1,0 +1,28 @@
+{
+  "assignment_id": "A-PR289-R2-CLAIM",
+  "candidate_sha": "e7affa4302f60cb02a664b315693b22e2372ef33",
+  "candidate_tree_sha": "1d25895f229c87723797c73018fed8783466541f",
+  "checks": {
+    "admission_authorization_separated": true,
+    "claim_mutations_executed_activated_killed": [
+      "MU289-ADMISSION-AUTH-COLLAPSE",
+      "MU289-WORKFLOW-AUTH-LAUNDERING",
+      "MU289-CLAIM-PROMOTION"
+    ],
+    "claim_projection_exact": true,
+    "pr290_ineligible_zero_consumed_budget": true,
+    "r1_fail_chronology_preserved": true,
+    "receipt_content_address_exact": true,
+    "source_bound_generation_identity_exact": true,
+    "workflow_authority_not_lane_authority": true
+  },
+  "evidence": {
+    "authorization_receipt_count": 6,
+    "receipt_content_id": "sha256:13f9c96512eb9ab8855bfab5d281a17b4bcda3ac3ec888ec2c98320b987024d1",
+    "receipt_sha256": "fd0ed2139903c7e47d4478a53e2e5054348801b427e9fb5250039324df5996d7",
+    "source_binding_count": 10
+  },
+  "run_id": "pr289-bounded-repair-r2-review-20260811",
+  "schema": "htt.pr289.r2.claim_oracle.v1",
+  "status": "PASS"
+}

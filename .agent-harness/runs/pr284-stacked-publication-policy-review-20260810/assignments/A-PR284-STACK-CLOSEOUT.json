@@ -1,0 +1,89 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-stacked-publication-policy-review-20260810",
+  "assignment_id": "A-PR284-STACK-CLOSEOUT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_gate_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "ec986572ee5f5e7854e962004b40e7f3cd6d9527798bb13baa111c88f8bc8476",
+    "seal_sha256": "8bfbdaff6af64436924580463f9ec2554279a1bc6a1486750cb0c32b6266bf5b",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "0db8394f751dc88d8fd5f83c399c672ab87fcbd6",
+    "diff_sha256": "404c50c3fdba1f92c6483cfc7829b9d0e836f5e385fe6db27b6f402ed3128f03",
+    "changed_files_sha256": "2ee57a82a18f93585636383adacae5cf34d753841adf5587c087d50f851e66f7",
+    "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Fresh bounded final evidence-freshness, claim, and publication closeout review. Read this registered assignment first; do not read CONTEXT_PACK, sibling results, or historical verdict envelopes. Verify the frozen candidate seal binds exact predecessor b6b6952d, candidate 0b3680a0, tree 0db8394f, updated policy, clean worktree, and unchanged production/dependency evidence key. Verify the fresh integration rehearsal is PASS against the same seal and latest target with all seven commands zero, while avoiding redundant substantive revalidation. Check claim ceiling diagnostic_only, family gate BLOCKED_PRE_NATIVE_ATLAS, HTT ownership and transfer-none/nonobserved/nonpublic boundaries, synchronized status mirrors, PR-285 PLANNED and INELIGIBLE with zero budget, and human-only merge refusal. Verify the explicit assurance exception is exactly two reviewer assignments at cumulative 16 to 18 and grants no reusable budget or merge authorization. Confirm no PR-284 push, PR creation, approval, merge, force-push, or ruleset mutation has occurred. Do not edit tracked/shared files; produce only assignment-local coverage, executable oracle, and a strict-valid registered result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json",
+      "sha256": "ec986572ee5f5e7854e962004b40e7f3cd6d9527798bb13baa111c88f8bc8476"
+    },
+    {
+      "path": ".prguard/runtime/PR284_STACK_POLICY_INTEGRATION_REHEARSAL.json",
+      "sha256": "479364e525cf8c6d759abe9dde90a711094ae15fe21a6feb5fe03ae607bd98e6"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_spec.yaml",
+      "sha256": "01db7946146246961c14fdaef2cc30ddde03a06944c40257d6c7b5cd92572da6"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_publication_policy.json",
+      "sha256": "6b19c380a96ddac1f98f0bcb774519d3fe3b555d4411a6f8e8f72876c0758446"
+    },
+    {
+      "path": "docs/generated/pr284_depth_path_doob_receipt.json",
+      "sha256": "8b6d40d1c8517c88dd3b4209b68e5660bf29bcbd1e7ea4ce40d7993218a428ea"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-284.md",
+      "sha256": "84b670343fdb6d8b2ccb4407f43d565f76a69cf3ffaa0e85ea099211bbf3ccee"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "dd7a5d3e073c7962a289787d246e1e8a462f7dce7f52e946ec99e6560e5fc60b"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "dd7a5d3e073c7962a289787d246e1e8a462f7dce7f52e946ec99e6560e5fc60b"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/RUN_PLAN.json",
+      "sha256": "5f9420b40491b3cbf6965c4ff7365317a0ad445cd223e3c7674d78e0e3b6f37b"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/results/A-PR284-STACK-CLOSEOUT.json",
+  "status": "registered",
+  "assignment_sha256": "0bb141c70f8a263976a2052dea6a47b05df92ac04c8729e3192e6aeba849f0b8"
+}

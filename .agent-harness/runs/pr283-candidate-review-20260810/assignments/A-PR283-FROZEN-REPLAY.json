@@ -1,0 +1,83 @@
+{
+  "schema_version": 3,
+  "run_id": "pr283-candidate-review-20260810",
+  "assignment_id": "A-PR283-FROZEN-REPLAY",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-283",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR283_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "274d32ef70dcefb0ad1128b22b5226285d5bafe4670e1a66ba9bcdade7eae6f3",
+    "seal_sha256": "89c44d46574c4e268789ab2d623f966bd46e63c8b12f36fade1075d449f03e08",
+    "base_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+    "candidate_sha": "6ee9048ffd80f25337f405d8c6a39fd3b7f489eb",
+    "merge_base_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+    "candidate_tree_sha": "6c5c55dee52aaf7c7649dd23d386e0f85782fd32",
+    "diff_sha256": "5c5e5abd22a509fca7681d1decb0a3ac3b4288c89d4f2a63a4fdc37bcb918ff2",
+    "changed_files_sha256": "7a71a99b7b63012071701c4af1acf33719e01ff76e8ba0316eca7adc4103ebf6",
+    "production_hash": "2bd9aa31b5c6fb2ddcab970fe4e616f7b6acdbf7840f2fefa75b69a9368a10f7"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR280-HERMETIC-HARNESS"
+  ],
+  "task": "Fresh frozen-candidate harness, portability, and replay review. Read assignment first; do not read CONTEXT_PACK or sibling results. Verify the seal and exact candidate identity; execute every declared policy command including portable clean replay; verify exact current PR282/PR283 receipts, regenerated PR273 pack where relevant, A-H serial stack semantics, stable patch deduplication, zero-budget INELIGIBLE behavior, human-only merge refusal, and no acceptance use of historical envelopes. No edits; write only registered result and end with HARNESS_RESULT.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR283_CANDIDATE_SEAL.json",
+      "sha256": "274d32ef70dcefb0ad1128b22b5226285d5bafe4670e1a66ba9bcdade7eae6f3"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr283_publication_policy.json",
+      "sha256": "1adf3fb4e6509c0d015d96783e6e878f740312579d123ea84342473756c06e6d"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr283_weak_identification.py",
+      "sha256": "323721e41eaa835d7e5602d7f7ed349fad74f3f432d8fd2786bb625e62156a60"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr280_harness.py",
+      "sha256": "8276512120bce6476b8a95a14ec5ab2dbc45d6f0e3cf70b1eab2af98f5f44c90"
+    },
+    {
+      "path": "tests/contracts/test_process_recovery_auto_stacked.py",
+      "sha256": "5ba613c492deda4f5a9239ea999cd9caef74668e5142035f6e0de7d0fb1a2dde"
+    },
+    {
+      "path": "tests/contracts/test_harness_profiles_v4.py",
+      "sha256": "b00dbebd30c1753933ff986b09d46abe397d8ae3c5dd7cb1037aa7cbef37f3ca"
+    },
+    {
+      "path": "docs/generated/pr282_exact_parity_readiness_receipt.json",
+      "sha256": "a6861dce30c737c05a2aff8ed204e43c8272b9170d0a754e737e7f5059a3549c"
+    },
+    {
+      "path": "docs/generated/pr283_weak_identification_receipt.json",
+      "sha256": "10d28620cd709585cf9444dbde72e19d7baced9ef2da901c005bcbeb3a85fedf"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope"
+  ],
+  "result_path": ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-REPLAY.json",
+  "status": "registered",
+  "assignment_sha256": "cb702319aeee5f2b3b2995ef80b2f42505e5e25ac9febb9f84138af5f01920c6"
+}

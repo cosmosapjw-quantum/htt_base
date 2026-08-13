@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "run_id": "pr290-science-contract-r2-rereview-20260811",
+  "assignment_id": "A-PR290-R2-PHYSCODE",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "candidate_seal_sha256": "bd29a3c9d1e4deb3bb19413a8f154aa2f5a47eabd5dda67c8e24126901192083",
+  "candidate_sha": "8da5ea88ab98aa42c8538198ea2d625f7d0f0555",
+  "candidate_tree_sha": "1dee7340e037c454d0516c43b9aef575c1a6a6f9",
+  "diff_sha256": "c7e5fcf03123cc2ec718b756976a4ac64554ce61d896ad4adbdbbe1527ef0094",
+  "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+  "completed_at": "2026-08-11T14:08:11+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR290_R2_CANDIDATE_SEAL.json", "git rev-parse HEAD -> 8da5ea88ab98aa42c8538198ea2d625f7d0f0555"],
+      "rationale": "HEAD, base, tree, diff, changed-file inventory, production hash, and every registered input hash match the frozen assignment."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/observed_lane_activation.py:501", ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/artifacts/A-PR290-R2-PHYSCODE-oracle.py"],
+      "rationale": "All twelve hostile science-contract relaxations stop as BLOCKED_CONTRACT_INVALID with an empty dependency snapshot."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/observed_lane_activation.py:727", "python -B scripts/codex_harness/run_pr290_planck_lane.py check -> rc 0"],
+      "rationale": "The authentic frozen spec reaches BLOCKED_PREDECESSOR_FINAL_SUCCESS and replays typed terminal receipts without substituting lifecycle labels for terminal success."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/observed_lane_activation.py:859", "tests/integration/test_planck_post275_lane.py", "python -B scripts/codex_harness/run_pr290_planck_lane.py focused -> 52 passed"],
+      "rationale": "Canonical PR-289 native-record replay is required and identity-only admission remains distinct from external H-PLANCK authorization."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr290_planck_lane.py:384", "python -B scripts/codex_harness/run_pr290_planck_lane.py focused -> 52 passed"],
+      "rationale": "Destination regularity, containment, hardlink/symlink refusal, and absent observed-results directory are checked before payload construction or atomic commit."
+    },
+    {
+      "cell": "synthetic_operator_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/obsstat/planck_post275_lane.py:192", "htt/obsstat/planck_post275_lane.py:331", ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/artifacts/A-PR290-R2-PHYSCODE-oracle.py"],
+      "rationale": "Synthetic operator checks require a complete typed identity and remain explicitly non-observed and non-claim-bearing."
+    },
+    {
+      "cell": "observation_null_pipeline_equivalence",
+      "status": "PASS",
+      "evidence_refs": ["htt/obsstat/planck_post275_lane.py:220", "docs/research_program/post_pr275/pr290_spec.yaml", "python -B scripts/codex_harness/run_pr290_planck_lane.py focused -> 52 passed"],
+      "rationale": "SMICA and Commander are separate matched rows, share every non-product operator identity, and use the identical FFP10 observation/null pipeline."
+    },
+    {
+      "cell": "mask_beam_harmonic_conventions",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr290_spec.yaml", "htt/src/common/observed_lane_activation.py:199", ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/artifacts/A-PR290-R2-PHYSCODE-oracle.py"],
+      "rationale": "Operator order, Galactic frame, Condon-Shortley reality convention, mask inverse requirement, and blocked mask/multipole labels are exact-bound; zero-boost and sign limits pass."
+    },
+    {
+      "cell": "full_covariance_and_null_contract",
+      "status": "PASS",
+      "evidence_refs": ["htt/obsstat/planck_post275_lane.py:261", ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/artifacts/A-PR290-R2-PHYSCODE-oracle.py", "python -B scripts/codex_harness/run_pr290_planck_lane.py adjacent -> 111 passed, 3 skipped"],
+      "rationale": "Full symmetric positive-definite off-diagonal covariance is required; diagonal, indefinite, and singular matrices are refused, while observed covariance remains blocked and FFP10 is fixed."
+    },
+    {
+      "cell": "look_elsewhere_and_component_replication",
+      "status": "PASS",
+      "evidence_refs": ["htt/obsstat/planck_post275_lane.py:132", ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/artifacts/A-PR290-R2-PHYSCODE-oracle.py"],
+      "rationale": "Observation-inclusive leave-one-out pooled max ranking agrees with 112 independent exact comparisons, uses conservative ties and floor 1/(N_null+1), and does not treat SMICA/Commander as independent skies."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json", "python -B scripts/codex_harness/run_pr290_planck_lane.py check -> rc 0", ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/artifacts/A-PR290-R2-PHYSCODE-oracle.py"],
+      "rationale": "The receipt remains byte-stable, observed results remain absent, and numeric_outputs_written is empty with observed_data_executed, public_use, and network/download side effects false."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["python -B scripts/codex_harness/run_pr290_planck_lane.py portable -> rc 0", "portable tracked manifest 8426afab7d2bd9a8ca51d395b95f0960fee456dfc8761b08e5d32e55c7bb911b"],
+      "rationale": "Clean archive replay passes with identical pre/post source and clean manifests and no external roots, observed execution, or network/download side effect."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr290_publication_policy.json", "python -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_publication_integrity.py -k policy_nonrelaxable_metadata_fails_closed_or_candidate_cross_binding -> 9 passed"],
+      "rationale": "Publication policy identity and candidate seal remain cross-bound and non-relaxable."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["htt/obsstat/planck_post275_lane.py:331", "docs/research_program/post_pr275/pr290_spec.yaml", "python -B scripts/check_claim_language.py --strict-missing --include-archives ... -> rc 0"],
+      "rationale": "Q, F, Pi, G_F, local/global rank, likelihood/prior/posterior/evidence, and native-family claims remain typed unavailable or blocked; the maximum live tier is diagnostic C2."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR290_R2_CANDIDATE_SEAL.json", "python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice -> OK 244 PRs"],
+      "rationale": "Candidate base equals the sealed PR-289 target SHA and the strict rescue-slice DAG validates."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR290-R2-PHYSCODE-ORACLE",
+      "kind": "differential_implementation",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/artifacts/A-PR290-R2-PHYSCODE-oracle.py"],
+      "command_fingerprint": "baabdeaedd04893a13170ecc5234786ed494e3dc006a77ac67c8e8d834e6ce7d",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T14:08:09+00:00",
+      "completed_at": "2026-08-11T14:08:11+00:00",
+      "artifact_path": ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/artifacts/A-PR290-R2-PHYSCODE-oracle.py",
+      "artifact_sha256": "fc4de5b3d732046d6d7a24f781be576891541537b2171291dda076f9026e5a7f",
+      "artifact_bytes": 14298,
+      "evidence_refs": ["12 contract-relaxation mutations", "112 exact differential pooled-rank comparisons", "units, covariance, zero-boost, and first-order sign invariants", "live no-output boundary"]
+    }
+  ],
+  "coverage_sha256": "9b1b684b01148298b666848fab2829f4ef282cb6d301a02e4d74e0a0d9836b79"
+}

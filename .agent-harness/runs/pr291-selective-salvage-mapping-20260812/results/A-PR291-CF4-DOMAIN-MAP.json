@@ -1,0 +1,349 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-selective-salvage-mapping-20260812",
+  "assignment_id": "A-PR291-CF4-DOMAIN-MAP",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/results/A-PR291-CF4-DOMAIN-MAP.json",
+  "assignment_sha256": "c9c239be90597549a5a92445abd3e0432ae240f11cbced3c88c1c2236bd93037",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/RUN_PLAN.json",
+    ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/assignments/A-PR291-CF4-DOMAIN-MAP.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    "HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "htt/obsstat/cf4_post275_lane.py",
+    "htt/src/common/cf4_observed_lane_activation.py",
+    "htt/src/common/data_identity.py",
+    "htt/src/common/depth_path.py",
+    "htt/src/common/semantic_guards/no_overclaim.py",
+    "htt/src/common/source_separation.py",
+    "scripts/codex_harness/run_pr291_cf4_lane.py",
+    "tests/contracts/test_claim_language_lint.py",
+    "tests/contracts/test_data_identity_registry_v2.py",
+    "tests/integration/test_cf4_post275_lane.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T15:05:00+00:00",
+  "completed_at": "2026-08-11T15:19:00+00:00",
+  "tool_versions": {
+    "git": "2.43.0",
+    "python": "3.12.3"
+  },
+  "commands": [
+    "sha256sum required inputs",
+    "git show and git diff for 06ac2060, cb99df8f, and 1417804b",
+    "git merge-base and git rev-list lineage checks",
+    "targeted rg and numbered source inspection; no test execution"
+  ],
+  "artifacts": [],
+  "review_coverage_path": null,
+  "review_coverage_sha256": null,
+  "salvage_map": {
+    "base_rule": "Reimplement only the listed subsets on exact sealed predecessor 06ac20605ebc371b0f97ad6e91c802a51a9bf764; do not cherry-pick cb99df8f or 1417804b because their merge base with 06ac2060 is 412d5d3945ea658494fb786c3c7d574596f23e44 and 06ac2060 is not their ancestor.",
+    "retain": [
+      {
+        "target": "htt/obsstat/cf4_post275_lane.py",
+        "historical_hunks": "cb99df8f:1-747 plus 1417804b:38-120, 601-800, 901-1010 selectively",
+        "content": "Synthetic-only monopole plus bulk plus symmetric trace-free shear design; corrected Sxx/Syy coordinates with Szz=-Sxx-Syy; GLS with full covariance; same-catalogue cross-estimand covariance; typed depth/ZoA path; shear invariants; projector/principal-angle eigenspace drift; response-null and set-valued abstention; G4-G7 diagnostic snapshot; legacy 0.0089 self-consistency downclaim."
+      },
+      {
+        "target": "htt/src/common/cf4_observed_lane_activation.py",
+        "historical_hunks": "cb99df8f control-only decision/terminal/receipt structure and 1417804b family-ceiling fields",
+        "content": "Repository-control-only preflight, deterministic terminal precedence, no catalogue reader, no observed output, no network side effect, H-CF4 separation, and content-bound nonexecution decision/receipt shape."
+      },
+      {
+        "target": "scripts/codex_harness/run_pr291_cf4_lane.py",
+        "historical_hunks": "cb99df8f:171-225 and destination containment helpers",
+        "content": "Destination preflight before payload generation, refusal of symlink/hardlink/results-directory aliasing, same-directory atomic receipt write, focused/adjacent/check/portable command routing."
+      },
+      {
+        "target": "htt/src/common/semantic_guards/no_overclaim.py",
+        "historical_hunks": "1417804b:187-215 only, with scanner-context repair",
+        "content": "Legacy-curl physical-vorticity/potential-flow promotion rule and retired-P0-rescue rule."
+      },
+      {
+        "target": "tests/integration/test_cf4_post275_lane.py and tests/contracts/test_claim_language_lint.py",
+        "historical_hunks": "cb99df8f numerical/containment cases plus 1417804b STF, eigenspace, weak-ID, cross-binding, and legacy-claim hostile cases",
+        "content": "Port only cases that exercise retained mechanics; replace historical fixtures and frozen status expectations with current PR-289 native-profile replay fixtures."
+      }
+    ],
+    "drop": [
+      "All historical generated receipts, PR deltas, status snapshots, claim-ledger hashes, source-binding hashes, fixed evaluation timestamps, and stale candidate/target identities; regenerate only after the new candidate exists.",
+      "Historical _EXPECTED_REGISTRY_CONTENT_ID, _EXPECTED_PR289_RECEIPT_CONTENT_ID, v2 asymmetric H-CF4 schema/verifier literals, obsolete caveat text, and any spec mirror that disagrees with the named current pr291_spec.yaml and publication policy.",
+      "The old identity admission shortcut at 1417804b:htt/src/common/cf4_observed_lane_activation.py:633-711, especially len(record_ids) >= 3; generic record IDs and labels are not admission evidence.",
+      "String-only operator identity as an authority boundary. The field inventory may remain, but production construction must come from a replayed current PR-289 CF4 native profile and admitted decision.",
+      "Any observed execution path, observed number, p-value, posterior, evidence, public figure, native-transfer claim, local/global point attribution, or family label; none belongs to PR-291 preactivation.",
+      "Any attempt to extract the claim scanner or CF4 operators into a new formalism/framework."
+    ],
+    "minimal_repairs": [
+      "Import and invoke current common.data_identity replay/record validators on the full CF4 ADMITTED_IDENTITY_ONLY decision. Require exactly the registry sequence catalogue, row_selection, covariance, frame_definition, sign_convention, units_contract, grouping_definition, depth_definition, zoa_definition; require one shared native profile and exact lane_admission_bundle_id. Then derive PR-291 catalogue/selection/covariance/frame/sign/units/grouping/depth/ZoA IDs from that replayed profile rather than caller strings.",
+      "Bind the 9-parameter radial model to Galactic right-handed unit vectors, positive-receding radial velocity, Mpc distance, km/s monopole and bulk, and km/s/Mpc shear. Preserve the corrected basis r[Sxx(x^2-z^2)+Syy(y^2-z^2)+2Sxyxy+2Sxzxz+2Syzyz].",
+      "Replace raw/default numerical-rank decisions with covariance-whitened, explicitly normalized coordinates and relative singular/eigengap thresholds tied to normalizer and feature-order identities. Refuse ill-conditioned covariance or consume an already registered rank-reduction contract; do not silently invert a merely positive but numerically singular matrix.",
+      "Make the response-null report and common.source_separation decision replay the same normalized whitened response and labelled local/global/nuisance column partition. Keep local_global_rank NOT_MEASURED for the live lane and report only synthetic abstention until observed providers exist.",
+      "Bind every depth rung to exact row-selection, covariance, grouping, depth-definition, ZoA, and transport identities from the admitted profile. Preserve common.depth_path's explicit TARGET_SUPPORT_SUBSET_OF_SOURCE convention unless the registered depth-definition component says otherwise; reject ordering, support, row, mask, or transport drift.",
+      "Scope no-overclaim exemptions to the matched sentence or existing structured Markdown cell/YAML guardrail node. Remove the historical +/-2-line GUARDRAIL_MARKERS suppression at 1417804b:no_overclaim.py:410-413 so an unrelated nearby not/no/without cannot suppress a positive claim."
+    ]
+  },
+  "hostile_test_matrix": [
+    {
+      "target": "tests/integration/test_cf4_post275_lane.py",
+      "case": "current_pr289_full_native_profile_replays",
+      "expected": "A complete 9-role CF4 decision accepted by common.data_identity replays byte-for-byte and supplies every operator identity; arbitrary strings cannot substitute."
+    },
+    {
+      "target": "tests/integration/test_cf4_post275_lane.py",
+      "case": "record_count_and_role_mutations_fail_closed",
+      "expected": "Three or nine forged record IDs, missing/duplicate/reordered roles, split native profiles, wrong ordinals, or bundle drift produce BLOCKED_DATA_IDENTITY_ADMISSION."
+    },
+    {
+      "target": "tests/integration/test_cf4_post275_lane.py",
+      "case": "all_cf4_role_relationships_are_nonaliasing",
+      "expected": "Catalogue, row selection, covariance, frame, sign, units, grouping, depth, and ZoA component aliases or byte mutations each fail exact replay."
+    },
+    {
+      "target": "tests/integration/test_cf4_post275_lane.py",
+      "case": "frame_sign_units_covariance_reparameterization",
+      "expected": "Equivalent registered unit rescaling leaves normalized rank/weak-ID classification invariant and recovers transformed coefficients; an unregistered frame handedness, radial-sign flip, distance-unit swap, feature-order swap, or covariance-unit mismatch refuses."
+    },
+    {
+      "target": "tests/integration/test_cf4_post275_lane.py",
+      "case": "covariance_hostility",
+      "expected": "Diagonal shortcut, asymmetric/indefinite covariance, NaN/Inf, near-singular unregistered covariance, cross-covariance omission, and non-PD joint block refuse; registered rank reduction reports effective rank and never calls inv on the discarded null space."
+    },
+    {
+      "target": "tests/integration/test_cf4_post275_lane.py",
+      "case": "stf_design_and_eigenspace_invariance",
+      "expected": "Axis fixtures verify Szz=-Sxx-Syy and all off-diagonal factors of two; eigenvector sign/basis rotations within a degenerate cluster leave projector drift zero, while a rotated subspace is detected; uniform unit rescaling does not change cluster membership."
+    },
+    {
+      "target": "tests/integration/test_cf4_post275_lane.py",
+      "case": "depth_grouping_zoa_replay",
+      "expected": "Nonmonotone depth, nonnested support, duplicate row identity, group/selection/covariance mismatch, ZoA drift, wrong transport source/target, or component-byte drift refuses."
+    },
+    {
+      "target": "tests/integration/test_cf4_post275_lane.py",
+      "case": "weak_identification_and_local_global_gate",
+      "expected": "Rank-deficient or ill-conditioned normalized response emits set-valued RESPONSE_EQUIVALENCE_ABSTENTION; favourable endpoint, pipeline-spread-as-confidence, unlabeled columns, or a source-separation decision not derived from the same response refuses."
+    },
+    {
+      "target": "tests/integration/test_cf4_post275_lane.py",
+      "case": "preactivation_has_no_scientific_execution",
+      "expected": "With current receipt CF4=REJECTED_NOT_PRESENT, H-CF4=NOT_AUTHORIZED, covariance/path/rank not measured, the result directory remains absent and numeric_outputs_written is empty; no prior, likelihood, posterior, Q, Pi, F, G_F, or family output exists."
+    },
+    {
+      "target": "tests/contracts/test_claim_language_lint.py",
+      "case": "sentence_and_structured_context_claim_guard",
+      "expected": "Positive 0.0089-vorticity/potential-flow and P0-rescue claims fail; same-sentence negation and explicit forbidden Markdown/YAML cells pass; unrelated nearby not/no/without never suppresses a positive claim."
+    },
+    {
+      "target": "tests/integration/test_cf4_post275_lane.py",
+      "case": "legacy_curl_ceiling",
+      "expected": "The fixed 0.0089 value remains dimensionless STABLE_LEGACY_STENCIL_LIMITED_SELF_CONSISTENCY with physical_vorticity_claim=FORBIDDEN and cannot upgrade potential flow, global tilt, geometry, or family status."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR291-LINEAGE",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "G56/G57 must be selectively reimplemented on 06ac2060, not cherry-picked: cb99df8f and 1417804b descend from f3349f67, their merge base with the sealed predecessor is 412d5d39, and 06ac2060 is not an ancestor.",
+      "assumptions_used": [
+        "docs/codex_handoff/pr_status.yaml and the publication policy identify 06ac2060 as the exact sealed PR-290 predecessor."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_publication_policy.json:6-7",
+        "docs/codex_handoff/pr_status.yaml:538-576",
+        "git:cb99df8f83bf2372be91879f13ba8dfb331693ac parent=f3349f67557a28f9d38475f0fe2d43c7b0ea5c52",
+        "git:1417804ba7274ef2cc5088be11c920d158d7990f parent=cb99df8f83bf2372be91879f13ba8dfb331693ac",
+        "git:merge-base(06ac2060,cb99df8f)=412d5d3945ea658494fb786c3c7d574596f23e44"
+      ],
+      "evidence_fingerprint": "git:06ac2060-cb99df8f-1417804b-lineage",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "git merge-base --is-ancestor 06ac2060 cb99df8f; expect exit 1",
+        "git rev-list --left-right --count 06ac2060...cb99df8f; observed 84 44"
+      ],
+      "confidence": 1.0,
+      "unresolved": []
+    },
+    {
+      "finding_id": "F-PR291-ADMISSION",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "critical",
+      "statement": "The historical activation admission is unsalvageable as written because it counts at least three record IDs. Current PR-289 authority requires exact replay of all nine CF4 native roles, one native profile, exact role order/ordinals, and the admission bundle; the live receipt currently has no CF4 admission and no execution authorization.",
+      "assumptions_used": [
+        "The named current PR-289 registry, module, tests, and receipt are authoritative inputs.",
+        "Identity admission and H-CF4 execution authorization are non-substitutable."
+      ],
+      "evidence_refs": [
+        "1417804b:htt/src/common/cf4_observed_lane_activation.py:633-711",
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json:75-105",
+        "htt/src/common/data_identity.py:907-985",
+        "htt/src/common/data_identity.py:1084-1156",
+        "htt/src/common/data_identity.py:1990-2068",
+        "tests/contracts/test_data_identity_registry_v2.py:482-526",
+        "tests/contracts/test_data_identity_registry_v2.py:688-721",
+        "docs/generated/pr289_data_identity_v2_receipt.json:143-206",
+        "docs/generated/pr289_data_identity_v2_receipt.json:482-529"
+      ],
+      "evidence_fingerprint": "source:cf4-nine-role-native-profile-replay-v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Construct a decision with three valid-looking record_id digests but no native profile; historical _identity_snapshot can satisfy its count while current replay_lane_admission_decision must reject.",
+        "Mutate each of the nine role component bytes and re-sign outer IDs; current nested/profile replay must still reject the mismatched authority relationship."
+      ],
+      "confidence": 1.0,
+      "unresolved": [
+        "No observed CF4 candidate root is present, so scientific contents of the nine external components are not evaluated here."
+      ]
+    },
+    {
+      "finding_id": "F-PR291-NUMERICS",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "The synthetic CF4 algebra is the valuable salvage core, including the corrected STF signs and projector-based eigenspace drift, but it needs unit-covariant normalized rank/eigengap decisions, an ill-conditioning or registered-rank-reduction path, and common-response provenance before its rank/weak-ID outputs are coherent.",
+      "assumptions_used": [
+        "Metric signature is irrelevant to this observer-side Euclidean velocity design; Galactic Cartesian coordinates are right-handed.",
+        "The radial model is v_r=m+B.n+r n_i S_ij n_j with S trace-free, positive v_r receding, r in Mpc, velocity in km/s.",
+        "All evaluated numerical fixtures remain synthetic."
+      ],
+      "evidence_refs": [
+        "1417804b:htt/obsstat/cf4_post275_lane.py:38-120",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:214-329",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:346-401",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:421-535",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:559-598",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:601-800",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:803-898",
+        "docs/research_program/post_pr275/pr291_spec.yaml:103-188",
+        "htt/src/common/source_separation.py:315-479"
+      ],
+      "evidence_fingerprint": "source:cf4-synthetic-numerics-rank-units-repair-v1",
+      "counterevidence_refs": [
+        "1417804b:tests/integration/test_cf4_post275_lane.py:344-445",
+        "1417804b:tests/integration/test_cf4_post275_lane.py:447-628"
+      ],
+      "reproduction": [
+        "Analytic sign check: with Szz=-Sxx-Syy, n^T S n=Sxx(x^2-z^2)+Syy(y^2-z^2)+2Sxyxy+2Sxzxz+2Syzyz; the 1417804b design matches this.",
+        "Rescale shear coordinates and distance units while preserving the physical response; current absolute eigengap_floor and mixed-coordinate matrix-rank paths are not contractually invariant.",
+        "Supply an extremely ill-conditioned positive-definite covariance; eigenvalue>0 alone can pass before direct inversion, so a registered conditioning/rank-reduction decision is required."
+      ],
+      "confidence": 0.98,
+      "unresolved": [
+        "The exact registered parameter normalizer/coordinate map for future observed local/global response remains unavailable and must not be invented in PR-291."
+      ]
+    },
+    {
+      "finding_id": "F-PR291-DEPTH",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "Historical depth/ZoA mechanics correctly enforce increasing depth, nested support, one ZoA identity, and explicit transports, but their row/selection/covariance/transport identifiers are caller text. Retain the mechanics only after every rung is derived from and cross-bound to the replayed grouping/depth/ZoA native components and the current data-identity profile.",
+      "assumptions_used": [
+        "common.depth_path's canonical nesting rule TARGET_SUPPORT_SUBSET_OF_SOURCE governs this salvage unless the admitted native depth-definition component defines a different estimand."
+      ],
+      "evidence_refs": [
+        "1417804b:htt/obsstat/cf4_post275_lane.py:421-535",
+        "htt/src/common/depth_path.py:1-12",
+        "htt/src/common/depth_path.py:567-644",
+        "docs/research_program/post_pr275/pr291_spec.yaml:150-167",
+        "htt/src/common/data_identity.py:946-985"
+      ],
+      "evidence_fingerprint": "source:cf4-depth-zoa-native-profile-cross-binding-v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Mutate row identity, grouping, selection, covariance, depth, ZoA, or transport source/target independently and require refusal.",
+        "Test increasing depth with nonnested support and nested support with reordered depths; both must refuse."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "No admitted depth-definition bytes are present, so near-to-far scientific selection semantics remain unevaluated."
+      ]
+    },
+    {
+      "finding_id": "F-PR291-SEMANTICS",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "PR-291 remains correctly outside priors, likelihoods, posteriors, Q/Pi/F/G_F, observed execution, and family identification. The legacy 0.0089 curl/divergence value is only a dimensionless stencil-limited reconstruction self-check; the G57 claim rules are useful but the historical nearby-line negation window must be narrowed to matched sentence or structured Markdown/YAML context.",
+      "assumptions_used": [
+        "HTT owns model-dependent likelihoods, while this PR's OBSSTAT module owns only synthetic observable mechanics.",
+        "Absence of a native low-ell atlas fixes the family ceiling below family identification."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml:10-22",
+        "docs/research_program/post_pr275/pr291_spec.yaml:168-188",
+        "docs/research_program/post_pr275/pr291_spec.yaml:247-253",
+        "docs/research_program/post_pr275/pr291_spec.yaml:282-304",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:1-7",
+        "1417804b:htt/obsstat/cf4_post275_lane.py:901-1010",
+        "1417804b:htt/src/common/semantic_guards/no_overclaim.py:187-215",
+        "1417804b:htt/src/common/semantic_guards/no_overclaim.py:393-413",
+        "1417804b:tests/contracts/test_claim_language_lint.py:114-146",
+        "docs/research_program/post_pr275/pr291_publication_policy.json:31-32",
+        "docs/research_program/post_pr275/pr291_publication_policy.json:117-128"
+      ],
+      "evidence_fingerprint": "source:cf4-claim-ceiling-and-sentence-scope-v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Scan a positive physical-vorticity sentence preceded by an unrelated sentence containing not/no/without; historical +/-2-line guard context suppresses it and the repaired scanner must report it.",
+        "Scan same-sentence explicit negation and existing forbidden Markdown/YAML cells; they must remain allowed.",
+        "Assert production modules expose no likelihood/prior/posterior/Q/Pi/F/G_F output and every live artifact says observed_data_executed=false and BLOCKED_PRE_NATIVE_ATLAS."
+      ],
+      "confidence": 1.0,
+      "unresolved": []
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR291-LINEAGE",
+        "F-PR291-ADMISSION",
+        "F-PR291-NUMERICS",
+        "F-PR291-DEPTH",
+        "F-PR291-SEMANTICS"
+      ],
+      "summary": "Selective salvage is implementable on 06ac2060: retain the synthetic CF4 numerical/containment/claim-hostile core, replace record-count and stale hash glue with full current PR-289 nine-role native-profile replay, repair unit-covariant covariance/rank/depth provenance, and keep the live lane nonexecuted, weak-ID abstaining, likelihood-free, Q/F/G-free, and family-blocked."
+    }
+  ],
+  "errors": []
+}

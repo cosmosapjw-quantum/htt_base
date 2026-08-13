@@ -1,0 +1,179 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-candidate-review-20260810",
+  "assignment_id": "A-PR284-CLAIM",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_gate_reviewer",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "61005c410caea0e96d36f2e62ed32b83fa60c73a3db3f069560da83733435014",
+    "seal_sha256": "ba5335bffb3c75d866027339d37660f068140ff2926967abed09550344a4205e",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "029f8cedd044cc5967bc12dc695230ca69cf3308",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "e09d127212ba3173377ea2442be1661107f2963a",
+    "diff_sha256": "24dc3ec9ef99a6f914e3466883dd722af520d053fc2bf0e46be2f8c99ec4aeba",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "c50c270cb71d9421ddac9ffc6471c893ab0fa5434413c54ce703e079b8a1c32c"
+  },
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-CLAIM.json",
+  "assignment_sha256": "b401a3b718a871826c9274ea0f3679cd045c151bcb687c3547fea35bac13589e",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr284-candidate-review-20260810/RUN_PLAN.json",
+    ".agent-harness/runs/pr284-candidate-review-20260810/assignments/A-PR284-CLAIM.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/bind_candidate.py",
+    ".agent-harness/scripts/cas_gate.py",
+    ".agent-harness/scripts/close_run.py",
+    ".agent-harness/scripts/integration_rehearsal.py",
+    ".agent-harness/scripts/launch_receipt.py",
+    ".agent-harness/scripts/merge_results.py",
+    ".agent-harness/scripts/pr_publication_gate.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/validate_harness.py",
+    ".agent-harness/templates/ASSIGNMENT.json",
+    ".agent-harness/templates/CANDIDATE_SEAL.json",
+    ".agent-harness/templates/CAS_ADJUDICATION.json",
+    ".agent-harness/templates/CAS_AXIS_RESULT.json",
+    ".agent-harness/templates/CAS_CONTRACT.json",
+    ".agent-harness/templates/INTEGRATION_RECEIPT.json",
+    ".agent-harness/templates/PR_INVENTORY.json",
+    ".agent-harness/templates/PUBLISH_AUTHORIZATION.json",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agent-harness/templates/RUN_PLAN.json",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/scripts/check_no_mock_results.py",
+    ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-284.md",
+    "docs/generated/pr284_depth_path_doob_receipt.json",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/research_program/post_pr275/pr284_spec.yaml",
+    "docs/research_program/vector_tensor/proof_registry_two_pillars.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+    "htt/htt/htt/infer/depth_path.py",
+    "htt/htt/htt/infer/depth_path_calibration.py",
+    "htt/src/common/depth_path.py",
+    "htt/src/common/depth_path_calibration.py",
+    "htt/src/common/vector_tensor_statistical_foundations.py",
+    "scripts/check_claim_language.py",
+    "scripts/codex_harness/run_pr284_depth_path_doob.py",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "tests/contracts/test_depth_path.py",
+    "tests/contracts/test_depth_path_doob_calibration.py",
+    "tests/contracts/test_pillar_s_core.py",
+    ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.py",
+    ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json",
+    ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/REVIEW_COVERAGE.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-09T21:09:12Z",
+  "completed_at": "2026-08-09T21:17:24Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "PyYAML": "6.0.1",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "argv": ["python3", "assignment-input-hash-and-context-check"],
+      "exit": 0,
+      "summary": "Context version and all seven required-input hashes matched."
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.py", "--repo", ".", "--output", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json"],
+      "exit": 1,
+      "summary": "Initial assignment-local checker run exposed only a case-sensitive Optional-stopping comparison defect in the checker; no candidate defect."
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.py", "--repo", ".", "--output", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json"],
+      "exit": 0,
+      "summary": "Corrected independent oracle passed all nine claim, ownership, transfer, theorem-boundary, fallback, receipt, and predecessor checks."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "htt/src/common/depth_path.py", "htt/src/common/depth_path_calibration.py", "htt/htt/htt/infer/depth_path.py", "htt/htt/htt/infer/depth_path_calibration.py", "tests/contracts/test_depth_path_doob_calibration.py", "docs/research_program/post_pr275/pr284_spec.yaml", "docs/generated/pr284_depth_path_doob_receipt.json", "docs/PR_DELTAS/pr-284.md"],
+      "exit": 0,
+      "summary": "No forbidden claim language detected."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "check"],
+      "exit": 0,
+      "summary": "Exact receipt replay emitted PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION."
+    },
+    {
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"],
+      "exit": 0,
+      "summary": "9 passed, 59 deselected."
+    },
+    {
+      "argv": ["python3", "-B", "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810/.agents/skills/htt-scientific-code-validation/scripts/check_no_mock_results.py"],
+      "cwd": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM",
+      "exit": 0,
+      "summary": "No suspicious mock/fake validation markers found in the assignment-local review artifacts."
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/REVIEW_COVERAGE.json", "--seal", ".prguard/runtime/PR284_CANDIDATE_SEAL.json", "--run-id", "pr284-candidate-review-20260810", "--assignment-id", "A-PR284-CLAIM", "--risk-tier", "R3"],
+      "exit": 0,
+      "summary": "Review coverage validated with no errors."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/REVIEW_COVERAGE.json",
+      "sha256": "83bc209e82446463662073a3a886b466df80760d7902cd61616dd325e0bf6b67",
+      "bytes": 8335,
+      "producer": "A-PR284-CLAIM"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json",
+      "sha256": "afcb8548f9d3ec27e27d43e7a376b19f35983135e937215e758a8639a477780d",
+      "bytes": 4397,
+      "producer": "A-PR284-CLAIM",
+      "command_fingerprint": "11f3ee419f9470cd00ce0469a58b110eb05bda4cfd925f06883735e43e0abdd1"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.py",
+      "sha256": "f5f7d4aa2e80d86bbf18be1e90699c1ba8d8d4ffae90d60e29c50dbbce3e6d43",
+      "bytes": 13188,
+      "producer": "A-PR284-CLAIM"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "83bc209e82446463662073a3a886b466df80760d7902cd61616dd325e0bf6b67",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/claim_provenance_oracle.json",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CLAIM/REVIEW_COVERAGE.json",
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "docs/research_program/post_pr275/pr284_publication_policy.json",
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "docs/PR_DELTAS/pr-284.md"
+      ],
+      "evidence_fingerprint": "sha256:afcb8548f9d3ec27e27d43e7a376b19f35983135e937215e758a8639a477780d",
+      "summary": "No claim/provenance defect found: HTT ownership and bounded contributor roles, C2 diagnostic-only ceiling, transfer none, non-observed/non-public status, finite-path-only theorem boundary, matched-mocks-not-executed status, blocked family gate, and exact PR-283 predecessor/policy provenance are mutually consistent. Numerical derivation, mutation execution, portable replay, and integration-rehearsal cells remain explicitly outside this lane."
+    }
+  ],
+  "errors": []
+}

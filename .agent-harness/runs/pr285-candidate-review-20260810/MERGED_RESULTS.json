@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "run_id": "pr285-candidate-review-20260810",
+  "generated_at": "2026-08-10T06:42:59+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 3,
+  "raw_finding_count": 2,
+  "unique_finding_count": 2,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR285-FROZEN-CLAIM",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json",
+            ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json",
+            "docs/research_program/post_pr275/pr285_spec.yaml",
+            "docs/research_program/post_pr275/pr285_publication_policy.json",
+            "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+            "docs/PR_DELTAS/pr-285.md",
+            "docs/codex_handoff/pr_status.yaml",
+            ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.logs/pr285-cas-four-axis-terminal-evidence.stdout",
+            ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-CLAIM/claim_lifecycle_oracle.py",
+            ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-CLAIM/review_coverage.json"
+          ],
+          "evidence_fingerprint": "7456bfa0f5c3441f0f630bbd492ec486a38fef2a295cb392c639599f07741020",
+          "summary": "No claim, ownership, provenance, lifecycle, or publication-boundary defect found. The frozen artifact is COMMON-owned C2 diagnostic-only evidence with transfer_source none, observed/public false, and family identification blocked. PASS_COMPLETE_PILLAR_T_ADJUDICATION means complete terminal coverage across 80 rows, not that every row passed: counts remain 11 PASS, 67 INCONCLUSIVE_WITH_RECEIPT, 1 BLOCKED_WITH_RECEIPT, and 1 FAIL. Current CAS replay remains CAS_BLOCKED because Wolfram/xAct is unavailable; historical CAS_4AXIS_PASS is component-only provenance and does not promote the current CAS gate or scientific claim. Status mirrors agree at PR-285 VALIDATED, PR-286 remains INELIGIBLE with zero consumed budget, and merge remains HUMAN_ONLY. This review does not authorize seal, push, merge, or publication."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR285-FROZEN-PHYSMATH",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR270-PILLAR-T-CAS",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR285-LEGACY-STATUS-FLATTENING"
+          ],
+          "summary": "CAS boundaries, VT-T dispositions, family ceiling, and PR190 chronology are correct, but the complete adjudication fails exact legacy premise/domain source-status preservation on 12 rows."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR285-FROZEN-REPLAY",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR285-LINEAGE-MAP-MISSING"
+          ],
+          "summary": "All replay, containment, source-binding, mutation, policy, and integration checks passed, but the named selective G20/G21/no-G22 lineage proposition lacks independent immutable mapping evidence and blocks the frozen review."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR285-LEGACY-STATUS-FLATTENING",
+      "claim_id": "C-PR270-PILLAR-T-CAS",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "PR285:legacy-premise-domain-status:12-declared-to-source-not-typed",
+      "statement": "PR-285 contradicts the frozen source typing for 12 of 65 legacy rows: THEOREM_SIGNATURES_V3 marks their assumptions and domains DECLARED, while the spec asserts no legacy row supplies typed premises/domain and the receipt labels every legacy row SOURCE_NOT_TYPED. The premise/domain values themselves are preserved and all 65 remain conservatively inconclusive, but G7 requires premise- and domain-specific terminal receipts and exact source status is not preserved.",
+      "assumptions_used": [
+        "THEOREM_SIGNATURES_V3 is the frozen source registry named by the PR-285 spec.",
+        "assumption_status=DECLARED and domain_status=DECLARED are semantically distinct from SOURCE_NOT_TYPED.",
+        "A conservative nonpromotion does not excuse contradictory provenance/status metadata in a premise/domain-specific receipt."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle_report.json",
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        "docs/research_program/post_pr275/pr285_spec.yaml#statement_identity_contract",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#legacy_signature_inventory"
+      ],
+      "counterevidence_refs": [
+        "All 65 legacy statements remain TITLE_ONLY and INCONCLUSIVE_WITH_RECEIPT.",
+        "The 12 declared assumption/domain value lists are copied byte-for-value into the receipt."
+      ],
+      "reproduction": [
+        "Run python -B .agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle.py.",
+        "Observe legacy_declared_premise_domain_count=true, legacy_premise_domain_values_exact=true, and legacy_premise_domain_status_exact=false.",
+        "The affected rows are SIG-P3, SIG-P11, SIG-P18, SIG-T1p, SIG-DL1, SIG-L-T2-EXIST, SIG-MES-PROV, SIG-T2G, SIG-TSUM, SIG-MES-BR, SIG-MES-REFREEZE, and SIG-MES-MESB-TRACE."
+      ],
+      "unresolved": [
+        "Repair the spec's all-65 premise/domain statement and preserve DECLARED source statuses for the 12 checked rows, while retaining TITLE_ONLY and INCONCLUSIVE_WITH_RECEIPT unless a typed theorem statement is independently adjudicated.",
+        "Add a mutation/test that changes a legacy premise_status or domain_status independently of its source status and requires rejection."
+      ],
+      "confidence": 1.0,
+      "source_finding_ids": [
+        "F-PR285-LEGACY-STATUS-FLATTENING"
+      ],
+      "supporting_assignments": [
+        "A-PR285-FROZEN-PHYSMATH"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR285-LINEAGE-MAP-MISSING",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The registered frozen evidence cannot independently verify the required selective recovery proposition that G20 and G21 were included while G22 and all aliases were excluded: the candidate seal binds five unique stable patch IDs but contains no mapping from logical recovery groups G20/G21/G22 to source commits or patch IDs, and the only named-group statement is self-authored PR-delta prose.",
+      "assumptions_used": [
+        "Selective-transplant provenance requires a resolvable mapping from named source groups to immutable source commit or stable patch identities.",
+        "A candidate's own narrative delta is not independent evidence of its source lineage."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-REPLAY/frozen_replay_oracle_output.json",
+        ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json",
+        "docs/PR_DELTAS/pr-285.md:147"
+      ],
+      "evidence_fingerprint": "pr285-lineage-map:seal-8e2c2e72:named-groups-g20-g21-g22:map-absent",
+      "counterevidence_refs": [
+        "The seal's five stable patch IDs recompute exactly and are unique, proving no duplicate patch ID within the candidate range."
+      ],
+      "reproduction": [
+        "Inspect .prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json keys and observe candidate_commits/stable_patch_ids but no logical_patch_groups, source_patch_groups, or recovery_groups mapping.",
+        "Recompute git patch-id --stable for every base..candidate commit and confirm all five identities are unique.",
+        "Search registered candidate inputs for G20, G21, and G22; the names occur only in docs/PR_DELTAS/pr-285.md prose, not an immutable source-group identity map."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Provide a candidate-seal-bound source lineage map naming G20/G21/G22 source commits and stable patch IDs, then verify included and excluded groups against that map."
+      ],
+      "source_finding_ids": [
+        "F-PR285-LINEAGE-MAP-MISSING"
+      ],
+      "supporting_assignments": [
+        "A-PR285-FROZEN-REPLAY"
+      ],
+      "supporting_agent_types": [
+        "harness_engineer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-285",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "assignment_count": 3,
+  "validated_result_count": 3,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/RUN_PLAN.json",
+      "sha256": "4c99f967017c3a01111b60b5c4493936f163ecb06ffb88f2da10bb230e476caa",
+      "bytes": 6207
+    },
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/assignments/A-PR285-FROZEN-CLAIM.json",
+      "sha256": "a312a792fce3f42184719b2b880a35f7b4b306e24697ecc1a1c2778bbfd046d4",
+      "bytes": 4208
+    },
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/assignments/A-PR285-FROZEN-PHYSMATH.json",
+      "sha256": "9daa1f6b3db445a1b508fa0b156bea70bc4991f2137d3b8591da405efc8f2767",
+      "bytes": 4931
+    },
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/assignments/A-PR285-FROZEN-REPLAY.json",
+      "sha256": "54c234995d90588a3ec8c43527b2265d3522c45ac1293523304b91eb10f39b7b",
+      "bytes": 4090
+    },
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/results/A-PR285-FROZEN-CLAIM.json",
+      "sha256": "bde0f4fcfc01de1c883c3104a4253f692f5040462f0a29b14008dc4b99414dab",
+      "bytes": 7695
+    },
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/results/A-PR285-FROZEN-PHYSMATH.json",
+      "sha256": "a08a89bcc187995a257fc0e43dc909b0a072f3eb8de9e2e383db3a19b52c103a",
+      "bytes": 9226
+    },
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/results/A-PR285-FROZEN-REPLAY.json",
+      "sha256": "3d379f2f60764fa77d809c5328e9bea4c7c3f7466b81ea863b6678e5c6500797",
+      "bytes": 9537
+    }
+  ],
+  "merge_input_sha256": "0d76d85d186fb2d12c434a37bdc7dd23616e7ef229aec353076cc1b2b0e3b0fd"
+}

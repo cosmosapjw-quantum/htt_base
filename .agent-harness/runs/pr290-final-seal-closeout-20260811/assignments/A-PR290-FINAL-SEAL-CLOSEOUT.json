@@ -1,0 +1,145 @@
+{
+  "schema_version": 3,
+  "run_id": "pr290-final-seal-closeout-20260811",
+  "assignment_id": "A-PR290-FINAL-SEAL-CLOSEOUT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-290",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR290_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f30163cc748f3162a7de8f9f1232515b47911ea92998f3ba0f51536739382aed",
+    "seal_sha256": "77e07224080bcea620674881ebe9aee78e6172b1692f8dfededa7e00a600cc3f",
+    "base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "merge_base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_tree_sha": "6c24b0eea0971badd30662473c68e91f1bbe9072",
+    "diff_sha256": "fc6552ed00b4183c1dcbfb7b15566c22253af5d5634d835ea199cf1277026afc",
+    "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+    "production_hash": "b9b62e081f702f6b2b1918e5b3f1b599d651bdfa2fb0261e878d7a669d94beaf"
+  },
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Final bounded metadata-only closeout of PR-290 at exact REVIEWED HEAD 06ac2060. Inspect only registered inputs and explicitly allowed R1/R2/R3 results. Do not rerun substantive assurance. Verify the final candidate seal and latest-target integration rehearsal, exact PR-289 predecessor/base 45da1bf5, clean worktree, eight linear unique candidate patch IDs, production hash b9b62e08 unchanged, and final metadata commit d73648b0..06ac2060 changes only PR delta, synchronized status mirrors, and regenerated nonexecution receipt. Validate immutable chronology: R1 code/replay PASS and physics/stat FAIL; bounded science-contract repair; R2 physics/code PASS and replay/claim FAIL on self-referential portable digest; metadata-only repair; R3 metadata closeout PASS with two fresh and thirteen carried cells. Verify all seven final integration commands PASS, terminal remains BLOCKED_PREDECESSOR_FINAL_SUCCESS with zero numeric/observed/network output, lifecycle REVIEWED, assurance pre-closeout 7/16 and projected 8/16, PR-291 PLANNED/INELIGIBLE 0/16, HUMAN_ONLY merge, and no push/PR/merge. Produce only assignment-local deterministic metadata oracle, exact 15-cell coverage and one strict-valid schema-v3 result; use only single-result validation, never aggregate.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR290_FINAL_CANDIDATE_SEAL.json",
+      "sha256": "f30163cc748f3162a7de8f9f1232515b47911ea92998f3ba0f51536739382aed"
+    },
+    {
+      "path": ".prguard/runtime/PR290_FINAL_INTEGRATION_REHEARSAL.json",
+      "sha256": "4fae957da4e9b53d0755197a30ed4d3c5d4e392812ceec8bbdfb3b4611b5ba28"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-CODE.json",
+      "sha256": "664a5b28fa5068563ef9e36e224de62646820a1f545edf4f6fb5cf9359658870"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-PHYSSTAT.json",
+      "sha256": "b19c6ed4bbe03cee597067f00d5a23a334167c858dfe7f4fb54848b3a6890b4e"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-REPLAYCLAIM.json",
+      "sha256": "77ed839b339784a7d504cfccef6b6823a0d97b692f3b99e67072f77918b88bc4"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/MERGED_RESULTS.json",
+      "sha256": "548877159287e552e0f4f19fe39c9ced7d1168d7060928386fc390de2d10a881"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/RUN_SUMMARY.json",
+      "sha256": "9c96fb76163bf1f54a3a6d8f44bf9463d62de8536730474b22c61cf7f8c939cf"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json",
+      "sha256": "8a7c48f0c348ca917083f8d05cfabc547716a0bd12cc2b3e1700a1268bff8851"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-REPLAYCLAIM.json",
+      "sha256": "ea0525991e68c536789824d9eadc1529a0c5b0ff2616913b557596ca2dc92904"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/MERGED_RESULTS.json",
+      "sha256": "75fe0dff5abf2a052663f26f0ab26676232b53f503e19b3be0d720e4895e2ac2"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/RUN_SUMMARY.json",
+      "sha256": "b90bab618404de6f32e474b598139e75d8ecd01d315f1edd64fa77d3bdd6b4b3"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/results/A-PR290-R3-METADATA-CLOSEOUT.json",
+      "sha256": "d72192e1b8de79ec560b2d8cf5f889a6c4e82db743258f405f5b46f765c3eda1"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/MERGED_RESULTS.json",
+      "sha256": "c038293e28ff3fbcc9c452dc8f8781eeecc642e16df63571a134af10cb125693"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/RUN_SUMMARY.json",
+      "sha256": "14bb11e8f545f86fcbe3c28a64909b00940ed3bbafa5af3f3e00e9b817778668"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr290_spec.yaml",
+      "sha256": "1ec571a1de15d6b0addc608e2eb5db1dc9df7ae6e3bdd7f66160cf56ebeb5f9a"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr290_publication_policy.json",
+      "sha256": "45655b62f02f2d422283aa99780c78e80a022fbd1fd371e8ee7a450ddad320cd"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+      "sha256": "501e5fb2a812e14deea6fc5e81094e766b38fe6b6e00df49b904a16ba345f0e1"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-290.md",
+      "sha256": "59b3031af346658bdaabdd7d5d3f3cd94a167bcc7bd745a6e602fad8f96c4b44"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "03feaaf86abb3d5c12767d168b7f169740e911d11f525543b9fffabbc42360e8"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "03feaaf86abb3d5c12767d168b7f169740e911d11f525543b9fffabbc42360e8"
+    },
+    {
+      "path": ".agent-harness/scripts/_harness.py",
+      "sha256": "388f66e208bc460fb916eeca8603fc6f5ebfd914e448e59e93382152fde3f6ce"
+    }
+  ],
+  "allowed_sibling_results": [
+    ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-CODE.json",
+    ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-PHYSSTAT.json",
+    ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-REPLAYCLAIM.json",
+    ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json",
+    ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-REPLAYCLAIM.json",
+    ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/results/A-PR290-R3-METADATA-CLOSEOUT.json"
+  ],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr290-final-seal-closeout-20260811/results/A-PR290-FINAL-SEAL-CLOSEOUT.json",
+  "status": "registered",
+  "assignment_sha256": "fc782d48d5b403ae5933a83ece910eeed28495bff198a4d6771768e9ea129895"
+}

@@ -1,0 +1,154 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-final-seal-closeout-20260811",
+  "assignment_id": "A-PR286-FINAL-SEAL-CLOSEOUT",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "assignment_sha256": "119d5403e1831c2b30147a2f2768c14c51efcbe3cb25e8e2b9901f83cca04fc9",
+  "agent_type": "harness_engineer",
+  "independence_mode": "adjudication",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "a3f30d393b84f3d53a112c944952f1129978208a9f28f1e1c5eee4be599f28f7",
+    "seal_sha256": "f9907e837137ee5315f26b0c891de1264ab089ed0a6ffbd7b5a9f0d2005ee107",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "48c4ec0b2a016728b3837135adb35693a9b9c55b",
+    "diff_sha256": "dc8ed8e9ab326508847972153f04f96ca044abc9ad567ea348e10e9716d5ab00",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "99ad99e15ff863b63945663c112767d1f6dc90e8f697a407798c281cb39c2b30"
+  },
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "started_at": "2026-08-11T03:52:35+00:00",
+  "completed_at": "2026-08-11T03:53:57+00:00",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "tool_versions": {
+    "python": "3.12.3",
+    "PyYAML": "6.0.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/scripts/candidate_seal.py",
+        "verify",
+        "--seal",
+        ".prguard/runtime/PR286_FINAL_CANDIDATE_SEAL.json"
+      ],
+      "returncode": 0,
+      "summary": "Exact final candidate seal validated with no errors."
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/final_closeout_oracle.py",
+        "--output",
+        ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/final_closeout_oracle_report.json",
+        "--coverage-output",
+        ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/review_coverage.json"
+      ],
+      "returncode": 0,
+      "summary": "All 12 bounded seal, receipt, lineage, immutable-review, lifecycle, budget, downstream, and non-publication invariants passed."
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/scripts/review_coverage.py",
+        "--coverage",
+        ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/review_coverage.json",
+        "--seal",
+        ".prguard/runtime/PR286_FINAL_CANDIDATE_SEAL.json",
+        "--run-id",
+        "pr286-final-seal-closeout-20260811",
+        "--assignment-id",
+        "A-PR286-FINAL-SEAL-CLOSEOUT",
+        "--risk-tier",
+        "R3"
+      ],
+      "returncode": 0,
+      "summary": "R3 review coverage validated with ok=true and no errors."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/final_closeout_oracle.py",
+      "sha256": "cec61d2345c833eb12175d0e4a9cfe05cdcbe20993ca4092572976375f27a753",
+      "bytes": 21395,
+      "producer": "A-PR286-FINAL-SEAL-CLOSEOUT"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/final_closeout_oracle_report.json",
+      "sha256": "c940ee30b3079eae4046eeb3aee2771a456235586a3eb8b1e20a8d7de6bc394e",
+      "bytes": 4371,
+      "producer": "A-PR286-FINAL-SEAL-CLOSEOUT",
+      "command_fingerprint": "887fea022cc9af833a291be8fb80a2fb3e3b9d1345f2ea73bcbd5305f35dfc8e"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/review_coverage.json",
+      "sha256": "6c618205176ce00f7e13bff4e6661073e9512ec2e5896048e813906e59fc8e27",
+      "bytes": 19503,
+      "producer": "A-PR286-FINAL-SEAL-CLOSEOUT"
+    }
+  ],
+  "files_read": [
+    ".agent-harness/runs/pr286-final-seal-closeout-20260811/assignments/A-PR286-FINAL-SEAL-CLOSEOUT.json",
+    ".agent-harness/runs/pr286-final-seal-closeout-20260811/RUN_PLAN.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/candidate_seal.py",
+    ".agent-harness/scripts/integration_rehearsal.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".prguard/runtime/PR286_FINAL_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR286_FINAL_INTEGRATION_REHEARSAL.json",
+    ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-MIO-PHYSCODE.json",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-REPLAY.json",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-CLAIM.json",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-CLAIM-REPLACEMENT.json",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/MERGED_RESULTS.json",
+    ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/RUN_SUMMARY.json",
+    "docs/research_program/post_pr275/pr286_publication_policy.json",
+    "docs/research_program/post_pr275/pr286_spec.yaml",
+    "docs/PR_DELTAS/pr-286.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml"
+  ],
+  "files_read_evidence": "self_declared",
+  "review_coverage_path": ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/review_coverage.json",
+  "review_coverage_sha256": "6c618205176ce00f7e13bff4e6661073e9512ec2e5896048e813906e59fc8e27",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/final_closeout_oracle_report.json",
+        ".agent-harness/runs/pr286-final-seal-closeout-20260811/artifacts/A-PR286-FINAL-SEAL-CLOSEOUT/review_coverage.json",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/MERGED_RESULTS.json",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/RUN_SUMMARY.json",
+        ".prguard/runtime/PR286_FINAL_CANDIDATE_SEAL.json",
+        ".prguard/runtime/PR286_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "evidence_fingerprint": "C-PR273-BLIND-INTEGRATION|final=b955a050|seal=f9907e83|review=cb7cdafe|receipt=43b1e070",
+      "summary": "The exact PR-286 final candidate preserves the registered held-out synthetic integration review without promotion: the immutable rereview retains three PASS results and the isolated claim ERROR as non-acceptance chronology, while final metadata-only commits leave the production/evidence key unchanged. The final seal and ten-command integration receipt validate exactly; PR-286 remains REVIEWED, and PR-287 remains PLANNED/INELIGIBLE with zero budget."
+    }
+  ],
+  "errors": [],
+  "result_path": ".agent-harness/runs/pr286-final-seal-closeout-20260811/results/A-PR286-FINAL-SEAL-CLOSEOUT.json"
+}

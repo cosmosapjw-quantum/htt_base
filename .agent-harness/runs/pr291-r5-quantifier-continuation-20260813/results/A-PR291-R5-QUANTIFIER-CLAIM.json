@@ -1,0 +1,141 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-quantifier-continuation-20260813",
+  "assignment_id": "A-PR291-R5-QUANTIFIER-CLAIM",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_lane_reviewer",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "4f9119ff3e38f2faea43086bb4276aa116cb2d47f830d13dfa8e7886d2df4071",
+    "seal_sha256": "5e4dbf2852e7c4418bb86755aeaf4889cc28e65642f46b3f0c0bbafcb06fdbb5",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "38802323415fe7dc88f63e58d53b316ec9b52c04",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "602a35f0e6e5063ff6677cf2913521975126f588",
+    "diff_sha256": "d4a4154b5fe1b65476942e2d41204332a75bcee7605fe139f6ee1176384cf2c3",
+    "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+    "production_hash": "01a620679c8ae134752cd92f0a8863254b1ac3d8abb16888c3860bdfa47fa9e7"
+  },
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/results/A-PR291-R5-QUANTIFIER-CLAIM.json",
+  "assignment_sha256": "23584eb3b0ba685dbf524c4b6d5b2adfcda3a07cec7842abe627ef20e6bb1e9c",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/RUN_PLAN.json",
+    ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/assignments/A-PR291-R5-QUANTIFIER-CLAIM.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-lane-auditor/SKILL.md",
+    ".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/harness/PUBLICATION_INTEGRITY.md",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "htt/obsstat/cf4_post275_lane.py",
+    "htt/src/common/cf4_observed_lane_activation.py",
+    "htt/src/common/semantic_guards/no_overclaim.py",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "tests/contracts/test_claim_language_lint.py",
+    "tests/integration/test_cf4_post275_lane.py",
+    "tests/integration/test_post275_blind_replay.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-13T08:47:00+00:00",
+  "completed_at": "2026-08-13T08:57:07+00:00",
+  "tool_versions": {
+    "git": "2.43.0",
+    "python": "3.12.3",
+    "pytest": "9.1.1"
+  },
+  "commands": [
+    ["python", "-B", "scripts/codex_harness/run_pr291_cf4_lane.py", "focused"],
+    ["python", "-B", "scripts/codex_harness/run_pr291_cf4_lane.py", "check"],
+    ["python", "-B", "scripts/codex_harness/run_pr291_cf4_lane.py", "adjacent"],
+    ["python", "-B", "scripts/codex_harness/run_pr291_cf4_lane.py", "portable"],
+    ["python", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"],
+    ["python", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+    ["python", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "docs/research_program/post_pr275/pr291_spec.yaml", "htt/src/common/cf4_observed_lane_activation.py", "htt/obsstat/cf4_post275_lane.py", "tests/integration/test_cf4_post275_lane.py", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", "docs/PR_DELTAS/pr-291.md"],
+    ["python", "-B", ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/hostile_claim_oracle.py"],
+    ["git", "diff", "--name-status", "b175869169430aea7e40a22c2f7e814a60f6e629..38802323415fe7dc88f63e58d53b316ec9b52c04"]
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/REVIEW_COVERAGE.json",
+      "sha256": "b770ea9ad424dbebb28aaac3bad852198480db79a313b37f4cf703817c0c7da1",
+      "bytes": 7930,
+      "producer": "A-PR291-R5-QUANTIFIER-CLAIM"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/hostile_claim_oracle.py",
+      "sha256": "3f8658be09df08fb54288b7f4724b0e72016ffe1ddc7db9534ff8a61ac5d3538",
+      "bytes": 7089,
+      "producer": "A-PR291-R5-QUANTIFIER-CLAIM",
+      "command_fingerprint": "0faed6315ac40a5037d10e258af1507e49a5e537f44e9df3390f66b21a1166c9"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "b770ea9ad424dbebb28aaac3bad852198480db79a313b37f4cf703817c0c7da1",
+  "findings": [
+    {
+      "finding_id": "F-PR291-R5-QUANTIFIER-CLAIM-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The frozen claim guard still permits ordinary positive Bianchi-family identification claims when a bounded family phrase is reordered before passive identification with an intervening adverb, or when scalar identification uses the reordered 'family as Bianchi' construction; seven single-line and multiline variants return no issue despite the diagnostic-only pre-native family ceiling.",
+      "assumptions_used": [
+        "A positive assertion that candidate families have been identified as Bianchi is forbidden before the native morphology-atlas gates even when Bianchi follows the predicate.",
+        "The words now and hereby do not negate the identification predicate.",
+        "Scalar support for identifying a candidate family as Bianchi is a scalar-to-family promotion in either grammatical direction."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/hostile_claim_oracle.py",
+        ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/REVIEW_COVERAGE.json",
+        "htt/src/common/semantic_guards/no_overclaim.py:127",
+        "htt/src/common/semantic_guards/no_overclaim.py:160",
+        "docs/research_program/post_pr275/pr291_spec.yaml:13"
+      ],
+      "evidence_fingerprint": "sha256:e2cb440b111af4b308020a127b5bd8c6682a6a158af501c2bc94e3c28233d34d",
+      "counterevidence_refs": [
+        "tests/contracts/test_claim_language_lint.py:110",
+        "tests/contracts/test_claim_language_lint.py:134",
+        "command:pr291-claim-language:exit=0",
+        "command:pr291-focused:62-passed"
+      ],
+      "reproduction": [
+        "python -B .agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/hostile_claim_oracle.py",
+        "Observe candidate_acceptance=FAIL, reproduced_bypasses count 7, prior_false_negatives empty, novel_false_negatives empty, safe_false_positives empty, and exact Markdown/YAML controls passing."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Expand the existing geometry/family predicate to cover passive family-before-Bianchi clauses with bounded non-negating auxiliaries/adverbs and scalar implications using 'family as Bianchi' in both directions.",
+        "Add all seven reproductions as regression tests while preserving predicate-scoped downclaims and exact Markdown/YAML guardrail exemptions.",
+        "Kill switch: keep PR-291 at VALIDATED with claim/review DEFERRED; do not close out, publish, merge, execute CF4 observed data, or activate PR-292 until a new frozen candidate passes a fresh authorized review."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR291-R5-QUANTIFIER-CLAIM-001"],
+      "summary": "FAIL: numerical CF4 bytes and carried physics/statistics evidence remain unchanged and all seven registered policy commands pass, but the claim/family ceiling is bypassable by seven reordered passive and scalar-family-as-Bianchi variants."
+    }
+  ],
+  "errors": []
+}

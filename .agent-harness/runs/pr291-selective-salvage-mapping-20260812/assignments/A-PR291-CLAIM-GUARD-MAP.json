@@ -1,0 +1,72 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-selective-salvage-mapping-20260812",
+  "assignment_id": "A-PR291-CLAIM-GUARD-MAP",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_lane_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Read the authoritative audit at /home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md only at PR-291/G57-G61, then inspect historical commits 1417804b,e54b2050,5c2a8025,e5e45420,1c8e742f and the named current claim guard/tests. Produce a bounded read-only salvage map for the existing no_overclaim scanner. Preserve valuable hostile CommonMark, determiner/plural/reordered/blockquote cases, but identify and remove the broad nearby not/no/without suppression defect. Specify the smallest matched-sentence or existing structured-Markdown-context repair and discriminating positive/negative tests. Do not extract a new scanner framework, change claim ontology, edit candidate/shared files, or read sibling results. Write only the registered result envelope with exact hunk/path evidence and no acceptance verdict on the mutable candidate.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/post_pr275/pr291_spec.yaml",
+      "sha256": "2669fc86efa58102308817b697644a5344d67f07c090f10987b17174d9f6fa38"
+    },
+    {
+      "path": "htt/src/common/semantic_guards/no_overclaim.py",
+      "sha256": "195e69421de46facb7bffa9f1abd4cfd3fe266ecc3139d9e37aa92232a907c16"
+    },
+    {
+      "path": "tests/contracts/test_claim_language_lint.py",
+      "sha256": "87f520c7a8b4e658195ea5c9a458a4a1c01a40d03fad004d4c9acdee70a07bcf"
+    },
+    {
+      "path": "scripts/check_claim_language.py",
+      "sha256": "b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677"
+    },
+    {
+      "path": "docs/harness/CLAIM_LEDGER.md",
+      "sha256": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "registered-result-envelope"
+  ],
+  "result_path": ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/results/A-PR291-CLAIM-GUARD-MAP.json",
+  "status": "registered",
+  "assignment_sha256": "b0ef935b81e403c98a1af56bfd9867df665e826419ea96d18a1b8f5e374cb06a"
+}

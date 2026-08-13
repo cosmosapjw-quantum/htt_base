@@ -1,0 +1,82 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR284-R2-REPLAY",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f6f78bfd7c1b8f0bc2f4c895da94db09fe6b4b78da245d8090e09ee8aa84e09a",
+    "seal_sha256": "911cfed58698d97a88585a664c6ad46db8df92d46f3a23cfdc2bac74c24bdc65",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "49a8f697c8d7985ec637e70aca3b9271d6f0da7f",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "702db54b4ce5ee0904352b2b507faffe5ef5d876",
+    "diff_sha256": "c9563b2e9e7bd45436aceb5a744e8fc6f7f8da7a818088b0d9426a37d7f59aea",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "4126069eaf7aa93fc8f4ec3799a33800fefd0614926691a1301e543a2a229861"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION",
+    "C-PR280-HERMETIC-HARNESS"
+  ],
+  "task": "Affected-cell frozen replay rereview after constructor-bypass repair. Read assignment first; do not read CONTEXT_PACK or current sibling results. Verify fresh receipt and 14/14 registered mutations, historical bypass oracle now dies before calibration, all seven policy commands and portable clean-root replay pass, exact predecessor target and stable patch IDs remain valid, and merge remains human-only. No shared edits; produce assignment-local coverage, executable oracle, and strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+      "sha256": "f6f78bfd7c1b8f0bc2f4c895da94db09fe6b4b78da245d8090e09ee8aa84e09a"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_publication_policy.json",
+      "sha256": "83fe6c6eeda8661e54e52e77c69e851bc09224a36f5747d45fa938949c781583"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_spec.yaml",
+      "sha256": "3a5784ea33b45d6d73cb4e8c1602d121702dd8aea206b8e625abe0f24d364e85"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr284_depth_path_doob.py",
+      "sha256": "b2a2f25db76fb60e0d1fa32870331cf6c3b20174008398e8df6907f339af5af1"
+    },
+    {
+      "path": "tests/contracts/test_depth_path_doob_calibration.py",
+      "sha256": "53038dcd3235d5de124e3b5fb10987dfa65b2396eea0b478ec2a28d44e719bc3"
+    },
+    {
+      "path": "docs/generated/pr284_depth_path_doob_receipt.json",
+      "sha256": "3e06fcb336ebd6fb0d3e4f8346311fda79b3db6e531b4c948cbdc76d6d72f161"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "afb099970afd8ddd6960303b58215d6e59bb46c3e9a954477dda642696d5d9bd"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-REPLAY.json",
+  "status": "registered",
+  "assignment_sha256": "810ba4158502a78908cd934f8508349168dfc639e10729d20643f0000f49a809"
+}

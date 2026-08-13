@@ -1,0 +1,49 @@
+{
+  "equality_semantics": {
+    "angle_equality": "WEAKLY_IDENTIFIED",
+    "both_strictly_above": "SEPARABLE_CANDIDATE",
+    "singular_equality": "WEAKLY_IDENTIFIED"
+  },
+  "forbidden_classifier_paths_executed": [
+    {
+      "bound_decision_status": "WEAKLY_IDENTIFIED",
+      "classifier_status": "RESPONSE_CLASS_CANDIDATE",
+      "gate_status": "SEPARABLE_CANDIDATE"
+    },
+    {
+      "bound_decision_status": "WEAKLY_IDENTIFIED",
+      "classifier_status": "UNKNOWN_CLASS",
+      "gate_status": "SEPARABLE_CANDIDATE"
+    },
+    {
+      "bound_decision_status": "WEAKLY_IDENTIFIED",
+      "classifier_status": "EQUIVALENCE_CLASS",
+      "gate_status": "SEPARABLE_CANDIDATE"
+    }
+  ],
+  "registered_threshold_contract_id": "sha256:08f0894d897da42bc3d207c95d2b73e7cd199b6aa1ff579b3ec75302404e7816",
+  "relaxed_threshold_contract_id": "sha256:f7dc4663545f5782b9d180f505f9301a6152035a1079e745c61c77981cee613d",
+  "relaxed_threshold_rejection": "threshold_contract must equal the registered PR-283 contract",
+  "schema": "htt.pr283.r2_physmath_oracle.v1",
+  "selected_mutation_rows": {
+    "MU283-WEAK-AS-SEPARABLE": {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU283-WEAK-AS-SEPARABLE",
+      "mutation_kind": "weak_status_promoted_to_separable",
+      "observed_outcome": "BLOCKED_WEAK_IDENTIFICATION_CONTRACT",
+      "observed_reason": "MUTANT_FORCED_RESPONSE_CLASS_CANDIDATE"
+    },
+    "MU283-WEAK-PRECEDENCE-DRIFT": {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU283-WEAK-PRECEDENCE-DRIFT",
+      "mutation_kind": "weak_gate_applied_after_open_set_labels",
+      "observed_outcome": "BLOCKED_WEAK_IDENTIFICATION_CONTRACT",
+      "observed_reason": "WEAK_GATE_PRECEDENCE_ENFORCED"
+    }
+  },
+  "status": "PASS"
+}

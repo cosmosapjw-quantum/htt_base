@@ -1,0 +1,147 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-claim-closeout-extension-20260813",
+  "assignment_id": "A-PR291-R5-CLAIM",
+  "assignment_sha256": "76b32658d288bf79403b6e2f550c0706ed50465ee99dbc1980caa05232af0f24",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_lane_reviewer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f5f10b379bc83f5baba8cf1f36765720a788477f37900f914dc4a545cdeb0121",
+    "seal_sha256": "8345974c09e968095cce4a8cac5014e3d08f42ed68e56004a2e3cd56ce3edf5a",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "5395853386b08b1fbf0b56a9e6c7a2a6e104ae5a",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "4a1bdbecae5767768b4e8d5beb3a00b41b437c1f",
+    "diff_sha256": "d4e14e08a51067fdffa696ea694b4d1a61bafb7db740da3fd0246bcda5951862",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "964135d7398a1c699a16885eb5050a8ec3cf9bcdddd6ff1640d299ab6757d298"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-CLAIM.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-13T07:49:00Z",
+  "completed_at": "2026-08-13T07:58:09Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "argv": ["git", "rev-parse", "HEAD"],
+      "returncode": 0,
+      "summary": "HEAD, tree, base, merge-base, required hashes, context version, and clean tracked state matched the assignment."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "docs/research_program/post_pr275/pr291_spec.yaml", "htt/src/common/cf4_observed_lane_activation.py", "htt/obsstat/cf4_post275_lane.py", "tests/integration/test_cf4_post275_lane.py", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", "docs/PR_DELTAS/pr-291.md"],
+      "returncode": 0,
+      "summary": "Exact policy command reported no forbidden claim language."
+    },
+    {
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_claim_language_lint.py"],
+      "returncode": 2,
+      "summary": "Initial focused command could not import common because repository-local htt/src was not on sys.path; this is environment/configuration evidence, not a candidate test failure."
+    },
+    {
+      "argv": ["env", "PYTHONPATH=htt/src", "python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_claim_language_lint.py"],
+      "returncode": 0,
+      "summary": "Focused claim-language tests passed 29/29."
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-hostile-oracle.py"],
+      "returncode": 0,
+      "summary": "Hostile mutation reproducer passed by demonstrating all eight independently derived scanner false negatives and all positive/safe controls."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-hostile-oracle.py",
+      "sha256": "a49cd02ba0953fda19795c5e493b29eaeb62b8c0632124e92384528f1d694aef",
+      "bytes": 5794,
+      "producer": "A-PR291-R5-CLAIM",
+      "command_fingerprint": "2491d256dcb0ba5d65c9251c102d9a0d6ba5adacaac80993f07ddea10d08ffdf"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-REVIEW_COVERAGE.json",
+      "sha256": "8925408b530131403ccbae993cf83263d6b82101c78edd0c6889c44fa6225c46",
+      "bytes": 7171,
+      "producer": "A-PR291-R5-CLAIM"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "8925408b530131403ccbae993cf83263d6b82101c78edd0c6889c44fa6225c46",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/assignments/A-PR291-R5-CLAIM.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/RUN_PLAN.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agents/skills/htt-claim-lane-auditor/SKILL.md",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    "htt/src/common/semantic_guards/no_overclaim.py",
+    "tests/contracts/test_claim_language_lint.py",
+    "scripts/check_claim_language.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR291-R5-CLAIM-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "sha256:a49cd02ba0953fda19795c5e493b29eaeb62b8c0632124e92384528f1d694aef#eight-family-promotion-false-negatives",
+      "statement": "The R5 scanner still fails closed incompletely: eight ordinary positive family-identification variants evade both the exact policy scan and focused regression suite, so claim_and_family_ceiling is not review-ready.",
+      "assumptions_used": [
+        "Before a native morphology atlas, any affirmative inference that an analysis or scalar identifies a Bianchi family is forbidden regardless of determiner, voice, line wrapping, or unrelated publication negation.",
+        "A mutation reproducer PASS means the review finding reproduced, not that the candidate claim gate passed."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-hostile-oracle.py",
+        "htt/src/common/semantic_guards/no_overclaim.py:100",
+        "tests/contracts/test_claim_language_lint.py:59",
+        "docs/research_program/post_pr275/pr291_spec.yaml:14"
+      ],
+      "counterevidence_refs": [
+        "Exact claim-language policy command passed with no issues.",
+        "Focused claim-language regression suite passed 29/29.",
+        "Registered reordered, active-plural, subject/predicate reversal, and scalar-reversal controls are detected.",
+        "Predicate-scoped downclaims and exact Markdown/YAML guardrails remain allowed."
+      ],
+      "reproduction": [
+        "Run python3 -B .agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-hostile-oracle.py.",
+        "Observe status PASS, false_negative_count 8, empty scanner_rules for all eight forbidden cases, and exit code 0."
+      ],
+      "unresolved": [
+        "The existing bounded grammar needs to cover plural analysis subjects, ordinary determiners, possessive analysis subjects, multiline determiner forms, general scalar-family implications, and unrelated same-clause negation without breaking predicate-scoped downclaims or structured guardrails."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR291-R5-CLAIM-001"],
+      "summary": "Ownership and artifact metadata remain correctly bounded to HTT delivery, OBSSTAT observables, COMMON guards, C2 diagnostic_only, transfer none, observed/public false, and BLOCKED_PRE_NATIVE_ATLAS. Nevertheless, the production scanner has reproducible family-promotion false negatives, so this R5 claim review fails. R4 FAIL chronology, the assignment-limited single-use extension, PR-292 PLANNED/INELIGIBLE with zero budget, and HUMAN_ONLY merge status remain preserved."
+    }
+  ],
+  "errors": []
+}

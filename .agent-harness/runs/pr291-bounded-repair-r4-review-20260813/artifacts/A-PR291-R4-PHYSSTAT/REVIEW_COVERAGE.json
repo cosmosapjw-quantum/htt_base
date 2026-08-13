@@ -1,0 +1,191 @@
+{
+  "assignment_id": "A-PR291-R4-PHYSSTAT",
+  "candidate_seal_sha256": "a226e0df027907b105bdb454ff5a5f50b60adb1a98663bcb22d70e14b7760ec1",
+  "candidate_sha": "02714ff26f8e6414edd1ef456065bf73e0f27374",
+  "candidate_tree_sha": "2b425d29ca48c8baa776aa5521ecf3795d64562a",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "completed_at": "2026-08-13T06:48:28+00:00",
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "evidence_refs": [
+        ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json",
+        "git rev-parse HEAD; git rev-parse HEAD^{tree}"
+      ],
+      "rationale": "Frozen HEAD, tree, base, diff, changed-file, and production identities matched the assignment and seal.",
+      "status": "PASS"
+    },
+    {
+      "cell": "spec_before_execution",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml",
+        "sha256:7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec"
+      ],
+      "rationale": "The registered spec was read and hash-verified before numerical execution.",
+      "status": "PASS"
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+        "python -B scripts/codex_harness/run_pr291_cf4_lane.py check"
+      ],
+      "rationale": "Replay stays typed BLOCKED_PREDECESSOR_FINAL_SUCCESS with no numerical output.",
+      "status": "PASS"
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml",
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"
+      ],
+      "rationale": "Admission remains REJECTED_NOT_PRESENT and H-CF4 remains NOT_AUTHORIZED; neither substitutes for the other.",
+      "status": "PASS"
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "evidence_refs": [
+        "python -B scripts/codex_harness/run_pr291_cf4_lane.py focused",
+        "tests/integration/test_cf4_post275_lane.py::test_runner_refuses_unsafe_destinations_before_payload_generation"
+      ],
+      "rationale": "Focused suite exercises output containment and passed 60 tests.",
+      "status": "PASS"
+    },
+    {
+      "cell": "synthetic_estimand_identity",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:187",
+        "tests/integration/test_cf4_post275_lane.py::test_operator_identity_is_exact_and_nonempty"
+      ],
+      "rationale": "The synthetic operator inventory is exact and does not present observed execution.",
+      "status": "PASS"
+    },
+    {
+      "cell": "group_row_selection_and_frame_conventions",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml",
+        "python -B scripts/codex_harness/run_pr291_cf4_lane.py adjacent"
+      ],
+      "rationale": "Nine-role identity, frame, positive-receding sign, and units remain explicit; adjacent suite passed 189 tests.",
+      "status": "PASS"
+    },
+    {
+      "cell": "full_covariance_and_effective_rank",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-PHYSSTAT/ORACLE_RESULT.json",
+        "htt/obsstat/cf4_post275_lane.py:342",
+        "htt/obsstat/cf4_post275_lane.py:1239"
+      ],
+      "rationale": "The oracle confirms fixed covariance-whitened column-normalized total-response rank, unit-column scale invariance, content binding, and a numerical null residual bound independent of the scientific rank floor.",
+      "status": "PASS"
+    },
+    {
+      "cell": "depth_zoa_nested_support_and_transport",
+      "evidence_refs": [
+        "python -B scripts/codex_harness/run_pr291_cf4_lane.py focused",
+        "tests/integration/test_cf4_post275_lane.py::test_depth_zoa_path_is_nested_and_identity_bound"
+      ],
+      "rationale": "Focused tests preserve nested support and bound row, covariance, ZoA, and transport identities.",
+      "status": "PASS"
+    },
+    {
+      "cell": "weak_identification_and_identified_set_abstention",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-PHYSSTAT/ORACLE_RESULT.json",
+        "htt/obsstat/cf4_post275_lane.py:1380",
+        "htt/obsstat/cf4_post275_lane.py:1401"
+      ],
+      "rationale": "The response/source gate equates a caller-declared LOCAL+GLOBAL joint rank to total response rank including NUISANCE. Identical LOCAL/GLOBAL columns with actual source joint rank one are accepted as declared joint rank two and emit a structural set.",
+      "status": "FAIL"
+    },
+    {
+      "cell": "legacy_p0_and_curl_disposition",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:1524",
+        "tests/integration/test_cf4_post275_lane.py::test_gate_snapshot_and_legacy_curl_preserve_claim_ceiling"
+      ],
+      "rationale": "The 0.0089 value remains dimensionless legacy stencil self-consistency; vorticity and potential-flow claims are forbidden.",
+      "status": "PASS"
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+        "python -B scripts/codex_harness/run_pr291_cf4_lane.py check"
+      ],
+      "rationale": "Receipt replay reports observed_data_executed false and an empty numeric_outputs_written list.",
+      "status": "PASS"
+    },
+    {
+      "cell": "portable_clean_integration",
+      "evidence_refs": [
+        ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json",
+        "git status --short"
+      ],
+      "rationale": "Candidate seal records a clean frozen tree; assignment-local ignored evidence is the only review write.",
+      "status": "PASS"
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_publication_policy.json",
+        ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json"
+      ],
+      "rationale": "The seal binds policy id PR291-PUBLICATION-POLICY and its registered hash.",
+      "status": "PASS"
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml",
+        "htt/obsstat/cf4_post275_lane.py:35",
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"
+      ],
+      "rationale": "OBSSTAT owns synthetic features only; no likelihood/prior/Q/F/G artifact is produced, transfer source is none, and family identification remains blocked pre-native-atlas.",
+      "status": "PASS"
+    },
+    {
+      "cell": "latest_target_integration",
+      "evidence_refs": [
+        ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json",
+        "git merge-base 06ac20605ebc371b0f97ad6e91c802a51a9bf764 HEAD"
+      ],
+      "rationale": "The frozen candidate is based on the exact registered PR-290 sealed predecessor.",
+      "status": "PASS"
+    }
+  ],
+  "coverage_sha256": "fc85d30fb395524b802223606d2fbd842d81f1cbfef2bc6f7e4934a2197e1677",
+  "diff_sha256": "df0950da457bf62acd1c2d2215daa27f6c39f9ede67bdcdd242c22f8cbda9906",
+  "first_verdict_read_only": true,
+  "independent_oracles": [
+    {
+      "argv": [
+        "python",
+        "-B",
+        ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-PHYSSTAT/ORACLE.py",
+        "--output",
+        ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-PHYSSTAT/ORACLE_RESULT.json"
+      ],
+      "artifact_bytes": 2024,
+      "artifact_path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-PHYSSTAT/ORACLE_RESULT.json",
+      "artifact_sha256": "d50c0c3be535ff58086ec95f94ae35c68bdcd0299eb1e92a2623c5b25d12b075",
+      "command_fingerprint": "286d3aef67ee577efdf2b84ebd8d8d4d4d3ded5fe918d1ab7a0118664867a347",
+      "completed_at": "2026-08-13T06:44:44+00:00",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-PHYSSTAT/ORACLE_RESULT.json",
+        ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-PHYSSTAT/ORACLE.py"
+      ],
+      "kind": "invariant_checker",
+      "oracle_id": "pr291-r4-physstat-hostile-oracle",
+      "returncode": 0,
+      "started_at": "2026-08-13T06:44:44+00:00",
+      "status": "PASS",
+      "timed_out": false
+    }
+  ],
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "run_id": "pr291-bounded-repair-r4-review-20260813",
+  "schema_version": 1
+}

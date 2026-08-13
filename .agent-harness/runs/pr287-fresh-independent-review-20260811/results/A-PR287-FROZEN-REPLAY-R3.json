@@ -1,0 +1,166 @@
+{
+  "schema_version": 3,
+  "run_id": "pr287-fresh-independent-review-20260811",
+  "assignment_id": "A-PR287-FROZEN-REPLAY-R3",
+  "assignment_sha256": "98b8058d7fe46fe319ad75b6959369d5933023c263ed588e1ce1bd7b6339c009",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-287",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "fbe4787a82f650ec050fab020ae2c9545e9f7fe778ec2d6f5d4550470537712b",
+    "seal_sha256": "486a8f7e75c04467e2c65a083529eff5f65e622f935b3346ada8ea7243cd456e",
+    "base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_sha": "06ee728054fd62423fa90bc6a5d714b9be8631e3",
+    "merge_base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_tree_sha": "dd909b5d35a385b251547f6224b657346d7688f6",
+    "diff_sha256": "83ef2581a3a1afdf5459ad64730783f6f7e905a3cda155236ec44971b160912f",
+    "changed_files_sha256": "b522232b4e7f07fe03b297f33a07dfcce4f7eb80cdd0bbd94b9fd06a20b73198",
+    "production_hash": "6d0963dfdc66dcd2bf80ef3dde6fd84d87f455f0c6db5199250b06b2c51e873a"
+  },
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY-R3.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-11T05:20:00Z",
+  "completed_at": "2026-08-11T05:50:37Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "git": "candidate Git object database used through allowed rev-parse diff patch-id status operations"
+  },
+  "commands": [
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "focused"],
+      "returncode": 0,
+      "result": "40 passed in 42.76s"
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "adjacent"],
+      "returncode": 0,
+      "result": "188 passed in 172.26s"
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "check"],
+      "returncode": 0,
+      "result": "ACTIVATED_PREDECESSOR_FINAL_SUCCESS; execution INCONCLUSIVE; isolated executor blocker; no fresh artifacts"
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "historical"],
+      "returncode": 0,
+      "result": "historical lane contained; execution INCONCLUSIVE; no fresh artifacts"
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "portable"],
+      "returncode": 0,
+      "result": "5896 tracked files; source and clean pre/post manifest 594b74801784f599b5e112ca0602a62a12aa95dc0b8786a957ca9044e8051025; zero fresh inputs"
+    },
+    {
+      "argv": ["python", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"],
+      "returncode": 0,
+      "result": "9 passed, 68 deselected"
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "returncode": 0,
+      "result": "244 PRs, DAG valid"
+    },
+    {
+      "argv": ["python", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "docs/research_program/post_pr275/pr287_spec.yaml", "docs/research_program/post_pr275/blind_replay", "tests/integration/test_post275_blind_replay.py", "docs/PR_DELTAS/pr-287.md"],
+      "returncode": 0,
+      "result": "No forbidden claim language detected"
+    },
+    {
+      "argv": ["python", "-B", ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY-R3/frozen_replay_oracle.py"],
+      "returncode": 0,
+      "result": "9 independent invariant groups PASS"
+    },
+    {
+      "argv": ["python", "-B", "inline review coverage validator"],
+      "returncode": 0,
+      "result": "30 exact cells, one R3 executable oracle, zero errors"
+    }
+  ],
+  "files_read": [
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/assignments/A-PR287-FROZEN-REPLAY-R3.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr287_spec.yaml",
+    "docs/research_program/post_pr275/pr287_publication_policy.json",
+    "docs/PR_DELTAS/pr-287.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+    "scripts/codex_harness/validate_pr_dag.py",
+    "tests/integration/test_post275_blind_replay.py",
+    "htt/src/common/post275_blind_replay.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/profile_registry.py",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    "htt/htt/htt/infer/post275_blind_replay.py",
+    "htt/mio/reports/post275_blind_replay.py",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "scripts/check_claim_language.py",
+    "docs/codex_handoff/pr_backlog.yaml"
+  ],
+  "files_read_evidence": "self_declared",
+  "external_files_read": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md",
+      "sha256": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436",
+      "purpose": "assignment-authorized salvage lineage authority"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY-R3/frozen_replay_oracle.py",
+      "sha256": "d52ac6272b8e75c96092b3076ce8ccc14b64428b92cb0f5ad858e9306fa5d7d5",
+      "bytes": 14186,
+      "producer": "A-PR287-FROZEN-REPLAY-R3",
+      "command_fingerprint": "e82bbcf40f2bf363346b4646125fe5bb2463c83716a125b654fdc0cdcac9472c"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY-R3/FROZEN_REPLAY_ORACLE.json",
+      "sha256": "c93fa2dfcd1345d46ba0b5886199adb2130923975f40e6a88a63f46f272dc1d4",
+      "bytes": 1120,
+      "producer": "A-PR287-FROZEN-REPLAY-R3",
+      "command_fingerprint": "e82bbcf40f2bf363346b4646125fe5bb2463c83716a125b654fdc0cdcac9472c"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY-R3/REVIEW_COVERAGE.json",
+      "sha256": "3a0c618c18c83c8c730489c89670a5e2ff1efb1772f0a003f5cb18518dbf9541",
+      "bytes": 13527,
+      "producer": "A-PR287-FROZEN-REPLAY-R3"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY-R3/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "3a0c618c18c83c8c730489c89670a5e2ff1efb1772f0a003f5cb18518dbf9541",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY-R3/REVIEW_COVERAGE.json",
+        ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY-R3/FROZEN_REPLAY_ORACLE.json",
+        "eight exact publication-policy commands all exited zero"
+      ],
+      "evidence_fingerprint": "pr287:06ee7280:blind-integration:30-cells:oracle-pass",
+      "summary": "The frozen PR-287 candidate satisfies the exact PR-286 base and PR_OPEN chain, authorized salvage lineage, transitive provenance, typed replay, portable invariance, mirror, and claim-boundary contracts. Fresh execution correctly remains INCONCLUSIVE at the capability-isolated executor blocker and generated no fresh challenge artifacts."
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-identity-replay-r3-20260810",
+  "assignment_id": "A-PR284-R3-CODE",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "f845a04769749a7b27a836ecb921da76509313221add64cd36ba0071b5e6e5f2",
+  "candidate_sha": "d54ff22dac780d3b159394237416d28b2bd15dc8",
+  "candidate_tree_sha": "5fe16f62eb7246c455d116d79d2d422b35dee7b7",
+  "diff_sha256": "198de84c15f37c2d3c2edde8b2cdfbf06e5fe353aa2dd893462ae6bc3382e55f",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-09T23:23:06Z",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json", "sha256sum required inputs: all registered hashes matched", "git rev-parse HEAD: d54ff22dac780d3b159394237416d28b2bd15dc8"],
+      "rationale": "Frozen candidate identity and required inputs matched the assignment."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr284_spec.yaml:26", "docs/research_program/post_pr275/pr284_spec.yaml:54"],
+      "rationale": "The G6 derivation and strict path premise were read before the executable oracle."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/infer/depth_path_calibration.py:144", "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 22 passed"],
+      "rationale": "The public proved factory revalidates the exact finite law."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/infer/depth_path_calibration.py:148", "htt/src/common/depth_path_calibration.py:728"],
+      "rationale": "Construction and later replay independently require exact centering and a positive second moment."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/infer/depth_path_calibration.py:191", "htt/src/common/depth_path_calibration.py:748", "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 22 passed"],
+      "rationale": "The finite partition tower is replayed independently of support nesting."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/depth_path_calibration.py:748", "htt/src/common/depth_path_calibration.py:779"],
+      "rationale": "Later report validation recomputes the tower equalities and tower content identity."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "FAIL",
+      "evidence_refs": ["docs/research_program/post_pr275/pr284_spec.yaml:54", "htt/src/common/depth_path.py:612", "htt/src/common/depth_path_calibration.py:694", ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/pr284_r3_code_oracle.py"],
+      "rationale": "Exact identity replay closes relabeling, but equal adjacent supports satisfy issubset and still receive a proved status and 1/4 bound despite the strict-nesting premise."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/infer/depth_path_calibration.py:332", "htt/htt/htt/infer/depth_path_calibration.py:342"],
+      "rationale": "Calibration binds both identities to the revalidated report."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/depth_path_calibration.py:759", "htt/src/common/depth_path_calibration.py:774"],
+      "rationale": "The selected-atom conditional path and maximum are recomputed during later validation."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/depth_path_calibration.py:954", "htt/src/common/depth_path_calibration.py:970"],
+      "rationale": "The calibration constructor recomputes the exact rational bound and squared threshold."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/infer/depth_path_calibration.py:255", ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/pr284_r3_code_oracle.py"],
+      "rationale": "The public unproved factory remains reachable and yields matched-mocks-required with no bound."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "FAIL",
+      "evidence_refs": ["scripts/codex_harness/run_pr284_depth_path_doob.py:45", "docs/generated/pr284_depth_path_doob_receipt.json:85", ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/pr284_r3_code_oracle.py"],
+      "rationale": "The registry kills non-subset support but has no mutation for equal adjacent supports, which survives."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION", "docs/generated/pr284_depth_path_doob_receipt.json:103"],
+      "rationale": "The frozen receipt replays, although its mutation inventory omits the discriminating strictness case."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This targeted code review ran focused and adjacent suites; portable integration was outside the bounded assignment."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Publication mutation was forbidden and policy execution was outside this targeted API review."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/depth_path_calibration.py:645", "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 22 passed"],
+      "rationale": "The diagnostic-only and pre-native-atlas claim boundaries remain fail closed."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json:13", ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json:22"],
+      "rationale": "The frozen seal binds the assigned base and candidate SHAs."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "mutation_test",
+      "oracle_id": "PR284-R3-CODE-IDENTITY-AND-STRICT-NESTING",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/pr284_r3_code_oracle.py"],
+      "command_fingerprint": "100699087346fae26322e3c4e3afee58c516fb12f517418456398802c4e56888",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-09T23:20:00Z",
+      "completed_at": "2026-08-09T23:23:06Z",
+      "artifact_path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/pr284_r3_code_oracle.py",
+      "artifact_sha256": "55a0828fbd82efd090ecc1b8413a05337c7b71a1c7289ef8787134ec3c9e9d16",
+      "artifact_bytes": 7863,
+      "evidence_refs": ["oracle output: invented identities and later drift rejected; proved/unproved factories preserved; equal-adjacent-support path received PROVED_FINITE_REGISTERED_PATH and 1/4 bound"]
+    }
+  ],
+  "coverage_sha256": "3f5137abdf7b11485e0e5cf3b4344dbd0341d5699baa831c2eb6c941c58ea9db"
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-bounded-repair-r4-review-20260813",
+  "assignment_id": "A-PR291-R4-CODE-REPLAY",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "a226e0df027907b105bdb454ff5a5f50b60adb1a98663bcb22d70e14b7760ec1",
+  "candidate_sha": "02714ff26f8e6414edd1ef456065bf73e0f27374",
+  "candidate_tree_sha": "2b425d29ca48c8baa776aa5521ecf3795d64562a",
+  "diff_sha256": "df0950da457bf62acd1c2d2215daa27f6c39f9ede67bdcdd242c22f8cbda9906",
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "completed_at": "2026-08-13T06:46:35Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {"cell": "candidate_identity", "status": "PASS", "evidence_refs": [".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json", "git rev-parse HEAD^{tree}", "git status --porcelain=v1"], "rationale": "Frozen HEAD, tree, base, diff, production hash, and clean state replayed exactly."},
+    {"cell": "spec_before_execution", "status": "PASS", "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml", ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/assignments/A-PR291-R4-CODE-REPLAY.json"], "rationale": "Assignment and governing spec were read and hash-verified before test execution."},
+    {"cell": "dependency_terminal_replay", "status": "PASS", "evidence_refs": ["python -B scripts/codex_harness/run_pr291_cf4_lane.py check", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"], "rationale": "Replay retains BLOCKED_PREDECESSOR_FINAL_SUCCESS."},
+    {"cell": "data_identity_and_human_authorization_separation", "status": "PASS", "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml", "htt/src/common/cf4_observed_lane_activation.py"], "rationale": "Admission and H-CF4 authorization remain separate and unavailable."},
+    {"cell": "preflight_before_first_write", "status": "PASS", "evidence_refs": ["scripts/codex_harness/run_pr291_cf4_lane.py", "python -B scripts/codex_harness/run_pr291_cf4_lane.py focused"], "rationale": "Focused hostile tests verify output preflight precedes payload generation."},
+    {"cell": "synthetic_estimand_identity", "status": "PASS", "evidence_refs": ["htt/obsstat/cf4_post275_lane.py", "python -B scripts/codex_harness/run_pr291_cf4_lane.py focused"], "rationale": "Synthetic operator identities are typed and content-bound."},
+    {"cell": "group_row_selection_and_frame_conventions", "status": "PASS", "evidence_refs": ["htt/obsstat/cf4_post275_lane.py", "tests/integration/test_cf4_post275_lane.py"], "rationale": "Group, row, selection, frame, sign, units, depth, and ZoA identities remain derived from the bound operator."},
+    {"cell": "full_covariance_and_effective_rank", "status": "PASS", "evidence_refs": ["htt/obsstat/cf4_post275_lane.py", ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_oracle.py"], "rationale": "Hostile replay confirms fixed covariance-whitened normalized SVD rank and machine-precision null-basis validation."},
+    {"cell": "depth_zoa_nested_support_and_transport", "status": "PASS", "evidence_refs": ["python -B scripts/codex_harness/run_pr291_cf4_lane.py focused", "python -B scripts/codex_harness/run_pr291_cf4_lane.py adjacent"], "rationale": "Nested support and transport identity tests pass."},
+    {"cell": "weak_identification_and_identified_set_abstention", "status": "PASS", "evidence_refs": ["htt/obsstat/cf4_post275_lane.py", ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_oracle.py"], "rationale": "G4/G7 rank-nullity replay and strict non-singleton typed intervals fail closed."},
+    {"cell": "legacy_p0_and_curl_disposition", "status": "PASS", "evidence_refs": ["htt/obsstat/cf4_post275_lane.py", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"], "rationale": "Legacy curl remains self-consistency only and P0 rescue remains forbidden."},
+    {"cell": "blocked_no_numeric_output", "status": "PASS", "evidence_refs": ["python -B scripts/codex_harness/run_pr291_cf4_lane.py check", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"], "rationale": "Receipt reports no observed execution, numbers, or network side effects."},
+    {"cell": "portable_clean_integration", "status": "PASS", "evidence_refs": ["python -B scripts/codex_harness/run_pr291_cf4_lane.py portable"], "rationale": "Clean archive replay preserved the 5927-file tracked manifest."},
+    {"cell": "publication_policy_cross_binding", "status": "PASS", "evidence_refs": ["docs/research_program/post_pr275/pr291_publication_policy.json", "python -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_publication_integrity.py -k policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"], "rationale": "All nine selected policy cross-binding tests pass."},
+    {"cell": "claim_and_family_ceiling", "status": "FAIL", "evidence_refs": [".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_oracle.py", "htt/src/common/semantic_guards/no_overclaim.py"], "rationale": "The scanner misses a positive reordered plural family-identification claim when an unrelated not-public clause precedes it."},
+    {"cell": "latest_target_integration", "status": "PASS", "evidence_refs": [".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json", "python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice"], "rationale": "Candidate is based on exact PR-290 SHA and the strict 244-card rescue DAG validates."}
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR291-R4-CODE-REPLAY-HOSTILE-ORACLE",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_oracle.py"],
+      "command_fingerprint": "aae59157b84de73dd0ed7fb10b7a843ae530ed74c5a837004e884154b47d1f44",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T06:46:35Z",
+      "completed_at": "2026-08-13T06:46:35Z",
+      "artifact_path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_oracle.py",
+      "artifact_sha256": "b41bade287202b982111a42f1ab9e37c19ae68e5ae080d7007f8d13f552e6b03",
+      "artifact_bytes": 10284,
+      "evidence_refs": ["htt/obsstat/cf4_post275_lane.py", "htt/src/common/semantic_guards/no_overclaim.py", "docs/codex_handoff/pr_status.yaml"]
+    }
+  ],
+  "coverage_sha256": "45cbc1beca6a8439e03df56a62c40569aa336d657171ecd0b5ef1b025418e5d8"
+}

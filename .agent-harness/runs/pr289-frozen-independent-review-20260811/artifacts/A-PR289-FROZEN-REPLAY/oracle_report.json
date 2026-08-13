@@ -1,0 +1,775 @@
+{
+  "assignment_id": "A-PR289-FROZEN-REPLAY",
+  "candidate_sha": "1ad54d3c5a484816128a1df93d54953589780520",
+  "candidate_tree_sha": "67ec8432a6557bb460dfe8015b361fe9f6c00d1d",
+  "checks": [
+    {
+      "check": "required_input_hashes",
+      "evidence": {
+        ".prguard/runtime/PR289_CANDIDATE_SEAL.json": "8aa29e14dcd7e704235a524634dcab219c46728df47da7b9ba8d5885f27271d5",
+        "docs/PR_DELTAS/pr-289.md": "20ef5426fe50b5cb42980b177b3e4aba16cf0af007076a4a7ab68a860e4cf2e9",
+        "docs/codex_handoff/pr_status.yaml": "64b72e89b95ba595543bcebe53906524755e941e6610c5419a7637afb88c1e3b",
+        "docs/generated/pr289_data_identity_v2_receipt.json": "15caa3ea64b302736e01261942173e08d85c7197545d299d7bb5582763623d5b",
+        "docs/harness/CLAIM_LEDGER.md": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+        "docs/research_program/post_pr275/data_runbooks.yaml": "b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de",
+        "docs/research_program/post_pr275/pr289_publication_policy.json": "16f8f3c37340d7a11ec3961825b626a43942ceced6e2db812b55738cbeb8b302",
+        "docs/research_program/post_pr275/pr289_spec.yaml": "75c466e103941b2a3592644718a9b88c4f48391196ada08c7610c760eea924fc",
+        "htt/src/common/data_identity.py": "91a148a67ff0b338cd5aedef5efc81039607302f8473e93ddf37fa70ed399539",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py": "27f7d531515910ed6758780b029e4c1c7bb2299585d4b51a85ea5340151c86b4",
+        "tests/contracts/test_data_identity_registry_v2.py": "df17c8c6d5e02298ae53c367a2919872e5ceea9d3e837d31193b1bf5a6ecb971"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "seal_identity",
+      "evidence": "0347f2f5011309909423c4e27e090556c95c2a237e7d9c7a5ab3781087407a47",
+      "status": "PASS"
+    },
+    {
+      "check": "candidate_head",
+      "evidence": "1ad54d3c5a484816128a1df93d54953589780520",
+      "status": "PASS"
+    },
+    {
+      "check": "candidate_tree",
+      "evidence": "67ec8432a6557bb460dfe8015b361fe9f6c00d1d",
+      "status": "PASS"
+    },
+    {
+      "check": "merge_base",
+      "evidence": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+      "status": "PASS"
+    },
+    {
+      "check": "exact_latest_target",
+      "evidence": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+      "status": "PASS"
+    },
+    {
+      "check": "candidate_seal_black_box_verify",
+      "evidence": "",
+      "status": "PASS"
+    },
+    {
+      "check": "linear_commit_inventory",
+      "evidence": [
+        "df548eefdc703d02773d9539cd12e54348534800",
+        "c4b1b1774e5faa2125b2e9ad6167b331a300d2a0",
+        "ac898295db4ec60e52973ad7c180bd0f24e0ee4d",
+        "8cbbdb4dc32c75d276d13713e61a3fd8724f966c",
+        "fd36d51dc6b62b22373578cdee5f5e9c65bd88cc",
+        "3889defa7a8836db171bd198946de8a6b86ebcf5",
+        "ae35b887d87b35ad741621e39c0653aff6e83057",
+        "6fc726bd7f512bd5d6576468d807d16084c65bc8",
+        "1ad54d3c5a484816128a1df93d54953589780520"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "linear_single_parent_chain",
+      "evidence": [
+        [
+          "27df5da040e27eeaad44873ba3424ff73fb4bb09"
+        ],
+        [
+          "df548eefdc703d02773d9539cd12e54348534800"
+        ],
+        [
+          "c4b1b1774e5faa2125b2e9ad6167b331a300d2a0"
+        ],
+        [
+          "ac898295db4ec60e52973ad7c180bd0f24e0ee4d"
+        ],
+        [
+          "8cbbdb4dc32c75d276d13713e61a3fd8724f966c"
+        ],
+        [
+          "fd36d51dc6b62b22373578cdee5f5e9c65bd88cc"
+        ],
+        [
+          "3889defa7a8836db171bd198946de8a6b86ebcf5"
+        ],
+        [
+          "ae35b887d87b35ad741621e39c0653aff6e83057"
+        ],
+        [
+          "6fc726bd7f512bd5d6576468d807d16084c65bc8"
+        ]
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "stable_patch_ids_exact",
+      "evidence": [
+        "fd24654567276d9c010016ee58f37cea75eef0c8",
+        "122120d7f0b90b9dbe24be63fd0fdf0b56655484",
+        "8c57aa2af00713bc3be8c49001e9275e769fecda",
+        "71b143a3fd6b6e9899174d56e760bbf1f3f38d89",
+        "da3256235bd064f766ee478155f796be13065b81",
+        "52d53b7b5c28e6acda0f314260415d90e792a24b",
+        "bdae1ef3ebeb7002bbd7eb7d76a7371e230ba14f",
+        "fe315a1b815b1a5710db5cf982c9a5c6c3d2ba75",
+        "366360cd5531c4cecdc62c8a1237d4ccd2acc3ee"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "stable_patch_ids_unique",
+      "evidence": [
+        "fd24654567276d9c010016ee58f37cea75eef0c8",
+        "122120d7f0b90b9dbe24be63fd0fdf0b56655484",
+        "8c57aa2af00713bc3be8c49001e9275e769fecda",
+        "71b143a3fd6b6e9899174d56e760bbf1f3f38d89",
+        "da3256235bd064f766ee478155f796be13065b81",
+        "52d53b7b5c28e6acda0f314260415d90e792a24b",
+        "bdae1ef3ebeb7002bbd7eb7d76a7371e230ba14f",
+        "fe315a1b815b1a5710db5cf982c9a5c6c3d2ba75",
+        "366360cd5531c4cecdc62c8a1237d4ccd2acc3ee"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "g45_alias_patch_identity",
+      "evidence": [
+        "122120d7f0b90b9dbe24be63fd0fdf0b56655484",
+        "122120d7f0b90b9dbe24be63fd0fdf0b56655484",
+        "122120d7f0b90b9dbe24be63fd0fdf0b56655484"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "g46_alias_patch_identity",
+      "evidence": [
+        "8c57aa2af00713bc3be8c49001e9275e769fecda",
+        "8c57aa2af00713bc3be8c49001e9275e769fecda"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "g47_alias_patch_identity",
+      "evidence": [
+        "702db343b6e7b96509d27040abbade944442a552",
+        "702db343b6e7b96509d27040abbade944442a552"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "g48_alias_patch_identity",
+      "evidence": [
+        "0c1a854b530215fdccfd9800a8e31e38f7cf0780",
+        "0c1a854b530215fdccfd9800a8e31e38f7cf0780"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "g39_g40_g42_not_ancestors",
+      "evidence": {
+        "44091dea7341e96cbf152b1e42d072de977f8522": 1,
+        "681285b042c99402ea2e7ed3a19cea4b5c6bc5f4": 1,
+        "a757eeee6c97e532a740a67909703d5ad394ab4a": 1,
+        "c2037e8ae1163db0f57b36355da24cf20ceea320": 1,
+        "da3cdb829f00c50339ea7c1c178c7499768dbc10": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "g47_bounded_core_blobs",
+      "evidence": {
+        "htt/src/common/data_identity.py": [
+          "a1c2fa3cd359a88aa288f63dbc7b119d29fb2b88",
+          "a1c2fa3cd359a88aa288f63dbc7b119d29fb2b88"
+        ],
+        "scripts/codex_harness/run_pr289_data_identity_v2.py": [
+          "57a0fcb59a850ff5245369e7bb800f90d6e11249",
+          "57a0fcb59a850ff5245369e7bb800f90d6e11249"
+        ],
+        "tests/contracts/test_data_identity_registry_v2.py": [
+          "073403eb0453b9274146a75ea78fd588f757f0c1",
+          "073403eb0453b9274146a75ea78fd588f757f0c1"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "g47_stale_receipt_excluded",
+      "evidence": "candidate core commit does not add generated receipt",
+      "status": "PASS"
+    },
+    {
+      "check": "g48_bounded_test_blob",
+      "evidence": "f6ae39f1c022713ff6c8329663e06e830d45a5fa",
+      "status": "PASS"
+    },
+    {
+      "check": "g48_stale_receipt_excluded",
+      "evidence": "portable salvage commit does not touch generated receipt",
+      "status": "PASS"
+    },
+    {
+      "check": "registry_content_address",
+      "evidence": "sha256:78e3ec41833db433b560ebf839e0ee9375f77879a629e4ce70900bfb959bbef0",
+      "status": "PASS"
+    },
+    {
+      "check": "receipt_content_address",
+      "evidence": "sha256:6d2ed14a21e1045b88bc91020a65d346873b2f9344dac91e9cc9c490cb067ab2",
+      "status": "PASS"
+    },
+    {
+      "check": "fresh_receipt_source_bindings",
+      "evidence": {
+        "docs/harness/CLAIM_LEDGER.md": true,
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json": true,
+        "docs/research_program/post_pr275/data_runbooks.yaml": true,
+        "docs/research_program/post_pr275/pr289_publication_policy.json": true,
+        "docs/research_program/post_pr275/pr289_spec.yaml": true,
+        "docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json": true,
+        "docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml": true,
+        "htt/src/common/data_identity.py": true,
+        "scripts/codex_harness/run_pr289_data_identity_v2.py": true,
+        "tests/contracts/test_data_identity_registry_v2.py": true
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "no_historical_receipt_blob_reuse",
+      "evidence": {
+        "48e280d9b4b7d88dadf7fff857fca7910defb563": "50c2f2d230c415ba5961d1df0af411e894297722",
+        "52386845290f47ad6243cc537447942ef6bf12db": "0811f0dbe145fcdf5b63b3b4d73f55428de40540",
+        "91d8b8adb72ec8c1e07cfa46fe028fa56867290b": "0811f0dbe145fcdf5b63b3b4d73f55428de40540",
+        "dde54a713ebb0408c3690f5b7d3fdded17e19ff3": "50c2f2d230c415ba5961d1df0af411e894297722"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "registered_mutation_exact_order",
+      "evidence": [
+        "MU289-PR274-MUTATION",
+        "MU289-ADMISSION-AUTH-COLLAPSE",
+        "MU289-SYMLINK",
+        "MU289-PARENT-SYMLINK",
+        "MU289-HARDLINK-ALIAS",
+        "MU289-SIZE",
+        "MU289-HASH",
+        "MU289-INVENTORY",
+        "MU289-RELEASE-LICENSE",
+        "MU289-PLACEHOLDER-PROVENANCE",
+        "MU289-EVIDENCE-JSON",
+        "MU289-SEMANTIC-FIELD",
+        "MU289-SEMANTIC-STATUS",
+        "MU289-RECORD-ID-STABILITY",
+        "MU289-INVENTORY-ID",
+        "MU289-NATIVE-PROFILE-OMISSION",
+        "MU289-NATIVE-REGISTRY-ROLE",
+        "MU289-PLANCK-NATIVE-RELATIONSHIP",
+        "MU289-CF4-NATIVE-RELATIONSHIP",
+        "MU289-HSC-KIDS-CHILD-IDENTITY",
+        "MU289-NATIVE-REPLAY",
+        "MU289-NAME-ONLY",
+        "MU289-DESI-PARTIAL",
+        "MU289-AUTODOWNLOAD",
+        "MU289-MUTATION-OMISSION",
+        "MU289-GATE-ID-ALIAS",
+        "MU289-WORKFLOW-AUTH-LAUNDERING",
+        "MU289-STATUS-PRECEDENCE",
+        "MU289-PARTIAL-LANE-AGGREGATE",
+        "MU289-CLAIM-PROMOTION"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "registered_mutations_live_killed",
+      "evidence": 30,
+      "status": "PASS"
+    },
+    {
+      "check": "zero_admission",
+      "evidence": "NO_ADMITTED_IDENTITIES",
+      "status": "PASS"
+    },
+    {
+      "check": "zero_authorization",
+      "evidence": [
+        "NOT_AUTHORIZED",
+        "NOT_AUTHORIZED",
+        "NOT_AUTHORIZED",
+        "NOT_AUTHORIZED",
+        "NOT_AUTHORIZED",
+        "NOT_AUTHORIZED"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "claim_ceiling",
+      "evidence": "diagnostic_only",
+      "status": "PASS"
+    },
+    {
+      "check": "machine_lane_cardinality_and_gate_identity",
+      "evidence": {
+        "ACT": [
+          7,
+          "H-ACT",
+          "common.registered_product_native_identity.v1"
+        ],
+        "CF4": [
+          9,
+          "H-CF4",
+          "common.cf4_native_identity.v1"
+        ],
+        "DESI": [
+          5,
+          "H-DESI",
+          "common.registered_product_native_identity.v1"
+        ],
+        "HSC_KIDS": [
+          15,
+          "H-HSC-KiDS",
+          "common.hsc_kids_native_identity.v1"
+        ],
+        "JWST_SN": [
+          5,
+          "H-JWST",
+          "common.registered_product_native_identity.v1"
+        ],
+        "PLANCK": [
+          13,
+          "H-PLANCK",
+          "common.planck_native_identity.v1"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "desi_exact_mock_cardinality",
+      "evidence": {
+        "abacus_inventory": 25,
+        "covariance": 1,
+        "ezmock_inventory": 1000,
+        "observed_catalogue": 1,
+        "selection": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "pr280_terminal_receipt_no_success",
+      "evidence": {
+        "active_core_count": 3,
+        "active_core_successors": [
+          "PR-295",
+          "PR-296",
+          "PR-297"
+        ],
+        "candidate_sha": "2f5d2b61da30c72594aece60e9e601066378a7c3",
+        "inventory_receipt": "docs/research_program/post_pr275/full_inventory_v4_receipt.json",
+        "inventory_receipt_sha256": "66630487b08aa03c374fb05f11b6007bc53336974ed6a8f1970205e139a2123e",
+        "observed_data_executed": false,
+        "public_use": false,
+        "receipt": "docs/PR_DELTAS/pr-280.md",
+        "resolution": "COMPLETED_FAILED_WITH_RECEIPT",
+        "resolved_on": "2026-08-04",
+        "review_receipt": ".agent-harness/runs/pr280-final-delivery-review-r7-20260804/results/A-PR280-FINAL-DELIVERY-REVIEW.json",
+        "scientific_artifact_mode": "governance_harness_failure_inventory",
+        "scientific_status_after": "OPEN_UNCHANGED",
+        "scientific_status_effect": "fresh_inventory_terminal_negative_and_root_cause_routing_registered",
+        "success_dependency_satisfied": false
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "workflow_authorization_domain",
+      "evidence": {
+        "authorization_domain": "workflow_only",
+        "execution_authorization": "EXPLICIT_USER_AUTHORIZED"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "pr290_ineligible_zero_budget",
+      "evidence": {
+        "assurance_budget": {
+          "consumed": 0,
+          "maximum": 16
+        },
+        "base_sha": null,
+        "dependency_hashes": {},
+        "gate_dispositions": {
+          "eligibility": "INELIGIBLE"
+        },
+        "lifecycle": "PLANNED",
+        "lifecycle_history": [
+          "PLANNED"
+        ],
+        "pr_url": null,
+        "predecessor_pr": "PR-289",
+        "predecessor_sealed_sha": null,
+        "production_hash": null,
+        "pushed_ref": null,
+        "sealed_head": null
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "immutable_pr274_hashes",
+      "evidence": {
+        "immutable_predecessor": "PR-274",
+        "rule": "PR-274 v1 bytes and its zero-admission conclusion remain immutable. Source-bound PR-274 replay runs in its exact canonical commit context; later repaired PR-273 pack bytes are not substituted into the old receipt. Every PR-289 record has a v2 identity and a separate authorization lifecycle; no v1 record is edited, promoted, or silently migrated.",
+        "v1_registry": "docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml",
+        "v1_registry_sha256": "92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9",
+        "v1_replay_commit": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+        "v1_result": "docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json",
+        "v1_result_sha256": "e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "policy_command:focused",
+      "evidence": {
+        "argv": [
+          "/usr/bin/python3",
+          "-B",
+          "scripts/codex_harness/run_pr289_data_identity_v2.py",
+          "focused"
+        ],
+        "returncode": 0,
+        "runtime_seconds": 2.271797499153763,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_tail": [],
+        "stdout_sha256": "25dabd0806cb8230fcb2d4040cd555818bd70b6ba93224a3d4ae8888ba9f2946",
+        "stdout_tail": [
+          ".................................................                        [100%]",
+          "49 passed in 2.12s"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "policy_command:preflight",
+      "evidence": {
+        "argv": [
+          "/usr/bin/python3",
+          "-B",
+          "scripts/codex_harness/run_pr289_data_identity_v2.py",
+          "preflight"
+        ],
+        "returncode": 0,
+        "runtime_seconds": 0.31939077703282237,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_tail": [],
+        "stdout_sha256": "286c694134f80f1ef492b17f1df82b6b2844bfedb923226e5958a749231138bf",
+        "stdout_tail": [
+          "{\"aggregate_status\": \"NO_ADMITTED_IDENTITIES\", \"authorization_statuses\": [\"NOT_AUTHORIZED\", \"NOT_AUTHORIZED\", \"NOT_AUTHORIZED\", \"NOT_AUTHORIZED\", \"NOT_AUTHORIZED\", \"NOT_AUTHORIZED\"], \"lane_statuses\": [\"REJECTED_NOT_PRESENT\", \"REJECTED_NOT_PRESENT\", \"REJECTED_NOT_PRESENT\", \"REJECTED_NOT_PRESENT\", \"REJECTED_NOT_PRESENT\", \"REJECTED_NOT_PRESENT\"], \"network_or_download_side_effect\": false, \"terminal\": \"PASS_DATA_IDENTITY_V2_PREFLIGHT\"}"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "policy_command:adjacent",
+      "evidence": {
+        "argv": [
+          "/usr/bin/python3",
+          "-B",
+          "scripts/codex_harness/run_pr289_data_identity_v2.py",
+          "adjacent"
+        ],
+        "returncode": 0,
+        "runtime_seconds": 6.48454080009833,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_tail": [],
+        "stdout_sha256": "0bbce76abc4d740beaa3c5ddd467750b6cfd922ff6e04e250c71807916400cda",
+        "stdout_tail": [
+          "......................................................                   [100%]",
+          "54 passed in 2.57s",
+          "{\"historical_replay_commit\": \"ff9ef9f45747e559c5343b463cf010dfc3a7432a\", \"live_source_bound_tests_replayed_only_in_historical_context\": [\"test_frozen_inputs_match_bytes_and_live_pr151_semantics\", \"test_committed_result_is_deterministic_and_source_bound\", \"test_live_status_self_closeout_does_not_mutate_result_provenance\", \"test_live_status_semantic_drift_still_fails_closed\"], \"terminal\": \"PASS_PR274_IMMUTABLE_AND_LIVE_COMPATIBILITY\"}"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "policy_command:check",
+      "evidence": {
+        "argv": [
+          "/usr/bin/python3",
+          "-B",
+          "scripts/codex_harness/run_pr289_data_identity_v2.py",
+          "check"
+        ],
+        "returncode": 0,
+        "runtime_seconds": 0.31786072067916393,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_tail": [],
+        "stdout_sha256": "99f126caf14055278563566b5bae5ba821ba60e3bed7173b1530321bed928eb0",
+        "stdout_tail": [
+          "{\"aggregate_status\": \"NO_ADMITTED_IDENTITIES\", \"observed_data_executed\": false, \"public_use\": false, \"receipt_sha256\": \"15caa3ea64b302736e01261942173e08d85c7197545d299d7bb5582763623d5b\", \"terminal\": \"PASS_DATA_IDENTITY_V2_PREFLIGHT\"}"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "policy_command:portable",
+      "evidence": {
+        "argv": [
+          "/usr/bin/python3",
+          "-B",
+          "scripts/codex_harness/run_pr289_data_identity_v2.py",
+          "portable"
+        ],
+        "returncode": 0,
+        "runtime_seconds": 2.875307867769152,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_tail": [],
+        "stdout_sha256": "e789d920fa736e1c81c1fdf789061d97fd39e08287dae894b35345c211630343",
+        "stdout_tail": [
+          "{\"clean_extracted_content_sha256\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"clean_extracted_file_count\": 5911, \"clean_root_post_hash\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"clean_root_pre_hash\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"exact_command\": [\"/usr/bin/python3\", \"-B\", \"scripts/codex_harness/run_pr289_data_identity_v2.py\", \"check\"], \"exact_command_runtime_seconds\": 0.3027920420281589, \"external_roots_supplied\": false, \"interpreter_and_dependency_versions\": {\"PyYAML\": \"6.0.1\", \"pytest\": \"9.1.1\", \"python\": \"3.12.3\"}, \"nested_exit_code\": 0, \"nested_stdout_sha256\": \"99f126caf14055278563566b5bae5ba821ba60e3bed7173b1530321bed928eb0\", \"network_or_download_side_effect\": false, \"schema\": \"PR289_PORTABLE_CLEAN_EVIDENCE_V2\", \"scrubbed_environment_keys\": {\"PYTEST_ADDOPTS\": true, \"PYTEST_PLUGINS\": true, \"PYTHONHOME\": true, \"PYTHONPATH\": \"CLEAN_ROOT_ONLY\", \"PYTHONSTARTUP\": true}, \"source_root_differs_from_execution_root\": true, \"source_root_post_hash\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"source_root_pre_hash\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"source_tracked_file_count\": 5911, \"source_tracked_manifest_sha256\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"tracked_source_manifest\": {\"content_identity_inventory_sha256\": \"79845142b6cb1053e3f2bcab28ae0fad84687a7e070a2f377091bacb20e88b38\", \"file_count\": 5911, \"manifest_sha256\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"path_inventory_sha256\": \"31e069cd71ec1b12c94dbc066730817bd9c232279ac69285ba9bd6ce8fc0feed\"}}"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "policy_command:policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity",
+      "evidence": {
+        "argv": [
+          "/usr/bin/python3",
+          "-B",
+          "-m",
+          "pytest",
+          "-p",
+          "no:cacheprovider",
+          "-q",
+          "scripts/codex_harness/test_publication_integrity.py",
+          "-k",
+          "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"
+        ],
+        "returncode": 0,
+        "runtime_seconds": 1.0813331096433103,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_tail": [],
+        "stdout_sha256": "2e053a645512ff57f48f4f59b623b5d48c7a2acf150e11c7f098b02d0dbcc4ca",
+        "stdout_tail": [
+          ".........                                                                [100%]",
+          "9 passed, 68 deselected in 0.94s"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "policy_command:--strict-rescue-slice",
+      "evidence": {
+        "argv": [
+          "/usr/bin/python3",
+          "-B",
+          "scripts/codex_harness/validate_pr_dag.py",
+          "docs/codex_handoff/pr_backlog.yaml",
+          "--status",
+          "docs/codex_handoff/pr_status.yaml",
+          "--strict-rescue-slice"
+        ],
+        "returncode": 0,
+        "runtime_seconds": 1.539987875148654,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_tail": [],
+        "stdout_sha256": "954bccce10cfc35cf06b7aa16b931d748ff4f55af6a9350c833855bdafcf44ee",
+        "stdout_tail": [
+          "OK: 244 PRs, DAG valid",
+          "topological_order=PR-000,PR-001,PR-003,PR-002,PR-004,PR-005,PR-020,PR-010,PR-021,PR-011,PR-013,PR-014,PR-040,PR-012,PR-022,PR-070,PR-015,PR-050,PR-041,PR-023,PR-071,PR-080,PR-030,PR-113,PR-051,PR-042,PR-072,PR-081,PR-031,PR-052,PR-043,PR-073,PR-082,PR-032,PR-053,PR-074,PR-083,PR-054,PR-075,PR-055,PR-076,PR-056,PR-060,PR-090,PR-100,PR-084,PR-061,PR-091,PR-101,PR-102,PR-062,PR-092,PR-063,PR-110,PR-064,PR-065,PR-066,PR-103,PR-111,PR-112,PR-114,PR-115,PR-116,PR-117,PR-118,PR-119,PR-120,PR-121,PR-122,PR-123,PR-124,PR-125,PR-126,PR-127,PR-128,PR-129,PR-130,PR-131,PR-132,PR-133,PR-134,PR-135,PR-136,PR-137,PR-138,PR-139,PR-140,PR-141,PR-142,PR-143,PR-144,PR-145,PR-146,PR-147,PR-148,PR-149,PR-150,PR-151,PR-152,PR-153,PR-154,PR-159,PR-160,PR-161,PR-167,PR-168,PR-169,PR-170,PR-171,PR-172,PR-173,PR-174,PR-175,PR-176,PR-177,PR-179,PR-184,PR-180,PR-182,PR-183,PR-185,PR-186,PR-187,PR-188,PR-189,PR-197,PR-200,PR-203,PR-209,PR-210,PR-211,PR-213,PR-212,PR-214,PR-223,PR-215,PR-219,PR-216,PR-217,PR-218,PR-220,PR-222,PR-221,PR-225,PR-224,PR-226,PR-227,PR-228,PR-229,PR-230,PR-231,PR-232,PR-233,PR-234,PR-235,PR-236,PR-237,PR-238,PR-239,PR-240,PR-241,PR-242,PR-243,PR-244,PR-245,PR-246,PR-247,PR-248,PR-249,PR-250,PR-251,PR-252,PR-253,PR-254,PR-255,PR-256,PR-257,PR-258,PR-259,PR-260,PR-261,PR-262,PR-263,PR-264,PR-265,PR-266,PR-267,PR-268,PR-269,PR-271,PR-270,PR-272,PR-273,PR-274,PR-275,PR-155,PR-156,PR-162,PR-163,PR-164,PR-165,PR-166,PR-181,PR-190,PR-276,PR-277,PR-278,PR-157,PR-158,PR-178,PR-279,PR-280,PR-295,PR-296,PR-297,PR-281,PR-282,PR-283,PR-284,PR-285,PR-191,PR-192,PR-193,PR-194,PR-195,PR-196,PR-286,PR-287,PR-288,PR-289,PR-204,PR-198,PR-199,PR-201,PR-202,PR-205,PR-206,PR-290,PR-291,PR-292,PR-293,PR-294,PR-207,PR-208"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "policy_command:docs/PR_DELTAS/pr-289.md",
+      "evidence": {
+        "argv": [
+          "/usr/bin/python3",
+          "-B",
+          "scripts/check_claim_language.py",
+          "--strict-missing",
+          "--include-archives",
+          "htt/src/common/data_identity.py",
+          "tests/contracts/test_data_identity_registry_v2.py",
+          "docs/research_program/post_pr275/pr289_spec.yaml",
+          "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+          "docs/research_program/post_pr275/data_runbooks.yaml",
+          "docs/harness/CLAIM_LEDGER.md",
+          "docs/generated/pr289_data_identity_v2_receipt.json",
+          "docs/PR_DELTAS/pr-289.md"
+        ],
+        "returncode": 0,
+        "runtime_seconds": 0.23799251578748226,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_tail": [],
+        "stdout_sha256": "19a00c56f80d1c997ad754ec812ae264d0469fe074b69c56b34594caa22f1164",
+        "stdout_tail": [
+          "No forbidden claim language detected."
+        ]
+      },
+      "status": "PASS"
+    }
+  ],
+  "notes": [
+    {
+      "acceptance_effect": "nonblocking because the exact fresh policy command passed and source/archive pre/post identities agree",
+      "fresh_hash": "c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0",
+      "recorded_hash": "2b1bdb16a40aa65553d43e8764eccd11819b2f779f7ed15c49105678b121a3d6",
+      "severity": "low",
+      "statement": "PR delta labels a pre-finalization portable manifest hash as current; fresh portable replay passes with the sealed tree's different manifest hash."
+    }
+  ],
+  "policy_commands": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "focused"
+      ],
+      "returncode": 0,
+      "runtime_seconds": 2.271797499153763,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": [],
+      "stdout_sha256": "25dabd0806cb8230fcb2d4040cd555818bd70b6ba93224a3d4ae8888ba9f2946",
+      "stdout_tail": [
+        ".................................................                        [100%]",
+        "49 passed in 2.12s"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "preflight"
+      ],
+      "returncode": 0,
+      "runtime_seconds": 0.31939077703282237,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": [],
+      "stdout_sha256": "286c694134f80f1ef492b17f1df82b6b2844bfedb923226e5958a749231138bf",
+      "stdout_tail": [
+        "{\"aggregate_status\": \"NO_ADMITTED_IDENTITIES\", \"authorization_statuses\": [\"NOT_AUTHORIZED\", \"NOT_AUTHORIZED\", \"NOT_AUTHORIZED\", \"NOT_AUTHORIZED\", \"NOT_AUTHORIZED\", \"NOT_AUTHORIZED\"], \"lane_statuses\": [\"REJECTED_NOT_PRESENT\", \"REJECTED_NOT_PRESENT\", \"REJECTED_NOT_PRESENT\", \"REJECTED_NOT_PRESENT\", \"REJECTED_NOT_PRESENT\", \"REJECTED_NOT_PRESENT\"], \"network_or_download_side_effect\": false, \"terminal\": \"PASS_DATA_IDENTITY_V2_PREFLIGHT\"}"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "adjacent"
+      ],
+      "returncode": 0,
+      "runtime_seconds": 6.48454080009833,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": [],
+      "stdout_sha256": "0bbce76abc4d740beaa3c5ddd467750b6cfd922ff6e04e250c71807916400cda",
+      "stdout_tail": [
+        "......................................................                   [100%]",
+        "54 passed in 2.57s",
+        "{\"historical_replay_commit\": \"ff9ef9f45747e559c5343b463cf010dfc3a7432a\", \"live_source_bound_tests_replayed_only_in_historical_context\": [\"test_frozen_inputs_match_bytes_and_live_pr151_semantics\", \"test_committed_result_is_deterministic_and_source_bound\", \"test_live_status_self_closeout_does_not_mutate_result_provenance\", \"test_live_status_semantic_drift_still_fails_closed\"], \"terminal\": \"PASS_PR274_IMMUTABLE_AND_LIVE_COMPATIBILITY\"}"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "check"
+      ],
+      "returncode": 0,
+      "runtime_seconds": 0.31786072067916393,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": [],
+      "stdout_sha256": "99f126caf14055278563566b5bae5ba821ba60e3bed7173b1530321bed928eb0",
+      "stdout_tail": [
+        "{\"aggregate_status\": \"NO_ADMITTED_IDENTITIES\", \"observed_data_executed\": false, \"public_use\": false, \"receipt_sha256\": \"15caa3ea64b302736e01261942173e08d85c7197545d299d7bb5582763623d5b\", \"terminal\": \"PASS_DATA_IDENTITY_V2_PREFLIGHT\"}"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "portable"
+      ],
+      "returncode": 0,
+      "runtime_seconds": 2.875307867769152,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": [],
+      "stdout_sha256": "e789d920fa736e1c81c1fdf789061d97fd39e08287dae894b35345c211630343",
+      "stdout_tail": [
+        "{\"clean_extracted_content_sha256\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"clean_extracted_file_count\": 5911, \"clean_root_post_hash\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"clean_root_pre_hash\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"exact_command\": [\"/usr/bin/python3\", \"-B\", \"scripts/codex_harness/run_pr289_data_identity_v2.py\", \"check\"], \"exact_command_runtime_seconds\": 0.3027920420281589, \"external_roots_supplied\": false, \"interpreter_and_dependency_versions\": {\"PyYAML\": \"6.0.1\", \"pytest\": \"9.1.1\", \"python\": \"3.12.3\"}, \"nested_exit_code\": 0, \"nested_stdout_sha256\": \"99f126caf14055278563566b5bae5ba821ba60e3bed7173b1530321bed928eb0\", \"network_or_download_side_effect\": false, \"schema\": \"PR289_PORTABLE_CLEAN_EVIDENCE_V2\", \"scrubbed_environment_keys\": {\"PYTEST_ADDOPTS\": true, \"PYTEST_PLUGINS\": true, \"PYTHONHOME\": true, \"PYTHONPATH\": \"CLEAN_ROOT_ONLY\", \"PYTHONSTARTUP\": true}, \"source_root_differs_from_execution_root\": true, \"source_root_post_hash\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"source_root_pre_hash\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"source_tracked_file_count\": 5911, \"source_tracked_manifest_sha256\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"tracked_source_manifest\": {\"content_identity_inventory_sha256\": \"79845142b6cb1053e3f2bcab28ae0fad84687a7e070a2f377091bacb20e88b38\", \"file_count\": 5911, \"manifest_sha256\": \"c26bfae490a3512b7d7345c65e6c2608125c3f0cf3ee77ae3e5e14c9ef34acd0\", \"path_inventory_sha256\": \"31e069cd71ec1b12c94dbc066730817bd9c232279ac69285ba9bd6ce8fc0feed\"}}"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "-k",
+        "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"
+      ],
+      "returncode": 0,
+      "runtime_seconds": 1.0813331096433103,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": [],
+      "stdout_sha256": "2e053a645512ff57f48f4f59b623b5d48c7a2acf150e11c7f098b02d0dbcc4ca",
+      "stdout_tail": [
+        ".........                                                                [100%]",
+        "9 passed, 68 deselected in 0.94s"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "returncode": 0,
+      "runtime_seconds": 1.539987875148654,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": [],
+      "stdout_sha256": "954bccce10cfc35cf06b7aa16b931d748ff4f55af6a9350c833855bdafcf44ee",
+      "stdout_tail": [
+        "OK: 244 PRs, DAG valid",
+        "topological_order=PR-000,PR-001,PR-003,PR-002,PR-004,PR-005,PR-020,PR-010,PR-021,PR-011,PR-013,PR-014,PR-040,PR-012,PR-022,PR-070,PR-015,PR-050,PR-041,PR-023,PR-071,PR-080,PR-030,PR-113,PR-051,PR-042,PR-072,PR-081,PR-031,PR-052,PR-043,PR-073,PR-082,PR-032,PR-053,PR-074,PR-083,PR-054,PR-075,PR-055,PR-076,PR-056,PR-060,PR-090,PR-100,PR-084,PR-061,PR-091,PR-101,PR-102,PR-062,PR-092,PR-063,PR-110,PR-064,PR-065,PR-066,PR-103,PR-111,PR-112,PR-114,PR-115,PR-116,PR-117,PR-118,PR-119,PR-120,PR-121,PR-122,PR-123,PR-124,PR-125,PR-126,PR-127,PR-128,PR-129,PR-130,PR-131,PR-132,PR-133,PR-134,PR-135,PR-136,PR-137,PR-138,PR-139,PR-140,PR-141,PR-142,PR-143,PR-144,PR-145,PR-146,PR-147,PR-148,PR-149,PR-150,PR-151,PR-152,PR-153,PR-154,PR-159,PR-160,PR-161,PR-167,PR-168,PR-169,PR-170,PR-171,PR-172,PR-173,PR-174,PR-175,PR-176,PR-177,PR-179,PR-184,PR-180,PR-182,PR-183,PR-185,PR-186,PR-187,PR-188,PR-189,PR-197,PR-200,PR-203,PR-209,PR-210,PR-211,PR-213,PR-212,PR-214,PR-223,PR-215,PR-219,PR-216,PR-217,PR-218,PR-220,PR-222,PR-221,PR-225,PR-224,PR-226,PR-227,PR-228,PR-229,PR-230,PR-231,PR-232,PR-233,PR-234,PR-235,PR-236,PR-237,PR-238,PR-239,PR-240,PR-241,PR-242,PR-243,PR-244,PR-245,PR-246,PR-247,PR-248,PR-249,PR-250,PR-251,PR-252,PR-253,PR-254,PR-255,PR-256,PR-257,PR-258,PR-259,PR-260,PR-261,PR-262,PR-263,PR-264,PR-265,PR-266,PR-267,PR-268,PR-269,PR-271,PR-270,PR-272,PR-273,PR-274,PR-275,PR-155,PR-156,PR-162,PR-163,PR-164,PR-165,PR-166,PR-181,PR-190,PR-276,PR-277,PR-278,PR-157,PR-158,PR-178,PR-279,PR-280,PR-295,PR-296,PR-297,PR-281,PR-282,PR-283,PR-284,PR-285,PR-191,PR-192,PR-193,PR-194,PR-195,PR-196,PR-286,PR-287,PR-288,PR-289,PR-204,PR-198,PR-199,PR-201,PR-202,PR-205,PR-206,PR-290,PR-291,PR-292,PR-293,PR-294,PR-207,PR-208"
+      ]
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "htt/src/common/data_identity.py",
+        "tests/contracts/test_data_identity_registry_v2.py",
+        "docs/research_program/post_pr275/pr289_spec.yaml",
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+        "docs/research_program/post_pr275/data_runbooks.yaml",
+        "docs/harness/CLAIM_LEDGER.md",
+        "docs/generated/pr289_data_identity_v2_receipt.json",
+        "docs/PR_DELTAS/pr-289.md"
+      ],
+      "returncode": 0,
+      "runtime_seconds": 0.23799251578748226,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_tail": [],
+      "stdout_sha256": "19a00c56f80d1c997ad754ec812ae264d0469fe074b69c56b34594caa22f1164",
+      "stdout_tail": [
+        "No forbidden claim language detected."
+      ]
+    }
+  ],
+  "run_id": "pr289-frozen-independent-review-20260811",
+  "schema": "htt.pr289.frozen_independent_oracle.v1",
+  "status": "PASS"
+}

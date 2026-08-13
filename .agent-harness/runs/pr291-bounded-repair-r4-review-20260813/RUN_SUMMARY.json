@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-bounded-repair-r4-review-20260813",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "created_at": "2026-08-13T06:31:14+00:00",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "0e8da2b416792c62897b6beb686e28f705d8a82cc299513dd3f5e905109d2c5b",
+    "seal_sha256": "a226e0df027907b105bdb454ff5a5f50b60adb1a98663bcb22d70e14b7760ec1",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "02714ff26f8e6414edd1ef456065bf73e0f27374",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "2b425d29ca48c8baa776aa5521ecf3795d64562a",
+    "diff_sha256": "df0950da457bf62acd1c2d2215daa27f6c39f9ede67bdcdd242c22f8cbda9906",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "1dc0fc6010d0f99f586aa7e34dae9f5eced9110962d36a68af61727029c7507c"
+  },
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "VALIDATED",
+  "evidence_key": {
+    "production_hash": "1dc0fc6010d0f99f586aa7e34dae9f5eced9110962d36a68af61727029c7507c",
+    "dependency_hashes": {
+      "pr291_spec": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec",
+      "publication_policy": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835",
+      "pr289_data_identity_receipt": "92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+      "pr289_registry": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+      "pr289_data_identity_module": "145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2",
+      "pr291_common_module": "4b15529947ea6269bc0ff38b7a58e5433fc6e767e34b732e2ee37cfac07bbeb0",
+      "pr291_obsstat_module": "54f802baffa26e30c2b354e90578a6b012c8f77d8a49b5e80c59e206bb827840",
+      "pr291_runner": "45659be3d9801697272726d1cf8018d3719a7d83127fc89d05781c30db239af8",
+      "pr291_contract_test": "8167e669927505b9121bbb09a98976755cdbcbd452f20c398f6b80d298990468",
+      "claim_guard": "5426c8c92d67d22bc6cecc43b2de5a69d5efd366ea58a2056ec3b622bd7f1f97",
+      "claim_contract_test": "29e02deec164be386fca735915b180e35015a821b26857033b8eb5efcf02ee10",
+      "claim_ledger": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+      "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+    }
+  },
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 11
+  },
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "publication_state": "NOT_PUBLISHED_BY_HARNESS",
+  "assignment_count": 3,
+  "results": [
+    {
+      "assignment_id": "A-PR291-R4-CLAIM",
+      "agent_type": "claim_lane_reviewer",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/results/A-PR291-R4-CLAIM.json",
+      "sha256": "2fb3245f341f06e60d4f7a3106e89d54fe5c7ae750ae6250e9d28c1d2d4f510f",
+      "bytes": 7272
+    },
+    {
+      "assignment_id": "A-PR291-R4-CODE-REPLAY",
+      "agent_type": "harness_engineer",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/results/A-PR291-R4-CODE-REPLAY.json",
+      "sha256": "0e2b0e2cc7a5cff96ebc08363831b250a40e063616f7e135a984f86bbe55482e",
+      "bytes": 7831
+    },
+    {
+      "assignment_id": "A-PR291-R4-PHYSSTAT",
+      "agent_type": "physics_stat_auditor",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/results/A-PR291-R4-PHYSSTAT.json",
+      "sha256": "9c76eed10dd66e7616f6fa0a25b78f2740934a0701069a688e57691944054a0d",
+      "bytes": 9992
+    }
+  ],
+  "merged_results": {
+    "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/MERGED_RESULTS.json",
+    "sha256": "1decf39f66ca908bc702c6b4b99be11a7545ace2b824cdba58a917dfd28cdff2",
+    "bytes": 13437
+  },
+  "disposition": "summarized_discardable",
+  "closed_at": "2026-08-13T07:00:14+00:00"
+}

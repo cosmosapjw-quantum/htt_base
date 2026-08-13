@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-candidate-review-20260810",
+  "assignment_id": "A-PR283-FROZEN-CODE",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "candidate_seal_sha256": "89c44d46574c4e268789ab2d623f966bd46e63c8b12f36fade1075d449f03e08",
+  "candidate_sha": "6ee9048ffd80f25337f405d8c6a39fd3b7f489eb",
+  "candidate_tree_sha": "6c5c55dee52aaf7c7649dd23d386e0f85782fd32",
+  "diff_sha256": "5c5e5abd22a509fca7681d1decb0a3ac3b4288c89d4f2a63a4fdc37bcb918ff2",
+  "changed_files_sha256": "7a71a99b7b63012071701c4af1acf33719e01ff76e8ba0316eca7adc4103ebf6",
+  "completed_at": "2026-08-09T19:22:22+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR283_CANDIDATE_SEAL.json", "validate_candidate_seal_payload: errors=[]"],
+      "rationale": "HEAD, tree, diff, changed-file inventory, production hash, policy, and live target recompute exactly."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml:1", "tests/contracts/test_weak_identification.py:206"],
+      "rationale": "The frozen specification and policy were read and hash-validated before executable review."
+    },
+    {
+      "cell": "covariance_supported_rank_ladder",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:315", "tests/contracts/test_weak_identification.py:400"],
+      "rationale": "Provider, covariance support, component ranks, and joint rank are evaluated in the registered order."
+    },
+    {
+      "cell": "full_rank_small_angle_status",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:440", "tests/contracts/test_weak_identification.py:264"],
+      "rationale": "A full-rank angle at or below the frozen minimum maps to WEAKLY_IDENTIFIED."
+    },
+    {
+      "cell": "full_rank_small_singular_value_status",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:416", "tests/contracts/test_weak_identification.py:316"],
+      "rationale": "The normalizer-bound smallest-to-largest joint singular-value ratio is enforced."
+    },
+    {
+      "cell": "rank_deficiency_distinct_from_weak_identification",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:421", "tests/contracts/test_weak_identification.py:330"],
+      "rationale": "Unsupported/component-rank failures remain NON_IDENTIFIED and non-direct sums remain SUM_ONLY."
+    },
+    {
+      "cell": "threshold_contract_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:131", "tests/contracts/test_weak_identification.py:348"],
+      "rationale": "The factory-derived threshold payload is content-addressed and equality abstains conservatively."
+    },
+    {
+      "cell": "exact_source_geometry_report_replay",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:75", "htt/htt/htt/departure/velocity_frame_decomposition.py:1244", "tests/contracts/test_weak_identification.py:482"],
+      "rationale": "The exact report type is remeasured from preserved replay inputs and copied-field drift is rejected."
+    },
+    {
+      "cell": "exact_normalizer_spec_binding",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:79", "htt/htt/htt/departure/velocity_frame_decomposition.py:1017", "tests/contracts/test_weak_identification.py:445"],
+      "rationale": "Projection requires exact NormalizerSpec bytes semantically replayed through the coordinate-map identity."
+    },
+    {
+      "cell": "mandatory_threshold_contract_enforcement",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:64", "htt/htt/htt/statistics/open_set_response_classes.py:90", "tests/contracts/test_weak_identification.py:503"],
+      "rationale": "The projection signature has no threshold default and None or a non-factory value fails closed."
+    },
+    {
+      "cell": "all_source_gate_callers_migrated",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/infer/vector_tensor_blind_integration.py:685", "pr283-source-replay-caller-migrations: 90 passed"],
+      "rationale": "Repository search found one production projection caller, which supplies the exact normalizer and frozen threshold contract."
+    },
+    {
+      "cell": "principal_angle_and_singular_value_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:263", "htt/src/common/source_separation.py:270", "tests/contracts/test_weak_identification.py:548"],
+      "rationale": "Both numeric sequences carry independent canonical content identities that are replay-checked."
+    },
+    {
+      "cell": "mandatory_open_set_abstention",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/open_set_response_classes.py:2529", "tests/contracts/test_weak_identification.py:264"],
+      "rationale": "NON_IDENTIFIED, SUM_ONLY, and WEAKLY_IDENTIFIED precede equivalence, distance, and margin candidate branches."
+    },
+    {
+      "cell": "no_point_estimate_or_nearest_fallback",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/open_set_response_classes.py:2514", "htt/src/common/open_set_response_classes.py:2529", "tests/contracts/test_weak_identification.py:276"],
+      "rationale": "Weak gating returns TYPE_UNIDENTIFIED with candidate_class_id null and exact response-class IDs only."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml:104", "scripts/codex_harness/run_pr283_weak_identification.py:703", "focused_oracle.log"],
+      "rationale": "The focused oracle executed the registered hostile mutation set and the receipt requires every mutation to activate and be killed."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["docs/generated/pr283_weak_identification_receipt.json", "pr283-receipt-replay: sha256=10d28620cd709585cf9444dbde72e19d7baced9ef2da901c005bcbeb3a85fedf"],
+      "rationale": "Receipt replay reproduced the frozen bytes and canonical artifact content address."
+    },
+    {
+      "cell": "pr272_predecessor_replay_preservation",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/vector_tensor/integration/PR283_PR272_OPEN_SET_V1_RELOCATION.json:1", "pr283-pr272-predecessor-replay: 5 passed"],
+      "rationale": "Historical PR-272 bytes remain exact at the registered relocation and replay succeeds."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_publication_policy.json", "pr283-publication-policy-cross-binding: 9 passed"],
+      "rationale": "Seal, change set, publication group, target, and policy identity cross-bind and nonrelaxable metadata fails closed."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml:12", "pr283-claim-language: No forbidden claim language detected"],
+      "rationale": "Outputs remain synthetic diagnostic-only with family identification blocked before a native atlas."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["pr283-portable-clean-replay: exact_command_exit_code=0", "pr283-portable-clean-replay: source_root_pre_hash=source_root_post_hash"],
+      "rationale": "A clean copied root replayed the exact check command without source mutation."
+    },
+    {
+      "cell": "serial_stack_bootstrap_integrity",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_process_recovery_auto_stacked.py", "pr283-process-recovery-bootstrap: 20 passed"],
+      "rationale": "The AUTO_STACKED_PR bootstrap and frozen lifecycle bindings pass their dedicated contract suite."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["validate_candidate_seal_payload: errors=[]", "pr283-dag-strict: eligibility=ELIGIBLE work_unit=PR-283"],
+      "rationale": "Seal recomputation confirmed the live remote target equals the frozen base and the strict DAG marks PR-283 eligible."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR283-FROZEN-CODE-FOCUSED",
+      "kind": "mutation_test",
+      "status": "PASS",
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr283_weak_identification.py", "focused"],
+      "command_fingerprint": "e445aff6067befcb792bb9902386f4f94dc549ee96851084a5b3dd3977dea4d9",
+      "started_at": "2026-08-09T19:15:00+00:00",
+      "completed_at": "2026-08-09T19:15:02+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-CODE/focused_oracle.log",
+      "artifact_sha256": "35d686571200bef275e0febd0a9045db3042d528e01afa89fb9dd7a8f74b7153",
+      "artifact_bytes": 387,
+      "evidence_refs": ["tests/contracts/test_weak_identification.py", "tests/pr_cards/test_pr_258_open_set_response_classes.py"]
+    }
+  ],
+  "coverage_sha256": "94c7866cefd547d928c21b091c6bdda8180055478ead4b1e47947829cad0a55f"
+}

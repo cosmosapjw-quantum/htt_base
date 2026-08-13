@@ -1,0 +1,173 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-identity-replay-r3-20260810",
+  "assignment_id": "A-PR284-R3-CODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "assignment_sha256": "660d63ff76af55fb959199623231535d59a00c146b187c9c27c0342a411a07bb",
+  "agent_type": "code_cartographer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "da4a16d506e8adbfa5232ab95ca202cf2009e5f1304d6732fb0c92c3cb343b9a",
+    "seal_sha256": "f845a04769749a7b27a836ecb921da76509313221add64cd36ba0071b5e6e5f2",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "d54ff22dac780d3b159394237416d28b2bd15dc8",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "5fe16f62eb7246c455d116d79d2d422b35dee7b7",
+    "diff_sha256": "198de84c15f37c2d3c2edde8b2cdfbf06e5fe353aa2dd893462ae6bc3382e55f",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "adfbf6216e0a2566edeacc12f555110edea7811d7dc2309e737d7933d230f411"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/results/A-PR284-R3-CODE.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-09T23:10:00Z",
+  "completed_at": "2026-08-09T23:25:15Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "candidate d54ff22dac780d3b159394237416d28b2bd15dc8"
+  },
+  "commands": [
+    {
+      "argv": ["sha256sum", ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json", ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-PHYSMATH.json", "htt/src/common/depth_path.py", "htt/src/common/depth_path_calibration.py", "htt/htt/htt/infer/depth_path_calibration.py", "scripts/codex_harness/run_pr284_depth_path_doob.py", "tests/contracts/test_depth_path_doob_calibration.py", "docs/generated/pr284_depth_path_doob_receipt.json"],
+      "returncode": 0,
+      "summary": "All registered required-input hashes matched."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "focused"],
+      "returncode": 0,
+      "summary": "22 passed in 1.99s."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "adjacent"],
+      "returncode": 0,
+      "summary": "41 passed in 3.04s."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "check"],
+      "returncode": 0,
+      "summary": "PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION."
+    },
+    {
+      "argv": ["python", "-B", ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/pr284_r3_code_oracle.py"],
+      "returncode": 0,
+      "summary": "Invented identities and later path drift rejected; proved/unproved public factories preserved; equal adjacent supports survived and emitted proved status with a 1/4 bound."
+    },
+    {
+      "argv": ["python", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/review_coverage.json", "--seal", ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json", "--run-id", "pr284-identity-replay-r3-20260810", "--assignment-id", "A-PR284-R3-CODE", "--risk-tier", "R3", "--structural-only"],
+      "returncode": 0,
+      "summary": "Assignment-local structural coverage validated with no errors."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/pr284_r3_code_oracle.py",
+      "sha256": "55a0828fbd82efd090ecc1b8413a05337c7b71a1c7289ef8787134ec3c9e9d16",
+      "bytes": 7863,
+      "producer": "A-PR284-R3-CODE",
+      "command_fingerprint": "100699087346fae26322e3c4e3afee58c516fb12f517418456398802c4e56888"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/review_coverage.json",
+      "sha256": "ce4ce517a9af615feb433fa854b4a407ecd4e7b2dd2d3c2b9424b4e60544f0b8",
+      "bytes": 7760,
+      "producer": "A-PR284-R3-CODE"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/review_coverage.json",
+  "review_coverage_sha256": "ce4ce517a9af615feb433fa854b4a407ecd4e7b2dd2d3c2b9424b4e60544f0b8",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agents/skills/htt-adversarial-review-loop/SKILL.md",
+    ".agent-harness/runs/pr284-identity-replay-r3-20260810/assignments/A-PR284-R3-CODE.json",
+    ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-PHYSMATH.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+    "docs/generated/pr284_depth_path_doob_receipt.json",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/research_program/post_pr275/pr284_spec.yaml",
+    "htt/htt/htt/infer/__init__.py",
+    "htt/htt/htt/infer/depth_path_calibration.py",
+    "htt/src/common/depth_path.py",
+    "htt/src/common/depth_path_calibration.py",
+    "scripts/codex_harness/run_pr284_depth_path_doob.py",
+    "tests/contracts/test_depth_path_doob_calibration.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR284-R3-CODE-001",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr284.strict-depth-path.equal-adjacent-support.bound-bypass.v1",
+      "statement": "The exact path/stratum identity-replay repair closes the historical relabeling bypass, but G6 still accepts a non-strict DepthPath: `DepthPath` checks only `target_support.issubset(source_support)`, so equal adjacent supports can be factory-built, revalidated, marked `PROVED_FINITE_REGISTERED_PATH`, and assigned a 1/4 Doob bound even though the governing PR-284 premise requires strictly nested sky supports.",
+      "assumptions_used": [
+        "The PR-284 spec's phrase `strictly nested sky supports` is a mandatory G6 bound premise, not merely descriptive language.",
+        "A proper depth-support reduction requires each adjacent target support to be a proper subset of its predecessor; equality is not strict nesting.",
+        "The generic historical DepthPath contract may remain non-strict for compatibility, but PR-284's proved factory must independently enforce its stronger premise before emitting a bound."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:32",
+        "docs/research_program/post_pr275/pr284_spec.yaml:54",
+        "docs/research_program/post_pr275/pr284_spec.yaml:89",
+        "htt/src/common/depth_path.py:588",
+        "htt/src/common/depth_path.py:612",
+        "htt/src/common/depth_path_calibration.py:694",
+        "htt/htt/htt/infer/depth_path_calibration.py:142",
+        "htt/htt/htt/infer/depth_path_calibration.py:228",
+        "htt/htt/htt/infer/depth_path_calibration.py:318",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py:45",
+        "docs/generated/pr284_depth_path_doob_receipt.json:85",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/pr284_r3_code_oracle.py"
+      ],
+      "counterevidence_refs": [
+        "htt/src/common/depth_path_calibration.py:694 exact path and stratum identity replay",
+        "htt/src/common/depth_path_calibration.py:863 later identity replay before serialization",
+        "tests/contracts/test_depth_path_doob_calibration.py:266 invented identity regression test",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 22 passed",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py adjacent: 41 passed",
+        "oracle: missing path, invented identity, and post-build path drift were rejected",
+        "oracle: proved and unproved public factories remained functional"
+      ],
+      "reproduction": [
+        "Run `python -B .agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-CODE/pr284_r3_code_oracle.py` from candidate d54ff22dac780d3b159394237416d28b2bd15dc8.",
+        "Observe `strict_support_bypass_survived.adjacent_supports_equal` is true.",
+        "Observe the equal-support report has `PROVED_FINITE_REGISTERED_PATH` and the calibration has probability upper bound `1/4`.",
+        "Contrast the registered mutation inventory: `MU284-NONNESTED-SUPPORT` checks only a non-subset support and has no equal-adjacent-support case."
+      ],
+      "unresolved": [
+        "Before G6 can pass, require a proper support subset on every adjacent PR-284 proved path edge, preferably in the PR-284 premise evaluator/replay if the frozen generic DepthPath contract intentionally permits equality.",
+        "Add a discriminating equal-adjacent-support mutation that must route to no-bound matched mocks or reject construction.",
+        "Regenerate the receipt and frozen candidate/review identities after the repair."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR284-R3-CODE-001"],
+      "summary": "The historical invented path/stratum relabeling is repaired without breaking the public factories, but the strict sky-support premise remains bypassable through equal adjacent supports, so the frozen G6 candidate is not admissible."
+    }
+  ],
+  "review_loop": {
+    "evidence_read": ["frozen seal and required hashes", "historical registered finding", "DepthPath construction/revalidation", "report/calibration constructors and public exports", "focused tests, adjacent tests, receipt mutation registry"],
+    "proposed_changes": ["enforce proper adjacent support subsets in PR-284 proved construction and replay", "add equal-support mutation and regression test", "regenerate receipt and candidate-bound review artifacts"],
+    "tests_to_run": ["focused PR-284 suite", "adjacent PR-284 suite", "receipt check", "assignment oracle with equal-support case expected rejected or mock-routed"],
+    "risks_and_kill_switches": ["do not modify frozen historical DepthPath semantics without auditing existing consumers", "no bound may be emitted when any adjacent support is equal", "candidate mutation invalidates current seal and reviews"],
+    "artifacts_status_updates_needed": ["PR-284 receipt", "candidate seal", "review coverage and adjudication", "PR delta and status only after a repaired candidate passes"]
+  },
+  "errors": []
+}

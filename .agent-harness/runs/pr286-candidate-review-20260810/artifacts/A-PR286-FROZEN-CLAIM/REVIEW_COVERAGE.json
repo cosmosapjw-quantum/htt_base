@@ -1,0 +1,207 @@
+{
+  "assignment_id": "A-PR286-FROZEN-CLAIM",
+  "candidate_seal_sha256": "d9241a26060fbdd09d0f1f77b3a47bec422525cb7d016b33b089bf232c03068d",
+  "candidate_sha": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+  "candidate_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+  "completed_at": "2026-08-10T13:29:24+00:00",
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#candidate_identity"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "spec_before_execution",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr286_spec.yaml"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "source_58_inventory_exactness",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#row_terminal_contract"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "vt_s_14_inventory_exactness",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#row_terminal_contract"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr286_spec.yaml#statement_identity_replay"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "exact_proof_not_simulation",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_s_complete_adjudication.py"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "estimand_and_sampling_law_binding",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#rows"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "covariance_and_null_binding",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_s_complete_adjudication.py"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "exact_vs_asymptotic_status",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr286_spec.yaml#statistical_receipt_contract"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "preregistration_seed_and_tolerance_binding",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr286_spec.yaml#coverage_rule"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "coverage_and_failure_map_replay",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#forbidden_input_mutations"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "negative_controls_visible",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#negative_control_terminal_contract"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "source_status_not_authority",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#complete_is_not_universal_proof"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "vts14_admitted_data_gate",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#row_terminal_contract"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "htt_mio_obsstat_ownership",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#ownership_firewall"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#receipt_content_address"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "portable_clean_integration",
+      "evidence_refs": [
+        ".prguard/runtime/PR286_CANDIDATE_INTEGRATION_REHEARSAL.json"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr286_publication_policy.json"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#claim_ceiling_and_provenance"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    },
+    {
+      "cell": "latest_target_integration",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#integration_rehearsal_identity"
+      ],
+      "rationale": "",
+      "status": "PASS"
+    }
+  ],
+  "coverage_sha256": "05b96ce3629f73d7988f5512555c53a9086c291b5d6b9876046c7b9b798b2259",
+  "diff_sha256": "80f2057dc690aaacf0258e1603dac0fcf4a455f343564d80717709afd615071d",
+  "first_verdict_read_only": true,
+  "independent_oracles": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.py",
+        "--out",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json"
+      ],
+      "artifact_bytes": 10650,
+      "artifact_path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json",
+      "artifact_sha256": "d724c64330183bf4c092cac41e8e18dc84bdf0f1877c4c41841eb915cd20d226",
+      "command_fingerprint": "1f26a86194617b222c9ea8c2e7d2f043c515ac490f7f0f4a24c4d3011a47d612",
+      "completed_at": "2026-08-10T13:24:53+00:00",
+      "evidence_refs": [
+        ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+        "docs/research_program/post_pr275/pr286_spec.yaml",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "kind": "invariant_checker",
+      "oracle_id": "PR286-FROZEN-CLAIM-ORACLE",
+      "returncode": 0,
+      "started_at": "2026-08-10T13:24:52+00:00",
+      "status": "PASS",
+      "timed_out": false
+    }
+  ],
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "run_id": "pr286-candidate-review-20260810",
+  "schema_version": 1
+}

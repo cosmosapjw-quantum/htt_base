@@ -1,0 +1,112 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-frozen-independent-review-20260811",
+  "assignment_id": "A-PR289-FROZEN-CLAIM",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_gate_reviewer",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "8aa29e14dcd7e704235a524634dcab219c46728df47da7b9ba8d5885f27271d5",
+    "seal_sha256": "0347f2f5011309909423c4e27e090556c95c2a237e7d9c7a5ab3781087407a47",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "1ad54d3c5a484816128a1df93d54953589780520",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "67ec8432a6557bb460dfe8015b361fe9f6c00d1d",
+    "diff_sha256": "ce6c09a90ccb0e3f50929591a074d4947eb094288b2720d863bc0f3516e44f6e",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "cd8aebca49820d989bf805173f20ac65093181f541920f5adee74ce8e8fce413"
+  },
+  "independence_mode": "blind-results",
+  "status": "error",
+  "gate_disposition": "INCONCLUSIVE",
+  "result_path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/results/A-PR289-FROZEN-CLAIM.json",
+  "assignment_sha256": "c7d075be33439d9be2364a2d542060f93ed9c5d92324bbfd5dfe7e0dbc0901c3",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr289-frozen-independent-review-20260811/assignments/A-PR289-FROZEN-CLAIM.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".prguard/runtime/PR289_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr289_spec.yaml",
+    "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "htt/src/common/data_identity.py",
+    "tests/contracts/test_data_identity_registry_v2.py",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/research_program/post_pr275/data_runbooks.yaml",
+    "docs/harness/CLAIM_LEDGER.md",
+    "docs/PR_DELTAS/pr-289.md",
+    "docs/codex_handoff/pr_status.yaml",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/runs/pr289-frozen-independent-review-20260811/RUN_PLAN.json",
+    ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-REPLAY.json",
+    ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-PHYSSTAT.json",
+    ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-CODE.json",
+    ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-CLAIM.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-CLAIM.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-PHYSSTAT.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-CODE.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T09:22:31+00:00",
+  "completed_at": "2026-08-11T09:32:57+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0"
+  },
+  "commands": [
+    ["python3", "-B", ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CLAIM/independence_breach_oracle.py", ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CLAIM/INDEPENDENCE_BREACH.json"],
+    ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CLAIM/REVIEW_COVERAGE.json", "--seal", ".prguard/runtime/PR289_CANDIDATE_SEAL.json", "--run-id", "pr289-frozen-independent-review-20260811", "--assignment-id", "A-PR289-FROZEN-CLAIM", "--risk-tier", "R3", "--structural-only"]
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CLAIM/INDEPENDENCE_BREACH.json",
+      "sha256": "ed6b935736e11800015325b48a19a92c12e44e64644003193607559af85c5d0a",
+      "bytes": 642,
+      "producer": "A-PR289-FROZEN-CLAIM"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CLAIM/independence_breach_oracle.py",
+      "sha256": "904c22c7b846a873ab123afadf53e3360c82d786d1689f21e24e95151801921d",
+      "bytes": 1518,
+      "producer": "A-PR289-FROZEN-CLAIM",
+      "command_fingerprint": "1c43affb69cbcb5a6b9852a28c7b9cd9daef2a5708d10345dac6f1c5558eb46c"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CLAIM/REVIEW_COVERAGE.json",
+      "sha256": "7159f962a4558cf17838f83072fd8f59ca8d4855e596b21163f05ec50f23b7df",
+      "bytes": 8156,
+      "producer": "A-PR289-FROZEN-CLAIM"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-CLAIM/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "7159f962a4558cf17838f83072fd8f59ca8d4855e596b21163f05ec50f23b7df",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "not_examined",
+      "finding_ids": [],
+      "summary": "Not examined: the blind-results independence contract was breached before a claim verdict could be formed."
+    }
+  ],
+  "errors": [
+    "ACCIDENTAL_HISTORICAL_RESULT_EXPOSURE: a malformed schema-search glob surfaced snippets from unrelated historical result envelopes; substantive review stopped and no PR-289 claim verdict was formed."
+  ]
+}

@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-numerical-repair-rereview-20260811",
+  "assignment_id": "A-PR286-R2-PHYSCODE",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "candidate_seal_sha256": "0667a86aea43de3ab892489053a0f1c39697107fc3a8d25b8bc0113fca2e806f",
+  "candidate_sha": "7ad8176282554670909c28306b3e14e83662a42b",
+  "candidate_tree_sha": "d14eedaa79f902f5b47b507fa3951e5a22cbe9b7",
+  "diff_sha256": "12137112ed5ea688cd4c36ab0a4c3f301bb9a1d95629314356f113585393e06f",
+  "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+  "completed_at": "2026-08-11T01:56:19Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json",
+        "git rev-parse HEAD^{commit} HEAD^{tree}"
+      ],
+      "rationale": "HEAD, tree, merge base, and all nine required-input hashes match the frozen assignment and seal."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/assignments/A-PR286-R2-PHYSCODE.json",
+        "docs/research_program/post_pr275/pr286_spec.yaml"
+      ],
+      "rationale": "The registered assignment was read before targeted evidence and execution."
+    },
+    {
+      "cell": "source_58_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_s_complete_adjudication.py::test_exact_inventory_and_terminal_counts",
+        "python3 -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py focused"
+      ],
+      "rationale": "The independent focused replay reports 44 passing contract tests and the receipt has exactly 58 source rows."
+    },
+    {
+      "cell": "vt_s_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_s_complete_adjudication.py::test_exact_inventory_and_terminal_counts",
+        ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-oracle.py"
+      ],
+      "rationale": "The receipt has exactly 14 VT-S rows and 72 total dispositions."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr286_pillar_s_adjudication.py check",
+        "tests/contracts/test_pillar_s_complete_adjudication.py"
+      ],
+      "rationale": "Receipt recomputation and statement replay tests pass without source-status substitution."
+    },
+    {
+      "cell": "exact_proof_not_simulation",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+        "tests/contracts/test_pillar_s_complete_adjudication.py::test_source_proven_cas_rows_only_are_exact_pass"
+      ],
+      "rationale": "Exact rows remain EXACT_TYPED_PROOF or EXACT_PROOF; synthetic rows remain explicitly synthetic and diagnostic-only."
+    },
+    {
+      "cell": "estimand_and_sampling_law_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+        "python3 -B scripts/codex_harness/build_pr272_pillar_s_inference.py --check"
+      ],
+      "rationale": "PR-272 replay passes against the bound estimands and registered laws."
+    },
+    {
+      "cell": "covariance_and_null_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+        "tests/contracts/test_pillar_s_complete_adjudication.py::test_preregistered_statistical_fields_and_negative_controls"
+      ],
+      "rationale": "The stored synthetic cell binds its declared covariance and visible registered null controls."
+    },
+    {
+      "cell": "exact_vs_asymptotic_status",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json"
+      ],
+      "rationale": "Exact and finite preregistered synthetic statuses remain typed separately across all 72 rows."
+    },
+    {
+      "cell": "preregistration_seed_and_tolerance_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "python3 -B scripts/codex_harness/build_pr272_pillar_s_inference.py --check",
+        "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml"
+      ],
+      "rationale": "The frozen PR-272 registry replay passes with its seed family and tolerance identities."
+    },
+    {
+      "cell": "coverage_and_failure_map_replay",
+      "status": "FAIL",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-oracle.py",
+        "htt/src/common/vector_tensor_statistical_inference.py:1523"
+      ],
+      "rationale": "The public MIO cross-check accepts an exact finite huge-scale near-proportional input with VALIDATED_REGISTERED_SYNTHETIC while all three numeric fields are NaN; this invalid path is absent from the registered hostile failure map."
+    },
+    {
+      "cell": "negative_controls_visible",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_s_complete_adjudication.py::test_each_registered_mutation_is_killed",
+        ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-oracle.py"
+      ],
+      "rationale": "All 19 registered mutations, including MU286-VTS14-NUMERIC-GUARD-DRIFT, are present and killed; the independent oracle separately exposes the unregistered MIO boundary defect."
+    },
+    {
+      "cell": "source_status_not_authority",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_s_complete_adjudication.py::test_source_oracle_and_active_labels_do_not_self_promote"
+      ],
+      "rationale": "All 50 non-CAS source rows remain INCONCLUSIVE_WITH_RECEIPT."
+    },
+    {
+      "cell": "vts14_admitted_data_gate",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14",
+        "docs/research_program/post_pr275/pr286_spec.yaml"
+      ],
+      "rationale": "VT-S14 remains BLOCKED_WITH_RECEIPT with admitted_data_executed false; the numerical defect reinforces continued no-admission."
+    },
+    {
+      "cell": "htt_mio_obsstat_ownership",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_s_inference.py::test_public_facades_enforce_owner_boundary",
+        "tests/contracts/test_pillar_s_inference.py::test_depth_local_global_keeps_htt_and_mio_ownership_separate"
+      ],
+      "rationale": "HTT retains GLS/model comparison and MIO remains residual-only with no likelihood, posterior, or evidence; the defect is numerical acceptance, not ownership leakage."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        "python3 -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py check"
+      ],
+      "rationale": "The frozen receipt recomputes byte-for-byte and its stored numeric fields are all finite."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        "python3 -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py portable"
+      ],
+      "rationale": "Portable clean replay exits zero and reports identical pre/post source and clean-root hashes."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/test_publication_integrity.py",
+        "docs/research_program/post_pr275/pr286_publication_policy.json"
+      ],
+      "rationale": "The exact three policy cross-binding tests pass (3 passed, 74 deselected)."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "python3 -B scripts/check_claim_language.py --strict-missing --include-archives",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json"
+      ],
+      "rationale": "Claim-language scan passes; claim level remains C2 diagnostic-only, public_use false, no native transfer, and family identification blocked pre-native-atlas."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This blind first-verdict assignment is bound to the frozen candidate and does not own or attest the later latest-target integration receipt."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR286-R2-PHYSCODE-NUMERIC-ORACLE",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-oracle.py"
+      ],
+      "command_fingerprint": "efa6ab148c678f22feca4d0a26de05737835befd9a306468ebf8ee24a2430113",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T01:54:40Z",
+      "completed_at": "2026-08-11T01:54:55Z",
+      "artifact_path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-oracle.py",
+      "artifact_sha256": "f630bda83f6932a381ea603e4c57bca1295c4c74d833622d42a15bbaacc725bc",
+      "artifact_bytes": 9592,
+      "evidence_refs": [
+        "htt/src/common/vector_tensor_statistical_inference.py",
+        "htt/mio/formalism/vector_tensor_validation.py",
+        "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json"
+      ]
+    }
+  ],
+  "coverage_sha256": "64e38dbd706c95c3f2ece26af808461eb28d506b902a1b8814426906839b483e"
+}

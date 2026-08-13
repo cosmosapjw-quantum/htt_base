@@ -1,0 +1,93 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-candidate-review-20260810",
+  "assignment_id": "A-PR286-FROZEN-CODE",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "code_cartographer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "0376ec83567e3ad8a005500110961f8b5df5ec275fc2c4ded9ad67eb12e12bd5",
+    "seal_sha256": "d9241a26060fbdd09d0f1f77b3a47bec422525cb7d016b33b089bf232c03068d",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+    "diff_sha256": "80f2057dc690aaacf0258e1603dac0fcf4a455f343564d80717709afd615071d",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "d3307adde069f7bfb422d290d14204cd1d67778a66cace303f0a962d56cca818"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Fresh frozen code and API review of PR-286. Read this assignment first; do not read CONTEXT_PACK, sibling results, or historical verdict envelopes. Verify exact candidate seal and integration receipt; inspect the central statistical inference implementation and all reachable callers for covariance whitening, numerical rank, principal angle, local/global abstention, proportional-design abstention, input validation, deterministic semantics, and compatibility with PR-272/PR-273. Reproduce discriminating hostile cases, especially non-identity covariance and scale/conditioning boundaries; decide whether any unwhitened-rank or threshold seam violates the registered contract. Verify no unused bypass helper or mutable default can mint a positive result. Write no tracked/shared files; produce only assignment-local review coverage, executable oracle, and one strict-valid registered result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+      "sha256": "0376ec83567e3ad8a005500110961f8b5df5ec275fc2c4ded9ad67eb12e12bd5"
+    },
+    {
+      "path": ".prguard/runtime/PR286_CANDIDATE_INTEGRATION_REHEARSAL.json",
+      "sha256": "78f13f54bebf60df6781fd8fec7576bb78e20075715e2783eed86bb469e46465"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr286_spec.yaml",
+      "sha256": "db4fc3d3d00cbeb239a437380d646a889ede519f671641cdf0f72e35a13ae413"
+    },
+    {
+      "path": "htt/src/common/vector_tensor_statistical_inference.py",
+      "sha256": "3bd16869f569c035d26950e77db3861c61c30206413ff101da8821cad7a1675e"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+      "sha256": "9aa189a082b5e8d1702f2d09cf1be301f7f183f86958c42b850d80c2f3a84834"
+    },
+    {
+      "path": "tests/contracts/test_pillar_s_complete_adjudication.py",
+      "sha256": "1f7bf9cb48c0b650cbc766dce8a0f4298892bb30e9e4e4ef593a3630416c87a2"
+    },
+    {
+      "path": "tests/contracts/test_pillar_s_inference.py",
+      "sha256": "84d64162b1f8dc591de68f44132e844e62fbc767e0b6d96de606a64ff9708faf"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+      "sha256": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+      "sha256": "36783932f540d4a4e26cc0d66f1f8bb5692623664deda7106e97326576f041bc"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+      "sha256": "1eb3a52de178443ed6a14dbff425c7630c93f37a8e3af66c8e348162d46df32d"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-CODE.json",
+  "status": "registered",
+  "assignment_sha256": "1d106ea0eee758562f220aae8fda16ffd13e6f49b25b4fd457698ba461ccbf13"
+}

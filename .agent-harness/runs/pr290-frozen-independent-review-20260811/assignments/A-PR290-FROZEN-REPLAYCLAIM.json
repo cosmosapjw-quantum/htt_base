@@ -1,0 +1,119 @@
+{
+  "schema_version": 3,
+  "run_id": "pr290-frozen-independent-review-20260811",
+  "assignment_id": "A-PR290-FROZEN-REPLAYCLAIM",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_lane_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-290",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "025809afa9b9760e39a2c21023193d2c0b1920fc86bf0e24e05b6f44b340141a",
+    "seal_sha256": "f7c226fdc53408bb10defeabbd7a23a5e17c38dd2a3a2359640aeacf3678b3ed",
+    "base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_sha": "27c83a1a12369b4b563667ff5145ae9a717b24f0",
+    "merge_base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_tree_sha": "344dfb920b26c0207432b6acd9625bf2dacf50da",
+    "diff_sha256": "d10438bad740b2c81a4198655a647b5d7ca021f9f9cf8a3e196e22a5576dbd23",
+    "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+    "production_hash": "f3a75833210278e15847731fa8f12183babb45ba0ea4409e75119960c9f5573f"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Blind frozen lineage/replay/claim review of PR-290. Verify exact PR-289 sealed base; unique current stable patch IDs; G49/G50/G53 valuable subsets plus G51/G52, with G54 and stale receipt/duplicate aliases absent; full current receipt and PR-289/PR-288 source bindings; seven policy commands, portable clean replay, status mirror identity, lifecycle VALIDATED, PR-291 INELIGIBLE with zero budget, HUMAN_ONLY merge, HTT/COMMON/OBSSTAT ownership, C2 diagnostic-only, transfer none, observed/public false, pre-native family gate blocked, and typed predecessor INCONCLUSIVE not regraded. Candidate/shared files read-only. Write only assignment-local oracle, coverage, and declared result. Do not inspect sibling or historical results, CONTEXT_PACK, process listings, broad .agent-harness searches, or aggregate validators.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+      "sha256": "025809afa9b9760e39a2c21023193d2c0b1920fc86bf0e24e05b6f44b340141a"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr290_spec.yaml",
+      "sha256": "e26580613babf85c6f68794bd4038538f9f916531428401d0fb951fef9b0b5cc"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr290_publication_policy.json",
+      "sha256": "45655b62f02f2d422283aa99780c78e80a022fbd1fd371e8ee7a450ddad320cd"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-290.md",
+      "sha256": "e2335b7f90a3c3ef8ed60f117e17e1c6847be1733940f3c40f022e2d8cf9efb5"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "c97522468d87199c93ac8e80d67ee77ad6a0eab39d6083f0c39e68f4951fa208"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "c97522468d87199c93ac8e80d67ee77ad6a0eab39d6083f0c39e68f4951fa208"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+      "sha256": "bc650c058ff54bd37d63d3e65c14e9c30b78f8b8d3383127f1807952c769b1c0"
+    },
+    {
+      "path": "htt/src/common/observed_lane_activation.py",
+      "sha256": "76524a3bd0d0ff5e0f6f4d24f650761cb853d8e2a7655a69bcda4321177c1e99"
+    },
+    {
+      "path": "htt/obsstat/planck_post275_lane.py",
+      "sha256": "84a326a2f7cb9ba10101a723ac14377e778260d06035b0435e94192459351959"
+    },
+    {
+      "path": "htt/obsstat/boost_biposh_residual.py",
+      "sha256": "8a8e95e7a1ffb97213bc9463cbdd78e3c4a0fd67a1cfc89756fa1fd4d62233d8"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr290_planck_lane.py",
+      "sha256": "abaddb4980839f3b368337e9c800bed7a15c78b8fb7ae78c4a0708dc9e250466"
+    },
+    {
+      "path": "tests/integration/test_planck_post275_lane.py",
+      "sha256": "548ee625e75264f46593358db1201c7bd28df71843ca3bcd6779135944fd8a61"
+    },
+    {
+      "path": "docs/generated/pr289_data_identity_v2_receipt.json",
+      "sha256": "92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+      "sha256": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f"
+    },
+    {
+      "path": "htt/src/common/data_identity.py",
+      "sha256": "145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2"
+    },
+    {
+      "path": "docs/generated/pr288_bayesian_semantics_receipt.json",
+      "sha256": "622dadbcdf4a5d616a78f485fd6a772d1c7823ed8d77e808aa2bfc8f66169b0c"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact 15-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-REPLAYCLAIM.json",
+  "status": "registered",
+  "assignment_sha256": "b92504308b1eb0a58c6d8d5797b08b02e5e9a97cb0ad9562a4783bbe9119cf48"
+}

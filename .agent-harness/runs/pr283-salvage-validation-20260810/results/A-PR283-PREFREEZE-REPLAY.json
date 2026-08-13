@@ -1,0 +1,279 @@
+{
+  "schema_version": 3,
+  "run_id": "pr283-salvage-validation-20260810",
+  "assignment_id": "A-PR283-PREFREEZE-REPLAY",
+  "assignment_sha256": "e2ac3124a7f70f7cd1d9b17652f6cdf86d15fb38f4662883b13bb94e34d2948b",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-283",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "result_path": ".agent-harness/runs/pr283-salvage-validation-20260810/results/A-PR283-PREFREEZE-REPLAY.json",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-09T18:39:00Z",
+  "completed_at": "2026-08-09T18:46:35Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "id": "required-input-sha256",
+      "exit_code": 0,
+      "summary": "All five registered input hashes with declared SHA-256 values matched; the generated receipt SHA-256 was 60e800d20c95c18f9ccb1edbf1a0959c7df7f3965175226797ad66f15ecff806."
+    },
+    {
+      "id": "pr283-process-recovery-bootstrap",
+      "exit_code": 0,
+      "summary": "14 passed in 1.89s."
+    },
+    {
+      "id": "pr283-focused",
+      "exit_code": 0,
+      "summary": "22 passed in 1.42s."
+    },
+    {
+      "id": "pr283-adjacent",
+      "exit_code": 0,
+      "summary": "62 passed in 5.81s."
+    },
+    {
+      "id": "pr283-receipt-replay-first",
+      "exit_code": 0,
+      "summary": "Receipt check passed with SHA-256 60e800d20c95c18f9ccb1edbf1a0959c7df7f3965175226797ad66f15ecff806."
+    },
+    {
+      "id": "pr283-receipt-replay-second",
+      "exit_code": 0,
+      "summary": "Independent second recomputation returned the identical receipt SHA-256."
+    },
+    {
+      "id": "pr283-in-memory-stale-receipt",
+      "exit_code": 0,
+      "summary": "An in-memory stale receipt substitute made check return 1 with expected and actual hashes; the audit wrapper returned 0 only after observing that rejection."
+    },
+    {
+      "id": "pr283-pr272-predecessor-replay",
+      "exit_code": 0,
+      "summary": "5 passed, 24 deselected in 1.58s."
+    },
+    {
+      "id": "pr283-publication-policy-cross-binding",
+      "exit_code": 0,
+      "summary": "9 passed, 58 deselected in 1.01s."
+    },
+    {
+      "id": "pr283-source-replay-caller-migrations-exact",
+      "exit_code": 2,
+      "summary": "Collection failed because common was not importable from the repository root."
+    },
+    {
+      "id": "pr283-source-replay-caller-migrations-controlled-import",
+      "exit_code": 0,
+      "summary": "With repository-only htt/src and htt on PYTHONPATH, 90 passed in 7.34s."
+    },
+    {
+      "id": "pr283-harness-portability-exact",
+      "exit_code": 2,
+      "summary": "Collection failed because common was not importable from the repository root."
+    },
+    {
+      "id": "pr283-harness-portability-controlled-import",
+      "exit_code": 0,
+      "summary": "With repository-only htt/src and htt on PYTHONPATH, 22 passed in 10.30s."
+    },
+    {
+      "id": "pr283-pr272-portability-selector-exact",
+      "exit_code": 2,
+      "summary": "Direct pytest collection failed because obsstat was not importable from the repository root; the policy-prescribed PR-272 runner itself passed."
+    },
+    {
+      "id": "pr283-portable-clean-replay",
+      "exit_code": 1,
+      "summary": "Fail-closed precondition: portable replay requires a clean committed candidate; the current candidate is mutable and dirty."
+    },
+    {
+      "id": "pr283-dag-strict",
+      "exit_code": 0,
+      "summary": "244-PR DAG valid; PR-283 eligible."
+    },
+    {
+      "id": "pr283-claim-language",
+      "exit_code": 2,
+      "summary": "Strict missing-path check failed for docs/PR_DELTAS/pr-283.md."
+    },
+    {
+      "id": "receipt-binding-audit",
+      "exit_code": 0,
+      "summary": "16 source bindings matched current-tree bytes; all 10 registered mutations executed, activated, were killed, and left zero survivors."
+    }
+  ],
+  "artifacts": [],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr283-salvage-validation-20260810/assignments/A-PR283-PREFREEZE-REPLAY.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr283-salvage-validation-20260810/RUN_PLAN.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    "docs/research_program/post_pr275/pr283_spec.yaml",
+    "docs/research_program/post_pr275/pr283_publication_policy.json",
+    "htt/htt/htt/statistics/open_set_response_classes.py",
+    "scripts/codex_harness/run_pr283_weak_identification.py",
+    "scripts/codex_harness/run_pr282_exact_parity_readiness.py",
+    "tests/contracts/test_weak_identification.py",
+    "tests/contracts/test_process_recovery_auto_stacked.py",
+    "tests/contracts/test_harness_profiles_v4.py",
+    "tests/contracts/test_pillar_s_inference.py",
+    "tests/obsstat/test_exact_parity_readiness.py",
+    "tests/pr_cards/test_pr_258_open_set_response_classes.py",
+    "tests/contracts/test_anisotropy_type_report.py",
+    "docs/research_program/vector_tensor/pr272_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+    "docs/research_program/vector_tensor/integration/PR282_PR272_V1_RELOCATION.json",
+    "docs/research_program/vector_tensor/integration/PR283_PR272_OPEN_SET_V1_RELOCATION.json",
+    "docs/generated/pr283_weak_identification_receipt.json"
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR283-RUNTIME-REPLAY-PASS",
+      "claim_id": "C-PR280-HERMETIC-HARNESS",
+      "verdict": "pass",
+      "severity": "low",
+      "evidence_fingerprint": "02029321967997595cc12d702cf7f1921e9534a55e35965db5fb176f2c66a501",
+      "statement": "The bounded PR-283 runtime and receipt replay is internally deterministic and fail-closed: 16 current-tree source bindings match, all 10 mutations execute and die, two check runs reproduce one receipt hash, stale receipt bytes are rejected, and the frozen PR-272 relocation replay passes.",
+      "assumptions_used": [
+        "The registered mutable assignment intentionally does not provide a candidate seal.",
+        "This finding validates replay mechanics and diagnostic-only boundaries, not scientific promotion."
+      ],
+      "evidence_refs": [
+        "docs/generated/pr283_weak_identification_receipt.json sha256:60e800d20c95c18f9ccb1edbf1a0959c7df7f3965175226797ad66f15ecff806",
+        "scripts/codex_harness/run_pr283_weak_identification.py:1329",
+        "scripts/codex_harness/run_pr283_weak_identification.py:1346",
+        "tests/contracts/test_weak_identification.py:532",
+        "docs/research_program/vector_tensor/integration/PR283_PR272_OPEN_SET_V1_RELOCATION.json"
+      ],
+      "counterevidence_refs": [],
+      "reproduction": [
+        "python -B scripts/codex_harness/run_pr283_weak_identification.py focused",
+        "python -B scripts/codex_harness/run_pr283_weak_identification.py adjacent",
+        "python -B scripts/codex_harness/run_pr283_weak_identification.py check",
+        "python -B scripts/codex_harness/run_pr282_exact_parity_readiness.py pr272"
+      ],
+      "unresolved": [],
+      "confidence": 0.99
+    },
+    {
+      "finding_id": "F-PR283-ROOT-IMPORT-POLICY-FAIL",
+      "claim_id": "C-PR280-HERMETIC-HARNESS",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "beda4f6709cdfe50447dc1c282a72b89c3fff883490484c27564b739897459e5",
+      "statement": "The exact source-caller and harness-portability policy commands are not hermetic from the repository root: both abort collection with ModuleNotFoundError for common. Their selectors pass 90/90 and 22/22 only after adding repository source roots to PYTHONPATH, so the defect is command bootstrap, not the selected tests.",
+      "assumptions_used": [
+        "Required policy argv is authoritative and must run without undeclared inherited import state.",
+        "An explicit repository-only PYTHONPATH rerun is diagnostic counterfactual evidence and does not regrade the exact command failures."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_publication_policy.json:75",
+        "docs/research_program/post_pr275/pr283_publication_policy.json:80",
+        "scripts/codex_harness/run_pr283_weak_identification.py:1183",
+        "exact pr283-source-replay-caller-migrations exit 2: ModuleNotFoundError No module named common",
+        "exact pr283-harness-portability exit 2: ModuleNotFoundError No module named common"
+      ],
+      "counterevidence_refs": [
+        "controlled repository-only PYTHONPATH caller migration replay: 90 passed",
+        "controlled repository-only PYTHONPATH harness portability replay: 22 passed"
+      ],
+      "reproduction": [
+        "python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_258_open_set_response_classes.py tests/contracts/test_anisotropy_type_report.py tests/integration/test_vector_tensor_blind_synthetic.py",
+        "python -B -m pytest -p no:cacheprovider -q tests/contracts/test_harness_profiles_v4.py"
+      ],
+      "unresolved": [
+        "Route these policy lanes through a repository-root bootstrap that scrubs ambient pytest variables and sets exact source roots, or make root imports intrinsically available; then rerun the exact policy argv."
+      ],
+      "confidence": 0.99
+    },
+    {
+      "finding_id": "F-PR283-CLAIM-COMMAND-MISSING-DELTA",
+      "claim_id": "C-PR280-HERMETIC-HARNESS",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "2f5673b9c418245f902b977d96ef0ec71eb5476973629e4bc312ee418fb4ed45",
+      "statement": "The exact strict claim-language command cannot execute because its required docs/PR_DELTAS/pr-283.md input is absent.",
+      "assumptions_used": [
+        "The strict-missing flag makes absence a deliberate fail-closed policy condition."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_publication_policy.json:90",
+        "pr283-claim-language exit 2: strict missing-path check failed: docs/PR_DELTAS/pr-283.md"
+      ],
+      "counterevidence_refs": [],
+      "reproduction": [
+        "python -B scripts/check_claim_language.py --strict-missing htt/src/common/source_separation.py htt/src/common/open_set_response_classes.py htt/src/common/vector_tensor_statistical_inference.py htt/htt/htt/statistics/open_set_response_classes.py tests/contracts/test_weak_identification.py tests/contracts/test_pillar_s_inference.py docs/research_program/vector_tensor/integration/PR283_PR272_OPEN_SET_V1_RELOCATION.json docs/research_program/post_pr275/pr283_spec.yaml docs/generated/pr283_weak_identification_receipt.json docs/PR_DELTAS/pr-283.md"
+      ],
+      "unresolved": [
+        "Create the PR-283 delta as a consuming status artifact or remove it from the policy before sealing; then rerun the exact strict command."
+      ],
+      "confidence": 1.0
+    },
+    {
+      "finding_id": "F-PR283-PORTABLE-PREFREEZE-BLOCKED",
+      "claim_id": "C-PR280-HERMETIC-HARNESS",
+      "verdict": "fail",
+      "severity": "medium",
+      "evidence_fingerprint": "3262a65f6e5077d1ef4625fe11425953b8bf081f69ea4b3a0be1faf14cbe1136",
+      "statement": "Portable clean replay is not yet admissible because the registered candidate is mutable and the worktree is dirty; the runner correctly returns 1 before archiving HEAD.",
+      "assumptions_used": [
+        "A current-tree portability verdict cannot be inferred from git archive HEAD while candidate changes remain uncommitted."
+      ],
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr283_weak_identification.py:1205",
+        "scripts/codex_harness/run_pr283_weak_identification.py:1213",
+        "pr283-portable-clean-replay exit 1: portable replay requires a clean committed candidate"
+      ],
+      "counterevidence_refs": [],
+      "reproduction": [
+        "python -B scripts/codex_harness/run_pr283_weak_identification.py portable"
+      ],
+      "unresolved": [
+        "After the production patch and generated receipt are frozen in one committed candidate, rerun portable and require unchanged source and clean-root manifests plus nested check exit 0."
+      ],
+      "confidence": 1.0
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR280-HERMETIC-HARNESS",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR283-RUNTIME-REPLAY-PASS",
+        "F-PR283-ROOT-IMPORT-POLICY-FAIL",
+        "F-PR283-CLAIM-COMMAND-MISSING-DELTA",
+        "F-PR283-PORTABLE-PREFREEZE-BLOCKED"
+      ],
+      "summary": "PR-283 runtime replay and artifact integrity pass, but the mutable candidate is not ready to freeze: two exact direct-pytest policy lanes lack repository-root import bootstrap, the strict claim command names a missing PR delta, and portable clean replay remains blocked until a committed candidate exists."
+    }
+  ],
+  "errors": []
+}

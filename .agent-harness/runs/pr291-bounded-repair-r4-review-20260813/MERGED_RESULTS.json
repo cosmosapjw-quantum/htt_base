@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-bounded-repair-r4-review-20260813",
+  "generated_at": "2026-08-13T06:57:16+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 3,
+  "raw_finding_count": 3,
+  "unique_finding_count": 3,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR291-R4-CLAIM",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR291-R4-CLAIM-GRAMMAR"
+          ],
+          "summary": "Blocking claim-firewall false negatives remain; the R4 claim gate fails despite correct ownership/provenance metadata and passing checked-in tests."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR291-R4-CODE-REPLAY",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR291-R4-CLAIM-GRAMMAR-001"
+          ],
+          "summary": "Code/replay review fails because an in-scope reordered plural family-identification promotion survives the scanner under unrelated clause negation."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR291-R4-PHYSSTAT",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR135-FINITE-NULL-RANK",
+          "evidence_fingerprint": "pr291-r4:fixed-threshold-total-rank-null-replay-oracle-v1",
+          "evidence_refs": [
+            ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-PHYSSTAT/ORACLE_RESULT.json",
+            "python -B scripts/codex_harness/run_pr291_cf4_lane.py focused"
+          ],
+          "finding_ids": [],
+          "outcome": "examined_no_findings",
+          "summary": "Within the assigned PR-291 numerical slice, fixed relative thresholds, covariance-whitened column-normalized total-response rank, scale invariance, content binding, and machine-epsilon null replay passed. This does not revalidate the broader historical finite-null p-value claim."
+        },
+        {
+          "claim_id": "C-PR136-IDENTIFIED-SET",
+          "finding_ids": [
+            "F-PR291-R4-PHYSSTAT-SOURCE-RANK-PROVENANCE"
+          ],
+          "outcome": "findings_present",
+          "summary": "FAIL: a caller-declared source geometry inconsistent with typed response-role columns is accepted and can drive a structural identified set."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR291-R4-CLAIM-GRAMMAR",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr291-r4-claim-grammar:false-negative:family-geometry-reordered-multiline-unrelated-negation:v1",
+      "statement": "The frozen claim scanner still permits positive Bianchi family or geometry promotion under reordered as-Bianchi syntax, same-clause unrelated not, and multiline or reversed scalar-family forms, so PR-291 does not satisfy its claim-and-family ceiling gate.",
+      "assumptions_used": [
+        "Pre-native family identification remains forbidden regardless of observed/public status.",
+        "Only negation scoped to the forbidden predicate may downclaim a match.",
+        "The scanner is an enforcement boundary, so a reproducible positive false negative is blocking even when checked-in examples pass."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-oracle.py",
+        "docs/research_program/post_pr275/pr291_spec.yaml:336",
+        "htt/src/common/semantic_guards/no_overclaim.py:100",
+        "htt/src/common/semantic_guards/no_overclaim.py:130",
+        "htt/src/common/semantic_guards/no_overclaim.py:632",
+        "tests/contracts/test_claim_language_lint.py:59"
+      ],
+      "counterevidence_refs": [
+        "Exact claim policy command passed.",
+        "Focused checked-in claim suite passed 28 tests.",
+        "Oracle confirmed active plural, passive as-Bianchi, direct multiline family, curl, P0, scalar unrelated-negation cases are caught and predicate-scoped downclaims remain allowed."
+      ],
+      "reproduction": [
+        "PYTHONPATH=htt/src python3 -B .agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CLAIM-oracle.py",
+        "Observe candidate_pass=false and missed_positive_cases containing reordered_active_as_bianchi, multiline_scalar_family, reordered_scalar_family, unrelated_not_family, and unrelated_not_geometry."
+      ],
+      "unresolved": [
+        "Add focused hostile tests for all five missed forms before altering the existing bounded grammar.",
+        "Re-run the exact claim policy, focused suite, and an independent oracle on newly frozen bytes."
+      ],
+      "confidence": 0.99,
+      "source_finding_ids": [
+        "F-PR291-R4-CLAIM-GRAMMAR"
+      ],
+      "supporting_assignments": [
+        "A-PR291-R4-CLAIM"
+      ],
+      "supporting_agent_types": [
+        "claim_lane_reviewer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR291-R4-CLAIM-GRAMMAR-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr291-r4-reordered-plural-family-identification-unrelated-negation-v1",
+      "statement": "The claim scanner misses the positive promotion 'The analysis is not public but definitively identifies several Bianchi families.'; the unrelated not-public clause suppresses no predicate, and the reordered plural family-identification form remains forbidden.",
+      "assumptions_used": [
+        "R4 requires reordered and plural family-identification forms to be detected.",
+        "Only negation scoped to the forbidden predicate may downclaim a match."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_oracle.py",
+        "htt/src/common/semantic_guards/no_overclaim.py",
+        "tests/contracts/test_claim_language_lint.py"
+      ],
+      "counterevidence_refs": [
+        "All seven declared publication-policy commands passed, including 28 existing claim-language tests inside the focused lane.",
+        "The hostile oracle passed fixed numerical rank, null replay, identified-set, receipt, portability-state, and lifecycle invariants."
+      ],
+      "reproduction": [
+        "Run: python -B .agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_oracle.py",
+        "Observe status FAIL_FINDING_REPRODUCED and claim_grammar.blocking_miss_reproduced equal to 1."
+      ],
+      "unresolved": [
+        "Extend the existing bounded geometry/family grammar to cover verb-first reordered plural forms without broadening unrelated-negation exemptions.",
+        "Add the exact hostile sentence as a contract regression and reseal before any rereview."
+      ],
+      "confidence": 0.99,
+      "source_finding_ids": [
+        "F-PR291-R4-CLAIM-GRAMMAR-001"
+      ],
+      "supporting_assignments": [
+        "A-PR291-R4-CODE-REPLAY"
+      ],
+      "supporting_agent_types": [
+        "harness_engineer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "assumptions_used": [
+        "parameter_roles identify the response columns whose LOCAL/GLOBAL source ranks must be reconciled",
+        "the registered covariance is SPD and passes the declared condition ceiling",
+        "source separation is diagnostic-only and must fail closed when source geometry is not derived from bound response bytes"
+      ],
+      "claim_id": "C-PR136-IDENTIFIED-SET",
+      "confidence": 0.99,
+      "counterevidence_refs": [
+        "tests/integration/test_cf4_post275_lane.py::test_gate_replays_null_basis_and_exact_source_rank",
+        "tests/integration/test_cf4_post275_lane.py::test_response_rank_is_whitened_column_scale_invariant_and_roles_are_typed"
+      ],
+      "evidence_fingerprint": "pr291-r4:typed-local-global-role-rank-vs-total-response-rank:nuisance-counterexample-v1",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-PHYSSTAT/ORACLE_RESULT.json",
+        "htt/obsstat/cf4_post275_lane.py:1260",
+        "htt/obsstat/cf4_post275_lane.py:1390",
+        "htt/obsstat/cf4_post275_lane.py:1401",
+        "htt/src/common/source_separation.py:315"
+      ],
+      "finding_id": "F-PR291-R4-PHYSSTAT-SOURCE-RANK-PROVENANCE",
+      "reproduction": [
+        "Construct response [[1,1,0],[0,0,1]] with roles LOCAL,GLOBAL,NUISANCE and SPD covariance [[1,.2],[.2,1]].",
+        "Observe covariance-whitened column-normalized total response_rank=2 and nullity=1, while numpy matrix_rank(response[:, LOCAL+GLOBAL])=1.",
+        "Create SourceSeparationDecision with declared local_rank=1, global_rank=1, joint_rank=2 and the response normalizer_id.",
+        "Call build_structural_identified_set; it returns BOUNDED_BUT_NOT_POINT_IDENTIFIED instead of rejecting the source-rank mismatch.",
+        "Run: PYTHONPATH=htt/src:htt:. python -B .agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-PHYSSTAT/ORACLE.py --output .agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-PHYSSTAT/ORACLE_RESULT.json"
+      ],
+      "severity": "high",
+      "statement": "The typed response/source binding does not derive LOCAL/GLOBAL component ranks, their joint rank, principal angles, or joint singular values from the covariance-whitened response columns selected by parameter_roles. It only compares the caller-declared source joint_rank to total response rank, which includes NUISANCE. Consequently identical LOCAL and GLOBAL columns (actual source joint rank 1) plus an independent NUISANCE column (total response rank 2) accept a declared source joint rank 2, yield WEAKLY_IDENTIFIED, and permit a BOUNDED_BUT_NOT_POINT_IDENTIFIED structural set. The repaired total rank/nullity equality therefore does not establish the claimed typed local/global rank provenance.",
+      "unresolved": [
+        "A defensible repair must compute or content-bind source component design matrices and derive local/global/joint rank plus angle/singular geometry under the same whitening and normalization contract; merely adding another declared rank field is insufficient."
+      ],
+      "verdict": "fail",
+      "source_finding_ids": [
+        "F-PR291-R4-PHYSSTAT-SOURCE-RANK-PROVENANCE"
+      ],
+      "supporting_assignments": [
+        "A-PR291-R4-PHYSSTAT"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "assignment_count": 3,
+  "validated_result_count": 3,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/RUN_PLAN.json",
+      "sha256": "bd1ae725f2f232ef3d42cf20d9ff7619383a90954d92cfa689f2b5b27217937b",
+      "bytes": 5462
+    },
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/assignments/A-PR291-R4-CLAIM.json",
+      "sha256": "47fd5b6d62caed47b549f7bf69c374d85a7810b19d6e9b432f945f7894e6e9e8",
+      "bytes": 5017
+    },
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/assignments/A-PR291-R4-CODE-REPLAY.json",
+      "sha256": "0dad823765357beb5089915c6aac34e0bb97a7b97dbfede6c26f48306d9199d1",
+      "bytes": 5132
+    },
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/assignments/A-PR291-R4-PHYSSTAT.json",
+      "sha256": "81f8bbbfb03e7f3ac17270e78d2213a558f18ae02383566d7652749ef79fbd3d",
+      "bytes": 4458
+    },
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/results/A-PR291-R4-CLAIM.json",
+      "sha256": "2fb3245f341f06e60d4f7a3106e89d54fe5c7ae750ae6250e9d28c1d2d4f510f",
+      "bytes": 7272
+    },
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/results/A-PR291-R4-CODE-REPLAY.json",
+      "sha256": "0e2b0e2cc7a5cff96ebc08363831b250a40e063616f7e135a984f86bbe55482e",
+      "bytes": 7831
+    },
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/results/A-PR291-R4-PHYSSTAT.json",
+      "sha256": "9c76eed10dd66e7616f6fa0a25b78f2740934a0701069a688e57691944054a0d",
+      "bytes": 9992
+    }
+  ],
+  "merge_input_sha256": "10f3db7333389c1d230f9dc97dbb1c7774c75de3b22bb1f1e7069fe7e593394c"
+}

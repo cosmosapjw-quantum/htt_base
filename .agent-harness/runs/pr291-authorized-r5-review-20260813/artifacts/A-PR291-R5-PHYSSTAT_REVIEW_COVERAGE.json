@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-authorized-r5-review-20260813",
+  "assignment_id": "A-PR291-R5-PHYSSTAT",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "8345974c09e968095cce4a8cac5014e3d08f42ed68e56004a2e3cd56ce3edf5a",
+  "candidate_sha": "5395853386b08b1fbf0b56a9e6c7a2a6e104ae5a",
+  "candidate_tree_sha": "4a1bdbecae5767768b4e8d5beb3a00b41b437c1f",
+  "diff_sha256": "d4e14e08a51067fdffa696ea694b4d1a61bafb7db740da3fd0246bcda5951862",
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "completed_at": "2026-08-13T07:41:11Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json",
+        "command:git-rev-parse-head-tree-merge-base-and-clean-status"
+      ],
+      "rationale": "HEAD, tree, merge base, clean state, seal bytes, and every assignment-required input hash matched the frozen binding."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml:1",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/assignments/A-PR291-R5-PHYSSTAT.json"
+      ],
+      "rationale": "The registered assignment and frozen specification were read before candidate tests or oracle execution."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "command:pr291-check-exit-0",
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:1"
+      ],
+      "rationale": "Check mode replayed the blocked predecessor terminal without observed execution or numerical output."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml:22",
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:1"
+      ],
+      "rationale": "The receipt independently records rejected identity admission and an unprovisioned, NOT_AUTHORIZED H-CF4 gate as distinct blockers."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Filesystem mutation ordering belongs to the disjoint code/replay lane; this assignment performed no candidate or shared-file writes."
+    },
+    {
+      "cell": "synthetic_estimand_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:187",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py"
+      ],
+      "rationale": "The oracle replayed exact operator, response, covariance, normalizer, estimand, label, and role identities on synthetic inputs only."
+    },
+    {
+      "cell": "group_row_selection_and_frame_conventions",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml:49",
+        "htt/obsstat/cf4_post275_lane.py:41",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py"
+      ],
+      "rationale": "The typed inventory includes exact row, selection, frame, sign, units, grouping, depth, and ZoA identities; the oracle checked right-handed axes, positive-receding signs, Mpc distance factors, and velocity/shear units."
+    },
+    {
+      "cell": "full_covariance_and_effective_rank",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:116",
+        "htt/obsstat/cf4_post275_lane.py:342",
+        "htt/obsstat/cf4_post275_lane.py:1239",
+        "command:pr291-focused-62-passed",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py"
+      ],
+      "rationale": "Independent derivation confirmed Cholesky whitening, column normalization, fixed 1e-12 relative SVD rank, covariance conditioning, diagonal-shortcut rejection, and machine-null replay independent of the scientific floor."
+    },
+    {
+      "cell": "depth_zoa_nested_support_and_transport",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/integration/test_cf4_post275_lane.py:607",
+        "command:pr291-focused-62-passed"
+      ],
+      "rationale": "Focused evidence exercises nested support, native-role-derived identities, and transport binding; this review found no physics/statistics contradiction."
+    },
+    {
+      "cell": "weak_identification_and_identified_set_abstention",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:1333",
+        "htt/obsstat/cf4_post275_lane.py:1389",
+        "htt/src/common/source_separation.py:315",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py"
+      ],
+      "rationale": "LOCAL/GLOBAL ranks and geometry are derived after role selection with NUISANCE excluded; scale and permutation controls preserve classification, nuisance lift cannot mint source rank, exact sub-tolerance drift is rejected, and singleton, reversed, SUM_ONLY, or favourable-point paths cannot emit the structural set."
+    },
+    {
+      "cell": "legacy_p0_and_curl_disposition",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:1611",
+        "docs/research_program/post_pr275/pr291_spec.yaml:153",
+        "command:pr291-focused-62-passed"
+      ],
+      "rationale": "The 0.0089 value remains dimensionless stencil self-consistency only; physical vorticity, potential flow, P0 rescue, and source/family use remain forbidden."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": [
+        "command:pr291-check-exit-0",
+        "command:receipt-content-replay-exit-0",
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:1"
+      ],
+      "rationale": "Exact receipt replay returned BLOCKED_PREDECESSOR_FINAL_SUCCESS, observed_data_executed=false, public_use=false, and an empty numeric_outputs_written list."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Portable archive replay belongs to the disjoint code/replay lane and was not required by this physics/statistics assignment."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Publication transaction and policy mutation tests belong to the disjoint claim/code lanes; this review used the frozen policy only to enumerate required coverage."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:1",
+        "htt/src/common/source_separation.py:41",
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:1",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py"
+      ],
+      "rationale": "No likelihood, prior distribution, posterior, evidence, Q, Pi, F, or G_F artifact is produced; G4/G7 are diagnostic gate labels, abstention is preserved, and every numerical artifact remains C2 diagnostic-only with BLOCKED_PRE_NATIVE_ATLAS."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        "command:git-rev-parse-origin-pr290-target",
+        ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json"
+      ],
+      "rationale": "The frozen target ref independently resolved to the exact declared base SHA 06ac20605ebc371b0f97ad6e91c802a51a9bf764."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR291-R5-PHYSSTAT-ORACLE",
+      "kind": "metamorphic_test",
+      "status": "PASS",
+      "argv": [
+        "{python}",
+        "-B",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py"
+      ],
+      "command_fingerprint": "30e3403b21c6f5ed4b05785c2c9befef42a9c3843d28d3d39e6bf33d70d76299",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T07:41:10Z",
+      "completed_at": "2026-08-13T07:41:11Z",
+      "artifact_path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py",
+      "artifact_sha256": "a494f09c0917a1097a2b62d78061b3910c883821708e336c79d0a7104211c6cd",
+      "artifact_bytes": 13363,
+      "evidence_refs": [
+        "oracle-output:status-PASS-16-controls",
+        "htt/obsstat/cf4_post275_lane.py:116",
+        "htt/obsstat/cf4_post275_lane.py:1389"
+      ]
+    }
+  ],
+  "coverage_sha256": "8955d96c04fba9e03d79037b6d7a2f223489ab39afcfef353ee4d643803a2bb5"
+}

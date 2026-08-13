@@ -1,0 +1,145 @@
+{
+  "candidate_verdict": "FAIL",
+  "checks": {
+    "claim_and_family_ceiling": true,
+    "fresh_four_axis_pass_forbidden": true,
+    "fresh_sympy_sage_lean_pass": true,
+    "fresh_wolfram_typed_engine_block": true,
+    "historical_byte_bound_cas_4axis_pass": true,
+    "legacy_all_title_only_and_inconclusive": true,
+    "legacy_declared_premise_domain_count": true,
+    "legacy_inventory_65": true,
+    "legacy_partition_31T_34S": true,
+    "legacy_premise_domain_status_exact": false,
+    "legacy_premise_domain_values_exact": true,
+    "pr190_exact_counterexample_chronology": true,
+    "vector_tensor_exact_statement_premise_domain_boundary_and_disposition": true,
+    "vector_tensor_inventory_14": true,
+    "vt_t13_chain_rule_only": true,
+    "vt_t14_native_blocker": true,
+    "vt_t8_local_only": true
+  },
+  "completed_at": "2026-08-10T06:35:05.121136+00:00",
+  "details": {
+    "cas_seal_compatibility": "The current run is CAS_BLOCKED/INCONCLUSIVE and cannot be called a fresh four-axis pass. It is compatible with the PR-285 process seal only as typed terminal platform evidence while the historical CAS_4AXIS_PASS remains separately byte-bound; it cannot cure an independent row-contract failure.",
+    "fresh_axis_statuses": {
+      "lean": "PASS",
+      "sage_singular": "PASS",
+      "sympy": "PASS",
+      "wolfram_xact_normalized": "BLOCKED_REQUIRED_ENGINE_UNAVAILABLE",
+      "wolfram_xact_raw": "BLOCKED_PLATFORM_OR_LICENSE"
+    },
+    "legacy_declared_rows": [
+      "SIG-P3",
+      "SIG-P11",
+      "SIG-P18",
+      "SIG-T1p",
+      "SIG-DL1",
+      "SIG-L-T2-EXIST",
+      "SIG-MES-PROV",
+      "SIG-T2G",
+      "SIG-TSUM",
+      "SIG-MES-BR",
+      "SIG-MES-REFREEZE",
+      "SIG-MES-MESB-TRACE"
+    ],
+    "legacy_value_drift": [],
+    "vt_mismatches": []
+  },
+  "findings": [
+    {
+      "finding_id": "PR285-LEGACY-PREMISE-DOMAIN-STATUS-DRIFT",
+      "reason": "Twelve legacy registry rows explicitly declare assumptions and domains, but the receipt labels them SOURCE_NOT_TYPED. Values are preserved; source typing status and the spec's all-65 premise/domain assertion are not.",
+      "rows": [
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-P3",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        },
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-P11",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        },
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-P18",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        },
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-T1p",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        },
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-DL1",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        },
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-L-T2-EXIST",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        },
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-MES-PROV",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        },
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-T2G",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        },
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-TSUM",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        },
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-MES-BR",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        },
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-MES-REFREEZE",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        },
+        {
+          "receipt_domain_status": "SOURCE_NOT_TYPED",
+          "receipt_premise_status": "SOURCE_NOT_TYPED",
+          "row_id": "SIG-MES-MESB-TRACE",
+          "source_assumption_status": "DECLARED",
+          "source_domain_status": "DECLARED"
+        }
+      ],
+      "severity": "high"
+    }
+  ],
+  "oracle_id": "PR285-PHYSMATH-ROW-CAS-ORACLE",
+  "schema_version": 1,
+  "started_at": "2026-08-10T06:34:41.919145+00:00"
+}

@@ -1,0 +1,104 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-claim-reauthorization-20260813",
+  "assignment_id": "A-PR291-R5-FINAL-REAUTH-CLOSEOUT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "7d79f1858b8e3bb63d7dbcd1af51e3d480d76ab9a3c8170d702980d0cd0cb9d1",
+    "seal_sha256": "c9e2b7a8ee86f8951b5bf90175033d5a45824a5487542f1cd9ef5b7c56b8b348",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "82532a2a71abc385f1176dce4b99a4917929155d",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "68e3a83249ada011f984b67078c003086b1fc6aa",
+    "diff_sha256": "5343db9b69375145eea9e51624b3ac9246f868f6482beae316e4eb456b0f8100",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "0dd1b5b383ae2befc3f06aa7254b1926d37d3d6a8ede0a0f1052b95a5a04ce18"
+  },
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Final metadata-only closeout of PR-291 after the owner-authorized claim-only R5 continuation. Start only after coordinator confirms A-PR291-R5-CLAIM-CODE-REVIEW completed PASS. Read this assignment first. Inspect only explicitly allowed prior/current R5 results and aggregates. Verify exact final seal and blocked nonexecution receipt, exact PR-290 predecessor/base, clean tree and unique patch IDs; preserve R4 and first-R5 FAIL chronology; require ordinary code/replay PASS, physics/statistics PASS, and final fresh claim/code PASS. Verify only claim guard/test/status/receipt/prose changed after the first R5 seal and numerical CF4 module/hash is unchanged, so physics/statistics evidence is carried without substantive rerun. Confirm ordinary 16/16, first extension 2/2, reauthorization 2/2, lifecycle eligible for REVIEWED then SEALED, PR-292 remains INELIGIBLE until PR-291 PR_OPEN, HUMAN_ONLY, and no push/PR/merge yet. Write no shared files and rerun no substantive assurance; produce only metadata oracle, exact 16-cell coverage, and strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR291_R5_FINAL_CANDIDATE_SEAL.json",
+      "sha256": "7d79f1858b8e3bb63d7dbcd1af51e3d480d76ab9a3c8170d702980d0cd0cb9d1"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_spec.yaml",
+      "sha256": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_publication_policy.json",
+      "sha256": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-291.md",
+      "sha256": "8ef026cbbe07590bdbad4cd0574812b9290afb910ed8f8b96ff62452aac60ec5"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "ba6acd59c4502c8a8fd69ff0108b84cc29fcf8d0cb1e9c927491e13fed5ceb53"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "ba6acd59c4502c8a8fd69ff0108b84cc29fcf8d0cb1e9c927491e13fed5ceb53"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+      "sha256": "322d30749c3dc1e812882ab8196df9567c6f21a0f41a54dc13078383dad9b592"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/RUN_SUMMARY.json",
+      "sha256": "c7d6e35b85d8cb89ee4e7fa75b48c920a264655edac63c85f852d7457237f96a"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/MERGED_RESULTS.json",
+      "sha256": "730dcf85551aec4900f7e8d28726e595cd3afa347de1dfd30d734da786ad1c60"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/RUN_SUMMARY.json",
+      "sha256": "2dbc371052f7e95b7fef911a69cdacd20baf4833073c0984e4f7056d771c3805"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/MERGED_RESULTS.json",
+      "sha256": "6c9856ef99122a46504f2f57699a6cf34f2dad388ac358ad992721ff6e41a0c1"
+    }
+  ],
+  "allowed_sibling_results": [
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-CLAIM.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-FINAL-CLOSEOUT.json",
+    ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-CLAIM-CODE-REVIEW.json"
+  ],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact 16-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable metadata oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-FINAL-REAUTH-CLOSEOUT.json",
+  "status": "registered",
+  "assignment_sha256": "73c4686dd1e0c7bbd1d2bd207e8aa7888aff854804227e2d49ca920bc6b0a79a"
+}

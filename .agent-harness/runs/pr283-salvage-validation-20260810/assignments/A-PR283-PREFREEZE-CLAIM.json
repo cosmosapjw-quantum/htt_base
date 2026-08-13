@@ -1,0 +1,74 @@
+{
+  "schema_version": 3,
+  "run_id": "pr283-salvage-validation-20260810",
+  "assignment_id": "A-PR283-PREFREEZE-CLAIM",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_gate_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-283",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR258-OPEN-SET-RESPONSE"
+  ],
+  "task": "Targeted independent claim and provenance audit of PR-283. Read the registered assignment first; do not reread CONTEXT_PACK.md or sibling results. Verify diagnostic-only C2 ceiling, HTT/MIO ownership, no family or geometry identification, transfer_source none, synthetic/non-public status, forbidden-input boundaries, policy/spec/receipt consistency, and banned-language absence across changed claim-bearing surfaces. No production edits; write only the registered result JSON and finish with the exact HARNESS_RESULT line.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/post_pr275/pr283_spec.yaml",
+      "sha256": "eef9e10ccb7503c485171b153732c63b1e735cc80c475b220920757bb0e95239"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr283_publication_policy.json",
+      "sha256": "98af384e4f86b44d7a8abeacef23fe6968addcc4de5d05fd1330099cd1f406b9"
+    },
+    {
+      "path": "htt/htt/htt/statistics/open_set_response_classes.py",
+      "sha256": "9f426751ab200e0eee46579f816f192798e335554994e2c8bc19b269bf476869"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr283_weak_identification.py",
+      "sha256": "48c7f3e77bd5b0840bebc5065871f97253e20587c5f1479873ca29e15ead4085"
+    },
+    {
+      "path": "tests/contracts/test_weak_identification.py",
+      "sha256": "47b3a7ee0f178baf700ea4503c46f8e0ddb6253eb47cfabada19e5043f68ca00"
+    },
+    {
+      "path": "docs/generated/pr283_weak_identification_receipt.json"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope"
+  ],
+  "result_path": ".agent-harness/runs/pr283-salvage-validation-20260810/results/A-PR283-PREFREEZE-CLAIM.json",
+  "status": "registered",
+  "assignment_sha256": "aee28d0e3c290278dd1d2bbd5c5cbd460b616b00d205532c9021a562d34341f6"
+}

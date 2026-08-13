@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-proper-subset-r4-20260810",
+  "assignment_id": "A-PR284-R4-REPLAY",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "3666dd8f920c46021ebb2823680cf397f37db810e1c1ebda9f4cd70cc46deaa0",
+  "candidate_sha": "50fea58d2bd4d33dfac017f46bf22df5ccd289d1",
+  "candidate_tree_sha": "6104ff701c82c78b113002131dec3bd493a54795",
+  "diff_sha256": "3205f94a1970082b88bec45fdfa33ec7eba829bed0710754e72d32b5bdd13386",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-10T02:51:33+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json#/checks"
+      ],
+      "rationale": "HEAD, tree, base, diff, changed files, ten commits, seal checksum, and stable patch inventory independently replay."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/assignments/A-PR284-R4-REPLAY.json#/required_inputs",
+        "docs/research_program/post_pr275/pr284_spec.yaml"
+      ],
+      "rationale": "The registered assignment, current context version, and all eleven declared input hashes were verified before execution."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/finite_target_law",
+        "tests/contracts/test_depth_path_doob_calibration.py"
+      ],
+      "rationale": "The exact rational finite law and shared target replay in the 23-test focused suite."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/report/target_second_moment",
+        "htt/src/common/depth_path_calibration.py"
+      ],
+      "rationale": "Report replay recomputes exact centering and the positive registered second moment."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json#/checks/proper_subset_discriminator",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/mutations/2"
+      ],
+      "rationale": "Fresh execution distinguishes the generic equal-support path from the stricter proved-report premise; the ordered nonstrict mutation fails closed independently."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/report/exact_tower_equalities"
+      ],
+      "rationale": "The conditional-expectation tower, path values, maximum, and tower content identity are revalidated exactly."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json#/checks/proper_subset_discriminator",
+        "htt/src/common/depth_path_calibration.py"
+      ],
+      "rationale": "The exact path retains its sky supports; equal adjacent supports are rejected only for proved status, while unproved status abstains."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json#/mutations/5",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/mutations/11"
+      ],
+      "rationale": "Both preprocessing and estimator identity mutations remain executed and killed after the R4 insertion."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/report/path_maximum_content_id"
+      ],
+      "rationale": "Selected-atom conditional values, maximum, and maximum identity replay from the sealed law and partitions."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/calibration",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py"
+      ],
+      "rationale": "The exact squared threshold and rational conservative bound recompute without floating tolerance."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json#/checks/proper_subset_discriminator/unproved_status",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/unproved_fixture"
+      ],
+      "rationale": "A fresh equal-support path remains valid only on the unproved route, requires matched mocks, and emits no probability bound."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json#/checks/mutation_count",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/mutations"
+      ],
+      "rationale": "All fifteen spec-ordered rows are unique, executed, activated, killed, and mapped to the blocking token."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json#/checks/receipt_content_sha256",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/source_bindings"
+      ],
+      "rationale": "The canonical receipt content address and all twelve source bindings independently recompute."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr284_depth_path_doob.py",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json#/checks/candidate_sha"
+      ],
+      "rationale": "The required portable command used a distinct temporary Git archive; source and archive pre/post manifests were identical across 5,875 files."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_publication_policy.json",
+        ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json#/integration_policy"
+      ],
+      "rationale": "Nine publication-integrity cells pass and exact policy bytes are cross-bound by the frozen candidate seal."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json#/claim_boundary",
+        "docs/research_program/post_pr275/pr284_spec.yaml"
+      ],
+      "rationale": "The artifact remains C2 diagnostic-only, transfer source none, non-observed, non-public, with the family gate blocked."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json#/checks/exact_predecessor_base_sha",
+        "docs/research_program/post_pr275/pr284_publication_policy.json#/attended_publication"
+      ],
+      "rationale": "The target tracking ref and merge base equal the exact PR-283 predecessor. This review performs no merge and grants no publication authorization."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "mutation_test",
+      "status": "PASS",
+      "oracle_id": "PR284-R4-PROPER-SUBSET-REPLAY",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle.py",
+        "--output",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json"
+      ],
+      "command_fingerprint": "64c42ce3cd81b9a62d0b8f0329ff5780fc00ee392a78eca4470d0d9f05b9a955",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-10T02:51:21+00:00",
+      "completed_at": "2026-08-10T02:51:26+00:00",
+      "artifact_path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json",
+      "artifact_sha256": "e31c880225d01dbaea250d87a40eaea320f8e0317d083986b426754998ab9dea",
+      "artifact_bytes": 1989,
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle.py",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-REPLAY/proper_subset_replay_oracle_output.json"
+      ]
+    }
+  ],
+  "coverage_sha256": "b01a0d5fcfcb424d6c909ae44918af2cd585dd2267321284984a9e775b480004"
+}

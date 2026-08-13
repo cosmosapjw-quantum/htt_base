@@ -1,0 +1,105 @@
+{
+  "schema_version": 3,
+  "run_id": "pr285-bounded-repair-rereview-20260810",
+  "assignment_id": "A-PR285-R2-LINEAGE-REPLAY",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-285",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR285_R2_FINAL_REVIEW_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "641c72f627cb9a221dab61751bd971513bb1a2623f2d4b7281cd78dc7226060e",
+    "seal_sha256": "7739a04d155d895f6dd4f5952b2e8f65387adc579d728af0c47eb0debe3fd2bb",
+    "base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_sha": "8682a13e8df75c48f6150af555ee231f62e7d9bc",
+    "merge_base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_tree_sha": "11abc914111064c9f8384dad3fdc88108763e43c",
+    "diff_sha256": "4e26387391037bb3b5e3b79bd4199dd98f2eb9f7c3e5a6cd8094f50c55c0f734",
+    "changed_files_sha256": "27d7bc58a8663e2a4573abe14386ced8a19a9c18db0f3c8469c03c5a2d6f1788",
+    "production_hash": "602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Fresh blind bounded rereview of the repaired PR-285 logical-patch lineage, code, claim, and replay boundary. Read this assignment first; do not read CONTEXT_PACK, sibling results, or historical review/result envelopes. Independently replay the final candidate seal's G20/G21/G22 map: audit SHA, every representative and alias source commit, stable patch IDs, exactly-once candidate inclusion for G20/G21, G22 absence, unique candidate patch IDs, and fail-closed hostile mutations. Verify optional mapping validation does not relax candidates without a declaration; inspect complete receipt/source/content-address/mutation/containment/atomic/portable behavior and claim ceiling. Confirm the final review candidate changed only delta/status bytes after the passing implementation integration receipt and do not repeat substantive assurance when the production/dependency key is unchanged. Write no tracked/shared files; produce only assignment-local executable oracle, coverage, and one strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR285_R2_FINAL_REVIEW_CANDIDATE_SEAL.json",
+      "sha256": "641c72f627cb9a221dab61751bd971513bb1a2623f2d4b7281cd78dc7226060e"
+    },
+    {
+      "path": ".prguard/runtime/PR285_R2_IMPLEMENTATION_CANDIDATE_SEAL.json",
+      "sha256": "02773cca24cdf455df4e96bd069c7abde4f186964aefa77c031bd2217534f149"
+    },
+    {
+      "path": ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json",
+      "sha256": "ee38ffce3f3e9654d371a283b2e35b44a6530bf0fd677f86d855bbb61dced772"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr285_publication_policy.json",
+      "sha256": "20c16524a86ca61ef33a5f3894c7ebc48eeeebe708eb7556725c025185cfe878"
+    },
+    {
+      "path": ".agent-harness/scripts/publication_integrity.py",
+      "sha256": "56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec"
+    },
+    {
+      "path": "scripts/codex_harness/test_publication_integrity.py",
+      "sha256": "ca681d6e4c3c024fd3b4fe2d7560e315bfc428359907329ac5f2ad1e11628e7f"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+      "sha256": "4cae2b46b32ca4aa7bd0f5833044617202baaab485877213615abe2b31570312"
+    },
+    {
+      "path": "tests/contracts/test_pillar_t_complete_adjudication.py",
+      "sha256": "991dca1420c97971a9979275832e4f38d50f2979647cbe3e5c711c61ebae6801"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+      "sha256": "270b80e94767b48d58032d96d48f829138f6d5ffa301e9c8eb48bbd72b5c7e66"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr285_spec.yaml",
+      "sha256": "481aba93390cf8aa0fe79f17036197bf76b7e98bc4b821cc198adea4deee98ee"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-285.md",
+      "sha256": "5a51165a3c5ed28add2590ffe79a73e5ddb837227fa01e0a1413c9a14296de41"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "f839ad7a0fa8dfcbb0e89465ffb48b510d271f024687810a73f759d5bd897096"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "f839ad7a0fa8dfcbb0e89465ffb48b510d271f024687810a73f759d5bd897096"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/results/A-PR285-R2-LINEAGE-REPLAY.json",
+  "status": "registered",
+  "assignment_sha256": "0246168a0d449396b26aa2d197bf7d4e38a6229910e6b72d8032089455b532f2"
+}

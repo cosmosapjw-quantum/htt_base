@@ -1,0 +1,57 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-frozen-independent-review-r2-20260813",
+  "assignment_id": "A-PR291-R2-CODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "workflow_role": "reviewer",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "verdict": "FAIL: a forged preloaded predecessor transaction-helper module bypasses the output-containment transaction and writes a receipt outside the candidate root.",
+  "candidate_binding": {
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "67076abbfce5e6bf549f1282c95729bfe89b4be8",
+    "candidate_tree_sha": "e53869e5122189bd0d00d3a54c14e182396e3df3",
+    "seal_sha256": "b277e46ee54781f8b1a9aa666e833f377b6052f9863a8d330d5cb6cb1b271045"
+  },
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "evidence_fingerprint": "pr291-unbound-preloaded-pr290-transaction-helpers-outside-root-write",
+      "severity": "P1",
+      "summary": "The runner imports _validate_output_destinations, _atomic_write, and related helpers by the ambient module name before any byte/origin check. A preloaded fake module therefore controls both preflight and write behavior.",
+      "evidence": [
+        "scripts/codex_harness/run_pr291_cf4_lane.py:31-39",
+        "scripts/codex_harness/run_pr291_cf4_lane.py:266-292",
+        ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-CODE/hostile_preloaded_pr290_helper_oracle.py",
+        ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-CODE/forged_helper_outside_root.json"
+      ],
+      "reproduction": "python -B .agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-CODE/hostile_preloaded_pr290_helper_oracle.py",
+      "required_remediation": "Bind the PR-290 transaction module itself by canonical path, regular-single-link checks, source hash, and function code origin before extracting helpers, or duplicate the bounded transaction code; add a hostile preloaded-run_pr290_planck_lane test that must fail before payload generation."
+    }
+  ],
+  "coverage_artifact": ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-CODE/REVIEW_COVERAGE.json",
+  "artifacts": [
+    ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-CODE/REVIEW_COVERAGE.json",
+    ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-CODE/hostile_preloaded_pr290_helper_oracle.py",
+    ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-CODE/forged_helper_outside_root.json"
+  ],
+  "assumptions": [
+    "The runner's stated preloaded-module and byte-containment defense applies to every imported helper which gates receipt output, not solely the two COMMON factories.",
+    "The candidate and shared sources were read-only; all new files are assignment-local artifacts or this registered result."
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "numpy": "2.4.2",
+    "pyyaml": "6.0.1"
+  },
+  "positive_evidence": {
+    "context_and_input_hashes": "all required input hashes and the context version matched the assignment",
+    "lineage": "candidate HEAD, parent chain, and merge base bind exactly to the sealed PR-290 base; strict DAG validation passed",
+    "nonexecution": "check replayed the exact sealed receipt with terminal BLOCKED_PREDECESSOR_FINAL_SUCCESS and no numeric/observed-data output",
+    "policy_commands": "all seven policy commands passed in this isolated worktree",
+    "pr292": "remains PLANNED/INELIGIBLE with assurance budget consumed 0; repository merge policy remains HUMAN_ONLY"
+  }
+}

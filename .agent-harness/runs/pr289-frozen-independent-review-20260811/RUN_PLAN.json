@@ -1,0 +1,104 @@
+{
+  "schema_version": 2,
+  "run_id": "pr289-frozen-independent-review-20260811",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "created_at": "2026-08-11T09:22:31+00:00",
+  "spec_ref": "docs/research_program/post_pr275/pr289_spec.yaml",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr288-bayesian-evidence-recovery-20260811",
+  "target_ref": "refs/remotes/origin/changeset/pr288-bayesian-evidence-recovery-20260811",
+  "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+  "candidate_ref": "HEAD",
+  "integration_policy": {
+    "path": "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "sha256": "16f8f3c37340d7a11ec3961825b626a43942ceced6e2db812b55738cbeb8b302",
+    "policy_id": "PR289-PUBLICATION-POLICY"
+  },
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "8aa29e14dcd7e704235a524634dcab219c46728df47da7b9ba8d5885f27271d5",
+    "seal_sha256": "0347f2f5011309909423c4e27e090556c95c2a237e7d9c7a5ab3781087407a47",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "1ad54d3c5a484816128a1df93d54953589780520",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "67ec8432a6557bb460dfe8015b361fe9f6c00d1d",
+    "diff_sha256": "ce6c09a90ccb0e3f50929591a074d4947eb094288b2720d863bc0f3516e44f6e",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "cd8aebca49820d989bf805173f20ac65093181f541920f5adee74ce8e8fce413"
+  },
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "budget": {
+    "max_concurrent": 4,
+    "max_total": 8,
+    "max_total_per_work_unit": 16,
+    "max_depth": 2
+  },
+  "publication_budget": {
+    "max_open_prs": 7,
+    "max_direct_to_target_prs": 1,
+    "max_prs_per_change_set": 1,
+    "max_stack_depth": 7,
+    "max_file_overlap_prs": 6
+  },
+  "stages": [
+    "context-build",
+    "work-unit-implementation",
+    "candidate-freeze",
+    "read-only-review",
+    "latest-target-integration",
+    "external-publisher-authorization"
+  ],
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "status": "candidate_frozen",
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "VALIDATED",
+  "stack_id": "PROCESS_INFLATION_RECOVERY_PHASE2",
+  "activation_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+  "predecessor_pr": "PR-288",
+  "predecessor_sealed_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+  "production_hash": "cd8aebca49820d989bf805173f20ac65093181f541920f5adee74ce8e8fce413",
+  "dependency_hashes": {
+    "pr289_spec": "75c466e103941b2a3592644718a9b88c4f48391196ada08c7610c760eea924fc",
+    "publication_policy": "16f8f3c37340d7a11ec3961825b626a43942ceced6e2db812b55738cbeb8b302",
+    "lane_registry": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+    "data_runbooks": "b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de",
+    "claim_ledger": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+    "pr289_runner": "27f7d531515910ed6758780b029e4c1c7bb2299585d4b51a85ea5340151c86b4",
+    "pr289_contract_test": "df17c8c6d5e02298ae53c367a2919872e5ceea9d3e837d31193b1bf5a6ecb971",
+    "pr274_registry": "92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9",
+    "pr274_result": "e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea",
+    "data_identity_receipt": "15caa3ea64b302736e01261942173e08d85c7197545d299d7bb5582763623d5b",
+    "publication_integrity": "56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec",
+    "dag_validator": "126ccf63e3a6d835584426e4c3d157be5482b1f7df39d0985638370366b40afc",
+    "claim_linter": "b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677",
+    "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+  },
+  "evidence_key": {
+    "production_hash": "cd8aebca49820d989bf805173f20ac65093181f541920f5adee74ce8e8fce413",
+    "dependency_hashes": {
+      "pr289_spec": "75c466e103941b2a3592644718a9b88c4f48391196ada08c7610c760eea924fc",
+      "publication_policy": "16f8f3c37340d7a11ec3961825b626a43942ceced6e2db812b55738cbeb8b302",
+      "lane_registry": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+      "data_runbooks": "b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de",
+      "claim_ledger": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+      "pr289_runner": "27f7d531515910ed6758780b029e4c1c7bb2299585d4b51a85ea5340151c86b4",
+      "pr289_contract_test": "df17c8c6d5e02298ae53c367a2919872e5ceea9d3e837d31193b1bf5a6ecb971",
+      "pr274_registry": "92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9",
+      "pr274_result": "e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea",
+      "data_identity_receipt": "15caa3ea64b302736e01261942173e08d85c7197545d299d7bb5582763623d5b",
+      "publication_integrity": "56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec",
+      "dag_validator": "126ccf63e3a6d835584426e4c3d157be5482b1f7df39d0985638370366b40afc",
+      "claim_linter": "b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677",
+      "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+    }
+  },
+  "gate_disposition": "PASS",
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 0
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR284-R2-CLAIM",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "911cfed58698d97a88585a664c6ad46db8df92d46f3a23cfdc2bac74c24bdc65",
+  "candidate_sha": "49a8f697c8d7985ec637e70aca3b9271d6f0da7f",
+  "candidate_tree_sha": "702db54b4ce5ee0904352b2b507faffe5ef5d876",
+  "diff_sha256": "c9563b2e9e7bd45436aceb5a744e8fc6f7f8da7a818088b0d9426a37d7f59aea",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-09T21:48:09Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json:checks.r2-candidate-and-policy-binding"
+      ],
+      "rationale": "The R2 commit, tree, merge base, seal, and unchanged target policy all recompute exactly."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "docs/generated/pr284_depth_path_doob_receipt.json:422-426",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py:256-330,873-874"
+      ],
+      "rationale": "The repaired spec is content-bound and validated before receipt construction or replay."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Independent finite-law derivation is outside this affected claim-language rereview."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "The repaired rejection test was observed, but independent mathematical validation belongs to the physics/statistics lane."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This review checks the finite-only language ceiling, not the independent filtration derivation."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Exact tower replay correctness is assigned to replay and physics/statistics reviewers."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Path and support mechanics were not changed in the affected claim cell."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Preprocessing and estimator mechanics were not part of this affected claim-language rereview."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Independent path-maximum recomputation is outside this claim/provenance lane."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Independent threshold and bound arithmetic is outside this claim/provenance lane."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json:474-619",
+        "docs/PR_DELTAS/pr-284.md:86-89",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json:checks.matched-mocks-remain-unexecuted"
+      ],
+      "rationale": "The repair leaves the unproved branch bound-null, MATCHED_MOCKS_REQUIRED, and explicitly required_not_executed."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "The new mutation language and exact receipt row were checked, but full mutation execution completeness belongs to code/replay lanes."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json:416-473",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json:checks.receipt-content-address-and-bindings",
+        "python3 -B scripts/codex_harness/run_pr284_depth_path_doob.py check => PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+      ],
+      "rationale": "The repaired receipt content address and source bindings recompute, and exact replay emits the pass token."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Portable execution is outside this affected claim-language rereview and is not claimed here."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_publication_policy.json",
+        ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json:103-106",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json:checks.r2-candidate-and-policy-binding"
+      ],
+      "rationale": "The unchanged policy identity and bytes remain sealed to the repaired candidate and exact PR-283 target SHA."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:4-24,39-52,140-166,290-316",
+        "docs/generated/pr284_depth_path_doob_receipt.json:20-74,207-230,416-619",
+        "docs/PR_DELTAS/pr-284.md:77-89,100-162",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json",
+        "scripts/check_claim_language.py => No forbidden claim language detected"
+      ],
+      "rationale": "The repaired mutation/replay language preserves HTT ownership, C2 diagnostic-only scope, transfer none, non-observed/non-public status, finite-only theorem boundary, mock non-execution, and blocked family identification."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "The exact local target SHA was verified, but integration rehearsal is a separate lane and is not claimed by this rereview."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR284-R2-CLAIM-REPAIR-INVARIANTS-V1",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.py",
+        "--repo",
+        ".",
+        "--output",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json"
+      ],
+      "command_fingerprint": "7f0f1275382978273644f08c3543829b94af6ace5527d70f5c6a09c1a98bec65",
+      "started_at": "2026-08-09T21:47:15Z",
+      "completed_at": "2026-08-09T21:47:15Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json",
+      "artifact_sha256": "83da131405e04b6e54f2c208b9451359e6aa73a123dfbf6a6c60773dd85045da",
+      "artifact_bytes": 4430,
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/assignments/A-PR284-R2-CLAIM.json",
+        ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "docs/research_program/post_pr275/pr284_publication_policy.json",
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "docs/PR_DELTAS/pr-284.md",
+        "htt/src/common/depth_path_calibration.py",
+        "htt/htt/htt/infer/depth_path_calibration.py"
+      ]
+    }
+  ],
+  "coverage_sha256": "bc7e8f2f1295546dc9453296b4cbc08bd36272b901b3030843871e0b81495449"
+}

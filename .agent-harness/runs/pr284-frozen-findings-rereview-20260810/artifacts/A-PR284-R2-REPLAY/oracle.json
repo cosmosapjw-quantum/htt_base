@@ -1,0 +1,89 @@
+{
+  "assignment_id": "A-PR284-R2-REPLAY",
+  "candidate_sha": "49a8f697c8d7985ec637e70aca3b9271d6f0da7f",
+  "checks": [
+    {
+      "check": "frozen_candidate_target_and_patch_uniqueness",
+      "evidence": {
+        "candidate_sha": "49a8f697c8d7985ec637e70aca3b9271d6f0da7f",
+        "candidate_tree_sha": "702db54b4ce5ee0904352b2b507faffe5ef5d876",
+        "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+        "stable_patch_id_matches_across_all_refs": {
+          "7723c679e68bac2d412c16f7efbe886ba5124585": [
+            "65733d886d8882a180b6987790a3f6f0f53a72aa"
+          ],
+          "a8a5952e04a06025b74b0f5fa43379a56869977c": [
+            "029f8cedd044cc5967bc12dc695230ca69cf3308"
+          ],
+          "cf18f8c953a0325b716fec870a8a5343b6ec8b66": [
+            "49a8f697c8d7985ec637e70aca3b9271d6f0da7f"
+          ]
+        },
+        "target_ref": "refs/remotes/origin/changeset/pr283-weak-identification-recovery-20260810",
+        "target_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+        "tracked_index_and_worktree_clean": true
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "fresh_receipt_and_fourteen_mutations",
+      "evidence": {
+        "all_fresh_mutations_activated_executed_killed": true,
+        "bypass_row": {
+          "activated": true,
+          "executed": true,
+          "killed": true,
+          "mutation_id": "MU284-REPORT-BUILDER-BYPASS",
+          "mutation_kind": "caller_supplied_proved_report_bypasses_replay",
+          "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+          "observed_reason": "CALLER_SUPPLIED_PROVED_REPORT_REJECTED"
+        },
+        "fresh_mutation_count": 14,
+        "fresh_mutation_ids": [
+          "MU284-SUPPORT-NESTING-AS-PROOF",
+          "MU284-NONNESTED-SUPPORT",
+          "MU284-TARGET-DRIFT",
+          "MU284-REPORT-BUILDER-BYPASS",
+          "MU284-PREPROCESSING-DRIFT",
+          "MU284-FILTRATION-DIRECTION-DRIFT",
+          "MU284-THRESHOLD-DRIFT",
+          "MU284-ATOM-SELECTION-DRIFT",
+          "MU284-PATH-MAXIMUM-DRIFT",
+          "MU284-PROBABILITY-LAW-DRIFT",
+          "MU284-ESTIMATOR-IDENTITY-DRIFT",
+          "MU284-FREE-BOUND-ON-UNPROVED",
+          "MU284-MATCHED-MOCK-PLAN-OMITTED",
+          "MU284-MATCHED-MOCK-PLAN-DRIFT"
+        ],
+        "receipt_content_sha256": "6cd68c1082a00a3db1385650ef7e2db785889dc9b2f2d24cb8d9835000f64213",
+        "source_binding_count": 12
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "historical_builder_bypass_dies_before_calibration",
+      "evidence": {
+        "calibration_attempted": false,
+        "rejected_stage": "DepthPathReverseMartingaleReport.__post_init__ premise replay",
+        "rejection": "common target must be exactly centered",
+        "report_constructed": false
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "human_only_merge_refusal",
+      "evidence": {
+        "attended_policy_forbids_merge": true,
+        "auto_merge_rejection": "AUTO_MERGE is recognized but refused; merge remains HUMAN ONLY",
+        "execution_mode": "AUTO_STACKED_PR",
+        "merge_command_classified_forbidden": true,
+        "merge_policy": "HUMAN_ONLY"
+      },
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "run_id": "pr284-frozen-findings-rereview-20260810",
+  "schema": "PR284_R2_ASSIGNMENT_LOCAL_REPLAY_ORACLE_V1",
+  "status": "PASS"
+}

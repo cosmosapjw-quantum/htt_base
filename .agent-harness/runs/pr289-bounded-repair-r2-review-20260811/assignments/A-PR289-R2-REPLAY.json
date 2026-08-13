@@ -1,0 +1,103 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-bounded-repair-r2-review-20260811",
+  "assignment_id": "A-PR289-R2-REPLAY",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "98b8f692fb9e8933b4972430d33f89da4a0b0bf0498bb9af3b7c354b27fcc5d9",
+    "seal_sha256": "b87547b5c86fb27fb63c6ba2f62639733295efe0b7ddf91ed82685a6c6cbba90",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "e7affa4302f60cb02a664b315693b22e2372ef33",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "1d25895f229c87723797c73018fed8783466541f",
+    "diff_sha256": "124822f8c20278b307447150dcd0a8aa357048f6a9526e8feb976c14a2715ae1",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "6752f1f52dccb2ca4768e127666a160bce8f826340d1b26d6bf70b3abca3220f"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "independent",
+  "independence_rationale": "Independent selective-lineage and clean-replay verification is epistemically distinct from code, native-domain, and claim review.",
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Blind independent R2 replay lineage and portability review of frozen PR-289. Verify exact PR-288 sealed base, selective G45 plus bounded G46-G48 inclusion and obsolete G39/G40/G42 exclusion, stable patch deduplication, production/dependency hashes, all 8 policy commands, exact PR-274 current plus ff9 replay, 32/32 mutations, clean distinct archive invariance, module/output/interpreter containment, status mirrors, lifecycle and PR-290 ineligibility. The canonical-root HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md is read-only authority and its exact SHA is status-bound; do not alter the canonical root. Do not inspect sibling or historical result envelopes, process listings, or broad .agent-harness searches. Do not edit tracked/shared files.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json",
+      "sha256": "98b8f692fb9e8933b4972430d33f89da4a0b0bf0498bb9af3b7c354b27fcc5d9"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr289_spec.yaml",
+      "sha256": "4880be4cd760b0ee5b664ada93d4b90f251280148f27d5fa9f3942256544f4f2"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr289_publication_policy.json",
+      "sha256": "4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+      "sha256": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f"
+    },
+    {
+      "path": "htt/src/common/data_identity.py",
+      "sha256": "2533d42d1fa7aa8305adfeda5165f50f0a907a49c68e13583f85587740033ee5"
+    },
+    {
+      "path": "tests/contracts/test_data_identity_registry_v2.py",
+      "sha256": "238cd65e19b9400bcadecb62b932cd62ea74348d3d7f97e52f63f30dc332c243"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr289_data_identity_v2.py",
+      "sha256": "6c3e4bcdbfbcd91f2d09917d232b67a331fb7881f4317c6a36938cdd78ca2c92"
+    },
+    {
+      "path": "docs/generated/pr289_data_identity_v2_receipt.json",
+      "sha256": "fd0ed2139903c7e47d4478a53e2e5054348801b427e9fb5250039324df5996d7"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runbooks.yaml",
+      "sha256": "b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de"
+    },
+    {
+      "path": "docs/harness/CLAIM_LEDGER.md",
+      "sha256": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-289.md",
+      "sha256": "1633ca3fab20b2426288e6f8cde73b19755dd5568bd649ce1c91356449a21442"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "aa03581cd13d5db636b99c0df9b077dd9f5338d171374003ad21a2509781e263"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact policy-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.json",
+  "status": "registered",
+  "assignment_sha256": "ecd5546b5fd099b393377e714d94626a222d79ac93e67ce3cd3e2652b56ee79d"
+}

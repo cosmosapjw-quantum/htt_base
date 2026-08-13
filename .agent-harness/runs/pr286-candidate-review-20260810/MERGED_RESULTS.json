@@ -1,0 +1,379 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-candidate-review-20260810",
+  "generated_at": "2026-08-10T13:39:26+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 4,
+  "raw_finding_count": 5,
+  "unique_finding_count": 5,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR286-FROZEN-CLAIM",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "evidence_fingerprint": "bd1cf7cfe547b34c37ae482236336ade37612f01e1eee9675eee874cf7774e99",
+          "evidence_refs": [
+            ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#downstream_nonpromotion",
+            ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/REVIEW_COVERAGE.json"
+          ],
+          "finding_ids": [],
+          "outcome": "examined_no_findings",
+          "summary": "The held-out PR-273 path remains synthetic, diagnostic-only, non-observed, and unable to promote row or source verdicts."
+        },
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "evidence_fingerprint": "932798d75788cfd58ce9c84f6a42ad46786335b3f22ae6269c77c9130219a984",
+          "evidence_refs": [
+            ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#forbidden_sources_absent",
+            ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/CLAIM_ORACLE.json#row_terminal_contract",
+            ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CLAIM/REVIEW_COVERAGE.json"
+          ],
+          "finding_ids": [],
+          "outcome": "examined_no_findings",
+          "summary": "VT-S14 remains blocked before admitted data; observed/public/native inputs and PR-151 partial acquisition are not admitted."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR286-FROZEN-CODE",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR286-VTS14-NAN-POSITIVE",
+            "F-PR286-VTS14-RANK-INPUT-SEAMS"
+          ],
+          "summary": "FAIL: frozen PR-286 does not safely close the VT-S14 numerical-identification boundary; a finite overflow case mints a positive synthetic validation report and related rank/input seams are untested."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR286-FROZEN-PHYSSTAT",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR286-PHYSSTAT-002"
+          ],
+          "summary": "The blind synthetic integration and its x/Q/F/G_F/Pi and family-identification ceilings replay without scientific promotion."
+        },
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR286-PHYSSTAT-001",
+            "F-PR286-PHYSSTAT-003"
+          ],
+          "summary": "The registered VT-S14 cell remains correctly blocked before admitted data, but the bound future adapter has a high-severity non-finite positive-status failure and the frozen candidate is not ready."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR286-FROZEN-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-REPLAY-oracle-output.json",
+            ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-REPLAY-review-coverage.json",
+            "external-audit-sha256:c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+          ],
+          "evidence_fingerprint": "9d8c277a1d167fe70ff724b5e998312facb934c3656eb1c18019931bb24e95c9",
+          "summary": "No blocking frozen-replay defect was found. The candidate preserves the PR-271/272/273 evidence lanes, reconstructs all 72 terminal rows with 33 current source bindings and deterministic content address, executes and kills all 18 registered mutations in order, remains portable and destination-contained, and cross-binds the exact predecessor, policy, and PR-287 DAG consumer without promoting row-level scientific claims."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR286-VTS14-NAN-POSITIVE",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The public VT-S14 local/global evaluator can return VALIDATED_REGISTERED_SYNTHETIC from finite near-proportional inputs after dot-product overflow creates NaN geometry and fit values; NaN is silently mapped to a right angle by the current min/max clamp.",
+      "assumptions_used": [
+        "Finite numeric sequences accepted by the public API must either produce finite deterministic report fields or fail closed with PillarSInferenceError.",
+        "A design with stable principal angle below the registered floor must not mint a positive validation status."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CODE/hostile_oracle.py",
+        "htt/src/common/vector_tensor_statistical_inference.py:1425",
+        "htt/src/common/vector_tensor_statistical_inference.py:1428",
+        "htt/src/common/vector_tensor_statistical_inference.py:1457"
+      ],
+      "evidence_fingerprint": "pr286:vts14:finite-overflow-nan-angle-positive-status:v1",
+      "counterevidence_refs": [
+        "tests/contracts/test_pillar_s_inference.py:717 proportional identity-covariance control passes",
+        "focused declared suites: 72 passed in 111.93s"
+      ],
+      "reproduction": [
+        "Run the assignment-local hostile_oracle.py with PYTHONPATH=htt/src:htt.",
+        "The oracle uses local=(1e200,1e200), global=(1e200,1e200+2e185), identity covariance, and floor=1e-12.",
+        "The stable atan2 angle is about 9.99e-16, yet the report status is VALIDATED_REGISTERED_SYNTHETIC and all five fit/chi-square fields are non-finite."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "The repair must define scale-stable whitening, normalization, finite-output validation, and a fail-closed threshold policy without changing frozen PR-272 result semantics."
+      ],
+      "source_finding_ids": [
+        "F-PR286-VTS14-NAN-POSITIVE"
+      ],
+      "supporting_assignments": [
+        "A-PR286-FROZEN-CODE"
+      ],
+      "supporting_agent_types": [
+        "code_cartographer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR286-VTS14-RANK-INPUT-SEAMS",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "medium",
+      "statement": "VT-S14 computes numerical rank on the unwhitened raw design while its angle and GLS law are covariance-whitened, and it evaluates the cosine before rejecting zero designs; this creates covariance/scale-dependent false abstention and leaks ZeroDivisionError outside the declared API exception.",
+      "assumptions_used": [
+        "Numerical identification diagnostics for one covariance-conditioned GLS comparison must use a consistent declared metric.",
+        "Invalid zero designs must fail through PillarSInferenceError rather than an incidental arithmetic exception."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CODE/hostile_oracle.py",
+        "htt/src/common/vector_tensor_statistical_inference.py:1425",
+        "htt/src/common/vector_tensor_statistical_inference.py:1433",
+        "scripts/codex_harness/run_pr286_pillar_s_adjudication.py:661"
+      ],
+      "evidence_fingerprint": "pr286:vts14:unwhitened-rank-zero-design-validation-seams:v1",
+      "counterevidence_refs": [
+        "The registered ordinary VT-S14 design has rank two and a comfortably positive whitened angle.",
+        "Exact proportional designs correctly abstain in the existing identity-covariance test."
+      ],
+      "reproduction": [
+        "For covariance=diag(1,1e-32), local=(1,0), global=(1,1e-16), the raw default numerical rank is one while the whitened rank is two; the API abstains from the raw rank.",
+        "For local=(0,0), global=(1,0), identity covariance, the public function raises ZeroDivisionError before _gls_fit can raise PillarSInferenceError."
+      ],
+      "confidence": 0.98,
+      "unresolved": [
+        "The governing contract should state whether rank is exact directional rank or a tolerance-bound whitened rank; the implementation and adjudicator must then share that single helper."
+      ],
+      "source_finding_ids": [
+        "F-PR286-VTS14-RANK-INPUT-SEAMS"
+      ],
+      "supporting_assignments": [
+        "A-PR286-FROZEN-CODE"
+      ],
+      "supporting_agent_types": [
+        "code_cartographer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR286-PHYSSTAT-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The HTT depth local/global API does not fail closed for every covariance accepted by its own finite symmetric positive-definite validator: covariance diag(1e-320,1,2,3) produces NaN amplitudes and chi-square fields while returning VALIDATED_REGISTERED_SYNTHETIC. The frozen VT-S14 covariance is well-conditioned and replays, but PR-286 binds this implementation as the future admitted-data adapter, so a positive validation state with non-finite statistics blocks the candidate.",
+      "assumptions_used": [
+        "The public function's accepted-input domain is defined by its implemented finite, exactly symmetric, numerically positive-definite checks.",
+        "A validation status must not be positive when its primary GLS outputs are non-finite.",
+        "The PR-286 fixed registered covariance remains a synthetic-only cell and does not erase fail-closed requirements for the bound implementation."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json#residual_risk",
+        "htt/src/common/vector_tensor_statistical_inference.py:1382-1472",
+        "htt/src/common/vector_tensor_statistical_inference.py:222-237"
+      ],
+      "evidence_fingerprint": "pr286:depth-local-global:accepted-spd-nonfinite-positive-status:v1",
+      "counterevidence_refs": [
+        "docs/research_program/vector_tensor/pr272_spec.yaml:188-203",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json#registered_claim_pass"
+      ],
+      "reproduction": [
+        "python3 -B .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle.py --output .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json",
+        "Inspect residual_risk: reproduced=true, all_numeric_fields_finite=false, status=VALIDATED_REGISTERED_SYNTHETIC."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Add a finite-output and conditioning refusal before constructing a positive HttDepthDiscriminationReport.",
+        "Add a regression test using non-identity covariance plus an extreme-scale SPD covariance; require a typed refusal rather than NaN serialization or positive status.",
+        "Rebuild and reseal the PR-286 implementation bundle and complete adjudication receipt after the production fix."
+      ],
+      "source_finding_ids": [
+        "F-PR286-PHYSSTAT-001"
+      ],
+      "supporting_assignments": [
+        "A-PR286-FROZEN-PHYSSTAT"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR286-PHYSSTAT-002",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "The frozen registered scientific dispositions are internally sound: exactly 58 source plus 14 VT-S rows are present; exact proof and synthetic validation remain distinct; x/Q/F/G_F/Pi stay diagnostic-only; HTT/MIO ownership is separated; and no likelihood/posterior/evidence or Bianchi-family promotion is minted.",
+      "assumptions_used": [
+        "The candidate seal and all assignment-declared input hashes are authoritative for this frozen review.",
+        "Process completion does not promote the 50 inconclusive source rows or blocked VT-S14 proposition."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#summary",
+        "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json#forbidden_use"
+      ],
+      "evidence_fingerprint": "pr286:registered-58-plus-14-evidence-and-claim-ceilings:v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "python3 -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py focused",
+        "python3 -B .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle.py --output .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json"
+      ],
+      "confidence": 0.99,
+      "unresolved": [],
+      "source_finding_ids": [
+        "F-PR286-PHYSSTAT-002"
+      ],
+      "supporting_assignments": [
+        "A-PR286-FROZEN-PHYSSTAT"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR286-PHYSSTAT-003",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "Within the frozen registered cell, the VT-S14 covariance has condition number 4.347434583051111, joint design rank two, and whitened principal angle 0.559844992566963 radians; an independent non-identity GLS calculation agrees and an exactly proportional design abstains. VT-S14 nevertheless remains BLOCKED_WITH_RECEIPT because admitted data are absent.",
+      "assumptions_used": [
+        "The frozen PR-272 depth covariance and local/global designs define only one registered synthetic cell.",
+        "A fixed-design synthetic pass cannot satisfy the admitted-data requirement."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json#nonidentity_gls",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json#registered_whitened_principal_angle_radians",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14"
+      ],
+      "evidence_fingerprint": "pr286:vts14-registered-cell-rank-angle-and-data-blocker:v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "python3 -B .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle.py --output .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json"
+      ],
+      "confidence": 0.99,
+      "unresolved": [],
+      "source_finding_ids": [
+        "F-PR286-PHYSSTAT-003"
+      ],
+      "supporting_assignments": [
+        "A-PR286-FROZEN-PHYSSTAT"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "assignment_count": 4,
+  "validated_result_count": 4,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/RUN_PLAN.json",
+      "sha256": "20063491de8c3ff4aef5a539cbf1b95da3b37c578570d2b7bea5f7dbbe1081c9",
+      "bytes": 6131
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/assignments/A-PR286-FROZEN-CLAIM.json",
+      "sha256": "c7c19f7af6fc0ee3ac3d509272b5a9e598aa62fd96e6c19e87e8e38eccc32dbe",
+      "bytes": 4375
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/assignments/A-PR286-FROZEN-CODE.json",
+      "sha256": "4c1440daa4387c050b9cf6ad2e862a64f851438e7d59cb9ff0116bac8495fd3b",
+      "bytes": 4708
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/assignments/A-PR286-FROZEN-PHYSSTAT.json",
+      "sha256": "1e846d649b1a1586eec54339337bca5fef8957a07bc10d4d2655ff2c2ce2be73",
+      "bytes": 5136
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/assignments/A-PR286-FROZEN-REPLAY.json",
+      "sha256": "44082c6e88db8e99874f180e399843042cc551d359ad71dc46e302b5dba173b7",
+      "bytes": 4658
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-CLAIM.json",
+      "sha256": "cce38f596beaef4ab363d479bc45ae9ff13e0771e7af6ed6635773bee68b386f",
+      "bytes": 6971
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-CODE.json",
+      "sha256": "4023e251739d66a8d6082606ebb7b494d1da5b1bcdde296ec270f918c9009ebe",
+      "bytes": 10081
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-PHYSSTAT.json",
+      "sha256": "dc20591369dcb5556f4d26d3f80a2680399057c50d1e10c32198549fbf3dc710",
+      "bytes": 13265
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-REPLAY.json",
+      "sha256": "27ef3f426398b84c5d8baae53053e1b55e2e9a6abce764e5350a338a1a0e3c82",
+      "bytes": 6740
+    }
+  ],
+  "merge_input_sha256": "4c3e8a741b086271bee76f5cb1604a30e0d160a9e333baa88618385413ec5797"
+}

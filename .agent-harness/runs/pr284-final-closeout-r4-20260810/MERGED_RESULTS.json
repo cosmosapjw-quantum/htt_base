@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-final-closeout-r4-20260810",
+  "generated_at": "2026-08-10T03:21:44+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 1,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR284-R4-FINAL-CLOSEOUT",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR280-HERMETIC-HARNESS",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/review_coverage.json",
+            ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle_output.json",
+            ".prguard/runtime/PR284_R4_FINAL_INTEGRATION_REHEARSAL.json"
+          ],
+          "evidence_fingerprint": "PR284-R4 final immutable closeout integration and historical-result binding",
+          "summary": "Final candidate, exact predecessor, eleven unique patch IDs, unchanged production/dependency key, seven zero-exit integration commands, identical merged/candidate tree, three exact prior PASS results, structurally valid aggregate, and synchronized REVIEWED 15/16 status all validate. PR-285 remains INELIGIBLE at zero assurance. No push, PR, merge, or publication action is recorded or authorized."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "assignment_count": 1,
+  "validated_result_count": 1,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr284-final-closeout-r4-20260810/RUN_PLAN.json",
+      "sha256": "c7c642ea859ae7da109cb16b66c8bf3d177d43c24bab5aa37edce5b856f3866c",
+      "bytes": 4060
+    },
+    {
+      "path": ".agent-harness/runs/pr284-final-closeout-r4-20260810/assignments/A-PR284-R4-FINAL-CLOSEOUT.json",
+      "sha256": "1b4e323cbadee39fa5b886c1037fbf727d47fef0fbc2580e408a40e1db545ce7",
+      "bytes": 5321
+    },
+    {
+      "path": ".agent-harness/runs/pr284-final-closeout-r4-20260810/results/A-PR284-R4-FINAL-CLOSEOUT.json",
+      "sha256": "5fc8c065ba879bc368faa4a389c389e8a521568c5be37f22cb44e468215ae088",
+      "bytes": 8726
+    }
+  ],
+  "merge_input_sha256": "42fe66a4f034b3c569afb2be6343177aa9723bc90c004b1395f3b86f086c42e7"
+}

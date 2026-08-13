@@ -1,0 +1,155 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR284-R2-PHYSMATH",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "assignment_sha256": "ddcfdc1aeec8328ff9787e731cf443431a79a6011f0dd35b6445d12af11d8585",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f6f78bfd7c1b8f0bc2f4c895da94db09fe6b4b78da245d8090e09ee8aa84e09a",
+    "seal_sha256": "911cfed58698d97a88585a664c6ad46db8df92d46f3a23cfdc2bac74c24bdc65",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "49a8f697c8d7985ec637e70aca3b9271d6f0da7f",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "702db54b4ce5ee0904352b2b507faffe5ef5d876",
+    "diff_sha256": "c9563b2e9e7bd45436aceb5a744e8fc6f7f8da7a818088b0d9426a37d7f59aea",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "4126069eaf7aa93fc8f4ec3799a33800fefd0614926691a1301e543a2a229861"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-PHYSMATH.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-09T21:34:00Z",
+  "completed_at": "2026-08-09T21:50:00Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "arithmetic": "fractions.Fraction exact rational"
+  },
+  "commands": [
+    {
+      "argv": ["sha256sum", ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json", ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-PHYSMATH.json", "docs/research_program/post_pr275/pr284_spec.yaml", "htt/src/common/depth_path_calibration.py", "htt/htt/htt/infer/depth_path_calibration.py", "tests/contracts/test_depth_path_doob_calibration.py", "docs/generated/pr284_depth_path_doob_receipt.json"],
+      "returncode": 0,
+      "summary": "All registered R2 required-input hashes matched."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "focused"],
+      "returncode": 0,
+      "summary": "21 passed in 1.81s."
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "check"],
+      "returncode": 0,
+      "summary": "PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION."
+    },
+    {
+      "argv": ["python", "-B", ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-PHYSMATH/pr284_r2_physmath_oracle.py"],
+      "returncode": 0,
+      "summary": "Named math forgeries rejected; authentic exact fixture passed; residual invented-DepthPath binding emitted a 1/4 bound."
+    },
+    {
+      "argv": ["python", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-PHYSMATH/review_coverage.json", "--seal", ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json", "--run-id", "pr284-frozen-findings-rereview-20260810", "--assignment-id", "A-PR284-R2-PHYSMATH", "--risk-tier", "R3", "--structural-only"],
+      "returncode": 0,
+      "summary": "Assignment-local affected-cell coverage validated structurally."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-PHYSMATH/pr284_r2_physmath_oracle.py",
+      "sha256": "89f9479826301f2c856b5b5f152d8f51f48abc93d8d6e81282a8218770f1aa36",
+      "bytes": 11609,
+      "producer": "A-PR284-R2-PHYSMATH",
+      "command_fingerprint": "ca4bc631d5bfb07058821722e0b5851d8c0647894360429ba46d4ba98aed1c26"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-PHYSMATH/review_coverage.json",
+      "sha256": "a247d28c8929aa278dafd132aecb54ec569de983bc919c93c3c42a1334a49def",
+      "bytes": 8692,
+      "producer": "A-PR284-R2-PHYSMATH"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-PHYSMATH/review_coverage.json",
+  "review_coverage_sha256": "a247d28c8929aa278dafd132aecb54ec569de983bc919c93c3c42a1334a49def",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/assignments/A-PR284-R2-PHYSMATH.json",
+    ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/RUN_PLAN.json",
+    ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-PHYSMATH.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+    "docs/generated/pr284_depth_path_doob_receipt.json",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/research_program/post_pr275/pr284_spec.yaml",
+    "htt/htt/htt/infer/depth_path_calibration.py",
+    "htt/src/common/depth_path_calibration.py",
+    "scripts/codex_harness/run_pr284_depth_path_doob.py",
+    "tests/contracts/test_depth_path_doob_calibration.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR284-R2-PHYSMATH-001",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr284.importable-contract-builder.unbound-depth-path-residual.v2",
+      "statement": "R2 closes the non-centering, false-second-moment, nonfiltration, tower, and selected-path-value portions of F-PR284-PHYSMATH-001, but the importable builder still mints a proved report with invented `path_content_id`, stratum IDs, sigma-field IDs, and premise identity because COMMON never revalidates a `DepthPath`; the public calibration then emits a 1/4 Doob bound despite the spec requiring an exact strictly nested DepthPath premise.",
+      "assumptions_used": [
+        "The spec's exact DepthPath identity and strictly nested sky-support premise is mandatory for any bound, not descriptive metadata.",
+        "Python callers can directly import the underscore builder, as demonstrated by the registered mutation itself.",
+        "Exact finite-law arithmetic is necessary but does not substitute for binding the probability construction to the claimed DepthPath and sky supports."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:32",
+        "docs/research_program/post_pr275/pr284_spec.yaml:54",
+        "docs/research_program/post_pr275/pr284_spec.yaml:89",
+        "htt/src/common/depth_path_calibration.py:557",
+        "htt/src/common/depth_path_calibration.py:692",
+        "htt/src/common/depth_path_calibration.py:864",
+        "htt/htt/htt/infer/depth_path_calibration.py:316",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-PHYSMATH/pr284_r2_physmath_oracle.py"
+      ],
+      "counterevidence_refs": [
+        "htt/src/common/depth_path_calibration.py:710",
+        "htt/src/common/depth_path_calibration.py:718",
+        "htt/src/common/depth_path_calibration.py:730",
+        "htt/src/common/depth_path_calibration.py:741",
+        "tests/contracts/test_depth_path_doob_calibration.py:221",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 21 passed",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+      ],
+      "reproduction": [
+        "Run `python -B .agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-PHYSMATH/pr284_r2_physmath_oracle.py` from the frozen R2 candidate root.",
+        "Observe non-centered, false-second-moment, and nonfiltration constructions are rejected.",
+        "Observe the authentic receipt recomputes mean zero, E[X^2]=5, event probability 1/2, and Doob bound 25/36, with mock abstention.",
+        "Observe a mathematically consistent raw report carrying `sha256:no-registered-depth-path` and invented stratum IDs is accepted and public calibration emits probability bound 1/4."
+      ],
+      "unresolved": [
+        "Bind the proved report to a revalidated exact DepthPath object or an independently verifiable path-to-strata/support content commitment before premise status can be accepted.",
+        "Split MU284-REPORT-BUILDER-BYPASS into discriminating mutations so an invented path/strata/support identity with otherwise valid exact mathematics must also be killed before receipt PASS."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR284-R2-PHYSMATH-001"],
+      "summary": "R2 correctly repairs the affected exact arithmetic and filtration replay, but the original caller-proof finding remains open at the DepthPath/sky-support binding layer; G6 cannot pass while a bound can be attached to invented path identities."
+    }
+  ],
+  "errors": []
+}

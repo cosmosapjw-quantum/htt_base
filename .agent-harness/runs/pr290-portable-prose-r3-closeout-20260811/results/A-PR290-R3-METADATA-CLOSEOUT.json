@@ -1,0 +1,145 @@
+{
+  "schema_version": 3,
+  "run_id": "pr290-portable-prose-r3-closeout-20260811",
+  "assignment_id": "A-PR290-R3-METADATA-CLOSEOUT",
+  "assignment_sha256": "ef8d671417f431b58e01095ec3f0fb3f80ba7edb7c5e47ebb42afca14f822e09",
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "independence_mode": "adjudication",
+  "work_unit_id": "PR-290",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR290_R3_METADATA_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "7878f8797787955287b9aff665910727ae9c7b41071d7be95acbdd9ca7867a29",
+    "seal_sha256": "e7df87ce9d0d24b70fc4e1bc6866d5406aa344167cd25087f3fff4d8b6b7fa9b",
+    "base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_sha": "d73648b01f86333c94c82051415c58cbccbf54d2",
+    "merge_base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_tree_sha": "f472f7c244bf137bda34c9fc356e200ead2295f7",
+    "diff_sha256": "e362011c8edd3aa5f39adf8d1020d2fa4f6f05f0d9e52d1bdded612d47196eb0",
+    "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+    "production_hash": "b9b62e081f702f6b2b1918e5b3f1b599d651bdfa2fb0261e878d7a669d94beaf"
+  },
+  "result_path": ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/results/A-PR290-R3-METADATA-CLOSEOUT.json",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-11T23:15:00+09:00",
+  "completed_at": "2026-08-11T23:28:00+09:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "PyYAML": "6.0.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr290_planck_lane.py", "portable"],
+      "returncode": 0,
+      "summary": "PASS: distinct clean archive over 5,919 tracked files; source/archive pre/post manifest 4c9fc775be12d64ebfa65aedd144fc0fd3833c23bd4e6b73c4b89d9def44f007 identical; no external root, network/download, or observed execution"
+    },
+    {
+      "argv": ["python", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "docs/research_program/post_pr275/pr290_spec.yaml", "htt/src/common/observed_lane_activation.py", "htt/obsstat/planck_post275_lane.py", "tests/integration/test_planck_post275_lane.py", "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json", "docs/PR_DELTAS/pr-290.md"],
+      "returncode": 0,
+      "summary": "No forbidden claim language detected"
+    },
+    {
+      "argv": ["python", "-B", ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-oracle.py"],
+      "returncode": 0,
+      "summary": "PASS: frozen metadata-only diff, unchanged production/dependency identities, R2 chronology, two fresh cells, lifecycle and publication boundaries"
+    },
+    {
+      "argv": ["python", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-REVIEW_COVERAGE.json", "--seal", ".prguard/runtime/PR290_R3_METADATA_CANDIDATE_SEAL.json", "--run-id", "pr290-portable-prose-r3-closeout-20260811", "--assignment-id", "A-PR290-R3-METADATA-CLOSEOUT", "--risk-tier", "R3", "--structural-only"],
+      "returncode": 0,
+      "summary": "PASS: exact 15-cell coverage; 2 fresh and 13 carried from registered frozen R2 evidence"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-oracle.py",
+      "sha256": "229eeb76e6a3a42172365c07191c139948a7645b1d5c070b9136e7976b673337",
+      "bytes": 9177,
+      "producer": "A-PR290-R3-METADATA-CLOSEOUT",
+      "command_fingerprint": "e72ce709de7c36029922b0636055f85bcbc348010705a60990ad02907c0d6598"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-REVIEW_COVERAGE.json",
+      "sha256": "1feb06651c47c10e8ed8d1eb0ad29e115c1c1c5b8dd11fb53624592a7c7d440f",
+      "bytes": 7093,
+      "producer": "A-PR290-R3-METADATA-CLOSEOUT"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "1feb06651c47c10e8ed8d1eb0ad29e115c1c1c5b8dd11fb53624592a7c7d440f",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/assignments/A-PR290-R3-METADATA-CLOSEOUT.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".prguard/runtime/PR290_R3_METADATA_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR290_R2_CANDIDATE_SEAL.json",
+    ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json",
+    ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-REPLAYCLAIM.json",
+    ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/MERGED_RESULTS.json",
+    ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/RUN_SUMMARY.json",
+    "docs/research_program/post_pr275/pr290_spec.yaml",
+    "docs/research_program/post_pr275/pr290_publication_policy.json",
+    "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+    "docs/PR_DELTAS/pr-290.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "htt/src/common/observed_lane_activation.py",
+    "htt/obsstat/planck_post275_lane.py",
+    "scripts/codex_harness/run_pr290_planck_lane.py",
+    "tests/integration/test_planck_post275_lane.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR290-R3-METADATA-CLOSEOUT-PASS",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "medium",
+      "evidence_fingerprint": "PR290:d73648b0:portable-prose-self-reference-removed",
+      "statement": "PASS for the registered metadata-only closeout: the sole R3 tracked change removes the self-referential portable-manifest literal while preserving all portable facts; fresh portable-clean and claim-language cells pass, and unchanged production/dependency identities permit the other thirteen cells to be carried from R2 without substantive rerun.",
+      "assumptions_used": [
+        "The R3 seal and registered input hashes identify the complete review subject.",
+        "The R2 physics/code PASS remains applicable because the R3 commit changes only tracked PR-delta prose and preserves the production hash.",
+        "A tracked document must not embed the digest of a manifest that includes that same document."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-oracle.py",
+        ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-REVIEW_COVERAGE.json",
+        "docs/PR_DELTAS/pr-290.md",
+        ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json",
+        ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-REPLAYCLAIM.json"
+      ],
+      "counterevidence_refs": [
+        "R2 replay/claim FAIL is retained as historical evidence for the now-removed stale exact digest."
+      ],
+      "reproduction": [
+        "python -B .agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-oracle.py",
+        "python -B .agent-harness/scripts/review_coverage.py --coverage .agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-REVIEW_COVERAGE.json --seal .prguard/runtime/PR290_R3_METADATA_CANDIDATE_SEAL.json --run-id pr290-portable-prose-r3-closeout-20260811 --assignment-id A-PR290-R3-METADATA-CLOSEOUT --risk-tier R3 --structural-only"
+      ],
+      "unresolved": [
+        "Observed Planck execution remains correctly absent and H-PLANCK remains NOT_AUTHORIZED.",
+        "PR-290 remains VALIDATED, unpublished, unsealed, and unmerged; publication and merge are outside this assignment."
+      ],
+      "confidence": 1.0
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR290-R3-METADATA-CLOSEOUT-PASS"],
+      "summary": "The metadata-only portable-prose repair passes without changing production or dependency identities; claim ceilings and nonexecution boundaries remain intact."
+    }
+  ],
+  "errors": []
+}

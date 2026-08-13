@@ -1,0 +1,108 @@
+{
+  "schema_version": 2,
+  "run_id": "pr286-mio-nonfinite-r3-rereview-20260811",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "created_at": "2026-08-11T02:56:48+00:00",
+  "spec_ref": "docs/research_program/post_pr275/pr286_spec.yaml",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr285-pillar-t-adjudication-recovery-20260810",
+  "target_ref": "refs/remotes/origin/changeset/pr285-pillar-t-adjudication-recovery-20260810",
+  "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+  "candidate_ref": "refs/heads/changeset/pr286-pillar-s-adjudication-recovery-20260810",
+  "integration_policy": {
+    "path": "docs/research_program/post_pr275/pr286_publication_policy.json",
+    "sha256": "768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d",
+    "policy_id": "PR286-PUBLICATION-POLICY"
+  },
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "d95f5a26bab5be25afb550e64d75ce4f8419fca8b61b232682c960e9e5e1fc95",
+    "seal_sha256": "26b24258bfec78ccbd0dad9382fc6ae8e9b9ba9a417b81753f84ca68b30c6f0f",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "0b1a8ef76df47b0b42e972bb47c9bc294e80aa7c",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "c92883d3500aff9a7fa07e561ad43bf4088feb9d",
+    "diff_sha256": "a07284aa230f991286ac4b3ed11e5201f70af2a49ae8bf79cf5191d5af3cc4d1",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "99ad99e15ff863b63945663c112767d1f6dc90e8f697a407798c281cb39c2b30"
+  },
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "budget": {
+    "max_concurrent": 4,
+    "max_total": 8,
+    "max_total_per_work_unit": 16,
+    "max_depth": 2
+  },
+  "publication_budget": {
+    "max_open_prs": 4,
+    "max_direct_to_target_prs": 1,
+    "max_prs_per_change_set": 1,
+    "max_stack_depth": 4,
+    "max_file_overlap_prs": 3
+  },
+  "stages": [
+    "context-build",
+    "work-unit-implementation",
+    "candidate-freeze",
+    "read-only-review",
+    "latest-target-integration",
+    "external-publisher-authorization"
+  ],
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "status": "candidate_frozen",
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "VALIDATED",
+  "stack_id": "PROCESS_INFLATION_RECOVERY_PHASE2",
+  "activation_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+  "predecessor_pr": "PR-285",
+  "predecessor_sealed_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+  "production_hash": "99ad99e15ff863b63945663c112767d1f6dc90e8f697a407798c281cb39c2b30",
+  "dependency_hashes": {
+    "theorem_signatures": "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
+    "vt_proof_program": "055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9",
+    "proof_registry_two_pillars": "01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201",
+    "pillar_s_core_proofs": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e",
+    "pillar_s_inference_validation": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
+    "pr273_diagnostic_pack": "36783932f540d4a4e26cc0d66f1f8bb5692623664deda7106e97326576f041bc",
+    "pr286_spec": "6fca230213eea5c914842c63513a9047cb3221d0646564692464a82d7a03fc05",
+    "publication_policy": "768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d",
+    "pr286_runner": "a4a5243e13bc46503a16904c5f26a670a077d575220f16ebdae0c5d206493732",
+    "pr286_contract_test": "5e544fdbbe564765092a8c4f60b4f39a6bd3a32d42467f7dc6c9ac34f6754bef",
+    "statistical_inference": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
+    "adjudication_receipt": "b5ea12647f1d7818da3702b3da8d127f490a15cdef8e37fa8958cfe803b3ee5a",
+    "publication_integrity_test": "b58ac958ac5c6aafb6de768a68813665fd233540cb328ede98240a933373d9cc",
+    "pr_backlog": "73553b6056e5111c1047b80f79c35cdb8e898e0a7b8a7e7e28f97731b5cc699e",
+    "dag_validator": "1382c9d5d8e096efbcd90cf804ae8c32b2de1ce5c47d67be75ab282b45361120",
+    "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+  },
+  "evidence_key": {
+    "production_hash": "99ad99e15ff863b63945663c112767d1f6dc90e8f697a407798c281cb39c2b30",
+    "dependency_hashes": {
+      "theorem_signatures": "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
+      "vt_proof_program": "055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9",
+      "proof_registry_two_pillars": "01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201",
+      "pillar_s_core_proofs": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e",
+      "pillar_s_inference_validation": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
+      "pr273_diagnostic_pack": "36783932f540d4a4e26cc0d66f1f8bb5692623664deda7106e97326576f041bc",
+      "pr286_spec": "6fca230213eea5c914842c63513a9047cb3221d0646564692464a82d7a03fc05",
+      "publication_policy": "768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d",
+      "pr286_runner": "a4a5243e13bc46503a16904c5f26a670a077d575220f16ebdae0c5d206493732",
+      "pr286_contract_test": "5e544fdbbe564765092a8c4f60b4f39a6bd3a32d42467f7dc6c9ac34f6754bef",
+      "statistical_inference": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254",
+      "adjudication_receipt": "b5ea12647f1d7818da3702b3da8d127f490a15cdef8e37fa8958cfe803b3ee5a",
+      "publication_integrity_test": "b58ac958ac5c6aafb6de768a68813665fd233540cb328ede98240a933373d9cc",
+      "pr_backlog": "73553b6056e5111c1047b80f79c35cdb8e898e0a7b8a7e7e28f97731b5cc699e",
+      "dag_validator": "1382c9d5d8e096efbcd90cf804ae8c32b2de1ce5c47d67be75ab282b45361120",
+      "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+    }
+  },
+  "gate_disposition": "PASS",
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 7
+  }
+}

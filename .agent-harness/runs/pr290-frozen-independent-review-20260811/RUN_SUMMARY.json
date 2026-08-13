@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "run_id": "pr290-frozen-independent-review-20260811",
+  "work_unit_id": "PR-290",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "created_at": "2026-08-11T13:15:46+00:00",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "025809afa9b9760e39a2c21023193d2c0b1920fc86bf0e24e05b6f44b340141a",
+    "seal_sha256": "f7c226fdc53408bb10defeabbd7a23a5e17c38dd2a3a2359640aeacf3678b3ed",
+    "base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_sha": "27c83a1a12369b4b563667ff5145ae9a717b24f0",
+    "merge_base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_tree_sha": "344dfb920b26c0207432b6acd9625bf2dacf50da",
+    "diff_sha256": "d10438bad740b2c81a4198655a647b5d7ca021f9f9cf8a3e196e22a5576dbd23",
+    "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+    "production_hash": "f3a75833210278e15847731fa8f12183babb45ba0ea4409e75119960c9f5573f"
+  },
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "VALIDATED",
+  "evidence_key": {
+    "production_hash": "f3a75833210278e15847731fa8f12183babb45ba0ea4409e75119960c9f5573f",
+    "dependency_hashes": {
+      "pr290_spec": "e26580613babf85c6f68794bd4038538f9f916531428401d0fb951fef9b0b5cc",
+      "publication_policy": "45655b62f02f2d422283aa99780c78e80a022fbd1fd371e8ee7a450ddad320cd",
+      "pr289_data_identity_receipt": "92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+      "pr289_registry": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+      "pr288_terminal_receipt": "622dadbcdf4a5d616a78f485fd6a772d1c7823ed8d77e808aa2bfc8f66169b0c",
+      "pr289_data_identity_module": "145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2",
+      "pr290_runner": "abaddb4980839f3b368337e9c800bed7a15c78b8fb7ae78c4a0708dc9e250466",
+      "pr290_contract_test": "548ee625e75264f46593358db1201c7bd28df71843ca3bcd6779135944fd8a61",
+      "claim_ledger": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+      "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+    }
+  },
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 0
+  },
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "publication_state": "NOT_PUBLISHED_BY_HARNESS",
+  "assignment_count": 3,
+  "results": [
+    {
+      "assignment_id": "A-PR290-FROZEN-CODE",
+      "agent_type": "harness_engineer",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-CODE.json",
+      "sha256": "664a5b28fa5068563ef9e36e224de62646820a1f545edf4f6fb5cf9359658870",
+      "bytes": 8706
+    },
+    {
+      "assignment_id": "A-PR290-FROZEN-PHYSSTAT",
+      "agent_type": "physics_stat_auditor",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-PHYSSTAT.json",
+      "sha256": "b19c6ed4bbe03cee597067f00d5a23a334167c858dfe7f4fb54848b3a6890b4e",
+      "bytes": 10245
+    },
+    {
+      "assignment_id": "A-PR290-FROZEN-REPLAYCLAIM",
+      "agent_type": "claim_lane_reviewer",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-REPLAYCLAIM.json",
+      "sha256": "77ed839b339784a7d504cfccef6b6823a0d97b692f3b99e67072f77918b88bc4",
+      "bytes": 9775
+    }
+  ],
+  "merged_results": {
+    "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/MERGED_RESULTS.json",
+    "sha256": "548877159287e552e0f4f19fe39c9ced7d1168d7060928386fc390de2d10a881",
+    "bytes": 10664
+  },
+  "disposition": "summarized_discardable",
+  "closed_at": "2026-08-11T13:50:05+00:00"
+}

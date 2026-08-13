@@ -1,0 +1,193 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-selective-salvage-mapping-20260812",
+  "assignment_id": "A-PR291-CLAIM-GUARD-MAP",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_lane_reviewer",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "independence_mode": "blind-results",
+  "status": "inconclusive",
+  "gate_disposition": "INCONCLUSIVE",
+  "result_path": ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/results/A-PR291-CLAIM-GUARD-MAP.json",
+  "assignment_sha256": "b0ef935b81e403c98a1af56bfd9867df665e826419ea96d18a1b8f5e374cb06a",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/assignments/A-PR291-CLAIM-GUARD-MAP.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-lane-auditor/SKILL.md",
+    "docs/harness/CLAIM_LEDGER.md",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "htt/src/common/semantic_guards/no_overclaim.py",
+    "scripts/check_claim_language.py",
+    "tests/contracts/test_claim_language_lint.py",
+    "tests/contracts/test_semantic_guards.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-12T00:05:00+09:00",
+  "completed_at": "2026-08-12T00:18:00+09:00",
+  "tool_versions": {
+    "git": "2.43.0",
+    "python": "3.12.3"
+  },
+  "commands": [
+    "sha256sum docs/research_program/post_pr275/pr291_spec.yaml htt/src/common/semantic_guards/no_overclaim.py tests/contracts/test_claim_language_lint.py scripts/check_claim_language.py docs/harness/CLAIM_LEDGER.md",
+    "rg -n 'PR-291|G57|G58|G59|G60|G61' /home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md",
+    "git show --no-ext-diff 1417804b e54b2050 5c2a8025 e5e45420 1c8e742f -- htt/src/common/semantic_guards/no_overclaim.py tests/contracts/test_claim_language_lint.py docs/PR_DELTAS/pr-291.md",
+    "nl -ba htt/src/common/semantic_guards/no_overclaim.py",
+    "nl -ba tests/contracts/test_claim_language_lint.py",
+    "nl -ba tests/contracts/test_semantic_guards.py"
+  ],
+  "artifacts": [],
+  "review_coverage_path": null,
+  "review_coverage_sha256": null,
+  "findings": [
+    {
+      "finding_id": "F-PR291-CG-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "BLOCKING: the current scanner, and the G61 historical scanner proposed for salvage, suppress any matched forbidden claim when any broad marker such as 'not ', 'no ', or 'without' occurs on an unrelated nearby line. scan_text calls _is_guardrail_context before recording an issue; that helper concatenates two preceding lines, the match line, and one following line and returns true on a substring marker. The same helper is also applied independently to both source-observable window lines and every touched multiline-CF4 line. On Markdown table rows it scans the whole row before the existing exact forbidden-column helper runs. Therefore unrelated caveat prose or another table cell can hide a positive production claim.",
+      "assumptions_used": [
+        "The audit's requested 'matched sentence/structured Markdown context' ceiling governs the salvage repair.",
+        "A forbidden claim and a distinct caveat sentence or Markdown cell are semantically independent even when source-adjacent.",
+        "The mutable candidate has no acceptance standing and was not evaluated."
+      ],
+      "evidence_refs": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:161-164",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:450-454",
+        "htt/src/common/semantic_guards/no_overclaim.py:38-61",
+        "htt/src/common/semantic_guards/no_overclaim.py:213-225",
+        "htt/src/common/semantic_guards/no_overclaim.py:364-384",
+        "git show 1c8e742f:htt/src/common/semantic_guards/no_overclaim.py#L280-L305",
+        "git show 1c8e742f:htt/src/common/semantic_guards/no_overclaim.py#L328-L335",
+        "git show 1c8e742f:htt/src/common/semantic_guards/no_overclaim.py#L400-L412",
+        "git show 1c8e742f:htt/src/common/semantic_guards/no_overclaim.py#L576-L596"
+      ],
+      "evidence_fingerprint": "PR291:no-overclaim:nearby-negation-window-suppression:v1",
+      "counterevidence_refs": [
+        "htt/src/common/semantic_guards/no_overclaim.py:387-419 preserves exact YAML guardrail sections",
+        "htt/src/common/semantic_guards/no_overclaim.py:422-468 already provides an exact forbidden-Markdown-column helper",
+        "tests/contracts/test_claim_language_lint.py:140-151 proves the YAML exemption is intended not to leak"
+      ],
+      "reproduction": [
+        "Static current-path proof: for text 'No observed bytes were read.\\nBianchi family identified in this artifact.', geometry_detected matches line 2; scan_text calls _is_guardrail_context; its [index-2,index+2) window contains 'no '; the function returns true and scan_text continues without an issue.",
+        "Static same-line proof: 'No observed bytes were read. Bianchi family identified in this artifact.' is likewise suppressed even though the negative sentence and positive claim sentence are distinct.",
+        "Static G61 proof after CF4 salvage: 'The observed lane is not authorized.\\nPhysical cosmic vorticity is supported by the 0.0089 curl diagnostic.' reaches the historical legacy_curl_physics_promotion match, then the same nearby-window helper suppresses it.",
+        "Static table proof: a positive match in an Allowed cell is suppressed if a different cell in the same row contains 'do not', because the whole-row marker return occurs before _match_is_in_forbidden_markdown_column."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "No patched or sealed candidate was provided, so the repaired behavior remains unexecuted and unreviewed."
+      ]
+    },
+    {
+      "finding_id": "F-PR291-CG-002",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "inconclusive",
+      "severity": "medium",
+      "statement": "Selective salvage map: reimplement, rather than cherry-pick, the two narrow CF4 rules from G57/G58 and the bounded multiline/CommonMark behavior from G59-G61 in htt/src/common/semantic_guards/no_overclaim.py; port their hostile and control cases into tests/contracts/test_claim_language_lint.py. G57 contributes diagnostic-first curl promotion, retired-P0 rescue, and matched downclaims. G58 adds physics-first/reordered forms. G59 adds ordinary wrapped prose and distinct-list/fence boundaries. G60 adds repeated/nested blockquotes, quoted lists, quote-depth boundaries, and quoted fences. G61 adds lazy blockquote continuations plus fence state scoped to the opening quote container. Preserve the current direct geometry determiner/verb-inflection cases and existing YAML/table structured exemptions. Do not import unrelated CF4 lane code, extract a scanner framework, alter RULES ontology, or promote PR-291 status.",
+      "assumptions_used": [
+        "The historical commits are evidence sources, not independently accepted candidates.",
+        "Only no_overclaim.py and its focused contract tests belong in this claim-guard salvage slice.",
+        "The PR-291 scientific ceiling remains diagnostic_only with observed_data_executed=false and family identification blocked."
+      ],
+      "evidence_refs": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:540-544",
+        "docs/research_program/post_pr275/pr291_spec.yaml:10-22",
+        "docs/research_program/post_pr275/pr291_spec.yaml:169-188",
+        "docs/research_program/post_pr275/pr291_spec.yaml:264-293",
+        "git show 1417804b:htt/src/common/semantic_guards/no_overclaim.py and tests/contracts/test_claim_language_lint.py",
+        "git show e54b2050:htt/src/common/semantic_guards/no_overclaim.py and tests/contracts/test_claim_language_lint.py",
+        "git show 5c2a8025:htt/src/common/semantic_guards/no_overclaim.py and tests/contracts/test_claim_language_lint.py",
+        "git show e5e45420:htt/src/common/semantic_guards/no_overclaim.py and tests/contracts/test_claim_language_lint.py",
+        "git show 1c8e742f:htt/src/common/semantic_guards/no_overclaim.py#L187-L223,#L235-L305,#L352-L493",
+        "git show 1c8e742f:tests/contracts/test_claim_language_lint.py#L114-L267",
+        "tests/contracts/test_claim_language_lint.py:59-72"
+      ],
+      "evidence_fingerprint": "PR291:no-overclaim:G57-G61-selective-salvage-map:v1",
+      "counterevidence_refs": [
+        "The audit marks G60's R5 candidate claim cases FAIL and G61 post-R5 unreviewed with a residual gap; neither commit can be adopted as accepted wholesale.",
+        "The current required-input hashes contain none of the CF4-specific legacy_curl_physics_promotion or retired_p0_rescue rules."
+      ],
+      "reproduction": [
+        "Compare git show 1417804b..1c8e742f for only htt/src/common/semantic_guards/no_overclaim.py and tests/contracts/test_claim_language_lint.py; the sequence is additive and each review-driven commit closes a distinct syntax/container escape.",
+        "Compare the required current no_overclaim.py hash 195e69421de46facb7bffa9f1abd4cfd3fe266ecc3139d9e37aa92232a907c16 with G61; the current file retains generic guards but lacks the two PR-291 CF4 rules and multiline helper."
+      ],
+      "confidence": 0.97,
+      "unresolved": [
+        "The final exact hunk must be reviewed against the actual implementation candidate because the assignment candidate is mutable and unsealed."
+      ]
+    },
+    {
+      "finding_id": "F-PR291-CG-003",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "inconclusive",
+      "severity": "high",
+      "statement": "Smallest repair and discriminating test contract: change _is_guardrail_context so ordinary prose exemption is evaluated only on the sentence containing the regex match, while retaining exact YAML guardrail-section ancestry and the existing matched forbidden-Markdown-column helper. Add only a tiny exact structured-list check for list items governed by an explicit 'Forbidden examples:' label so the existing negative-example fixture remains valid; do not retain the generic nearby-line window. Pass match/span information from scan_text, _scan_source_observable_windows, and _scan_multiline_legacy_curl_windows so all three paths share the same scope. Remove the whole-row table marker shortcut and let the existing cell-aware helper decide. For multiline CF4 matches, evaluate the folded match-bearing sentence once, not every touched source line. Positive regressions must flag a geometry or CF4 promotion despite unrelated 'not', 'no', and 'without' sentences both before and after it, including one same-source-line two-sentence case and an Allowed table cell whose neighboring cell says 'do not'. Negative controls must allow true same-sentence downclaims, the exact YAML keys, explicit Forbidden-examples list items, forbidden-reading cells, proper fences, distinct list items, quote-depth changes, and lazy blockquote downclaims. Preserve current determiner/verb-inflection geometry cases plus every G57-G61 reordered/wrapped/blockquote positive case.",
+      "assumptions_used": [
+        "Sentence punctuation plus the scanner's existing Markdown container boundaries is sufficient for this bounded repair.",
+        "An exact structured-list label is narrower than generic marker proximity and does not constitute a new scanner framework."
+      ],
+      "evidence_refs": [
+        "htt/src/common/semantic_guards/no_overclaim.py:198-238",
+        "htt/src/common/semantic_guards/no_overclaim.py:241-281",
+        "htt/src/common/semantic_guards/no_overclaim.py:364-468",
+        "tests/contracts/test_claim_language_lint.py:114-163",
+        "tests/contracts/test_semantic_guards.py:249-268",
+        "git show 1c8e742f:tests/contracts/test_claim_language_lint.py#L114-L267"
+      ],
+      "evidence_fingerprint": "PR291:no-overclaim:matched-sentence-structured-context-test-contract:v1",
+      "counterevidence_refs": [
+        "A sentence-only change without the exact Forbidden-examples list container would regress tests/contracts/test_claim_language_lint.py:114-124.",
+        "A main scan_text-only change would leave _scan_source_observable_windows and the G59-G61 multiline helper with the same broad suppression defect."
+      ],
+      "reproduction": [
+        "Required focused command after implementation: python -m pytest tests/contracts/test_claim_language_lint.py tests/contracts/test_semantic_guards.py -q",
+        "Required direct positive fixtures: unrelated 'not', 'no', and 'without' in preceding/following sentences must each yield exactly the intended rule_id.",
+        "Required direct negative fixtures: same-sentence 'is not supported', 'does not establish', and 'does not rescue' must yield no issues.",
+        "Required CommonMark fixture set: retain G59 ordinary wraps/list boundaries, G60 repeated and nested blockquotes/quoted fences, and G61 lazy blockquote plus quote-container fence transitions.",
+        "Required CLI smoke after focused tests: python scripts/check_claim_language.py docs --dry-run --format json; inspect nonzero output rather than weakening rules if existing production text is exposed."
+      ],
+      "confidence": 0.95,
+      "unresolved": [
+        "Sentence-boundary implementation must avoid abbreviations or decimal 0.0089 being treated as sentence terminators.",
+        "Kill switch: stop if the patch requires a general Markdown parser/framework, changes rule ontology, or makes an existing forbidden positive case pass.",
+        "Kill switch: stop on any regression in YAML exact-section scoping, forbidden-column cell scoping, fences, list boundaries, or negative downclaims.",
+        "No CLAIM_LEDGER, PR status, or claim-tier update is warranted from this read-only map; a future tested and independently reviewed candidate may update only its PR delta/status evidence."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR291-CG-001",
+        "F-PR291-CG-002",
+        "F-PR291-CG-003"
+      ],
+      "summary": "A bounded G57-G61 claim-guard salvage is well specified, but the broad nearby negation suppression is a blocking fail-open and no mutable candidate acceptance verdict is issued."
+    }
+  ],
+  "errors": []
+}

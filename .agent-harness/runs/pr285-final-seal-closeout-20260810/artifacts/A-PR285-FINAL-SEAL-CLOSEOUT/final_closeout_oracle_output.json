@@ -1,0 +1,236 @@
+{
+  "assignment_id": "A-PR285-FINAL-SEAL-CLOSEOUT",
+  "candidate_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+  "check_count": 12,
+  "checks": [
+    {
+      "check": "registered_required_input_hashes",
+      "evidence": {
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/MERGED_RESULTS.json": "261f297638f46906b69554c66683d2ae8dfc53969713a9cc15fe81a6f5a940d5",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/RUN_SUMMARY.json": "2015c5f3e84eab3acdd740180104a6adb368a37b88b70370ed5f6faf4c8ef660",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/results/A-PR285-R2-LINEAGE-REPLAY.json": "209082dd9dbcfcda5930d83b36415d9d7f7fb0d986471a7c251304a472bafd08",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/results/A-PR285-R2-STATUS-PHYSMATH.json": "934169c8dc8107cef6a8b61a2a6143fa4d218835bcc0db79f97e1af3a1bfc834",
+        ".prguard/runtime/PR285_R2_FINAL_CANDIDATE_SEAL.json": "7088597cbff291936441dcb31a2520596cbb1eb59f8d9fa802120ffa51e74269",
+        ".prguard/runtime/PR285_R2_FINAL_INTEGRATION_REHEARSAL.json": "93f0bd6ca3e54101a0c75c675e8f762b95bd54ffda622bf9b54871bcafccaba1",
+        ".prguard/runtime/PR285_R2_FINAL_REVIEW_CANDIDATE_SEAL.json": "641c72f627cb9a221dab61751bd971513bb1a2623f2d4b7281cd78dc7226060e",
+        ".prguard/runtime/PR285_R2_IMPLEMENTATION_CANDIDATE_SEAL.json": "02773cca24cdf455df4e96bd069c7abde4f186964aefa77c031bd2217534f149",
+        ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json": "ee38ffce3f3e9654d371a283b2e35b44a6530bf0fd677f86d855bbb61dced772",
+        "docs/PR_DELTAS/pr-285.md": "d255d0c632e44d5e35f3a5b0dd560feefdbf7a4fb0b18b2c49107ac3c0455c97",
+        "docs/codex_handoff/pr_status.yaml": "5761f42429102cc197bf1e1813f5e1986adc00703fe551c7c79894664e98e082",
+        "docs/research_program/post_pr275/pr285_publication_policy.json": "20c16524a86ca61ef33a5f3894c7ebc48eeeebe708eb7556725c025185cfe878",
+        "docs/research_program/post_pr275/pr285_spec.yaml": "481aba93390cf8aa0fe79f17036197bf76b7e98bc4b821cc198adea4deee98ee",
+        "machine_readable/pr_status.yaml": "5761f42429102cc197bf1e1813f5e1986adc00703fe551c7c79894664e98e082"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "live_final_candidate_seal_verifier",
+      "evidence": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\n  \"ok\": true,\n  \"seal\": \".prguard/runtime/PR285_R2_FINAL_CANDIDATE_SEAL.json\",\n  \"seal_sha256\": \"12ad1d54c69211faa5b82f3c54fa1277b8685fa4633d367c171fc535adb167c0\",\n  \"errors\": []\n}"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "final_integration_receipt_verifier",
+      "evidence": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\n  \"ok\": true,\n  \"errors\": []\n}"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "exact_head_parent_base_and_cleanliness",
+      "evidence": {
+        "head": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+        "merge_base": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+        "parents": [
+          "8682a13e8df75c48f6150af555ee231f62e7d9bc"
+        ],
+        "target_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+        "tree": "1aba859c52aee2d14ef8c72472858eec02771edf",
+        "worktree_porcelain": ""
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "reviewed_to_final_head_is_metadata_only",
+      "evidence": {
+        "paths": [
+          "docs/PR_DELTAS/pr-285.md",
+          "docs/codex_handoff/pr_status.yaml",
+          "machine_readable/pr_status.yaml"
+        ],
+        "range": "8682a13e8df75c48f6150af555ee231f62e7d9bc..16bc6db511b8b7228e5c4dcb95c65074fe519f24"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "final_seal_exact_identity",
+      "evidence": {
+        "base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+        "candidate_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+        "candidate_tree_sha": "1aba859c52aee2d14ef8c72472858eec02771edf",
+        "dirty": false,
+        "merge_base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+        "production_hash": "602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2",
+        "seal_sha256": "12ad1d54c69211faa5b82f3c54fa1277b8685fa4633d367c171fc535adb167c0"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "final_integration_exact_identity",
+      "evidence": {
+        "candidate_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+        "command_ids": [
+          "pr285-focused",
+          "pr285-adjacent",
+          "pr285-receipt-replay",
+          "pr285-portable-clean-replay",
+          "pr285-cas-four-axis-terminal-evidence",
+          "pr285-publication-policy-cross-binding",
+          "pr285-dag-strict",
+          "pr285-claim-language"
+        ],
+        "latest_target_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+        "merged_tree_sha": "1aba859c52aee2d14ef8c72472858eec02771edf",
+        "status": "PASS"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "logical_g20_g21_g22_and_stable_patch_dedup",
+      "evidence": {
+        "candidate_patch_count": 9,
+        "groups": {
+          "G20": {
+            "candidate_commit": "e0dc7d73ecbf25930daa0ff22871c86d99b00a40",
+            "candidate_matches": 1,
+            "declared_patch_id": "ec4535b0ffb7a461583d8f2f17821d14be86be80",
+            "disposition": "INCLUDE",
+            "source_patch_ids": {
+              "50c3fb52c3f31d173922c41712ba6276fa633e99": "ec4535b0ffb7a461583d8f2f17821d14be86be80",
+              "53b924233bc4285a4dbf7d2fda9666ddb16617a4": "ec4535b0ffb7a461583d8f2f17821d14be86be80",
+              "6a7139e2a53234023da4808884188b489279161e": "ec4535b0ffb7a461583d8f2f17821d14be86be80",
+              "e972edfcf3fed34070e6e670d648a66e40e73c81": "ec4535b0ffb7a461583d8f2f17821d14be86be80"
+            }
+          },
+          "G21": {
+            "candidate_commit": "ca5c6117f9d028809616dbdd604ceb8da05e50cb",
+            "candidate_matches": 1,
+            "declared_patch_id": "42b0834deccf5abbbbf7cb033b48fe01de8c1bf5",
+            "disposition": "INCLUDE",
+            "source_patch_ids": {
+              "63faaa51a764bb93ac3ddf550c3d437642d9d81e": "42b0834deccf5abbbbf7cb033b48fe01de8c1bf5",
+              "87356190621427655f66d9466e94ab72ab7147a7": "42b0834deccf5abbbbf7cb033b48fe01de8c1bf5"
+            }
+          },
+          "G22": {
+            "candidate_commit": null,
+            "candidate_matches": 0,
+            "declared_patch_id": "24fc17b06f91db9f4850fc665cd0a47c8996ce81",
+            "disposition": "EXCLUDE_OBSOLETE",
+            "source_patch_ids": {
+              "6e289afdba12b8a92f74c2d5de9beb123f7cf1e4": "24fc17b06f91db9f4850fc665cd0a47c8996ce81"
+            }
+          }
+        },
+        "unique_candidate_patch_count": 9
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "immutable_prior_two_of_two_pass_review",
+      "evidence": {
+        "aggregate_hash": "261f297638f46906b69554c66683d2ae8dfc53969713a9cc15fe81a6f5a940d5",
+        "conflicts": 0,
+        "errors": 0,
+        "findings": 0,
+        "result_hashes": {
+          ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/results/A-PR285-R2-LINEAGE-REPLAY.json": "209082dd9dbcfcda5930d83b36415d9d7f7fb0d986471a7c251304a472bafd08",
+          ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/results/A-PR285-R2-STATUS-PHYSMATH.json": "934169c8dc8107cef6a8b61a2a6143fa4d218835bcc0db79f97e1af3a1bfc834"
+        },
+        "summary_hash": "2015c5f3e84eab3acdd740180104a6adb368a37b88b70370ed5f6faf4c8ef660",
+        "validated_results": 2
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "production_and_dependency_evidence_key_unchanged",
+      "evidence": {
+        "dependency_hash_count": 20,
+        "production_hash": "602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "reviewed_lifecycle_cas_and_projected_assurance",
+      "evidence": {
+        "current_assurance_budget": {
+          "consumed": 13,
+          "maximum": 16
+        },
+        "pr285_gates": {
+          "cas": "INCONCLUSIVE",
+          "claim": "PASS",
+          "code": "PASS",
+          "eligibility": "PASS",
+          "harness": "PASS",
+          "implementation": "PASS",
+          "physics": "PASS",
+          "portability_replay": "PASS",
+          "publication": "INELIGIBLE",
+          "push": "INELIGIBLE",
+          "review": "PASS",
+          "seal": "DEFERRED",
+          "statistics": "PASS",
+          "validation": "PASS"
+        },
+        "pr285_lifecycle": "REVIEWED",
+        "pr286": {
+          "assurance_budget": {
+            "consumed": 0,
+            "maximum": 16
+          },
+          "gates": {
+            "eligibility": "INELIGIBLE"
+          },
+          "lifecycle": "PLANNED"
+        },
+        "projected_after_this_assignment": {
+          "consumed": 14,
+          "maximum": 16
+        },
+        "status_mirrors_byte_identical": true
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "no_recorded_push_pr_or_merge",
+      "evidence": {
+        "candidate_remote_ref_present": false,
+        "github_pr_created_by_harness": false,
+        "head_parent_count": 1,
+        "pr_url": null,
+        "pushed_ref": null,
+        "remote_branches_containing_candidate": []
+      },
+      "status": "PASS"
+    }
+  ],
+  "completed_at": "2026-08-10T12:31:19.888092+00:00",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "oracle_id": "PR285-FINAL-SEAL-CLOSEOUT-INVARIANTS",
+  "passed_count": 12,
+  "projected_post_assignment_assurance_budget": {
+    "consumed": 14,
+    "maximum": 16
+  },
+  "run_id": "pr285-final-seal-closeout-20260810",
+  "schema_version": 1,
+  "scope_note": "Metadata/seal/replay closeout only; no substantive scientific assurance was rerun.",
+  "started_at": "2026-08-10T12:30:32.064266+00:00",
+  "status": "PASS"
+}

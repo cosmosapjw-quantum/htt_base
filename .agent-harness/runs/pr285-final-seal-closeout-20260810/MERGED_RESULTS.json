@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "run_id": "pr285-final-seal-closeout-20260810",
+  "generated_at": "2026-08-10T12:35:55+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 0,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR285-FINAL-SEAL-CLOSEOUT",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr285-final-seal-closeout-20260810/artifacts/A-PR285-FINAL-SEAL-CLOSEOUT/final_closeout_oracle_output.json",
+            ".agent-harness/runs/pr285-final-seal-closeout-20260810/artifacts/A-PR285-FINAL-SEAL-CLOSEOUT/review_coverage.json",
+            ".prguard/runtime/PR285_R2_FINAL_CANDIDATE_SEAL.json",
+            ".prguard/runtime/PR285_R2_FINAL_INTEGRATION_REHEARSAL.json",
+            ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/results/A-PR285-R2-STATUS-PHYSMATH.json",
+            ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/results/A-PR285-R2-LINEAGE-REPLAY.json",
+            ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/MERGED_RESULTS.json",
+            ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/RUN_SUMMARY.json",
+            "docs/PR_DELTAS/pr-285.md",
+            "docs/codex_handoff/pr_status.yaml"
+          ],
+          "evidence_fingerprint": "pr285-final-closeout:12ad1d54c69211faa5b82f3c54fa1277b8685fa4633d367c171fc535adb167c0",
+          "summary": "Exact metadata-only final closeout found no blocking seal, integration, lineage-dedup, immutable-review, evidence-key, lifecycle, CAS-boundary, budget, successor-eligibility, or recorded-publication defect at candidate 16bc6db5. Current assurance is 13/16 and becomes 14/16 by accounting for this assignment; no substantive scientific assurance was rerun."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-285",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "assignment_count": 1,
+  "validated_result_count": 1,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr285-final-seal-closeout-20260810/RUN_PLAN.json",
+      "sha256": "d8079c194e13b39fcf9338f85da2c8e795711914ff153272e52fbcf3c60b7e40",
+      "bytes": 6744
+    },
+    {
+      "path": ".agent-harness/runs/pr285-final-seal-closeout-20260810/assignments/A-PR285-FINAL-SEAL-CLOSEOUT.json",
+      "sha256": "fc8ee19fe6f375af60d46f4edf58358f74e26d5a1db0504dde61140fcad7ff1c",
+      "bytes": 5636
+    },
+    {
+      "path": ".agent-harness/runs/pr285-final-seal-closeout-20260810/results/A-PR285-FINAL-SEAL-CLOSEOUT.json",
+      "sha256": "f2f602b3ba10d5c53deefba977386d91a4e649d19074a3765b0fb9d4a5be6bc0",
+      "bytes": 9674
+    }
+  ],
+  "merge_input_sha256": "c2140e9ef2af398a2541ef2bd4392f427964162ea937c9a99f36708e93a49ce0"
+}

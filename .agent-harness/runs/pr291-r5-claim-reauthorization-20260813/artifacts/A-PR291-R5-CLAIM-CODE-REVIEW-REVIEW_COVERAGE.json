@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-claim-reauthorization-20260813",
+  "assignment_id": "A-PR291-R5-CLAIM-CODE-REVIEW",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "c9e2b7a8ee86f8951b5bf90175033d5a45824a5487542f1cd9ef5b7c56b8b348",
+  "candidate_sha": "82532a2a71abc385f1176dce4b99a4917929155d",
+  "candidate_tree_sha": "68e3a83249ada011f984b67078c003086b1fc6aa",
+  "diff_sha256": "5343db9b69375145eea9e51624b3ac9246f868f6482beae316e4eb456b0f8100",
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "completed_at": "2026-08-13T08:25:45.741668+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR291_R5_FINAL_CANDIDATE_SEAL.json", "git rev-parse HEAD", "git rev-parse HEAD^{tree}", "git status --porcelain=v2 --untracked-files=all"],
+      "rationale": "HEAD, tree, base, merge base, diff identity, input hashes, and clean status match the frozen assignment and seal."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:1", "docs/research_program/post_pr275/pr291_spec.yaml:6", "docs/research_program/post_pr275/pr291_spec.yaml:39"],
+      "rationale": "The frozen preactivation spec is hash-bound and forbids observed execution before predecessor, admission, and human gates."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py check"],
+      "rationale": "Fresh replay deterministically returns BLOCKED_PREDECESSOR_FINAL_SUCCESS."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:55", "docs/research_program/post_pr275/pr291_spec.yaml:82", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"],
+      "rationale": "Identity remains REJECTED_NOT_PRESENT and H-CF4 remains separately NOT_AUTHORIZED with no ordinary-agent mint path."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:205", "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py focused", "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py portable"],
+      "rationale": "Focused containment tests and clean-root replay pass; blocked execution writes no numerical artifact."
+    },
+    {
+      "cell": "synthetic_estimand_identity",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:194", "htt/obsstat/cf4_post275_lane.py", "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py focused"],
+      "rationale": "Synthetic fixtures remain operator-only and cannot support observed numbers, p-values, anomaly, global tilt, or public figures."
+    },
+    {
+      "cell": "group_row_selection_and_frame_conventions",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:96", "htt/src/common/cf4_observed_lane_activation.py", "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py adjacent"],
+      "rationale": "The ordered identity and units/sign contracts remain unchanged from the carried R5 numerical bytes."
+    },
+    {
+      "cell": "full_covariance_and_effective_rank",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:132", "htt/obsstat/cf4_post275_lane.py", "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py focused"],
+      "rationale": "The full-covariance, whitening, effective-rank, and registered-tolerance implementation hash is unchanged and its focused tests pass."
+    },
+    {
+      "cell": "depth_zoa_nested_support_and_transport",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:142", "htt/obsstat/cf4_post275_lane.py", "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py adjacent"],
+      "rationale": "Nested support, transport, ZoA identity, and no-reordering contracts remain unchanged and adjacent tests pass."
+    },
+    {
+      "cell": "weak_identification_and_identified_set_abstention",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:155", "htt/obsstat/cf4_post275_lane.py", "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py focused"],
+      "rationale": "Weak identification still produces response-equivalence abstention and forbids favourable endpoints or robustness spread as confidence."
+    },
+    {
+      "cell": "legacy_p0_and_curl_disposition",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml:167", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", "python3 -B scripts/check_claim_language.py --strict-missing --include-archives docs/research_program/post_pr275/pr291_spec.yaml htt/src/common/cf4_observed_lane_activation.py htt/obsstat/cf4_post275_lane.py tests/integration/test_cf4_post275_lane.py docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json docs/PR_DELTAS/pr-291.md"],
+      "rationale": "The 0.0089 ratio remains a legacy stencil self-consistency diagnostic and P0 rescue, vorticity, and potential-flow promotions remain forbidden."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py check"],
+      "rationale": "Fresh deterministic replay reports no network/download side effect, observed execution, or numeric output."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["python3 -B scripts/codex_harness/run_pr291_cf4_lane.py portable"],
+      "rationale": "Clean-root replay passes with unchanged pre/post source and execution-root manifests."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_publication_policy.json", ".prguard/runtime/PR291_R5_FINAL_CANDIDATE_SEAL.json", "python3 -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_publication_integrity.py -k policy_nonrelaxable_metadata_fails_closed_or_candidate_seal_cross_binds_declared_policy_identity"],
+      "rationale": "Nine selected policy non-relaxation and seal cross-binding tests pass."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "FAIL",
+      "evidence_refs": ["htt/src/common/semantic_guards/no_overclaim.py:108", "htt/src/common/semantic_guards/no_overclaim.py:141", "tests/contracts/test_claim_language_lint.py:110", ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-CLAIM-CODE-REVIEW-hostile-oracle.py"],
+      "rationale": "The fixed determiner allow-list misses ordinary every, each, multiple, many, all, and possessive-object variants; 11 forbidden hostile cases survive although the eight named repairs and safe controls pass."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["git rev-parse refs/remotes/origin/changeset/pr290-planck-native-replay-recovery-20260811", "git merge-base refs/remotes/origin/changeset/pr290-planck-native-replay-recovery-20260811 HEAD", "python3 -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice"],
+      "rationale": "The registered target ref and merge base equal the frozen base, and strict rescue-slice validation passes."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR291_R5_CLAIM_HOSTILE_ORACLE",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": ["/usr/bin/python3", "-B", ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-CLAIM-CODE-REVIEW-hostile-oracle.py"],
+      "command_fingerprint": "62223deb7236d2f826a1fab3f6d6c431bc041a108fa111249189fce4992476d6",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T08:25:45.631009+00:00",
+      "completed_at": "2026-08-13T08:25:45.741668+00:00",
+      "artifact_path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-CLAIM-CODE-REVIEW-hostile-oracle.py",
+      "artifact_sha256": "40076ba503dc36680797d7673a8194142823ff9539ba6980bd87e6b7f199847c",
+      "artifact_bytes": 6062,
+      "evidence_refs": ["oracle completed with candidate_verdict FAIL", "20 forbidden promotions, 7 safe controls, and 2 positive structured contexts exercised", "11 false negatives, 0 false positives"]
+    }
+  ],
+  "coverage_sha256": "dba64d5f96e5d2536f90063e476e51366ee67593357fae5966bdeffb84c69251"
+}

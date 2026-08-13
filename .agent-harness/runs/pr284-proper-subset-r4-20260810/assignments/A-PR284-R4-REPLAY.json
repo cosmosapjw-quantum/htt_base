@@ -1,0 +1,97 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-proper-subset-r4-20260810",
+  "assignment_id": "A-PR284-R4-REPLAY",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "93c3dadced3fec69db081092e66f96eac5632b4713f652642d470cc2f6fdacd4",
+    "seal_sha256": "3666dd8f920c46021ebb2823680cf397f37db810e1c1ebda9f4cd70cc46deaa0",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "50fea58d2bd4d33dfac017f46bf22df5ccd289d1",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "6104ff701c82c78b113002131dec3bd493a54795",
+    "diff_sha256": "3205f94a1970082b88bec45fdfa33ec7eba829bed0710754e72d32b5bdd13386",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR280-HERMETIC-HARNESS"
+  ],
+  "task": "Fresh bounded frozen harness, receipt, stable-patch deduplication, and portability review of the PR-284 proper-subset repair. Read this assignment first; do not read CONTEXT_PACK or current sibling results. Run all seven publication-policy commands exactly, verify the portable replay uses a distinct clean archive with invariant manifests, recompute all receipt source bindings and canonical content address, require 15 ordered mutation rows including independently discriminating MU284-NONSTRICT-SUPPORT, verify exact predecessor base and unique stable patch IDs, and confirm review authorizes no merge or publication. Write no tracked/shared files; produce only assignment-local coverage, executable oracle, and a strict-valid registered result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+      "sha256": "93c3dadced3fec69db081092e66f96eac5632b4713f652642d470cc2f6fdacd4"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_spec.yaml",
+      "sha256": "01db7946146246961c14fdaef2cc30ddde03a06944c40257d6c7b5cd92572da6"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_publication_policy.json",
+      "sha256": "83fe6c6eeda8661e54e52e77c69e851bc09224a36f5747d45fa938949c781583"
+    },
+    {
+      "path": "docs/generated/pr284_depth_path_doob_receipt.json",
+      "sha256": "8b6d40d1c8517c88dd3b4209b68e5660bf29bcbd1e7ea4ce40d7993218a428ea"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-284.md",
+      "sha256": "e4bcb4de3c35afcd2dfafa04395006de5ad89151391f56f0df34c8805dbdca3c"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "97686b51ddb359fc3d0ff55733ec5c545280c9ccf6348f3428167d271c414ca6"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "97686b51ddb359fc3d0ff55733ec5c545280c9ccf6348f3428167d271c414ca6"
+    },
+    {
+      "path": "htt/src/common/depth_path.py",
+      "sha256": "41ffe054645c00a36158688b55a0aab390919d3759283b9d5e2f33d69ec8f247"
+    },
+    {
+      "path": "htt/src/common/depth_path_calibration.py",
+      "sha256": "c8ff7f37844f769797ba6c5740750651f540d7c9f122f8f8d9e2ac37bfd9e70a"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr284_depth_path_doob.py",
+      "sha256": "71da0de333c96b634ca67c642ce91b53f09cbf25510f165bab7f718060e616d1"
+    },
+    {
+      "path": "tests/contracts/test_depth_path_doob_calibration.py",
+      "sha256": "0055dfdf9e8df253d81e5876b4516bbea24649c9d5e20ddbd069308769dd0164"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-REPLAY.json",
+  "status": "registered",
+  "assignment_sha256": "2d4938bd77b31289a04c29ac0d93b3b3ca5b8af9a1f2d20c35da4015a397fc89"
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-process-bootstrap-20260810",
+  "recorded_at": "2026-08-09T18:26:54Z",
+  "execution_mode": "AUTO_STACKED_PR",
+  "stack_id": "PROCESS_INFLATION_RECOVERY_PHASE2",
+  "target_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+  "process_commit_sha": "64ceeb287d88e627132ce206a4aa3259b93a1bc1",
+  "process_tree_sha": "0b44d1b017ad0417df816048c9dbeba8a9d417cf",
+  "overall_disposition": "PASS",
+  "fixtures": {
+    "A_future_before_predecessor_open": {
+      "disposition": "PASS",
+      "observed": "INELIGIBLE/DEFERRED",
+      "retry_budget_cost": 0,
+      "assurance_budget_cost": 0
+    },
+    "B_second_active_implementation_run": {
+      "disposition": "PASS",
+      "same_worktree_refused": true,
+      "cross_worktree_refused": true
+    },
+    "C_ineligible_budget": {
+      "disposition": "PASS",
+      "retry_budget_cost": 0,
+      "assurance_budget_cost": 0
+    },
+    "D_wrong_predecessor_base": {
+      "disposition": "PASS",
+      "exact_fork_base_required": true
+    },
+    "E_duplicate_stable_patch": {
+      "disposition": "PASS",
+      "real_temporary_git_history_exercised": true
+    },
+    "F_post_seal_production_mutation": {
+      "disposition": "PASS",
+      "seal_invalidated": true
+    },
+    "G_receipt_only_change": {
+      "disposition": "PASS",
+      "substantive_rerun_required": false
+    },
+    "H_merge_action": {
+      "disposition": "PASS",
+      "auto_merge_refused": true,
+      "merge_policy": "HUMAN_ONLY"
+    }
+  },
+  "commands": [
+    {
+      "command": "PYTHONPATH=htt/src:htt python -m pytest tests/contracts/test_process_recovery_auto_stacked.py -q",
+      "exit_code": 0,
+      "result": "14 passed"
+    },
+    {
+      "command": "PYTHONPATH=htt/src:htt python -m pytest scripts/codex_harness/test_publication_integrity.py -q",
+      "exit_code": 0,
+      "result": "67 passed"
+    },
+    {
+      "command": "python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict --work-unit PR-283 --candidate-ref HEAD",
+      "exit_code": 0,
+      "result": "DAG valid; PR-283 ELIGIBLE"
+    },
+    {
+      "command": "python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict --work-unit PR-284 --candidate-ref HEAD",
+      "exit_code": 2,
+      "result": "DAG valid; PR-284 INELIGIBLE/DEFERRED; zero budget"
+    }
+  ],
+  "known_preexisting_non_passes": [
+    {
+      "surface": "tests/contracts/test_harness_profiles_v4.py",
+      "disposition": "FAIL_PREEXISTING_TARGETED_BY_PR283_G06",
+      "detail": "hermetic smoke selected the original root venv and could not import scripts.codex_harness"
+    },
+    {
+      "surface": "repo-wide no-mock helper",
+      "disposition": "FAIL_PREEXISTING_HISTORICAL_MARKERS",
+      "detail": "historical calibration_factor and mock-marker inventory; changed process surfaces had no matches"
+    }
+  ]
+}

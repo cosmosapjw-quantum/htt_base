@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "run_id": "pr289-r5-authorized-review-extension-20260811",
+  "assignment_id": "A-PR289-R5-PHYSCODE",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "candidate_seal_sha256": "301be2d0d73f18c109b71f36c43e8c8d033bd7fcfb01a6d04142b7493e30cf01",
+  "candidate_sha": "eec048d4cf19989983986d139c7d0a797b1363e0",
+  "candidate_tree_sha": "27251a5b9e28685b23473f23d7d0b960b039d375",
+  "diff_sha256": "bebb8bc4ba55b67c42b0a879f63137fe240f8fb8cc82528d9b7c8fff9e99b71f",
+  "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+  "completed_at": "2026-08-11T12:08:05Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR289_R5_CANDIDATE_SEAL.json; HEAD=eec048d4; tree=27251a5b; required hashes matched"],
+      "rationale": "The checked-out commit, tree, base, merge base, diff, changed-file inventory, and production binding match the frozen seal."
+    },
+    {
+      "cell": "pr280_terminal_receipt_without_success_promotion",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml: dependencies and dependency_contract"],
+      "rationale": "The dependency is explicitly terminal-receipt-only and does not relabel the failed aggregate or admit external data."
+    },
+    {
+      "cell": "immutable_pr274_v1",
+      "status": "PASS",
+      "evidence_refs": ["python3 -B scripts/codex_harness/run_pr289_data_identity_v2.py adjacent: 50 passed, 4 deselected; historical ff9ef9f4 replay 54 passed"],
+      "rationale": "Current compatibility and exact historical replay both pass without modifying v1 bytes."
+    },
+    {
+      "cell": "v2_factory_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py: factory tokens, canonical_sha256, DataIdentityRecordV2"],
+      "rationale": "Registry, record, authorization, and receipt constructors are factory-gated and sealed by canonical identities."
+    },
+    {
+      "cell": "stable_record_and_inspection_identities",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_data_identity_registry_v2.py: test_planck_admission_is_stable_across_root_and_inspection_time"],
+      "rationale": "Stable IDs exclude local root and inspection time while inspection receipts bind the timestamp."
+    },
+    {
+      "cell": "typed_provenance_evidence",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py: _strict_json_bytes and _validate_evidence; focused suite 60 passed"],
+      "rationale": "Duplicate keys, nonfinite values, placeholder identities, and unresolved evidence fail closed."
+    },
+    {
+      "cell": "machine_lane_cardinality_and_gate_identity",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json; test_native_lane_registry_roles_are_exact_and_survey_specific"],
+      "rationale": "Lane order, role cardinalities, native schemas, analysis plans, and human gate IDs are exact."
+    },
+    {
+      "cell": "regular_file_and_no_symlink_boundary",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py: _read_regular_bytes, _regular_beneath; focused suite 60 passed"],
+      "rationale": "Regular-file descriptors and no-follow traversal checks reject files or parents that are symlinks or mutate during inspection."
+    },
+    {
+      "cell": "hardlink_and_root_confinement",
+      "status": "PASS",
+      "evidence_refs": ["test_path_size_hash_and_inventory_attacks_fail_closed; test_runner_refuses_hardlinked_output_before_payload_generation"],
+      "rationale": "Hardlink aliases, duplicate inodes, root escape, and unsafe output destinations fail closed."
+    },
+    {
+      "cell": "size_hash_and_component_inventory",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py: component_inventory_id and evaluate_lane_identity; focused suite 60 passed"],
+      "rationale": "Positive byte size, exact streamed digest, ordered inventory, and component completeness are independently recomputed."
+    },
+    {
+      "cell": "release_and_license_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py: _release_version, _identity, _validate_evidence"],
+      "rationale": "Release and license evidence is typed and bound; identity admission does not validate scientific suitability."
+    },
+    {
+      "cell": "units_frame_convention",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py: _validate_cf4_native_profile; MU289-CF4-NATIVE-RELATIONSHIP killed"],
+      "rationale": "CF4 units, coordinate frame, radial-sign, grouping, depth, and ZoA identities are distinct content-bound roles; their physical correctness is not promoted by identity admission."
+    },
+    {
+      "cell": "mask_selection_covariance_null",
+      "status": "PASS",
+      "evidence_refs": ["_validate_planck_native_profile, _validate_cf4_native_profile, _validate_hsc_kids_native_profile; focused suite 60 passed"],
+      "rationale": "Mask, selection, covariance, sky, and null identities/statuses are typed and native-role-specific."
+    },
+    {
+      "cell": "transfer_and_sky_support",
+      "status": "PASS",
+      "evidence_refs": ["docs/generated/pr289_data_identity_v2_receipt.json: transfer_source=none and family gate blocked"],
+      "rationale": "Observer-side no-transfer status is NOT_APPLICABLE, Planck same-sky support must be REGISTERED, and no native or external transfer result is claimed."
+    },
+    {
+      "cell": "planck_first_candidate",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr289_spec.yaml: lane_registry PLANCK first_candidate=true"],
+      "rationale": "The registry keeps Planck first and requires the full paired native identity profile before admission."
+    },
+    {
+      "cell": "planck_native_profile_and_same_sky_replay",
+      "status": "PASS",
+      "evidence_refs": ["test_complete_native_profiles_admit_and_replay_exactly[PLANCK]; test_planck_native_relationship_mutations_fail_closed"],
+      "rationale": "Distinct SMICA/Commander maps, masks, beams, windows, covariances, shared pixelization/selection, same-sky support, and FFP10 inventory replay exactly."
+    },
+    {
+      "cell": "cf4_native_catalogue_selection_covariance_replay",
+      "status": "PASS",
+      "evidence_refs": ["test_complete_native_profiles_admit_and_replay_exactly[CF4]; test_cf4_exact_catalogue_and_semantic_roles_fail_closed"],
+      "rationale": "CF4 catalogue, selected rows, covariance, frame, sign, units, grouping, depth, and ZoA identities replay as one exact profile."
+    },
+    {
+      "cell": "hsc_kids_separate_child_and_cross_covariance_replay",
+      "status": "PASS",
+      "evidence_refs": ["test_complete_native_profiles_admit_and_replay_exactly[HSC_KIDS]; test_hsc_and_kids_child_identities_remain_separate"],
+      "rationale": "HSC and KiDS product/mask/random/PSF/n(z)/calibration-response/auto-covariance roles remain separate and bind one cross-covariance relationship."
+    },
+    {
+      "cell": "native_profile_export_replay_and_string_only_refusal",
+      "status": "PASS",
+      "evidence_refs": ["test_generic_record_id_or_string_profile_cannot_admit_planck; test_complete_native_profiles_admit_and_replay_exactly"],
+      "rationale": "A generic record ID or string-only profile cannot replace the content-bound native profile."
+    },
+    {
+      "cell": "exported_record_full_semantic_replay",
+      "status": "PASS",
+      "evidence_refs": ["test_exported_record_replay_revalidates_all_semantic_fields; MU289-EXPORTED-SEMANTIC-REPLAY killed"],
+      "rationale": "Re-signing an exported record does not bypass typed semantic replay."
+    },
+    {
+      "cell": "repeated_role_ordinal_completeness",
+      "status": "PASS",
+      "evidence_refs": ["test_repeated_role_replay_requires_each_ordinal_once; independent oracle record_ordinal probe"],
+      "rationale": "Repeated roles must appear exactly once at each registered ordinal before authorization construction."
+    },
+    {
+      "cell": "verified_bytes_equal_executed_module",
+      "status": "PASS",
+      "evidence_refs": ["run_pr289_data_identity_v2.py: _load_bound_data_identity_module and _build; focused suite 60 passed"],
+      "rationale": "The runner compiles the exact read bytes, checks module and factory origin, and matches the executed digest to source bindings."
+    },
+    {
+      "cell": "output_parent_identity_pinning",
+      "status": "PASS",
+      "evidence_refs": ["test_runner_output_parent_replacement_fails_closed; test_runner_late_build_parent_replacement_fails_closed; test_runner_late_check_parent_replacement_fails_closed"],
+      "rationale": "Build and check pin the output parent inode before, during, and after directory-relative no-follow operations."
+    },
+    {
+      "cell": "interpreter_alias_invariant_receipt",
+      "status": "PASS",
+      "evidence_refs": ["/usr/bin/python, /usr/bin/python3, /usr/bin/python3.10 check: all exit 0 with receipt SHA-256 92ca6a84..."],
+      "rationale": "All three installed interpreter aliases replay the same frozen receipt identity."
+    },
+    {
+      "cell": "name_only_hsc_kids_refusal",
+      "status": "PASS",
+      "evidence_refs": ["test_hsc_kids_name_only_is_typed_refusal; MU289-NAME-ONLY killed"],
+      "rationale": "Name-only HSC/KiDS input returns the typed refusal and retains no records."
+    },
+    {
+      "cell": "pr151_partial_desi_refusal",
+      "status": "PASS",
+      "evidence_refs": ["test_desi_partial_precedes_name_only_and_missing_root; MU289-DESI-PARTIAL killed"],
+      "rationale": "Incomplete or mutable PR-151/DESI input remains blocked at canonical precedence."
+    },
+    {
+      "cell": "admission_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": ["independent oracle cf4_decision_planck_lane killed before receipt construction; authentic PLANCK/CF4/HSC_KIDS same-lane replay passed"],
+      "rationale": "Admission is identity-only; cross-lane decisions are refused before receipt construction and authentic decisions yield only NOT_AUTHORIZED."
+    },
+    {
+      "cell": "authorization_state_machine_and_workflow_domain",
+      "status": "PASS",
+      "evidence_refs": ["ExecutionAuthorizationReceipt.__post_init__; test_records_and_authorizations_are_factory_only; receipt has six NOT_AUTHORIZED rows"],
+      "rationale": "PR-289 cannot construct AUTHORIZED, and workflow permission is never converted into lane data-execution authority."
+    },
+    {
+      "cell": "refusal_status_precedence_and_lane_aggregation",
+      "status": "PASS",
+      "evidence_refs": ["test_desi_partial_precedes_name_only_and_missing_root; test_clean_checkout_no_roots_is_explicit_pass_with_zero_admissions"],
+      "rationale": "All applicable reasons survive while the canonical status and whole-lane aggregate follow the registered precedence."
+    },
+    {
+      "cell": "no_download_or_repository_copy",
+      "status": "PASS",
+      "evidence_refs": ["preflight: network_or_download_side_effect=false; portable: external_roots_supplied=false and network_or_download_side_effect=false"],
+      "rationale": "Missing roots are explicit refusals and neither preflight nor portable replay acquires or copies external data."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": ["independent oracle: mutation_count=33 and all executed/activated/killed; mutation IDs SHA-256 d36b7ba1..."],
+      "rationale": "All 33 spec-ordered mutations execute through live evaluators and die; omission or hardcoding fails closed."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["check: receipt SHA-256 92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34; content ID 4e2aa483..."],
+      "rationale": "Fresh recomputation exactly matches the committed receipt and its source-bound content identity."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["publication integrity selector: 9 passed, 68 deselected; candidate seal policy SHA-256 4c282e04..."],
+      "rationale": "Nonrelaxable metadata and candidate-seal policy bindings pass their focused tests."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["strict claim-language scan: no forbidden language; receipt diagnostic_only C2, observed/public false, family gate BLOCKED_PRE_NATIVE_ATLAS"],
+      "rationale": "No prior, likelihood, posterior, Q/Pi/F/G, local/global rank, morphology, geometry, native-solver, or family-identification result is executed or promoted."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["portable: 5911 files; source/clean pre/post manifest SHA-256 c8a56431...; nested exit 0"],
+      "rationale": "A distinct clean archive replay preserves all tracked bytes and reproduces the receipt without ambient Python-path or external-root dependence."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["git ls-remote origin refs/heads/changeset/pr288-bayesian-evidence-recovery-20260811 -> 27df5da040e27eeaad44873ba3424ff73fb4bb09; candidate merge-base is identical"],
+      "rationale": "The live remote target remains the exact frozen base and merge base of the candidate."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR289-R5-PHYSCODE-ORACLE",
+      "kind": "mutation_test",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-PHYSCODE/pr289_r5_physcode_oracle.py"
+      ],
+      "command_fingerprint": "1c233c299912ab96f1218b3393661a8b6cb4efea25f034accf994629a25740f4",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T12:07:52Z",
+      "completed_at": "2026-08-11T12:08:05Z",
+      "artifact_path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-PHYSCODE/pr289_r5_physcode_oracle.py",
+      "artifact_sha256": "d70157be4f5eb1642921bfa68a05c1b99563fbe5c0f5491cf2c4eeb10b1903c1",
+      "artifact_bytes": 6098,
+      "evidence_refs": [
+        "oracle stdout: same-lane PLANCK/CF4/HSC_KIDS replay PASS; five hostile probes killed; 33/33 mutations killed; claim boundary unchanged"
+      ]
+    }
+  ],
+  "coverage_sha256": "f72132b777003ac6dee03510d6afa79e1f1e01aa5aac9a1c30fb44d66b7eabd6"
+}

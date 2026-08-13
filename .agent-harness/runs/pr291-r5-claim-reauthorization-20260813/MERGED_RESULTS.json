@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-claim-reauthorization-20260813",
+  "generated_at": "2026-08-13T08:39:20+00:00",
+  "process_status": "INVALID_ENVELOPES",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 1,
+  "raw_finding_count": 1,
+  "unique_finding_count": 1,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR291-R5-CLAIM-CODE-REVIEW",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR291-R5-CLAIM-QUANTIFIER-FN"
+          ],
+          "summary": "Candidate fails the fresh claim/code review because ordinary quantifier and possessive family-identification promotions bypass the semantic guard; publication and closeout must remain blocked."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR291-R5-CLAIM-QUANTIFIER-FN",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "sha256:7043d93966920746e493f8c341b9e67c450acbabbbcdbb01a195e5a8e51ab67e",
+      "statement": "The final claim-only grammar remains bypassable: enumerated determiner patterns omit ordinary quantifiers and possessive objects, allowing positive Bianchi-family identification claims to pass unreported.",
+      "assumptions_used": [
+        "Ordinary grammatical variants of a forbidden production claim must remain forbidden regardless of determiner, number, possessive form, line wrapping, or scalar-implication direction.",
+        "Predicate-scoped downclaims and exact negative Markdown/YAML contexts must continue to pass."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-CLAIM-CODE-REVIEW-REVIEW_COVERAGE.json",
+        ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-CLAIM-CODE-REVIEW-hostile-oracle.py",
+        "htt/src/common/semantic_guards/no_overclaim.py:108",
+        "htt/src/common/semantic_guards/no_overclaim.py:111",
+        "htt/src/common/semantic_guards/no_overclaim.py:141",
+        "htt/src/common/semantic_guards/no_overclaim.py:149",
+        "tests/contracts/test_claim_language_lint.py:110"
+      ],
+      "counterevidence_refs": [
+        "All eight specifically named prior false-negative cases are now caught.",
+        "All seven safe downclaim and exact structured negative controls remain allowed.",
+        "All seven registered publication-policy commands pass.",
+        "The carried CF4 numerical, activation, runner, integration-test, spec, and publication-policy hashes are unchanged from b1758691 through HEAD."
+      ],
+      "reproduction": [
+        "Run: /usr/bin/python3 -B .agent-harness/runs/pr291-r5-claim-reauthorization-20260813/artifacts/A-PR291-R5-CLAIM-CODE-REVIEW-hostile-oracle.py",
+        "Observe candidate_verdict FAIL, 11 false_negatives, 0 false_positives.",
+        "Minimal probes include: The analysis identifies every Bianchi family; This analysis's output identifies its Bianchi family; The scalar implies identification of every Bianchi family."
+      ],
+      "unresolved": [
+        "The geometry_detected and scalar_family_identification rules still encode closed determiner lists rather than accepting arbitrary bounded modifiers before Bianchi family nouns.",
+        "Regression coverage lacks hostile quantifiers every, each, multiple, many, all and possessive-object variants in prose and positive structured contexts."
+      ],
+      "confidence": 0.99,
+      "source_finding_ids": [
+        "F-PR291-R5-CLAIM-QUANTIFIER-FN"
+      ],
+      "supporting_assignments": [
+        "A-PR291-R5-CLAIM-CODE-REVIEW"
+      ],
+      "supporting_agent_types": [
+        "claim_lane_reviewer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-FINAL-REAUTH-CLOSEOUT.json",
+      "error": "review coverage checksum mismatch"
+    }
+  ],
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "assignment_count": 2,
+  "validated_result_count": 1,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/RUN_PLAN.json",
+      "sha256": "d187eb672b48463caf164ec9f3e299a0deb0154a8be5699c9a4cb207b4b8fdc8",
+      "bytes": 6089
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/assignments/A-PR291-R5-CLAIM-CODE-REVIEW.json",
+      "sha256": "b75c6d4bd88e91fe028c356e63fc9b739300249cdeb5c98fa06ba7546060560c",
+      "bytes": 5301
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/assignments/A-PR291-R5-FINAL-REAUTH-CLOSEOUT.json",
+      "sha256": "86c6a011589cd0883301886f105841433ebecc63a3f8c5fc828145f0ee17af78",
+      "bytes": 5609
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-CLAIM-CODE-REVIEW.json",
+      "sha256": "a408f3fa0c4bbcd09456ea2fb6606b2881fae2f4a7909b47d603088c5f5ce40e",
+      "bytes": 10438
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-FINAL-REAUTH-CLOSEOUT.json",
+      "sha256": "89966703775fa4f6e5014811b15d1b46c11e3bb123cc6afb0a384f4ff0d7d097",
+      "bytes": 9202
+    }
+  ],
+  "merge_input_sha256": "aa0b7eba86a9c63677874f99b1e95fbaae78f7b4532263acf683f8cca53c2d76"
+}

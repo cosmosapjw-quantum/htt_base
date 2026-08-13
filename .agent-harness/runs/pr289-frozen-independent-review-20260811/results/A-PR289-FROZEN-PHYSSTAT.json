@@ -1,0 +1,113 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-frozen-independent-review-20260811",
+  "assignment_id": "A-PR289-FROZEN-PHYSSTAT",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "8aa29e14dcd7e704235a524634dcab219c46728df47da7b9ba8d5885f27271d5",
+    "seal_sha256": "0347f2f5011309909423c4e27e090556c95c2a237e7d9c7a5ab3781087407a47",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "1ad54d3c5a484816128a1df93d54953589780520",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "67ec8432a6557bb460dfe8015b361fe9f6c00d1d",
+    "diff_sha256": "ce6c09a90ccb0e3f50929591a074d4947eb094288b2720d863bc0f3516e44f6e",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "cd8aebca49820d989bf805173f20ac65093181f541920f5adee74ce8e8fce413"
+  },
+  "independence_mode": "blind-results",
+  "status": "error",
+  "gate_disposition": "INCONCLUSIVE",
+  "result_path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/results/A-PR289-FROZEN-PHYSSTAT.json",
+  "assignment_sha256": "8b39391b77ad4cc2a5e73e39fcb880f0814251d48ee6b647c31a02a686887bc3",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr289-frozen-independent-review-20260811/assignments/A-PR289-FROZEN-PHYSSTAT.json",
+    ".agent-harness/runs/pr289-frozen-independent-review-20260811/RUN_PLAN.json",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".prguard/runtime/PR289_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr289_spec.yaml",
+    "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "htt/src/common/data_identity.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/pr_publication_gate.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/_harness.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T09:22:31+00:00",
+  "completed_at": "2026-08-11T09:32:48+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "argv": ["sha256sum", ".prguard/runtime/PR289_CANDIDATE_SEAL.json", "docs/research_program/post_pr275/pr289_spec.yaml", "docs/research_program/post_pr275/pr289_publication_policy.json", "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json", "htt/src/common/data_identity.py", "tests/contracts/test_data_identity_registry_v2.py", "scripts/codex_harness/run_pr289_data_identity_v2.py", "docs/generated/pr289_data_identity_v2_receipt.json", "docs/research_program/post_pr275/data_runbooks.yaml", "docs/harness/CLAIM_LEDGER.md", "docs/PR_DELTAS/pr-289.md", "docs/codex_handoff/pr_status.yaml"],
+      "returncode": 0,
+      "outcome": "registered input hashes matched"
+    },
+    {
+      "argv": ["rg", "-n", "REVIEW_COVERAGE|required_review_cells|result envelope|result_path|schema_version.*3", ".agent-harness/scripts", ".agent-harness/schemas", ".agent-harness", "-g", "!runs/**/results/**", "-g", "!generated/CONTEXT_PACK.md"],
+      "returncode": 0,
+      "outcome": "INDEPENDENCE_VIOLATION: ineffective exclusion emitted matching lines and snippets from historical result envelopes; substantive review stopped immediately"
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-PHYSSTAT/independence_incident_oracle.py"],
+      "returncode": 0,
+      "outcome": "frozen assignment and candidate binding verified; no scientific verdict asserted"
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-PHYSSTAT/REVIEW_COVERAGE.json", "--seal", ".prguard/runtime/PR289_CANDIDATE_SEAL.json", "--run-id", "pr289-frozen-independent-review-20260811", "--assignment-id", "A-PR289-FROZEN-PHYSSTAT", "--risk-tier", "R3", "--structural-only"],
+      "returncode": 0,
+      "outcome": "coverage structurally valid with all cells waived due independence breach"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-PHYSSTAT/REVIEW_COVERAGE.json",
+      "sha256": "43197ac5c6d7922c501c466b724925bb25cc4ce80e84e292603ba922897e5294",
+      "bytes": 7524,
+      "producer": "A-PR289-FROZEN-PHYSSTAT"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-PHYSSTAT/independence_incident_oracle.py",
+      "sha256": "a88ec532a20d68339478a9b01af4e8cfd3ac2a8f5ac0fb2b208edbc194db203e",
+      "bytes": 3277,
+      "producer": "A-PR289-FROZEN-PHYSSTAT",
+      "command_fingerprint": "e6f2412c57a2b597238aa223381756d9cbc810afe04099a28f4f73526c49bf86"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr289-frozen-independent-review-20260811/artifacts/A-PR289-FROZEN-PHYSSTAT/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "43197ac5c6d7922c501c466b724925bb25cc4ce80e84e292603ba922897e5294",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "not_examined",
+      "finding_ids": [],
+      "summary": "No physics/statistics or claim-gate verdict is issued because blind-results independence was contaminated before adjudication completed."
+    }
+  ],
+  "errors": [
+    "BLIND_RESULTS_INDEPENDENCE_BREACH: a schema-discovery rg command used an ineffective exclusion glob and emitted matching lines and snippets from historical result envelopes. The review stopped immediately after detection. No candidate correctness, scientific claim, family-identification gate, or publication-readiness verdict is asserted; a fresh registered blind assignment is required."
+  ]
+}

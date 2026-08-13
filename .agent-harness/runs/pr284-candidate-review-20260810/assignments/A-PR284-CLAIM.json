@@ -1,0 +1,81 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-candidate-review-20260810",
+  "assignment_id": "A-PR284-CLAIM",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_gate_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "61005c410caea0e96d36f2e62ed32b83fa60c73a3db3f069560da83733435014",
+    "seal_sha256": "ba5335bffb3c75d866027339d37660f068140ff2926967abed09550344a4205e",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "029f8cedd044cc5967bc12dc695230ca69cf3308",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "e09d127212ba3173377ea2442be1661107f2963a",
+    "diff_sha256": "24dc3ec9ef99a6f914e3466883dd722af520d053fc2bf0e46be2f8c99ec4aeba",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "c50c270cb71d9421ddac9ffc6471c893ab0fa5434413c54ce703e079b8a1c32c"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Frozen-candidate claim and provenance review. Read assignment first; do not read CONTEXT_PACK or sibling results. Verify HTT ownership, contributor roles, C2 diagnostic-only ceiling, transfer none, non-observed/non-public status, finite-path-only theorem boundary, matched mocks not executed, family gate blocked, and exact predecessor/policy provenance. No shared edits; write assignment-local coverage, executable oracle, and registered result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+      "sha256": "61005c410caea0e96d36f2e62ed32b83fa60c73a3db3f069560da83733435014"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_spec.yaml",
+      "sha256": "ee357f7c99e9cf1beb8805328ba724faee16cf4c9f72fcc399c852bc7bf75743"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_publication_policy.json",
+      "sha256": "83fe6c6eeda8661e54e52e77c69e851bc09224a36f5747d45fa938949c781583"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-284.md",
+      "sha256": "f97da4898023704963cca8b189efe9890043a0b511f61b5915fd5972a9f530dd"
+    },
+    {
+      "path": "docs/generated/pr284_depth_path_doob_receipt.json",
+      "sha256": "0ac4fdec9dc8e7d36707a0bf24cc9bab2f709f57d1007205495d323a9f42af8c"
+    },
+    {
+      "path": "htt/src/common/depth_path_calibration.py",
+      "sha256": "f72885524bcb4e8fbe47755693d561b249210447790a9953fc171182d4dac46d"
+    },
+    {
+      "path": "htt/htt/htt/infer/depth_path_calibration.py",
+      "sha256": "6fe34f03694a63f285c0a933bd75ae8854ff40974e7299be336a2f4c1884c86f"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-CLAIM.json",
+  "status": "registered",
+  "assignment_sha256": "b401a3b718a871826c9274ea0f3679cd045c151bcb687c3547fea35bac13589e"
+}

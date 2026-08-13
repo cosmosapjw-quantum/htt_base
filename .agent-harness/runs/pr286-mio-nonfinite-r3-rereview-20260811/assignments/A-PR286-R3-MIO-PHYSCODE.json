@@ -1,0 +1,94 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-mio-nonfinite-r3-rereview-20260811",
+  "assignment_id": "A-PR286-R3-MIO-PHYSCODE",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "d95f5a26bab5be25afb550e64d75ce4f8419fca8b61b232682c960e9e5e1fc95",
+    "seal_sha256": "26b24258bfec78ccbd0dad9382fc6ae8e9b9ba9a417b81753f84ca68b30c6f0f",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "0b1a8ef76df47b0b42e972bb47c9bc294e80aa7c",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "c92883d3500aff9a7fa07e561ad43bf4088feb9d",
+    "diff_sha256": "a07284aa230f991286ac4b3ed11e5201f70af2a49ae8bf79cf5191d5af3cc4d1",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "99ad99e15ff863b63945663c112767d1f6dc90e8f697a407798c281cb39c2b30"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION",
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Fresh blind bounded rereview of the exact frozen PR-286 MIO non-finite repair. Read this assignment first; do not read CONTEXT_PACK, sibling results, or any historical review or result envelope. Independently reproduce the exact exported MIO facade counterexample with finite 1e200 inputs. Verify that every public MIO diagnostic numeric output fails closed through PillarSInferenceError when finite inputs cause non-finite arithmetic, while the ordinary registered MIO result remains unchanged. Probe the narrow adjacent numerical boundary for NaN or Inf positive reports, recheck the prior HTT GLS, whitened-rank, scale-stable-angle, proportional-abstention, extreme-SPD, and zero-design controls, verify the 72-row finite receipt and discriminating twentieth mutation, and preserve ownership, units, signs, and claim ceilings. Write no tracked or shared files; produce only assignment-local executable oracle, coverage, and one strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+      "sha256": "d95f5a26bab5be25afb550e64d75ce4f8419fca8b61b232682c960e9e5e1fc95"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr286_spec.yaml",
+      "sha256": "6fca230213eea5c914842c63513a9047cb3221d0646564692464a82d7a03fc05"
+    },
+    {
+      "path": "htt/src/common/vector_tensor_statistical_inference.py",
+      "sha256": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254"
+    },
+    {
+      "path": "htt/mio/formalism/vector_tensor_validation.py",
+      "sha256": "e08b58382250ae70c8afabaaf771e6579e5244812f2a59706f8f3b681888da8b"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+      "sha256": "a4a5243e13bc46503a16904c5f26a670a077d575220f16ebdae0c5d206493732"
+    },
+    {
+      "path": "tests/contracts/test_pillar_s_inference.py",
+      "sha256": "f1daf4bf081a0eadf9cb6443b5580282cffae6a03937506d9ec1350f8b8999a3"
+    },
+    {
+      "path": "tests/contracts/test_pillar_s_complete_adjudication.py",
+      "sha256": "5e544fdbbe564765092a8c4f60b4f39a6bd3a32d42467f7dc6c9ac34f6754bef"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+      "sha256": "b5ea12647f1d7818da3702b3da8d127f490a15cdef8e37fa8958cfe803b3ee5a"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+      "sha256": "71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+      "sha256": "36783932f540d4a4e26cc0d66f1f8bb5692623664deda7106e97326576f041bc"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-MIO-PHYSCODE.json",
+  "status": "registered",
+  "assignment_sha256": "c3a4722bfc5c8f67a7528046de0624d7b32979c6ba620f83ecb89dea756cb024"
+}

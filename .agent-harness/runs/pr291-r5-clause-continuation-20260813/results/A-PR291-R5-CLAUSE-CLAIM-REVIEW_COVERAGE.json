@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-clause-continuation-20260813",
+  "assignment_id": "A-PR291-R5-CLAUSE-CLAIM",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "ad585eb8f93a6bef8cbad27c4ef27ca20253e786f226101a8774cf6beb07d070",
+  "candidate_sha": "6c9d86a22394f512211cb42f9ef60d248f10ce20",
+  "candidate_tree_sha": "4e40985666c5ea82d8d1bed3009f179e22aa12db",
+  "diff_sha256": "0338828d09aa6698dd3464a6e7eecb226a90444260a98a5dfc439f0f8e43672a",
+  "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+  "completed_at": "2026-08-13T10:06:55Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {"cell": "candidate_identity", "status": "PASS", "evidence_refs": ["candidate HEAD/tree/merge-base/full-index-diff and canonical seal recomputation"], "rationale": "Exact frozen candidate and clean worktree matched the registered binding."},
+    {"cell": "spec_before_execution", "status": "PASS", "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml sha256 7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec"], "rationale": "Preactivation specification remains diagnostic-only and observed execution remains false."},
+    {"cell": "dependency_terminal_replay", "status": "PASS", "evidence_refs": ["run_pr291_cf4_lane.py check exited 0 with BLOCKED_PREDECESSOR_FINAL_SUCCESS"], "rationale": "Dependency replay remains fail-closed."},
+    {"cell": "data_identity_and_human_authorization_separation", "status": "PASS", "evidence_refs": ["PR291_NONEXECUTION_RECEIPT.json decision snapshots"], "rationale": "Rejected identity admission and NOT_AUTHORIZED H-CF4 are separate blockers."},
+    {"cell": "preflight_before_first_write", "status": "PASS", "evidence_refs": ["62 focused tests passed"], "rationale": "Focused containment checks passed and the blocked receipt reports no numeric outputs."},
+    {"cell": "synthetic_estimand_identity", "status": "PASS", "evidence_refs": ["62 focused tests passed", "htt/obsstat/cf4_post275_lane.py sha256 6a3ae13200b381af4502ef0ec0f001c039727a9dcfc1dd49e239a9f0c64e56bb"], "rationale": "Synthetic-only operator identity is unchanged."},
+    {"cell": "group_row_selection_and_frame_conventions", "status": "PASS", "evidence_refs": ["189 adjacent tests passed"], "rationale": "Adjacent identity and convention contracts passed."},
+    {"cell": "full_covariance_and_effective_rank", "status": "PASS", "evidence_refs": ["62 focused tests passed", "189 adjacent tests passed"], "rationale": "Registered covariance and rank checks passed on unchanged numerical bytes."},
+    {"cell": "depth_zoa_nested_support_and_transport", "status": "PASS", "evidence_refs": ["189 adjacent tests passed"], "rationale": "Nested support and transport checks passed."},
+    {"cell": "weak_identification_and_identified_set_abstention", "status": "PASS", "evidence_refs": ["62 focused tests passed", "189 adjacent tests passed"], "rationale": "Weak-identification abstention path passed."},
+    {"cell": "legacy_p0_and_curl_disposition", "status": "PASS", "evidence_refs": ["PR291_NONEXECUTION_RECEIPT.json forbidden_uses", "registered claim-language command exited 0"], "rationale": "Legacy curl remains diagnostic-only and P0 rescue remains forbidden."},
+    {"cell": "blocked_no_numeric_output", "status": "PASS", "evidence_refs": ["check terminal BLOCKED_PREDECESSOR_FINAL_SUCCESS with numeric_outputs_written empty"], "rationale": "Blocked execution wrote no numeric result."},
+    {"cell": "portable_clean_integration", "status": "PASS", "evidence_refs": ["portable command exited 0 over 5927 tracked files with unchanged pre/post hashes"], "rationale": "Portable clean replay passed."},
+    {"cell": "publication_policy_cross_binding", "status": "PASS", "evidence_refs": ["9 policy cross-binding tests passed", "publication policy sha256 2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835"], "rationale": "Policy and candidate seal remain cross-bound."},
+    {"cell": "claim_and_family_ceiling", "status": "FAIL", "evidence_refs": ["A-PR291-R5-CLAUSE-CLAIM-oracle.py case negative_does_adverb_not", "htt/src/common/semantic_guards/no_overclaim.py lines 695-735"], "rationale": "Predicate-local auxiliary plus positive adverb plus not is falsely reported as a positive family-identification claim."},
+    {"cell": "latest_target_integration", "status": "PASS", "evidence_refs": ["base and merge-base 06ac20605ebc371b0f97ad6e91c802a51a9bf764", "strict DAG command passed 244 cards"], "rationale": "Candidate remains based on the exact registered PR-290 target."}
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "pr291-clause-grammar-oracle",
+      "kind": "executable_test",
+      "status": "PASS",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM-oracle.py"],
+      "command_fingerprint": "8ea2a4492028b6972ea942f8f02459275c673d7f41aa85e416b784c82fce2108",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T10:06:54Z",
+      "completed_at": "2026-08-13T10:06:55Z",
+      "artifact_path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM-oracle.py",
+      "artifact_sha256": "0459cbe73042897b6a64c1259fcd9813b352900da4c9361bcb0d57fec1cd2435",
+      "artifact_bytes": 5317,
+      "evidence_refs": ["31 independently selected grammar and structured-context cases; exact blocker reproduced"]
+    }
+  ],
+  "coverage_sha256": "821e02a335236da3dbbe0f8d73c6a89712bd09bce2da4193de74cb38fa00b2c5"
+}

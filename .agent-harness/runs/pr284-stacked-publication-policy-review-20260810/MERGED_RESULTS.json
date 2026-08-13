@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-stacked-publication-policy-review-20260810",
+  "generated_at": "2026-08-10T05:44:32+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 2,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR284-STACK-CLOSEOUT",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json",
+            ".prguard/runtime/PR284_STACK_POLICY_INTEGRATION_REHEARSAL.json",
+            "docs/research_program/post_pr275/pr284_publication_policy.json",
+            "docs/research_program/post_pr275/pr284_spec.yaml",
+            "docs/generated/pr284_depth_path_doob_receipt.json",
+            "docs/codex_handoff/pr_status.yaml",
+            "machine_readable/pr_status.yaml",
+            ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/RUN_PLAN.json",
+            ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-CLOSEOUT/closeout_freshness_oracle.py",
+            ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-CLOSEOUT/review_coverage.json"
+          ],
+          "evidence_fingerprint": "pr284-stack-closeout:0b3680a0:8bfbdaff:2fdefdb2:policy-6b19c380:16-to-18-single-use:no-publication-auth",
+          "summary": "No evidence-freshness, claim, or publication-closeout defect was found in this frozen bounded lane. The fresh integration rehearsal is content-addressed, within policy age, bound to the same seal and exact live target, and records all seven commands at zero. Production and dependency evidence keys are unchanged, so substantive science was not redundantly revalidated. Claim status remains HTT-owned C2 diagnostic-only with transfer none, observed/public false, and family identification blocked. Status mirrors agree; PR-285 remains PLANNED/INELIGIBLE with zero budget. The assurance exception is exactly two named reviewer assignments over a single-use 16-to-18 window and grants no reusable budget, push, PR mutation, approval, merge, force-push, ruleset, or publication authority. Live lookup confirms no PR-284 remote branch or PR; predecessor PR 380 remains OPEN/BLOCKED at the exact target SHA. This pass is not merge or publication authorization."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR284-STACK-POLICY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR280-HERMETIC-HARNESS",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "The bounded PR-284 stacked-publication policy repair admits the single exact sealed predecessor and one overlapping predecessor PR while retaining every assigned upper-bound, duplicate-publication, mutation, reviewer-budget, immutable-seal, and seven-command integration control.",
+          "evidence_refs": [
+            ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/live_inventory.json",
+            ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/policy_oracle_output.json",
+            ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/focused_pytest.txt",
+            ".prguard/runtime/PR284_STACK_POLICY_INTEGRATION_REHEARSAL.json"
+          ],
+          "evidence_fingerprint": "pr284-stack-policy:seal-8bfbdaff:inventory-aafe528a:oracle-908869b2"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "assignment_count": 2,
+  "validated_result_count": 2,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/RUN_PLAN.json",
+      "sha256": "5f9420b40491b3cbf6965c4ff7365317a0ad445cd223e3c7674d78e0e3b6f37b",
+      "bytes": 4683
+    },
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/assignments/A-PR284-STACK-CLOSEOUT.json",
+      "sha256": "826d13ddf3946855652902900c90a9328d958ebc8646b8f221cc99c345859391",
+      "bytes": 4758
+    },
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/assignments/A-PR284-STACK-POLICY.json",
+      "sha256": "60c8b19b835a567a61e69ba14abd7e14e4fd84bba8b83d0c14f6af4a68467ce3",
+      "bytes": 5113
+    },
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/results/A-PR284-STACK-CLOSEOUT.json",
+      "sha256": "d3eabc7e9dfaf851186380806771f5446c2610c4746770c1858f58ea33920c28",
+      "bytes": 8452
+    },
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/results/A-PR284-STACK-POLICY.json",
+      "sha256": "4d159dd979fa36b650a3016949972b4a40fed74c60ede9fdb3962d278b93fdbc",
+      "bytes": 8321
+    }
+  ],
+  "merge_input_sha256": "de428c335a0110bdbe5b0596edf0eb53b5ded71fc0ebd2418e9b93f857c0323e"
+}

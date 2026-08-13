@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "change_set_id": "CS-PR288-BAYES-SEMANTICS",
+  "publication_group_id": "PG-PR288-BAYES-SEMANTICS",
+  "candidate_seal_sha256": "fa1130c1c2c1b9f0e4330750ce7f2f5455823b9a240b63dcdfe2495573dce4d2",
+  "candidate_sha": "5c20df43241f5156e17b1c25b2fcf38592d99ca0",
+  "candidate_tree_sha": "bc809f87b03df0573bedfaf260fd9cc97fa33251",
+  "diff_sha256": "5a3b7dabda9138f88a9f8e03c979f20106af6d08996ea2ae12701adcaa8eef6c",
+  "changed_files_sha256": "0daebf3fcd581e6308cf2772ba9fd8762d4d47115e79bff10b730c852f4f1fa9",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr287-entropy-truth-recovery-20260811",
+  "latest_target_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+  "integration_policy_sha256": "c1e088fa12716ef9bc9870bad0213b8d37ae28e0dc96edec6e2cc66f1f81910b",
+  "merged_tree_sha": "bc809f87b03df0573bedfaf260fd9cc97fa33251",
+  "started_at": "2026-08-11T07:19:52+00:00",
+  "completed_at": "2026-08-11T07:21:38+00:00",
+  "status": "PASS",
+  "commands": [
+    {
+      "id": "pr288-focused",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+        "focused"
+      ],
+      "argv": [
+        "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+        "-B",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+        "focused"
+      ],
+      "executable_path": "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T07:19:54+00:00",
+      "completed_at": "2026-08-11T07:20:14+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "1f24c123369853fefa4a2971762d8242c092b9f556ff183ba46ca69cdcae0865",
+      "stdout_bytes": 624,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr288-engine-crosscheck",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+        "engines"
+      ],
+      "argv": [
+        "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+        "-B",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+        "engines"
+      ],
+      "executable_path": "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 3600,
+      "started_at": "2026-08-11T07:20:14+00:00",
+      "completed_at": "2026-08-11T07:20:39+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "ffdd6b48500c7b4cb53e153be44a09251efd3a740281df00e7565e0d5a50fd54",
+      "stdout_bytes": 5707,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr288-adjacent",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+        "adjacent"
+      ],
+      "argv": [
+        "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+        "-B",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+        "adjacent"
+      ],
+      "executable_path": "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T07:20:39+00:00",
+      "completed_at": "2026-08-11T07:20:42+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "2f112a7966b2b96db02c029dabe4dd8019ad6df86b3a46b49659c4c417d4a17d",
+      "stdout_bytes": 110,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr288-receipt-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+        "check"
+      ],
+      "argv": [
+        "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+        "-B",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+        "check"
+      ],
+      "executable_path": "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 600,
+      "started_at": "2026-08-11T07:20:42+00:00",
+      "completed_at": "2026-08-11T07:21:07+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "5588c043ae3cb78f431d5054eb0471c365b3e19e0c6ab7ecbb6296e02425da80",
+      "stdout_bytes": 166,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr288-portable-clean-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+        "portable"
+      ],
+      "argv": [
+        "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+        "-B",
+        "scripts/codex_harness/run_pr288_bayesian_semantics.py",
+        "portable"
+      ],
+      "executable_path": "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T07:21:07+00:00",
+      "completed_at": "2026-08-11T07:21:35+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "34da4b5597c9f99aaf293621054ce9f27a25689b7dc274a3a5372ef3f2e74120",
+      "stdout_bytes": 1594,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr288-publication-policy-cross-binding",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "-k",
+        "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"
+      ],
+      "argv": [
+        "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "-k",
+        "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"
+      ],
+      "executable_path": "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T07:21:35+00:00",
+      "completed_at": "2026-08-11T07:21:36+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "ca607365be6dea15829f1357dd8b365ebcace56cf2c998c93521b9b7e3ac59cb",
+      "stdout_bytes": 113,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr288-dag-strict",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "argv": [
+        "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "executable_path": "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T07:21:36+00:00",
+      "completed_at": "2026-08-11T07:21:37+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "954bccce10cfc35cf06b7aa16b931d748ff4f55af6a9350c833855bdafcf44ee",
+      "stdout_bytes": 1749,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr288-claim-language",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "htt/htt/htt/infer/bayesian_semantics.py",
+        "tests/htt/test_bayesian_semantics_repair.py",
+        "docs/research_program/post_pr275/pr288_spec.yaml",
+        "docs/generated/pr288_bayesian_semantics_receipt.json",
+        "docs/PR_DELTAS/pr-288.md"
+      ],
+      "argv": [
+        "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "htt/htt/htt/infer/bayesian_semantics.py",
+        "tests/htt/test_bayesian_semantics_repair.py",
+        "docs/research_program/post_pr275/pr288_spec.yaml",
+        "docs/generated/pr288_bayesian_semantics_receipt.json",
+        "docs/PR_DELTAS/pr-288.md"
+      ],
+      "executable_path": "/tmp/htt-pr288-dynesty-20260811-59uIpF/venv/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T07:21:37+00:00",
+      "completed_at": "2026-08-11T07:21:38+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "19a00c56f80d1c997ad754ec812ae264d0469fe074b69c56b34594caa22f1164",
+      "stdout_bytes": 38,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    }
+  ],
+  "receipt_sha256": "e270ad8830bf18dfe79ebbde8e78e6355e1f06c26147a889c0bd8329c354231d"
+}

@@ -1,0 +1,88 @@
+{
+  "assignment_id": "A-PR284-REPLAY",
+  "candidate_sha": "029f8cedd044cc5967bc12dc695230ca69cf3308",
+  "checks": [
+    {
+      "check": "frozen_candidate_and_exact_pr283_target",
+      "evidence": {
+        "candidate_sha": "029f8cedd044cc5967bc12dc695230ca69cf3308",
+        "candidate_tree_sha": "e09d127212ba3173377ea2442be1661107f2963a",
+        "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+        "target_ref": "refs/remotes/origin/changeset/pr283-weak-identification-recovery-20260810",
+        "target_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+        "tracked_index_and_worktree_clean": true
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "stable_patch_id_uniqueness",
+      "evidence": {
+        "all_ref_matches": {
+          "7723c679e68bac2d412c16f7efbe886ba5124585": [
+            "65733d886d8882a180b6987790a3f6f0f53a72aa"
+          ],
+          "a8a5952e04a06025b74b0f5fa43379a56869977c": [
+            "029f8cedd044cc5967bc12dc695230ca69cf3308"
+          ]
+        },
+        "sealed_stable_patch_ids": {
+          "7723c679e68bac2d412c16f7efbe886ba5124585": "65733d886d8882a180b6987790a3f6f0f53a72aa",
+          "a8a5952e04a06025b74b0f5fa43379a56869977c": "029f8cedd044cc5967bc12dc695230ca69cf3308"
+        },
+        "unique_across_all_refs": true
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "fresh_receipt_source_and_thirteen_mutations",
+      "evidence": {
+        "all_fresh_mutations_activated_executed_killed": true,
+        "fresh_mutation_count": 13,
+        "fresh_mutation_ids": [
+          "MU284-SUPPORT-NESTING-AS-PROOF",
+          "MU284-NONNESTED-SUPPORT",
+          "MU284-TARGET-DRIFT",
+          "MU284-PREPROCESSING-DRIFT",
+          "MU284-FILTRATION-DIRECTION-DRIFT",
+          "MU284-THRESHOLD-DRIFT",
+          "MU284-ATOM-SELECTION-DRIFT",
+          "MU284-PATH-MAXIMUM-DRIFT",
+          "MU284-PROBABILITY-LAW-DRIFT",
+          "MU284-ESTIMATOR-IDENTITY-DRIFT",
+          "MU284-FREE-BOUND-ON-UNPROVED",
+          "MU284-MATCHED-MOCK-PLAN-OMITTED",
+          "MU284-MATCHED-MOCK-PLAN-DRIFT"
+        ],
+        "receipt_content_sha256": "2c4dab87a7dc2a475a608e59ed24110ef45d33ed1e466527ffeb832509abeebf",
+        "source_binding_count": 12
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "fifo_hardlink_and_atomic_write_defenses",
+      "evidence": {
+        "atomic_failure_preserved_original_and_cleaned_temp": true,
+        "atomic_replace_failure_injected": true,
+        "atomic_replace_success": true,
+        "fifo_rejection": "receipt destination must be a single-link regular file",
+        "hardlink_rejection": "receipt destination must be a single-link regular file"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "human_only_merge_refusal",
+      "evidence": {
+        "attended_policy_forbids_merge": true,
+        "auto_merge_rejection": "AUTO_MERGE is recognized but refused; merge remains HUMAN ONLY",
+        "execution_mode": "AUTO_STACKED_PR",
+        "merge_command_classified_forbidden": true,
+        "merge_policy": "HUMAN_ONLY"
+      },
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "run_id": "pr284-candidate-review-20260810",
+  "schema": "PR284_ASSIGNMENT_LOCAL_REPLAY_ORACLE_V1",
+  "status": "PASS"
+}

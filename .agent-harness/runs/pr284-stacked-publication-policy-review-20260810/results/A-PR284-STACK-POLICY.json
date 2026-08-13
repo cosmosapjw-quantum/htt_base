@@ -1,0 +1,144 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-stacked-publication-policy-review-20260810",
+  "assignment_id": "A-PR284-STACK-POLICY",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "ec986572ee5f5e7854e962004b40e7f3cd6d9527798bb13baa111c88f8bc8476",
+    "seal_sha256": "8bfbdaff6af64436924580463f9ec2554279a1bc6a1486750cb0c32b6266bf5b",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "0db8394f751dc88d8fd5f83c399c672ab87fcbd6",
+    "diff_sha256": "404c50c3fdba1f92c6483cfc7829b9d0e836f5e385fe6db27b6f402ed3128f03",
+    "changed_files_sha256": "2ee57a82a18f93585636383adacae5cf34d753841adf5587c087d50f851e66f7",
+    "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034"
+  },
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/results/A-PR284-STACK-POLICY.json",
+  "assignment_sha256": "441b0d0caabbe267ce5a0368ad614e844391a33287c91313e7d49372953e9cb0",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/assignments/A-PR284-STACK-POLICY.json",
+    ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR284_STACK_POLICY_INTEGRATION_REHEARSAL.json",
+    ".prguard/runtime/PR284_PUBLICATION_BLOCKER.json",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/PR_DELTAS/pr-284.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "tests/contracts/test_process_recovery_auto_stacked.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/pr_inventory.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/RUN_PLAN.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-10T05:27:00+00:00",
+  "completed_at": "2026-08-10T05:37:00+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "gh": "used read-only through registered pr_inventory collector"
+  },
+  "commands": [
+    {
+      "argv": ["gh", "pr", "list", "--repo", "cosmosapjw-quantum/htt_base", "--state", "open", "--limit", "1000", "--json", "number,headRefName,baseRefName,headRefOid,isDraft,body,changedFiles,files"],
+      "purpose": "fresh read-only live PR inventory",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/live_inventory.json"
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/policy_oracle.py"],
+      "purpose": "candidate, policy, synthetic rejection, assurance exception, and integration receipt oracle",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/policy_oracle_output.json"
+    },
+    {
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity or pr284_policy_allows_one_open_predecessor_and_bounds_next_slots or reviewer_rereview_budget_exception_is_named_single_run_and_single_use or reviewer_rereview_budget_exception_cannot_raise_the_ordinary_limit"],
+      "purpose": "focused policy and reviewer-budget regression probes",
+      "returncode": 0,
+      "timed_out": false,
+      "summary": "12 passed, 57 deselected in 1.13s",
+      "artifact_path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/focused_pytest.txt"
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/review_coverage.json", "--seal", ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json", "--run-id", "pr284-stacked-publication-policy-review-20260810", "--assignment-id", "A-PR284-STACK-POLICY", "--risk-tier", "R3"],
+      "purpose": "strict R3 review coverage validation",
+      "returncode": 0,
+      "timed_out": false,
+      "summary": "ok=true, errors=[]"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/live_inventory.json",
+      "sha256": "234be42c3719f5ba5d6866a61d34b77893bd57e76de809d6b59304eed9ec2789",
+      "bytes": 3894,
+      "producer": "A-PR284-STACK-POLICY",
+      "command_fingerprint": "gh-pr-list-read-only-pr284-stack-policy"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/policy_oracle.py",
+      "sha256": "3478b0bba25fba84c45ef77fd35d5f5f82393e495e3b153005e021b93e9bf630",
+      "bytes": 9631,
+      "producer": "A-PR284-STACK-POLICY"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/policy_oracle_output.json",
+      "sha256": "908869b285108dcee4182f7463b42dad094d135b6396c7a3be4bf3a9ea55952c",
+      "bytes": 2562,
+      "producer": "A-PR284-STACK-POLICY",
+      "command_fingerprint": "cf8f22debf5a75b17d88b479cd4a2b640c7af26c89bbc865855013cddf30726f"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/focused_pytest.txt",
+      "sha256": "952de6024c8a6a6a454bdb13727025551db3671774c85f1e480fc954194157d1",
+      "bytes": 114,
+      "producer": "A-PR284-STACK-POLICY"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/review_coverage.json",
+      "sha256": "f75df99ea72e58b388b8dcb4cb99adb19a4ae9b26029e3c784f5d5cf3ccdc209",
+      "bytes": 7487,
+      "producer": "A-PR284-STACK-POLICY"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/review_coverage.json",
+  "review_coverage_sha256": "f75df99ea72e58b388b8dcb4cb99adb19a4ae9b26029e3c784f5d5cf3ccdc209",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR280-HERMETIC-HARNESS",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "The bounded PR-284 stacked-publication policy repair admits the single exact sealed predecessor and one overlapping predecessor PR while retaining every assigned upper-bound, duplicate-publication, mutation, reviewer-budget, immutable-seal, and seven-command integration control.",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/live_inventory.json",
+        ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/policy_oracle_output.json",
+        ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/artifacts/A-PR284-STACK-POLICY/focused_pytest.txt",
+        ".prguard/runtime/PR284_STACK_POLICY_INTEGRATION_REHEARSAL.json"
+      ],
+      "evidence_fingerprint": "pr284-stack-policy:seal-8bfbdaff:inventory-aafe528a:oracle-908869b2"
+    }
+  ],
+  "errors": []
+}

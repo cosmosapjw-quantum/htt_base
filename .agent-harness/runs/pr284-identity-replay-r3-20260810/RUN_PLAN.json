@@ -1,0 +1,86 @@
+{
+  "schema_version": 2,
+  "run_id": "pr284-identity-replay-r3-20260810",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "created_at": "2026-08-09T23:06:26+00:00",
+  "spec_ref": "docs/research_program/post_pr275/pr284_spec.yaml",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr283-weak-identification-recovery-20260810",
+  "target_ref": "refs/remotes/origin/changeset/pr283-weak-identification-recovery-20260810",
+  "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+  "candidate_ref": "changeset/pr284-finite-depth-law-recovery-20260810",
+  "integration_policy": {
+    "path": "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "sha256": "83fe6c6eeda8661e54e52e77c69e851bc09224a36f5747d45fa938949c781583",
+    "policy_id": "PR284-PUBLICATION-POLICY"
+  },
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "da4a16d506e8adbfa5232ab95ca202cf2009e5f1304d6732fb0c92c3cb343b9a",
+    "seal_sha256": "f845a04769749a7b27a836ecb921da76509313221add64cd36ba0071b5e6e5f2",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "d54ff22dac780d3b159394237416d28b2bd15dc8",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "5fe16f62eb7246c455d116d79d2d422b35dee7b7",
+    "diff_sha256": "198de84c15f37c2d3c2edde8b2cdfbf06e5fe353aa2dd893462ae6bc3382e55f",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "adfbf6216e0a2566edeacc12f555110edea7811d7dc2309e737d7933d230f411"
+  },
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "budget": {
+    "max_concurrent": 4,
+    "max_total": 8,
+    "max_total_per_work_unit": 16,
+    "max_depth": 2
+  },
+  "publication_budget": {
+    "max_open_prs": 1,
+    "max_direct_to_target_prs": 1,
+    "max_prs_per_change_set": 1,
+    "max_stack_depth": 1,
+    "max_file_overlap_prs": 0
+  },
+  "stages": [
+    "context-build",
+    "work-unit-implementation",
+    "candidate-freeze",
+    "read-only-review",
+    "latest-target-integration",
+    "external-publisher-authorization"
+  ],
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "status": "candidate_frozen",
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "VALIDATED",
+  "stack_id": "PROCESS_INFLATION_RECOVERY_PHASE2",
+  "activation_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+  "predecessor_pr": "PR-283",
+  "predecessor_sealed_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+  "production_hash": "adfbf6216e0a2566edeacc12f555110edea7811d7dc2309e737d7933d230f411",
+  "dependency_hashes": {
+    "common_depth_path": "41ffe054645c00a36158688b55a0aab390919d3759283b9d5e2f33d69ec8f247",
+    "vector_tensor_statistical_foundations": "1a69c6b2bdd65b49b49c9383086b5f303c651b0aaf95bed41fdde53a97d2d215",
+    "htt_depth_path": "fb8b9043f3d01c608c1aea4283ba23f533ccf050918cabbb1e5cf6003033bf74",
+    "proof_registry_two_pillars": "01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201",
+    "pillar_s_core_proofs": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e"
+  },
+  "evidence_key": {
+    "production_hash": "adfbf6216e0a2566edeacc12f555110edea7811d7dc2309e737d7933d230f411",
+    "dependency_hashes": {
+      "common_depth_path": "41ffe054645c00a36158688b55a0aab390919d3759283b9d5e2f33d69ec8f247",
+      "vector_tensor_statistical_foundations": "1a69c6b2bdd65b49b49c9383086b5f303c651b0aaf95bed41fdde53a97d2d215",
+      "htt_depth_path": "fb8b9043f3d01c608c1aea4283ba23f533ccf050918cabbb1e5cf6003033bf74",
+      "proof_registry_two_pillars": "01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201",
+      "pillar_s_core_proofs": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e"
+    }
+  },
+  "gate_disposition": "PASS",
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 8
+  }
+}

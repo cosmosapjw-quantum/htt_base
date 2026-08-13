@@ -1,0 +1,174 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-bounded-repair-r3-review-20260813",
+  "assignment_id": "A-PR291-R3-CODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "a1f8430ed17e9d8f1fa061daf423a95ed36d5c71bdad45ff38aa58ffa8b15804",
+    "seal_sha256": "28a2bda8a600cf5ccb0dab4dbb9525105004c469f628d1e392d261beee5a32d1",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "1af0db69da0a190b268d6765e334b05023dd04e7",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "d5f3a1199932eb1b66b403e74287e003c941191f",
+    "diff_sha256": "fefd37043d724282ea1fbc3cf6a7de72c02d30bc9f3dff712c6bca564aef4cf3",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "7545b0cbc5e6e0ae572b4c8b7e9efebeafc9b41a25e90da82d407b0ecec8813b"
+  },
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/results/A-PR291-R3-CODE.json",
+  "assignment_sha256": "fc8579b323b36e9bc96e3215a68098eeba18bd4316fb5c13b294acecb996f780",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/assignments/A-PR291-R3-CODE.json",
+    ".agent-harness/scripts/candidate_seal.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "htt/obsstat/cf4_post275_lane.py",
+    "htt/src/common/cf4_observed_lane_activation.py",
+    "htt/src/common/data_identity.py",
+    "htt/src/common/depth_path.py",
+    "htt/src/common/observed_lane_activation.py",
+    "htt/src/common/sky_support.py",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/run_pr290_planck_lane.py",
+    "scripts/codex_harness/run_pr291_cf4_lane.py",
+    "tests/integration/test_cf4_post275_lane.py",
+    "tests/integration/test_planck_post275_lane.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-13T05:14:00+00:00",
+  "completed_at": "2026-08-13T05:28:28+00:00",
+  "tool_versions": {
+    "git": "2.43.0",
+    "numpy": "2.4.2",
+    "pytest": "9.1.1",
+    "python": "3.12.3",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {
+      "id": "candidate-seal-verify",
+      "argv": ["python3", "-B", ".agent-harness/scripts/candidate_seal.py", "verify", "--seal", ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json"],
+      "returncode": 0,
+      "summary": "exact canonical candidate seal passed"
+    },
+    {
+      "id": "pr291-focused",
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr291_cf4_lane.py", "focused"],
+      "returncode": 0,
+      "summary": "57 passed"
+    },
+    {
+      "id": "pr291-preactivation",
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr291_cf4_lane.py", "check"],
+      "returncode": 0,
+      "summary": "deterministic BLOCKED_PREDECESSOR_FINAL_SUCCESS receipt replay"
+    },
+    {
+      "id": "pr291-adjacent",
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr291_cf4_lane.py", "adjacent"],
+      "returncode": 0,
+      "summary": "189 passed"
+    },
+    {
+      "id": "pr291-portable-clean",
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/run_pr291_cf4_lane.py", "portable"],
+      "returncode": 0,
+      "summary": "clean archive replay passed with identical tracked manifests"
+    },
+    {
+      "id": "pr291-policy-cross-binding",
+      "argv": ["/usr/bin/python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"],
+      "returncode": 0,
+      "summary": "9 passed, 68 deselected"
+    },
+    {
+      "id": "pr291-dag-strict",
+      "argv": ["/usr/bin/python3", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "returncode": 0,
+      "summary": "strict rescue-slice DAG validation passed"
+    },
+    {
+      "id": "pr291-claim-language",
+      "argv": ["/usr/bin/python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "docs/research_program/post_pr275/pr291_spec.yaml", "htt/src/common/cf4_observed_lane_activation.py", "htt/obsstat/cf4_post275_lane.py", "tests/integration/test_cf4_post275_lane.py", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", "docs/PR_DELTAS/pr-291.md"],
+      "returncode": 0,
+      "summary": "no forbidden claim language detected"
+    },
+    {
+      "id": "independent-oracle",
+      "argv": ["/usr/bin/python3", "-B", ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-oracle.py"],
+      "returncode": 0,
+      "summary": "20 hostile and deterministic invariants passed in an outside-repository temporary root"
+    },
+    {
+      "id": "candidate-diff-check",
+      "argv": ["git", "diff", "--check", "06ac20605ebc371b0f97ad6e91c802a51a9bf764..1af0db69da0a190b268d6765e334b05023dd04e7"],
+      "returncode": 0,
+      "summary": "no whitespace errors"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-REVIEW_COVERAGE.json",
+      "sha256": "52b4552afddb276c4518265a94ef695f6faf150979b985fe9ab4913cd4e817e7",
+      "bytes": 10102,
+      "producer": "A-PR291-R3-CODE"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-oracle.py",
+      "sha256": "9f9fe65902d724e7e4a27d3988aacb303a135fd757e62b069af46bd0624a8421",
+      "bytes": 12255,
+      "producer": "A-PR291-R3-CODE"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json",
+      "sha256": "ce8f06a5e03fdf0067803f3903e36d4f60670d89bf883d6f3c2b9edc89a16848",
+      "bytes": 5073,
+      "producer": "A-PR291-R3-CODE",
+      "command_fingerprint": "8b6b6a499bb531e5ef1298ccf30f0f2b000a281818a8b6aa06cfddd651d5a423"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "52b4552afddb276c4518265a94ef695f6faf150979b985fe9ab4913cd4e817e7",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-REVIEW_COVERAGE.json",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-evidence.json",
+        ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CODE-oracle.py"
+      ],
+      "evidence_fingerprint": "sha256:8843f66560f45fc1b671d41dfe335b2b473f74dc184fa97eef7c3389314bda2a",
+      "summary": "No code, harness, replay, containment, portability, status, or claim-ceiling defect was reproduced against the exact frozen PR-291 candidate."
+    }
+  ],
+  "errors": []
+}

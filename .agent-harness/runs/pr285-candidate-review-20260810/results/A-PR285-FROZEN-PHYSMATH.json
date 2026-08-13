@@ -1,0 +1,157 @@
+{
+  "schema_version": 3,
+  "run_id": "pr285-candidate-review-20260810",
+  "assignment_id": "A-PR285-FROZEN-PHYSMATH",
+  "assignment_sha256": "71fbeb81c588ebd7c54517142ee37f363242a9c6717dc1a355413cb3fd4b3762",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-285",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "7baf4ec6b941c0a29b247604b71cd94f43cb18de007afda9d1c2cc77d59e5d21",
+    "seal_sha256": "8e2c2e72cca0d018441a91368ded4a3f898df12c36de5e8104352119ab4d2629",
+    "base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_sha": "be8392d0fb3d13fefdf6bce89a1c89ef11890080",
+    "merge_base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_tree_sha": "f74d8f8b550d2351d21a8db5021e0f8566d9ecc2",
+    "diff_sha256": "9a50ef58e647f018e98e81f1868ffc271499984fdb0f73a0465098ce9a7a1183",
+    "changed_files_sha256": "bb335983aab436ac3ca9e949e3bd118d1812d2d040465372166641fb1f899be4",
+    "production_hash": "602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr285-candidate-review-20260810/results/A-PR285-FROZEN-PHYSMATH.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-10T06:25:00+00:00",
+  "completed_at": "2026-08-10T06:36:30+00:00",
+  "tool_versions": {
+    "python": "3.12.13",
+    "pyyaml": "6.0.2",
+    "sympy": "1.14.0",
+    "sagemath": "10.9",
+    "lean": "4.31.0",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr285_pillar_t_adjudication.py", "cas"],
+      "returncode": 0,
+      "summary": "Current aggregate CAS_BLOCKED; SymPy, Sage/Singular, and Lean preflight PASS; Wolfram/xAct BLOCKED_PLATFORM_OR_LICENSE; no current four-axis pass."
+    },
+    {
+      "argv": ["python", "-B", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle.py"],
+      "returncode": 0,
+      "summary": "Independent invariant checker completed and emitted candidate_verdict FAIL for premise/domain status drift."
+    },
+    {
+      "argv": ["python", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/review_coverage.json", "--seal", ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json", "--run-id", "pr285-candidate-review-20260810", "--assignment-id", "A-PR285-FROZEN-PHYSMATH", "--risk-tier", "R3", "--structural-only"],
+      "returncode": 0,
+      "summary": "Blocking review coverage is structurally valid."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle.py",
+      "sha256": "70144b37370097bbe2721d0f47e6092f2e1459b01a0e72a34c1cbbea7c77851b",
+      "bytes": 12856,
+      "producer": "A-PR285-FROZEN-PHYSMATH",
+      "command_fingerprint": "PR285-PHYSMATH-ORACLE-SOURCE-V1"
+    },
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle_report.json",
+      "sha256": "ff23d5d036d859657443a1b66b998cea56c3af748b2f6b99e4624a983e303448",
+      "bytes": 5422,
+      "producer": "A-PR285-FROZEN-PHYSMATH",
+      "command_fingerprint": "cd95abcb345303844f1ad0b8638fd74a5a590052e8446a5b5635af65f7d1ecb2"
+    },
+    {
+      "path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/review_coverage.json",
+      "sha256": "7dfa7edee791b6c836b6671797a2c65b978608db85c0525f0a5da38435c7d054",
+      "bytes": 9553,
+      "producer": "A-PR285-FROZEN-PHYSMATH",
+      "command_fingerprint": "PR285-PHYSMATH-COVERAGE-V1"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/review_coverage.json",
+  "review_coverage_sha256": "7dfa7edee791b6c836b6671797a2c65b978608db85c0525f0a5da38435c7d054",
+  "files_read": [
+    ".agent-harness/runs/pr285-candidate-review-20260810/assignments/A-PR285-FROZEN-PHYSMATH.json",
+    ".agent-harness/runs/pr285-candidate-review-20260810/RUN_PLAN.json",
+    ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json",
+    "docs/research_program/post_pr275/pr285_spec.yaml",
+    "docs/research_program/post_pr275/pr285_publication_policy.json",
+    "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+    "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+    "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml",
+    "docs/research_program/vector_tensor/pr269_spec.yaml",
+    "docs/research_program/vector_tensor/pr270_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_T_CORE_PROOFS_V1.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml",
+    "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+    "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+    "docs/research_program/strengthening/pr190_spec.yaml",
+    "docs/generated/pr190_attainability/attainability_report.json",
+    "docs/PR_DELTAS/pr-285.md",
+    "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+    "tests/contracts/test_pillar_t_complete_adjudication.py",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md"
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR285-LEGACY-STATUS-FLATTENING",
+      "claim_id": "C-PR270-PILLAR-T-CAS",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "PR285:legacy-premise-domain-status:12-declared-to-source-not-typed",
+      "statement": "PR-285 contradicts the frozen source typing for 12 of 65 legacy rows: THEOREM_SIGNATURES_V3 marks their assumptions and domains DECLARED, while the spec asserts no legacy row supplies typed premises/domain and the receipt labels every legacy row SOURCE_NOT_TYPED. The premise/domain values themselves are preserved and all 65 remain conservatively inconclusive, but G7 requires premise- and domain-specific terminal receipts and exact source status is not preserved.",
+      "assumptions_used": [
+        "THEOREM_SIGNATURES_V3 is the frozen source registry named by the PR-285 spec.",
+        "assumption_status=DECLARED and domain_status=DECLARED are semantically distinct from SOURCE_NOT_TYPED.",
+        "A conservative nonpromotion does not excuse contradictory provenance/status metadata in a premise/domain-specific receipt."
+      ],
+      "evidence_refs": [
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#legacy_signature_inventory",
+        "docs/research_program/post_pr275/pr285_spec.yaml#statement_identity_contract",
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle_report.json"
+      ],
+      "counterevidence_refs": [
+        "All 65 legacy statements remain TITLE_ONLY and INCONCLUSIVE_WITH_RECEIPT.",
+        "The 12 declared assumption/domain value lists are copied byte-for-value into the receipt."
+      ],
+      "reproduction": [
+        "Run python -B .agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle.py.",
+        "Observe legacy_declared_premise_domain_count=true, legacy_premise_domain_values_exact=true, and legacy_premise_domain_status_exact=false.",
+        "The affected rows are SIG-P3, SIG-P11, SIG-P18, SIG-T1p, SIG-DL1, SIG-L-T2-EXIST, SIG-MES-PROV, SIG-T2G, SIG-TSUM, SIG-MES-BR, SIG-MES-REFREEZE, and SIG-MES-MESB-TRACE."
+      ],
+      "unresolved": [
+        "Repair the spec's all-65 premise/domain statement and preserve DECLARED source statuses for the 12 checked rows, while retaining TITLE_ONLY and INCONCLUSIVE_WITH_RECEIPT unless a typed theorem statement is independently adjudicated.",
+        "Add a mutation/test that changes a legacy premise_status or domain_status independently of its source status and requires rejection."
+      ],
+      "confidence": 1.0
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR270-PILLAR-T-CAS",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR285-LEGACY-STATUS-FLATTENING"],
+      "summary": "CAS boundaries, VT-T dispositions, family ceiling, and PR190 chronology are correct, but the complete adjudication fails exact legacy premise/domain source-status preservation on 12 rows."
+    }
+  ],
+  "errors": []
+}

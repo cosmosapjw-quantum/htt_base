@@ -1,0 +1,161 @@
+{
+  "schema_version": 3,
+  "run_id": "pr283-salvage-validation-r2-20260810",
+  "assignment_id": "A-PR283-PREFREEZE-R2-REPLAY",
+  "assignment_sha256": "01f93c43a7ea09582b0cc5cf4989982618f9ce6a52d7e443f36c468fcf856298",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-283",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "result_path": ".agent-harness/runs/pr283-salvage-validation-r2-20260810/results/A-PR283-PREFREEZE-R2-REPLAY.json",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-09T18:49:00Z",
+  "completed_at": "2026-08-09T18:58:00Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "id": "r2-required-input-hash-preflight",
+      "exit_code": 0,
+      "summary": "All six registered required-input SHA-256 values matched before substantive replay."
+    },
+    {
+      "id": "pr283-source-replay-caller-migrations",
+      "argv": "env -u PYTHONPATH python -B scripts/codex_harness/run_pr283_weak_identification.py caller-migrations",
+      "exit_code": 0,
+      "summary": "90 passed in 6.94s with ambient PYTHONPATH absent."
+    },
+    {
+      "id": "pr283-harness-portability",
+      "argv": "env -u PYTHONPATH python -B scripts/codex_harness/run_pr283_weak_identification.py harness-portability",
+      "exit_code": 0,
+      "summary": "22 passed in 9.37s with ambient PYTHONPATH absent."
+    },
+    {
+      "id": "pr283-focused-selector-regression",
+      "argv": "env -u PYTHONPATH python -B scripts/codex_harness/run_pr283_weak_identification.py focused",
+      "exit_code": 0,
+      "summary": "23 passed in 1.37s, including exact policy-to-runner selector mapping."
+    },
+    {
+      "id": "pr283-receipt-check-first",
+      "argv": "env -u PYTHONPATH python -B scripts/codex_harness/run_pr283_weak_identification.py check",
+      "exit_code": 0,
+      "summary": "Recomputed receipt matched checked-in bytes at SHA-256 10d28620cd709585cf9444dbde72e19d7baced9ef2da901c005bcbeb3a85fedf."
+    },
+    {
+      "id": "pr283-receipt-check-second",
+      "argv": "env -u PYTHONPATH python -B scripts/codex_harness/run_pr283_weak_identification.py check",
+      "exit_code": 0,
+      "summary": "Independent second recomputation produced the identical receipt hash."
+    },
+    {
+      "id": "pr283-current-binding-audit",
+      "exit_code": 0,
+      "summary": "All 16 receipt source bindings matched current bytes; policy, PR-283 runner, and focused test hashes matched their exact receipt rows; all 10 mutations executed, activated, and were killed."
+    },
+    {
+      "id": "pr283-stale-receipt-rejection",
+      "exit_code": 0,
+      "summary": "An in-memory stale receipt substitute made the runner check return 1 with distinct expected and actual hashes; the wrapper returned 0 only after observing rejection."
+    },
+    {
+      "id": "pr283-claim-language",
+      "exit_code": 0,
+      "summary": "No forbidden claim language detected; the restored PR delta path exists."
+    },
+    {
+      "id": "pr283-portable-clean-replay-deferred",
+      "exit_code": 1,
+      "summary": "Expected non-acceptance precondition while candidate is mutable: portable replay requires a clean committed candidate. This is explicitly not an R2 PASS requirement."
+    },
+    {
+      "id": "r2-required-input-hash-final",
+      "exit_code": 0,
+      "summary": "After a transient documentation edit was restored, all six required inputs again matched the registered assignment hashes; substantive commands were not repeated solely for restored documentation bytes."
+    }
+  ],
+  "artifacts": [],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr283-salvage-validation-r2-20260810/assignments/A-PR283-PREFREEZE-R2-REPLAY.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    "docs/research_program/post_pr275/pr283_publication_policy.json",
+    "scripts/codex_harness/run_pr283_weak_identification.py",
+    "tests/contracts/test_weak_identification.py",
+    "scripts/codex_harness/run_pr280_harness.py",
+    "docs/generated/pr283_weak_identification_receipt.json",
+    "docs/PR_DELTAS/pr-283.md"
+  ],
+  "harness_summary": {
+    "evidence_read": [
+      "Six assignment-sealed repair inputs and their current hashes",
+      "Exact policy argv for the two repaired lanes",
+      "PR-283 source-root environment construction and selector dispatch",
+      "PR-280 clean source-root allowlist including repository root",
+      "Current receipt source bindings, mutations, and terminal state"
+    ],
+    "proposed_changes": [],
+    "tests_run": [
+      "Caller migrations with ambient PYTHONPATH unset: 90 passed",
+      "Harness portability with ambient PYTHONPATH unset: 22 passed",
+      "Focused selector regression: 23 passed",
+      "Receipt check twice with identical hash",
+      "In-memory stale receipt rejection",
+      "Strict claim-language command"
+    ],
+    "risks_and_kill_switches": [
+      "Portable clean replay remains fail-closed until a clean committed candidate exists; no portable acceptance is inferred in this mutable R2 cell.",
+      "Any subsequent change to the policy, runner, focused tests, receipt, PR-280 harness, or PR delta invalidates this mutable rereview and requires fresh binding."
+    ],
+    "artifacts_status_updates_needed": [
+      "No production or shared edits were made.",
+      "Rerun portable clean replay after candidate freeze and before immutable acceptance."
+    ]
+  },
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR280-HERMETIC-HARNESS",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_fingerprint": "9bb12c6b3815d684344083b74d84111544dda71127c49b79067dc60c9eda5b87",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_publication_policy.json:75",
+        "docs/research_program/post_pr275/pr283_publication_policy.json:80",
+        "scripts/codex_harness/run_pr283_weak_identification.py:1183",
+        "scripts/codex_harness/run_pr283_weak_identification.py:1324",
+        "scripts/codex_harness/run_pr283_weak_identification.py:1332",
+        "tests/contracts/test_weak_identification.py:237",
+        "scripts/codex_harness/run_pr280_harness.py:40",
+        "docs/generated/pr283_weak_identification_receipt.json sha256:10d28620cd709585cf9444dbde72e19d7baced9ef2da901c005bcbeb3a85fedf"
+      ],
+      "summary": "The repaired exact policy lanes are hermetic with ambient PYTHONPATH unset, selectors are bound by regression, current receipt bytes deterministically recompute and bind the policy/runner/test sources, stale receipt bytes are rejected, and no stale prior result is used as acceptance. Portable clean replay remains correctly deferred for the mutable candidate."
+    }
+  ],
+  "errors": []
+}

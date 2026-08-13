@@ -1,0 +1,29 @@
+{
+  "acceptance_evidence": false,
+  "assignment_id": "A-PR287-FROZEN-REPLAY",
+  "bindings": {
+    "assignment_file_sha256": "2d71c012d65526951af97b056f247d9ecdd899743231bbb1da499824262cf6c9",
+    "assignment_sha256": "da606b47a01ecd98f426d5de28402bb4a73a5be2c1bbddba59486b6518e0abfa",
+    "candidate_seal_sha256": "486a8f7e75c04467e2c65a083529eff5f65e622f935b3346ada8ea7243cd456e",
+    "candidate_sha": "06ee728054fd62423fa90bc6a5d714b9be8631e3",
+    "policy_file_sha256": "30e24d1f9e77c5c206a64e7d8b639cfccd4c6bd9455a6893cbc69ae55ea1d155",
+    "seal_file_sha256": "fbe4787a82f650ec050fab020ae2c9545e9f7fe778ec2d6f5d4550470537712b"
+  },
+  "candidate_verdict_issued": false,
+  "claim_verdict_issued": false,
+  "completed_at": "2026-08-11T05:29:43+00:00",
+  "containment": {
+    "replacement_blind_reviewer_required_for_acceptance": true,
+    "substantive_oracle_terminated": true,
+    "tracked_or_shared_files_written": false
+  },
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "incident": "BLIND_RESULTS_ISOLATION_BREACH: a scoped process-status check for the assignment-local oracle unexpectedly exposed a live sibling PR-287 result path and gate_disposition=PASS write command before this reviewer submitted. The sibling result file was not opened, but sibling verdict metadata was visible, so no claim or acceptance verdict is issued.",
+  "oracle_id": "PR287-BLIND-ISOLATION-BREACH-ORACLE",
+  "review_status": "ERROR",
+  "run_id": "pr287-fresh-independent-review-20260811",
+  "schema_version": 1,
+  "sibling_result_file_opened": false,
+  "started_at": "2026-08-11T05:29:43+00:00",
+  "status": "PASS"
+}

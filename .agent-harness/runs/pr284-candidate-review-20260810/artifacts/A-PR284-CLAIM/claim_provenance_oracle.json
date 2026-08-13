@@ -1,0 +1,104 @@
+{
+  "assignment_id": "A-PR284-CLAIM",
+  "checks": [
+    {
+      "check_id": "assignment-context-and-input-seals",
+      "detail": "Assignment identity, context version, and every required-input byte hash match.",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-candidate-review-20260810/assignments/A-PR284-CLAIM.json",
+        "required_inputs[*].sha256"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "candidate-identity",
+      "detail": "The review is bound to the frozen candidate commit, tree, merge base, and seal.",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr284-candidate-review-20260810/assignments/A-PR284-CLAIM.json",
+        "git rev-parse HEAD"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "exact-predecessor-and-policy",
+      "detail": "Policy, seal, local target ref, and recovery delta bind the exact PR-283 predecessor SHA.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_publication_policy.json",
+        ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+        "docs/PR_DELTAS/pr-284.md:21-34",
+        "git rev-parse refs/remotes/origin/changeset/pr283-weak-identification-recovery-20260810"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "owner-and-contributor-roles",
+      "detail": "HTT owns premise evaluation and calibration; contributors remain bounded to their declared roles.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:4-8,162-166",
+        "docs/generated/pr284_depth_path_doob_receipt.json:20-29,198-200",
+        "htt/src/common/depth_path_calibration.py:1-5,38-41",
+        "htt/htt/htt/infer/depth_path_calibration.py:1"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "c2-diagnostic-transfer-and-family-ceiling",
+      "detail": "Every layer preserves C2 diagnostic-only, transfer none, synthetic/non-observed/non-public status, and the blocked family gate.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:16-24",
+        "docs/research_program/post_pr275/pr284_publication_policy.json:31-32",
+        "docs/generated/pr284_depth_path_doob_receipt.json:20-36,194-235,407-464",
+        "htt/src/common/depth_path_calibration.py:38-60,520-633,775-858"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "finite-path-only-theorem-boundary",
+      "detail": "The source is oracle-verified but not adjudicated; PR-284 is confined to an exact finite registered path.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:39-52,304-314",
+        "docs/generated/pr284_depth_path_doob_receipt.json:54-74",
+        "docs/PR_DELTAS/pr-284.md:77-89"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "matched-mocks-required-not-executed",
+      "detail": "The fallback is a preregistered design only: it emits no bound and contains no executed-mock claim.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml:117-138,286-298",
+        "docs/generated/pr284_depth_path_doob_receipt.json:465-609",
+        "htt/src/common/depth_path_calibration.py:393-436,597-622",
+        "htt/htt/htt/infer/depth_path_calibration.py:254-313,345-379"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "receipt-content-address-and-source-bindings",
+      "detail": "The receipt content address and every declared source binding recompute exactly.",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json:408-464"
+      ],
+      "status": "PASS"
+    },
+    {
+      "check_id": "forbidden-claim-drift",
+      "detail": "Production prose and runtime sources contain the required denials and no MIO/TSC/native-transfer overclaim fragments.",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-284.md:3-17,77-89,131-135",
+        "htt/src/common/depth_path_calibration.py:42-60",
+        "htt/htt/htt/infer/depth_path_calibration.py:1-5"
+      ],
+      "status": "PASS"
+    }
+  ],
+  "completed_at": "2026-08-09T21:11:14Z",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "failures": [],
+  "oracle_id": "PR284-CLAIM-PROVENANCE-INVARIANTS-V1",
+  "run_id": "pr284-candidate-review-20260810",
+  "schema_version": 1,
+  "started_at": "2026-08-09T21:11:14Z",
+  "status": "PASS"
+}

@@ -1,0 +1,109 @@
+{
+  "schema_version": 3,
+  "run_id": "pr285-final-seal-closeout-20260810",
+  "assignment_id": "A-PR285-FINAL-SEAL-CLOSEOUT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-285",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR285_R2_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "7088597cbff291936441dcb31a2520596cbb1eb59f8d9fa802120ffa51e74269",
+    "seal_sha256": "12ad1d54c69211faa5b82f3c54fa1277b8685fa4633d367c171fc535adb167c0",
+    "base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "merge_base_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "candidate_tree_sha": "1aba859c52aee2d14ef8c72472858eec02771edf",
+    "diff_sha256": "e176041a9662995e4d29f31f5f54154d8ae70c42028ddee7b68d5c24e7838af4",
+    "changed_files_sha256": "27d7bc58a8663e2a4573abe14386ced8a19a9c18db0f3c8469c03c5a2d6f1788",
+    "production_hash": "602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2"
+  },
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Final bounded closeout of PR-285 at exact reviewed HEAD 16bc6db5. Read this assignment first. This assignment may inspect the explicitly registered prior-run review results and aggregate; do not inspect any other historical verdict envelopes. Verify final candidate seal and final integration receipt exactly, logical G20/G21/G22 map and stable patch dedup, exact predecessor/base, clean worktree, and that 8682a13e..16bc6db5 changes only PR delta and synchronized status mirrors. Validate prior 2/2 PASS review immutably by registered result/aggregate/summary hashes rather than live-revalidating their now-stale required-input hashes. Confirm production/dependency evidence key unchanged, lifecycle REVIEWED, assurance becomes 14/16 after this assignment, CAS remains INCONCLUSIVE/CAS_BLOCKED, PR-286 remains PLANNED/INELIGIBLE zero budget, and no push/PR/merge occurred. Do not rerun substantive scientific assurance; use focused metadata/seal/replay checks only. Write no tracked/shared files; produce only assignment-local executable oracle, coverage, and the registered strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR285_R2_FINAL_CANDIDATE_SEAL.json",
+      "sha256": "7088597cbff291936441dcb31a2520596cbb1eb59f8d9fa802120ffa51e74269"
+    },
+    {
+      "path": ".prguard/runtime/PR285_R2_FINAL_INTEGRATION_REHEARSAL.json",
+      "sha256": "93f0bd6ca3e54101a0c75c675e8f762b95bd54ffda622bf9b54871bcafccaba1"
+    },
+    {
+      "path": ".prguard/runtime/PR285_R2_FINAL_REVIEW_CANDIDATE_SEAL.json",
+      "sha256": "641c72f627cb9a221dab61751bd971513bb1a2623f2d4b7281cd78dc7226060e"
+    },
+    {
+      "path": ".prguard/runtime/PR285_R2_IMPLEMENTATION_CANDIDATE_SEAL.json",
+      "sha256": "02773cca24cdf455df4e96bd069c7abde4f186964aefa77c031bd2217534f149"
+    },
+    {
+      "path": ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json",
+      "sha256": "ee38ffce3f3e9654d371a283b2e35b44a6530bf0fd677f86d855bbb61dced772"
+    },
+    {
+      "path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/results/A-PR285-R2-STATUS-PHYSMATH.json",
+      "sha256": "934169c8dc8107cef6a8b61a2a6143fa4d218835bcc0db79f97e1af3a1bfc834"
+    },
+    {
+      "path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/results/A-PR285-R2-LINEAGE-REPLAY.json",
+      "sha256": "209082dd9dbcfcda5930d83b36415d9d7f7fb0d986471a7c251304a472bafd08"
+    },
+    {
+      "path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/MERGED_RESULTS.json",
+      "sha256": "261f297638f46906b69554c66683d2ae8dfc53969713a9cc15fe81a6f5a940d5"
+    },
+    {
+      "path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/RUN_SUMMARY.json",
+      "sha256": "2015c5f3e84eab3acdd740180104a6adb368a37b88b70370ed5f6faf4c8ef660"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr285_publication_policy.json",
+      "sha256": "20c16524a86ca61ef33a5f3894c7ebc48eeeebe708eb7556725c025185cfe878"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr285_spec.yaml",
+      "sha256": "481aba93390cf8aa0fe79f17036197bf76b7e98bc4b821cc198adea4deee98ee"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-285.md",
+      "sha256": "d255d0c632e44d5e35f3a5b0dd560feefdbf7a4fb0b18b2c49107ac3c0455c97"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "5761f42429102cc197bf1e1813f5e1986adc00703fe551c7c79894664e98e082"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "5761f42429102cc197bf1e1813f5e1986adc00703fe551c7c79894664e98e082"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr285-final-seal-closeout-20260810/results/A-PR285-FINAL-SEAL-CLOSEOUT.json",
+  "status": "registered",
+  "assignment_sha256": "2c3f82072fc6b49b9f2e988d622ff5f3269741ba311573fc519f7a0791b46e26"
+}

@@ -1,0 +1,95 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-claim-closeout-extension-20260813",
+  "assignment_id": "A-PR291-R5-CLAIM",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_lane_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f5f10b379bc83f5baba8cf1f36765720a788477f37900f914dc4a545cdeb0121",
+    "seal_sha256": "8345974c09e968095cce4a8cac5014e3d08f42ed68e56004a2e3cd56ce3edf5a",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "5395853386b08b1fbf0b56a9e6c7a2a6e104ae5a",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "4a1bdbecae5767768b4e8d5beb3a00b41b437c1f",
+    "diff_sha256": "d4e14e08a51067fdffa696ea694b4d1a61bafb7db740da3fd0246bcda5951862",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "964135d7398a1c699a16885eb5050a8ec3cf9bcdddd6ff1640d299ab6757d298"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "independent",
+  "independence_rationale": "Independent claim grammar derivation is required after the R4 false-negative family-language finding.",
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Fresh blind R5 claim/provenance review under the explicitly authorized single-use assurance extension. Read this assignment first and validate exact context/hash/seal/clean HEAD/base. Independently falsify reordered, active-plural, determiner, subject/predicate reversal, multiline, scalar-family implication, and unrelated-negation variants in the existing scanner; verify predicate-scoped downclaims and exact structured Markdown/YAML guardrails remain allowed. Confirm ownership HTT/COMMON/OBSSTAT, C2 diagnostic_only, transfer none, observed/public false, family gate BLOCKED_PRE_NATIVE_ATLAS, R4 FAIL chronology preserved, extension limited to named assignments, PR-292 INELIGIBLE zero budget, and HUMAN_ONLY. Run the exact claim-language policy command, focused claim tests, and an assignment-local hostile oracle. Candidate/shared files read-only. Write only assignment-local artifacts/result. Do not inspect sibling/historical results, CONTEXT_PACK, process listings, broad harness searches, or aggregate validators. Validate only this result with python3 .agent-harness/scripts/strict_result_validation.py <result_path>.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json",
+      "sha256": "f5f10b379bc83f5baba8cf1f36765720a788477f37900f914dc4a545cdeb0121"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_spec.yaml",
+      "sha256": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_publication_policy.json",
+      "sha256": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-291.md",
+      "sha256": "f564f9ddf3c2ebadcedafe3d65190a78c778b731f56195c776f7738581f5127a"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "88629a4b8499a730e266ba20899a8a5a21fed6b33fcc9e342e3ff5ad25811089"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "88629a4b8499a730e266ba20899a8a5a21fed6b33fcc9e342e3ff5ad25811089"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+      "sha256": "23bb79ff4f90ad12c66013527e8e3fd70afb62bc13c24843cc6ac2148d71c76e"
+    },
+    {
+      "path": "htt/src/common/semantic_guards/no_overclaim.py",
+      "sha256": "ca4aa88b16a44dfedad18811bbeee68a58466d0cc270c9f2ea94f777dbde0f45"
+    },
+    {
+      "path": "tests/contracts/test_claim_language_lint.py",
+      "sha256": "835bc6996e4dedd9390a896b3634b9310a9f178e352a5d69f37696cbe49c265a"
+    },
+    {
+      "path": "scripts/check_claim_language.py",
+      "sha256": "b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact 16-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-CLAIM.json",
+  "status": "registered",
+  "assignment_sha256": "76b32658d288bf79403b6e2f550c0706ed50465ee99dbc1980caa05232af0f24"
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "run_id": "pr288-final-seal-closeout-20260811",
+  "generated_at": "2026-08-11T08:35:32+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 0,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR288-FINAL-SEAL-CLOSEOUT",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR280-HERMETIC-HARNESS",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "The exact final PR-288 seal and freshness-aware receipt close cleanly over the immutable reviewed candidate: PR-287 base and nine unique patches are exact; the final two commits are metadata-only; the reviewed production/dependency evidence key is unchanged; five command rows are carried byte-for-byte and only portable, DAG/status, and claim-language rows are fresh; the first contaminated claim review remains ERROR/INCONCLUSIVE/not_examined while its replacement, physics/code, and replay reviews pass; lifecycle is REVIEWED with a 7/16 post-assignment projection, PR-289 remains PLANNED/INELIGIBLE at 0/16, and local status/refs contain no push, PR, or merge evidence.",
+          "evidence_refs": [
+            ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle_evidence.json",
+            ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/REVIEW_COVERAGE.json",
+            ".prguard/runtime/PR288_FINAL_CANDIDATE_SEAL.json",
+            ".prguard/runtime/PR288_FINAL_INTEGRATION_REHEARSAL.json"
+          ],
+          "evidence_fingerprint": "pr288-final-seal:27df5da0:oracle-4ff3b11e:coverage-7ed4ba38"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-288",
+  "change_set_id": "CS-PR288-BAYES-SEMANTICS",
+  "publication_group_id": "PG-PR288-BAYES-SEMANTICS",
+  "assignment_count": 1,
+  "validated_result_count": 1,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr288-final-seal-closeout-20260811/RUN_PLAN.json",
+      "sha256": "047e6864ea3eb14ae280756075c39f1cfa0ef83a81cc21cfa9478b82ef9d9dce",
+      "bytes": 5460
+    },
+    {
+      "path": ".agent-harness/runs/pr288-final-seal-closeout-20260811/assignments/A-PR288-FINAL-SEAL-CLOSEOUT.json",
+      "sha256": "976d70b29449f3f1e4de6fc768fe336b70d022765c069dd80db02ca99a8b7131",
+      "bytes": 6654
+    },
+    {
+      "path": ".agent-harness/runs/pr288-final-seal-closeout-20260811/results/A-PR288-FINAL-SEAL-CLOSEOUT.json",
+      "sha256": "acd92595ab4b7183996e0f72fc024539b1c6859dd0ff97221075e62142581a20",
+      "bytes": 7676
+    }
+  ],
+  "merge_input_sha256": "02f3db050a32fa3ff05de99fc3a348b32da31b213c4043e27a1aa2b3d4356d3a"
+}

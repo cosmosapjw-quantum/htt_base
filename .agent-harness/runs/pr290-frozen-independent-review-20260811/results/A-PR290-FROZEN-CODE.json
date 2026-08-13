@@ -1,0 +1,165 @@
+{
+  "schema_version": 3,
+  "run_id": "pr290-frozen-independent-review-20260811",
+  "assignment_id": "A-PR290-FROZEN-CODE",
+  "assignment_sha256": "67151607023521ee33dcc2ea96e99bc3b16555c49657d2161600fb5a1856ac95",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "work_unit_id": "PR-290",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "025809afa9b9760e39a2c21023193d2c0b1920fc86bf0e24e05b6f44b340141a",
+    "seal_sha256": "f7c226fdc53408bb10defeabbd7a23a5e17c38dd2a3a2359640aeacf3678b3ed",
+    "base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_sha": "27c83a1a12369b4b563667ff5145ae9a717b24f0",
+    "merge_base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_tree_sha": "344dfb920b26c0207432b6acd9625bf2dacf50da",
+    "diff_sha256": "d10438bad740b2c81a4198655a647b5d7ca021f9f9cf8a3e196e22a5576dbd23",
+    "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+    "production_hash": "f3a75833210278e15847731fa8f12183babb45ba0ea4409e75119960c9f5573f"
+  },
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-CODE.json",
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-11T13:20:37+00:00",
+  "completed_at": "2026-08-11T13:41:53+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "2.43.0",
+    "PyYAML": "6.0.1",
+    "numpy": "2.4.2",
+    "healpy": "1.19.0"
+  },
+  "commands": [
+    {
+      "id": "pr290-focused",
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr290_planck_lane.py", "focused"],
+      "returncode": 0,
+      "summary": "40 passed"
+    },
+    {
+      "id": "pr290-preactivation",
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr290_planck_lane.py", "check"],
+      "returncode": 0,
+      "summary": "BLOCKED_PREDECESSOR_FINAL_SUCCESS; zero numerical outputs; observed execution false; network or download side effect false"
+    },
+    {
+      "id": "pr290-adjacent",
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr290_planck_lane.py", "adjacent"],
+      "returncode": 0,
+      "summary": "111 passed, 3 skipped"
+    },
+    {
+      "id": "pr290-portable-clean",
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr290_planck_lane.py", "portable"],
+      "returncode": 0,
+      "summary": "5919 tracked files; distinct clean archive; identical source and clean pre/post manifests; no observed execution"
+    },
+    {
+      "id": "pr290-policy-cross-binding",
+      "argv": ["python", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "scripts/codex_harness/test_publication_integrity.py", "-k", "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"],
+      "returncode": 0,
+      "summary": "9 passed, 68 deselected"
+    },
+    {
+      "id": "pr290-dag-strict",
+      "argv": ["python", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "returncode": 0,
+      "summary": "244 PRs, DAG valid"
+    },
+    {
+      "id": "pr290-claim-language",
+      "argv": ["python", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "docs/research_program/post_pr275/pr290_spec.yaml", "htt/src/common/observed_lane_activation.py", "htt/obsstat/planck_post275_lane.py", "tests/integration/test_planck_post275_lane.py", "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json", "docs/PR_DELTAS/pr-290.md"],
+      "returncode": 0,
+      "summary": "No forbidden claim language detected"
+    },
+    {
+      "id": "assignment-local-hostile-oracle",
+      "argv": ["python", "-B", ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_oracle.py"],
+      "returncode": 0,
+      "summary": "16 hostile checks passed"
+    }
+  ],
+  "files_read": [
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr290-frozen-independent-review-20260811/RUN_PLAN.json",
+    ".agent-harness/runs/pr290-frozen-independent-review-20260811/assignments/A-PR290-FROZEN-CODE.json",
+    ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_oracle.py",
+    ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_REVIEW_COVERAGE.json",
+    ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-CODE.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr290_spec.yaml",
+    "docs/research_program/post_pr275/pr290_publication_policy.json",
+    "docs/PR_DELTAS/pr-290.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+    "htt/src/common/observed_lane_activation.py",
+    "htt/obsstat/planck_post275_lane.py",
+    "htt/obsstat/boost_biposh_residual.py",
+    "scripts/codex_harness/run_pr290_planck_lane.py",
+    "tests/integration/test_planck_post275_lane.py",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "htt/src/common/data_identity.py",
+    "docs/generated/pr288_bayesian_semantics_receipt.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_oracle.py",
+      "sha256": "199d06d150db187b160ca8d1f5c8216acca0cc22b0e0b857e7f91c0f4f5b2997",
+      "bytes": 18185,
+      "producer": "A-PR290-FROZEN-CODE",
+      "command_fingerprint": "ce1eb50e8c1fcef99b54551fbbc843a860739b0f0c57a776655bc31716b43510"
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_REVIEW_COVERAGE.json",
+      "sha256": "744ff7dbfc4017158b371eb43992d6251785183ec99bb6132349e598db4e8a88",
+      "bytes": 7213,
+      "producer": "A-PR290-FROZEN-CODE"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "744ff7dbfc4017158b371eb43992d6251785183ec99bb6132349e598db4e8a88",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "PR-290 replays the complete canonical ordered PR-289 Planck native record and profile decision and its canonical NOT_AUTHORIZED projection; record-ID-only and fully re-signed incomplete profiles fail closed.",
+      "evidence_refs": [
+        "htt/src/common/observed_lane_activation.py:602",
+        "htt/src/common/observed_lane_activation.py:714",
+        "htt/src/common/observed_lane_activation.py:776",
+        "htt/src/common/data_identity.py:1913",
+        "htt/src/common/data_identity.py:1990",
+        ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_oracle.py"
+      ],
+      "evidence_fingerprint": "sha256:7397c87c1b9bae9285d2c76b722797b3c4aca147b276e14e2019d2737b3f478a"
+    }
+  ],
+  "errors": [],
+  "summary": "The frozen PR-290 candidate passes the independent code, harness, portability, deterministic replay, data-admission, module-origin, output-containment, and claim-boundary review. BLOCKED_PREDECESSOR_FINAL_SUCCESS remains active; no observed data were executed and no numerical observed result was written.",
+  "proposed_changes": [],
+  "risks_and_kill_switches": [
+    "Any publication-policy invalidation key change invalidates this PASS.",
+    "BLOCKED_PREDECESSOR_FINAL_SUCCESS must not be regraded as observed-lane readiness or scientific success.",
+    "No observed Planck execution, numerical result, public claim, native-transfer validation, or family identification was reviewed or authorized."
+  ],
+  "artifacts_and_status_updates_needed": [
+    "Main adjudication may consume this envelope and coverage artifact; this reviewer makes no candidate, shared status, manifest, receipt, or production update."
+  ]
+}

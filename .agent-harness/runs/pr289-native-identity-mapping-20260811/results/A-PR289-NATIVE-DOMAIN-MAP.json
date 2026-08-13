@@ -1,0 +1,657 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-native-identity-mapping-20260811",
+  "assignment_id": "A-PR289-NATIVE-DOMAIN-MAP",
+  "assignment_sha256": "c900cc7a4852d621f11679b21124d0a5910c500ae36d1b044d95507c502eef33",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr289-native-identity-mapping-20260811/results/A-PR289-NATIVE-DOMAIN-MAP.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-11T08:48:30Z",
+  "completed_at": "2026-08-11T08:57:30Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git_head_at_start": "3889defa7a8836db171bd198946de8a6b86ebcf5",
+    "audit_method": "repo-local htt physics/statistics identity-contract audit"
+  },
+  "commands": [
+    {
+      "command": "sha256sum registered PR-289 inputs; compare CONTEXT_INDEX context version; git status --short; git rev-parse HEAD",
+      "exit_code": 0,
+      "summary": "All six required inputs matched the assignment hashes, context_version matched, and the worktree was clean at audit start."
+    },
+    {
+      "command": "targeted nl/sed/rg inspection of pr289_spec, lane registry, data_identity, focused tests, runbooks, claim ledger, and the authoritative salvage audit PR-289 section",
+      "exit_code": 0,
+      "summary": "Reproduced the under-typed native-role and cross-record-relationship gap without sibling-result access or broad rediscovery."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/contracts/test_data_identity_registry_v2.py -q",
+      "exit_code": 127,
+      "summary": "Preferred venv interpreter is absent in this isolated worktree; this is not a test verdict."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -p no:cacheprovider tests/contracts/test_data_identity_registry_v2.py -q",
+      "exit_code": 2,
+      "summary": "System interpreter initially lacked the repository package root on sys.path; collection failed with ModuleNotFoundError: common."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt/src python3 -m pytest -p no:cacheprovider tests/contracts/test_data_identity_registry_v2.py -q",
+      "exit_code": 0,
+      "summary": "22 passed in 0.99s; the passing positive fixture itself demonstrates that generic lane strings and a record-count inventory are currently admitted."
+    }
+  ],
+  "artifacts": [],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr289-native-identity-mapping-20260811/assignments/A-PR289-NATIVE-DOMAIN-MAP.json",
+    ".agent-harness/runs/pr289-native-identity-mapping-20260811/RUN_PLAN.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    "docs/research_program/post_pr275/pr289_spec.yaml",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "htt/src/common/data_identity.py",
+    "tests/contracts/test_data_identity_registry_v2.py",
+    "docs/research_program/post_pr275/data_runbooks.yaml",
+    "docs/harness/CLAIM_LEDGER.md"
+  ],
+  "external_files_read": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:149-155",
+    "/home/cosmosapjw/.codex/memories/MEMORY.md targeted keyword index only"
+  ],
+  "input_integrity": {
+    "verified_at_start": true,
+    "registered_hashes_matched": {
+      "docs/research_program/post_pr275/pr289_spec.yaml": "6cf4e981efaae5d691826038eae662cae8bfbd34501cb4543165c5aa96054169",
+      "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json": "28d07d8c53cc434b279cd4bbccd31709d26106349a302236ec1481145c7fb8ae",
+      "htt/src/common/data_identity.py": "7d6cadae649a66f5a3ecb3424ec7e3c49717ec6a57a7b9a7026c3996987b3647",
+      "tests/contracts/test_data_identity_registry_v2.py": "1cc7a740a0dddfe9f21f53e79eea03cdd7342fc7b5c2a1c6aba0005cc045478d",
+      "docs/research_program/post_pr275/data_runbooks.yaml": "1972cab5d8ef874a6d05d5265a79f96e9b1529c44f5702dd7447ba657002475d",
+      "docs/harness/CLAIM_LEDGER.md": "254e99da6ac1b3eb78f2aeb161d4582be92212c232eec505c82d252e5e7eabba"
+    },
+    "concurrent_drift_note": "After the frozen-input audit and focused test, LANE_REGISTRY_V2.json, data_identity.py, and test_data_identity_registry_v2.py became modified by another concurrent writer. This result does not review, endorse, or revert those mutable diffs; integration must register fresh input bindings and rerun the proposed hostile matrix against the final candidate."
+  },
+  "physics_stat_audit": {
+    "verdict": "FAIL_CURRENT_ADMISSION_CONTRACT_UNDERTYPED",
+    "controlling_assumptions": [
+      "PR-289 performs identity admission only: no acquisition, feature extraction, likelihood evaluation, posterior inference, or scientific execution.",
+      "release-native or product-native means native to an external data release and never means a native BASS/native low-ell solver output.",
+      "A cross-record relationship is admissible only when its endpoints are exact factory-built DataIdentityRecordV2 record IDs and the relationship payload is itself content-addressed and included in the lane bundle identity.",
+      "The exact Planck, CF4, HSC, and KiDS convention values must come from authoritative release evidence; this audit specifies required typed roles and algebraic consistency, not invented values."
+    ],
+    "conventions": {
+      "metric_signature": "not_applicable_to_identity_preflight",
+      "units": "explicit typed input/output units; no implicit natural units or bare lane string",
+      "frames": "component-level sky/data frame plus transform identity; equality only where a declared relation requires it",
+      "signs": "component-level observable orientation and handedness; covariance axes inherit the corresponding observable sign/order contract",
+      "harmonics": "Planck and spin-2 identities must bind coordinate, pixelization, ordering, harmonic, and polarization/axis conventions without executing transforms",
+      "depth": "CF4 depth definition is an exact child identity and is not inferred from a generic selection_id"
+    },
+    "units_and_signs": {
+      "current_status": "BLOCKED_GENERIC_TEXT_ONLY",
+      "required": [
+        "Planck map units and covariance product units; dimensionless beam, mask, and window; explicit HEALPix NSIDE/order/frame and harmonic convention.",
+        "CF4 catalogue column units including distance/h scaling and radial-velocity units; covariance units equal the ordered outer product of data-vector units; explicit radial sign and frame transform.",
+        "HSC/KiDS shear, PSF, n(z), calibration, response, and covariance axis/unit conventions per survey; cross-covariance units and order equal the HSC-by-KiDS product domains."
+      ],
+      "nonclaim": "Identity compatibility is not numerical normalization, PSD, calibration, or physical validation."
+    },
+    "priors": {
+      "status": "NOT_APPLICABLE_AND_FORBIDDEN_IN_PR289",
+      "rule": "No prior family, hyperprior, or prior sensitivity result may be inferred from a release-native identity, covariance record, lane admission, or authorization receipt."
+    },
+    "likelihood_semantics": {
+      "status": "NOT_APPLICABLE_AND_HTT_ONLY",
+      "rule": "A covariance child identity binds bytes, axes, units, and applicable data records only. It does not select a Gaussian likelihood, validate covariance estimation, produce evidence, or authorize HTT inference. Deterministic operator/template identity remains distinct from stochastic covariance identity."
+    },
+    "x_q_pi_f_g": {
+      "status": "NOT_PRODUCED_NOT_CONSUMED",
+      "rule": "PR-289 admission must not emit or promote x_C, Q, Pi, certified F, or G_F. If downstream produced later, x_C remains signed, Q policy-normalized, Pi exceedance rather than truth probability, F certified occupancy, and G_F a null-calibrated depth-gap diagnostic."
+    },
+    "local_global_rank": {
+      "status": "NOT_EVALUATED_NO_CLAIM",
+      "rule": "PR-289 contains no covariance-whitened local/global response design. Shape, axis-order, operator, or covariance identity does not establish numerical rank, principal-angle separation, nuisance identifiability, or a global-tilt candidate. Downstream rank must fail closed before posterior inference."
+    },
+    "family_identification": {
+      "requested_tier": "diagnostic_only data-admission preflight",
+      "allowed_tier": "roadmap_rescue_v1:C2 process/data identity only",
+      "gate": "BLOCKED_PRE_NATIVE_ATLAS",
+      "rule": "Planck/CF4/HSC/KiDS release-native identities are observed-product provenance, not native solver transfer or a morphology atlas. They cannot support Bianchi geometry detection, family ranking, or family identification; scalar/directional/MIO diagnostics cannot upgrade the gate."
+    }
+  },
+  "minimal_schema_contract": {
+    "scope": "Extend only the existing LANE_REGISTRY_V2.json plus common.data_identity v2 factory/evidence/decision path; do not create a separate identity framework.",
+    "registry_extension": {
+      "field": "release_native_profile",
+      "required_children": [
+        "profile_schema",
+        "component_roles: exact component_id to typed release-native role mapping",
+        "relationship_rules: exact kind, endpoint roles, cardinality, equality/difference constraints, and required status"
+      ],
+      "parse_rules": [
+        "Unknown role, relationship kind, endpoint, duplicate role, missing endpoint, self-link where distinct endpoints are required, or extra field fails registry load.",
+        "Every required component instance has exactly one release-native role; every required relationship has exactly one declaration.",
+        "Use release_native or product_native vocabulary; reject native_solver/native_atlas labels in this data-admission schema."
+      ]
+    },
+    "evidence_extension": {
+      "fields": [
+        "component_bindings keyed by exact component_id, each with release_native_role, semantic_profile payload, semantic_profile_id, units/frame/sign/direction/harmonic/sky/selection/covariance/null identities as applicable",
+        "relationship_declarations keyed by registered relationship_id seed, referencing component_id endpoints and exact constraint payloads"
+      ],
+      "content_addressing": [
+        "semantic_profile_id is SHA-256 of the full finite component semantic payload, not a caller string",
+        "source_locator_identity binds the component bindings and relationship declarations as well as release/license and component inventory",
+        "DataIdentityRecordV2 stable payload includes release_native_role and semantic_profile_id",
+        "After child records are built, resolve each relationship endpoint to the exact record_id and factory-build a content-addressed relationship record",
+        "lane_admission_bundle_id binds ordered record_ids plus ordered relationship_ids; record counts alone are insufficient"
+      ]
+    },
+    "relationship_record": {
+      "location": "htt/src/common/data_identity.py",
+      "fields": [
+        "relationship_id",
+        "lane_id",
+        "kind",
+        "subject_record_ids",
+        "object_record_ids",
+        "constraint_payload",
+        "status=VERIFIED_IDENTITY_RELATION"
+      ],
+      "rule": "Factory-only and hash-sealed exactly like DataIdentityRecordV2. No relationship status expresses scientific validity, execution authorization, rank, likelihood, or family evidence."
+    }
+  },
+  "release_native_domain_map": {
+    "PLANCK": {
+      "required_component_roles": [
+        "smica_map",
+        "commander_map",
+        "sky_selection",
+        "pixelization",
+        "sky_mask",
+        "pixel_window",
+        "smica_beam",
+        "commander_beam",
+        "smica_observation_operator",
+        "commander_observation_operator",
+        "ffp10_null_inventory_or_content_bound_unavailability_receipt",
+        "smica_null_operator",
+        "commander_null_operator",
+        "pair_covariance"
+      ],
+      "required_relationships": [
+        {
+          "kind": "distinct_release_variants",
+          "endpoints": ["smica_map", "commander_map"],
+          "constraint": "distinct release-native roles and distinct record_ids; neither label may be inferred from filename or record order"
+        },
+        {
+          "kind": "same_sky_pair",
+          "endpoints": ["smica_map", "commander_map", "sky_selection", "pixelization", "sky_mask", "pixel_window"],
+          "constraint": "both map profiles resolve to the identical sky selection, HEALPix NSIDE/order/frame, mask/support, pixel window, harmonic convention, and output support identities"
+        },
+        {
+          "kind": "observation_pipeline",
+          "endpoints": ["smica_map", "smica_beam", "sky_selection", "pixelization", "sky_mask", "pixel_window", "smica_observation_operator"],
+          "constraint": "operator input/output role, units, frame, harmonic domain, l-range/window, and exact child identities agree"
+        },
+        {
+          "kind": "observation_pipeline",
+          "endpoints": ["commander_map", "commander_beam", "sky_selection", "pixelization", "sky_mask", "pixel_window", "commander_observation_operator"],
+          "constraint": "operator input/output role, units, frame, harmonic domain, l-range/window, and exact child identities agree"
+        },
+        {
+          "kind": "matched_null_pipeline",
+          "endpoints": ["ffp10_null_inventory_or_content_bound_unavailability_receipt", "smica_observation_operator", "smica_null_operator"],
+          "constraint": "REGISTERED requires an exact FFP10 inventory and operator profile; UNAVAILABLE_DECLARED requires a content-bound unavailability receipt and forbids a fabricated null ID"
+        },
+        {
+          "kind": "matched_null_pipeline",
+          "endpoints": ["ffp10_null_inventory_or_content_bound_unavailability_receipt", "commander_observation_operator", "commander_null_operator"],
+          "constraint": "same observation/null selection, pixelization, mask, window, harmonic, and output axes for Commander"
+        },
+        {
+          "kind": "covariance_applies_to",
+          "endpoints": ["pair_covariance", "smica_observation_operator", "commander_observation_operator"],
+          "constraint": "exact ordered pair output axes, support, units-product, and selection profile are bound; covariance identity does not imply likelihood validity"
+        }
+      ]
+    },
+    "CF4": {
+      "required_component_roles": [
+        "catalogue",
+        "row_selection",
+        "covariance",
+        "coordinate_frame_contract",
+        "radial_sign_orientation_contract",
+        "units_contract",
+        "grouping_definition",
+        "depth_definition",
+        "zoa_definition"
+      ],
+      "required_relationships": [
+        {
+          "kind": "row_selection_consumes",
+          "endpoints": ["row_selection", "catalogue"],
+          "constraint": "selection binds the exact catalogue record plus row-key namespace/order and no filename-only or release-name-only substitution"
+        },
+        {
+          "kind": "grouping_applies_to",
+          "endpoints": ["grouping_definition", "catalogue", "row_selection"],
+          "constraint": "group keys, grouping algorithm/version, and selected row identity are explicit"
+        },
+        {
+          "kind": "depth_applies_to",
+          "endpoints": ["depth_definition", "row_selection", "grouping_definition"],
+          "constraint": "depth variable, bin edges/inclusion rule, units, and ordered selected/grouped row domain are content-bound"
+        },
+        {
+          "kind": "zoa_applies_to",
+          "endpoints": ["zoa_definition", "row_selection", "coordinate_frame_contract"],
+          "constraint": "ZoA mask/selection boundary, sky frame, inclusion orientation, and support identity agree"
+        },
+        {
+          "kind": "observable_conventions_apply_to",
+          "endpoints": ["coordinate_frame_contract", "radial_sign_orientation_contract", "units_contract", "catalogue", "row_selection"],
+          "constraint": "sky/velocity frame, radial positive direction, distance/h scaling, velocity units, column roles, and any transform identity are explicit; generic nonempty IDs fail"
+        },
+        {
+          "kind": "covariance_applies_to",
+          "endpoints": ["covariance", "catalogue", "row_selection", "grouping_definition", "depth_definition", "zoa_definition", "coordinate_frame_contract", "radial_sign_orientation_contract", "units_contract"],
+          "constraint": "covariance binds exact selected ordered data-vector axes; each covariance unit is the outer product of corresponding observable units; shape/order identity alone is not PSD, rank, or likelihood validation"
+        }
+      ]
+    },
+    "HSC_KIDS": {
+      "required_component_roles": [
+        "hsc_product",
+        "hsc_mask",
+        "hsc_randoms",
+        "hsc_psf",
+        "hsc_n_z",
+        "hsc_shear_calibration",
+        "hsc_response",
+        "hsc_covariance",
+        "kids_product",
+        "kids_mask",
+        "kids_randoms",
+        "kids_psf",
+        "kids_n_z",
+        "kids_shear_calibration",
+        "kids_response",
+        "kids_covariance",
+        "hsc_kids_cross_covariance"
+      ],
+      "required_relationships": [
+        {
+          "kind": "survey_child_of",
+          "endpoints": ["hsc_mask", "hsc_randoms", "hsc_psf", "hsc_n_z", "hsc_shear_calibration", "hsc_response", "hsc_covariance", "hsc_product"],
+          "constraint": "every HSC child resolves to the exact HSC release/product, selection/tomographic axes, shear/PSF sign convention, and units profile"
+        },
+        {
+          "kind": "survey_child_of",
+          "endpoints": ["kids_mask", "kids_randoms", "kids_psf", "kids_n_z", "kids_shear_calibration", "kids_response", "kids_covariance", "kids_product"],
+          "constraint": "every KiDS child resolves to the exact KiDS release/product, selection/tomographic axes, shear/PSF sign convention, and units profile"
+        },
+        {
+          "kind": "survey_profiles_distinct",
+          "endpoints": ["hsc_product", "hsc_psf", "hsc_n_z", "hsc_shear_calibration", "hsc_response", "hsc_covariance", "kids_product", "kids_psf", "kids_n_z", "kids_shear_calibration", "kids_response", "kids_covariance"],
+          "constraint": "HSC and KiDS child record IDs and roles remain separate; byte equality, generic role aliasing, or list order cannot merge survey identities"
+        },
+        {
+          "kind": "calibration_response_applies_to",
+          "endpoints": ["hsc_shear_calibration", "hsc_response", "hsc_product", "hsc_n_z", "hsc_mask"],
+          "constraint": "calibration and response are separate exact children and bind the corrected HSC vector/order without asserting numerical calibration"
+        },
+        {
+          "kind": "calibration_response_applies_to",
+          "endpoints": ["kids_shear_calibration", "kids_response", "kids_product", "kids_n_z", "kids_mask"],
+          "constraint": "calibration and response are separate exact children and bind the corrected KiDS vector/order without asserting numerical calibration"
+        },
+        {
+          "kind": "covariance_applies_to",
+          "endpoints": ["hsc_covariance", "hsc_product", "hsc_mask", "hsc_n_z", "hsc_shear_calibration", "hsc_response"],
+          "constraint": "exact HSC corrected data-vector axes/order/units and no KiDS alias"
+        },
+        {
+          "kind": "covariance_applies_to",
+          "endpoints": ["kids_covariance", "kids_product", "kids_mask", "kids_n_z", "kids_shear_calibration", "kids_response"],
+          "constraint": "exact KiDS corrected data-vector axes/order/units and no HSC alias"
+        },
+        {
+          "kind": "cross_covariance_applies_to",
+          "endpoints": ["hsc_kids_cross_covariance", "hsc_covariance", "kids_covariance", "hsc_product", "kids_product"],
+          "constraint": "distinct cross-covariance child references both ordered corrected survey vectors, with HSC-by-KiDS axis orientation and product units; it cannot be inferred from either auto-covariance or a generic covariance ID"
+        }
+      ]
+    }
+  },
+  "minimal_test_matrix": [
+    {
+      "id": "T289-NATIVE-POS-REGISTRY",
+      "polarity": "positive",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Each of PLANCK, CF4, and HSC_KIDS loads an exact registered release_native_profile; all component roles and relationship kinds resolve once; independently recomputed relationship_ids and lane bundle ID match."
+    },
+    {
+      "id": "T289-NATIVE-NEG-GENERIC",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "The old _base_evidence generic strings and correct component record count are rejected as REJECTED_MISSING_SEMANTIC_CONTRACT; this is the direct regression lock for the reproduced defect."
+    },
+    {
+      "id": "T289-NATIVE-NEG-RECORD-ID-ONLY",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "A complete-looking list of valid record_ids with absent, dangling, reordered, or wrong-kind relationship records cannot create lane_admission_bundle_id."
+    },
+    {
+      "id": "T289-PLANCK-POS-PAIR",
+      "polarity": "positive",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Distinct SMICA and Commander maps admit only with the complete common-sky, observation-operator, matched-FFP10/null, and pair-covariance graph."
+    },
+    {
+      "id": "T289-PLANCK-NEG-ROLE-ALIAS",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "One map record used for both SMICA and Commander, filename-derived labels, swapped roles, or duplicate native roles fail."
+    },
+    {
+      "id": "T289-PLANCK-NEG-SAME-SKY",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "A claimed same-sky pair with any mask, sky support, selection, coordinate frame, NSIDE/order, pixel window, or harmonic convention mismatch fails."
+    },
+    {
+      "id": "T289-PLANCK-NEG-PIPELINE",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Missing/dangling/wrong-map beam, observation operator, window, l-domain, input/output unit, or output-axis relation fails."
+    },
+    {
+      "id": "T289-PLANCK-NEG-NULL",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "REGISTERED FFP10 status without exact inventory and per-profile null operators, observation/null profile mismatch, or UNAVAILABLE_DECLARED with fabricated null ID fails."
+    },
+    {
+      "id": "T289-CF4-POS-GRAPH",
+      "polarity": "positive",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Exact catalogue, row selection, covariance, frame, radial sign, units, grouping, depth, and ZoA children admit with all relation endpoints resolved."
+    },
+    {
+      "id": "T289-CF4-NEG-SELECTION",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Selection bound to a different catalogue/release, missing row-key order, generic selection string, or name-only catalogue fails."
+    },
+    {
+      "id": "T289-CF4-NEG-CONVENTIONS",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Generic frame/sign/units text, opposite radial sign, incompatible frame transform, ambiguous h scaling, or covariance units inconsistent with the data-vector outer product fails."
+    },
+    {
+      "id": "T289-CF4-NEG-GROUP-DEPTH-ZOA",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Missing grouping/depth/ZoA child, wrong selected-row endpoint, incompatible sky frame, or mutated bin/inclusion boundary fails."
+    },
+    {
+      "id": "T289-CF4-NEG-COVARIANCE",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Covariance bound only by ID/count, to the unselected catalogue, or to a different row/depth/group/ZoA order fails; no test calls shape identity PSD/rank/likelihood validation."
+    },
+    {
+      "id": "T289-SPIN2-POS-SEPARATE",
+      "polarity": "positive",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Separate HSC and KiDS products each have exact mask/random/PSF/n(z)/calibration/response/auto-covariance children, plus one exact cross-covariance relation spanning both corrected ordered vectors."
+    },
+    {
+      "id": "T289-SPIN2-NEG-SINGLETON",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Singleton shared psf, n_z, shear_calibration, response, or covariance role cannot satisfy both surveys; HSC/KiDS role aliasing or list-order inference fails."
+    },
+    {
+      "id": "T289-SPIN2-NEG-PARENT",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Any child bound to the wrong survey release/product, mask, tomography selection/order, or shear/PSF convention fails."
+    },
+    {
+      "id": "T289-SPIN2-NEG-CAL-RESPONSE",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Calibration substituted for response, missing either child, or either applying to a different selected/tomographic vector fails."
+    },
+    {
+      "id": "T289-SPIN2-NEG-CROSS-COV",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Cross-covariance absent, aliased to an auto-covariance, referencing only one survey, reversed without explicit orientation, or mismatched in axes/order/units fails."
+    },
+    {
+      "id": "T289-SEMANTICS-POS-NONCLAIM",
+      "polarity": "positive",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "A fully related lane remains ADMITTED_IDENTITY_ONLY with NOT_AUTHORIZED receipt, diagnostic_only claim tier, observed_data_executed=false, transfer_source=none, family gate blocked, and no prior/likelihood/Q/F/G/rank fields."
+    },
+    {
+      "id": "T289-SEMANTICS-NEG-PROMOTION",
+      "polarity": "negative",
+      "target": "tests/contracts/test_data_identity_registry_v2.py",
+      "case": "Relationship completeness cannot emit AUTHORIZED, observed, native_solver, likelihood, posterior, evidence, full-rank, global-tilt, morphology-family, or family-identification status; mutation validation must kill every such promotion."
+    }
+  ],
+  "file_targets": [
+    {
+      "path": "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+      "target": "Replace generic target-lane inventories with exact release-native component roles and typed relationship rules; keep ACT/DESI/JWST scope unchanged."
+    },
+    {
+      "path": "htt/src/common/data_identity.py",
+      "target": "Parse/factory-seal component semantic profiles and resolved cross-record relationships; bind relationship IDs into lane admission bundles; preserve current byte/hash/inode/refusal and authorization separation."
+    },
+    {
+      "path": "tests/contracts/test_data_identity_registry_v2.py",
+      "target": "Replace generic positive helpers for PLANCK/CF4/HSC_KIDS with full native-profile fixtures and add the minimal matrix above."
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr289_spec.yaml",
+      "target": "Amend only existing semantic/mutation rows to name generic-native-role, dangling relationship, same-sky, CF4 convention/domain, separate-survey child, and nonclaim-promotion defects; no new gate family."
+    },
+    {
+      "path": "scripts/codex_harness/run_pr289_data_identity_v2.py",
+      "target": "Regenerate/check receipt from complete relationship-bound lane bundles, not record counts; retain no-download and output containment behavior."
+    }
+  ],
+  "tests_to_run_after_integration": [
+    "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt/src python3 -m pytest -p no:cacheprovider tests/contracts/test_data_identity_registry_v2.py -q",
+    "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt/src python3 scripts/codex_harness/run_pr289_data_identity_v2.py --check",
+    "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt/src python3 -m pytest -p no:cacheprovider tests/contracts/test_claim_language_lint.py tests/contracts/test_transfer_registry.py tests/contracts/test_mio_htt_no_merge.py -q",
+    "python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+  ],
+  "risks_and_kill_switches": [
+    "Kill admission if any native role or relation is accepted by arbitrary nonempty text, filename, record order, or record count.",
+    "Kill admission if relationship endpoint resolution is dangling, duplicated, cyclic where forbidden, wrong-kind, wrong-survey, or not bound into lane_admission_bundle_id.",
+    "Kill Planck same-sky admission on any support/mask/pixelization/frame/window/harmonic mismatch; do not average or coerce profiles.",
+    "Kill CF4 admission on frame/sign/unit/covariance-domain ambiguity; do not infer conventions from column names.",
+    "Kill HSC_KIDS admission if any survey-specific PSF/n(z)/calibration/response/covariance child is shared or inferred, or cross-covariance lacks both exact endpoints.",
+    "Kill any admission-to-authorization, covariance-to-likelihood, identity-to-rank, MIO-to-HTT, transfer-to-native-solver, or relationship-to-family-identification promotion.",
+    "Because the candidate is mutable and the registry drifted concurrently after initial verification, no PASS may be issued until all registered inputs are resealed and the hostile matrix passes against one frozen candidate."
+  ],
+  "artifacts_and_status_updates_needed": [
+    "Regenerate the PR-289 preflight receipt only after the final relationship-bound candidate and mutations pass.",
+    "Keep observed_data_executed=false, public_use=false, scientific_status_effect=OPEN_UNCHANGED, execution receipts NOT_AUTHORIZED, and family_identification_gate=BLOCKED_PRE_NATIVE_ATLAS.",
+    "Do not add a rank, prior, likelihood, Q/F/G, morphology, native-solver, or family claim artifact to PR-289."
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR289-DOMAIN-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "critical",
+      "evidence_fingerprint": "PR289:PLANCK:generic-map-and-shared-semantic-profile-admission",
+      "statement": "The frozen PR-289 contract cannot represent or validate separate SMICA and Commander release-native identities, same-sky pairing, matched FFP10/null processing, or exact selection/pixelization/beam/mask/window/operator relationships. A single map plus generic strings is admitted.",
+      "assumptions_used": [
+        "Release-native identity is not native-solver identity.",
+        "Same-sky is an exact cross-record compatibility relation, not equal lane labels."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json frozen SHA 28d07d...: PLANCK has map/mask/beam/covariance only",
+        "htt/src/common/data_identity.py:846-915 validates semantic IDs as nonempty lane-wide text and builds no cross-record relation",
+        "tests/contracts/test_data_identity_registry_v2.py:66-140 creates generic strings and a single-map fixture; lines 218-254 admits it",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:149-155"
+      ],
+      "counterevidence_refs": [
+        "htt/src/common/data_identity.py:1018-1141 correctly enforces inventory order, file hashes, inode isolation, and record sealing",
+        "Focused frozen-input suite passed 22 tests, confirming process mechanics but not native relationship completeness"
+      ],
+      "reproduction": [
+        "Run the focused suite with PYTHONPATH=htt/src; observe test_planck_admission_is_stable... returns ADMITTED_IDENTITY_ONLY for _base_evidence generic strings.",
+        "Inspect frozen registry PLANCK required_component_ids and verify that SMICA, Commander, pixelization, FFP10, window, and operator endpoints do not exist."
+      ],
+      "unresolved": [
+        "Exact Planck release convention values and FFP10 availability evidence must be supplied by authoritative release metadata; they must not be invented by the validator."
+      ],
+      "confidence": 0.99
+    },
+    {
+      "finding_id": "F-PR289-DOMAIN-002",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "PR289:CF4:missing-executable-catalogue-selection-convention-domain-graph",
+      "statement": "The frozen CF4 lane binds catalogue/selection/covariance filenames and lane-wide text, but has no executable child identities or cross-record graph for row selection, frame, radial sign, units, grouping, depth, ZoA, and covariance applicability/order.",
+      "assumptions_used": [
+        "Identity admission may validate content-addressed metadata relationships without executing CF4 science.",
+        "Covariance identity is incomplete unless its exact ordered observable domain, units, and selection provenance are bound."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json frozen SHA 28d07d...: CF4 has catalogue/selection/covariance only",
+        "docs/research_program/post_pr275/data_runbooks.yaml:66-108 requires raw group catalogue, full covariance, depth and ZoA path, orbit invariants, and shared-nuisance identified set",
+        "htt/src/common/data_identity.py:872-897 accepts units/frame/sign/selection/covariance/null as nonempty shared strings",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:154"
+      ],
+      "counterevidence_refs": [
+        "The existing exact-file and source-locator machinery is suitable for sealing the additional child identities",
+        "The existing admission/authorization split correctly prevents current CF4 execution"
+      ],
+      "reproduction": [
+        "Use _valid_descriptor(..., lane_id='CF4') from the frozen test helper; it supplies generic frame/sign/units strings and no group/depth/ZoA records yet reaches the same admission path.",
+        "Compare LaneSpec.expected_component_sequence against the runbook required_input_contract."
+      ],
+      "unresolved": [
+        "Authoritative CF4 column, frame, radial sign, distance/h scaling, grouping, depth, and ZoA payload values are not present in the assigned inputs and must be bound rather than guessed."
+      ],
+      "confidence": 0.98
+    },
+    {
+      "finding_id": "F-PR289-DOMAIN-003",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "critical",
+      "evidence_fingerprint": "PR289:HSC-KIDS:singleton-psf-nz-calibration-covariance-without-cross-graph",
+      "statement": "The frozen HSC_KIDS registry has separate survey products/masks/randoms but only one PSF, one n(z), one shear-calibration, and one covariance component; it has no response child or HSC-KiDS cross-covariance child. It therefore cannot enforce survey-specific parent/child identities or covariance applicability.",
+      "assumptions_used": [
+        "HSC and KiDS remain separate release-native profiles even when a downstream statistic combines them.",
+        "Calibration and response identities are distinct, and auto- and cross-covariance identities are distinct."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json frozen SHA 28d07d...: singleton psf/n_z/shear_calibration/covariance roles",
+        "docs/research_program/post_pr275/data_runbooks.yaml:109-147 requires separate complete products with PSF, n(z), calibration, response, and covariance",
+        "tests/contracts/test_data_identity_registry_v2.py:384-396 tests only name_only refusal and no survey-child graph",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md:155"
+      ],
+      "counterevidence_refs": [
+        "The frozen registry already distinguishes hsc_product/kids_product, masks, and randoms, so the repair is a bounded extension rather than a new framework",
+        "Current exact file identity checks can be retained"
+      ],
+      "reproduction": [
+        "Inspect frozen HSC_KIDS required_component_ids and confirm absent hsc_psf/kids_psf, per-survey n_z/calibration/response/covariance, and cross_covariance roles.",
+        "Run the focused suite; no positive fixture asserts separate survey child relations."
+      ],
+      "unresolved": [
+        "Exact HSC and KiDS release versions, tomography/order conventions, and covariance domains must come from authoritative release evidence."
+      ],
+      "confidence": 0.99
+    },
+    {
+      "finding_id": "F-PR289-DOMAIN-004",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "low",
+      "evidence_fingerprint": "PR289:semantic-firewall:admission-not-inference-rank-or-family",
+      "statement": "The frozen PR-289 claim and authorization ceiling is correctly fail-closed: admission is identity-only, all receipts remain NOT_AUTHORIZED, no observed execution occurs, covariance is not a likelihood, Q/F/G and local/global rank are absent, and the family-identification gate remains blocked pre-native-atlas. These boundaries must survive the native-role repair.",
+      "assumptions_used": [
+        "Passing a process preflight is not scientific validation.",
+        "MIO diagnostics and HTT inference remain ownership-separated."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr289_spec.yaml:1-325 diagnostic-only, identity-only, NOT_AUTHORIZED, forbidden native/family promotion",
+        "htt/src/common/data_identity.py:23-33 and 1145-1237 authorization factory boundary",
+        "tests/contracts/test_data_identity_registry_v2.py:186-215 and 249-254 assert no execution, no public use, blocked family gate, and NOT_AUTHORIZED",
+        "docs/research_program/post_pr275/data_runbooks.yaml:51-65,94-108,133-147 ownership and claim boundaries"
+      ],
+      "counterevidence_refs": [
+        "No family-identification, local/global rank, prior, likelihood, or Q/F/G computation exists in the assigned production file"
+      ],
+      "reproduction": [
+        "Run the focused frozen-input suite and inspect test_clean_checkout_no_roots... plus test_planck_admission_is_stable... authorization assertions.",
+        "Inspect DataIdentityPreflightReceipt metadata for family_identification_gate=BLOCKED_PRE_NATIVE_ATLAS and observed_data_executed=false."
+      ],
+      "unresolved": [
+        "The final repaired candidate must add hostile tests that relationship completeness cannot promote any of these statuses."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR289-DOMAIN-001",
+        "F-PR289-DOMAIN-002",
+        "F-PR289-DOMAIN-003",
+        "F-PR289-DOMAIN-004"
+      ],
+      "summary": "Current generic byte/hash/inode and authorization mechanics are reusable, but the frozen admission contract fails the required Planck, CF4, and separate HSC/KiDS release-native role and cross-record relationship objective. Repair must remain identity-only and cannot affect priors, likelihoods, Q/F/G, local/global rank, or the blocked family-identification gate."
+    }
+  ],
+  "errors": []
+}

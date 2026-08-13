@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "run_id": "pr290-selective-salvage-mapping-20260811",
+  "assignment_id": "A-PR290-SALVAGE-MAP",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "status": "pass",
+  "claim_id": "RUN-pr290-selective-salvage-mapping-20260811-salvage-map",
+  "scope": "Read-only bounded selective-salvage map. This result does not accept a gate, validate scientific output, authorize Planck execution, or promote a claim.",
+  "governing_spec_and_gates": {
+    "pr290_spec": "docs/research_program/post_pr275/pr290_spec.yaml#dependency_contract,data_identity_contract,human_execution_gate,pipeline_contract,output_contract",
+    "pr289_spec": "docs/research_program/post_pr275/pr289_spec.yaml#data_identity_record_v2,registry_and_lane_contract,native_profile_rule",
+    "binding_policy": "docs/research_program/post_pr275/pr290_publication_policy.json#target_sha,claim_ceiling,forbidden_inputs",
+    "required_base": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "base_object_present": true,
+    "source_lineage_check": "45da1bf54149864fb9d87be3a828df202ee1df7f is an ancestor of G53 e3f9beb47d061a1af4e354155617db388d5dbbca"
+  },
+  "input_verification": {
+    "docs/research_program/post_pr275/pr290_spec.yaml": "sha256:1f0d060fb8a6a2ea89081275261455ec47aed1ffe85f933a69af6e8bfe86da16",
+    "docs/research_program/post_pr275/pr290_publication_policy.json": "sha256:45655b62f02f2d422283aa99780c78e80a022fbd1fd371e8ee7a450ddad320cd",
+    "docs/research_program/post_pr275/pr289_spec.yaml": "sha256:f4a8e89e603a1f6e4fe9cb99c422ef83407fd264328b3adaf927aafdcfb6636f",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json": "sha256:e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+    "docs/generated/pr289_data_identity_v2_receipt.json": "sha256:92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+    "htt/src/common/data_identity.py": "sha256:145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2",
+    "tests/contracts/test_data_identity_registry_v2.py": "sha256:1ee3fb1541a911abfd686d5cd78f75380b8847dfe5d1fd076cd48153a4f1c3c3"
+  },
+  "evidence": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md",
+      "locations": ["157-160", "201-203", "239", "445-449", "532-537"],
+      "finding": "PR-290 retains subsets G49, G50, G53 and G51-G52 from exact SEALED_HEAD(PR-289); G54 is obsolete. Retain numerical/operator/transaction/containment code, but replace record-ID-only admission fixtures with full canonical native-record/profile replay."
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr290_spec.yaml",
+      "locations": ["data_identity_contract", "pipeline_contract", "human_execution_gate", "output_contract"],
+      "finding": "Planck admission requires 13 named components, common observation/null operator identity, non-diagonal covariance, and a separate H-PLANCK receipt; current output is preactivation/nonexecution only."
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr289_spec.yaml",
+      "locations": ["107-110", "142-154", "313-320"],
+      "finding": "Planck native profile must be content-bound and replay component paths, child identities, and relationships from exact inventory; generic strings, record IDs, or component counts are insufficient."
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+      "locations": ["PLANCK lane object"],
+      "finding": "Canonical Planck identity is common.planck_native_identity.v1 with SMICA/Commander maps, masks, beams, window operators, covariances, pixelization, native selection, and FFP10 inventory."
+    }
+  ],
+  "logical_groups": [
+    {
+      "group": "G49",
+      "commit": "e3e2f48e474395bbbf876d2c1b38ba50ea5a53a6",
+      "stable_patch_id": "83f2b1e2c5b51515ab666c3ee84ceb574155c583",
+      "audit_classification": "SALVAGE_SUBSET",
+      "files": ["docs/research_program/post_pr275/pr290_spec.yaml", "docs/research_program/post_pr275/pr290_publication_policy.json"],
+      "salvage": "Retain only clauses that lock diagnostic-only ceiling, PR-289 dependency, complete Planck component inventory, nonexecution boundary, and policy target identity. Rebind/recreate on exact PR-289 sealed base; do not transplant frozen target or publication state."
+    },
+    {
+      "group": "G50",
+      "commit": "043f79bde81dafe2816676324f9ee997b780a2cd",
+      "stable_patch_id": "b6c49990aa1b22b5f766d5e3aa84c68a199fe3b8",
+      "audit_classification": "SALVAGE_SUBSET",
+      "valuable_files_and_symbols": {
+        "htt/obsstat/planck_post275_lane.py": ["observation_inclusive_max_scan", "ObservationInclusiveMaxScan", "require_common_operator_identity", "require_complete_component_operator_identities", "validate_full_joint_covariance", "biposh_feature_units", "build_preactivation_capability_snapshot"],
+        "htt/src/common/observed_lane_activation.py": ["_validate_spec", "_dependency_snapshot", "_planck_identity_snapshot", "_verify_external_human_authorization", "PlanckActivationDecision", "build_planck_activation_decision", "build_planck_nonexecution_receipt"],
+        "scripts/codex_harness/run_pr290_planck_lane.py": ["_validate_output_destinations", "_atomic_write", "_write", "_check", "_portable"],
+        "tests/integration/test_planck_post275_lane.py": ["predecessor/authorization ordering", "operator identity and full covariance", "global-rank permutation/nonfinite checks", "hardlink/symlink/rebound-parent/fsync transaction containment"]
+      },
+      "salvage": "Keep numerical rank/operator checks, fail-closed activation separation, source-binding and receipt transaction/containment mechanics. Do not preserve generated receipt, PR delta, claim ledger row, or frozen review/target bindings as acceptance evidence."
+    },
+    {
+      "group": "G51",
+      "commit": "a0c99f06b4fe757106076469138f6a09a7da2943",
+      "stable_patch_id": "6425896977ddbcbdd8b5fcfaca97c3437c7192c1",
+      "audit_classification": "REBASE_AND_REVALIDATE",
+      "salvage": "Retain narrow review-driven hardening only after rebase: strict spec/terminal/source-binding validation, output preflight before payload generation, and corresponding negative tests. Recreate receipt/delta/spec material from the new target."
+    },
+    {
+      "group": "G52",
+      "commit": "6119943a4077d046da53b37f783a369aca14715b",
+      "stable_patch_id": "4755d04b55b5ba8dc3c2f69c948181166d9c07b2",
+      "audit_classification": "REBASE_AND_REVALIDATE",
+      "salvage": "Retain operator-identity, active-estimand, full-covariance, claim-boundary, and post-fsync/rebound containment repairs with their hostile tests. Historical R3 mixed review is not acceptance evidence."
+    },
+    {
+      "group": "G53",
+      "commit": "e3f9beb47d061a1af4e354155617db388d5dbbca",
+      "stable_patch_id": "63000682ce6e3eec9e8a79e9f4fb0994721605d7",
+      "audit_classification": "SALVAGE_SUBSET",
+      "salvage": "Keep provenance validation linkage from PR-289 receipt to registry and required source files, then replace its record-ID-only acceptance path. Regenerate all receipt/delta/spec-derived bindings on the actual candidate."
+    },
+    {
+      "group": "G54",
+      "commit": "e5ef3b7a5c2803eedb04d803f7767dcf27d06989",
+      "stable_patch_id": "887e5c747219187da25871c990b5488dcfda8f02",
+      "audit_classification": "OBSOLETE",
+      "exclude": "Only edits docs/PR_DELTAS/pr-290.md to report stale post-review replay evidence. Preserve forensic history but do not transplant or cite it as current review evidence."
+    }
+  ],
+  "mandatory_replacement": {
+    "defect": "G53 _planck_identity_snapshot accepts lane_decisions[].records containing only record_id; G53 test helper _admit_planck_identity constructs four such synthetic rows.",
+    "replacement": "Replay every canonical PR-289 PLANCK native record/profile through the corrected data_identity evaluator, including typed payload, exact ordered component inventory, component role/ordinal, content identity, relative child path/identity, and Planck relationships. Bind the replayed complete records to lane_admission_bundle_id and exact_admission_record_ids before H-PLANCK comparison.",
+    "required_negative_cases": ["record_id-only record", "missing required component", "role rename/alias/ordinal drift", "SMICA/Commander collapse", "missing/different FFP10 or null identity", "profile payload mismatch despite recomputed record id", "authorization record list or bundle mismatch"],
+    "required_positive_fixture": "A full canonical PR-289 PLANCK native-record/profile replay fixture, not hash-shaped placeholders b/c/d/e and not a name-only product fixture."
+  },
+  "datasets_and_operator_contract": {
+    "lane": "PLANCK / PLANCK_PR3_LOWELL_BUNDLE",
+    "products": ["SMICA", "Commander", "FFP10 null inventory"],
+    "required_components": ["smica_map", "commander_map", "smica_mask", "commander_mask", "smica_beam", "commander_beam", "smica_window_operator", "commander_window_operator", "smica_covariance", "commander_covariance", "pixelization", "native_selection", "ffp10_null_inventory"],
+    "operator_order": ["release_and_component_identity", "beam_and_pixel_window_normalization", "registered_mask_application_and_deconvolution", "harmonic_convention_validation", "low_ell_alm_and_cl", "power_tensor_axes_and_multipole_vectors", "biposh_and_parity", "sector_stress_and_response_projection", "covariance_and_null_calibration", "observation_inclusive_look_elsewhere_correction", "component_separation_comparison", "legacy_scalar_projection"],
+    "numerical_contracts": ["observation-inclusive leave-one-out max scan", "permutation equivariance", "reject nonfinite/singleton ranks", "identical observation/null identity fields", "full joint covariance with diagonal shortcut forbidden", "BiPoSH quadratic/quartic scale laws"],
+    "no_equation_reconstruction": "The source groups implement numerical/operator checks; this mapping did not find a standalone equation artifact requiring CAS verification."
+  },
+  "stale_or_generated_glue_to_exclude": ["docs/PR_DELTAS/pr-290.md source bytes", "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json source bytes", "docs/harness/CLAIM_LEDGER.md source row", "source policy target/candidate/seal/review status assertions", "G54 post-review narrative"],
+  "revalidation_commands_from_policy": ["python -B scripts/codex_harness/run_pr290_planck_lane.py focused", "python -B scripts/codex_harness/run_pr290_planck_lane.py check", "python -B scripts/codex_harness/run_pr290_planck_lane.py adjacent", "python -B scripts/codex_harness/run_pr290_planck_lane.py portable", "python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice", "python -B scripts/check_claim_language.py --strict-missing --include-archives docs/research_program/post_pr275/pr290_spec.yaml htt/src/common/observed_lane_activation.py htt/obsstat/planck_post275_lane.py tests/integration/test_planck_post275_lane.py docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json docs/PR_DELTAS/pr-290.md"],
+  "tooling": {"commands_used": ["git show", "git diff-tree --name-status", "git patch-id --stable", "git cat-file", "git merge-base", "rg", "sed", "python3 sha256/context verification"], "execution": "No tests or observed-data commands were run; assignment requested mapping only."},
+  "evidence_fingerprint": "claim=RUN-pr290-selective-salvage-mapping-20260811-salvage-map;base=45da1bf54149864fb9d87be3a828df202ee1df7f;groups=G49,G50,G51,G52,G53;exclude=G54;record_replay=full-native-profile",
+  "result_path": ".agent-harness/runs/pr290-selective-salvage-mapping-20260811/results/A-PR290-SALVAGE-MAP.json"
+}

@@ -1,0 +1,129 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-predicate-continuation-20260813",
+  "assignment_id": "A-PR291-R5-PREDICATE-CLOSEOUT",
+  "assignment_sha256": "6738a3ba31af57a446cdd3d7a9f4f30a4957b004a9ea2bbaab04046890a8ea5b",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "adjudication",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_PREDICATE_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "be541b2933e7283cf5c0759bdf2eba8e22c75983d75f2e5edfc3f9dd7d6b6812",
+    "seal_sha256": "977f96e2b21d07caf31d9176244afddcac5893156e78ac6d71cd13fc52479d27",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "c39e57e5638a63e023783fb962521799ce87866b",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "62026afc31a915dc7f96c718fcc654c71a8ed53a",
+    "diff_sha256": "ef5b9f7477cf91308db87caadfd96a5f53073649ea8feb20b4dd9f93af75e4c0",
+    "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+    "production_hash": "ba3cec1bec67dbbec36903374d00155467e8623af7aa07dfb2fb47b32e90000b"
+  },
+  "result_path": ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/results/A-PR291-R5-PREDICATE-CLOSEOUT.json",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-13T09:33:00+00:00",
+  "completed_at": "2026-08-13T09:40:28+00:00",
+  "tool_versions": {"git": "2.43.0", "python": "3.12.3", "PyYAML": "6.0.1"},
+  "commands": [
+    {
+      "id": "metadata-bindings",
+      "argv": ["sha256sum", "registered required inputs"],
+      "returncode": 0,
+      "summary": "All registered inputs, context, seal, frozen HEAD/tree/base, clean tracked state, and synchronized status bytes matched."
+    },
+    {
+      "id": "metadata-oracle",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/artifacts/A-PR291-R5-PREDICATE-CLOSEOUT/metadata_closeout_oracle.py"],
+      "returncode": 0,
+      "status": "pass_fail_closed",
+      "summary": "Seven metadata groups passed; candidate disposition FAIL, PR-291 VALIDATED, review/seal blocked, PR-292 PLANNED/INELIGIBLE, cumulative assignment 24, and no publication action."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/artifacts/A-PR291-R5-PREDICATE-CLOSEOUT/REVIEW_COVERAGE.json",
+      "sha256": "483e246a47fa3adc185dd0ff0b1afd729b30c492e986ec44efeeb497eb7d5ed1",
+      "bytes": 8163,
+      "producer": "A-PR291-R5-PREDICATE-CLOSEOUT"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/artifacts/A-PR291-R5-PREDICATE-CLOSEOUT/metadata_closeout_oracle.py",
+      "sha256": "2904b3cdbae685918e453c3887ef1828712f8bcc57d849cd8391d9b742b54f74",
+      "bytes": 11587,
+      "producer": "A-PR291-R5-PREDICATE-CLOSEOUT",
+      "command_fingerprint": "dc37c269f7189956af5e0bdb4871060fc33df3470259099a16dad7ab035e9c56"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/artifacts/A-PR291-R5-PREDICATE-CLOSEOUT/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "483e246a47fa3adc185dd0ff0b1afd729b30c492e986ec44efeeb497eb7d5ed1",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/RUN_PLAN.json",
+    ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/assignments/A-PR291-R5-PREDICATE-CLOSEOUT.json",
+    ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/results/A-PR291-R5-PREDICATE-CLAIM.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/RUN_SUMMARY.json",
+    ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/RUN_SUMMARY.json",
+    ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/RUN_SUMMARY.json",
+    ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/RUN_SUMMARY.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR291_R5_PREDICATE_FINAL_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "machine_readable/pr_status.yaml"
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR291-R5-PREDICATE-CLOSEOUT-FN",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "sha256:200fe2b9806ba752e08cd3125d30204af014585bfb75975367fdd7a5959803f7:active-generic-modal-fn",
+      "statement": "PR-291 cannot advance beyond VALIDATED because the fresh strict claim review reproduced two arbitrary-actor or modal-passive false negatives.",
+      "assumptions_used": ["Positive family-identification claims remain forbidden regardless of document-like actor.", "A fresh strict reviewer FAIL blocks REVIEWED and SEALED."],
+      "evidence_refs": [".agent-harness/runs/pr291-r5-predicate-continuation-20260813/results/A-PR291-R5-PREDICATE-CLAIM.json", "oracle cases active_generic_actor and passive_modal_auxiliary"],
+      "counterevidence_refs": [".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json", ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json"],
+      "reproduction": ["Read the strict-valid predicate claim result and its two named false-negative oracle rows.", "Run the assignment-local metadata oracle and observe candidate_disposition FAIL with lifecycle VALIDATED."],
+      "unresolved": ["Repair and regression-test arbitrary actors and modal passive attribution in a newly authorized candidate."],
+      "confidence": 0.99
+    },
+    {
+      "finding_id": "F-PR291-R5-PREDICATE-CLOSEOUT-FP",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "sha256:200fe2b9806ba752e08cd3125d30204af014585bfb75975367fdd7a5959803f7:predicate-negation-fp",
+      "statement": "PR-291 cannot advance beyond VALIDATED because five predicate-scoped negation, contraction, or scalar downclaim controls are false positives.",
+      "assumptions_used": ["Predicate-scoped downclaims must remain allowed.", "Metadata closeout cannot repair, reseal, publish, or activate PR-292."],
+      "evidence_refs": [".agent-harness/runs/pr291-r5-predicate-continuation-20260813/results/A-PR291-R5-PREDICATE-CLAIM.json", "oracle cases negative_aux_not, negative_adverb_before_not, negative_cannot_adverb, negative_contraction, and negative_scalar"],
+      "counterevidence_refs": ["Existing exact does-not and never controls passed.", "Exact Markdown and YAML guardrail contexts passed."],
+      "reproduction": ["Read the strict-valid predicate claim result and its five named false-positive controls.", "Run the assignment-local metadata oracle and observe two false negatives plus five false positives."],
+      "unresolved": ["Normalize bounded predicate negation without weakening positive-claim detection, then require fresh strict review."],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR291-R5-PREDICATE-CLOSEOUT-FN", "F-PR291-R5-PREDICATE-CLOSEOUT-FP"],
+      "summary": "Strict-valid FAIL: two arbitrary-actor false negatives and five predicate-negation or contraction false positives block REVIEWED/SEALED. Carried code/replay and physics/statistics remain PASS under unchanged numerical hashes; PR-291 stays VALIDATED, PR-292 stays PLANNED/INELIGIBLE, cumulative accounting reaches 24, and publication remains HUMAN_ONLY with no action."
+    }
+  ],
+  "errors": []
+}

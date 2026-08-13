@@ -1,0 +1,139 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-r5-authorized-review-extension-20260811",
+  "assignment_id": "A-PR289-R5-PHYSCODE",
+  "assignment_sha256": "790ab78b24013c3120201524cf1ecbc8ba24a9c8180c562016e37b8906c0ef3d",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_R5_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "a2681b6259aa6ac98929122b0fd4bfdceef21d18e818e43552f5e09b109c4e7a",
+    "seal_sha256": "301be2d0d73f18c109b71f36c43e8c8d033bd7fcfb01a6d04142b7493e30cf01",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "eec048d4cf19989983986d139c7d0a797b1363e0",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "27251a5b9e28685b23473f23d7d0b960b039d375",
+    "diff_sha256": "bebb8bc4ba55b67c42b0a879f63137fe240f8fb8cc82528d9b7c8fff9e99b71f",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "c638eaea433bcce5a5b00140a916108d5c23b64d079c94bbb7456a343acf0d48"
+  },
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-11T11:45:00Z",
+  "completed_at": "2026-08-11T12:12:40Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "python_alias_3_10": "3.10.20",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    "sha256sum all 13 required inputs and jq context/seal identities: exit 0; every declared digest matched",
+    "git rev-parse HEAD^{commit} HEAD^{tree}; git merge-base base candidate: frozen identities matched",
+    "python3 -B scripts/codex_harness/run_pr289_data_identity_v2.py focused: exit 0; 60 passed in 43.04s",
+    "python3 -B scripts/codex_harness/run_pr289_data_identity_v2.py preflight: exit 0; six REJECTED_NOT_PRESENT, six NOT_AUTHORIZED, no network/download side effect",
+    "python3 -B scripts/codex_harness/run_pr289_data_identity_v2.py adjacent: exit 0; current tree 50 passed and 4 deselected; exact ff9ef9f4 replay 54 passed",
+    "python3 -B scripts/codex_harness/run_pr289_data_identity_v2.py check: exit 0; receipt SHA-256 92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+    "python3 -B scripts/codex_harness/run_pr289_data_identity_v2.py portable: exit 0; 5911 files and identical c8a56431... source/clean pre/post manifests",
+    "/usr/bin/python, /usr/bin/python3, /usr/bin/python3.10 -B scripts/codex_harness/run_pr289_data_identity_v2.py check: all exit 0 with identical receipt SHA-256",
+    "python3 -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_publication_integrity.py -k policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity: exit 0; 9 passed, 68 deselected",
+    "python3 -B scripts/check_claim_language.py --strict-missing --include-archives [PR-289 files]: exit 0; no forbidden claim language",
+    "git ls-remote --exit-code origin refs/heads/changeset/pr288-bayesian-evidence-recovery-20260811: exit 0; remote target remains 27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "PYTHONPATH=htt/src:. python3 -B .agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-PHYSCODE/pr289_r5_physcode_oracle.py: exit 0; same-lane replay PASS, five hostile probes killed, 33/33 mutations killed",
+    "python3 .agent-harness/scripts/review_coverage.py --coverage [assignment coverage] --seal .prguard/runtime/PR289_R5_CANDIDATE_SEAL.json --run-id pr289-r5-authorized-review-extension-20260811 --assignment-id A-PR289-R5-PHYSCODE --risk-tier R3: exit 0; ok=true"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-PHYSCODE/REVIEW_COVERAGE.json",
+      "sha256": "38949e68e4469c35e9989e83a7dc2de77527c33e5042b69df926812d1d46d76a",
+      "bytes": 14829,
+      "producer": "A-PR289-R5-PHYSCODE"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-PHYSCODE/pr289_r5_physcode_oracle.py",
+      "sha256": "d70157be4f5eb1642921bfa68a05c1b99563fbe5c0f5491cf2c4eeb10b1903c1",
+      "bytes": 6098,
+      "producer": "A-PR289-R5-PHYSCODE",
+      "command_fingerprint": "1c233c299912ab96f1218b3393661a8b6cb4efea25f034accf994629a25740f4"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-PHYSCODE/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "38949e68e4469c35e9989e83a7dc2de77527c33e5042b69df926812d1d46d76a",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/assignments/A-PR289-R5-PHYSCODE.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/validate_harness.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-transfer-provenance/SKILL.md",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+    ".prguard/runtime/PR289_R5_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-289.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/harness/CLAIM_LEDGER.md",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "docs/research_program/post_pr275/data_runbooks.yaml",
+    "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "docs/research_program/post_pr275/pr289_spec.yaml",
+    "htt/src/common/data_identity.py",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+    "tests/contracts/test_data_identity_registry_v2.py"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "The frozen R5 candidate closes the CF4-decision/PLANCK-lane mismatch before receipt construction, revalidates role ordinals, record seals, component inventory and bundle identity, preserves authentic same-lane replay, kills all 33 registered mutations, and maintains diagnostic-only no-execution/no-family-promotion boundaries.",
+      "evidence_refs": [
+        "htt/src/common/data_identity.py: replay_lane_admission_decision and build_not_authorized_receipt",
+        "tests/contracts/test_data_identity_registry_v2.py: 60-test focused suite",
+        ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-PHYSCODE/pr289_r5_physcode_oracle.py",
+        ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/artifacts/A-PR289-R5-PHYSCODE/REVIEW_COVERAGE.json"
+      ],
+      "evidence_fingerprint": "PR289-R5-PHYSCODE-C-PR274-DATA-ADMISSION-eec048d4"
+    }
+  ],
+  "errors": [],
+  "review_summary": {
+    "verdict": "PASS",
+    "units_and_signs": "Identity semantics pass: CF4 units/frame/radial-sign/grouping/depth/ZoA roles are distinct and content-bound. This does not validate their scientific values or conventions against observed data.",
+    "priors_and_likelihood": "NOT_EXECUTED: PR-289 implements no priors, likelihood, posterior, evidence, PPC, or LOOCV path and grants no authority to run one.",
+    "q_pi_f_g": "NOT_EXECUTED: no x/Q/Pi/F/G_F computation or promotion exists; the claim ledger explicitly marks it forbidden/not evaluated.",
+    "local_global_rank": "NOT_EXECUTED: no response-rank, local/global discrimination, or family ranking occurs in this data-identity preflight.",
+    "family_gate": "PASS: diagnostic-only C2, transfer_source none, observed_data_executed false, public_use false, and BLOCKED_PRE_NATIVE_ATLAS remain frozen in the receipt.",
+    "remaining_risks": [
+      "Identity admission proves byte/role/provenance consistency, not the physical correctness of units, signs, covariance, masks, nulls, or selection operators.",
+      "No external roots were supplied, so no lane is admitted; all six clean-checkout decisions are explicit REJECTED_NOT_PRESENT.",
+      "No prior, likelihood, Q/Pi/F/G, response-rank, local/global, morphology, geometry, native-solver, or family-identification claim was tested or granted."
+    ],
+    "file_targets_if_regression_occurs": [
+      "htt/src/common/data_identity.py: replay_lane_admission_decision and build_not_authorized_receipt",
+      "tests/contracts/test_data_identity_registry_v2.py: cross-lane, ordinal, semantic replay, output-parent, interpreter, and archive regressions",
+      "scripts/codex_harness/run_pr289_data_identity_v2.py: bound module loading, receipt build/check, atomic parent pinning, and portable replay"
+    ]
+  }
+}

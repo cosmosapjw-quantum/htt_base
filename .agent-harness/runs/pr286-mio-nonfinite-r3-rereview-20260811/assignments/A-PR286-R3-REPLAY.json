@@ -1,0 +1,117 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-mio-nonfinite-r3-rereview-20260811",
+  "assignment_id": "A-PR286-R3-REPLAY",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "d95f5a26bab5be25afb550e64d75ce4f8419fca8b61b232682c960e9e5e1fc95",
+    "seal_sha256": "26b24258bfec78ccbd0dad9382fc6ae8e9b9ba9a417b81753f84ca68b30c6f0f",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "0b1a8ef76df47b0b42e972bb47c9bc294e80aa7c",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "c92883d3500aff9a7fa07e561ad43bf4088feb9d",
+    "diff_sha256": "a07284aa230f991286ac4b3ed11e5201f70af2a49ae8bf79cf5191d5af3cc4d1",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "99ad99e15ff863b63945663c112767d1f6dc90e8f697a407798c281cb39c2b30"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Fresh blind bounded replay and harness rereview of the exact frozen PR-286 MIO repair. Read this assignment first; do not read CONTEXT_PACK, sibling results, or any historical review or result envelope. Verify exact base, head, tree, diff, unique stable patch ids, selective G23 G25 G27 lineage and G24 G26 exclusion, current source bindings, 72 rows, content address, ordered 20 of 20 mutation activation execution and kills including the MIO numerical guard, containment and atomicity, exact receipt replay, focused and adjacent gates, portable archive invariance, publication-policy cross-binding, strict rescue DAG, strict claim language, lifecycle VALIDATED, assurance 7 of 16, and PR-287 INELIGIBLE zero budget. Write no tracked or shared files; produce only assignment-local executable oracle, coverage, and one strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+      "sha256": "d95f5a26bab5be25afb550e64d75ce4f8419fca8b61b232682c960e9e5e1fc95"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr286_spec.yaml",
+      "sha256": "6fca230213eea5c914842c63513a9047cb3221d0646564692464a82d7a03fc05"
+    },
+    {
+      "path": "htt/src/common/vector_tensor_statistical_inference.py",
+      "sha256": "61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254"
+    },
+    {
+      "path": "htt/mio/formalism/vector_tensor_validation.py",
+      "sha256": "e08b58382250ae70c8afabaaf771e6579e5244812f2a59706f8f3b681888da8b"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+      "sha256": "a4a5243e13bc46503a16904c5f26a670a077d575220f16ebdae0c5d206493732"
+    },
+    {
+      "path": "tests/contracts/test_pillar_s_inference.py",
+      "sha256": "f1daf4bf081a0eadf9cb6443b5580282cffae6a03937506d9ec1350f8b8999a3"
+    },
+    {
+      "path": "tests/contracts/test_pillar_s_complete_adjudication.py",
+      "sha256": "5e544fdbbe564765092a8c4f60b4f39a6bd3a32d42467f7dc6c9ac34f6754bef"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+      "sha256": "b5ea12647f1d7818da3702b3da8d127f490a15cdef8e37fa8958cfe803b3ee5a"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr286_publication_policy.json",
+      "sha256": "768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d"
+    },
+    {
+      "path": ".agent-harness/scripts/publication_integrity.py",
+      "sha256": "56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec"
+    },
+    {
+      "path": "scripts/codex_harness/test_publication_integrity.py",
+      "sha256": "b58ac958ac5c6aafb6de768a68813665fd233540cb328ede98240a933373d9cc"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-286.md",
+      "sha256": "39ce89dc0b149540221e1cbdb9331322f31a734851762f5a93b9f5744a221047"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "d27e79de2c61e0db1ff22852cd1cc9a27af74f57aa282b8714acd621663b8eef"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "d27e79de2c61e0db1ff22852cd1cc9a27af74f57aa282b8714acd621663b8eef"
+    },
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256": "73553b6056e5111c1047b80f79c35cdb8e898e0a7b8a7e7e28f97731b5cc699e"
+    },
+    {
+      "path": "scripts/codex_harness/validate_pr_dag.py",
+      "sha256": "1382c9d5d8e096efbcd90cf804ae8c32b2de1ce5c47d67be75ab282b45361120"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/results/A-PR286-R3-REPLAY.json",
+  "status": "registered",
+  "assignment_sha256": "009c63d5f5181a7a4955e3c0ff75910a619a3cabeab0b4d785cfec72712d45ce"
+}

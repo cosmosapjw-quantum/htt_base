@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-frozen-findings-rereview-20260810",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "created_at": "2026-08-09T21:36:38+00:00",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f6f78bfd7c1b8f0bc2f4c895da94db09fe6b4b78da245d8090e09ee8aa84e09a",
+    "seal_sha256": "911cfed58698d97a88585a664c6ad46db8df92d46f3a23cfdc2bac74c24bdc65",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "49a8f697c8d7985ec637e70aca3b9271d6f0da7f",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "702db54b4ce5ee0904352b2b507faffe5ef5d876",
+    "diff_sha256": "c9563b2e9e7bd45436aceb5a744e8fc6f7f8da7a818088b0d9426a37d7f59aea",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "4126069eaf7aa93fc8f4ec3799a33800fefd0614926691a1301e543a2a229861"
+  },
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "IMPLEMENTED",
+  "evidence_key": {
+    "production_hash": "4126069eaf7aa93fc8f4ec3799a33800fefd0614926691a1301e543a2a229861",
+    "dependency_hashes": {}
+  },
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 4
+  },
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "publication_state": "NOT_PUBLISHED_BY_HARNESS",
+  "assignment_count": 4,
+  "results": [
+    {
+      "assignment_id": "A-PR284-R2-CLAIM",
+      "agent_type": "claim_gate_reviewer",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-CLAIM.json",
+      "sha256": "ab2a520403e507f3db1d95ef6d782ff3c5ff89986add7388d47ed8a0a9a60510",
+      "bytes": 9683
+    },
+    {
+      "assignment_id": "A-PR284-R2-CODE",
+      "agent_type": "code_cartographer",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-CODE.json",
+      "sha256": "e645823e2d2658be9167aaaef4bc169bf576d8961ad4b2d49d33b375859a15ad",
+      "bytes": 7717
+    },
+    {
+      "assignment_id": "A-PR284-R2-PHYSMATH",
+      "agent_type": "physics_stat_auditor",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-PHYSMATH.json",
+      "sha256": "b39b11cd780784d715b869ef02ae5315817f1e64bd7cf2bedd64a8bbee3af895",
+      "bytes": 9364
+    },
+    {
+      "assignment_id": "A-PR284-R2-REPLAY",
+      "agent_type": "harness_engineer",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-REPLAY.json",
+      "sha256": "b0da580d1ef08cad37f82670953048e13d0e57c1c1825f46bf35ce377b745f64",
+      "bytes": 11132
+    }
+  ],
+  "merged_results": {
+    "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/MERGED_RESULTS.json",
+    "sha256": "cfdee51c99953b64f6fa1e7475acbcd0c73edddcdcfc4efa2f43e14958d7efca",
+    "bytes": 12015
+  },
+  "disposition": "summarized_discardable",
+  "closed_at": "2026-08-09T22:01:07+00:00"
+}

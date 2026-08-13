@@ -1,0 +1,143 @@
+{
+  "schema_version": 3,
+  "run_id": "pr287-fresh-independent-review-20260811",
+  "assignment_id": "A-PR287-FROZEN-PHYSSTAT",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "work_unit_id": "PR-287",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "fbe4787a82f650ec050fab020ae2c9545e9f7fe778ec2d6f5d4550470537712b",
+    "seal_sha256": "486a8f7e75c04467e2c65a083529eff5f65e622f935b3346ada8ea7243cd456e",
+    "base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_sha": "06ee728054fd62423fa90bc6a5d714b9be8631e3",
+    "merge_base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_tree_sha": "dd909b5d35a385b251547f6224b657346d7688f6",
+    "diff_sha256": "83ef2581a3a1afdf5459ad64730783f6f7e905a3cda155236ec44971b160912f",
+    "changed_files_sha256": "b522232b4e7f07fe03b297f33a07dfcce4f7eb80cdd0bbd94b9fd06a20b73198",
+    "production_hash": "6d0963dfdc66dcd2bf80ef3dde6fd84d87f455f0c6db5199250b06b2c51e873a"
+  },
+  "independence_mode": "blind-results",
+  "status": "inconclusive",
+  "gate_disposition": "INCONCLUSIVE",
+  "result_path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-PHYSSTAT.json",
+  "assignment_sha256": "850625ccc726878e3fcbe7b4e0ee38dc9e810ed9336d620e8deeb53e0dc4843a",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CLAIM_REGISTRY.jsonl",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/RUN_PLAN.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/assignments/A-PR287-FROZEN-PHYSSTAT.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+    ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+    "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+    "docs/research_program/post_pr275/pr287_publication_policy.json",
+    "docs/research_program/post_pr275/pr287_spec.yaml",
+    "htt/htt/htt/infer/post275_blind_replay.py",
+    "htt/mio/reports/post275_blind_replay.py",
+    "htt/src/common/post275_blind_replay.py",
+    "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+    "tests/integration/test_post275_blind_replay.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T05:04:00Z",
+  "completed_at": "2026-08-11T05:22:51Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "PyYAML": "6.0.1",
+    "pytest": "9.1.1"
+  },
+  "commands": [
+    {"argv":["python3","-B","-m","pytest","-p","no:cacheprovider","-q","tests/integration/test_post275_blind_replay.py"],"returncode":2,"outcome":"declared bare-source packaging caveat: ModuleNotFoundError common during collection"},
+    {"argv":["python3","-B","scripts/codex_harness/run_pr287_post275_blind_replay.py","focused"],"returncode":0,"outcome":"focused suite completed with 31 passing progress marks"},
+    {"argv":["python3","-B",".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-PHYSSTAT/PHYSSTAT_ORACLE.py"],"returncode":0,"outcome":"deterministic independent oracle PASS; no entropy and no fresh outputs"},
+    {"argv":["python3","-B",".agent-harness/scripts/review_coverage.py","--coverage",".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-PHYSSTAT/REVIEW_COVERAGE.json","--seal",".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json","--run-id","pr287-fresh-independent-review-20260811","--assignment-id","A-PR287-FROZEN-PHYSSTAT","--risk-tier","R3","--structural-only"],"returncode":0,"outcome":"coverage valid"}
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-PHYSSTAT/REVIEW_COVERAGE.json",
+      "sha256": "e1e3fd89d761cd3827328cf8aa0c277f94e3a16d04e86c393240e6d15ed154a2",
+      "bytes": 10481,
+      "producer": "A-PR287-FROZEN-PHYSSTAT"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-PHYSSTAT/PHYSSTAT_ORACLE.py",
+      "sha256": "8e239f1d71cceebf5fe25882f634f1d0a9f1de1a8ba6f4056b81425f017df1b6",
+      "bytes": 5263,
+      "producer": "A-PR287-FROZEN-PHYSSTAT",
+      "command_fingerprint": "861e028a680e7b6216a9752afbe2c695957abf5b85761e85ae099c2b96e8c67b"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-PHYSSTAT/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "e1e3fd89d761cd3827328cf8aa0c277f94e3a16d04e86c393240e6d15ed154a2",
+  "findings": [
+    {
+      "finding_id": "F-PR287-PHYSSTAT-EXECUTOR-ABSENT",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "inconclusive",
+      "severity": "medium",
+      "evidence_fingerprint": "PR287-PHYSSTAT-ISOLATED-EXECUTOR-ABSENT-V1",
+      "statement": "The frozen diagnostic contracts and containment pass static and deterministic checks, but fresh blind scientific execution remains unavailable because the capability-isolated analyst executor is not installed; this is the preregistered INCONCLUSIVE disposition, not a mathematics or containment failure.",
+      "assumptions_used": [
+        "No fresh entropy, truth vault, challenge, submission, adjudication, or result pack may be created by this review.",
+        "The sealed candidate and exact required-input hashes define the reviewed implementation.",
+        "Synthetic diagnostic checks cannot promote observed, source-proof, geometry, native-solver, or family claims."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr287_spec.yaml:326",
+        "htt/htt/htt/infer/post275_blind_replay.py:18",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py:55",
+        ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-PHYSSTAT/PHYSSTAT_ORACLE.py"
+      ],
+      "counterevidence_refs": [
+        "Focused deterministic suite completed successfully through the declared runner.",
+        "No fresh output path exists after review."
+      ],
+      "reproduction": [
+        "python3 -B scripts/codex_harness/run_pr287_post275_blind_replay.py focused",
+        "python3 -B .agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-PHYSSTAT/PHYSSTAT_ORACLE.py"
+      ],
+      "unresolved": [
+        "Install and separately authorize a capability-isolated analyst executor before any fresh blind execution."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR287-PHYSSTAT-EXECUTOR-ABSENT"],
+      "summary": "Typed integration math and containment are consistent, but fresh blind execution remains preregistered INCONCLUSIVE because the isolated analyst executor is absent."
+    },
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "The PR-287 surfaces preserve the no-observed-data, no-PR151-input, diagnostic-only data-admission ceiling; no fresh or observed artifact was admitted.",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr287_spec.yaml:117",
+        "htt/src/common/post275_blind_replay.py:3381",
+        ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-PHYSSTAT/PHYSSTAT_ORACLE.py"
+      ],
+      "evidence_fingerprint": "PR287-PHYSSTAT-NO-OBSERVED-DATA-ADMISSION-V1"
+    }
+  ],
+  "errors": []
+}

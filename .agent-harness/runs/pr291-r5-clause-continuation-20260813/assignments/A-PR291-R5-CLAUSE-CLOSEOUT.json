@@ -1,0 +1,76 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-clause-continuation-20260813",
+  "assignment_id": "A-PR291-R5-CLAUSE-CLOSEOUT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_CLAUSE_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "035e67d7239778b553e3475b2bfd3aae782c4fe3a36f7d15d4523788b7482c19",
+    "seal_sha256": "ad585eb8f93a6bef8cbad27c4ef27ca20253e786f226101a8774cf6beb07d070",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "6c9d86a22394f512211cb42f9ef60d248f10ce20",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "4e40985666c5ea82d8d1bed3009f179e22aa12db",
+    "diff_sha256": "0338828d09aa6698dd3464a6e7eecb226a90444260a98a5dfc439f0f8e43672a",
+    "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+    "production_hash": "264931c49f4cd6d0850f1e46b3ba9b441596f7486067e25361cf4aca96a61695"
+  },
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Metadata-only failed closeout for the frozen PR-291 clause continuation. Read assignment first and only the explicitly allowed sibling result. Confirm the strict-valid claim FAIL and its single predicate-local negation-order finding, exact seal/head/tree/base, unchanged CF4 numerical hashes, lifecycle remains VALIDATED, PR292 remains PLANNED/INELIGIBLE with zero budget, HUMAN_ONLY merge, and no push/PR/merge. Do not rerun substantive assurance or edit shared/tracked files. Write assignment-local metadata oracle, exact 16-cell coverage with only claim_and_family_ceiling FAIL, schema-v3 FAIL result, and validate only your own result using strict_result_validation.py.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR291_R5_CLAUSE_FINAL_CANDIDATE_SEAL.json",
+      "sha256": "035e67d7239778b553e3475b2bfd3aae782c4fe3a36f7d15d4523788b7482c19"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_publication_policy.json",
+      "sha256": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "7e931173b3310306a1b03b259ef8414d1a24c2c465649894d80a0134571138e5"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "7e931173b3310306a1b03b259ef8414d1a24c2c465649894d80a0134571138e5"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM.json",
+      "sha256": "1f3415a0f1309f2288998691120de0d9e3586948290d567510526a6432fa9883"
+    }
+  ],
+  "allowed_sibling_results": [
+    ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM.json"
+  ],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact 16-cell REVIEW_COVERAGE artifact",
+    "assignment-local metadata closeout oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLOSEOUT.json",
+  "status": "registered",
+  "assignment_sha256": "f78c0d7b5d5d30b3c5b8b03bfe48af6646d38d7a1132bdab925e4256229a09ee"
+}

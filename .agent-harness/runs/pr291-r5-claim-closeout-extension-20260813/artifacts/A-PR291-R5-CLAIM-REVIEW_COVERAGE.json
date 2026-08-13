@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-claim-closeout-extension-20260813",
+  "assignment_id": "A-PR291-R5-CLAIM",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "8345974c09e968095cce4a8cac5014e3d08f42ed68e56004a2e3cd56ce3edf5a",
+  "candidate_sha": "5395853386b08b1fbf0b56a9e6c7a2a6e104ae5a",
+  "candidate_tree_sha": "4a1bdbecae5767768b4e8d5beb3a00b41b437c1f",
+  "diff_sha256": "d4e14e08a51067fdffa696ea694b4d1a61bafb7db740da3fd0246bcda5951862",
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "completed_at": "2026-08-13T07:58:09Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json",
+        "git rev-parse HEAD=5395853386b08b1fbf0b56a9e6c7a2a6e104ae5a; HEAD tree=4a1bdbecae5767768b4e8d5beb3a00b41b437c1f; merge-base=06ac20605ebc371b0f97ad6e91c802a51a9bf764; tracked status empty"
+      ],
+      "rationale": "Exact frozen candidate, tree, base, merge-base, seal-file hash, required-input hashes, and clean tracked state replayed."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml:1",
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"
+      ],
+      "rationale": "The preactivation spec binds C2 diagnostic-only scope and the receipt reports no observed execution or numerical output."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This claim-lane assignment did not independently replay predecessor terminal artifacts."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml:54",
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"
+      ],
+      "rationale": "Identity admission and distinct H-CF4 human authorization remain separate; both observed activation prerequisites are unsatisfied."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Output-preflight implementation is outside this claim-language assignment."
+    },
+    {
+      "cell": "synthetic_estimand_identity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Synthetic estimand mechanics are outside this claim-language assignment."
+    },
+    {
+      "cell": "group_row_selection_and_frame_conventions",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Catalogue row-selection and frame replay are outside this claim-language assignment."
+    },
+    {
+      "cell": "full_covariance_and_effective_rank",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Covariance and numerical rank replay are outside this claim-language assignment."
+    },
+    {
+      "cell": "depth_zoa_nested_support_and_transport",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Depth, ZoA, and transport mechanics are outside this claim-language assignment."
+    },
+    {
+      "cell": "weak_identification_and_identified_set_abstention",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Weak-identification numerical mechanics are outside this claim-language assignment."
+    },
+    {
+      "cell": "legacy_p0_and_curl_disposition",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_spec.yaml:163",
+        "tests/contracts/test_claim_language_lint.py:159",
+        "PYTHONPATH=htt/src python3 -B -m pytest -p no:cacheprovider -q tests/contracts/test_claim_language_lint.py => 29 passed"
+      ],
+      "rationale": "The specification retains the no-rescue/no-physics disposition, and focused scanner controls pass."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"
+      ],
+      "rationale": "Receipt terminal is BLOCKED_PREDECESSOR_FINAL_SUCCESS with observed_data_executed false and numeric_outputs_written empty."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Portable clean integration is outside this claim-language assignment."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr291_publication_policy.json",
+        ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json"
+      ],
+      "rationale": "Candidate seal binds the exact publication policy hash, C2 ceiling, and BLOCKED_PRE_NATIVE_ATLAS family gate."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "FAIL",
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-hostile-oracle.py",
+        "htt/src/common/semantic_guards/no_overclaim.py:100",
+        "python3 -B .agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-hostile-oracle.py => PASS reproducer, 8/8 false negatives"
+      ],
+      "rationale": "The scanner misses eight positive family-promotion variants while registered detections, predicate-scoped downclaims, and exact Markdown/YAML guardrails behave as expected."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Latest-target integration is a later closeout-stage responsibility and cannot proceed from this substantive claim FAIL."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR291-R5-CLAIM-FALSE-NEGATIVE-REPRODUCER",
+      "kind": "mutation_test",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-hostile-oracle.py"
+      ],
+      "command_fingerprint": "2491d256dcb0ba5d65c9251c102d9a0d6ba5adacaac80993f07ddea10d08ffdf",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T07:55:00Z",
+      "completed_at": "2026-08-13T07:55:01Z",
+      "artifact_path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-hostile-oracle.py",
+      "artifact_sha256": "a49cd02ba0953fda19795c5e493b29eaeb62b8c0632124e92384528f1d694aef",
+      "artifact_bytes": 5794,
+      "evidence_refs": [
+        "htt/src/common/semantic_guards/no_overclaim.py",
+        "tests/contracts/test_claim_language_lint.py",
+        "oracle stdout: status PASS, false_negative_count 8"
+      ]
+    }
+  ],
+  "coverage_sha256": "c82ad2ef74b4741b39fd588c165697093da64878d2eb50908a0b8c07ee769073"
+}

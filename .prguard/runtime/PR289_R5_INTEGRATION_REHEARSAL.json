@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "candidate_seal_sha256": "301be2d0d73f18c109b71f36c43e8c8d033bd7fcfb01a6d04142b7493e30cf01",
+  "candidate_sha": "eec048d4cf19989983986d139c7d0a797b1363e0",
+  "candidate_tree_sha": "27251a5b9e28685b23473f23d7d0b960b039d375",
+  "diff_sha256": "bebb8bc4ba55b67c42b0a879f63137fe240f8fb8cc82528d9b7c8fff9e99b71f",
+  "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr288-bayesian-evidence-recovery-20260811",
+  "latest_target_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+  "integration_policy_sha256": "4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9",
+  "merged_tree_sha": "27251a5b9e28685b23473f23d7d0b960b039d375",
+  "started_at": "2026-08-11T12:20:09+00:00",
+  "completed_at": "2026-08-11T12:21:06+00:00",
+  "status": "PASS",
+  "commands": [
+    {
+      "id": "pr289-focused",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "focused"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "focused"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T12:20:11+00:00",
+      "completed_at": "2026-08-11T12:20:53+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "cbea268cc2b8da7135bdb6300ae6d89d5aadf77c25156846ddc32d548671d3ee",
+      "stdout_bytes": 100,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr289-readonly-preflight",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "preflight"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "preflight"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T12:20:53+00:00",
+      "completed_at": "2026-08-11T12:20:54+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "286c694134f80f1ef492b17f1df82b6b2844bfedb923226e5958a749231138bf",
+      "stdout_bytes": 435,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr289-adjacent",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "adjacent"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "adjacent"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T12:20:54+00:00",
+      "completed_at": "2026-08-11T12:21:00+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "afe3def803c262f811d2d1306539a383b1279ee031c0712047f6c0d254d40ccb",
+      "stdout_bytes": 649,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr289-receipt-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "check"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "check"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 600,
+      "started_at": "2026-08-11T12:21:00+00:00",
+      "completed_at": "2026-08-11T12:21:01+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "a157754ca3548f6eac5b621bd37f8325c0dcb06384cb83f7953b533eb8980cd4",
+      "stdout_bytes": 234,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr289-portable-clean-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "portable"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr289_data_identity_v2.py",
+        "portable"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1800,
+      "started_at": "2026-08-11T12:21:01+00:00",
+      "completed_at": "2026-08-11T12:21:03+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "ab808dfd31bb5af139563efe326184c0581b2ef914862b14d546eefd49ddcd8d",
+      "stdout_bytes": 1680,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr289-publication-policy-cross-binding",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "-k",
+        "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "-k",
+        "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T12:21:03+00:00",
+      "completed_at": "2026-08-11T12:21:05+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "5141670157f1c07662d6a3d709b5cd15bd3cae93a6d40f983331b4f5041b75fe",
+      "stdout_bytes": 113,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr289-dag-strict",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T12:21:05+00:00",
+      "completed_at": "2026-08-11T12:21:06+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "954bccce10cfc35cf06b7aa16b931d748ff4f55af6a9350c833855bdafcf44ee",
+      "stdout_bytes": 1749,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr289-claim-language",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "htt/src/common/data_identity.py",
+        "tests/contracts/test_data_identity_registry_v2.py",
+        "docs/research_program/post_pr275/pr289_spec.yaml",
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+        "docs/research_program/post_pr275/data_runbooks.yaml",
+        "docs/harness/CLAIM_LEDGER.md",
+        "docs/generated/pr289_data_identity_v2_receipt.json",
+        "docs/PR_DELTAS/pr-289.md"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "htt/src/common/data_identity.py",
+        "tests/contracts/test_data_identity_registry_v2.py",
+        "docs/research_program/post_pr275/pr289_spec.yaml",
+        "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+        "docs/research_program/post_pr275/data_runbooks.yaml",
+        "docs/harness/CLAIM_LEDGER.md",
+        "docs/generated/pr289_data_identity_v2_receipt.json",
+        "docs/PR_DELTAS/pr-289.md"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-11T12:21:06+00:00",
+      "completed_at": "2026-08-11T12:21:06+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "19a00c56f80d1c997ad754ec812ae264d0469fe074b69c56b34594caa22f1164",
+      "stdout_bytes": 38,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    }
+  ],
+  "receipt_sha256": "4b12e3ac28a7928e8680508512408f4b56716b1762756449339e6485da67a1fb"
+}

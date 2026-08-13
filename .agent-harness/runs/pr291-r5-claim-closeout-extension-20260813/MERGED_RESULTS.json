@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-claim-closeout-extension-20260813",
+  "generated_at": "2026-08-13T08:08:56+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 1,
+  "raw_finding_count": 1,
+  "unique_finding_count": 1,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR291-R5-CLAIM",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR291-R5-CLAIM-001"
+          ],
+          "summary": "Ownership and artifact metadata remain correctly bounded to HTT delivery, OBSSTAT observables, COMMON guards, C2 diagnostic_only, transfer none, observed/public false, and BLOCKED_PRE_NATIVE_ATLAS. Nevertheless, the production scanner has reproducible family-promotion false negatives, so this R5 claim review fails. R4 FAIL chronology, the assignment-limited single-use extension, PR-292 PLANNED/INELIGIBLE with zero budget, and HUMAN_ONLY merge status remain preserved."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR291-R5-FINAL-CLOSEOUT",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR291-R5-FINAL-CLOSEOUT-001"
+          ],
+          "summary": "R5 code/replay and physstat pass, but claim FAIL blocks closeout. Ordinary assurance is 16/16 and the single-use extension is 2/2. PR-291 remains VALIDATED, PR-292 remains PLANNED/INELIGIBLE at zero budget, merge is HUMAN_ONLY, and no push, PR creation, or merge occurred."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR291-R5-CLAIM-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "sha256:a49cd02ba0953fda19795c5e493b29eaeb62b8c0632124e92384528f1d694aef#eight-family-promotion-false-negatives",
+      "statement": "The R5 scanner still fails closed incompletely: eight ordinary positive family-identification variants evade both the exact policy scan and focused regression suite, so claim_and_family_ceiling is not review-ready.",
+      "assumptions_used": [
+        "Before a native morphology atlas, any affirmative inference that an analysis or scalar identifies a Bianchi family is forbidden regardless of determiner, voice, line wrapping, or unrelated publication negation.",
+        "A mutation reproducer PASS means the review finding reproduced, not that the candidate claim gate passed."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-hostile-oracle.py",
+        "docs/research_program/post_pr275/pr291_spec.yaml:14",
+        "htt/src/common/semantic_guards/no_overclaim.py:100",
+        "tests/contracts/test_claim_language_lint.py:59"
+      ],
+      "counterevidence_refs": [
+        "Exact claim-language policy command passed with no issues.",
+        "Focused claim-language regression suite passed 29/29.",
+        "Registered reordered, active-plural, subject/predicate reversal, and scalar-reversal controls are detected.",
+        "Predicate-scoped downclaims and exact Markdown/YAML guardrails remain allowed."
+      ],
+      "reproduction": [
+        "Run python3 -B .agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/artifacts/A-PR291-R5-CLAIM-hostile-oracle.py.",
+        "Observe status PASS, false_negative_count 8, empty scanner_rules for all eight forbidden cases, and exit code 0."
+      ],
+      "unresolved": [
+        "The existing bounded grammar needs to cover plural analysis subjects, ordinary determiners, possessive analysis subjects, multiline determiner forms, general scalar-family implications, and unrelated same-clause negation without breaking predicate-scoped downclaims or structured guardrails."
+      ],
+      "confidence": 0.99,
+      "source_finding_ids": [
+        "F-PR291-R5-CLAIM-001"
+      ],
+      "supporting_assignments": [
+        "A-PR291-R5-CLAIM"
+      ],
+      "supporting_agent_types": [
+        "claim_lane_reviewer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "assignment_count": 2,
+  "validated_result_count": 2,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/RUN_PLAN.json",
+      "sha256": "1341f303c80a4df77f0a89c0973247ea2f31e35b5bd2497a841ee0cf5fb19e8d",
+      "bytes": 6011
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/assignments/A-PR291-R5-CLAIM.json",
+      "sha256": "ba4b02e54df4ea757f0f2089c57bfaf21e6e3f5d7d7c7516ccbbaa24556a1cb7",
+      "bytes": 4931
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/assignments/A-PR291-R5-FINAL-CLOSEOUT.json",
+      "sha256": "a85e0097e5da8058df7a7ef78fa57df4460cfff61b3b8c52eb9cb6912ce4cefc",
+      "bytes": 4871
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-CLAIM.json",
+      "sha256": "0759b9af6112d06c989b71a1fff2149acd524ea9aa98923e33bf58ce1d9ee395",
+      "bytes": 8484
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/results/A-PR291-R5-FINAL-CLOSEOUT.json",
+      "sha256": "e455b8cfae7ae31e80f3f1a4924913a999ee7e10247e4b3426b9db7772a176f9",
+      "bytes": 6323
+    }
+  ],
+  "merge_input_sha256": "c78690e7457fceb4ecb5884891cbd94213c0f33c27d04d89a9099ddba1a13f9f"
+}

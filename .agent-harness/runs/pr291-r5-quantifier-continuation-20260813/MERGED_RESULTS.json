@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-quantifier-continuation-20260813",
+  "generated_at": "2026-08-13T09:12:28+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 1,
+  "raw_finding_count": 1,
+  "unique_finding_count": 1,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR291-R5-QUANTIFIER-CLAIM",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR291-R5-QUANTIFIER-CLAIM-001"
+          ],
+          "summary": "FAIL: numerical CF4 bytes and carried physics/statistics evidence remain unchanged and all seven registered policy commands pass, but the claim/family ceiling is bypassable by seven reordered passive and scalar-family-as-Bianchi variants."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR291-R5-QUANTIFIER-CLOSEOUT",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR291-R5-QUANTIFIER-CLOSEOUT-001"
+          ],
+          "summary": "Strict-valid FAIL. Carried code/replay and physics/statistics remain PASS under unchanged numerical hashes, but the fresh seven-case claim failure blocks REVIEWED/SEALED; PR-291 stays VALIDATED and PR-292 stays PLANNED/INELIGIBLE."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR291-R5-QUANTIFIER-CLAIM-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The frozen claim guard still permits ordinary positive Bianchi-family identification claims when a bounded family phrase is reordered before passive identification with an intervening adverb, or when scalar identification uses the reordered 'family as Bianchi' construction; seven single-line and multiline variants return no issue despite the diagnostic-only pre-native family ceiling.",
+      "assumptions_used": [
+        "A positive assertion that candidate families have been identified as Bianchi is forbidden before the native morphology-atlas gates even when Bianchi follows the predicate.",
+        "The words now and hereby do not negate the identification predicate.",
+        "Scalar support for identifying a candidate family as Bianchi is a scalar-to-family promotion in either grammatical direction."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/REVIEW_COVERAGE.json",
+        ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/hostile_claim_oracle.py",
+        "docs/research_program/post_pr275/pr291_spec.yaml:13",
+        "htt/src/common/semantic_guards/no_overclaim.py:127",
+        "htt/src/common/semantic_guards/no_overclaim.py:160"
+      ],
+      "evidence_fingerprint": "sha256:e2cb440b111af4b308020a127b5bd8c6682a6a158af501c2bc94e3c28233d34d",
+      "counterevidence_refs": [
+        "tests/contracts/test_claim_language_lint.py:110",
+        "tests/contracts/test_claim_language_lint.py:134",
+        "command:pr291-claim-language:exit=0",
+        "command:pr291-focused:62-passed"
+      ],
+      "reproduction": [
+        "python -B .agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/hostile_claim_oracle.py",
+        "Observe candidate_acceptance=FAIL, reproduced_bypasses count 7, prior_false_negatives empty, novel_false_negatives empty, safe_false_positives empty, and exact Markdown/YAML controls passing."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Expand the existing geometry/family predicate to cover passive family-before-Bianchi clauses with bounded non-negating auxiliaries/adverbs and scalar implications using 'family as Bianchi' in both directions.",
+        "Add all seven reproductions as regression tests while preserving predicate-scoped downclaims and exact Markdown/YAML guardrail exemptions.",
+        "Kill switch: keep PR-291 at VALIDATED with claim/review DEFERRED; do not close out, publish, merge, execute CF4 observed data, or activate PR-292 until a new frozen candidate passes a fresh authorized review."
+      ],
+      "source_finding_ids": [
+        "F-PR291-R5-QUANTIFIER-CLAIM-001"
+      ],
+      "supporting_assignments": [
+        "A-PR291-R5-QUANTIFIER-CLAIM"
+      ],
+      "supporting_agent_types": [
+        "claim_lane_reviewer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "assignment_count": 2,
+  "validated_result_count": 2,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/RUN_PLAN.json",
+      "sha256": "373a1610d344958788547a0f3e75a13a87828a8147fb0d5a4f0dc36e7fa73681",
+      "bytes": 6663
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/assignments/A-PR291-R5-QUANTIFIER-CLAIM.json",
+      "sha256": "adfda01bd21face5399a6d918880445fb4f9e42cf205474f5282b5a1372818b9",
+      "bytes": 4789
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/assignments/A-PR291-R5-QUANTIFIER-CLOSEOUT.json",
+      "sha256": "4c7d4d2e5b63e7470df8abacc0ce90cbefe23230a23eeb8b7b10df0bafd11d32",
+      "bytes": 5172
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/results/A-PR291-R5-QUANTIFIER-CLAIM.json",
+      "sha256": "d07334ba1dd6e4f08552a1843c475907feca12c9c8819dcddf2066688456d792",
+      "bytes": 9012
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/results/A-PR291-R5-QUANTIFIER-CLOSEOUT.json",
+      "sha256": "966921371dd760b036be8786d7a67f66a37081df6005482470969519fc569806",
+      "bytes": 8633
+    }
+  ],
+  "merge_input_sha256": "5b8302b85c257b171a9e367f4808f4abbf1cb91ff04270373e925beb981b9ec5"
+}

@@ -1,0 +1,111 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-bounded-repair-r3-review-20260813",
+  "assignment_id": "A-PR291-R3-CODE",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "a1f8430ed17e9d8f1fa061daf423a95ed36d5c71bdad45ff38aa58ffa8b15804",
+    "seal_sha256": "28a2bda8a600cf5ccb0dab4dbb9525105004c469f628d1e392d261beee5a32d1",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "1af0db69da0a190b268d6765e334b05023dd04e7",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "d5f3a1199932eb1b66b403e74287e003c941191f",
+    "diff_sha256": "fefd37043d724282ea1fbc3cf6a7de72c02d30bc9f3dff712c6bca564aef4cf3",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "7545b0cbc5e6e0ae572b4c8b7e9efebeafc9b41a25e90da82d407b0ecec8813b"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Blind frozen code/harness/replay review of repaired PR-291 at exact R3 seal. Start in /home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810, read this assignment first, validate context and every input hash. Independently falsify exact PR-290 base and selective G55 plus bounded G56-G61 lineage; exact nine-role PR-289 identity replay; PR-290 transaction-module origin/byte/function provenance before payload construction; hostile preloaded-module, outside-root, parent-race, symlink/hardlink/FIFO/traversal/atomic-write defenses; deterministic receipt and all seven policy commands. Run a fresh assignment-local oracle using a true temporary path outside repository. Confirm PR-292 INELIGIBLE/0 and HUMAN_ONLY. Candidate/shared files read-only. Write only assignment-local artifacts and declared result. Do not inspect siblings/history results, CONTEXT_PACK, process listings, broad .agent-harness searches, or aggregate validators; run only single-result validation.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json",
+      "sha256": "a1f8430ed17e9d8f1fa061daf423a95ed36d5c71bdad45ff38aa58ffa8b15804"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_spec.yaml",
+      "sha256": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_publication_policy.json",
+      "sha256": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-291.md",
+      "sha256": "dd13555b623dfd16d9e677057c2632c0e3f8742adfbc02260dab887fb621cb87"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "21304426b04ac0cff3df3c3625b2f20e318fe0cb65730c5187a61f77c75b42ac"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "21304426b04ac0cff3df3c3625b2f20e318fe0cb65730c5187a61f77c75b42ac"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+      "sha256": "e2b7ba98f891fb1f493773e4842ef0d9553e5912fc61a3730ab5d53980f2bb13"
+    },
+    {
+      "path": "htt/src/common/cf4_observed_lane_activation.py",
+      "sha256": "4b15529947ea6269bc0ff38b7a58e5433fc6e767e34b732e2ee37cfac07bbeb0"
+    },
+    {
+      "path": "htt/obsstat/cf4_post275_lane.py",
+      "sha256": "dbde6106ec52c58c3f8df80149f973bd9e3c2201ff39683bf6bb5ad87bd5a8b2"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr291_cf4_lane.py",
+      "sha256": "45659be3d9801697272726d1cf8018d3719a7d83127fc89d05781c30db239af8"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr290_planck_lane.py",
+      "sha256": "abaddb4980839f3b368337e9c800bed7a15c78b8fb7ae78c4a0708dc9e250466"
+    },
+    {
+      "path": "tests/integration/test_cf4_post275_lane.py",
+      "sha256": "bef174ab837e75997d36feb5578a64f890c82961d0480559ca6f828e45f21e4b"
+    },
+    {
+      "path": "docs/generated/pr289_data_identity_v2_receipt.json",
+      "sha256": "92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+      "sha256": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact 16-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/results/A-PR291-R3-CODE.json",
+  "status": "registered",
+  "assignment_sha256": "fc8579b323b36e9bc96e3215a68098eeba18bd4316fb5c13b294acecb996f780"
+}

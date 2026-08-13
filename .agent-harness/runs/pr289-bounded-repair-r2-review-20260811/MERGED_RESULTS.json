@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "run_id": "pr289-bounded-repair-r2-review-20260811",
+  "generated_at": "2026-08-11T10:48:06+00:00",
+  "process_status": "INVALID_ENVELOPES",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 0,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [],
+  "findings": [],
+  "conflicts": [],
+  "errors": [
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CLAIM.json",
+      "error": "assignment required_inputs[5] hash mismatch (stale input): tests/contracts/test_data_identity_registry_v2.py; assignment candidate worktree is dirty; commit or remove non-ignored changes first"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE.json",
+      "error": "assignment required_inputs[5] hash mismatch (stale input): tests/contracts/test_data_identity_registry_v2.py; assignment candidate worktree is dirty; commit or remove non-ignored changes first; AUTO_STACKED_PR result status and gate_disposition disagree; result assignment_sha256 does not match the registration seal; result_path inside the result does not match its registration; result launch_evidence must equal the verified class 'unverified'; result execution_evidence must be self_declared; result started_at must be a non-empty string; result completed_at must be a non-empty string; result commands must be a list; result artifacts must be a list; result files_read must be a list of non-empty strings; result files_read_evidence must be self_declared; reviewer result requires review_coverage_path; reviewer result requires review_coverage_sha256; result errors must be a list; finding 'F-PR289-R2-CODE-001' has an invalid verdict; finding 'F-PR289-R2-CODE-001' severity must be one of ['critical', 'high', 'low', 'medium']; finding 'F-PR289-R2-CODE-001' lacks a statement; finding 'F-PR289-R2-CODE-001' assumptions_used must be a list of non-empty strings; finding 'F-PR289-R2-CODE-001' evidence_refs must be a list of non-empty strings; finding 'F-PR289-R2-CODE-001' counterevidence_refs must be a list of non-empty strings; finding 'F-PR289-R2-CODE-001' reproduction must be a list of non-empty strings; finding 'F-PR289-R2-CODE-001' unresolved must be a list of non-empty strings; finding 'F-PR289-R2-CODE-001' confidence must be in [0, 1]; claim_result 'C-PR274-DATA-ADMISSION' outcome must be one of ['examined_no_findings', 'findings_present', 'not_examined']; claim_result 'C-PR274-DATA-ADMISSION' requires a summary; fail result must contain at least one fail finding"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE_REVIEW_COVERAGE.json",
+      "error": "registered assignment path is missing or not a regular file: .agent-harness/runs/pr289-bounded-repair-r2-review-20260811/assignments/A-PR289-R2-CODE_REVIEW_COVERAGE.json"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-DOMAIN.json",
+      "error": "assignment required_inputs[5] hash mismatch (stale input): tests/contracts/test_data_identity_registry_v2.py; assignment candidate worktree is dirty; commit or remove non-ignored changes first"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.json",
+      "error": "assignment required_inputs[5] hash mismatch (stale input): tests/contracts/test_data_identity_registry_v2.py; assignment candidate worktree is dirty; commit or remove non-ignored changes first; artifact 0 must contain path, sha256, bytes, and producer; artifact 1 must contain path, sha256, bytes, and producer; self-declared files_read path is not canonical repository-relative: '/home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md'; review coverage must be referenced exactly once as an assignment-produced artifact; claim_result 'C-PR274-DATA-ADMISSION' outcome must be one of ['examined_no_findings', 'findings_present', 'not_examined']"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.review_coverage.json",
+      "error": "registered assignment path is missing or not a regular file: .agent-harness/runs/pr289-bounded-repair-r2-review-20260811/assignments/A-PR289-R2-REPLAY.review_coverage.json"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-PHYSSTAT.json",
+      "error": "registered assignment has no result"
+    }
+  ],
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "assignment_count": 5,
+  "validated_result_count": 0,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/RUN_PLAN.json",
+      "sha256": "dce5fc6ccbd15fdd09279d522d91a1cc6b78877f385bab33f9e047ec3db1249b",
+      "bytes": 5587
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/assignments/A-PR289-R2-CLAIM.json",
+      "sha256": "1c3e8e9d8898224c31af036dd7f390eb16f295760e7cbc96813222c696acbeb3",
+      "bytes": 4642
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/assignments/A-PR289-R2-CODE.json",
+      "sha256": "908d1435a38f390d2ee98e74b10905cc83f822e4b49c9bd8cd329dcff0ec10ee",
+      "bytes": 4752
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/assignments/A-PR289-R2-DOMAIN.json",
+      "sha256": "8ca636d73bffb7876cff5d7b30338d6b0d91f8e385091da5b21dbd378ed36f01",
+      "bytes": 4714
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/assignments/A-PR289-R2-PHYSSTAT.json",
+      "sha256": "42c5c59966033ac94472167e28ee6401510f1246436ca2163c5f6af80e1b2d7c",
+      "bytes": 4773
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/assignments/A-PR289-R2-REPLAY.json",
+      "sha256": "fc868cc69eff3d24dd787536ca57ca2095ade1ce55c417e54c7ae668a9f7489b",
+      "bytes": 4920
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CLAIM.json",
+      "sha256": "98ed571abc51f20b7bf41ca0907c88354a197aa1f317713351685e5838d613c6",
+      "bytes": 8370
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE.json",
+      "sha256": "75ba243155a6ab34b6e210bc6ca7c242ee3fa2c5fc6670074aa5c256ed2d95d6",
+      "bytes": 13324
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE_REVIEW_COVERAGE.json",
+      "sha256": "130dbe236d0996538aeed107fb1d4af547171f5c22a93b762eec1e1db4060437",
+      "bytes": 10521
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-DOMAIN.json",
+      "sha256": "b4fb43fdbefbc5a9c3e809eef2e6e84aa68d3b3bf2ab3b7a107826bf59c2f06a",
+      "bytes": 11067
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.json",
+      "sha256": "87180c1e0f07689d3bf3bacfedfe1b26e8b4001b3fdc37e3cf811d43e5c587c6",
+      "bytes": 9885
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-REPLAY.review_coverage.json",
+      "sha256": "00601790c876ae29b084a12b6d31f95f9fb5c5027a8720b5084dcb0f760b6d01",
+      "bytes": 6209
+    }
+  ],
+  "merge_input_sha256": "59d190f8116781df9476531bd2a09c5c1f6a12e5edceb53cbb78cd9c32f4f9c7"
+}

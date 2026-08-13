@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR283-R2-CODE",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "candidate_seal_sha256": "a74c8b6c8eea857af899ac23e43eecaf2755b48b48fb7ccb37f50a3650915955",
+  "candidate_sha": "6fa98399dfe8b0a0735f9938063420457cda7688",
+  "candidate_tree_sha": "101ff1d291a4368cffcff80b4cef0e7f4092f3f0",
+  "diff_sha256": "0c898eb6fe199071eb5d7021a690cfec3591aa202d4b3e134cf6fe7e267e1afe",
+  "changed_files_sha256": "7a71a99b7b63012071701c4af1acf33719e01ff76e8ba0316eca7adc4103ebf6",
+  "completed_at": "2026-08-09T19:59:46Z",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR283_R2_CANDIDATE_SEAL.json", "validate_candidate_seal_payload: []"],
+      "rationale": "The sealed commit, tree, diff, production hash, and every assignment-required input match the frozen binding."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml:68", ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-PHYSMATH.json:121"],
+      "rationale": "The controlling fixed threshold contract and prior root-cause finding were read before executing the rereview oracle."
+    },
+    {
+      "cell": "covariance_supported_rank_ladder",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This rereview is bounded to the repaired threshold identity, exact replay, and caller compatibility; it does not reopen the rank-ladder adjudication."
+    },
+    {
+      "cell": "full_rank_small_angle_status",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Small-angle classification is outside the repaired singular-threshold finding."
+    },
+    {
+      "cell": "full_rank_small_singular_value_status",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/threshold_identity_replay_oracle.json", "tests/contracts/test_weak_identification.py:483"],
+      "rationale": "The registered 0.01 contract leaves the 0.005 fixture WEAKLY_IDENTIFIED and TYPE_UNIDENTIFIED."
+    },
+    {
+      "cell": "rank_deficiency_distinct_from_weak_identification",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "The repair does not alter rank-deficiency behavior."
+    },
+    {
+      "cell": "threshold_contract_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:94", "tests/contracts/test_weak_identification.py:483", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/threshold_identity_replay_oracle.json"],
+      "rationale": "The projection now requires the exact registered content identity; a separately constructed content-equivalent contract remains compatible and an alternate 0.001 singular threshold is rejected."
+    },
+    {
+      "cell": "exact_source_geometry_report_replay",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:81", "htt/htt/htt/departure/velocity_frame_decomposition.py:1244", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/threshold_identity_replay_oracle.json"],
+      "rationale": "Changing registered joint singular values without rebuilding the report fails exact replay before projection."
+    },
+    {
+      "cell": "exact_normalizer_spec_binding",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:79", "htt/src/common/anchor_geometry.py:1134", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/threshold_identity_replay_oracle.json"],
+      "rationale": "An exact NormalizerSpec is required, and a changed coordinate map fails source-report replay."
+    },
+    {
+      "cell": "mandatory_threshold_contract_enforcement",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:90", "tests/contracts/test_weak_identification.py:483", "tests/contracts/test_weak_identification.py:519"],
+      "rationale": "Missing, wrong-type, and alternate-identity contracts fail closed."
+    },
+    {
+      "cell": "all_source_gate_callers_migrated",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/infer/vector_tensor_blind_integration.py:685", "tests/pr_cards/test_pr_258_open_set_response_classes.py:352", "tests/contracts/test_anisotropy_type_report.py:363", "scripts/codex_harness/run_pr258_open_set_oracle.py:886", "python -B scripts/codex_harness/run_pr283_weak_identification.py caller-migrations: 90 passed"],
+      "rationale": "Every production or compatibility caller discovered by targeted symbol search passes the exported registered contract; the complete caller-migration lane passes."
+    },
+    {
+      "cell": "principal_angle_and_singular_value_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:263", "htt/src/common/source_separation.py:270", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/threshold_identity_replay_oracle.json"],
+      "rationale": "Decision identities remain content-addressed, and singular-value drift is rejected by exact source-report replay."
+    },
+    {
+      "cell": "mandatory_open_set_abstention",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/threshold_identity_replay_oracle.json", "python -B scripts/codex_harness/run_pr283_weak_identification.py focused: 25 passed"],
+      "rationale": "The weak singular fixture produces TYPE_UNIDENTIFIED before a candidate can be returned."
+    },
+    {
+      "cell": "no_point_estimate_or_nearest_fallback",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/threshold_identity_replay_oracle.json"],
+      "rationale": "The registered weak case returns candidate_class_id null."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Mutation-runner implementation was a separate prior finding and is outside this code-cartography rereview assignment."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["python -B scripts/codex_harness/run_pr283_weak_identification.py check: exact replay sha256=42ae6c4d0fcc735d6b62172788db2cee4fb21882069ce04f20ed9923fb346e0e"],
+      "rationale": "The frozen generated receipt exactly replays after the repair."
+    },
+    {
+      "cell": "pr272_predecessor_replay_preservation",
+      "status": "PASS",
+      "evidence_refs": ["python -B scripts/codex_harness/run_pr283_weak_identification.py caller-migrations: 90 passed", "python -B scripts/codex_harness/run_pr283_weak_identification.py adjacent: 62 passed"],
+      "rationale": "PR-258/PR-256 compatibility and caller lanes remain green under the registered contract."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Publication-policy adjudication is outside the registered repaired-code caller-surface assignment."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "No claim-language or family-identification surface changed in the threshold repair."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Clean-environment integration is owned by the harness/integration review lane."
+    },
+    {
+      "cell": "serial_stack_bootstrap_integrity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Serial-stack bootstrap integrity is outside this targeted code-path assignment."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Latest-target integration is owned by the integration gate, not this frozen candidate rereview."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR283-R2-THRESHOLD-IDENTITY-REPLAY",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/threshold_identity_replay_oracle.py"],
+      "command_fingerprint": "c82d6db3e23ae9a7921fdab0acaedfbc09ff7461a184fbfff4681f7efbed83fc",
+      "started_at": "2026-08-09T19:59:30Z",
+      "completed_at": "2026-08-09T19:59:31Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/threshold_identity_replay_oracle.json",
+      "artifact_sha256": "28ed9ec74407e0fbc61bc445b3b0ddc68e698047c33861aa82f87e7e555f67ff",
+      "artifact_bytes": 1028,
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:90", "tests/contracts/test_weak_identification.py:483"]
+    }
+  ],
+  "coverage_sha256": "6f50bbf02109f5f0545bc9f10ce6ba613e431665433321c98938f44a9c22abe8"
+}

@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "candidate_seal_sha256": "89c44d46574c4e268789ab2d623f966bd46e63c8b12f36fade1075d449f03e08",
+  "candidate_sha": "6ee9048ffd80f25337f405d8c6a39fd3b7f489eb",
+  "candidate_tree_sha": "6c5c55dee52aaf7c7649dd23d386e0f85782fd32",
+  "diff_sha256": "5c5e5abd22a509fca7681d1decb0a3ac3b4288c89d4f2a63a4fdc37bcb918ff2",
+  "changed_files_sha256": "7a71a99b7b63012071701c4af1acf33719e01ff76e8ba0316eca7adc4103ebf6",
+  "target_remote": "origin",
+  "target_branch": "research/pr04-multicomponent",
+  "latest_target_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+  "integration_policy_sha256": "1adf3fb4e6509c0d015d96783e6e878f740312579d123ea84342473756c06e6d",
+  "merged_tree_sha": "6c5c55dee52aaf7c7649dd23d386e0f85782fd32",
+  "started_at": "2026-08-09T19:18:28+00:00",
+  "completed_at": "2026-08-09T19:18:44+00:00",
+  "status": "FAIL",
+  "commands": [
+    {
+      "id": "pr283-process-recovery-bootstrap",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_process_recovery_auto_stacked.py"
+      ],
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/contracts/test_process_recovery_auto_stacked.py"
+      ],
+      "executable_path": "/usr/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-09T19:18:29+00:00",
+      "completed_at": "2026-08-09T19:18:32+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "f3aefbc29660263437ae00e233b2208da69ecf64d28f5a64a2801106239d08eb",
+      "stdout_bytes": 99,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr283-focused",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr283_weak_identification.py",
+        "focused"
+      ],
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "scripts/codex_harness/run_pr283_weak_identification.py",
+        "focused"
+      ],
+      "executable_path": "/usr/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 900,
+      "started_at": "2026-08-09T19:18:32+00:00",
+      "completed_at": "2026-08-09T19:18:34+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "9fce236c15d08fb22bf92e713ad3b1edb2bb9f1ac2ad05f3e33bdd9f77ac3e3d",
+      "stdout_bytes": 99,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr283-adjacent",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr283_weak_identification.py",
+        "adjacent"
+      ],
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "scripts/codex_harness/run_pr283_weak_identification.py",
+        "adjacent"
+      ],
+      "executable_path": "/usr/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1200,
+      "started_at": "2026-08-09T19:18:34+00:00",
+      "completed_at": "2026-08-09T19:18:41+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "83d6bc875c59a4b3c92ae81fc7b3d7d5de637d007bd72cda6632e54b6aeb5fa2",
+      "stdout_bytes": 99,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr283-receipt-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr283_weak_identification.py",
+        "check"
+      ],
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "scripts/codex_harness/run_pr283_weak_identification.py",
+        "check"
+      ],
+      "executable_path": "/usr/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-09T19:18:41+00:00",
+      "completed_at": "2026-08-09T19:18:42+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "b0729b297021c2bfc58abe5858b282589d0d64ba95d517c275acffdd6662e695",
+      "stdout_bytes": 129,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr283-pr272-predecessor-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr282_exact_parity_readiness.py",
+        "pr272"
+      ],
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "scripts/codex_harness/run_pr282_exact_parity_readiness.py",
+        "pr272"
+      ],
+      "executable_path": "/usr/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 600,
+      "started_at": "2026-08-09T19:18:42+00:00",
+      "completed_at": "2026-08-09T19:18:44+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "6dfa958b3065b27d164eda33870573a8d010ca8982c5fa2e637452561cf035d0",
+      "stdout_bytes": 113,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr283-portable-clean-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr283_weak_identification.py",
+        "portable"
+      ],
+      "argv": [
+        "/usr/bin/python",
+        "-B",
+        "scripts/codex_harness/run_pr283_weak_identification.py",
+        "portable"
+      ],
+      "executable_path": "/usr/bin/python",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1200,
+      "started_at": "2026-08-09T19:18:44+00:00",
+      "completed_at": "2026-08-09T19:18:44+00:00",
+      "returncode": 1,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stderr_sha256": "9a5bf2b5722a4a9bf708a50524a6d96f9f89bfa27aaa6185fd8fe1e437c2118a",
+      "stderr_bytes": 53
+    }
+  ],
+  "receipt_sha256": "50b112f0282896cee668df8b8fc85bc9ff470448af1ec4a56d4b92bf399f85a4"
+}

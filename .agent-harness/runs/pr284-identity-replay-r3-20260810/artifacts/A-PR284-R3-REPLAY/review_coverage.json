@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-identity-replay-r3-20260810",
+  "assignment_id": "A-PR284-R3-REPLAY",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "f845a04769749a7b27a836ecb921da76509313221add64cd36ba0071b5e6e5f2",
+  "candidate_sha": "d54ff22dac780d3b159394237416d28b2bd15dc8",
+  "candidate_tree_sha": "5fe16f62eb7246c455d116d79d2d422b35dee7b7",
+  "diff_sha256": "198de84c15f37c2d3c2edde8b2cdfbf06e5fe353aa2dd893462ae6bc3382e55f",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-09T23:24:34+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json#/checks"
+      ],
+      "rationale": "HEAD, tree, diff, changed-file inventory, seal checksum, seven commits, and stable patch IDs independently replayed."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/assignments/A-PR284-R3-REPLAY.json#/required_inputs",
+        "docs/research_program/post_pr275/pr284_spec.yaml"
+      ],
+      "rationale": "The registered assignment and all declared input hashes were verified before policy command execution."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/finite_target_law",
+        "tests/contracts/test_depth_path_doob_calibration.py"
+      ],
+      "rationale": "The receipt binds one exact rational atomic law and one common target; focused replay passed."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/report/target_second_moment",
+        "htt/src/common/depth_path_calibration.py"
+      ],
+      "rationale": "Exact replay requires zero weighted mean and positive second moment and recomputes the registered value."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_spec.yaml#/filtration_contract",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/mutations/0"
+      ],
+      "rationale": "Support-only proof substitution is killed and decreasing partition replay remains a separate condition."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/report/exact_tower_equalities"
+      ],
+      "rationale": "The report revalidates the exact finite tower, conditional values, and tower identity."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json#/checks/strengthened_builder_bypass_marker",
+        "tests/contracts/test_depth_path_doob_calibration.py"
+      ],
+      "rationale": "A fresh hostile replay using authentic arithmetic and invented path identities fails at exact DepthPath identity replay."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json#/mutations/4",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/mutations/10"
+      ],
+      "rationale": "Both preprocessing and estimator drift mutations execute and fail closed."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/report/path_maximum_content_id"
+      ],
+      "rationale": "Selected-atom path values, maximum, and content identity are recomputed from exact conditionals."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json#/proved_fixture/calibration",
+        "scripts/codex_harness/run_pr284_depth_path_doob.py"
+      ],
+      "rationale": "Exact squared-threshold comparison and the conservative rational bound replay without floating tolerance."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr284_depth_path_doob_receipt.json#/unproved_fixture",
+        "docs/research_program/post_pr275/pr284_spec.yaml#/matched_mock_fallback"
+      ],
+      "rationale": "The unproved fixture carries a bound-null matched-mock plan whose mocks remain explicitly unexecuted."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json#/checks/mutation_count",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/mutations"
+      ],
+      "rationale": "All fourteen spec-ordered rows are unique, executed, activated, killed, and mapped to the blocking token."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json#/checks/receipt_content_sha256",
+        "docs/generated/pr284_depth_path_doob_receipt.json#/source_bindings"
+      ],
+      "rationale": "The canonical content address and all twelve source bindings independently recompute."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr284_depth_path_doob.py",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json#/checks/candidate_sha"
+      ],
+      "rationale": "The required portable command passed from a distinct temporary Git archive; source and archive pre/post manifests were identical across 5,875 files."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr284_publication_policy.json",
+        ".prguard/runtime/PR284_R3_FINAL_REVIEW_CANDIDATE_SEAL.json#/integration_policy"
+      ],
+      "rationale": "Nine focused publication-integrity tests passed and policy bytes cross-bind the frozen seal."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json#/claim_boundary",
+        "docs/research_program/post_pr275/pr284_spec.yaml"
+      ],
+      "rationale": "The result remains C2 diagnostic-only, transfer source none, non-observed, non-public, with the pre-native family gate blocked."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json#/checks/exact_predecessor_base_sha",
+        "docs/research_program/post_pr275/pr284_publication_policy.json#/attended_publication"
+      ],
+      "rationale": "The tracking ref and merge base equal the exact PR-283 predecessor. This read-only review performs no merge and grants no publication authorization."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "oracle_id": "PR284-R3-IDENTITY-REPLAY",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle.py",
+        "--output",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json"
+      ],
+      "command_fingerprint": "b2464cdf15ff3572d2ebb2f46d022151eaecb7f27c9b88e2a0b735751ff8670b",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-09T23:24:14+00:00",
+      "completed_at": "2026-08-09T23:24:19+00:00",
+      "artifact_path": ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json",
+      "artifact_sha256": "78554112388ec9a6502a362b386c445cdafb78b0d5982caf4ef0a8a58ed0c6eb",
+      "artifact_bytes": 1689,
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle.py",
+        ".agent-harness/runs/pr284-identity-replay-r3-20260810/artifacts/A-PR284-R3-REPLAY/identity_replay_oracle_output.json"
+      ]
+    }
+  ],
+  "coverage_sha256": "7d88e69911dfc05e771a7978d2567c8fb0bae85b6526c0fccd7159f06562f8c7"
+}

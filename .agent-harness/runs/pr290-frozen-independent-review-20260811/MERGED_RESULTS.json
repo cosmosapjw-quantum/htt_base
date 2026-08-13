@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "run_id": "pr290-frozen-independent-review-20260811",
+  "generated_at": "2026-08-11T13:47:14+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 3,
+  "raw_finding_count": 2,
+  "unique_finding_count": 2,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR290-FROZEN-CODE",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "PR-290 replays the complete canonical ordered PR-289 Planck native record and profile decision and its canonical NOT_AUTHORIZED projection; record-ID-only and fully re-signed incomplete profiles fail closed.",
+          "evidence_refs": [
+            "htt/src/common/observed_lane_activation.py:602",
+            "htt/src/common/observed_lane_activation.py:714",
+            "htt/src/common/observed_lane_activation.py:776",
+            "htt/src/common/data_identity.py:1913",
+            "htt/src/common/data_identity.py:1990",
+            ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_oracle.py"
+          ],
+          "evidence_fingerprint": "sha256:7397c87c1b9bae9285d2c76b722797b3c4aca147b276e14e2019d2737b3f478a"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR290-FROZEN-PHYSSTAT",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR135-FINITE-NULL-RANK",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR290-PHYSSTAT-SPEC-GUARD-GAP"
+          ],
+          "summary": "The concrete pooled rank is exact, observation-inclusive, conservative, permutation-equivariant, and finite-resolution correct, but the activation validator fails to enforce those semantics and adjacent units/covariance/blocker contracts against declared spec mutations."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR290-FROZEN-REPLAYCLAIM",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "PR290-GROUP-LABEL-TRACEABILITY"
+          ],
+          "summary": "PASS: PR-290 preserves the admitted-identity versus human-authorization boundary, writes no observed numerical output, keeps the claim/family ceiling blocked, and has one low nonblocking historical G-label traceability limitation."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR290-PHYSSTAT-SPEC-GUARD-GAP",
+      "claim_id": "C-PR135-FINITE-NULL-RANK",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr290-spec-guard-accepts-eight-physics-stat-relaxations-v1",
+      "statement": "The fail-closed activation validator accepts science-critical PR-290 spec relaxations: the forbidden legacy global-rank estimator, anti-conservative strict ties, an incorrect finite-resolution rule, independent SMICA/Commander pairing, a diagonal covariance shortcut, linear units for quadratic BiPoSH A, and READY relabelling of blocked mask-deconvolution and multipole-vector capabilities. The current sealed spec is safe, and the production rank/operator helpers pass, but these declared mutation classes are not enforced by the activation boundary.",
+      "assumptions_used": [
+        "The current specification and its mutation registry are authoritative for fail-closed semantics.",
+        "A spec validator used by build_planck_activation_decision must reject changes to science-critical estimator, units, covariance, pairing, and blocker fields rather than rely only on review invalidation.",
+        "The review concerns the frozen candidate bytes and does not treat synthetic checks as observed Planck evidence."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-PHYSSTAT-oracle.py",
+        "docs/research_program/post_pr275/pr290_spec.yaml:188",
+        "docs/research_program/post_pr275/pr290_spec.yaml:199",
+        "docs/research_program/post_pr275/pr290_spec.yaml:311",
+        "htt/src/common/observed_lane_activation.py:430",
+        "htt/src/common/observed_lane_activation.py:469"
+      ],
+      "counterevidence_refs": [
+        "htt/obsstat/planck_post275_lane.py:132",
+        "htt/obsstat/planck_post275_lane.py:192",
+        "htt/obsstat/planck_post275_lane.py:261",
+        "htt/obsstat/boost_biposh_residual.py:96",
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json:131",
+        "python3 -B scripts/codex_harness/run_pr290_planck_lane.py focused",
+        "python3 -B scripts/codex_harness/run_pr290_planck_lane.py adjacent"
+      ],
+      "reproduction": [
+        "Run python3 -B .agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-PHYSSTAT-oracle.py from the repository root.",
+        "Observe spec_guard.mutation_count=8, all eight names in accepted_relaxations, and candidate_semantic_verdict=FAIL.",
+        "The oracle mutates only in-memory YAML mappings and calls htt.src.common.observed_lane_activation._validate_spec; it does not modify candidate/shared files."
+      ],
+      "unresolved": [
+        "File target: htt/src/common/observed_lane_activation.py _validate_spec must freeze the detailed global_rank_contract, covariance_contract, harmonic_and_unit_contract, mask_beam_contract, and multipole_vector_contract.",
+        "Test target: tests/integration/test_planck_post275_lane.py should add one fail-closed mutation case for each accepted relaxation before resealing."
+      ],
+      "confidence": 0.99,
+      "source_finding_ids": [
+        "F-PR290-PHYSSTAT-SPEC-GUARD-GAP"
+      ],
+      "supporting_assignments": [
+        "A-PR290-FROZEN-PHYSSTAT"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PR290-GROUP-LABEL-TRACEABILITY",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "low",
+      "evidence_fingerprint": "sha256:18818c118c6564be8ba40f60205288972df2ea2480e17a8d0abbb7cf85a2b3c1",
+      "statement": "The frozen candidate passes, with a low nonblocking traceability limitation: G49/G50/G51/G52/G53 selection and G54 exclusion are stated in the PR delta, while no required input independently maps those historical labels to source commits.",
+      "assumptions_used": [
+        "Historical G labels are explanatory recovery provenance, not candidate acceptance evidence.",
+        "Current commit, tree, changed-file inventory, stable patch IDs, seal, source bindings, and executed policy commands are the controlling frozen-candidate evidence."
+      ],
+      "evidence_refs": [
+        ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+        "docs/PR_DELTAS/pr-290.md:23",
+        "docs/PR_DELTAS/pr-290.md:26"
+      ],
+      "counterevidence_refs": [
+        "The exact current changed-file inventory and four stable patch IDs independently bind the reconstructed candidate even though they do not encode G labels."
+      ],
+      "reproduction": [
+        "Read docs/PR_DELTAS/pr-290.md lines 23-27.",
+        "Compare the statement with the required_inputs inventory in the sealed assignment; no independent G-label source map is registered.",
+        "Recompute the seal, HEAD/tree/merge-base, changed-file inventory, and candidate stable patch IDs with the assignment-local oracle."
+      ],
+      "unresolved": [
+        "No required input independently maps G49-G54 labels to historical source commits."
+      ],
+      "confidence": 0.98,
+      "source_finding_ids": [
+        "PR290-GROUP-LABEL-TRACEABILITY"
+      ],
+      "supporting_assignments": [
+        "A-PR290-FROZEN-REPLAYCLAIM"
+      ],
+      "supporting_agent_types": [
+        "claim_lane_reviewer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-290",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "assignment_count": 3,
+  "validated_result_count": 3,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/RUN_PLAN.json",
+      "sha256": "19b073ed32a4c6bfecdb2b11cdc9de6156e331474f25983ee3ae072c58221372",
+      "bytes": 4919
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/assignments/A-PR290-FROZEN-CODE.json",
+      "sha256": "30fb91f5d074715035cd37e17d3df3fb51db8e2764156ecee432de8c07eda526",
+      "bytes": 5536
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/assignments/A-PR290-FROZEN-PHYSSTAT.json",
+      "sha256": "7ab09af96a4c26e2f4303049ed42a68f2011cc4b9c84deb6f30467dc79dc9a9e",
+      "bytes": 5559
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/assignments/A-PR290-FROZEN-REPLAYCLAIM.json",
+      "sha256": "da090b730a7063587687b5d233e9059b140189a711d13d484dc8c36d63e146b9",
+      "bytes": 5528
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-CODE.json",
+      "sha256": "664a5b28fa5068563ef9e36e224de62646820a1f545edf4f6fb5cf9359658870",
+      "bytes": 8706
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-PHYSSTAT.json",
+      "sha256": "b19c6ed4bbe03cee597067f00d5a23a334167c858dfe7f4fb54848b3a6890b4e",
+      "bytes": 10245
+    },
+    {
+      "path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-REPLAYCLAIM.json",
+      "sha256": "77ed839b339784a7d504cfccef6b6823a0d97b692f3b99e67072f77918b88bc4",
+      "bytes": 9775
+    }
+  ],
+  "merge_input_sha256": "b6917f68f869ec66ad1ee9cbf9576db15400008ee8879af5ce6e48e4a9126ae4"
+}

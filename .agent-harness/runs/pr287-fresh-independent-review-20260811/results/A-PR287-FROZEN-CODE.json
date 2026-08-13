@@ -1,0 +1,134 @@
+{
+  "schema_version": 3,
+  "run_id": "pr287-fresh-independent-review-20260811",
+  "assignment_id": "A-PR287-FROZEN-CODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "code_cartographer",
+  "work_unit_id": "PR-287",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "fbe4787a82f650ec050fab020ae2c9545e9f7fe778ec2d6f5d4550470537712b",
+    "seal_sha256": "486a8f7e75c04467e2c65a083529eff5f65e622f935b3346ada8ea7243cd456e",
+    "base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_sha": "06ee728054fd62423fa90bc6a5d714b9be8631e3",
+    "merge_base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_tree_sha": "dd909b5d35a385b251547f6224b657346d7688f6",
+    "diff_sha256": "83ef2581a3a1afdf5459ad64730783f6f7e905a3cda155236ec44971b160912f",
+    "changed_files_sha256": "b522232b4e7f07fe03b297f33a07dfcce4f7eb80cdd0bbd94b9fd06a20b73198",
+    "production_hash": "6d0963dfdc66dcd2bf80ef3dde6fd84d87f455f0c6db5199250b06b2c51e873a"
+  },
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-CODE.json",
+  "assignment_sha256": "71ac52bea1583aac214a3d7bb25cea91726619403d04bd00d3ed216ca551308e",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/assignments/A-PR287-FROZEN-CODE.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/RUN_PLAN.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr287_spec.yaml",
+    "docs/research_program/post_pr275/pr287_publication_policy.json",
+    "htt/src/common/post275_blind_replay.py",
+    "htt/htt/htt/infer/post275_blind_replay.py",
+    "htt/mio/reports/post275_blind_replay.py",
+    "htt/obsstat/exact_parity_readiness.py",
+    "scripts/codex_harness/run_pr287_post275_blind_replay.py",
+    "tests/integration/test_post275_blind_replay.py",
+    "tests/obsstat/test_exact_parity_readiness.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T05:10:34.152823+00:00",
+  "completed_at": "2026-08-11T05:25:20+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0",
+    "pytest": "9.1.1",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "focused"],
+      "returncode": 0,
+      "summary": "40 passed in 42.71s"
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "adjacent"],
+      "returncode": 0,
+      "summary": "188 passed in 178.49s; includes exact-parity readiness"
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "portable"],
+      "returncode": 0,
+      "summary": "clean and source manifests remained 594b74801784f599b5e112ca0602a62a12aa95dc0b8786a957ca9044e8051025"
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "check"],
+      "returncode": 0,
+      "summary": "ACTIVATED with typed INCONCLUSIVE isolated-executor blocker and no fresh artifacts"
+    },
+    {
+      "argv": ["python", "-B", "scripts/codex_harness/run_pr287_post275_blind_replay.py", "historical"],
+      "returncode": 0,
+      "summary": "ACTIVATED with typed INCONCLUSIVE isolated-executor blocker and no fresh artifacts"
+    },
+    {
+      "argv": ["/usr/bin/python", "-B", ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-CODE/oracle.py"],
+      "returncode": 0,
+      "summary": "independent invariant oracle passed nine provenance, containment, claim, and parity checks"
+    },
+    {
+      "argv": ["python", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-CODE/REVIEW_COVERAGE.json", "--seal", ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json", "--run-id", "pr287-fresh-independent-review-20260811", "--assignment-id", "A-PR287-FROZEN-CODE", "--risk-tier", "R3"],
+      "returncode": 0,
+      "summary": "coverage ok true with no errors"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-CODE/oracle.py",
+      "sha256": "a04fc55172c2e3a228399c2ed7faf8d12d2f7f1caff54c54f4e3453aa8881b9e",
+      "bytes": 5467,
+      "producer": "A-PR287-FROZEN-CODE",
+      "command_fingerprint": "f9c40a307f6f6545649f1c0032a3c88c140226634758cb699f64de39e15771a7"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-CODE/REVIEW_COVERAGE.json",
+      "sha256": "edcd527bfe7e88d1ea600d8ed2d2ece81ead8dd0d3e8eed6f024ffdf72a04bfd",
+      "bytes": 13041,
+      "producer": "A-PR287-FROZEN-CODE"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-CODE/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "edcd527bfe7e88d1ea600d8ed2d2ece81ead8dd0d3e8eed6f024ffdf72a04bfd",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "Frozen-code review found no defect in API behavior, exact activation rebuilding, transitive harness provenance, owner-factory origin and call-site binding, recursive claim rejection, hostile mutation coverage, or exact-rational parity preservation. Fresh execution correctly remains INCONCLUSIVE because the capability-isolated analyst executor is not installed.",
+      "evidence_refs": [
+        "htt/src/common/post275_blind_replay.py:build_dependency_activation_receipt",
+        "htt/src/common/post275_blind_replay.py:_canonical_harness_validation_modules",
+        "htt/src/common/post275_blind_replay.py:_owner_factory_provenance",
+        "htt/htt/htt/infer/post275_blind_replay.py:analyze_fresh_challenge",
+        "tests/integration/test_post275_blind_replay.py:40 passed",
+        "tests/obsstat/test_exact_parity_readiness.py:adjacent suite passed",
+        ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-CODE/oracle.py"
+      ],
+      "evidence_fingerprint": "PR287-FROZEN-CODE-06ee7280-NO-FINDINGS"
+    }
+  ],
+  "errors": []
+}

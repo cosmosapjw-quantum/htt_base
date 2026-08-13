@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "run_id": "pr285-bounded-repair-rereview-20260810",
+  "generated_at": "2026-08-10T12:11:26+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 2,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR285-R2-LINEAGE-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-LINEAGE-REPLAY/lineage_replay_oracle_output.json",
+            ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-LINEAGE-REPLAY/review_coverage.json",
+            ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json"
+          ],
+          "evidence_fingerprint": "pr285-r2-lineage-replay:7739a04d155d895f6dd4f5952b2e8f65387adc579d728af0c47eb0debe3fd2bb",
+          "summary": "Fresh blind bounded rereview found no blocking lineage, receipt, replay, claim-ceiling, portability, or final-status-only regression in the frozen PR-285 candidate."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR285-R2-STATUS-PHYSMATH",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR270-PILLAR-T-CAS",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "PASS with no blocking finding. Independent exact replay preserves all 65 legacy premise/domain values and statuses (12 DECLARED, 53 SOURCE_NOT_TYPED) while every legacy row remains INCONCLUSIVE_WITH_RECEIPT; kills the flattening mutation; reproduces the 80-row 11/1/67/1 terminal split; preserves VT-T8 and VT-T13 scope ceilings, VT-T14 native blocker, and PR-190 FAIL chronology; verifies exact (-,+,+,+) comparator signs and explicit normalized units; keeps current CAS_BLOCKED separate from historical hash-bound CAS_4AXIS_PASS; and confirms the review candidate adds only delta/status metadata with unchanged production identity. Priors, likelihood semantics, MIO Q/Pi/F/G, and local/global response-rank inference are not applicable because this candidate changes no production or inference code, and the family-identification gate remains BLOCKED_PRE_NATIVE_ATLAS.",
+          "evidence_refs": [
+            ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/oracle.json",
+            ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-STATUS-PHYSMATH/review_coverage.json",
+            "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+            "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+            "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+            "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+            "docs/generated/pr190_attainability/attainability_report.json",
+            ".prguard/runtime/PR285_R2_FINAL_REVIEW_CANDIDATE_SEAL.json",
+            ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json"
+          ],
+          "evidence_fingerprint": "pr285-r2-status-physmath:8682a13e:81510340"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-285",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "assignment_count": 2,
+  "validated_result_count": 2,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/RUN_PLAN.json",
+      "sha256": "f039f7d59ce2f679123fb59800378181978c09ba72fc333f10e1b7d41e58b7cd",
+      "bytes": 6756
+    },
+    {
+      "path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/assignments/A-PR285-R2-LINEAGE-REPLAY.json",
+      "sha256": "5eec8c8cfb259fa1f11e0d1050b6e2443572625b166a7d8d9de3b27bb4eee97e",
+      "bytes": 5287
+    },
+    {
+      "path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/assignments/A-PR285-R2-STATUS-PHYSMATH.json",
+      "sha256": "6678f859adcd2e94ddbcd64268928e6db994ccefa64e7784d3eb268d745382eb",
+      "bytes": 5194
+    },
+    {
+      "path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/results/A-PR285-R2-LINEAGE-REPLAY.json",
+      "sha256": "209082dd9dbcfcda5930d83b36415d9d7f7fb0d986471a7c251304a472bafd08",
+      "bytes": 8808
+    },
+    {
+      "path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/results/A-PR285-R2-STATUS-PHYSMATH.json",
+      "sha256": "934169c8dc8107cef6a8b61a2a6143fa4d218835bcc0db79f97e1af3a1bfc834",
+      "bytes": 9353
+    }
+  ],
+  "merge_input_sha256": "b7b6dfab52ec822f19bd9d54af2ac809ea192de0d3bfd56a426cbaf7f1ae5f9c"
+}

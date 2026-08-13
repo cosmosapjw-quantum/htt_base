@@ -1,0 +1,206 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-bounded-repair-r2-review-20260811",
+  "assignment_id": "A-PR289-R2-DOMAIN",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "98b8f692fb9e8933b4972430d33f89da4a0b0bf0498bb9af3b7c354b27fcc5d9",
+    "seal_sha256": "b87547b5c86fb27fb63c6ba2f62639733295efe0b7ddf91ed82685a6c6cbba90",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "e7affa4302f60cb02a664b315693b22e2372ef33",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "1d25895f229c87723797c73018fed8783466541f",
+    "diff_sha256": "124822f8c20278b307447150dcd0a8aa357048f6a9526e8feb976c14a2715ae1",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "6752f1f52dccb2ca4768e127666a160bce8f826340d1b26d6bf70b3abca3220f"
+  },
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-DOMAIN.json",
+  "assignment_sha256": "e82fb99e41b62c4abcd44266d3ea141ad199b0b4fd98fd12d8c05e7071ba2090",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/assignments/A-PR289-R2-DOMAIN.json",
+    ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/RUN_PLAN.json",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-289.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/harness/CLAIM_LEDGER.md",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "docs/research_program/post_pr275/data_runbooks.yaml",
+    "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "docs/research_program/post_pr275/pr289_spec.yaml",
+    "htt/src/common/data_identity.py",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "tests/contracts/test_data_identity_registry_v2.py",
+    ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/domain_relationship_oracle.py",
+    ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/DOMAIN_ORACLE.json",
+    ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/REVIEW_COVERAGE.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T10:20:00+00:00",
+  "completed_at": "2026-08-11T10:42:51+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    [
+      "python3",
+      "-B",
+      "scripts/codex_harness/run_pr289_data_identity_v2.py",
+      "focused"
+    ],
+    [
+      "python3",
+      "-B",
+      "scripts/codex_harness/run_pr289_data_identity_v2.py",
+      "preflight"
+    ],
+    [
+      "python3",
+      "-B",
+      "scripts/codex_harness/run_pr289_data_identity_v2.py",
+      "check"
+    ],
+    [
+      "python3",
+      "-B",
+      ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/domain_relationship_oracle.py",
+      ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/DOMAIN_ORACLE.json",
+      ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/REVIEW_COVERAGE.json"
+    ],
+    [
+      "python3",
+      "-B",
+      ".agent-harness/scripts/review_coverage.py",
+      "--coverage",
+      ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/REVIEW_COVERAGE.json",
+      "--seal",
+      ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json",
+      "--run-id",
+      "pr289-bounded-repair-r2-review-20260811",
+      "--assignment-id",
+      "A-PR289-R2-DOMAIN",
+      "--risk-tier",
+      "R3",
+      "--structural-only"
+    ],
+    [
+      "python3",
+      "-B",
+      "scripts/check_claim_language.py",
+      "--strict-missing",
+      "--include-archives",
+      "htt/src/common/data_identity.py",
+      "tests/contracts/test_data_identity_registry_v2.py",
+      "docs/research_program/post_pr275/pr289_spec.yaml",
+      "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+      "docs/research_program/post_pr275/data_runbooks.yaml",
+      "docs/harness/CLAIM_LEDGER.md",
+      "docs/generated/pr289_data_identity_v2_receipt.json",
+      "docs/PR_DELTAS/pr-289.md"
+    ]
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/domain_relationship_oracle.py",
+      "sha256": "88dced4eb69f2265d2b4f20c625a670bf9d6242de0ac0c12fd1608ba3422613b",
+      "bytes": 11942,
+      "producer": "A-PR289-R2-DOMAIN"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/DOMAIN_ORACLE.json",
+      "sha256": "67f253f7b65781aafa5659ef73436cb02083855a8ed5d8ef582a4b0c83a53ebc",
+      "bytes": 2524,
+      "producer": "A-PR289-R2-DOMAIN",
+      "command_fingerprint": "7998de7b1e2910b9cc57930bbd5e9eb79d2fee3ebdd92249f1fea71e0121e8f6"
+    },
+    {
+      "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/REVIEW_COVERAGE.json",
+      "sha256": "17b735c1eac2f376dbbfa3da9d91d565dd097fb984bc028ae8498611f76802cb",
+      "bytes": 16429,
+      "producer": "A-PR289-R2-DOMAIN"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "17b735c1eac2f376dbbfa3da9d91d565dd097fb984bc028ae8498611f76802cb",
+  "findings": [
+    {
+      "finding_id": "F-PR289-DOMAIN-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "sha256:0c44b703fdb4d217b12bd1999d66458624ea9743c771b1571c84049a6ebbd764",
+      "statement": "A complete Planck bundle remains ADMITTED_IDENTITY_ONLY when covariance_status or sky_support_status is changed from REGISTERED to NOT_APPLICABLE, even though the native profile still binds distinct SMICA and Commander covariance components and an explicit same-sky relationship. This violates the registered status-versus-identity consistency rule and makes positive Planck identity admission internally contradictory.",
+      "assumptions_used": [
+        "The specification requires independently typed semantic identities and statuses and treats contradiction between them as a fail-closed defect.",
+        "The Planck native profile's covariance components and same-sky pair make covariance and sky support applicable for a positively admitted complete bundle.",
+        "ADMITTED_IDENTITY_ONLY is not execution authorization and does not itself create an observed-data, likelihood, posterior, Q/Pi/F/G, local/global, or family claim."
+      ],
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr289_spec.yaml:105-110",
+        "docs/research_program/post_pr275/pr289_spec.yaml:147-154",
+        "htt/src/common/data_identity.py:840-896",
+        "htt/src/common/data_identity.py:1598-1623",
+        "tests/contracts/test_data_identity_registry_v2.py:87-114",
+        ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/DOMAIN_ORACLE.json"
+      ],
+      "counterevidence_refs": [
+        "htt/src/common/data_identity.py:789-1073",
+        "tests/contracts/test_data_identity_registry_v2.py:624-797",
+        ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/DOMAIN_ORACLE.json"
+      ],
+      "reproduction": [
+        "python3 -B .agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/domain_relationship_oracle.py .agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/DOMAIN_ORACLE.json .agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/REVIEW_COVERAGE.json",
+        "Inspect finding.accepted_contradictions in DOMAIN_ORACLE.json; both covariance_status and sky_support_status resolve to ADMITTED_IDENTITY_ONLY."
+      ],
+      "unresolved": [
+        "The oracle did not exhaustively enumerate every allowed-value status-versus-identity combination outside the assigned Planck, CF4, and HSC/KiDS domain slice."
+      ],
+      "confidence": 0.99,
+      "required_fix": "In htt/src/common/data_identity.py, make Planck native-profile replay require covariance_status == REGISTERED and sky_support_status == REGISTERED when the registered covariance roles and same-sky pair are present. Add hostile tests in tests/contracts/test_data_identity_registry_v2.py that use allowed enum value NOT_APPLICABLE, re-sign the evidence, and require REJECTED_MISSING_SEMANTIC_CONTRACT. Extend MU289-SEMANTIC-STATUS beyond the currently invalid enum VALID so the registered mutation exercises this cross-field contradiction.",
+      "test_targets": [
+        "tests/contracts/test_data_identity_registry_v2.py",
+        "htt/src/common/data_identity.py"
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR289-DOMAIN-001"
+      ],
+      "summary": "The Planck/CF4/HSC-KiDS structural role relationships otherwise fail closed, and the COMMON diagnostic-only ownership, no-execution boundary, transfer_source none, blocked family gate, and absence of likelihood/posterior/Q-Pi-F-G/local-global conclusions are consistent. Positive Planck identity admission nevertheless accepts two allowed-value semantic status contradictions, so the data-admission claim does not pass R2 domain review.",
+      "evidence_refs": [
+        ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/DOMAIN_ORACLE.json",
+        ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/artifacts/A-PR289-R2-DOMAIN/REVIEW_COVERAGE.json"
+      ],
+      "evidence_fingerprint": "sha256:0c44b703fdb4d217b12bd1999d66458624ea9743c771b1571c84049a6ebbd764"
+    }
+  ],
+  "errors": []
+}

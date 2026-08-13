@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "assignment_id": "A-PR291-R2-CODE",
+  "candidate_binding": {
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "67076abbfce5e6bf549f1282c95729bfe89b4be8",
+    "candidate_tree_sha": "e53869e5122189bd0d00d3a54c14e182396e3df3",
+    "seal_sha256": "b277e46ee54781f8b1a9aa666e833f377b6052f9863a8d330d5cb6cb1b271045"
+  },
+  "review_cells": [
+    {"id": "candidate_identity", "status": "PASS", "evidence": ".prguard/runtime/PR291_VALIDATED_CANDIDATE_SEAL.json; git merge-base and HEAD checks"},
+    {"id": "spec_before_execution", "status": "PASS", "evidence": "docs/research_program/post_pr275/pr291_spec.yaml; runner lines 237-263"},
+    {"id": "dependency_terminal_replay", "status": "PASS", "evidence": "PR291_NONEXECUTION_RECEIPT.json decision.dependency_snapshot; runner lines 249-258"},
+    {"id": "data_identity_and_human_authorization_separation", "status": "PASS", "evidence": "PR291_NONEXECUTION_RECEIPT.json decision snapshots; focused suite"},
+    {"id": "preflight_before_first_write", "status": "FAIL", "evidence": "runner lines 31-39 import unbound transaction helpers; hostile_preloaded_pr290_helper_oracle.py exits 0 and writes outside ROOT"},
+    {"id": "synthetic_estimand_identity", "status": "PASS", "evidence": "tests/integration/test_cf4_post275_lane.py; focused command: 56 passed"},
+    {"id": "group_row_selection_and_frame_conventions", "status": "PASS", "evidence": "pr291_spec.yaml data_identity_contract and pipeline_contract; focused suite"},
+    {"id": "full_covariance_and_effective_rank", "status": "PASS", "evidence": "pr291_spec.yaml full_covariance_contract; focused suite"},
+    {"id": "depth_zoa_nested_support_and_transport", "status": "PASS", "evidence": "pr291_spec.yaml depth_and_zoa_contract; focused suite"},
+    {"id": "weak_identification_and_identified_set_abstention", "status": "PASS", "evidence": "pr291_spec.yaml weak_identification_contract; focused and adjacent suites"},
+    {"id": "legacy_p0_and_curl_disposition", "status": "PASS", "evidence": "pr291_spec.yaml legacy_disposition; focused and adjacent suites"},
+    {"id": "blocked_no_numeric_output", "status": "PASS", "evidence": "PR291_NONEXECUTION_RECEIPT.json terminal BLOCKED_PREDECESSOR_FINAL_SUCCESS and numeric_outputs_written=[]; check command"},
+    {"id": "portable_clean_integration", "status": "PASS", "evidence": "runner lines 380-460; portable command returned nested_exit_code=0"},
+    {"id": "publication_policy_cross_binding", "status": "PASS", "evidence": "pr291_publication_policy.json; 9 policy-integrity tests passed"},
+    {"id": "claim_and_family_ceiling", "status": "PASS", "evidence": "claim-language command reported no forbidden claim language; receipt remains diagnostic_only and BLOCKED_PRE_NATIVE_ATLAS"},
+    {"id": "latest_target_integration", "status": "PASS", "evidence": "seal binds base and merge base to 06ac...; strict DAG validation passed"}
+  ],
+  "cell_count": 16,
+  "finding": {
+    "claim_id": "C-PR274-DATA-ADMISSION",
+    "severity": "P1",
+    "title": "PR-291 trusts a preloaded run_pr290_planck_lane helper module for its output transaction",
+    "evidence_fingerprint": "pr291-unbound-preloaded-pr290-transaction-helpers-outside-root-write",
+    "affected_code": "scripts/codex_harness/run_pr291_cf4_lane.py:31-39,266-292",
+    "reproduction": "python -B .agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-CODE/hostile_preloaded_pr290_helper_oracle.py",
+    "observed": "The oracle preloads a forged run_pr290_planck_lane; _write accepts its forged preflight and atomic-write helpers, returns 0, and writes forged_helper_outside_root.json outside ROOT.",
+    "required_fix": "Load and byte/origin-bind the PR-290 transaction helper module before extracting helpers, or implement the transaction locally; add a regression that preloads run_pr290_planck_lane and verifies refusal before payload generation."
+  },
+  "commands": [
+    {"id": "pr291-focused", "status": "PASS", "detail": "56 passed in 2.95s"},
+    {"id": "pr291-preactivation", "status": "PASS", "detail": "receipt replayed sealed bytes; terminal BLOCKED_PREDECESSOR_FINAL_SUCCESS"},
+    {"id": "pr291-adjacent", "status": "PASS", "detail": "fresh runner completed successfully"},
+    {"id": "pr291-portable-clean", "status": "PASS", "detail": "nested_exit_code=0; source and clean manifests unchanged"},
+    {"id": "pr291-policy-cross-binding", "status": "PASS", "detail": "9 passed, 68 deselected"},
+    {"id": "pr291-dag-strict", "status": "PASS", "detail": "OK: 244 PRs, DAG valid"},
+    {"id": "pr291-claim-language", "status": "PASS", "detail": "No forbidden claim language detected"}
+  ],
+  "pr292_guard": {
+    "status": "PASS",
+    "evidence": "docs/codex_handoff/pr_status.yaml:593-605: lifecycle PLANNED, eligibility INELIGIBLE, assurance consumed 0; merge policy is HUMAN_ONLY."
+  }
+}

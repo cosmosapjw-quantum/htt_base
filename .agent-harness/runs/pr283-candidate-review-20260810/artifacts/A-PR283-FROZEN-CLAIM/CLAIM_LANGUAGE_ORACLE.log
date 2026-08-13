@@ -1,0 +1,9 @@
+oracle_id: PR283-CLAIM-LANGUAGE-STRICT
+kind: static_analyzer
+started_at: 2026-08-09T19:22:41Z
+completed_at: 2026-08-09T19:22:42Z
+returncode: 0
+timed_out: false
+command: python3 -B scripts/check_claim_language.py --strict-missing htt/src/common/source_separation.py htt/src/common/open_set_response_classes.py htt/src/common/vector_tensor_statistical_inference.py htt/htt/htt/statistics/open_set_response_classes.py tests/contracts/test_weak_identification.py tests/contracts/test_pillar_s_inference.py docs/research_program/vector_tensor/integration/PR283_PR272_OPEN_SET_V1_RELOCATION.json docs/research_program/post_pr275/pr283_spec.yaml docs/generated/pr283_weak_identification_receipt.json docs/PR_DELTAS/pr-283.md
+stdout: No forbidden claim language detected.
+stderr:

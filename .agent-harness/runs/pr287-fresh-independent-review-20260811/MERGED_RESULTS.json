@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "run_id": "pr287-fresh-independent-review-20260811",
+  "generated_at": "2026-08-11T06:10:30+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 6,
+  "raw_finding_count": 1,
+  "unique_finding_count": 1,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR287-FROZEN-CLAIM",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "evidence_refs": [
+            "docs/research_program/post_pr275/pr287_spec.yaml"
+          ],
+          "finding_ids": [],
+          "outcome": "examined_no_findings",
+          "summary": "C2 diagnostic-only fresh/historical separation retained."
+        },
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "evidence_refs": [
+            "docs/research_program/post_pr275/blind_replay/README.md"
+          ],
+          "finding_ids": [],
+          "outcome": "examined_no_findings",
+          "summary": "No observed or PR-151 data admission; typed executor blocker retained."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR287-FROZEN-CODE",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "Frozen-code review found no defect in API behavior, exact activation rebuilding, transitive harness provenance, owner-factory origin and call-site binding, recursive claim rejection, hostile mutation coverage, or exact-rational parity preservation. Fresh execution correctly remains INCONCLUSIVE because the capability-isolated analyst executor is not installed.",
+          "evidence_refs": [
+            "htt/src/common/post275_blind_replay.py:build_dependency_activation_receipt",
+            "htt/src/common/post275_blind_replay.py:_canonical_harness_validation_modules",
+            "htt/src/common/post275_blind_replay.py:_owner_factory_provenance",
+            "htt/htt/htt/infer/post275_blind_replay.py:analyze_fresh_challenge",
+            "tests/integration/test_post275_blind_replay.py:40 passed",
+            "tests/obsstat/test_exact_parity_readiness.py:adjacent suite passed",
+            ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-CODE/oracle.py"
+          ],
+          "evidence_fingerprint": "PR287-FROZEN-CODE-06ee7280-NO-FINDINGS"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR287-FROZEN-PHYSSTAT",
+      "status": "inconclusive",
+      "gate_disposition": "INCONCLUSIVE",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR287-PHYSSTAT-EXECUTOR-ABSENT"
+          ],
+          "summary": "Typed integration math and containment are consistent, but fresh blind execution remains preregistered INCONCLUSIVE because the isolated analyst executor is absent."
+        },
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "The PR-287 surfaces preserve the no-observed-data, no-PR151-input, diagnostic-only data-admission ceiling; no fresh or observed artifact was admitted.",
+          "evidence_refs": [
+            "docs/research_program/post_pr275/pr287_spec.yaml:117",
+            "htt/src/common/post275_blind_replay.py:3381",
+            ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-PHYSSTAT/PHYSSTAT_ORACLE.py"
+          ],
+          "evidence_fingerprint": "PR287-PHYSSTAT-NO-OBSERVED-DATA-ADMISSION-V1"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR287-FROZEN-REPLAY-R2",
+      "status": "inconclusive",
+      "gate_disposition": "INCONCLUSIVE",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "not_examined",
+          "finding_ids": [],
+          "summary": "Substantive replay review not completed because another reviewer artifact exposed verdict metadata before first verdict."
+        }
+      ],
+      "reported_errors": [
+        "BLIND_RESULTS_INDEPENDENCE_CONTAMINATION: another PR-287 reviewer artifact exposed verdict metadata during a broad schema search; no policy-cell or acceptance verdict was executed after exposure."
+      ],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR287-FROZEN-REPLAY-R3",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+            ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY-R3/REVIEW_COVERAGE.json",
+            ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-REPLAY-R3/FROZEN_REPLAY_ORACLE.json",
+            "eight exact publication-policy commands all exited zero"
+          ],
+          "evidence_fingerprint": "pr287:06ee7280:blind-integration:30-cells:oracle-pass",
+          "summary": "The frozen PR-287 candidate satisfies the exact PR-286 base and PR_OPEN chain, authorized salvage lineage, transitive provenance, typed replay, portable invariance, mirror, and claim-boundary contracts. Fresh execution correctly remains INCONCLUSIVE at the capability-isolated executor blocker and generated no fresh challenge artifacts."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR287-FROZEN-REPLAY",
+      "status": "error",
+      "gate_disposition": "INCONCLUSIVE",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "not_examined",
+          "finding_ids": [],
+          "summary": "No claim or candidate acceptance verdict is issued because sibling PR-287 verdict metadata became visible before this blind reviewer submitted. The sibling result file itself was not opened."
+        }
+      ],
+      "reported_errors": [
+        "BLIND_RESULTS_ISOLATION_BREACH: a scoped process-status check for the assignment-local oracle unexpectedly exposed a live sibling PR-287 result path and gate_disposition=PASS write command before this reviewer submitted. The sibling result file was not opened, but sibling verdict metadata was visible, so no claim or acceptance verdict is issued."
+      ],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR287-PHYSSTAT-EXECUTOR-ABSENT",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "inconclusive",
+      "severity": "medium",
+      "evidence_fingerprint": "PR287-PHYSSTAT-ISOLATED-EXECUTOR-ABSENT-V1",
+      "statement": "The frozen diagnostic contracts and containment pass static and deterministic checks, but fresh blind scientific execution remains unavailable because the capability-isolated analyst executor is not installed; this is the preregistered INCONCLUSIVE disposition, not a mathematics or containment failure.",
+      "assumptions_used": [
+        "No fresh entropy, truth vault, challenge, submission, adjudication, or result pack may be created by this review.",
+        "The sealed candidate and exact required-input hashes define the reviewed implementation.",
+        "Synthetic diagnostic checks cannot promote observed, source-proof, geometry, native-solver, or family claims."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-PHYSSTAT/PHYSSTAT_ORACLE.py",
+        "docs/research_program/post_pr275/pr287_spec.yaml:326",
+        "htt/htt/htt/infer/post275_blind_replay.py:18",
+        "scripts/codex_harness/run_pr287_post275_blind_replay.py:55"
+      ],
+      "counterevidence_refs": [
+        "Focused deterministic suite completed successfully through the declared runner.",
+        "No fresh output path exists after review."
+      ],
+      "reproduction": [
+        "python3 -B scripts/codex_harness/run_pr287_post275_blind_replay.py focused",
+        "python3 -B .agent-harness/runs/pr287-fresh-independent-review-20260811/artifacts/A-PR287-FROZEN-PHYSSTAT/PHYSSTAT_ORACLE.py"
+      ],
+      "unresolved": [
+        "Install and separately authorize a capability-isolated analyst executor before any fresh blind execution."
+      ],
+      "confidence": 0.99,
+      "source_finding_ids": [
+        "F-PR287-PHYSSTAT-EXECUTOR-ABSENT"
+      ],
+      "supporting_assignments": [
+        "A-PR287-FROZEN-PHYSSTAT"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-287",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "assignment_count": 6,
+  "validated_result_count": 6,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/RUN_PLAN.json",
+      "sha256": "4199b3fd29d9e803dded29ca78f29733adafbde6840c699a3e9d9fc0dea8aea1",
+      "bytes": 5116
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/assignments/A-PR287-FROZEN-CLAIM.json",
+      "sha256": "0da28d0d424fe18c116341dc2c21a2a3908e31cdd93436d74e3433b8964deaa1",
+      "bytes": 3822
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/assignments/A-PR287-FROZEN-CODE.json",
+      "sha256": "3e93a5a786a496baa6341cb2b4f609704e0c3c944f4cfcd91627016cab5202cf",
+      "bytes": 3808
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/assignments/A-PR287-FROZEN-PHYSSTAT.json",
+      "sha256": "2eaa003f92998c8ff5878f9f02568b78e067937e8a8dd08ffc393be28c102c1c",
+      "bytes": 4034
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/assignments/A-PR287-FROZEN-REPLAY-R2.json",
+      "sha256": "9fe77eebc3cac1f1a99ad319cbd5533717b4702d4e2833c88853d85d923fdd00",
+      "bytes": 4474
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/assignments/A-PR287-FROZEN-REPLAY-R3.json",
+      "sha256": "584138d58f2837424bb88dcd565d3a5657b27a88e8d4011e6af69cafc382514a",
+      "bytes": 4733
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/assignments/A-PR287-FROZEN-REPLAY.json",
+      "sha256": "2d71c012d65526951af97b056f247d9ecdd899743231bbb1da499824262cf6c9",
+      "bytes": 4304
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-CLAIM.json",
+      "sha256": "eed958709bbe998666a8d061545479b99df968b07bf0c1e1d5ed499cfc282b63",
+      "bytes": 3556
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-CODE.json",
+      "sha256": "5347f35327c5042327461c61a2b65129f0c84f994bfbc7d767bc6a1d9b8c54b5",
+      "bytes": 6946
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-PHYSSTAT.json",
+      "sha256": "8ec81c6e83933bdb77e4dd9aaa6dca5142502ba50e84279b5f393ba03339f226",
+      "bytes": 8351
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY-R2.json",
+      "sha256": "953e011c4bf924e7dc48d6e21c13c40b9536c88f2b08edb0f02bac735d61af84",
+      "bytes": 5466
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY-R3.json",
+      "sha256": "b50bb1418e421bc1f38fbc8783e3424be272f73b5012d4da88dbee52ec4b3e1a",
+      "bytes": 8409
+    },
+    {
+      "path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY.json",
+      "sha256": "829486feed1918ce3a55c4756f8af55e31affb2810b4a7c54b5018553ba7d425",
+      "bytes": 8763
+    }
+  ],
+  "merge_input_sha256": "bae4d3e53a5d1537c56a31b1a9caefda38dfb34b67614a2e2432e0be687ad937"
+}

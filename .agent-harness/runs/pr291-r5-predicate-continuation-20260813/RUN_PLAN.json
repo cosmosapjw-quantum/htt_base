@@ -1,0 +1,125 @@
+{
+  "schema_version": 2,
+  "run_id": "pr291-r5-predicate-continuation-20260813",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "created_at": "2026-08-13T09:18:49+00:00",
+  "spec_ref": "docs/research_program/post_pr275/pr291_spec.yaml",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr290-planck-native-replay-recovery-20260811",
+  "target_ref": "refs/remotes/origin/changeset/pr290-planck-native-replay-recovery-20260811",
+  "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+  "candidate_ref": "HEAD",
+  "integration_policy": {
+    "path": "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "sha256": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835",
+    "policy_id": "PR291-PUBLICATION-POLICY"
+  },
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_PREDICATE_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "be541b2933e7283cf5c0759bdf2eba8e22c75983d75f2e5edfc3f9dd7d6b6812",
+    "seal_sha256": "977f96e2b21d07caf31d9176244afddcac5893156e78ac6d71cd13fc52479d27",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "c39e57e5638a63e023783fb962521799ce87866b",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "62026afc31a915dc7f96c718fcc654c71a8ed53a",
+    "diff_sha256": "ef5b9f7477cf91308db87caadfd96a5f53073649ea8feb20b4dd9f93af75e4c0",
+    "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+    "production_hash": "ba3cec1bec67dbbec36903374d00155467e8623af7aa07dfb2fb47b32e90000b"
+  },
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "budget": {
+    "max_concurrent": 4,
+    "max_total": 8,
+    "max_total_per_work_unit": 16,
+    "max_depth": 2
+  },
+  "publication_budget": {
+    "max_open_prs": 9,
+    "max_direct_to_target_prs": 1,
+    "max_prs_per_change_set": 1,
+    "max_stack_depth": 9,
+    "max_file_overlap_prs": 8
+  },
+  "stages": [
+    "context-build",
+    "work-unit-implementation",
+    "candidate-freeze",
+    "read-only-review",
+    "latest-target-integration",
+    "external-publisher-authorization"
+  ],
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "status": "candidate_frozen",
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "VALIDATED",
+  "stack_id": "PROCESS_INFLATION_RECOVERY_PHASE2",
+  "activation_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+  "predecessor_pr": "PR-290",
+  "predecessor_sealed_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+  "production_hash": "ba3cec1bec67dbbec36903374d00155467e8623af7aa07dfb2fb47b32e90000b",
+  "dependency_hashes": {
+    "pr291_spec": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec",
+    "publication_policy": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835",
+    "pr289_data_identity_receipt": "92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+    "pr289_registry": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+    "pr289_data_identity_module": "145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2",
+    "pr291_common_module": "4b15529947ea6269bc0ff38b7a58e5433fc6e767e34b732e2ee37cfac07bbeb0",
+    "pr291_obsstat_module": "6a3ae13200b381af4502ef0ec0f001c039727a9dcfc1dd49e239a9f0c64e56bb",
+    "pr291_runner": "45659be3d9801697272726d1cf8018d3719a7d83127fc89d05781c30db239af8",
+    "pr291_contract_test": "ca827a64d0ddc15a7c9072e5163bc6e76236d47e0eca2672f8d25c0d86574ed8",
+    "claim_guard": "e7735fa9056b6cb4d982dc14a17f8328915054cfcd6973ab2a5104cc58c8fe29",
+    "claim_contract_test": "ea9992fc09d7b48100123dc7e06d17157f25c1bcecc4c554f7b41037e24bbf14",
+    "harness_core": "cbc5af9b5dfc84f8982f4c59283520b35f8cc470c5523a191619151ab24e3ff0",
+    "harness_init": "d9ceeeffae0ed0d72a27ae2ec58e2430e48cd8d725369af36c12ed4c093ae9a9",
+    "harness_contract_test": "01d6ef4439e8777578ced6db4c6c631e00def1fed966e05b867f6721e357b779",
+    "claim_ledger": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+    "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+  },
+  "evidence_key": {
+    "production_hash": "ba3cec1bec67dbbec36903374d00155467e8623af7aa07dfb2fb47b32e90000b",
+    "dependency_hashes": {
+      "pr291_spec": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec",
+      "publication_policy": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835",
+      "pr289_data_identity_receipt": "92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+      "pr289_registry": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+      "pr289_data_identity_module": "145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2",
+      "pr291_common_module": "4b15529947ea6269bc0ff38b7a58e5433fc6e767e34b732e2ee37cfac07bbeb0",
+      "pr291_obsstat_module": "6a3ae13200b381af4502ef0ec0f001c039727a9dcfc1dd49e239a9f0c64e56bb",
+      "pr291_runner": "45659be3d9801697272726d1cf8018d3719a7d83127fc89d05781c30db239af8",
+      "pr291_contract_test": "ca827a64d0ddc15a7c9072e5163bc6e76236d47e0eca2672f8d25c0d86574ed8",
+      "claim_guard": "e7735fa9056b6cb4d982dc14a17f8328915054cfcd6973ab2a5104cc58c8fe29",
+      "claim_contract_test": "ea9992fc09d7b48100123dc7e06d17157f25c1bcecc4c554f7b41037e24bbf14",
+      "harness_core": "cbc5af9b5dfc84f8982f4c59283520b35f8cc470c5523a191619151ab24e3ff0",
+      "harness_init": "d9ceeeffae0ed0d72a27ae2ec58e2430e48cd8d725369af36c12ed4c093ae9a9",
+      "harness_contract_test": "01d6ef4439e8777578ced6db4c6c631e00def1fed966e05b867f6721e357b779",
+      "claim_ledger": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+      "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+    }
+  },
+  "gate_disposition": "PASS",
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 16
+  },
+  "budget_exception": {
+    "exception_id": "PR291-R5-PREDICATE-CONTINUATION-20260813",
+    "kind": "single_run_reviewer_rereview_reauthorization",
+    "run_id": "pr291-r5-predicate-continuation-20260813",
+    "work_unit_id": "PR-291",
+    "authorized_by": "user-current-thread-20260813",
+    "reason": "bounded-predicate-normalization-review-and-final-closeout",
+    "baseline_limit": 16,
+    "additional_assignments": 2,
+    "allowed_workflow_role": "reviewer",
+    "allowed_assignment_ids": [
+      "A-PR291-R5-PREDICATE-CLAIM",
+      "A-PR291-R5-PREDICATE-CLOSEOUT"
+    ],
+    "single_use": true,
+    "cumulative_start": 22
+  }
+}

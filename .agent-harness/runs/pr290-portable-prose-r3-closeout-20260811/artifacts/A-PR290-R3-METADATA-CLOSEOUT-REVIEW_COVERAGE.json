@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "coverage_sha256": "a1f2ccb462656d027554ae64bb766e94cd7aa29aa73eda26df3442516747e9e8",
+  "run_id": "pr290-portable-prose-r3-closeout-20260811",
+  "assignment_id": "A-PR290-R3-METADATA-CLOSEOUT",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "candidate_seal_sha256": "e7df87ce9d0d24b70fc4e1bc6866d5406aa344167cd25087f3fff4d8b6b7fa9b",
+  "candidate_sha": "d73648b01f86333c94c82051415c58cbccbf54d2",
+  "candidate_tree_sha": "f472f7c244bf137bda34c9fc356e200ead2295f7",
+  "diff_sha256": "e362011c8edd3aa5f39adf8d1020d2fa4f6f05f0d9e52d1bdded612d47196eb0",
+  "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+  "completed_at": "2026-08-11T14:31:00Z",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR290_R3_METADATA_CANDIDATE_SEAL.json", ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json", ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-REPLAYCLAIM.json"],
+      "rationale": "Carried substantive R2 identity cell; the metadata oracle confirms the sole tracked R3 change is the PR delta and production identity is unchanged."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"],
+      "rationale": "Carried from R2: all twelve hostile spec relaxations fail closed."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"],
+      "rationale": "Carried from R2: authentic configuration remains BLOCKED_PREDECESSOR_FINAL_SUCCESS with zero output."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"],
+      "rationale": "Carried from R2: data admission and H-PLANCK authorization remain separate and unavailable."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"],
+      "rationale": "Carried from R2: containment and no-output boundary passed."
+    },
+    {
+      "cell": "synthetic_operator_identity",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"],
+      "rationale": "Carried from R2: exact rank, dimensional, sign, SPD, and zero-boost checks passed."
+    },
+    {
+      "cell": "observation_null_pipeline_equivalence",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"],
+      "rationale": "Carried from R2: matched registered scan-operator contract passed."
+    },
+    {
+      "cell": "mask_beam_harmonic_conventions",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"],
+      "rationale": "Carried from R2: typed unavailable states and unit contracts passed."
+    },
+    {
+      "cell": "full_covariance_and_null_contract",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"],
+      "rationale": "Carried from R2: positive-definite joint covariance and finite-null contract passed."
+    },
+    {
+      "cell": "look_elsewhere_and_component_replication",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"],
+      "rationale": "Carried from R2: pooled max-rank and same-sky component-pairing checks passed."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"],
+      "rationale": "Carried from R2: live blocked path produced no numerical, observed, or network output."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-oracle.py"],
+      "rationale": "Fresh R3 cell: distinct clean archive over 5,919 tracked files with identical source/archive pre/post manifests and no external root, network side effect, or observed execution."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json", ".prguard/runtime/PR290_R3_METADATA_CANDIDATE_SEAL.json"],
+      "rationale": "Carried from R2: policy identity and production hash remain unchanged."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-oracle.py"],
+      "rationale": "Fresh R3 cell: strict claim-language scan passed and the diagnostic-only pre-native family ceiling remains."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR290_R3_METADATA_CANDIDATE_SEAL.json", "docs/codex_handoff/pr_status.yaml"],
+      "rationale": "Carried target cell: exact PR-289 sealed predecessor 45da1bf; PR-290 remains VALIDATED and unpublished; PR-291 remains PLANNED and INELIGIBLE at zero budget."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "oracle_id": "PR290_R3_METADATA_CLOSEOUT_ORACLE",
+      "argv": ["python", "-B", ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-oracle.py"],
+      "command_fingerprint": "5e10fc072c31a6cf024c024634f910cf2a5e1e4e08c1d7230f27e9ef89ea5b89",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T14:24:00Z",
+      "completed_at": "2026-08-11T14:25:00Z",
+      "artifact_path": ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/artifacts/A-PR290-R3-METADATA-CLOSEOUT-oracle.py",
+      "artifact_sha256": "229eeb76e6a3a42172365c07191c139948a7645b1d5c070b9136e7976b673337",
+      "artifact_bytes": 9177,
+      "evidence_refs": ["docs/PR_DELTAS/pr-290.md", ".prguard/runtime/PR290_R3_METADATA_CANDIDATE_SEAL.json"]
+    }
+  ],
+  "scope_note": "Metadata-only closeout: two fresh cells and thirteen carried substantive R2 cells; no publication readiness, push, PR, approval, or merge action is implied."
+}

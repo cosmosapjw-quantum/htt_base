@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-claim-reauthorization-20260813",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "created_at": "2026-08-13T08:15:33+00:00",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "7d79f1858b8e3bb63d7dbcd1af51e3d480d76ab9a3c8170d702980d0cd0cb9d1",
+    "seal_sha256": "c9e2b7a8ee86f8951b5bf90175033d5a45824a5487542f1cd9ef5b7c56b8b348",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "82532a2a71abc385f1176dce4b99a4917929155d",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "68e3a83249ada011f984b67078c003086b1fc6aa",
+    "diff_sha256": "5343db9b69375145eea9e51624b3ac9246f868f6482beae316e4eb456b0f8100",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "0dd1b5b383ae2befc3f06aa7254b1926d37d3d6a8ede0a0f1052b95a5a04ce18"
+  },
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "VALIDATED",
+  "evidence_key": {
+    "production_hash": "0dd1b5b383ae2befc3f06aa7254b1926d37d3d6a8ede0a0f1052b95a5a04ce18",
+    "dependency_hashes": {
+      "pr291_spec": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec",
+      "publication_policy": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835",
+      "pr289_data_identity_receipt": "92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+      "pr289_registry": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+      "pr289_data_identity_module": "145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2",
+      "pr291_common_module": "4b15529947ea6269bc0ff38b7a58e5433fc6e767e34b732e2ee37cfac07bbeb0",
+      "pr291_obsstat_module": "6a3ae13200b381af4502ef0ec0f001c039727a9dcfc1dd49e239a9f0c64e56bb",
+      "pr291_runner": "45659be3d9801697272726d1cf8018d3719a7d83127fc89d05781c30db239af8",
+      "pr291_contract_test": "ca827a64d0ddc15a7c9072e5163bc6e76236d47e0eca2672f8d25c0d86574ed8",
+      "claim_guard": "94da4aa8bb1c747b339809e6515d2511d1250874b6de399db58c37cdb659a306",
+      "claim_contract_test": "d558c7cbe793d58aed8ae399073e23c219e68cadbcea3efe76e71c1bdd40fb23",
+      "claim_ledger": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+      "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+    }
+  },
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 16
+  },
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "publication_state": "NOT_PUBLISHED_BY_HARNESS",
+  "assignment_count": 2,
+  "results": [
+    {
+      "assignment_id": "A-PR291-R5-CLAIM-CODE-REVIEW",
+      "agent_type": "claim_lane_reviewer",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-CLAIM-CODE-REVIEW.json",
+      "sha256": "a408f3fa0c4bbcd09456ea2fb6606b2881fae2f4a7909b47d603088c5f5ce40e",
+      "bytes": 10438
+    },
+    {
+      "assignment_id": "A-PR291-R5-FINAL-REAUTH-CLOSEOUT",
+      "agent_type": "harness_engineer",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/results/A-PR291-R5-FINAL-REAUTH-CLOSEOUT.json",
+      "sha256": "89966703775fa4f6e5014811b15d1b46c11e3bb123cc6afb0a384f4ff0d7d097",
+      "bytes": 9202
+    }
+  ],
+  "merged_results": {
+    "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/MERGED_RESULTS.json",
+    "sha256": "4ec6698d48411223c4d952ece6df8762b98a7c4e09e443d48f0e5e89a0f1d3b7",
+    "bytes": 5571
+  },
+  "disposition": "active"
+}

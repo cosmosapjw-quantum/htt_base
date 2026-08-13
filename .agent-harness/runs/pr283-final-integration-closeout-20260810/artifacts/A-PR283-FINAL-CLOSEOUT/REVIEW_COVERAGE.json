@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-final-integration-closeout-20260810",
+  "assignment_id": "A-PR283-FINAL-CLOSEOUT",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "candidate_seal_sha256": "e68909947ade58a68fb9a5e24913b768fe22a9cdfc8eff68d1894a470bec19fc",
+  "candidate_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+  "candidate_tree_sha": "3f11a22c9e1a0374208596f146bd7def72ff5a1b",
+  "diff_sha256": "b48d126902d052d34ef1bfd36501797d8b13b40dc5f9370f4abbf2881488b309",
+  "changed_files_sha256": "0a98fecc1a0ab9d8ee9ff40a53dd9cac8ae1d468360af3ef9026cbe3f3dd797f",
+  "completed_at": "2026-08-09T20:33:00Z",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR283_FINAL_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/EXECUTABLE_ORACLE.json"
+      ],
+      "rationale": "The live HEAD, tree, merge base, target, seal checksum, and eight unique stable patch IDs match the frozen final candidate."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR283_FINAL_CANDIDATE_SEAL.json",
+        "docs/PR_DELTAS/pr-283.md"
+      ],
+      "rationale": "The final seal retains the pre-execution policy/spec identities and the delta preserves the validation chronology."
+    },
+    {
+      "cell": "covariance_supported_rank_ladder",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-PHYSMATH.json",
+        ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/EXECUTABLE_ORACLE.json"
+      ],
+      "rationale": "The bounded physics/statistics rereview passed, and the final production hash is identical to its repaired candidate binding."
+    },
+    {
+      "cell": "full_rank_small_angle_status",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-PHYSMATH.json"
+      ],
+      "rationale": "The repaired physics/statistics PASS covers the full-rank small-angle boundary and remains production-hash fresh."
+    },
+    {
+      "cell": "full_rank_small_singular_value_status",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-PHYSMATH.json"
+      ],
+      "rationale": "The repaired physics/statistics PASS covers strict singular-threshold eligibility and equality abstention."
+    },
+    {
+      "cell": "rank_deficiency_distinct_from_weak_identification",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-PHYSMATH.json"
+      ],
+      "rationale": "The prior bounded rereview found no conflation of rank deficiency with weak identification."
+    },
+    {
+      "cell": "threshold_contract_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CODE.json",
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-PHYSMATH.json"
+      ],
+      "rationale": "Independent code and physics/statistics rereviews passed exact registered threshold identity."
+    },
+    {
+      "cell": "exact_source_geometry_report_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CODE.json"
+      ],
+      "rationale": "The repaired code oracle passed exact source-report replay and rejected report drift."
+    },
+    {
+      "cell": "exact_normalizer_spec_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CODE.json"
+      ],
+      "rationale": "The repaired code oracle passed exact NormalizerSpec replay and rejected normalizer drift."
+    },
+    {
+      "cell": "mandatory_threshold_contract_enforcement",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CODE.json",
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-PHYSMATH.json"
+      ],
+      "rationale": "Both repaired rereviews confirm that an alternate singular threshold is rejected."
+    },
+    {
+      "cell": "all_source_gate_callers_migrated",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CODE.json",
+        ".prguard/runtime/PR283_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "rationale": "The repaired caller rereview passed 90 callers and the final receipt reran the registered caller-migration command successfully."
+    },
+    {
+      "cell": "principal_angle_and_singular_value_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-PHYSMATH.json"
+      ],
+      "rationale": "The prior physics/statistics rereview passed angle and singular-value identity at the unchanged production boundary."
+    },
+    {
+      "cell": "mandatory_open_set_abstention",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CODE.json",
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CLAIM.json"
+      ],
+      "rationale": "Code and claim rereviews preserve the mandatory diagnostic-only abstention boundary."
+    },
+    {
+      "cell": "no_point_estimate_or_nearest_fallback",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CLAIM.json",
+        "docs/research_program/post_pr275/pr283_publication_policy.json"
+      ],
+      "rationale": "The claim rereview and policy retain the no-point-estimate, no-geometry-label ceiling."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CODE.json",
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-REPLAY.json"
+      ],
+      "rationale": "The repaired code and replay rereviews passed the registered mutation execution and kill obligations."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CODE.json",
+        ".prguard/runtime/PR283_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "rationale": "The scientific receipt replay remained byte-exact and the final integration receipt validates its canonical checksum and policy bindings."
+    },
+    {
+      "cell": "pr272_predecessor_replay_preservation",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR283_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "rationale": "The final receipt records a zero exit for the policy-registered PR-272 predecessor replay."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR283_FINAL_CANDIDATE_SEAL.json",
+        ".prguard/runtime/PR283_FINAL_INTEGRATION_REHEARSAL.json",
+        "docs/research_program/post_pr275/pr283_publication_policy.json"
+      ],
+      "rationale": "Seal and receipt both bind the exact policy hash, and the policy cross-binding command exits zero."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CLAIM.json",
+        "docs/research_program/post_pr275/pr283_publication_policy.json"
+      ],
+      "rationale": "The claim rereview retains C2 diagnostic-only, transfer-none, non-public scope and BLOCKED_PRE_NATIVE_ATLAS family status."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/EXECUTABLE_ORACLE.json",
+        ".prguard/runtime/PR283_R2_INTEGRATION_REHEARSAL.json",
+        ".prguard/runtime/PR283_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "rationale": "The honest dirty-index rehearsal FAIL is preserved; the clean temporary merge commit repair passes fresh 5,867-file source/clean-root invariance."
+    },
+    {
+      "cell": "serial_stack_bootstrap_integrity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR283_FINAL_INTEGRATION_REHEARSAL.json",
+        "docs/codex_handoff/pr_status.yaml",
+        ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/EXECUTABLE_ORACLE.json"
+      ],
+      "rationale": "The bootstrap command exits zero; PR-284 remains INELIGIBLE with 0/16 consumed and merge remains HUMAN_ONLY."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR283_FINAL_INTEGRATION_REHEARSAL.json",
+        ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/EXECUTABLE_ORACLE.json"
+      ],
+      "rationale": "The policy-complete 11-command receipt validates against exact target ff9ef9f and merged tree 3f11a22."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "invariant_checker",
+      "oracle_id": "pr283-final-closeout",
+      "status": "PASS",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/final_closeout_oracle.py"
+      ],
+      "command_fingerprint": "321990cb506904236f1bf665230ee163b13c47e5edd8e7ecc5cc714d05278099",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-09T20:31:44Z",
+      "completed_at": "2026-08-09T20:32:11Z",
+      "artifact_path": ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/EXECUTABLE_ORACLE.json",
+      "artifact_sha256": "203403f0c095b0608d4ea32e8c7d19dea0c8e6417bfbcff4cec8758b2f2f6088",
+      "artifact_bytes": 1720,
+      "evidence_refs": [
+        ".prguard/runtime/PR283_FINAL_CANDIDATE_SEAL.json",
+        ".prguard/runtime/PR283_FINAL_INTEGRATION_REHEARSAL.json",
+        ".prguard/runtime/PR283_R2_INTEGRATION_REHEARSAL.json",
+        "docs/codex_handoff/pr_status.yaml"
+      ]
+    }
+  ],
+  "coverage_sha256": "66fa0ec455eeb2502272fedd1eb90258992dbb9e286f6a8fe97e7bf08ab7e8b5"
+}

@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-candidate-review-20260810",
+  "generated_at": "2026-08-09T19:38:41+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 4,
+  "raw_finding_count": 3,
+  "unique_finding_count": 3,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR283-FROZEN-CLAIM",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR258-OPEN-SET-RESPONSE",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR283-CLAIM-001"
+          ],
+          "summary": "FAIL: ownership and scientific ceilings are correctly bounded, but the asserted PR-153 forbidden-input boundary is not cross-bound into the controlling and generated artifacts."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR283-FROZEN-CODE",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR258-OPEN-SET-RESPONSE",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "htt/htt/htt/statistics/open_set_response_classes.py:64",
+            "htt/src/common/source_separation.py:315",
+            "htt/src/common/open_set_response_classes.py:2529",
+            "tests/contracts/test_weak_identification.py:482",
+            "pr283-focused: 23 passed",
+            "pr283-source-replay-caller-migrations: 90 passed",
+            "validate_candidate_seal_payload: errors=[]"
+          ],
+          "evidence_fingerprint": "pr283-frozen-code:6ee9048ffd80f25337f405d8c6a39fd3b7f489eb:2bd9aa31b5c6fb2ddcab970fe4e616f7b6acdbf7840f2fefa75b69a9368a10f7",
+          "summary": "Exact frozen-candidate code and caller review found no correctness, regression, test-adequacy, claim-hygiene, or maintainability defect in the assigned PR-283 open-set response claim."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR283-FROZEN-PHYSMATH",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR283-THRESHOLD-REGISTRATION-BYPASS",
+            "F-PR283-MUTATION-EVIDENCE-NONEXECUTION"
+          ],
+          "summary": "Frozen-candidate physics/statistics review fails: core whitening, nuisance quotient, rank ladder, equality semantics, replay, and claim ceiling are sound, but the fixed singular-threshold registration can be bypassed to restore a point candidate and two receipt mutation rows overstate non-executed mutants as killed."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR283-FROZEN-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR280-HERMETIC-HARNESS",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-REPLAY/EXECUTABLE_ORACLE.json",
+            ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-REPLAY/REVIEW_COVERAGE.json",
+            ".prguard/runtime/PR283_CANDIDATE_SEAL.json"
+          ],
+          "evidence_fingerprint": "pr283-frozen-replay:89c44d46574c4e268789ab2d623f966bd46e63c8b12f36fade1075d449f03e08",
+          "summary": "Fresh frozen-candidate replay found no harness, portability, receipt, generated-pack, serial-stack, publication-refusal, or historical-acceptance-integrity defect."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR283-CLAIM-001",
+      "claim_id": "C-PR258-OPEN-SET-RESPONSE",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "PR-283's delta asserts that PR-153 artifacts are forbidden inputs, but PR-153 is absent from the governing spec, publication-policy forbidden_inputs, receipt-generator caveats, and exact generated receipt; therefore the sealed policy does not enforce the asserted PR-153 provenance boundary and the receipt/spec/policy/delta set is not exactly consistent.",
+      "assumptions_used": [
+        "The PR delta's explicit PR-153 prohibition is intended to be a controlling input boundary for this change set, as required by the assignment.",
+        "A forbidden-input boundary is enforced only when it is encoded in the governing spec or policy and propagated into the generated receipt, not when it appears only in prose."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-CLAIM/CLAIM_LANGUAGE_ORACLE.log",
+        "docs/PR_DELTAS/pr-283.md:92-93",
+        "docs/generated/pr283_weak_identification_receipt.json:323-345",
+        "docs/research_program/post_pr275/pr283_publication_policy.json:133-142",
+        "docs/research_program/post_pr275/pr283_spec.yaml:250-260",
+        "scripts/codex_harness/run_pr283_weak_identification.py:123-134"
+      ],
+      "evidence_fingerprint": "pr283:pr153-forbidden-input-cross-binding:delta-vs-spec-policy-generator-receipt",
+      "counterevidence_refs": [
+        "docs/PR_DELTAS/pr-283.md:92-93 explicitly states PR-153 artifacts were forbidden and not read or modified.",
+        "The strict claim-language command exits zero because it checks forbidden phrasing, not omission of a required forbidden-input identity.",
+        "No PR-153 science artifact appears in the frozen candidate's changed-file inventory, which lowers evidence of actual consumption but does not repair the missing enforceable contract."
+      ],
+      "reproduction": [
+        "rg -n -i 'PR[-_ ]?153' docs/research_program/post_pr275/pr283_spec.yaml docs/research_program/post_pr275/pr283_publication_policy.json scripts/codex_harness/run_pr283_weak_identification.py docs/generated/pr283_weak_identification_receipt.json docs/PR_DELTAS/pr-283.md",
+        "Observe that the only match among these claim/provenance surfaces is docs/PR_DELTAS/pr-283.md:92, while policy forbidden_inputs and the receipt caveats contain PR-151 only.",
+        "Run python3 -B scripts/codex_harness/run_pr283_weak_identification.py check and the registered strict claim-language command; both exit zero, demonstrating that current checks do not kill this omission."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Whether PR-153 should be removed from the delta instead of added to spec/policy/receipt is an owner decision; either resolution requires regenerating and resealing the candidate because the governing bytes are frozen."
+      ],
+      "source_finding_ids": [
+        "F-PR283-CLAIM-001"
+      ],
+      "supporting_assignments": [
+        "A-PR283-FROZEN-CLAIM"
+      ],
+      "supporting_agent_types": [
+        "claim_gate_reviewer"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR283-THRESHOLD-REGISTRATION-BYPASS",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The frozen PR-283 projection accepts any factory-derived relative-singular threshold whose angle and units match the PR-256 report; it does not require the specified PR-283 threshold identity. Replaying the exact same full-rank report with relative singular value 0.005 under threshold 0.001 changes the default WEAKLY_IDENTIFIED abstention into SEPARABLE_CANDIDATE and returns a point response-class candidate, contradicting the fixed/pre-result threshold and mandatory-abstention contract.",
+      "assumptions_used": [
+        "The threshold_contract section of pr283_spec.yaml is the controlling fixed PR-283 operating contract.",
+        "A content identity for an arbitrary caller-created contract does not establish preregistration or equality to the specified contract.",
+        "Response-class candidate eligibility remains diagnostic-only and is not interpreted as physical source or family identification."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/threshold_registration_oracle.json",
+        "docs/research_program/post_pr275/pr283_spec.yaml:68",
+        "htt/htt/htt/statistics/open_set_response_classes.py:90"
+      ],
+      "evidence_fingerprint": "sha256:56b305e5d275252904a474bf1cbf18969e47ca71ba2f452a62a6e73f7e582761",
+      "counterevidence_refs": [
+        "tests/contracts/test_weak_identification.py:469 verifies only angle-threshold mismatch",
+        "tests/contracts/test_weak_identification.py:503 verifies omission but not alternate singular-threshold identity",
+        "python -B scripts/codex_harness/run_pr283_weak_identification.py focused: 23 passed"
+      ],
+      "reproduction": [
+        "Build the registered orthogonal full-rank fixture with global amplitude 0.005 and the default 0.01 relative-singular threshold; observe WEAKLY_IDENTIFIED, TYPE_UNIDENTIFIED, candidate null.",
+        "Build a factory-derived threshold contract with the same angle 0.2 and units but relative-singular threshold 0.001.",
+        "Call source_separation_gate_from_pr256 with the exact same report, classes, covariance, nuisance, and normalizer, then classify the exact same observation.",
+        "Observe SEPARABLE_CANDIDATE, RESPONSE_CLASS_CANDIDATE, response-class-local; executable details are in threshold_registration_oracle.json."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "A compliant fix must bind the projection to a preregistered/fixed threshold contract identity without falsely making the representation-dependent threshold universal."
+      ],
+      "source_finding_ids": [
+        "F-PR283-THRESHOLD-REGISTRATION-BYPASS"
+      ],
+      "supporting_assignments": [
+        "A-PR283-FROZEN-PHYSMATH"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR283-MUTATION-EVIDENCE-NONEXECUTION",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The generated receipt claims every registered mutation executed and was killed, but MU283-WEAK-AS-SEPARABLE and MU283-WEAK-PRECEDENCE-DRIFT do not execute the registered mutant defects. The first assigns an unused forced candidate and checks unchanged production output; the second runs unchanged production cases and labels their expected abstention as a killed precedence mutant. Therefore the PASS receipt does not satisfy its own execute-and-kill mutation rule.",
+      "assumptions_used": [
+        "The spec's mutation_rule uses execute and killed literally, requiring the intended defect to be activated in an executable path.",
+        "A positive control against unchanged production behavior is not mutation execution."
+      ],
+      "evidence_refs": [
+        "docs/generated/pr283_weak_identification_receipt.json",
+        "docs/research_program/post_pr275/pr283_spec.yaml:158",
+        "docs/research_program/post_pr275/pr283_spec.yaml:224",
+        "scripts/codex_harness/run_pr283_weak_identification.py:731",
+        "scripts/codex_harness/run_pr283_weak_identification.py:906"
+      ],
+      "evidence_fingerprint": "source:scripts/codex_harness/run_pr283_weak_identification.py@6ee9048f:731-742,906-955",
+      "counterevidence_refs": [
+        "python -B scripts/codex_harness/run_pr283_weak_identification.py check exits 0 and exactly replays the receipt",
+        "The other eight mutation rows exercise actual rejected alternate inputs or forged replay fields"
+      ],
+      "reproduction": [
+        "Inspect _run_mutations lines 731-742: forced_candidate is never injected into classification or gate logic, while killed is derived from the unmodified classified result.",
+        "Inspect _run_mutations lines 906-955: far and broad-equivalence classifications run the unmodified weak gate; no after-open-set precedence mutation is injected.",
+        "Run the receipt check and inspect its mutations array; both rows nevertheless report executed=true, activated=true, killed=true."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Replace these rows with executable mutants or downgrade the receipt language/status; add a real singular-threshold identity/registration mutation covering the reproduced bypass."
+      ],
+      "source_finding_ids": [
+        "F-PR283-MUTATION-EVIDENCE-NONEXECUTION"
+      ],
+      "supporting_assignments": [
+        "A-PR283-FROZEN-PHYSMATH"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-283",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "assignment_count": 4,
+  "validated_result_count": 4,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/RUN_PLAN.json",
+      "sha256": "1f7e4c7922c0deeb1a476c1d93a14bfe032aec5e23dbac9453e1417a2d82259e",
+      "bytes": 2928
+    },
+    {
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/assignments/A-PR283-FROZEN-CLAIM.json",
+      "sha256": "5e0714c6f273ee566a5cb74682d8a1f6c00ee4c6f66b116133bcd31b636e4238",
+      "bytes": 3805
+    },
+    {
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/assignments/A-PR283-FROZEN-CODE.json",
+      "sha256": "76daccac57560b99b20fe47df1c2228ec86171c54ce537838190a8fc99c70abf",
+      "bytes": 4021
+    },
+    {
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/assignments/A-PR283-FROZEN-PHYSMATH.json",
+      "sha256": "d8d84ba8a747a5052b837f29921237938d7d10c5107c03525d17371aa66a6434",
+      "bytes": 3844
+    },
+    {
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/assignments/A-PR283-FROZEN-REPLAY.json",
+      "sha256": "b2a87e066029539fe35f14444d196819a0a54367e12f31cd899d9e7253847cbc",
+      "bytes": 3868
+    },
+    {
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-CLAIM.json",
+      "sha256": "aa81421b915a496471f0eb3d6e1da9cf017c6476a1de5763cba1b47f70536d0f",
+      "bytes": 10359
+    },
+    {
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-CODE.json",
+      "sha256": "0e7af03eb696f92db9e4f96af881035beed2086b365b52007de1036ecdebb8e0",
+      "bytes": 7262
+    },
+    {
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-PHYSMATH.json",
+      "sha256": "304f10d5790e0b37176b4783ecc83419dfb093b6148a7dc2fb14a91048c244dc",
+      "bytes": 11940
+    },
+    {
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-REPLAY.json",
+      "sha256": "1c88420af789cc9e6dc204bd60622d16fcc19e2aaf82ed4c7ff3c321ea967355",
+      "bytes": 7826
+    }
+  ],
+  "merge_input_sha256": "59955e945c2a8e12297c09843ab8f360f88db60bf9aecf7648ba7c4a4629a5c8"
+}

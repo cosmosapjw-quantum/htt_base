@@ -1,0 +1,77 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-frozen-independent-review-r2-20260813",
+  "assignment_id": "A-PR291-R2-PHYSSTAT",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "assignment_sha256": "0ed9b581d6240d510d1e3c33d5f1ffc8a0a46f251a0c74837fab1dff6b5f1d6d",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_VALIDATED_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "877ce2e42341daca46737bd7d1abb012bc0b42e7254ee822bfe998eda68784f4",
+    "seal_sha256": "b277e46ee54781f8b1a9aa666e833f377b6052f9863a8d330d5cb6cb1b271045",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "67076abbfce5e6bf549f1282c95729bfe89b4be8",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "e53869e5122189bd0d00d3a54c14e182396e3df3",
+    "diff_sha256": "f3e6bd5f3a6771e7655eaa5ba65b6c4f01bfefa14609b2d825f3a0a51aa5a81a",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "66a34981e03da2bb0146687c6a2f9871a09f1e28432e234355ea46bfafdf3744"
+  },
+  "result_path": ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/results/A-PR291-R2-PHYSSTAT.json",
+  "status": "error",
+  "gate_disposition": "INCONCLUSIVE",
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-13T04:40:00+00:00",
+  "completed_at": "2026-08-13T05:00:00+00:00",
+  "tool_versions": {"python": "3.12", "numpy": "2.x", "pytest": "8.x"},
+  "commands": [
+    "verified every assignment-required input SHA-256 before mutable candidate drift",
+    "ran assignment-local independent_physstat_oracle.py with return code 0",
+    "stopped substantive review on main-agent fail-closed instruction"
+  ],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/assignments/A-PR291-R2-PHYSSTAT.json",
+    ".prguard/runtime/PR291_VALIDATED_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "htt/src/common/data_identity.py",
+    "htt/src/common/cf4_observed_lane_activation.py",
+    "htt/obsstat/cf4_post275_lane.py",
+    "scripts/codex_harness/run_pr291_cf4_lane.py",
+    "tests/integration/test_cf4_post275_lane.py",
+    "htt/src/common/semantic_guards/no_overclaim.py",
+    "tests/contracts/test_claim_language_lint.py",
+    "docs/harness/CLAIM_LEDGER.md",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py"
+  ],
+  "artifacts": [
+    {"path": ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-PHYSSTAT/REVIEW_COVERAGE.json", "sha256": "3baa019410d75440932c19f3cb6bea0a1b017f7fe84e1b0766e7a31da6689ef7", "bytes": 4805, "producer": "A-PR291-R2-PHYSSTAT"},
+    {"path": ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-PHYSSTAT/independent_physstat_oracle.py", "sha256": "5dd155490213a21b3cd350fbfcfe3eb9351e2b56acd440ac3181998e92f750b8", "bytes": 4560, "producer": "A-PR291-R2-PHYSSTAT"}
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-PHYSSTAT/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "3baa019410d75440932c19f3cb6bea0a1b017f7fe84e1b0766e7a31da6689ef7",
+  "findings": [],
+  "claim_results": [
+    {"claim_id": "C-PR135-FINITE-NULL-RANK", "outcome": "not_examined", "finding_ids": [], "summary": "No verdict: candidate/shared files drifted after initial sealed-input verification, and main-agent instruction stopped substantive review."},
+    {"claim_id": "C-PR136-IDENTIFIED-SET", "outcome": "not_examined", "finding_ids": [], "summary": "No verdict: candidate/shared files drifted after initial sealed-input verification, and main-agent instruction stopped substantive review."}
+  ],
+  "errors": [
+    "CANDIDATE_DRIFT: mutable shared worktree runner and integration-test bytes diverged from the frozen assignment-required SHA-256 values after initial verification; no candidate PASS or FAIL is admissible.",
+    "PROTOCOL_INCIDENT: reviewer performed a prohibited process-listing inspection while diagnosing the shared mutation; main-agent instruction requires fail-closed closeout."
+  ]
+}

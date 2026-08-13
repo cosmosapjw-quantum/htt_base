@@ -1,0 +1,145 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-final-closeout-r4-20260810",
+  "assignment_id": "A-PR284-R4-FINAL-CLOSEOUT",
+  "assignment_sha256": "75828d1ba1f85c163bce43ee3a2695c842025423793347d67970bc37a167eeb0",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R4_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f98552fabd7062a76093bcbc7a2d700ed7d588cf12b3cf4d71bb5f853217241e",
+    "seal_sha256": "5aaba833e7d5884add6c79338ec6396ccc7c0eab0c5c0090376f9edc8b68a4d1",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "30bf45339cf517ff77606c3f8abcdeb2949b36e9",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "d8352d6ca5286a6b1f364429c218d307b3dea28d",
+    "diff_sha256": "f766850981d30717d366441d4b114b5ac429b93bc7d2c459ed12eac9978110c2",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034"
+  },
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr284-final-closeout-r4-20260810/results/A-PR284-R4-FINAL-CLOSEOUT.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-10T03:11:00+00:00",
+  "completed_at": "2026-08-10T03:18:25+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {
+      "id": "required-input-hash-and-head-preflight",
+      "argv": ["sha256sum", "<13 registered required inputs>"],
+      "returncode": 0,
+      "observed": "all thirteen hashes matched; context matched; HEAD=30bf45339cf517ff77606c3f8abcdeb2949b36e9; worktree clean"
+    },
+    {
+      "id": "historical-envelope-live-state-diagnostic",
+      "argv": ["python3", "-B", "<strict_result_validation over three prior R4 results against current live worktree>"],
+      "returncode": 1,
+      "observed": "expected non-acceptance diagnostic: only stale PR delta/status required-input hashes and 50fea-to-30bf candidate-seal fields; historical envelopes are immutable snapshot evidence and are validated below by exact hashes/internal summary"
+    },
+    {
+      "id": "pr284-final-closeout-oracle",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle.py", "--output", ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle_output.json"],
+      "returncode": 0,
+      "observed": "PR284_R4_FINAL_CLOSEOUT_ORACLE_PASS 9903aa8a69af78e8180672298712a12d23196b4828b3b13db56daec45075c045"
+    },
+    {
+      "id": "review-coverage-strict",
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/review_coverage.json", "--seal", ".prguard/runtime/PR284_R4_FINAL_CANDIDATE_SEAL.json", "--run-id", "pr284-final-closeout-r4-20260810", "--assignment-id", "A-PR284-R4-FINAL-CLOSEOUT", "--risk-tier", "R3"],
+      "returncode": 0,
+      "observed": "ok=true; errors=[]"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle.py",
+      "sha256": "eba8b3873df5df187fd8828dcb8f568f2f5c5a1139100f5e47112360af6cca0e",
+      "bytes": 15664,
+      "producer": "A-PR284-R4-FINAL-CLOSEOUT",
+      "command_fingerprint": "6e7f670ac8e0efa1c133c06ec6c2d36de77ec4720a098386764c04c218c047b2"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle_output.json",
+      "sha256": "9903aa8a69af78e8180672298712a12d23196b4828b3b13db56daec45075c045",
+      "bytes": 2033,
+      "producer": "A-PR284-R4-FINAL-CLOSEOUT",
+      "command_fingerprint": "6e7f670ac8e0efa1c133c06ec6c2d36de77ec4720a098386764c04c218c047b2"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/review_coverage.json",
+      "sha256": "68a4454f2f936747e87a51b8e1b950131c3d2caf7d533a7177a2301feab722d8",
+      "bytes": 9826,
+      "producer": "A-PR284-R4-FINAL-CLOSEOUT"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/review_coverage.json",
+  "review_coverage_sha256": "68a4454f2f936747e87a51b8e1b950131c3d2caf7d533a7177a2301feab722d8",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr284-final-closeout-r4-20260810/RUN_PLAN.json",
+    ".agent-harness/runs/pr284-final-closeout-r4-20260810/assignments/A-PR284-R4-FINAL-CLOSEOUT.json",
+    ".agent-harness/runs/pr284-proper-subset-r4-20260810/MERGED_RESULTS.json",
+    ".agent-harness/runs/pr284-proper-subset-r4-20260810/RUN_SUMMARY.json",
+    ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-CLAIM.json",
+    ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-PHYSCODE.json",
+    ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-REPLAY.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR284_R4_FINAL_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR284_R4_FINAL_INTEGRATION_REHEARSAL.json",
+    "docs/PR_DELTAS/pr-284.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/generated/pr284_depth_path_doob_receipt.json",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/research_program/post_pr275/pr284_spec.yaml",
+    "machine_readable/pr_status.yaml"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR280-HERMETIC-HARNESS",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/review_coverage.json",
+        ".agent-harness/runs/pr284-final-closeout-r4-20260810/artifacts/A-PR284-R4-FINAL-CLOSEOUT/final_closeout_oracle_output.json",
+        ".prguard/runtime/PR284_R4_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "evidence_fingerprint": "PR284-R4 final immutable closeout integration and historical-result binding",
+      "summary": "Final candidate, exact predecessor, eleven unique patch IDs, unchanged production/dependency key, seven zero-exit integration commands, identical merged/candidate tree, three exact prior PASS results, structurally valid aggregate, and synchronized REVIEWED 15/16 status all validate. PR-285 remains INELIGIBLE at zero assurance. No push, PR, merge, or publication action is recorded or authorized."
+    }
+  ],
+  "errors": [],
+  "summary": "PASS for the bounded PR-284 final closeout. The expected stale-live historical-envelope diagnostic is preserved as non-acceptance evidence; immutable hashes and internal summary bindings are the applicable closeout criterion. This result consumes the final registered assurance unit but grants no merge authorization.",
+  "proposed_changes": [],
+  "tests_run": [],
+  "tests_not_rerun": [
+    "No scientific, mutation, focused, adjacent, or portability assurance was rerun; the final integration rehearsal already records all seven policy commands at return code zero."
+  ],
+  "risks_and_kill_switches": [
+    "Any final seal, latest-target, merged-tree, command-returncode, prior-result hash, aggregate, summary, production, dependency, or lifecycle drift invalidates closeout.",
+    "Historical R4 envelopes must remain validated at their sealed 50fea snapshot; replay against advanced live status/seal bytes is intentionally non-applicable.",
+    "PR-284 remains unsealed and unpublished until a separately authorized lifecycle action occurs.",
+    "No merge authorization is granted by this closeout result."
+  ],
+  "artifacts_status_updates_needed": [
+    "Coordinator may account this result as the final assurance unit and adjudicate closeout.",
+    "No shared status, seal, push, PR, merge, or publication mutation was made by this assignment."
+  ]
+}

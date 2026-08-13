@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-mio-nonfinite-r3-rereview-20260811",
+  "assignment_id": "A-PR286-R3-MIO-PHYSCODE",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "candidate_seal_sha256": "26b24258bfec78ccbd0dad9382fc6ae8e9b9ba9a417b81753f84ca68b30c6f0f",
+  "candidate_sha": "0b1a8ef76df47b0b42e972bb47c9bc294e80aa7c",
+  "candidate_tree_sha": "c92883d3500aff9a7fa07e561ad43bf4088feb9d",
+  "diff_sha256": "a07284aa230f991286ac4b3ed11e5201f70af2a49ae8bf79cf5191d5af3cc4d1",
+  "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+  "completed_at": "2026-08-11T03:17:54Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR286_R3_MIO_CANDIDATE_SEAL.json",
+        "sha256sum required inputs and git rev-parse HEAD"
+      ],
+      "rationale": "Candidate HEAD, tree, diff, seal, context version, and every assignment-required input hash matched the frozen registration."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr286_spec.yaml",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/assignments/A-PR286-R3-MIO-PHYSCODE.json"
+      ],
+      "rationale": "The registered assignment and hash-matched PR-286 spec were read before the executable review."
+    },
+    {
+      "cell": "source_58_inventory_exactness",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This bounded MIO/HTT numerical rereview did not independently remap the 58 source rows; the blind replay lane owns that distinct failure class."
+    },
+    {
+      "cell": "vt_s_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py"
+      ],
+      "rationale": "The oracle strictly validated the tracked receipt, its exact 72 rows, and the VT-S14 semantic/rank cell."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Independent statement-preimage replay belongs to the blind replay lane and was not duplicated here."
+    },
+    {
+      "cell": "exact_proof_not_simulation",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This assignment reviewed synthetic inference diagnostics and did not re-adjudicate the CAS-bound exact-proof rows."
+    },
+    {
+      "cell": "estimand_and_sampling_law_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S14",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14"
+      ],
+      "rationale": "The finite preregistered synthetic depth-conditioned estimand and Gaussian sampling law remain typed and unpromoted."
+    },
+    {
+      "cell": "covariance_and_null_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/vector_tensor/pr272_spec.yaml#preregistration.depth_local_global",
+        "python -B scripts/codex_harness/build_pr272_pillar_s_inference.py --check"
+      ],
+      "rationale": "The exact registered depth covariance replayed; no observed/null-calibrated claim was inferred from the MIO residual diagnostic."
+    },
+    {
+      "cell": "exact_vs_asymptotic_status",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14.finite_or_asymptotic_status"
+      ],
+      "rationale": "VT-S14 remains FINITE_PREREGISTERED_SYNTHETIC and BLOCKED_WITH_RECEIPT, not exact or admitted-data evidence."
+    },
+    {
+      "cell": "preregistration_seed_and_tolerance_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "python -B scripts/codex_harness/build_pr272_pillar_s_inference.py --check",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py"
+      ],
+      "rationale": "The frozen PR-272 registry was current and both ordinary registered MIO records replayed exactly from the registered generator and seed."
+    },
+    {
+      "cell": "coverage_and_failure_map_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "python -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py focused: 45 passed",
+        "python -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py adjacent: 90 passed",
+        "PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pillar_s_inference.py tests/contracts/test_pillar_s_complete_adjudication.py: 80 passed"
+      ],
+      "rationale": "Focused, adjacent, and direct contract lanes passed with registered failures still visible."
+    },
+    {
+      "cell": "negative_controls_visible",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py",
+        "tests/contracts/test_pillar_s_inference.py"
+      ],
+      "rationale": "Large-scale GLS/MIO refusal, extreme-SPD refusal, zero-design refusal, proportional abstention, whitened-rank selection, and scale-stable-angle controls all behaved as typed."
+    },
+    {
+      "cell": "source_status_not_authority",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14"
+      ],
+      "rationale": "VALIDATED_REGISTERED_SYNTHETIC does not discharge VT-S14; its receipt remains blocked and its source program obligation retained."
+    },
+    {
+      "cell": "vts14_admitted_data_gate",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14",
+        "python -B scripts/codex_harness/build_pr273_blind_synthetic.py --check"
+      ],
+      "rationale": "The PR-273 synthetic pack replayed but did not become admitted data; VT-S14 remains BLOCKED_WITH_RECEIPT."
+    },
+    {
+      "cell": "htt_mio_obsstat_ownership",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/mio/formalism/vector_tensor_validation.py",
+        "htt/src/common/vector_tensor_statistical_inference.py",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py"
+      ],
+      "rationale": "The MIO facade exposes residual diagnostics only, HTT retains GLS ownership, and likelihood/posterior/evidence plus x/Q/Pi/F/G outputs are absent from this lane."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        "python -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py check: ok=true",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py"
+      ],
+      "rationale": "The tracked receipt validated, held 72 rows and 20 killed mutations, and the independently activated twentieth mutation died with SEMANTIC_TYPE_DRIFT."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        "python -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py portable: exit 0"
+      ],
+      "rationale": "Portable clean-root replay exited zero with identical pre/post source and clean-root hashes."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Publication-policy mechanics are outside this physics/statistics numerical rereview and remain assigned to the replay or publication reviewer."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr286_spec.yaml",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py"
+      ],
+      "rationale": "The lane remains diagnostic_only, roadmap_rescue_v1 C2, transfer_source none, non-observed, non-public, and BLOCKED_PRE_NATIVE_ATLAS."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "This reviewer inspected the exact frozen candidate; latest-target integration is a later lifecycle stage and was not claimed here."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "metamorphic_test",
+      "status": "PASS",
+      "oracle_id": "PR286-MIO-NONFINITE-BOUNDARY-ORACLE",
+      "argv": [
+        "python",
+        "-B",
+        ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py"
+      ],
+      "command_fingerprint": "27060e9cf464efcbcf90a17eb5aca60a7f12d5a035ff01a92beef919cf66f154",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T03:13:10Z",
+      "completed_at": "2026-08-11T03:13:16Z",
+      "artifact_path": ".agent-harness/runs/pr286-mio-nonfinite-r3-rereview-20260811/artifacts/A-PR286-R3-MIO-PHYSCODE-oracle.py",
+      "artifact_sha256": "6dc80a2e7ffaa36a04594967eb863034152fc98e5207ec846c691e30a18e071c",
+      "artifact_bytes": 16487,
+      "evidence_refs": [
+        "exact exported 1e200 finite-input counterexample",
+        "one-ULP overflow boundary and seven-scale finite positive sweep",
+        "exact PR-272 ordinary MIO result replay",
+        "HTT GLS, whitened-rank, angle, proportional, SPD, and zero-design controls",
+        "72-row receipt and twentieth-mutation replay"
+      ]
+    }
+  ],
+  "coverage_sha256": "135fde6db5a17b43376a90a01d0bd1356297c5efb84a8e06894835fb21ba514a"
+}

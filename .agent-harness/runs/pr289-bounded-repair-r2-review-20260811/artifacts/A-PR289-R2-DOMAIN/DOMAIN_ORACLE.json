@@ -1,0 +1,83 @@
+{
+  "candidate_sha": "e7affa4302f60cb02a664b315693b22e2372ef33",
+  "completed_at": "2026-08-11T10:41:51+00:00",
+  "controls": [
+    {
+      "check_id": "baseline_planck_admits",
+      "expected": "ADMITTED_IDENTITY_ONLY",
+      "observed": "ADMITTED_IDENTITY_ONLY",
+      "passed": true
+    },
+    {
+      "check_id": "baseline_cf4_admits",
+      "expected": "ADMITTED_IDENTITY_ONLY",
+      "observed": "ADMITTED_IDENTITY_ONLY",
+      "passed": true
+    },
+    {
+      "check_id": "baseline_hsc_kids_admits",
+      "expected": "ADMITTED_IDENTITY_ONLY",
+      "observed": "ADMITTED_IDENTITY_ONLY",
+      "passed": true
+    },
+    {
+      "check_id": "planck_covariance_status_contradiction_reproduced",
+      "expected": "ADMITTED_IDENTITY_ONLY",
+      "observed": "ADMITTED_IDENTITY_ONLY",
+      "passed": true
+    },
+    {
+      "check_id": "planck_sky_support_status_contradiction_reproduced",
+      "expected": "ADMITTED_IDENTITY_ONLY",
+      "observed": "ADMITTED_IDENTITY_ONLY",
+      "passed": true
+    },
+    {
+      "check_id": "planck_commander_covariance_alias",
+      "expected": "REJECTED_MISSING_SEMANTIC_CONTRACT",
+      "observed": "REJECTED_MISSING_SEMANTIC_CONTRACT",
+      "passed": true
+    },
+    {
+      "check_id": "cf4_sign_role_alias",
+      "expected": "REJECTED_MISSING_SEMANTIC_CONTRACT",
+      "observed": "REJECTED_MISSING_SEMANTIC_CONTRACT",
+      "passed": true
+    },
+    {
+      "check_id": "cf4_depth_role_alias",
+      "expected": "REJECTED_MISSING_SEMANTIC_CONTRACT",
+      "observed": "REJECTED_MISSING_SEMANTIC_CONTRACT",
+      "passed": true
+    },
+    {
+      "check_id": "hsc_kids_product_alias",
+      "expected": "REJECTED_MISSING_SEMANTIC_CONTRACT",
+      "observed": "REJECTED_MISSING_SEMANTIC_CONTRACT",
+      "passed": true
+    },
+    {
+      "check_id": "hsc_kids_covariance_alias",
+      "expected": "REJECTED_MISSING_SEMANTIC_CONTRACT",
+      "observed": "REJECTED_MISSING_SEMANTIC_CONTRACT",
+      "passed": true
+    }
+  ],
+  "finding": {
+    "accepted_contradictions": {
+      "covariance_status": "ADMITTED_IDENTITY_ONLY",
+      "sky_support_status": "ADMITTED_IDENTITY_ONLY"
+    },
+    "bound_relationships": [
+      "smica_covariance",
+      "commander_covariance",
+      "same_sky_pair"
+    ],
+    "lane_id": "PLANCK"
+  },
+  "oracle_id": "PR289-DOMAIN-STATUS-RELATIONSHIP-ORACLE",
+  "schema": "htt.pr289.domain_relationship_oracle.v1",
+  "started_at": "2026-08-11T10:41:51+00:00",
+  "status": "PASS",
+  "verdict": "REPRODUCED_BLOCKING_SEMANTIC_STATUS_CONTRADICTION"
+}

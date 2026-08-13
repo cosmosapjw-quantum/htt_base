@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-candidate-review-20260810",
+  "assignment_id": "A-PR284-PHYSMATH",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "ba5335bffb3c75d866027339d37660f068140ff2926967abed09550344a4205e",
+  "candidate_sha": "029f8cedd044cc5967bc12dc695230ca69cf3308",
+  "candidate_tree_sha": "e09d127212ba3173377ea2442be1661107f2963a",
+  "diff_sha256": "24dc3ec9ef99a6f914e3466883dd722af520d053fc2bf0e46be2f8c99ec4aeba",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-09T21:13:08Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR284_CANDIDATE_SEAL.json", "git rev-parse HEAD"],
+      "rationale": "HEAD, candidate seal, candidate tree, diff digest, and all assignment input hashes matched the frozen registration."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr284_spec.yaml:1", ".agent-harness/runs/pr284-candidate-review-20260810/assignments/A-PR284-PHYSMATH.json"],
+      "rationale": "The registered assignment and governing spec were read before executing the candidate tests and oracle."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "FAIL",
+      "evidence_refs": ["htt/src/common/depth_path_calibration.py:741", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py"],
+      "rationale": "The importable token-gated builder accepts a non-centered finite law and caller-supplied false second moment as a proved report."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "FAIL",
+      "evidence_refs": ["htt/src/common/depth_path_calibration.py:560", "htt/htt/htt/infer/depth_path_calibration.py:148", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py"],
+      "rationale": "Centering and second-moment recomputation exist only in the public HTT factory; COMMON revalidation trusts values minted by the importable private builder."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/infer/depth_path_calibration.py:191", "htt/src/common/vector_tensor_statistical_foundations.py:1643", "tests/contracts/test_depth_path_doob_calibration.py:296"],
+      "rationale": "The supported public path reverses fine-to-coarse partitions once and the finite-tower verifier checks refinement independently of sky-support nesting."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "FAIL",
+      "evidence_refs": ["htt/src/common/depth_path_calibration.py:590", "htt/src/common/depth_path_calibration.py:741", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py"],
+      "rationale": "COMMON validation checks only that supplied equality flags are true and the supplied tower identifier is text; the importable builder can seal these without invoking the tower verifier."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "FAIL",
+      "evidence_refs": ["htt/src/common/depth_path_calibration.py:536", "htt/src/common/depth_path_calibration.py:741", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py"],
+      "rationale": "The bypass seals arbitrary path and stratum text without revalidating a DepthPath or its sky-support identities."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/infer/depth_path_calibration.py:326", "htt/src/common/depth_path_calibration.py:794", "tests/contracts/test_depth_path_doob_calibration.py:458"],
+      "rationale": "Once a report is sealed, public calibration enforces exact preprocessing and estimator identity equality."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "FAIL",
+      "evidence_refs": ["htt/src/common/depth_path_calibration.py:581", "htt/src/common/depth_path_calibration.py:741", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py"],
+      "rationale": "COMMON checks the maximum only against caller-supplied path values and does not recompute conditional expectations from the registered law and partitions."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "FAIL",
+      "evidence_refs": ["htt/htt/htt/infer/depth_path_calibration.py:345", "htt/src/common/depth_path_calibration.py:804", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py"],
+      "rationale": "The exact formula is correct for authentic reports, but public calibration emits 1/4 from the forged proved report and its false second moment."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "FAIL",
+      "evidence_refs": ["htt/htt/htt/infer/depth_path_calibration.py:254", "htt/src/common/depth_path_calibration.py:741", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py"],
+      "rationale": "The honest unproved factory abstains, but the importable proved-report builder bypasses the fallback entirely and issues a bound from fabricated premise evidence."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "FAIL",
+      "evidence_refs": ["docs/research_program/post_pr275/pr284_spec.yaml:187", "scripts/codex_harness/run_pr284_depth_path_doob.py:46", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py"],
+      "rationale": "All thirteen registered mutations pass, but none attempts fresh construction through the importable token-bearing builder; the independent mutation survives."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "FAIL",
+      "evidence_refs": ["docs/generated/pr284_depth_path_doob_receipt.json:200", "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py"],
+      "rationale": "Receipt bytes and shipped arithmetic replay exactly, but the terminal PASS omits a surviving premise-forgery mutation and therefore cannot establish the stated gate."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Portable clean integration is assigned to the disjoint replay role; this blind physics/statistics review did not duplicate that execution."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Publication policy lifecycle checks are outside this assignment's physics/statistics failure class."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr284_spec.yaml:19", "htt/src/common/depth_path_calibration.py:38", "docs/generated/pr284_depth_path_doob_receipt.json:20"],
+      "rationale": "The artifact stays C2 diagnostic-only, transfer none, observed/public false, and BLOCKED_PRE_NATIVE_ATLAS; it makes no prior, likelihood, Q/F/G, local/global-rank, posterior, or family-identification claim."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Latest-target integration is owned by the integration/replay lane and was intentionally not duplicated in blind-results mode."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "A-PR284-PHYSMATH-CONSTRUCTOR-BYPASS-V1",
+      "kind": "mutation_test",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py"],
+      "command_fingerprint": "8b556a4ef69b0357bbd1163abe577d7211b8692f8bb2c305778ca050bd64c634",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-09T21:12:30Z",
+      "completed_at": "2026-08-09T21:12:31Z",
+      "artifact_path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-PHYSMATH/pr284_physmath_oracle.py",
+      "artifact_sha256": "705c7f3cda0c5e7f414b77f9db98926f3f4a6146f75ba8d8a3d647b4535156b6",
+      "artifact_bytes": 7786,
+      "evidence_refs": ["htt/src/common/depth_path_calibration.py:741", "htt/htt/htt/infer/depth_path_calibration.py:316", "docs/generated/pr284_depth_path_doob_receipt.json:200"]
+    }
+  ],
+  "coverage_sha256": "0e128ea47d469de682431d96f63cdc4d90a38f264d4029c1324ed2903ba46bf5"
+}

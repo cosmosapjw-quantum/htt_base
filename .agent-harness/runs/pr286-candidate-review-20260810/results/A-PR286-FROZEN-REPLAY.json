@@ -1,0 +1,112 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-candidate-review-20260810",
+  "assignment_id": "A-PR286-FROZEN-REPLAY",
+  "assignment_sha256": "ee66880f893418fcc5d1821927a999d2933d1fa501750a48cb7e60a429775a82",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "0376ec83567e3ad8a005500110961f8b5df5ec275fc2c4ded9ad67eb12e12bd5",
+    "seal_sha256": "d9241a26060fbdd09d0f1f77b3a47bec422525cb7d016b33b089bf232c03068d",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+    "diff_sha256": "80f2057dc690aaacf0258e1603dac0fcf4a455f343564d80717709afd615071d",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "d3307adde069f7bfb422d290d14204cd1d67778a66cace303f0a962d56cca818"
+  },
+  "result_path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-REPLAY.json",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-10T13:12:00+00:00",
+  "completed_at": "2026-08-10T13:33:36+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1",
+    "numpy": "2.4.2"
+  },
+  "commands": [
+    {"id": "required-input-and-context-hashes", "returncode": 0, "summary": "All nine required repository inputs, the context version, HEAD/tree, and external audit hash matched."},
+    {"id": "frozen-lineage-patch-id-audit", "returncode": 0, "summary": "G23/G25 exact patch IDs matched, G24/G26 were absent, narrow G27 diff matched, and seven candidate patch IDs were unique from predecessor history."},
+    {"id": "pr286-focused", "returncode": 0, "summary": "42 passed in 106.72s."},
+    {"id": "pr286-adjacent", "returncode": 0, "summary": "85 passed in 7.88s."},
+    {"id": "pr286-receipt-replay", "returncode": 0, "summary": "Tracked receipt exact replay returned ok=true."},
+    {"id": "pr286-portable-clean-replay", "returncode": 0, "summary": "Independent execution root and 5,887 tracked-file manifests were identical before and after replay."},
+    {"id": "pr286-pr271-pr272-pr273-replays", "returncode": 0, "summary": "All three predecessor replay builders exited zero."},
+    {"id": "pr286-publication-policy-cross-binding", "returncode": 0, "summary": "3 passed, 74 deselected."},
+    {"id": "pr286-dag-strict", "returncode": 0, "summary": "244 PR DAG valid under strict rescue slice."},
+    {"id": "pr286-claim-language", "returncode": 0, "summary": "No forbidden claim language detected."},
+    {"id": "assignment-independent-oracle", "returncode": 0, "summary": "All lineage, 72/33/18, content-address, containment, atomic-write, portability, predecessor, and DAG checks passed."},
+    {"id": "review-coverage-strict", "returncode": 0, "summary": "R3 review coverage validator returned ok=true with no errors."}
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-REPLAY-oracle.py",
+      "sha256": "9056cbec632d9061157aed8d26702096b0caf049c6318b9eac7fcac47b39a4f5",
+      "bytes": 19753,
+      "producer": "A-PR286-FROZEN-REPLAY"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-REPLAY-oracle-output.json",
+      "sha256": "9d8c277a1d167fe70ff724b5e998312facb934c3656eb1c18019931bb24e95c9",
+      "bytes": 7287,
+      "producer": "A-PR286-FROZEN-REPLAY"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-REPLAY-review-coverage.json",
+      "sha256": "97cb2c009ca84a520cb52430c1c60115b62d1a95b97478cda3077098e07bfbec",
+      "bytes": 8591,
+      "producer": "A-PR286-FROZEN-REPLAY"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-REPLAY-review-coverage.json",
+  "review_coverage_sha256": "97cb2c009ca84a520cb52430c1c60115b62d1a95b97478cda3077098e07bfbec",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr286-candidate-review-20260810/assignments/A-PR286-FROZEN-REPLAY.json",
+    ".agent-harness/runs/pr286-candidate-review-20260810/RUN_PLAN.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR286_CANDIDATE_INTEGRATION_REHEARSAL.json",
+    ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+    "docs/research_program/post_pr275/pr286_publication_policy.json",
+    "docs/research_program/post_pr275/pr286_spec.yaml",
+    "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+    "scripts/codex_harness/validate_pr_dag.py",
+    "tests/contracts/test_pillar_s_complete_adjudication.py"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-REPLAY-oracle-output.json",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-REPLAY-review-coverage.json",
+        "external-audit-sha256:c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+      ],
+      "evidence_fingerprint": "9d8c277a1d167fe70ff724b5e998312facb934c3656eb1c18019931bb24e95c9",
+      "summary": "No blocking frozen-replay defect was found. The candidate preserves the PR-271/272/273 evidence lanes, reconstructs all 72 terminal rows with 33 current source bindings and deterministic content address, executes and kills all 18 registered mutations in order, remains portable and destination-contained, and cross-binds the exact predecessor, policy, and PR-287 DAG consumer without promoting row-level scientific claims."
+    }
+  ],
+  "errors": []
+}

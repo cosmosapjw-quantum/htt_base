@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-stacked-publication-policy-review-20260810",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "created_at": "2026-08-10T05:25:48+00:00",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_STACK_POLICY_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "ec986572ee5f5e7854e962004b40e7f3cd6d9527798bb13baa111c88f8bc8476",
+    "seal_sha256": "8bfbdaff6af64436924580463f9ec2554279a1bc6a1486750cb0c32b6266bf5b",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "0db8394f751dc88d8fd5f83c399c672ab87fcbd6",
+    "diff_sha256": "404c50c3fdba1f92c6483cfc7829b9d0e836f5e385fe6db27b6f402ed3128f03",
+    "changed_files_sha256": "2ee57a82a18f93585636383adacae5cf34d753841adf5587c087d50f851e66f7",
+    "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034"
+  },
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "REVIEWED",
+  "evidence_key": {
+    "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034",
+    "dependency_hashes": {
+      "common_depth_path": "41ffe054645c00a36158688b55a0aab390919d3759283b9d5e2f33d69ec8f247",
+      "vector_tensor_statistical_foundations": "1a69c6b2bdd65b49b49c9383086b5f303c651b0aaf95bed41fdde53a97d2d215",
+      "htt_depth_path": "fb8b9043f3d01c608c1aea4283ba23f533ccf050918cabbb1e5cf6003033bf74",
+      "proof_registry_two_pillars": "01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201",
+      "pillar_s_core_proofs": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e"
+    }
+  },
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 16
+  },
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "publication_state": "NOT_PUBLISHED_BY_HARNESS",
+  "assignment_count": 2,
+  "results": [
+    {
+      "assignment_id": "A-PR284-STACK-CLOSEOUT",
+      "agent_type": "claim_gate_reviewer",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/results/A-PR284-STACK-CLOSEOUT.json",
+      "sha256": "d3eabc7e9dfaf851186380806771f5446c2610c4746770c1858f58ea33920c28",
+      "bytes": 8452
+    },
+    {
+      "assignment_id": "A-PR284-STACK-POLICY",
+      "agent_type": "harness_engineer",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/results/A-PR284-STACK-POLICY.json",
+      "sha256": "4d159dd979fa36b650a3016949972b4a40fed74c60ede9fdb3962d278b93fdbc",
+      "bytes": 8321
+    }
+  ],
+  "merged_results": {
+    "path": ".agent-harness/runs/pr284-stacked-publication-policy-review-20260810/MERGED_RESULTS.json",
+    "sha256": "e8e7ac246245cc9694ebd5a2f6bf18c9acd67e0b303c45f45913f6699910b6d0",
+    "bytes": 5690
+  },
+  "disposition": "summarized_discardable",
+  "closed_at": "2026-08-10T05:46:47+00:00"
+}

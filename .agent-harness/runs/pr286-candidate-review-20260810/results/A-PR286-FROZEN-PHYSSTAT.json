@@ -1,0 +1,222 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-candidate-review-20260810",
+  "assignment_id": "A-PR286-FROZEN-PHYSSTAT",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "0376ec83567e3ad8a005500110961f8b5df5ec275fc2c4ded9ad67eb12e12bd5",
+    "seal_sha256": "d9241a26060fbdd09d0f1f77b3a47bec422525cb7d016b33b089bf232c03068d",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+    "diff_sha256": "80f2057dc690aaacf0258e1603dac0fcf4a455f343564d80717709afd615071d",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "d3307adde069f7bfb422d290d14204cd1d67778a66cace303f0a962d56cca818"
+  },
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-PHYSSTAT.json",
+  "assignment_sha256": "5b879ce502aeb6b35340bc08f4f23799dcf1121e1e8b14e721110da26d784440",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CLAIM_REGISTRY.jsonl",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/README.md",
+    ".agent-harness/runs/pr286-candidate-review-20260810/RUN_PLAN.json",
+    ".agent-harness/runs/pr286-candidate-review-20260810/assignments/A-PR286-FROZEN-PHYSSTAT.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+    ".prguard/runtime/PR286_CANDIDATE_INTEGRATION_REHEARSAL.json",
+    ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+    "docs/research_program/post_pr275/pr286_publication_policy.json",
+    "docs/research_program/post_pr275/pr286_spec.yaml",
+    "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+    "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml",
+    "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+    "docs/research_program/vector_tensor/pr272_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+    "docs/research_program/vector_tensor/proofs/PR271_PILLAR_S_CORE.md",
+    "htt/src/common/vector_tensor_statistical_inference.py",
+    "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+    "tests/contracts/test_pillar_s_complete_adjudication.py",
+    "tests/contracts/test_pillar_s_inference.py",
+    "tests/integration/test_vector_tensor_blind_synthetic.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-10T13:15:00Z",
+  "completed_at": "2026-08-10T13:32:46Z",
+  "tool_versions": {
+    "git": "2.43.0",
+    "numpy": "2.4.2",
+    "pytest": "9.1.1",
+    "python": "3.12.3",
+    "pyyaml": "6.0.1"
+  },
+  "commands": [
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "focused"],
+      "returncode": 0,
+      "result": "42 passed in 107.24s"
+    },
+    {
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_pillar_s_inference.py", "-k", "weak_identification or depth_local_global or implementation_and_semantic_types"],
+      "environment": "missing PYTHONPATH",
+      "returncode": 2,
+      "result": "collection error: ModuleNotFoundError: No module named common"
+    },
+    {
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_pillar_s_inference.py", "-k", "weak_identification or depth_local_global or implementation_and_semantic_types"],
+      "environment": "PYTHONPATH=.:htt/src:htt",
+      "returncode": 0,
+      "result": "3 passed, 27 deselected in 0.13s"
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle.py", "--output", ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json"],
+      "returncode": 0,
+      "result": "registered checks pass and conditioning defect reproduced"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle.py",
+      "sha256": "c688854bb082a3c2516f3c26d02d0b7bb9435583ef73d352112d1a3dbeb5ef88",
+      "bytes": 12295,
+      "producer": "A-PR286-FROZEN-PHYSSTAT",
+      "command_fingerprint": "a88a90ea83deda69e9c8f4419ca5eaef19bebadaac9dc9fd1ff05f8ef1db102a"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json",
+      "sha256": "1e7c540a5d1038256a5c2e1ae16ec5726e6db2f1798ef0fab3f89f2193b61301",
+      "bytes": 1397,
+      "producer": "A-PR286-FROZEN-PHYSSTAT",
+      "command_fingerprint": "a88a90ea83deda69e9c8f4419ca5eaef19bebadaac9dc9fd1ff05f8ef1db102a"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_coverage.json",
+      "sha256": "6a40ca0409fccbfdac20cc427eeb66a5cec88415095dd827ebbc35b7ea1a3abb",
+      "bytes": 9186,
+      "producer": "A-PR286-FROZEN-PHYSSTAT"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_coverage.json",
+  "review_coverage_sha256": "6a40ca0409fccbfdac20cc427eeb66a5cec88415095dd827ebbc35b7ea1a3abb",
+  "findings": [
+    {
+      "finding_id": "F-PR286-PHYSSTAT-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The HTT depth local/global API does not fail closed for every covariance accepted by its own finite symmetric positive-definite validator: covariance diag(1e-320,1,2,3) produces NaN amplitudes and chi-square fields while returning VALIDATED_REGISTERED_SYNTHETIC. The frozen VT-S14 covariance is well-conditioned and replays, but PR-286 binds this implementation as the future admitted-data adapter, so a positive validation state with non-finite statistics blocks the candidate.",
+      "assumptions_used": [
+        "The public function's accepted-input domain is defined by its implemented finite, exactly symmetric, numerically positive-definite checks.",
+        "A validation status must not be positive when its primary GLS outputs are non-finite.",
+        "The PR-286 fixed registered covariance remains a synthetic-only cell and does not erase fail-closed requirements for the bound implementation."
+      ],
+      "evidence_refs": [
+        "htt/src/common/vector_tensor_statistical_inference.py:222-237",
+        "htt/src/common/vector_tensor_statistical_inference.py:1382-1472",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json#residual_risk"
+      ],
+      "evidence_fingerprint": "pr286:depth-local-global:accepted-spd-nonfinite-positive-status:v1",
+      "counterevidence_refs": [
+        "docs/research_program/vector_tensor/pr272_spec.yaml:188-203",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json#registered_claim_pass"
+      ],
+      "reproduction": [
+        "python3 -B .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle.py --output .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json",
+        "Inspect residual_risk: reproduced=true, all_numeric_fields_finite=false, status=VALIDATED_REGISTERED_SYNTHETIC."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Add a finite-output and conditioning refusal before constructing a positive HttDepthDiscriminationReport.",
+        "Add a regression test using non-identity covariance plus an extreme-scale SPD covariance; require a typed refusal rather than NaN serialization or positive status.",
+        "Rebuild and reseal the PR-286 implementation bundle and complete adjudication receipt after the production fix."
+      ]
+    },
+    {
+      "finding_id": "F-PR286-PHYSSTAT-002",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "The frozen registered scientific dispositions are internally sound: exactly 58 source plus 14 VT-S rows are present; exact proof and synthetic validation remain distinct; x/Q/F/G_F/Pi stay diagnostic-only; HTT/MIO ownership is separated; and no likelihood/posterior/evidence or Bianchi-family promotion is minted.",
+      "assumptions_used": [
+        "The candidate seal and all assignment-declared input hashes are authoritative for this frozen review.",
+        "Process completion does not promote the 50 inconclusive source rows or blocked VT-S14 proposition."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#summary",
+        "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json#forbidden_use"
+      ],
+      "evidence_fingerprint": "pr286:registered-58-plus-14-evidence-and-claim-ceilings:v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "python3 -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py focused",
+        "python3 -B .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle.py --output .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json"
+      ],
+      "confidence": 0.99,
+      "unresolved": []
+    },
+    {
+      "finding_id": "F-PR286-PHYSSTAT-003",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "Within the frozen registered cell, the VT-S14 covariance has condition number 4.347434583051111, joint design rank two, and whitened principal angle 0.559844992566963 radians; an independent non-identity GLS calculation agrees and an exactly proportional design abstains. VT-S14 nevertheless remains BLOCKED_WITH_RECEIPT because admitted data are absent.",
+      "assumptions_used": [
+        "The frozen PR-272 depth covariance and local/global designs define only one registered synthetic cell.",
+        "A fixed-design synthetic pass cannot satisfy the admitted-data requirement."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json#registered_whitened_principal_angle_radians",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json#nonidentity_gls",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14"
+      ],
+      "evidence_fingerprint": "pr286:vts14-registered-cell-rank-angle-and-data-blocker:v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "python3 -B .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle.py --output .agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json"
+      ],
+      "confidence": 0.99,
+      "unresolved": []
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR286-PHYSSTAT-002"],
+      "summary": "The blind synthetic integration and its x/Q/F/G_F/Pi and family-identification ceilings replay without scientific promotion."
+    },
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR286-PHYSSTAT-001", "F-PR286-PHYSSTAT-003"],
+      "summary": "The registered VT-S14 cell remains correctly blocked before admitted data, but the bound future adapter has a high-severity non-finite positive-status failure and the frozen candidate is not ready."
+    }
+  ],
+  "errors": []
+}

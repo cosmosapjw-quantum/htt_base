@@ -1,0 +1,80 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-selective-salvage-mapping-20260812",
+  "assignment_id": "A-PR291-CF4-DOMAIN-MAP",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Read the authoritative audit at /home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md only at the PR-291/G55-G61 sections, then inspect historical commits cb99df8f and 1417804b plus the named current inputs. Produce a bounded read-only salvage map for G56-G57 against exact PR-290 sealed predecessor 06ac2060. Identify exact production/test hunks to retain, stale generated/hash/record-ID-only glue to drop, and minimal repairs required for complete native CF4 catalogue, row-selection, covariance, frame/sign/units, grouping/depth/ZoA replay through current PR-289 data_identity. Check covariance/rank/depth/weak-ID/legacy-curl semantics, units/signs, no observed execution and family ceiling. Do not edit candidate/shared files, do not read sibling results, and do not propose new formalism/framework. Write only the registered result envelope with resolvable commit/path/line evidence and an implementable hostile-test matrix.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/post_pr275/pr291_spec.yaml",
+      "sha256": "2669fc86efa58102308817b697644a5344d67f07c090f10987b17174d9f6fa38"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_publication_policy.json",
+      "sha256": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+      "sha256": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f"
+    },
+    {
+      "path": "docs/generated/pr289_data_identity_v2_receipt.json",
+      "sha256": "92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34"
+    },
+    {
+      "path": "htt/src/common/data_identity.py",
+      "sha256": "145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2"
+    },
+    {
+      "path": "tests/contracts/test_data_identity_registry_v2.py",
+      "sha256": "1ee3fb1541a911abfd686d5cd78f75380b8847dfe5d1fd076cd48153a4f1c3c3"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "827ecb37b8b1e7f318c6c59ed78753f0367859d648be90a8b36ebaecc7d116ff"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "registered-result-envelope"
+  ],
+  "result_path": ".agent-harness/runs/pr291-selective-salvage-mapping-20260812/results/A-PR291-CF4-DOMAIN-MAP.json",
+  "status": "registered",
+  "assignment_sha256": "c9c239be90597549a5a92445abd3e0432ae240f11cbced3c88c1c2236bd93037"
+}

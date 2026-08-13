@@ -1,0 +1,88 @@
+{
+  "schema_version": 3,
+  "run_id": "pr287-fresh-independent-review-20260811",
+  "assignment_id": "A-PR287-FROZEN-CLAIM",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_gate_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-287",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "fbe4787a82f650ec050fab020ae2c9545e9f7fe778ec2d6f5d4550470537712b",
+    "seal_sha256": "486a8f7e75c04467e2c65a083529eff5f65e622f935b3346ada8ea7243cd456e",
+    "base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_sha": "06ee728054fd62423fa90bc6a5d714b9be8631e3",
+    "merge_base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_tree_sha": "dd909b5d35a385b251547f6224b657346d7688f6",
+    "diff_sha256": "83ef2581a3a1afdf5459ad64730783f6f7e905a3cda155236ec44971b160912f",
+    "changed_files_sha256": "b522232b4e7f07fe03b297f33a07dfcce4f7eb80cdd0bbd94b9fd06a20b73198",
+    "production_hash": "6d0963dfdc66dcd2bf80ef3dde6fd84d87f455f0c6db5199250b06b2c51e873a"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION",
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Blind independent claim and provenance review of frozen PR-287. Verify HTT COMMON MIO ownership, C2 diagnostic-only ceiling, transfer none, observed and public false, BLOCKED_PRE_NATIVE_ATLAS, PR-151 exclusion, historical versus fresh separation, determiner plural and reordered claim variants, status lifecycle, and typed INCONCLUSIVE executor blocker. Write no tracked or shared file.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+      "sha256": "fbe4787a82f650ec050fab020ae2c9545e9f7fe778ec2d6f5d4550470537712b"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr287_spec.yaml",
+      "sha256": "dbd0d6fe29a45e51a6850102ed4587ac38f8da7cfb52453552aa0a4ba704ac09"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr287_publication_policy.json",
+      "sha256": "30e24d1f9e77c5c206a64e7d8b639cfccd4c6bd9455a6893cbc69ae55ea1d155"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-287.md",
+      "sha256": "2071fb8c93006c1f7c79fa36a99bf2611db30dcc8ff2db7b632eec9feda33737"
+    },
+    {
+      "path": "docs/research_program/post_pr275/blind_replay/README.md",
+      "sha256": "bf6621233967c00a1b94a61017febebc8c0e969bf61436a092bf6805547bca73"
+    },
+    {
+      "path": "htt/src/common/post275_blind_replay.py",
+      "sha256": "95d458f939b7ff377e0810a288aaff1da7c254c69f0b836da0dcc61d95e30652"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "1c6785cd22cf284ed6aebcb74e0acd9c0313f2072acac0c76677d2ee7679bf57"
+    },
+    {
+      "path": "scripts/check_claim_language.py",
+      "sha256": "b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only shell",
+    "pytest",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact policy-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-CLAIM.json",
+  "status": "registered",
+  "assignment_sha256": "330e8d5714e7d8cb7687a04f8c60352a3d82b6e453328bafc62c273136607043"
+}

@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR283-R2-REPLAY",
+  "candidate_sha": "6fa98399dfe8b0a0735f9938063420457cda7688",
+  "candidate_tree_sha": "101ff1d291a4368cffcff80b4cef0e7f4092f3f0",
+  "candidate_seal_sha256": "a74c8b6c8eea857af899ac23e43eecaf2755b48b48fb7ccb37f50a3650915955",
+  "first_verdict": "PASS",
+  "required_input_hashes_match": true,
+  "oracle": {
+    "kind": "property_test",
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-q",
+      "tests/contracts/test_process_recovery_auto_stacked.py"
+    ],
+    "started_at": "2026-08-09T19:50:12+00:00",
+    "completed_at": "2026-08-09T19:50:15+00:00",
+    "returncode": 0,
+    "timed_out": false,
+    "stdout": "....................                                                     [100%]\n20 passed in 2.11s\n",
+    "stderr": ""
+  },
+  "policy_commands": [
+    {"id": "pr283-process-recovery-bootstrap", "returncode": 0, "summary": "20 passed in 2.11s"},
+    {"id": "pr283-focused", "returncode": 0, "summary": "25 passed in 1.47s"},
+    {"id": "pr283-adjacent", "returncode": 0, "summary": "62 passed in 6.34s"},
+    {"id": "pr283-receipt-replay", "returncode": 0, "summary": "fresh exact bytes matched sha256 42ae6c4d0fcc735d6b62172788db2cee4fb21882069ce04f20ed9923fb346e0e"},
+    {"id": "pr283-pr272-predecessor-replay", "returncode": 0, "summary": "5 passed, 24 deselected in 1.54s"},
+    {"id": "pr283-portable-clean-replay", "returncode": 0, "summary": "5867 tracked files; source and clean-root manifests invariant; nested receipt replay exited 0"},
+    {"id": "pr283-publication-policy-cross-binding", "returncode": 0, "summary": "9 passed, 58 deselected in 0.97s"},
+    {"id": "pr283-source-replay-caller-migrations", "returncode": 0, "summary": "90 passed in 6.67s"},
+    {"id": "pr283-harness-portability", "returncode": 0, "summary": "22 passed in 9.90s"},
+    {"id": "pr283-dag-strict", "returncode": 0, "summary": "244 PR cards valid; PR-283 ELIGIBLE"},
+    {"id": "pr283-claim-language", "returncode": 0, "summary": "no forbidden claim language detected"}
+  ],
+  "additional_checks": [
+    {"id": "candidate-seal-validation", "returncode": 0, "summary": "no validation errors"},
+    {"id": "pr282-current-receipt-check", "returncode": 0, "summary": "exact bytes matched sha256 a6861dce30c737c05a2aff8ed204e43c8272b9170d0a754e737e7f5059a3549c"},
+    {"id": "assignment-invariant-oracle", "returncode": 0, "summary": "fresh receipt, mutant execution, stable-patch, future-deferral, and merge-refusal invariants passed"}
+  ],
+  "portable_clean_evidence": {
+    "tracked_file_count": 5867,
+    "manifest_sha256": "b102231ebcbe2a1cf99caebd64b998dffce4810167d67c58681e49396c43e399",
+    "path_inventory_sha256": "44e14087c1f4f44d20ef9b2bfa4fd050fd2fbe950edd85f79889fcf7f34f86e2",
+    "content_identity_inventory_sha256": "158504ea174c570f60a3fb7f0f5dedc1bfa00d4b5088c026d2532044f7ba3e8b",
+    "source_pre_equals_post": true,
+    "clean_pre_equals_post": true,
+    "source_root_differs_from_execution_root": true,
+    "nested_receipt_returncode": 0,
+    "environment_scrubbed": true
+  },
+  "mutation_execution": {
+    "count": 10,
+    "unique_ids": 10,
+    "all_executed": true,
+    "all_activated": true,
+    "all_killed": true,
+    "mutation_survivors": [],
+    "validation_errors": [],
+    "weak_status_forbidden_path_call_count": 3,
+    "receipt_recomputed_byte_equal": true,
+    "receipt_sha256": "42ae6c4d0fcc735d6b62172788db2cee4fb21882069ce04f20ed9923fb346e0e",
+    "terminal": "PASS_WEAK_IDENTIFICATION_ABSTENTION"
+  },
+  "stable_patch_invariants": {
+    "count": 6,
+    "unique_within_candidate": true,
+    "absent_from_base_history": true,
+    "matches_candidate_seal": true,
+    "stable_patch_ids": [
+      "711390afc3c05f0df9c544eb12393d713a6d0c86",
+      "3efffa9dba48e79937cb99f6ba36f758df9b4ea6",
+      "c50dd4e10ba8d962650435269c613d6645ca1c09",
+      "906e59eb075813ba02f2c28da34102a0e391ba8d",
+      "8b7945636c611dec1d0f3d893bc365b05215f8e0",
+      "9f92c8413e81c576969fcaa40c8a7ee3aeb56e8f"
+    ]
+  },
+  "serial_stack_A_through_H": [
+    {"case": "A", "predicate": "future initialization before predecessor PR_OPEN refused", "passed": true},
+    {"case": "B", "predicate": "second active implementation refused across linked worktrees", "passed": true},
+    {"case": "C", "predicate": "ineligible future gate consumes zero retry and assurance budget", "passed": true},
+    {"case": "D", "predicate": "successor base mismatch with predecessor sealed head refused", "passed": true},
+    {"case": "E", "predicate": "existing stable patch ID reintroduction refused", "passed": true},
+    {"case": "F", "predicate": "sealed production mutation invalidates seal", "passed": true},
+    {"case": "G", "predicate": "unchanged evidence key reuses substantive assurance", "passed": true},
+    {"case": "H", "predicate": "automatic and GitHub merge actions refused as human-only", "passed": true}
+  ],
+  "serial_stack_observations": {
+    "future_pr284_eligible": false,
+    "future_pr284_disposition": "INELIGIBLE",
+    "future_pr284_retry_budget_cost": 0,
+    "future_pr284_assurance_budget_cost": 0,
+    "auto_merge_refused": true,
+    "gh_pr_merge_forbidden": true,
+    "merge_policy": "HUMAN_ONLY"
+  },
+  "historical_provenance_only": {
+    "path": ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-REPLAY.json",
+    "sha256": "1c88420af789cc9e6dc204bd60622d16fcc19e2aaf82ed4c7ff3c321ea967355",
+    "used_as_acceptance_evidence": false
+  },
+  "versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "2.43.0",
+    "PyYAML": "6.0.1",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0"
+  },
+  "ok": true
+}

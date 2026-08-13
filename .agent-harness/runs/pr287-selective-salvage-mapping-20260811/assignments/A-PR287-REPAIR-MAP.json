@@ -1,0 +1,66 @@
+{
+  "schema_version": 3,
+  "run_id": "pr287-selective-salvage-mapping-20260811",
+  "assignment_id": "A-PR287-REPAIR-MAP",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "code_cartographer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-287",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "workflow_role": "implementer",
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null,
+    "production_hash": null
+  },
+  "independence_mode": "shared-core",
+  "discovery_mode": "independent",
+  "independence_rationale": "Independent targeted reconstruction of the three audit findings is needed because the final historical lineage was unreviewed.",
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Read this assignment first. Inspect only the historical selected PR-287 implementation lineage ending at aedd2164 plus current repository modules it transitively imports. Reproduce or map exactly three audit-authorized repair classes: transitive publication_integrity.py/profile_registry.py origin and byte provenance; owner factory origin/path/bytes provenance; claim detection determiner/plural/reordered variants. Identify focused hostile tests and any underflow-prone exact-rational-to-float code that must not be transplanted. Do not implement, do not broaden the claim framework, do not inspect sibling results, and write only the registered result.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/post_pr275/pr287_spec.yaml",
+      "sha256": "e07cf9e68ecf44493e3f3e3c694d334a87560184a992eb9e28ebbe50f071f3dc"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr287_publication_policy.json",
+      "sha256": "533a55d88c8eac40b3150c18e2818af78e5113ac445b71569a082b9af1b68fd0"
+    },
+    {
+      "path": ".agent-harness/scripts/publication_integrity.py",
+      "sha256": "56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec"
+    },
+    {
+      "path": ".agent-harness/scripts/profile_registry.py",
+      "sha256": "4070ab33a9834c5e71960baab90bb45b1b2cbeedaf1214be09489588978538e2"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell"
+  ],
+  "required_outputs": [
+    "registered-result-envelope"
+  ],
+  "result_path": ".agent-harness/runs/pr287-selective-salvage-mapping-20260811/results/A-PR287-REPAIR-MAP.json",
+  "status": "registered",
+  "assignment_sha256": "891bcfbbfeaf9944f562083b93bc767d7e0ec2e01245323e61daaff82a0d13a4"
+}

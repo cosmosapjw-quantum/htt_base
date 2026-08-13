@@ -1,0 +1,91 @@
+{
+  "candidate_sha": "dcde762d1ce3027e01edcf2744398f7588bb5fb1",
+  "checks": {
+    "combined_uncertainty_and_analytic_thresholds": true,
+    "dynesty_3_and_scrambled_sobol_independence": true,
+    "dynesty_prerelease_refusal": {
+      "3.0.0.dev1": "BLOCKED_REQUIRED_ENGINE_UNAVAILABLE",
+      "3.0.0rc1": "BLOCKED_REQUIRED_ENGINE_UNAVAILABLE"
+    },
+    "finite_and_content_addressed_receipt": true,
+    "foldwise_refit_conditional_loocv": {
+      "exact_log_predictive_density": {
+        "CHANNEL-1": -0.8325029934858102,
+        "CHANNEL-2": -1.0648209094566679,
+        "CHANNEL-3": -0.8339515778500105,
+        "CHANNEL-4": -1.0447960951693365
+      },
+      "max_abs_error": 0.008826997507013434,
+      "monte_carlo_minus_exact": {
+        "CHANNEL-1": 0.0026069265657037155,
+        "CHANNEL-2": -0.008826997507013434,
+        "CHANNEL-3": 0.0018379513142178228,
+        "CHANNEL-4": -0.00277321691140453
+      }
+    },
+    "independent_analytic_log_evidence": {
+      "PR288-MISSPECIFIED-NEGATIVE-CONTROL": -4.287388370599289,
+      "PR288-NORMAL-MEAN-ANALYTIC": -3.457867080313809,
+      "PR288-NULL-EQUAL-MODELS-A": -2.5058668208785666,
+      "PR288-NULL-EQUAL-MODELS-B": -2.5058668208785666,
+      "PR288-REGISTERED-CORRELATED-NUISANCE": -4.2128293363822005
+    },
+    "null_and_covariance_negative_controls": {
+      "analytic_covariance_shift": 0.07455903421708854,
+      "null_log_bayes_factors": {
+        "DYNESTY_NESTED": 0.060014744709701695,
+        "SCIPY_SOBOL_QMC": 6.4537430661815165e-06
+      }
+    },
+    "ownership_legacy_and_family_gate": true,
+    "pr280_failed_terminal_precedence": true,
+    "registered_mutations": {
+      "executed_and_killed": 15
+    },
+    "registered_ranks": {
+      "PR288-MISSPECIFIED-NEGATIVE-CONTROL": {
+        "covariance_rank": 4,
+        "covariance_rows": 4,
+        "design_columns": 3,
+        "design_rank": 3
+      },
+      "PR288-NORMAL-MEAN-ANALYTIC": {
+        "covariance_rank": 3,
+        "covariance_rows": 3,
+        "design_columns": 1,
+        "design_rank": 1
+      },
+      "PR288-NULL-EQUAL-MODELS-A": {
+        "covariance_rank": 2,
+        "covariance_rows": 2,
+        "design_columns": 2,
+        "design_rank": 2
+      },
+      "PR288-NULL-EQUAL-MODELS-B": {
+        "covariance_rank": 2,
+        "covariance_rows": 2,
+        "design_columns": 2,
+        "design_rank": 2
+      },
+      "PR288-REGISTERED-CORRELATED-NUISANCE": {
+        "covariance_rank": 4,
+        "covariance_rows": 4,
+        "design_columns": 3,
+        "design_rank": 3
+      }
+    },
+    "replicated_ppc_equality_tail": {
+      "registered_pvalue": 0.828125,
+      "strict_gt_only": 0.1877431906614786,
+      "weighted_ge_pvalue": 0.2509727626459144
+    },
+    "system_engine_typed_inconclusive": {
+      "returncode": 2,
+      "terminal": "BLOCKED_DEPENDENCY_OR_ENGINE"
+    }
+  },
+  "receipt_content_id": "sha256:68f439f31327c6894fe9bd9bf4269c216bec3a6832165dc71d35885320f7e518",
+  "receipt_sha256": "622dadbcdf4a5d616a78f485fd6a772d1c7823ed8d77e808aa2bfc8f66169b0c",
+  "schema": "HTT_PR288_INDEPENDENT_PHYSCODE_ORACLE_V1",
+  "status": "PASS"
+}

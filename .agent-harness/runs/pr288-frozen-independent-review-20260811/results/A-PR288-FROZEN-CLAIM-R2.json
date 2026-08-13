@@ -1,0 +1,101 @@
+{
+  "schema_version": 3,
+  "run_id": "pr288-frozen-independent-review-20260811",
+  "assignment_id": "A-PR288-FROZEN-CLAIM-R2",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "assignment_sha256": "09f32db56776e1b6f9943036450f96126149a37d02e4f2b64f8be457697ff298",
+  "agent_type": "claim_gate_reviewer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-288",
+  "change_set_id": "CS-PR288-BAYES-SEMANTICS",
+  "publication_group_id": "PG-PR288-BAYES-SEMANTICS",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR288_VALIDATED_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "cdde24653257c03c34fc94b2af1d58eff55f8aad4575bff07e8190c4d6a637fe",
+    "seal_sha256": "f48b634025993d4edd6cb4e3da0838b7d5be1c9b70cbbbf309bdeacdd70666c0",
+    "base_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+    "candidate_sha": "dcde762d1ce3027e01edcf2744398f7588bb5fb1",
+    "merge_base_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+    "candidate_tree_sha": "69d9f00aa1b8a43dfb9287ffbc9103f350fba80e",
+    "diff_sha256": "530985dfda2c66cba6ec7769bcf151f1ba087a2c9b69add8faa51508225db136",
+    "changed_files_sha256": "0daebf3fcd581e6308cf2772ba9fd8762d4d47115e79bff10b730c852f4f1fa9",
+    "production_hash": "7d2ce119e4f176aacaa870f0c7bc0dc1e5e0aa843bf2984f6ac7af7d4d148a79"
+  },
+  "result_path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-CLAIM-R2.json",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-11T07:57:52Z",
+  "completed_at": "2026-08-11T08:01:52Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0"
+  },
+  "commands": [
+    "python -B .agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-oracle.py",
+    "python -B .agent-harness/scripts/review_coverage.py --coverage .agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-REVIEW_COVERAGE.json --seal .prguard/runtime/PR288_VALIDATED_CANDIDATE_SEAL.json --run-id pr288-frozen-independent-review-20260811 --assignment-id A-PR288-FROZEN-CLAIM-R2 --risk-tier R3"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-REVIEW_COVERAGE.json",
+      "sha256": "d488e6c74b3a41a9d9764e803cd1d9a3336f91102acda6075a46fa71c2840447",
+      "bytes": 10883,
+      "producer": "A-PR288-FROZEN-CLAIM-R2"
+    },
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-oracle.py",
+      "sha256": "437af89907d7e5b74fe27f2f78c15f3349f3b73342730b7296d38e1e46116d2d",
+      "bytes": 14568,
+      "producer": "A-PR288-FROZEN-CLAIM-R2",
+      "command_fingerprint": "70434d85f3020b008f0a7b27b95e8241bb9c7a1c5b163d10ba89b5f3c5842b57"
+    },
+    {
+      "path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-oracle-output.json",
+      "sha256": "0cbd283378a762e4c7641ada40f664d7db043aa549b9f08ec51e0989bf0eb680",
+      "bytes": 1181,
+      "producer": "A-PR288-FROZEN-CLAIM-R2",
+      "command_fingerprint": "70434d85f3020b008f0a7b27b95e8241bb9c7a1c5b163d10ba89b5f3c5842b57"
+    }
+  ],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr288-frozen-independent-review-20260811/assignments/A-PR288-FROZEN-CLAIM-R2.json",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".prguard/runtime/PR288_VALIDATED_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr288_spec.yaml",
+    "docs/research_program/post_pr275/pr288_publication_policy.json",
+    "docs/PR_DELTAS/pr-288.md",
+    "docs/generated/pr288_bayesian_semantics_receipt.json",
+    "htt/htt/htt/infer/bayesian_semantics.py",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/PR_DELTAS/pr-280.md",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-oracle.py",
+    ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-oracle-output.json",
+    ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-REVIEW_COVERAGE.json"
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "d488e6c74b3a41a9d9764e803cd1d9a3336f91102acda6075a46fa71c2840447",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-REVIEW_COVERAGE.json",
+        ".agent-harness/runs/pr288-frozen-independent-review-20260811/artifacts/A-PR288-FROZEN-CLAIM-R2-oracle-output.json"
+      ],
+      "evidence_fingerprint": "d488e6c74b3a41a9d9764e803cd1d9a3336f91102acda6075a46fa71c2840447",
+      "summary": "The exact frozen PR-288 candidate preserves HTT ownership and the C2 synthetic diagnostic ceiling, transfer source none, observed/public false, blocked family identification, exact use restrictions, legacy quarantine, nonpromoting process success, and PR-280's failed terminal provenance. No positive MIO posterior, native-transfer, geometry, or Bianchi-family claim was found."
+    }
+  ],
+  "errors": []
+}

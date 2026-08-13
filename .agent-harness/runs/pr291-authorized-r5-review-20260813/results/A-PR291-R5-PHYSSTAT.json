@@ -1,0 +1,160 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-authorized-r5-review-20260813",
+  "assignment_id": "A-PR291-R5-PHYSSTAT",
+  "assignment_sha256": "2d844839b23e92834000f6489a22689b787b8f4eee3b79ca93ca1ddd5a27539f",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f5f10b379bc83f5baba8cf1f36765720a788477f37900f914dc4a545cdeb0121",
+    "seal_sha256": "8345974c09e968095cce4a8cac5014e3d08f42ed68e56004a2e3cd56ce3edf5a",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "5395853386b08b1fbf0b56a9e6c7a2a6e104ae5a",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "4a1bdbecae5767768b4e8d5beb3a00b41b437c1f",
+    "diff_sha256": "d4e14e08a51067fdffa696ea694b4d1a61bafb7db740da3fd0246bcda5951862",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "964135d7398a1c699a16885eb5050a8ec3cf9bcdddd6ff1640d299ab6757d298"
+  },
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-13T07:25:00Z",
+  "completed_at": "2026-08-13T07:42:38Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "id": "binding",
+      "argv": ["git", "status/rev-parse/merge-base/sha256sum"],
+      "returncode": 0,
+      "summary": "Clean HEAD, exact base/tree/context/seal, target ref, and all required-input hashes matched."
+    },
+    {
+      "id": "oracle",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py"],
+      "returncode": 0,
+      "summary": "PASS across 16 independent physics/statistics controls."
+    },
+    {
+      "id": "focused",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr291_cf4_lane.py", "focused"],
+      "returncode": 0,
+      "summary": "62 passed in 2.93 seconds."
+    },
+    {
+      "id": "adjacent",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr291_cf4_lane.py", "adjacent"],
+      "returncode": 0,
+      "summary": "189 passed in 57.02 seconds."
+    },
+    {
+      "id": "check",
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr291_cf4_lane.py", "check"],
+      "returncode": 0,
+      "summary": "Exact frozen nonexecution receipt replayed with BLOCKED_PREDECESSOR_FINAL_SUCCESS and no observed/numerical side effect."
+    },
+    {
+      "id": "receipt",
+      "argv": ["python3", "-B", "assignment-local inline receipt content verifier"],
+      "returncode": 0,
+      "summary": "File SHA-256 23bb79ff4f90ad12c66013527e8e3fd70afb62bc13c24843cc6ac2148d71c76e and content identity sha256:47e5f17f97538d4b8f1b886fd36baaeb768ad0cfdd8d14522d69a836847c9ed1 replayed."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py",
+      "sha256": "a494f09c0917a1097a2b62d78061b3910c883821708e336c79d0a7104211c6cd",
+      "bytes": 13363,
+      "producer": "A-PR291-R5-PHYSSTAT",
+      "command_fingerprint": "30e3403b21c6f5ed4b05785c2c9befef42a9c3843d28d3d39e6bf33d70d76299"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_REVIEW_COVERAGE.json",
+      "sha256": "66197548a87ef6d8a0f96630f7f9a83dbf9f9e87203d3bb3e2d2bf07587aaee1",
+      "bytes": 8982,
+      "producer": "A-PR291-R5-PHYSSTAT"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "66197548a87ef6d8a0f96630f7f9a83dbf9f9e87203d3bb3e2d2bf07587aaee1",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/RUN_PLAN.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/assignments/A-PR291-R5-PHYSSTAT.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+    ".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "htt/obsstat/cf4_post275_lane.py",
+    "htt/src/common/cf4_observed_lane_activation.py",
+    "htt/src/common/source_separation.py",
+    "scripts/codex_harness/run_pr291_cf4_lane.py",
+    "tests/integration/test_cf4_post275_lane.py"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR135-FINITE-NULL-RANK",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "Covariance-whitened, column-normalized finite rank and right-null replay satisfy the fixed-threshold, units/scale, permutation, covariance, rank-deficient, nuisance-lift, and machine-null controls. No likelihood, prior-distribution, Q/F/G, source, or family claim is minted by this diagnostic.",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:116",
+        "htt/obsstat/cf4_post275_lane.py:1009",
+        "htt/obsstat/cf4_post275_lane.py:1195",
+        "htt/obsstat/cf4_post275_lane.py:1239",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py",
+        "command:pr291-focused-62-passed",
+        "command:pr291-adjacent-189-passed"
+      ],
+      "evidence_fingerprint": "sha256:b83f384f95c43f333df6fb1f82523345fc580c9b47df53e0df961b321dada834"
+    },
+    {
+      "claim_id": "C-PR136-IDENTIFIED-SET",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "The structural set is strictly non-singleton, point/confidence-free, requires an exact WEAKLY_IDENTIFIED decision, recomputes LOCAL/GLOBAL joint geometry with NUISANCE excluded, rejects sub-tolerance content drift, reconciles G4/G7, and remains diagnostic-only with family identification blocked.",
+      "evidence_refs": [
+        "htt/obsstat/cf4_post275_lane.py:1333",
+        "htt/obsstat/cf4_post275_lane.py:1389",
+        "htt/obsstat/cf4_post275_lane.py:1450",
+        "htt/obsstat/cf4_post275_lane.py:1489",
+        "htt/src/common/source_separation.py:315",
+        ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-PHYSSTAT_oracle.py",
+        "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json:1"
+      ],
+      "evidence_fingerprint": "sha256:c1d9b5b5d33c45fa2356ac26f356aafbe4cdd085e933fc17ddb8523554a656d6"
+    }
+  ],
+  "errors": [],
+  "summary": "PASS. Independent R5 physics/statistics review found no substantive defect in the frozen candidate for the two assigned claims. The result validates synthetic diagnostic mechanics only; observed CF4 execution, public use, physical source attribution, likelihood/evidence, and Bianchi family identification remain blocked."
+}

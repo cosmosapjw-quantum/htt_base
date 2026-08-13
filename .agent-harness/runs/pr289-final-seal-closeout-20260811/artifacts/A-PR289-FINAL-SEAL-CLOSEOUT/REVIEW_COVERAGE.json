@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "run_id": "pr289-final-seal-closeout-20260811",
+  "assignment_id": "A-PR289-FINAL-SEAL-CLOSEOUT",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "candidate_seal_sha256": "69c1c25c127d0563a158a784cde7e58dc287a87e363dbca4bb8cf8e1903857da",
+  "candidate_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+  "candidate_tree_sha": "b398078201964aa2c43acff5eb7bc2b6f2d601df",
+  "diff_sha256": "47613de9436a0c434dd1376c93d0aed47c5f075cc877f7c3c68bfaca7f0881ff",
+  "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+  "completed_at": "2026-08-11T12:33:46Z",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR289_FINAL_CANDIDATE_SEAL.json", ".agent-harness/runs/pr289-final-seal-closeout-20260811/artifacts/A-PR289-FINAL-SEAL-CLOSEOUT/final_closeout_oracle.py"],
+      "rationale": "Final seal, HEAD, tree, merge base, diff, 17 linear commits, and unique stable patch IDs agree."
+    },
+    {
+      "cell": "pr280_terminal_receipt_without_success_promotion",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json"],
+      "rationale": "The exact accepted R5 lineage review passed this policy cell without promoting historical terminal failure."
+    },
+    {
+      "cell": "immutable_pr274_v1",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json", ".prguard/runtime/PR289_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "R5 immutable replay PASS is carried under the unchanged production and dependency key."
+    },
+    {
+      "cell": "v2_factory_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json", ".prguard/runtime/PR289_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "R5 physics/code PASS remains bound to unchanged substantive evidence."
+    },
+    {
+      "cell": "stable_record_and_inspection_identities",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 physics/code review examined stable record and inspection identities."
+    },
+    {
+      "cell": "typed_provenance_evidence",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 physics/code review examined typed provenance evidence."
+    },
+    {
+      "cell": "machine_lane_cardinality_and_gate_identity",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 physics/code review revalidated role ordinals and lane identity."
+    },
+    {
+      "cell": "regular_file_and_no_symlink_boundary",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed the registered file-boundary cell."
+    },
+    {
+      "cell": "hardlink_and_root_confinement",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed root, hardlink, and confinement checks."
+    },
+    {
+      "cell": "size_hash_and_component_inventory",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review revalidated record seals and component inventory identity."
+    },
+    {
+      "cell": "release_and_license_identity",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed release and license identity handling."
+    },
+    {
+      "cell": "units_frame_convention",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed units, frame, and convention checks."
+    },
+    {
+      "cell": "mask_selection_covariance_null",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed mask, selection, covariance, and null status checks."
+    },
+    {
+      "cell": "transfer_and_sky_support",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review preserved transfer-none and pre-native sky-support boundaries."
+    },
+    {
+      "cell": "planck_first_candidate",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed the Planck first-candidate ordering cell."
+    },
+    {
+      "cell": "planck_native_profile_and_same_sky_replay",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed native profile and same-sky replay."
+    },
+    {
+      "cell": "cf4_native_catalogue_selection_covariance_replay",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed CF4 catalogue, selection, and covariance replay."
+    },
+    {
+      "cell": "hsc_kids_separate_child_and_cross_covariance_replay",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed separate HSC/KiDS child and cross-covariance replay."
+    },
+    {
+      "cell": "native_profile_export_replay_and_string_only_refusal",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed native export replay and string-only refusal."
+    },
+    {
+      "cell": "exported_record_full_semantic_replay",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed full semantic replay."
+    },
+    {
+      "cell": "repeated_role_ordinal_completeness",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 repair and review revalidated repeated-role ordinals."
+    },
+    {
+      "cell": "verified_bytes_equal_executed_module",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json"],
+      "rationale": "The accepted R5 replay review passed verified-byte execution identity."
+    },
+    {
+      "cell": "output_parent_identity_pinning",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed output-parent identity pinning."
+    },
+    {
+      "cell": "interpreter_alias_invariant_receipt",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json"],
+      "rationale": "The accepted R5 replay review passed three-interpreter receipt identity."
+    },
+    {
+      "cell": "name_only_hsc_kids_refusal",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed name-only HSC/KiDS refusal."
+    },
+    {
+      "cell": "pr151_partial_desi_refusal",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed partial DESI refusal."
+    },
+    {
+      "cell": "admission_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-final-r4-replacement-review-20260811/results/A-PR289-R4-FINAL-REVIEW.json", ".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "R4's pre-exposure mismatch remained INCONCLUSIVE; the bounded repair and exact R5 PASS reject cross-lane authorization."
+    },
+    {
+      "cell": "authorization_state_machine_and_workflow_domain",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json"],
+      "rationale": "The accepted R5 review preserved workflow-only authorization and no execution promotion."
+    },
+    {
+      "cell": "refusal_status_precedence_and_lane_aggregation",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json"],
+      "rationale": "The accepted R5 review passed refusal precedence and lane aggregation."
+    },
+    {
+      "cell": "no_download_or_repository_copy",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json", ".prguard/runtime/PR289_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "R5 replay and the final portable metadata rerun preserve no-download and no-copy boundaries."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-PHYSCODE.json", ".prguard/runtime/PR289_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "All 33 registered mutations passed R5; that command row is carried byte-for-byte under the unchanged key."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json", ".prguard/runtime/PR289_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "Receipt replay PASS is carried byte-for-byte and the final integration receipt is canonically content-addressed."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR289_FINAL_CANDIDATE_SEAL.json", ".prguard/runtime/PR289_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "Seal and receipt bind the exact policy hash; the policy test row is carried byte-for-byte."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr289-r5-authorized-review-extension-20260811/results/A-PR289-R5-REPLAYCLAIM.json", "docs/PR_DELTAS/pr-289.md", ".prguard/runtime/PR289_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "R5 preserved COMMON C2 diagnostic-only and pre-native family blocks; final claim-language metadata rerun passed."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR289_FINAL_INTEGRATION_REHEARSAL.json", ".agent-harness/runs/pr289-final-seal-closeout-20260811/artifacts/A-PR289-FINAL-SEAL-CLOSEOUT/final_closeout_oracle.py"],
+      "rationale": "Portable clean replay was freshly rerun on final metadata and the worktree is clean."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR289_FINAL_INTEGRATION_REHEARSAL.json", ".prguard/runtime/PR289_FINAL_CANDIDATE_SEAL.json", ".agent-harness/runs/pr289-final-seal-closeout-20260811/artifacts/A-PR289-FINAL-SEAL-CLOSEOUT/final_closeout_oracle.py"],
+      "rationale": "Final seal and receipt bind exact PR-288 predecessor 27df5da0; all eight required command cells are PASS with freshness typing."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR289_FINAL_CLOSEOUT_ORACLE",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": ["/usr/bin/python3", "-B", ".agent-harness/runs/pr289-final-seal-closeout-20260811/artifacts/A-PR289-FINAL-SEAL-CLOSEOUT/final_closeout_oracle.py"],
+      "command_fingerprint": "ce491c60e1505c3f4fe7f9e9ef6d2de96bd314138dfd4eb34b9b244d1b257da0",
+      "started_at": "2026-08-11T12:33:45Z",
+      "completed_at": "2026-08-11T12:33:46Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr289-final-seal-closeout-20260811/artifacts/A-PR289-FINAL-SEAL-CLOSEOUT/final_closeout_oracle.py",
+      "artifact_sha256": "7032a4493ba09f874b202b3e759e67cd759114d5330cefe6fd607c4f84615d45",
+      "artifact_bytes": 14384,
+      "evidence_refs": [".prguard/runtime/PR289_FINAL_CANDIDATE_SEAL.json", ".prguard/runtime/PR289_FINAL_INTEGRATION_REHEARSAL.json", "docs/codex_handoff/pr_status.yaml"]
+    }
+  ],
+  "coverage_sha256": "a3964513dac9751ea5b1b8a2f0b811b917c6832b98a134b414f49055aa0ef7f9"
+}

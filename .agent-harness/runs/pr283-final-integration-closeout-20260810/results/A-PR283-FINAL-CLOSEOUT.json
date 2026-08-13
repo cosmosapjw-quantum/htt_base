@@ -1,0 +1,155 @@
+{
+  "schema_version": 3,
+  "run_id": "pr283-final-integration-closeout-20260810",
+  "assignment_id": "A-PR283-FINAL-CLOSEOUT",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "work_unit_id": "PR-283",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR283_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "a06fddfffd113fd335165314d30692c22d397c61d47107546ae53930526923c9",
+    "seal_sha256": "e68909947ade58a68fb9a5e24913b768fe22a9cdfc8eff68d1894a470bec19fc",
+    "base_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+    "candidate_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "merge_base_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+    "candidate_tree_sha": "3f11a22c9e1a0374208596f146bd7def72ff5a1b",
+    "diff_sha256": "b48d126902d052d34ef1bfd36501797d8b13b40dc5f9370f4abbf2881488b309",
+    "changed_files_sha256": "0a98fecc1a0ab9d8ee9ff40a53dd9cac8ae1d468360af3ef9026cbe3f3dd797f",
+    "production_hash": "3d8aa16fe56b8111ad382780c60779d8a091e95cab3d0f4f7c76dcd2b1ba1a7d"
+  },
+  "independence_mode": "adjudication",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr283-final-integration-closeout-20260810/results/A-PR283-FINAL-CLOSEOUT.json",
+  "assignment_sha256": "7aed6488c71d96b5549c30ef600543451639a8b4dee7664315ec377ecf69453f",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr283-final-integration-closeout-20260810/RUN_PLAN.json",
+    ".agent-harness/runs/pr283-final-integration-closeout-20260810/assignments/A-PR283-FINAL-CLOSEOUT.json",
+    ".prguard/runtime/PR283_FINAL_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR283_FINAL_INTEGRATION_REHEARSAL.json",
+    ".prguard/runtime/PR283_R2_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR283_R2_INTEGRATION_REHEARSAL.json",
+    ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/MERGED_RESULTS.json",
+    ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CODE.json",
+    ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-PHYSMATH.json",
+    ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CLAIM.json",
+    ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-REPLAY.json",
+    ".agent-harness/scripts/integration_rehearsal.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "scripts/codex_harness/run_pr283_weak_identification.py",
+    "tests/contracts/test_process_recovery_auto_stacked.py",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/PR_DELTAS/pr-283.md",
+    "docs/research_program/post_pr275/pr283_publication_policy.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-09T20:23:00Z",
+  "completed_at": "2026-08-09T20:39:08Z",
+  "tool_versions": {
+    "git": "2.43.0",
+    "PyYAML": "6.0.1",
+    "pytest": "9.1.1",
+    "python": "3.12.3"
+  },
+  "commands": [
+    {
+      "id": "assignment-context-and-input-validation",
+      "returncode": 0,
+      "summary": "Assignment context matched e9b385d7...e3019 and all 14 registered required-input SHA-256 values matched."
+    },
+    {
+      "id": "candidate-history-and-scope-inspection",
+      "returncode": 0,
+      "summary": "HEAD b6b6952, tree 3f11a22, merge base and local target ff9ef9f; post-R2 scope is the integration runner, its focused regression test, and review/status metadata only."
+    },
+    {
+      "id": "final-integration-receipt-verification",
+      "returncode": 0,
+      "summary": "integration_rehearsal.py verify returned ok=true with no errors against the live exact target and command logs."
+    },
+    {
+      "id": "fresh-portable-clean-replay",
+      "returncode": 0,
+      "summary": "Fresh portable replay preserved identical source and clean-root pre/post manifests across 5,867 tracked files; nested exact replay exited zero."
+    },
+    {
+      "id": "bounded-closeout-regressions",
+      "returncode": 0,
+      "summary": "Clean merged-tree rehearsal, future zero-budget refusal, and automatic merge refusal selectors passed: 3 passed in 0.42s."
+    },
+    {
+      "id": "assignment-oracle-construction-check",
+      "returncode": 1,
+      "summary": "The first assignment-local oracle draft used a newline-bearing local checksum reconstruction and honestly failed only its redundant stable-patch checksum assertion; the repository seal validator had already passed. The draft formula was corrected to the canonical helper before evidentiary execution."
+    },
+    {
+      "id": "assignment-invariant-oracle",
+      "returncode": 0,
+      "summary": "Final oracle passed 14/14 inputs, live seal and receipt, eight unique stable patches, unchanged production hash, preserved R2 FAIL, 11-command PASS, 5,867-file invariance, REVIEWED 13/16 state, PR-284 zero budget, and human-only publication refusal."
+    },
+    {
+      "id": "review-coverage-validation",
+      "returncode": 0,
+      "summary": "All 22 exact policy review cells and the R3 executable oracle validated against the final frozen seal with no errors."
+    },
+    {
+      "id": "registered-result-strict-validation",
+      "returncode": 0,
+      "summary": "The schema-v3 registered reviewer result, assignment binding, declared artifacts, complete coverage, claim disposition, and HARNESS_RESULT envelope validated with no errors."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/final_closeout_oracle.py",
+      "sha256": "15cdf03c1938a2e4fa023c9f000f9a5643033d5819f9078533f5a829048a788f",
+      "bytes": 12057,
+      "producer": "A-PR283-FINAL-CLOSEOUT",
+      "command_fingerprint": "321990cb506904236f1bf665230ee163b13c47e5edd8e7ecc5cc714d05278099"
+    },
+    {
+      "path": ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/EXECUTABLE_ORACLE.json",
+      "sha256": "203403f0c095b0608d4ea32e8c7d19dea0c8e6417bfbcff4cec8758b2f2f6088",
+      "bytes": 1720,
+      "producer": "A-PR283-FINAL-CLOSEOUT",
+      "command_fingerprint": "321990cb506904236f1bf665230ee163b13c47e5edd8e7ecc5cc714d05278099"
+    },
+    {
+      "path": ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/REVIEW_COVERAGE.json",
+      "sha256": "213e2d97b159347ba72d45d6759479eeb18101800cadf55016a013e09955788e",
+      "bytes": 11035,
+      "producer": "A-PR283-FINAL-CLOSEOUT"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "213e2d97b159347ba72d45d6759479eeb18101800cadf55016a013e09955788e",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "Final frozen-candidate closeout found no remaining integration, portability, lifecycle, publication-refusal, production-freshness, or generated-artifact integrity defect. The historical rehearsal FAIL is preserved; the repaired receipt covers all 11 policy commands at exact target ff9; scientific PASS cells remain bound to the unchanged production hash; this review does not authorize push, PR creation, approval, merge, or claim promotion.",
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/EXECUTABLE_ORACLE.json",
+        ".agent-harness/runs/pr283-final-integration-closeout-20260810/artifacts/A-PR283-FINAL-CLOSEOUT/REVIEW_COVERAGE.json",
+        ".prguard/runtime/PR283_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "evidence_fingerprint": "sha256:203403f0c095b0608d4ea32e8c7d19dea0c8e6417bfbcff4cec8758b2f2f6088"
+    }
+  ],
+  "errors": []
+}

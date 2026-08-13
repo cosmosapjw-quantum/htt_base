@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+_________ ERROR collecting tests/contracts/test_claim_language_lint.py _________
+ImportError while importing test module '/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810/tests/contracts/test_claim_language_lint.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/contracts/test_claim_language_lint.py:8: in <module>
+    from common.semantic_guards.no_overclaim import (
+E   ModuleNotFoundError: No module named 'common'
+=========================== short test summary info ============================
+ERROR tests/contracts/test_claim_language_lint.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.12s

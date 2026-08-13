@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR283-R2-REPLAY",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "candidate_seal_sha256": "a74c8b6c8eea857af899ac23e43eecaf2755b48b48fb7ccb37f50a3650915955",
+  "candidate_sha": "6fa98399dfe8b0a0735f9938063420457cda7688",
+  "candidate_tree_sha": "101ff1d291a4368cffcff80b4cef0e7f4092f3f0",
+  "diff_sha256": "0c898eb6fe199071eb5d7021a690cfec3591aa202d4b3e134cf6fe7e267e1afe",
+  "changed_files_sha256": "7a71a99b7b63012071701c4af1acf33719e01ff76e8ba0316eca7adc4103ebf6",
+  "completed_at": "2026-08-09T20:03:00+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR283_R2_CANDIDATE_SEAL.json", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/EXECUTABLE_ORACLE.json"],
+      "rationale": "Seal validation, commit, tree, diff, changed-file inventory, and required input hashes matched."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/assignments/A-PR283-R2-REPLAY.json"],
+      "rationale": "Registered spec and assignment were read and hash-validated before policy execution."
+    },
+    {
+      "cell": "covariance_supported_rank_ladder",
+      "status": "PASS",
+      "evidence_refs": ["docs/generated/pr283_weak_identification_receipt.json", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/EXECUTABLE_ORACLE.json"],
+      "rationale": "Fresh receipt replay and focused tests preserved the covariance-supported rank ladder."
+    },
+    {
+      "cell": "full_rank_small_angle_status",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_weak_identification.py", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "The small-angle full-rank fixture remains WEAKLY_IDENTIFIED with mandatory abstention."
+    },
+    {
+      "cell": "full_rank_small_singular_value_status",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_weak_identification.py", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "The small-relative-singular-value full-rank fixture remains WEAKLY_IDENTIFIED."
+    },
+    {
+      "cell": "rank_deficiency_distinct_from_weak_identification",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_weak_identification.py", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "Rank-deficient SUM_ONLY and full-rank WEAKLY_IDENTIFIED states remain distinct."
+    },
+    {
+      "cell": "threshold_contract_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py", "tests/contracts/test_weak_identification.py"],
+      "rationale": "The repaired source gate refuses a factory-valid threshold contract with a nonregistered identity."
+    },
+    {
+      "cell": "exact_source_geometry_report_replay",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr283_weak_identification.py", "tests/contracts/test_weak_identification.py"],
+      "rationale": "Source report mutations fail exact replay in the fresh focused suite and mutation oracle."
+    },
+    {
+      "cell": "exact_normalizer_spec_binding",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py", "tests/contracts/test_weak_identification.py"],
+      "rationale": "Normalizer identity and coordinate-map binding are exercised and fail closed on drift."
+    },
+    {
+      "cell": "mandatory_threshold_contract_enforcement",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py", "tests/contracts/test_weak_identification.py"],
+      "rationale": "Omission and alternate singular-threshold contracts are both refused."
+    },
+    {
+      "cell": "all_source_gate_callers_migrated",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr283_weak_identification.py", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/EXECUTABLE_ORACLE.json"],
+      "rationale": "The exact caller-migrations mode passed 90 tests."
+    },
+    {
+      "cell": "principal_angle_and_singular_value_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "Fresh mutations for principal-angle, singular-value, and cardinality drift all executed and died."
+    },
+    {
+      "cell": "mandatory_open_set_abstention",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/open_set_response_classes.py", "tests/contracts/test_weak_identification.py"],
+      "rationale": "Weak status takes precedence over unknown, equivalence, and response-candidate labels."
+    },
+    {
+      "cell": "no_point_estimate_or_nearest_fallback",
+      "status": "PASS",
+      "evidence_refs": ["docs/generated/pr283_weak_identification_receipt.json", "docs/research_program/post_pr275/pr283_spec.yaml"],
+      "rationale": "Weak fixtures return no candidate class and the contract forbids point or nearest fallback."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/EXECUTABLE_ORACLE.json", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "Ten unique registered mutants executed, activated, and died; three forbidden weak-status classifier paths were observed."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["docs/generated/pr283_weak_identification_receipt.json", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/EXECUTABLE_ORACLE.json"],
+      "rationale": "Fresh in-memory build rendered byte-identically to SHA-256 42ae6c4d0fcc735d6b62172788db2cee4fb21882069ce04f20ed9923fb346e0e."
+    },
+    {
+      "cell": "pr272_predecessor_replay_preservation",
+      "status": "PASS",
+      "evidence_refs": ["docs/generated/pr282_exact_parity_readiness_receipt.json", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/EXECUTABLE_ORACLE.json"],
+      "rationale": "The PR-272 predecessor selector passed 5 tests and the current PR-282 receipt replayed exactly."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_publication_policy.json", ".prguard/runtime/PR283_R2_CANDIDATE_SEAL.json"],
+      "rationale": "Nine policy nonrelaxation and seal cross-binding tests passed."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "Claim lint passed; the result remains diagnostic_only, synthetic, nonpublic, and blocked pre-native-atlas."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/EXECUTABLE_ORACLE.json"],
+      "rationale": "A clean git archive replayed under scrubbed Python environment with identical 5,867-file pre/post manifests."
+    },
+    {
+      "cell": "serial_stack_bootstrap_integrity",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_process_recovery_auto_stacked.py", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/EXECUTABLE_ORACLE.json"],
+      "rationale": "All 20 A-through-H firewall and current-lifecycle tests passed, including zero-cost future deferral and human-only merge refusal."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR283_R2_CANDIDATE_SEAL.json", "docs/codex_handoff/pr_status.yaml"],
+      "rationale": "The frozen candidate merge base equals the sealed current target SHA and strict DAG selection reports PR-283 ELIGIBLE."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "pr283-r2-serial-stack",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": ["/usr/bin/python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_process_recovery_auto_stacked.py"],
+      "command_fingerprint": "54ebe8a5f016132d3506bb61558b2fa2a48b51736a77a8b229ad18cec1853bb7",
+      "started_at": "2026-08-09T19:50:12+00:00",
+      "completed_at": "2026-08-09T19:50:15+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/EXECUTABLE_ORACLE.json",
+      "artifact_sha256": "7dccfe173ccfd3d7f2ea97a8efc0d02360f6dea75339b0930281f3bfcf4dee9f",
+      "artifact_bytes": 5762,
+      "evidence_refs": ["tests/contracts/test_process_recovery_auto_stacked.py", ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/EXECUTABLE_ORACLE.json"]
+    }
+  ],
+  "coverage_sha256": "59963e399cc05f1a7b51e230ce209c4704b7f70c9a007c65dd01464711a49ec6"
+}

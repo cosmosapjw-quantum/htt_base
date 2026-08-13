@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "run_id": "pr290-science-contract-r2-rereview-20260811",
+  "assignment_id": "A-PR290-R2-REPLAYCLAIM",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "candidate_seal_sha256": "bd29a3c9d1e4deb3bb19413a8f154aa2f5a47eabd5dda67c8e24126901192083",
+  "candidate_sha": "8da5ea88ab98aa42c8538198ea2d625f7d0f0555",
+  "candidate_tree_sha": "1dee7340e037c454d0516c43b9aef575c1a6a6f9",
+  "diff_sha256": "c7e5fcf03123cc2ec718b756976a4ac64554ce61d896ad4adbdbbe1527ef0094",
+  "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+  "completed_at": "2026-08-11T14:10:00+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {"cell": "candidate_identity", "status": "PASS", "evidence_refs": [".prguard/runtime/PR290_R2_CANDIDATE_SEAL.json", "oracle: six unique patch IDs, zero predecessor collision"], "rationale": "Exact HEAD, tree, merge base, origin target, commit sequence, and patch identities reproduced."},
+    {"cell": "spec_before_execution", "status": "PASS", "evidence_refs": ["docs/research_program/post_pr275/pr290_spec.yaml", "focused: 52 passed"], "rationale": "Typed preactivation precedes any payload generation or observed access."},
+    {"cell": "dependency_terminal_replay", "status": "PASS", "evidence_refs": ["docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json", "focused: test_required_predecessor_terminals_are_replayed_not_copied"], "rationale": "PR-287 remains typed INCONCLUSIVE and the active terminal is BLOCKED_PREDECESSOR_FINAL_SUCCESS."},
+    {"cell": "data_identity_and_human_authorization_separation", "status": "PASS", "evidence_refs": ["docs/generated/pr289_data_identity_v2_receipt.json", "docs/codex_handoff/pr_status.yaml"], "rationale": "Identity admission, complete native-record replay, and H-PLANCK authorization are independently enforced."},
+    {"cell": "preflight_before_first_write", "status": "PASS", "evidence_refs": ["htt/src/common/observed_lane_activation.py", "focused: containment mutation tests passed"], "rationale": "Blocked execution writes only the atomic nonexecution receipt after containment checks."},
+    {"cell": "synthetic_operator_identity", "status": "PASS", "evidence_refs": ["htt/obsstat/planck_post275_lane.py", "focused: synthetic operator tests passed"], "rationale": "Synthetic fixtures are explicitly non-observed and incapable of supporting public or morphology claims."},
+    {"cell": "observation_null_pipeline_equivalence", "status": "PASS", "evidence_refs": ["htt/obsstat/planck_post275_lane.py", "docs/research_program/post_pr275/pr290_spec.yaml"], "rationale": "SMICA and Commander require exact observation/null operator identity."},
+    {"cell": "mask_beam_harmonic_conventions", "status": "PASS", "evidence_refs": ["docs/research_program/post_pr275/pr290_spec.yaml", "focused: science-critical relaxation mutations passed"], "rationale": "Unavailable deconvolution and multipole-vector capabilities remain typed blockers."},
+    {"cell": "full_covariance_and_null_contract", "status": "PASS", "evidence_refs": ["htt/obsstat/planck_post275_lane.py", "focused: covariance and finite-rank tests passed"], "rationale": "Diagonal covariance and anti-conservative rank relaxations fail closed."},
+    {"cell": "look_elsewhere_and_component_replication", "status": "PASS", "evidence_refs": ["docs/research_program/post_pr275/pr290_spec.yaml", "focused: 52 passed"], "rationale": "Observation-inclusive conservative global rank and matched SMICA/Commander rows are frozen."},
+    {"cell": "blocked_no_numeric_output", "status": "PASS", "evidence_refs": ["pr290-preactivation: terminal BLOCKED_PREDECESSOR_FINAL_SUCCESS, numeric_outputs_written=[]", "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json"], "rationale": "Observed execution, network/download effects, public use, and numeric outputs are false or empty."},
+    {"cell": "portable_clean_integration", "status": "FAIL", "evidence_refs": ["pr290-portable-clean: current manifest 8426afab7d2bd9a8ca51d395b95f0960fee456dfc8761b08e5d32e55c7bb911b", "docs/PR_DELTAS/pr-290.md:78 reports 75945200f0bf16cab9949b2fbfd31b18a4dbe9187f9665ea3eb311c9fbe58d44"], "rationale": "The clean archive replay passes, but the frozen delta's exact current-evidence manifest claim is stale and not source-bound to this candidate."},
+    {"cell": "publication_policy_cross_binding", "status": "PASS", "evidence_refs": ["pr290-policy-cross-binding: 9 passed", "docs/research_program/post_pr275/pr290_publication_policy.json"], "rationale": "Policy identity is cross-bound to the frozen candidate seal."},
+    {"cell": "claim_and_family_ceiling", "status": "PASS", "evidence_refs": ["pr290-claim-language: no forbidden claim language", "docs/research_program/post_pr275/pr290_spec.yaml"], "rationale": "C2 diagnostic-only, transfer none, observed/public false, HTT/COMMON/OBSSTAT ownership, and blocked family gate are preserved."},
+    {"cell": "latest_target_integration", "status": "PASS", "evidence_refs": ["origin PR-289 target and merge-base 45da1bf54149864fb9d87be3a828df202ee1df7f", "pr290-dag-strict: 244 PRs, DAG valid"], "rationale": "The candidate is based exactly on the sealed PR-289 target; PR-291 remains INELIGIBLE with zero assurance consumed."}
+  ],
+  "independent_oracles": [
+    {
+      "kind": "invariant_checker",
+      "oracle_id": "PR290-R2-REPLAYCLAIM-INVARIANT",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/artifacts/A-PR290-R2-REPLAYCLAIM_oracle.py"],
+      "command_fingerprint": "c18c3b8bc409213a5e3ccc09a1c258ef7be2cbd7f2ecc29f39040a7f50a0f5c5",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T14:09:35+00:00",
+      "completed_at": "2026-08-11T14:09:40+00:00",
+      "artifact_path": ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/artifacts/A-PR290-R2-REPLAYCLAIM_oracle.py",
+      "artifact_sha256": "037f9db6f41a71f62ef1b03ec0d6b286fc0e3041ca72b91fafc663716c76be96",
+      "artifact_bytes": 7286,
+      "evidence_refs": ["oracle stdout: safe boundary verified; stale portable manifest detected", "git/receipt/spec/status independent invariants"]
+    }
+  ],
+  "coverage_sha256": "ac25109f68c2ba9e39316dbc724abdfe4555810872a09f4ffd888398e5d1a372"
+}

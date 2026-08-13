@@ -1,0 +1,102 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-predicate-continuation-20260813",
+  "assignment_id": "A-PR291-R5-PREDICATE-CLOSEOUT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_PREDICATE_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "be541b2933e7283cf5c0759bdf2eba8e22c75983d75f2e5edfc3f9dd7d6b6812",
+    "seal_sha256": "977f96e2b21d07caf31d9176244afddcac5893156e78ac6d71cd13fc52479d27",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "c39e57e5638a63e023783fb962521799ce87866b",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "62026afc31a915dc7f96c718fcc654c71a8ed53a",
+    "diff_sha256": "ef5b9f7477cf91308db87caadfd96a5f53073649ea8feb20b4dd9f93af75e4c0",
+    "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+    "production_hash": "ba3cec1bec67dbbec36903374d00155467e8623af7aa07dfb2fb47b32e90000b"
+  },
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Final metadata-only adjudication after A-PR291-R5-PREDICATE-CLAIM. Start only after coordinator confirms strict-valid PASS. Read assignment first; inspect only explicitly allowed evidence. Verify exact seal/base/clean tree/unique patch IDs, blocked nonexecution receipt, preserved failure chronology, carried code/replay and physstat PASS under unchanged numerical hashes, fresh predicate claim PASS, ordinary and named extension accounting through cumulative 24, lifecycle eligible for REVIEWED then SEALED, PR292 INELIGIBLE until PR291 PR_OPEN, HUMAN_ONLY, and no push/PR/merge. No substantive rerun/shared edits. Produce only metadata oracle, exact 16-cell coverage, and strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR291_R5_PREDICATE_FINAL_CANDIDATE_SEAL.json",
+      "sha256": "be541b2933e7283cf5c0759bdf2eba8e22c75983d75f2e5edfc3f9dd7d6b6812"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_spec.yaml",
+      "sha256": "7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr291_publication_policy.json",
+      "sha256": "2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-291.md",
+      "sha256": "6eaeeb89ee33b4b38a147b33aefffea279f0e50403631ba2fc2ceb9da2d78096"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "aceafd6cf516b8b20057cfb52a504f08a40e59a97c79e891c7e4f0f3b038ae69"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "aceafd6cf516b8b20057cfb52a504f08a40e59a97c79e891c7e4f0f3b038ae69"
+    },
+    {
+      "path": "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+      "sha256": "f1d3c5b187e90dc5c2b703b0fd195068d999d838fb96dbdfb3164a79703bcfc3"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/RUN_SUMMARY.json",
+      "sha256": "c7d6e35b85d8cb89ee4e7fa75b48c920a264655edac63c85f852d7457237f96a"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/RUN_SUMMARY.json",
+      "sha256": "2dbc371052f7e95b7fef911a69cdacd20baf4833073c0984e4f7056d771c3805"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-claim-reauthorization-20260813/RUN_SUMMARY.json",
+      "sha256": "39c378ed9029d338ec929cb6f690d7f4c6f6ddd2945856b5c2b21f607279ff6b"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/RUN_SUMMARY.json",
+      "sha256": "950b41ec72bef52747ac09e40ce15eb16a2ce75ad549bb586a39621c834f4574"
+    }
+  ],
+  "allowed_sibling_results": [
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-CODE-REPLAY.json",
+    ".agent-harness/runs/pr291-authorized-r5-review-20260813/results/A-PR291-R5-PHYSSTAT.json",
+    ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/results/A-PR291-R5-PREDICATE-CLAIM.json"
+  ],
+  "allowed_tools": [
+    "read-only-shell",
+    "python",
+    "git"
+  ],
+  "required_outputs": [
+    "schema-v3 reviewer result envelope",
+    "exact 16-cell REVIEW_COVERAGE artifact",
+    "assignment-local executable metadata oracle artifact"
+  ],
+  "result_path": ".agent-harness/runs/pr291-r5-predicate-continuation-20260813/results/A-PR291-R5-PREDICATE-CLOSEOUT.json",
+  "status": "registered",
+  "assignment_sha256": "6738a3ba31af57a446cdd3d7a9f4f30a4957b004a9ea2bbaab04046890a8ea5b"
+}

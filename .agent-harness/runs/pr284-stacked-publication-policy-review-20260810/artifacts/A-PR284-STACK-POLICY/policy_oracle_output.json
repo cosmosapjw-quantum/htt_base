@@ -1,0 +1,64 @@
+{
+  "assurance_exception": {
+    "additional_assignments": 2,
+    "allowed_assignment_ids": [
+      "A-PR284-STACK-POLICY",
+      "A-PR284-STACK-CLOSEOUT"
+    ],
+    "allowed_workflow_role": "reviewer",
+    "baseline_limit": 16,
+    "ordinary_global_max": 16,
+    "rejected_roles": {
+      "adjudicator": "Cumulative work-unit budget exception authorizes only the named reviewer assignments",
+      "implementer": "Cumulative work-unit budget exception authorizes only the named reviewer assignments"
+    },
+    "run_id": "pr284-stacked-publication-policy-review-20260810",
+    "single_use": true
+  },
+  "candidate_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+  "command_denials": {
+    "approval": "non-read-only gh command is denied fail-closed",
+    "force_push": "Git publication is reserved for the external publisher",
+    "merge": "non-read-only gh command is denied fail-closed",
+    "ordinary_pr_mutation": "non-read-only gh command is denied fail-closed",
+    "ordinary_push": "Git publication is reserved for the external publisher",
+    "ruleset_mutation": "mutating gh api is reserved for the external publisher"
+  },
+  "integration_rehearsal": {
+    "command_ids": [
+      "pr284-focused",
+      "pr284-adjacent",
+      "pr284-receipt-replay",
+      "pr284-portable-clean-replay",
+      "pr284-publication-policy-cross-binding",
+      "pr284-dag-strict",
+      "pr284-claim-language"
+    ],
+    "passed": 7,
+    "receipt_sha256": "2fdefdb22878ea2e5e1939737c6289ea5c64c8b9d82c4d9ed3db92c0b28fb11a"
+  },
+  "live_inventory": {
+    "inventory_sha256": "aafe528aae7bcf4f706963e8225ba8b1b0a51db9a70765ffc159757772a341b3",
+    "observed_at": "2026-08-10T05:32:51+00:00",
+    "open_pr_numbers": [
+      380
+    ],
+    "overlap_paths": [
+      "docs/PR_DELTAS/pr-283.md",
+      "docs/codex_handoff/pr_status.yaml",
+      "machine_readable/pr_status.yaml",
+      "scripts/codex_harness/test_publication_integrity.py",
+      "tests/contracts/test_process_recovery_auto_stacked.py"
+    ],
+    "predecessor_head_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa"
+  },
+  "policy_sha256": "6b19c380a96ddac1f98f0bcb774519d3fe3b555d4411a6f8e8f72876c0758446",
+  "status": "PASS",
+  "synthetic_rejections": {
+    "candidate_depth_three": "open PR stack-depth budget is exhausted",
+    "duplicate_change_set": "change-set already has open PR(s): #380",
+    "second_direct_to_target": "direct-to-target PR budget is exhausted",
+    "second_open_slot": "repository open-PR budget is exhausted",
+    "second_overlap": "candidate overlaps open PR(s): #380, #381"
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-proper-subset-r4-20260810",
+  "assignment_id": "A-PR284-R4-CLAIM",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_gate_reviewer",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "93c3dadced3fec69db081092e66f96eac5632b4713f652642d470cc2f6fdacd4",
+    "seal_sha256": "3666dd8f920c46021ebb2823680cf397f37db810e1c1ebda9f4cd70cc46deaa0",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "50fea58d2bd4d33dfac017f46bf22df5ccd289d1",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "6104ff701c82c78b113002131dec3bd493a54795",
+    "diff_sha256": "3205f94a1970082b88bec45fdfa33ec7eba829bed0710754e72d32b5bdd13386",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034"
+  },
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/results/A-PR284-R4-CLAIM.json",
+  "assignment_sha256": "9c22186bc1a20a520008b3992ec382d34c58c0c305b86de2c279640dffb73479",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr284-proper-subset-r4-20260810/assignments/A-PR284-R4-CLAIM.json",
+    ".agent-harness/runs/pr284-proper-subset-r4-20260810/RUN_PLAN.json",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr284_spec.yaml",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/generated/pr284_depth_path_doob_receipt.json",
+    "docs/PR_DELTAS/pr-284.md",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/research_program/vector_tensor/proof_registry_two_pillars.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+    "htt/src/common/depth_path.py",
+    "htt/src/common/depth_path_calibration.py",
+    "htt/src/common/vector_tensor_statistical_foundations.py",
+    "htt/htt/htt/infer/depth_path.py",
+    "htt/htt/htt/infer/depth_path_calibration.py",
+    "scripts/codex_harness/run_pr284_depth_path_doob.py",
+    "scripts/check_claim_language.py",
+    "tests/contracts/test_depth_path.py",
+    "tests/contracts/test_depth_path_doob_calibration.py",
+    "tests/contracts/test_pillar_s_core.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-10T02:46:00Z",
+  "completed_at": "2026-08-10T02:52:13Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0",
+    "numpy": "2.4.2",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {
+      "argv": ["sha256sum", "<eight required inputs>"],
+      "returncode": 0,
+      "outcome": "all registered input hashes matched"
+    },
+    {
+      "argv": ["git", "rev-parse", "HEAD", "HEAD^{tree}"],
+      "returncode": 0,
+      "outcome": "candidate commit and tree matched the frozen R4 binding"
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "check"],
+      "returncode": 0,
+      "outcome": "PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+    },
+    {
+      "argv": ["python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "<registered PR-284 inputs>"],
+      "returncode": 0,
+      "outcome": "No forbidden claim language detected."
+    },
+    {
+      "argv": ["env", "PYTHONPATH=.:htt/src:htt", "python3", "-B", ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-CLAIM/proper_subset_claim_oracle.py"],
+      "returncode": 0,
+      "outcome": "PASS with eight proper-subset and claim-boundary checks"
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-CLAIM/review_coverage.json", "--seal", ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json", "--run-id", "pr284-proper-subset-r4-20260810", "--assignment-id", "A-PR284-R4-CLAIM", "--risk-tier", "R3"],
+      "returncode": 0,
+      "outcome": "strict review coverage validation ok=true"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-CLAIM/proper_subset_claim_oracle.py",
+      "sha256": "a3a9769345805bb87da65392778dd8d9bff7cc16b5bb514af5407dd68cbfa25e",
+      "bytes": 10800,
+      "producer": "A-PR284-R4-CLAIM",
+      "command_fingerprint": "931a5f5dd3caa6088971f65772b0aa8702e97cd6f640cad18d5575dbe31bfd29"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-CLAIM/review_coverage.json",
+      "sha256": "fbccae8d63a8c7c6d85fb7ae6d6171d644b3dcfcaca8c6e9aa7bcbe8f1c677c8",
+      "bytes": 8903,
+      "producer": "A-PR284-R4-CLAIM"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-CLAIM/review_coverage.json",
+  "review_coverage_sha256": "fbccae8d63a8c7c6d85fb7ae6d6171d644b3dcfcaca8c6e9aa7bcbe8f1c677c8",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".prguard/runtime/PR284_R4_CANDIDATE_SEAL.json",
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "docs/research_program/post_pr275/pr284_publication_policy.json",
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "docs/PR_DELTAS/pr-284.md",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-CLAIM/proper_subset_claim_oracle.py",
+        ".agent-harness/runs/pr284-proper-subset-r4-20260810/artifacts/A-PR284-R4-CLAIM/review_coverage.json"
+      ],
+      "evidence_fingerprint": "pr284-r4-claim:50fea58d:3666dd8f:de87bc2f:proper-subset-premise:c2-ceiling-pass",
+      "summary": "No claim, ownership, or provenance defect was found in the frozen proper-subset repair lane. Equal adjacent support is rejected before a proved-premise report can be constructed, while the unproved route retains an explicit matched-mock requirement and no bound. Strict support reduction remains only one premise condition, not proof, posterior, native transfer, observed significance, geometry, or family identification. HTT owns premise/calibration decisions; COMMON owns immutable contracts; OBSSTAT supplies estimator/mask inputs; MIO is diagnostic-only. This pass does not independently certify portable/latest-target integration, aggregate review, publication, or scientific claim promotion."
+    }
+  ],
+  "errors": []
+}

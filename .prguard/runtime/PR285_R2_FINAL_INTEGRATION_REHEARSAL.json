@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "candidate_seal_sha256": "12ad1d54c69211faa5b82f3c54fa1277b8685fa4633d367c171fc535adb167c0",
+  "candidate_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+  "candidate_tree_sha": "1aba859c52aee2d14ef8c72472858eec02771edf",
+  "diff_sha256": "e176041a9662995e4d29f31f5f54154d8ae70c42028ddee7b68d5c24e7838af4",
+  "changed_files_sha256": "27d7bc58a8663e2a4573abe14386ced8a19a9c18db0f3c8469c03c5a2d6f1788",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr284-finite-depth-law-recovery-20260810",
+  "latest_target_sha": "0b3680a03f325e3f1fa1699528a5a59303ddb8b4",
+  "integration_policy_sha256": "20c16524a86ca61ef33a5f3894c7ebc48eeeebe708eb7556725c025185cfe878",
+  "merged_tree_sha": "1aba859c52aee2d14ef8c72472858eec02771edf",
+  "started_at": "2026-08-10T12:16:25+00:00",
+  "completed_at": "2026-08-10T12:18:34+00:00",
+  "status": "PASS",
+  "commands": [
+    {
+      "id": "pr285-focused",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "focused"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "focused"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 900,
+      "started_at": "2026-08-10T12:16:26+00:00",
+      "completed_at": "2026-08-10T12:17:14+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "08851832d4fc6dbc5af6a4f2a95436e662a5137389db8d573c9b322082084591",
+      "stdout_bytes": 100,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr285-adjacent",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "adjacent"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "adjacent"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 1200,
+      "started_at": "2026-08-10T12:17:14+00:00",
+      "completed_at": "2026-08-10T12:18:08+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "13857e030d4dcd583a73f24f2f426d5bf16b63c053d4ea8f3db01532b83885ae",
+      "stdout_bytes": 392,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr285-receipt-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "check"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "check"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-10T12:18:08+00:00",
+      "completed_at": "2026-08-10T12:18:13+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "0b6531f987965bdbbeeb6bbb91b99be3bfa9f42efc785f388bbbf3f871ce989b",
+      "stdout_bytes": 8,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr285-portable-clean-replay",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "portable"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "portable"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 600,
+      "started_at": "2026-08-10T12:18:13+00:00",
+      "completed_at": "2026-08-10T12:18:22+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "81656fdb8b5f2fb984411a5ef0c894d074dc1bc36c1855a2893d917c7592c9e8",
+      "stdout_bytes": 1439,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr285-cas-four-axis-terminal-evidence",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "cas"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "cas"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 3600,
+      "started_at": "2026-08-10T12:18:22+00:00",
+      "completed_at": "2026-08-10T12:18:30+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "2e1d850c835db586de2ae87d1616821c7d7889f01062103f8d1f0baadc74a571",
+      "stdout_bytes": 378,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr285-publication-policy-cross-binding",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "-k",
+        "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity or pr285_policy_allows_two_open_predecessors_and_bounds_next_slots or pr285_policy_binds_exact_g20_g21_include_and_g22_exclude_lineage or verified_logical_patch_lineage or invalid_logical_patch_lineage"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "-k",
+        "policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity or pr285_policy_allows_two_open_predecessors_and_bounds_next_slots or pr285_policy_binds_exact_g20_g21_include_and_g22_exclude_lineage or verified_logical_patch_lineage or invalid_logical_patch_lineage"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-10T12:18:30+00:00",
+      "completed_at": "2026-08-10T12:18:32+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "02e9f484aa813e67ea4dd5b5bfebd2bc0d14d7898b25e370fb03cc03790b0abd",
+      "stdout_bytes": 114,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr285-dag-strict",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-10T12:18:32+00:00",
+      "completed_at": "2026-08-10T12:18:34+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "954bccce10cfc35cf06b7aa16b931d748ff4f55af6a9350c833855bdafcf44ee",
+      "stdout_bytes": 1749,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    {
+      "id": "pr285-claim-language",
+      "policy_argv": [
+        "{python}",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "tests/contracts/test_pillar_t_complete_adjudication.py",
+        "docs/research_program/post_pr275/pr285_spec.yaml",
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        "docs/PR_DELTAS/pr-285.md"
+      ],
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "scripts/check_claim_language.py",
+        "--strict-missing",
+        "--include-archives",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+        "tests/contracts/test_pillar_t_complete_adjudication.py",
+        "docs/research_program/post_pr275/pr285_spec.yaml",
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json",
+        "docs/PR_DELTAS/pr-285.md"
+      ],
+      "executable_path": "/usr/bin/python3",
+      "executable_realpath": "/usr/bin/python3.12",
+      "executable_sha256": "1643dacd9feaedc58f3cc581e4d22577dfe25c09b10282936186ccf0f2e61118",
+      "timeout_seconds": 300,
+      "started_at": "2026-08-10T12:18:34+00:00",
+      "completed_at": "2026-08-10T12:18:34+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "stdout_sha256": "19a00c56f80d1c997ad754ec812ae264d0469fe074b69c56b34594caa22f1164",
+      "stdout_bytes": 38,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    }
+  ],
+  "receipt_sha256": "dd3a574bd9191f0154af0d25daf248855daeef696d4cbf16840de71f531453a6"
+}

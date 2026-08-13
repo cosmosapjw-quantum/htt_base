@@ -1,0 +1,109 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-numerical-repair-rereview-20260811",
+  "assignment_id": "A-PR286-R2-REPLAY",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "217f4c0cd8da2c6b40c15257ea1954352704fbb01757ccf9d7ff9addd6165509",
+    "seal_sha256": "0667a86aea43de3ab892489053a0f1c39697107fc3a8d25b8bc0113fca2e806f",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "7ad8176282554670909c28306b3e14e83662a42b",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "d14eedaa79f902f5b47b507fa3951e5a22cbe9b7",
+    "diff_sha256": "12137112ed5ea688cd4c36ab0a4c3f301bb9a1d95629314356f113585393e06f",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "6a5a82ed5c563f646be7815e334c5e119569a20c8594c62264e70d3b2de05e34"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Fresh blind bounded rereview of the repaired PR-286 lineage, receipt, harness, and portability boundary. Read this assignment first; do not read CONTEXT_PACK, sibling results, or historical review/result envelopes. Verify the final candidate seal and exact predecessor, selective G23/G25/G27 salvage with G24/G26 excluded, stable patch-id uniqueness, 72 rows, 33 source bindings, deterministic receipt content address, ordered 19 of 19 mutation kills including the numerical guard, destination containment and atomic writes, portable clean replay, PR-271/272/273 preservation, synchronized status mirrors, DAG and publication-policy cross-binding. The authoritative external audit is read-only at /home/cosmosapjw/Dropbox/bianchi/htt_base/HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md with expected SHA-256 c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436; verify before use. Do not repeat substantive assurance whose production/dependency key is unchanged except where needed for a discriminating oracle. Write no tracked/shared files; produce only assignment-local executable oracle, coverage, and one strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json",
+      "sha256": "217f4c0cd8da2c6b40c15257ea1954352704fbb01757ccf9d7ff9addd6165509"
+    },
+    {
+      "path": ".prguard/runtime/PR286_REPAIR_IMPLEMENTATION_CANDIDATE_SEAL.json",
+      "sha256": "480595df9515068b2787d33b22b569435c5a10ecb6b29bc01d3055b11aa7de23"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr286_spec.yaml",
+      "sha256": "7b359af0818766860b4bfecc4eae36fa2b31580636d3dfea99a6ed280c4e4989"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr286_publication_policy.json",
+      "sha256": "768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d"
+    },
+    {
+      "path": ".agent-harness/scripts/publication_integrity.py",
+      "sha256": "56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec"
+    },
+    {
+      "path": "scripts/codex_harness/test_publication_integrity.py",
+      "sha256": "b58ac958ac5c6aafb6de768a68813665fd233540cb328ede98240a933373d9cc"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+      "sha256": "7da531e70160a751e45348db7eeb4d2ee3fe129a31cbca01315c242a38f5557e"
+    },
+    {
+      "path": "tests/contracts/test_pillar_s_complete_adjudication.py",
+      "sha256": "00d78ac6793535f64e2858a07e0ce1e22d8bfbd2725313723f46eb023b3a5172"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+      "sha256": "ff2fe5f92cc3a6470500905f742dd788d63fd17a53ac00ffb7560cf3c1c503c2"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-286.md",
+      "sha256": "3553f2994a77172b83b553c034f9cc44e1736924878c2b3f425d2f734209b441"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "9d9a7d2f2f6a7362ef81314c816f3338d76ca66f0bcf2e19efaf472d61c4ed6d"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "9d9a7d2f2f6a7362ef81314c816f3338d76ca66f0bcf2e19efaf472d61c4ed6d"
+    },
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256": "73553b6056e5111c1047b80f79c35cdb8e898e0a7b8a7e7e28f97731b5cc699e"
+    },
+    {
+      "path": "scripts/codex_harness/validate_pr_dag.py",
+      "sha256": "1382c9d5d8e096efbcd90cf804ae8c32b2de1ce5c47d67be75ab282b45361120"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/results/A-PR286-R2-REPLAY.json",
+  "status": "registered",
+  "assignment_sha256": "d737d91f6ff78015c63b46c6f37512f5c768ab3480412213da2df46933571d30"
+}

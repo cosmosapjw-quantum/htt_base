@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr289-native-data-identity-recovery-20260811",
+  "target_ref": "refs/remotes/origin/changeset/pr289-native-data-identity-recovery-20260811",
+  "remote_fetch_urls": [
+    "https://github.com/cosmosapjw-quantum/htt_base.git"
+  ],
+  "remote_push_urls": [
+    "https://github.com/cosmosapjw-quantum/htt_base.git"
+  ],
+  "publication_repository_host": "github.com",
+  "publication_repository_slug": "cosmosapjw-quantum/htt_base",
+  "base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+  "candidate_branch": "changeset/pr290-planck-native-replay-recovery-20260811",
+  "candidate_ref": "refs/heads/changeset/pr290-planck-native-replay-recovery-20260811",
+  "candidate_sha": "8da5ea88ab98aa42c8538198ea2d625f7d0f0555",
+  "merge_base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+  "candidate_tree_sha": "1dee7340e037c454d0516c43b9aef575c1a6a6f9",
+  "candidate_commits": [
+    "206d9609f90cc34969b84c9d922ee60420386a7a",
+    "757c32c09e8fa1ae6940fe51617a1b2e9faf6c6f",
+    "ea1e9a92fe30ef22c5280e7d79007286731cfc5e",
+    "27c83a1a12369b4b563667ff5145ae9a717b24f0",
+    "73dc87c4a0e0cd752ab2d9fe10a7299f120f2f1d",
+    "8da5ea88ab98aa42c8538198ea2d625f7d0f0555"
+  ],
+  "candidate_commits_sha256": "86aee1005d42f8711dd1d09c355fd670485912f6422a9ce307f5da6f8a9f7e9d",
+  "stable_patch_ids": [
+    {
+      "commit": "206d9609f90cc34969b84c9d922ee60420386a7a",
+      "stable_patch_id": "af0008614a13d55efc06037bba7841d968b52284"
+    },
+    {
+      "commit": "757c32c09e8fa1ae6940fe51617a1b2e9faf6c6f",
+      "stable_patch_id": "dda7a1cebe110b36dbb4351cf4466fb347f591bb"
+    },
+    {
+      "commit": "ea1e9a92fe30ef22c5280e7d79007286731cfc5e",
+      "stable_patch_id": "bc93d7a412c80910eafe737867233d86b0d6bbdd"
+    },
+    {
+      "commit": "27c83a1a12369b4b563667ff5145ae9a717b24f0",
+      "stable_patch_id": "9c3717147851c4aad5446273f1fde8e6c336a33d"
+    },
+    {
+      "commit": "73dc87c4a0e0cd752ab2d9fe10a7299f120f2f1d",
+      "stable_patch_id": "6d15763d4b7f98da149fe4f3d306f121720766c9"
+    },
+    {
+      "commit": "8da5ea88ab98aa42c8538198ea2d625f7d0f0555",
+      "stable_patch_id": "aada836da38d0333bee5ce6943af9c16e3fb3461"
+    }
+  ],
+  "stable_patch_ids_sha256": "d390da647a354dfcd35aa67d6d1257576ee03757a78a6c9fba67e5b5701fc834",
+  "production_hash": "b9b62e081f702f6b2b1918e5b3f1b599d651bdfa2fb0261e878d7a669d94beaf",
+  "diff_stat": {
+    "production": 3,
+    "tests": 1,
+    "runners": 5,
+    "receipts": 3,
+    "generated": 0
+  },
+  "diff_sha256": "c7e5fcf03123cc2ec718b756976a4ac64554ce61d896ad4adbdbbe1527ef0094",
+  "changed_files": [
+    {
+      "status": "M",
+      "path": "docs/PR_DELTAS/pr-289.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/PR_DELTAS/pr-290.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/codex_handoff/pr_status.yaml"
+    },
+    {
+      "status": "A",
+      "path": "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/research_program/post_pr275/pr290_publication_policy.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/research_program/post_pr275/pr290_spec.yaml"
+    },
+    {
+      "status": "M",
+      "path": "htt/obsstat/boost_biposh_residual.py"
+    },
+    {
+      "status": "A",
+      "path": "htt/obsstat/planck_post275_lane.py"
+    },
+    {
+      "status": "A",
+      "path": "htt/src/common/observed_lane_activation.py"
+    },
+    {
+      "status": "M",
+      "path": "machine_readable/pr_status.yaml"
+    },
+    {
+      "status": "A",
+      "path": "scripts/codex_harness/run_pr290_planck_lane.py"
+    },
+    {
+      "status": "A",
+      "path": "tests/integration/test_planck_post275_lane.py"
+    }
+  ],
+  "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+  "integration_policy": {
+    "path": "docs/research_program/post_pr275/pr290_publication_policy.json",
+    "sha256": "45655b62f02f2d422283aa99780c78e80a022fbd1fd371e8ee7a450ddad320cd",
+    "policy_id": "PR290-PUBLICATION-POLICY"
+  },
+  "dirty": false,
+  "seal_sha256": "bd29a3c9d1e4deb3bb19413a8f154aa2f5a47eabd5dda67c8e24126901192083"
+}

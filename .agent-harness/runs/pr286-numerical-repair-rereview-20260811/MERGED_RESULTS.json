@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-numerical-repair-rereview-20260811",
+  "generated_at": "2026-08-11T02:05:30+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 3,
+  "raw_finding_count": 1,
+  "unique_finding_count": 1,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR286-R2-CLAIM",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "docs/codex_handoff/pr_status.yaml#execution_resolutions.PR-273",
+            "docs/codex_handoff/pr_backlog.yaml#PR-273",
+            "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#metadata",
+            "docs/PR_DELTAS/pr-286.md#Statistical-and-ownership-boundaries"
+          ],
+          "evidence_fingerprint": "795030be188056c2cebe99deab771a5be4edfd5bc3e0048adea59b1ea9068a9f",
+          "summary": "The PR-273 input remains held-out synthetic integration evidence only. PR-286 stays C2 diagnostic-only with transfer none, no observed/public/native/family promotion, and no reuse of historical envelopes as current acceptance evidence."
+        },
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "docs/codex_handoff/pr_status.yaml#execution_resolutions.PR-274",
+            "docs/codex_handoff/pr_status.yaml#stacked_pr_execution.prs.PR-286",
+            "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#rows.VT-S14",
+            "docs/research_program/post_pr275/pr286_spec.yaml#vector_tensor_evidence.admitted_data_gate"
+          ],
+          "evidence_fingerprint": "288349547652e5025f467fb7f51e41a02e4a3565ab4fc92104cabdd3b80db5f4",
+          "summary": "PR-274 remains NO_ADMITTED_DATA_PILOT with zero admitted inputs; VT-S14 remains BLOCKED_WITH_RECEIPT. PR-286 is VALIDATED with rereview DEFERRED at assurance 4/16, PR-287 remains INELIGIBLE at 0/16, exact PR-285 predecessor binding holds, and merge is HUMAN_ONLY."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR286-R2-PHYSCODE",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "python3 -B scripts/codex_harness/build_pr273_blind_synthetic.py --check",
+            "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+            "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14"
+          ],
+          "evidence_fingerprint": "36783932f540d4a4e26cc0d66f1f8bb5692623664deda7106e97326576f041bc",
+          "summary": "The exact PR-273 held-out synthetic pack replays (5 cases, 2 held out, 5 mutations killed), remains diagnostic-only, and is not relabelled as observed or admitted data."
+        },
+        {
+          "claim_id": "C-PR274-DATA-ADMISSION",
+          "outcome": "findings_present",
+          "finding_ids": [
+            "F-PR286-R2-MIO-NONFINITE"
+          ],
+          "summary": "VT-S14 is correctly BLOCKED_WITH_RECEIPT and the frozen row is finite, but public numerical admission readiness fails because an exact finite MIO input can create a positive-status non-finite report. No observed-data, public-use, family, or native-transfer promotion is permitted."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR286-R2-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-oracle-report.json",
+            ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-review-coverage.json",
+            "exact PR-286 policy command set: 10 of 10 exit zero"
+          ],
+          "evidence_fingerprint": "7e7b848115b9c30470999b20484d18876383696c1bf52607b470ab8973fa281e",
+          "summary": "No blocking defect was found in the repaired PR-286 candidate lineage, receipt, numerical mutation guard, portable replay, frozen PR-271/272/273 record boundary, status mirrors, or publication/DAG cross-binding. This pass is process and diagnostic evidence only; it grants no publication, observed-data, native-solver, or family-identification authority."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR286-R2-MIO-NONFINITE",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "27eab6f7b04f0c4c244c09075e8f418838d71f2b545bde1eebb7203702e86282",
+      "statement": "The public MIO depth cross-check can return VALIDATED_REGISTERED_SYNTHETIC with three NaN numeric fields for exact finite huge-scale near-proportional inputs instead of failing through PillarSInferenceError.",
+      "assumptions_used": [
+        "Finite real inputs accepted by the public diagnostic API must not produce a positive-status report containing non-finite numbers.",
+        "Numerically invalid local/global report construction must fail closed through PillarSInferenceError, consistent with the neighboring HTT API boundary.",
+        "The finding does not assert that the currently frozen VT-S14 receipt contains non-finite values; its stored registered cell is finite."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-oracle.py",
+        "htt/mio/formalism/vector_tensor_validation.py:7",
+        "htt/src/common/vector_tensor_statistical_inference.py:1523",
+        "tests/contracts/test_pillar_s_inference.py:700"
+      ],
+      "counterevidence_refs": [
+        "htt/src/common/vector_tensor_statistical_inference.py:1382",
+        "tests/contracts/test_pillar_s_inference.py:745",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14"
+      ],
+      "reproduction": [
+        "Run: python3 -B .agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-oracle.py",
+        "Observe public_export=true, exact finite data/local_design=[1e200,1e200], global_design=[1e200,1e200+2e185], returned_status=VALIDATED_REGISTERED_SYNTHETIC, numeric_fields=[nan,nan,nan].",
+        "Observe strict json serialization with allow_nan=false refuses the returned report while the function itself does not raise PillarSInferenceError."
+      ],
+      "unresolved": [
+        "Add scale-stable MIO projection/residual arithmetic or explicit finite postcondition checks before constructing a positive-status report.",
+        "Add a public-facade regression test using the exact finite huge-scale counterexample.",
+        "Extend the VT-S14 hostile numerical control or mutation so the MIO report boundary, not only HTT GLS, is discriminated."
+      ],
+      "confidence": 0.99,
+      "source_finding_ids": [
+        "F-PR286-R2-MIO-NONFINITE"
+      ],
+      "supporting_assignments": [
+        "A-PR286-R2-PHYSCODE"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "supporting_evidence_origins": [
+        "unverified"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "assignment_count": 3,
+  "validated_result_count": 3,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/RUN_PLAN.json",
+      "sha256": "bff0a2c1f027e738eb8c3cd4f1c7b7373659526e936567e25cb3c14a6c83c779",
+      "bytes": 6143
+    },
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/assignments/A-PR286-R2-CLAIM.json",
+      "sha256": "9308a5e6454d4e0067d7566443c0193bfe1d058e0d33025c16f94065da4f4f47",
+      "bytes": 4489
+    },
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/assignments/A-PR286-R2-PHYSCODE.json",
+      "sha256": "cb56d2e54b0b43627b18efeb03a0a372399bddd8f50cd83cb15d6d60850e3499",
+      "bytes": 4642
+    },
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/assignments/A-PR286-R2-REPLAY.json",
+      "sha256": "fc7d79fe9449980398a39447f138b46eadf8087a1ab1417ab8eddd634216d188",
+      "bytes": 5511
+    },
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/results/A-PR286-R2-CLAIM.json",
+      "sha256": "bb752df737e0577c13a2160435e3c7db887782487af91eea19753eadb93c0a0a",
+      "bytes": 7134
+    },
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/results/A-PR286-R2-PHYSCODE.json",
+      "sha256": "2956dfbb04c57e8cec9f5011c746ca0186a4bb6c54e04e9e38b5390fb25e9396",
+      "bytes": 10279
+    },
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/results/A-PR286-R2-REPLAY.json",
+      "sha256": "28b970d1c2f8356974cd75c85f195d83f3407cb44b56be6c0bdee880d5924883",
+      "bytes": 11001
+    }
+  ],
+  "merge_input_sha256": "23079d6a4c9dd20fe0465c8eb3c6fb2bedd8e1b6f30df2361a380dadfd86b5c7"
+}

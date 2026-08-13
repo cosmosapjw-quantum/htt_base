@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "run_id": "pr284-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR284-R2-REPLAY",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "candidate_seal_sha256": "911cfed58698d97a88585a664c6ad46db8df92d46f3a23cfdc2bac74c24bdc65",
+  "candidate_sha": "49a8f697c8d7985ec637e70aca3b9271d6f0da7f",
+  "candidate_tree_sha": "702db54b4ce5ee0904352b2b507faffe5ef5d876",
+  "diff_sha256": "c9563b2e9e7bd45436aceb5a744e8fc6f7f8da7a818088b0d9426a37d7f59aea",
+  "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+  "completed_at": "2026-08-09T21:48:09.496Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json", "oracle.json#frozen_candidate_target_and_patch_uniqueness"],
+      "rationale": "HEAD, tree, predecessor base, merge-base, policy binding, and tracked cleanliness match the R2 frozen seal."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr284_spec.yaml sha256 3a5784ea33b45d6d73cb4e8c1602d121702dd8aea206b8e625abe0f24d364e85", "assignment required-input preflight"],
+      "rationale": "The repaired 14-row spec and every registered input hash were checked before replay."
+    },
+    {
+      "cell": "exact_finite_law_and_common_target",
+      "status": "PASS",
+      "evidence_refs": ["pr284-focused: 21 passed", "oracle.json#historical_builder_bypass_dies_before_calibration"],
+      "rationale": "The legitimate common target replays while the historical caller-supplied noncentered target is rejected by report construction."
+    },
+    {
+      "cell": "centered_square_integrable_target",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_depth_path_doob_calibration.py::test_common_report_builder_cannot_mint_proved_status_without_replay", "oracle rejection: common target must be exactly centered"],
+      "rationale": "Centering and positive second moment are independently recomputed inside report construction."
+    },
+    {
+      "cell": "decreasing_filtration_distinct_from_support_nesting",
+      "status": "PASS",
+      "evidence_refs": ["pr284-focused: 21 passed", "MU284-FILTRATION-DIRECTION-DRIFT"],
+      "rationale": "Support nesting remains insufficient and a non-coarsening filtration fails closed."
+    },
+    {
+      "cell": "exact_tower_replay",
+      "status": "PASS",
+      "evidence_refs": ["pr284-receipt-replay: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION", "MU284-REPORT-BUILDER-BYPASS"],
+      "rationale": "Exact tower values and identities are recomputed by the report contract rather than accepted from callers."
+    },
+    {
+      "cell": "path_and_sky_support_binding",
+      "status": "PASS",
+      "evidence_refs": ["pr284-adjacent: 41 passed", "docs/generated/pr284_depth_path_doob_receipt.json#proved_fixture.report.path_content_id"],
+      "rationale": "Path, strata, synthetic supports, and transport identities replay through adjacent contracts."
+    },
+    {
+      "cell": "preprocessing_and_estimator_identity",
+      "status": "PASS",
+      "evidence_refs": ["MU284-PREPROCESSING-DRIFT", "MU284-ESTIMATOR-IDENTITY-DRIFT", "oracle.json#fresh_receipt_and_fourteen_mutations"],
+      "rationale": "Fresh mutations kill both preprocessing and estimator identity drift."
+    },
+    {
+      "cell": "path_maximum_recomputation",
+      "status": "PASS",
+      "evidence_refs": ["MU284-PATH-MAXIMUM-DRIFT", "oracle.json#historical_builder_bypass_dies_before_calibration"],
+      "rationale": "Path values and maxima are independently recomputed; caller-supplied zero values cannot mint a report."
+    },
+    {
+      "cell": "threshold_and_bound_recomputation",
+      "status": "PASS",
+      "evidence_refs": ["pr284-focused: 21 passed", "MU284-THRESHOLD-DRIFT"],
+      "rationale": "Exact rational threshold and bound replay passes and post-report threshold drift is rejected."
+    },
+    {
+      "cell": "unproved_premise_matched_mock_fallback",
+      "status": "PASS",
+      "evidence_refs": ["MU284-FREE-BOUND-ON-UNPROVED", "MU284-MATCHED-MOCK-PLAN-OMITTED", "MU284-MATCHED-MOCK-PLAN-DRIFT"],
+      "rationale": "Unproved premises produce no bound and require the preregistered unchanged matched-mock plan."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "PASS",
+      "evidence_refs": ["oracle.json#fresh_receipt_and_fourteen_mutations"],
+      "rationale": "All fourteen rows freshly executed in registry order, including MU284-REPORT-BUILDER-BYPASS, and all were activated, executed, and killed."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["receipt content sha256 6cd68c1082a00a3db1385650ef7e2db785889dc9b2f2d24cb8d9835000f64213", "pr284-receipt-replay exit 0"],
+      "rationale": "Canonical receipt identity, twelve source hashes, and the fresh 14-row result match the checked-in receipt."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["pr284-portable-clean-replay exit 0", "source and clean pre/post manifest 46fbcd0bd63c78747caa23044e06984cf99efa3706f3e5cccbf2303fa71e3d6a"],
+      "rationale": "A distinct clean git-archive root replayed the receipt with scrubbed Python state and unchanged source/clean manifests."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["pr284-publication-policy-cross-binding: 9 passed", "oracle.json#human_only_merge_refusal"],
+      "rationale": "Policy/candidate cross-binding passes and agent PR mutation, automatic merge, and attended merge remain forbidden."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["pr284-claim-language: No forbidden claim language detected", "docs/research_program/post_pr275/pr284_spec.yaml#claim_tier"],
+      "rationale": "The result remains synthetic diagnostic-only, transfer-free, non-observed, non-public, and blocked for family identification."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["oracle.json#frozen_candidate_target_and_patch_uniqueness"],
+      "rationale": "The exact remote PR-283 predecessor remains the base and merge-base; all three sealed candidate patch IDs occur exactly once across all refs."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR284-R2-REPLAY-ORACLE-V1",
+      "kind": "mutation_test",
+      "status": "PASS",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-REPLAY/oracle.py"],
+      "command_fingerprint": "6e115391bb9a104ba2b61dfc934d62f822889e13a79abd679f2a7ed0bd93e043",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-09T21:48:04.538Z",
+      "completed_at": "2026-08-09T21:48:09.496Z",
+      "artifact_path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-REPLAY/oracle.json",
+      "artifact_sha256": "303af2937445bdfde8edea10e444412b0f7b8bb362bdf46cd26853db8d043eb4",
+      "artifact_bytes": 3371,
+      "evidence_refs": ["fresh 14-mutation execution", "historical builder bypass rejected before calibration", "global three-patch-ID uniqueness", "AUTO_MERGE refusal"]
+    }
+  ],
+  "coverage_sha256": "c5891767242a4e9bac7d98d583e8c7ec623a3e5cad1b0267f21dec78792a6425"
+}

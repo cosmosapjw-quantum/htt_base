@@ -1,0 +1,83 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-frozen-independent-review-r2-20260813",
+  "assignment_id": "A-PR291-R2-CLAIM",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "status": "fail",
+  "workflow_role": "reviewer",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_binding": {
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "67076abbfce5e6bf549f1282c95729bfe89b4be8",
+    "candidate_tree_sha": "e53869e5122189bd0d00d3a54c14e182396e3df3",
+    "diff_sha256": "f3e6bd5f3a6771e7655eaa5ba65b6c4f01bfefa14609b2d825f3a0a51aa5a81a",
+    "seal_sha256": "b277e46ee54781f8b1a9aa666e833f377b6052f9863a8d330d5cb6cb1b271045"
+  },
+  "claim_ids": ["C-PR274-DATA-ADMISSION"],
+  "verdict": {
+    "claim_gate": "FAIL",
+    "summary": "The C2 diagnostic-only, transfer-none, no-observed-execution, no-public-use, pre-native-atlas and typed nonexecution boundaries are correctly represented, but the production claim scanner does not enforce them against four positive forbidden-claim forms required by this review."
+  },
+  "findings": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "evidence_fingerprint": "claim-language/geometry-detection-hostile-variants/v1",
+      "verdict": "fail",
+      "severity": "blocking",
+      "title": "Positive forbidden geometry/family claims evade the claimed scanner boundary",
+      "evidence": [
+        "htt/src/common/semantic_guards/no_overclaim.py:103-109 enumerates only narrow singular/direct geometry-family phrasings.",
+        "htt/src/common/semantic_guards/no_overclaim.py:283-314 scans each line, with multiline folding implemented only for legacy curl claims.",
+        "htt/src/common/semantic_guards/no_overclaim.py:618-627 treats any guardrail marker anywhere in the matched sentence as a negative context.",
+        "artifacts/A-PR291-R2-CLAIM/hostile_claim_oracle.py and hostile_claim_oracle.out show misses for plural, reordered modifier, multiline, and same-sentence unrelated-without variants."
+      ],
+      "reproduction": "PYTHONDONTWRITEBYTECODE=1 python -B .agent-harness/runs/pr291-frozen-independent-review-r2-20260813/artifacts/A-PR291-R2-CLAIM/hostile_claim_oracle.py",
+      "required_fix": "Extend positive-claim recognition to the demonstrated grammar and make prose exemptions semantic/claim-scoped rather than any-marker-in-sentence; add these adversarial cases to tests/contracts/test_claim_language_lint.py."
+    }
+  ],
+  "confirmed_boundaries": {
+    "owner": "HTT",
+    "contributors": ["OBSSTAT", "COMMON"],
+    "claim_level": "C2",
+    "claim_tier": "diagnostic_only",
+    "transfer_source": "none",
+    "observed_data_executed": false,
+    "public_use": false,
+    "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    "terminal": "BLOCKED_PREDECESSOR_FINAL_SUCCESS",
+    "authorization": "NOT_AUTHORIZED"
+  },
+  "provenance_checks": [
+    "All 17 assignment required-input SHA-256 values matched the frozen assignment.",
+    "PR291_NONEXECUTION_RECEIPT.json binds the current PR-289 receipt, registry, data_identity.py, CF4 COMMON/OBSSTAT modules, runner, test, and claim guard hashes.",
+    "The PR delta bounds G55 to one stable-patch transplant and G56-G61 to reconstructed subsets; it explicitly excludes stale receipts and acceptance reuse.",
+    "docs/codex_handoff/pr_status.yaml keeps PR-292 PLANNED and INELIGIBLE with assurance budget consumed=0, while the stack merge policy is HUMAN_ONLY."
+  ],
+  "tests": [
+    {
+      "command": "python -B scripts/check_claim_language.py --strict-missing --include-archives docs/research_program/post_pr275/pr291_spec.yaml htt/src/common/cf4_observed_lane_activation.py htt/obsstat/cf4_post275_lane.py tests/integration/test_cf4_post275_lane.py docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json docs/PR_DELTAS/pr-291.md",
+      "status": "pass",
+      "evidence": "artifacts/A-PR291-R2-CLAIM/strict_claim_language.out"
+    },
+    {
+      "command": "PYTHONPATH=htt/src python -B -m pytest -p no:cacheprovider -q tests/contracts/test_claim_language_lint.py",
+      "status": "pass",
+      "evidence": "artifacts/A-PR291-R2-CLAIM/claim_language_regression_configured.out (26 passed)"
+    },
+    {
+      "command": "python -B artifacts/A-PR291-R2-CLAIM/hostile_claim_oracle.py",
+      "status": "fail_expected",
+      "evidence": "artifacts/A-PR291-R2-CLAIM/hostile_claim_oracle.out (4 of 9 adversarial cases evade detection)"
+    }
+  ],
+  "artifacts": [
+    "artifacts/A-PR291-R2-CLAIM/REVIEW_COVERAGE.json",
+    "artifacts/A-PR291-R2-CLAIM/hostile_claim_oracle.py",
+    "artifacts/A-PR291-R2-CLAIM/hostile_claim_oracle.out",
+    "artifacts/A-PR291-R2-CLAIM/strict_claim_language.out",
+    "artifacts/A-PR291-R2-CLAIM/claim_language_regression_configured.out"
+  ],
+  "remaining_risk": "The strict scan and its current 26 tests pass despite the demonstrated coverage holes; neither result is sufficient claim-gate acceptance until the hostile oracle passes."
+}

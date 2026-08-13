@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "oracle_id": "PR283-RELATIVE-THRESHOLD-REGISTRATION-BYPASS",
+  "kind": "mutation_test",
+  "started_at": "2026-08-09T19:24:38Z",
+  "completed_at": "2026-08-09T19:24:38Z",
+  "argv": [
+    "env",
+    "PYTHONPATH=htt/src:htt",
+    "python",
+    "-B",
+    "-"
+  ],
+  "stdin_procedure": [
+    "Load the frozen PR-283 default threshold contract and build the orthogonal full-rank fixture with relative joint singular value 0.005.",
+    "Confirm the default contract yields WEAKLY_IDENTIFIED, TYPE_UNIDENTIFIED, and no candidate.",
+    "Construct another factory-derived contract with the same required angle threshold 0.2 but relative singular threshold 0.001.",
+    "Project the exact same replay-valid source geometry report and classify the exact same observation.",
+    "Assert that the relaxed contract yields SEPARABLE_CANDIDATE, RESPONSE_CLASS_CANDIDATE, and response-class-local."
+  ],
+  "returncode": 0,
+  "timed_out": false,
+  "stdout": {
+    "default": [
+      "WEAKLY_IDENTIFIED",
+      "TYPE_UNIDENTIFIED",
+      null,
+      "sha256:08f0894d897da42bc3d207c95d2b73e7cd199b6aa1ff579b3ec75302404e7816"
+    ],
+    "relaxed": [
+      "SEPARABLE_CANDIDATE",
+      "RESPONSE_CLASS_CANDIDATE",
+      "response-class-local",
+      "sha256:f7dc4663545f5782b9d180f505f9301a6152035a1079e745c61c77981cee613d"
+    ]
+  },
+  "stderr": "",
+  "verdict": "PASS_REPRODUCED_REGISTERED_THRESHOLD_BYPASS",
+  "interpretation": "The content-addressed factory records whichever threshold the caller supplies, but source_separation_gate_from_pr256 does not require the fixed PR-283 contract identity. The same frozen geometry can therefore be regraded into a point-candidate-eligible state."
+}

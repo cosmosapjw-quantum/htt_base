@@ -1,0 +1,174 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-candidate-review-20260810",
+  "assignment_id": "A-PR284-CODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "code_cartographer",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "61005c410caea0e96d36f2e62ed32b83fa60c73a3db3f069560da83733435014",
+    "seal_sha256": "ba5335bffb3c75d866027339d37660f068140ff2926967abed09550344a4205e",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "029f8cedd044cc5967bc12dc695230ca69cf3308",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "e09d127212ba3173377ea2442be1661107f2963a",
+    "diff_sha256": "24dc3ec9ef99a6f914e3466883dd722af520d053fc2bf0e46be2f8c99ec4aeba",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "c50c270cb71d9421ddac9ffc6471c893ab0fa5434413c54ce703e079b8a1c32c"
+  },
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-CODE.json",
+  "assignment_sha256": "c9658fe1daf2e1a5a0c8ba89d366411b0294ce11991c2b5ef5d91eb0ee61087b",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/README.md",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr284-candidate-review-20260810/RUN_PLAN.json",
+    ".agent-harness/runs/pr284-candidate-review-20260810/assignments/A-PR284-CODE.json",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agents/skills/htt-adversarial-review-loop/SKILL.md",
+    ".prguard/runtime/PR284_CANDIDATE_SEAL.json",
+    "docs/generated/pr284_depth_path_doob_receipt.json",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/research_program/post_pr275/pr284_spec.yaml",
+    "htt/htt/htt/infer/__init__.py",
+    "htt/htt/htt/infer/depth_path_calibration.py",
+    "htt/src/common/depth_path_calibration.py",
+    "scripts/codex_harness/run_pr284_depth_path_doob.py",
+    "tests/contracts/test_depth_path_doob_calibration.py",
+    ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CODE.json",
+    ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/REVIEW_COVERAGE.json",
+    ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/threshold_identity_replay_oracle.py",
+    ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/REVIEW_COVERAGE.json",
+    ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.py",
+    ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-09T21:02:00Z",
+  "completed_at": "2026-08-09T21:12:00Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {
+      "command": "sha256sum assignment-required inputs; git rev-parse HEAD HEAD^{tree}; git status --short",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "returncode": 0,
+      "output": "all required hashes matched; HEAD=029f8cedd044cc5967bc12dc695230ca69cf3308; tree=e09d127212ba3173377ea2442be1661107f2963a; clean"
+    },
+    {
+      "command": "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "returncode": 0,
+      "output": "20 passed in 1.73s"
+    },
+    {
+      "command": "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "returncode": 0,
+      "output": "PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+    },
+    {
+      "command": "python -B -m pytest -q tests/contracts/test_depth_path_doob_calibration.py -k selected-code-tests",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "returncode": 2,
+      "output": "collection error: ModuleNotFoundError: No module named 'common'; invocation omitted repository package roots"
+    },
+    {
+      "command": "PYTHONPATH=htt/src:htt python -B -m pytest -q tests/contracts/test_depth_path_doob_calibration.py -k selected-code-tests",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "returncode": 0,
+      "output": "4 passed, 16 deselected in 0.93s"
+    },
+    {
+      "command": "python -B .agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.py",
+      "cwd": "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810",
+      "returncode": 0,
+      "output": "public factory rejected invalid premise; reachable contract builder produced a revalidating PROVED report and public 1/4 bound"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/REVIEW_COVERAGE.json",
+      "sha256": "949a5b68bcdf5895b3fe212849ac76e048a0da8c7b7c66aad77e7cd3ad592171",
+      "bytes": 9028,
+      "producer": "A-PR284-CODE"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json",
+      "sha256": "61a2a324d68376df9c793cac49be613cb244347b71988f0c9801b48a8028bbf0",
+      "bytes": 1033,
+      "producer": "A-PR284-CODE",
+      "command_fingerprint": "048c863a79dec33a34c31d5e599460701bce08c84abd2e024a4ee7d228a537d4"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.py",
+      "sha256": "08ad057a7843ae53395a5f28868b70c9fa4ee037ab5ee9d9d7d649e0dab3815c",
+      "bytes": 4811,
+      "producer": "A-PR284-CODE",
+      "command_fingerprint": "048c863a79dec33a34c31d5e599460701bce08c84abd2e024a4ee7d228a537d4"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "949a5b68bcdf5895b3fe212849ac76e048a0da8c7b7c66aad77e7cd3ad592171",
+  "findings": [
+    {
+      "finding_id": "F-PR284-CODE-001",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "critical",
+      "statement": "The common-layer `_build_depth_path_reverse_martingale_report_contract` is importable and accepts caller-supplied proved status, non-centered law, non-decreasing partitions, tower equalities, second moment, and path values without replay; its result passes revalidation and causes the public calibration factory to emit a probability bound.",
+      "assumptions_used": [
+        "An importable module attribute is reachable by an in-process caller even when omitted from __all__.",
+        "The specification's factory-only and no-caller-supplied-proved-status requirements apply to all reachable construction paths, not only names exported by htt.infer.__all__."
+      ],
+      "evidence_refs": [
+        "htt/src/common/depth_path_calibration.py:560",
+        "htt/src/common/depth_path_calibration.py:590",
+        "htt/src/common/depth_path_calibration.py:741",
+        "htt/src/common/depth_path_calibration.py:750",
+        "htt/htt/htt/infer/depth_path_calibration.py:316",
+        ".agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.json"
+      ],
+      "evidence_fingerprint": "sha256:61a2a324d68376df9c793cac49be613cb244347b71988f0c9801b48a8028bbf0",
+      "counterevidence_refs": [
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py focused: 20 passed",
+        "python -B scripts/codex_harness/run_pr284_depth_path_doob.py check: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION"
+      ],
+      "reproduction": [
+        "python -B .agent-harness/runs/pr284-candidate-review-20260810/artifacts/A-PR284-CODE/factory_bypass_oracle.py",
+        "Observe report_revalidation_accepted=true and public calibration status BOUND_AVAILABLE_CONDITIONAL_PROVED_PREMISE with probability_upper_bound=1/4."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Make report revalidation independently replay centering, second moment, filtration refinement, conditional expectations, selected path values, and path maximum, so no reachable builder can mint proof premises.",
+        "Add a registered mutation and contract test that invokes the common builder/revalidator bypass path and requires fail-closed rejection."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR284-CODE-001"
+      ],
+      "summary": "PR-284 is not review-ready: the public factory behaves correctly, but a reachable common-layer construction path bypasses the proved-premise replay and emits a bound; the registered mutation suite does not cover it."
+    }
+  ],
+  "errors": []
+}

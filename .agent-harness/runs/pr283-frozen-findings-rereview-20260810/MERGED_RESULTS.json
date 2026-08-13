@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-frozen-findings-rereview-20260810",
+  "generated_at": "2026-08-09T20:10:47+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 4,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR283-R2-CLAIM",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR258-OPEN-SET-RESPONSE",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "docs/research_program/post_pr275/pr283_spec.yaml:246",
+            "docs/research_program/post_pr275/pr283_publication_policy.json:133",
+            "scripts/codex_harness/run_pr283_weak_identification.py:125",
+            "docs/generated/pr283_weak_identification_receipt.json:323",
+            "docs/PR_DELTAS/pr-283.md:87",
+            "tests/contracts/test_weak_identification.py:575",
+            ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CLAIM/PR153_CLAIM_ORACLE.json"
+          ],
+          "evidence_fingerprint": "pr283:r2:pr153-forbidden-input-cross-binding:6fa98399",
+          "summary": "PASS: the repaired frozen candidate cross-binds PR-153 forbidden-input semantics and preserves the HTT-owned C2 diagnostic-only, transfer-none, non-observed, non-public, pre-native-atlas claim ceiling."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR283-R2-CODE",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "htt/htt/htt/statistics/open_set_response_classes.py:90",
+            "tests/contracts/test_weak_identification.py:483",
+            ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CODE/threshold_identity_replay_oracle.json",
+            "python -B scripts/codex_harness/run_pr283_weak_identification.py caller-migrations: 90 passed"
+          ],
+          "evidence_fingerprint": "sha256:28ed9ec74407e0fbc61bc445b3b0ddc68e698047c33861aa82f87e7e555f67ff",
+          "summary": "The frozen repair closes the alternate singular-threshold bypass by requiring the registered PR-283 content identity, preserves content-equivalent callers, retains exact source-report and NormalizerSpec replay, and leaves the targeted caller surface green; no blocking finding remains in this bounded rereview."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR283-R2-PHYSMATH",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            "htt/htt/htt/statistics/open_set_response_classes.py:93",
+            "htt/src/common/source_separation.py:440",
+            "htt/src/common/open_set_response_classes.py:2529",
+            "scripts/codex_harness/run_pr283_weak_identification.py:739",
+            "scripts/codex_harness/run_pr283_weak_identification.py:971",
+            ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-PHYSMATH/pr283_r2_physmath_oracle.json"
+          ],
+          "evidence_fingerprint": "sha256:87073300ec16a2e5ea3d06b0d03079386261e4578cba3d9d3c50e5264d3ef601",
+          "summary": "PASS for the bounded three-finding R2 physics/statistics rereview. The exact registered threshold contract now blocks the former relaxed-singular bypass; equality remains WEAKLY_IDENTIFIED while both strict exceedances remain candidate-eligible; and the repaired weak-status and precedence mutation rows execute RESPONSE_CLASS_CANDIDATE, UNKNOWN_CLASS, and EQUIVALENCE_CLASS counterfactual paths before production abstention distinguishes and kills them. Whitening/covariance quotient, nuisance identity, local/global rank ladder, dimensionless-beta units, and sign-free nonnegative geometry metrics remain coherent at the touched boundary. No priors or likelihoods are introduced; covariance squared distance remains a diagnostic classifier metric, not Bayesian evidence. Q, F, Pi, and G_F are neither computed nor claimed. Family identification remains BLOCKED_PRE_NATIVE_ATLAS with public_use=false, transfer_source=none, and synthetic diagnostic C2 scope."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    },
+    {
+      "assignment_id": "A-PR283-R2-REPLAY",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "evidence_refs": [
+            ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/EXECUTABLE_ORACLE.json",
+            ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-REPLAY/REVIEW_COVERAGE.json",
+            ".prguard/runtime/PR283_R2_CANDIDATE_SEAL.json"
+          ],
+          "evidence_fingerprint": "pr283-r2-frozen-replay:a74c8b6c8eea857af899ac23e43eecaf2755b48b48fb7ccb37f50a3650915955",
+          "summary": "Fresh repaired-candidate rereview found no replay, portability, mutation-execution, serial-stack, stable-patch, publication-refusal, or claim-ceiling defect."
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-283",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "assignment_count": 4,
+  "validated_result_count": 4,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/RUN_PLAN.json",
+      "sha256": "dc076215fe423337080cc2624c53194f01822210de9cba989c19702b517ebee5",
+      "bytes": 2939
+    },
+    {
+      "path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/assignments/A-PR283-R2-CLAIM.json",
+      "sha256": "8a136782982a46ac408b17ad3a742d9eb37a7f810db31a0e302ed9c2917c18af",
+      "bytes": 3977
+    },
+    {
+      "path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/assignments/A-PR283-R2-CODE.json",
+      "sha256": "931b87dfbd078d5ae5d08b85124b5f274b421b7f95a763e0930b0f53e5e81e26",
+      "bytes": 3513
+    },
+    {
+      "path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/assignments/A-PR283-R2-PHYSMATH.json",
+      "sha256": "03aaff7bf451091ac3d822ba80ead17b593a113d6253a89874b68b4f22a70e51",
+      "bytes": 3883
+    },
+    {
+      "path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/assignments/A-PR283-R2-REPLAY.json",
+      "sha256": "99176e2e39a9ca58aa22e368bf7364187e7ec5a137f11580269d19c0efd7bf4c",
+      "bytes": 4180
+    },
+    {
+      "path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CLAIM.json",
+      "sha256": "9677e37c0076895633ef2960e7fc3fd30522907b38636250a26996445405f8bd",
+      "bytes": 9769
+    },
+    {
+      "path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-CODE.json",
+      "sha256": "e7dc335d3f6183f720c58bf40285e0f520367500b70b7e1153cd200262870fb8",
+      "bytes": 8040
+    },
+    {
+      "path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-PHYSMATH.json",
+      "sha256": "6d558578215980f811c54ea548199f297b5ec7d15aa4f1a980fe40279152e740",
+      "bytes": 9574
+    },
+    {
+      "path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/results/A-PR283-R2-REPLAY.json",
+      "sha256": "05335dbe0895fe366f90c1afd76532b27156681f75939d9bda191afc1ce2ea08",
+      "bytes": 7158
+    }
+  ],
+  "merge_input_sha256": "be5057b8c8fa5c05d42708327a7072275581b692b42f858905df7bbe8826cbc9"
+}

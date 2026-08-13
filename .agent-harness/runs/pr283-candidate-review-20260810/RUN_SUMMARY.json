@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-candidate-review-20260810",
+  "work_unit_id": "PR-283",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "created_at": "2026-08-09T19:05:32+00:00",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR283_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "274d32ef70dcefb0ad1128b22b5226285d5bafe4670e1a66ba9bcdade7eae6f3",
+    "seal_sha256": "89c44d46574c4e268789ab2d623f966bd46e63c8b12f36fade1075d449f03e08",
+    "base_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+    "candidate_sha": "6ee9048ffd80f25337f405d8c6a39fd3b7f489eb",
+    "merge_base_sha": "ff9ef9f45747e559c5343b463cf010dfc3a7432a",
+    "candidate_tree_sha": "6c5c55dee52aaf7c7649dd23d386e0f85782fd32",
+    "diff_sha256": "5c5e5abd22a509fca7681d1decb0a3ac3b4288c89d4f2a63a4fdc37bcb918ff2",
+    "changed_files_sha256": "7a71a99b7b63012071701c4af1acf33719e01ff76e8ba0316eca7adc4103ebf6",
+    "production_hash": "2bd9aa31b5c6fb2ddcab970fe4e616f7b6acdbf7840f2fefa75b69a9368a10f7"
+  },
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "VALIDATED",
+  "evidence_key": {
+    "production_hash": "2bd9aa31b5c6fb2ddcab970fe4e616f7b6acdbf7840f2fefa75b69a9368a10f7",
+    "dependency_hashes": {}
+  },
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 5
+  },
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "publication_state": "NOT_PUBLISHED_BY_HARNESS",
+  "assignment_count": 4,
+  "results": [
+    {
+      "assignment_id": "A-PR283-FROZEN-CLAIM",
+      "agent_type": "claim_gate_reviewer",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-CLAIM.json",
+      "sha256": "aa81421b915a496471f0eb3d6e1da9cf017c6476a1de5763cba1b47f70536d0f",
+      "bytes": 10359
+    },
+    {
+      "assignment_id": "A-PR283-FROZEN-CODE",
+      "agent_type": "code_cartographer",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-CODE.json",
+      "sha256": "0e7af03eb696f92db9e4f96af881035beed2086b365b52007de1036ecdebb8e0",
+      "bytes": 7262
+    },
+    {
+      "assignment_id": "A-PR283-FROZEN-PHYSMATH",
+      "agent_type": "physics_stat_auditor",
+      "status": "fail",
+      "gate_disposition": "FAIL",
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-PHYSMATH.json",
+      "sha256": "304f10d5790e0b37176b4783ecc83419dfb093b6148a7dc2fb14a91048c244dc",
+      "bytes": 11940
+    },
+    {
+      "assignment_id": "A-PR283-FROZEN-REPLAY",
+      "agent_type": "harness_engineer",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "path": ".agent-harness/runs/pr283-candidate-review-20260810/results/A-PR283-FROZEN-REPLAY.json",
+      "sha256": "1c88420af789cc9e6dc204bd60622d16fcc19e2aaf82ed4c7ff3c321ea967355",
+      "bytes": 7826
+    }
+  ],
+  "merged_results": {
+    "path": ".agent-harness/runs/pr283-candidate-review-20260810/MERGED_RESULTS.json",
+    "sha256": "865a63afe5bf1e1674d489614d733997861636d48b145732bf59ffc4fa1d20bc",
+    "bytes": 15871
+  },
+  "disposition": "summarized_discardable",
+  "closed_at": "2026-08-09T19:42:26+00:00"
+}

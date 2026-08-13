@@ -1,0 +1,154 @@
+{
+  "schema_version": 3,
+  "run_id": "pr287-final-seal-closeout-20260811",
+  "assignment_id": "A-PR287-FINAL-SEAL-CLOSEOUT",
+  "assignment_sha256": "6527d6e2755f611906de51b38197303a97e4336f428fcb58888395d5d7b0b95f",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "adjudication",
+  "work_unit_id": "PR-287",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR287_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "65f84c67c1cd327fb1456c0139433af925dc44075177d1401e7d86d87d3942bf",
+    "seal_sha256": "d9e88f01afb6ffe4eb8af0206d30cae7f12494e498914528ed22ccfcd76a26bb",
+    "base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+    "merge_base_sha": "b955a050f19db853a93779506e8acb4e4a5352a9",
+    "candidate_tree_sha": "e03b17661c1b5bc74ab0bbecbc31a82948f32bc9",
+    "diff_sha256": "bbf20c198dd4e4d55bcf4e5bf6b4f35906fc9a5ffa07ba595eab649f55c9fdf7",
+    "changed_files_sha256": "b522232b4e7f07fe03b297f33a07dfcce4f7eb80cdd0bbd94b9fd06a20b73198",
+    "production_hash": "6d0963dfdc66dcd2bf80ef3dde6fd84d87f455f0c6db5199250b06b2c51e873a"
+  },
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "started_at": "2026-08-11T06:24:28+00:00",
+  "completed_at": "2026-08-11T06:36:58+00:00",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/scripts/candidate_seal.py",
+        "verify",
+        "--seal",
+        ".prguard/runtime/PR287_FINAL_CANDIDATE_SEAL.json"
+      ],
+      "returncode": 0,
+      "result": "candidate seal payload and live immutable metadata PASS"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr287-final-seal-closeout-20260811/artifacts/A-PR287-FINAL-SEAL-CLOSEOUT/final_closeout_oracle.py"
+      ],
+      "returncode": 0,
+      "result": "29/29 metadata-only closeout checks PASS; no substantive scientific assurance rerun"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/scripts/review_coverage.py",
+        "--coverage",
+        ".agent-harness/runs/pr287-final-seal-closeout-20260811/artifacts/A-PR287-FINAL-SEAL-CLOSEOUT/review_coverage.json",
+        "--seal",
+        ".prguard/runtime/PR287_FINAL_CANDIDATE_SEAL.json",
+        "--run-id",
+        "pr287-final-seal-closeout-20260811",
+        "--assignment-id",
+        "A-PR287-FINAL-SEAL-CLOSEOUT",
+        "--risk-tier",
+        "R3"
+      ],
+      "returncode": 0,
+      "result": "30 exact policy cells and executable invariant oracle PASS"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr287-final-seal-closeout-20260811/artifacts/A-PR287-FINAL-SEAL-CLOSEOUT/final_closeout_oracle.py",
+      "sha256": "65bb0bec76c354dcfcd90fab4d6b60762cefc39f6db9212c7ceaacd1637a47c7",
+      "bytes": 18588,
+      "producer": "A-PR287-FINAL-SEAL-CLOSEOUT",
+      "command_fingerprint": "1b27b8bc120dc0b79b689b904ad29bb9f26466d2de1c7d8b8d22c907972d1025"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-final-seal-closeout-20260811/artifacts/A-PR287-FINAL-SEAL-CLOSEOUT/final_closeout_oracle_report.json",
+      "sha256": "ac6e9d4662448f4c2e9e89d0bf75b76cb56ccacf19d10b86ceb105938dbf5002",
+      "bytes": 13054,
+      "producer": "A-PR287-FINAL-SEAL-CLOSEOUT",
+      "command_fingerprint": "1b27b8bc120dc0b79b689b904ad29bb9f26466d2de1c7d8b8d22c907972d1025"
+    },
+    {
+      "path": ".agent-harness/runs/pr287-final-seal-closeout-20260811/artifacts/A-PR287-FINAL-SEAL-CLOSEOUT/review_coverage.json",
+      "sha256": "055cbac4affb51fd21475b0985b26dc4a270bb2559a7995bda060f076ec6b6ee",
+      "bytes": 26145,
+      "producer": "A-PR287-FINAL-SEAL-CLOSEOUT"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr287-final-seal-closeout-20260811/artifacts/A-PR287-FINAL-SEAL-CLOSEOUT/review_coverage.json",
+  "review_coverage_sha256": "055cbac4affb51fd21475b0985b26dc4a270bb2559a7995bda060f076ec6b6ee",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr287-final-seal-closeout-20260811/assignments/A-PR287-FINAL-SEAL-CLOSEOUT.json",
+    ".agent-harness/runs/pr287-final-seal-closeout-20260811/RUN_PLAN.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".prguard/runtime/PR287_FINAL_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR287_FINAL_INTEGRATION_REHEARSAL.json",
+    ".prguard/runtime/PR287_VALIDATED_CANDIDATE_SEAL.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-CODE.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-PHYSSTAT.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-CLAIM.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY-R2.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/results/A-PR287-FROZEN-REPLAY-R3.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/MERGED_RESULTS.json",
+    ".agent-harness/runs/pr287-fresh-independent-review-20260811/RUN_SUMMARY.json",
+    "docs/research_program/post_pr275/pr287_publication_policy.json",
+    "docs/research_program/post_pr275/pr287_spec.yaml",
+    "docs/PR_DELTAS/pr-287.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    ".agent-harness/scripts/candidate_seal.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/strict_result_validation.py"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "Final metadata closeout passes at exact reviewed HEAD 319835cc: the final seal and recorded integration receipt are internally valid; the six-commit lineage and stable patch IDs are unique; the review-only tail changes only the PR delta and synchronized status mirrors; the production/dependency evidence key is unchanged; the initial and R2 contamination envelopes remain not_examined while replacement R3 passes; PR-287 remains REVIEWED at derived assurance 7/16 after this assignment; PR-288 remains PLANNED/INELIGIBLE at 0/16; and no push, PR, or merge is recorded. The separate capability-isolated executor blocker remains typed fresh-execution INCONCLUSIVE and is not promoted by this process closeout.",
+      "evidence_refs": [
+        ".prguard/runtime/PR287_FINAL_CANDIDATE_SEAL.json",
+        ".prguard/runtime/PR287_FINAL_INTEGRATION_REHEARSAL.json",
+        ".agent-harness/runs/pr287-final-seal-closeout-20260811/artifacts/A-PR287-FINAL-SEAL-CLOSEOUT/final_closeout_oracle_report.json",
+        ".agent-harness/runs/pr287-final-seal-closeout-20260811/artifacts/A-PR287-FINAL-SEAL-CLOSEOUT/review_coverage.json",
+        ".agent-harness/runs/pr287-fresh-independent-review-20260811/MERGED_RESULTS.json",
+        ".agent-harness/runs/pr287-fresh-independent-review-20260811/RUN_SUMMARY.json",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/PR_DELTAS/pr-287.md"
+      ],
+      "evidence_fingerprint": "PR287-FINAL-SEAL-319835CC-METADATA-CLOSEOUT-PASS"
+    }
+  ],
+  "errors": [],
+  "result_path": ".agent-harness/runs/pr287-final-seal-closeout-20260811/results/A-PR287-FINAL-SEAL-CLOSEOUT.json"
+}

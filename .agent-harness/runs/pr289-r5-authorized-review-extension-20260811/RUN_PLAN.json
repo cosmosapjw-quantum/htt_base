@@ -1,0 +1,120 @@
+{
+  "schema_version": 2,
+  "run_id": "pr289-r5-authorized-review-extension-20260811",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "created_at": "2026-08-11T11:58:07+00:00",
+  "spec_ref": "docs/research_program/post_pr275/pr289_spec.yaml",
+  "target_remote": "origin",
+  "target_branch": "changeset/pr288-bayesian-evidence-recovery-20260811",
+  "target_ref": "refs/remotes/origin/changeset/pr288-bayesian-evidence-recovery-20260811",
+  "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+  "candidate_ref": "HEAD",
+  "integration_policy": {
+    "path": "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "sha256": "4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9",
+    "policy_id": "PR289-PUBLICATION-POLICY"
+  },
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR289_R5_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "a2681b6259aa6ac98929122b0fd4bfdceef21d18e818e43552f5e09b109c4e7a",
+    "seal_sha256": "301be2d0d73f18c109b71f36c43e8c8d033bd7fcfb01a6d04142b7493e30cf01",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "eec048d4cf19989983986d139c7d0a797b1363e0",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "27251a5b9e28685b23473f23d7d0b960b039d375",
+    "diff_sha256": "bebb8bc4ba55b67c42b0a879f63137fe240f8fb8cc82528d9b7c8fff9e99b71f",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "c638eaea433bcce5a5b00140a916108d5c23b64d079c94bbb7456a343acf0d48"
+  },
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "budget": {
+    "max_concurrent": 4,
+    "max_total": 8,
+    "max_total_per_work_unit": 16,
+    "max_depth": 2
+  },
+  "publication_budget": {
+    "max_open_prs": 7,
+    "max_direct_to_target_prs": 1,
+    "max_prs_per_change_set": 1,
+    "max_stack_depth": 7,
+    "max_file_overlap_prs": 6
+  },
+  "stages": [
+    "context-build",
+    "work-unit-implementation",
+    "candidate-freeze",
+    "read-only-review",
+    "latest-target-integration",
+    "external-publisher-authorization"
+  ],
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
+  "status": "candidate_frozen",
+  "execution_mode": "AUTO_STACKED_PR",
+  "lifecycle_state": "VALIDATED",
+  "stack_id": "PROCESS_INFLATION_RECOVERY_PHASE2",
+  "activation_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+  "predecessor_pr": "PR-288",
+  "predecessor_sealed_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+  "production_hash": "c638eaea433bcce5a5b00140a916108d5c23b64d079c94bbb7456a343acf0d48",
+  "dependency_hashes": {
+    "pr289_spec": "f4a8e89e603a1f6e4fe9cb99c422ef83407fd264328b3adaf927aafdcfb6636f",
+    "publication_policy": "4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9",
+    "lane_registry": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+    "data_runbooks": "b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de",
+    "claim_ledger": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+    "pr289_runner": "14ed58a68f4a628644219f6df0b966d5e2cedddef0a7c32f10ce1c94a85e6ad5",
+    "pr289_contract_test": "1ee3fb1541a911abfd686d5cd78f75380b8847dfe5d1fd076cd48153a4f1c3c3",
+    "pr274_registry": "92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9",
+    "pr274_result": "e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea",
+    "data_identity_receipt": "92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+    "publication_integrity": "56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec",
+    "dag_validator": "126ccf63e3a6d835584426e4c3d157be5482b1f7df39d0985638370366b40afc",
+    "claim_linter": "b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677",
+    "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+  },
+  "evidence_key": {
+    "production_hash": "c638eaea433bcce5a5b00140a916108d5c23b64d079c94bbb7456a343acf0d48",
+    "dependency_hashes": {
+      "pr289_spec": "f4a8e89e603a1f6e4fe9cb99c422ef83407fd264328b3adaf927aafdcfb6636f",
+      "publication_policy": "4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9",
+      "lane_registry": "e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+      "data_runbooks": "b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de",
+      "claim_ledger": "86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+      "pr289_runner": "14ed58a68f4a628644219f6df0b966d5e2cedddef0a7c32f10ce1c94a85e6ad5",
+      "pr289_contract_test": "1ee3fb1541a911abfd686d5cd78f75380b8847dfe5d1fd076cd48153a4f1c3c3",
+      "pr274_registry": "92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9",
+      "pr274_result": "e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea",
+      "data_identity_receipt": "92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34",
+      "publication_integrity": "56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec",
+      "dag_validator": "126ccf63e3a6d835584426e4c3d157be5482b1f7df39d0985638370366b40afc",
+      "claim_linter": "b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677",
+      "salvage_audit": "c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436"
+    }
+  },
+  "gate_disposition": "PASS",
+  "assurance_budget": {
+    "maximum": 16,
+    "consumed": 12
+  },
+  "budget_exception": {
+    "exception_id": "PR289-AUTH-LANE-R5-20260811",
+    "kind": "single_run_reviewer_rereview",
+    "run_id": "pr289-r5-authorized-review-extension-20260811",
+    "work_unit_id": "PR-289",
+    "authorized_by": "user-stacked-publication-assurance-extension-20260811",
+    "reason": "bounded-cross-lane-authorization-repair-review",
+    "baseline_limit": 16,
+    "additional_assignments": 2,
+    "allowed_workflow_role": "reviewer",
+    "allowed_assignment_ids": [
+      "A-PR289-R5-PHYSCODE",
+      "A-PR289-R5-REPLAYCLAIM"
+    ],
+    "single_use": true
+  }
+}

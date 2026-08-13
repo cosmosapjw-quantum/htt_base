@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "coverage_sha256": "4d57e15f6b5567e2bd6072ab14b55b18a50997b17795a0f2b64b79ad120f94f9",
+  "run_id": "pr290-final-seal-closeout-20260811",
+  "assignment_id": "A-PR290-FINAL-SEAL-CLOSEOUT",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-290",
+  "risk_tier": "R3",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "candidate_seal_sha256": "77e07224080bcea620674881ebe9aee78e6172b1692f8dfededa7e00a600cc3f",
+  "candidate_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+  "candidate_tree_sha": "6c24b0eea0971badd30662473c68e91f1bbe9072",
+  "diff_sha256": "fc6552ed00b4183c1dcbfb7b15566c22253af5d5634d835ea199cf1277026afc",
+  "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+  "completed_at": "2026-08-11T14:52:45+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": true,
+  "candidate_binding": {
+    "seal_path": ".prguard/runtime/PR290_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f30163cc748f3162a7de8f9f1232515b47911ea92998f3ba0f51536739382aed",
+    "seal_sha256": "77e07224080bcea620674881ebe9aee78e6172b1692f8dfededa7e00a600cc3f",
+    "base_sha": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+    "candidate_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "production_hash": "b9b62e081f702f6b2b1918e5b3f1b599d651bdfa2fb0261e878d7a669d94beaf"
+  },
+  "required_cell_count": 15,
+  "fresh_cell_count": 2,
+  "carried_cell_count": 13,
+  "coverage_cells": [
+    {"cell": "candidate_identity", "status": "PASS", "evidence_refs": [".prguard/runtime/PR290_FINAL_CANDIDATE_SEAL.json", ".agent-harness/runs/pr290-final-seal-closeout-20260811/A-PR290-FINAL-SEAL-CLOSEOUT_oracle.py"], "rationale": "Fresh final seal and Git identity check."},
+    {"cell": "spec_before_execution", "status": "PASS", "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"], "rationale": "Carried under unchanged production and dependency identities."},
+    {"cell": "dependency_terminal_replay", "status": "PASS", "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json", "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json"], "rationale": "Carried exact predecessor terminal replay."},
+    {"cell": "data_identity_and_human_authorization_separation", "status": "PASS", "evidence_refs": [".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-CODE.json", "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json"], "rationale": "Carried identity versus authorization boundary."},
+    {"cell": "preflight_before_first_write", "status": "PASS", "evidence_refs": [".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-CODE.json"], "rationale": "Carried output-containment and preflight-order review."},
+    {"cell": "synthetic_operator_identity", "status": "PASS", "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"], "rationale": "Carried exact pooled-rank and operator-identity review."},
+    {"cell": "observation_null_pipeline_equivalence", "status": "PASS", "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"], "rationale": "Carried matched scan-operator review."},
+    {"cell": "mask_beam_harmonic_conventions", "status": "PASS", "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"], "rationale": "Carried dimensional, sign, and typed-blocker review."},
+    {"cell": "full_covariance_and_null_contract", "status": "PASS", "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"], "rationale": "Carried full covariance and null-contract review."},
+    {"cell": "look_elsewhere_and_component_replication", "status": "PASS", "evidence_refs": [".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"], "rationale": "Carried conservative rank and component-pairing review."},
+    {"cell": "blocked_no_numeric_output", "status": "PASS", "evidence_refs": ["docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json", ".prguard/runtime/PR290_FINAL_INTEGRATION_REHEARSAL.json"], "rationale": "Carried terminal boundary and confirmed final no-output state."},
+    {"cell": "portable_clean_integration", "status": "PASS", "evidence_refs": [".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/results/A-PR290-R3-METADATA-CLOSEOUT.json", ".prguard/runtime/PR290_FINAL_INTEGRATION_REHEARSAL.json"], "rationale": "Carried R3 repair and confirmed final portable PASS."},
+    {"cell": "publication_policy_cross_binding", "status": "PASS", "evidence_refs": ["docs/research_program/post_pr275/pr290_publication_policy.json", ".prguard/runtime/PR290_FINAL_INTEGRATION_REHEARSAL.json"], "rationale": "Carried policy identity and confirmed final cross-binding PASS."},
+    {"cell": "claim_and_family_ceiling", "status": "PASS", "evidence_refs": [".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/results/A-PR290-R3-METADATA-CLOSEOUT.json", "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json"], "rationale": "Carried diagnostic-only and family-gate ceiling."},
+    {"cell": "latest_target_integration", "status": "PASS", "evidence_refs": [".prguard/runtime/PR290_FINAL_INTEGRATION_REHEARSAL.json", ".prguard/runtime/PR290_FINAL_CANDIDATE_SEAL.json"], "rationale": "Fresh latest-target integration at final candidate."}
+  ],
+  "independent_oracles": [
+    {
+      "kind": "invariant_checker",
+      "oracle_id": "PR290-FINAL-SEAL-METADATA-ORACLE",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr290-final-seal-closeout-20260811/A-PR290-FINAL-SEAL-CLOSEOUT_oracle.py"],
+      "command_fingerprint": "6da52088a1e016071c8cdc6969ac1ac61a0e7a37ed1cc1de75918f66ae1a4f16",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T14:52:44+00:00",
+      "completed_at": "2026-08-11T14:52:45+00:00",
+      "artifact_path": ".agent-harness/runs/pr290-final-seal-closeout-20260811/A-PR290-FINAL-SEAL-CLOSEOUT_oracle.py",
+      "artifact_sha256": "9595c95fb589a28622da1d21546c280aa5952614fcfe6cfa396b47f01b58f170",
+      "artifact_bytes": 12316,
+      "evidence_refs": [".prguard/runtime/PR290_FINAL_CANDIDATE_SEAL.json", ".prguard/runtime/PR290_FINAL_INTEGRATION_REHEARSAL.json"]
+    }
+  ],
+  "cells": [
+    {
+      "cell_id": "candidate_identity",
+      "status": "PASS",
+      "provenance": "fresh",
+      "evidence_refs": [
+        ".prguard/runtime/PR290_FINAL_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr290-final-seal-closeout-20260811/A-PR290-FINAL-SEAL-CLOSEOUT_oracle.py"
+      ],
+      "summary": "Final seal and Git metadata bind clean HEAD 06ac2060 to exact PR-289 base 45da1bf5, eight linear unique patches, and unchanged production hash."
+    },
+    {
+      "cell_id": "spec_before_execution",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json",
+        ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/results/A-PR290-R3-METADATA-CLOSEOUT.json"
+      ],
+      "summary": "R2 science-contract PASS is carried because both later commits are metadata-only and production/dependency identities are unchanged."
+    },
+    {
+      "cell_id": "dependency_terminal_replay",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json",
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json"
+      ],
+      "summary": "Exact predecessor replay remains fail-closed at BLOCKED_PREDECESSOR_FINAL_SUCCESS."
+    },
+    {
+      "cell_id": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-CODE.json",
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json"
+      ],
+      "summary": "Identity admission and H-PLANCK authorization remain separate; H-PLANCK is NOT_AUTHORIZED."
+    },
+    {
+      "cell_id": "preflight_before_first_write",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-frozen-independent-review-20260811/results/A-PR290-FROZEN-CODE.json"
+      ],
+      "summary": "The R1 code/harness review found no output-containment or preflight-order defect."
+    },
+    {
+      "cell_id": "synthetic_operator_identity",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"
+      ],
+      "summary": "R2 verified exact pooled ranks and operator identities after the bounded science-contract repair."
+    },
+    {
+      "cell_id": "observation_null_pipeline_equivalence",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"
+      ],
+      "summary": "R2 verified the registered observation-inclusive null contract and matched scan operator."
+    },
+    {
+      "cell_id": "mask_beam_harmonic_conventions",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"
+      ],
+      "summary": "R2 confirmed dimensional/sign contracts and typed mask, beam, and harmonic blockers."
+    },
+    {
+      "cell_id": "full_covariance_and_null_contract",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"
+      ],
+      "summary": "R2 rejected diagonal covariance and other registered science-contract relaxations."
+    },
+    {
+      "cell_id": "look_elsewhere_and_component_replication",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-science-contract-r2-rereview-20260811/results/A-PR290-R2-PHYSCODE.json"
+      ],
+      "summary": "R2 retained conservative finite-rank and same-sky SMICA/Commander pairing semantics."
+    },
+    {
+      "cell_id": "blocked_no_numeric_output",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+        ".prguard/runtime/PR290_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "summary": "Terminal remains blocked with zero numerical outputs, observed execution false, and network/download false."
+    },
+    {
+      "cell_id": "portable_clean_integration",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/results/A-PR290-R3-METADATA-CLOSEOUT.json",
+        ".prguard/runtime/PR290_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "summary": "R3 freshly closed the portable-prose defect; the final rehearsal records the portable command PASS at 06ac2060."
+    },
+    {
+      "cell_id": "publication_policy_cross_binding",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr290_publication_policy.json",
+        ".prguard/runtime/PR290_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "summary": "The final seal binds the unchanged publication policy and the final rehearsal records the cross-binding command PASS."
+    },
+    {
+      "cell_id": "claim_and_family_ceiling",
+      "status": "PASS",
+      "provenance": "carried",
+      "evidence_refs": [
+        ".agent-harness/runs/pr290-portable-prose-r3-closeout-20260811/results/A-PR290-R3-METADATA-CLOSEOUT.json",
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json"
+      ],
+      "summary": "C2 diagnostic-only, transfer none, public false, and BLOCKED_PRE_NATIVE_ATLAS remain unchanged."
+    },
+    {
+      "cell_id": "latest_target_integration",
+      "status": "PASS",
+      "provenance": "fresh",
+      "evidence_refs": [
+        ".prguard/runtime/PR290_FINAL_INTEGRATION_REHEARSAL.json",
+        ".prguard/runtime/PR290_FINAL_CANDIDATE_SEAL.json"
+      ],
+      "summary": "Latest-target rehearsal at exact PR-289 sealed predecessor 45da1bf5 records all seven required commands PASS for final candidate 06ac2060."
+    }
+  ],
+  "missing_cells": [],
+  "extra_cells": [],
+  "overall_status": "PASS"
+}

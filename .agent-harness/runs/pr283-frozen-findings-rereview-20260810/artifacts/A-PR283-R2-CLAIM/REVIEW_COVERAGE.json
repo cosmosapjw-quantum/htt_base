@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR283-R2-CLAIM",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "candidate_seal_sha256": "a74c8b6c8eea857af899ac23e43eecaf2755b48b48fb7ccb37f50a3650915955",
+  "candidate_sha": "6fa98399dfe8b0a0735f9938063420457cda7688",
+  "candidate_tree_sha": "101ff1d291a4368cffcff80b4cef0e7f4092f3f0",
+  "diff_sha256": "0c898eb6fe199071eb5d7021a690cfec3591aa202d4b3e134cf6fe7e267e1afe",
+  "changed_files_sha256": "7a71a99b7b63012071701c4af1acf33719e01ff76e8ba0316eca7adc4103ebf6",
+  "completed_at": "2026-08-09T20:00:00Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR283_R2_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/assignments/A-PR283-R2-CLAIM.json"
+      ],
+      "rationale": "Required-input hashes, HEAD, tree, and clean-worktree state matched the frozen assignment and seal."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_spec.yaml",
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/assignments/A-PR283-R2-CLAIM.json"
+      ],
+      "rationale": "The registered assignment named the exact frozen spec as a required input before review execution."
+    },
+    {
+      "cell": "covariance_supported_rank_ladder",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Bounded claim/provenance rereview; numerical rank-ladder behavior belongs to the independent physics/code lanes."
+    },
+    {
+      "cell": "full_rank_small_angle_status",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Bounded claim/provenance rereview; no independent numerical reassessment was assigned."
+    },
+    {
+      "cell": "full_rank_small_singular_value_status",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Bounded claim/provenance rereview; no independent numerical reassessment was assigned."
+    },
+    {
+      "cell": "rank_deficiency_distinct_from_weak_identification",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Bounded claim/provenance rereview; mathematical behavior is outside this assignment slice."
+    },
+    {
+      "cell": "threshold_contract_identity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Threshold repair is outside the assigned PR-153 claim/provenance finding."
+    },
+    {
+      "cell": "exact_source_geometry_report_replay",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Source-geometry replay implementation is outside this claim lane."
+    },
+    {
+      "cell": "exact_normalizer_spec_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Normalizer implementation review is outside this claim lane."
+    },
+    {
+      "cell": "mandatory_threshold_contract_enforcement",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Threshold enforcement implementation is outside this claim lane."
+    },
+    {
+      "cell": "all_source_gate_callers_migrated",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Caller migration completeness is outside this bounded claim rereview."
+    },
+    {
+      "cell": "principal_angle_and_singular_value_identity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Numerical identity enforcement is outside this claim lane."
+    },
+    {
+      "cell": "mandatory_open_set_abstention",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Runtime classifier behavior is assigned to independent code and physics reviewers."
+    },
+    {
+      "cell": "no_point_estimate_or_nearest_fallback",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_spec.yaml:246",
+        "docs/generated/pr283_weak_identification_receipt.json:342"
+      ],
+      "rationale": "The governing and generated claim surfaces forbid point estimates and nearest-class fallback under weak identification."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Mutation implementation quality is outside this claim lane."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/generated/pr283_weak_identification_receipt.json",
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CLAIM/PR153_CLAIM_ORACLE.json"
+      ],
+      "rationale": "Fresh runner check matched the frozen receipt bytes, and the oracle independently verified the receipt content address and bound-source hashes."
+    },
+    {
+      "cell": "pr272_predecessor_replay_preservation",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Predecessor replay preservation is outside this bounded claim rereview."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_publication_policy.json:133",
+        "docs/research_program/post_pr275/pr283_spec.yaml:246",
+        "scripts/codex_harness/run_pr283_weak_identification.py:125",
+        "docs/generated/pr283_weak_identification_receipt.json:323",
+        "docs/PR_DELTAS/pr-283.md:87",
+        "tests/contracts/test_weak_identification.py:575",
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CLAIM/PR153_CLAIM_ORACLE.json"
+      ],
+      "rationale": "PR-153 forbidden-input semantics are present across spec, policy, generator, receipt, delta, and omission-sensitive receipt tests."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr283_spec.yaml:4",
+        "docs/generated/pr283_weak_identification_receipt.json:331",
+        "docs/PR_DELTAS/pr-283.md:87",
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CLAIM/PR153_CLAIM_ORACLE.json"
+      ],
+      "rationale": "Owner HTT with COMMON/MIO contributors, C2 diagnostic-only, transfer none, observed/public false, and BLOCKED_PRE_NATIVE_ATLAS are aligned without posterior, truth, native, geometry, or family promotion."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Portable clean integration is outside this bounded claim rereview."
+    },
+    {
+      "cell": "serial_stack_bootstrap_integrity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Process bootstrap integrity is outside this bounded claim rereview."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Latest-target integration is a later independent stage and was not assigned here."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR283-PR153-CLAIM-CROSS-BINDING",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CLAIM/PR153_CLAIM_ORACLE.py"
+      ],
+      "command_fingerprint": "246394485354c5e59c818fde5464f363ec9ae3d36f08b51e923ce5ebc64e9a00",
+      "started_at": "2026-08-09T19:59:45Z",
+      "completed_at": "2026-08-09T19:59:45Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CLAIM/PR153_CLAIM_ORACLE.json",
+      "artifact_sha256": "210b083434bf0184d9b50bf0e012aff7a5a1eb66bab8c7ffd503e3ff6a0ddfa3",
+      "artifact_bytes": 1522,
+      "evidence_refs": [
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CLAIM/PR153_CLAIM_ORACLE.py",
+        ".agent-harness/runs/pr283-frozen-findings-rereview-20260810/artifacts/A-PR283-R2-CLAIM/PR153_CLAIM_ORACLE.json"
+      ]
+    }
+  ],
+  "coverage_sha256": "3e190ea903ad5cc7c15c56f63711025d74a30349b4a2e6412baed48c7322bce0"
+}

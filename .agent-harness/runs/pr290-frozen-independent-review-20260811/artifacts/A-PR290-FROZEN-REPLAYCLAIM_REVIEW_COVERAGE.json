@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "run_id": "pr290-frozen-independent-review-20260811",
+  "assignment_id": "A-PR290-FROZEN-REPLAYCLAIM",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "candidate_seal_sha256": "f7c226fdc53408bb10defeabbd7a23a5e17c38dd2a3a2359640aeacf3678b3ed",
+  "candidate_sha": "27c83a1a12369b4b563667ff5145ae9a717b24f0",
+  "candidate_tree_sha": "344dfb920b26c0207432b6acd9625bf2dacf50da",
+  "diff_sha256": "d10438bad740b2c81a4198655a647b5d7ca021f9f9cf8a3e196e22a5576dbd23",
+  "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+  "completed_at": "2026-08-11T13:34:09+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/PR_DELTAS/pr-290.md",
+        "git:HEAD=27c83a1a12369b4b563667ff5145ae9a717b24f0;tree=344dfb920b26c0207432b6acd9625bf2dacf50da;merge-base=45da1bf54149864fb9d87be3a828df202ee1df7f"
+      ],
+      "rationale": "The exact PR-289 sealed base, frozen candidate/tree, changed-file inventory, seal checksum, and four unique stable patch IDs match. G49-G53 selection and G54 exclusion are recorded in the PR delta; current candidate acceptance does not rely on historical group labels."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr290_spec.yaml",
+        "tests/integration/test_planck_post275_lane.py"
+      ],
+      "rationale": "Only a nonexecution receipt and synthetic operator evidence are enabled; observed outputs remain disabled and preflight precedes payload construction."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+        "docs/generated/pr288_bayesian_semantics_receipt.json",
+        "docs/generated/pr289_data_identity_v2_receipt.json",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "rationale": "Current PR-288/PR-289 receipts are byte-bound, while PR-287 fresh execution remains INCONCLUSIVE and its required terminal receipt is absent; the predecessor is not regraded."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+        "htt/src/common/observed_lane_activation.py",
+        "tests/integration/test_planck_post275_lane.py"
+      ],
+      "rationale": "PLANCK identity is REJECTED_NOT_PRESENT and H-PLANCK is independently NOT_AUTHORIZED with no receipt; admission is never treated as execution authority."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr290_planck_lane.py",
+        "tests/integration/test_planck_post275_lane.py",
+        "command:pr290-focused:40-passed"
+      ],
+      "rationale": "Containment rejects links, nonregular paths, escapes, rebound parents, and existing result directories before payload generation, then rechecks after atomic replacement and fsync."
+    },
+    {
+      "cell": "synthetic_operator_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        "htt/obsstat/planck_post275_lane.py",
+        "htt/obsstat/boost_biposh_residual.py",
+        "tests/integration/test_planck_post275_lane.py"
+      ],
+      "rationale": "The preserved operator path is synthetic-only, enforces complete frozen identities, and passes the finite zero-boost identity/domain checks without observed-data claims."
+    },
+    {
+      "cell": "observation_null_pipeline_equivalence",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr290_spec.yaml",
+        "htt/obsstat/planck_post275_lane.py",
+        "tests/integration/test_planck_post275_lane.py"
+      ],
+      "rationale": "Observation and null rows require identical operator identities, with complete separate SMICA and Commander product rows."
+    },
+    {
+      "cell": "mask_beam_harmonic_conventions",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr290_spec.yaml",
+        "htt/obsstat/planck_post275_lane.py"
+      ],
+      "rationale": "Harmonic and dimensional conventions are typed, while beam/pixel normalization and mask deconvolution remain explicit blockers."
+    },
+    {
+      "cell": "full_covariance_and_null_contract",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr290_spec.yaml",
+        "htt/obsstat/planck_post275_lane.py",
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json"
+      ],
+      "rationale": "Diagonal covariance is refused by the synthetic validator; actual joint covariance remains BLOCKED_FEATURE_VECTOR_UNREGISTERED and nulls remain NOT_EXECUTED."
+    },
+    {
+      "cell": "look_elsewhere_and_component_replication",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr290_spec.yaml",
+        "htt/obsstat/planck_post275_lane.py",
+        "tests/integration/test_planck_post275_lane.py"
+      ],
+      "rationale": "The observation-inclusive leave-one-out pooled max rank uses conservative ties and requires both SMICA and Commander."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+        "command:pr290-preactivation:exit-0"
+      ],
+      "rationale": "The terminal is BLOCKED_PREDECESSOR_FINAL_SUCCESS; numerical outputs are empty, observed/public/network flags are false, and the observed-results directory is absent."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr290_planck_lane.py",
+        "command:pr290-portable-clean:exit-0;tracked-files=5919;manifest=1229fc371f66ebf6495a7f35e5f6549b0df5d7f86fece6b60bbb193b08535f95"
+      ],
+      "rationale": "A distinct clean archive root replayed successfully with identical source/clean pre/post manifests and no external roots, network/download, or observed execution."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+        "docs/research_program/post_pr275/pr290_publication_policy.json",
+        "command:pr290-policy-cross-binding:9-passed"
+      ],
+      "rationale": "The frozen seal binds the exact policy bytes and identity; all seven commands are registered and ordinary-agent push or PR mutation remains forbidden."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr290_spec.yaml",
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+        "docs/PR_DELTAS/pr-290.md",
+        "command:pr290-claim-language:exit-0"
+      ],
+      "rationale": "Ownership remains HTT delivery, COMMON activation/provenance/guards, and OBSSTAT features; the artifact is C2 diagnostic_only, transfer none, observed/public false, with BLOCKED_PRE_NATIVE_ATLAS and no plot/caption/public claim lane."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_status.yaml",
+        "machine_readable/pr_status.yaml",
+        "docs/research_program/post_pr275/pr290_publication_policy.json",
+        "command:pr290-dag-strict:244-prs-valid"
+      ],
+      "rationale": "Status mirrors are byte-identical; PR-290 is VALIDATED and unsealed/unpushed, PR-291 is INELIGIBLE with zero consumed budget, the exact PR-289 target is bound, and merge policy remains HUMAN_ONLY."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR290-FROZEN-REPLAYCLAIM-ORACLE",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-REPLAYCLAIM_oracle.py"
+      ],
+      "command_fingerprint": "f7795b4bec846795b8a3b485e71e0e76911206290728952a4fa0428f312b4a42",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T13:31:30+00:00",
+      "completed_at": "2026-08-11T13:31:31+00:00",
+      "artifact_path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/artifacts/A-PR290-FROZEN-REPLAYCLAIM_oracle.py",
+      "artifact_sha256": "96ff35fa9d929b6cd580e11441f61e33c547024a8b4743c8502715b6006eadc1",
+      "artifact_bytes": 16967,
+      "evidence_refs": [
+        ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json",
+        "docs/research_program/post_pr275/pr290_spec.yaml",
+        "docs/research_program/post_pr275/pr290_publication_policy.json",
+        "docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json",
+        "docs/codex_handoff/pr_status.yaml"
+      ]
+    }
+  ],
+  "coverage_sha256": "4993d95f09494354f30e792f70700267e15531aeed6fc5eaaa3e83a16a24c0e6"
+}

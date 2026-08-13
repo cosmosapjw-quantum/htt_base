@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-authorized-r5-review-20260813",
+  "assignment_id": "A-PR291-R5-CODE-REPLAY",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "8345974c09e968095cce4a8cac5014e3d08f42ed68e56004a2e3cd56ce3edf5a",
+  "candidate_sha": "5395853386b08b1fbf0b56a9e6c7a2a6e104ae5a",
+  "candidate_tree_sha": "4a1bdbecae5767768b4e8d5beb3a00b41b437c1f",
+  "diff_sha256": "d4e14e08a51067fdffa696ea694b4d1a61bafb7db740da3fd0246bcda5951862",
+  "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+  "completed_at": "2026-08-13T07:38:00+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json", "git rev-parse HEAD=5395853386b08b1fbf0b56a9e6c7a2a6e104ae5a", "git rev-parse HEAD^{tree}=4a1bdbecae5767768b4e8d5beb3a00b41b437c1f"],
+      "rationale": "Frozen candidate, tree, merge base, required input hashes, and clean worktree matched the registered assignment."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml", "scripts/codex_harness/run_pr291_cf4_lane.py check"],
+      "rationale": "The preactivation specification was reviewed before executing any validation command and the runner remained blocked."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", "terminal=BLOCKED_PREDECESSOR_FINAL_SUCCESS"],
+      "rationale": "Missing canonical predecessor success replays deterministically as the highest-priority blocker."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"],
+      "rationale": "CF4 identity is rejected-not-present and H-CF4 is separately not authorized; neither state substitutes for the other."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": ["tests/integration/test_cf4_post275_lane.py", "scripts/codex_harness/run_pr291_cf4_lane.py focused: 62 passed"],
+      "rationale": "Focused containment tests pass, including unsafe destination refusal before payload generation."
+    },
+    {
+      "cell": "synthetic_estimand_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/obsstat/cf4_post275_lane.py", "tests/integration/test_cf4_post275_lane.py"],
+      "rationale": "Synthetic estimands retain exact operator and content identities and are not represented as observed results."
+    },
+    {
+      "cell": "group_row_selection_and_frame_conventions",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/cf4_observed_lane_activation.py", "scripts/codex_harness/run_pr291_cf4_lane.py adjacent: 189 passed"],
+      "rationale": "Exact native-role admission and group, row, selection, frame, sign, units, depth, and ZoA bindings replay through adjacent tests."
+    },
+    {
+      "cell": "full_covariance_and_effective_rank",
+      "status": "PASS",
+      "evidence_refs": ["htt/obsstat/cf4_post275_lane.py", ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-CODE-REPLAY-oracle.py"],
+      "rationale": "Covariance whitening, column normalization, exact singular inventory, fixed rank floor, effective rank, and nullity replay passed hostile checks."
+    },
+    {
+      "cell": "depth_zoa_nested_support_and_transport",
+      "status": "PASS",
+      "evidence_refs": ["tests/integration/test_cf4_post275_lane.py", "scripts/codex_harness/run_pr291_cf4_lane.py adjacent: 189 passed"],
+      "rationale": "Nested support, exact native-role derivation, transport identity, and ZoA binding tests pass."
+    },
+    {
+      "cell": "weak_identification_and_identified_set_abstention",
+      "status": "PASS",
+      "evidence_refs": ["htt/obsstat/cf4_post275_lane.py", ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-CODE-REPLAY-oracle.py"],
+      "rationale": "Role-selected source geometry excludes nuisance columns and exact ranks and content identities replay in structural-set and G4/G7 paths."
+    },
+    {
+      "cell": "legacy_p0_and_curl_disposition",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_claim_language_lint.py", "scripts/codex_harness/run_pr291_cf4_lane.py focused: 62 passed"],
+      "rationale": "Retired P0 and physical curl promotions remain blocked while explicit downclaims remain accepted."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr291_cf4_lane.py check", "numeric_outputs_written=[]", "observed_data_executed=false"],
+      "rationale": "Two exact receipt replays preserved identical bytes, reported no numeric or network effects, and left the observed results directory absent."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr291_cf4_lane.py portable", "tracked_file_count=5927", "clean_root_pre_hash=f92c9902feaa132344192c80777b05baeed167e23378db53b58b67d6b2f3fa9e", "clean_root_post_hash=f92c9902feaa132344192c80777b05baeed167e23378db53b58b67d6b2f3fa9e"],
+      "rationale": "A separate clean-root replay passed with scrubbed environment and identical pre/post manifests."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_publication_policy.json", "scripts/codex_harness/test_publication_integrity.py: 9 passed"],
+      "rationale": "Policy non-relaxability and candidate-seal policy identity cross-binding selectors pass."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/semantic_guards/no_overclaim.py", ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-CODE-REPLAY-oracle.py", "scripts/check_claim_language.py: no forbidden claim language"],
+      "rationale": "Reordered, plural, multiline, reverse-scalar, and unrelated-negation promotions are caught while predicate-scoped downclaims pass."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR291_R5_CANDIDATE_SEAL.json", "docs/research_program/post_pr275/pr291_publication_policy.json", "git merge-base HEAD 06ac20605ebc371b0f97ad6e91c802a51a9bf764=06ac20605ebc371b0f97ad6e91c802a51a9bf764"],
+      "rationale": "The frozen candidate is based on the exact policy target SHA and the registered merge base matches that target."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "kind": "invariant_checker",
+      "oracle_id": "A-PR291-R5-CODE-REPLAY-ORACLE-V1",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-CODE-REPLAY-oracle.py"],
+      "command_fingerprint": "36cc6c682812b9340b17986a99a38fed2c22f7e3b9c1eacfc8d88140bf3a8356",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-13T07:35:55+00:00",
+      "completed_at": "2026-08-13T07:35:56+00:00",
+      "artifact_path": ".agent-harness/runs/pr291-authorized-r5-review-20260813/artifacts/A-PR291-R5-CODE-REPLAY-oracle.py",
+      "artifact_sha256": "5bd7e8d7655d20243cb79f841b35a8d7fdf257d44319016cf81394e379ddb44f",
+      "artifact_bytes": 12091,
+      "evidence_refs": ["oracle status=PASS", "oracle check_count=13"]
+    }
+  ],
+  "coverage_sha256": "45e4c483d3f9f09f5a80d46156f558ea6d6dd30fca9eae597c4ad2318a3d1114"
+}

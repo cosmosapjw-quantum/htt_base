@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-candidate-review-20260810",
+  "assignment_id": "A-PR283-FROZEN-PHYSMATH",
+  "change_set_id": "CS-PR283-WEAK-IDENTIFICATION",
+  "publication_group_id": "PG-PR283-WEAK-IDENTIFICATION",
+  "candidate_seal_sha256": "89c44d46574c4e268789ab2d623f966bd46e63c8b12f36fade1075d449f03e08",
+  "candidate_sha": "6ee9048ffd80f25337f405d8c6a39fd3b7f489eb",
+  "candidate_tree_sha": "6c5c55dee52aaf7c7649dd23d386e0f85782fd32",
+  "diff_sha256": "5c5e5abd22a509fca7681d1decb0a3ac3b4288c89d4f2a63a4fdc37bcb918ff2",
+  "changed_files_sha256": "7a71a99b7b63012071701c4af1acf33719e01ff76e8ba0316eca7adc4103ebf6",
+  "completed_at": "2026-08-09T19:24:38Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR283_CANDIDATE_SEAL.json", "validate_candidate_seal_payload=[]; HEAD=6ee9048ffd80f25337f405d8c6a39fd3b7f489eb; tree=6c5c55dee52aaf7c7649dd23d386e0f85782fd32"],
+      "rationale": "The live candidate seal rebuilt without drift and all assignment input hashes matched."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml:1", ".agent-harness/runs/pr283-candidate-review-20260810/assignments/A-PR283-FROZEN-PHYSMATH.json"],
+      "rationale": "The registered assignment and specification were read before substantive review."
+    },
+    {
+      "cell": "covariance_supported_rank_ladder",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/anchored_response_geometry.py:377", "htt/htt/htt/departure/velocity_frame_decomposition.py:1137", "python -B scripts/codex_harness/run_pr283_weak_identification.py adjacent: 62 passed"],
+      "rationale": "Whitening is restricted to positive covariance support, nuisance projection occurs in that supported whitened space, and local/global/joint ranks are computed from the same anchored quotient."
+    },
+    {
+      "cell": "full_rank_small_angle_status",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_weak_identification.py:264", "python -B scripts/codex_harness/run_pr283_weak_identification.py focused: 23 passed"],
+      "rationale": "The full-rank small-angle fixture becomes WEAKLY_IDENTIFIED and abstains."
+    },
+    {
+      "cell": "full_rank_small_singular_value_status",
+      "status": "PASS",
+      "evidence_refs": ["tests/contracts/test_weak_identification.py:316", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "Under the default 0.01 contract, relative singular value 0.005 becomes WEAKLY_IDENTIFIED."
+    },
+    {
+      "cell": "rank_deficiency_distinct_from_weak_identification",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:397", "tests/contracts/test_weak_identification.py:330"],
+      "rationale": "Component deficiency maps to NON_IDENTIFIED, joint direct-sum deficiency maps to SUM_ONLY, and full-rank practical weakness maps to WEAKLY_IDENTIFIED."
+    },
+    {
+      "cell": "threshold_contract_identity",
+      "status": "FAIL",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml:68", "htt/htt/htt/statistics/open_set_response_classes.py:90", ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/threshold_registration_oracle.json"],
+      "rationale": "The decision content-addresses whichever factory contract is supplied, but the projection does not require the fixed PR-283 contract identity; relaxing only the singular threshold regrades the same report into point-candidate eligibility."
+    },
+    {
+      "cell": "exact_source_geometry_report_replay",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:75", "tests/contracts/test_weak_identification.py:482"],
+      "rationale": "The factory report is rebuilt from retained covariance, nuisance, provider, and normalizer inputs before projection."
+    },
+    {
+      "cell": "exact_normalizer_spec_binding",
+      "status": "PASS",
+      "evidence_refs": ["htt/htt/htt/departure/velocity_frame_decomposition.py:1017", "tests/contracts/test_weak_identification.py:445"],
+      "rationale": "The block normalizer is invertible, cannot mix local/global columns, and its coordinate-map content identity is carried into the decision and gate."
+    },
+    {
+      "cell": "mandatory_threshold_contract_enforcement",
+      "status": "FAIL",
+      "evidence_refs": ["htt/htt/htt/statistics/open_set_response_classes.py:90", ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/threshold_registration_oracle.json"],
+      "rationale": "Omission fails closed, but an alternate factory-derived relative-singular threshold is accepted because only the angle threshold is cross-bound to the PR-256 report."
+    },
+    {
+      "cell": "all_source_gate_callers_migrated",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Caller migration inventory was outside this targeted physics/statistics assignment."
+    },
+    {
+      "cell": "principal_angle_and_singular_value_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/source_separation.py:244", "tests/contracts/test_weak_identification.py:548"],
+      "rationale": "Angle and singular sequences are separately content-addressed and exact replay rejects identity drift; the singular sequence cardinality is bounded by total parameter dimension."
+    },
+    {
+      "cell": "mandatory_open_set_abstention",
+      "status": "FAIL",
+      "evidence_refs": ["htt/src/common/open_set_response_classes.py:2529", ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/threshold_registration_oracle.json"],
+      "rationale": "The WEAKLY_IDENTIFIED branch itself precedes equivalence, distance, and margin labels, but the same frozen weak fixture can be regraded to SEPARABLE_CANDIDATE through an alternate singular threshold and then bypass abstention."
+    },
+    {
+      "cell": "no_point_estimate_or_nearest_fallback",
+      "status": "FAIL",
+      "evidence_refs": [".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/threshold_registration_oracle.json"],
+      "rationale": "The reproduced relaxed-contract path returns response-class-local for the exact same geometry and observation that abstain under the specified contract."
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "status": "FAIL",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml:158", "docs/research_program/post_pr275/pr283_spec.yaml:224", "scripts/codex_harness/run_pr283_weak_identification.py:731", "scripts/codex_harness/run_pr283_weak_identification.py:906", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "MU283-WEAK-AS-SEPARABLE and MU283-WEAK-PRECEDENCE-DRIFT do not execute their registered mutant implementations. They infer killed=true from unchanged production outcomes while the receipt states executed=true."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["python -B scripts/codex_harness/run_pr283_weak_identification.py check: exit 0 sha256=10d28620cd709585cf9444dbde72e19d7baced9ef2da901c005bcbeb3a85fedf", "tests/contracts/test_weak_identification.py:559"],
+      "rationale": "The checked receipt is byte-exact and internally content-addressed, although its mutation-completeness semantics are separately failed."
+    },
+    {
+      "cell": "pr272_predecessor_replay_preservation",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Predecessor relocation replay was outside this targeted physics/statistics assignment."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Publication harness cross-binding was outside this targeted physics/statistics assignment."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml:23", "htt/src/common/source_separation.py:43", "docs/generated/pr283_weak_identification_receipt.json"],
+      "rationale": "The artifact is synthetic diagnostic-only C2, transfer_source none, public_use false, and explicitly blocks source attribution, geometry detection, posterior/evidence semantics, and family identification. SEPARABLE_CANDIDATE is downstream diagnostic eligibility only."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Portable archive execution was not required by this targeted assignment."
+    },
+    {
+      "cell": "serial_stack_bootstrap_integrity",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Serial stack process recovery was outside this targeted physics/statistics assignment."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "NOT_APPLICABLE",
+      "evidence_refs": [],
+      "rationale": "Latest-target integration is a later lifecycle stage, not a frozen-candidate first-verdict task."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR283-RELATIVE-THRESHOLD-REGISTRATION-BYPASS",
+      "kind": "mutation_test",
+      "status": "PASS",
+      "argv": ["env", "PYTHONPATH=htt/src:htt", "python", "-B", "-"],
+      "command_fingerprint": "ef81ee1fffc68adc116a3d4a572a33cfa96c439b701b8f10e826bdb04c1ed018",
+      "started_at": "2026-08-09T19:24:38Z",
+      "completed_at": "2026-08-09T19:24:38Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr283-candidate-review-20260810/artifacts/A-PR283-FROZEN-PHYSMATH/threshold_registration_oracle.json",
+      "artifact_sha256": "56b305e5d275252904a474bf1cbf18969e47ca71ba2f452a62a6e73f7e582761",
+      "artifact_bytes": 1700,
+      "evidence_refs": ["docs/research_program/post_pr275/pr283_spec.yaml:68", "htt/htt/htt/statistics/open_set_response_classes.py:90"]
+    }
+  ],
+  "coverage_sha256": "62199eeb66baa8b5b2505f6f9aa57163831f4b30f0dfa80bd2373daf83084171"
+}

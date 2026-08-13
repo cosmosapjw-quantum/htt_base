@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-candidate-review-20260810",
+  "assignment_id": "A-PR286-FROZEN-PHYSSTAT",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "candidate_seal_sha256": "d9241a26060fbdd09d0f1f77b3a47bec422525cb7d016b33b089bf232c03068d",
+  "candidate_sha": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+  "candidate_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+  "diff_sha256": "80f2057dc690aaacf0258e1603dac0fcf4a455f343564d80717709afd615071d",
+  "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+  "completed_at": "2026-08-10T13:30:36Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR286_CANDIDATE_SEAL.json@0376ec83567e3ad8a005500110961f8b5df5ec275fc2c4ded9ad67eb12e12bd5"],
+      "rationale": "HEAD and tree match the frozen candidate binding; all required-input hashes replayed."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml@db4fc3d3d00cbeb239a437380d646a889ede519f671641cdf0f72e35a13ae413"],
+      "rationale": "The frozen G8 evidence-class contract controlled the review."
+    },
+    {
+      "cell": "source_58_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.source_inventory_58"],
+      "rationale": "Independent replay found 30 partition-I, 24 partition-II, and four bridge rows."
+    },
+    {
+      "cell": "vt_s_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.vt_inventory_14"],
+      "rationale": "The successor inventory is exactly VT-S1 through VT-S14 in registered order."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "PASS",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.statement_replay"],
+      "rationale": "All 72 source replay identities recompute from the declared tuple, including null statements."
+    },
+    {
+      "cell": "exact_proof_not_simulation",
+      "status": "PASS",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.source_dispositions", "A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.vt_evidence_ceiling"],
+      "rationale": "Only eight CAS-bound source rows and five typed analytic VT-S rows carry exact-proof grades; synthetic rows retain a synthetic-only ceiling."
+    },
+    {
+      "cell": "estimand_and_sampling_law_binding",
+      "status": "PASS",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.estimand_law_covariance_preregistered"],
+      "rationale": "Every statistical row binds a nonempty frozen estimand and sampling law."
+    },
+    {
+      "cell": "covariance_and_null_binding",
+      "status": "FAIL",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#residual_risk", "htt/src/common/vector_tensor_statistical_inference.py#evaluate_depth_local_global"],
+      "rationale": "The registered non-identity cell replays, but an accepted finite SPD conditioning probe returns NaN amplitudes and chi-square fields with status VALIDATED_REGISTERED_SYNTHETIC; the public numerical contract does not fail closed."
+    },
+    {
+      "cell": "exact_vs_asymptotic_status",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#rows"],
+      "rationale": "Exact rows use exact finite status, while statistical rows are explicitly finite preregistered synthetic rather than asymptotic proof."
+    },
+    {
+      "cell": "preregistration_seed_and_tolerance_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml@71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf"],
+      "rationale": "The receipt binds the registered seed-family, configuration, and statement-boundary identities."
+    },
+    {
+      "cell": "coverage_and_failure_map_replay",
+      "status": "PASS",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.coverage_and_controls_visible"],
+      "rationale": "Coverage payloads and retained failure maps are present for all nine statistical cells."
+    },
+    {
+      "cell": "negative_controls_visible",
+      "status": "PASS",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.nonidentity_proportional_abstention", "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#mutation_results"],
+      "rationale": "The proportional local/global design abstains under non-identity covariance and the registered negative-control dispositions remain visible."
+    },
+    {
+      "cell": "source_status_not_authority",
+      "status": "PASS",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.source_dispositions"],
+      "rationale": "The 50 non-CAS source rows remain inconclusive irrespective of routing labels such as ORACLE_VERIFIED."
+    },
+    {
+      "cell": "vts14_admitted_data_gate",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14"],
+      "rationale": "VT-S14 is BLOCKED_WITH_RECEIPT and retains PROGRAM_OBLIGATION because no admitted data were executed."
+    },
+    {
+      "cell": "htt_mio_obsstat_ownership",
+      "status": "PASS",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.claim_and_ownership_firewall"],
+      "rationale": "HTT owns the GLS diagnostic; MIO exposes residual-only cross-checks with likelihood, posterior, Bayes factor, and evidence forbidden."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.receipt_content_address", "test:run_pr286_pillar_s_adjudication.py focused:42-passed"],
+      "rationale": "The canonical receipt content address independently recomputes and the focused suite passed 42 tests."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR286_CANDIDATE_INTEGRATION_REHEARSAL.json@78f13f54bebf60df6781fd8fec7576bb78e20075715e2783eed86bb469e46465"],
+      "rationale": "The frozen integration rehearsal records zero-exit portable clean replay; this role did not duplicate the replay agent's forensic work."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_publication_policy.json@768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d"],
+      "rationale": "The sealed policy names the exact review cells and command set consumed by the integration receipt."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.q_f_g_pi_diagnostic_only", "A-PR286-FROZEN-PHYSSTAT_oracle_output.json#checks.claim_and_ownership_firewall"],
+      "rationale": "x/Q/F/G_F/Pi remain diagnostic synthetic successors; observed/public use is false and family identification is blocked pre-native atlas."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR286_CANDIDATE_INTEGRATION_REHEARSAL.json#status=PASS"],
+      "rationale": "The required frozen rehearsal binds the latest declared target and candidate tree."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR286-FROZEN-PHYSSTAT-DIFFERENTIAL-V1",
+      "kind": "differential_implementation",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle.py",
+        "--output",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json"
+      ],
+      "command_fingerprint": "a88a90ea83deda69e9c8f4419ca5eaef19bebadaac9dc9fd1ff05f8ef1db102a",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-10T13:30:36Z",
+      "completed_at": "2026-08-10T13:30:36Z",
+      "artifact_path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-PHYSSTAT_oracle_output.json",
+      "artifact_sha256": "1e7c540a5d1038256a5c2e1ae16ec5726e6db2f1798ef0fab3f89f2193b61301",
+      "artifact_bytes": 1397,
+      "evidence_refs": [
+        "htt/src/common/vector_tensor_statistical_inference.py@3bd16869f569c035d26950e77db3861c61c30206413ff101da8821cad7a1675e",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json@1eb3a52de178443ed6a14dbff425c7630c93f37a8e3af66c8e348162d46df32d"
+      ]
+    }
+  ],
+  "coverage_sha256": "8a95dc1c5d477ee98b534e534e8ec9b4329d682a658f6a2b40c44b5d7dc8bdff"
+}

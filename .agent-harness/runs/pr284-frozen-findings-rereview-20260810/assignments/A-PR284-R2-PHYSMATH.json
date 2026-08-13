@@ -1,0 +1,81 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR284-R2-PHYSMATH",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f6f78bfd7c1b8f0bc2f4c895da94db09fe6b4b78da245d8090e09ee8aa84e09a",
+    "seal_sha256": "911cfed58698d97a88585a664c6ad46db8df92d46f3a23cfdc2bac74c24bdc65",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "49a8f697c8d7985ec637e70aca3b9271d6f0da7f",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "702db54b4ce5ee0904352b2b507faffe5ef5d876",
+    "diff_sha256": "c9563b2e9e7bd45436aceb5a744e8fc6f7f8da7a818088b0d9426a37d7f59aea",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "4126069eaf7aa93fc8f4ec3799a33800fefd0614926691a1301e543a2a229861"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION"
+  ],
+  "task": "Bounded frozen physics/statistics rereview of F-PR284-PHYSMATH-001 and affected exact-math cells. Read assignment first; do not read CONTEXT_PACK or current sibling results. Verify forged noncentered/false-second-moment/nonfiltration reports are rejected before calibration while authentic Fraction law gives exact mean zero, second moment, tower, inclusive event and Doob bound, and unproved premise still abstains to matched mocks. No shared edits; produce assignment-local coverage, executable oracle, and strict-valid result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+      "sha256": "f6f78bfd7c1b8f0bc2f4c895da94db09fe6b4b78da245d8090e09ee8aa84e09a"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-candidate-review-20260810/results/A-PR284-PHYSMATH.json",
+      "sha256": "b36b2465afba5eef24f34522cf4f925046bec55bc1f592a092ea3e584ec5b7e6"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr284_spec.yaml",
+      "sha256": "3a5784ea33b45d6d73cb4e8c1602d121702dd8aea206b8e625abe0f24d364e85"
+    },
+    {
+      "path": "htt/src/common/depth_path_calibration.py",
+      "sha256": "89874115f583120d9b5c62cc9697e33dedbc30c3cba3e9c51a97a82701d2dfa3"
+    },
+    {
+      "path": "htt/htt/htt/infer/depth_path_calibration.py",
+      "sha256": "6fe34f03694a63f285c0a933bd75ae8854ff40974e7299be336a2f4c1884c86f"
+    },
+    {
+      "path": "tests/contracts/test_depth_path_doob_calibration.py",
+      "sha256": "53038dcd3235d5de124e3b5fb10987dfa65b2396eea0b478ec2a28d44e719bc3"
+    },
+    {
+      "path": "docs/generated/pr284_depth_path_doob_receipt.json",
+      "sha256": "3e06fcb336ebd6fb0d3e4f8346311fda79b3db6e531b4c948cbdc76d6d72f161"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-PHYSMATH.json",
+  "status": "registered",
+  "assignment_sha256": "ddcfdc1aeec8328ff9787e731cf443431a79a6011f0dd35b6445d12af11d8585"
+}

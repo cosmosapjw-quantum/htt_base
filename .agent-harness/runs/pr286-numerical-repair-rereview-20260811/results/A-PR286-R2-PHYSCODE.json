@@ -1,0 +1,168 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-numerical-repair-rereview-20260811",
+  "assignment_id": "A-PR286-R2-PHYSCODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "assignment_sha256": "0b2df37912e98db03c937aadc765bb98b9e9d9bf7fa3ea1a3b901142d29d1013",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/results/A-PR286-R2-PHYSCODE.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "217f4c0cd8da2c6b40c15257ea1954352704fbb01757ccf9d7ff9addd6165509",
+    "seal_sha256": "0667a86aea43de3ab892489053a0f1c39697107fc3a8d25b8bc0113fca2e806f",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "7ad8176282554670909c28306b3e14e83662a42b",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "d14eedaa79f902f5b47b507fa3951e5a22cbe9b7",
+    "diff_sha256": "12137112ed5ea688cd4c36ab0a4c3f301bb9a1d95629314356f113585393e06f",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "6a5a82ed5c563f646be7815e334c5e119569a20c8594c62264e70d3b2de05e34"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "started_at": "2026-08-11T01:39:00Z",
+  "completed_at": "2026-08-11T02:00:00Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    "python3 -B .agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-oracle.py",
+    "PYTHONPATH=.:htt/src:htt python3 -B -m pytest -p no:cacheprovider -q tests/contracts/test_pillar_s_inference.py -k 'depth_local_global or public_facades_enforce_owner_boundary'",
+    "python3 -B -m pytest -p no:cacheprovider -q tests/contracts/test_pillar_s_complete_adjudication.py",
+    "python3 -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py focused",
+    "python3 -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py check",
+    "python3 -B scripts/codex_harness/run_pr286_pillar_s_adjudication.py portable",
+    "python3 -B scripts/codex_harness/build_pr272_pillar_s_inference.py --check",
+    "python3 -B scripts/codex_harness/build_pr273_blind_synthetic.py --check",
+    "python3 -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_publication_integrity.py -k 'test_integration_policy_rejects_publication_capable_argv or test_candidate_seal_binds_diff_remote_policy_and_clean_state or test_pr286_policy_allows_three_open_predecessors_and_bounds_next_slots'",
+    "python3 -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+    "python3 -B scripts/check_claim_language.py --strict-missing --include-archives scripts/codex_harness/run_pr286_pillar_s_adjudication.py tests/contracts/test_pillar_s_complete_adjudication.py docs/research_program/post_pr275/pr286_spec.yaml docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json docs/PR_DELTAS/pr-286.md"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-oracle.py",
+      "sha256": "f630bda83f6932a381ea603e4c57bca1295c4c74d833622d42a15bbaacc725bc",
+      "bytes": 9592,
+      "producer": "A-PR286-R2-PHYSCODE"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-coverage.json",
+      "sha256": "a397b56ed1fc8b7e3d504f1c677088214bb40be6e76545792989c20a9b8ab9cc",
+      "bytes": 10112,
+      "producer": "A-PR286-R2-PHYSCODE"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-coverage.json",
+  "review_coverage_sha256": "a397b56ed1fc8b7e3d504f1c677088214bb40be6e76545792989c20a9b8ab9cc",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/RUN_PLAN.json",
+    ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/assignments/A-PR286-R2-PHYSCODE.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+    ".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-286.md",
+    "docs/codex_handoff/pr_backlog.json",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+    "docs/research_program/post_pr275/pr286_publication_policy.json",
+    "docs/research_program/post_pr275/pr286_spec.yaml",
+    "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+    "docs/research_program/vector_tensor/pr272_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+    "htt/mio/formalism/vector_tensor_validation.py",
+    "htt/src/common/vector_tensor_statistical_inference.py",
+    "scripts/check_claim_language.py",
+    "scripts/codex_harness/build_pr272_pillar_s_inference.py",
+    "scripts/codex_harness/build_pr273_blind_synthetic.py",
+    "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+    "scripts/codex_harness/test_publication_integrity.py",
+    "scripts/codex_harness/validate_pr_dag.py",
+    "tests/contracts/test_pillar_s_complete_adjudication.py",
+    "tests/contracts/test_pillar_s_inference.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR286-R2-MIO-NONFINITE",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "27eab6f7b04f0c4c244c09075e8f418838d71f2b545bde1eebb7203702e86282",
+      "statement": "The public MIO depth cross-check can return VALIDATED_REGISTERED_SYNTHETIC with three NaN numeric fields for exact finite huge-scale near-proportional inputs instead of failing through PillarSInferenceError.",
+      "assumptions_used": [
+        "Finite real inputs accepted by the public diagnostic API must not produce a positive-status report containing non-finite numbers.",
+        "Numerically invalid local/global report construction must fail closed through PillarSInferenceError, consistent with the neighboring HTT API boundary.",
+        "The finding does not assert that the currently frozen VT-S14 receipt contains non-finite values; its stored registered cell is finite."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-oracle.py",
+        "htt/mio/formalism/vector_tensor_validation.py:7",
+        "htt/src/common/vector_tensor_statistical_inference.py:1523",
+        "tests/contracts/test_pillar_s_inference.py:700"
+      ],
+      "counterevidence_refs": [
+        "htt/src/common/vector_tensor_statistical_inference.py:1382",
+        "tests/contracts/test_pillar_s_inference.py:745",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14"
+      ],
+      "reproduction": [
+        "Run: python3 -B .agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-PHYSCODE-oracle.py",
+        "Observe public_export=true, exact finite data/local_design=[1e200,1e200], global_design=[1e200,1e200+2e185], returned_status=VALIDATED_REGISTERED_SYNTHETIC, numeric_fields=[nan,nan,nan].",
+        "Observe strict json serialization with allow_nan=false refuses the returned report while the function itself does not raise PillarSInferenceError."
+      ],
+      "unresolved": [
+        "Add scale-stable MIO projection/residual arithmetic or explicit finite postcondition checks before constructing a positive-status report.",
+        "Add a public-facade regression test using the exact finite huge-scale counterexample.",
+        "Extend the VT-S14 hostile numerical control or mutation so the MIO report boundary, not only HTT GLS, is discriminated."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        "python3 -B scripts/codex_harness/build_pr273_blind_synthetic.py --check",
+        "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+        "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json#VT-S14"
+      ],
+      "evidence_fingerprint": "36783932f540d4a4e26cc0d66f1f8bb5692623664deda7106e97326576f041bc",
+      "summary": "The exact PR-273 held-out synthetic pack replays (5 cases, 2 held out, 5 mutations killed), remains diagnostic-only, and is not relabelled as observed or admitted data."
+    },
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR286-R2-MIO-NONFINITE"
+      ],
+      "summary": "VT-S14 is correctly BLOCKED_WITH_RECEIPT and the frozen row is finite, but public numerical admission readiness fails because an exact finite MIO input can create a positive-status non-finite report. No observed-data, public-use, family, or native-transfer promotion is permitted."
+    }
+  ],
+  "errors": []
+}

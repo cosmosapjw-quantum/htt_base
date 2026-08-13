@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-bounded-repair-r3-review-20260813",
+  "assignment_id": "A-PR291-R3-CLAIM",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "candidate_sha": "1af0db69da0a190b268d6765e334b05023dd04e7",
+  "review_role": "claim_lane_reviewer",
+  "scope_note": "Statuses assess claim language, provenance, ownership, and publication-boundary consistency; they do not substitute for code, harness, physics, or statistics review.",
+  "cell_count": 16,
+  "cells": [
+    {
+      "cell_id": "candidate_identity",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": [".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json", "git rev-parse HEAD HEAD^{tree}"]
+    },
+    {
+      "cell_id": "spec_before_execution",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/research_program/post_pr275/pr291_spec.yaml:8", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"]
+    },
+    {
+      "cell_id": "dependency_terminal_replay",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/research_program/post_pr275/pr291_spec.yaml:23", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"]
+    },
+    {
+      "cell_id": "data_identity_and_human_authorization_separation",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/harness/CLAIM_LEDGER.md:7", "docs/research_program/post_pr275/pr291_spec.yaml:36", "docs/codex_handoff/pr_status.yaml:1926"]
+    },
+    {
+      "cell_id": "preflight_before_first_write",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/research_program/post_pr275/pr291_spec.yaml:206", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"]
+    },
+    {
+      "cell_id": "synthetic_estimand_identity",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/research_program/post_pr275/pr291_spec.yaml:190", "docs/PR_DELTAS/pr-291.md:31"]
+    },
+    {
+      "cell_id": "group_row_selection_and_frame_conventions",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/research_program/post_pr275/pr291_spec.yaml:43", "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json"]
+    },
+    {
+      "cell_id": "full_covariance_and_effective_rank",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/research_program/post_pr275/pr291_spec.yaml:139", "docs/PR_DELTAS/pr-291.md:36"]
+    },
+    {
+      "cell_id": "depth_zoa_nested_support_and_transport",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/research_program/post_pr275/pr291_spec.yaml:151", "docs/PR_DELTAS/pr-291.md:43"]
+    },
+    {
+      "cell_id": "weak_identification_and_identified_set_abstention",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/research_program/post_pr275/pr291_spec.yaml:164", "docs/PR_DELTAS/pr-291.md:40"]
+    },
+    {
+      "cell_id": "legacy_p0_and_curl_disposition",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/research_program/post_pr275/pr291_spec.yaml:181", "htt/obsstat/cf4_post275_lane.py:1277", "tests/integration/test_cf4_post275_lane.py:742"]
+    },
+    {
+      "cell_id": "blocked_no_numeric_output",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", "tests/integration/test_cf4_post275_lane.py:877"]
+    },
+    {
+      "cell_id": "portable_clean_integration",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/PR_DELTAS/pr-291.md:27", ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json"]
+    },
+    {
+      "cell_id": "publication_policy_cross_binding",
+      "status": "PASS_CLAIM_PROVENANCE",
+      "evidence": ["docs/research_program/post_pr275/pr291_publication_policy.json", ".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json"]
+    },
+    {
+      "cell_id": "claim_and_family_ceiling",
+      "status": "FAIL",
+      "finding_ids": ["F-PR291-CLAIM-GRAMMAR", "F-PR291-CLAIM-NEGATION-SCOPE"],
+      "evidence": ["htt/src/common/semantic_guards/no_overclaim.py:100", "htt/src/common/semantic_guards/no_overclaim.py:625", ".agent-harness/runs/pr291-bounded-repair-r3-review-20260813/artifacts/A-PR291-R3-CLAIM/claim_oracle.py"]
+    },
+    {
+      "cell_id": "latest_target_integration",
+      "status": "PASS_FROZEN_BINDING_ONLY",
+      "evidence": [".prguard/runtime/PR291_R3_CANDIDATE_SEAL.json", "docs/research_program/post_pr275/pr291_publication_policy.json"]
+    }
+  ]
+}

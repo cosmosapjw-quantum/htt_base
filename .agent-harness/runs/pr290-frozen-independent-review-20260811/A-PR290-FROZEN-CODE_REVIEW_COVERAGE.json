@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "run_id": "pr290-frozen-independent-review-20260811",
+  "assignment_id": "A-PR290-FROZEN-CODE",
+  "change_set_id": "CS-PR290-PLANCK-REBOOT",
+  "publication_group_id": "PG-PR290-PLANCK-REBOOT",
+  "candidate_seal_sha256": "f7c226fdc53408bb10defeabbd7a23a5e17c38dd2a3a2359640aeacf3678b3ed",
+  "candidate_sha": "27c83a1a12369b4b563667ff5145ae9a717b24f0",
+  "candidate_tree_sha": "344dfb920b26c0207432b6acd9625bf2dacf50da",
+  "diff_sha256": "d10438bad740b2c81a4198655a647b5d7ca021f9f9cf8a3e196e22a5576dbd23",
+  "changed_files_sha256": "1626114cc5c4791b7d2190e3e20d3792e27df7c7c021eb1ead6502ca4c9d62f2",
+  "completed_at": "2026-08-11T13:32:09+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json", ".agent-harness/runs/pr290-frozen-independent-review-20260811/assignments/A-PR290-FROZEN-CODE.json"],
+      "rationale": "HEAD, tree, base, diff, changed-file inventory, production hash, seal bytes, and all required-input hashes matched the frozen assignment binding."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr290_spec.yaml", "htt/src/common/observed_lane_activation.py"],
+      "rationale": "Activation validates the frozen contract before returning a decision, and structured mutations fail closed."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/observed_lane_activation.py", "tests/integration/test_planck_post275_lane.py"],
+      "rationale": "Canonical resolution rows and self-bound terminal receipts are replayed; the live terminal remains BLOCKED_PREDECESSOR_FINAL_SUCCESS."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": ["htt/src/common/data_identity.py", ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_oracle.py"],
+      "rationale": "An authentic ordered 13-record profile reached the separate human gate, while record-ID-only and fully re-signed incomplete profiles failed at admission."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr290_planck_lane.py", ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_oracle.py"],
+      "rationale": "Destination containment precedes payload generation and rejects link, FIFO, parent-alias, and observed-result mutations."
+    },
+    {
+      "cell": "synthetic_operator_identity",
+      "status": "PASS",
+      "evidence_refs": ["htt/obsstat/planck_post275_lane.py", "tests/integration/test_planck_post275_lane.py"],
+      "rationale": "SMICA and Commander operator identities and synthetic-only numerical contracts pass without observed-data access."
+    },
+    {
+      "cell": "observation_null_pipeline_equivalence",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr290_spec.yaml", "tests/integration/test_planck_post275_lane.py"],
+      "rationale": "The observation/null identity equality is structurally required and drift mutations fail closed."
+    },
+    {
+      "cell": "mask_beam_harmonic_conventions",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr290_spec.yaml", "htt/obsstat/planck_post275_lane.py"],
+      "rationale": "Harmonic and unit identities are frozen while unavailable beam, window, and mask-deconvolution operations remain typed blockers."
+    },
+    {
+      "cell": "full_covariance_and_null_contract",
+      "status": "PASS",
+      "evidence_refs": ["htt/obsstat/planck_post275_lane.py", "tests/integration/test_planck_post275_lane.py"],
+      "rationale": "Synthetic covariance must be finite, symmetric, positive definite, full rank, and non-diagonal; observed covariance remains blocked."
+    },
+    {
+      "cell": "look_elsewhere_and_component_replication",
+      "status": "PASS",
+      "evidence_refs": ["htt/obsstat/planck_post275_lane.py", "tests/integration/test_planck_post275_lane.py"],
+      "rationale": "Observation-inclusive leave-one-out pooled max rank and required SMICA, Commander, and FFP10 identities are enforced."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/planck/PR290_NONEXECUTION_RECEIPT.json", ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_oracle.py"],
+      "rationale": "The frozen receipt records zero numerical outputs, no observed execution, no network side effect, and no observed-results directory."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr290_planck_lane.py", "docs/PR_DELTAS/pr-290.md"],
+      "rationale": "The required portable command passed from a distinct clean archive over 5919 tracked files with identical pre/post manifests."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr290_publication_policy.json", ".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json"],
+      "rationale": "The publication-policy cross-binding command passed against the exact candidate and target identities."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr290_spec.yaml", "docs/PR_DELTAS/pr-290.md"],
+      "rationale": "Strict scanning and structural checks preserve C2 diagnostic_only, transfer none, public use false, and the pre-native family block."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR290_VALIDATED_CANDIDATE_SEAL.json", "docs/codex_handoff/pr_status.yaml"],
+      "rationale": "The frozen base and merge base equal the exact PR-289 sealed head and strict rescue DAG validation passed."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR290-FROZEN-CODE-HOSTILE-ORACLE",
+      "kind": "mutation_test",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_oracle.py"],
+      "command_fingerprint": "ce1eb50e8c1fcef99b54551fbbc843a860739b0f0c57a776655bc31716b43510",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T13:31:06+00:00",
+      "completed_at": "2026-08-11T13:31:08+00:00",
+      "artifact_path": ".agent-harness/runs/pr290-frozen-independent-review-20260811/A-PR290-FROZEN-CODE_oracle.py",
+      "artifact_sha256": "199d06d150db187b160ca8d1f5c8216acca0cc22b0e0b857e7f91c0f4f5b2997",
+      "artifact_bytes": 18185,
+      "evidence_refs": ["htt/src/common/observed_lane_activation.py", "scripts/codex_harness/run_pr290_planck_lane.py", "htt/src/common/data_identity.py"]
+    }
+  ],
+  "coverage_sha256": "7a3535976a0f59c17fc2ad6fb5550f6b4fd261c3095eb14609c5f88ec42b80f6"
+}

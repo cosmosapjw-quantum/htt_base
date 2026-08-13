@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "run_id": "pr287-final-seal-closeout-20260811",
+  "generated_at": "2026-08-11T06:40:35+00:00",
+  "process_status": "STRUCTURALLY_VALID",
+  "claim_gate_status": "NOT_EVALUATED",
+  "result_count": 0,
+  "raw_finding_count": 0,
+  "unique_finding_count": 0,
+  "result_dispositions": [
+    {
+      "assignment_id": "A-PR287-FINAL-SEAL-CLOSEOUT",
+      "status": "pass",
+      "gate_disposition": "PASS",
+      "claim_results": [
+        {
+          "claim_id": "C-PR273-BLIND-INTEGRATION",
+          "outcome": "examined_no_findings",
+          "finding_ids": [],
+          "summary": "Final metadata closeout passes at exact reviewed HEAD 319835cc: the final seal and recorded integration receipt are internally valid; the six-commit lineage and stable patch IDs are unique; the review-only tail changes only the PR delta and synchronized status mirrors; the production/dependency evidence key is unchanged; the initial and R2 contamination envelopes remain not_examined while replacement R3 passes; PR-287 remains REVIEWED at derived assurance 7/16 after this assignment; PR-288 remains PLANNED/INELIGIBLE at 0/16; and no push, PR, or merge is recorded. The separate capability-isolated executor blocker remains typed fresh-execution INCONCLUSIVE and is not promoted by this process closeout.",
+          "evidence_refs": [
+            ".prguard/runtime/PR287_FINAL_CANDIDATE_SEAL.json",
+            ".prguard/runtime/PR287_FINAL_INTEGRATION_REHEARSAL.json",
+            ".agent-harness/runs/pr287-final-seal-closeout-20260811/artifacts/A-PR287-FINAL-SEAL-CLOSEOUT/final_closeout_oracle_report.json",
+            ".agent-harness/runs/pr287-final-seal-closeout-20260811/artifacts/A-PR287-FINAL-SEAL-CLOSEOUT/review_coverage.json",
+            ".agent-harness/runs/pr287-fresh-independent-review-20260811/MERGED_RESULTS.json",
+            ".agent-harness/runs/pr287-fresh-independent-review-20260811/RUN_SUMMARY.json",
+            "docs/codex_handoff/pr_status.yaml",
+            "docs/PR_DELTAS/pr-287.md"
+          ],
+          "evidence_fingerprint": "PR287-FINAL-SEAL-319835CC-METADATA-CLOSEOUT-PASS"
+        }
+      ],
+      "reported_errors": [],
+      "launch_evidence": "unverified",
+      "files_read_evidence": "self_declared",
+      "execution_evidence": "self_declared"
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "errors": [],
+  "work_unit_id": "PR-287",
+  "change_set_id": "CS-PR287-FRESH-BLIND-REPLAY",
+  "publication_group_id": "PG-PR287-FRESH-BLIND-REPLAY",
+  "assignment_count": 1,
+  "validated_result_count": 1,
+  "merge_inputs": [
+    {
+      "path": ".agent-harness/runs/pr287-final-seal-closeout-20260811/RUN_PLAN.json",
+      "sha256": "4d9857eff954b36deaae15a5766dd56cfaabdf99632476547aade6a643da43fd",
+      "bytes": 5149
+    },
+    {
+      "path": ".agent-harness/runs/pr287-final-seal-closeout-20260811/assignments/A-PR287-FINAL-SEAL-CLOSEOUT.json",
+      "sha256": "d783f0c68264fb96f33bd7b11ae70deff75ce85e64cd5170fae8bfb3ccf6a45e",
+      "bytes": 6174
+    },
+    {
+      "path": ".agent-harness/runs/pr287-final-seal-closeout-20260811/results/A-PR287-FINAL-SEAL-CLOSEOUT.json",
+      "sha256": "580ccc9cdcad19ee9f7409448fb64b8977fb8bf7bfa79ff1465fa4efba6d567c",
+      "bytes": 7977
+    }
+  ],
+  "merge_input_sha256": "e922bd1ad8246bc4a5c29496b9c56efc2be7544db12714d6d7415e86dbf7f4df"
+}

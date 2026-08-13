@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "run_id": "pr286-numerical-repair-rereview-20260811",
+  "assignment_id": "A-PR286-R2-REPLAY",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "candidate_seal_sha256": "0667a86aea43de3ab892489053a0f1c39697107fc3a8d25b8bc0113fca2e806f",
+  "candidate_sha": "7ad8176282554670909c28306b3e14e83662a42b",
+  "candidate_tree_sha": "d14eedaa79f902f5b47b507fa3951e5a22cbe9b7",
+  "diff_sha256": "12137112ed5ea688cd4c36ab0a4c3f301bb9a1d95629314356f113585393e06f",
+  "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+  "completed_at": "2026-08-11T01:57:29Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR286_R2_CANDIDATE_SEAL.json", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-oracle-report.json"],
+      "rationale": "Candidate SHA, tree, diff, changed-file inventory, clean state, linear chain, implementation predecessor, and exact PR-285 sealed base were independently replayed."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr286_spec.yaml", "scripts/codex_harness/run_pr286_pillar_s_adjudication.py focused: 44 passed"],
+      "rationale": "The hash-bound governing specification was present before this fresh execution and its focused contract passed."
+    },
+    {
+      "cell": "source_58_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json", "focused replay: test_exact_inventory_and_terminal_counts"],
+      "rationale": "The receipt contains exactly 58 source rows with the registered partition and proof-class counts."
+    },
+    {
+      "cell": "vt_s_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json", "focused replay: 44 passed"],
+      "rationale": "The receipt contains VT-S1 through VT-S14 exactly once, giving 72 total rows."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "PASS",
+      "evidence_refs": ["scripts/codex_harness/run_pr286_pillar_s_adjudication.py", "MU286-STATEMENT-DRIFT: killed with STATEMENT_IDENTITY_DRIFT"],
+      "rationale": "Canonical statement replay includes null-valued source statements and rejects statement drift."
+    },
+    {
+      "cell": "exact_proof_not_simulation",
+      "status": "PASS",
+      "evidence_refs": ["PR-271 exact core replay: exit 0", "MU286-EXACT-BY-SIMULATION and MU286-ORACLE-LABEL-AS-PROOF: killed"],
+      "rationale": "Exact rows remain proof-bound; simulation and source labels cannot promote exact propositions."
+    },
+    {
+      "cell": "estimand_and_sampling_law_binding",
+      "status": "PASS",
+      "evidence_refs": ["PR-272 preregistration replay: current", "MU286-ESTIMAND-DRIFT and MU286-LAW-COVARIANCE-DRIFT: killed"],
+      "rationale": "Registered estimands and sampling laws replay exactly and their hostile mutations fail closed."
+    },
+    {
+      "cell": "covariance_and_null_binding",
+      "status": "PASS",
+      "evidence_refs": ["PR-272 preregistration replay: current", "five numerical selectors: 5 passed"],
+      "rationale": "Covariance and null identities are bound; the repaired evaluator uses whitened rank and typed finite-GLS refusal."
+    },
+    {
+      "cell": "exact_vs_asymptotic_status",
+      "status": "PASS",
+      "evidence_refs": ["focused replay: test_vt_s_exact_and_synthetic_evidence_stay_distinct", "docs/research_program/post_pr275/pr286_spec.yaml"],
+      "rationale": "Exact proof, finite preregistered synthetic validation, inconclusive source status, and blocked admitted-data status remain distinct."
+    },
+    {
+      "cell": "preregistration_seed_and_tolerance_binding",
+      "status": "PASS",
+      "evidence_refs": ["PR-272 preregistration replay: current", "MU286-SEED-TOLERANCE-DRIFT: killed with PREREGISTRATION_DRIFT"],
+      "rationale": "Seed and acceptance-floor identities replay from the registered PR-272 material."
+    },
+    {
+      "cell": "coverage_and_failure_map_replay",
+      "status": "PASS",
+      "evidence_refs": ["PR-272 preregistration replay: current", "PR-273 blind pack replay: 5 cases, 2 held out, 5 mutations killed"],
+      "rationale": "Coverage results, held-out diagnostics, and failure maps replay without promotion to observed evidence."
+    },
+    {
+      "cell": "negative_controls_visible",
+      "status": "PASS",
+      "evidence_refs": ["MU286-HIDE-NEGATIVE-CONTROL: killed", "MU286-NEGATIVE-CONTROL-SURVIVES: killed"],
+      "rationale": "Negative-control removal and unexpected survival both fail closed and remain terminally visible."
+    },
+    {
+      "cell": "source_status_not_authority",
+      "status": "PASS",
+      "evidence_refs": ["MU286-BARE-SOURCE-STATUS: killed", "focused replay: test_source_oracle_and_active_labels_do_not_self_promote"],
+      "rationale": "Routing statuses cannot act as independent proof or terminal proposition authority."
+    },
+    {
+      "cell": "vts14_admitted_data_gate",
+      "status": "PASS",
+      "evidence_refs": ["receipt row VT-S14: BLOCKED_WITH_RECEIPT", "MU286-VTS14-DATA-PROMOTION: killed"],
+      "rationale": "VT-S14 remains blocked before admitted data despite synthetic adapter validation."
+    },
+    {
+      "cell": "htt_mio_obsstat_ownership",
+      "status": "PASS",
+      "evidence_refs": ["MU286-MIO-POSTERIOR: killed", "focused replay: test_claim_and_ownership_firewall"],
+      "rationale": "HTT retains likelihood ownership, obsstat supplies inputs, and MIO remains diagnostic-only."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": ["receipt check: ok=true", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-oracle-report.json"],
+      "rationale": "Two independent in-memory builds and the tracked replay were byte-identical; the 33 bindings and canonical content address match."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["portable replay: 5887 files, source and clean manifests invariant", "focused replay: 44 passed"],
+      "rationale": "A distinct Git-archive execution root replayed the receipt without changing source or clean tracked bytes."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["publication integrity selector: 3 passed", "docs/research_program/post_pr275/pr286_publication_policy.json"],
+      "rationale": "Policy identity, non-publication argv, candidate seal, remote target, and stack bounds are cross-bound."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["strict claim-language scan: no forbidden claim language", "MU286-CLAIM-PROMOTION: killed"],
+      "rationale": "The diagnostic-only ceiling and pre-native family-identification block remain enforced."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["git merge-tree base 16bc6db and candidate 7ad8176 produced tree d14eedaa", "strict rescue DAG: 244 PRs, valid"],
+      "rationale": "The current target ref equals the sealed PR-285 predecessor and the exact target/candidate merge resolves to the sealed candidate tree."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR286-R2-BOUNDARY-ORACLE",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": ["python3", "-B", ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-oracle.py"],
+      "command_fingerprint": "0300a95b377eeb69702e1e67c593deb091b5c1dbd8ef6ec7c6533abaef0a2670",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-11T01:52:45.450729+00:00",
+      "completed_at": "2026-08-11T01:53:13.225009+00:00",
+      "artifact_path": ".agent-harness/runs/pr286-numerical-repair-rereview-20260811/artifacts/A-PR286-R2-REPLAY-oracle-report.json",
+      "artifact_sha256": "4c30f3ac3c778e1e6ab25fe283445fb058fc0b0ed9b797c8295da578901ae3a3",
+      "artifact_bytes": 2537,
+      "evidence_refs": ["candidate seal and exact PR-285 predecessor", "audited patch-ID salvage and exclusions", "72-row receipt with 33 source bindings", "19 ordered mutation kills", "scratch-only containment and atomic-write adversaries"]
+    }
+  ],
+  "coverage_sha256": "827224fc5f7c5ced08897e11c3fd2758f7843e54189d6dcba22cadebebb5a1ef"
+}

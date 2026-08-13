@@ -1,0 +1,129 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-r5-clause-continuation-20260813",
+  "assignment_id": "A-PR291-R5-CLAUSE-CLAIM",
+  "assignment_sha256": "4fdb4d95d4b39474e881ac8ef74e6b72231b1fde8a24dd6a50059165e9ed3b6c",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_lane_reviewer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R5_CLAUSE_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "035e67d7239778b553e3475b2bfd3aae782c4fe3a36f7d15d4523788b7482c19",
+    "seal_sha256": "ad585eb8f93a6bef8cbad27c4ef27ca20253e786f226101a8774cf6beb07d070",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "6c9d86a22394f512211cb42f9ef60d248f10ce20",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "4e40985666c5ea82d8d1bed3009f179e22aa12db",
+    "diff_sha256": "0338828d09aa6698dd3464a6e7eecb226a90444260a98a5dfc439f0f8e43672a",
+    "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+    "production_hash": "264931c49f4cd6d0850f1e46b3ba9b441596f7486067e25361cf4aca96a61695"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-13T09:55:00Z",
+  "completed_at": "2026-08-13T10:07:51Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    "sha256sum over all eleven required inputs",
+    "git candidate HEAD/tree/merge-base/full-index-diff and clean-worktree checks",
+    "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py focused: 62 passed",
+    "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py check: BLOCKED_PREDECESSOR_FINAL_SUCCESS and no numeric output",
+    "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py adjacent: 189 passed",
+    "python3 -B scripts/codex_harness/run_pr291_cf4_lane.py portable: passed over 5927 tracked files",
+    "publication-policy cross-binding selector: 9 passed",
+    "strict rescue-slice DAG validation: 244 cards valid",
+    "registered claim-language command: no forbidden claim language detected",
+    "assignment-local 31-case executable grammar oracle: exact blocker reproduced"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM-oracle.py",
+      "sha256": "0459cbe73042897b6a64c1259fcd9813b352900da4c9361bcb0d57fec1cd2435",
+      "bytes": 5317,
+      "producer": "A-PR291-R5-CLAUSE-CLAIM",
+      "command_fingerprint": "8ea2a4492028b6972ea942f8f02459275c673d7f41aa85e416b784c82fce2108"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM-REVIEW_COVERAGE.json",
+      "sha256": "adfc6cac50471efbdc216f254df4417cb6fbec2c7dd869ddb8041c0c838a130d",
+      "bytes": 5660,
+      "producer": "A-PR291-R5-CLAUSE-CLAIM"
+    }
+  ],
+  "files_read": [
+    ".agent-harness/runs/pr291-r5-clause-continuation-20260813/assignments/A-PR291-R5-CLAUSE-CLAIM.json",
+    ".prguard/runtime/PR291_R5_CLAUSE_FINAL_CANDIDATE_SEAL.json",
+    ".agents/skills/htt-claim-lane-auditor/SKILL.md",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "htt/src/common/semantic_guards/no_overclaim.py",
+    "tests/contracts/test_claim_language_lint.py",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    "htt/obsstat/cf4_post275_lane.py",
+    "htt/src/common/cf4_observed_lane_activation.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "review_coverage_path": ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM-REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "adfc6cac50471efbdc216f254df4417cb6fbec2c7dd869ddb8041c0c838a130d",
+  "findings": [
+    {
+      "finding_id": "F-PR291-CLAUSE-NEGATION-ORDER",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "sha256:51821f3446e411f9c0262d202fd6e015c5d70e2891290848d1907c4c84f50bf4",
+      "statement": "The frozen clause-scoped repair still emits a geometry_detected error for the predicate-local downclaim 'The independent report does conclusively not identify every Bianchi family.' The active-negation recognizer accepts auxiliary plus not plus positive adverbs, but not auxiliary plus positive adverbs plus not plus predicate. This is a false positive in an explicitly required positive-adverb order and blocks claim-lane acceptance.",
+      "assumptions_used": [
+        "Predicate-local negation of family identification is permitted downclaim language.",
+        "The assignment requires multiple positive-adverb orders, not only the registered test order."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM-oracle.py",
+        "htt/src/common/semantic_guards/no_overclaim.py:695",
+        "htt/src/common/semantic_guards/no_overclaim.py:701",
+        "htt/src/common/semantic_guards/no_overclaim.py:727"
+      ],
+      "counterevidence_refs": [
+        "The other 30 independent oracle cases matched their expected claim classification.",
+        "All seven registered policy commands exited zero."
+      ],
+      "reproduction": [
+        "Set PYTHONPATH=htt/src:htt.",
+        "Run python3 -B .agent-harness/runs/pr291-r5-clause-continuation-20260813/results/A-PR291-R5-CLAUSE-CLAIM-oracle.py.",
+        "Observe mismatches equals ['negative_does_adverb_not'] and the rule_ids value equals ['geometry_detected']."
+      ],
+      "unresolved": [
+        "Repair active predicate negation so auxiliary plus bounded positive adverbs plus not plus predicate is exempted without allowing unrelated modifiers such as not public but identifies."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR291-CLAUSE-NEGATION-ORDER"],
+      "summary": "Frozen bindings, unchanged numerical/admission hashes, all seven policy commands, exact Markdown/YAML contexts, and PR-292 ineligibility were verified; the required clause-scoped grammar oracle nevertheless found one blocking false positive."
+    }
+  ],
+  "errors": []
+}

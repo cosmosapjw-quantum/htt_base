@@ -1,0 +1,126 @@
+{
+  "schema_version": 3,
+  "run_id": "pr288-final-seal-closeout-20260811",
+  "assignment_id": "A-PR288-FINAL-SEAL-CLOSEOUT",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "work_unit_id": "PR-288",
+  "change_set_id": "CS-PR288-BAYES-SEMANTICS",
+  "publication_group_id": "PG-PR288-BAYES-SEMANTICS",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR288_FINAL_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "a0823a01fdcccf0d854652507ab35861ffe9fb2e042cf4a32403e5668a199f12",
+    "seal_sha256": "3650528494b927678836a8a14abeab6840d88e4a0a24f0ae311aa79fe143c330",
+    "base_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+    "candidate_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "merge_base_sha": "319835cc4b4e2e3270a0b27787ce5d5a44ea16b7",
+    "candidate_tree_sha": "93ead987a1a750a5dd34cbe9e98baf8fc7b48746",
+    "diff_sha256": "846174d4a8996732dbfb38e477b5dfd39f8dccf45d150f2f25ef998bd2bf8c6f",
+    "changed_files_sha256": "0daebf3fcd581e6308cf2772ba9fd8762d4d47115e79bff10b730c852f4f1fa9",
+    "production_hash": "7d2ce119e4f176aacaa870f0c7bc0dc1e5e0aa843bf2984f6ac7af7d4d148a79"
+  },
+  "independence_mode": "adjudication",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr288-final-seal-closeout-20260811/results/A-PR288-FINAL-SEAL-CLOSEOUT.json",
+  "assignment_sha256": "3ecd32e2ea435209d17da83737b4b9041e9919f1d042f50a62cf6769c4a32e3f",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr288-final-seal-closeout-20260811/assignments/A-PR288-FINAL-SEAL-CLOSEOUT.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR288_FINAL_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR288_FINAL_INTEGRATION_REHEARSAL.json",
+    ".prguard/runtime/PR288_FINAL_EVIDENCE_CARRY_FORWARD.py",
+    ".prguard/runtime/PR288_VALIDATED_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR288_IMPLEMENTATION_INTEGRATION_REHEARSAL.json",
+    ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-PHYSCODE.json",
+    ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-REPLAY.json",
+    ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-CLAIM.json",
+    ".agent-harness/runs/pr288-frozen-independent-review-20260811/results/A-PR288-FROZEN-CLAIM-R2.json",
+    ".agent-harness/runs/pr288-frozen-independent-review-20260811/MERGED_RESULTS.json",
+    ".agent-harness/runs/pr288-frozen-independent-review-20260811/RUN_SUMMARY.json",
+    "docs/research_program/post_pr275/pr288_publication_policy.json",
+    "docs/research_program/post_pr275/pr288_spec.yaml",
+    "docs/PR_DELTAS/pr-288.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "machine_readable/pr_status.yaml",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle.py",
+    ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle_evidence.json",
+    ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/REVIEW_COVERAGE.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-11T08:24:00Z",
+  "completed_at": "2026-08-11T08:32:43Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "git": "2.43.0",
+    "PyYAML": "6.0.1"
+  },
+  "commands": [
+    {
+      "argv": ["python", "-B", ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle.py", "--output", ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle_evidence.json"],
+      "returncode": 0,
+      "summary": "All 47 bounded seal, lineage, freshness, review-history, lifecycle, budget, and local publication-state invariants passed."
+    },
+    {
+      "argv": ["python", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/REVIEW_COVERAGE.json", "--seal", ".prguard/runtime/PR288_FINAL_CANDIDATE_SEAL.json", "--run-id", "pr288-final-seal-closeout-20260811", "--assignment-id", "A-PR288-FINAL-SEAL-CLOSEOUT", "--risk-tier", "R3"],
+      "returncode": 0,
+      "summary": "Exact 22-cell R3 review coverage validated with no errors."
+    },
+    {
+      "argv": ["PYTHONPATH=.agent-harness/scripts", "python", "load_and_validate_registered_result_file"],
+      "returncode": 0,
+      "summary": "Registered result and HARNESS_RESULT envelope strict validation returned no errors."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle.py",
+      "sha256": "eb5a4826ec70ec1d28a574f0722dd9e9be2389d0cf693b0af9c545bb7889a2a0",
+      "bytes": 20546,
+      "producer": "A-PR288-FINAL-SEAL-CLOSEOUT"
+    },
+    {
+      "path": ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle_evidence.json",
+      "sha256": "4ff3b11efe7425a5f9ba40e67e33863266c207e6d281169cc21688ba943db20b",
+      "bytes": 20435,
+      "producer": "A-PR288-FINAL-SEAL-CLOSEOUT",
+      "command_fingerprint": "e1b4d83087080d8f8e6276df12dcd115ecd9baf52b1ebee7de092d3bd5f0577d"
+    },
+    {
+      "path": ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/REVIEW_COVERAGE.json",
+      "sha256": "7ed4ba381bbb7b6ecb6dd255302c22a55ec1a585fa2b5d08fe57e7413db0d160",
+      "bytes": 8888,
+      "producer": "A-PR288-FINAL-SEAL-CLOSEOUT"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "7ed4ba381bbb7b6ecb6dd255302c22a55ec1a585fa2b5d08fe57e7413db0d160",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR280-HERMETIC-HARNESS",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "The exact final PR-288 seal and freshness-aware receipt close cleanly over the immutable reviewed candidate: PR-287 base and nine unique patches are exact; the final two commits are metadata-only; the reviewed production/dependency evidence key is unchanged; five command rows are carried byte-for-byte and only portable, DAG/status, and claim-language rows are fresh; the first contaminated claim review remains ERROR/INCONCLUSIVE/not_examined while its replacement, physics/code, and replay reviews pass; lifecycle is REVIEWED with a 7/16 post-assignment projection, PR-289 remains PLANNED/INELIGIBLE at 0/16, and local status/refs contain no push, PR, or merge evidence.",
+      "evidence_refs": [
+        ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/oracle_evidence.json",
+        ".agent-harness/runs/pr288-final-seal-closeout-20260811/artifacts/A-PR288-FINAL-SEAL-CLOSEOUT/REVIEW_COVERAGE.json",
+        ".prguard/runtime/PR288_FINAL_CANDIDATE_SEAL.json",
+        ".prguard/runtime/PR288_FINAL_INTEGRATION_REHEARSAL.json"
+      ],
+      "evidence_fingerprint": "pr288-final-seal:27df5da0:oracle-4ff3b11e:coverage-7ed4ba38"
+    }
+  ],
+  "errors": []
+}

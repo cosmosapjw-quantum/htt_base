@@ -1,0 +1,166 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-candidate-review-20260810",
+  "assignment_id": "A-PR286-FROZEN-CODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "code_cartographer",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "0376ec83567e3ad8a005500110961f8b5df5ec275fc2c4ded9ad67eb12e12bd5",
+    "seal_sha256": "d9241a26060fbdd09d0f1f77b3a47bec422525cb7d016b33b089bf232c03068d",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+    "diff_sha256": "80f2057dc690aaacf0258e1603dac0fcf4a455f343564d80717709afd615071d",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "d3307adde069f7bfb422d290d14204cd1d67778a66cace303f0a962d56cca818"
+  },
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-CODE.json",
+  "assignment_sha256": "1d106ea0eee758562f220aae8fda16ffd13e6f49b25b4fd457698ba461ccbf13",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/pr286-candidate-review-20260810/assignments/A-PR286-FROZEN-CODE.json",
+    ".agent-harness/runs/pr286-candidate-review-20260810/RUN_PLAN.json",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/templates/REVIEW_COVERAGE.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agents/skills/htt-adversarial-review-loop/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+    ".prguard/runtime/PR286_CANDIDATE_INTEGRATION_REHEARSAL.json",
+    "docs/research_program/post_pr275/pr286_spec.yaml",
+    "docs/research_program/post_pr275/pr286_publication_policy.json",
+    "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+    "docs/research_program/vector_tensor/pr272_spec.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml",
+    "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+    "htt/src/common/vector_tensor_statistical_inference.py",
+    "htt/htt/htt/infer/vector_tensor_validation.py",
+    "htt/mio/formalism/vector_tensor_validation.py",
+    "scripts/codex_harness/build_pr272_pillar_s_inference.py",
+    "scripts/codex_harness/run_pr286_pillar_s_adjudication.py",
+    "tests/contracts/test_pillar_s_complete_adjudication.py",
+    "tests/contracts/test_pillar_s_inference.py"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-10T13:14:00Z",
+  "completed_at": "2026-08-10T13:29:35Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {"argv": ["sha256sum", "assignment-required-inputs"], "returncode": 0, "summary": "All ten declared input bytes matched."},
+    {"argv": ["python", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_pillar_s_inference.py", "tests/contracts/test_pillar_s_complete_adjudication.py"], "returncode": 2, "summary": "Initial collection lacked repository package roots and failed with ModuleNotFoundError: common."},
+    {"argv": ["env", "PYTHONPATH=htt/src:htt", "python", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_pillar_s_inference.py", "tests/contracts/test_pillar_s_complete_adjudication.py"], "returncode": 0, "summary": "72 passed in 111.93s."},
+    {"argv": ["/usr/bin/python3", "-B", ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CODE/hostile_oracle.py"], "returncode": 0, "summary": "Hostile property oracle reproduced the blocking positive-result and validation seams."},
+    {"argv": ["python", "-B", ".agent-harness/scripts/review_coverage.py", "--structural-only"], "returncode": 0, "summary": "Strict review coverage validation returned ok=true."}
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CODE/hostile_oracle.py",
+      "sha256": "250c0dd9b2678f8cb8c96ac3a18f57efd528007a0faa052e54368177ea052088",
+      "bytes": 3813,
+      "producer": "A-PR286-FROZEN-CODE",
+      "command_fingerprint": "6e3b977e3aaf49e964b5dd61db39cf55e374e96bfdd8afe2cd01ad1727c99447"
+    },
+    {
+      "path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CODE/review_coverage.json",
+      "sha256": "8bce374fe49aaa57734548b37c1e6ffcaecfa21b38ac7b430733dfb7f9c8864c",
+      "bytes": 6866,
+      "producer": "A-PR286-FROZEN-CODE"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CODE/review_coverage.json",
+  "review_coverage_sha256": "8bce374fe49aaa57734548b37c1e6ffcaecfa21b38ac7b430733dfb7f9c8864c",
+  "findings": [
+    {
+      "finding_id": "F-PR286-VTS14-NAN-POSITIVE",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The public VT-S14 local/global evaluator can return VALIDATED_REGISTERED_SYNTHETIC from finite near-proportional inputs after dot-product overflow creates NaN geometry and fit values; NaN is silently mapped to a right angle by the current min/max clamp.",
+      "assumptions_used": [
+        "Finite numeric sequences accepted by the public API must either produce finite deterministic report fields or fail closed with PillarSInferenceError.",
+        "A design with stable principal angle below the registered floor must not mint a positive validation status."
+      ],
+      "evidence_refs": [
+        "htt/src/common/vector_tensor_statistical_inference.py:1425",
+        "htt/src/common/vector_tensor_statistical_inference.py:1428",
+        "htt/src/common/vector_tensor_statistical_inference.py:1457",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CODE/hostile_oracle.py"
+      ],
+      "evidence_fingerprint": "pr286:vts14:finite-overflow-nan-angle-positive-status:v1",
+      "counterevidence_refs": [
+        "tests/contracts/test_pillar_s_inference.py:717 proportional identity-covariance control passes",
+        "focused declared suites: 72 passed in 111.93s"
+      ],
+      "reproduction": [
+        "Run the assignment-local hostile_oracle.py with PYTHONPATH=htt/src:htt.",
+        "The oracle uses local=(1e200,1e200), global=(1e200,1e200+2e185), identity covariance, and floor=1e-12.",
+        "The stable atan2 angle is about 9.99e-16, yet the report status is VALIDATED_REGISTERED_SYNTHETIC and all five fit/chi-square fields are non-finite."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "The repair must define scale-stable whitening, normalization, finite-output validation, and a fail-closed threshold policy without changing frozen PR-272 result semantics."
+      ]
+    },
+    {
+      "finding_id": "F-PR286-VTS14-RANK-INPUT-SEAMS",
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "verdict": "fail",
+      "severity": "medium",
+      "statement": "VT-S14 computes numerical rank on the unwhitened raw design while its angle and GLS law are covariance-whitened, and it evaluates the cosine before rejecting zero designs; this creates covariance/scale-dependent false abstention and leaks ZeroDivisionError outside the declared API exception.",
+      "assumptions_used": [
+        "Numerical identification diagnostics for one covariance-conditioned GLS comparison must use a consistent declared metric.",
+        "Invalid zero designs must fail through PillarSInferenceError rather than an incidental arithmetic exception."
+      ],
+      "evidence_refs": [
+        "htt/src/common/vector_tensor_statistical_inference.py:1425",
+        "htt/src/common/vector_tensor_statistical_inference.py:1433",
+        "scripts/codex_harness/run_pr286_pillar_s_adjudication.py:661",
+        ".agent-harness/runs/pr286-candidate-review-20260810/artifacts/A-PR286-FROZEN-CODE/hostile_oracle.py"
+      ],
+      "evidence_fingerprint": "pr286:vts14:unwhitened-rank-zero-design-validation-seams:v1",
+      "counterevidence_refs": [
+        "The registered ordinary VT-S14 design has rank two and a comfortably positive whitened angle.",
+        "Exact proportional designs correctly abstain in the existing identity-covariance test."
+      ],
+      "reproduction": [
+        "For covariance=diag(1,1e-32), local=(1,0), global=(1,1e-16), the raw default numerical rank is one while the whitened rank is two; the API abstains from the raw rank.",
+        "For local=(0,0), global=(1,0), identity covariance, the public function raises ZeroDivisionError before _gls_fit can raise PillarSInferenceError."
+      ],
+      "confidence": 0.98,
+      "unresolved": [
+        "The governing contract should state whether rank is exact directional rank or a tolerance-bound whitened rank; the implementation and adjudicator must then share that single helper."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-PR286-VTS14-NAN-POSITIVE",
+        "F-PR286-VTS14-RANK-INPUT-SEAMS"
+      ],
+      "summary": "FAIL: frozen PR-286 does not safely close the VT-S14 numerical-identification boundary; a finite overflow case mints a positive synthetic validation report and related rank/input seams are untested."
+    }
+  ],
+  "errors": []
+}

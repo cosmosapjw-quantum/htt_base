@@ -1,0 +1,201 @@
+{
+  "schema": "htt.review_coverage.v1",
+  "artifact_type": "REVIEW_COVERAGE",
+  "run_id": "pr289-bounded-repair-r2-review-20260811",
+  "assignment_id": "A-PR289-R2-CODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "candidate_sha": "e7affa4302f60cb02a664b315693b22e2372ef33",
+  "policy_path": "docs/research_program/post_pr275/pr289_publication_policy.json",
+  "policy_sha256": "4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9",
+  "cells": [
+    {
+      "cell": "candidate_identity",
+      "verdict": "PASS",
+      "evidence": ["candidate HEAD e7affa4302f60cb02a664b315693b22e2372ef33", "tree 1d25895f229c87723797c73018fed8783466541f", ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json sha256 98b8f692fb9e8933b4972430d33f89da4a0b0bf0498bb9af3b7c354b27fcc5d9"]
+    },
+    {
+      "cell": "pr280_terminal_receipt_without_success_promotion",
+      "verdict": "PASS",
+      "evidence": ["docs/codex_handoff/pr_status.yaml execution_resolutions.PR-280=COMPLETED_FAILED_WITH_RECEIPT", "success_dependency_satisfied=false", "PR-289 spec dependency mode requires_terminal_receipt and success_dependency_required=false"]
+    },
+    {
+      "cell": "immutable_pr274_v1",
+      "verdict": "PASS",
+      "evidence": ["pr289-adjacent exit 0: live 50 passed/4 deselected; source-bound replay commit ff9ef9f4 54 passed", "PR-274 registry sha256 92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9", "PR-274 result sha256 e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea"]
+    },
+    {
+      "cell": "v2_factory_and_content_address",
+      "verdict": "PASS",
+      "evidence": ["focused suite 55 passed", "factory-only dataclass construction tests", "receipt content id sha256:13f9c96512eb9ab8855bfab5d281a17b4bcda3ac3ec888ec2c98320b987024d1"]
+    },
+    {
+      "cell": "stable_record_and_inspection_identities",
+      "verdict": "PASS",
+      "evidence": ["focused suite 55 passed", "MU289-RECORD-ID-STABILITY killed", "record_id excludes path/time while inspection_receipt_id changes with inspection time"]
+    },
+    {
+      "cell": "typed_provenance_evidence",
+      "verdict": "PASS",
+      "evidence": ["focused duplicate-key/nonfinite/placeholder tests passed", "independent semantic replay oracle rejected 27 individually re-signed invalid fields"]
+    },
+    {
+      "cell": "machine_lane_cardinality_and_gate_identity",
+      "verdict": "PASS",
+      "evidence": ["LANE_REGISTRY_V2.json sha256 e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f", "focused exact lane role/cardinality/gate tests passed", "MU289-GATE-ID-ALIAS killed"]
+    },
+    {
+      "cell": "regular_file_and_no_symlink_boundary",
+      "verdict": "PASS",
+      "evidence": ["focused suite symlink/parent-symlink/nonregular probes passed", "MU289-SYMLINK and MU289-PARENT-SYMLINK killed"]
+    },
+    {
+      "cell": "hardlink_and_root_confinement",
+      "verdict": "PASS",
+      "evidence": ["focused hardlink/root escape tests passed", "MU289-HARDLINK-ALIAS killed", "archive oracle rejected traversal, absolute, symlink, and hardlink members"]
+    },
+    {
+      "cell": "size_hash_and_component_inventory",
+      "verdict": "PASS",
+      "evidence": ["focused size/hash/order tests passed", "MU289-SIZE, MU289-HASH, MU289-INVENTORY, and MU289-INVENTORY-ID killed"]
+    },
+    {
+      "cell": "release_and_license_identity",
+      "verdict": "PASS",
+      "evidence": ["focused release/license/placeholder tests passed", "independent replay rejected release_name, release_version, release_identity, license_identity, and license_status individually"]
+    },
+    {
+      "cell": "units_frame_convention",
+      "verdict": "PASS",
+      "evidence": ["independent replay rejected units, coordinate frame, sign, directional, and harmonic drift individually", "CF4 native semantic role tests passed"]
+    },
+    {
+      "cell": "mask_selection_covariance_null",
+      "verdict": "PASS",
+      "evidence": ["independent replay rejected mask, selection, covariance identity/status, and null identity/status drift individually"]
+    },
+    {
+      "cell": "transfer_and_sky_support",
+      "verdict": "PASS",
+      "evidence": ["independent replay rejected transfer source/spec/status and sky support identity/status drift individually", "transfer_source remains none"]
+    },
+    {
+      "cell": "planck_first_candidate",
+      "verdict": "PASS",
+      "evidence": ["registry order starts PLANCK", "clean preflight emits typed PLANCK not-present refusal and no admission"]
+    },
+    {
+      "cell": "planck_native_profile_and_same_sky_replay",
+      "verdict": "PASS",
+      "evidence": ["focused Planck complete-profile and four relationship mutation tests passed", "MU289-PLANCK-NATIVE-RELATIONSHIP killed"]
+    },
+    {
+      "cell": "cf4_native_catalogue_selection_covariance_replay",
+      "verdict": "PASS",
+      "evidence": ["focused CF4 complete-profile and exact role mutation tests passed", "MU289-CF4-NATIVE-RELATIONSHIP killed"]
+    },
+    {
+      "cell": "hsc_kids_separate_child_and_cross_covariance_replay",
+      "verdict": "PASS",
+      "evidence": ["focused HSC/KiDS complete-profile and separate-child tests passed", "MU289-HSC-KIDS-CHILD-IDENTITY killed"]
+    },
+    {
+      "cell": "native_profile_export_replay_and_string_only_refusal",
+      "verdict": "PASS",
+      "evidence": ["focused native export and string-only refusal tests passed", "MU289-NATIVE-REPLAY and MU289-NATIVE-PROFILE-OMISSION killed"]
+    },
+    {
+      "cell": "exported_record_full_semantic_replay",
+      "verdict": "PASS",
+      "evidence": ["A-PR289-R2-CODE_oracle.py rejected 27 individually re-signed invalid exported fields", "MU289-EXPORTED-SEMANTIC-REPLAY killed"]
+    },
+    {
+      "cell": "repeated_role_ordinal_completeness",
+      "verdict": "PASS",
+      "evidence": ["independent oracle duplicated one of the first two real DESI ezmock_inventory ordinals and replay failed with admitted native record ordinal inventory drifted", "MU289-REPEATED-ROLE-ORDINAL killed"]
+    },
+    {
+      "cell": "verified_bytes_equal_executed_module",
+      "verdict": "PASS",
+      "evidence": ["independent hostile sys.modules/meta_path oracle returned PASS receipt", "executed module digest 2533d42d1fa7aa8305adfeda5165f50f0a907a49c68e13583f85587740033ee5 equals bound source digest"]
+    },
+    {
+      "cell": "output_parent_identity_pinning",
+      "verdict": "FAIL",
+      "evidence": ["late build replacement after _assert_bound_parent returned 0 and reported success while advertised output was absent and receipt existed only in detached old parent", "late check replacement after _assert_bound_parent returned 0 while ATTACKER bytes occupied advertised receipt path and detached old bytes were validated", "A-PR289-R2-CODE_oracle.py exit 1"]
+    },
+    {
+      "cell": "interpreter_alias_invariant_receipt",
+      "verdict": "PASS",
+      "evidence": ["/usr/bin/python, /usr/bin/python3, and /usr/bin/python3.10 check each exited 0", "all three stdout sha256 cba13a5072579f236664ebe345b1085ad6d240c0b12332f88826d2f4ae925f3f", "receipt sha256 fd0ed2139903c7e47d4478a53e2e5054348801b427e9fb5250039324df5996d7"]
+    },
+    {
+      "cell": "name_only_hsc_kids_refusal",
+      "verdict": "PASS",
+      "evidence": ["focused name-only HSC/KiDS test passed", "MU289-NAME-ONLY killed"]
+    },
+    {
+      "cell": "pr151_partial_desi_refusal",
+      "verdict": "PASS",
+      "evidence": ["focused DESI partial precedence test passed", "MU289-DESI-PARTIAL killed"]
+    },
+    {
+      "cell": "admission_authorization_separation",
+      "verdict": "PASS",
+      "evidence": ["clean preflight six NOT_AUTHORIZED receipts", "MU289-ADMISSION-AUTH-COLLAPSE killed", "observed_data_executed=false and public_use=false"]
+    },
+    {
+      "cell": "authorization_state_machine_and_workflow_domain",
+      "verdict": "PASS",
+      "evidence": ["factory rejects AUTHORIZED construction", "lane receipts use lane_data_execution while backlog implementation authorization is workflow_only", "MU289-WORKFLOW-AUTH-LAUNDERING killed"]
+    },
+    {
+      "cell": "refusal_status_precedence_and_lane_aggregation",
+      "verdict": "PASS",
+      "evidence": ["focused precedence/aggregate tests passed", "MU289-STATUS-PRECEDENCE and MU289-PARTIAL-LANE-AGGREGATE killed"]
+    },
+    {
+      "cell": "no_download_or_repository_copy",
+      "verdict": "PASS",
+      "evidence": ["preflight output network_or_download_side_effect=false", "portable replay external_roots_supplied=false", "MU289-AUTODOWNLOAD killed"]
+    },
+    {
+      "cell": "registered_mutation_completeness",
+      "verdict": "PASS",
+      "evidence": ["receipt contains exactly 32 results in exact spec order", "every result has exact fields and executed=true activated=true killed=true nonempty marker", "MU289-MUTATION-OMISSION killed"]
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "verdict": "PASS",
+      "evidence": ["check exit 0", "frozen receipt sha256 fd0ed2139903c7e47d4478a53e2e5054348801b427e9fb5250039324df5996d7", "receipt content id sha256:13f9c96512eb9ab8855bfab5d281a17b4bcda3ac3ec888ec2c98320b987024d1"]
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "verdict": "PASS",
+      "evidence": ["publication-integrity selection exit 0: 9 passed, 68 deselected", "candidate seal binds policy sha256 4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9"]
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "verdict": "PASS",
+      "evidence": ["strict claim-language command exit 0", "claim tier diagnostic_only", "family gate BLOCKED_PRE_NATIVE_ATLAS", "MU289-CLAIM-PROMOTION killed"]
+    },
+    {
+      "cell": "portable_clean_integration",
+      "verdict": "PASS",
+      "evidence": ["portable command exit 0", "5911 tracked files identical before/after in source and clean archive", "manifest sha256 f4f41cfe551472c7ec61069feeac2c0b4ee82cdf0d99b79f8c8f750dfe5d133f"]
+    },
+    {
+      "cell": "latest_target_integration",
+      "verdict": "PASS",
+      "evidence": ["local target ref resolves to sealed base 27df5da040e27eeaad44873ba3424ff73fb4bb09", "merge base equals sealed base", "target...candidate count 0 behind/12 ahead", "strict 244-card DAG validation exit 0"]
+    }
+  ],
+  "summary": {
+    "required_cell_count": 36,
+    "covered_cell_count": 36,
+    "pass_count": 35,
+    "fail_count": 1,
+    "inconclusive_count": 0,
+    "uncovered_cells": [],
+    "failed_cells": ["output_parent_identity_pinning"]
+  }
+}

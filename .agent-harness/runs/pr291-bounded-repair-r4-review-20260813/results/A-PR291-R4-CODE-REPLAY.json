@@ -1,0 +1,135 @@
+{
+  "schema_version": 3,
+  "run_id": "pr291-bounded-repair-r4-review-20260813",
+  "assignment_id": "A-PR291-R4-CODE-REPLAY",
+  "assignment_sha256": "d4bbc73d1297fa70c177fabdd5af7a03b52686b2ca0c79ed3ee893f06813318a",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "work_unit_id": "PR-291",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "0e8da2b416792c62897b6beb686e28f705d8a82cc299513dd3f5e905109d2c5b",
+    "seal_sha256": "a226e0df027907b105bdb454ff5a5f50b60adb1a98663bcb22d70e14b7760ec1",
+    "base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_sha": "02714ff26f8e6414edd1ef456065bf73e0f27374",
+    "merge_base_sha": "06ac20605ebc371b0f97ad6e91c802a51a9bf764",
+    "candidate_tree_sha": "2b425d29ca48c8baa776aa5521ecf3795d64562a",
+    "diff_sha256": "df0950da457bf62acd1c2d2215daa27f6c39f9ede67bdcdd242c22f8cbda9906",
+    "changed_files_sha256": "4746a46244bcc9e471a4a94ccd6f22c9f3a0b7326051b8569e241717bf610756",
+    "production_hash": "1dc0fc6010d0f99f586aa7e34dae9f5eced9110962d36a68af61727029c7507c"
+  },
+  "status": "fail",
+  "gate_disposition": "FAIL",
+  "result_path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/results/A-PR291-R4-CODE-REPLAY.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-08-13T06:31:14Z",
+  "completed_at": "2026-08-13T06:46:35Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    "python -B scripts/codex_harness/run_pr291_cf4_lane.py focused",
+    "python -B scripts/codex_harness/run_pr291_cf4_lane.py check",
+    "python -B scripts/codex_harness/run_pr291_cf4_lane.py adjacent",
+    "python -B scripts/codex_harness/run_pr291_cf4_lane.py portable",
+    "python -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_publication_integrity.py -k policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity",
+    "python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+    "python -B scripts/check_claim_language.py --strict-missing --include-archives docs/research_program/post_pr275/pr291_spec.yaml htt/src/common/cf4_observed_lane_activation.py htt/obsstat/cf4_post275_lane.py tests/integration/test_cf4_post275_lane.py docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json docs/PR_DELTAS/pr-291.md",
+    "python -B .agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_oracle.py",
+    "python -B .agent-harness/scripts/review_coverage.py --coverage .agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_REVIEW_COVERAGE.json --seal .prguard/runtime/PR291_R4_CANDIDATE_SEAL.json --run-id pr291-bounded-repair-r4-review-20260813 --assignment-id A-PR291-R4-CODE-REPLAY --risk-tier R3 --structural-only"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_oracle.py",
+      "sha256": "b41bade287202b982111a42f1ab9e37c19ae68e5ae080d7007f8d13f552e6b03",
+      "bytes": 10284,
+      "producer": "A-PR291-R4-CODE-REPLAY",
+      "command_fingerprint": "aae59157b84de73dd0ed7fb10b7a843ae530ed74c5a837004e884154b47d1f44"
+    },
+    {
+      "path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_REVIEW_COVERAGE.json",
+      "sha256": "c8090047107fb5a6c056e84a6ee629136f9e7d65355b12a5525ec7cd021f5937",
+      "bytes": 6811,
+      "producer": "A-PR291-R4-CODE-REPLAY"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "c8090047107fb5a6c056e84a6ee629136f9e7d65355b12a5525ec7cd021f5937",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/RUN_PLAN.json",
+    ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/assignments/A-PR291-R4-CODE-REPLAY.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".prguard/runtime/PR291_R4_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-291.md",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json",
+    "docs/research_program/post_pr275/pr291_publication_policy.json",
+    "docs/research_program/post_pr275/pr291_spec.yaml",
+    "htt/obsstat/cf4_post275_lane.py",
+    "htt/src/common/cf4_observed_lane_activation.py",
+    "htt/src/common/semantic_guards/no_overclaim.py",
+    "htt/src/common/source_separation.py",
+    "machine_readable/pr_status.yaml",
+    "scripts/codex_harness/run_pr291_cf4_lane.py",
+    "tests/contracts/test_claim_language_lint.py",
+    "tests/integration/test_cf4_post275_lane.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR291-R4-CLAIM-GRAMMAR-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "pr291-r4-reordered-plural-family-identification-unrelated-negation-v1",
+      "statement": "The claim scanner misses the positive promotion 'The analysis is not public but definitively identifies several Bianchi families.'; the unrelated not-public clause suppresses no predicate, and the reordered plural family-identification form remains forbidden.",
+      "assumptions_used": [
+        "R4 requires reordered and plural family-identification forms to be detected.",
+        "Only negation scoped to the forbidden predicate may downclaim a match."
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_oracle.py",
+        "htt/src/common/semantic_guards/no_overclaim.py",
+        "tests/contracts/test_claim_language_lint.py"
+      ],
+      "counterevidence_refs": [
+        "All seven declared publication-policy commands passed, including 28 existing claim-language tests inside the focused lane.",
+        "The hostile oracle passed fixed numerical rank, null replay, identified-set, receipt, portability-state, and lifecycle invariants."
+      ],
+      "reproduction": [
+        "Run: python -B .agent-harness/runs/pr291-bounded-repair-r4-review-20260813/artifacts/A-PR291-R4-CODE-REPLAY_oracle.py",
+        "Observe status FAIL_FINDING_REPRODUCED and claim_grammar.blocking_miss_reproduced equal to 1."
+      ],
+      "unresolved": [
+        "Extend the existing bounded geometry/family grammar to cover verb-first reordered plural forms without broadening unrelated-negation exemptions.",
+        "Add the exact hostile sentence as a contract regression and reseal before any rereview."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "outcome": "findings_present",
+      "finding_ids": ["F-PR291-R4-CLAIM-GRAMMAR-001"],
+      "summary": "Code/replay review fails because an in-scope reordered plural family-identification promotion survives the scanner under unrelated clause negation."
+    }
+  ],
+  "errors": []
+}

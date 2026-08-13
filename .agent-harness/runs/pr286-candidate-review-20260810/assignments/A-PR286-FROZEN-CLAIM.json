@@ -1,0 +1,90 @@
+{
+  "schema_version": 3,
+  "run_id": "pr286-candidate-review-20260810",
+  "assignment_id": "A-PR286-FROZEN-CLAIM",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "claim_gate_reviewer",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "work_unit_id": "PR-286",
+  "change_set_id": "CS-PR286-PILLAR-S-ADJUDICATION",
+  "publication_group_id": "PG-PR286-PILLAR-S-ADJUDICATION",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "0376ec83567e3ad8a005500110961f8b5df5ec275fc2c4ded9ad67eb12e12bd5",
+    "seal_sha256": "d9241a26060fbdd09d0f1f77b3a47bec422525cb7d016b33b089bf232c03068d",
+    "base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_sha": "f2fb069d4ac5bdcd18564839ffa236bd242ca115",
+    "merge_base_sha": "16bc6db511b8b7228e5c4dcb95c65074fe519f24",
+    "candidate_tree_sha": "1d6ca231d3137b95372da18087741531f9cc0b0b",
+    "diff_sha256": "80f2057dc690aaacf0258e1603dac0fcf4a455f343564d80717709afd615071d",
+    "changed_files_sha256": "c1e6b5dff45ad51982bbb39d266bf9b3ee0aa2650691f23aee0cdd84d8188223",
+    "production_hash": "d3307adde069f7bfb422d290d14204cd1d67778a66cace303f0a962d56cca818"
+  },
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR273-BLIND-INTEGRATION",
+    "C-PR274-DATA-ADMISSION"
+  ],
+  "task": "Fresh frozen claim, ownership, provenance, and lifecycle review of PR-286. Read this assignment first; do not read CONTEXT_PACK, sibling results, or historical verdict envelopes. Verify spec-policy-delta-receipt-status consistency, HTT inference ownership, OBSSTAT estimand/null/covariance ownership, MIO diagnostic-only residual role, C2 diagnostic-only ceiling, transfer none, observed/public false, BLOCKED_PRE_NATIVE_ATLAS, forbidden inputs, terminal vocabulary, and that complete adjudication does not mean universal proof. Verify status mirrors are synchronized at VALIDATED, PR-287 remains INELIGIBLE with zero budget, predecessor exactness and HUMAN_ONLY merge posture. Write no tracked/shared files; produce only assignment-local review coverage, executable oracle, and one strict-valid registered result.",
+  "required_inputs": [
+    {
+      "path": ".prguard/runtime/PR286_CANDIDATE_SEAL.json",
+      "sha256": "0376ec83567e3ad8a005500110961f8b5df5ec275fc2c4ded9ad67eb12e12bd5"
+    },
+    {
+      "path": ".prguard/runtime/PR286_CANDIDATE_INTEGRATION_REHEARSAL.json",
+      "sha256": "78f13f54bebf60df6781fd8fec7576bb78e20075715e2783eed86bb469e46465"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr286_spec.yaml",
+      "sha256": "db4fc3d3d00cbeb239a437380d646a889ede519f671641cdf0f72e35a13ae413"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr286_publication_policy.json",
+      "sha256": "768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json",
+      "sha256": "1eb3a52de178443ed6a14dbff425c7630c93f37a8e3af66c8e348162d46df32d"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-286.md",
+      "sha256": "d94c3fb1b613f8c074b6d97a7a8adeb90ad6fa8091fde71c2d34a6fc023be1be"
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "952e56d715cf740381ddfa701b2e82a4cb7f828036a13088d760fb4cefcb376c"
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "952e56d715cf740381ddfa701b2e82a4cb7f828036a13088d760fb4cefcb376c"
+    },
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256": "73553b6056e5111c1047b80f79c35cdb8e898e0a7b8a7e7e28f97731b5cc699e"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only-shell",
+    "pytest"
+  ],
+  "required_outputs": [
+    "registered-result-envelope",
+    "assignment-local-review-coverage",
+    "assignment-local-executable-oracle"
+  ],
+  "result_path": ".agent-harness/runs/pr286-candidate-review-20260810/results/A-PR286-FROZEN-CLAIM.json",
+  "status": "registered",
+  "assignment_sha256": "d21693bfa7ff3b651c90f544bbc2cb1d6891e5ccae734ee47ca46de0551f50c9"
+}

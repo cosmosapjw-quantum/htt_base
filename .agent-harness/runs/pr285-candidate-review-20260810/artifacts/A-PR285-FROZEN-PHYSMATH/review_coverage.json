@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "run_id": "pr285-candidate-review-20260810",
+  "assignment_id": "A-PR285-FROZEN-PHYSMATH",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "candidate_seal_sha256": "8e2c2e72cca0d018441a91368ded4a3f898df12c36de5e8104352119ab4d2629",
+  "candidate_sha": "be8392d0fb3d13fefdf6bce89a1c89ef11890080",
+  "candidate_tree_sha": "f74d8f8b550d2351d21a8db5021e0f8566d9ecc2",
+  "diff_sha256": "9a50ef58e647f018e98e81f1868ffc271499984fdb0f73a0465098ce9a7a1183",
+  "changed_files_sha256": "bb335983aab436ac3ca9e949e3bd118d1812d2d040465372166641fb1f899be4",
+  "completed_at": "2026-08-10T06:35:48+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json"],
+      "rationale": "HEAD, tree, base, merge-base, diff, changed-file, production, and seal identities match the frozen assignment."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "FAIL",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml#statement_identity_contract", "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#legacy_signature_inventory"],
+      "rationale": "The spec says every legacy row supplies neither typed premises nor a typed domain, but 12 frozen registry rows explicitly mark both statuses DECLARED."
+    },
+    {
+      "cell": "legacy_65_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#legacy_signature_inventory", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle_report.json"],
+      "rationale": "The receipt has all 65 legacy rows in source order with the exact 31 T and 34 S partition."
+    },
+    {
+      "cell": "vector_tensor_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml#pillar_T", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle_report.json"],
+      "rationale": "VT-T1 through VT-T14 appear exactly once and in canonical order."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle_report.json"],
+      "rationale": "All VT-T typed statements and the PR190 failed statement match their frozen sources; no restricted statement is promoted."
+    },
+    {
+      "cell": "premise_and_domain_specificity",
+      "status": "FAIL",
+      "evidence_refs": ["docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#legacy_signature_inventory", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle_report.json"],
+      "rationale": "Premise/domain values are copied, but 12 DECLARED source statuses are rewritten as SOURCE_NOT_TYPED in the terminal receipt."
+    },
+    {
+      "cell": "legacy_title_only_inconclusive_boundary",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#legacy_signature_inventory", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"],
+      "rationale": "All 65 title-only legacy statements remain INCONCLUSIVE_WITH_RECEIPT; the separate status-fidelity defect does not create a proof promotion."
+    },
+    {
+      "cell": "analytic_and_conditional_proof_replay",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/vector_tensor/proofs/PILLAR_T_CORE_PROOFS_V1.yaml", "docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle_report.json"],
+      "rationale": "Eleven exact typed rows have PASS dispositions; their statements, assumptions, domains, and boundaries replay exactly."
+    },
+    {
+      "cell": "four_axis_cas_shared_contract",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/vector_tensor/cas/CAS_CONTRACT.json", "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle_report.json"],
+      "rationale": "The historical four-axis pass is hash-bound to one contract. Fresh SymPy, Sage/Singular, and Lean executions pass; Wolfram is platform-blocked, so the current run is not a fresh four-axis pass and majority voting remains forbidden."
+    },
+    {
+      "cell": "restricted_and_partial_scope_boundary",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml#VT-T8", "docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml#VT-T13"],
+      "rationale": "VT-T8 is restricted to a generic local chart and VT-T13 to an invariant chain-rule core; global separation and full typed dynamics remain withheld."
+    },
+    {
+      "cell": "native_geometry_blocked_boundary",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml#VT-T14", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"],
+      "rationale": "VT-T14 remains BLOCKED_WITH_RECEIPT before admitted native geometry and morphology-atlas evidence."
+    },
+    {
+      "cell": "pr190_counterexample_preservation",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/strengthening/pr190_spec.yaml", "docs/generated/pr190_attainability/attainability_report.json", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle_report.json"],
+      "rationale": "The lower then interior same-frame Frobenius W2 contradictions are copied exactly; terminal failure and unsatisfied success dependency remain unchanged."
+    },
+    {
+      "cell": "terminal_vocabulary_and_zero_bare_statuses",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json#summary"],
+      "rationale": "All 80 rows use terminal vocabulary and bare NOT_ADJUDICATED count is zero."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json", "scripts/codex_harness/run_pr285_pillar_t_adjudication.py"],
+      "rationale": "The frozen integration rehearsal records exact receipt replay and the content-addressed tracked receipt is bound by the seal."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "The sealed integration rehearsal records a zero-exit portable clean replay with matching merged tree."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_publication_policy.json", ".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json", ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "Change-set, publication-group, target, policy hash, candidate identity, and integration receipt cross-bind."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr285_spec.yaml", "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"],
+      "rationale": "Output remains diagnostic-only, transfer-free, non-observed, non-public, and blocked before native family identification."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR285_FINAL_CANDIDATE_SEAL.json", ".prguard/runtime/PR285_FINAL_INTEGRATION_REHEARSAL.json"],
+      "rationale": "The rehearsal latest target, merge base, merged tree, candidate SHA, and candidate tree match the frozen seal."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR285-PHYSMATH-ROW-CAS-ORACLE",
+      "kind": "invariant_checker",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle.py"],
+      "command_fingerprint": "cd95abcb345303844f1ad0b8638fd74a5a590052e8446a5b5635af65f7d1ecb2",
+      "returncode": 0,
+      "timed_out": false,
+      "started_at": "2026-08-10T06:34:41.919145+00:00",
+      "completed_at": "2026-08-10T06:35:05.121136+00:00",
+      "artifact_path": ".agent-harness/runs/pr285-candidate-review-20260810/artifacts/A-PR285-FROZEN-PHYSMATH/oracle_report.json",
+      "artifact_sha256": "ff23d5d036d859657443a1b66b998cea56c3af748b2f6b99e4624a983e303448",
+      "artifact_bytes": 5422,
+      "evidence_refs": ["docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml", "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json", "docs/generated/pr190_attainability/attainability_report.json"]
+    }
+  ],
+  "coverage_sha256": "d9b98c52aaa5277cf195453f248da88cdea5de654f24a23d591e767da85e4fbb"
+}

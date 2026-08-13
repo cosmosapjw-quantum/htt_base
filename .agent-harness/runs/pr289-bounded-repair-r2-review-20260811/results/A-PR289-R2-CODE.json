@@ -1,0 +1,223 @@
+{
+  "schema_version": 3,
+  "run_id": "pr289-bounded-repair-r2-review-20260811",
+  "assignment_id": "A-PR289-R2-CODE",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "harness_engineer",
+  "workflow_role": "reviewer",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "work_unit_id": "PR-289",
+  "change_set_id": "CS-PR289-DATA-IDENTITY-V2",
+  "publication_group_id": "PG-PR289-DATA-IDENTITY-V2",
+  "status": "fail",
+  "verdict": "FAIL",
+  "candidate_binding": {
+    "state": "frozen",
+    "base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_sha": "e7affa4302f60cb02a664b315693b22e2372ef33",
+    "merge_base_sha": "27df5da040e27eeaad44873ba3424ff73fb4bb09",
+    "candidate_tree_sha": "1d25895f229c87723797c73018fed8783466541f",
+    "diff_sha256": "124822f8c20278b307447150dcd0a8aa357048f6a9526e8feb976c14a2715ae1",
+    "changed_files_sha256": "621d99013dd65c44146ccb0f3d75a2365332deb43aeda60864bfa4f2d5bae15e",
+    "production_hash": "6752f1f52dccb2ca4768e127666a160bce8f826340d1b26d6bf70b3abca3220f",
+    "seal_path": ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "98b8f692fb9e8933b4972430d33f89da4a0b0bf0498bb9af3b7c354b27fcc5d9",
+    "seal_sha256": "b87547b5c86fb27fb63c6ba2f62639733295efe0b7ddf91ed82685a6c6cbba90"
+  },
+  "summary": "Frozen PR-289 R2 code/harness review fails one required policy cell. Full exported semantic replay, real repeated-role ordinal completeness, verified-byte factory execution under hostile import state, interpreter-alias invariant replay including Python 3.10, 32 ordered mutations, archive containment, receipt replay, and all eight policy commands pass. Output-parent identity pinning remains incomplete for both build and check: a parent swap after the last pathname assertion but before the descriptor-relative operation yields false success against a detached directory.",
+  "claim_results": [
+    {
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "FAIL",
+      "evidence_fingerprint": "sha256:d9fc35aa2d563c21026c288ff96ba619f7fe6f614dbd14c9f386e1cbaeb3d68e",
+      "finding_ids": ["F-PR289-R2-CODE-001"]
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR289-R2-CODE-001",
+      "claim_id": "C-PR274-DATA-ADMISSION",
+      "verdict": "FAIL",
+      "severity": "BLOCKER",
+      "policy_cell": "output_parent_identity_pinning",
+      "title": "Late output-parent replacement makes build and check report false success",
+      "proposition": "The runner's final pathname identity assertion precedes the descriptor-relative write or read. If the parent path is replaced in that interval, the pinned descriptor continues to access the detached original directory, but build/check still return zero and report the advertised repository path as valid.",
+      "evidence_fingerprint": "sha256:d9fc35aa2d563c21026c288ff96ba619f7fe6f614dbd14c9f386e1cbaeb3d68e",
+      "evidence_references": [
+        {
+          "path": "scripts/codex_harness/run_pr289_data_identity_v2.py",
+          "lines": "329-344",
+          "note": "build asserts pathname parent before os.replace and has no post-replace pathname assertion"
+        },
+        {
+          "path": "scripts/codex_harness/run_pr289_data_identity_v2.py",
+          "lines": "393-415",
+          "note": "check asserts pathname parent before reading via the pinned descriptor and has no post-read pathname assertion"
+        },
+        {
+          "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE_oracle.py",
+          "lines": "210-309",
+          "note": "assignment-local late build and late check replacement reproducers"
+        }
+      ],
+      "observed": {
+        "build": "return_code=0; success JSON names docs/generated/pr289_data_identity_v2_receipt.json; advertised output absent; receipt exists only in detached prior parent",
+        "check": "return_code=0; success JSON reports detached receipt digest; ATTACKER bytes occupy the advertised receipt path"
+      },
+      "expected": "Any replacement of the advertised output parent before the write/check linearization point must fail closed and must not produce a successful receipt or replay report.",
+      "assumptions": [
+        "A concurrent local actor can rename and replace docs/generated while the runner is active.",
+        "The required policy cell covers build and check parent replacement, not only redirection outside the repository.",
+        "A zero exit with the advertised path absent or containing different bytes violates generated-artifact integrity even when descriptor-relative operations remain confined to the detached directory."
+      ],
+      "reproduction": {
+        "command": "/usr/bin/python -B .agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE_oracle.py",
+        "expected_current_exit_code": 1,
+        "current_markers": [
+          "late_build_parent_replacement.passed=false",
+          "late_build_parent_replacement.return_code=0",
+          "late_build_parent_replacement.advertised_output_exists=false",
+          "late_check_parent_replacement.passed=false",
+          "late_check_parent_replacement.return_code=0",
+          "late_check_parent_replacement.advertised_output_is_attacker_bytes=true"
+        ]
+      },
+      "recommended_change": "Add a post-operation parent identity assertion after os.replace/fsync in build and after the descriptor-relative read in check. Preserve descriptor-relative no-follow I/O. Add discriminating late-race tests for both paths that replace the parent immediately before the actual replace/read and require a nonzero/exception outcome; regenerate the receipt and all candidate-bound hashes afterward.",
+      "kill_switch": "Do not admit the code/harness review, reseal, or publish PR-289 while this policy cell is FAIL. A new candidate invalidates this review and requires fresh R2 evidence."
+    }
+  ],
+  "passed_checks": [
+    "All 12 assignment required-input SHA-256 values matched.",
+    "Candidate HEAD, tree, merge base, seal, target ref, and clean tracked state matched the assignment binding.",
+    "Independent exported replay rejected 27 individually re-signed invalid semantic/status fields.",
+    "Independent actual-registry DESI replay rejected a duplicated ezmock_inventory ordinal with one ordinal omitted.",
+    "Hostile sys.modules and meta_path replacements did not execute; loaded factory digest equaled the bound module digest.",
+    "/usr/bin/python, /usr/bin/python3, and /usr/bin/python3.10 produced identical successful receipt replay output.",
+    "The frozen receipt contains exactly 32 ordered mutation results, all executed, activated, killed, and carrying nonempty markers.",
+    "Archive traversal, absolute-path, symlink, and hardlink members were rejected.",
+    "The exact 36 policy review cells were covered in policy order; 35 PASS and one FAIL."
+  ],
+  "policy_commands": [
+    {
+      "id": "pr289-focused",
+      "command": "/usr/bin/python -B scripts/codex_harness/run_pr289_data_identity_v2.py focused",
+      "exit_code": 0,
+      "result": "55 passed in 41.34s"
+    },
+    {
+      "id": "pr289-readonly-preflight",
+      "command": "/usr/bin/python -B scripts/codex_harness/run_pr289_data_identity_v2.py preflight",
+      "exit_code": 0,
+      "result": "six REJECTED_NOT_PRESENT; six NOT_AUTHORIZED; no network/download side effect"
+    },
+    {
+      "id": "pr289-adjacent",
+      "command": "/usr/bin/python -B scripts/codex_harness/run_pr289_data_identity_v2.py adjacent",
+      "exit_code": 0,
+      "result": "50 passed/4 deselected live; 54 passed at exact PR-274 replay commit"
+    },
+    {
+      "id": "pr289-receipt-replay",
+      "command": "/usr/bin/python -B scripts/codex_harness/run_pr289_data_identity_v2.py check",
+      "exit_code": 0,
+      "result": "receipt sha256 fd0ed2139903c7e47d4478a53e2e5054348801b427e9fb5250039324df5996d7"
+    },
+    {
+      "id": "pr289-portable-clean-replay",
+      "command": "/usr/bin/python -B scripts/codex_harness/run_pr289_data_identity_v2.py portable",
+      "exit_code": 0,
+      "result": "5911 tracked files; source/clean pre/post manifest sha256 f4f41cfe551472c7ec61069feeac2c0b4ee82cdf0d99b79f8c8f750dfe5d133f"
+    },
+    {
+      "id": "pr289-publication-policy-cross-binding",
+      "command": "/usr/bin/python -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_publication_integrity.py -k 'policy_nonrelaxable_metadata_fails_closed or candidate_seal_cross_binds_declared_policy_identity'",
+      "exit_code": 0,
+      "result": "9 passed, 68 deselected"
+    },
+    {
+      "id": "pr289-dag-strict",
+      "command": "/usr/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+      "exit_code": 0,
+      "result": "244 PRs, DAG valid"
+    },
+    {
+      "id": "pr289-claim-language",
+      "command": "/usr/bin/python -B scripts/check_claim_language.py --strict-missing --include-archives htt/src/common/data_identity.py tests/contracts/test_data_identity_registry_v2.py docs/research_program/post_pr275/pr289_spec.yaml docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json docs/research_program/post_pr275/data_runbooks.yaml docs/harness/CLAIM_LEDGER.md docs/generated/pr289_data_identity_v2_receipt.json docs/PR_DELTAS/pr-289.md",
+      "exit_code": 0,
+      "result": "No forbidden claim language detected"
+    }
+  ],
+  "independent_oracle": {
+    "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE_oracle.py",
+    "sha256": "4cdbe7f06893221b13dff12bc4eac832acdedc7efb06901f77c8fce4df35f60d",
+    "command": "/usr/bin/python -B .agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE_oracle.py",
+    "exit_code": 1,
+    "interpretation": "Expected reviewer FAIL because two late parent-replacement probes reproduce the blocker; all other oracle sections pass."
+  },
+  "review_coverage": {
+    "path": ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE_REVIEW_COVERAGE.json",
+    "sha256": "130dbe236d0996538aeed107fb1d4af547171f5c22a93b762eec1e1db4060437",
+    "required_cell_count": 36,
+    "covered_cell_count": 36,
+    "pass_count": 35,
+    "fail_count": 1,
+    "uncovered_cells": []
+  },
+  "tool_versions": {
+    "review_python": "3.12.3",
+    "alternate_python": "3.10.20",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.1"
+  },
+  "evidence_read": [
+    ".prguard/runtime/PR289_R2_CANDIDATE_SEAL.json",
+    "docs/research_program/post_pr275/pr289_spec.yaml",
+    "docs/research_program/post_pr275/pr289_publication_policy.json",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+    "htt/src/common/data_identity.py",
+    "tests/contracts/test_data_identity_registry_v2.py",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+    "docs/generated/pr289_data_identity_v2_receipt.json",
+    "docs/research_program/post_pr275/data_runbooks.yaml",
+    "docs/harness/CLAIM_LEDGER.md",
+    "docs/PR_DELTAS/pr-289.md",
+    "docs/codex_handoff/pr_status.yaml"
+  ],
+  "proposed_changes": [
+    "Post-assert parent identity after build replacement/fsync and after check read.",
+    "Add late-race build and check regression tests using the assignment oracle timing.",
+    "Regenerate receipt, status/delta hashes, candidate seal, and all independent reviews after tracked repair."
+  ],
+  "tests_to_run_after_repair": [
+    "/usr/bin/python -B .agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE_oracle.py (must exit 0 on a newly registered candidate-bound assignment)",
+    "all eight commands in docs/research_program/post_pr275/pr289_publication_policy.json",
+    "/usr/bin/python3.10 -B scripts/codex_harness/run_pr289_data_identity_v2.py check"
+  ],
+  "risks_and_kill_switches": [
+    "Current successful build/check output is not reliable under the reproduced late parent replacement race.",
+    "Any tracked repair changes candidate SHA/tree/diff, receipt bindings, seal, and review validity.",
+    "Do not reinterpret the 35 passing cells or process PASS as data admission, execution authorization, observed analysis, native validation, public use, or family identification."
+  ],
+  "artifacts_status_updates_needed": [
+    "Tracked repair and regression tests",
+    "Fresh docs/generated/pr289_data_identity_v2_receipt.json",
+    "Fresh PR-289 delta/status dependency hashes",
+    "Fresh candidate seal and R2 review run"
+  ],
+  "write_scope": {
+    "tracked_or_shared_candidate_files_modified": false,
+    "assignment_local_files_written": [
+      ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE_oracle.py",
+      ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE_REVIEW_COVERAGE.json",
+      ".agent-harness/runs/pr289-bounded-repair-r2-review-20260811/results/A-PR289-R2-CODE.json"
+    ]
+  },
+  "independence_attestation": {
+    "sibling_or_historical_result_envelopes_inspected": false,
+    "process_listings_inspected": false,
+    "broad_agent_harness_search_performed": false,
+    "named_validators_treated_as_black_boxes": true,
+    "sibling_results_used": []
+  }
+}

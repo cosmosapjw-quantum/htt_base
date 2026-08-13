@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "run_id": "pr291-r5-quantifier-continuation-20260813",
+  "assignment_id": "A-PR291-R5-QUANTIFIER-CLAIM",
+  "change_set_id": "CS-PR291-CF4-REBOOT",
+  "publication_group_id": "PG-PR291-CF4-REBOOT",
+  "candidate_seal_sha256": "5e4dbf2852e7c4418bb86755aeaf4889cc28e65642f46b3f0c0bbafcb06fdbb5",
+  "candidate_sha": "38802323415fe7dc88f63e58d53b316ec9b52c04",
+  "candidate_tree_sha": "602a35f0e6e5063ff6677cf2913521975126f588",
+  "diff_sha256": "d4a4154b5fe1b65476942e2d41204332a75bcee7605fe139f6ee1176384cf2c3",
+  "changed_files_sha256": "c99638c4a52a040e9f8678b3f453284a356b74bd0a09320936aa6fd51435beb3",
+  "completed_at": "2026-08-13T08:55:37+00:00",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json", "git:38802323415fe7dc88f63e58d53b316ec9b52c04^{tree}=602a35f0e6e5063ff6677cf2913521975126f588"],
+      "rationale": "Seal file hash, candidate SHA, tree, diff digest, changed-files digest, production hash, and clean tracked worktree match the assignment binding."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml", "command:pr291-preactivation"],
+      "rationale": "The spec fixes a diagnostic-only preactivation phase, and check mode terminates before observed execution."
+    },
+    {
+      "cell": "dependency_terminal_replay",
+      "status": "PASS",
+      "evidence_refs": ["command:pr291-focused", "command:pr291-preactivation"],
+      "rationale": "Focused replay passes and the terminal remains BLOCKED_PREDECESSOR_FINAL_SUCCESS."
+    },
+    {
+      "cell": "data_identity_and_human_authorization_separation",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml", "docs/codex_handoff/pr_status.yaml:1945"],
+      "rationale": "Identity admission and H-CF4 remain distinct, and the canonical human gate is NOT_AUTHORIZED."
+    },
+    {
+      "cell": "preflight_before_first_write",
+      "status": "PASS",
+      "evidence_refs": ["command:pr291-focused", "command:pr291-preactivation"],
+      "rationale": "Focused containment tests pass; blocked check reports an empty numeric_outputs_written list."
+    },
+    {
+      "cell": "synthetic_estimand_identity",
+      "status": "PASS",
+      "evidence_refs": ["command:pr291-focused", "docs/research_program/post_pr275/pr291_spec.yaml"],
+      "rationale": "Synthetic fixture scope and exact estimand order are typed and focused tests pass."
+    },
+    {
+      "cell": "group_row_selection_and_frame_conventions",
+      "status": "PASS",
+      "evidence_refs": ["command:pr291-focused", "command:pr291-adjacent"],
+      "rationale": "Exact grouped-row selection plus coordinate, sign, units, and distance bindings pass focused and adjacent tests."
+    },
+    {
+      "cell": "full_covariance_and_effective_rank",
+      "status": "PASS",
+      "evidence_refs": ["sha256:6a3ae13200b381af4502ef0ec0f001c039727a9dcfc1dd49e239a9f0c64e56bb", "sha256:4b15529947ea6269bc0ff38b7a58e5433fc6e767e34b732e2ee37cfac07bbeb0", "git:b175869169430aea7e40a22c2f7e814a60f6e629..38802323415fe7dc88f63e58d53b316ec9b52c04:numerical-bytes-unchanged"],
+      "rationale": "CF4 OBSSTAT and COMMON numerical source blobs are byte-identical to the accepted R5 physics/statistics candidate; the frozen physics/statistics evidence is carried without a new independent numerical audit."
+    },
+    {
+      "cell": "depth_zoa_nested_support_and_transport",
+      "status": "PASS",
+      "evidence_refs": ["command:pr291-focused", "command:pr291-adjacent", "sha256:6a3ae13200b381af4502ef0ec0f001c039727a9dcfc1dd49e239a9f0c64e56bb"],
+      "rationale": "Nested support, ZoA, and transport tests pass on numerical bytes unchanged since the accepted R5 physics/statistics review."
+    },
+    {
+      "cell": "weak_identification_and_identified_set_abstention",
+      "status": "PASS",
+      "evidence_refs": ["command:pr291-focused", "command:pr291-adjacent", "sha256:6a3ae13200b381af4502ef0ec0f001c039727a9dcfc1dd49e239a9f0c64e56bb"],
+      "rationale": "Weak-identification, response-rank, source-geometry, and abstention code is unchanged and its registered suites pass."
+    },
+    {
+      "cell": "legacy_p0_and_curl_disposition",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_spec.yaml", "command:pr291-claim-language"],
+      "rationale": "P0 remains retired and 0.0089 remains a stencil self-consistency no-go; the registered claim scan is clean."
+    },
+    {
+      "cell": "blocked_no_numeric_output",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/data_runs/cf4/PR291_NONEXECUTION_RECEIPT.json", "command:pr291-preactivation"],
+      "rationale": "Observed execution is false, public use is false, no numeric output is written, and the terminal remains blocked."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": ["command:pr291-portable-clean", "portable:file_count=5927:pre_post_manifest=8667f6fa3194c65689be917f3d0df962dd4ece24c003e18221e1f21b4ae5c239"],
+      "rationale": "Portable clean-root replay passes with distinct execution root and identical source/clean-root pre/post manifests."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": ["docs/research_program/post_pr275/pr291_publication_policy.json", ".prguard/runtime/PR291_R5_QUANTIFIER_FINAL_CANDIDATE_SEAL.json", "command:pr291-policy-cross-binding"],
+      "rationale": "Policy identity is seal-bound and all nine selected nonrelaxability/cross-binding tests pass."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "FAIL",
+      "evidence_refs": [".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/hostile_claim_oracle.py", "htt/src/common/semantic_guards/no_overclaim.py:127", "htt/src/common/semantic_guards/no_overclaim.py:160"],
+      "rationale": "The independent oracle reproduces seven ordinary positive family-identification bypasses in reordered passive and scalar-family-as-Bianchi forms despite the diagnostic-only pre-native ceiling."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": ["git:refs/remotes/origin/changeset/pr290-planck-native-replay-recovery-20260811=06ac20605ebc371b0f97ad6e91c802a51a9bf764", "git:merge-base=06ac20605ebc371b0f97ad6e91c802a51a9bf764", "command:pr291-dag-strict"],
+      "rationale": "The local target ref and merge base equal the policy/seal target SHA, and the strict 244-card rescue DAG validates."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR291-R5-QUANTIFIER-HOSTILE-ORACLE",
+      "kind": "property_test",
+      "status": "PASS",
+      "argv": ["python", "-B", ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/hostile_claim_oracle.py"],
+      "command_fingerprint": "0faed6315ac40a5037d10e258af1507e49a5e537f44e9df3390f66b21a1166c9",
+      "started_at": "2026-08-13T08:54:00+00:00",
+      "completed_at": "2026-08-13T08:55:00+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr291-r5-quantifier-continuation-20260813/artifacts/A-PR291-R5-QUANTIFIER-CLAIM/hostile_claim_oracle.py",
+      "artifact_sha256": "3f8658be09df08fb54288b7f4724b0e72016ffe1ddc7db9534ff8a61ac5d3538",
+      "artifact_bytes": 7089,
+      "evidence_refs": ["htt/src/common/semantic_guards/no_overclaim.py", "tests/contracts/test_claim_language_lint.py", "docs/research_program/post_pr275/pr291_spec.yaml"]
+    }
+  ],
+  "coverage_sha256": "95782f1c9c4f826f5ce147ddf71cff01ece7c0f4531b8b38f9214bf5827e2d47"
+}

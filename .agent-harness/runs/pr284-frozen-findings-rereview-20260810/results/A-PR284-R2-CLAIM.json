@@ -1,0 +1,162 @@
+{
+  "schema_version": 3,
+  "run_id": "pr284-frozen-findings-rereview-20260810",
+  "assignment_id": "A-PR284-R2-CLAIM",
+  "context_version": "e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019",
+  "agent_type": "claim_gate_reviewer",
+  "work_unit_id": "PR-284",
+  "change_set_id": "CS-PR284-DEPTH-DOOB",
+  "publication_group_id": "PG-PR284-DEPTH-DOOB",
+  "workflow_role": "reviewer",
+  "candidate_binding": {
+    "state": "frozen",
+    "seal_path": ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+    "seal_file_sha256": "f6f78bfd7c1b8f0bc2f4c895da94db09fe6b4b78da245d8090e09ee8aa84e09a",
+    "seal_sha256": "911cfed58698d97a88585a664c6ad46db8df92d46f3a23cfdc2bac74c24bdc65",
+    "base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_sha": "49a8f697c8d7985ec637e70aca3b9271d6f0da7f",
+    "merge_base_sha": "b6b6952d52f59bbe05477ef3b02292a98fe92baa",
+    "candidate_tree_sha": "702db54b4ce5ee0904352b2b507faffe5ef5d876",
+    "diff_sha256": "c9563b2e9e7bd45436aceb5a744e8fc6f7f8da7a818088b0d9426a37d7f59aea",
+    "changed_files_sha256": "0b0f12da44faa039ba85a6d869d90a6f96572e2bb1e2a0324184eeacf8c8ff0b",
+    "production_hash": "4126069eaf7aa93fc8f4ec3799a33800fefd0614926691a1301e543a2a229861"
+  },
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "gate_disposition": "PASS",
+  "result_path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/results/A-PR284-R2-CLAIM.json",
+  "assignment_sha256": "f73cc1edeec50d7cf8d74b159b2cf727d599b9caa8572dd419ece70b055f10b9",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/RUN_PLAN.json",
+    ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/assignments/A-PR284-R2-CLAIM.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/publication_integrity.py",
+    ".agent-harness/scripts/review_coverage.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-claim-provenance-ledger/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/scripts/check_no_mock_results.py",
+    ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json",
+    "docs/PR_DELTAS/pr-284.md",
+    "docs/generated/pr284_depth_path_doob_receipt.json",
+    "docs/research_program/post_pr275/pr284_publication_policy.json",
+    "docs/research_program/post_pr275/pr284_spec.yaml",
+    "docs/research_program/vector_tensor/proof_registry_two_pillars.yaml",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+    "htt/htt/htt/infer/depth_path.py",
+    "htt/htt/htt/infer/depth_path_calibration.py",
+    "htt/src/common/depth_path.py",
+    "htt/src/common/depth_path_calibration.py",
+    "htt/src/common/vector_tensor_statistical_foundations.py",
+    "scripts/check_claim_language.py",
+    "scripts/codex_harness/run_pr284_depth_path_doob.py",
+    "tests/contracts/test_depth_path.py",
+    "tests/contracts/test_depth_path_doob_calibration.py",
+    "tests/contracts/test_pillar_s_core.py",
+    ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.py",
+    ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json",
+    ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/REVIEW_COVERAGE.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-09T21:44:50Z",
+  "completed_at": "2026-08-09T21:49:52Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "PyYAML": "6.0.1",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "argv": ["python3", "registered-input-hash-and-context-check"],
+      "exit": 0,
+      "summary": "Context version and all six registered input hashes matched."
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.py", "--repo", ".", "--output", ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json"],
+      "attempt_exit_codes": [1, 1, 1, 0],
+      "exit": 0,
+      "summary": "Three initial runs exposed only assignment-local Markdown/diff whitespace-matching defects; after normalization the unchanged oracle passed all nine affected claim/provenance invariants."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "--include-archives", "htt/src/common/depth_path.py", "htt/src/common/depth_path_calibration.py", "htt/htt/htt/infer/depth_path.py", "htt/htt/htt/infer/depth_path_calibration.py", "tests/contracts/test_depth_path_doob_calibration.py", "docs/research_program/post_pr275/pr284_spec.yaml", "docs/generated/pr284_depth_path_doob_receipt.json", "docs/PR_DELTAS/pr-284.md"],
+      "exit": 0,
+      "summary": "No forbidden claim language detected."
+    },
+    {
+      "argv": ["python3", "-B", "scripts/codex_harness/run_pr284_depth_path_doob.py", "check"],
+      "exit": 0,
+      "summary": "Exact repaired receipt replay emitted PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION."
+    },
+    {
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_depth_path_doob_calibration.py", "-k", "common_report_builder_cannot_mint_proved_status_without_replay or spec_and_backlog_bind_g6_terminal_receipt_and_claim_ceiling"],
+      "exit": 2,
+      "summary": "Preserved source-layout bootstrap failure during collection: ModuleNotFoundError: No module named 'common'; no scientific test executed."
+    },
+    {
+      "env": {"PYTHONPATH": ".:htt/src:htt"},
+      "argv": ["python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_depth_path_doob_calibration.py", "-k", "common_report_builder_cannot_mint_proved_status_without_replay or spec_and_backlog_bind_g6_terminal_receipt_and_claim_ceiling"],
+      "exit": 0,
+      "summary": "2 passed, 19 deselected in 1.39s under declared repository source roots."
+    },
+    {
+      "argv": ["python3", "-B", "/home/cosmosapjw/worktrees/htt-process-inflation-recovery-pr283-20260810/.agents/skills/htt-scientific-code-validation/scripts/check_no_mock_results.py"],
+      "cwd": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM",
+      "exit": 0,
+      "summary": "No suspicious mock/fake validation markers found in assignment-local artifacts."
+    },
+    {
+      "argv": ["python3", "-B", ".agent-harness/scripts/review_coverage.py", "--coverage", ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/REVIEW_COVERAGE.json", "--seal", ".prguard/runtime/PR284_R2_CANDIDATE_SEAL.json", "--run-id", "pr284-frozen-findings-rereview-20260810", "--assignment-id", "A-PR284-R2-CLAIM", "--risk-tier", "R3"],
+      "exit": 0,
+      "summary": "Affected-cell review coverage validated with no errors."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/REVIEW_COVERAGE.json",
+      "sha256": "468d7bc310e676c8815a7007c75761a0acf84566a96f175723dd13c79c8010cb",
+      "bytes": 8370,
+      "producer": "A-PR284-R2-CLAIM"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json",
+      "sha256": "83da131405e04b6e54f2c208b9451359e6aa73a123dfbf6a6c60773dd85045da",
+      "bytes": 4430,
+      "producer": "A-PR284-R2-CLAIM",
+      "command_fingerprint": "7f0f1275382978273644f08c3543829b94af6ace5527d70f5c6a09c1a98bec65"
+    },
+    {
+      "path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.py",
+      "sha256": "5264101ef79e7e092168178e76e4ccba15d1dd2e9f3c8d9b2983cedd92ee1c15",
+      "bytes": 14715,
+      "producer": "A-PR284-R2-CLAIM"
+    }
+  ],
+  "review_coverage_path": ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/REVIEW_COVERAGE.json",
+  "review_coverage_sha256": "468d7bc310e676c8815a7007c75761a0acf84566a96f175723dd13c79c8010cb",
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR273-BLIND-INTEGRATION",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/claim_repair_oracle.json",
+        ".agent-harness/runs/pr284-frozen-findings-rereview-20260810/artifacts/A-PR284-R2-CLAIM/REVIEW_COVERAGE.json",
+        "docs/research_program/post_pr275/pr284_spec.yaml",
+        "docs/research_program/post_pr275/pr284_publication_policy.json",
+        "docs/generated/pr284_depth_path_doob_receipt.json",
+        "docs/PR_DELTAS/pr-284.md",
+        "htt/src/common/depth_path_calibration.py"
+      ],
+      "evidence_fingerprint": "sha256:83da131405e04b6e54f2c208b9451359e6aa73a123dfbf6a6c60773dd85045da",
+      "summary": "No affected claim/provenance defect found after the constructor-bypass repair. New replay/mutation language remains a finite registered contract check and does not promote theorem status, matched-mock execution, observed/public use, native transfer, geometry, or family identification; HTT ownership and C2 diagnostic-only boundaries remain cross-bound. The bare-source pytest collection failure is preserved separately from the passing source-root execution."
+    }
+  ],
+  "errors": []
+}

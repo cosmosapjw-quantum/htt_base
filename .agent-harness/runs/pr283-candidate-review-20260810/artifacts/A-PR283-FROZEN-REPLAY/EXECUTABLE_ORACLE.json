@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "run_id": "pr283-candidate-review-20260810",
+  "assignment_id": "A-PR283-FROZEN-REPLAY",
+  "candidate_sha": "6ee9048ffd80f25337f405d8c6a39fd3b7f489eb",
+  "candidate_tree_sha": "6c5c55dee52aaf7c7649dd23d386e0f85782fd32",
+  "candidate_seal_sha256": "89c44d46574c4e268789ab2d623f966bd46e63c8b12f36fade1075d449f03e08",
+  "first_verdict": "PASS",
+  "oracle": {
+    "kind": "property_test",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "pytest",
+      "-p",
+      "no:cacheprovider",
+      "-q",
+      "tests/contracts/test_process_recovery_auto_stacked.py"
+    ],
+    "started_at": "2026-08-09T19:23:29.862023+00:00",
+    "completed_at": "2026-08-09T19:23:32.116604+00:00",
+    "returncode": 0,
+    "timed_out": false,
+    "stdout": "....................                                                     [100%]\n20 passed in 2.11s\n",
+    "stderr": ""
+  },
+  "policy_commands": [
+    {
+      "id": "pr283-process-recovery-bootstrap",
+      "returncode": 0,
+      "summary": "20 passed in 2.18s"
+    },
+    {
+      "id": "pr283-focused",
+      "returncode": 0,
+      "summary": "23 passed in 1.43s"
+    },
+    {
+      "id": "pr283-adjacent",
+      "returncode": 0,
+      "summary": "62 passed in 6.23s"
+    },
+    {
+      "id": "pr283-receipt-replay",
+      "returncode": 0,
+      "summary": "exact PR283 receipt replay matched sha256 10d28620cd709585cf9444dbde72e19d7baced9ef2da901c005bcbeb3a85fedf"
+    },
+    {
+      "id": "pr283-pr272-predecessor-replay",
+      "returncode": 0,
+      "summary": "5 passed, 24 deselected in 1.63s"
+    },
+    {
+      "id": "pr283-portable-clean-replay",
+      "returncode": 0,
+      "summary": "5867 tracked files; source and clean-root manifests invariant; nested receipt replay exit 0"
+    },
+    {
+      "id": "pr283-publication-policy-cross-binding",
+      "returncode": 0,
+      "summary": "9 passed, 58 deselected in 0.95s"
+    },
+    {
+      "id": "pr283-source-replay-caller-migrations",
+      "returncode": 0,
+      "summary": "90 passed in 6.85s"
+    },
+    {
+      "id": "pr283-harness-portability",
+      "returncode": 0,
+      "summary": "22 passed in 9.82s"
+    },
+    {
+      "id": "pr283-dag-strict",
+      "returncode": 0,
+      "summary": "244 PR cards valid; PR-283 ELIGIBLE"
+    },
+    {
+      "id": "pr283-claim-language",
+      "returncode": 0,
+      "summary": "no forbidden claim language detected"
+    }
+  ],
+  "additional_replay_checks": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "scripts/codex_harness/run_pr282_exact_parity_readiness.py",
+        "check"
+      ],
+      "returncode": 0,
+      "summary": "exact current PR282 receipt matched sha256 a6861dce30c737c05a2aff8ed204e43c8272b9170d0a754e737e7f5059a3549c"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "scripts/codex_harness/build_pr273_blind_synthetic.py",
+        "--check"
+      ],
+      "returncode": 0,
+      "summary": "PR273 regenerated artifacts matched byte for byte: 5 cases, 2 held out, 5 mutations killed"
+    }
+  ],
+  "portable_clean_evidence": {
+    "tracked_file_count": 5867,
+    "manifest_sha256": "cd3777f43dd1d0724e50be2983bae17e7dc17776845cdecb2d0dd63990b84084",
+    "source_pre_equals_post": true,
+    "clean_pre_equals_post": true,
+    "source_root_differs_from_execution_root": true,
+    "nested_receipt_returncode": 0,
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "PyYAML": "6.0.1"
+  },
+  "invariant_checks": {
+    "candidate_seal_validation_errors": [],
+    "required_input_hashes_match": true,
+    "worktree_clean_before_review": true,
+    "stable_patch_count": 5,
+    "stable_patch_ids_unique_and_absent_from_base_history": true,
+    "future_pr284_disposition": "INELIGIBLE",
+    "future_pr284_retry_budget_cost": 0,
+    "future_pr284_assurance_budget_cost": 0,
+    "auto_merge_mode_refused": true,
+    "gh_pr_merge_classified_forbidden": true,
+    "historical_acceptance_reference_free": true,
+    "historical_reference_hits_in_current_plan_assignment_seal_policy_and_receipts": []
+  }
+}

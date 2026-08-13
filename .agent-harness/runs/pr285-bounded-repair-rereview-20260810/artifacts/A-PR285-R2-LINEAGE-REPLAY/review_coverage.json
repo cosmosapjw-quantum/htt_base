@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "run_id": "pr285-bounded-repair-rereview-20260810",
+  "assignment_id": "A-PR285-R2-LINEAGE-REPLAY",
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "candidate_seal_sha256": "7739a04d155d895f6dd4f5952b2e8f65387adc579d728af0c47eb0debe3fd2bb",
+  "candidate_sha": "8682a13e8df75c48f6150af555ee231f62e7d9bc",
+  "candidate_tree_sha": "11abc914111064c9f8384dad3fdc88108763e43c",
+  "diff_sha256": "4e26387391037bb3b5e3b79bd4199dd98f2eb9f7c3e5a6cd8094f50c55c0f734",
+  "changed_files_sha256": "27d7bc58a8663e2a4573abe14386ced8a19a9c18db0f3c8469c03c5a2d6f1788",
+  "completed_at": "2026-08-10T12:03:18Z",
+  "first_verdict_read_only": true,
+  "correlated_review": false,
+  "coverage_cells": [
+    {
+      "cell": "candidate_identity",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR285_R2_FINAL_REVIEW_CANDIDATE_SEAL.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-LINEAGE-REPLAY/lineage_replay_oracle_output.json#lineage_replay"
+      ],
+      "rationale": "HEAD, tree, merge base, seal checksums, diff digest, changed-file digest, and stable patch inventory replay exactly."
+    },
+    {
+      "cell": "spec_before_execution",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr285_spec.yaml",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/assignments/A-PR285-R2-LINEAGE-REPLAY.json"
+      ],
+      "rationale": "The registered assignment and governing PR-285 spec were read before executable replay."
+    },
+    {
+      "cell": "legacy_65_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_exact_inventory_and_terminal_counts",
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"
+      ],
+      "rationale": "Fresh focused tests and independent receipt build retain all 65 legacy rows."
+    },
+    {
+      "cell": "vector_tensor_14_inventory_exactness",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_vector_tensor_dispositions_preserve_restricted_boundaries",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-LINEAGE-REPLAY/lineage_replay_oracle_output.json#receipt_and_write_boundary"
+      ],
+      "rationale": "Fresh focused tests and exact replay retain VT-T1 through VT-T14."
+    },
+    {
+      "cell": "statement_identity_and_no_weakening",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr285_spec.yaml#statement_identity_contract",
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_each_registered_mutation_is_killed"
+      ],
+      "rationale": "Statement identities replay from bound sources and the weakening mutation is killed."
+    },
+    {
+      "cell": "premise_and_domain_specificity",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_legacy_titles_preserve_source_status_without_promotion",
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py#_validate_core"
+      ],
+      "rationale": "Premise values, domain values, and their declared or source-not-typed statuses replay exactly."
+    },
+    {
+      "cell": "legacy_title_only_inconclusive_boundary",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_legacy_titles_preserve_source_status_without_promotion",
+        "docs/research_program/post_pr275/pr285_spec.yaml#statement_identity_contract"
+      ],
+      "rationale": "All title-only legacy rows remain INCONCLUSIVE_WITH_RECEIPT and none are promoted."
+    },
+    {
+      "cell": "analytic_and_conditional_proof_replay",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py#_vector_tensor_rows",
+        "docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json"
+      ],
+      "rationale": "The 16 exact source bindings and tracked receipt replay without byte drift."
+    },
+    {
+      "cell": "four_axis_cas_shared_contract",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_cas_contract_has_all_four_axes_and_no_majority_vote",
+        "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json"
+      ],
+      "rationale": "The receipt preserves the frozen four-axis contract and forbids majority-vote promotion; current live Wolfram availability is not regraded."
+    },
+    {
+      "cell": "restricted_and_partial_scope_boundary",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_vector_tensor_dispositions_preserve_restricted_boundaries",
+        "docs/research_program/post_pr275/pr285_spec.yaml#expected_vector_tensor_dispositions"
+      ],
+      "rationale": "VT-T8 and VT-T13 remain inconclusive at their local or partial scope ceilings."
+    },
+    {
+      "cell": "native_geometry_blocked_boundary",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_vector_tensor_dispositions_preserve_restricted_boundaries",
+        "docs/research_program/post_pr275/pr285_spec.yaml#expected_vector_tensor_dispositions"
+      ],
+      "rationale": "VT-T14 remains BLOCKED_WITH_RECEIPT before native geometry and atlas evidence."
+    },
+    {
+      "cell": "pr190_counterexample_preservation",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_pr190_full_interval_counterexample_remains_fail",
+        "docs/generated/pr190_attainability/attainability_report.json"
+      ],
+      "rationale": "The full-interval candidate remains FAIL and its W2=0 counterexample boundary is retained."
+    },
+    {
+      "cell": "terminal_vocabulary_and_zero_bare_statuses",
+      "status": "PASS",
+      "evidence_refs": [
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_exact_inventory_and_terminal_counts",
+        "docs/research_program/post_pr275/pr285_spec.yaml#receipt_contract"
+      ],
+      "rationale": "All 80 rows have terminal receipt vocabulary and the bare status count is zero."
+    },
+    {
+      "cell": "receipt_recomputation_and_content_address",
+      "status": "PASS",
+      "evidence_refs": [
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-LINEAGE-REPLAY/lineage_replay_oracle_output.json#receipt_and_write_boundary",
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_content_address_recomputes"
+      ],
+      "rationale": "Independent rebuild equals tracked bytes and recomputes receipt content SHA-256 3e70058559c8926d52ae97147d163c808bdf4223b0ae0462b0c8bf3148e4da53."
+    },
+    {
+      "cell": "portable_clean_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr285_pillar_t_adjudication.py#_portable",
+        ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json"
+      ],
+      "rationale": "Fresh 5,881-file git-archive replay preserved identical source and clean-root manifests and exited zero."
+    },
+    {
+      "cell": "publication_policy_cross_binding",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr285_publication_policy.json#logical_patch_lineage",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-LINEAGE-REPLAY/lineage_replay_oracle_output.json#hostile_guard_replay"
+      ],
+      "rationale": "Audit SHA, every representative and alias, G20/G21 exactly-once inclusion, G22 absence, six hostile mutations, and unconditional duplicate rejection all replay."
+    },
+    {
+      "cell": "claim_and_family_ceiling",
+      "status": "PASS",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/pr285_publication_policy.json#claim_ceiling",
+        "tests/contracts/test_pillar_t_complete_adjudication.py::test_claim_and_family_firewall"
+      ],
+      "rationale": "All row and metadata claims remain diagnostic-only, observed/public use remains false, and family identification remains blocked."
+    },
+    {
+      "cell": "latest_target_integration",
+      "status": "PASS",
+      "evidence_refs": [
+        ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-LINEAGE-REPLAY/lineage_replay_oracle_output.json#seal_receipt_and_bounded_rereview"
+      ],
+      "rationale": "The PASS receipt cross-binds the implementation seal and eight commands; the final follow-up changes only delta/status mirrors while all production and dependency bytes remain unchanged."
+    }
+  ],
+  "independent_oracles": [
+    {
+      "oracle_id": "PR285-R2-LINEAGE-REPLAY",
+      "kind": "mutation_test",
+      "status": "PASS",
+      "argv": [
+        "python3",
+        "-B",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-LINEAGE-REPLAY/lineage_replay_oracle.py",
+        "--output",
+        ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-LINEAGE-REPLAY/lineage_replay_oracle_output.json"
+      ],
+      "command_fingerprint": "841dc4be8d9e4cf59bc8b2073602324469c48869ef927df0d97eb6bc101ce4c4",
+      "started_at": "2026-08-10T12:01:30Z",
+      "completed_at": "2026-08-10T12:02:30Z",
+      "returncode": 0,
+      "timed_out": false,
+      "artifact_path": ".agent-harness/runs/pr285-bounded-repair-rereview-20260810/artifacts/A-PR285-R2-LINEAGE-REPLAY/lineage_replay_oracle_output.json",
+      "artifact_sha256": "1359707bcbb8037a9c71b6d91e5d3e2adbb018b35b680c1a67b57c3184df1d3b",
+      "artifact_bytes": 2797,
+      "evidence_refs": [
+        "HTT_PROCESS_INFLATION_SALVAGE_AUDIT_20260810.md@sha256:c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436",
+        ".prguard/runtime/PR285_R2_FINAL_REVIEW_CANDIDATE_SEAL.json",
+        ".prguard/runtime/PR285_R2_IMPLEMENTATION_INTEGRATION_REHEARSAL.json"
+      ]
+    }
+  ],
+  "coverage_sha256": "a2508b0a24052970eed4e7d3851768bb1c6b6c623ad19ae6c77aa2dd544e7783"
+}

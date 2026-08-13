@@ -1,0 +1,65 @@
+{
+  "checks": [
+    {
+      "baseline_rank_nullity": [
+        2,
+        1
+      ],
+      "check": "whitened_column_normalized_rank_scale_invariance",
+      "passed": true,
+      "scaled_rank_nullity": [
+        2,
+        1
+      ]
+    },
+    {
+      "check": "null_replay_bound_independent_of_rank_floor",
+      "null_residual_bound": 1.3481600519334532e-13,
+      "null_residual_norm": 6.845500320316733e-17,
+      "passed": true,
+      "relative_singular_floor": 1e-12
+    },
+    {
+      "baseline_content_id": "sha256:edcac0130ba27211273e89b4f24a87637674d485f76af242b71fb99f6737e0d0",
+      "check": "response_content_binding_changes_under_column_units",
+      "passed": true,
+      "scaled_content_id": "sha256:c1b620168e94e60a96c7e639a4baddc64fd57a9a29f5b826b233303645c226d2"
+    },
+    {
+      "check": "fixed_relative_eigengap_scale_invariance",
+      "drift_statuses": [
+        "WEAKLY_IDENTIFIED",
+        "WEAKLY_IDENTIFIED",
+        "WEAKLY_IDENTIFIED"
+      ],
+      "passed": true,
+      "shear_statuses": [
+        "WEAKLY_IDENTIFIED",
+        "WEAKLY_IDENTIFIED",
+        "WEAKLY_IDENTIFIED"
+      ]
+    },
+    {
+      "check": "strict_non_singleton_structural_set",
+      "passed": true
+    },
+    {
+      "accepted_structural_set_status": "BOUNDED_BUT_NOT_POINT_IDENTIFIED",
+      "actual_local_global_rank": 1,
+      "check": "typed_source_rank_recomputed_from_response_role_columns",
+      "decision_status": "WEAKLY_IDENTIFIED",
+      "declared_local_global_joint_rank": 2,
+      "explanation": "LOCAL and GLOBAL columns are identical, so their actual joint rank is one. The independent NUISANCE column raises total response rank to two. The binding compares declared source joint rank only to total response rank and accepts the forged source geometry.",
+      "passed": false,
+      "total_response_rank": 2
+    }
+  ],
+  "numpy_version": "2.4.2",
+  "oracle_id": "pr291-r4-physstat-hostile-oracle",
+  "schema_version": 1,
+  "summary": {
+    "failed": 1,
+    "overall": "FAIL",
+    "passed": 5
+  }
+}
