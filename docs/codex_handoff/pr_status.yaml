@@ -571,25 +571,25 @@ stacked_pr_execution:
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: 66a34981e03da2bb0146687c6a2f9871a09f1e28432e234355ea46bfafdf3744
+      production_hash: 7545b0cbc5e6e0ae572b4c8b7e9efebeafc9b41a25e90da82d407b0ecec8813b
       dependency_hashes:
-        pr291_spec: f30762a1c56678c749f22734e31357119d1c736c1c3de742dabf7a330ecf77bc
+        pr291_spec: 7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec
         publication_policy: 2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835
         pr289_data_identity_receipt: 92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34
         pr289_registry: e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f
         pr289_data_identity_module: 145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2
         pr291_common_module: 4b15529947ea6269bc0ff38b7a58e5433fc6e767e34b732e2ee37cfac07bbeb0
         pr291_obsstat_module: dbde6106ec52c58c3f8df80149f973bd9e3c2201ff39683bf6bb5ad87bd5a8b2
-        pr291_runner: 59529780548ae35be9926a79f6efb0211c81bdaf8a3834d1d4a0f05d0653a056
-        pr291_contract_test: 956bbe88fffe92ea1619c4473df8bcb853b883ea2e0c6c4856dd264b23762bd3
-        claim_guard: 30007607e0ab3f0c76fee7048dfb9763e179cad21d9f827998b7e987d497e6df
-        claim_contract_test: 15992eae1a53d7282bfed793a1ddfc21f39c4d62e2b2109cb730279d3e6479ec
+        pr291_runner: 45659be3d9801697272726d1cf8018d3719a7d83127fc89d05781c30db239af8
+        pr291_contract_test: bef174ab837e75997d36feb5578a64f890c82961d0480559ca6f828e45f21e4b
+        claim_guard: 77716ea504f5eccd3bcf33ef83b4bac661177466935fb9b118612cfe8d4d02ac
+        claim_contract_test: 6ffa22fc4609f6e67273e2d52fbfe0d8e97dd045e404e6761e1301f8de7b6bb9
         claim_ledger: 86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b
         salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
       gate_dispositions: {eligibility: PASS, implementation: PASS, validation: PASS,
-        code: DEFERRED, physics: DEFERRED, statistics: DEFERRED, claim: DEFERRED,
-        harness: PASS, portability_replay: PASS, review: DEFERRED}
-      assurance_budget: {maximum: 16, consumed: 0}
+        code: FAIL, physics: INCONCLUSIVE, statistics: INCONCLUSIVE, claim: FAIL,
+        harness: PASS, portability_replay: DEFERRED, review: FAIL, rereview: DEFERRED}
+      assurance_budget: {maximum: 16, consumed: 8}
     PR-292:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
