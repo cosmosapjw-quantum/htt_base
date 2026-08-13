@@ -107,6 +107,30 @@ def test_reordered_and_clause_scoped_family_promotions_are_errors() -> None:
         assert _rules(text) == [], text
 
 
+def test_plural_determiner_and_scalar_family_variants_are_errors() -> None:
+    forbidden = (
+        "The analyses identify Bianchi families in the CF4 result.",
+        "The analysis identifies both Bianchi families in the CF4 result.",
+        "The analysis identifies these Bianchi families in the CF4 result.",
+        "Our analysis identifies a Bianchi family in the CF4 result.",
+        "The analysis definitively identifies both Bianchi\nfamilies in the CF4 result.",
+        "The low-ell scalar therefore implies identification of a Bianchi family.",
+        "Identification of a Bianchi family follows from the scalar x/Q result.",
+        "The analysis is not public but identifies both Bianchi families.",
+    )
+    for text in forbidden:
+        assert _rules(text), text
+
+    safe = (
+        "The analysis does not identify both Bianchi families.",
+        "Both Bianchi families are not identified by this analysis.",
+        "Identification of a Bianchi family does not follow from the scalar x/Q result.",
+        "The low-ell scalar does not imply identification of a Bianchi family.",
+    )
+    for text in safe:
+        assert _rules(text) == [], text
+
+
 def test_claim_scoped_geometry_downclaims_remain_allowed() -> None:
     safe = (
         "Do not claim Bianchi geometry detected in the CF4 result.\n"
