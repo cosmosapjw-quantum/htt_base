@@ -100,19 +100,18 @@ RULES: tuple[ClaimLanguageRule, ...] = (
         rule_id="geometry_detected",
         pattern=re.compile(
             r"\b("
-            r"Bianchi geometr(?:y|ies)\s+"
-            r"(?:(?:is|are|was|were|has|have|been|being|conclusively|"
-            r"directly|uniquely|definitively)\s+){0,5}detected|"
+            r"Bianchi geometr(?:y|ies)\b[^.!?\n]{0,96}\bdetect(?:s|ed)?|"
             r"global Bianchi anisotropy detected|"  # forbidden-rule literal
-            r"Bianchi famil(?:y|ies)\s+"
-            r"(?:(?:is|are|was|were|has|have|been|being|conclusively|"
-            r"directly|uniquely|definitively)\s+){0,5}identified|"
+            r"Bianchi famil(?:y|ies)\b[^.!?\n]{0,96}\bidentif(?:y|ies|ied)|"
             r"identified Bianchi family|"  # forbidden-rule literal
             r"family identified as|"  # forbidden-rule literal
-            r"(?:we|the\s+analysis)\s+"
-            r"(?:(?:conclusively|directly|uniquely|definitively)\s+){0,3}"
+            r"(?:we|the\s+analysis)\b[^.!?\n]{0,96}\b"
             r"identif(?:y|ies|ied)\s+"
             r"(?:(?:a|the|those|several)\s+)?Bianchi famil(?:y|ies)|"
+            r"(?:we|the\s+analysis)\b[^.!?\n]{0,96}\b"
+            r"identif(?:y|ies|ied)\s+"
+            r"(?:(?:the|those|several)\s+)?famil(?:y|ies)\s+as\s+Bianchi"
+            r"(?:\s+(?:type\s+)?[A-Za-z0-9_-]+)?|"
             r"(?:the\s+)?famil(?:y|ies)\s+"
             r"(?:(?:is|are|was|were|has|have|been|being|conclusively|"
             r"directly|uniquely|definitively)\s+){0,5}"
@@ -138,6 +137,12 @@ RULES: tuple[ClaimLanguageRule, ...] = (
             r"prov(?:e|es|ed).{0,40}Bianchi type|"
             r"certif(?:y|ies|ied).{0,40}Bianchi geometry|"
             r"Bianchi geometry|geometry detected"
+            r")|"
+            r"Bianchi family identification[^.!?\n]{0,160}\b"
+            r"(?:follows?|results?)\s+from\s+(?:the\s+)?("
+            r"scalar|D[_\\\-\s]?(?:\\ell|ell|l)|x\s*[,/]\s*Q|"
+            r"F\s*[,/]\s*G|low[- ]ell feature|direction coherence|"
+            r"directional coherence|BiPoSH norm|largest Bayes factor"
             r")",
             re.IGNORECASE,
         ),
@@ -390,7 +395,12 @@ def _scan_multiline_claim_windows(
     rules = tuple(
         item
         for item in RULES
-        if item.rule_id in {"geometry_detected", "legacy_curl_physics_promotion"}
+        if item.rule_id
+        in {
+            "geometry_detected",
+            "scalar_family_identification",
+            "legacy_curl_physics_promotion",
+        }
     )
     issues: list[ClaimLanguageIssue] = []
     block: list[tuple[int, str]] = []
@@ -654,7 +664,7 @@ def _match_sentence_has_guardrail(text: str, match: re.Match[str]) -> bool:
     if re.search(
         r"\b(?:do|does|did|can|could|may|must|should|will|would)\s+not\s+"
         r"(?:detect|identify|support|establish|prove|certify|validate|"
-        r"rescue|imply|promote|claim)\b",
+        r"rescue|imply|promote|claim|follow|result)\b",
         matched_claim,
     ):
         return True

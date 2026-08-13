@@ -90,7 +90,75 @@ def _identity() -> dict[str, str]:
     return identity
 
 
+def _derived_source_geometry(response) -> dict[str, object]:
+    whitened = np.asarray(response.covariance_whitened_response, dtype=float)
+    normalized = whitened / np.asarray(response.column_scales, dtype=float)
+    local = normalized[:, [
+        index for index, role in enumerate(response.parameter_roles) if role == "LOCAL"
+    ]]
+    global_ = normalized[:, [
+        index for index, role in enumerate(response.parameter_roles) if role == "GLOBAL"
+    ]]
+    joint = np.column_stack((local, global_))
+
+    def rank(matrix: np.ndarray) -> int:
+        singular = np.linalg.svd(matrix, compute_uv=False)
+        return int(np.count_nonzero(singular > 1.0e-12 * singular[0]))
+
+    local_rank = rank(local)
+    global_rank = rank(global_)
+    joint_singular = np.linalg.svd(joint, compute_uv=False)
+    joint_rank = int(
+        np.count_nonzero(joint_singular > 1.0e-12 * joint_singular[0])
+    )
+    angles: tuple[float, ...] = ()
+    if local_rank == local.shape[1] and global_rank == global_.shape[1]:
+        local_u = np.linalg.svd(local, full_matrices=False)[0][:, :local_rank]
+        global_u = np.linalg.svd(global_, full_matrices=False)[0][:, :global_rank]
+        cosines = np.linalg.svd(local_u.T @ global_u, compute_uv=False)
+        angles = tuple(float(value) for value in np.arccos(np.clip(cosines, 0.0, 1.0)))
+    return {
+        "local_rank": local_rank,
+        "global_rank": global_rank,
+        "joint_rank": joint_rank,
+        "principal_angles_radians": angles,
+        "joint_singular_values": tuple(float(value) for value in joint_singular),
+    }
+
+
+def _source_decision(identity: dict[str, str], response, *, weak: bool):
+    geometry = _derived_source_geometry(response)
+    angles = geometry["principal_angles_radians"]
+    angle_threshold = min(angles) if weak and angles else 0.0
+    return evaluate_source_separation(
+        source_geometry_report_id=identity["estimand_id"],
+        covariance_id=identity["covariance_id"],
+        nuisance_tangent_id=_sha_id("pr291-nuisance"),
+        normalizer_id=response.normalizer_id,
+        normalizer_source_identity="PR291-SYNTHETIC-DIMENSIONLESS-NORMALIZER",
+        normalizer_coordinate_map_id=_sha_id("pr291-normalizer-map"),
+        parameter_coordinate_units="dimensionless_beta_c_equals_1",
+        provider_available=True,
+        covariance_supported=True,
+        local_parameter_count=1,
+        global_parameter_count=1,
+        local_rank=geometry["local_rank"],
+        global_rank=geometry["global_rank"],
+        joint_rank=geometry["joint_rank"],
+        principal_angles_radians=angles,
+        joint_singular_values=geometry["joint_singular_values"],
+        threshold_contract=build_weak_identification_threshold_contract(
+            minimum_principal_angle_radians=angle_threshold,
+            minimum_normalizer_bound_relative_joint_singular_value=0.0,
+        ),
+    )
+
+
 def _weak_source_decision(identity: dict[str, str], response):
+    return _source_decision(identity, response, weak=True)
+
+
+def _forged_weak_source_decision(identity: dict[str, str], response):
     return evaluate_source_separation(
         source_geometry_report_id=identity["estimand_id"],
         covariance_id=identity["covariance_id"],
@@ -814,14 +882,114 @@ def test_gate_replays_null_basis_and_exact_source_rank() -> None:
         parameter_roles=("LOCAL", "GLOBAL", "NUISANCE"),
     )
     assert (rank_one.response_rank, rank_one.nullity) == (1, 2)
-    with pytest.raises(Cf4Post275Error, match="rank/nullity"):
+    with pytest.raises(Cf4Post275Error, match="source geometry"):
         build_cf4_gate_snapshot(
             design=design,
             depth=depth,
             shear=shear,
             eigenspace_drift=eigenspace,
             response=rank_one,
-            source_separation=_weak_source_decision(identity, rank_one),
+            source_separation=_forged_weak_source_decision(identity, rank_one),
+        )
+
+
+def test_source_rank_binding_excludes_nuisance_columns() -> None:
+    identity = _identity()
+    directions, distances = _directions_and_distances()
+    depth = build_synthetic_depth_zoa_path(
+        _depth_rows(), operator_identity=identity
+    )
+    design = build_cf4_moment_design(directions, distances, identity)
+    shear = analyze_synthetic_shear(
+        np.diag([2.0, -0.5, -1.5]),
+        covariance_id=identity["covariance_id"],
+        response_id=identity["response_id"],
+    )
+    eigenspace = analyze_synthetic_eigenspace_drift(
+        np.diag([1.0, 1.0 + 1e-11, -2.0 - 1e-11]),
+        np.diag([1.0 + 1e-11, 1.0, -2.0 - 1e-11]),
+        reference_depth_id=depth.path.strata[0].stratum_id,
+        candidate_depth_id=depth.path.strata[1].stratum_id,
+        depth_path_content_id=depth.path.content_id,
+        covariance_id=identity["covariance_id"],
+        response_id=identity["response_id"],
+    )
+    response = analyze_synthetic_response_nullspace(
+        [[1.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+        [[1.0, 0.2], [0.2, 1.0]],
+        covariance_id=identity["covariance_id"],
+        response_id=identity["response_id"],
+        parameter_labels=("local", "global", "nuisance"),
+        parameter_roles=("LOCAL", "GLOBAL", "NUISANCE"),
+    )
+    forged_source_geometry = _forged_weak_source_decision(identity, response)
+
+    assert response.response_rank == 2
+    assert forged_source_geometry.joint_rank == 2
+    with pytest.raises(Cf4Post275Error, match="source-response source geometry"):
+        build_structural_identified_set(
+            lower=-1.0,
+            upper=1.0,
+            nuisance_box_id="nuisance:synthetic:v1",
+            response=response,
+            source_separation=forged_source_geometry,
+        )
+    with pytest.raises(Cf4Post275Error, match="source-response source geometry"):
+        build_cf4_gate_snapshot(
+            design=design,
+            depth=depth,
+            shear=shear,
+            eigenspace_drift=eigenspace,
+            response=response,
+            source_separation=forged_source_geometry,
+        )
+
+
+def test_source_geometry_values_require_exact_content_replay() -> None:
+    identity = _identity()
+    response = analyze_synthetic_response_nullspace(
+        [[1.0, 0.0, 1.0], [0.0, 1.0, 1.0]],
+        [[1.0, 0.2], [0.2, 1.0]],
+        covariance_id=identity["covariance_id"],
+        response_id=identity["response_id"],
+        parameter_labels=("local", "global", "nuisance"),
+        parameter_roles=("LOCAL", "GLOBAL", "NUISANCE"),
+    )
+    geometry = _derived_source_geometry(response)
+    singular = list(geometry["joint_singular_values"])
+    singular[0] += 1.0e-15
+    forged = evaluate_source_separation(
+        source_geometry_report_id=identity["estimand_id"],
+        covariance_id=identity["covariance_id"],
+        nuisance_tangent_id=_sha_id("pr291-nuisance"),
+        normalizer_id=response.normalizer_id,
+        normalizer_source_identity="PR291-SYNTHETIC-DIMENSIONLESS-NORMALIZER",
+        normalizer_coordinate_map_id=_sha_id("pr291-normalizer-map"),
+        parameter_coordinate_units="dimensionless_beta_c_equals_1",
+        provider_available=True,
+        covariance_supported=True,
+        local_parameter_count=1,
+        global_parameter_count=1,
+        local_rank=geometry["local_rank"],
+        global_rank=geometry["global_rank"],
+        joint_rank=geometry["joint_rank"],
+        principal_angles_radians=geometry["principal_angles_radians"],
+        joint_singular_values=singular,
+        threshold_contract=build_weak_identification_threshold_contract(
+            minimum_principal_angle_radians=min(
+                geometry["principal_angles_radians"]
+            ),
+            minimum_normalizer_bound_relative_joint_singular_value=0.0,
+        ),
+    )
+
+    with pytest.raises(Cf4Post275Error, match="source geometry"):
+        build_structural_identified_set(
+            lower=-1.0,
+            upper=1.0,
+            nuisance_box_id="nuisance:synthetic:v1",
+            response=response,
+            source_separation=forged,
         )
 
 
@@ -969,32 +1137,7 @@ def test_gate_snapshot_rejects_nonweak_source_decision_and_identity_drift() -> N
         covariance_id=identity["covariance_id"],
         response_id=identity["response_id"],
     )
-    separable = evaluate_source_separation(
-        **{
-            **{
-                "source_geometry_report_id": identity["estimand_id"],
-                "covariance_id": identity["covariance_id"],
-                "nuisance_tangent_id": _sha_id("pr291-nuisance"),
-                "normalizer_id": response.normalizer_id,
-                "normalizer_source_identity": "PR291-SYNTHETIC-DIMENSIONLESS-NORMALIZER",
-                "normalizer_coordinate_map_id": _sha_id("pr291-normalizer-map"),
-                "parameter_coordinate_units": "dimensionless_beta_c_equals_1",
-                "provider_available": True,
-                "covariance_supported": True,
-                "local_parameter_count": 1,
-                "global_parameter_count": 1,
-                "local_rank": 1,
-                "global_rank": 1,
-                "joint_rank": 2,
-                "principal_angles_radians": (1.0,),
-                "joint_singular_values": (1.0, 0.5),
-                "threshold_contract": build_weak_identification_threshold_contract(
-                    minimum_principal_angle_radians=0.2,
-                    minimum_normalizer_bound_relative_joint_singular_value=0.01,
-                ),
-            }
-        }
-    )
+    separable = _source_decision(identity, response, weak=False)
     with pytest.raises(Cf4Post275Error, match="G4 requires"):
         build_cf4_gate_snapshot(
             design=design,

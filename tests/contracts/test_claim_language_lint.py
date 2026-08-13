@@ -85,6 +85,28 @@ def test_same_sentence_unrelated_without_cannot_hide_geometry_claim() -> None:
     assert _rules(text) == ["geometry_detected"]
 
 
+def test_reordered_and_clause_scoped_family_promotions_are_errors() -> None:
+    forbidden = (
+        ("The analysis identifies the families as Bianchi VII_h.", "geometry_detected"),
+        ("The analysis is not public but definitively identifies several Bianchi families.", "geometry_detected"),
+        ("Bianchi families are not public but are identified in the CF4 result.", "geometry_detected"),
+        ("Bianchi geometry is not public but was detected in the CF4 result.", "geometry_detected"),
+        ("The scalar result establishes Bianchi\nfamily identification.", "scalar_family_identification"),
+        ("Bianchi family identification follows from the scalar x/Q result.", "scalar_family_identification"),
+    )
+    for text, rule_id in forbidden:
+        assert _rules(text) == [rule_id], text
+
+    safe = (
+        "The analysis does not identify the families as Bianchi VII_h.",
+        "Bianchi families are not identified in the CF4 result.",
+        "Bianchi geometry was not detected in the CF4 result.",
+        "Bianchi family identification does not follow from the scalar x/Q result.",
+    )
+    for text in safe:
+        assert _rules(text) == [], text
+
+
 def test_claim_scoped_geometry_downclaims_remain_allowed() -> None:
     safe = (
         "Do not claim Bianchi geometry detected in the CF4 result.\n"

@@ -1366,6 +1366,15 @@ def build_structural_identified_set(
         "response_rank": response.response_rank,
         "response_nullity": response.nullity,
         "relative_singular_floor": response.relative_singular_floor,
+        "source_local_rank": decision.local_rank,
+        "source_global_rank": decision.global_rank,
+        "source_joint_rank": decision.joint_rank,
+        "source_principal_angles_content_id": (
+            decision.principal_angles_content_id
+        ),
+        "source_joint_singular_values_content_id": (
+            decision.joint_singular_values_content_id
+        ),
         "source_separation_decision_id": decision.decision_id,
         "source_geometry_report_id": decision.source_geometry_report_id,
         "threshold_contract_id": decision.threshold_contract.contract_id,
@@ -1374,6 +1383,67 @@ def build_structural_identified_set(
         "pipeline_spread_as_confidence": "FORBIDDEN",
         "claim_tier": CLAIM_TIER,
         "family_identification_gate": FAMILY_GATE,
+    }
+
+
+def _source_response_geometry(
+    response: Cf4ResponseNullReport,
+) -> dict[str, object]:
+    whitened = np.asarray(response.covariance_whitened_response, dtype=float)
+    scales = np.asarray(response.column_scales, dtype=float)
+    normalized = whitened / scales
+    local_columns = tuple(
+        index for index, role in enumerate(response.parameter_roles) if role == "LOCAL"
+    )
+    global_columns = tuple(
+        index for index, role in enumerate(response.parameter_roles) if role == "GLOBAL"
+    )
+    local = normalized[:, local_columns]
+    global_ = normalized[:, global_columns]
+    joint = normalized[:, (*local_columns, *global_columns)]
+
+    def svd_rank(matrix: np.ndarray) -> tuple[np.ndarray, int]:
+        singular = np.linalg.svd(matrix, compute_uv=False)
+        if singular.size == 0 or not np.all(np.isfinite(singular)):
+            raise Cf4Post275Error("source-response singular geometry is invalid")
+        rank = int(
+            np.count_nonzero(
+                singular > RELATIVE_SINGULAR_FLOOR * float(singular[0])
+            )
+        )
+        return singular, rank
+
+    _, local_rank = svd_rank(local)
+    _, global_rank = svd_rank(global_)
+    joint_singular, joint_rank = svd_rank(joint)
+    principal_angles: tuple[float, ...] = ()
+    if local_rank == len(local_columns) and global_rank == len(global_columns):
+        local_u = np.linalg.svd(local, full_matrices=False)[0][:, :local_rank]
+        global_u = np.linalg.svd(global_, full_matrices=False)[0][:, :global_rank]
+        cosine = np.linalg.svd(local_u.T @ global_u, compute_uv=False)
+        principal_angles = tuple(
+            float(value)
+            for value in np.arccos(np.clip(cosine, 0.0, 1.0))
+        )
+    joint_singular_values = tuple(float(value) for value in joint_singular)
+    return {
+        "local_rank": local_rank,
+        "global_rank": global_rank,
+        "joint_rank": joint_rank,
+        "principal_angles_radians": principal_angles,
+        "principal_angles_content_id": _content_id(
+            {
+                "schema": "COMMON_PRINCIPAL_ANGLES_V1",
+                "values": list(principal_angles),
+            }
+        ),
+        "joint_singular_values": joint_singular_values,
+        "joint_singular_values_content_id": _content_id(
+            {
+                "schema": "COMMON_JOINT_SINGULAR_VALUES_V1",
+                "values": list(joint_singular_values),
+            }
+        ),
     }
 
 
@@ -1400,11 +1470,19 @@ def _replay_response_source_binding(
     if (
         decision.local_rank != decision.local_parameter_count
         or decision.global_rank != decision.global_parameter_count
-        or decision.joint_rank != response.response_rank
-        or response.nullity
-        != response.parameter_dimension - decision.joint_rank
     ):
         raise Cf4Post275Error("source-response rank/nullity drifted")
+    derived = _source_response_geometry(response)
+    if (
+        decision.local_rank != derived["local_rank"]
+        or decision.global_rank != derived["global_rank"]
+        or decision.joint_rank != derived["joint_rank"]
+        or decision.principal_angles_content_id
+        != derived["principal_angles_content_id"]
+        or decision.joint_singular_values_content_id
+        != derived["joint_singular_values_content_id"]
+    ):
+        raise Cf4Post275Error("source-response source geometry drifted")
     return decision
 
 
@@ -1515,6 +1593,15 @@ def build_cf4_gate_snapshot(
             "unidentified_direction_count": response.nullity,
             "right_null_basis": [list(row) for row in response.right_null_basis],
             "source_separation_decision_id": decision.decision_id,
+            "source_local_rank": decision.local_rank,
+            "source_global_rank": decision.global_rank,
+            "source_joint_rank": decision.joint_rank,
+            "source_principal_angles_content_id": (
+                decision.principal_angles_content_id
+            ),
+            "source_joint_singular_values_content_id": (
+                decision.joint_singular_values_content_id
+            ),
             "claim_tier": CLAIM_TIER,
             "family_identification_gate": FAMILY_GATE,
         },
