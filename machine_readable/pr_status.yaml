@@ -571,7 +571,7 @@ stacked_pr_execution:
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: 964135d7398a1c699a16885eb5050a8ec3cf9bcdddd6ff1640d299ab6757d298
+      production_hash: 0dd1b5b383ae2befc3f06aa7254b1926d37d3d6a8ede0a0f1052b95a5a04ce18
       dependency_hashes:
         pr291_spec: 7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec
         publication_policy: 2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835
@@ -582,23 +582,26 @@ stacked_pr_execution:
         pr291_obsstat_module: 6a3ae13200b381af4502ef0ec0f001c039727a9dcfc1dd49e239a9f0c64e56bb
         pr291_runner: 45659be3d9801697272726d1cf8018d3719a7d83127fc89d05781c30db239af8
         pr291_contract_test: ca827a64d0ddc15a7c9072e5163bc6e76236d47e0eca2672f8d25c0d86574ed8
-        claim_guard: ca4aa88b16a44dfedad18811bbeee68a58466d0cc270c9f2ea94f777dbde0f45
-        claim_contract_test: 835bc6996e4dedd9390a896b3634b9310a9f178e352a5d69f37696cbe49c265a
+        claim_guard: 94da4aa8bb1c747b339809e6515d2511d1250874b6de399db58c37cdb659a306
+        claim_contract_test: d558c7cbe793d58aed8ae399073e23c219e68cadbcea3efe76e71c1bdd40fb23
         claim_ledger: 86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b
         salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
       gate_dispositions: {eligibility: PASS, implementation: PASS, validation: PASS,
-        code: DEFERRED, physics: DEFERRED, statistics: DEFERRED, claim: DEFERRED,
-        harness: DEFERRED, portability_replay: DEFERRED, review: DEFERRED,
+        code: DEFERRED, physics: PASS, statistics: PASS, claim: DEFERRED,
+        harness: PASS, portability_replay: PASS, review: DEFERRED,
         rereview: DEFERRED}
-      previous_review_run: .agent-harness/runs/pr291-bounded-repair-r4-review-20260813/RUN_SUMMARY.json
-      previous_review_summary_sha256: d04c1cdf5b0df12855ce5d7fc333c0ea5ab25fe8fb2c1ce726322f98894564bb
+      previous_review_run: .agent-harness/runs/pr291-r5-claim-closeout-extension-20260813/RUN_SUMMARY.json
+      previous_review_summary_sha256: 2dbc371052f7e95b7fef911a69cdacd20baf4833073c0984e4f7056d771c3805
       review_run: null
       review_summary_sha256: null
-      assurance_budget: {maximum: 16, consumed: 14}
+      assurance_budget: {maximum: 16, consumed: 16}
       assurance_extension_id: PR291-R5-THREAD-20260813
       authorized_assurance_extension_maximum: 2
-      authorized_assurance_extension_consumed: 0
+      authorized_assurance_extension_consumed: 2
       assurance_extension_authorized_by: user-current-thread-20260813
+      assurance_reauthorization_id: PR291-R5-CLAIM-REAUTH-20260813
+      authorized_assurance_reauthorization_maximum: 2
+      authorized_assurance_reauthorization_consumed: 0
     PR-292:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
