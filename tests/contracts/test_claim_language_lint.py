@@ -68,8 +68,27 @@ def test_direct_geometry_detection_claim_is_blocked() -> None:
         "We identify a Bianchi family from the statistic.",
         "Bianchi geometry has been detected in this map.",
         "We detected the Bianchi geometry.",
+        "Bianchi families were identified in the CF4 result.",
+        "The Bianchi family was conclusively identified in the CF4 result.",
+        "The Bianchi geometry\nwas detected in the CF4 result.",
     ):
         assert _rules(text) == ["geometry_detected"], text
+
+
+def test_same_sentence_unrelated_without_cannot_hide_geometry_claim() -> None:
+    text = "Without a public release, Bianchi geometry detected in the CF4 result."
+
+    assert _rules(text) == ["geometry_detected"]
+
+
+def test_claim_scoped_geometry_downclaims_remain_allowed() -> None:
+    safe = (
+        "Do not claim Bianchi geometry detected in the CF4 result.\n"
+        "Bianchi geometry was not detected in the CF4 result.\n"
+        "Bianchi family identification remains blocked.\n"
+    )
+
+    assert scan_text(safe, path=Path("geometry_downclaims.md")) == ()
 
 
 def test_tsc_teff_full_solver_language_is_blocked() -> None:

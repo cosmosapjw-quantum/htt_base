@@ -100,9 +100,13 @@ RULES: tuple[ClaimLanguageRule, ...] = (
         rule_id="geometry_detected",
         pattern=re.compile(
             r"\b("
-            r"Bianchi geometry (?:is |was |has been )?detected|"  # forbidden-rule literal
+            r"Bianchi geometr(?:y|ies)\s+"
+            r"(?:(?:is|are|was|were|has|have|been|being|conclusively|"
+            r"directly|uniquely|definitively)\s+){0,5}detected|"
             r"global Bianchi anisotropy detected|"  # forbidden-rule literal
-            r"Bianchi family (?:is |was |has been )?identified|"  # forbidden-rule literal
+            r"Bianchi famil(?:y|ies)\s+"
+            r"(?:(?:is|are|was|were|has|have|been|being|conclusively|"
+            r"directly|uniquely|definitively)\s+){0,5}identified|"
             r"identified Bianchi family|"  # forbidden-rule literal
             r"family identified as|"  # forbidden-rule literal
             r"(?:we\s+)?identif(?:y|ies|ied)\s+(?:a\s+|the\s+)?Bianchi family|"
@@ -310,7 +314,7 @@ def scan_text(text: str, *, path: Path = Path("<text>")) -> tuple[ClaimLanguageI
                     )
                 )
     issues.extend(_scan_source_observable_windows(lines, path=path))
-    issues.extend(_scan_multiline_legacy_curl_windows(lines, path=path))
+    issues.extend(_scan_multiline_claim_windows(lines, path=path))
     return tuple(issues)
 
 
@@ -358,12 +362,12 @@ def _scan_source_observable_windows(
     return tuple(issues)
 
 
-def _scan_multiline_legacy_curl_windows(
+def _scan_multiline_claim_windows(
     lines: Sequence[str],
     *,
     path: Path,
 ) -> tuple[ClaimLanguageIssue, ...]:
-    """Catch legacy-curl promotions split by ordinary prose wrapping.
+    """Catch registered promotion claims split by ordinary prose wrapping.
 
     The primary scanner remains line based for stable locations and narrow
     guardrail exemptions.  Publication prose, however, can wrap one semantic
@@ -376,8 +380,10 @@ def _scan_multiline_legacy_curl_windows(
     Report only matches that genuinely span more than one source line.
     """
 
-    rule = next(
-        item for item in RULES if item.rule_id == "legacy_curl_physics_promotion"
+    rules = tuple(
+        item
+        for item in RULES
+        if item.rule_id in {"geometry_detected", "legacy_curl_physics_promotion"}
     )
     issues: list[ClaimLanguageIssue] = []
     block: list[tuple[int, str]] = []
@@ -406,29 +412,30 @@ def _scan_multiline_legacy_curl_windows(
             spans.append((start, cursor, line_index))
         joined = " ".join(joined_parts)
 
-        for match in rule.pattern.finditer(joined):
-            touched = [
-                line_index
-                for start, stop, line_index in spans
-                if start < match.end() and stop > match.start()
-            ]
-            if len(touched) < 2:
-                continue
-            if any(
-                _structured_guardrail_context(lines, line_index, path=path)
-                for line_index in touched
-            ) or _match_sentence_has_guardrail(joined, match):
-                continue
-            issues.append(
-                ClaimLanguageIssue(
-                    path=path,
-                    line=touched[0] + 1,
-                    rule_id=rule.rule_id,
-                    severity="error",
-                    message=rule.message,
-                    text=match.group(0).strip(),
+        for rule in rules:
+            for match in rule.pattern.finditer(joined):
+                touched = [
+                    line_index
+                    for start, stop, line_index in spans
+                    if start < match.end() and stop > match.start()
+                ]
+                if len(touched) < 2:
+                    continue
+                if any(
+                    _structured_guardrail_context(lines, line_index, path=path)
+                    for line_index in touched
+                ) or _match_sentence_has_guardrail(joined, match):
+                    continue
+                issues.append(
+                    ClaimLanguageIssue(
+                        path=path,
+                        line=touched[0] + 1,
+                        rule_id=rule.rule_id,
+                        severity="error",
+                        message=rule.message,
+                        text=match.group(0).strip(),
+                    )
                 )
-            )
         block.clear()
         block_quote_depth = None
 
@@ -616,7 +623,7 @@ def _structured_guardrail_context(
 
 
 def _match_sentence_has_guardrail(text: str, match: re.Match[str]) -> bool:
-    """Limit ordinary-prose exemptions to the sentence bearing the match."""
+    """Recognize only negation semantically scoped to the matched claim."""
 
     start = 0
     for boundary in re.finditer(r"[.!?](?:[\"')\]]*)\s+", text[: match.start()]):
@@ -624,7 +631,28 @@ def _match_sentence_has_guardrail(text: str, match: re.Match[str]) -> bool:
     end_match = re.search(r"[.!?](?:[\"')\]]*)\s+", text[match.end() :])
     end = match.end() + end_match.end() if end_match is not None else len(text)
     sentence = text[start:end].lower()
-    return any(marker in sentence for marker in GUARDRAIL_MARKERS)
+    relative_start = match.start() - start
+    relative_end = match.end() - start
+    matched_claim = sentence[relative_start:relative_end]
+    if re.search(r"\b(?:no|not|never|cannot)\b", matched_claim):
+        return True
+
+    prefix = sentence[:relative_start].rstrip()
+    if re.search(
+        r"(?:\b(?:do|does|did|must|should|can|could|may)\s+not\s+"
+        r"(?:claim|assert|conclude|infer|report|say)(?:\s+that)?|"
+        r"\bno)$",
+        prefix,
+    ):
+        return True
+
+    suffix = sentence[relative_end:]
+    return re.match(
+        r"^\s*(?:(?:is|are|was|were|remains?|must\s+be|should\s+be|"
+        r"cannot\s+be)\s+)?(?:blocked|forbidden|rejected|not\s+supported|"
+        r"not\s+allowed|not\s+claimed)\b",
+        suffix,
+    ) is not None
 
 
 def _is_yaml_guardrail_section(

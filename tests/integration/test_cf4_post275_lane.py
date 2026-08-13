@@ -922,6 +922,36 @@ def test_runner_ignores_preloaded_activation_and_identity_modules(
     assert receipt["observed_data_executed"] is False
 
 
+def test_runner_ignores_preloaded_pr290_transaction_module(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    marker: list[str] = []
+    fake = types.ModuleType("run_pr290_planck_lane")
+
+    def fake_validate_output_destinations(**_kwargs: object) -> None:
+        marker.append("forged_validate_called")
+
+    def fake_atomic_write(output: Path, payload: bytes, **_kwargs: object) -> None:
+        marker.append("forged_atomic_write_called")
+        output.write_bytes(payload)
+
+    fake._validate_output_destinations = fake_validate_output_destinations
+    fake._atomic_write = fake_atomic_write
+    fake._encoded = lambda payload: json.dumps(
+        payload, sort_keys=True, separators=(",", ":")
+    ).encode("ascii")
+    fake._tracked_manifest = lambda *_args, **_kwargs: {}
+    fake._tracked_paths = lambda *_args, **_kwargs: ()
+    monkeypatch.setitem(sys.modules, "run_pr290_planck_lane", fake)
+
+    runner = _load_runner()
+    outside = tmp_path / "outside-root.json"
+    assert runner._write(root=ROOT, output=outside) == 1
+    assert marker == []
+    assert not outside.exists()
+
+
 @pytest.mark.parametrize("member_kind", ("traversal", "symlink"))
 def test_runner_safe_archive_extraction_rejects_escape_and_links(
     tmp_path: Path, member_kind: str

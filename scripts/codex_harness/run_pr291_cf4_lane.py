@@ -24,21 +24,6 @@ import stat
 
 
 ROOT = Path(__file__).resolve().parents[2]
-SCRIPT_DIRECTORY = Path(__file__).resolve().parent
-if str(SCRIPT_DIRECTORY) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIRECTORY))
-
-# Reuse the already hostile-reviewed PR-290 filesystem transaction without
-# modifying it.  Its implementation is explicitly source-bound below.
-from run_pr290_planck_lane import (  # noqa: E402
-    _atomic_write,
-    _encoded,
-    _tracked_manifest,
-    _tracked_paths,
-    _validate_output_destinations,
-)
-
-
 SPEC = ROOT / "docs/research_program/post_pr275/pr291_spec.yaml"
 POLICY = ROOT / "docs/research_program/post_pr275/pr291_publication_policy.json"
 STATUS = ROOT / "docs/codex_handoff/pr_status.yaml"
@@ -112,6 +97,73 @@ def _sha(path: Path) -> str:
         while block := handle.read(16 << 20):
             digest.update(block)
     return "sha256:" + digest.hexdigest()
+
+
+_TRANSACTION_SYMBOLS = (
+    "_atomic_write",
+    "_encoded",
+    "_tracked_manifest",
+    "_tracked_paths",
+    "_validate_output_destinations",
+)
+
+
+def _load_transaction_module(
+    root: Path,
+    *,
+    expected_sha256: str,
+) -> object:
+    """Load the PR-290 transaction implementation from exact bound bytes.
+
+    The helper module controls preflight and atomic output placement, so an
+    ambient import is not an admissible dependency boundary.  Load it by its
+    canonical path and verify every callable's defining byte origin before any
+    payload generation or filesystem mutation.
+    """
+
+    module_path = root / PR290_TRANSACTION_RUNNER.relative_to(ROOT)
+    root_resolved = root.resolve(strict=True)
+    try:
+        metadata = module_path.lstat()
+        resolved = module_path.resolve(strict=True)
+    except OSError as exc:
+        raise RuntimeError("PR-290 transaction module is unavailable") from exc
+    if (
+        stat.S_ISLNK(metadata.st_mode)
+        or not stat.S_ISREG(metadata.st_mode)
+        or metadata.st_nlink != 1
+        or not resolved.is_relative_to(root_resolved)
+        or _sha(module_path) != expected_sha256
+    ):
+        raise RuntimeError("PR-290 transaction module origin or bytes drifted")
+
+    module_name = "_htt_pr291_pr290_transaction_" + hashlib.sha256(
+        (str(resolved) + expected_sha256).encode("utf-8")
+    ).hexdigest()
+    module_spec = importlib.util.spec_from_file_location(module_name, module_path)
+    if module_spec is None or module_spec.loader is None:
+        raise RuntimeError("PR-290 transaction module loader is unavailable")
+    module = importlib.util.module_from_spec(module_spec)
+    sys.modules.pop(module_name, None)
+    sys.modules[module_name] = module
+    try:
+        module_spec.loader.exec_module(module)
+    except Exception as exc:
+        sys.modules.pop(module_name, None)
+        raise RuntimeError("PR-290 transaction module execution failed") from exc
+    if (
+        Path(str(getattr(module, "__file__", ""))).resolve() != resolved
+        or _sha(module_path) != expected_sha256
+        or any(
+            not callable(getattr(module, symbol, None))
+            or Path(getattr(module, symbol).__code__.co_filename).resolve()
+            != resolved
+            for symbol in _TRANSACTION_SYMBOLS
+        )
+    ):
+        sys.modules.pop(module_name, None)
+        raise RuntimeError("executed PR-290 transaction module origin drifted")
+    return module
 
 
 def _load_common_module(
@@ -234,9 +286,15 @@ def _generation_identity(source_bindings: dict[str, str]) -> dict[str, object]:
     }
 
 
-def _build(root: Path = ROOT) -> dict[str, object]:
+def _build(
+    root: Path = ROOT,
+    *,
+    expected_source_bindings: dict[str, str] | None = None,
+) -> dict[str, object]:
     _activate(root)
     bindings = _base_source_bindings(root)
+    if expected_source_bindings is not None and bindings != expected_source_bindings:
+        raise RuntimeError("source bindings changed during receipt construction")
     module = _load_common_module(root, source_bindings=bindings)
     decision = module.build_cf4_activation_decision(
         repository_root=root,
@@ -267,7 +325,14 @@ def _write(*, root: Path = ROOT, output: Path | None = None) -> int:
     destination = output or (root / OUTPUT.relative_to(ROOT))
     observed = root / OBSERVED_RESULT_DIRECTORY.relative_to(ROOT)
     try:
-        _validate_output_destinations(
+        bindings = _base_source_bindings(root)
+        transaction = _load_transaction_module(
+            root,
+            expected_sha256=bindings[
+                PR290_TRANSACTION_RUNNER.relative_to(ROOT).as_posix()
+            ],
+        )
+        transaction._validate_output_destinations(
             root=root,
             output=destination,
             observed_result_directory=observed,
@@ -276,17 +341,17 @@ def _write(*, root: Path = ROOT, output: Path | None = None) -> int:
     except RuntimeError as exc:
         print(exc, file=sys.stderr)
         return 1
-    payload = _build(root)
+    payload = _build(root, expected_source_bindings=bindings)
     try:
-        _validate_output_destinations(
+        transaction._validate_output_destinations(
             root=root,
             output=destination,
             observed_result_directory=observed,
             require_existing=False,
         )
-        _atomic_write(
+        transaction._atomic_write(
             destination,
-            _encoded(payload),
+            transaction._encoded(payload),
             root=root,
             observed_result_directory=observed,
         )
@@ -311,13 +376,22 @@ def _write(*, root: Path = ROOT, output: Path | None = None) -> int:
 def _check(root: Path = ROOT) -> int:
     output = root / OUTPUT.relative_to(ROOT)
     observed = root / OBSERVED_RESULT_DIRECTORY.relative_to(ROOT)
-    _validate_output_destinations(
+    bindings = _base_source_bindings(root)
+    transaction = _load_transaction_module(
+        root,
+        expected_sha256=bindings[
+            PR290_TRANSACTION_RUNNER.relative_to(ROOT).as_posix()
+        ],
+    )
+    transaction._validate_output_destinations(
         root=root,
         output=output,
         observed_result_directory=observed,
         require_existing=True,
     )
-    expected = _encoded(_build(root))
+    expected = transaction._encoded(
+        _build(root, expected_source_bindings=bindings)
+    )
     observed_bytes = output.read_bytes()
     if observed_bytes != expected:
         raise RuntimeError("frozen PR-291 receipt drifted; rerun build")
@@ -384,15 +458,22 @@ def _portable() -> int:
         text=True,
     ):
         raise RuntimeError("portable replay requires a clean committed candidate")
-    tracked = _tracked_paths(ROOT)
-    source_before = _tracked_manifest(ROOT, tracked)
+    bindings = _base_source_bindings(ROOT)
+    transaction = _load_transaction_module(
+        ROOT,
+        expected_sha256=bindings[
+            PR290_TRANSACTION_RUNNER.relative_to(ROOT).as_posix()
+        ],
+    )
+    tracked = transaction._tracked_paths(ROOT)
+    source_before = transaction._tracked_manifest(ROOT, tracked)
     archive = subprocess.check_output(["git", "archive", "HEAD"], cwd=ROOT)
     with tempfile.TemporaryDirectory(prefix="pr291-portable-") as temporary:
         clean = Path(temporary) / "repo"
         clean.mkdir()
         with tarfile.open(fileobj=BytesIO(archive), mode="r:") as handle:
             _safe_extract_archive(handle, clean)
-        clean_before = _tracked_manifest(clean, tracked)
+        clean_before = transaction._tracked_manifest(clean, tracked)
         if clean_before != source_before:
             raise RuntimeError("clean archive manifest differs from source")
         environment = {
@@ -433,8 +514,8 @@ def _portable() -> int:
                 "clean PR-291 portable replay failed: "
                 + (completed.stderr or completed.stdout)
             )
-        clean_after = _tracked_manifest(clean, tracked)
-        source_after = _tracked_manifest(ROOT, tracked)
+        clean_after = transaction._tracked_manifest(clean, tracked)
+        source_after = transaction._tracked_manifest(ROOT, tracked)
         if clean_after != clean_before or source_after != source_before:
             raise RuntimeError("portable replay changed tracked bytes")
         print(
