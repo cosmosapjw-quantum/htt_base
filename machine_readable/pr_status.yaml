@@ -1,4 +1,4 @@
-generated_on: '2026-08-12'
+generated_on: '2026-08-13'
 completed:
 - PR-290
 - PR-289
@@ -587,9 +587,12 @@ stacked_pr_execution:
         claim_ledger: 86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b
         salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
       gate_dispositions: {eligibility: PASS, implementation: PASS, validation: PASS,
-        code: DEFERRED, physics: DEFERRED, statistics: DEFERRED, claim: DEFERRED,
-        harness: PASS, portability_replay: PASS, review: DEFERRED, rereview: DEFERRED}
-      assurance_budget: {maximum: 16, consumed: 11}
+        code: FAIL, physics: FAIL, statistics: FAIL, claim: FAIL,
+        harness: PASS, portability_replay: PASS, review: FAIL, rereview: FAIL}
+      execution_blocker: BLOCKED_ASSURANCE_BUDGET_EXHAUSTED
+      review_run: .agent-harness/runs/pr291-bounded-repair-r4-review-20260813/RUN_SUMMARY.json
+      review_summary_sha256: d04c1cdf5b0df12855ce5d7fc333c0ea5ab25fe8fb2c1ce726322f98894564bb
+      assurance_budget: {maximum: 16, consumed: 14}
     PR-292:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
