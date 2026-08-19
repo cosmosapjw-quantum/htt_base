@@ -1,5 +1,6 @@
-generated_on: '2026-08-11'
+generated_on: '2026-08-13'
 completed:
+- PR-290
 - PR-289
 - PR-288
 - PR-287
@@ -212,7 +213,6 @@ pending:
 - PR-206
 - PR-207
 - PR-208
-- PR-291
 - PR-292
 - PR-293
 - PR-294
@@ -245,7 +245,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-290
+in_progress: PR-291
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -259,7 +259,7 @@ stacked_pr_execution:
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
   target_sha: ff9ef9f45747e559c5343b463cf010dfc3a7432a
-  active_implementation_pr: PR-290
+  active_implementation_pr: PR-291
   pr_order:
   - PR-283
   - PR-284
@@ -536,14 +536,15 @@ stacked_pr_execution:
         push: PASS, publication: PASS}
       assurance_budget: {maximum: 16, consumed: 15}
     PR-290:
-      lifecycle: REVIEWED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      lifecycle: PR_OPEN
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED, SEALED,
+        PUSHED, PR_OPEN]
       base_sha: 45da1bf54149864fb9d87be3a828df202ee1df7f
       predecessor_pr: PR-289
       predecessor_sealed_sha: 45da1bf54149864fb9d87be3a828df202ee1df7f
-      sealed_head: null
-      pushed_ref: null
-      pr_url: null
+      sealed_head: 06ac20605ebc371b0f97ad6e91c802a51a9bf764
+      pushed_ref: refs/heads/changeset/pr290-planck-native-replay-recovery-20260811
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/387
       production_hash: b9b62e081f702f6b2b1918e5b3f1b599d651bdfa2fb0261e878d7a669d94beaf
       dependency_hashes:
         pr290_spec: 1ec571a1de15d6b0addc608e2eb5db1dc9df7ae6e3bdd7f66160cf56ebeb5f9a
@@ -559,21 +560,56 @@ stacked_pr_execution:
       gate_dispositions: {eligibility: PASS, implementation: PASS, validation: PASS,
         code: PASS, physics: PASS, statistics: PASS, claim: PASS,
         harness: PASS, portability_replay: PASS, review: PASS,
-        rereview: PASS}
-      assurance_budget: {maximum: 16, consumed: 7}
+        rereview: PASS, seal: PASS, push: PASS, publication: PASS}
+      assurance_budget: {maximum: 16, consumed: 8}
     PR-291:
-      lifecycle: PLANNED
-      lifecycle_history: [PLANNED]
-      base_sha: null
+      lifecycle: VALIDATED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
+      base_sha: 06ac20605ebc371b0f97ad6e91c802a51a9bf764
       predecessor_pr: PR-290
-      predecessor_sealed_sha: null
+      predecessor_sealed_sha: 06ac20605ebc371b0f97ad6e91c802a51a9bf764
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: null
-      dependency_hashes: {}
-      gate_dispositions: {eligibility: INELIGIBLE}
-      assurance_budget: {maximum: 16, consumed: 0}
+      production_hash: 264931c49f4cd6d0850f1e46b3ba9b441596f7486067e25361cf4aca96a61695
+      dependency_hashes:
+        pr291_spec: 7b074bbb2f22ae62d2222e0bd8f62c0fd5253fe28ac5fca0ce45d956c0ac69ec
+        publication_policy: 2354087be93139b2740ea8f6eeacc27f73a287d418fc35fcc012fcc6cf1fb835
+        pr289_data_identity_receipt: 92ca6a84f6c42f42de3dd33c7150fce7d1ef1672e4c6eaa407e8c36750928c34
+        pr289_registry: e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f
+        pr289_data_identity_module: 145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2
+        pr291_common_module: 4b15529947ea6269bc0ff38b7a58e5433fc6e767e34b732e2ee37cfac07bbeb0
+        pr291_obsstat_module: 6a3ae13200b381af4502ef0ec0f001c039727a9dcfc1dd49e239a9f0c64e56bb
+        pr291_runner: 45659be3d9801697272726d1cf8018d3719a7d83127fc89d05781c30db239af8
+        pr291_contract_test: ca827a64d0ddc15a7c9072e5163bc6e76236d47e0eca2672f8d25c0d86574ed8
+        claim_guard: 7df85c7ed17c9205583edcbb5f23c42ba6d924f4af2755aa395a107b79ebbe37
+        claim_contract_test: 6ccdca03fd493297b904d1ba8dbbf5f73c569f3ac074dddb8f9f36bdecaabedd
+        harness_core: 4911691183918b9f00d97fc348b1a6063c41e2df3aed677d166e974fbd449c29
+        harness_init: 45bd83e8bad29b0a4a309e11f6d633adda20fc4658d079cdb26a120cc7a860cb
+        harness_contract_test: e8e1489b08534736498b8a059171a90add58d42c5f3943f54187b3a3970e0d3a
+        claim_ledger: 86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b
+        salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
+      gate_dispositions: {eligibility: PASS, implementation: PASS, validation: PASS,
+        code: PASS, physics: PASS, statistics: PASS, claim: PASS,
+        harness: PASS, portability_replay: DEFERRED, review: DEFERRED,
+        rereview: DEFERRED}
+      process_disposition: STOP_PROCESS_ASSURANCE_INFLATION
+      fixed_acceptance_policy: docs/research_program/post_pr275/pr291_publication_policy.json
+      fixed_acceptance_policy_blob: 9ca2f278faec55d3e73db9651af536064362d6a8
+      fixed_acceptance_command_count: 7
+      fixed_acceptance_review_cell_count: 16
+      non_blocking_lint_limitation: does-conclusively-not-identify-conservative-false-positive
+      carried_review_run: .agent-harness/runs/pr291-authorized-r5-review-20260813/RUN_SUMMARY.json
+      carried_review_summary_sha256: c7d6e35b85d8cb89ee4e7fa75b48c920a264655edac63c85f852d7457237f96a
+      carried_code_replay_result_sha256: 7ed84261bd6cc28d4bc66f22a2e5c36e503ed35ea7fd660545b762ceec383ce6
+      carried_physstat_result_sha256: 52217e596fff19d74e6389929d188ba040a6e3ae363375fbde41652b19453de6
+      review_run: null
+      review_summary_sha256: null
+      assurance_budget: {maximum: 16, consumed: 16}
+      assurance_extension_id: PR291-R5-THREAD-20260813
+      authorized_assurance_extension_maximum: 2
+      authorized_assurance_extension_consumed: 2
+      assurance_extension_authorized_by: user-current-thread-20260813
     PR-292:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
@@ -720,6 +756,25 @@ execution_lane:
   PR-296: defensible
   PR-297: defensible
 execution_resolutions:
+  PR-290:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-290.md
+    review_receipt: .agent-harness/runs/pr290-final-seal-closeout-20260811/RUN_SUMMARY.json
+    review_receipt_sha256: 02b1cbe1072029e6fef6cca808f8755ffd2ceb07087dc05aece74f1e2b0df900
+    publication_receipt_sha256: 0f84cd4f69e9db0973f4b5f878f5d6757914947d65add55e1da3fa6607baa840
+    candidate_sha: 06ac20605ebc371b0f97ad6e91c802a51a9bf764
+    sealed_head: 06ac20605ebc371b0f97ad6e91c802a51a9bf764
+    pushed_ref: refs/heads/changeset/pr290-planck-native-replay-recovery-20260811
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/387
+    resolved_on: '2026-08-12'
+    scientific_status_effect: planck_native_record_replay_and_nonexecution_operator_contracts_recovered
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: synthetic_planck_preactivation_nonexecution
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    assurance_budget_consumed: 8
+    success_dependency_satisfied: true
   PR-289:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-289.md

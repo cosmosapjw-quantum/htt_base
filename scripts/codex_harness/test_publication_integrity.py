@@ -2032,8 +2032,7 @@ def test_reviewer_rereview_budget_exception_cannot_raise_the_ordinary_limit(
         )
 
 
-def test_reviewer_rereview_reauthorization_is_exactly_the_second_wave(
-) -> None:
+def test_reviewer_rereview_reauthorization_is_rejected() -> None:
     run_id = "run-pr254-rereview-r2"
     allowed = ["A-PR254-R2-HARNESS", "A-PR254-R2-PHYSSTAT"]
     plan = {
@@ -2055,48 +2054,11 @@ def test_reviewer_rereview_reauthorization_is_exactly_the_second_wave(
             "single_use": True,
         },
     }
-    assert (
+    with pytest.raises(PublicationIntegrityError, match="fields must exactly match"):
         validate_review_rereview_budget_exception(plan, run_id=run_id)
-        == plan["budget_exception"]
-    )
-    enforce_work_unit_assignment_budget(
-        plan,
-        run_id=run_id,
-        assignment_id=allowed[0],
-        workflow_role="reviewer",
-        cumulative_count=18,
-        current_run_assignment_ids=set(),
-    )
-    enforce_work_unit_assignment_budget(
-        plan,
-        run_id=run_id,
-        assignment_id=allowed[1],
-        workflow_role="reviewer",
-        cumulative_count=19,
-        current_run_assignment_ids={allowed[0]},
-    )
-    with pytest.raises(
-        PublicationIntegrityError,
-        match="consumption does not match",
-    ):
-        enforce_work_unit_assignment_budget(
-            plan,
-            run_id=run_id,
-            assignment_id=allowed[0],
-            workflow_role="reviewer",
-            cumulative_count=20,
-            current_run_assignment_ids=set(),
-        )
-    early = copy.deepcopy(plan)
-    early["budget_exception"]["cumulative_start"] = 17
-    with pytest.raises(
-        PublicationIntegrityError,
-        match="must begin at cumulative assignment 18",
-    ):
-        validate_review_rereview_budget_exception(early, run_id=run_id)
 
 
-def test_init_run_records_exact_second_wave_reauthorization(
+def test_init_run_rejects_retired_reauthorization_option(
     tmp_path: Path,
 ) -> None:
     repo, _ = _make_candidate_repo(tmp_path)
@@ -2126,7 +2088,7 @@ def test_init_run_records_exact_second_wave_reauthorization(
             "--review-rereview-reason",
             "repair findings require one final candidate bound review",
             "--review-rereview-reauthorization-start",
-            "18",
+            "20",
             "--review-rereview-exception-assignment",
             "A-PR254-R2-HARNESS",
             "--review-rereview-exception-assignment",
@@ -2134,22 +2096,8 @@ def test_init_run_records_exact_second_wave_reauthorization(
         ],
         cwd=repo,
     )
-    assert initialized.returncode == 0, initialized.stdout + initialized.stderr
-    plan = json.loads(
-        (
-            repo
-            / f".agent-harness/runs/{run_id}/RUN_PLAN.json"
-        ).read_text(encoding="utf-8")
-    )
-    assert plan["budget"]["max_total_per_work_unit"] == 16
-    assert plan["budget_exception"][
-        "kind"
-    ] == "single_run_reviewer_rereview_reauthorization"
-    assert plan["budget_exception"]["cumulative_start"] == 18
-    assert plan["budget_exception"]["allowed_assignment_ids"] == [
-        "A-PR254-R2-HARNESS",
-        "A-PR254-R2-PHYSSTAT",
-    ]
+    assert initialized.returncode != 0
+    assert "unrecognized arguments" in initialized.stderr
 
 
 def test_cumulative_work_unit_budget_fails_closed_on_malformed_history(

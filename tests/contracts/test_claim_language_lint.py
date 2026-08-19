@@ -68,8 +68,139 @@ def test_direct_geometry_detection_claim_is_blocked() -> None:
         "We identify a Bianchi family from the statistic.",
         "Bianchi geometry has been detected in this map.",
         "We detected the Bianchi geometry.",
+        "Bianchi families were identified in the CF4 result.",
+        "The Bianchi family was conclusively identified in the CF4 result.",
+        "The Bianchi geometry\nwas detected in the CF4 result.",
+        "We identified those Bianchi families from the CF4 statistic.",
+        "The analysis identified several Bianchi families from the CF4 statistic.",
+        "The family was conclusively identified as Bianchi VII_h.",
+        "We identified those Bianchi\nfamilies from the CF4 statistic.",
     ):
         assert _rules(text) == ["geometry_detected"], text
+
+
+def test_same_sentence_unrelated_without_cannot_hide_geometry_claim() -> None:
+    text = "Without a public release, Bianchi geometry detected in the CF4 result."
+
+    assert _rules(text) == ["geometry_detected"]
+
+
+def test_reordered_and_clause_scoped_family_promotions_are_errors() -> None:
+    forbidden = (
+        ("The analysis identifies the families as Bianchi VII_h.", "geometry_detected"),
+        ("The analysis is not public but definitively identifies several Bianchi families.", "geometry_detected"),
+        ("Bianchi families are not public but are identified in the CF4 result.", "geometry_detected"),
+        ("Bianchi geometry is not public but was detected in the CF4 result.", "geometry_detected"),
+        ("The scalar result establishes Bianchi\nfamily identification.", "scalar_family_identification"),
+        ("Bianchi family identification follows from the scalar x/Q result.", "scalar_family_identification"),
+    )
+    for text, rule_id in forbidden:
+        assert _rules(text) == [rule_id], text
+
+    safe = (
+        "The analysis does not identify the families as Bianchi VII_h.",
+        "Bianchi families are not identified in the CF4 result.",
+        "Bianchi geometry was not detected in the CF4 result.",
+        "Bianchi family identification does not follow from the scalar x/Q result.",
+    )
+    for text in safe:
+        assert _rules(text) == [], text
+
+
+def test_plural_determiner_and_scalar_family_variants_are_errors() -> None:
+    forbidden = (
+        "The analyses identify Bianchi families in the CF4 result.",
+        "The analysis identifies both Bianchi families in the CF4 result.",
+        "The analysis identifies these Bianchi families in the CF4 result.",
+        "Our analysis identifies a Bianchi family in the CF4 result.",
+        "The analysis definitively identifies both Bianchi\nfamilies in the CF4 result.",
+        "The low-ell scalar therefore implies identification of a Bianchi family.",
+        "Identification of a Bianchi family follows from the scalar x/Q result.",
+        "The analysis is not public but identifies both Bianchi families.",
+    )
+    for text in forbidden:
+        assert _rules(text), text
+
+    for auxiliary in (
+        "has already been",
+        "was formally",
+        "has once again been",
+        "is hereby",
+        "was unambiguously",
+    ):
+        text = f"Every registered candidate family {auxiliary} identified as Bianchi VII_h."
+        assert _rules(text), text
+
+    safe = (
+        "The analysis does not identify both Bianchi families.",
+        "Both Bianchi families are not identified by this analysis.",
+        "Identification of a Bianchi family does not follow from the scalar x/Q result.",
+        "The low-ell scalar does not imply identification of a Bianchi family.",
+    )
+    for text in safe:
+        assert _rules(text) == [], text
+
+
+def test_quantified_and_possessive_family_variants_are_errors() -> None:
+    forbidden = (
+        "The analysis identifies every Bianchi family in the result.",
+        "The analysis identifies each Bianchi family in the result.",
+        "The analyses identify multiple Bianchi families in the result.",
+        "Their analyses identify many Bianchi families in the result.",
+        "The analysis identifies all Bianchi families in the result.",
+        "This analysis's output identifies its Bianchi family.",
+        "The analyses' outputs identify all Bianchi families.",
+        "Every Bianchi family is identified by the analysis.",
+        "The analyses identify\nmultiple Bianchi families in the result.",
+        "The scalar implies identification of every Bianchi family.",
+        "Identification of multiple Bianchi families follows from the scalar.",
+        "The analysis is not public but identifies every Bianchi family.",
+        "All candidate families have now been identified as Bianchi VII_h.",
+        "Every candidate family is hereby identified as Bianchi VII_h.",
+        "Each viable family has conclusively now been identified as Bianchi VII_h.",
+        "Identification of every candidate family as Bianchi VII_h follows from the scalar.",
+        "The scalar implies identification of every candidate family as Bianchi VII_h.",
+        "Every candidate family is identified by the scalar as Bianchi VII_h.",
+        "All candidate families have\nnow been identified as Bianchi VII_h.",
+        "The report identifies every Bianchi family in the catalogue.",
+        "Every candidate family could already have been identified as Bianchi VII_h.",
+    )
+    for text in forbidden:
+        assert _rules(text), text
+
+    safe = (
+        "The analysis does not identify every Bianchi family.",
+        "This analysis's output does not identify its Bianchi family.",
+        "The scalar does not imply identification of every Bianchi family.",
+        "Identification of multiple Bianchi families does not follow from the scalar.",
+        "All candidate families have not been identified as Bianchi VII_h.",
+        "Identification of every candidate family as Bianchi VII_h does not follow from the scalar.",
+        "Every Bianchi family has clearly not been identified by this analysis.",
+        "The report cannot conclusively identify every Bianchi family.",
+        "The report doesn't identify every Bianchi family.",
+        "The scalar cannot uniquely imply identification of each Bianchi family.",
+        "The report can't identify every Bianchi family.",
+        "The report never identifies any Bianchi family.",
+        "Every Bianchi family has never been identified by this analysis.",
+        "Every Bianchi family couldn't have been identified by this analysis.",
+        "The scalar won't uniquely imply identification of each Bianchi family.",
+    )
+    for text in safe:
+        assert _rules(text) == [], text
+
+    assert _rules(
+        "The report is never public but identifies every Bianchi family."
+    ) == ["geometry_detected"]
+
+
+def test_claim_scoped_geometry_downclaims_remain_allowed() -> None:
+    safe = (
+        "Do not claim Bianchi geometry detected in the CF4 result.\n"
+        "Bianchi geometry was not detected in the CF4 result.\n"
+        "Bianchi family identification remains blocked.\n"
+    )
+
+    assert scan_text(safe, path=Path("geometry_downclaims.md")) == ()
 
 
 def test_tsc_teff_full_solver_language_is_blocked() -> None:
@@ -111,6 +242,217 @@ def test_mio_truth_and_external_native_overclaims_are_blocked() -> None:
     ]
 
 
+def test_cf4_legacy_diagnostics_cannot_be_promoted_to_physics_claims() -> None:
+    assert _rules(
+        "The 0.0089 curl diagnostic is evidence for physical cosmic vorticity."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules(
+        "The 0.0089 curl diagnostic is evidence for cosmic potential flow."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules(
+        "Physical cosmic vorticity is supported by the 0.0089 curl diagnostic."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules(
+        "Cosmic potential flow is established by the WF curl-div ratio."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules(
+        "Physical cosmic vorticity is supported by\n"
+        "the 0.0089 curl diagnostic."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules(
+        "Cosmic potential flow\n"
+        "is established by\n"
+        "the WF curl-div ratio."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules(
+        "- Physical cosmic vorticity is supported by\n"
+        "  the 0.0089 curl diagnostic."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules(
+        "> Physical cosmic vorticity is supported by\n"
+        "> the 0.0089 curl diagnostic."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules(
+        ">> Cosmic potential flow is established by\n"
+        ">> the WF curl-div ratio."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules(
+        "> - Physical cosmic vorticity is supported by\n"
+        ">   the 0.0089 curl diagnostic."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules(
+        "> Physical cosmic vorticity is supported by\n"
+        "the 0.0089 curl diagnostic."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules(
+        ">> Cosmic potential flow is established by\n"
+        "the WF curl-div ratio."
+    ) == ["legacy_curl_physics_promotion"]
+    assert _rules("PR-291 rescues the retired P0 velocity-shape headline.") == [
+        "retired_p0_rescue"
+    ]
+
+
+def test_cf4_legacy_downclaims_remain_allowed() -> None:
+    safe = """
+The 0.0089 curl diagnostic is not evidence for physical cosmic vorticity.
+The legacy diagnostic does not establish a cosmic potential flow.
+Physical cosmic vorticity is not supported by the 0.0089 curl diagnostic.
+Cosmic potential flow is not established by the WF curl-div ratio.
+Physical cosmic vorticity is not supported by
+the 0.0089 curl diagnostic.
+Cosmic potential flow
+is not established by
+the WF curl-div ratio.
+PR-291 does not rescue the retired P0 velocity-shape headline.
+The 0.0089 diagnostic is a self-consistency no-go, not as a measurement of
+physical cosmic vorticity or evidence for potential flow in the Universe.
+"""
+
+    assert scan_text(safe, path=Path("cf4_downclaim.md")) == ()
+
+
+def test_unrelated_negation_cannot_hide_positive_cf4_or_geometry_claims() -> None:
+    cases = (
+        "No posterior is computed. The 0.0089 curl diagnostic is evidence for physical cosmic vorticity.",
+        "The pipeline is not public. Bianchi geometry detected in the CF4 result.",
+        "Without observed execution, this is synthetic. Cosmic potential flow is established by the WF curl-div ratio.",
+        "No posterior is computed.\nPhysical cosmic vorticity is supported by\nthe 0.0089 curl diagnostic.",
+        "The 0.0089 curl diagnostic is not public but is evidence for physical cosmic vorticity.",
+        "PR-291 is not public but rescues the retired P0 velocity-shape headline.",
+        "The scalar result is not public but establishes Bianchi family identification.",
+    )
+
+    for text in cases:
+        assert scan_text(text, path=Path("unrelated_negation.md")), text
+
+
+def test_neighboring_markdown_cell_cannot_hide_allowed_cell_claim() -> None:
+    text = """
+| Allowed reading | Forbidden reading |
+|---|---|
+| The 0.0089 curl diagnostic is evidence for physical cosmic vorticity. | Do not claim potential flow. |
+"""
+
+    issues = scan_text(text, path=Path("claim_matrix.md"))
+
+    assert [issue.rule_id for issue in issues] == ["legacy_curl_physics_promotion"]
+
+
+def test_claim_ledger_forbidden_status_is_exact_structured_context() -> None:
+    forbidden = """
+| Claim | Owner | Status |
+|---|---|---|
+| PR-291 rescues the retired P0 velocity-shape headline. | HTT | FORBIDDEN / NOT_GRANTED |
+"""
+    positive = forbidden.replace("FORBIDDEN / NOT_GRANTED", "SUPPORTED")
+
+    assert scan_text(forbidden, path=Path("claim_ledger.md")) == ()
+    assert [issue.rule_id for issue in scan_text(positive, path=Path("claim_ledger.md"))] == [
+        "retired_p0_rescue"
+    ]
+
+
+def test_unrelated_negation_cannot_hide_source_observable_conflation() -> None:
+    text = (
+        "No posterior is computed.\n"
+        "Source adequacy therefore means\n"
+        "the observable is adequate."
+    )
+
+    assert [issue.rule_id for issue in scan_text(text, path=Path("source.md"))] == [
+        "source_observable_conflation"
+    ]
+
+
+def test_cf4_multiline_scan_respects_fences_and_list_item_boundaries() -> None:
+    explanatory = """
+```
+Physical cosmic vorticity is supported by
+the 0.0089 curl diagnostic.
+```
+- Physical cosmic vorticity is supported by
+- the 0.0089 curl diagnostic.
+> ```
+> Physical cosmic vorticity is supported by
+> the 0.0089 curl diagnostic.
+> ```
+> Physical cosmic vorticity is not supported by
+> the 0.0089 curl diagnostic.
+> - Physical cosmic vorticity is supported by
+> - the 0.0089 curl diagnostic.
+> Cosmic potential flow is established by
+>> the WF curl-div ratio.
+"""
+
+    assert scan_text(explanatory, path=Path("cf4_examples.md")) == ()
+
+
+def test_cf4_quoted_fence_state_cannot_mask_outside_promotion() -> None:
+    escaped = """
+> ```
+Physical cosmic vorticity is supported by
+the 0.0089 curl diagnostic.
+> ```
+"""
+    closed_before_promotion = """
+> ```
+> quoted example
+> ```
+Physical cosmic vorticity is supported by
+the 0.0089 curl diagnostic.
+"""
+    single_line_outside = """
+> ```text
+Physical cosmic vorticity is supported by the 0.0089 curl diagnostic.
+> ```
+"""
+    quoted_after_unclosed_unquoted_fence = """
+```
+> Physical cosmic vorticity is supported by the 0.0089 curl diagnostic.
+```
+"""
+
+    assert [
+        issue.rule_id
+        for issue in scan_text(escaped, path=Path("cf4_escaped_quote_fence.md"))
+    ] == ["legacy_curl_physics_promotion"]
+    assert [
+        issue.rule_id
+        for issue in scan_text(
+            closed_before_promotion,
+            path=Path("cf4_closed_quote_fence.md"),
+        )
+    ] == ["legacy_curl_physics_promotion"]
+    assert [
+        issue.rule_id
+        for issue in scan_text(
+            single_line_outside,
+            path=Path("cf4_single_line_outside_quote_fence.md"),
+        )
+    ] == ["legacy_curl_physics_promotion"]
+    assert [
+        issue.rule_id
+        for issue in scan_text(
+            quoted_after_unclosed_unquoted_fence,
+            path=Path("cf4_quoted_after_unclosed_fence.md"),
+        )
+    ] == ["legacy_curl_physics_promotion"]
+
+
+def test_cf4_quoted_fence_and_lazy_downclaim_controls_remain_allowed() -> None:
+    controls = """
+> ```text
+> Physical cosmic vorticity is supported by the 0.0089 curl diagnostic.
+> ```
+
+> Physical cosmic vorticity is not supported by
+the 0.0089 curl diagnostic.
+"""
+
+    assert scan_text(controls, path=Path("cf4_quote_controls.md")) == ()
+
+
 def test_negative_guardrails_and_blocked_examples_are_allowed() -> None:
     text = """
 Forbidden examples:
@@ -132,6 +474,10 @@ preregistered_falsifiers:
 forbidden_output_language:
   - Bianchi geometry detected
   - Bianchi family identified
+mutation_registry:
+  - {mutation_id: BAD-P0, intended_defect: PR-291 revives the retired P0 headline}
+forbidden_uses:
+  - PR-291 rescues the retired P0 headline
 """
 
     assert scan_text(text, path=Path("spec.yaml")) == ()

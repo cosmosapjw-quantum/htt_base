@@ -62,6 +62,8 @@ GUARDRAIL_MARKERS = (
 YAML_GUARDRAIL_SECTION_KEYS = frozenset(
     {
         "forbidden_output_language",
+        "forbidden_uses",
+        "mutation_registry",
         "preregistered_falsifiers",
     }
 )
@@ -73,6 +75,35 @@ SOURCE_OBSERVABLE_CONFLATION_PATTERN = re.compile(
     r".{0,100}\b(?:observable\s+(?:is\s+)?adequate|"
     r"the\s+observable\s+is\s+adequate|observable\s+adequacy)",
     re.IGNORECASE,
+)
+
+# Match the grammatical roles around a forbidden family-identification
+# predicate instead of enumerating an ever-growing list of determiners.  The
+# bounded modifier fragment deliberately excludes lexical negators; semantic
+# negation of the predicate itself is handled by
+# ``_match_sentence_has_guardrail`` below.
+_POSITIVE_NOUN_MODIFIERS = (
+    r"(?:(?!(?:no|not|non)\b)[A-Za-z][A-Za-z'-]{0,31}\s+){0,3}"
+)
+_BIANCHI_FAMILY_PHRASE = (
+    rf"{_POSITIVE_NOUN_MODIFIERS}Bianchi\s+famil(?:y|ies)"
+)
+_FAMILY_PHRASE = rf"{_POSITIVE_NOUN_MODIFIERS}famil(?:y|ies)"
+_BIANCHI_TYPE_PHRASE = r"Bianchi(?:\s+(?:type\s+)?[A-Za-z0-9_-]+)?"
+_FAMILY_AS_BIANCHI_PHRASE = (
+    rf"{_FAMILY_PHRASE}\s+as\s+{_BIANCHI_TYPE_PHRASE}"
+)
+# Passive identification may contain ordinary auxiliaries and positive
+# adverbs.  Negators are intentionally absent, so ``have not been identified``
+# cannot enter a positive match and still remains a permitted downclaim.
+_POSITIVE_IDENTIFICATION_AUX = (
+    r"(?:(?:is|are|was|were|has|have|had|be|been|being|can|could|may|"
+    r"might|must|shall|should|will|would|now|hereby|already|once|again|"
+    r"[A-Za-z]+ly)\s+){0,8}"
+)
+_ANALYSIS_ACTOR = (
+    r"(?:we|(?:(?:the|this|that|our|your|their|a|an)\s+)?"
+    r"analys(?:is|es)(?:(?:'s|')\s+(?:output|outputs))?)"
 )
 
 
@@ -98,12 +129,24 @@ RULES: tuple[ClaimLanguageRule, ...] = (
         rule_id="geometry_detected",
         pattern=re.compile(
             r"\b("
-            r"Bianchi geometry (?:is |was |has been )?detected|"  # forbidden-rule literal
+            r"Bianchi geometr(?:y|ies)\b[^.!?\n]{0,96}\bdetect(?:s|ed)?|"
             r"global Bianchi anisotropy detected|"  # forbidden-rule literal
-            r"Bianchi family (?:is |was |has been )?identified|"  # forbidden-rule literal
+            r"Bianchi famil(?:y|ies)\b[^.!?\n]{0,96}\bidentif(?:y|ies|ied)|"
             r"identified Bianchi family|"  # forbidden-rule literal
             r"family identified as|"  # forbidden-rule literal
-            r"(?:we\s+)?identif(?:y|ies|ied)\s+(?:a\s+|the\s+)?Bianchi family|"
+            r"identif(?:y|ies|ied)\s+"
+            rf"(?:{_BIANCHI_FAMILY_PHRASE}|{_FAMILY_AS_BIANCHI_PHRASE})|"
+            rf"{_ANALYSIS_ACTOR}\b[^.!?\n]{{0,96}}\b"
+            r"identif(?:y|ies|ied)\s+"
+            rf"{_BIANCHI_FAMILY_PHRASE}|"
+            rf"{_ANALYSIS_ACTOR}\b[^.!?\n]{{0,96}}\b"
+            r"identif(?:y|ies|ied)\s+"
+            rf"{_FAMILY_PHRASE}\s+as\s+Bianchi"
+            r"(?:\s+(?:type\s+)?[A-Za-z0-9_-]+)?|"
+            rf"{_FAMILY_PHRASE}\s+"
+            rf"{_POSITIVE_IDENTIFICATION_AUX}identified"
+            r"(?:\s+by\s+[^.!?\n]{1,80})?\s+as\s+"
+            rf"{_BIANCHI_TYPE_PHRASE}|"
             r"(?:we\s+)?detect(?:s|ed)?\s+(?:a\s+|the\s+)?Bianchi geometry"
             r")\b",
             re.IGNORECASE,
@@ -122,9 +165,19 @@ RULES: tuple[ClaimLanguageRule, ...] = (
             r"|directional coherence|BiPoSH norm|largest Bayes factor"
             r").{0,160}\b("
             r"family identification|identif(?:y|ies|ied).{0,40}famil|"
+            r"identification\s+of\s+"
+            rf"(?:{_BIANCHI_FAMILY_PHRASE}|{_FAMILY_AS_BIANCHI_PHRASE})|"
             r"prov(?:e|es|ed).{0,40}Bianchi type|"
             r"certif(?:y|ies|ied).{0,40}Bianchi geometry|"
             r"Bianchi geometry|geometry detected"
+            r")|"
+            r"(?:Bianchi family identification|identification\s+of\s+"
+            rf"(?:{_BIANCHI_FAMILY_PHRASE}|{_FAMILY_AS_BIANCHI_PHRASE}))"
+            r"[^.!?\n]{0,160}\b"
+            r"(?:follows?|results?)\s+from\s+(?:the\s+)?("
+            r"scalar|D[_\\\-\s]?(?:\\ell|ell|l)|x\s*[,/]\s*Q|"
+            r"F\s*[,/]\s*G|low[- ]ell feature|direction coherence|"
+            r"directional coherence|BiPoSH norm|largest Bayes factor"
             r")",
             re.IGNORECASE,
         ),
@@ -185,6 +238,43 @@ RULES: tuple[ClaimLanguageRule, ...] = (
         message="External/AniCLASS transfer outputs cannot be labeled native.",
     ),
     ClaimLanguageRule(
+        rule_id="legacy_curl_physics_promotion",
+        pattern=re.compile(
+            r"(?:"
+            r"\b(?:0\.0089|(?:WF\s+)?curl(?:[- ]?div(?:ergence)?|\s+diagnostic|\s+ratio)?)\b"
+            r".{0,180}\b(?:evidence|support(?:s|ed)?|prov(?:e|es|ed)|"
+            r"establish(?:es|ed)?|detect(?:s|ed)?)\b.{0,120}\b(?:"
+            r"physical\s+(?:cosmic\s+)?vorticity|cosmic\s+vorticity|"
+            r"cosmic\s+potential\s+flow|potential\s+flow\s+in\s+the\s+Universe)\b"
+            r"|"
+            r"\b(?:physical\s+(?:cosmic\s+)?vorticity|cosmic\s+vorticity|"
+            r"cosmic\s+potential\s+flow|potential\s+flow\s+in\s+the\s+Universe)\b"
+            r".{0,120}\b(?:evidence|support(?:s|ed)?|prov(?:e|es|ed)|"
+            r"establish(?:es|ed)?|detect(?:s|ed)?)\b.{0,180}\b(?:"
+            r"0\.0089|(?:WF\s+)?curl(?:[- ]?div(?:ergence)?|\s+diagnostic|\s+ratio)?)\b"
+            r")",
+            re.IGNORECASE,
+        ),
+        message=(
+            "The legacy CF4 curl diagnostic is a stencil self-consistency "
+            "check, not evidence for physical vorticity or cosmic potential flow."
+        ),
+    ),
+    ClaimLanguageRule(
+        rule_id="retired_p0_rescue",
+        pattern=re.compile(
+            r"\b(?:PR[- ]?291|CF4|(?:this|the|new)\s+(?:analysis|result))\b"
+            r".{0,120}\b(?:rescu(?:e|es|ed)|reviv(?:e|es|ed)|"
+            r"restor(?:e|es|ed)|rehabilitat(?:e|es|ed))\b.{0,120}\b"
+            r"(?:retired\s+)?P0(?:\s+velocity[- ]shape)?(?:\s+headline)?\b|"
+            r"\b(?:retired\s+)?P0(?:\s+velocity[- ]shape)?(?:\s+headline)?\b"
+            r".{0,120}\b(?:rescu(?:e|es|ed)|reviv(?:e|es|ed)|"
+            r"restor(?:e|es|ed)|rehabilitat(?:e|es|ed))\b",
+            re.IGNORECASE,
+        ),
+        message="PR-291 cannot rescue the retired P0 or velocity-shape headline.",
+    ),
+    ClaimLanguageRule(
         rule_id="source_observable_conflation",
         pattern=SOURCE_OBSERVABLE_CONFLATION_PATTERN,
         message=(
@@ -203,24 +293,60 @@ def scan_text(text: str, *, path: Path = Path("<text>")) -> tuple[ClaimLanguageI
     issues: list[ClaimLanguageIssue] = []
     lines = text.splitlines()
     in_fence = False
+    fence_character: str | None = None
+    fence_length = 0
+    fence_quote_depth: int | None = None
     for index, line in enumerate(lines, 1):
         stripped = line.strip()
-        if stripped.startswith("```") or stripped.startswith("~~~"):
-            in_fence = not in_fence
+        quote_depth = 0
+        while stripped.startswith(">"):
+            quote_depth += 1
+            stripped = stripped[1:].lstrip()
+        fence_match = re.match(r"^(`{3,}|~{3,})", stripped)
+        if in_fence and quote_depth != fence_quote_depth:
+            in_fence = False
+            fence_character = None
+            fence_length = 0
+            fence_quote_depth = None
+        elif in_fence:
+            if (
+                fence_match is not None
+                and fence_character is not None
+                and fence_match.group(1)[0] == fence_character
+                and len(fence_match.group(1)) >= fence_length
+                and not stripped[len(fence_match.group(1)) :].strip()
+            ):
+                in_fence = False
+                fence_character = None
+                fence_length = 0
+                fence_quote_depth = None
             continue
-        if in_fence or not stripped:
+        if fence_match is not None:
+            marker = fence_match.group(1)
+            in_fence = True
+            fence_character = marker[0]
+            fence_length = len(marker)
+            fence_quote_depth = quote_depth
+            continue
+        if not stripped:
             continue
         for rule in RULES:
             match = rule.pattern.search(line)
             if match is None:
-                continue
-            if _is_guardrail_context(lines, index - 1, path=path):
                 continue
             if _match_is_in_forbidden_markdown_column(
                 lines,
                 zero_based_index=index - 1,
                 match=match,
                 pattern=rule.pattern,
+            ):
+                continue
+            if _is_guardrail_context(
+                lines,
+                index - 1,
+                path=path,
+                matched_text=line,
+                match=match,
             ):
                 continue
             if match:
@@ -235,6 +361,7 @@ def scan_text(text: str, *, path: Path = Path("<text>")) -> tuple[ClaimLanguageI
                     )
                 )
     issues.extend(_scan_source_observable_windows(lines, path=path))
+    issues.extend(_scan_multiline_claim_windows(lines, path=path))
     return tuple(issues)
 
 
@@ -258,13 +385,14 @@ def _scan_source_observable_windows(
         candidate_lines.append((index, stripped))
 
     for offset, (line_number, first) in enumerate(candidate_lines[:-1]):
-        if _is_guardrail_context(lines, line_number - 1, path=path):
-            continue
         second_number, second = candidate_lines[offset + 1]
-        if _is_guardrail_context(lines, second_number - 1, path=path):
-            continue
         window = f"{first} {second}"
-        if SOURCE_OBSERVABLE_CONFLATION_PATTERN.search(window):
+        match = SOURCE_OBSERVABLE_CONFLATION_PATTERN.search(window)
+        if match is not None and not (
+            _structured_guardrail_context(lines, line_number - 1, path=path)
+            or _structured_guardrail_context(lines, second_number - 1, path=path)
+            or _match_sentence_has_guardrail(window, match)
+        ):
             issues.append(
                 ClaimLanguageIssue(
                     path=path,
@@ -278,6 +406,158 @@ def _scan_source_observable_windows(
                     text=window.strip(),
                 )
             )
+    return tuple(issues)
+
+
+def _scan_multiline_claim_windows(
+    lines: Sequence[str],
+    *,
+    path: Path,
+) -> tuple[ClaimLanguageIssue, ...]:
+    """Catch registered promotion claims split by ordinary prose wrapping.
+
+    The primary scanner remains line based for stable locations and narrow
+    guardrail exemptions.  Publication prose, however, can wrap one semantic
+    sentence over several source lines.  Fold only contiguous prose blocks,
+    stopping at blank lines, fenced-code containers, genuine quote-depth
+    changes, and new Markdown structural items.  CommonMark lazy blockquote
+    continuations inherit the active quote depth even when the repeated ``>``
+    marker is omitted.  Fence state is scoped to the quote container that
+    opened it so an unterminated quoted example cannot mask later prose.
+    Report only matches that genuinely span more than one source line.
+    """
+
+    rules = tuple(
+        item
+        for item in RULES
+        if item.rule_id
+        in {
+            "geometry_detected",
+            "scalar_family_identification",
+            "legacy_curl_physics_promotion",
+        }
+    )
+    issues: list[ClaimLanguageIssue] = []
+    block: list[tuple[int, str]] = []
+    in_fence = False
+    fence_character: str | None = None
+    fence_length = 0
+    fence_quote_depth: int | None = None
+    block_quote_depth: int | None = None
+
+    def flush() -> None:
+        nonlocal block_quote_depth
+        if len(block) < 2:
+            block.clear()
+            block_quote_depth = None
+            return
+
+        joined_parts: list[str] = []
+        spans: list[tuple[int, int, int]] = []
+        cursor = 0
+        for line_index, value in block:
+            if joined_parts:
+                cursor += 1
+            start = cursor
+            joined_parts.append(value)
+            cursor += len(value)
+            spans.append((start, cursor, line_index))
+        joined = " ".join(joined_parts)
+
+        for rule in rules:
+            for match in rule.pattern.finditer(joined):
+                touched = [
+                    line_index
+                    for start, stop, line_index in spans
+                    if start < match.end() and stop > match.start()
+                ]
+                if len(touched) < 2:
+                    continue
+                if any(
+                    _structured_guardrail_context(lines, line_index, path=path)
+                    for line_index in touched
+                ) or _match_sentence_has_guardrail(joined, match):
+                    continue
+                issues.append(
+                    ClaimLanguageIssue(
+                        path=path,
+                        line=touched[0] + 1,
+                        rule_id=rule.rule_id,
+                        severity="error",
+                        message=rule.message,
+                        text=match.group(0).strip(),
+                    )
+                )
+        block.clear()
+        block_quote_depth = None
+
+    for line_index, line in enumerate(lines):
+        stripped = line.strip()
+        quote_depth = 0
+        while stripped.startswith(">"):
+            quote_depth += 1
+            stripped = stripped[1:].lstrip()
+
+        fence_match = re.match(r"^(`{3,}|~{3,})", stripped)
+        if in_fence and quote_depth != fence_quote_depth:
+            # A fence belongs to the Markdown container that opened it.  A
+            # quote-depth transition ends that container even when the source
+            # omitted an explicit closing marker; process this line as prose
+            # in its new container instead of letting stale fence state hide it.
+            in_fence = False
+            fence_character = None
+            fence_length = 0
+            fence_quote_depth = None
+        elif in_fence:
+            if (
+                fence_match is not None
+                and fence_character is not None
+                and fence_match.group(1)[0] == fence_character
+                and len(fence_match.group(1)) >= fence_length
+                and not stripped[len(fence_match.group(1)) :].strip()
+            ):
+                in_fence = False
+                fence_character = None
+                fence_length = 0
+                fence_quote_depth = None
+            continue
+
+        if fence_match is not None:
+            flush()
+            marker = fence_match.group(1)
+            in_fence = True
+            fence_character = marker[0]
+            fence_length = len(marker)
+            fence_quote_depth = quote_depth
+            continue
+        if not stripped:
+            flush()
+            continue
+
+        is_structural = re.match(
+            r"^(?:#{1,6}\s|[-*+]\s|\d+[.)]\s|\|)", stripped
+        ) is not None
+        effective_quote_depth = quote_depth
+        if (
+            block
+            and quote_depth == 0
+            and block_quote_depth is not None
+            and block_quote_depth > 0
+            and not is_structural
+        ):
+            # CommonMark permits an ordinary paragraph continuation inside a
+            # block quote to omit the repeated marker.  Retain the established
+            # container depth until a real block boundary appears.
+            effective_quote_depth = block_quote_depth
+
+        if block and effective_quote_depth != block_quote_depth:
+            flush()
+        if block and is_structural:
+            flush()
+        if not block:
+            block_quote_depth = effective_quote_depth
+        block.append((line_index, stripped))
+    flush()
     return tuple(issues)
 
 
@@ -366,22 +646,138 @@ def _is_guardrail_context(
     zero_based_index: int,
     *,
     path: Path,
+    matched_text: str,
+    match: re.Match[str],
+) -> bool:
+    if _structured_guardrail_context(lines, zero_based_index, path=path):
+        return True
+    return _match_sentence_has_guardrail(matched_text, match)
+
+
+def _structured_guardrail_context(
+    lines: Sequence[str], zero_based_index: int, *, path: Path
 ) -> bool:
     if path.suffix.lower() in {".yaml", ".yml"} and _is_yaml_guardrail_section(
         lines, zero_based_index
     ):
         return True
     current = lines[zero_based_index].strip()
-    if current.startswith("|") and current.endswith("|"):
-        # Nearby table headers such as ``Forbidden reading`` describe a column,
-        # not every cell in the following rows.  Per-cell handling lives in
-        # ``_match_is_in_forbidden_markdown_column`` below.
-        window = current.lower()
-        return any(marker in window for marker in GUARDRAIL_MARKERS)
-    start = max(0, zero_based_index - 2)
-    stop = min(len(lines), zero_based_index + 2)
-    window = " ".join(lines[start:stop]).lower()
-    return any(marker in window for marker in GUARDRAIL_MARKERS)
+    if re.match(r"^(?:[-*+]\s|\d+[.)]\s)", current) is None:
+        return False
+    for candidate in reversed(lines[:zero_based_index]):
+        stripped = candidate.strip()
+        if not stripped:
+            break
+        if re.match(r"^(?:[-*+]\s|\d+[.)]\s)", stripped):
+            continue
+        return re.fullmatch(r"Forbidden examples\s*:\s*", stripped, re.IGNORECASE) is not None
+    return False
+
+
+def _match_sentence_has_guardrail(text: str, match: re.Match[str]) -> bool:
+    """Recognize only negation semantically scoped to the matched claim."""
+
+    start = 0
+    for boundary in re.finditer(r"[.!?](?:[\"')\]]*)\s+", text[: match.start()]):
+        start = boundary.end()
+    end_match = re.search(r"[.!?](?:[\"')\]]*)\s+", text[match.end() :])
+    end = match.end() + end_match.end() if end_match is not None else len(text)
+    sentence = text[start:end].lower()
+    relative_start = match.start() - start
+    relative_end = match.end() - start
+    matched_claim = sentence[relative_start:relative_end]
+    predicate_forms = (
+        r"detect(?:s|ed)?|identif(?:y|ies|ied)|support(?:s|ed)?|"
+        r"establish(?:es|ed)?|prov(?:e|es|ed)|certif(?:y|ies|ied)|"
+        r"validat(?:e|es|ed)|rescu(?:e|es|ed)|impl(?:y|ies|ied)|"
+        r"promot(?:e|es|ed)|claim(?:s|ed)?|follow(?:s|ed)?|result(?:s|ed)?"
+    )
+    positive_adverbs = r"(?:[a-z]+ly\s+){0,3}"
+    # Active predicate negation immediately before the match.  This handles
+    # contractions and positive adverbs without letting an unrelated earlier
+    # qualifier such as ``not public but`` suppress a later positive claim.
+    prefix = sentence[:relative_start]
+    if re.search(
+        rf"(?:\bcannot|\bnever|\b(?:ca|wo|sha)n['’]t|"
+        rf"\b(?:can|could|may|might|must|shall|should|will|"
+        rf"would|do|does|did)n['’]t|\b(?:can|could|may|might|must|shall|"
+        rf"should|will|would|do|does|did)\s+not)\s+{positive_adverbs}$",
+        prefix,
+    ):
+        return True
+    # Passive predicate negation is contained inside the matched family
+    # clause.  Permit only auxiliaries and adverbs between ``not`` and the
+    # predicate, so ``not public but ... identified`` is not exempted.
+    if re.search(
+        rf"\b(?:is|are|was|were|has|have|had|can|could|may|might|must|"
+        rf"shall|should|will|would)\s+{positive_adverbs}(?:not|never)\s+"
+        rf"(?:(?:be|been|being|have|has|had|[a-z]+ly)\s+){{0,4}}"
+        rf"(?:{predicate_forms})\b",
+        matched_claim,
+    ):
+        return True
+    if re.search(
+        rf"\b(?:is|are|was|were|has|have|had|can|could|may|might|must|"
+        rf"shall|should|will|would)n['’]t\s+"
+        rf"(?:(?:be|been|being|have|has|had|[a-z]+ly)\s+){{0,4}}"
+        rf"(?:{predicate_forms})\b",
+        matched_claim,
+    ):
+        return True
+    if re.search(
+        rf"(?:\bcannot|\bnever|\b(?:ca|wo|sha)n['’]t|"
+        rf"\b(?:can|could|may|might|must|shall|should|will|"
+        rf"would|do|does|did)n['’]t|\b(?:can|could|may|might|must|shall|"
+        rf"should|will|would|do|does|did)\s+not)\s+{positive_adverbs}"
+        rf"(?:{predicate_forms})\b",
+        matched_claim,
+    ):
+        return True
+    if re.search(
+        r"\b(?:is|are|was|were|has|have)\s+not\s+"
+        r"(?:(?:conclusively|directly|uniquely|definitively)\s+){0,3}"
+        r"(?:detected|identified|supported|established|proved|certified|"
+        r"validated|evidence\s+for|a\s+truth\s+certificate|"
+        r"truth\s+certificates?|a\s+native\s+solver\s+result|"
+        r"native\s+solver\s+results?)\b",
+        matched_claim,
+    ):
+        return True
+    if re.search(
+        r"\b(?:do|does|did|can|could|may|must|should|will|would)\s+not\s+"
+        r"(?:detect|identify|support|establish|prove|certify|validate|"
+        r"rescue|imply|promote|claim|follow|result)\b",
+        matched_claim,
+    ):
+        return True
+    if re.search(
+        r"\b(?:never|cannot)\s+(?:detect|identify|support|establish|prove|"
+        r"certify|validate|rescue|imply|promote|claim)\b",
+        matched_claim,
+    ):
+        return True
+    if re.search(
+        r"\bnot\s+as\s+(?:a\s+|an\s+)?(?:measurement|evidence|proof|"
+        r"detection|identification)\s+(?:of|for)\b",
+        matched_claim,
+    ):
+        return True
+
+    if re.search(
+        r"(?:\b(?:do|does|did|must|should|can|could|may)\s+not\s+"
+        r"(?:claim|assert|conclude|infer|report|say)(?:\s+that)?|"
+        r"\bno)$",
+        prefix.rstrip(),
+    ):
+        return True
+
+    suffix = sentence[relative_end:]
+    return re.match(
+        r"^\s*(?:(?:is|are|was|were|remains?|must\s+be|should\s+be|"
+        r"cannot\s+be)\s+)?(?:blocked|forbidden|rejected|not\s+supported|"
+        r"not\s+allowed|not\s+claimed)\b",
+        suffix,
+    ) is not None
 
 
 def _is_yaml_guardrail_section(
@@ -426,11 +822,12 @@ def _match_is_in_forbidden_markdown_column(
     match: re.Match[str],
     pattern: re.Pattern[str],
 ) -> bool:
-    """Return true only when a match ends in an explicit forbidden-reading cell.
+    """Return true only for an exact negative Markdown-table context.
 
     This keeps explanatory claim matrices scannable without granting a blanket
     exemption to the table row: a forbidden phrase placed in an ``Allowed``
-    cell is still reported.
+    cell is still reported. Claim-ledger rows receive the same narrow treatment
+    only when their exact ``Status`` cell begins with ``FORBIDDEN``.
     """
 
     row = lines[zero_based_index]
@@ -444,17 +841,35 @@ def _match_is_in_forbidden_markdown_column(
         if not candidate.startswith("|") or not candidate.endswith("|"):
             break
         cells = tuple(cell.strip().lower() for cell in candidate.strip("|").split("|"))
-        if any("forbidden" in cell and "reading" in cell for cell in cells):
+        if (
+            any("forbidden" in cell and "reading" in cell for cell in cells)
+            or "status" in cells
+        ):
             header_cells = cells
             break
     if header_cells is None or len(header_cells) != len(row_spans):
         return False
+
+    status_indexes = {
+        index for index, cell in enumerate(header_cells) if cell == "status"
+    }
+    if any(
+        re.fullmatch(
+            r"forbidden(?:\s*/\s*(?:not_granted|not_evaluated))?",
+            row_spans[index].group(0).strip().lower(),
+        )
+        is not None
+        for index in status_indexes
+    ):
+        return True
 
     forbidden_indexes = {
         index
         for index, cell in enumerate(header_cells)
         if "forbidden" in cell and "reading" in cell
     }
+    if not forbidden_indexes:
+        return False
     first_forbidden_start = min(
         row_spans[index].start() for index in forbidden_indexes
     )
