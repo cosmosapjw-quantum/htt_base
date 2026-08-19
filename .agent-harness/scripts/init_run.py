@@ -98,15 +98,6 @@ def main() -> None:
         default=None,
         help="bounded reason for consuming the narrow reviewer exception",
     )
-    parser.add_argument(
-        "--review-rereview-reauthorization-start",
-        type=int,
-        default=None,
-        help=(
-            "exact cumulative assignment count for an owner-authorized later "
-            "two-reviewer wave; values must be even and at least 18"
-        ),
-    )
     args = parser.parse_args()
     try:
         execution_mode = validate_execution_mode(args.execution_mode)
@@ -150,11 +141,6 @@ def main() -> None:
     elif any(item is not None for item in exception_fields):
         raise SystemExit(
             "review rereview exception metadata requires at least one "
-            "--review-rereview-exception-assignment"
-        )
-    elif args.review_rereview_reauthorization_start is not None:
-        raise SystemExit(
-            "review rereview reauthorization requires at least one "
             "--review-rereview-exception-assignment"
         )
     try:
@@ -335,16 +321,9 @@ def main() -> None:
         }
     )
     if exception_assignment_ids:
-        reauthorization_start = (
-            args.review_rereview_reauthorization_start
-        )
         template["budget_exception"] = {
             "exception_id": args.review_rereview_exception_id,
-            "kind": (
-                "single_run_reviewer_rereview_reauthorization"
-                if reauthorization_start is not None
-                else "single_run_reviewer_rereview"
-            ),
+            "kind": "single_run_reviewer_rereview",
             "run_id": run_id,
             "work_unit_id": args.work_unit,
             "authorized_by": args.review_rereview_authorized_by,
@@ -355,10 +334,6 @@ def main() -> None:
             "allowed_assignment_ids": exception_assignment_ids,
             "single_use": True,
         }
-        if reauthorization_start is not None:
-            template["budget_exception"]["cumulative_start"] = (
-                reauthorization_start
-            )
     plan_errors = validate_run_plan_payload(
         template,
         repo=repo,

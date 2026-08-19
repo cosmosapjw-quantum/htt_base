@@ -34,10 +34,6 @@ ACTIVE_RUN_RELATIVE_PATH = Path(".agent-harness/runtime/ACTIVE_RUN")
 LEGACY_ACTIVE_RUN_RELATIVE_PATH = Path(".agent-harness/ACTIVE_RUN")
 DEFAULT_MAX_TOTAL_PER_WORK_UNIT = 16
 MAX_REVIEW_REREVIEW_EXCEPTION_ASSIGNMENTS = 2
-FIRST_REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START = (
-    DEFAULT_MAX_TOTAL_PER_WORK_UNIT
-    + MAX_REVIEW_REREVIEW_EXCEPTION_ASSIGNMENTS
-)
 EXECUTION_MODES = {"MANUAL_PR", "AUTO_STACKED_PR", "AUTO_MERGE"}
 LIFECYCLE_STATES = (
     "PLANNED",
@@ -1437,11 +1433,9 @@ def validate_review_rereview_budget_exception(
 
     The ordinary cumulative work-unit ceiling remains 16.  An exception may
     authorize at most two named reviewer assignments in exactly one run after
-    that ceiling has been exhausted.  A later reauthorization may begin only
-    after all earlier two-assignment waves have been consumed.  Every wave must
-    carry a fresh human authorization, name at most two reviewers, and bind its
-    exact cumulative start.  No form authorizes implementers, adjudicators,
-    arbitrary assignment IDs, or a reusable/global increase.
+    that ceiling has been exhausted.  The total cumulative ceiling is therefore
+    18.  No form authorizes a later wave, implementers, adjudicators, arbitrary
+    assignment IDs, or a reusable/global increase.
     """
 
     value = plan.get("budget_exception")
@@ -1464,9 +1458,6 @@ def validate_review_rereview_budget_exception(
         "allowed_assignment_ids",
         "single_use",
     }
-    kind = value.get("kind")
-    if kind == "single_run_reviewer_rereview_reauthorization":
-        required_fields.add("cumulative_start")
     if set(value) != required_fields:
         raise PublicationIntegrityError(
             "RUN_PLAN budget_exception fields must exactly match the "
@@ -1476,10 +1467,7 @@ def validate_review_rereview_budget_exception(
         raise PublicationIntegrityError(
             "RUN_PLAN budget_exception.exception_id is missing or unsafe"
         )
-    if kind not in {
-        "single_run_reviewer_rereview",
-        "single_run_reviewer_rereview_reauthorization",
-    }:
+    if value.get("kind") != "single_run_reviewer_rereview":
         raise PublicationIntegrityError(
             "RUN_PLAN budget_exception.kind is not a registered "
             "review-rereview exception"
@@ -1541,24 +1529,6 @@ def validate_review_rereview_budget_exception(
         raise PublicationIntegrityError(
             "RUN_PLAN budget_exception must be single_use=true"
         )
-    if kind == "single_run_reviewer_rereview_reauthorization":
-        cumulative_start = value.get("cumulative_start")
-        if (
-            type(cumulative_start) is not int
-            or cumulative_start
-            < FIRST_REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START
-            or (
-                cumulative_start
-                - FIRST_REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START
-            )
-            % MAX_REVIEW_REREVIEW_EXCEPTION_ASSIGNMENTS
-            != 0
-        ):
-            raise PublicationIntegrityError(
-                "RUN_PLAN reviewer rereview reauthorization must begin at an "
-                "exact two-assignment wave boundary at or after cumulative "
-                f"assignment {FIRST_REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START}"
-            )
     return value
 
 
@@ -1594,24 +1564,20 @@ def enforce_work_unit_assignment_budget(
 
     allowed_ids = set(exception["allowed_assignment_ids"])
     additional = int(exception["additional_assignments"])
-    authorized_start = int(
-        exception.get("cumulative_start", ordinary_limit)
-    )
     if cumulative_count < ordinary_limit:
         raise PublicationIntegrityError(
             "RUN_PLAN budget_exception cannot be consumed before the ordinary "
             "work-unit budget is exhausted"
         )
-    if cumulative_count < authorized_start:
+    if cumulative_count >= ordinary_limit + additional:
         raise PublicationIntegrityError(
-            "RUN_PLAN budget_exception cannot be consumed before its "
-            "authorized cumulative start"
+            "Cumulative work-unit budget exception is exhausted"
         )
     if not current_run_assignment_ids <= allowed_ids:
         raise PublicationIntegrityError(
             "RUN_PLAN budget_exception run contains a non-authorized assignment"
         )
-    if cumulative_count != authorized_start + len(current_run_assignment_ids):
+    if cumulative_count != ordinary_limit + len(current_run_assignment_ids):
         raise PublicationIntegrityError(
             "RUN_PLAN budget_exception consumption does not match cumulative "
             "work-unit history"
