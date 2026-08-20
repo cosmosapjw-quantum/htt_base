@@ -1,0 +1,655 @@
+schema: htt.pr287.post275_blind_replay_spec.v1
+pr_id: PR-287
+title: Current typed replay and fresh blind synthetic challenge
+owner: HTT
+contributors: [COMMON, OBSSTAT, MIO]
+change_set_id: CS-PR287-FRESH-BLIND-REPLAY
+publication_group_id: PG-PR287-FRESH-BLIND-REPLAY
+
+dependencies: [PR-281, PR-282, PR-283, PR-284, PR-285, PR-286]
+dependency_contracts:
+  - upstream_id: PR-281
+    mode: requires_success
+    required_resolution: COMPLETED_SUCCESS
+    required_receipt: docs/PR_DELTAS/pr-281.md
+  - upstream_id: PR-282
+    mode: requires_success
+    required_resolution: COMPLETED_SUCCESS
+    required_terminal: PASS_EXECUTABLE_P_EQUIVARIANCE
+    required_receipt: docs/generated/pr282_exact_parity_readiness_receipt.json
+  - upstream_id: PR-283
+    mode: requires_success
+    required_resolution: COMPLETED_SUCCESS
+    required_terminal: PASS_WEAK_IDENTIFICATION_ABSTENTION
+    required_receipt: docs/generated/pr283_weak_identification_receipt.json
+  - upstream_id: PR-284
+    mode: requires_success
+    required_resolution: COMPLETED_SUCCESS
+    required_terminal: PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION
+    required_receipt: docs/generated/pr284_depth_path_doob_receipt.json
+  - upstream_id: PR-285
+    mode: requires_success
+    required_resolution: COMPLETED_SUCCESS
+    required_terminal: PASS_COMPLETE_PILLAR_T_ADJUDICATION
+    required_receipt: docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json
+    success_semantics: PROCESS_COMPLETION_ONLY
+    downstream_row_contract:
+      preserve_row_verdicts: true
+      preserve_fail_inconclusive_and_blocked: true
+      preserve_exact_row_semantics: true
+      synthetic_validation_effect: NO_THEOREM_SOURCE_OBSERVED_OR_EXACTNESS_PROMOTION
+  - upstream_id: PR-286
+    mode: requires_success
+    required_resolution: COMPLETED_SUCCESS
+    required_terminal: PASS_COMPLETE_PILLAR_S_ADJUDICATION
+    required_receipt: docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json
+    success_semantics: PROCESS_COMPLETION_ONLY
+    downstream_row_contract:
+      preserve_row_verdicts: true
+      preserve_inconclusive_and_blocked: true
+      synthetic_validation_effect: NO_OBSERVED_OR_SOURCE_PROOF_PROMOTION
+
+activation_contract:
+  current_state: ACTIVE_PREDECESSOR_PR_OPEN
+  authority_mode: STACKED_PR_OPEN_EXACT_SEALED_HEAD
+  canonical_status_source: docs/codex_handoff/pr_status.yaml
+  canonical_target_sha: ff9ef9f45747e559c5343b463cf010dfc3a7432a
+  required_predecessor_state: PR_OPEN
+  required_predecessor_sealed_sha: b955a050f19db853a93779506e8acb4e4a5352a9
+  predecessor_pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/383
+  review_evidence_role: HISTORICAL_PROVENANCE_ONLY
+  pre_activation_allowed:
+    - frozen design and publication-policy review
+    - typed interface mapping and fail-first contract tests
+    - dependency-stack replay without held-out generation or result inspection
+  pre_activation_forbidden:
+    - fresh seed generation
+    - challenge or truth-vault generation
+    - blind analyst execution
+    - held-out truth inspection or adjudication
+    - result-pack generation
+  rule: >-
+    Fresh challenge execution is eligible only because all six canonical
+    predecessor rows satisfy their registered dependency contracts and PR-286
+    is OPEN at its exact sealed head. A moving target tip, merge state, or a
+    different predecessor commit cannot substitute for that recorded head.
+  exact_validation:
+    - require exact canonical spec path docs/research_program/post_pr275/pr287_spec.yaml
+    - require exact canonical status path docs/codex_handoff/pr_status.yaml
+    - resolve every predecessor from the canonical status row
+    - require resolution COMPLETED_SUCCESS and success_dependency_satisfied true
+    - resolve every declared receipt and review receipt as a regular non-symlink file
+    - treat predecessor review envelopes as historical provenance rather than replaying them against the current descendant worktree
+    - require PR-283 through PR-286 to have the exact complete PR_OPEN lifecycle and PASS implementation validation review seal push and publication gates
+    - require every stacked base predecessor and predecessor_sealed_sha to equal the immediately preceding exact SEALED_HEAD
+    - require current PR-287 to be the only ACTIVE implementation and to start from the recorded PR-286 SEALED_HEAD
+    - recompute and bind receipt hashes and candidate identities before side effects
+    - validate PR-282 through PR-286 process-terminal tokens from their exact receipts
+    - read each terminal only from its registered schema path; recursive token search is forbidden
+    - reject missing duplicate stale mismatched or unregistered predecessor evidence
+  side_effect_boundary: >-
+    Activation validation is pure and completes before entropy access, scratch
+    creation, challenge construction, truth construction, historical replay,
+    submission parsing, adjudication, or pack writes.
+
+capability: current_vector_tensor_spine_replay_and_held_out_challenge
+scope: pre-solver fresh synthetic integration and historical replay
+claim_tier: diagnostic_only
+claim_level: {scheme: roadmap_rescue_v1, level: C2}
+scientific_artifact_mode: synthetic_diagnostic
+transfer_source: none
+observed_data_executed: false
+public_use: false
+family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
+scientific_status_effect: OPEN_UNCHANGED
+
+lane_separation:
+  historical_replay:
+    source_pr: PR-273
+    source_pack: docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json
+    mode: EXACT_HISTORICAL_REPLAY_ONLY
+    execution_order: after_fresh_submission_is_content_frozen
+    allowed_use:
+      - reproduce historical typed-pipeline behavior and archived failure boundaries
+      - BC1-tagged compatibility projection into a separate comparison appendix
+    forbidden_use:
+      - seed, threshold, normalizer, case design, expected label, or truth anchor for the fresh challenge
+      - replacement for current-spine execution
+      - proof, observed, native, geometry, or family promotion
+  fresh_challenge:
+    mode: NEW_CHALLENGE_AND_NEW_TRUTH_VAULT
+    case_ids: [D01, D02, D03, D04, H01, H02, H03, H04, H05, H06, H07, H08]
+    development_ids: [D01, D02, D03, D04]
+    held_out_ids: [H01, H02, H03, H04, H05, H06, H07, H08]
+    hidden_scenario_bank:
+      schema: htt.pr287.typed_scenario_bank.v1
+      content_address: sha256_of_canonical_scenario_inventory
+      scenario_order:
+        - SCALAR_LIMIT
+        - TENSOR_ONLY
+        - MISSING_CHANNEL
+        - COVARIANCE_CORRECT
+        - COVARIANCE_MISSPECIFIED_PAIRED
+        - MULTIPLICITY_STRESS
+        - COVERAGE_FAILURE
+        - WEAK_LOCAL_GLOBAL_OVERLAP
+        - SEPARATED_LOCAL_GLOBAL
+        - OPEN_SET_UNKNOWN
+        - PROVED_DEPTH_PATH
+        - PREMISE_MISSING_DEPTH_PATH
+      required_scenario_fields:
+        - scenario_id
+        - partition
+        - data_generating_law_id
+        - estimand_id
+        - analysis_unit
+        - covariance_generator_id
+        - covariance_analysis_id
+        - covariance_generator_matrix
+        - covariance_analysis_matrix
+        - latent_draw_inventory_id
+        - replicate_or_exact_enumeration_rule
+        - exact_enumeration_cell_ids
+        - seed_policy_id
+        - hypothesis_family_id
+        - alpha
+        - simultaneous_method
+        - acceptance_rule_id
+        - expected_negative_control_terminal
+        - mc_precision_rule_id
+      common_statistical_contract:
+        replicate_count: 512
+        analysis_unit: one complete synthetic challenge case
+        alpha: 0.05
+        hypothesis_family_id: PR287-HELDOUT-FAMILY-V1
+        simultaneous_method: Holm-Bonferroni_FWER
+        raw_cell_results_preserved: true
+        coverage_estimand: repeated_case_interval_contains_frozen_truth
+        coverage_target: 0.90
+        coverage_acceptance: exact_binomial_95pct_interval_contains_target
+        mc_precision_rule: exact_binomial_interval_half_width_at_most_0.04
+        insufficient_precision_terminal: INCONCLUSIVE_MC_PRECISION
+      scenario_template:
+        partition: exact development for first four scenarios and held_out for remaining eight
+        data_generating_law_id: scenario_specific_content_id_required
+        analysis_unit: one_complete_synthetic_challenge_case
+        covariance_generator_id: scenario_specific_content_id_required
+        covariance_analysis_id: scenario_specific_content_id_required
+        covariance_generator_matrix: finite_symmetric_positive_definite_and_content_bound
+        covariance_analysis_matrix: finite_symmetric_positive_definite_and_content_bound
+        latent_draw_inventory_id: generated_after_seed_and_content_addressed
+        replicate_or_exact_enumeration_rule: 512_independent_replicates_or_exact_finite_enumeration
+        exact_enumeration_cell_ids: empty for Monte Carlo or a complete ordered distinct content-ID inventory frozen before exact execution
+        seed_policy_id: PR287-CRYPTO-SEED-DERIVATION-V1
+        hypothesis_family_id: PR287-HELDOUT-FAMILY-V1
+        alpha: 0.05
+        simultaneous_method: Holm-Bonferroni_FWER
+        acceptance_rule_id: scenario_specific_content_id_required
+        expected_negative_control_terminal: scenario_specific_required
+        mc_precision_rule_id: PR287-EXACT-BINOMIAL-HALFWIDTH-004-V1
+      canonicalization_rule: >-
+        Expand the template with every scenario-specific value and secret
+        partition assignment before hashing the truth-vault scenario bank.
+        Placeholder, missing, duplicate, or unexpanded effective fields block
+        challenge generation.
+      paired_covariance_contract:
+        shared_latent_draw_inventory: required
+        correct_analysis_covariance: equals_generator_covariance
+        misspecified_analysis_covariance: registered_distinct_positive_definite_matrix
+        misspecified_terminal: MISSPECIFIED_NEGATIVE_CONTROL
+        forbidden: [calibrated_alias, independent_draw_substitution, hidden_negative_control]
+      scenario_contracts:
+        - {scenario_id: SCALAR_LIMIT, estimand_id: scalar_limit_crosswalk, expected_negative_control_terminal: NOT_APPLICABLE}
+        - {scenario_id: TENSOR_ONLY, estimand_id: tensor_channel_response, expected_negative_control_terminal: NOT_APPLICABLE}
+        - {scenario_id: MISSING_CHANNEL, estimand_id: typed_missingness, expected_negative_control_terminal: REQUIRED_ABSTENTION}
+        - {scenario_id: COVARIANCE_CORRECT, estimand_id: covariance_calibrated_coverage, expected_negative_control_terminal: CALIBRATED_CONTROL}
+        - {scenario_id: COVARIANCE_MISSPECIFIED_PAIRED, estimand_id: paired_covariance_failure_visibility, expected_negative_control_terminal: MISSPECIFIED_NEGATIVE_CONTROL}
+        - {scenario_id: MULTIPLICITY_STRESS, estimand_id: familywise_error_control, expected_negative_control_terminal: SIMULTANEOUS_FAILURE_VISIBLE}
+        - {scenario_id: COVERAGE_FAILURE, estimand_id: registered_interval_coverage, expected_negative_control_terminal: COVERAGE_FAILURE_VISIBLE}
+        - {scenario_id: WEAK_LOCAL_GLOBAL_OVERLAP, estimand_id: source_separation_abstention, expected_negative_control_terminal: TYPE_UNIDENTIFIED}
+        - {scenario_id: SEPARATED_LOCAL_GLOBAL, estimand_id: source_separation_candidate_eligibility, expected_negative_control_terminal: NOT_APPLICABLE}
+        - {scenario_id: OPEN_SET_UNKNOWN, estimand_id: open_set_unknown_abstention, expected_negative_control_terminal: UNKNOWN_CLASS}
+        - {scenario_id: PROVED_DEPTH_PATH, estimand_id: premise_bound_depth_calibration, expected_negative_control_terminal: NOT_APPLICABLE}
+        - {scenario_id: PREMISE_MISSING_DEPTH_PATH, estimand_id: depth_bound_unavailability, expected_negative_control_terminal: MATCHED_MOCKS_REQUIRED}
+    mapping_visibility: truth_vault_and_adjudicator_only
+
+seed_contract:
+  generation_time: after_dependency_activation_and_before_challenge_generation
+  generator: operating_system_cryptographic_random_256_bits
+  seed_visibility_before_submission: truth_designer_only
+  challenge_binding: sha256_commitment_only
+  commitment_domain: PR287_FRESH_BLIND_SEED_V1
+  derivation_rule: HKDF_SHA256_domain_separated_case_and_replicate_seeds
+  required_identities:
+    - seed_commitment_content_id
+    - challenge_config_content_id
+    - threshold_contract_content_id
+    - challenge_content_id
+    - truth_vault_content_id
+    - case_inventory_content_id
+  disclosure_time: registered_adjudication_after_submission_content_freeze
+  forbidden_derivations:
+    - PR-273 seeds or case values
+    - legacy result-pack numbers
+    - current expected labels, thresholds, or reviewer outputs
+
+fresh_artifact_contracts:
+  common_factory_module: common.post275_blind_replay
+  analyst_module: htt.infer.post275_blind_replay
+  factory_only_types:
+    - DependencyActivationReceipt
+    - TypedScenarioBank
+    - FreshChallenge
+    - TruthVaultReference
+    - FrozenSubmission
+    - CaseAnalysisResult
+    - RegisteredAdjudication
+    - HistoricalReplayReceipt
+  content_id_algorithm: sha256_of_canonical_json_excluding_own_content_id
+  artifact_paths:
+    challenge: docs/research_program/post_pr275/blind_replay/FRESH_CHALLENGE_V1.json
+    truth_vault: docs/research_program/post_pr275/blind_replay/FRESH_TRUTH_VAULT_V1.json
+    submission: docs/research_program/post_pr275/blind_replay/FROZEN_SUBMISSION_V1.json
+    submission_freeze_receipt: docs/research_program/post_pr275/blind_replay/SUBMISSION_FREEZE_RECEIPT_V1.json
+    adjudication: docs/research_program/post_pr275/blind_replay/REGISTERED_ADJUDICATION_V1.json
+    pack_A: docs/research_program/post_pr275/blind_replay/PACK_A_V1.json
+    pack_B: docs/research_program/post_pr275/blind_replay/PACK_B_V1.json
+    pack_C: docs/research_program/post_pr275/blind_replay/PACK_C_V1.json
+    historical_replay_receipt: docs/research_program/post_pr275/blind_replay/HISTORICAL_REPLAY_RECEIPT_V1.json
+    terminal_receipt: docs/generated/pr287_fresh_blind_typed_replay_receipt.json
+  blocked_state_rule: none_of_the_artifact_paths_may_exist_before_exact_dependency_activation
+  recursive_forbidden_fields:
+    challenge:
+      - truth
+      - expected_label
+      - expected_terminal
+      - held_out_scenario_mapping
+      - disclosed_seed
+      - reviewer_verdict
+      - historical_result_number
+      - ground_truth
+      - oracle_truth
+      - gold_label
+      - target_label
+      - expected_class
+    submission:
+      - truth
+      - expected_label
+      - expected_terminal
+      - held_out_scenario_mapping
+      - disclosed_seed
+      - adjudication
+      - historical_result_number
+      - ground_truth
+      - oracle_truth
+      - gold_label
+      - target_label
+      - expected_class
+  positive_payload_schemas:
+    challenge_case_fields: [case_id, observable_vector, covariance_id, mask_id]
+    rule: unregistered keys are rejected rather than treated as extensibility
+    submission_case_input_fields:
+      - case_id
+      - supported_quotient
+      - response_provider_available
+      - local_response_rank
+      - global_response_rank
+      - joint_response_rank
+      - response_class_cardinality
+      - minimum_principal_angle
+      - weak_angle_threshold
+      - weak_identification
+      - unknown_distance
+      - unknown_distance_threshold
+      - response_equivalence
+      - margin_abstention
+      - depth_premise_status
+      - finite_depth_bound
+      - matched_mock_status
+      - covariance_status
+      - raw_p_value
+      - coverage_evidence_mode
+      - coverage_cell_results
+    weak_angle_threshold: 0.2
+    derived_only_fields: [scenario_bank_content_id, covariance_generator_id, covariance_analysis_id, classifier_terminal, holm_adjusted_p_value, coverage_successes, coverage_trials, coverage_cell_results_content_id, coverage_interval, coverage_status, mc_interval_half_width, mc_precision_status]
+  role_capabilities:
+    challenge_designer: [construct_challenge, seal_truth_vault_reference]
+    blind_analyst: [read_fresh_challenge, call_current_typed_runtime, emit_submission]
+    independent_adjudicator: [read_truth_after_submission_freeze, recompute_verdicts, compose_packs]
+    replay_auditor: [read_frozen_pr273_only_after_submission_freeze, emit_separate_replay_receipt]
+  blind_analyst_forbidden_capabilities:
+    - filesystem_truth_discovery
+    - truth_vault_path_or_handle
+    - seed_disclosure
+    - historical_PR273_truth_result_or_adjudication_import
+    - direct_pack_or_terminal_label_authority
+    - arbitrary_in_process_callback_with_ambient_filesystem_or_import_access
+  analyst_executor_status: BLOCKED_CAPABILITY_ISOLATED_EXECUTOR_NOT_INSTALLED
+  execution_disposition: INCONCLUSIVE
+  freeze_receipt:
+    required_fields:
+      - challenge_content_id
+      - challenge_config_content_id
+      - threshold_contract_content_id
+      - case_inventory_content_id
+      - submission_content_id
+      - submission_frozen_at_utc
+      - source_commit_or_external_candidate_seal_id
+    precondition_for: [truth_read, seed_disclosure, adjudication, historical_replay, pack_composition]
+
+analysis_protocol:
+  stages:
+    - stage: SPEC_AND_DEPENDENCY_FREEZE
+      readable: [this specification, predecessor terminal receipts, typed interfaces]
+      forbidden: [fresh seed, fresh truth, held-out mapping, fresh result packs]
+      output: dependency activation receipt
+      required_output_id: dependency_activation_receipt_content_id
+    - stage: CHALLENGE_DESIGN
+      role: challenge_designer
+      readable: [this specification, activated typed interfaces]
+      forbidden: [analyst output, reviewer verdicts, historical result numbers as design inputs]
+      required_input_ids: [dependency_activation_receipt_content_id, challenge_config_content_id, threshold_contract_content_id]
+      output: fresh challenge, sealed truth vault reference, seed commitment
+      required_output_ids: [challenge_content_id, truth_vault_content_id, seed_commitment_content_id, case_inventory_content_id]
+    - stage: BLIND_ANALYSIS
+      role: blind_analyst
+      readable: [fresh challenge, current typed runtime, frozen thresholds]
+      forbidden:
+        - fresh truth vault and seed
+        - held-out scenario mapping and expected outcomes
+        - PR-273 truth, adjudication, analyst submission, and diagnostic pack
+        - sibling reviewer results
+      required_input_ids: [challenge_content_id, challenge_config_content_id, threshold_contract_content_id]
+      output: content-addressed analyst submission
+      required_output_id: submission_content_id
+    - stage: REGISTERED_ADJUDICATION
+      role: independent_adjudicator
+      precondition: analyst submission content identity is frozen
+      readable: [fresh truth vault, frozen analyst submission, mutation registry]
+      required_input_ids: [truth_vault_content_id, submission_content_id, challenge_content_id, threshold_contract_content_id]
+      output: adjudication, packs A/B/C, terminal receipt
+      required_output_ids: [adjudication_content_id, pack_A_content_id, pack_B_content_id, pack_C_content_id, terminal_receipt_content_id]
+    - stage: HISTORICAL_REPLAY
+      role: replay_auditor
+      precondition: fresh analyst submission content identity is frozen
+      readable: [frozen PR-273 pack and replay sources]
+      required_input_ids: [submission_content_id, historical_pr273_pack_content_id]
+      output: separate historical replay receipt
+      required_output_id: historical_replay_receipt_content_id
+  stage_trace_contract:
+    exact_stage_order: [SPEC_AND_DEPENDENCY_FREEZE, CHALLENGE_DESIGN, BLIND_ANALYSIS, REGISTERED_ADJUDICATION, HISTORICAL_REPLAY]
+    required_per_stage: [stage_id, input_content_ids, output_content_ids, status, started_at_utc, completed_at_utc]
+    failure_rule: missing_duplicate_reordered_or_identity_mismatched_stage_blocks_terminal
+
+current_pipeline_contract:
+  semantic_order:
+    - JointAnisotropyStateV2 orbit acceptance
+    - exact parity P-equivariance readiness
+    - covariance-supported weak-identification decision
+    - open-set mandatory abstention
+    - premise-bound DepthPath calibration
+    - Pillar T row-level adjudication projection
+    - Pillar S row-level adjudication projection
+    - result-pack composition
+  required_diagnostics:
+    - x_phi, Q_phi, Pi_phi_of_q, F_phi_certified, and G_F typed crosswalk
+    - SectorStress and support utilization
+    - partial-identification and simultaneous coverage
+    - multiplicity and covariance-misspecification outcomes
+    - local/global rank, principal angle, weak-ID, and abstention
+    - open-set unknown-class behavior
+    - depth-path premise and matched-mock fallback status
+  pr286_row_rule:
+    preserve_row_verdicts: true
+    preserve_inconclusive_and_blocked: true
+    exact_rows_require_exact_evidence: true
+    synthetic_replay_cannot_promote_source_status: true
+  classifier_precedence:
+    - OUTSIDE_SUPPORTED_QUOTIENT
+    - MISSING_RESPONSE_PROVIDER
+    - NON_IDENTIFIED_OR_SUM_ONLY_OR_WEAKLY_IDENTIFIED_TO_TYPE_UNIDENTIFIED
+    - UNKNOWN_CLASS_AT_OR_ABOVE_DISTANCE_THRESHOLD
+    - RESPONSE_EQUIVALENCE_OR_MARGIN_ABSTENTION
+    - UNIQUE_RESPONSE_CLASS_CANDIDATE
+  row_projection_contract:
+    sources:
+      pillar_t: docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json
+      pillar_s: docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json
+    frozen_source_sha256:
+      pillar_t: 5c22fb53883926ae607751de736cf0f3f637791247aa548b9cb36f48cbf2ad13
+      pillar_s: f924d67ae6f25340cb5844895cea96a9257f145d2935e93f91445dafcc98c053
+    exact_inventory:
+      pillar_t_rows: 80
+      pillar_s_rows: 72
+      order_sensitive: true
+    required_row_fields:
+      - row_id
+      - source_statement_or_replay_identity
+      - verdict
+      - evidence_class
+      - statement_relation
+      - claim_ceiling
+      - units_normalization_and_frame
+      - sign_orientation_convention
+      - prior_applicability_and_identity
+      - covariance_law_coverage_status
+      - rank_and_identification_scope
+      - singular_value_and_principal_angle_status
+      - row_semantic_content_id
+    required_preserved_terminals:
+      - FAIL
+      - INCONCLUSIVE_WITH_RECEIPT
+      - BLOCKED_WITH_RECEIPT
+    forbidden_promotions:
+      - simulation_to_exact_proof
+      - process_pass_to_row_pass
+      - unavailable_to_not_applicable
+      - source_unproved_to_source_proved
+      - synthetic_to_observed
+  depth_path_projection_contract:
+    required_fields:
+      - depth_path_report_id
+      - calibration_receipt_id
+      - premise_status
+      - finite_bound_status
+      - matched_mock_plan_id
+      - matched_mock_plan_content_id
+      - matched_mock_registration_chronology
+      - null_law_and_generator_id
+      - acceptance_rule_id
+      - null_mock_status
+    rule: >-
+      A missing premise or null bound remains MATCHED_MOCKS_REQUIRED or
+      BLOCKED/INCONCLUSIVE exactly; downstream composition cannot infer a
+      finite bound or completed mocks from a PR-284 process pass.
+
+legacy_bc1_contract:
+  label: BC1_LEGACY_PROJECTION
+  allowed_fields: [legacy_source_path, legacy_content_id, projected_field_name, projected_value]
+  required_output_flag: legacy_reproduction_only
+  forbidden_roles: [seed, threshold, normalizer, case_truth, expected_outcome, inference_anchor]
+  execution_lane: separate_historical_comparison_appendix_only
+  execution_precondition: fresh_submission_content_id_frozen
+  forbidden_fresh_pack_membership: true
+
+result_pack_contract:
+  canonical_surface_semantics:
+    x_phi:
+      owner: MIO
+      semantics: signed registered projection coordinate
+      required_metadata: [units_normalization_and_frame, sign_orientation_convention]
+    Q_phi:
+      owner: MIO
+      semantics: registered policy-normalized diagnostic ratio
+      required_metadata: [policy_id, denominator_identity, zero_denominator_status]
+    Pi_phi_of_q:
+      owner: MIO
+      semantics: threshold exceedance fraction not truth probability
+      required_metadata: [q_threshold, comparison_rule, denominator_identity]
+    F_phi_certified:
+      owner: MIO
+      semantics: numeric only under registered sign-clean admissible ceiling
+      required_metadata: [ceiling_identity, sign_clean_status, admissibility_status]
+      numeric_range_when_admissible: closed_unit_interval
+      exact_state_machine:
+        - {sign_clean_status: PASS, admissibility_status: ADMISSIBLE, value: required_closed_unit_interval}
+        - {sign_clean_status: FAIL, admissibility_status: INADMISSIBLE, value: null}
+    G_F:
+      owner: MIO
+      semantics: ordered-depth diagnostic gap conditional on registered null calibration
+      required_metadata: [ordered_depth_bin_identity, path_identity, covariance_id, null_status]
+  common_forbidden_numeric_ownership: >-
+    COMMON may validate schemas, identities, and compose an index. It does not
+    derive or own numerical x/Q/Pi/F/G_F or morphology statistics.
+  pack_A:
+    owner: COMMON
+    scope: typed composition envelope and owner-preserving diagnostic index
+    required_surfaces: [x_phi, Q_phi, Pi_phi_of_q, F_phi_certified, G_F, SectorStress, support_utilization, partial_identification]
+    required_per_surface: [subject_owner, schema_id, content_id, status, allowed_use, forbidden_use]
+    forbidden_surfaces: [derived_numeric_value_by_COMMON, likelihood, posterior, Bayes_factor, evidence, truth_probability, family_label, truth_certificate]
+  pack_B:
+    owner: HTT
+    scope: local/global, weak-ID, open-set, covariance, multiplicity, and depth diagnostic gate report
+    required_surfaces: [rank, principal_angles, covariance_status, weak_identification, abstention, depth_calibration, coverage]
+    likelihood_semantics: NOT_APPLICABLE_DIAGNOSTIC_ONLY
+    prior_applicability_and_identity: NOT_APPLICABLE_DIAGNOSTIC_ONLY
+    forbidden_surfaces: [likelihood, posterior, Bayes_factor, evidence, truth_probability, family_label, truth_certificate]
+  pack_C:
+    owner: MIO
+    scope: family-independent x-Q-Pi-F-G diagnostic report
+    required_surfaces: [x_phi, Q_phi, Pi_phi_of_q, F_phi_certified, G_F, direction_coherence, depth_coherence]
+    likelihood_semantics: NOT_APPLICABLE_DIAGNOSTIC_ONLY
+    prior_applicability_and_identity: NOT_APPLICABLE_DIAGNOSTIC_ONLY
+    forbidden_surfaces: [likelihood, posterior, Bayes_factor, evidence, truth_probability, family_label, truth_certificate]
+  shared_metadata:
+    - owner
+    - scope
+    - claim_tier
+    - claim_level
+    - scientific_artifact_mode
+    - transfer_source
+    - config_and_input_identities
+    - synthetic_sky_mask_status
+    - covariance_and_null_status
+    - observed_data_executed
+    - public_use
+    - scientific_status_effect
+    - family_identification_gate
+    - evidence_lane_identity
+    - pr151_partial_data_excluded
+    - likelihood_semantics
+    - prior_applicability_and_identity
+    - units_normalization_and_frame
+    - sign_orientation_convention
+    - surface_semantic_content_ids
+    - seed_commitment_and_disclosure_status
+    - assumptions
+    - caveats
+    - generating_procedure
+    - git_commit_or_worktree_state
+  pack_identity_rule: >-
+    Each pack is built by its owner-specific factory, recursively rejects
+    forbidden fields and forbidden claim language in runtime string values,
+    binds every upstream content identity, and recomputes its own canonical
+    content ID. Declared owner strings alone are insufficient.
+  pack_B_precedence_evidence:
+    weak_identification_surface_fields: [classifier_terminal, precedence_rule_id, response_equivalence, margin_abstention]
+    rank_geometry_rule: max_local_or_global_rank_at_most_joint_rank_at_most_rank_sum
+    principal_angle_rule: zero exactly when positive-rank response subspaces intersect; undefined when either component rank is zero
+  factory_module_binding:
+    PACK_A: common.post275_blind_replay
+    PACK_B: htt.infer.post275_blind_replay
+    PACK_C: mio.reports.post275_blind_replay
+  recursive_forbidden_aliases:
+    - posterior_odds
+    - log_evidence
+    - family_candidate
+    - detected_geometry
+
+mutation_registry:
+  - {mutation_id: MU287-ACTIVATION-BYPASS, intended_defect: entropy or artifact construction occurs before exact predecessor activation}
+  - {mutation_id: MU287-TRUTH-IN-CHALLENGE, intended_defect: held-out truth field enters analyst challenge}
+  - {mutation_id: MU287-TRUTH-IN-SUBMISSION, intended_defect: analyst submission carries truth or expected label}
+  - {mutation_id: MU287-LEGACY-SEED, intended_defect: PR-273 or legacy pack value seeds fresh execution}
+  - {mutation_id: MU287-HISTORICAL-BEFORE-FREEZE, intended_defect: PR273 truth result or replay is read before fresh submission freeze}
+  - {mutation_id: MU287-CHALLENGE-IDENTITY, intended_defect: challenge bytes or config change without content identity update}
+  - {mutation_id: MU287-TRUTH-VAULT-IDENTITY, intended_defect: truth mapping changes without truth-vault identity update}
+  - {mutation_id: MU287-THRESHOLD-IDENTITY, intended_defect: threshold contract changes after challenge freeze}
+  - {mutation_id: MU287-CHALLENGE-AFTER-SUBMISSION, intended_defect: challenge changes after submission freeze}
+  - {mutation_id: MU287-SUBMISSION-AFTER-SEAL, intended_defect: submission changes after its content identity freezes}
+  - {mutation_id: MU287-SEED-COMMITMENT, intended_defect: disclosed seed does not match challenge commitment}
+  - {mutation_id: MU287-CASE-PARTITION, intended_defect: case is missing duplicated reordered or assigned to two partitions}
+  - {mutation_id: MU287-STAGE-ORDER, intended_defect: stage is missing duplicated reordered or carries mismatched input output identities}
+  - {mutation_id: MU287-COVARIANCE-BYPASS, intended_defect: misspecified covariance is treated as calibrated}
+  - {mutation_id: MU287-MULTIPLICITY-BYPASS, intended_defect: unadjusted pointwise result replaces simultaneous control}
+  - {mutation_id: MU287-COVERAGE-SUPPRESS, intended_defect: registered coverage failure is hidden}
+  - {mutation_id: MU287-WEAK-ID-LABEL, intended_defect: weakly identified case emits a point label}
+  - {mutation_id: MU287-WEAK-ID-PRECEDENCE, intended_defect: weak source gate is overwritten by unknown or equivalence label}
+  - {mutation_id: MU287-OPEN-SET-FALLBACK, intended_defect: unknown case is forced to nearest registered class}
+  - {mutation_id: MU287-DEPTH-PREMISE, intended_defect: bound emitted when reverse-martingale premise is absent}
+  - {mutation_id: MU287-DEPTH-IDENTITY, intended_defect: depth report calibration plan null law or chronology identity drifts}
+  - {mutation_id: MU287-PR285-PROMOTION, intended_defect: failed inconclusive or blocked Pillar T row is promoted by process success}
+  - {mutation_id: MU287-PR286-PROMOTION, intended_defect: inconclusive or blocked PR-286 row is promoted by simulation}
+  - {mutation_id: MU287-ROW-SEMANTIC-DRIFT, intended_defect: units sign prior covariance rank or statement changes while verdict is retained}
+  - {mutation_id: MU287-PACK-OWNER, intended_defect: COMMON derives numerical diagnostics or an owner factory is substituted}
+  - {mutation_id: MU287-XQPI-FG-SEMANTICS, intended_defect: sign denominator threshold ceiling depth or null semantics drift}
+  - {mutation_id: MU287-MIO-INFERENCE, intended_defect: pack C contains HTT-only probabilistic or adjudicative inference surfaces}
+  - {mutation_id: MU287-PACK-METADATA, intended_defect: pack omits C2 synthetic observed public family or evidence-lane metadata}
+  - {mutation_id: MU287-PACK-CLAIM-PROMOTION, intended_defect: any fresh pack exceeds diagnostic-only synthetic scope}
+  - {mutation_id: MU287-MUTATION-OMISSION, intended_defect: returned mutation battery is incomplete or reordered}
+
+portable_clean_contract:
+  mode: git_archive_or_enumerated_tracked_candidate_copy
+  source_root_must_differ_from_execution_root: true
+  reject_symlinks_and_missing_bindings: true
+  scrub_environment:
+    - PYTHONPATH
+    - PYTHONHOME
+    - PYTEST_ADDOPTS
+    - PYTEST_PLUGINS
+    - PYTHONSTARTUP
+    - PR287_ORBIT_ACTIVATION_OVERRIDE
+  required_evidence:
+    - tracked_source_manifest_and_content_ids
+    - interpreter_and_dependency_versions
+    - scrubbed_environment_keys
+    - exact_command_exit_code_and_runtime
+    - source_and_clean_root_pre_post_hashes
+    - zero_untracked_truth_submission_adjudication_or_pack_inputs
+  execution_rule: >-
+    Run from the clean copy with no source-worktree import path. Verify the
+    exact PR_OPEN sealed-head activation and typed isolated-executor blocker
+    without generating fresh challenge, truth, submission, adjudication, or
+    pack artifacts.
+
+terminal_contract:
+  pass_token: PASS_FRESH_BLIND_TYPED_REPLAY
+  block_token: BLOCKED_FRESH_BLIND_TYPED_REPLAY
+  precedence:
+    - BLOCKED_PREDECESSOR_FINAL_SUCCESS
+    - BLOCKED_CAPABILITY_ISOLATED_EXECUTOR_NOT_INSTALLED
+    - BLOCKED_BLINDNESS_OR_IDENTITY
+    - BLOCKED_REGISTERED_MUTATION
+    - BLOCKED_STATISTICAL_OR_TYPED_CONTRACT
+    - PASS_FRESH_BLIND_TYPED_REPLAY
+  process_success_semantics: >-
+    A pass means the preregistered synthetic pipeline, blind protocol, and
+    mutations executed as specified. It does not promote any theorem row,
+    observed result, physical source, geometry, native-solver, or family claim.
+
+allowed_uses:
+  - synthetic current-spine integration and mutation evidence
+  - diagnostic-only typed result packs for later separately authorized consumers
+  - exact historical replay kept separate from fresh evidence
+forbidden_uses:
+  - observed-data inference or PR-151 partial-data use
+  - legacy-number copying into current inference or challenge design
+  - MIO likelihood posterior Bayes factor or evidence
+  - native solver validation geometry detection or Bianchi family identification
+  - synthetic promotion of an inconclusive blocked or source-unproved row
+caveats:
+  - All fresh outputs are synthetic and conditional on the registered challenge generator.
+  - Historical PR-273 replay is reproducibility evidence only and is not fresh validation.
+  - PR-285 current CAS reexecution remains platform-blocked on Wolfram even though its frozen historical aggregate is CAS_4AXIS_PASS.
+  - PR-286 process completion preserves its row-level inconclusive and blocked dispositions.
+  - Bare source-layout smoke requires the repository's declared PYTHONPATH and remains separate packaging debt.
