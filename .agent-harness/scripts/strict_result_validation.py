@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from _harness import (
+    GATE_DISPOSITIONS,
     SHA256_RE,
     compute_effective_context_sha256,
     declared_result_path,
@@ -346,6 +347,25 @@ def validate_result_payload(
     status = result.get("status")
     if status not in RESULT_STATUSES:
         errors.append("result status is invalid")
+    plan_path = repo / ".agent-harness" / "runs" / run_id / "RUN_PLAN.json"
+    try:
+        plan = load_json(plan_path)
+    except (OSError, json.JSONDecodeError):
+        plan = {}
+    gate_disposition = result.get("gate_disposition")
+    if gate_disposition is not None and gate_disposition not in GATE_DISPOSITIONS:
+        errors.append("result gate_disposition is invalid")
+    if plan.get("execution_mode") == "AUTO_STACKED_PR":
+        expected_gate = {
+            "pass": "PASS",
+            "fail": "FAIL",
+            "inconclusive": "INCONCLUSIVE",
+            "error": "INCONCLUSIVE",
+        }.get(status)
+        if gate_disposition != expected_gate:
+            errors.append(
+                "AUTO_STACKED_PR result status and gate_disposition disagree"
+            )
 
     if historical:
         findings = result.get("findings")
@@ -475,13 +495,6 @@ def validate_result_payload(
                         repo,
                         binding.get("seal_path"),
                         field="candidate seal",
-                    )
-                    plan = load_json(
-                        repo
-                        / ".agent-harness"
-                        / "runs"
-                        / run_id
-                        / "RUN_PLAN.json"
                     )
                     policy_ref = plan.get("integration_policy")
                     if not isinstance(policy_ref, Mapping):

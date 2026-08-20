@@ -41,6 +41,7 @@ SOURCE_ROOTS = (
     REPO_ROOT / "htt/src",
     REPO_ROOT / "htt",
     REPO_ROOT / "htt/htt",
+    REPO_ROOT,
 )
 CHANGED_DIFF_FILTER = "ACDMRTUXB"
 

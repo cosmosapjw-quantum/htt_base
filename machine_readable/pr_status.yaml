@@ -205,7 +205,6 @@ pending:
 - PR-206
 - PR-207
 - PR-208
-- PR-283
 - PR-284
 - PR-285
 - PR-286
@@ -246,7 +245,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: null
+in_progress: PR-283
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -254,6 +253,160 @@ background_execution_contracts:
     kind: acquisition
     allowed_phase: acquire
     partial_scientific_use: forbidden
+stacked_pr_execution:
+  schema_version: 1
+  stack_id: PROCESS_INFLATION_RECOVERY_PHASE2
+  execution_mode: AUTO_STACKED_PR
+  merge_policy: HUMAN_ONLY
+  target_sha: ff9ef9f45747e559c5343b463cf010dfc3a7432a
+  active_implementation_pr: PR-283
+  pr_order:
+  - PR-283
+  - PR-284
+  - PR-285
+  - PR-286
+  - PR-287
+  - PR-288
+  - PR-289
+  - PR-290
+  - PR-291
+  - PR-292
+  prs:
+    PR-283:
+      lifecycle: REVIEWED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      base_sha: ff9ef9f45747e559c5343b463cf010dfc3a7432a
+      predecessor_pr: null
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions:
+        eligibility: PASS
+        implementation: PASS
+        validation: PASS
+        review: PASS
+        seal: DEFERRED
+      assurance_budget: {maximum: 16, consumed: 13}
+    PR-284:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-283
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: INELIGIBLE}
+      assurance_budget: {maximum: 16, consumed: 0}
+    PR-285:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-284
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: INELIGIBLE}
+      assurance_budget: {maximum: 16, consumed: 0}
+    PR-286:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-285
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: INELIGIBLE}
+      assurance_budget: {maximum: 16, consumed: 0}
+    PR-287:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-286
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: INELIGIBLE}
+      assurance_budget: {maximum: 16, consumed: 0}
+    PR-288:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-287
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: INELIGIBLE}
+      assurance_budget: {maximum: 16, consumed: 0}
+    PR-289:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-288
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: INELIGIBLE}
+      assurance_budget: {maximum: 16, consumed: 0}
+    PR-290:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-289
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: INELIGIBLE}
+      assurance_budget: {maximum: 16, consumed: 0}
+    PR-291:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-290
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: INELIGIBLE}
+      assurance_budget: {maximum: 16, consumed: 0}
+    PR-292:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-291
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: INELIGIBLE}
+      assurance_budget: {maximum: 16, consumed: 0}
 execution_lane:
   PR-167: defensible
   PR-168: defensible

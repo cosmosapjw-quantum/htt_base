@@ -65,6 +65,7 @@ from htt.departure.velocity_frame_decomposition import (  # noqa: E402
     register_source_response_provider,
 )
 from htt.statistics.open_set_response_classes import (  # noqa: E402
+    PR283_DEFAULT_THRESHOLD_CONTRACT,
     source_separation_gate_from_pr256,
 )
 
@@ -762,6 +763,21 @@ def _check_equivalence_precedence_and_gate_surface() -> dict[str, object]:
     }
 
 
+def _source_gate_normalizer() -> NormalizerSpec:
+    return NormalizerSpec(
+        normalizer_id="PR258-SOURCE-GATE-ORACLE",
+        kind=NormalizerKind.EXPANSION_NORMALIZED,
+        purposes=(NormalizerPurpose.RESPONSE_CONDITIONING,),
+        coordinate_labels=(
+            "beta_MO_amplitude",
+            "beta_RM_amplitude",
+        ),
+        coordinate_map=((1.0, 0.0), (0.0, 1.0)),
+        source_identity="PR258-SOURCE-GATE-ORACLE",
+        assumptions=("block-preserving map",),
+    )
+
+
 def _source_geometry_report(
     *,
     labels: tuple[str, ...],
@@ -816,18 +832,7 @@ def _source_geometry_report(
         local_provider=local,
         global_provider=global_value,
         covariance=covariance,
-        normalizer=NormalizerSpec(
-            normalizer_id="PR258-SOURCE-GATE-ORACLE",
-            kind=NormalizerKind.EXPANSION_NORMALIZED,
-            purposes=(NormalizerPurpose.RESPONSE_CONDITIONING,),
-            coordinate_labels=(
-                "beta_MO_amplitude",
-                "beta_RM_amplitude",
-            ),
-            coordinate_map=((1.0, 0.0), (0.0, 1.0)),
-            source_identity="PR258-SOURCE-GATE-ORACLE",
-            assumptions=("block-preserving map",),
-        ),
+        normalizer=_source_gate_normalizer(),
         covariance_id=anchored_numeric_content_id(covariance),
         mask_id=_receipt("source-gate-mask"),
         separation_threshold_radians=0.2,
@@ -883,6 +888,8 @@ def _check_source_gate_provenance_binding() -> dict[str, object]:
         classes=classes,
         covariance=covariance,
         nuisance_tangent=None,
+        normalizer=_source_gate_normalizer(),
+        threshold_contract=PR283_DEFAULT_THRESHOLD_CONTRACT,
     )
     classify_kwargs = {
         "classes": classes,
@@ -925,6 +932,8 @@ def _check_source_gate_provenance_binding() -> dict[str, object]:
                 classes=classes,
                 covariance=covariance,
                 nuisance_tangent=None,
+                normalizer=_source_gate_normalizer(),
+                threshold_contract=PR283_DEFAULT_THRESHOLD_CONTRACT,
             )
         except OpenSetResponseError:
             mismatch_rejected += 1

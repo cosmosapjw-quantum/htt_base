@@ -23,6 +23,28 @@
   Managed policy plus credential/network isolation, including removal of
   write-capable browser sessions, is required for hard enforcement.
 
+## Serial stacked-PR process recovery
+
+- `PROCESS_INFLATION_RECOVERY_PHASE2` uses `execution_mode = AUTO_STACKED_PR`.
+  `AUTO_MERGE` is a recognized configuration value but is always refused; merge
+  remains a human-only action.
+- A recovery stack has exactly one active implementation PR. Its lifecycle is
+  strictly `PLANNED -> ACTIVE -> IMPLEMENTED -> VALIDATED -> REVIEWED -> SEALED
+  -> PUSHED -> PR_OPEN`; skipped or reversed transitions are invalid.
+- A successor becomes eligible only after its predecessor is `PR_OPEN`, and it
+  must start from the predecessor's recorded exact `SEALED_HEAD`. Future work is
+  `INELIGIBLE/DEFERRED`, not failed, and consumes zero retry and assurance
+  budget.
+- Salvage operates on deduplicated logical patches. A stable patch ID already in
+  the stacked lineage must not be reintroduced under a new commit object.
+- Acceptance evidence is keyed by the production hash plus relevant dependency
+  hashes. Receipt-, documentation-, presentation-, or review-prose-only changes
+  do not authorize another substantive assurance run. A production mutation
+  after sealing invalidates the seal.
+- Root dirty state, forensic branches/worktrees, historical receipts, seals, and
+  review envelopes are preservation evidence only. They are not current
+  acceptance evidence and must not be mutated or reused as such.
+
 ## Mandatory shared-context protocol for subagent workflows
 
 This repository uses spec-driven development and evidence-bearing subagent audits. `AGENTS.md` is the durable operating policy and `.agent-harness/context/CONTEXT_INDEX.json` is the sole persistent harness context configuration. `CONTEXT_PACK.md` is a generated delivery view; assignments and results are evidence scoped to one run, not global authority.

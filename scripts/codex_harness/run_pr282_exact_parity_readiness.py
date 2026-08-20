@@ -149,8 +149,13 @@ def _pytest(paths: tuple[str, ...]) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
-    if len(args) != 1 or args[0] not in {"build", "check", "focused", "adjacent"}:
-        print("usage: run_pr282_exact_parity_readiness.py {build|check|focused|adjacent}", file=sys.stderr)
+    modes = {"build", "check", "focused", "adjacent", "pr272"}
+    if len(args) != 1 or args[0] not in modes:
+        print(
+            "usage: run_pr282_exact_parity_readiness.py "
+            "{build|check|focused|adjacent|pr272}",
+            file=sys.stderr,
+        )
         return 2
     mode = args[0]
     if mode == "focused":
@@ -161,6 +166,18 @@ def main(argv: list[str] | None = None) -> int:
                 "tests/contracts/test_pillar_s_core.py",
                 "tests/obsstat/test_alm_conventions.py",
                 "tests/obsstat/test_biposh_features.py",
+            )
+        )
+    if mode == "pr272":
+        return _pytest(
+            (
+                "tests/contracts/test_pillar_s_inference.py",
+                "-k",
+                (
+                    "pr282_relocation or "
+                    "preregistration_bytes_and_input_hashes or "
+                    "registry_generator_is_deterministic"
+                ),
             )
         )
 

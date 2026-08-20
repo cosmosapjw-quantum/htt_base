@@ -105,6 +105,7 @@ from htt.infer.anisotropy_type_report import (
     build_local_global_compatibility_input,
 )
 from htt.statistics.open_set_response_classes import (
+    PR283_DEFAULT_THRESHOLD_CONTRACT,
     source_separation_gate_from_pr256,
 )
 
@@ -686,6 +687,8 @@ def _source_and_open_set(case: Mapping[str, object]):
         classes=classes,
         covariance=covariance,
         nuisance_tangent=None,
+        normalizer=normalizer,
+        threshold_contract=PR283_DEFAULT_THRESHOLD_CONTRACT,
     )
     classification = classify_open_set_response(
         observation=observation,

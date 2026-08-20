@@ -24,6 +24,7 @@ from _harness import (
     is_safe_identifier,
     load_json,
     root,
+    shared_stack_assignment_count,
     validate_assignment_payload,
     validate_run_plan_payload,
 )
@@ -47,9 +48,23 @@ def _path_ref(repo, rel: str) -> dict:
     return {"path": rel}
 
 
-def _work_unit_assignment_count(harness, work_unit_id) -> int:
+def _work_unit_assignment_count(harness, work_unit_or_plan, *, repo=None) -> int:
+    plan = work_unit_or_plan if isinstance(work_unit_or_plan, dict) else None
+    work_unit_id = (
+        plan.get("work_unit_id") if plan is not None else work_unit_or_plan
+    )
     if not work_unit_id:
         return 0
+    if plan is not None and plan.get("execution_mode") == "AUTO_STACKED_PR":
+        if repo is None:
+            raise PublicationIntegrityError(
+                "AUTO_STACKED_PR assignment count requires the repository root"
+            )
+        return shared_stack_assignment_count(
+            repo,
+            stack_id=str(plan.get("stack_id") or ""),
+            work_unit_id=str(work_unit_id),
+        )
     count = 0
     for plan_path in sorted(harness.glob("runs/*/RUN_PLAN.json")):
         if plan_path.is_symlink() or not plan_path.is_file():
@@ -158,6 +173,14 @@ def main() -> None:
             "assignment registration REFUSED (invalid RUN_PLAN):\n- "
             + "\n- ".join(plan_errors)
         )
+    if (
+        plan.get("execution_mode") == "AUTO_STACKED_PR"
+        and plan.get("gate_disposition") != "PASS"
+    ):
+        raise SystemExit(
+            "assignment registration REFUSED: stacked work unit is "
+            "INELIGIBLE/DEFERRED; retry_budget=0 assurance_budget=0"
+        )
     assignments_dir = run_dir / "assignments"
     existing = sorted(assignments_dir.glob("*.json"))
     max_total = int(plan["budget"]["max_total"])
@@ -166,7 +189,7 @@ def main() -> None:
 
     work_unit_id = plan.get("work_unit_id")
     if work_unit_id:
-        unit_count = _work_unit_assignment_count(harness, work_unit_id)
+        unit_count = _work_unit_assignment_count(harness, plan, repo=repo)
         try:
             enforce_work_unit_assignment_budget(
                 plan,

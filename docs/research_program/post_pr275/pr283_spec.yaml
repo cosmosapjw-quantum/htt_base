@@ -1,0 +1,262 @@
+schema: htt.pr283.weak_identification_spec.v1
+pr_id: PR-283
+title: Runtime weak identification and mandatory open-set abstention
+owner: HTT
+contributors:
+  - COMMON
+  - MIO
+change_set_id: CS-PR283-WEAK-IDENTIFICATION
+publication_group_id: PG-PR283-WEAK-IDENTIFICATION
+dependencies:
+  - PR-280
+dependency_contract:
+  upstream_id: PR-280
+  mode: requires_terminal_receipt
+claim_tier: diagnostic_only
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C2
+scientific_artifact_mode: synthetic_diagnostic
+transfer_source: none
+observed_data_executed: false
+public_use: false
+family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
+
+gate:
+  gate_id: G4
+  statement: Weak identification produces abstention rather than a forced label.
+  pass_token: PASS_WEAK_IDENTIFICATION_ABSTENTION
+  block_token: BLOCKED_WEAK_IDENTIFICATION_CONTRACT
+  derivation_rule: >-
+    The runtime status is recomputed from a covariance-supported PR-256 source
+    geometry report and a threshold contract frozen before open-set evaluation.
+    No caller-supplied readiness, candidate label, point estimate, or post-result
+    threshold is accepted.
+
+mathematical_boundary:
+  source_oracle_id: TF-10-LOCAL-GLOBAL-SEPARATION
+  source_registry: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml
+  source_registry_status: ORACLE_VERIFIED
+  executable_oracle: common.tensor_foundations_oracle.tf10_local_global_separation
+  conditional_algebra_obligation: VT-T12
+  conditional_algebra_registry: docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml
+  source_proof_adjudication_status: NOT_ADJUDICATED
+  conditional_verdict: PROVED_CONDITIONAL_LINEAR_ALGEBRA
+  pr283_effect: runtime_execution_without_proof_promotion
+  boundary: >-
+    Principal-angle algebra is reused under its registered supported-whitened
+    assumptions. PR-283 executes a diagnostic ladder; it does not adjudicate
+    the source proof, promote TF-10 beyond ORACLE_VERIFIED, or turn
+    SEPARABLE_CANDIDATE into positive source identification.
+
+identification_ladder:
+  missing_provider: MISSING_RESPONSE_PROVIDER
+  covariance_unsupported_or_component_rank_deficient: NON_IDENTIFIED
+  algebraically_non_direct_sum: SUM_ONLY
+  full_rank_below_practical_separation_threshold: WEAKLY_IDENTIFIED
+  full_rank_above_all_practical_thresholds: SEPARABLE_CANDIDATE
+  required_order:
+    - provider availability
+    - covariance support and component ranks
+    - joint direct-sum rank
+    - practical angle and singular-value thresholds
+  distinction: >-
+    Algebraic direct-sum rank and practical source separation are different
+    statements. A positive but small principal angle remains full rank and is
+    therefore WEAKLY_IDENTIFIED rather than SUM_ONLY.
+
+threshold_contract:
+  contract_id: pr283.source-separation-thresholds.v1
+  minimum_principal_angle_radians: 0.2
+  minimum_normalizer_bound_relative_joint_singular_value: 0.01
+  relative_singular_value_definition: >-
+    smallest divided by largest joint singular value after the exact registered
+    PR-256 response-conditioning NormalizerSpec has been applied
+  singular_value_cardinality: >-
+    The joint singular-value sequence cannot contain more entries than the
+    combined local and global parameter dimension.
+  representation_boundary: >-
+    The conditioning threshold is meaningful only in the registered
+    dimensionless beta/c-equals-one parameter coordinates. It is replayable and
+    normalizer-bound, not invariant under arbitrary response-column rescaling.
+  pass_rule: both_metrics_strictly_exceed_their_registered_minima
+  equality_rule: equality_is_weakly_identified
+  registration_time: before_open_set_observation_evaluation
+  required_identities:
+    - source_geometry_report_id
+    - covariance_id
+    - nuisance_tangent_id
+    - principal_angles_content_id
+    - joint_singular_values_content_id
+    - threshold_contract_content_id
+    - normalizer_id
+    - normalizer_source_identity
+    - normalizer_coordinate_map_content_id
+    - parameter_coordinate_units
+
+runtime_contract:
+  common_module: htt/src/common/source_separation.py
+  htt_projection: htt/htt/htt/statistics/open_set_response_classes.py
+  open_set_classifier: htt/src/common/open_set_response_classes.py
+  required_gate_status: SourceSeparationGateStatus.WEAKLY_IDENTIFIED
+  weak_gate_precedence: >-
+    Apply source-separation abstention before response-equivalence,
+    unknown-distance, and decision-margin labels. Structural quotient failures
+    and missing providers retain their own fail-closed terminal states.
+  weak_branch_output:
+    open_set_status: TYPE_UNIDENTIFIED
+    candidate_class_id: null
+    point_estimate: forbidden
+    returned_equivalence_class: exact_PR258_response_class_ids_only
+    returned_equivalence_class_forbidden_semantics:
+      - Bianchi family
+      - native morphology
+      - geometry label
+      - physical source attribution
+  source_bindings:
+    - exact PR-256 geometry report content identity
+    - exact covariance and nuisance-tangent identities
+    - exact PR-258 class contracts and metric identity
+
+synthetic_fixtures:
+  coordinate_frame: registered_common_synthetic_basis
+  covariance_status: synthetic_positive_definite_identity
+  null_mock_status: not_used_by_structural_runtime_gate
+  cases:
+    - fixture_id: pr283.full-rank-small-angle.v1
+      local_parameter_count: 1
+      global_parameter_count: 1
+      local_rank: 1
+      global_rank: 1
+      joint_rank: 2
+      expected_status: WEAKLY_IDENTIFIED
+      expected_candidate: null
+    - fixture_id: pr283.full-rank-small-relative-singular-value.v1
+      local_parameter_count: 1
+      global_parameter_count: 1
+      local_rank: 1
+      global_rank: 1
+      joint_rank: 2
+      expected_status: WEAKLY_IDENTIFIED
+      expected_candidate: null
+    - fixture_id: pr283.rank-deficient-sum-only.v1
+      local_parameter_count: 1
+      global_parameter_count: 1
+      local_rank: 1
+      global_rank: 1
+      joint_rank: 1
+      expected_status: SUM_ONLY
+      expected_candidate: null
+    - fixture_id: pr283.well-separated-full-rank.v1
+      local_parameter_count: 1
+      global_parameter_count: 1
+      local_rank: 1
+      global_rank: 1
+      joint_rank: 2
+      expected_status: SEPARABLE_CANDIDATE
+
+mutation_registry:
+  - mutation_id: MU283-WEAK-AS-SEPARABLE
+    mutation_kind: weak_status_promoted_to_separable
+    intended_defect: a full-rank small-angle case emits a point candidate
+    expected_kill: mandatory abstention assertion fails
+  - mutation_id: MU283-THRESHOLD-IDENTITY-DRIFT
+    mutation_kind: registered_threshold_contract_identity_changed
+    intended_defect: the same measured geometry is regraded with a relaxed singular threshold
+    expected_kill: exact registered threshold-contract identity blocks evaluation
+  - mutation_id: MU283-COVARIANCE-DRIFT
+    mutation_kind: source_gate_covariance_identity_changed
+    intended_defect: weak-ID decision is replayed on a different quotient
+    expected_kill: source-gate binding rejects the classifier call
+  - mutation_id: MU283-ANGLE-IDENTITY-DRIFT
+    mutation_kind: principal_angle_bytes_changed_without_report_reseal
+    intended_defect: measured geometry and weak-ID receipt disagree
+    expected_kill: source geometry identity validation rejects the projection
+  - mutation_id: MU283-SINGULAR-IDENTITY-DRIFT
+    mutation_kind: joint_singular_value_bytes_changed_without_report_reseal
+    intended_defect: conditioning metric and weak-ID receipt disagree
+    expected_kill: source geometry identity validation rejects the projection
+  - mutation_id: MU283-NORMALIZER-IDENTITY-DRIFT
+    mutation_kind: normalizer_map_identity_changed_without_geometry_replay
+    intended_defect: representation-dependent conditioning is silently regraded
+    expected_kill: normalizer binding rejects the projection
+  - mutation_id: MU283-WEAK-PRECEDENCE-DRIFT
+    mutation_kind: weak_gate_applied_after_open_set_labels
+    intended_defect: weak identification is overwritten by equivalence or unknown-distance labels
+    expected_kill: weak source gate forces TYPE_UNIDENTIFIED before those labels
+  - mutation_id: MU283-SINGULAR-CARDINALITY-DRIFT
+    mutation_kind: joint_singular_value_count_exceeds_parameter_dimension
+    intended_defect: trailing singular values alter the registered conditioning metric
+    expected_kill: singular-value cardinality validation rejects the decision
+  - mutation_id: MU283-THRESHOLD-OMISSION
+    mutation_kind: registered_practical_threshold_contract_omitted
+    intended_defect: a full-rank ill-conditioned response bypasses weak identification
+    expected_kill: active PR-283 projection rejects a missing threshold contract
+  - mutation_id: MU283-SOURCE-REPORT-REPLAY-DRIFT
+    mutation_kind: source_geometry_angles_changed_after_factory_measurement
+    intended_defect: copied PR-256 geometry fields are regraded without replay
+    expected_kill: exact normalizer-bound geometry replay rejects the projection
+
+receipt_contract:
+  output_path: docs/generated/pr283_weak_identification_receipt.json
+  content_address: sha256_of_canonical_json_excluding_receipt_content_sha256
+  required_bindings:
+    - docs/research_program/post_pr275/pr283_spec.yaml
+    - docs/research_program/post_pr275/pr283_publication_policy.json
+    - htt/src/common/source_separation.py
+    - htt/src/common/tensor_foundations_oracle.py
+    - htt/src/common/pillar_t_cas.py
+    - htt/src/common/open_set_response_classes.py
+    - docs/research_program/vector_tensor/frozen_sources/pr272_open_set_response_classes.py
+    - docs/research_program/vector_tensor/integration/PR283_PR272_OPEN_SET_V1_RELOCATION.json
+    - docs/research_program/vector_tensor/proof_registry_two_pillars.yaml
+    - docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml
+    - htt/htt/htt/departure/velocity_frame_decomposition.py
+    - htt/htt/htt/statistics/__init__.py
+    - htt/htt/htt/statistics/open_set_response_classes.py
+    - scripts/codex_harness/run_pr283_weak_identification.py
+    - tests/contracts/test_weak_identification.py
+    - tests/contracts/test_pillar_t_cas.py
+  terminal_precedence:
+    - BLOCKED_CONTRACT_INVALID
+    - BLOCKED_WEAK_IDENTIFICATION_CONTRACT
+    - PASS_WEAK_IDENTIFICATION_ABSTENTION
+  mutation_rule: >-
+    Every registered mutation must execute and be killed. Missing, skipped,
+    duplicated, reordered, unmapped, or surviving mutations block G4.
+  required_metadata:
+    - owner
+    - scope
+    - claim_tier_and_level
+    - transfer_source
+    - synthetic_sky_and_covariance_status
+    - null_mock_status
+    - assumptions
+    - caveats
+    - generating_command_or_procedure
+    - exact_source_bindings
+    - git_commit_or_worktree_state
+
+assumptions:
+  - PR-256 response providers and geometry report are factory-derived and replay-bound.
+  - Principal angles and singular values are evaluated on the same covariance-supported nuisance quotient.
+  - Practical thresholds are registered before any open-set observation is classified.
+  - Full rank is necessary but not sufficient for a point response-class candidate.
+
+allowed_uses:
+  - Synthetic runtime validation of weak local/global source identification.
+  - Mandatory abstention before later multi-probe and claim-capability integration.
+  - Diagnostic reporting of the measured rank, angle, and conditioning ladder.
+forbidden_uses:
+  - A point estimate or nearest response-class fallback under weak identification.
+  - Observed-data source attribution, global-tilt detection, or physical parameter inference.
+  - Native solver validation, geometry detection, or Bianchi family identification.
+  - HTT posterior/evidence production or MIO truth certification.
+  - PR-153 artifacts are forbidden input.
+caveats:
+  - Thresholds define a registered diagnostic operating point, not a universal physical constant.
+  - The singular-value threshold is conditional on the exact registered dimensionless-beta normalizer and is not coordinate-rescaling invariant.
+  - Synthetic fixtures do not establish observed-sky covariance, mask, or null validity.
+  - WEAKLY_IDENTIFIED is an abstention state, not partial evidence for either source hypothesis.
+  - PR-151 partial/background data is forbidden input.
+  - PR-153 artifacts are forbidden input.

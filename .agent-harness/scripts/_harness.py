@@ -8,6 +8,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
 
+import yaml
+
 from publication_integrity import (
     PublicationIntegrityError,
     bytes_sha256,
@@ -15,6 +17,7 @@ from publication_integrity import (
     git,
     load_publication_policy,
     mutable_candidate_binding,
+    reject_duplicate_stable_patch_ids,
     require_change_set_id,
     require_publication_group_id,
     validate_candidate_binding,
@@ -35,6 +38,24 @@ REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START = (
     DEFAULT_MAX_TOTAL_PER_WORK_UNIT
     + MAX_REVIEW_REREVIEW_EXCEPTION_ASSIGNMENTS
 )
+EXECUTION_MODES = {"MANUAL_PR", "AUTO_STACKED_PR", "AUTO_MERGE"}
+LIFECYCLE_STATES = (
+    "PLANNED",
+    "ACTIVE",
+    "IMPLEMENTED",
+    "VALIDATED",
+    "REVIEWED",
+    "SEALED",
+    "PUSHED",
+    "PR_OPEN",
+)
+GATE_DISPOSITIONS = {
+    "PASS",
+    "FAIL",
+    "INCONCLUSIVE",
+    "INELIGIBLE",
+    "DEFERRED",
+}
 
 
 class ActiveRunError(RuntimeError):
@@ -53,6 +74,577 @@ class ActiveRunError(RuntimeError):
 
     def as_dict(self) -> dict[str, str]:
         return {"code": self.error_code, "message": self.message, **self.details}
+
+
+def validate_execution_mode(mode: object) -> str:
+    """Recognize all declared modes while refusing automatic merge authority."""
+
+    if mode not in EXECUTION_MODES:
+        raise PublicationIntegrityError(
+            "execution_mode must be MANUAL_PR, AUTO_STACKED_PR, or AUTO_MERGE"
+        )
+    assert isinstance(mode, str)
+    if mode == "AUTO_MERGE":
+        raise PublicationIntegrityError(
+            "AUTO_MERGE is recognized but refused; merge remains HUMAN ONLY"
+        )
+    return mode
+
+
+def validate_lifecycle_transition(previous: object, current: object) -> None:
+    """Require one adjacent transition in the serial stacked-PR lifecycle."""
+
+    if previous not in LIFECYCLE_STATES or current not in LIFECYCLE_STATES:
+        raise PublicationIntegrityError("lifecycle state is not registered")
+    previous_index = LIFECYCLE_STATES.index(str(previous))
+    current_index = LIFECYCLE_STATES.index(str(current))
+    if current_index not in {previous_index, previous_index + 1}:
+        raise PublicationIntegrityError(
+            f"illegal lifecycle transition: {previous} -> {current}"
+        )
+
+
+def _valid_git_sha(value: object) -> bool:
+    return isinstance(value, str) and re.fullmatch(r"[0-9a-f]{40}", value) is not None
+
+
+def _stack_result(errors: list[str]) -> dict[str, object]:
+    eligible = not errors
+    return {
+        "eligible": eligible,
+        "disposition": "PASS" if eligible else "INELIGIBLE",
+        "retry_budget_cost": 1 if eligible else 0,
+        "assurance_budget_cost": 1 if eligible else 0,
+        "errors": errors,
+    }
+
+
+def validate_stacked_execution_status(status: Mapping[str, Any]) -> list[str]:
+    """Validate the synchronized status authority for one serial PR stack."""
+
+    errors: list[str] = []
+    stack = status.get("stacked_pr_execution")
+    if not isinstance(stack, Mapping):
+        return ["stacked_pr_execution status authority is missing"]
+    if stack.get("schema_version") != 1:
+        errors.append("stacked_pr_execution schema_version must equal 1")
+    try:
+        if validate_execution_mode(stack.get("execution_mode")) != "AUTO_STACKED_PR":
+            errors.append("stacked recovery authority requires AUTO_STACKED_PR")
+    except PublicationIntegrityError as exc:
+        errors.append(str(exc))
+    if stack.get("merge_policy") != "HUMAN_ONLY":
+        errors.append("stack merge_policy must remain HUMAN_ONLY")
+    if not is_safe_identifier(stack.get("stack_id")):
+        errors.append("stack_id is missing or unsafe")
+    if not _valid_git_sha(stack.get("target_sha")):
+        errors.append("stack target_sha must be a full Git SHA")
+    order = stack.get("pr_order")
+    prs = stack.get("prs")
+    if (
+        not isinstance(order, list)
+        or not order
+        or any(not is_safe_identifier(item) for item in order)
+        or len(order) != len(set(order))
+        or not isinstance(prs, Mapping)
+        or set(prs) != set(order)
+    ):
+        return [*errors, "stack PR order and records must match exactly"]
+    active_records: list[str] = []
+    for index, pr_id in enumerate(order):
+        record = prs.get(pr_id)
+        if not isinstance(record, Mapping):
+            errors.append(f"{pr_id} execution record must be an object")
+            continue
+        lifecycle = record.get("lifecycle")
+        if lifecycle not in LIFECYCLE_STATES:
+            errors.append(f"{pr_id} lifecycle is not registered")
+            continue
+        history = record.get("lifecycle_history")
+        if (
+            not isinstance(history, list)
+            or not history
+            or history != list(LIFECYCLE_STATES[: len(history)])
+            or history[-1] != lifecycle
+        ):
+            errors.append(f"{pr_id} lifecycle history is not an ordered prefix")
+        lifecycle_index = LIFECYCLE_STATES.index(str(lifecycle))
+        if 1 <= lifecycle_index < len(LIFECYCLE_STATES) - 1:
+            active_records.append(pr_id)
+        expected_predecessor = order[index - 1] if index else None
+        if record.get("predecessor_pr") != expected_predecessor:
+            errors.append(f"{pr_id} predecessor chain is invalid")
+        base_sha = record.get("base_sha")
+        if lifecycle != "PLANNED" and not _valid_git_sha(base_sha):
+            errors.append(f"{pr_id} active lifecycle requires base_sha")
+        if index == 0 and lifecycle != "PLANNED" and base_sha != stack.get("target_sha"):
+            errors.append(f"{pr_id} base_sha must equal the canonical stack target")
+        if index and lifecycle != "PLANNED":
+            predecessor = prs.get(expected_predecessor)
+            sealed_head = (
+                predecessor.get("sealed_head")
+                if isinstance(predecessor, Mapping)
+                else None
+            )
+            if record.get("predecessor_sealed_sha") != sealed_head:
+                errors.append(f"{pr_id} predecessor sealed-head binding is invalid")
+            if base_sha != sealed_head:
+                errors.append(f"{pr_id} base_sha differs from predecessor sealed head")
+            if not isinstance(predecessor, Mapping) or predecessor.get("lifecycle") != "PR_OPEN":
+                errors.append(f"{pr_id} activated before predecessor PR_OPEN")
+        if lifecycle_index >= LIFECYCLE_STATES.index("SEALED") and not _valid_git_sha(
+            record.get("sealed_head")
+        ):
+            errors.append(f"{pr_id} SEALED lifecycle requires sealed_head")
+        if lifecycle_index >= LIFECYCLE_STATES.index("PUSHED"):
+            pushed_ref = record.get("pushed_ref")
+            if not isinstance(pushed_ref, str) or not pushed_ref.startswith("refs/heads/"):
+                errors.append(f"{pr_id} PUSHED lifecycle requires pushed_ref")
+        if lifecycle == "PR_OPEN":
+            pr_url = record.get("pr_url")
+            if not isinstance(pr_url, str) or not pr_url.startswith("https://github.com/"):
+                errors.append(f"{pr_id} PR_OPEN lifecycle requires a GitHub PR URL")
+        dispositions = record.get("gate_dispositions")
+        if (
+            not isinstance(dispositions, Mapping)
+            or not dispositions
+            or any(value not in GATE_DISPOSITIONS for value in dispositions.values())
+        ):
+            errors.append(f"{pr_id} gate dispositions are malformed")
+        assurance = record.get("assurance_budget")
+        if not isinstance(assurance, Mapping):
+            errors.append(f"{pr_id} assurance budget is missing")
+        else:
+            maximum = assurance.get("maximum")
+            consumed = assurance.get("consumed")
+            if (
+                type(maximum) is not int
+                or maximum != DEFAULT_MAX_TOTAL_PER_WORK_UNIT
+                or type(consumed) is not int
+                or not 0 <= consumed <= maximum
+            ):
+                errors.append(f"{pr_id} assurance budget is invalid")
+    active_pr = stack.get("active_implementation_pr")
+    terminal = all(
+        isinstance(prs.get(pr_id), Mapping)
+        and prs[pr_id].get("lifecycle") == "PR_OPEN"
+        for pr_id in order
+    )
+    if terminal:
+        if active_records or active_pr is not None:
+            errors.append("terminal AUTO_STACKED_PR stack must have no active PR")
+    elif len(active_records) != 1:
+        errors.append("AUTO_STACKED_PR requires exactly one active implementation PR")
+    elif active_pr != active_records[0]:
+        errors.append("active_implementation_pr does not name the active lifecycle")
+    if status.get("in_progress") != active_pr:
+        errors.append("top-level in_progress disagrees with active implementation PR")
+    return errors
+
+
+def load_stacked_execution_status(repo: str | Path) -> dict[str, Any]:
+    """Load the byte-identical canonical and compatibility status mirrors."""
+
+    root_path = Path(repo).resolve()
+    canonical = root_path / "docs" / "codex_handoff" / "pr_status.yaml"
+    mirror = root_path / "machine_readable" / "pr_status.yaml"
+    try:
+        canonical_bytes = canonical.read_bytes()
+        mirror_bytes = mirror.read_bytes()
+    except OSError as exc:
+        raise PublicationIntegrityError("stack status mirror is unavailable") from exc
+    if canonical_bytes != mirror_bytes:
+        raise PublicationIntegrityError("stack status mirrors are not synchronized")
+    try:
+        payload = yaml.safe_load(canonical_bytes)
+    except yaml.YAMLError as exc:
+        raise PublicationIntegrityError("stack status YAML is malformed") from exc
+    if not isinstance(payload, dict):
+        raise PublicationIntegrityError("stack status must be a mapping")
+    errors = validate_stacked_execution_status(payload)
+    if errors:
+        raise PublicationIntegrityError("; ".join(errors))
+    return payload
+
+
+def resolve_candidate_activation_base(
+    repo: str | Path,
+    status: Mapping[str, Any],
+    *,
+    work_unit_id: str,
+    candidate_ref: str,
+) -> str:
+    """Resolve the candidate's fork point against its recorded exact stack base."""
+
+    stack = status.get("stacked_pr_execution")
+    records = stack.get("prs") if isinstance(stack, Mapping) else None
+    record = records.get(work_unit_id) if isinstance(records, Mapping) else None
+    declared_base = record.get("base_sha") if isinstance(record, Mapping) else None
+    root_path = Path(repo).resolve()
+    candidate_sha = str(
+        git(root_path, "rev-parse", "--verify", f"{candidate_ref}^{{commit}}")
+    ).strip()
+    if not _valid_git_sha(candidate_sha):
+        raise PublicationIntegrityError("candidate ref did not resolve to a commit")
+    if not _valid_git_sha(declared_base):
+        # A planned successor intentionally has no base until its predecessor
+        # reaches PR_OPEN. Return a real commit so eligibility can report the
+        # zero-budget INELIGIBLE disposition instead of a tool error.
+        return candidate_sha
+    activation_base = str(
+        git(root_path, "merge-base", declared_base, candidate_sha)
+    ).strip()
+    if not _valid_git_sha(activation_base):
+        raise PublicationIntegrityError("candidate activation base did not resolve")
+    return activation_base
+
+
+def _shared_worktree_roots(repo: str | Path) -> list[Path]:
+    root_path = Path(repo).resolve()
+    output = str(git(root_path, "worktree", "list", "--porcelain"))
+    roots = [
+        Path(line.removeprefix("worktree ")).resolve()
+        for line in output.splitlines()
+        if line.startswith("worktree ")
+    ]
+    if root_path not in roots:
+        raise PublicationIntegrityError("current worktree is missing from Git inventory")
+    return sorted(set(roots), key=lambda item: str(item))
+
+
+def _shared_stack_run_plans(
+    repo: str | Path,
+    *,
+    stack_id: str,
+) -> list[tuple[Path, Path, Mapping[str, Any]]]:
+    rows: list[tuple[Path, Path, Mapping[str, Any]]] = []
+    for worktree in _shared_worktree_roots(repo):
+        runs_root = worktree / ".agent-harness" / "runs"
+        if not runs_root.is_dir() or runs_root.is_symlink():
+            continue
+        for plan_path in sorted(runs_root.glob("*/RUN_PLAN.json")):
+            if plan_path.is_symlink() or not plan_path.is_file():
+                raise PublicationIntegrityError(
+                    f"shared stack RUN_PLAN is not a regular file: {plan_path}"
+                )
+            try:
+                plan = load_json(plan_path)
+            except (OSError, json.JSONDecodeError) as exc:
+                raise PublicationIntegrityError(
+                    f"shared stack RUN_PLAN is malformed: {plan_path}"
+                ) from exc
+            if not isinstance(plan, Mapping):
+                raise PublicationIntegrityError(
+                    f"shared stack RUN_PLAN is not an object: {plan_path}"
+                )
+            if (
+                plan.get("execution_mode") == "AUTO_STACKED_PR"
+                and plan.get("stack_id") == stack_id
+            ):
+                rows.append((worktree, plan_path.parent, plan))
+    return rows
+
+
+def shared_active_stack_runs(
+    repo: str | Path,
+    *,
+    stack_id: str,
+) -> list[dict[str, str]]:
+    """Return active runs for one stack across every registered Git worktree."""
+
+    by_location = {
+        (worktree, str(plan.get("run_id"))): plan
+        for worktree, _run_dir, plan in _shared_stack_run_plans(
+            repo,
+            stack_id=stack_id,
+        )
+    }
+    active: list[dict[str, str]] = []
+    for worktree in _shared_worktree_roots(repo):
+        try:
+            run_id = active_run_id(worktree, required=False)
+        except ActiveRunError as exc:
+            raise PublicationIntegrityError(str(exc)) from exc
+        if run_id is None:
+            continue
+        plan = by_location.get((worktree, run_id))
+        if plan is None:
+            continue
+        active.append(
+            {
+                "worktree": str(worktree),
+                "run_id": run_id,
+                "work_unit_id": str(plan.get("work_unit_id") or ""),
+            }
+        )
+    return active
+
+
+def shared_stack_assignment_count(
+    repo: str | Path,
+    *,
+    stack_id: str,
+    work_unit_id: str,
+) -> int:
+    """Count current-stack assignments across all Git worktrees and runs."""
+
+    count = 0
+    for _worktree, run_dir, plan in _shared_stack_run_plans(
+        repo,
+        stack_id=stack_id,
+    ):
+        if plan.get("work_unit_id") != work_unit_id:
+            continue
+        assignments = run_dir / "assignments"
+        if assignments.is_symlink() or not assignments.is_dir():
+            raise PublicationIntegrityError(
+                f"shared stack assignments directory is invalid: {assignments}"
+            )
+        count += len(sorted(assignments.glob("*.json")))
+    return count
+
+
+def validate_run_execution_fields(
+    plan: Mapping[str, Any], *, repo: str | Path
+) -> list[str]:
+    """Bind a run plan to the active serial-stack status without spending a gate."""
+
+    errors: list[str] = []
+    try:
+        mode = validate_execution_mode(plan.get("execution_mode"))
+    except PublicationIntegrityError as exc:
+        return [str(exc)]
+    lifecycle = plan.get("lifecycle_state")
+    if lifecycle not in LIFECYCLE_STATES:
+        errors.append("RUN_PLAN lifecycle_state is not registered")
+    gate_disposition = plan.get("gate_disposition")
+    if gate_disposition not in GATE_DISPOSITIONS:
+        errors.append("RUN_PLAN gate_disposition is not registered")
+    production_hash = plan.get("production_hash")
+    if production_hash is not None and (
+        not isinstance(production_hash, str)
+        or SHA256_RE.fullmatch(production_hash) is None
+    ):
+        errors.append("RUN_PLAN production_hash is invalid")
+    dependencies = plan.get("dependency_hashes")
+    if (
+        not isinstance(dependencies, Mapping)
+        or any(
+            not isinstance(key, str)
+            or not key
+            or not isinstance(value, str)
+            or SHA256_RE.fullmatch(value) is None
+            for key, value in dependencies.items()
+        )
+    ):
+        errors.append("RUN_PLAN dependency_hashes are invalid")
+    assurance = plan.get("assurance_budget")
+    if not isinstance(assurance, Mapping):
+        errors.append("RUN_PLAN assurance_budget is missing")
+    else:
+        maximum = assurance.get("maximum")
+        consumed = assurance.get("consumed")
+        if (
+            type(maximum) is not int
+            or maximum != DEFAULT_MAX_TOTAL_PER_WORK_UNIT
+            or type(consumed) is not int
+            or not 0 <= consumed <= maximum
+        ):
+            errors.append("RUN_PLAN assurance_budget is invalid")
+    if mode == "MANUAL_PR":
+        if plan.get("stack_id") is not None:
+            errors.append("MANUAL_PR must not name an AUTO_STACKED_PR stack_id")
+        return errors
+    try:
+        status = load_stacked_execution_status(repo)
+    except PublicationIntegrityError as exc:
+        return [*errors, str(exc)]
+    stack = status["stacked_pr_execution"]
+    work_unit_id = plan.get("work_unit_id")
+    if plan.get("stack_id") != stack.get("stack_id"):
+        errors.append("RUN_PLAN stack_id differs from status authority")
+    eligibility = evaluate_stack_eligibility(
+        status,
+        work_unit_id=str(work_unit_id or ""),
+        candidate_sha=str(plan.get("activation_base_sha") or ""),
+    )
+    errors.extend(str(item) for item in eligibility["errors"])
+    records = stack.get("prs")
+    record = records.get(work_unit_id) if isinstance(records, Mapping) else None
+    if isinstance(record, Mapping):
+        bindings = {
+            "lifecycle_state": record.get("lifecycle"),
+            "activation_base_sha": record.get("base_sha"),
+            "predecessor_pr": record.get("predecessor_pr"),
+            "predecessor_sealed_sha": record.get("predecessor_sealed_sha"),
+            "dependency_hashes": record.get("dependency_hashes"),
+            "assurance_budget": record.get("assurance_budget"),
+        }
+        for field, expected in bindings.items():
+            if plan.get(field) != expected:
+                errors.append(f"RUN_PLAN {field} differs from status authority")
+    binding = plan.get("candidate_binding")
+    if isinstance(binding, Mapping) and binding.get("state") == "frozen":
+        evidence_key = plan.get("evidence_key")
+        if not isinstance(evidence_key, Mapping):
+            errors.append("frozen AUTO_STACKED_PR run requires evidence_key")
+        else:
+            try:
+                _validate_evidence_key(evidence_key, label="RUN_PLAN evidence_key")
+            except PublicationIntegrityError as exc:
+                errors.append(str(exc))
+            if evidence_key.get("production_hash") != binding.get("production_hash"):
+                errors.append("RUN_PLAN evidence_key production hash differs from seal")
+            if evidence_key.get("dependency_hashes") != plan.get("dependency_hashes"):
+                errors.append("RUN_PLAN evidence_key dependency hashes drifted")
+    return errors
+
+
+def evaluate_stack_eligibility(
+    status: Mapping[str, Any],
+    *,
+    work_unit_id: str,
+    candidate_sha: str,
+) -> dict[str, object]:
+    """Evaluate selected-work eligibility separately from structural DAG validity."""
+
+    errors: list[str] = validate_stacked_execution_status(status)
+    stack = status.get("stacked_pr_execution")
+    if not isinstance(stack, Mapping):
+        return _stack_result(["stacked_pr_execution status authority is missing"])
+    try:
+        mode = validate_execution_mode(stack.get("execution_mode"))
+    except PublicationIntegrityError as exc:
+        errors.append(str(exc))
+        mode = None
+    if stack.get("merge_policy") != "HUMAN_ONLY":
+        errors.append("stack merge_policy must remain HUMAN_ONLY")
+    if mode != "AUTO_STACKED_PR":
+        errors.append("selected stacked work requires AUTO_STACKED_PR")
+    order = stack.get("pr_order")
+    prs = stack.get("prs")
+    if (
+        not isinstance(order, list)
+        or not order
+        or any(not isinstance(item, str) for item in order)
+        or len(order) != len(set(order))
+        or not isinstance(prs, Mapping)
+    ):
+        return _stack_result([*errors, "stack PR order or records are malformed"])
+    if work_unit_id not in order or work_unit_id not in prs:
+        return _stack_result([*errors, f"{work_unit_id} is not registered in the stack"])
+    active_pr = stack.get("active_implementation_pr")
+    if active_pr != work_unit_id:
+        errors.append(
+            f"active implementation PR is {active_pr!r}, not {work_unit_id}"
+        )
+    if status.get("in_progress") != active_pr:
+        errors.append("top-level in_progress disagrees with active implementation PR")
+    record = prs[work_unit_id]
+    if not isinstance(record, Mapping):
+        return _stack_result([*errors, f"{work_unit_id} execution record is malformed"])
+    if record.get("lifecycle") not in LIFECYCLE_STATES[1:-1]:
+        errors.append(
+            f"{work_unit_id} lifecycle must be an active pre-PR_OPEN state"
+        )
+    history = record.get("lifecycle_history")
+    if not isinstance(history, list) or not history:
+        errors.append(f"{work_unit_id} lifecycle history is missing")
+    else:
+        expected = list(LIFECYCLE_STATES[: len(history)])
+        if history != expected or history[-1] != record.get("lifecycle"):
+            errors.append(f"{work_unit_id} lifecycle history is not an ordered prefix")
+    index = order.index(work_unit_id)
+    base_sha = record.get("base_sha")
+    if not _valid_git_sha(candidate_sha):
+        errors.append("candidate base is not a full Git SHA")
+    if index == 0:
+        target_sha = stack.get("target_sha")
+        if base_sha != target_sha or candidate_sha != target_sha:
+            errors.append("first stacked PR must start at the exact canonical target SHA")
+        if record.get("predecessor_pr") is not None:
+            errors.append("first stacked PR must not name a stack predecessor")
+    else:
+        expected_predecessor = order[index - 1]
+        predecessor = prs.get(expected_predecessor)
+        if record.get("predecessor_pr") != expected_predecessor:
+            errors.append(
+                f"{work_unit_id} predecessor must be {expected_predecessor}"
+            )
+        if not isinstance(predecessor, Mapping):
+            errors.append(f"{expected_predecessor} execution record is malformed")
+        else:
+            if predecessor.get("lifecycle") != "PR_OPEN":
+                errors.append(
+                    f"{expected_predecessor} must reach PR_OPEN before {work_unit_id} activation"
+                )
+            sealed_head = predecessor.get("sealed_head")
+            recorded = record.get("predecessor_sealed_sha")
+            if not _valid_git_sha(sealed_head):
+                errors.append(f"{expected_predecessor} sealed head is missing")
+            if recorded != sealed_head:
+                errors.append(
+                    f"{work_unit_id} recorded predecessor sealed head does not match"
+                )
+            if base_sha != sealed_head or candidate_sha != sealed_head:
+                errors.append(
+                    f"{work_unit_id} must start at the exact predecessor sealed head"
+                )
+    return _stack_result(errors)
+
+
+def _validate_evidence_key(value: Mapping[str, Any], *, label: str) -> None:
+    production_hash = value.get("production_hash")
+    dependencies = value.get("dependency_hashes")
+    if not isinstance(production_hash, str) or SHA256_RE.fullmatch(production_hash) is None:
+        raise PublicationIntegrityError(f"{label} production_hash is invalid")
+    if (
+        not isinstance(dependencies, Mapping)
+        or any(
+            not isinstance(key, str)
+            or not key
+            or not isinstance(item, str)
+            or SHA256_RE.fullmatch(item) is None
+            for key, item in dependencies.items()
+        )
+    ):
+        raise PublicationIntegrityError(f"{label} dependency_hashes are invalid")
+
+
+def evaluate_evidence_freshness(
+    previous: Mapping[str, Any], current: Mapping[str, Any]
+) -> dict[str, object]:
+    """Route only production/dependency drift to substantive assurance."""
+
+    _validate_evidence_key(previous, label="previous evidence key")
+    _validate_evidence_key(current, label="current evidence key")
+    if previous["production_hash"] != current["production_hash"]:
+        return {
+            "seal_valid": False,
+            "substantive_rerun_required": True,
+            "stale_dependencies": [],
+            "reason": "PRODUCTION_HASH_CHANGED",
+        }
+    previous_dependencies = dict(previous["dependency_hashes"])
+    current_dependencies = dict(current["dependency_hashes"])
+    stale = sorted(
+        key
+        for key in set(previous_dependencies) | set(current_dependencies)
+        if previous_dependencies.get(key) != current_dependencies.get(key)
+    )
+    if stale:
+        return {
+            "seal_valid": True,
+            "substantive_rerun_required": True,
+            "stale_dependencies": stale,
+            "reason": "DEPENDENCY_HASH_CHANGED",
+        }
+    return {
+        "seal_valid": True,
+        "substantive_rerun_required": False,
+        "stale_dependencies": [],
+        "reason": "EVIDENCE_KEY_UNCHANGED",
+    }
 
 
 def historical_run_ids(repo: Path) -> set[str]:
@@ -820,6 +1412,10 @@ def validate_run_plan_payload(
             raise PublicationIntegrityError(
                 "RUN_PLAN status must be initialized or candidate_frozen"
             )
+        if "execution_mode" in plan:
+            execution_errors = validate_run_execution_fields(plan, repo=repo)
+            if execution_errors:
+                raise PublicationIntegrityError("; ".join(execution_errors))
         candidate_ref = plan.get("candidate_ref")
         if not isinstance(candidate_ref, str) or not candidate_ref:
             raise PublicationIntegrityError("RUN_PLAN candidate_ref must be non-empty")
@@ -983,7 +1579,7 @@ def enforce_work_unit_assignment_budget(
     )
     if exception is None:
         raise PublicationIntegrityError(
-            f"Cumulative work-unit budget exhausted for "
+            f"BLOCKED_ASSURANCE_BUDGET_EXHAUSTED: cumulative work-unit budget for "
             f"{plan.get('work_unit_id')}: {cumulative_count}/{ordinary_limit} "
             "(budget spans ALL runs of this work unit; a new run does not "
             "reset it)"

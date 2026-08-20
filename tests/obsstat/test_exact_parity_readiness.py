@@ -5,6 +5,7 @@ from fractions import Fraction
 import hashlib
 import inspect
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -379,6 +380,25 @@ def test_generated_receipt_replays_exactly() -> None:
     assert payload["observed_data_executed"] is False
     assert payload["public_use"] is False
     assert payload["family_identification_gate"] == "BLOCKED_PRE_NATIVE_ATLAS"
+
+
+def test_pr272_replay_runner_is_portable_without_inherited_pythonpath() -> None:
+    env = dict(os.environ)
+    env.pop("PYTHONPATH", None)
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-B",
+            "scripts/codex_harness/run_pr282_exact_parity_readiness.py",
+            "pr272",
+        ],
+        cwd=ROOT,
+        env=env,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_publication_policy_binds_no_promotion_and_exact_review_cells() -> None:

@@ -14,6 +14,16 @@ from typing import Any
 
 import yaml
 
+HARNESS_SCRIPTS = Path(__file__).resolve().parents[2] / ".agent-harness" / "scripts"
+if str(HARNESS_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(HARNESS_SCRIPTS))
+
+from _harness import (  # noqa: E402
+    evaluate_stack_eligibility,
+    load_stacked_execution_status,
+    resolve_candidate_activation_base,
+)
+
 if __package__:  # Package import used by pytest and library callers.
     from .premise_anchor_gates import (
         claim_contracts_for_backlog,
@@ -2300,8 +2310,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--strict-rescue-slice", action="store_true")
     parser.add_argument("--write-mermaid", metavar="PATH")
     parser.add_argument("--json", action="store_true")
+    parser.add_argument(
+        "--work-unit",
+        help="report selected AUTO_STACKED_PR eligibility separately from DAG validity",
+    )
+    parser.add_argument(
+        "--candidate-ref",
+        default="HEAD",
+        help="activation candidate ref used for exact sealed-head eligibility",
+    )
     args = parser.parse_args(argv)
 
+    eligibility = None
     try:
         data = load_yaml(args.backlog)
         info = validate_backlog(data)
@@ -2310,6 +2330,22 @@ def main(argv: list[str] | None = None) -> int:
             validate_long_horizon_rescue_slice(data, info, status=status)
         if args.write_mermaid:
             Path(args.write_mermaid).write_text(render_mermaid(info), encoding="utf-8")
+        if args.work_unit:
+            if not args.status:
+                raise ValueError("--work-unit requires --status")
+            repo = Path(args.backlog).resolve().parents[2]
+            status = load_stacked_execution_status(repo)
+            candidate_sha = resolve_candidate_activation_base(
+                repo,
+                status,
+                work_unit_id=args.work_unit,
+                candidate_ref=args.candidate_ref,
+            )
+            eligibility = evaluate_stack_eligibility(
+                status,
+                work_unit_id=args.work_unit,
+                candidate_sha=candidate_sha,
+            )
     except Exception as exc:
         print(str(exc), file=sys.stderr)
         return 1
@@ -2321,6 +2357,14 @@ def main(argv: list[str] | None = None) -> int:
                     "total": len(info.ids),
                     "edges": info.edge_count,
                     "topological_order": list(info.order),
+                    "selected_work_unit": (
+                        {
+                            "work_unit_id": args.work_unit,
+                            **eligibility,
+                        }
+                        if eligibility is not None
+                        else None
+                    ),
                 },
                 indent=2,
             )
@@ -2328,6 +2372,18 @@ def main(argv: list[str] | None = None) -> int:
     else:
         print(f"OK: {len(info.ids)} PRs, DAG valid")
         print("topological_order=" + ",".join(info.order))
+        if eligibility is not None:
+            if eligibility["eligible"]:
+                print(f"eligibility=ELIGIBLE work_unit={args.work_unit}")
+            else:
+                print(
+                    "eligibility=INELIGIBLE/DEFERRED "
+                    f"work_unit={args.work_unit} retry_budget=0 assurance_budget=0"
+                )
+                for error in eligibility["errors"]:
+                    print(f"eligibility_reason={error}")
+    if eligibility is not None and not eligibility["eligible"]:
+        return 2
     return 0
 
 

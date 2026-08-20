@@ -546,6 +546,24 @@ def test_candidate_seal_binds_diff_remote_policy_and_clean_state(
     assert seal["target_branch"] == TARGET_BRANCH
     assert seal["candidate_branch"].startswith("changeset/")
     assert seal["changed_files"] == [{"status": "A", "path": "feature.txt"}]
+    assert len(seal["stable_patch_ids"]) == 1
+    assert seal["stable_patch_ids"][0]["commit"] == seal["candidate_sha"]
+    assert len(seal["stable_patch_ids"][0]["stable_patch_id"]) == 40
+    assert len(seal["stable_patch_ids_sha256"]) == 64
+    assert len(seal["production_hash"]) == 64
+    assert seal["diff_stat"] == {
+        "production": 1,
+        "tests": 0,
+        "runners": 0,
+        "receipts": 0,
+        "generated": 0,
+    }
+    binding = candidate_binding_from_payload(
+        seal,
+        seal_path=".prguard/runtime/CANDIDATE_SEAL.json",
+        seal_file_sha256="0" * 64,
+    )
+    assert binding["production_hash"] == seal["production_hash"]
 
     _git(repo, "remote", "set-url", "--push", "origin", "ssh://example.invalid/x")
     errors = validate_candidate_seal_payload(seal, repo=repo)
@@ -919,6 +937,37 @@ def test_integration_rehearsal_binds_merged_tree_and_command_logs(
             log_dir=log_dir,
         )
     )
+
+
+def test_integration_rehearsal_runs_commands_from_a_clean_merged_tree(
+    tmp_path: Path,
+) -> None:
+    repo, _ = _make_candidate_repo(tmp_path)
+    policy = _policy()
+    policy["required_commands"][0]["argv"] = [
+        PYTHON_EXECUTABLE_TOKEN,
+        "-c",
+        "import subprocess; "
+        "status = subprocess.run("
+        "['git', 'status', '--porcelain'], "
+        "check=True, capture_output=True, text=True); "
+        "assert status.stdout == ''",
+    ]
+    _write_json(repo / POLICY_REL, policy)
+    _git(repo, "add", POLICY_REL)
+    _git(repo, "commit", "-qm", "require clean integration command root")
+    seal = _seal(repo)
+    seal_rel = ".prguard/runtime/CLEAN_CANDIDATE_SEAL.json"
+    write_json_exclusive(repo / seal_rel, seal)
+
+    receipt = create_receipt(
+        repo,
+        seal_path=seal_rel,
+        output_path=".prguard/runtime/CLEAN_INTEGRATION_RECEIPT.json",
+    )
+
+    assert receipt["status"] == "PASS"
+    assert receipt["commands"][0]["returncode"] == 0
 
 
 def _inventory(seal: dict, *, rows: list[dict] | None = None) -> dict:
@@ -1906,6 +1955,16 @@ def test_publication_gate_validates_exact_evidence_and_consumes_once(
         cwd=repo,
     )
     assert frozen.returncode == 0, frozen.stdout + frozen.stderr
+    frozen_plan = json.loads(
+        (repo / f".agent-harness/runs/{run_id}/RUN_PLAN.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert frozen_plan["production_hash"] == seal["production_hash"]
+    assert frozen_plan["evidence_key"] == {
+        "production_hash": seal["production_hash"],
+        "dependency_hashes": {},
+    }
 
     assignment_id = "A-REVIEW"
     registered = _run(

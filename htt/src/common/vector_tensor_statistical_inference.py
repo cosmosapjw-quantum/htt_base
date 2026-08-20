@@ -69,6 +69,42 @@ SPEC_PATH = Path("docs/research_program/vector_tensor/pr272_spec.yaml")
 EXPECTED_SPEC_SHA256 = (
     "4ab978cf971e565dd6a598bd795249555a717aefa8f6c89b26727fdf58f7f9a2"
 )
+_PR272_FROZEN_RELOCATION_RULES = {
+    "pr271_statistical_foundations": {
+        "manifest_path": (
+            "docs/research_program/vector_tensor/integration/"
+            "PR282_PR272_V1_RELOCATION.json"
+        ),
+        "schema": "htt.pr282.frozen_source_relocation.v1",
+        "relocation_id": "PR282-PR272-STATISTICAL-FOUNDATIONS-V1",
+        "successor_pr": "PR-282",
+        "relocated_path": (
+            "docs/research_program/vector_tensor/frozen_sources/"
+            "pr272_vector_tensor_statistical_foundations.py"
+        ),
+        "caveat": (
+            "PR-282 exact-sign hardening is the current implementation; "
+            "this relocation cannot promote or reseal the PR-272 result"
+        ),
+    },
+    "open_set_response": {
+        "manifest_path": (
+            "docs/research_program/vector_tensor/integration/"
+            "PR283_PR272_OPEN_SET_V1_RELOCATION.json"
+        ),
+        "schema": "htt.pr283.frozen_source_relocation.v1",
+        "relocation_id": "PR283-PR272-OPEN-SET-RESPONSE-V1",
+        "successor_pr": "PR-283",
+        "relocated_path": (
+            "docs/research_program/vector_tensor/frozen_sources/"
+            "pr272_open_set_response_classes.py"
+        ),
+        "caveat": (
+            "PR-283 weak-identification precedence is the current implementation; "
+            "this relocation cannot promote or reseal the PR-272 result"
+        ),
+    },
+}
 REGISTRY_PATH = Path(
     "docs/research_program/vector_tensor/proofs/"
     "PILLAR_S_INFERENCE_VALIDATION_V1.yaml"
@@ -232,6 +268,126 @@ def _cp_lower(covered: int, total: int, confidence: float) -> float:
     return float(clopper_pearson_lower(int(covered), total, confidence))
 
 
+def resolve_preregistered_frozen_input(
+    repo_root: Path,
+    name: str,
+    record: Mapping[str, object],
+) -> Path:
+    """Resolve one exact PR-272 input without rewriting its preregistration.
+
+    Successors may change an active source only after preserving the exact
+    preregistered bytes at a fixed repository-local path and binding that path
+    through a successor-specific relocation manifest.
+    """
+
+    root = repo_root.resolve()
+    relative = record.get("path")
+    expected = record.get("sha256")
+    if not isinstance(name, str) or not name:
+        raise PillarSInferenceError("PR-272 frozen input name is malformed")
+    if not isinstance(relative, str) or not isinstance(expected, str):
+        raise PillarSInferenceError(
+            f"PR-272 frozen input {name!r} is malformed"
+        )
+
+    original_relative = Path(relative)
+    if original_relative.is_absolute() or ".." in original_relative.parts:
+        raise PillarSInferenceError(
+            f"PR-272 frozen input {name!r} path is not repository-relative"
+        )
+    original = root / original_relative
+    if original.is_file() and not original.is_symlink():
+        try:
+            original.resolve(strict=True).relative_to(root)
+        except (OSError, ValueError) as exc:
+            raise PillarSInferenceError(
+                f"PR-272 frozen input {name!r} escapes the repository"
+            ) from exc
+        if _sha256_bytes(original.read_bytes()) == expected:
+            return original
+
+    rule = _PR272_FROZEN_RELOCATION_RULES.get(name)
+    if rule is None:
+        raise PillarSInferenceError(f"PR-272 frozen input {name!r} drifted")
+    manifest_relative = Path(rule["manifest_path"])
+    manifest_path = root / manifest_relative
+    if manifest_path.is_symlink() or not manifest_path.is_file():
+        raise PillarSInferenceError(
+            f"PR-272 frozen input {name!r} relocation manifest is missing"
+        )
+    try:
+        manifest_path.resolve(strict=True).relative_to(root)
+        relocation = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        raise PillarSInferenceError(
+            f"PR-272 frozen input {name!r} relocation manifest is invalid"
+        ) from exc
+
+    expected_top = {
+        "entries",
+        "relocation_id",
+        "schema",
+        "source_pr",
+        "successor_pr",
+    }
+    if (
+        not isinstance(relocation, Mapping)
+        or set(relocation) != expected_top
+        or relocation.get("schema") != rule["schema"]
+        or relocation.get("relocation_id") != rule["relocation_id"]
+        or relocation.get("source_pr") != "PR-272"
+        or relocation.get("successor_pr") != rule["successor_pr"]
+        or not isinstance(relocation.get("entries"), list)
+        or len(relocation["entries"]) != 1
+    ):
+        raise PillarSInferenceError(
+            f"PR-272 frozen input {name!r} relocation binding drifted"
+        )
+    entry = relocation["entries"][0]
+    if (
+        not isinstance(entry, Mapping)
+        or set(entry)
+        != {
+            "allowed_use",
+            "caveat",
+            "frozen_input",
+            "original_path",
+            "relocated_path",
+            "sha256",
+        }
+        or entry.get("frozen_input") != name
+        or entry.get("original_path") != relative
+        or entry.get("relocated_path") != rule["relocated_path"]
+        or entry.get("sha256") != expected
+        or entry.get("allowed_use") != "exact historical PR-272 replay only"
+        or entry.get("caveat") != rule["caveat"]
+    ):
+        raise PillarSInferenceError(
+            f"PR-272 frozen input {name!r} relocation binding drifted"
+        )
+    relocated_relative = Path(str(entry["relocated_path"]))
+    if relocated_relative.is_absolute() or ".." in relocated_relative.parts:
+        raise PillarSInferenceError(
+            f"PR-272 frozen input {name!r} relocation path is invalid"
+        )
+    relocated = root / relocated_relative
+    if relocated.is_symlink() or not relocated.is_file():
+        raise PillarSInferenceError(
+            f"PR-272 frozen input {name!r} relocation is not a regular file"
+        )
+    try:
+        relocated.resolve(strict=True).relative_to(root)
+    except (OSError, ValueError) as exc:
+        raise PillarSInferenceError(
+            f"PR-272 frozen input {name!r} relocation escapes the repository"
+        ) from exc
+    if _sha256_bytes(relocated.read_bytes()) != expected:
+        raise PillarSInferenceError(
+            f"PR-272 frozen input {name!r} relocated bytes drifted"
+        )
+    return relocated
+
+
 def load_preregistered_design(repo_root: Path) -> Mapping[str, object]:
     """Load the byte-frozen PR-272 design and reject post-result drift."""
 
@@ -268,10 +424,12 @@ def load_preregistered_design(repo_root: Path) -> Mapping[str, object]:
             raise PillarSInferenceError(
                 f"PR-272 frozen input {name!r} is malformed"
             )
-        source_path = repo_root / relative
-        if not source_path.is_file() or _sha256_bytes(
-            source_path.read_bytes()
-        ) != expected:
+        source_path = resolve_preregistered_frozen_input(
+            repo_root,
+            name,
+            record,
+        )
+        if _sha256_bytes(source_path.read_bytes()) != expected:
             raise PillarSInferenceError(
                 f"PR-272 frozen input {name!r} drifted"
             )

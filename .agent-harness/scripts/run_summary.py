@@ -40,6 +40,7 @@ def summarize_run(repo: Path, run_dir: Path, disposition: str) -> dict:
                 "agent_type": payload.get("agent_type")
                 or assignment.get("agent_type"),
                 "status": payload.get("status"),
+                "gate_disposition": payload.get("gate_disposition"),
                 "path": path.relative_to(repo).as_posix(),
                 "sha256": hashlib.sha256(data).hexdigest(),
                 "bytes": len(data),
@@ -63,6 +64,10 @@ def summarize_run(repo: Path, run_dir: Path, disposition: str) -> dict:
         "created_at": plan.get("created_at"),
         "context_version": plan.get("context_version"),
         "candidate_binding": plan.get("candidate_binding"),
+        "execution_mode": plan.get("execution_mode"),
+        "lifecycle_state": plan.get("lifecycle_state"),
+        "evidence_key": plan.get("evidence_key"),
+        "assurance_budget": plan.get("assurance_budget"),
         "publication_mode": plan.get("publication_mode"),
         "github_pr_created_by_harness": plan.get(
             "github_pr_created_by_harness", False
