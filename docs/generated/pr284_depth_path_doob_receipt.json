@@ -1,0 +1,996 @@
+{
+  "allowed_uses": [
+    "Synthetic exact replay of one finite reverse-martingale depth path.",
+    "Conservative premise-bound path-maximum calibration diagnostics.",
+    "Fail-closed routing to a matched-mock plan when the premise is unproved."
+  ],
+  "assumptions": [
+    "The finite registered law and selected atom are synthetic and preregistered.",
+    "DepthPath nesting and filtration refinement are distinct checks.",
+    "The registered target is centered and square-integrable under one common law.",
+    "A matched-mock requirement is not itself evidence that matched mocks passed."
+  ],
+  "caveats": [
+    "The Doob bound may be conservative and is conditional on every registered premise.",
+    "The exact finite proof does not validate a data-derived conditional-expectation estimator.",
+    "Matched mocks must be separately executed and reviewed before any statistical use.",
+    "PR-151 partial/background data is forbidden input.",
+    "The known fast TF-11 simulation-oracle instability remains excluded from acceptance evidence and is not repaired or promoted here."
+  ],
+  "claim_level": {
+    "level": "C2",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "diagnostic_only",
+  "contributors": [
+    "OBSSTAT",
+    "MIO",
+    "COMMON"
+  ],
+  "covariance_status": "not_used_by_exact_finite_tower",
+  "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+  "forbidden_uses": [
+    "Free calibration from support nesting alone.",
+    "Optional-stopping, asymptotic, or general reverse-martingale theorem claims.",
+    "Observed-data significance, posterior, evidence, or source attribution.",
+    "Native solver validation, geometry detection, or Bianchi family identification."
+  ],
+  "future_consumer_contract": {
+    "consumer": "PR-287",
+    "required_input": "exact PR-284 receipt and per-report typed status",
+    "rules": [
+      "BOUND_AVAILABLE_CONDITIONAL_PROVED_PREMISE permits only the sealed synthetic conditional bound.",
+      "MATCHED_MOCKS_REQUIRED remains unresolved until a separate executed and independently reviewed matched-mock receipt passes.",
+      "PR-284 process success never implies that a bound is available or that mocks executed."
+    ]
+  },
+  "gate_id": "G6",
+  "generating_command": "python3 -B scripts/codex_harness/run_pr284_depth_path_doob.py build",
+  "generation_identity": {
+    "git_or_worktree_identity": "EXTERNAL_CANDIDATE_SEAL_REQUIRED",
+    "mode": "EXACT_BOUND_SOURCE_HASHES",
+    "reason": "Embedding the commit containing this receipt would be circular; the external candidate seal binds the final git identity."
+  },
+  "mathematical_boundary": {
+    "claim_ceiling": "diagnostic_only",
+    "counterexample_boundaries": [
+      "support nesting is substituted for partition refinement",
+      "different target variables are used at different rungs",
+      "a conditional cell has zero probability",
+      "finite tower identity is promoted to convergence or optional stopping",
+      "known fast-oracle instability is hidden or promoted"
+    ],
+    "obligation_id": "TF-11-MASK-PATH-MARTINGALE",
+    "pr284_effect": "runtime_execution_without_general_theorem_promotion",
+    "relation_to_source": "FINITE_REGISTERED_PATH_ONLY",
+    "source_proof_adjudication_status": "NOT_ADJUDICATED",
+    "source_registry_path": "docs/research_program/vector_tensor/proof_registry_two_pillars.yaml",
+    "source_registry_sha256": "01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201",
+    "source_registry_status": "ORACLE_VERIFIED",
+    "source_statement_identity_sha256": "592cf0bbf90f544f9c11e8e33335eaa2e8d49959145c7d295372c5ca3453f9dd",
+    "typed_proof_path": "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+    "typed_proof_sha256": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e",
+    "typed_proof_verdict": "PROVED_FINITE_REGISTERED_PATH"
+  },
+  "mutations": [
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-SUPPORT-NESTING-AS-PROOF",
+      "mutation_kind": "nested_support_substituted_for_partition_tower",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "FINITE_LAW_AND_PARTITION_EVIDENCE_REQUIRED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-NONNESTED-SUPPORT",
+      "mutation_kind": "one path support is not a subset of its predecessor",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "NONNESTED_SUPPORT_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-NONSTRICT-SUPPORT",
+      "mutation_kind": "one path support equals its predecessor",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "NONSTRICT_SUPPORT_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-TARGET-DRIFT",
+      "mutation_kind": "one common-target value changes after report sealing",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "FINITE_TARGET_IDENTITY_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-REPORT-BUILDER-BYPASS",
+      "mutation_kind": "caller_supplied_proved_report_bypasses_replay",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "CALLER_SUPPLIED_PROVED_REPORT_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-PREPROCESSING-DRIFT",
+      "mutation_kind": "preprocessing identity differs across rungs or calibration",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "PREPROCESSING_IDENTITY_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-FILTRATION-DIRECTION-DRIFT",
+      "mutation_kind": "non-coarsening partition is inserted",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "DECREASING_FILTRATION_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-THRESHOLD-DRIFT",
+      "mutation_kind": "threshold changes after report construction",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "THRESHOLD_CONTRACT_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-ATOM-SELECTION-DRIFT",
+      "mutation_kind": "selected atom or selection rule changes after registration",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "ATOM_SELECTION_IDENTITY_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-PATH-MAXIMUM-DRIFT",
+      "mutation_kind": "sealed path maximum is changed without expectation replay",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "PATH_MAXIMUM_IDENTITY_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-PROBABILITY-LAW-DRIFT",
+      "mutation_kind": "one exact weight changes under a stale finite-law identity",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "PROBABILITY_LAW_IDENTITY_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-ESTIMATOR-IDENTITY-DRIFT",
+      "mutation_kind": "estimator identity changes at calibration",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "ESTIMATOR_IDENTITY_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-FREE-BOUND-ON-UNPROVED",
+      "mutation_kind": "unproved report is relabelled bound_available",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "UNPROVED_PREMISE_FREE_BOUND_REJECTED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-MATCHED-MOCK-PLAN-OMITTED",
+      "mutation_kind": "unproved premise carries no resolvable fallback identity",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "MATCHED_MOCK_PLAN_REQUIRED"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU284-MATCHED-MOCK-PLAN-DRIFT",
+      "mutation_kind": "null law, generator, seed policy, or acceptance rule changes",
+      "observed_outcome": "BLOCKED_DEPTH_PATH_CALIBRATION_CONTRACT",
+      "observed_reason": "MATCHED_MOCK_PLAN_IDENTITY_REJECTED"
+    }
+  ],
+  "null_mock_status": {
+    "fallback_fixture": "required_not_executed",
+    "proved_fixture": "not_used_exact_finite_fixture"
+  },
+  "observed_data_executed": false,
+  "owner": "HTT",
+  "pr_id": "PR-284",
+  "proved_fixture": {
+    "calibration": {
+      "allowed_use": [
+        "synthetic exact replay of one finite registered depth path",
+        "conservative premise-bound path-maximum diagnostic",
+        "routing to a content-addressed matched-mock plan when the premise is unproved"
+      ],
+      "calibration_id": "PR284-DOOB-CALIBRATION-V1",
+      "claim_tier": "diagnostic_only",
+      "content_id": "sha256:663d72b1eb2c6e251eb73a5bea4c3d0a496e6de524238a12f2af1e09ef29ff21",
+      "event_comparison": "GREATER_THAN_OR_EQUAL_EXACT_SQUARES",
+      "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+      "forbidden_use": [
+        "free calibration from support nesting alone",
+        "observed-data significance, posterior, evidence, or source attribution",
+        "optional-stopping, convergence, or general reverse-martingale theorem claim",
+        "native validation, geometry detection, or Bianchi family identification"
+      ],
+      "matched_mock_plan_content_id": null,
+      "matched_mock_plan_id": null,
+      "observed_data_executed": false,
+      "owner": "HTT",
+      "path_exceeds_threshold": true,
+      "path_maximum_squared": "9/1",
+      "preprocessing_id": "sha256:common-preprocessing-v1",
+      "probability_upper_bound": "25/36",
+      "public_use": false,
+      "report_content_id": "sha256:0f2cec5597cbda2ab864b7ed5f1d5eb50f1831ccf5e0cc30aafdb2ec508c0584",
+      "schema": "HTT_DEPTH_PATH_DOOB_CALIBRATION_V1",
+      "status": "BOUND_AVAILABLE_CONDITIONAL_PROVED_PREMISE",
+      "target_second_moment": "5/1",
+      "threshold_contract_content_id": "sha256:06204eea7f11050abc2968e38822b5bb236a0dbac13304200c6707ef4e07e2ef",
+      "threshold_squared": "36/5",
+      "transfer_source": "none"
+    },
+    "doob_probability_upper_bound": "25/36",
+    "event_probability_within_bound": true,
+    "exact_event_probability": "1/2",
+    "finite_target_law": {
+      "atom_ids": [
+        "atom-a",
+        "atom-b",
+        "atom-c",
+        "atom-d"
+      ],
+      "common_target": [
+        "-3/1",
+        "-1/1",
+        "1/1",
+        "3/1"
+      ],
+      "common_target_id": "PR284-CENTERED-TARGET-V1",
+      "content_id": "sha256:f223fca72ef6aee3355948987c99d5f8212cec95c7176f565b60553423c4887d",
+      "law_id": "PR284-FINITE-LAW-V1",
+      "registration_id": "sha256:finite-law-preregistered-v1",
+      "schema": "HTT_DEPTH_PATH_FINITE_TARGET_LAW_V1",
+      "weights": [
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ]
+    },
+    "report": {
+      "allowed_use": [
+        "synthetic exact replay of one finite registered depth path",
+        "conservative premise-bound path-maximum diagnostic",
+        "routing to a content-addressed matched-mock plan when the premise is unproved"
+      ],
+      "claim_tier": "diagnostic_only",
+      "content_id": "sha256:0f2cec5597cbda2ab864b7ed5f1d5eb50f1831ccf5e0cc30aafdb2ec508c0584",
+      "exact_tower_equalities": [
+        true,
+        true
+      ],
+      "exact_tower_report_content_id": "sha256:ecaf7a8828828a08bfdc8d729e3da315adf195fbbef7750777035e59f15336e0",
+      "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+      "fast_oracle_caveat": "known fast TF-11 simulation-oracle instability is excluded from acceptance evidence",
+      "filtration_direction": "DECREASING",
+      "filtration_id": "sha256:decreasing-filtration-v1",
+      "finite_target_law": {
+        "atom_ids": [
+          "atom-a",
+          "atom-b",
+          "atom-c",
+          "atom-d"
+        ],
+        "common_target": [
+          "-3/1",
+          "-1/1",
+          "1/1",
+          "3/1"
+        ],
+        "common_target_id": "PR284-CENTERED-TARGET-V1",
+        "content_id": "sha256:f223fca72ef6aee3355948987c99d5f8212cec95c7176f565b60553423c4887d",
+        "law_id": "PR284-FINITE-LAW-V1",
+        "registration_id": "sha256:finite-law-preregistered-v1",
+        "schema": "HTT_DEPTH_PATH_FINITE_TARGET_LAW_V1",
+        "weights": [
+          "1/4",
+          "1/4",
+          "1/4",
+          "1/4"
+        ]
+      },
+      "forbidden_use": [
+        "free calibration from support nesting alone",
+        "observed-data significance, posterior, evidence, or source attribution",
+        "optional-stopping, convergence, or general reverse-martingale theorem claim",
+        "native validation, geometry detection, or Bianchi family identification"
+      ],
+      "matched_mock_plan": null,
+      "observed_data_executed": false,
+      "owner": "HTT",
+      "path": {
+        "allowed_use": [
+          "observer-side feature transport across explicitly nested sky supports",
+          "MIO depth-coherence diagnostic",
+          "HTT model-conditional likelihood input through its separate adapter",
+          "depth-scramble negative control"
+        ],
+        "claim_ceiling": "diagnostic_only",
+        "content_id": "sha256:c51d03d2f66e2d02b05aac74cd3ed0b73b65f0f2cc0760704f8cd59ffc02d95a",
+        "forbidden_use": [
+          "silent pooling of incompatible sky supports",
+          "global-tilt evidence from coherence alone",
+          "native solver or native morphology-atlas result",
+          "geometry detection or Bianchi family identification"
+        ],
+        "kernels": [
+          {
+            "assumptions": [
+              "synthetic scalar identity transport"
+            ],
+            "component_transport_ids": [],
+            "content_id": "sha256:73eb2b60987683e717daf66fd924cf1639716ab3f6a681d0af668de284463567",
+            "covariance_transport_id": "sha256:covariance-k12",
+            "mask_transport_id": "sha256:mask-k12",
+            "matrix_hex": [
+              [
+                "0x1.0000000000000p+0"
+              ]
+            ],
+            "method_id": "PR284-IDENTITY-TRANSPORT-V1",
+            "schema": "HTT_TRANSPORT_KERNEL_V1",
+            "selection_transport_id": "sha256:selection-k12",
+            "source_feature_names": [
+              "centered_scalar"
+            ],
+            "source_stratum_content_id": "sha256:bbe77645b9004ddccfc3f065d4f1635e89b539f26df12beed6ee409a30b04256",
+            "source_stratum_id": "PR284-D1",
+            "target_feature_names": [
+              "centered_scalar"
+            ],
+            "target_stratum_content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "target_stratum_id": "PR284-D2",
+            "transport_id": "PR284-K12"
+          },
+          {
+            "assumptions": [
+              "synthetic scalar identity transport"
+            ],
+            "component_transport_ids": [],
+            "content_id": "sha256:d95c0c7d7b8265e3761edb648c00fc58da845d84f9c4bb623ae1c2d988e5f204",
+            "covariance_transport_id": "sha256:covariance-k23",
+            "mask_transport_id": "sha256:mask-k23",
+            "matrix_hex": [
+              [
+                "0x1.0000000000000p+0"
+              ]
+            ],
+            "method_id": "PR284-IDENTITY-TRANSPORT-V1",
+            "schema": "HTT_TRANSPORT_KERNEL_V1",
+            "selection_transport_id": "sha256:selection-k23",
+            "source_feature_names": [
+              "centered_scalar"
+            ],
+            "source_stratum_content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "source_stratum_id": "PR284-D2",
+            "target_feature_names": [
+              "centered_scalar"
+            ],
+            "target_stratum_content_id": "sha256:60ad84eaa9c8adce48f7a30adadfe2731aad08e39970dd00f7f1f8f4bc059ba5",
+            "target_stratum_id": "PR284-D3",
+            "transport_id": "PR284-K23"
+          }
+        ],
+        "nesting_rule": "TARGET_SUPPORT_SUBSET_OF_SOURCE",
+        "path_id": "PR284-NESTED-PATH-V1",
+        "schema": "HTT_DEPTH_PATH_V1",
+        "strata": [
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:bbe77645b9004ddccfc3f065d4f1635e89b539f26df12beed6ee409a30b04256",
+            "covariance_id": "sha256:covariance-D1",
+            "depth_coordinate_hex": "0x1.999999999999ap-4",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D1",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:705b0075d908c6ea5b8bf82785272bf0b10398a5f9f12298c51c9c5845278c2d",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D1",
+              "sky_fraction": 1.0,
+              "sky_support_hash": "sha256:d18c48f3f8cc66387c7933e8dccfbb402d744fc41b5c155f422acebf9d802902"
+            },
+            "source_artifact_id": "sha256:source-D1",
+            "stratum_id": "PR284-D1",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1",
+              "pixel-2",
+              "pixel-3"
+            ],
+            "support_universe_size": 4
+          },
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "covariance_id": "sha256:covariance-D2",
+            "depth_coordinate_hex": "0x1.999999999999ap-3",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D2",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:5f646be0e0acec63605249a2e704f2447cc054909cfd9a3504f6a464d8b0067a",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D2",
+              "sky_fraction": 0.75,
+              "sky_support_hash": "sha256:32021fded3125d7401ea026bd0ca51080f8caa04b4c1472b8df3da0d333706c1"
+            },
+            "source_artifact_id": "sha256:source-D2",
+            "stratum_id": "PR284-D2",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1",
+              "pixel-2"
+            ],
+            "support_universe_size": 4
+          },
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:60ad84eaa9c8adce48f7a30adadfe2731aad08e39970dd00f7f1f8f4bc059ba5",
+            "covariance_id": "sha256:covariance-D3",
+            "depth_coordinate_hex": "0x1.3333333333333p-2",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D3",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:45fc5a122e570862112521f8dd251021ff7482ab5febd5529e6c5547ffba4884",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D3",
+              "sky_fraction": 0.5,
+              "sky_support_hash": "sha256:8f8b5d5fb3a3f03b81dd26d0c948a50260104705f7ef46afd5e76f131080e2ad"
+            },
+            "source_artifact_id": "sha256:source-D3",
+            "stratum_id": "PR284-D3",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1"
+            ],
+            "support_universe_size": 4
+          }
+        ]
+      },
+      "path_content_id": "sha256:c51d03d2f66e2d02b05aac74cd3ed0b73b65f0f2cc0760704f8cd59ffc02d95a",
+      "path_maximum_abs": "3/1",
+      "path_maximum_content_id": "sha256:bff9edddb9beeec6c3358f9a58a25a1e7e502dac131fbc9b94b550f987aef257",
+      "path_partitions": [
+        [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        [
+          "left",
+          "left",
+          "right",
+          "right"
+        ],
+        [
+          "all",
+          "all",
+          "all",
+          "all"
+        ]
+      ],
+      "path_values": [
+        "-3/1",
+        "-2/1",
+        "0/1"
+      ],
+      "premise_evidence_id": "sha256:pr271-finite-tower-v1",
+      "premise_status": "PROVED_FINITE_REGISTERED_PATH",
+      "preprocessing_id": "sha256:common-preprocessing-v1",
+      "public_use": false,
+      "relation_to_source": "FINITE_REGISTERED_PATH_ONLY",
+      "report_id": "PR284-PROVED-REPORT-V1",
+      "schema": "HTT_DEPTH_PATH_REVERSE_MARTINGALE_REPORT_V1",
+      "selection_contract": {
+        "content_id": "sha256:e45964c81c787a7ad2af1c9663b83b4ac7a7e705717d4a9ece57b656694b571f",
+        "finite_target_law_content_id": "sha256:f223fca72ef6aee3355948987c99d5f8212cec95c7176f565b60553423c4887d",
+        "registration_id": "sha256:selection-preregistered-v1",
+        "schema": "HTT_DEPTH_PATH_SELECTION_CONTRACT_V1",
+        "selected_atom_id": "atom-a",
+        "selected_atom_index": 0,
+        "selection_id": "PR284-SELECTED-ATOM-V1",
+        "selection_rule_id": "sha256:fixed-first-atom-rule-v1"
+      },
+      "sigma_field_ids": [
+        "sha256:F1",
+        "sha256:F2",
+        "sha256:F3"
+      ],
+      "source_oracle_id": "TF-11-MASK-PATH-MARTINGALE",
+      "source_proof_adjudication_status": "NOT_ADJUDICATED",
+      "source_registry_status": "ORACLE_VERIFIED",
+      "stratum_content_ids": [
+        "sha256:bbe77645b9004ddccfc3f065d4f1635e89b539f26df12beed6ee409a30b04256",
+        "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+        "sha256:60ad84eaa9c8adce48f7a30adadfe2731aad08e39970dd00f7f1f8f4bc059ba5"
+      ],
+      "target_second_moment": "5/1",
+      "threshold_contract": {
+        "content_id": "sha256:06204eea7f11050abc2968e38822b5bb236a0dbac13304200c6707ef4e07e2ef",
+        "contract_id": "PR284-DOOB-THRESHOLD-V1",
+        "event_comparison": "GREATER_THAN_OR_EQUAL_EXACT_SQUARES",
+        "multiplier": "6/5",
+        "registration_id": "sha256:preregistered-before-path-inspection",
+        "schema": "HTT_DEPTH_PATH_THRESHOLD_CONTRACT_V1",
+        "threshold_representation": "EXACT_LAMBDA_SQUARED_TIMES_SECOND_MOMENT"
+      },
+      "transfer_source": "none",
+      "typed_proof_verdict": "PROVED_FINITE_REGISTERED_PATH",
+      "unresolved_reasons": []
+    },
+    "selection_contract": {
+      "content_id": "sha256:e45964c81c787a7ad2af1c9663b83b4ac7a7e705717d4a9ece57b656694b571f",
+      "finite_target_law_content_id": "sha256:f223fca72ef6aee3355948987c99d5f8212cec95c7176f565b60553423c4887d",
+      "registration_id": "sha256:selection-preregistered-v1",
+      "schema": "HTT_DEPTH_PATH_SELECTION_CONTRACT_V1",
+      "selected_atom_id": "atom-a",
+      "selected_atom_index": 0,
+      "selection_id": "PR284-SELECTED-ATOM-V1",
+      "selection_rule_id": "sha256:fixed-first-atom-rule-v1"
+    },
+    "threshold_contract": {
+      "content_id": "sha256:06204eea7f11050abc2968e38822b5bb236a0dbac13304200c6707ef4e07e2ef",
+      "contract_id": "PR284-DOOB-THRESHOLD-V1",
+      "event_comparison": "GREATER_THAN_OR_EQUAL_EXACT_SQUARES",
+      "multiplier": "6/5",
+      "registration_id": "sha256:preregistered-before-path-inspection",
+      "schema": "HTT_DEPTH_PATH_THRESHOLD_CONTRACT_V1",
+      "threshold_representation": "EXACT_LAMBDA_SQUARED_TIMES_SECOND_MOMENT"
+    }
+  },
+  "public_use": false,
+  "receipt_content_sha256": "de87bc2f96d6133fb45149784f4d081f24525d61a8c2dcc46f9e018fbdee6b5e",
+  "schema": "htt.pr284.depth_path_doob_artifact.v1",
+  "scientific_artifact_mode": "synthetic_diagnostic",
+  "scope": "synthetic premise-bound finite depth-path calibration",
+  "sky_support_status": "synthetic_nested_masks_bound_by_DepthPath",
+  "source_bindings": [
+    {
+      "path": "docs/research_program/post_pr275/pr284_spec.yaml",
+      "sha256": "01db7946146246961c14fdaef2cc30ddde03a06944c40257d6c7b5cd92572da6"
+    },
+    {
+      "path": "htt/src/common/depth_path.py",
+      "sha256": "41ffe054645c00a36158688b55a0aab390919d3759283b9d5e2f33d69ec8f247"
+    },
+    {
+      "path": "htt/src/common/depth_path_calibration.py",
+      "sha256": "c8ff7f37844f769797ba6c5740750651f540d7c9f122f8f8d9e2ac37bfd9e70a"
+    },
+    {
+      "path": "htt/src/common/vector_tensor_statistical_foundations.py",
+      "sha256": "1a69c6b2bdd65b49b49c9383086b5f303c651b0aaf95bed41fdde53a97d2d215"
+    },
+    {
+      "path": "htt/htt/htt/infer/depth_path.py",
+      "sha256": "fb8b9043f3d01c608c1aea4283ba23f533ccf050918cabbb1e5cf6003033bf74"
+    },
+    {
+      "path": "htt/htt/htt/infer/depth_path_calibration.py",
+      "sha256": "7bc2c3ac0550f71242fbea30f9a90a5daeb30915c6b9aa80935e229479ef4bf1"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/proof_registry_two_pillars.yaml",
+      "sha256": "01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+      "sha256": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr284_depth_path_doob.py",
+      "sha256": "71da0de333c96b634ca67c642ce91b53f09cbf25510f165bab7f718060e616d1"
+    },
+    {
+      "path": "tests/contracts/test_depth_path.py",
+      "sha256": "7d67a7124c941738810f1a37b1e02d7f43ed7363ba3d6d24b541a0ccfe7da5c2"
+    },
+    {
+      "path": "tests/contracts/test_depth_path_doob_calibration.py",
+      "sha256": "0055dfdf9e8df253d81e5876b4516bbea24649c9d5e20ddbd069308769dd0164"
+    },
+    {
+      "path": "tests/contracts/test_pillar_s_core.py",
+      "sha256": "f110c7b89b52a292c333b6babe02f361e565144f26943af074121dc03f07ecda"
+    }
+  ],
+  "terminal_status": "PASS_PREMISE_BOUND_DEPTH_PATH_CALIBRATION",
+  "transfer_source": "none",
+  "unproved_fixture": {
+    "calibration": {
+      "allowed_use": [
+        "synthetic exact replay of one finite registered depth path",
+        "conservative premise-bound path-maximum diagnostic",
+        "routing to a content-addressed matched-mock plan when the premise is unproved"
+      ],
+      "calibration_id": "PR284-MOCK-FALLBACK-V1",
+      "claim_tier": "diagnostic_only",
+      "content_id": "sha256:dcbd08987cd4e5db0ae38d944f96185bd7fccda1523df9f46683765203c12bfd",
+      "event_comparison": "GREATER_THAN_OR_EQUAL_EXACT_SQUARES",
+      "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+      "forbidden_use": [
+        "free calibration from support nesting alone",
+        "observed-data significance, posterior, evidence, or source attribution",
+        "optional-stopping, convergence, or general reverse-martingale theorem claim",
+        "native validation, geometry detection, or Bianchi family identification"
+      ],
+      "matched_mock_plan_content_id": "sha256:71b82ff28e61528c8c8408b5394a0441a7fac7b3ba6cf3e13bca3fa8e4dfd3e3",
+      "matched_mock_plan_id": "PR284-MATCHED-MOCK-PLAN-V1",
+      "observed_data_executed": false,
+      "owner": "HTT",
+      "path_exceeds_threshold": null,
+      "path_maximum_squared": null,
+      "preprocessing_id": "sha256:common-preprocessing-v1",
+      "probability_upper_bound": null,
+      "public_use": false,
+      "report_content_id": "sha256:cab8fe5e7c705f75af53c14ea0ee26cdd61f796040e781484dee7e3049400587",
+      "schema": "HTT_DEPTH_PATH_DOOB_CALIBRATION_V1",
+      "status": "MATCHED_MOCKS_REQUIRED",
+      "target_second_moment": null,
+      "threshold_contract_content_id": "sha256:06204eea7f11050abc2968e38822b5bb236a0dbac13304200c6707ef4e07e2ef",
+      "threshold_squared": null,
+      "transfer_source": "none"
+    },
+    "matched_mock_plan": {
+      "acceptance_rule_id": "sha256:mock-acceptance-rule-v1",
+      "content_id": "sha256:71b82ff28e61528c8c8408b5394a0441a7fac7b3ba6cf3e13bca3fa8e4dfd3e3",
+      "ensemble_policy_id": "sha256:ensemble-policy-v1",
+      "estimator_id": "sha256:conditional-estimator-v1",
+      "matching_variable_ids": [
+        "mask",
+        "selection",
+        "noise",
+        "depth"
+      ],
+      "mock_generator_id": "sha256:matched-mock-generator-v1",
+      "multiplicity_rule_id": "sha256:path-maximum-multiplicity-v1",
+      "null_law_id": "sha256:matched-null-law-v1",
+      "null_mock_status": "required_not_executed",
+      "path_content_id": "sha256:c51d03d2f66e2d02b05aac74cd3ed0b73b65f0f2cc0760704f8cd59ffc02d95a",
+      "plan_id": "PR284-MATCHED-MOCK-PLAN-V1",
+      "preprocessing_id": "sha256:common-preprocessing-v1",
+      "registration_id": "sha256:mock-plan-preregistered-v1",
+      "schema": "HTT_DEPTH_PATH_MATCHED_MOCK_PLAN_V1",
+      "seed_policy_id": "sha256:seed-policy-v1",
+      "threshold_contract_content_id": "sha256:06204eea7f11050abc2968e38822b5bb236a0dbac13304200c6707ef4e07e2ef"
+    },
+    "matched_mocks_executed": false,
+    "probability_bound": null,
+    "report": {
+      "allowed_use": [
+        "synthetic exact replay of one finite registered depth path",
+        "conservative premise-bound path-maximum diagnostic",
+        "routing to a content-addressed matched-mock plan when the premise is unproved"
+      ],
+      "claim_tier": "diagnostic_only",
+      "content_id": "sha256:cab8fe5e7c705f75af53c14ea0ee26cdd61f796040e781484dee7e3049400587",
+      "exact_tower_equalities": [],
+      "exact_tower_report_content_id": null,
+      "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+      "fast_oracle_caveat": "known fast TF-11 simulation-oracle instability is excluded from acceptance evidence",
+      "filtration_direction": "DECREASING",
+      "filtration_id": "sha256:unproved-filtration-v1",
+      "finite_target_law": null,
+      "forbidden_use": [
+        "free calibration from support nesting alone",
+        "observed-data significance, posterior, evidence, or source attribution",
+        "optional-stopping, convergence, or general reverse-martingale theorem claim",
+        "native validation, geometry detection, or Bianchi family identification"
+      ],
+      "matched_mock_plan": {
+        "acceptance_rule_id": "sha256:mock-acceptance-rule-v1",
+        "content_id": "sha256:71b82ff28e61528c8c8408b5394a0441a7fac7b3ba6cf3e13bca3fa8e4dfd3e3",
+        "ensemble_policy_id": "sha256:ensemble-policy-v1",
+        "estimator_id": "sha256:conditional-estimator-v1",
+        "matching_variable_ids": [
+          "mask",
+          "selection",
+          "noise",
+          "depth"
+        ],
+        "mock_generator_id": "sha256:matched-mock-generator-v1",
+        "multiplicity_rule_id": "sha256:path-maximum-multiplicity-v1",
+        "null_law_id": "sha256:matched-null-law-v1",
+        "null_mock_status": "required_not_executed",
+        "path_content_id": "sha256:c51d03d2f66e2d02b05aac74cd3ed0b73b65f0f2cc0760704f8cd59ffc02d95a",
+        "plan_id": "PR284-MATCHED-MOCK-PLAN-V1",
+        "preprocessing_id": "sha256:common-preprocessing-v1",
+        "registration_id": "sha256:mock-plan-preregistered-v1",
+        "schema": "HTT_DEPTH_PATH_MATCHED_MOCK_PLAN_V1",
+        "seed_policy_id": "sha256:seed-policy-v1",
+        "threshold_contract_content_id": "sha256:06204eea7f11050abc2968e38822b5bb236a0dbac13304200c6707ef4e07e2ef"
+      },
+      "observed_data_executed": false,
+      "owner": "HTT",
+      "path": {
+        "allowed_use": [
+          "observer-side feature transport across explicitly nested sky supports",
+          "MIO depth-coherence diagnostic",
+          "HTT model-conditional likelihood input through its separate adapter",
+          "depth-scramble negative control"
+        ],
+        "claim_ceiling": "diagnostic_only",
+        "content_id": "sha256:c51d03d2f66e2d02b05aac74cd3ed0b73b65f0f2cc0760704f8cd59ffc02d95a",
+        "forbidden_use": [
+          "silent pooling of incompatible sky supports",
+          "global-tilt evidence from coherence alone",
+          "native solver or native morphology-atlas result",
+          "geometry detection or Bianchi family identification"
+        ],
+        "kernels": [
+          {
+            "assumptions": [
+              "synthetic scalar identity transport"
+            ],
+            "component_transport_ids": [],
+            "content_id": "sha256:73eb2b60987683e717daf66fd924cf1639716ab3f6a681d0af668de284463567",
+            "covariance_transport_id": "sha256:covariance-k12",
+            "mask_transport_id": "sha256:mask-k12",
+            "matrix_hex": [
+              [
+                "0x1.0000000000000p+0"
+              ]
+            ],
+            "method_id": "PR284-IDENTITY-TRANSPORT-V1",
+            "schema": "HTT_TRANSPORT_KERNEL_V1",
+            "selection_transport_id": "sha256:selection-k12",
+            "source_feature_names": [
+              "centered_scalar"
+            ],
+            "source_stratum_content_id": "sha256:bbe77645b9004ddccfc3f065d4f1635e89b539f26df12beed6ee409a30b04256",
+            "source_stratum_id": "PR284-D1",
+            "target_feature_names": [
+              "centered_scalar"
+            ],
+            "target_stratum_content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "target_stratum_id": "PR284-D2",
+            "transport_id": "PR284-K12"
+          },
+          {
+            "assumptions": [
+              "synthetic scalar identity transport"
+            ],
+            "component_transport_ids": [],
+            "content_id": "sha256:d95c0c7d7b8265e3761edb648c00fc58da845d84f9c4bb623ae1c2d988e5f204",
+            "covariance_transport_id": "sha256:covariance-k23",
+            "mask_transport_id": "sha256:mask-k23",
+            "matrix_hex": [
+              [
+                "0x1.0000000000000p+0"
+              ]
+            ],
+            "method_id": "PR284-IDENTITY-TRANSPORT-V1",
+            "schema": "HTT_TRANSPORT_KERNEL_V1",
+            "selection_transport_id": "sha256:selection-k23",
+            "source_feature_names": [
+              "centered_scalar"
+            ],
+            "source_stratum_content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "source_stratum_id": "PR284-D2",
+            "target_feature_names": [
+              "centered_scalar"
+            ],
+            "target_stratum_content_id": "sha256:60ad84eaa9c8adce48f7a30adadfe2731aad08e39970dd00f7f1f8f4bc059ba5",
+            "target_stratum_id": "PR284-D3",
+            "transport_id": "PR284-K23"
+          }
+        ],
+        "nesting_rule": "TARGET_SUPPORT_SUBSET_OF_SOURCE",
+        "path_id": "PR284-NESTED-PATH-V1",
+        "schema": "HTT_DEPTH_PATH_V1",
+        "strata": [
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:bbe77645b9004ddccfc3f065d4f1635e89b539f26df12beed6ee409a30b04256",
+            "covariance_id": "sha256:covariance-D1",
+            "depth_coordinate_hex": "0x1.999999999999ap-4",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D1",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:705b0075d908c6ea5b8bf82785272bf0b10398a5f9f12298c51c9c5845278c2d",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D1",
+              "sky_fraction": 1.0,
+              "sky_support_hash": "sha256:d18c48f3f8cc66387c7933e8dccfbb402d744fc41b5c155f422acebf9d802902"
+            },
+            "source_artifact_id": "sha256:source-D1",
+            "stratum_id": "PR284-D1",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1",
+              "pixel-2",
+              "pixel-3"
+            ],
+            "support_universe_size": 4
+          },
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+            "covariance_id": "sha256:covariance-D2",
+            "depth_coordinate_hex": "0x1.999999999999ap-3",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D2",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:5f646be0e0acec63605249a2e704f2447cc054909cfd9a3504f6a464d8b0067a",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D2",
+              "sky_fraction": 0.75,
+              "sky_support_hash": "sha256:32021fded3125d7401ea026bd0ca51080f8caa04b4c1472b8df3da0d333706c1"
+            },
+            "source_artifact_id": "sha256:source-D2",
+            "stratum_id": "PR284-D2",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1",
+              "pixel-2"
+            ],
+            "support_universe_size": 4
+          },
+          {
+            "assumptions": [
+              "synthetic nested-mask fixture"
+            ],
+            "content_id": "sha256:60ad84eaa9c8adce48f7a30adadfe2731aad08e39970dd00f7f1f8f4bc059ba5",
+            "covariance_id": "sha256:covariance-D3",
+            "depth_coordinate_hex": "0x1.3333333333333p-2",
+            "depth_unit": "synthetic_depth",
+            "feature_names": [
+              "centered_scalar"
+            ],
+            "feature_unit": "dimensionless_diagnostic",
+            "schema": "HTT_MASK_STRATUM_V1",
+            "selection_id": "sha256:selection-D3",
+            "sky_support": {
+              "completeness_status": "synthetic_fixture_complete",
+              "coordinate_frame": "GALACTIC",
+              "mask_hash": "sha256:45fc5a122e570862112521f8dd251021ff7482ab5febd5529e6c5547ffba4884",
+              "mock_coverage_status": "synthetic_fixture_only",
+              "nside": null,
+              "pixelization": "PR284_UNIT_PIXELS",
+              "scan_volume_hash": "",
+              "selection_mode": "pr284-selection-D3",
+              "sky_fraction": 0.5,
+              "sky_support_hash": "sha256:8f8b5d5fb3a3f03b81dd26d0c948a50260104705f7ef46afd5e76f131080e2ad"
+            },
+            "source_artifact_id": "sha256:source-D3",
+            "stratum_id": "PR284-D3",
+            "support_unit_ids": [
+              "pixel-0",
+              "pixel-1"
+            ],
+            "support_universe_size": 4
+          }
+        ]
+      },
+      "path_content_id": "sha256:c51d03d2f66e2d02b05aac74cd3ed0b73b65f0f2cc0760704f8cd59ffc02d95a",
+      "path_maximum_abs": null,
+      "path_maximum_content_id": null,
+      "path_partitions": [],
+      "path_values": [],
+      "premise_evidence_id": "sha256:support-nesting-only-v1",
+      "premise_status": "UNPROVED_REQUIRES_MATCHED_MOCKS",
+      "preprocessing_id": "sha256:common-preprocessing-v1",
+      "public_use": false,
+      "relation_to_source": "FINITE_REGISTERED_PATH_ONLY",
+      "report_id": "PR284-UNPROVED-REPORT-V1",
+      "schema": "HTT_DEPTH_PATH_REVERSE_MARTINGALE_REPORT_V1",
+      "selection_contract": null,
+      "sigma_field_ids": [],
+      "source_oracle_id": "TF-11-MASK-PATH-MARTINGALE",
+      "source_proof_adjudication_status": "NOT_ADJUDICATED",
+      "source_registry_status": "ORACLE_VERIFIED",
+      "stratum_content_ids": [
+        "sha256:bbe77645b9004ddccfc3f065d4f1635e89b539f26df12beed6ee409a30b04256",
+        "sha256:a64272772ddc10980dbee93d10a7b38e379616384240f313f3265879bd875e2c",
+        "sha256:60ad84eaa9c8adce48f7a30adadfe2731aad08e39970dd00f7f1f8f4bc059ba5"
+      ],
+      "target_second_moment": null,
+      "threshold_contract": {
+        "content_id": "sha256:06204eea7f11050abc2968e38822b5bb236a0dbac13304200c6707ef4e07e2ef",
+        "contract_id": "PR284-DOOB-THRESHOLD-V1",
+        "event_comparison": "GREATER_THAN_OR_EQUAL_EXACT_SQUARES",
+        "multiplier": "6/5",
+        "registration_id": "sha256:preregistered-before-path-inspection",
+        "schema": "HTT_DEPTH_PATH_THRESHOLD_CONTRACT_V1",
+        "threshold_representation": "EXACT_LAMBDA_SQUARED_TIMES_SECOND_MOMENT"
+      },
+      "transfer_source": "none",
+      "typed_proof_verdict": "PROVED_FINITE_REGISTERED_PATH",
+      "unresolved_reasons": [
+        "explicit conditional-expectation partitions are not proved"
+      ]
+    }
+  }
+}
