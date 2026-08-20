@@ -1989,10 +1989,26 @@ def _validate_post275_slice(cards: dict[str, Any]) -> None:
             raise ValueError(
                 f"{pr_id} missing post-275 programme fields: {missing_fields}"
             )
-        expected_contracts = [
-            {"upstream_id": upstream_id, "mode": mode}
-            for upstream_id, mode in expected["dependencies"]
-        ]
+        expected_contracts = []
+        for upstream_id, mode in expected["dependencies"]:
+            contract = {"upstream_id": upstream_id, "mode": mode}
+            if pr_id == "PR-287" and upstream_id == "PR-286":
+                contract.update(
+                    {
+                        "required_terminal": (
+                            "PASS_COMPLETE_PILLAR_S_ADJUDICATION"
+                        ),
+                        "success_semantics": "PROCESS_COMPLETION_ONLY",
+                        "downstream_row_contract": {
+                            "preserve_row_verdicts": True,
+                            "preserve_inconclusive_and_blocked": True,
+                            "synthetic_validation_effect": (
+                                "NO_OBSERVED_OR_SOURCE_PROOF_PROMOTION"
+                            ),
+                        },
+                    }
+                )
+            expected_contracts.append(contract)
         if card.get("depends") != [row["upstream_id"] for row in expected_contracts]:
             raise ValueError(f"{pr_id} post-275 dependencies drifted")
         if card.get("dependency_contracts") != expected_contracts:

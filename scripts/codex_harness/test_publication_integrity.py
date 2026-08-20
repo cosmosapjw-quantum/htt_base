@@ -1295,6 +1295,108 @@ def test_pr285_policy_allows_two_open_predecessors_and_bounds_next_slots(
     )
 
 
+def test_pr286_policy_allows_three_open_predecessors_and_bounds_next_slots(
+    tmp_path: Path,
+) -> None:
+    repo, _ = _make_candidate_repo(tmp_path)
+    seal = _seal(repo)
+    _, policy = load_publication_policy(
+        REPO_ROOT,
+        "docs/research_program/post_pr275/pr286_publication_policy.json",
+    )
+    assert {
+        "max_open_prs": policy["max_open_prs"],
+        "max_stack_depth": policy["max_stack_depth"],
+        "max_file_overlap_prs": policy["max_file_overlap_prs"],
+    } == {
+        "max_open_prs": 4,
+        "max_stack_depth": 4,
+        "max_file_overlap_prs": 3,
+    }
+
+    first = _open_pr(seal)
+    first.update(
+        {
+            "number": 380,
+            "head_branch": "changeset/pr283-weak-identification-recovery-20260810",
+            "head_sha": "1" * 40,
+            "base_branch": "canonical/base",
+            "changed_files": ["feature.txt"],
+            "stack_depth": 1,
+        }
+    )
+    second = _open_pr(seal)
+    second.update(
+        {
+            "number": 381,
+            "head_branch": "changeset/pr284-finite-depth-law-recovery-20260810",
+            "head_sha": "2" * 40,
+            "base_branch": first["head_branch"],
+            "changed_files": ["feature.txt"],
+            "stack_depth": 2,
+        }
+    )
+    third = _open_pr(seal)
+    third.update(
+        {
+            "number": 382,
+            "head_branch": seal["target_branch"],
+            "head_sha": seal["base_sha"],
+            "base_branch": second["head_branch"],
+            "changed_files": ["feature.txt"],
+            "stack_depth": 3,
+        }
+    )
+    assert validate_pr_inventory_payload(
+        _inventory(seal, rows=[first, second, third]),
+        seal=seal,
+        policy=policy,
+    ) == []
+
+    fourth_open = _open_pr(seal)
+    fourth_open.update(
+        {
+            "number": 383,
+            "head_branch": "changeset/unrelated-open-pr",
+            "head_sha": "3" * 40,
+            "changed_files": ["unrelated.txt"],
+        }
+    )
+    assert any(
+        "open-PR budget" in error
+        for error in validate_pr_inventory_payload(
+            _inventory(seal, rows=[first, second, third, fourth_open]),
+            seal=seal,
+            policy=policy,
+        )
+    )
+
+    too_deep = copy.deepcopy(third)
+    too_deep["stack_depth"] = 4
+    assert any(
+        "stack-depth budget" in error
+        for error in validate_pr_inventory_payload(
+            _inventory(seal, rows=[first, second, too_deep]),
+            seal=seal,
+            policy=policy,
+        )
+    )
+
+    fourth_overlap = copy.deepcopy(fourth_open)
+    fourth_overlap["changed_files"] = ["feature.txt"]
+    overlap_probe_policy = copy.deepcopy(policy)
+    overlap_probe_policy["max_open_prs"] = 5
+    overlap_probe_policy["max_stack_depth"] = 5
+    assert any(
+        "overlaps open PR" in error
+        for error in validate_pr_inventory_payload(
+            _inventory(seal, rows=[first, second, third, fourth_overlap]),
+            seal=seal,
+            policy=overlap_probe_policy,
+        )
+    )
+
+
 def test_pr285_policy_binds_exact_g20_g21_include_and_g22_exclude_lineage() -> None:
     _, policy = load_publication_policy(
         REPO_ROOT,

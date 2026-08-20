@@ -1382,15 +1382,69 @@ class MioDepthDiagnosticCrossCheck:
 def _gls_fit(
     data: np.ndarray, design: np.ndarray, covariance: np.ndarray
 ) -> tuple[float, float, np.ndarray]:
-    inverse_data = np.linalg.solve(covariance, data)
-    inverse_design = np.linalg.solve(covariance, design)
-    information = float(design @ inverse_design)
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        inverse_data = np.linalg.solve(covariance, data)
+        inverse_design = np.linalg.solve(covariance, design)
+        information = float(design @ inverse_design)
+    if not math.isfinite(information):
+        raise PillarSInferenceError("finite GLS outputs are required")
     if information <= 0.0:
         raise PillarSInferenceError("GLS design information must be positive")
-    amplitude = float(design @ inverse_data) / information
-    residual = data - amplitude * design
-    chi_square = float(residual @ np.linalg.solve(covariance, residual))
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        amplitude = float(design @ inverse_data) / information
+        residual = data - amplitude * design
+        chi_square = float(residual @ np.linalg.solve(covariance, residual))
+    if not (
+        math.isfinite(amplitude)
+        and math.isfinite(chi_square)
+        and np.all(np.isfinite(residual))
+    ):
+        raise PillarSInferenceError("finite GLS outputs are required")
     return amplitude, chi_square, residual
+
+
+def _unit_direction(values: np.ndarray, name: str) -> np.ndarray:
+    scale = float(np.max(np.abs(values)))
+    if scale == 0.0:
+        raise PillarSInferenceError(f"{name} design must be nonzero")
+    if not math.isfinite(scale):
+        raise PillarSInferenceError(f"{name} whitened design must be finite")
+    scaled = values / scale
+    norm = float(np.linalg.norm(scaled))
+    if not math.isfinite(norm) or norm == 0.0:
+        raise PillarSInferenceError(f"{name} whitened design must be finite")
+    return scaled / norm
+
+
+def _whitened_design_geometry(
+    covariance: np.ndarray,
+    local: np.ndarray,
+    global_: np.ndarray,
+) -> tuple[int, float]:
+    cholesky = np.linalg.cholesky(covariance)
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        whitened_local = np.linalg.solve(cholesky, local)
+        whitened_global = np.linalg.solve(cholesky, global_)
+    local_direction = _unit_direction(whitened_local, "local")
+    global_direction = _unit_direction(whitened_global, "global")
+    alignment = (
+        1.0
+        if float(local_direction @ global_direction) >= 0.0
+        else -1.0
+    )
+    difference_norm = float(
+        np.linalg.norm(local_direction - alignment * global_direction)
+    )
+    sum_norm = float(
+        np.linalg.norm(local_direction + alignment * global_direction)
+    )
+    principal_angle = 2.0 * math.atan2(difference_norm, sum_norm)
+    design_rank = int(
+        np.linalg.matrix_rank(
+            np.column_stack((local_direction, global_direction))
+        )
+    )
+    return design_rank, principal_angle
 
 
 def evaluate_depth_local_global(
@@ -1403,6 +1457,7 @@ def evaluate_depth_local_global(
     mask_path_id: str,
     transfer_source: str,
     indifference_tolerance: float = 1.0e-12,
+    principal_angle_floor_radians: float = 1.0e-12,
 ) -> HttDepthDiscriminationReport:
     values = _vector(data, "data")
     covariance_matrix = _positive_definite(
@@ -1414,6 +1469,18 @@ def evaluate_depth_local_global(
         raise PillarSInferenceError(
             "local/global designs must match the depth path"
         )
+    angle_floor = _real(
+        principal_angle_floor_radians, "principal_angle_floor_radians"
+    )
+    if angle_floor < 0.0 or angle_floor >= math.pi / 2.0:
+        raise PillarSInferenceError(
+            "principal_angle_floor_radians must lie in [0, pi/2)"
+        )
+    design_rank, principal_angle = _whitened_design_geometry(
+        covariance_matrix,
+        local,
+        global_,
+    )
     local_amplitude, local_chi2, _ = _gls_fit(
         values, local, covariance_matrix
     )
@@ -1426,14 +1493,20 @@ def evaluate_depth_local_global(
         raise PillarSInferenceError(
             "indifference_tolerance must be nonnegative"
         )
-    if difference > tolerance:
+    if design_rank < 2 or principal_angle <= angle_floor:
+        selected = ModelCandidate.INDETERMINATE
+        status = ValidationStatus.ABSTAIN_NON_IDENTIFIED
+    elif difference > tolerance:
         selected = ModelCandidate.LOCAL
+        status = ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC
     elif difference < -tolerance:
         selected = ModelCandidate.GLOBAL
+        status = ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC
     else:
         selected = ModelCandidate.INDETERMINATE
+        status = ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC
     return HttDepthDiscriminationReport(
-        status=ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC,
+        status=status,
         selected_candidate=selected,
         local_chi_square=local_chi2,
         global_chi_square=global_chi2,
@@ -1463,23 +1536,38 @@ def build_mio_depth_cross_check(
         raise PillarSInferenceError(
             "MIO diagnostic designs must match the depth path"
         )
-    local_scale = float(local @ local)
-    global_scale = float(global_ @ global_)
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        local_scale = float(local @ local)
+        global_scale = float(global_ @ global_)
+    if not (math.isfinite(local_scale) and math.isfinite(global_scale)):
+        raise PillarSInferenceError(
+            "finite MIO diagnostic outputs are required"
+        )
     if min(local_scale, global_scale) <= 0.0:
         raise PillarSInferenceError("MIO diagnostic design must be nonzero")
-    local_residual = values - (float(local @ values) / local_scale) * local
-    global_residual = (
-        values - (float(global_ @ values) / global_scale) * global_
-    )
-    local_norm = float(np.linalg.norm(local_residual))
-    global_norm = float(np.linalg.norm(global_residual))
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        local_residual = values - (float(local @ values) / local_scale) * local
+        global_residual = (
+            values - (float(global_ @ values) / global_scale) * global_
+        )
+        local_norm = float(np.linalg.norm(local_residual))
+        global_norm = float(np.linalg.norm(global_residual))
+        norm_difference = global_norm - local_norm
+    if not (
+        np.all(np.isfinite(local_residual))
+        and np.all(np.isfinite(global_residual))
+        and math.isfinite(local_norm)
+        and math.isfinite(global_norm)
+        and math.isfinite(norm_difference)
+    ):
+        raise PillarSInferenceError(
+            "finite MIO diagnostic outputs are required"
+        )
     return MioDepthDiagnosticCrossCheck(
         status=ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC,
         local_residual_norm=local_norm,
         global_residual_norm=global_norm,
-        residual_norm_difference_global_minus_local=(
-            global_norm - local_norm
-        ),
+        residual_norm_difference_global_minus_local=norm_difference,
         mask_path_id=_text(mask_path_id, "mask_path_id"),
     )
 

@@ -1,0 +1,239 @@
+schema: htt.pr286.pillar_s_complete_adjudication.v1
+pr_id: PR-286
+title: Pillar S source and vector/tensor statistical adjudication
+owner: HTT
+contributors: [COMMON, OBSSTAT]
+change_set_id: CS-PR286-PILLAR-S-ADJUDICATION
+publication_group_id: PG-PR286-PILLAR-S-ADJUDICATION
+dependencies: [PR-280]
+dependency_contract:
+  upstream_id: PR-280
+  mode: requires_terminal_receipt
+claim_tier: diagnostic_only
+claim_level: {scheme: roadmap_rescue_v1, level: C2}
+scientific_artifact_mode: proof_adjudication_diagnostic
+transfer_source: none
+observed_data_executed: false
+public_use: false
+family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
+
+gate:
+  gate_id: G8
+  statement: Every registered source and VT-S row has an evidence-class-specific terminal receipt.
+  pass_token: PASS_COMPLETE_PILLAR_S_ADJUDICATION
+  block_token: BLOCKED_PILLAR_S_ADJUDICATION_CONTRACT
+  terminal_verdicts: [PASS, FAIL, INCONCLUSIVE_WITH_RECEIPT, BLOCKED_WITH_RECEIPT]
+  rule: >-
+    Exact propositions require proof evidence. Statistical propositions require
+    a frozen estimand, law, covariance, exact/asymptotic status,
+    implementation identity, preregistered coverage rule, and visible negative
+    controls. Simulation alone cannot prove an exact proposition.
+
+inventory_contract:
+  registry: docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml
+  requested_pillar_s_58_semantics: >-
+    The canonical requested count is proposal_registry_rows: 30 partition-I
+    theoretical rows, 24 partition-II statistical rows, and four bridge rows.
+    Partition labels are preserved and are not inferred from the card title.
+  source_group: proposal_registry_rows
+  expected_source_rows: 58
+  expected_partition_counts: {I: 30, II: 24, BRIDGE: 4}
+  expected_proof_class_counts: {TC: 30, ST: 24, U: 4}
+  vector_tensor_program: docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml
+  vector_tensor_rows: [VT-S1, VT-S2, VT-S3, VT-S4, VT-S5, VT-S6, VT-S7, VT-S8, VT-S9, VT-S10, VT-S11, VT-S12, VT-S13, VT-S14]
+  expected_vector_tensor_rows: 14
+  expected_total_receipts: 72
+  statement_identity_replay:
+    algorithm: sha256
+    encoding: canonical_json_utf8_sort_keys_compact_v1
+    fields: [row_id, source_group, source_partition, proof_class, source_status, source_statement]
+    null_rule: A missing source statement is encoded as the JSON null value, never as an empty string or omitted field.
+    authority_rule: >-
+      The registry-provided statement_identity_sha256 is preserved as source
+      provenance. PR-286 additionally recomputes source_replay_identity_sha256
+      from the exact field tuple above, so statement, null, row, partition,
+      proof-class, or status drift fails closed without guessing the historical
+      registry's preimage convention.
+
+source_disposition_policy:
+  exact_pass_statuses: [PROVEN_CAS4]
+  exact_pass_rows: [I-2.1, I-2.2, I-2.3, I-2.9, I-5.1, I-5.2, I-5.3, I-5.4]
+  inconclusive_statuses: [ACTIVE, ACTIVE_CONDITIONAL, ORACLE_VERIFIED, PROPOSED, OPEN, RESTRICTED]
+  rule: >-
+    A source status is routing metadata, not independent authority. The eight
+    PROVEN_CAS4 rows may pass only after their exact evidence reference and
+    statement identity replay. ORACLE_VERIFIED and simulation labels remain
+    inconclusive without the evidence class required by the exact source
+    statement. Null source statements remain explicitly unavailable.
+  exact_source_bindings:
+    I-2.1: {legacy_claim_id: PR257-O3-SCALAR-PSEUDOSCALAR, contract_id: CAS-PR257-ORBIT-CATALOGUE-V2-001}
+    I-2.2: {legacy_claim_id: PR257-TRACEFREE-CAYLEY-HAMILTON, contract_id: CAS-PR257-ORBIT-CATALOGUE-V2-001}
+    I-2.3: {legacy_claim_id: PR257-KRYLOV-GRAM-SYZYGY, contract_id: CAS-PR257-ORBIT-CATALOGUE-V2-001}
+    I-2.9: {legacy_claim_id: PR257-NONGENERIC-NONSEPARATION, contract_id: CAS-PR257-ORBIT-CATALOGUE-V2-001}
+    I-5.1: {legacy_claim_id: PA-THM-GAUGE-SUBLEVEL, contract_id: CAS-PR254-ANCHOR-GEOMETRY-001}
+    I-5.2: {legacy_claim_id: PA-THM-PRODUCT-BALL, contract_id: CAS-PR254-ANCHOR-GEOMETRY-001}
+    I-5.3: {legacy_claim_id: PA-THM-ONE-WAY-MES, contract_id: CAS-PR254-ANCHOR-GEOMETRY-001}
+    I-5.4: {legacy_claim_id: PA-THM-RANK-INVARIANCE, contract_id: CAS-PR254-ANCHOR-GEOMETRY-001}
+  exact_binding_rule: >-
+    Every PASS row binds its exact legacy claim ID, CAS contract path and hash,
+    CAS adjudication path and hash, CAS_4AXIS_PASS state, all four PASS axes,
+    and exact source statement replay identity. A source status alone never
+    satisfies this rule.
+
+vector_tensor_evidence:
+  exact_core:
+    spec: docs/research_program/vector_tensor/pr271_spec.yaml
+    proof_registry: docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml
+    rows: [VT-S1, VT-S2, VT-S4, VT-S7, VT-S8]
+    verdict: PASS
+    evidence_grade: EXACT_TYPED_PROOF
+  registered_synthetic:
+    spec: docs/research_program/vector_tensor/pr272_spec.yaml
+    validation_registry: docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml
+    blind_challenge: docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json
+    rows: [VT-S3, VT-S5, VT-S6, VT-S9, VT-S10, VT-S11, VT-S12, VT-S13]
+    verdict: PASS
+    evidence_grade: PREREGISTERED_SYNTHETIC_VALIDATION_ONLY
+    source_status_effect: RETAIN_CONDITIONAL_PROGRAM
+  admitted_data_gate:
+    row: VT-S14
+    synthetic_validation_status: VALIDATED_REGISTERED_SYNTHETIC
+    source_status: PROGRAM_OBLIGATION
+    verdict: BLOCKED_WITH_RECEIPT
+    reason: Synthetic adapter validation does not satisfy the admitted-data requirement.
+
+statistical_receipt_contract:
+  required_fields:
+    - row_id
+    - source_group
+    - source_statement
+    - source_statement_identity_sha256
+    - statement_relation
+    - evidence_class
+    - estimand
+    - sampling_law
+    - covariance_assumptions
+    - finite_or_asymptotic_status
+    - implementation_evidence
+    - preregistration_evidence
+    - coverage_evidence
+    - negative_controls
+    - units_normalization_and_frame
+    - sign_orientation_convention
+    - prior_applicability_and_identity
+    - rank_and_identification_scope
+    - singular_value_and_principal_angle_status
+    - assumptions
+    - counterexample_boundary
+    - verdict
+    - verdict_reason
+    - claim_ceiling
+  not_applicable_rule: >-
+    Exact theoretical rows use typed NOT_APPLICABLE_EXACT_PROPOSITION values
+    for statistical-only fields and must instead bind exact proof evidence.
+    Missing statistical inputs use UNAVAILABLE, never an invented default.
+  coverage_rule: >-
+    Registered tolerances, seeds, covariance identities, laws, failure maps,
+    and multiplicity corrections are frozen before result inspection. Coverage
+    failures and misspecified negative controls remain visible.
+  exactness_rule: >-
+    Exact statements cannot be approved by Monte Carlo coverage, numerical
+    agreement, or a source ORACLE_VERIFIED label alone.
+  implementation_identity_rule: >-
+    Synthetic rows bind the PR-272 generator, the central statistical
+    implementation, its numerical helper modules, the replay interpreter and
+    NumPy version, and the output registry. These are current replay bindings
+    from the PR-272 delivery commit, not proof that code bytes were frozen by a
+    pre-result external seal.
+  semantic_typing_rule: >-
+    Units/normalization/frame, signed contrast orientation, prior
+    applicability, and local-versus-global rank scope are typed fields. Exact
+    or irrelevant cells use NOT_APPLICABLE_* tokens; missing statistical
+    inputs use UNAVAILABLE. VT-S11 is one registered linear cell only. VT-S14
+    must bind column-normalized covariance-whitened joint design rank two and
+    a positive scale-stable whitened principal angle; proportional designs
+    abstain as ABSTAIN_NON_IDENTIFIED, and any non-finite GLS output is
+    refused.
+  negative_control_terminal_rule:
+    expected_control_failure: EXPECTED_NEGATIVE_CONTROL_KILLED
+    unexpected_control_survival: UNEXPECTED_NEGATIVE_CONTROL_SURVIVED
+    positive_cell_failure: POSITIVE_CELL_FAILED
+    aggregate_effect: >-
+      Expected negative-control kills support process PASS. A surviving
+      negative control or a failed positive registered cell fails G8 and stays
+      visible; neither may be laundered into an expected failure.
+
+artifact_contract:
+  output_path: docs/research_program/post_pr275/pillar_s_adjudication/PILLAR_S_COMPLETE_ADJUDICATION_V1.json
+  content_address: sha256_of_canonical_json_excluding_receipt_content_sha256
+  source_binding_scope: >-
+    Bind the scientific specifications, proof registries, implementations,
+    generators, runner, and focused contract test. The canonical DAG, its
+    compatibility mirrors, and the DAG validator are live orchestration inputs:
+    validate their normalized PR-287 dependency contract and publication-policy
+    command, but do not content-bind their whole mutable files into this
+    claim-bearing receipt.
+  required_metadata:
+    - owner
+    - scope
+    - claim_tier_and_level
+    - transfer_source
+    - observed_and_public_status
+    - family_identification_gate
+    - generating_command
+    - exact_source_bindings
+    - git_commit_or_external_seal_identity
+    - assumptions_and_caveats
+  no_bare_statuses: [NOT_ADJUDICATED, ACTIVE, ACTIVE_CONDITIONAL, ORACLE_VERIFIED, PROPOSED, OPEN, RESTRICTED, CONDITIONAL_PROGRAM, PROGRAM_OBLIGATION]
+  terminal_precedence: [BLOCKED_PILLAR_S_ADJUDICATION_CONTRACT, FAIL_PRESERVED_NEGATIVE_CONTROL, PASS_COMPLETE_PILLAR_S_ADJUDICATION]
+  mutation_rule: >-
+    Every registered mutation executes and is killed. Missing, duplicate,
+    reordered, unmapped, inconsistently flagged, or surviving mutation results
+    block G8.
+
+mutation_registry:
+  - {mutation_id: MU286-DROP-SOURCE-ROW, mutation_kind: omit_source_row, expected_kill: exact_58_inventory_mismatch}
+  - {mutation_id: MU286-DROP-VTS-ROW, mutation_kind: omit_vt_s_row, expected_kill: exact_14_inventory_mismatch}
+  - {mutation_id: MU286-BARE-SOURCE-STATUS, mutation_kind: source_status_used_as_terminal, expected_kill: terminal_vocabulary_rejection}
+  - {mutation_id: MU286-STATEMENT-DRIFT, mutation_kind: source_statement_changed, expected_kill: statement_identity_replay}
+  - {mutation_id: MU286-EXACT-BY-SIMULATION, mutation_kind: exact_row_passes_on_simulation_only, expected_kill: evidence_class_rejection}
+  - {mutation_id: MU286-ORACLE-LABEL-AS-PROOF, mutation_kind: oracle_verified_row_promoted_without_proof, expected_kill: exact_proof_requirement}
+  - {mutation_id: MU286-ESTIMAND-DRIFT, mutation_kind: estimand_changes_after_registration, expected_kill: statistical_identity_replay}
+  - {mutation_id: MU286-LAW-COVARIANCE-DRIFT, mutation_kind: law_or_covariance_changes, expected_kill: preregistration_binding}
+  - {mutation_id: MU286-SEED-TOLERANCE-DRIFT, mutation_kind: seed_or_acceptance_floor_changes, expected_kill: preregistration_binding}
+  - {mutation_id: MU286-HIDE-NEGATIVE-CONTROL, mutation_kind: failure_map_removed, expected_kill: visible_failure_requirement}
+  - {mutation_id: MU286-VTS14-DATA-PROMOTION, mutation_kind: synthetic_adapter_called_admitted_data, expected_kill: admitted_data_gate}
+  - {mutation_id: MU286-MIO-POSTERIOR, mutation_kind: MIO_likelihood_or_posterior_enabled, expected_kill: ownership_firewall}
+  - {mutation_id: MU286-CLAIM-PROMOTION, mutation_kind: observed_native_public_or_family_claim, expected_kill: claim_firewall}
+  - {mutation_id: MU286-CAS-BINDING-DRIFT, mutation_kind: exact_row_contract_claim_or_adjudication_changed, expected_kill: exact_cas_binding_replay}
+  - {mutation_id: MU286-IMPLEMENTATION-BINDING-DRIFT, mutation_kind: generator_or_scientific_module_identity_changed, expected_kill: implementation_identity_replay}
+  - {mutation_id: MU286-SEMANTIC-TYPE-DRIFT, mutation_kind: units_sign_prior_or_rank_scope_changed, expected_kill: semantic_type_replay}
+  - {mutation_id: MU286-NEGATIVE-CONTROL-SURVIVES, mutation_kind: expected_negative_control_unexpectedly_passes, expected_kill: negative_control_terminal_rule}
+  - {mutation_id: MU286-VTS14-PROPORTIONAL-DESIGN, mutation_kind: local_global_design_rank_or_angle_collapses, expected_kill: local_global_rank_gate}
+  - {mutation_id: MU286-VTS14-NUMERIC-GUARD-DRIFT, mutation_kind: finite_gls_refusal_or_whitened_rank_control_changes, expected_kill: semantic_type_replay}
+  - {mutation_id: MU286-VTS14-MIO-NUMERIC-GUARD-DRIFT, mutation_kind: finite_MIO_residual_refusal_changes, expected_kill: semantic_type_replay}
+
+assumptions:
+  - PR-271 exact proof rows and PR-272 preregistration bytes remain frozen.
+  - PR-272 simulation evidence is synthetic and diagnostic-only.
+  - PR-273 is a held-out synthetic integration diagnostic, not observed evidence.
+  - Process success means complete evidence-specific disposition, not universal proof.
+caveats:
+  - Many source rows remain inconclusive because their required evidence class is absent.
+  - Synthetic coverage is conditional on the registered DGP, covariance, seed family, and tolerance.
+  - VT-S14 remains blocked before admitted data despite synthetic adapter validation.
+  - No native solver, observed sky, physical family ranking, or MIO posterior is produced.
+  - PR-272 code bytes are bound as current replay provenance, not retroactively labelled preregistered before result inspection.
+
+future_consumer_contract:
+  consumer: PR-287
+  upstream_terminal_required: PASS_COMPLETE_PILLAR_S_ADJUDICATION
+  upstream_success_semantics: PROCESS_COMPLETION_ONLY
+  required_row_fields: [row_id, verdict, evidence_class, statement_relation, claim_ceiling]
+  preserve_row_verdicts: true
+  preserve_inconclusive_and_blocked: true
+  synthetic_validation_effect: NO_OBSERVED_OR_SOURCE_PROOF_PROMOTION
+  rule: >-
+    Consume exact row-level verdicts and evidence grades. A process PASS cannot
+    convert INCONCLUSIVE_WITH_RECEIPT or BLOCKED_WITH_RECEIPT into proposition
+    success, and synthetic validation cannot seed observed inference.

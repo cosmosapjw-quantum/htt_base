@@ -714,6 +714,108 @@ def test_depth_local_global_keeps_htt_and_mio_ownership_separate() -> None:
     assert mio_report.local_residual_norm < mio_report.global_residual_norm
 
 
+def test_depth_local_global_abstains_for_proportional_designs() -> None:
+    design = np.asarray((1.0, 2.0, 3.0, 4.0))
+    report = evaluate_depth_local_global(
+        design,
+        covariance=np.eye(4),
+        covariance_id="identity",
+        local_design=design,
+        global_design=2.0 * design,
+        mask_path_id="nested-mask",
+        transfer_source="none",
+    )
+    assert report.status is ValidationStatus.ABSTAIN_NON_IDENTIFIED
+    assert report.selected_candidate is ModelCandidate.INDETERMINATE
+
+    near_overlap = evaluate_depth_local_global(
+        design,
+        covariance=np.eye(4),
+        covariance_id="identity",
+        local_design=design,
+        global_design=design + np.asarray((0.0, 0.0, 0.0, 1.0e-8)),
+        mask_path_id="nested-mask",
+        transfer_source="none",
+        principal_angle_floor_radians=1.0e-6,
+    )
+    assert near_overlap.status is ValidationStatus.ABSTAIN_NON_IDENTIFIED
+    assert near_overlap.selected_candidate is ModelCandidate.INDETERMINATE
+
+
+def test_depth_local_global_refuses_nonfinite_large_scale_fit() -> None:
+    local = np.asarray((1.0e200, 1.0e200))
+    global_ = np.asarray((1.0e200, 1.0e200 + 2.0e185))
+    with pytest.raises(PillarSInferenceError, match="finite GLS"):
+        evaluate_depth_local_global(
+            local,
+            covariance=np.eye(2),
+            covariance_id="identity",
+            local_design=local,
+            global_design=global_,
+            mask_path_id="nested-mask",
+            transfer_source="none",
+            principal_angle_floor_radians=1.0e-12,
+        )
+
+
+def test_mio_depth_cross_check_refuses_nonfinite_large_scale_fit() -> None:
+    import mio.formalism.vector_tensor_validation as mio_surface
+
+    local = np.asarray((1.0e200, 1.0e200))
+    global_ = np.asarray((1.0e200, 1.0e200 + 2.0e185))
+    with pytest.raises(PillarSInferenceError, match="finite MIO diagnostic"):
+        mio_surface.build_mio_depth_cross_check(
+            local,
+            local_design=local,
+            global_design=global_,
+            mask_path_id="nested-mask",
+        )
+
+
+def test_depth_local_global_refuses_nonfinite_extreme_covariance_fit() -> None:
+    local = np.asarray((0.25, 0.5, 0.75, 1.0))
+    global_ = np.ones(4)
+    with pytest.raises(PillarSInferenceError, match="finite GLS"):
+        evaluate_depth_local_global(
+            local,
+            covariance=np.diag((1.0e-320, 1.0, 2.0, 3.0)),
+            covariance_id="extreme-spd",
+            local_design=local,
+            global_design=global_,
+            mask_path_id="nested-mask",
+            transfer_source="none",
+        )
+
+
+def test_depth_local_global_rank_uses_covariance_whitened_design() -> None:
+    local = np.asarray((1.0, 0.0))
+    global_ = np.asarray((1.0, 1.0e-16))
+    report = evaluate_depth_local_global(
+        local,
+        covariance=np.diag((1.0, 1.0e-32)),
+        covariance_id="anisotropic",
+        local_design=local,
+        global_design=global_,
+        mask_path_id="nested-mask",
+        transfer_source="none",
+    )
+    assert report.status is ValidationStatus.VALIDATED_REGISTERED_SYNTHETIC
+    assert report.selected_candidate is ModelCandidate.LOCAL
+
+
+def test_depth_local_global_refuses_zero_design_with_typed_error() -> None:
+    with pytest.raises(PillarSInferenceError, match="design must be nonzero"):
+        evaluate_depth_local_global(
+            (0.0, 0.0),
+            covariance=np.eye(2),
+            covariance_id="identity",
+            local_design=(0.0, 0.0),
+            global_design=(1.0, 0.0),
+            mask_path_id="nested-mask",
+            transfer_source="none",
+        )
+
+
 def test_public_facades_enforce_owner_boundary() -> None:
     import htt.infer.vector_tensor_validation as htt_surface
     import mio.formalism.vector_tensor_validation as mio_surface

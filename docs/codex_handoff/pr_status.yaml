@@ -1,5 +1,6 @@
-generated_on: '2026-08-10'
+generated_on: '2026-08-11'
 completed:
+- PR-285
 - PR-284
 - PR-283
 - PR-282
@@ -207,7 +208,6 @@ pending:
 - PR-206
 - PR-207
 - PR-208
-- PR-286
 - PR-287
 - PR-288
 - PR-289
@@ -245,7 +245,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-285
+in_progress: PR-286
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -259,7 +259,7 @@ stacked_pr_execution:
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
   target_sha: ff9ef9f45747e559c5343b463cf010dfc3a7432a
-  active_implementation_pr: PR-285
+  active_implementation_pr: PR-286
   pr_order:
   - PR-283
   - PR-284
@@ -332,14 +332,15 @@ stacked_pr_execution:
         publication: PASS
       assurance_budget: {maximum: 16, consumed: 16}
     PR-285:
-      lifecycle: REVIEWED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      lifecycle: PR_OPEN
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED, SEALED,
+        PUSHED, PR_OPEN]
       base_sha: 0b3680a03f325e3f1fa1699528a5a59303ddb8b4
       predecessor_pr: PR-284
       predecessor_sealed_sha: 0b3680a03f325e3f1fa1699528a5a59303ddb8b4
-      sealed_head: null
-      pushed_ref: null
-      pr_url: null
+      sealed_head: 16bc6db511b8b7228e5c4dcb95c65074fe519f24
+      pushed_ref: refs/heads/changeset/pr285-pillar-t-adjudication-recovery-20260810
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/382
       production_hash: 602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2
       dependency_hashes:
         theorem_signatures: d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b
@@ -374,23 +375,52 @@ stacked_pr_execution:
         portability_replay: PASS
         cas: INCONCLUSIVE
         review: PASS
-        seal: DEFERRED
-        push: INELIGIBLE
-        publication: INELIGIBLE
-      assurance_budget: {maximum: 16, consumed: 13}
+        seal: PASS
+        push: PASS
+        publication: PASS
+      assurance_budget: {maximum: 16, consumed: 14}
     PR-286:
-      lifecycle: PLANNED
-      lifecycle_history: [PLANNED]
-      base_sha: null
+      lifecycle: REVIEWED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      base_sha: 16bc6db511b8b7228e5c4dcb95c65074fe519f24
       predecessor_pr: PR-285
-      predecessor_sealed_sha: null
+      predecessor_sealed_sha: 16bc6db511b8b7228e5c4dcb95c65074fe519f24
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: null
-      dependency_hashes: {}
-      gate_dispositions: {eligibility: INELIGIBLE}
-      assurance_budget: {maximum: 16, consumed: 0}
+      production_hash: 99ad99e15ff863b63945663c112767d1f6dc90e8f697a407798c281cb39c2b30
+      dependency_hashes:
+        theorem_signatures: d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b
+        vt_proof_program: 055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9
+        proof_registry_two_pillars: 01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201
+        pillar_s_core_proofs: 8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e
+        pillar_s_inference_validation: 71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf
+        pr273_diagnostic_pack: 36783932f540d4a4e26cc0d66f1f8bb5692623664deda7106e97326576f041bc
+        pr286_spec: 6fca230213eea5c914842c63513a9047cb3221d0646564692464a82d7a03fc05
+        publication_policy: 768b5263096154770e48762704e363d127ea1c1ef89a8c973f94a14173ec086d
+        pr286_runner: a4a5243e13bc46503a16904c5f26a670a077d575220f16ebdae0c5d206493732
+        pr286_contract_test: 5e544fdbbe564765092a8c4f60b4f39a6bd3a32d42467f7dc6c9ac34f6754bef
+        statistical_inference: 61278f7d29831215dac2abd38f00c1f96a68e6f6462683778f3635a01fc9c254
+        adjudication_receipt: b5ea12647f1d7818da3702b3da8d127f490a15cdef8e37fa8958cfe803b3ee5a
+        publication_integrity_test: b58ac958ac5c6aafb6de768a68813665fd233540cb328ede98240a933373d9cc
+        pr_backlog: 73553b6056e5111c1047b80f79c35cdb8e898e0a7b8a7e7e28f97731b5cc699e
+        dag_validator: 1382c9d5d8e096efbcd90cf804ae8c32b2de1ce5c47d67be75ab282b45361120
+        salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
+      gate_dispositions:
+        eligibility: PASS
+        implementation: PASS
+        validation: PASS
+        code: PASS
+        physics: PASS
+        statistics: PASS
+        claim: PASS
+        harness: PASS
+        portability_replay: PASS
+        review: PASS
+        seal: DEFERRED
+        push: INELIGIBLE
+        publication: INELIGIBLE
+      assurance_budget: {maximum: 16, consumed: 11}
     PR-287:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
@@ -602,6 +632,26 @@ execution_lane:
   PR-296: defensible
   PR-297: defensible
 execution_resolutions:
+  PR-285:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-285.md
+    review_receipt: .agent-harness/runs/pr285-final-seal-closeout-20260810/RUN_SUMMARY.json
+    review_receipt_sha256: 0d815ee34c5a24a772275b2cfc248e70d35fb9707aecd6e3a2f3aa0a1138fdb3
+    publication_receipt_sha256: 1b86e95c67c5f6a4480bdbd735955a26e0b4c68b519549d94058fda582c2e696
+    candidate_sha: 16bc6db511b8b7228e5c4dcb95c65074fe519f24
+    sealed_head: 16bc6db511b8b7228e5c4dcb95c65074fe519f24
+    pushed_ref: refs/heads/changeset/pr285-pillar-t-adjudication-recovery-20260810
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/382
+    resolved_on: '2026-08-10'
+    scientific_status_effect: complete_pillar_t_row_adjudication_with_exact_source_status_and_lineage_replay_recovered
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: proof_adjudication_diagnostic
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    current_cas_disposition: INCONCLUSIVE
+    assurance_budget_consumed: 14
+    success_dependency_satisfied: true
   PR-284:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-284.md
