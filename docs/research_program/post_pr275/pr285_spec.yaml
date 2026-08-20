@@ -1,0 +1,280 @@
+schema: htt.pr285.pillar_t_complete_adjudication.v1
+pr_id: PR-285
+title: Pillar T source and vector/tensor theorem adjudication
+owner: COMMON
+contributors: []
+change_set_id: CS-PR285-PILLAR-T-ADJUDICATION
+publication_group_id: PG-PR285-PILLAR-T-ADJUDICATION
+dependencies:
+  - PR-280
+dependency_contract:
+  upstream_id: PR-280
+  mode: requires_terminal_receipt
+claim_tier: diagnostic_only
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C2
+scientific_artifact_mode: proof_adjudication_diagnostic
+transfer_source: none
+observed_data_executed: false
+public_use: false
+family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
+
+gate:
+  gate_id: G7
+  statement: Every registered source-inventory and VT-T row has a premise- and domain-specific terminal receipt.
+  pass_token: PASS_COMPLETE_PILLAR_T_ADJUDICATION
+  block_token: BLOCKED_PILLAR_T_ADJUDICATION_CONTRACT
+  terminal_verdicts:
+    - PASS
+    - FAIL
+    - INCONCLUSIVE_WITH_RECEIPT
+    - BLOCKED_WITH_RECEIPT
+  derivation_rule: >-
+    A row receives PASS only for the exact typed statement under the frozen
+    premises and domain. Missing source signatures remain inconclusive, an
+    exact counterexample remains FAIL, and unavailable external/native
+    premises remain blocked. No source statement is weakened to obtain PASS.
+
+inventory_contract:
+  source_registry: docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml
+  requested_pillar_t_65_semantics: >-
+    The historical request named Pillar T 65, but the canonical registry
+    defines it as the entire 65-row legacy_signature_inventory, partitioned
+    into 31 T and 34 S rows. PR-285 adjudicates all 65 without relabelling the
+    partitions; PR-286 separately owns the 58 proposal_registry_rows and the
+    14 VT-S rows.
+  source_group: legacy_signature_inventory
+  expected_source_rows: 65
+  expected_source_partition_counts:
+    T: 31
+    S: 34
+  vector_tensor_program: docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml
+  vector_tensor_rows:
+    - VT-T1
+    - VT-T2
+    - VT-T3
+    - VT-T4
+    - VT-T5
+    - VT-T6
+    - VT-T7
+    - VT-T8
+    - VT-T9
+    - VT-T10
+    - VT-T11
+    - VT-T12
+    - VT-T13
+    - VT-T14
+  expected_vector_tensor_rows: 14
+  failed_candidate:
+    claim_id: C-PR190-FULL-COMPARATOR-ATTAINABILITY
+    spec: docs/research_program/strengthening/pr190_spec.yaml
+    receipt: docs/generated/pr190_attainability/attainability_report.json
+    required_terminal: COMPLETED_FAILED_WITH_RECEIPT
+    required_success_dependency_satisfied: false
+    adjudication_verdict: FAIL
+  expected_total_receipts_including_failed_candidate: 80
+
+statement_identity_contract:
+  legacy_rows:
+    source_statement_kind: TITLE_ONLY
+    rule: >-
+      Preserve the exact source title, statement identity, premise values,
+      premise status, domain values, and domain status. Twelve source rows
+      declare premise and domain metadata while 53 record SOURCE_NOT_TYPED;
+      neither status turns a title-only source row into an adjudicated typed
+      theorem or permits promotion to PASS.
+    terminal: INCONCLUSIVE_WITH_RECEIPT
+  vector_tensor_rows:
+    analytic_source: docs/research_program/vector_tensor/pr269_spec.yaml
+    cas_and_conditional_source: docs/research_program/vector_tensor/pr270_spec.yaml
+    rule: >-
+      Copy each typed statement, assumptions, domain, relation-to-source, and
+      counterexample boundary without semantic rewriting. A restricted or
+      partial elaboration cannot adjudicate the broader source row as PASS.
+  failed_candidate:
+    rule: >-
+      Copy the full PR-190 statement and the exact constraint obstruction.
+      Algebraic fixtures or an upper-endpoint compatibility result cannot
+      reverse the failed conjunctive full-interval claim.
+
+evidence_contract:
+  legacy_t_proofs: docs/research_program/vector_tensor/proofs/PILLAR_T_CORE_PROOFS_V1.yaml
+  legacy_s_proofs: docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml
+  vector_tensor_cas_proofs: docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml
+  canonical_cas_contract: docs/research_program/vector_tensor/cas/CAS_CONTRACT.json
+  canonical_cas_run_spec: docs/research_program/vector_tensor/cas/CAS_RUN_SPEC.json
+  canonical_cas_adjudication: docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
+  cas_required_rows:
+    - VT-T5
+    - VT-T6
+    - VT-T7
+    - VT-T8
+    - VT-T13
+  required_axes:
+    - wolfram_xact
+    - sympy
+    - sage_singular
+    - lean
+  aggregate_states:
+    - CAS_4AXIS_PASS
+    - CAS_PASS_WITH_REGISTERED_EXCEPTION
+    - CAS_CONFLICT
+    - CAS_BLOCKED
+    - CAS_FAIL
+  aggregate_rule: >-
+    All required axes share one contract hash. Majority vote is forbidden.
+    The existing parent-observed CAS adjudication is replayed exactly; a tool
+    absence or timeout is a platform blocker and cannot be called a pass.
+  historical_evidence_effect: >-
+    CAS evidence establishes only the exact algebraic component named in the
+    canonical contract. It does not adjudicate a withheld global, dynamical,
+    native, observed, or family-identification extension.
+
+expected_vector_tensor_dispositions:
+  PASS:
+    - VT-T1
+    - VT-T2
+    - VT-T3
+    - VT-T4
+    - VT-T5
+    - VT-T6
+    - VT-T7
+    - VT-T9
+    - VT-T10
+    - VT-T11
+    - VT-T12
+  INCONCLUSIVE_WITH_RECEIPT:
+    - VT-T8
+    - VT-T13
+  BLOCKED_WITH_RECEIPT:
+    - VT-T14
+  FAIL: []
+  rationale:
+    VT-T8: The registered CAS proves only a generic local chart and explicitly withholds global orbit separation.
+    VT-T13: The registered CAS proves only the invariant chain-rule core and withholds the typed evolution law.
+    VT-T14: The required native geometry and morphology-atlas payload is unavailable.
+
+receipt_contract:
+  output_path: docs/research_program/post_pr275/pillar_t_adjudication/PILLAR_T_COMPLETE_ADJUDICATION_V1.json
+  content_address: sha256_of_canonical_json_excluding_receipt_content_sha256
+  required_row_fields:
+    - row_id
+    - source_group
+    - source_statement
+    - source_statement_identity_sha256
+    - adjudicated_statement
+    - statement_relation
+    - premises
+    - premise_status
+    - domains
+    - domain_status
+    - proof_evidence
+    - counterexample_boundary
+    - verdict
+    - verdict_reason
+    - claim_ceiling
+  required_metadata:
+    - owner
+    - scope
+    - claim_tier_and_level
+    - transfer_source
+    - observed_and_public_status
+    - family_identification_gate
+    - assumptions
+    - caveats
+    - generating_command
+    - exact_source_bindings
+    - git_commit_or_external_seal_identity
+  terminal_precedence:
+    - BLOCKED_PILLAR_T_ADJUDICATION_CONTRACT
+    - FAIL_PRESERVED_COUNTEREXAMPLE
+    - PASS_COMPLETE_PILLAR_T_ADJUDICATION
+  no_bare_statuses:
+    - NOT_ADJUDICATED
+    - MIGRATION_PENDING
+    - READY_FOR_PROOF
+    - CONDITIONAL_PROGRAM
+    - PROGRAM_OBLIGATION
+  mutation_rule: >-
+    Every registered mutation must execute and be killed. Missing, duplicated,
+    reordered, unmapped, inconsistently flagged, or surviving mutation rows
+    block G7.
+
+mutation_registry:
+  - mutation_id: MU285-DROP-SOURCE-ROW
+    mutation_kind: omit_one_legacy_row
+    expected_kill: exact 65-row inventory mismatch
+  - mutation_id: MU285-DROP-VT-ROW
+    mutation_kind: omit_one_vector_tensor_row
+    expected_kill: exact 14-row inventory mismatch
+  - mutation_id: MU285-BARE-NOT-ADJUDICATED
+    mutation_kind: replace_terminal_verdict_with_bare_source_status
+    expected_kill: terminal vocabulary rejection
+  - mutation_id: MU285-WEAKEN-STATEMENT
+    mutation_kind: alter_statement_without_matching_source_identity
+    expected_kill: statement identity replay rejection
+  - mutation_id: MU285-LEGACY-STATUS-FLATTENED
+    mutation_kind: replace_a_declared_legacy_premise_and_domain_status_with_source_not_typed
+    expected_kill: exact source premise and domain status replay rejection
+  - mutation_id: MU285-CAS-AXIS-OMITTED
+    mutation_kind: delete_one_required_axis
+    expected_kill: four-axis aggregate rejection
+  - mutation_id: MU285-CAS-MAJORITY-VOTE
+    mutation_kind: three_axes_pass_one_axis_fail_but_aggregate_pass
+    expected_kill: exact aggregate rule rejection
+  - mutation_id: MU285-CAS-CONTRACT-DRIFT
+    mutation_kind: axis_receipt_uses_different_contract_hash
+    expected_kill: shared-contract identity rejection
+  - mutation_id: MU285-T8-GLOBAL-PROMOTION
+    mutation_kind: restricted_local_chart_rendered_pass_for_global_separation
+    expected_kill: relation-to-source boundary rejection
+  - mutation_id: MU285-T13-FULL-DYNAMICS-PROMOTION
+    mutation_kind: partial_chain_rule_rendered_pass_for_full_evolution
+    expected_kill: withheld-extension boundary rejection
+  - mutation_id: MU285-T14-NATIVE-PROMOTION
+    mutation_kind: native_geometry_gate_rendered_pass
+    expected_kill: missing external geometry evidence rejection
+  - mutation_id: MU285-PR190-REFUTATION-LAUNDERED
+    mutation_kind: failed_full_interval_claim_rendered_pass_or_inconclusive
+    expected_kill: exact failed-candidate terminal rejection
+  - mutation_id: MU285-CLAIM-CEILING-PROMOTION
+    mutation_kind: public_observed_native_or_family_claim_enabled
+    expected_kill: claim firewall rejection
+
+assumptions:
+  - Title-only source rows do not receive a proof verdict merely because premise or domain metadata are declared.
+  - Legacy premise and domain values and statuses are preserved exactly from the source registry.
+  - PR-269 and PR-270 proof artifacts are frozen evidence, not mutable authority.
+  - The current CAS contract covers exact registered algebraic cores only.
+  - A terminal process receipt does not imply every row passed.
+
+caveats:
+  - The result contains many negative or inconclusive dispositions by design.
+  - PASS is scoped to the exact typed statement and its declared premises.
+  - No external low-ell solver, observed sky, covariance likelihood, or morphology atlas is executed.
+  - The historical PR-190 negative result remains a failed theorem candidate.
+
+allowed_uses:
+  - Dependency routing from typed row-level dispositions.
+  - Audit of exact proof, counterexample, and blocked-premise coverage.
+  - Selection of unresolved proof work without bare status ambiguity.
+forbidden_uses:
+  - Native solver validation.
+  - Observed-data inference.
+  - Bianchi family identification.
+  - Claim that all source rows are proved.
+  - Majority-vote CAS adjudication.
+
+future_consumer_contract:
+  consumers:
+    - PR-191
+    - PR-192
+    - PR-193
+    - PR-194
+    - PR-195
+    - PR-287
+  rule: >-
+    Consumers must inspect the exact per-row verdict and scope. PR-285 process
+    success means complete terminal coverage; it does not convert FAIL,
+    INCONCLUSIVE_WITH_RECEIPT, or BLOCKED_WITH_RECEIPT into PASS.

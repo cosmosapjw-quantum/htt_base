@@ -1,5 +1,6 @@
 generated_on: '2026-08-10'
 completed:
+- PR-284
 - PR-283
 - PR-282
 - PR-281
@@ -206,7 +207,6 @@ pending:
 - PR-206
 - PR-207
 - PR-208
-- PR-285
 - PR-286
 - PR-287
 - PR-288
@@ -245,7 +245,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-284
+in_progress: PR-285
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -259,7 +259,7 @@ stacked_pr_execution:
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
   target_sha: ff9ef9f45747e559c5343b463cf010dfc3a7432a
-  active_implementation_pr: PR-284
+  active_implementation_pr: PR-285
   pr_order:
   - PR-283
   - PR-284
@@ -300,14 +300,15 @@ stacked_pr_execution:
         publication: PASS
       assurance_budget: {maximum: 16, consumed: 14}
     PR-284:
-      lifecycle: REVIEWED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      lifecycle: PR_OPEN
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED, SEALED,
+        PUSHED, PR_OPEN]
       base_sha: b6b6952d52f59bbe05477ef3b02292a98fe92baa
       predecessor_pr: PR-283
       predecessor_sealed_sha: b6b6952d52f59bbe05477ef3b02292a98fe92baa
-      sealed_head: null
-      pushed_ref: null
-      pr_url: null
+      sealed_head: 0b3680a03f325e3f1fa1699528a5a59303ddb8b4
+      pushed_ref: refs/heads/changeset/pr284-finite-depth-law-recovery-20260810
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/381
       production_hash: 842d469e906b2b55eadcdda56cac59924ae2189ac2677ef8a5e605e03a0be034
       dependency_hashes:
         common_depth_path: 41ffe054645c00a36158688b55a0aab390919d3759283b9d5e2f33d69ec8f247
@@ -323,26 +324,60 @@ stacked_pr_execution:
         physics: PASS
         statistics: PASS
         claim: PASS
-        harness: DEFERRED
-        portability_replay: DEFERRED
-        review: DEFERRED
-        seal: INELIGIBLE
-        push: INELIGIBLE
-        publication: INELIGIBLE
+        harness: PASS
+        portability_replay: PASS
+        review: PASS
+        seal: PASS
+        push: PASS
+        publication: PASS
       assurance_budget: {maximum: 16, consumed: 16}
     PR-285:
-      lifecycle: PLANNED
-      lifecycle_history: [PLANNED]
-      base_sha: null
+      lifecycle: REVIEWED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      base_sha: 0b3680a03f325e3f1fa1699528a5a59303ddb8b4
       predecessor_pr: PR-284
-      predecessor_sealed_sha: null
+      predecessor_sealed_sha: 0b3680a03f325e3f1fa1699528a5a59303ddb8b4
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: null
-      dependency_hashes: {}
-      gate_dispositions: {eligibility: INELIGIBLE}
-      assurance_budget: {maximum: 16, consumed: 0}
+      production_hash: 602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2
+      dependency_hashes:
+        theorem_signatures: d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b
+        vt_proof_program: 055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9
+        pr269_spec: 510e7513ee058d9d20aa6a399a431cc24e013f721a5af6d3a794c7690d4164e7
+        pr270_spec: 439b331d6b8e8c0d51ef2a75bd22dbea4a3699ee9e6afbbe88b66bb4be11da8d
+        pillar_t_core_proofs: 808c69ca1111591a6d6b52079b6caa7889a838009540ef9959a077640dcdc1d6
+        pillar_s_core_proofs: 8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e
+        pillar_t_cas_proofs: 8f2faf3847f21d2a903bd143ba35ee123ad24256da42e3e1444ad991ade7a27e
+        cas_contract: 2d2ceb84603b24ab0b34db8b69715483061428ee36d6b2f5952494a9bb8108b4
+        cas_run_spec: fc8b55a6a56cb0744a6f815c12f758df63122061070adb46f9a6f45930ca5904
+        cas_adjudication: a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275
+        pr190_spec: 74872439326b0973ab69de3628f279dd3fad46bf83aa17641e49477aa167b73f
+        pr190_receipt: 580aa9e36ac5419c7364ca6b295dece08c39c8ca1f91962d25c63d32fd3cf426
+        pr285_spec: 481aba93390cf8aa0fe79f17036197bf76b7e98bc4b821cc198adea4deee98ee
+        publication_policy: 20c16524a86ca61ef33a5f3894c7ebc48eeeebe708eb7556725c025185cfe878
+        pr285_runner: 4cae2b46b32ca4aa7bd0f5833044617202baaab485877213615abe2b31570312
+        pr285_contract_test: 991dca1420c97971a9979275832e4f38d50f2979647cbe3e5c711c61ebae6801
+        adjudication_receipt: 270b80e94767b48d58032d96d48f829138f6d5ffa301e9c8eb48bbd72b5c7e66
+        publication_integrity: 56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec
+        publication_integrity_test: ca681d6e4c3c024fd3b4fe2d7560e315bfc428359907329ac5f2ad1e11628e7f
+        salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
+      gate_dispositions:
+        eligibility: PASS
+        implementation: PASS
+        validation: PASS
+        code: PASS
+        physics: PASS
+        statistics: PASS
+        claim: PASS
+        harness: PASS
+        portability_replay: PASS
+        cas: INCONCLUSIVE
+        review: PASS
+        seal: DEFERRED
+        push: INELIGIBLE
+        publication: INELIGIBLE
+      assurance_budget: {maximum: 16, consumed: 13}
     PR-286:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
@@ -567,6 +602,28 @@ execution_lane:
   PR-296: defensible
   PR-297: defensible
 execution_resolutions:
+  PR-284:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-284.md
+    review_receipt: .agent-harness/runs/pr284-stacked-publication-policy-review-20260810/RUN_SUMMARY.json
+    publication_receipt: .prguard/runtime/PR284_STACK_POLICY_PUBLICATION_RECEIPT.json
+    publication_receipt_sha256: f1fe9c8413a58fc47f1d20d5cf5da912eaa1ef494b03f9817831ea2937ed9405
+    candidate_sha: 0b3680a03f325e3f1fa1699528a5a59303ddb8b4
+    sealed_head: 0b3680a03f325e3f1fa1699528a5a59303ddb8b4
+    pushed_ref: refs/heads/changeset/pr284-finite-depth-law-recovery-20260810
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/381
+    resolved_on: '2026-08-10'
+    scientific_status_effect: exact_finite_depth_law_identity_replay_and_matched_mock_abstention_recovered
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: synthetic_diagnostic
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    assurance_budget_consumed: 18
+    ordinary_assurance_budget_consumed: 16
+    authorized_assurance_extension_consumed: 2
+    assurance_extension_id: PR284-STACK-PUBLICATION-20260810
+    success_dependency_satisfied: true
   PR-283:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-283.md

@@ -235,7 +235,14 @@ def test_canonical_status_closes_success_edge_without_unblocking_pr191():
     }
     assert "PR-190" in status["blocked"]
     assert "PR-190" not in status["pending"]
-    assert status["in_progress"] is None
+    active = status["in_progress"]
+    if active is not None:
+        stack = status["stacked_pr_execution"]
+        assert stack["execution_mode"] == "AUTO_STACKED_PR"
+        assert stack["active_implementation_pr"] == active
+    assert active != "PR-191"
+    assert "PR-191" in status["pending"]
+    assert "PR-191" not in status["completed"]
     resolution = status["execution_resolutions"]["PR-190"]
     assert resolution["resolution"] == "COMPLETED_FAILED_WITH_RECEIPT"
     assert resolution["success_dependency_satisfied"] is False

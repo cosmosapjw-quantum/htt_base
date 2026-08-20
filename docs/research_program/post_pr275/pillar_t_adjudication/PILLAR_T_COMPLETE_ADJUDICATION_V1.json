@@ -1,0 +1,2834 @@
+{
+  "cas_evidence": {
+    "aggregate_path": "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+    "aggregate_sha256": "a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275",
+    "aggregate_status": "CAS_4AXIS_PASS",
+    "axis_statuses": {
+      "lean": "PASS",
+      "sage_singular": "PASS",
+      "sympy": "PASS",
+      "wolfram_xact": "PASS"
+    },
+    "claim_promotion_effect": "CAS_COMPONENT_ONLY_NO_SCIENTIFIC_PROMOTION",
+    "contract_id": "CAS-PR270-VECTOR-TENSOR-ORBIT-001",
+    "contract_sha256": "2d2ceb84603b24ab0b34db8b69715483061428ee36d6b2f5952494a9bb8108b4",
+    "covered_rows": [
+      "VT-T5",
+      "VT-T6",
+      "VT-T7",
+      "VT-T8",
+      "VT-T13"
+    ],
+    "current_reexecution_policy": "all required axes PASS permits an exact replay; any required platform block yields CAS_BLOCKED_WITH_RECEIPT and never a majority-vote pass",
+    "majority_vote_forbidden": true,
+    "required_axes": [
+      "wolfram_xact",
+      "sympy",
+      "sage_singular",
+      "lean"
+    ],
+    "verification_state": "RUNNER_OBSERVED_EXECUTION"
+  },
+  "change_set_id": "CS-PR285-PILLAR-T-ADJUDICATION",
+  "metadata": {
+    "assumptions": [
+      "frozen title-only source rows do not become proved merely because premise or domain metadata are declared",
+      "legacy premise and domain status fields are preserved exactly from the source registry",
+      "PR-269 and PR-270 proof artifacts remain immutable evidence",
+      "CAS evidence applies only to the registered algebraic core",
+      "process success means terminal coverage rather than universal proof"
+    ],
+    "caveats": [
+      "65 legacy rows remain inconclusive because their source signatures are title-only",
+      "VT-T8 and VT-T13 retain restricted or partial proof scopes",
+      "VT-T14 remains blocked before admitted native geometry and atlas evidence",
+      "the PR-190 full comparator-attainability candidate remains refuted",
+      "no observed sky, native low-ell solver, or family-identification result is produced"
+    ],
+    "claim_level": {
+      "level": "C2",
+      "scheme": "roadmap_rescue_v1"
+    },
+    "claim_tier": "diagnostic_only",
+    "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    "generating_command": "python3 -B scripts/codex_harness/run_pr285_pillar_t_adjudication.py build",
+    "generation_identity": {
+      "git_commit": null,
+      "mode": "external_candidate_seal_required",
+      "source_binding_set_sha256": "b8a9b1e05049e1f32162ac3ee330ed698851128118597a33e49ef914f580a286",
+      "worktree_state": "external_seal_bound"
+    },
+    "observed_data_executed": false,
+    "owner": "COMMON",
+    "public_use": false,
+    "scope": "pre-solver complete row-level theorem disposition",
+    "transfer_source": "none"
+  },
+  "mutation_registry": [
+    {
+      "expected_kill": "exact 65-row inventory mismatch",
+      "mutation_id": "MU285-DROP-SOURCE-ROW",
+      "mutation_kind": "omit_one_legacy_row"
+    },
+    {
+      "expected_kill": "exact 14-row inventory mismatch",
+      "mutation_id": "MU285-DROP-VT-ROW",
+      "mutation_kind": "omit_one_vector_tensor_row"
+    },
+    {
+      "expected_kill": "terminal vocabulary rejection",
+      "mutation_id": "MU285-BARE-NOT-ADJUDICATED",
+      "mutation_kind": "replace_terminal_verdict_with_bare_source_status"
+    },
+    {
+      "expected_kill": "statement identity replay rejection",
+      "mutation_id": "MU285-WEAKEN-STATEMENT",
+      "mutation_kind": "alter_statement_without_matching_source_identity"
+    },
+    {
+      "expected_kill": "exact source premise and domain status replay rejection",
+      "mutation_id": "MU285-LEGACY-STATUS-FLATTENED",
+      "mutation_kind": "replace_a_declared_legacy_premise_and_domain_status_with_source_not_typed"
+    },
+    {
+      "expected_kill": "four-axis aggregate rejection",
+      "mutation_id": "MU285-CAS-AXIS-OMITTED",
+      "mutation_kind": "delete_one_required_axis"
+    },
+    {
+      "expected_kill": "exact aggregate rule rejection",
+      "mutation_id": "MU285-CAS-MAJORITY-VOTE",
+      "mutation_kind": "three_axes_pass_one_axis_fail_but_aggregate_pass"
+    },
+    {
+      "expected_kill": "shared-contract identity rejection",
+      "mutation_id": "MU285-CAS-CONTRACT-DRIFT",
+      "mutation_kind": "axis_receipt_uses_different_contract_hash"
+    },
+    {
+      "expected_kill": "relation-to-source boundary rejection",
+      "mutation_id": "MU285-T8-GLOBAL-PROMOTION",
+      "mutation_kind": "restricted_local_chart_rendered_pass_for_global_separation"
+    },
+    {
+      "expected_kill": "withheld-extension boundary rejection",
+      "mutation_id": "MU285-T13-FULL-DYNAMICS-PROMOTION",
+      "mutation_kind": "partial_chain_rule_rendered_pass_for_full_evolution"
+    },
+    {
+      "expected_kill": "missing external geometry evidence rejection",
+      "mutation_id": "MU285-T14-NATIVE-PROMOTION",
+      "mutation_kind": "native_geometry_gate_rendered_pass"
+    },
+    {
+      "expected_kill": "exact failed-candidate terminal rejection",
+      "mutation_id": "MU285-PR190-REFUTATION-LAUNDERED",
+      "mutation_kind": "failed_full_interval_claim_rendered_pass_or_inconclusive"
+    },
+    {
+      "expected_kill": "claim firewall rejection",
+      "mutation_id": "MU285-CLAIM-CEILING-PROMOTION",
+      "mutation_kind": "public_observed_native_or_family_claim_enabled"
+    }
+  ],
+  "mutation_results": [
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "LEGACY_INVENTORY_MISMATCH",
+      "killed": true,
+      "mutation_id": "MU285-DROP-SOURCE-ROW",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "VT_INVENTORY_MISMATCH",
+      "killed": true,
+      "mutation_id": "MU285-DROP-VT-ROW",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "TERMINAL_VOCABULARY_INVALID",
+      "killed": true,
+      "mutation_id": "MU285-BARE-NOT-ADJUDICATED",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "STATEMENT_IDENTITY_DRIFT",
+      "killed": true,
+      "mutation_id": "MU285-WEAKEN-STATEMENT",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "LEGACY_PREMISE_DOMAIN_STATUS_DRIFT",
+      "killed": true,
+      "mutation_id": "MU285-LEGACY-STATUS-FLATTENED",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "CAS_REQUIRED_AXES_MISMATCH",
+      "killed": true,
+      "mutation_id": "MU285-CAS-AXIS-OMITTED",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "CAS_AGGREGATE_INVALID",
+      "killed": true,
+      "mutation_id": "MU285-CAS-MAJORITY-VOTE",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "CAS_CONTRACT_DRIFT",
+      "killed": true,
+      "mutation_id": "MU285-CAS-CONTRACT-DRIFT",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "VT_T8_SCOPE_PROMOTION",
+      "killed": true,
+      "mutation_id": "MU285-T8-GLOBAL-PROMOTION",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "VT_T13_SCOPE_PROMOTION",
+      "killed": true,
+      "mutation_id": "MU285-T13-FULL-DYNAMICS-PROMOTION",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "VT_T14_NATIVE_PROMOTION",
+      "killed": true,
+      "mutation_id": "MU285-T14-NATIVE-PROMOTION",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "PR190_REFUTATION_LAUNDERED",
+      "killed": true,
+      "mutation_id": "MU285-PR190-REFUTATION-LAUNDERED",
+      "survivor": false
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "kill_marker": "CLAIM_FIREWALL_DRIFT",
+      "killed": true,
+      "mutation_id": "MU285-CLAIM-CEILING-PROMOTION",
+      "survivor": false
+    }
+  ],
+  "pr_id": "PR-285",
+  "publication_group_id": "PG-PR285-PILLAR-T-ADJUDICATION",
+  "receipt_content_sha256": "3e70058559c8926d52ae97147d163c808bdf4223b0ae0462b0c8bf3148e4da53",
+  "rows": [
+    {
+      "adjudicated_statement": "Signed comparator identity and Domain-checked semantics",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P1",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P1"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P1",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "496f0b44ab6358e6c8fd85044d5f1381d64ecd3008ea7d49719500c7394ed471",
+      "source_statement": "Signed comparator identity and Domain-checked semantics",
+      "source_statement_identity_sha256": "491a24ee5397886ffd1d0c72d02cb16641b0dd9bc93bab402c382bc19a5e6778",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Diagnostic variables Q, F, Pi, G_F, and P_post are distinct",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P2",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P2"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P2",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "17e9f8ba8af49890879335b14c90edebb33db5efb5ba7e8024de0203daab50d7",
+      "source_statement": "Diagnostic variables Q, F, Pi, G_F, and P_post are distinct",
+      "source_statement_identity_sha256": "50227383aa6f260a8aa16df45a27ee46bfad67f9799a0d61d00048793d25e8f1",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Diagonal MES three-bound hierarchy",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "strictly positive multipole triples satisfying the hierarchy ordering"
+      ],
+      "frame_convention": "covariant CMB-frame multipole bounds (MES convention)",
+      "premise_status": "DECLARED",
+      "premises": [
+        "linearized almost-EGS covariant multipole hierarchy",
+        "diagonal (uncorrelated) bound combination",
+        "MES reduction assumptions C1 (spatial <= time derivative) and C2 (Theta t_R ~ 3)",
+        "admissibility ordering B_sigma > B_omega > B_accel (module raises otherwise)"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p3",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P3"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_NOT_READJUDICATED",
+      "row_id": "SIG-P3",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "71f64b021a0c2e11c72f37fca1b4465cb61477888ba1d34d5f741e3b0ae3ab22",
+      "source_statement": "Diagonal MES three-bound hierarchy",
+      "source_statement_identity_sha256": "00c0fd823ebbce03290bc4c949864afb44238f610ea0c5f2137450787ed67d74",
+      "statement_relation": "EXACT_SOURCE_REFERENCE",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "Frame-attribution safe-route correction",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p4",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P4"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P4",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "7304743cc111761d742ec28d591e9e0c8169afec93a96e5c27e8a56f1b1aafca",
+      "source_statement": "Frame-attribution safe-route correction",
+      "source_statement_identity_sha256": "6d0944cc64657deda7cabb87fa78566b1deee9a0f483c8316473bac8cfadcdf6",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Conditional Bianchi V momentum-response formula",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p5",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P5"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P5",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "e795f246101feb93682493a7e496910473521dfd2481910f9b80e7494cd431c7",
+      "source_statement": "Conditional Bianchi V momentum-response formula",
+      "source_statement_identity_sha256": "307ea01ec9cb887164561670ec3553b0c633f2e111fe91319049a6b3f544d00b",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Flat-FLRW first jet",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p6",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P6"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P6",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "ea95946cecefaf48ed55b914920b295bd45f9e25bd17c150769d1075990c601e",
+      "source_statement": "Flat-FLRW first jet",
+      "source_statement_identity_sha256": "9073bbea90cd6a8f00df21c7b747505f4a3b0457f054b0b477562db670fb7f32",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Non-collinear boost composition and first-jet separation",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p7",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P7"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P7",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "f77176fd5b634b3de2c0820a58a6efb3d0139e26b64ee7418a4c637f15a5a6d1",
+      "source_statement": "Non-collinear boost composition and first-jet separation",
+      "source_statement_identity_sha256": "570af4956379820f7d96aa49e67954980b5b15a83f555ed01b31634f99ff8c39",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Response rank and duplicated channels",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P8",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P8"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P8",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "06f8dcf5c874e55e5edaea3c6d4d2d67c78c1ceccd32e5ca13aefbd0f6de66ff",
+      "source_statement": "Response rank and duplicated channels",
+      "source_statement_identity_sha256": "76faae226e63f7fb9a181e03b6e5fa9964d64968630e2d947bbdb1249e962b0e",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Radial-vorticity blindness",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p9",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P9"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P9",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "d4809f2d9255aebf04dfb446f853dc07ffcfbb8ad5aa067316b76b48054ea280",
+      "source_statement": "Radial-vorticity blindness",
+      "source_statement_identity_sha256": "f21f61cfe40a209485c0e5d0dc70682ec6c36ca19581e3382f638454a61702d9",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Single-shell degeneracy and broad-depth rank recovery",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P10",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P10"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P10",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "e015755253b155d57e5a04da71e666e2c4b42e31197a2ed249b723f5e43caa42",
+      "source_statement": "Single-shell degeneracy and broad-depth rank recovery",
+      "source_statement_identity_sha256": "d190f9bcfa5cb7198e19d6ccad994f8cdf716085948eff9a00d18dc66988a157",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "PSD second-moment cone",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "PSD cone with registered ceiling intersections"
+      ],
+      "frame_convention": "comparator scalar sector (no sky frame)",
+      "premise_status": "DECLARED",
+      "premises": [
+        "M = diag(g) is positive semidefinite on the genuine second-moment sectors {Sigma2, W2, Omega_tilt}; the signed Delta Omega_k component rides a separate signed carrier (global M >= 0 is NOT asserted)",
+        "x_C = tr(C M) is linear in M (bit-identical to the scalar comparator)",
+        "admissible set is the PSD moment cone intersected with registered ceilings"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p11",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P11"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_NOT_READJUDICATED",
+      "row_id": "SIG-P11",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "9a14e2c3725668e76383ebb226c163e62c2c1cf00a7a76fc8734ab26f46fee73",
+      "source_statement": "PSD second-moment cone",
+      "source_statement_identity_sha256": "b5e094a1f44db17e7787c5c7fa4bf192a72fb75112ca7e0315d5b54cbb8dcaa9",
+      "statement_relation": "EXACT_SOURCE_REFERENCE",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "Scalar tilt trace is not sufficient",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p12",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P12"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P12",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "255d21c9aabb0e71687f7f54472acb1e8dd543d1b8107b5561bfc5e108edd81d",
+      "source_statement": "Scalar tilt trace is not sufficient",
+      "source_statement_identity_sha256": "4fef058a0342ef79cdb60ff3cdfe5e2890e297ece24abc4934726e2fe7a8b0da",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Shear memory of anisotropic stress",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p13",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P13"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P13",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "f036f89eb818ba2de22d5b0f00f019719735ba7a96cdf5733064a3dc8c648471",
+      "source_statement": "Shear memory of anisotropic stress",
+      "source_statement_identity_sha256": "b574b98d9aabb5b15313adae62ff8e849354dbdfa21dda2c7a1478fbf2711def",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Dust-FLRW oracle",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p14",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P14"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P14",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "3acb1ad36f1b3908e9a17249ef8782888da8bafbcc72e84b8783d2024c8cfc0f",
+      "source_statement": "Dust-FLRW oracle",
+      "source_statement_identity_sha256": "04d2374c14cb995702e1452b563f0bbcba57b001b488da35abb331e3942a2851",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Quadrupole filling under registered closure",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p15",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P15"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P15",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "4e27de901d7db1b21f706be6dc04a8c2dbc737c56c2197c9676acd4f4ae29a23",
+      "source_statement": "Quadrupole filling under registered closure",
+      "source_statement_identity_sha256": "e38173585a3261bf339aee16619413b442ea063d820468b2060ec37ee9216792",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Single-sky sampling dispersion",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P16",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P16"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P16",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "4eb1b362a746e38081abd136e4a7a80724f70013b1fbc8d24fcc17662767f193",
+      "source_statement": "Single-sky sampling dispersion",
+      "source_statement_identity_sha256": "260c4c86bc225e2fc80a1365184cd665f9187054aab51807afd60174d17609a7",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Multi-ell Fisher floor and transfer-profile refinement",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P17",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P17"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P17",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "4acdc7cb891efa8baef3c603358d61051c6f2b048cdce87044fedbf04973c101",
+      "source_statement": "Multi-ell Fisher floor and transfer-profile refinement",
+      "source_statement_identity_sha256": "ea3c1e1cad7b62193f06f64edd0c340cd4c449fe8e0be61eafa6148af4d0da6d",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Graded rank-2 comparator",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "source CHECKED status is not a PR-271 proof verdict",
+        "tensor reduction does not widen the scalar source domain"
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "registered response map on the graded comparator"
+      ],
+      "frame_convention": null,
+      "premise_status": "DECLARED",
+      "premises": [
+        "the registered response map only is used (no transfer/mask extension)",
+        "reachable eigen-directions have rank 2",
+        "{W2, Omega_k} is a joint structural null of the registered map"
+      ],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P18",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P18"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_WITH_SCALAR_REDUCTION",
+      "row_id": "SIG-P18",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "7eec7b9abbbc7eee62a8ef693d1e9c1f94707353e61a9901fe3335524a572147",
+      "source_statement": "Graded rank-2 comparator",
+      "source_statement_identity_sha256": "340a741d1ce0d01d3de805367202ae2d45a2af523d2aa3bacca35a191a053133",
+      "statement_relation": "REFERENCE_RESOLVED_WITH_SCALAR_REDUCTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "Exceedance and e-value calibration",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P19",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P19"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P19",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "f478a6c247469f25ea4a1f9ea3c68285f7543dccee5dd57b6d085ce140fc65d4",
+      "source_statement": "Exceedance and e-value calibration",
+      "source_statement_identity_sha256": "0211e62b19d57f1764981d700668024123aeaad5fd19b1b5957c8798c874e5b3",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Rao-Blackwell reachable-sector domination",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P20",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P20"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P20",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "abe6c86969b0e94f37dbd950749eb6e3b4ca18156c81c514fa179822cd6d74b9",
+      "source_statement": "Rao-Blackwell reachable-sector domination",
+      "source_statement_identity_sha256": "66c405e9998ddd78e0d2f0f019c8e8f01deff22cadae285de657ef83bfd4c685",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Volterra depth-memory representation",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p21",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P21"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P21",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "6519b2d5b1d8269d92f9729345bd864b6f6ff34e03251d9c9748cf8a36a8fed3",
+      "source_statement": "Volterra depth-memory representation",
+      "source_statement_identity_sha256": "70e7b6d6cd417813618e5f96629827bb7ecf952118e40f7c145a5634c81f553d",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Transverse reopening of the vorticity sector",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p22",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P22"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P22",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "2d05b5e193dc9c5135b624a768cad9fa84da5584fa273dc8ca83881d37228632",
+      "source_statement": "Transverse reopening of the vorticity sector",
+      "source_statement_identity_sha256": "a5bf59b2873d07f3865184c9b10827d32aeea4da16cf3acafac277fa1b1be26f",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Diagonal covariance compression loses morphology",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P23",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P23"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P23",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "c28a1a18fa12ac8697e1652b34c0191e486278d56adaa791a49601449fbb5b17",
+      "source_statement": "Diagonal covariance compression loses morphology",
+      "source_statement_identity_sha256": "3848fe99214bbbcfa6b86a84fa1274cb7dd7b4086cba68b41c61ebb84440f858",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Full-covariance MES tightening",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P24",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P24"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P24",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "e1e07314da072b495108e1ed7520408d9c049ee9655fd104037f6f8b49dd92a6",
+      "source_statement": "Full-covariance MES tightening",
+      "source_statement_identity_sha256": "77b91c26b74fe86db1c90d0ea8bcedf269ff60e38a5366e92598f4b615ac612a",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Rank-failure no-result and morphology information gain",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P25",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P25"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P25",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "32fdde6052a1a4750be0e7ccb53e821c49dc1aee97dbee92394e8a46b9dff0f1",
+      "source_statement": "Rank-failure no-result and morphology information gain",
+      "source_statement_identity_sha256": "9d3144235524f45645b4cf2c660f666961439121f30095178833edb9d64eebcd",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Partial-identification interval for x_C (one-sided nonnegative cone)",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P26",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P26"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P26",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "0aec3a8ab825f50409ef9c5a492fa8072796259d6652d35ef9f85767de18566e",
+      "source_statement": "Partial-identification interval for x_C (one-sided nonnegative cone)",
+      "source_statement_identity_sha256": "ae10c1393f3684214d40f749ba32c308293282042cc4e09eda1f9a52c93e3915",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "MES-rank route reconciliation",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p27",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P27"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P27",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "3fecb1886a416c3b140207bf95f70bd7206d65e6897f1d342e1ee1b792c51c95",
+      "source_statement": "MES-rank route reconciliation",
+      "source_statement_identity_sha256": "449a7b0b4242264c26c7a6246a2ea655c7c6813fe1954c7c4f66b38369e65f6a",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Posterior prior-exposure under null directions",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P28",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P28"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P28",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "4d142532a122c288b109dc3c594e77f6537755942d1fe4beefb73524110f4ce6",
+      "source_statement": "Posterior prior-exposure under null directions",
+      "source_statement_identity_sha256": "8090ccd29c68314d34918b954e738d5baa0e12203f33bc41f03bd91048febb2e",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Finite-cover e-value combination",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P29",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P29"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P29",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "f83752667d75dfb9020938741cf739859ff6107ba46e760fc56e5ae6a3e76721",
+      "source_statement": "Finite-cover e-value combination",
+      "source_statement_identity_sha256": "13ebff00302dd8e3c7e1591ed8ce373878039673a881496d35688a63046edc18",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Parameter duplication versus observation duplication",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P30",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P30"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P30",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "58b1d592b00b0f26221b5dad1495c689cc39030512db6499f56e5e7a183894e9",
+      "source_statement": "Parameter duplication versus observation duplication",
+      "source_statement_identity_sha256": "254ca71739ab4ca88f9ae9622e09862519ecf2fb5555ef5ee74eaab736eb3921",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Identified-set sharpness over PSD and ceiling cones",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P31",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P31"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P31",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "8f84872529fd48d044694269470e7f1cd46ab0af62190bde9d1d5617a21a124c",
+      "source_statement": "Identified-set sharpness over PSD and ceiling cones",
+      "source_statement_identity_sha256": "f214cf4e9dbe8684c6292c52be8c803c676739bd6da8d42a1146ee2073db9e1f",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Optical ansatz branch identifiability",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p32",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P32"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P32",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "449e73d0f9de60e88676f30219ecafd4c0edc9b2582db9286502a45c1f26382b",
+      "source_statement": "Optical ansatz branch identifiability",
+      "source_statement_identity_sha256": "d9f1a1622ce3317b56548548dfc8bb4a4d2ebdc573c33ee916f6bca549825f4b",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Depth-gap delta-method propagation",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P33",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P33"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P33",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "a2090b5faa6a6c4524f212037d56df51d3084746f084e0448abd9c21140c96b9",
+      "source_statement": "Depth-gap delta-method propagation",
+      "source_statement_identity_sha256": "e4e683dfc7511a084ed72e9af0ad524217cea53da5909f704fd7132d24cafffd",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Vector-g response covariance propagation",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P34",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P34"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P34",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "0fa6e1535817b55135e0297f6920f666872d6585a2779cc4b341fe4698c2bf84",
+      "source_statement": "Vector-g response covariance propagation",
+      "source_statement_identity_sha256": "91deda6cfa56638ed561e10cecefbecc3c76de2b6faf394621fa155ec4434698",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Two-stage identified-set coverage with Imbens-Manski endpoint correction",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P35",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P35"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P35",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "9eaf4244c5fb1aac74154471ce42eb0c557696e1176add189a0017ea4186e46b",
+      "source_statement": "Two-stage identified-set coverage with Imbens-Manski endpoint correction",
+      "source_statement_identity_sha256": "fff15f6840f3bc27e6f53b0b5e87e67b92d766e6bc2130b072f9269cb7d3d304",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Joint-feasible-set depth-gap interval propagation (\"strict whenever\")",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P36",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-P36"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-P36",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "5cc6ad9822e5cb0a7a191e12a0de6eb2422966a26f7a87052078f1daba3a67d5",
+      "source_statement": "Joint-feasible-set depth-gap interval propagation (\"strict whenever\")",
+      "source_statement_identity_sha256": "bfd792651193429bd0b8f16ee97cbb73ee6cca3a2511cb2f5e9728cabc3ed0fe",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Signed-box two-branch identified interval (curvature signed, two-sided)",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "source CHECKED status is not a PR-271 proof verdict",
+        "tensor reduction does not widen the scalar source domain"
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "registered box bounds; branch intervals [11/100,17/100] and [9/100,17/100]"
+      ],
+      "frame_convention": null,
+      "premise_status": "DECLARED",
+      "premises": [
+        "signed-box component model for the comparator budget",
+        "two-branch split by curvature sign (open vs all-curvature)",
+        "registered box ceilings"
+      ],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T1p",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-T1p"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_WITH_SCALAR_REDUCTION",
+      "row_id": "SIG-T1p",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "a308e1901a4d3ff962dd8d89346e051c69c5b931e4cbd0e0f8a6b057980e6573",
+      "source_statement": "Signed-box two-branch identified interval (curvature signed, two-sided)",
+      "source_statement_identity_sha256": "2108d52681dc028371a217839f7f991bf2c725bffe8f1f0e7fc0495b3940d4e6",
+      "statement_relation": "REFERENCE_RESOLVED_WITH_SCALAR_REDUCTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "Lower-gap monotonicity of the all-curvature branch (|c_k| U_k)",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "source CHECKED status is not a PR-271 proof verdict",
+        "tensor reduction does not widen the scalar source domain"
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "nonnegative curvature ceilings"
+      ],
+      "frame_convention": null,
+      "premise_status": "DECLARED",
+      "premises": [
+        "all-curvature branch lower endpoint x_lo(U_k_max) = x_lo(0) - |c_k| U_k_max",
+        "upper endpoints of the two branches coincide"
+      ],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-DL1",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-DL1"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_WITH_SCALAR_REDUCTION",
+      "row_id": "SIG-DL1",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "e9fc331d89ca6634dc04e0692c81b74933cfd82e484df951fe18124f6fb1df07",
+      "source_statement": "Lower-gap monotonicity of the all-curvature branch (|c_k| U_k)",
+      "source_statement_identity_sha256": "423851358a0dbff7dfb1eb8c7d749215cb50737851c3a91d19f73f34a76facb9",
+      "statement_relation": "REFERENCE_RESOLVED_WITH_SCALAR_REDUCTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "Existence-level depth-gap strictness lemma (some endpoint strict iff a shared component conflicts)",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "source CHECKED status is not a PR-271 proof verdict",
+        "tensor reduction does not widen the scalar source domain"
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "registered coefficient domain excluding zero denominators"
+      ],
+      "frame_convention": null,
+      "premise_status": "DECLARED",
+      "premises": [
+        "existence-level statement only: some endpoint is strict iff a registered sign condition holds",
+        "the retracted per-endpoint iff (T2p) is not implied"
+      ],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-L-T2-EXIST",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-L-T2-EXIST"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_WITH_SCALAR_REDUCTION",
+      "row_id": "SIG-L-T2-EXIST",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "a9b555da81177a453f18326dbaa3543f3d24b2219046f1414fb2b6a7972e0954",
+      "source_statement": "Existence-level depth-gap strictness lemma (some endpoint strict iff a shared component conflicts)",
+      "source_statement_identity_sha256": "38163cb8b13a8fabf25d9587b9d7fedd07bbe87375e1c29d25190646affe5901",
+      "statement_relation": "REFERENCE_RESOLVED_WITH_SCALAR_REDUCTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "Depth-gap strictness per-endpoint iff via coefficient signs",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T2p",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-T2p"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-T2p",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "8dba8598c6677e8e22261720ceb8f783253b4d48f5a6a9e20af6f82fec62d056",
+      "source_statement": "Depth-gap strictness per-endpoint iff via coefficient signs",
+      "source_statement_identity_sha256": "c1f13d1f4d91158e5c148d0884c3cea02a07cbd9836ae72677a18c251017b184",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Signed-numerator domain repair of the fixed-pairing quotient interval",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T2pp",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-T2pp"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-T2pp",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "e213ce0ff1c0b970d7f61a1b27e67987f0953232de4587e606aceaeca6218d4e",
+      "source_statement": "Signed-numerator domain repair of the fixed-pairing quotient interval",
+      "source_statement_identity_sha256": "c2e60921a3211fbb2760d46311e2d21400e1e131c5619c9715da6324092cdb7c",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Linearized realization of the identified-interval endpoints",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-t3-lin",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-T3-lin"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-T3-lin",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "7b98e92b27a9110c4d6039c61ec5d9f54923ce0838ac80afa5942172795b00db",
+      "source_statement": "Linearized realization of the identified-interval endpoints",
+      "source_statement_identity_sha256": "a0827ccb07ac17624b1df5f7dfb560852e5ed861079b2b1d5e53c9e2c062a9d2",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Exact constraint-surface endpoint witnesses (homogeneous initial-data candidates)",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-t3-full",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-T3-full"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-T3-full",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "169b31fbf501a66c04ef02c464fecc1de2482cd79806f294214b4a1295a64740",
+      "source_statement": "Exact constraint-surface endpoint witnesses (homogeneous initial-data candidates)",
+      "source_statement_identity_sha256": "5cb875c0f74c8b62c438c9b5ecd6b822e5cee64dfab97c6ae9cc5129434b93ed",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Interior x_C-value family (two-segment exact sweep)",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-t3-int",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-T3-int"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-T3-int",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "499b7b0f83aa485f182c251294df0ca20e0ca6a8e91e6ba85664283c333fb486",
+      "source_statement": "Interior x_C-value family (two-segment exact sweep)",
+      "source_statement_identity_sha256": "3b6fa634cebc354f19a50dd7687d642fe9abe184641c946add07b3abedfd9bfb",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Estimated-covariance residual test is Hotelling T^2 / F",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T4p",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-T4p"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-T4p",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "b0c17d12d40e725c0a320b69bf8ebaed783b017eece2c52cd5a6d8693d600075",
+      "source_statement": "Estimated-covariance residual test is Hotelling T^2 / F",
+      "source_statement_identity_sha256": "ab4bb64439686714d0bf310acccc6ca2d7be218935faafd0b10807b99afd091d",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Exact deterministic-width Imbens-Manski endpoint coverage (special model)",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T5p",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-T5p"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-T5p",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "e92f69c88c95c0a6c71e331436e6415d6088b28642eb91b84716244510bdec1c",
+      "source_statement": "Exact deterministic-width Imbens-Manski endpoint coverage (special model)",
+      "source_statement_identity_sha256": "0ecb19f8d4082a22055569b13005b6fb27ec530dd568067c8145549e99822af5",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Noncentral-chi-square power monotonicity",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T8p",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-T8p"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-T8p",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "d37390c7dab27b4cfcfb0ad29a76ca14a9c0cac084355b3d5bdb7dd74d8800ea",
+      "source_statement": "Noncentral-chi-square power monotonicity",
+      "source_statement_identity_sha256": "0d0238ea2dfe90c644bab190f9de0d6b2ec2fd6904208965afb48ec448321ffb",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Multi-component tilt composition",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-t9p",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-T9p"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-T9p",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "b28509bbfa87ab3e6e93973cb94f6e9940d0f4920f973b7021f928d9cc06af19",
+      "source_statement": "Multi-component tilt composition",
+      "source_statement_identity_sha256": "d1963648f636e25a2f440c8ab667483430d773494391f25cfcac697f61840b55",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "MES coefficient provenance (sigma rederived bit-exact; omega/accel primary-sourced print-only; SAG1997 discrepancy documented)",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "MESa raw bound term lists as archived"
+      ],
+      "frame_convention": "covariant CMB-frame multipole bounds (MES convention)",
+      "premise_status": "DECLARED",
+      "premises": [
+        "transcription authority of the SHA-archived MESa raw bounds (eq 51/52)",
+        "C1: a spatial-gradient bound is <= the same-order time-derivative bound",
+        "C2: k-th time derivatives reduce by (1/(Theta t_R))^k with Theta t_R ~ 3"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-mes-prov",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-MES-PROV"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_NOT_READJUDICATED",
+      "row_id": "SIG-MES-PROV",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "d1a7b1dafc60d1094df50d702b083e9c92ec3d0a10d6cc03f27199bc4cc20d26",
+      "source_statement": "MES coefficient provenance (sigma rederived bit-exact; omega/accel primary-sourced print-only; SAG1997 discrepancy documented)",
+      "source_statement_identity_sha256": "709185c38f89b4ce43aa7187486e0f1c2a05bedd5e93d0b7e2df886d3035c4d4",
+      "statement_relation": "EXACT_SOURCE_REFERENCE",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "Beta-channel toy correspondence (s = tanh beta; pair-tilt map s^2 = t/(2+t))",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-u1",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-U1"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-U1",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "e3dd49c547c2afc32ec1db58a9007f24aca874e018ecea1cd1956799fcde6283",
+      "source_statement": "Beta-channel toy correspondence (s = tanh beta; pair-tilt map s^2 = t/(2+t))",
+      "source_statement_identity_sha256": "cef8c494d7da66641b6a33382d63988d3039843f334018bb6d928efde141ce10",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Fingerprint envelope ceilings at eps1 (exact rationals)",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-u2",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-U2"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-U2",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "572a1bc7c1d6e398aef45bb26b98bf63ac602ff95d3622fae21cbff8fec56136",
+      "source_statement": "Fingerprint envelope ceilings at eps1 (exact rationals)",
+      "source_statement_identity_sha256": "60ca69f1e0d69ec450f4fb1e0fd11a5ab2e186136526eee452a5d480d79f2e21",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Rank-2 response schema correspondence (comparator and Teff lanes)",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-U3",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-U3"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-U3",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "a6bd557de92f9e2f99e9f0e21643c27323b2c607364e72a13e496019a3bc4068",
+      "source_statement": "Rank-2 response schema correspondence (comparator and Teff lanes)",
+      "source_statement_identity_sha256": "24348ddc0f4d9bdad335983db0c87340c929937f26abb5368367e30ed4d0f602",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Teff fingerprint statistical closure (IM coverage + Hotelling calibration)",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-U4",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-U4"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-U4",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "a71fa29efd5786cfcfec0269868c1a89d28691291340687c221ec3026ebc949d",
+      "source_statement": "Teff fingerprint statistical closure (IM coverage + Hotelling calibration)",
+      "source_statement_identity_sha256": "28d5837b338f7539070d11fb2d8d4b29a0509cf18a2ca90af459d699b5bf58b4",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "General fractional-program interval theorem (product relaxation; per-endpoint diagonal-attainment iff; argmin/argmax corollary)",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "source CHECKED status is not a PR-271 proof verdict",
+        "tensor reduction does not widen the scalar source domain"
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "S = [0, 1] with strictly positive denominator"
+      ],
+      "frame_convention": null,
+      "premise_status": "DECLARED",
+      "premises": [
+        "product relaxation of the fractional program",
+        "diagonal-attainment criterion",
+        "argmin/argmax intersection corollary for N > 0"
+      ],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T2G",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-T2G"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_WITH_SCALAR_REDUCTION",
+      "row_id": "SIG-T2G",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "fba7ade0762c9b49dbcd6c59d5c5a508aa29ba816ad5c2116a8c270e01dce780",
+      "source_statement": "General fractional-program interval theorem (product relaxation; per-endpoint diagonal-attainment iff; argmin/argmax corollary)",
+      "source_statement_identity_sha256": "2e3f9ef5f729e7ed25556ac2849fcc62344720dfb32a851a30e94635643458a6",
+      "statement_relation": "REFERENCE_RESOLVED_WITH_SCALAR_REDUCTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "Two-temperature fingerprint sum bound R3 + R5 >= 2 (exact factorization mu3*mu5 - mu4^2 = s^2 (1-s^2)^3)",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "s in [0, 1]"
+      ],
+      "frame_convention": "Teff fingerprint lane (no sky frame)",
+      "premise_status": "DECLARED",
+      "premises": [
+        "fingerprint ratios R3, R5 from the registered two-temperature family",
+        "equality holds iff s = 0"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-tsum",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-TSUM"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_NOT_READJUDICATED",
+      "row_id": "SIG-TSUM",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "ac6dd96c992a004eca994cd7a395bb2ce778f0c598e4f2678573d9cedc554145",
+      "source_statement": "Two-temperature fingerprint sum bound R3 + R5 >= 2 (exact factorization mu3*mu5 - mu4^2 = s^2 (1-s^2)^3)",
+      "source_statement_identity_sha256": "7d28cc90eb778cacae7bd9fd6c5df2a2e57963b034e42ae8ae6d8f98a829fdd9",
+      "statement_relation": "EXACT_SOURCE_REFERENCE",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "Teff fingerprint statistical closure, v9 rerun (full MC provenance, Wilson CIs, pre-registered acceptance)",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-U4-v9",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-U4-v9"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-U4-v9",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "317075b92939d81e505f02c8ed73281006ee56386feb19a4a1c2d6b0ba8f3cac",
+      "source_statement": "Teff fingerprint statistical closure, v9 rerun (full MC provenance, Wilson CIs, pre-registered acceptance)",
+      "source_statement_identity_sha256": "8cd844a8753091b030abfdd63737a5b2372624f9468cdc2aa5579b381bdc96ff",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "MES coefficient branch registry (MES-G verified geodesic / MES-NG unverified non-geodesic / ACCEL withheld) + eps1 attribution triple",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "registered branch table (geodesic verified; non-geodesic print-only)"
+      ],
+      "frame_convention": "covariant CMB-frame multipole bounds (MES convention)",
+      "premise_status": "DECLARED",
+      "premises": [
+        "frozen registry values unchanged (byte-identity guard)",
+        "ceiling map W2_max = (3/2) B_omega^2 under the registered convention W2 = omega^2/(6 H^2)",
+        "branch provenance disclosed per source accessibility"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-mes-br",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-MES-BR"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_NOT_READJUDICATED",
+      "row_id": "SIG-MES-BR",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "d290aa3d4005075dce14a83af40463c4f048a4e2cb7bffee0dad75ee93cd285d",
+      "source_statement": "MES coefficient branch registry (MES-G verified geodesic / MES-NG unverified non-geodesic / ACCEL withheld) + eps1 attribution triple",
+      "source_statement_identity_sha256": "3a9a3d96ba1d602ac56dc76fc7fe8c4f6c389fb998fbda0b14dd079796a66134",
+      "statement_relation": "EXACT_SOURCE_REFERENCE",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "Tilted-LRS Bianchi V evolution seal (constraint preservation monitored on non-vacuum trajectories; P5 exact-rapidity relation holds dynamically)",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-bv-dyn",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-BV-DYN"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-BV-DYN",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "3aeb84031b7826fa94bdbb6f70ac758d3923fa6207190496e5d9c42493d95862",
+      "source_statement": "Tilted-LRS Bianchi V evolution seal (constraint preservation monitored on non-vacuum trajectories; P5 exact-rapidity relation holds dynamically)",
+      "source_statement_identity_sha256": "455e8b01219ce39c1f2f73dcac3ef2ebf6fdb04c1145a8de5a8d1f6ecd58c07d",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "K5/CF4 identified-interval card v9 (three labeled W^2 ceiling branches x two curvature branches)",
+      "branch_convention": null,
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "premises or domains cannot be inferred from a title"
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": null,
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-K5-CARD-v2",
+        "docs/research_program/vector_tensor/pr271_spec.yaml#legacy_pillar_s",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-K5-CARD-v2"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-K5-CARD-v2",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "S",
+      "source_record_sha256": "be8a6103ffdeba6af7de6b9e234d68f211e7e36fa300e19148f1beb10ad6885d",
+      "source_statement": "K5/CF4 identified-interval card v9 (three labeled W^2 ceiling branches x two curvature branches)",
+      "source_statement_identity_sha256": "6b3ef14ac365d658d5b78d1c82e66430c417b0be5cb95a40680fae42b1f805f0",
+      "statement_relation": "SOURCE_TITLE_ONLY_NO_PREMISE_INVENTION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "King-Ellis tilted-congruence frame kinematics + constraint algebra (items 1-7 of the rotating-congruence program)",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-ke-frame",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-KE-FRAME"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-KE-FRAME",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "443a3f7fa3ff15aded261304efcece7a626cb33fb07dff2751fe0c51cea1f096",
+      "source_statement": "King-Ellis tilted-congruence frame kinematics + constraint algebra (items 1-7 of the rotating-congruence program)",
+      "source_statement_identity_sha256": "986735c02f5d2b6dde851d70a884234a67a125db4829291f8add5d1dbdc39ea0",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Exact vorticity classification of group-invariant tilted congruences (corrects the blanket Omega_k=0 irrotationality reading)",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-ke-obs",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-KE-OBS"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-KE-OBS",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "01f2090e41cd89354dbb3212fde6b720728f266f917d307b962bf5a5cc4b6bf9",
+      "source_statement": "Exact vorticity classification of group-invariant tilted congruences (corrects the blanket Omega_k=0 irrotationality reading)",
+      "source_statement_identity_sha256": "9fa2733a1679eaa20f4c9d3d91c8f6865c0cdb96e174ce259e5a2ed6e6dd21e7",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Rotating perfect-fluid development at Omega_k>0 + the double Omega_k=0 obstruction (items 8-10)",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-ke-dyn",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-KE-DYN"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-KE-DYN",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "d65b8853b0f9b94a81402608011fc9ad4b6c040082f05765f5fa796013259bd9",
+      "source_statement": "Rotating perfect-fluid development at Omega_k>0 + the double Omega_k=0 obstruction (items 8-10)",
+      "source_statement_identity_sha256": "461c4f0d3ea296df98409c16f67259758924687cd2ac71a0db43b7b0b25ad494",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "Higher-order anisotropic-Omega_k re-opening transfer (curvature-shear slaving) + finite attribution/class-conditional ceilings",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed."
+      ],
+      "domain_status": "SOURCE_NOT_TYPED",
+      "domains": [],
+      "frame_convention": "SOURCE_NOT_TYPED",
+      "premise_status": "SOURCE_NOT_TYPED",
+      "premises": [],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-omk-reopen",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-OMK-REOPEN"
+      ],
+      "proof_record_verdict": "INCONCLUSIVE_MISSING_SIGNATURE",
+      "row_id": "SIG-OMK-REOPEN",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "07c310412fd97574a17ddf98036fc47e8976d0ad3a3877f5b51996d9b51e7967",
+      "source_statement": "Higher-order anisotropic-Omega_k re-opening transfer (curvature-shear slaving) + finite attribution/class-conditional ceilings",
+      "source_statement_identity_sha256": "f3ebe67e5d5c86ae8d87a1c1f98b69e02811f006efc40d8aa8fab65d275921c8",
+      "statement_relation": "SOURCE_SIGNATURE_MISSING",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The frozen source row remains title-only; its exact premise and domain metadata are preserved, but do not establish an adjudicated typed theorem."
+    },
+    {
+      "adjudicated_statement": "MES geodesic derivation + re-freeze of the vorticity-ceiling anchor (W2_max 1.3087e-6 -> 3.3789e-13)",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "geodesic branch at the registered eps values"
+      ],
+      "frame_convention": "covariant CMB-frame multipole bounds, SAG observer-motion convention",
+      "premise_status": "DECLARED",
+      "premises": [
+        "geodesic congruence u_dot = 0 (MESa p.123)",
+        "SAG observer-motion convention eps1 = 0 (the observed dipole is observer motion)",
+        "hierarchy preservation B_sigma > B_omega excludes the full-dipole ceiling (e1_crit = (43/25) eps2 + (9/35) eps3)"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-mes-refreeze",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-MES-REFREEZE"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_NOT_READJUDICATED",
+      "row_id": "SIG-MES-REFREEZE",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "8a33b254f2d920cca7f1342bdf07470e102944e2237ebba2f3408f37877457e0",
+      "source_statement": "MES geodesic derivation + re-freeze of the vorticity-ceiling anchor (W2_max 1.3087e-6 -> 3.3789e-13)",
+      "source_statement_identity_sha256": "6e20d9965c190c9f740798733484df7e30d2282647b761f17bdf7a97af646e44",
+      "statement_relation": "EXACT_SOURCE_REFERENCE",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "MESb web-trace + refutation of the in-house non-geodesic bounds; geodesic vorticity anchor re-adopted from three primary sources",
+      "branch_convention": "SOURCE_NOT_TYPED",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative."
+      ],
+      "domain_status": "DECLARED",
+      "domains": [
+        "accessible-source claims about the MESb branch"
+      ],
+      "frame_convention": "covariant CMB-frame multipole bounds (MES convention)",
+      "premise_status": "DECLARED",
+      "premises": [
+        "only accessible, SHA-archived primary sources ground coefficient attributions",
+        "the in-house non-geodesic omega/accel reconstruction is refuted (appears in no accessible source; exceeds the companion's faithful cap at eps1 = 0)",
+        "the geodesic anchor survives adversarial refutation lanes"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-mes-mesb-trace",
+        "tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml#SIG-MES-MESB-TRACE"
+      ],
+      "proof_record_verdict": "REFERENCE_RESOLVED_NOT_READJUDICATED",
+      "row_id": "SIG-MES-MESB-TRACE",
+      "source_group": "legacy_signature_inventory",
+      "source_partition": "T",
+      "source_record_sha256": "1d07d1ab63a1a8f5f9a0a69b53fed6ed26190a966f0ff364e36d3f82a8b25b9e",
+      "source_statement": "MESb web-trace + refutation of the in-house non-geodesic bounds; geodesic vorticity anchor re-adopted from three primary sources",
+      "source_statement_identity_sha256": "1f0d8be3f5b71511e919277f8e0e138f2ca922235cb9aa762af5b71cce63680e",
+      "statement_relation": "EXACT_SOURCE_REFERENCE",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The referenced evidence is preserved, but the source row remains title-only and was explicitly not readjudicated under typed premises."
+    },
+    {
+      "adjudicated_statement": "Sigma2 = (sigma_ab sigma^ab)/(6 H^2) = (3/2) ||sigma/Theta||_F^2, and W2 = (omega_ab omega^ab)/(6 H^2) = (omega_a omega^a)/(3 H^2) = 3 ||omega/Theta||_2^2.",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "H or Theta zero",
+        "non-spatial or non-STF shear",
+        "polar rather than axial vorticity-vector convention"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "real finite components with H greater than zero"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "H is finite and strictly positive and Theta equals 3 H",
+        "sigma_ab is a spatial symmetric trace-free tensor",
+        "omega_ab is a spatial antisymmetric two-form with spatial dual omega_a"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t1",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse",
+        "docs/research_program/vector_tensor/pr269_spec.yaml#VT-T1"
+      ],
+      "proof_mode": "exact_algebra",
+      "proof_record_verdict": "PROVED_ANALYTIC",
+      "row_id": "VT-T1",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "READY_FOR_PROOF",
+      "source_statement": "Typed 1+3 normalization conversion",
+      "source_statement_identity_sha256": "b86a6fe617cb3becdd44d00f4e6d4db4655e1df59bf4d8cd1b4cdb94cb53c3b0",
+      "statement_relation": "TYPED_ELABORATION_WITH_EXPLICIT_PREMISES",
+      "verdict": "PASS",
+      "verdict_reason": "The exact typed statement passes under its declared premises and domain; no broader source or scientific claim is granted."
+    },
+    {
+      "adjudicated_statement": "p_{A(g y)}(g k) = p_{A(y)}(k)",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "non-invertible g",
+        "action-equivariance failure",
+        "non-absorbing body where the gauge is not finite"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "finite-dimensional real typed state space"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "g is an invertible linear action on the typed state space",
+        "each anchor body is nonempty, closed, convex, absorbing, and contains zero",
+        "A(g y) equals g A(y)"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t2",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse",
+        "docs/research_program/vector_tensor/pr269_spec.yaml#VT-T2"
+      ],
+      "proof_mode": "convex_analysis",
+      "proof_record_verdict": "PROVED_ANALYTIC",
+      "row_id": "VT-T2",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "READY_FOR_PROOF",
+      "source_statement": "Equivariant anchor-body gauge",
+      "source_statement_identity_sha256": "ebf150ccba26642e3cdd3942cb2303bd61598a207388f6dbfa8cd612cee095a2",
+      "statement_relation": "TYPED_ELABORATION_WITH_EXPLICIT_PREMISES",
+      "verdict": "PASS",
+      "verdict_reason": "The exact typed statement passes under its declared premises and domain; no broader source or scientific claim is granted."
+    },
+    {
+      "adjudicated_statement": "p_A(k) = sup_{phi in A_polar} abs(phi(k))",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "non-balanced A with an absolute-polar definition",
+        "non-closed or non-absorbing A without the required gauge closure"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "finite-dimensional real vector space and algebraic dual"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "A is closed, convex, balanced, absorbing, and contains zero",
+        "A_polar is defined by absolute dual pairing at most one"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t3",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse",
+        "docs/research_program/vector_tensor/pr269_spec.yaml#VT-T3"
+      ],
+      "proof_mode": "convex_analysis",
+      "proof_record_verdict": "PROVED_ANALYTIC",
+      "row_id": "VT-T3",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "READY_FOR_PROOF",
+      "source_statement": "Polar support-gauge duality",
+      "source_statement_identity_sha256": "b5468436d8491ce59a26136704f184eadc25d391a3032b7305b1a1fd295b3b2f",
+      "statement_relation": "TYPED_ELABORATION_WITH_EXPLICIT_PREMISES",
+      "verdict": "PASS",
+      "verdict_reason": "The exact typed statement passes under its declared premises and domain; no broader source or scientific claim is granted."
+    },
+    {
+      "adjudicated_statement": "x_phi <= p_A(k), so each typed directional stress is a certified lower bound",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "phi outside A_polar",
+        "signed phi(k) relabelled as the nonnegative x_phi",
+        "point estimate relabelled as a global equality"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "admissible directional functionals in the registered polar body"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "the VT-T3 anchor and polar premises hold",
+        "x_phi is typed as abs(phi(k)) for phi in A_polar"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t4",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse",
+        "docs/research_program/vector_tensor/pr269_spec.yaml#VT-T4"
+      ],
+      "proof_mode": "exact_algebra",
+      "proof_record_verdict": "PROVED_ANALYTIC",
+      "row_id": "VT-T4",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "READY_FOR_PROOF",
+      "source_statement": "Homogeneous functional stress lower bound",
+      "source_statement_identity_sha256": "893614eb4b8fc9129d0e8a3a19f9edabad498057197711b9a3ad99cc51a497db",
+      "statement_relation": "TYPED_ELABORATION_WITH_EXPLICIT_PREMISES",
+      "verdict": "PASS",
+      "verdict_reason": "The exact typed statement passes under its declared premises and domain; no broader source or scientific claim is granted."
+    },
+    {
+      "adjudicated_statement": "Delta = I2^3/2 - 3 I3^2 is the characteristic discriminant and Delta = I2^3(1-J_sigma^2)/2 for J_sigma = sqrt(6) I3/I2^(3/2). Thus abs(J_sigma) <= 1; equality is the repeated-eigenvalue stratum.",
+      "cas_evidence_scope": {
+        "aggregate": "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        "contract": "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "effect": "EXACT_REGISTERED_ALGEBRAIC_CORE_ONLY"
+      },
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "zero shear",
+        "non-STF matrix",
+        "complex spectrum"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "principal and repeated-eigenvalue shear strata"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "sigma is a real symmetric trace-free 3 by 3 matrix",
+        "I2 equals tr(sigma squared) and is strictly positive",
+        "I3 equals tr(sigma cubed)"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        "docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t5",
+        "docs/research_program/vector_tensor/pr270_spec.yaml#VT-T5"
+      ],
+      "proof_mode": "exact_algebra_four_axis_cas",
+      "proof_record_verdict": "PROVED_CAS4_EXACT",
+      "row_id": "VT-T5",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "READY_FOR_PROOF",
+      "source_statement": "Shear shape and discriminant strata",
+      "source_statement_identity_sha256": "e9af63c40c297f2f5db5375492b84d690b22003031509e743d5d1eb614ce5cf1",
+      "statement_relation": "EXACT_ELABORATION",
+      "verdict": "PASS",
+      "verdict_reason": "The exact typed statement passes under its declared premises and domain; no broader source or scientific claim is granted."
+    },
+    {
+      "adjudicated_statement": "sigma^3 = tr(sigma^2) sigma/2 + tr(sigma^3) identity/3, so every vector-shear contraction with power at least three reduces to powers zero, one, and two.",
+      "cas_evidence_scope": {
+        "aggregate": "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        "contract": "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "effect": "EXACT_REGISTERED_ALGEBRAIC_CORE_ONLY"
+      },
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "non-trace-free matrix without the missing trace terms"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "exact real trace-free matrix domain"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "sigma is a real trace-free 3 by 3 matrix"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        "docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t6",
+        "docs/research_program/vector_tensor/pr270_spec.yaml#VT-T6"
+      ],
+      "proof_mode": "exact_algebra_four_axis_cas",
+      "proof_record_verdict": "PROVED_CAS4_EXACT",
+      "row_id": "VT-T6",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "READY_FOR_PROOF",
+      "source_statement": "STF Cayley-Hamilton contraction reduction",
+      "source_statement_identity_sha256": "b30d185d66041521e63fd51ef6d41bcb1b3f453add42d2d37428dc789d56b458",
+      "statement_relation": "EXACT_ELABORATION",
+      "verdict": "PASS",
+      "verdict_reason": "The exact typed statement passes under its declared premises and domain; no broader source or scientific claim is granted."
+    },
+    {
+      "adjudicated_statement": "det[v,sigma v,sigma^2 v] equals v_1 v_2 v_3 product_{i<j}(lambda_j-lambda_i). Its square is the Krylov Gram determinant. The vector is cyclic exactly when the eigenvalues are simple and every eigenframe component is nonzero.",
+      "cas_evidence_scope": {
+        "aggregate": "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        "contract": "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "effect": "EXACT_REGISTERED_ALGEBRAIC_CORE_ONLY"
+      },
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "repeated eigenvalue",
+        "zero eigenframe component"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "principal cyclic and noncyclic boundary strata"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "sigma is diagonalizable over the reals with eigenvalues lambda_1..lambda_3",
+        "v has eigenframe coordinates v_1..v_3"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        "docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t7",
+        "docs/research_program/vector_tensor/pr270_spec.yaml#VT-T7"
+      ],
+      "proof_mode": "exact_algebra_four_axis_cas",
+      "proof_record_verdict": "PROVED_CAS4_EXACT",
+      "row_id": "VT-T7",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "READY_FOR_PROOF",
+      "source_statement": "Krylov determinant factorization and cyclicity",
+      "source_statement_identity_sha256": "8c3aad2f7de40d3e16a48031d8e795d851d9e89d8baa2535b9a0d5859b2c1844",
+      "statement_relation": "EXACT_ELABORATION",
+      "verdict": "PASS",
+      "verdict_reason": "The exact typed statement passes under its declared premises and domain; no broader source or scientific claim is granted."
+    },
+    {
+      "adjudicated_statement": "On the declared eigenframe slice the 14 chart coordinates have a nonzero exact Jacobian at a registered rational witness. Hence they are local coordinates on a generic principal/cyclic SO(3) quotient. The reference Krylov sign retains its declared O(3) parity.",
+      "cas_evidence_scope": {
+        "aggregate": "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        "contract": "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "effect": "EXACT_REGISTERED_ALGEBRAIC_CORE_ONLY"
+      },
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "repeated spectrum or noncyclic reference vector",
+        "local rank never proves global orbit separation or invariant completeness"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "registered principal cyclic SO(3) eigenframe chart"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "sigma has simple spectrum",
+        "one declared polar or axial reference vector is cyclic",
+        "the 14-coordinate chart uses I2, I3 and powers zero through two against four typed vectors"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        "docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t8",
+        "docs/research_program/vector_tensor/pr270_spec.yaml#VT-T8"
+      ],
+      "proof_mode": "constructive_invariant_theory_four_axis_cas",
+      "proof_record_verdict": "PROVED_CAS4_RESTRICTED_LOCAL_CHART",
+      "row_id": "VT-T8",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "READY_FOR_PROOF",
+      "source_statement": "Generic cyclic-chart SO3 reconstruction and parity-typed O3 quotient",
+      "source_statement_identity_sha256": "7392c8d3bf37e52fad34986ec9ed27db84dc5d4bad344c4cf8b03a6a2e86cb48",
+      "statement_relation": "RESTRICTED_GENERIC_LOCAL_ELABORATION",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The generic local-chart proof passes, but global orbit separation and invariant-ring completeness are explicitly withheld.",
+      "withheld_extension": "global orbit separation, invariant-ring completeness, or family identification"
+    },
+    {
+      "adjudicated_statement": "A polar vector transforms as R v and an axial vector as det(R) R w; polar-polar and axial-axial contractions are scalars, while polar-axial contraction is a pseudoscalar. Proper rotations preserve all contractions and reflections flip only pseudoscalars.",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "erasing polar or axial type",
+        "treating an O(3) reflection as an SO(3) action"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "O(3), with SO(3) as the determinant-positive subgroup"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "R is orthogonal in three spatial dimensions",
+        "polar and axial slots retain their parity types"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t9",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse",
+        "docs/research_program/vector_tensor/pr269_spec.yaml#VT-T9"
+      ],
+      "proof_mode": "representation_theory",
+      "proof_record_verdict": "PROVED_ANALYTIC",
+      "row_id": "VT-T9",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "READY_FOR_PROOF",
+      "source_statement": "Polar-axial parity transformation law",
+      "source_statement_identity_sha256": "df1225bb2cdf0aa42a3f1508ffa6610119a58992c51d8f6897ae5ea18b0866fb",
+      "statement_relation": "TYPED_ELABORATION_WITH_EXPLICIT_PREMISES",
+      "verdict": "PASS",
+      "verdict_reason": "The exact typed statement passes under its declared premises and domain; no broader source or scientific claim is granted."
+    },
+    {
+      "adjudicated_statement": "k = r u with r = p_A(k), u = k/r, and p_A(u) = 1; r and u are unique. The group orbit of u is the normalized orbit shape.",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "k equals zero",
+        "gauge has a nontrivial null direction",
+        "A is not group invariant when orbit invariance is claimed"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "nonzero finite-gauge states"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "A is a group-invariant gauge body",
+        "k is nonzero and r = p_A(k) is finite and strictly positive"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t10",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors",
+        "tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse",
+        "docs/research_program/vector_tensor/pr269_spec.yaml#VT-T10"
+      ],
+      "proof_mode": "group_action_convex_analysis",
+      "proof_record_verdict": "PROVED_ANALYTIC",
+      "row_id": "VT-T10",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "READY_FOR_PROOF",
+      "source_statement": "Anchor amplitude-orbit factorization",
+      "source_statement_identity_sha256": "232f2c385d601216825d4f541ef2bbd8136a71fd0cb4016a89f7efd335240684",
+      "statement_relation": "TYPED_ELABORATION_WITH_EXPLICIT_PREMISES",
+      "verdict": "PASS",
+      "verdict_reason": "The exact typed statement passes under its declared premises and domain; no broader source or scientific claim is granted."
+    },
+    {
+      "adjudicated_statement": "P_N=N(N^T N)^(-1)N^T is the nuisance projector and (I-P_N)R is the supported response quotient. Covariance-null directions are removed before, not conflated with, nuisance projection.",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "rank-deficient nuisance columns refuse",
+        "covariance-null removal cannot be relabelled nuisance projection"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "finite supported whitened coordinates"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "the observable covariance support has already been selected",
+        "the nuisance tangent has full declared column rank in supported coordinates"
+      ],
+      "proof_evidence": [
+        "htt/src/common/pillar_t_cas.py#supported_response_quotient",
+        "htt/src/common/anchored_response_geometry.py",
+        "tests/contracts/test_pillar_t_cas.py",
+        "docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t11",
+        "docs/research_program/vector_tensor/pr270_spec.yaml#VT-T11"
+      ],
+      "proof_mode": "linear_algebra",
+      "proof_record_verdict": "PROVED_CONDITIONAL_LINEAR_ALGEBRA",
+      "row_id": "VT-T11",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "CONDITIONAL_PROGRAM",
+      "source_statement": "Supported linear-response quotient",
+      "source_statement_identity_sha256": "3dd0846f726d26b743539b895e011d696939df822b439808df834ea7ff150321",
+      "statement_relation": "CONDITIONAL_LINEAR_ALGEBRA_CORE",
+      "verdict": "PASS",
+      "verdict_reason": "The exact typed statement passes under its declared premises and domain; no broader source or scientific claim is granted."
+    },
+    {
+      "adjudicated_statement": "G^T(I-LL^T)G has eigenvalues sin^2(theta_i), where theta_i are the principal angles. It is positive definite exactly when no global direction lies in the local tangent. Small positive angles are weak-identification, not rank deficiency.",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "a zero angle is overlap not positive separation",
+        "a small positive angle is weak identification not rank deficiency"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "finite-dimensional response tangent spaces"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "local and global tangent bases are orthonormal in supported whitened coordinates"
+      ],
+      "proof_evidence": [
+        "htt/src/common/pillar_t_cas.py#principal_angle_separation",
+        "htt/src/common/anchored_response_geometry.py",
+        "tests/contracts/test_pillar_t_cas.py",
+        "docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t12",
+        "docs/research_program/vector_tensor/pr270_spec.yaml#VT-T12"
+      ],
+      "proof_mode": "linear_algebra_statistical_information",
+      "proof_record_verdict": "PROVED_CONDITIONAL_LINEAR_ALGEBRA",
+      "row_id": "VT-T12",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "CONDITIONAL_PROGRAM",
+      "source_statement": "Local-global Schur and principal-angle identifiability",
+      "source_statement_identity_sha256": "2170703d0a88aa3bf5dcf057015b5604285ba2ef3fbe04a0cc84c9ed65dea601",
+      "statement_relation": "CONDITIONAL_LINEAR_ALGEBRA_CORE",
+      "verdict": "PASS",
+      "verdict_reason": "The exact typed statement passes under its declared premises and domain; no broader source or scientific claim is granted."
+    },
+    {
+      "adjudicated_statement": "dI2/dt=2 tr(sigma sigma_dot), dI3/dt=3 tr(sigma^2 sigma_dot), and J_sigma obeys the exact quotient chain rule recorded by the CAS contract.",
+      "cas_evidence_scope": {
+        "aggregate": "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        "contract": "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "effect": "EXACT_REGISTERED_ALGEBRAIC_CORE_ONLY"
+      },
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "I2 equals zero",
+        "no typed E H stress acceleration vorticity evolution branch is registered"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "exact invariant quotient-rule core only"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "sigma(t) is differentiable, symmetric, trace-free, and I2 is positive"
+      ],
+      "proof_evidence": [
+        "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+        "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+        "htt/src/common/pillar_t_cas.py#shape_chain_rule_core",
+        "docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t13",
+        "docs/research_program/vector_tensor/pr270_spec.yaml#VT-T13"
+      ],
+      "proof_mode": "covariant_dynamics_four_axis_cas",
+      "proof_record_verdict": "PARTIAL_CHAIN_RULE_CAS4",
+      "row_id": "VT-T13",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "CONDITIONAL_PROGRAM",
+      "source_statement": "Invariant 1+3 evolution identities",
+      "source_statement_identity_sha256": "40f76976739fdc9c5093a4c61214c07350aa6a1da46f137203e5ae378c37beff",
+      "statement_relation": "PARTIAL_CHAIN_RULE_ONLY",
+      "verdict": "INCONCLUSIVE_WITH_RECEIPT",
+      "verdict_reason": "The exact chain-rule core passes, but no typed full evolution law binds the requested covariant source decomposition.",
+      "withheld_extension": "The requested decomposition into E_ab, H_ab, pi_ab, A_a, and omega_a remains INCONCLUSIVE_MISSING_TYPED_EVOLUTION_LAW because no single branch/sign/domain convention is registered in the frozen inputs."
+    },
+    {
+      "adjudicated_statement": "Without an admitted Weyl/three-curvature/anisotropic-stress geometry payload and the future native morphology atlas, the only permitted output is a partial kinematic diagnostic report.",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        "a future geometry payload requires its own admission and validation",
+        "a future native atlas requires external null mask covariance and equivalence gates"
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "partial pre-solver kinematic diagnostics"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "no admitted native geometry payload or morphology atlas is in scope"
+      ],
+      "proof_evidence": [
+        "htt/src/common/pillar_t_cas.py#native_geometry_gate",
+        "docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t14",
+        "tests/contracts/test_pillar_t_cas.py",
+        "docs/research_program/vector_tensor/pr270_spec.yaml#VT-T14"
+      ],
+      "proof_mode": "covariant_geometry_native_gate",
+      "proof_record_verdict": "INCONCLUSIVE_NATIVE_GEOMETRY_GATE",
+      "row_id": "VT-T14",
+      "source_group": "vector_tensor_successor",
+      "source_program_status": "PROGRAM_OBLIGATION",
+      "source_statement": "Kinematic-to-geometric type escalation",
+      "source_statement_identity_sha256": "cd5bb39175c0b6ca0acf3d08334c7a1085c0df8027c07adbc8f8134cafbacd1d",
+      "statement_relation": "EXTERNAL_GATE_REFUSAL",
+      "verdict": "BLOCKED_WITH_RECEIPT",
+      "verdict_reason": "The required admitted native geometry payload and morphology atlas do not exist in the pre-solver repository.",
+      "withheld_extension": "INCONCLUSIVE_NATIVE_GEOMETRY_GATE"
+    },
+    {
+      "adjudicated_statement": "The lower endpoint, upper endpoint, and every interior value of the registered open-branch comparator interval [11/100, 17/100] are realized in one declared frame and convention by admissible Einstein-matter solutions.  Algebraic, constraint, local-dynamical, and global-dynamical sharpness are separate conjunctive levels; no lower level promotes a higher level.",
+      "claim_ceiling": "diagnostic_only",
+      "counterexample_boundary": [
+        {
+          "evidence_refs": [
+            "docs/research_program/THEOREM_REGISTRY.yaml#KE-DYN",
+            "docs/research_program/THEOREM_REGISTRY.yaml#T3-full"
+          ],
+          "level": "CONSTRAINT",
+          "premise_ids": [
+            "FROBENIUS-HYPERSURFACE-NORMAL",
+            "GAUSS-MOMENTUM-MATTER-COMPATIBILITY"
+          ],
+          "reason": "Bianchi-I hypersurface-normal Frobenius identity requires W2=0, but the same-frame target requires W2=1/25",
+          "status": "REFUTED",
+          "target_id": "PR190-LOWER-XC-11-100"
+        },
+        {
+          "evidence_refs": [
+            "docs/research_program/THEOREM_REGISTRY.yaml#T3-int",
+            "docs/research_program/THEOREM_REGISTRY.yaml#T3-full"
+          ],
+          "level": "CONSTRAINT",
+          "premise_ids": [
+            "FROBENIUS-HYPERSURFACE-NORMAL",
+            "GAUSS-MOMENTUM-MATTER-COMPATIBILITY"
+          ],
+          "reason": "Bianchi-I hypersurface-normal Frobenius identity requires W2=0, but the same-frame target requires W2=3/100",
+          "status": "REFUTED",
+          "target_id": "PR190-INTERIOR-XC-12-100"
+        }
+      ],
+      "domain_status": "TYPED_AND_FROZEN",
+      "domains": [
+        "registered open-branch comparator interval [11/100, 17/100]",
+        "admissible Einstein-matter solutions in the registered homogeneous congruence"
+      ],
+      "premise_status": "TYPED_AND_FROZEN",
+      "premises": [
+        "one declared frame and convention applies to every target",
+        "lower endpoint, upper endpoint, and every interior value must all be admissible Einstein-matter solutions",
+        "algebraic, constraint, local-dynamical, and global-dynamical sharpness are conjunctive"
+      ],
+      "proof_evidence": [
+        "docs/research_program/strengthening/pr190_spec.yaml",
+        "docs/generated/pr190_attainability/attainability_report.json",
+        "docs/research_program/strengthening/pr190_cas/CAS_ADJUDICATION.json"
+      ],
+      "row_id": "C-PR190-FULL-COMPARATOR-ATTAINABILITY",
+      "source_group": "failed_candidate",
+      "source_statement": "The lower endpoint, upper endpoint, and every interior value of the registered open-branch comparator interval [11/100, 17/100] are realized in one declared frame and convention by admissible Einstein-matter solutions.  Algebraic, constraint, local-dynamical, and global-dynamical sharpness are separate conjunctive levels; no lower level promotes a higher level.",
+      "source_statement_identity_sha256": "356b3dcdd5a363d47fdc40c2b02229fcacf9bf11842f8b43449259ede0b43177",
+      "statement_relation": "EXACT_REGISTERED_FAILED_CANDIDATE",
+      "success_dependency_satisfied": false,
+      "terminal_source_status": "COMPLETED_FAILED_WITH_RECEIPT",
+      "verdict": "FAIL",
+      "verdict_reason": "The registered full conjunctive statement is refuted at the constraint level by exact same-frame Frobenius contradictions; no weaker statement is substituted."
+    }
+  ],
+  "schema": "htt.pr285.pillar_t_complete_adjudication_receipt.v1",
+  "scientific_status_effect": "ROW_LEVEL_TERMINAL_DISPOSITION_ONLY",
+  "source_binding_map": {
+    "docs/generated/pr190_attainability/attainability_report.json": "580aa9e36ac5419c7364ca6b295dece08c39c8ca1f91962d25c63d32fd3cf426",
+    "docs/research_program/post_pr275/pr285_publication_policy.json": "20c16524a86ca61ef33a5f3894c7ebc48eeeebe708eb7556725c025185cfe878",
+    "docs/research_program/post_pr275/pr285_spec.yaml": "481aba93390cf8aa0fe79f17036197bf76b7e98bc4b821cc198adea4deee98ee",
+    "docs/research_program/strengthening/pr190_spec.yaml": "74872439326b0973ab69de3628f279dd3fad46bf83aa17641e49477aa167b73f",
+    "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml": "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
+    "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml": "055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9",
+    "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json": "a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275",
+    "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json": "2d2ceb84603b24ab0b34db8b69715483061428ee36d6b2f5952494a9bb8108b4",
+    "docs/research_program/vector_tensor/cas/CAS_RUN_SPEC.json": "fc8b55a6a56cb0744a6f815c12f758df63122061070adb46f9a6f45930ca5904",
+    "docs/research_program/vector_tensor/pr269_spec.yaml": "510e7513ee058d9d20aa6a399a431cc24e013f721a5af6d3a794c7690d4164e7",
+    "docs/research_program/vector_tensor/pr270_spec.yaml": "439b331d6b8e8c0d51ef2a75bd22dbea4a3699ee9e6afbbe88b66bb4be11da8d",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e",
+    "docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml": "8f2faf3847f21d2a903bd143ba35ee123ad24256da42e3e1444ad991ade7a27e",
+    "docs/research_program/vector_tensor/proofs/PILLAR_T_CORE_PROOFS_V1.yaml": "808c69ca1111591a6d6b52079b6caa7889a838009540ef9959a077640dcdc1d6",
+    "scripts/codex_harness/run_pr285_pillar_t_adjudication.py": "4cae2b46b32ca4aa7bd0f5833044617202baaab485877213615abe2b31570312",
+    "tests/contracts/test_pillar_t_complete_adjudication.py": "991dca1420c97971a9979275832e4f38d50f2979647cbe3e5c711c61ebae6801"
+  },
+  "source_bindings": [
+    {
+      "path": "docs/research_program/post_pr275/pr285_spec.yaml",
+      "sha256": "481aba93390cf8aa0fe79f17036197bf76b7e98bc4b821cc198adea4deee98ee"
+    },
+    {
+      "path": "docs/research_program/post_pr275/pr285_publication_policy.json",
+      "sha256": "20c16524a86ca61ef33a5f3894c7ebc48eeeebe708eb7556725c025185cfe878"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+      "sha256": "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml",
+      "sha256": "055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/pr269_spec.yaml",
+      "sha256": "510e7513ee058d9d20aa6a399a431cc24e013f721a5af6d3a794c7690d4164e7"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/pr270_spec.yaml",
+      "sha256": "439b331d6b8e8c0d51ef2a75bd22dbea4a3699ee9e6afbbe88b66bb4be11da8d"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/proofs/PILLAR_T_CORE_PROOFS_V1.yaml",
+      "sha256": "808c69ca1111591a6d6b52079b6caa7889a838009540ef9959a077640dcdc1d6"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+      "sha256": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml",
+      "sha256": "8f2faf3847f21d2a903bd143ba35ee123ad24256da42e3e1444ad991ade7a27e"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/cas/CAS_CONTRACT.json",
+      "sha256": "2d2ceb84603b24ab0b34db8b69715483061428ee36d6b2f5952494a9bb8108b4"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/cas/CAS_RUN_SPEC.json",
+      "sha256": "fc8b55a6a56cb0744a6f815c12f758df63122061070adb46f9a6f45930ca5904"
+    },
+    {
+      "path": "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json",
+      "sha256": "a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275"
+    },
+    {
+      "path": "docs/research_program/strengthening/pr190_spec.yaml",
+      "sha256": "74872439326b0973ab69de3628f279dd3fad46bf83aa17641e49477aa167b73f"
+    },
+    {
+      "path": "docs/generated/pr190_attainability/attainability_report.json",
+      "sha256": "580aa9e36ac5419c7364ca6b295dece08c39c8ca1f91962d25c63d32fd3cf426"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr285_pillar_t_adjudication.py",
+      "sha256": "4cae2b46b32ca4aa7bd0f5833044617202baaab485877213615abe2b31570312"
+    },
+    {
+      "path": "tests/contracts/test_pillar_t_complete_adjudication.py",
+      "sha256": "991dca1420c97971a9979275832e4f38d50f2979647cbe3e5c711c61ebae6801"
+    }
+  ],
+  "success_dependency_satisfied": true,
+  "summary": {
+    "bare_not_adjudicated_count": 0,
+    "failed_candidate_rows": 1,
+    "source_partition_counts": {
+      "S": 34,
+      "T": 31
+    },
+    "source_rows": 65,
+    "terminal_counts": {
+      "BLOCKED_WITH_RECEIPT": 1,
+      "FAIL": 1,
+      "INCONCLUSIVE_WITH_RECEIPT": 67,
+      "PASS": 11
+    },
+    "vector_tensor_rows": 14
+  },
+  "terminal": "PASS_COMPLETE_PILLAR_T_ADJUDICATION"
+}

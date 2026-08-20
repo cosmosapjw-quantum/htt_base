@@ -26,6 +26,7 @@ from urllib.parse import urlsplit
 
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 GIT_OID_RE = re.compile(r"^[0-9a-f]{40,64}$")
+LOGICAL_PATCH_GROUP_RE = re.compile(r"^G[0-9]{2}$")
 CANONICAL_CHANGE_SET_RE = re.compile(r"^CS-[A-Z0-9]+(?:-[A-Z0-9]+)*$")
 CANONICAL_PUBLICATION_GROUP_RE = re.compile(r"^PG-[A-Z0-9]+(?:-[A-Z0-9]+)*$")
 CHANGE_SET_METADATA_LINE_RE = re.compile(
@@ -1113,6 +1114,151 @@ def reject_duplicate_stable_patch_ids(
     return rows
 
 
+def _validate_logical_patch_lineage(
+    repo: Path,
+    declaration: object,
+    *,
+    candidate_patch_ids: Sequence[Mapping[str, str]],
+) -> dict[str, Any]:
+    """Replay an optional audit-declared logical-patch map into a candidate seal."""
+
+    prefix = "logical patch lineage"
+    if not isinstance(declaration, Mapping):
+        raise PublicationIntegrityError(f"{prefix} must be an object")
+    if set(declaration) != {"schema_version", "authority", "groups"}:
+        raise PublicationIntegrityError(f"{prefix} fields are incomplete or unknown")
+    if declaration.get("schema_version") != 1:
+        raise PublicationIntegrityError(f"{prefix} schema_version must equal 1")
+
+    authority = declaration.get("authority")
+    if not isinstance(authority, Mapping) or set(authority) != {
+        "document_id",
+        "sha256",
+    }:
+        raise PublicationIntegrityError(f"{prefix} authority is malformed")
+    document_id = require_repo_relative_name(
+        authority.get("document_id"), field=f"{prefix} authority document_id"
+    )
+    authority_sha = authority.get("sha256")
+    if not isinstance(authority_sha, str) or SHA256_RE.fullmatch(authority_sha) is None:
+        raise PublicationIntegrityError(f"{prefix} authority SHA-256 is malformed")
+
+    groups = declaration.get("groups")
+    if not isinstance(groups, list) or not groups:
+        raise PublicationIntegrityError(f"{prefix} groups must be a non-empty list")
+    candidate_by_commit = {
+        str(row.get("commit")): str(row.get("stable_patch_id"))
+        for row in candidate_patch_ids
+    }
+    candidate_patch_counts: dict[str, int] = {}
+    for patch_id in candidate_by_commit.values():
+        candidate_patch_counts[patch_id] = candidate_patch_counts.get(patch_id, 0) + 1
+
+    normalized_groups: list[dict[str, Any]] = []
+    seen_group_ids: set[str] = set()
+    seen_source_commits: set[str] = set()
+    seen_group_patch_ids: set[str] = set()
+    required_fields = {
+        "group_id",
+        "disposition",
+        "representative_commit",
+        "duplicate_alias_commits",
+        "stable_patch_id",
+        "candidate_commit",
+    }
+    for item in groups:
+        if not isinstance(item, Mapping) or set(item) != required_fields:
+            raise PublicationIntegrityError(f"{prefix} group fields are malformed")
+        group_id = item.get("group_id")
+        if not isinstance(group_id, str) or LOGICAL_PATCH_GROUP_RE.fullmatch(group_id) is None:
+            raise PublicationIntegrityError(f"{prefix} group_id is malformed")
+        if group_id in seen_group_ids:
+            raise PublicationIntegrityError(f"{prefix} repeats group {group_id}")
+        seen_group_ids.add(group_id)
+        disposition = item.get("disposition")
+        if disposition not in {"INCLUDE", "EXCLUDE_OBSOLETE"}:
+            raise PublicationIntegrityError(
+                f"{prefix} group {group_id} has an invalid disposition"
+            )
+        representative = item.get("representative_commit")
+        aliases = item.get("duplicate_alias_commits")
+        declared_patch_id = item.get("stable_patch_id")
+        candidate_commit = item.get("candidate_commit")
+        if (
+            not isinstance(representative, str)
+            or GIT_OID_RE.fullmatch(representative) is None
+            or not isinstance(aliases, list)
+            or any(
+                not isinstance(alias, str) or GIT_OID_RE.fullmatch(alias) is None
+                for alias in aliases
+            )
+            or len(set(aliases)) != len(aliases)
+            or representative in aliases
+            or not isinstance(declared_patch_id, str)
+            or GIT_OID_RE.fullmatch(declared_patch_id) is None
+        ):
+            raise PublicationIntegrityError(
+                f"{prefix} group {group_id} has malformed commit or patch identities"
+            )
+        source_commits = [representative, *aliases]
+        if seen_source_commits.intersection(source_commits):
+            raise PublicationIntegrityError(f"{prefix} reuses a source commit")
+        seen_source_commits.update(source_commits)
+        if declared_patch_id in seen_group_patch_ids:
+            raise PublicationIntegrityError(f"{prefix} reuses a stable patch ID")
+        seen_group_patch_ids.add(declared_patch_id)
+        for source_commit in source_commits:
+            resolved = str(
+                git(repo, "rev-parse", "--verify", f"{source_commit}^{{commit}}")
+            ).strip()
+            if resolved != source_commit:
+                raise PublicationIntegrityError(
+                    f"{prefix} source commit did not resolve exactly"
+                )
+            try:
+                actual_patch_id = _stable_patch_id(repo, source_commit)
+            except (OSError, subprocess.CalledProcessError) as exc:
+                raise PublicationIntegrityError(
+                    f"{prefix} source patch ID could not be computed"
+                ) from exc
+            if actual_patch_id != declared_patch_id:
+                raise PublicationIntegrityError(
+                    f"{prefix} group {group_id} source patch ID drifted"
+                )
+
+        matches = candidate_patch_counts.get(declared_patch_id, 0)
+        if disposition == "INCLUDE":
+            if (
+                not isinstance(candidate_commit, str)
+                or GIT_OID_RE.fullmatch(candidate_commit) is None
+                or candidate_by_commit.get(candidate_commit) != declared_patch_id
+                or matches != 1
+            ):
+                raise PublicationIntegrityError(
+                    f"{prefix} group {group_id} is not included exactly once"
+                )
+        elif candidate_commit is not None or matches != 0:
+            raise PublicationIntegrityError(
+                f"{prefix} group {group_id} obsolete patch is present"
+            )
+        normalized_groups.append(
+            {
+                "group_id": group_id,
+                "disposition": disposition,
+                "representative_commit": representative,
+                "duplicate_alias_commits": list(aliases),
+                "stable_patch_id": declared_patch_id,
+                "candidate_commit": candidate_commit,
+            }
+        )
+
+    return {
+        "schema_version": 1,
+        "authority": {"document_id": document_id, "sha256": authority_sha},
+        "groups": normalized_groups,
+    }
+
+
 def _candidate_path_category(path: str) -> str:
     parts = Path(path).parts
     lowered = path.lower()
@@ -1270,6 +1416,13 @@ def build_candidate_seal(
         target_ref=f"{remote}/{target_branch}",
         target_sha=base_sha,
     )
+    logical_patch_lineage = None
+    if "logical_patch_lineage" in policy:
+        logical_patch_lineage = _validate_logical_patch_lineage(
+            root,
+            policy["logical_patch_lineage"],
+            candidate_patch_ids=stable_patch_ids,
+        )
     fetch_urls = remote_urls(root, remote, push=False)
     push_urls = remote_urls(root, remote, push=True)
     publication_host, publication_slug = publication_repository_identity(
@@ -1324,6 +1477,11 @@ def build_candidate_seal(
         },
         "dirty": False,
     }
+    if logical_patch_lineage is not None:
+        payload["logical_patch_lineage"] = logical_patch_lineage
+        payload["logical_patch_lineage_sha256"] = bytes_sha256(
+            canonical_json_bytes(logical_patch_lineage)
+        )
     payload["seal_sha256"] = canonical_sha256(payload, omit={"seal_sha256"})
     return payload
 
