@@ -1,0 +1,42 @@
+pr_id: PR-300
+title: one-command authorized observational-program dispatcher
+predecessor_contract:
+  required_pr: PR-299
+  required_terminal: production_bayesian_readiness_contract
+scope:
+  owner: COMMON
+  observed_data_execution: false
+  result_generation: false
+  dispatch_scope: canonical_pr279_runbooks_only
+publication_policy: docs/research_program/post_pr275/pr300_publication_policy.json
+one_command:
+  command: PYTHONPATH=htt/src:htt/htt venv/bin/python -B scripts/codex_harness/run_authorized_observational_program.py --execute-authorized
+  check_command: PYTHONPATH=htt/src:htt/htt venv/bin/python -B scripts/codex_harness/run_authorized_observational_program.py --check
+  semantics: manual all-or-nothing dispatch after every lane is independently ready
+canonical_lanes:
+  - PLANCK
+  - CF4
+  - HSC_KIDS
+  - ACT
+  - DESI
+  - JWST_SN
+  - CROSS_PROBE
+fail_closed_on:
+  - any_missing_or_to_be_created_execution_entrypoint
+  - any_nonterminal_upstream_pr
+  - any_missing_or_noncurrent_human_authorization
+  - pr151_formalism_revalidation_required
+  - any_attempt_to_execute_from_check_mode
+claim_boundary:
+  claim_tier: diagnostic_only
+  observed_data_executed: false
+  forbidden:
+    - automatic observed-data execution
+    - blocked-lane zero fill or substitution
+    - legacy PR-151 result reuse
+    - native solver validation or family identification
+anti_inflation:
+  max_new_runners: 1
+  max_new_tests: 1
+  no_new_global_status_enum_or_ledger: true
+  consumer: every current and future observed-lane execution request

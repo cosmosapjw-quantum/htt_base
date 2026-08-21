@@ -89,6 +89,36 @@ def test_weighted_posterior_lineage_binds_exact_samples_weights_and_settings() -
         )
 
 
+def test_ppc_consumer_plan_requires_unique_canonical_discrepancy_order() -> None:
+    contract = _contract(
+        discrepancies={
+            "zeta": lambda observed, replicated: float(np.sum(observed - replicated)),
+            "amplitude": lambda observed, replicated: float(np.sum(observed - replicated)),
+        }
+    )
+    lineage = build_sampler_posterior_lineage(
+        contract=contract,
+        samples=np.array([[0.0, 1.0], [1.0, 2.0], [2.0, 3.0]]),
+        normalized_weights=np.array([0.2, 0.3, 0.5]),
+        sampler_settings={"nlive": 200, "dlogz": 0.1, "bound": "multi", "sample": "rwalk", "seed": 7},
+        resampling_rule="systematic",
+    )
+    with pytest.raises(ProductionBayesianError, match="registered discrepancy"):
+        build_posterior_consumer_plan(
+            contract=contract,
+            lineage=lineage,
+            ppc_discrepancy_ids=("zeta", "amplitude"),
+            loo_block_ids=("NGC-z1", "SGC-z1"),
+        )
+    plan = build_posterior_consumer_plan(
+        contract=contract,
+        lineage=lineage,
+        ppc_discrepancy_ids=("amplitude", "zeta"),
+        loo_block_ids=("NGC-z1", "SGC-z1"),
+    )
+    assert plan.ppc_discrepancy_ids == ("amplitude", "zeta")
+
+
 def test_all_registered_lanes_are_readiness_only_until_bound_and_authorized() -> None:
     descriptors = load_observational_lane_descriptors(SPEC)
     assert tuple(item.lane_id for item in descriptors) == ("H-PLANCK", "H-DESI", "H-CF4", "H-JWST", "H-ACT")
@@ -154,6 +184,7 @@ def test_authorization_requires_the_exact_pr289_runtime_type(monkeypatch: pytest
     assert ready.status is LaneReadinessStatus.READY_FOR_AUTHORIZED_EXECUTION
     for forged_plan, message in (
         (replace(consumer, ppc_discrepancy_ids=("forged",)), "registered discrepancy"),
+        (replace(consumer, ppc_discrepancy_ids=("amplitude", "amplitude")), "must be unique"),
         (replace(consumer, loo_block_ids=("forged-block",)), "registered block partition"),
         (replace(consumer, plan_content_id="sha256:" + "0" * 64), "forged or stale"),
     ):

@@ -462,7 +462,7 @@ VECTOR_TENSOR_REQUIRED_FIELDS = ADVOCATE_REQUIRED_FIELDS | {
     "solver_gate_required",
 }
 
-# --- Post-275 re-adjudication and reexecution (PR-276..294 plus audit PR-299) --
+# --- Post-275 re-adjudication and reexecution (PR-276..294 plus PR-299/300) --
 # PR-276 consumes the terminal PR-190 refutation without reopening either
 # historical requires-success edge.  The remaining cards are registered as one
 # prospective programme; data execution still needs its lane-specific human
@@ -606,6 +606,11 @@ POST275_CARD_CONTRACTS = {
             ("PR-288", "requires_terminal_receipt"),
             ("PR-289", "requires_success"),
         ],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-300": {
+        "owner": "COMMON",
+        "dependencies": [("PR-299", "requires_success")],
         "authorization": "EXPLICIT_USER_AUTHORIZED",
     },
 }
@@ -1962,7 +1967,7 @@ def _validate_vector_tensor_slice(
 
 
 def _validate_post275_slice(cards: dict[str, Any]) -> None:
-    """Validate the historical PR-276..294 programme plus its PR-299 amendment."""
+    """Validate the historical PR-276..294 programme plus PR-299/300 amendments."""
 
     spec_path = (
         Path(__file__).resolve().parents[2]
@@ -2001,8 +2006,12 @@ def _validate_post275_slice(cards: dict[str, Any]) -> None:
         raise ValueError("PR-299 audit successor drifted")
     if amendment.get("current_registered_total_after_pr299_audit_amendment") != 245:
         raise ValueError("PR-299 audit card count drifted")
+    if amendment.get("post299_dispatch_successor") != "PR-300":
+        raise ValueError("PR-300 dispatch successor drifted")
+    if amendment.get("current_registered_total_after_pr300_dispatch_amendment") != 246:
+        raise ValueError("PR-300 dispatch card count drifted")
 
-    for pr_id in [*_pr_range(276, 294), "PR-299"]:
+    for pr_id in [*_pr_range(276, 294), "PR-299", "PR-300"]:
         card = cards[pr_id]
         expected = POST275_CARD_CONTRACTS[pr_id]
         missing_fields = sorted(POST275_REQUIRED_FIELDS - set(card))

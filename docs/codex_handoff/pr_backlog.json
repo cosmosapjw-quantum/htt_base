@@ -234,6 +234,7 @@
       "PR-288",
       "PR-289",
       "PR-299",
+      "PR-300",
       "PR-204",
       "PR-198",
       "PR-199",
@@ -16473,6 +16474,92 @@
       "solver_gate_required": false,
       "change_set_id": "CS-PR299-PRODUCTION-BAYES-READINESS",
       "publication_group_id": "PG-PR299-PRODUCTION-BAYES-READINESS"
+    },
+    {
+      "id": "PR-300",
+      "wave": 75,
+      "title": "One-command authorized observational-program readiness",
+      "owner": "COMMON",
+      "capability": "all_lane_fail_closed_manual_dispatch",
+      "inputs": [
+        "PR-299 production Bayesian readiness contract",
+        "PR-279 canonical data runbooks and canonical DAG/status",
+        "PR-151 formalism-invalidation state"
+      ],
+      "outputs": [
+        "One-command all-lane manual execution dispatcher",
+        "Read-only program readiness report with every blocking reason"
+      ],
+      "contributors": [
+        "HTT",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "scripts/codex_harness"
+      ],
+      "depends": [
+        "PR-299"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-299",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Derive the seven allowed observed lanes from the canonical runbooks; do not maintain a second registry.",
+        "Dispatch only after all entrypoints, terminal dependencies, and per-lane human authorizations are current.",
+        "Keep PR-151 invalidated pending successor-formalism validation and never recreate its deleted outputs."
+      ],
+      "files": [
+        "scripts/codex_harness/run_authorized_observational_program.py",
+        "tests/contracts/test_authorized_observational_program.py",
+        "htt/htt/htt/infer/bayesian_production.py",
+        "tests/htt/test_bayesian_production.py",
+        "docs/research_program/post_pr275/pr300_spec.yaml",
+        "docs/research_program/post_pr275/pr300_publication_policy.json",
+        "docs/PR_DELTAS/pr-300.md"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt/htt python -m pytest -p no:cacheprovider -q tests/contracts/test_authorized_observational_program.py tests/htt/test_bayesian_production.py",
+        "PYTHONPATH=htt/src:htt/htt python scripts/codex_harness/run_authorized_observational_program.py --check"
+      ],
+      "dod": [
+        "The single execute command is manual and all-or-nothing; a blocked lane never runs or enters a joint result.",
+        "`--check` imports no analysis producer, opens no payload, and emits no numerical science artifact.",
+        "PPC IDs are unique and in their canonical tuple order before `READY` is possible."
+      ],
+      "kill": "Any subprocess during a blocked preflight, any PR-151 legacy result reuse, or any manual authorization bypass.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2-STATISTICS",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Readiness routing only; it creates no observed inference, transfer validation, or family-identification capability.",
+      "forbidden": [
+        "No automatic observed-data execution, blocked-lane substitution, MIO posterior, native validation, geometry detection, or family-identification claim."
+      ],
+      "anti_drift": [
+        "One runner and one test only; consume canonical runbooks and cards rather than create another execution registry."
+      ],
+      "roadmap_anchor": "docs/research_program/post_pr275/pr300_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "readiness_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_STATISTICS",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR300-ONE-COMMAND-OBSERVATIONAL-READINESS",
+      "publication_group_id": "PG-PR300-ONE-COMMAND-OBSERVATIONAL-READINESS"
     },
     {
       "id": "PR-295",

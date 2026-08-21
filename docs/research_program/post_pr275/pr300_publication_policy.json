@@ -1,0 +1,14 @@
+{
+  "schema": "htt.publication_policy.v1",
+  "policy_id": "PR300-ONE-COMMAND-OBSERVATIONAL-READINESS-POLICY",
+  "change_set_id": "CS-PR300-ONE-COMMAND-OBSERVATIONAL-READINESS",
+  "publication_group_id": "PG-PR300-ONE-COMMAND-OBSERVATIONAL-READINESS",
+  "execution_mode": "MANUAL_PR",
+  "human_only": ["push", "pull_request", "review_approval", "merge", "observed_data_authorization"],
+  "candidate_requirements": [
+    "clean_tree",
+    "exact_base_and_candidate_seal",
+    "one_independent_review",
+    "no_observed_data_execution"
+  ]
+}

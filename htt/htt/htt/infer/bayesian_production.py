@@ -207,6 +207,12 @@ def _consumer_plan_unsigned_payload(
     }
 
 
+def _canonical_ppc_discrepancy_ids(contract: ProductionModelContract) -> tuple[str, ...]:
+    """Return the sole stable order accepted by a posterior-consumer plan."""
+
+    return tuple(sorted(contract.discrepancies))
+
+
 def build_sampler_posterior_lineage(
     *,
     contract: ProductionModelContract,
@@ -273,7 +279,7 @@ def build_posterior_consumer_plan(
     if lineage.model_contract_content_id != contract.contract_content_id:
         raise ProductionBayesianError("posterior lineage does not bind this model contract")
     discrepancies = _names(ppc_discrepancy_ids, "ppc_discrepancy_ids")
-    if set(discrepancies) != set(contract.discrepancies):
+    if discrepancies != _canonical_ppc_discrepancy_ids(contract):
         raise ProductionBayesianError("PPC consumer must use the registered discrepancy family")
     blocks = _names(loo_block_ids, "loo_block_ids")
     if blocks != contract.block_ids:
@@ -409,9 +415,12 @@ def assess_lane_readiness(
         raise ProductionBayesianError(
             "posterior lineage and PPC/LOO consumer plan do not bind this model contract"
         )
-    if set(posterior_consumer_plan.ppc_discrepancy_ids) != set(model_contract.discrepancies):
+    if (
+        _names(posterior_consumer_plan.ppc_discrepancy_ids, "ppc_discrepancy_ids")
+        != _canonical_ppc_discrepancy_ids(model_contract)
+    ):
         raise ProductionBayesianError(
-            "PPC consumer plan does not use the registered discrepancy family"
+            "PPC consumer plan does not use the exact registered discrepancy tuple"
         )
     if posterior_consumer_plan.loo_block_ids != model_contract.block_ids:
         raise ProductionBayesianError(
