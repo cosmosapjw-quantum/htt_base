@@ -1,0 +1,530 @@
+{
+  "aggregate_status": "NO_ADMITTED_IDENTITIES",
+  "allowed_uses": [
+    "read-only external product identity preflight",
+    "explicit refusal and input-gap reporting"
+  ],
+  "assumptions": [
+    "candidate roots, when supplied, are read-only local directories",
+    "identity admission is separate from lane execution authorization"
+  ],
+  "authorization_receipts": [
+    {
+      "analysis_plan_id": "plan:PR290-PLANCK-LOWELL-V1",
+      "authorization_domain": "lane_data_execution",
+      "authorization_id": "sha256:82b691f0892cfe99d41170dfd2f98ffd2f0bcfbb7f7c32ac4e8c7a44be995348",
+      "authorized_scope": null,
+      "exact_admission_record_ids": [],
+      "expires_at_utc": null,
+      "human_authority_identity": null,
+      "human_gate_receipt_id": null,
+      "issued_at_utc": null,
+      "lane_admission_bundle_id": null,
+      "lane_id": "PLANCK",
+      "required_human_gate_id": "H-PLANCK",
+      "schema": "common.execution_authorization_receipt.v1",
+      "status": "NOT_AUTHORIZED"
+    },
+    {
+      "analysis_plan_id": "plan:PR291-CF4-TOMOGRAPHY-V1",
+      "authorization_domain": "lane_data_execution",
+      "authorization_id": "sha256:9969e909f8c495efa438dd98634ecc897ca8df74ecffa750f19dece8fb3ba204",
+      "authorized_scope": null,
+      "exact_admission_record_ids": [],
+      "expires_at_utc": null,
+      "human_authority_identity": null,
+      "human_gate_receipt_id": null,
+      "issued_at_utc": null,
+      "lane_admission_bundle_id": null,
+      "lane_id": "CF4",
+      "required_human_gate_id": "H-CF4",
+      "schema": "common.execution_authorization_receipt.v1",
+      "status": "NOT_AUTHORIZED"
+    },
+    {
+      "analysis_plan_id": "plan:PR292-HSC-KIDS-SPIN2-V1",
+      "authorization_domain": "lane_data_execution",
+      "authorization_id": "sha256:4875530c6c0678b82b6f91aa0f089400722b3c88e37645ab4c9d87fd7049127b",
+      "authorized_scope": null,
+      "exact_admission_record_ids": [],
+      "expires_at_utc": null,
+      "human_authority_identity": null,
+      "human_gate_receipt_id": null,
+      "issued_at_utc": null,
+      "lane_admission_bundle_id": null,
+      "lane_id": "HSC_KIDS",
+      "required_human_gate_id": "H-HSC-KiDS",
+      "schema": "common.execution_authorization_receipt.v1",
+      "status": "NOT_AUTHORIZED"
+    },
+    {
+      "analysis_plan_id": "plan:PR204-ACT-LENSING-V1",
+      "authorization_domain": "lane_data_execution",
+      "authorization_id": "sha256:039746e836b1d7a614695534366076ad7f35b8c2490879ce97a5d05ee7e68970",
+      "authorized_scope": null,
+      "exact_admission_record_ids": [],
+      "expires_at_utc": null,
+      "human_authority_identity": null,
+      "human_gate_receipt_id": null,
+      "issued_at_utc": null,
+      "lane_admission_bundle_id": null,
+      "lane_id": "ACT",
+      "required_human_gate_id": "H-ACT",
+      "schema": "common.execution_authorization_receipt.v1",
+      "status": "NOT_AUTHORIZED"
+    },
+    {
+      "analysis_plan_id": "plan:PR203-DESI-BGS-V1",
+      "authorization_domain": "lane_data_execution",
+      "authorization_id": "sha256:49badd892cbe2a5b6473c454c72f0c692d40c36fb47b5cc728dc64a3453aa7c3",
+      "authorized_scope": null,
+      "exact_admission_record_ids": [],
+      "expires_at_utc": null,
+      "human_authority_identity": null,
+      "human_gate_receipt_id": null,
+      "issued_at_utc": null,
+      "lane_admission_bundle_id": null,
+      "lane_id": "DESI",
+      "required_human_gate_id": "H-DESI",
+      "schema": "common.execution_authorization_receipt.v1",
+      "status": "NOT_AUTHORIZED"
+    },
+    {
+      "analysis_plan_id": "plan:PR293-JWST-SN-V1",
+      "authorization_domain": "lane_data_execution",
+      "authorization_id": "sha256:db8d96a16f10a5239aa4270b48769d774cfa1db0f690aa5040d9b1aa0ccdc4c2",
+      "authorized_scope": null,
+      "exact_admission_record_ids": [],
+      "expires_at_utc": null,
+      "human_authority_identity": null,
+      "human_gate_receipt_id": null,
+      "issued_at_utc": null,
+      "lane_admission_bundle_id": null,
+      "lane_id": "JWST_SN",
+      "required_human_gate_id": "H-JWST",
+      "schema": "common.execution_authorization_receipt.v1",
+      "status": "NOT_AUTHORIZED"
+    }
+  ],
+  "caveats": [
+    "process PASS does not admit, authorize, execute, or validate a lane",
+    "PR-151 partial acquisition is forbidden input",
+    "no native solver, observed-data statistic, or family claim is produced"
+  ],
+  "claim_level": {
+    "level": "C2",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "diagnostic_only",
+  "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+  "forbidden_uses": [
+    "automatic acquisition",
+    "observed-data execution",
+    "admission inferred as execution authorization",
+    "native or family claim promotion"
+  ],
+  "generating_procedure": [
+    "python3",
+    "-B",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+    "build"
+  ],
+  "generation_identity": {
+    "generating_procedure": [
+      "python3",
+      "-B",
+      "scripts/codex_harness/run_pr289_data_identity_v2.py",
+      "build"
+    ],
+    "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:sha256:1f432551cebca70a548a4385afc5b197072e145a3b794937f9632198a4a0d51d",
+    "schema": "common.source_bound_generation_identity.v1"
+  },
+  "git_commit_or_worktree_state": "BOUND_SOURCE_WORKTREE:sha256:1f432551cebca70a548a4385afc5b197072e145a3b794937f9632198a4a0d51d",
+  "lane_and_product_identities": [
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "PLANCK",
+      "native_identity_profile_id": null,
+      "product_id": "PLANCK_PR3_LOWELL_BUNDLE",
+      "status": "REJECTED_NOT_PRESENT"
+    },
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "CF4",
+      "native_identity_profile_id": null,
+      "product_id": "CF4_GROUP_CATALOGUE_BUNDLE",
+      "status": "REJECTED_NOT_PRESENT"
+    },
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "HSC_KIDS",
+      "native_identity_profile_id": null,
+      "product_id": "HSC_KIDS_SPIN2_BUNDLE",
+      "status": "REJECTED_NOT_PRESENT"
+    },
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "ACT",
+      "native_identity_profile_id": null,
+      "product_id": "ACT_LENSING_BUNDLE",
+      "status": "REJECTED_NOT_PRESENT"
+    },
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "DESI",
+      "native_identity_profile_id": null,
+      "product_id": "DESI_DR1_BGS_BRIGHT_BUNDLE",
+      "status": "REJECTED_NOT_PRESENT"
+    },
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "JWST_SN",
+      "native_identity_profile_id": null,
+      "product_id": "JWST_SN_ROW_LEVEL_BUNDLE",
+      "status": "REJECTED_NOT_PRESENT"
+    }
+  ],
+  "lane_decisions": [
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "PLANCK",
+      "product_id": "PLANCK_PR3_LOWELL_BUNDLE",
+      "reasons": [
+        "candidate root not supplied"
+      ],
+      "records": [],
+      "status": "REJECTED_NOT_PRESENT"
+    },
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "CF4",
+      "product_id": "CF4_GROUP_CATALOGUE_BUNDLE",
+      "reasons": [
+        "candidate root not supplied"
+      ],
+      "records": [],
+      "status": "REJECTED_NOT_PRESENT"
+    },
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "HSC_KIDS",
+      "product_id": "HSC_KIDS_SPIN2_BUNDLE",
+      "reasons": [
+        "candidate root not supplied"
+      ],
+      "records": [],
+      "status": "REJECTED_NOT_PRESENT"
+    },
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "ACT",
+      "product_id": "ACT_LENSING_BUNDLE",
+      "reasons": [
+        "candidate root not supplied"
+      ],
+      "records": [],
+      "status": "REJECTED_NOT_PRESENT"
+    },
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "DESI",
+      "product_id": "DESI_DR1_BGS_BRIGHT_BUNDLE",
+      "reasons": [
+        "candidate root not supplied"
+      ],
+      "records": [],
+      "status": "REJECTED_NOT_PRESENT"
+    },
+    {
+      "lane_admission_bundle_id": null,
+      "lane_id": "JWST_SN",
+      "product_id": "JWST_SN_ROW_LEVEL_BUNDLE",
+      "reasons": [
+        "candidate root not supplied"
+      ],
+      "records": [],
+      "status": "REJECTED_NOT_PRESENT"
+    }
+  ],
+  "mutation_results": [
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-PR274-MUTATION",
+      "observed_marker": "source binding hash drifted: docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-ADMISSION-AUTH-COLLAPSE",
+      "observed_marker": "PR-289 cannot construct authorization"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-AUTH-LANE-BINDING",
+      "observed_marker": "authorization lane decision identity drifted"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-SYMLINK",
+      "observed_marker": "MU289-SYMLINK rejected as REJECTED_SYMLINK_OR_ALIAS"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-PARENT-SYMLINK",
+      "observed_marker": "MU289-PARENT-SYMLINK rejected as REJECTED_SYMLINK_OR_ALIAS"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-HARDLINK-ALIAS",
+      "observed_marker": "MU289-HARDLINK-ALIAS rejected as REJECTED_SYMLINK_OR_ALIAS"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-SIZE",
+      "observed_marker": "MU289-SIZE rejected as REJECTED_IDENTITY_MISMATCH"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-HASH",
+      "observed_marker": "MU289-HASH rejected as REJECTED_IDENTITY_MISMATCH"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-INVENTORY",
+      "observed_marker": "MU289-INVENTORY rejected as REJECTED_INCOMPLETE_COMPONENT_SET"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-RELEASE-LICENSE",
+      "observed_marker": "MU289-RELEASE-LICENSE rejected as REJECTED_MISSING_RELEASE_OR_LICENSE"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-PLACEHOLDER-PROVENANCE",
+      "observed_marker": "MU289-PLACEHOLDER-PROVENANCE rejected as REJECTED_MISSING_RELEASE_OR_LICENSE"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-EVIDENCE-JSON",
+      "observed_marker": "MU289-EVIDENCE-JSON rejected as REJECTED_MISSING_SEMANTIC_CONTRACT"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-SEMANTIC-FIELD",
+      "observed_marker": "MU289-SEMANTIC-FIELD rejected as REJECTED_MISSING_SEMANTIC_CONTRACT"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-SEMANTIC-STATUS",
+      "observed_marker": "allowed status values cannot contradict bound Planck roles"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-RECORD-ID-STABILITY",
+      "observed_marker": "stable record identity excludes root and inspection time"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-INVENTORY-ID",
+      "observed_marker": "component inventory identity independently recomputed"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-NATIVE-PROFILE-OMISSION",
+      "observed_marker": "generic record IDs cannot replace a native identity profile"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-NATIVE-REGISTRY-ROLE",
+      "observed_marker": "PLANCK native component roles drifted"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-PLANCK-NATIVE-RELATIONSHIP",
+      "observed_marker": "SMICA and Commander native roles cannot collapse"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-CF4-NATIVE-RELATIONSHIP",
+      "observed_marker": "CF4 exact frame and sign roles cannot alias"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-HSC-KIDS-CHILD-IDENTITY",
+      "observed_marker": "HSC and KiDS require separate PSF child identities"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-NATIVE-REPLAY",
+      "observed_marker": "source_locator_identity drifted"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-EXPORTED-SEMANTIC-REPLAY",
+      "observed_marker": "license_status must be BOUND"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-REPEATED-ROLE-ORDINAL",
+      "observed_marker": "admitted native record ordinal inventory drifted"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-NAME-ONLY",
+      "observed_marker": "name-only HSC/KiDS input rejected"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-DESI-PARTIAL",
+      "observed_marker": "PR-151 partial refusal has canonical precedence"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-AUTODOWNLOAD",
+      "observed_marker": "missing input refused without acquisition side effect"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-MUTATION-OMISSION",
+      "observed_marker": "registered mutation results are omitted or reordered"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-GATE-ID-ALIAS",
+      "observed_marker": "HSC_KIDS human gate identity drifted"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-WORKFLOW-AUTH-LAUNDERING",
+      "observed_marker": "PR-289 cannot construct authorization"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-STATUS-PRECEDENCE",
+      "observed_marker": "PR-151 partial refusal has canonical precedence"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-PARTIAL-LANE-AGGREGATE",
+      "observed_marker": "partial component set does not count as an admitted lane"
+    },
+    {
+      "activated": true,
+      "executed": true,
+      "killed": true,
+      "mutation_id": "MU289-CLAIM-PROMOTION",
+      "observed_marker": "process PASS cannot promote scientific claims"
+    }
+  ],
+  "observed_data_executed": false,
+  "owner": "COMMON",
+  "public_use": false,
+  "receipt_content_id": "sha256:4e2aa483abfa1c63777bad1b678058ae17a6e7108ad43475176367b634b8f74e",
+  "registry_content_id": "sha256:78e3ec41833db433b560ebf839e0ee9375f77879a629e4ce70900bfb959bbef0",
+  "schema": "common.data_identity_v2_preflight_receipt.v1",
+  "scientific_status_effect": "OPEN_UNCHANGED",
+  "scope": "external-data identity admission without acquisition or analysis",
+  "sky_mask_selection_covariance_null_status": [
+    {
+      "lane_id": "PLANCK",
+      "status": "NOT_EVALUATED_NO_COMPLETE_LANE"
+    },
+    {
+      "lane_id": "CF4",
+      "status": "NOT_EVALUATED_NO_COMPLETE_LANE"
+    },
+    {
+      "lane_id": "HSC_KIDS",
+      "status": "NOT_EVALUATED_NO_COMPLETE_LANE"
+    },
+    {
+      "lane_id": "ACT",
+      "status": "NOT_EVALUATED_NO_COMPLETE_LANE"
+    },
+    {
+      "lane_id": "DESI",
+      "status": "NOT_EVALUATED_NO_COMPLETE_LANE"
+    },
+    {
+      "lane_id": "JWST_SN",
+      "status": "NOT_EVALUATED_NO_COMPLETE_LANE"
+    }
+  ],
+  "source_bindings": {
+    "docs/harness/CLAIM_LEDGER.md": "sha256:86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b",
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json": "sha256:e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f",
+    "docs/research_program/post_pr275/data_runbooks.yaml": "sha256:b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de",
+    "docs/research_program/post_pr275/pr289_publication_policy.json": "sha256:4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9",
+    "docs/research_program/post_pr275/pr289_spec.yaml": "sha256:f4a8e89e603a1f6e4fe9cb99c422ef83407fd264328b3adaf927aafdcfb6636f",
+    "docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json": "sha256:e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea",
+    "docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml": "sha256:92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9",
+    "htt/src/common/data_identity.py": "sha256:145fa42267348098522cd90929c052f21629e0314086e24aad216ce0de112da2",
+    "scripts/codex_harness/run_pr289_data_identity_v2.py": "sha256:14ed58a68f4a628644219f6df0b966d5e2cedddef0a7c32f10ce1c94a85e6ad5",
+    "tests/contracts/test_data_identity_registry_v2.py": "sha256:1ee3fb1541a911abfd686d5cd78f75380b8847dfe5d1fd076cd48153a4f1c3c3"
+  },
+  "terminal": "PASS_DATA_IDENTITY_V2_PREFLIGHT",
+  "transfer_source": "none"
+}

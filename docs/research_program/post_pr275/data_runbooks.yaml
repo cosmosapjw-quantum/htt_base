@@ -35,8 +35,9 @@ runbooks:
   admission_work_unit: PR-289
   execution_authorization_gate: H-PLANCK
   admission_is_execution_authorization: false
-  required_input_contract: PR3 maps, masks, beams, harmonic conventions, and FFP10 processed through one
-    observation/null pipeline
+  required_input_contract: distinct PR3 SMICA and Commander maps with content-bound per-pipeline masks,
+    beams, covariance and window/operator identities; exact same-sky pixelization and native selection;
+    and an exact FFP10 null inventory
   sequence:
   - authenticated_release
   - selection_mask_frame_units_transfer
@@ -62,6 +63,9 @@ runbooks:
   - execution before both admission and lane-scoped human authorization
   - MIO diagnostic used as HTT likelihood, posterior, or evidence
   - weak-identification point estimate or nearest-family forcing
+  - generic record ID or string-only substitute for the native Planck relationship profile
+  - collapsed SMICA/Commander or missing same-sky, FFP10, mask, beam, covariance, pixelization,
+    selection, or window/operator role
   - native solver, native atlas, geometry detection, or family identification claim
 - runbook_id: RB-CF4
   lane: CF4
@@ -78,8 +82,9 @@ runbooks:
   admission_work_unit: PR-289
   execution_authorization_gate: H-CF4
   admission_is_execution_authorization: false
-  required_input_contract: raw group catalogue, full covariance, depth and ZoA path, orbit invariants,
-    and shared-nuisance identified set
+  required_input_contract: exact raw group catalogue, row selection, full covariance, coordinate frame,
+    radial sign, units, grouping, depth and ZoA identities, plus orbit invariants and a shared-nuisance
+    identified set
   sequence:
   - authenticated_release
   - selection_mask_frame_units_transfer
@@ -105,6 +110,9 @@ runbooks:
   - execution before both admission and lane-scoped human authorization
   - MIO diagnostic used as HTT likelihood, posterior, or evidence
   - weak-identification point estimate or nearest-family forcing
+  - generic record ID or string-only substitute for the native CF4 relationship profile
+  - catalogue admission without exact row-selection, covariance, frame, sign, units, grouping, depth,
+    and ZoA roles
   - native solver, native atlas, geometry detection, or family identification claim
 - runbook_id: RB-HSC-KIDS
   lane: HSC_KIDS
@@ -115,10 +123,11 @@ runbooks:
   - PR-292
   current_state: BLOCKED_AT_ADMISSION_OR_AUTHORIZATION
   admission_work_unit: PR-289
-  execution_authorization_gate: H-HSC/KiDS
+  execution_authorization_gate: H-HSC-KiDS
   admission_is_execution_authorization: false
-  required_input_contract: separate complete HSC and KiDS spin-2 products, masks, randoms, PSF, n(z),
-    calibration, response, and covariance
+  required_input_contract: separate complete HSC and KiDS spin-2 products, masks, randoms, PSF and
+    n(z) identities; separate HSC calibration and KiDS response identities; separate survey
+    covariances; and one content-bound HSC/KiDS cross-covariance
   sequence:
   - authenticated_release
   - selection_mask_frame_units_transfer
@@ -144,6 +153,9 @@ runbooks:
   - execution before both admission and lane-scoped human authorization
   - MIO diagnostic used as HTT likelihood, posterior, or evidence
   - weak-identification point estimate or nearest-family forcing
+  - generic record ID or string-only substitute for the native HSC/KiDS relationship profile
+  - shared HSC/KiDS PSF, n(z), calibration, response, or auto-covariance identity
+  - missing or unbound HSC/KiDS cross-covariance relationship
   - native solver, native atlas, geometry detection, or family identification claim
 - runbook_id: RB-ACT
   lane: ACT

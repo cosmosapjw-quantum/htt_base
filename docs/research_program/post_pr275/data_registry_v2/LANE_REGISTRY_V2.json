@@ -1,0 +1,232 @@
+{
+  "schema": "common.data_identity_lane_registry.v2",
+  "registry_id": "PR289-LANE-REGISTRY-V2",
+  "lane_order": [
+    "PLANCK",
+    "CF4",
+    "HSC_KIDS",
+    "ACT",
+    "DESI",
+    "JWST_SN"
+  ],
+  "universal_semantic_fields": [
+    "units_contract_id",
+    "coordinate_frame_id",
+    "sign_orientation_convention_id",
+    "directional_convention_id",
+    "harmonic_convention_id",
+    "mask_id",
+    "selection_id",
+    "sky_support_id",
+    "covariance_id",
+    "covariance_status",
+    "null_ensemble_id",
+    "null_ensemble_status",
+    "transfer_source",
+    "transfer_function_spec_id",
+    "transfer_provenance_status",
+    "sky_support_status",
+    "license_status",
+    "native_identity_profile"
+  ],
+  "lanes": [
+    {
+      "lane_id": "PLANCK",
+      "product_id": "PLANCK_PR3_LOWELL_BUNDLE",
+      "required_component_ids": [
+        "smica_map",
+        "commander_map",
+        "smica_mask",
+        "commander_mask",
+        "smica_beam",
+        "commander_beam",
+        "smica_window_operator",
+        "commander_window_operator",
+        "smica_covariance",
+        "commander_covariance",
+        "pixelization",
+        "native_selection",
+        "ffp10_null_inventory"
+      ],
+      "component_cardinality": {
+        "smica_map": 1,
+        "commander_map": 1,
+        "smica_mask": 1,
+        "commander_mask": 1,
+        "smica_beam": 1,
+        "commander_beam": 1,
+        "smica_window_operator": 1,
+        "commander_window_operator": 1,
+        "smica_covariance": 1,
+        "commander_covariance": 1,
+        "pixelization": 1,
+        "native_selection": 1,
+        "ffp10_null_inventory": 1
+      },
+      "native_identity_schema": "common.planck_native_identity.v1",
+      "required_human_gate_id": "H-PLANCK",
+      "analysis_plan_id": "plan:PR290-PLANCK-LOWELL-V1",
+      "allowed_transfer_sources": [
+        "none"
+      ],
+      "name_only_forbidden": true
+    },
+    {
+      "lane_id": "CF4",
+      "product_id": "CF4_GROUP_CATALOGUE_BUNDLE",
+      "required_component_ids": [
+        "catalogue",
+        "row_selection",
+        "covariance",
+        "frame_definition",
+        "sign_convention",
+        "units_contract",
+        "grouping_definition",
+        "depth_definition",
+        "zoa_definition"
+      ],
+      "component_cardinality": {
+        "catalogue": 1,
+        "row_selection": 1,
+        "covariance": 1,
+        "frame_definition": 1,
+        "sign_convention": 1,
+        "units_contract": 1,
+        "grouping_definition": 1,
+        "depth_definition": 1,
+        "zoa_definition": 1
+      },
+      "native_identity_schema": "common.cf4_native_identity.v1",
+      "required_human_gate_id": "H-CF4",
+      "analysis_plan_id": "plan:PR291-CF4-TOMOGRAPHY-V1",
+      "allowed_transfer_sources": [
+        "none"
+      ],
+      "name_only_forbidden": true
+    },
+    {
+      "lane_id": "HSC_KIDS",
+      "product_id": "HSC_KIDS_SPIN2_BUNDLE",
+      "required_component_ids": [
+        "hsc_product",
+        "kids_product",
+        "hsc_mask",
+        "kids_mask",
+        "hsc_randoms",
+        "kids_randoms",
+        "hsc_psf",
+        "kids_psf",
+        "hsc_n_z",
+        "kids_n_z",
+        "hsc_shear_calibration",
+        "kids_shear_response",
+        "hsc_covariance",
+        "kids_covariance",
+        "hsc_kids_cross_covariance"
+      ],
+      "component_cardinality": {
+        "hsc_product": 1,
+        "kids_product": 1,
+        "hsc_mask": 1,
+        "kids_mask": 1,
+        "hsc_randoms": 1,
+        "kids_randoms": 1,
+        "hsc_psf": 1,
+        "kids_psf": 1,
+        "hsc_n_z": 1,
+        "kids_n_z": 1,
+        "hsc_shear_calibration": 1,
+        "kids_shear_response": 1,
+        "hsc_covariance": 1,
+        "kids_covariance": 1,
+        "hsc_kids_cross_covariance": 1
+      },
+      "native_identity_schema": "common.hsc_kids_native_identity.v1",
+      "required_human_gate_id": "H-HSC-KiDS",
+      "analysis_plan_id": "plan:PR292-HSC-KIDS-SPIN2-V1",
+      "allowed_transfer_sources": [
+        "none"
+      ],
+      "name_only_forbidden": true
+    },
+    {
+      "lane_id": "ACT",
+      "product_id": "ACT_LENSING_BUNDLE",
+      "required_component_ids": [
+        "product",
+        "response",
+        "mean_field",
+        "noise",
+        "mask",
+        "simulation",
+        "covariance"
+      ],
+      "component_cardinality": {
+        "product": 1,
+        "response": 1,
+        "mean_field": 1,
+        "noise": 1,
+        "mask": 1,
+        "simulation": 1,
+        "covariance": 1
+      },
+      "native_identity_schema": "common.registered_product_native_identity.v1",
+      "required_human_gate_id": "H-ACT",
+      "analysis_plan_id": "plan:PR204-ACT-LENSING-V1",
+      "allowed_transfer_sources": [
+        "none"
+      ],
+      "name_only_forbidden": true
+    },
+    {
+      "lane_id": "DESI",
+      "product_id": "DESI_DR1_BGS_BRIGHT_BUNDLE",
+      "required_component_ids": [
+        "observed_catalogue",
+        "selection",
+        "covariance",
+        "ezmock_inventory",
+        "abacus_inventory"
+      ],
+      "component_cardinality": {
+        "observed_catalogue": 1,
+        "selection": 1,
+        "covariance": 1,
+        "ezmock_inventory": 1000,
+        "abacus_inventory": 25
+      },
+      "native_identity_schema": "common.registered_product_native_identity.v1",
+      "required_human_gate_id": "H-DESI",
+      "analysis_plan_id": "plan:PR203-DESI-BGS-V1",
+      "allowed_transfer_sources": [
+        "none"
+      ],
+      "name_only_forbidden": true
+    },
+    {
+      "lane_id": "JWST_SN",
+      "product_id": "JWST_SN_ROW_LEVEL_BUNDLE",
+      "required_component_ids": [
+        "source_rows",
+        "host_rows",
+        "individual_errors",
+        "covariance",
+        "competitor_model"
+      ],
+      "component_cardinality": {
+        "source_rows": 1,
+        "host_rows": 1,
+        "individual_errors": 1,
+        "covariance": 1,
+        "competitor_model": 1
+      },
+      "native_identity_schema": "common.registered_product_native_identity.v1",
+      "required_human_gate_id": "H-JWST",
+      "analysis_plan_id": "plan:PR293-JWST-SN-V1",
+      "allowed_transfer_sources": [
+        "none"
+      ],
+      "name_only_forbidden": true
+    }
+  ]
+}
