@@ -382,26 +382,27 @@ def test_canonical_payload_generation_is_byte_deterministic():
     }
 
 
-def test_inventory_is_sorted_unique_and_hashes_every_legacy_file():
+def test_legacy_inventory_is_sorted_unique_and_hash_bound():
     payload = json.loads(
         (REPO / quarantine.INVENTORY_RELATIVE_PATH).read_text(encoding="utf-8")
     )
     paths = [row["path"] for row in payload["entries"]]
     assert paths == sorted(paths)
     assert len(paths) == len(set(paths))
-    legacy_files = {
-        path.relative_to(REPO).as_posix()
-        for path in (REPO / "legacy/cf4_p0").rglob("*")
-        if path.is_file()
-    }
-    legacy_entries = {
-        row["path"]
-        for row in payload["entries"]
-        if row["mode"] == "legacy_reproduction_only"
-    }
-    assert legacy_entries == legacy_files
+    legacy_rows = [
+        row for row in payload["entries"] if row["mode"] == "legacy_reproduction_only"
+    ]
+    assert legacy_rows
+    for row in legacy_rows:
+        assert row["public_use"] is False
+        assert row["role"] == "frozen_numerical_reproduction"
+        assert isinstance(row["sha256"], str)
+        assert len(row["sha256"]) == 64
+        int(row["sha256"], 16)
+        assert type(row["size_bytes"]) is int
+        assert row["size_bytes"] > 0
+
     for row in payload["entries"]:
-        path = REPO / row["path"]
         if row["mode"] == "active_public_binary":
             assert row["byte_validation"] == "dynamic_fail_closed_no_self_reference"
             assert row["binding_gate"].endswith(":verify_package_binary_binding")
@@ -414,8 +415,35 @@ def test_inventory_is_sorted_unique_and_hashes_every_legacy_file():
                 "archive_embeds_canonical_inventory"
             )
             assert "sha256" not in row
-        else:
-            assert hashlib.sha256(path.read_bytes()).hexdigest() == row["sha256"]
+
+
+def test_materialized_legacy_tree_matches_inventory_when_available():
+    payload = json.loads(
+        (REPO / quarantine.INVENTORY_RELATIVE_PATH).read_text(encoding="utf-8")
+    )
+    expected = {
+        row["path"]
+        for row in payload["entries"]
+        if row["mode"] == "legacy_reproduction_only"
+    }
+    legacy_root = REPO / "legacy/cf4_p0"
+    if not legacy_root.is_dir():
+        pytest.skip("off-repo CF4 legacy archive is not materialized")
+    assert not legacy_root.is_symlink()
+
+    actual = {
+        path.relative_to(REPO).as_posix()
+        for path in legacy_root.rglob("*")
+        if path.is_file()
+    }
+    assert actual == expected
+    by_path = {row["path"]: row for row in payload["entries"]}
+    for relative in sorted(expected):
+        path = REPO / relative
+        assert not path.is_symlink()
+        raw = path.read_bytes()
+        assert len(raw) == by_path[relative]["size_bytes"]
+        assert hashlib.sha256(raw).hexdigest() == by_path[relative]["sha256"]
 
 
 def test_inventory_pins_active_producers_and_shared_release_gates():
@@ -1071,7 +1099,7 @@ def test_block_hash_or_payload_mutation_is_rejected(tmp_path: Path, monkeypatch)
         quarantine.load_block_record(REPO)
 
 
-def test_legacy_mode_is_explicit_scoped_and_hash_bound():
+def test_legacy_mode_requires_explicit_enable_and_scoped_output():
     legacy = REPO / "legacy/cf4_p0/cards/cf4_mv_bulkflow_card.json"
     with pytest.raises(quarantine.LegacyReproductionRequired, match="explicit"):
         quarantine.require_legacy_reproduction(
@@ -1083,6 +1111,12 @@ def test_legacy_mode_is_explicit_scoped_and_hash_bound():
             artifact_path="docs/generated/cf4_mv_bulkflow_card.json",
             repo_root=REPO,
         )
+
+
+def test_materialized_legacy_card_is_hash_bound_when_available():
+    legacy = REPO / "legacy/cf4_p0/cards/cf4_mv_bulkflow_card.json"
+    if not legacy.is_file():
+        pytest.skip("off-repo CF4 legacy card is not materialized")
     quarantine.require_legacy_reproduction(
         enabled=True, artifact_path=legacy, repo_root=REPO
     )

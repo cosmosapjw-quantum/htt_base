@@ -39,7 +39,15 @@ PR151_WITHDRAWN = (
     "figures/obsdata_current/fig_obs_desi_dipole_mock.source.json",
     "figures/obsdata_current/fig_obs_desi_dipole_mock.manifest.json",
 )
-STALE_RECEIPT = "docs/generated/pr289_data_identity_v2_receipt.json"
+STALE_RECEIPT = Path("docs/generated/pr289_data_identity_v2_receipt.json")
+EXPECTED_ROOTLESS_LANES = (
+    "PLANCK",
+    "CF4",
+    "HSC_KIDS",
+    "ACT",
+    "DESI",
+    "JWST_SN",
+)
 
 
 def _sha256(path: Path) -> str:
@@ -62,7 +70,10 @@ def _require_pr151_quarantine(root: Path) -> None:
     spec = root / "docs/research_program/long_horizon_rescue/pr151_spec.yaml"
     if "scientific_status: INVALIDATED_PENDING_FORMALISM_REVALIDATION" not in spec.read_text(encoding="utf-8"):
         raise RuntimeError("PR151_INVALIDATION_STATE_DRIFT")
-    if (root / STALE_RECEIPT).exists():
+    stale_receipt = (
+        STALE_RECEIPT if STALE_RECEIPT.is_absolute() else root / STALE_RECEIPT
+    )
+    if stale_receipt.exists():
         raise RuntimeError("STALE_PR289_CANDIDATE_RECEIPT_PRESENT")
     present = [relative for relative in PR151_WITHDRAWN if (root / relative).exists()]
     if present:
@@ -81,21 +92,62 @@ def _load_exact_pr289_runner(root: Path):
     return module
 
 
+def _validate_rootless_preflight(
+    preflight: dict[str, Any],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    decisions = preflight.get("lane_decisions")
+    authorizations = preflight.get("authorization_receipts")
+    if not isinstance(decisions, list) or not isinstance(authorizations, list):
+        raise RuntimeError("PR289_ROOTLESS_PREFLIGHT_SHAPE_DRIFT")
+    if not all(isinstance(row, dict) for row in decisions + authorizations):
+        raise RuntimeError("PR289_ROOTLESS_PREFLIGHT_SHAPE_DRIFT")
+
+    decision_lanes = tuple(row.get("lane_id") for row in decisions)
+    authorization_lanes = tuple(row.get("lane_id") for row in authorizations)
+    if decision_lanes != EXPECTED_ROOTLESS_LANES:
+        raise RuntimeError("PR289_ROOTLESS_LANE_ORDER_DRIFT")
+    if authorization_lanes != EXPECTED_ROOTLESS_LANES:
+        raise RuntimeError("PR289_ROOTLESS_AUTHORIZATION_ORDER_DRIFT")
+
+    for row in decisions:
+        if row.get("status") != "REJECTED_NOT_PRESENT":
+            raise RuntimeError(
+                f"PR289_NONCANONICAL_ROOTLESS_REFUSAL:{row.get('lane_id')}:"
+                f"{row.get('status')}"
+            )
+        if row.get("records") not in ([], ()):
+            raise RuntimeError("PR289_REFUSED_LANE_RETAINED_RECORDS")
+        if row.get("lane_admission_bundle_id") is not None:
+            raise RuntimeError("PR289_REFUSED_LANE_RETAINED_BUNDLE")
+
+    nullable_fields = (
+        "human_gate_receipt_id",
+        "human_authority_identity",
+        "authorized_scope",
+        "issued_at_utc",
+        "expires_at_utc",
+    )
+    for row in authorizations:
+        if row.get("status") != "NOT_AUTHORIZED":
+            raise RuntimeError("PR303_UNEXPECTED_AUTHORIZATION")
+        if row.get("exact_admission_record_ids") not in ([], ()):
+            raise RuntimeError("PR289_REFUSAL_AUTH_RETAINED_RECORD_IDS")
+        if row.get("lane_admission_bundle_id") is not None:
+            raise RuntimeError("PR289_REFUSAL_AUTH_RETAINED_BUNDLE")
+        if any(row.get(field) is not None for field in nullable_fields):
+            raise RuntimeError("PR289_REFUSAL_AUTH_INVENTED_HUMAN_STATE")
+
+    if preflight.get("aggregate_status") != "NO_ADMITTED_IDENTITIES":
+        raise RuntimeError("PR303_UNEXPECTED_PREFLIGHT_AGGREGATE")
+    return decisions, authorizations
+
+
 def build_payload(root: Path = ROOT) -> dict[str, Any]:
     source_hashes = _require_core_identity(root)
     _require_pr151_quarantine(root)
     runner = _load_exact_pr289_runner(root)
     preflight = runner._build(root)
-    decisions = preflight["lane_decisions"]
-    authorizations = preflight["authorization_receipts"]
-    if len(decisions) != 6 or len(authorizations) != 6:
-        raise RuntimeError("PR289_LANE_CARDINALITY_DRIFT")
-    if any(row["status"] == "ADMITTED_IDENTITY_ONLY" for row in decisions):
-        raise RuntimeError("PR303_UNEXPECTED_ADMITTED_LANE")
-    if any(row["status"] != "NOT_AUTHORIZED" for row in authorizations):
-        raise RuntimeError("PR303_UNEXPECTED_AUTHORIZATION")
-    if preflight["aggregate_status"] != "NO_ADMITTED_IDENTITIES":
-        raise RuntimeError("PR303_UNEXPECTED_PREFLIGHT_AGGREGATE")
+    decisions, authorizations = _validate_rootless_preflight(preflight)
     return {
         "schema": "htt.pr303.integrated_data_identity_receipt.v1",
         "terminal": TERMINAL,
@@ -106,6 +158,10 @@ def build_payload(root: Path = ROOT) -> dict[str, Any]:
         "pr289_preflight_terminal": preflight["terminal"],
         "pr289_aggregate_status": preflight["aggregate_status"],
         "refused_lane_count": len(decisions),
+        "refused_lane_statuses": {
+            row["lane_id"]: row["status"] for row in decisions
+        },
+        "not_authorized_lane_ids": [row["lane_id"] for row in authorizations],
         "admitted_lane_count": 0,
         "authorized_lane_count": 0,
         "executed_lane_count": 0,

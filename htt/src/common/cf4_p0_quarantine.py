@@ -2670,6 +2670,10 @@ def require_legacy_reproduction(
     if not path.is_absolute():
         path = root / path
     relative = _repo_relative(path, root, "legacy artifact path")
+    if not _path_is_under(relative, ("legacy/cf4_p0",)):
+        raise LegacyReproductionRequired(
+            "legacy reproduction output must stay under ('legacy/cf4_p0',)"
+        )
     policy, _ = load_policy(root)
     if not _path_is_under(relative, policy["legacy_output_roots"]):
         raise LegacyReproductionRequired(

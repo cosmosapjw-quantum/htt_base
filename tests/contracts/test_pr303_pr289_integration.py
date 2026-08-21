@@ -2,11 +2,14 @@
 from __future__ import annotations
 
 import ast
+from copy import deepcopy
 import importlib.util
 import json
 from pathlib import Path
 import subprocess
 import sys
+
+import pytest
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -26,6 +29,12 @@ def test_pr303_receipt_is_a_zero_execution_integration_only_result() -> None:
     payload = _runner().build_payload()
     assert payload["terminal"] == "PASS_PR289_PR300_INTEGRATION_ONLY"
     assert len(payload["exact_pr289_source_hashes"]) == 7
+    assert payload["refused_lane_statuses"] == {
+        lane: "REJECTED_NOT_PRESENT" for lane in _runner().EXPECTED_ROOTLESS_LANES
+    }
+    assert payload["not_authorized_lane_ids"] == list(
+        _runner().EXPECTED_ROOTLESS_LANES
+    )
     assert payload["admitted_lane_count"] == 0
     assert payload["authorized_lane_count"] == 0
     assert payload["executed_lane_count"] == 0
@@ -63,17 +72,34 @@ def test_pr303_runner_has_no_network_or_subprocess_execution_surface() -> None:
     assert not imports & forbidden
 
 
-def test_pr303_rejects_reappearance_of_the_stale_pr289_receipt() -> None:
+def test_pr303_rejects_reappearance_of_the_stale_pr289_receipt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     module = _runner()
-    stale = ROOT / module.STALE_RECEIPT
-    assert not stale.exists()
+    stale = tmp_path / "pr289_data_identity_v2_receipt.json"
     stale.write_text("{}\n", encoding="utf-8")
-    try:
-        try:
-            module.build_payload()
-        except RuntimeError as exc:
-            assert "STALE_PR289_CANDIDATE_RECEIPT_PRESENT" in str(exc)
-        else:
-            raise AssertionError("stale PR-289 receipt was accepted")
-    finally:
-        stale.unlink()
+    monkeypatch.setattr(module, "STALE_RECEIPT", stale)
+    with pytest.raises(RuntimeError, match="STALE_PR289_CANDIDATE_RECEIPT_PRESENT"):
+        module.build_payload()
+
+
+def test_pr303_rejects_a_noncanonical_rootless_refusal() -> None:
+    module = _runner()
+    pr289 = module._load_exact_pr289_runner(ROOT)
+    preflight = deepcopy(pr289._build(ROOT))
+    preflight["lane_decisions"][0]["status"] = "REJECTED_IDENTITY_MISMATCH"
+
+    with pytest.raises(RuntimeError, match="PR289_NONCANONICAL_ROOTLESS_REFUSAL"):
+        module._validate_rootless_preflight(preflight)
+
+
+def test_pr303_rejects_a_refusal_authorization_with_record_ids() -> None:
+    module = _runner()
+    pr289 = module._load_exact_pr289_runner(ROOT)
+    preflight = deepcopy(pr289._build(ROOT))
+    preflight["authorization_receipts"][0]["exact_admission_record_ids"] = [
+        "record-that-must-not-survive-rootless-refusal"
+    ]
+
+    with pytest.raises(RuntimeError, match="PR289_REFUSAL_AUTH_RETAINED_RECORD_IDS"):
+        module._validate_rootless_preflight(preflight)
