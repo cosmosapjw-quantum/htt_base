@@ -28,7 +28,7 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Null/mock status | `not_statistical` |
 | Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false without an exact factory-issued ClaimCapabilityDecision.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier.<br>Verified smoke receipts set only generic process readiness; they do not grant a ClaimCapability. |
 | Generating command | `python -m common.status_snapshot --write docs/generated/status_snapshot.json` |
-| Source commit | `eb9758b9+dirty` |
+| Source commit | `794c9db6+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
