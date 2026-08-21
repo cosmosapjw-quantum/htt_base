@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "policy_id": "PR303-INTEGRATION-POLICY",
+  "pr_id": "PR-303",
+  "base_ref": "changeset/pr300-one-command-observational-readiness-20260821",
+  "base_commit": "4c371d1101f5e0eb19d3dea80ca40eabea5f7987",
+  "source_commit": "45da1bf54149864fb9d87be3a828df202ee1df7f",
+  "publication_mode": "draft_pr_only",
+  "claim_ceiling": "diagnostic_only",
+  "observed_data_executed": false,
+  "scientific_effect": "none",
+  "forbidden_actions": [
+    "authorization_implementation",
+    "nonce_consumption",
+    "observed_payload_access",
+    "lane_execution",
+    "canary",
+    "cross_probe_scheduling",
+    "default_branch_merge",
+    "force_push"
+  ],
+  "terminal": "PASS_PR289_PR300_INTEGRATION_ONLY"
+}
