@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from pathlib import Path
 from enum import Enum
 from types import ModuleType
@@ -151,3 +152,16 @@ def test_authorization_requires_the_exact_pr289_runtime_type(monkeypatch: pytest
         posterior_consumer_plan=consumer,
     )
     assert ready.status is LaneReadinessStatus.READY_FOR_AUTHORIZED_EXECUTION
+    for forged_plan, message in (
+        (replace(consumer, ppc_discrepancy_ids=("forged",)), "registered discrepancy"),
+        (replace(consumer, loo_block_ids=("forged-block",)), "registered block partition"),
+        (replace(consumer, plan_content_id="sha256:" + "0" * 64), "forged or stale"),
+    ):
+        with pytest.raises(ProductionBayesianError, match=message):
+            assess_lane_readiness(
+                desi,
+                model_contract=contract,
+                authorization_receipt=ExecutionAuthorizationReceipt("DESI", AuthorizationStatus.AUTHORIZED),
+                posterior_lineage=lineage,
+                posterior_consumer_plan=forged_plan,
+            )

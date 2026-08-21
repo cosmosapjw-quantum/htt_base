@@ -189,6 +189,24 @@ class PosteriorConsumerPlan:
     plan_content_id: str
 
 
+def _consumer_plan_unsigned_payload(
+    *,
+    model_contract_content_id: str,
+    posterior_lineage_content_id: str,
+    ppc_discrepancy_ids: Sequence[object],
+    loo_block_ids: Sequence[object],
+) -> dict[str, object]:
+    """Canonical payload for a plan that may authorize posterior consumers."""
+
+    return {
+        "schema": "htt.production_bayesian_posterior_consumer_plan.v1",
+        "model_contract_content_id": model_contract_content_id,
+        "posterior_lineage_content_id": posterior_lineage_content_id,
+        "ppc_discrepancy_ids": list(ppc_discrepancy_ids),
+        "loo_block_ids": list(loo_block_ids),
+    }
+
+
 def build_sampler_posterior_lineage(
     *,
     contract: ProductionModelContract,
@@ -260,13 +278,12 @@ def build_posterior_consumer_plan(
     blocks = _names(loo_block_ids, "loo_block_ids")
     if blocks != contract.block_ids:
         raise ProductionBayesianError("blockwise LOO consumer must preserve the registered partition")
-    unsigned = {
-        "schema": "htt.production_bayesian_posterior_consumer_plan.v1",
-        "model_contract_content_id": contract.contract_content_id,
-        "posterior_lineage_content_id": lineage.lineage_content_id,
-        "ppc_discrepancy_ids": list(discrepancies),
-        "loo_block_ids": list(blocks),
-    }
+    unsigned = _consumer_plan_unsigned_payload(
+        model_contract_content_id=contract.contract_content_id,
+        posterior_lineage_content_id=lineage.lineage_content_id,
+        ppc_discrepancy_ids=discrepancies,
+        loo_block_ids=blocks,
+    )
     return PosteriorConsumerPlan(
         model_contract_content_id=contract.contract_content_id,
         posterior_lineage_content_id=lineage.lineage_content_id,
@@ -392,6 +409,24 @@ def assess_lane_readiness(
         raise ProductionBayesianError(
             "posterior lineage and PPC/LOO consumer plan do not bind this model contract"
         )
+    if set(posterior_consumer_plan.ppc_discrepancy_ids) != set(model_contract.discrepancies):
+        raise ProductionBayesianError(
+            "PPC consumer plan does not use the registered discrepancy family"
+        )
+    if posterior_consumer_plan.loo_block_ids != model_contract.block_ids:
+        raise ProductionBayesianError(
+            "LOO consumer plan does not preserve the registered block partition"
+        )
+    expected_plan_content_id = canonical_content_id(
+        _consumer_plan_unsigned_payload(
+            model_contract_content_id=model_contract.contract_content_id,
+            posterior_lineage_content_id=posterior_lineage.lineage_content_id,
+            ppc_discrepancy_ids=posterior_consumer_plan.ppc_discrepancy_ids,
+            loo_block_ids=posterior_consumer_plan.loo_block_ids,
+        )
+    )
+    if posterior_consumer_plan.plan_content_id != expected_plan_content_id:
+        raise ProductionBayesianError("PPC/LOO consumer plan content identity is forged or stale")
     return LaneReadinessDecision(
         lane_id=descriptor.lane_id,
         status=LaneReadinessStatus.READY_FOR_AUTHORIZED_EXECUTION,
