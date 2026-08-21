@@ -1,5 +1,6 @@
 generated_on: '2026-08-11'
 completed:
+- PR-287
 - PR-286
 - PR-285
 - PR-284
@@ -209,7 +210,6 @@ pending:
 - PR-206
 - PR-207
 - PR-208
-- PR-288
 - PR-289
 - PR-290
 - PR-291
@@ -245,7 +245,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-287
+in_progress: PR-288
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -259,7 +259,7 @@ stacked_pr_execution:
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
   target_sha: ff9ef9f45747e559c5343b463cf010dfc3a7432a
-  active_implementation_pr: PR-287
+  active_implementation_pr: PR-288
   pr_order:
   - PR-283
   - PR-284
@@ -423,14 +423,15 @@ stacked_pr_execution:
         publication: PASS
       assurance_budget: {maximum: 16, consumed: 12}
     PR-287:
-      lifecycle: REVIEWED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      lifecycle: PR_OPEN
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED, SEALED,
+        PUSHED, PR_OPEN]
       base_sha: b955a050f19db853a93779506e8acb4e4a5352a9
       predecessor_pr: PR-286
       predecessor_sealed_sha: b955a050f19db853a93779506e8acb4e4a5352a9
-      sealed_head: null
-      pushed_ref: null
-      pr_url: null
+      sealed_head: 319835cc4b4e2e3270a0b27787ce5d5a44ea16b7
+      pushed_ref: refs/heads/changeset/pr287-entropy-truth-recovery-20260811
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/384
       production_hash: 6d0963dfdc66dcd2bf80ef3dde6fd84d87f455f0c6db5199250b06b2c51e873a
       dependency_hashes:
         pr287_spec: dbd0d6fe29a45e51a6850102ed4587ac38f8da7cfb52453552aa0a4ba704ac09
@@ -456,21 +457,49 @@ stacked_pr_execution:
         portability_replay: PASS
         fresh_execution: INCONCLUSIVE
         review: PASS
+        seal: PASS
+        push: PASS
+        publication: PASS
       execution_blocker: BLOCKED_CAPABILITY_ISOLATED_EXECUTOR_NOT_INSTALLED
-      assurance_budget: {maximum: 16, consumed: 6}
+      assurance_budget: {maximum: 16, consumed: 7}
     PR-288:
-      lifecycle: PLANNED
-      lifecycle_history: [PLANNED]
-      base_sha: null
+      lifecycle: REVIEWED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      base_sha: 319835cc4b4e2e3270a0b27787ce5d5a44ea16b7
       predecessor_pr: PR-287
-      predecessor_sealed_sha: null
+      predecessor_sealed_sha: 319835cc4b4e2e3270a0b27787ce5d5a44ea16b7
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: null
-      dependency_hashes: {}
-      gate_dispositions: {eligibility: INELIGIBLE}
-      assurance_budget: {maximum: 16, consumed: 0}
+      production_hash: 7d2ce119e4f176aacaa870f0c7bc0dc1e5e0aa843bf2984f6ac7af7d4d148a79
+      dependency_hashes:
+        pr288_spec: 994603817e0546a1abb10b026cb3fcb31ebf5bee829c4e452798a808e19d4233
+        publication_policy: c1e088fa12716ef9bc9870bad0213b8d37ae28e0dc96edec6e2cc66f1f81910b
+        pr288_runner: b5a5ebd1ed6d4bd9b3a2220945f980f4b3e3722218d5f3add43b4c33876d1917
+        pr288_contract_test: a6e136f2dea787c91c89e1f82991c0265a18e2d006f47deddcf857d3494f6753
+        pr280_delta: 46b46e1d3937600118cb2670d9788e2424ee4fc26f4ee1e9ac993e1b497b978b
+        pr280_inventory_receipt: 66630487b08aa03c374fb05f11b6007bc53336974ed6a8f1970205e139a2123e
+        pr280_dependency_receipt: 83d2292151c88d2ad8245fbbae47eb20da0436d4cf4795722af0903ffd74cdbf
+        bayesian_semantics_receipt: 622dadbcdf4a5d616a78f485fd6a772d1c7823ed8d77e808aa2bfc8f66169b0c
+        publication_integrity: 56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec
+        integration_rehearsal: 5a918e733fe744c3d1f74d47c38ea316de1e61f51b6ec106dc7ae9674c14c9e2
+        dag_validator: 126ccf63e3a6d835584426e4c3d157be5482b1f7df39d0985638370366b40afc
+        claim_linter: b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677
+        salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
+      gate_dispositions:
+        eligibility: PASS
+        implementation: PASS
+        validation: PASS
+        code: PASS
+        physics: PASS
+        statistics: PASS
+        claim: PASS
+        harness: PASS
+        required_engine_isolated: PASS
+        system_default_engine: INCONCLUSIVE
+        portability_replay: PASS
+        review: PASS
+      assurance_budget: {maximum: 16, consumed: 6}
     PR-289:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
@@ -656,6 +685,25 @@ execution_lane:
   PR-296: defensible
   PR-297: defensible
 execution_resolutions:
+  PR-287:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-287.md
+    review_receipt: .agent-harness/runs/pr287-final-seal-closeout-20260811/RUN_SUMMARY.json
+    review_receipt_sha256: 05ef2a71da441178c8de365a5a50799a29dc0f18a4211a623c6761c2ae920a64
+    publication_receipt_sha256: c19f24f4d72439430c607b72c6108db101dccb757afe1403a3c5b70cec237c34
+    candidate_sha: 319835cc4b4e2e3270a0b27787ce5d5a44ea16b7
+    sealed_head: 319835cc4b4e2e3270a0b27787ce5d5a44ea16b7
+    pushed_ref: refs/heads/changeset/pr287-entropy-truth-recovery-20260811
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/384
+    resolved_on: '2026-08-11'
+    scientific_status_effect: typed_blind_replay_containment_and_provenance_recovered_with_fresh_execution_blocked
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: typed_synthetic_replay_contract
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    assurance_budget_consumed: 7
+    success_dependency_satisfied: true
   PR-286:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-286.md

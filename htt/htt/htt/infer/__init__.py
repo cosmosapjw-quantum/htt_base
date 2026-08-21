@@ -159,6 +159,12 @@ from htt.infer.vector_tensor_data_admission import (
     future_pilot_candidate_ids,
     require_future_pilot_eligibility,
 )
+from htt.infer.bayesian_semantics import (
+    BayesianSemanticsError,
+    BayesianSemanticsReceipt,
+    build_bayesian_semantics_receipt,
+    validate_bayesian_semantics_receipt,
+)
 
 __all__ = [
     'LatentAxisModel', 'LatentAxisParams', 'dipole_projection',
@@ -230,4 +236,7 @@ __all__ = [
     'evaluate_depth_local_global', 'evaluate_joint_anchor_coverage',
     'evaluate_matched_counterpair_power', 'evaluate_open_set_validation',
     'evaluate_weak_identification',
+    'BayesianSemanticsError', 'BayesianSemanticsReceipt',
+    'build_bayesian_semantics_receipt',
+    'validate_bayesian_semantics_receipt',
 ]
