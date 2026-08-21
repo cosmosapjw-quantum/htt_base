@@ -28,7 +28,8 @@ def build_payload():
       "forbidden_claims_reaffirmed":[
         "partial DESI mocks never enter any rank/p/covariance/significance or headline",
         "each closed lane carries its own null/covariance/selection receipt",
-        "the DESI official-mock closure waits for the PR-151 acquisition terminal receipt"]}
+        "the prior DESI diagnostic is invalidated pending formalism revalidation",
+        "the DESI official-mock closure waits for a revalidated PR-151 terminal receipt"]}
 def _render(o): return (json.dumps(o,sort_keys=True,indent=1)+"\n").encode()
 def main(argv=None):
     ap=argparse.ArgumentParser(); m=ap.add_mutually_exclusive_group(required=True)

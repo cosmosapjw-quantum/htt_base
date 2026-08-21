@@ -343,11 +343,11 @@ claims:
     caveats: [the WF MEAN-field curl/div ratio is the real measurement (potential-flow suppression on the reconstructed 3-D field); the CR vorticity DISTRIBUTION is residual-dominated and depends on the residual correlation length R (RMS|curl| = 14-48 (km/s)/Mpc across R=7.8-30 Mpc), which is NOT determined by (v_mean, v_std) alone; the true Hoffman-Ribak CR needs the full WF residual covariance (the WF operator + data + noise model), so a DEFINITIVE ensemble still needs an owned field-realization set (BLOCKED_MISSING_FIELD_REALIZATIONS stays PARTIAL) -- this correlated-residual CR is a principled upgrade over the toy, not the definitive ensemble; NOT a Bianchi family/geometry or observer-frame claim; no vorticity signal claim]
   ext.desi_dipole_mock:
     owner: OBSSTAT/DATA
-    status: MEASURED_MOCK_CALIBRATED
-    evidence_type: real_data_measurement
-    claim_tier: C3
-    allowed_phrase: EXT-DESI-MOCK -- the mock-calibrated significance of the DESI DR1 BGS number-count dipole (the rev-r197 in-house-mock pattern applied to the dipole): the analytic shot-noise floor separates shot noise from clustering, and an in-house LambdaCDM clustering mock (exact ell=1 projection of the observed dN/dz -> GRF sky maps masked to the real BGS footprint + Poisson shot, run through the IDENTICAL dipole estimator) gives the LambdaCDM null; the observed dipole D=9.49e-3 is CLUSTERING-dominated (13.5 sigma above the shot-noise floor) and CONSISTENT with LambdaCDM clustering cosmic variance (mock |D|=0.021+/-0.009, p=0.90 at bias 1.5; robust across bias 1.2-2.0), NOT an excess/anomaly
-    caveats: [the dipole is clustering-dominated so the relevant null is the LambdaCDM clustering cosmic variance (supplied by the mock), not the shot-noise floor; the mock uses the observed dN/dz + fiducial P(k) + a LINEAR bias (fiducial 1.5, sensitivity 1.2-2.0, not fit); BGS is low-z so the dipole still MIXES the clustering and kinematic components -- this tests consistency of the TOTAL dipole with LambdaCDM clustering, it does NOT isolate the kinematic component (sub-dominant to the clustering cosmic variance at these depths); the GRF mock is Gaussian/linear (nonlinear/lognormal + imaging-systematic residuals not modelled, sub-dominant at the dipole scale); a consistency test, NOT a clean kinematic measurement, and NOT a Bianchi family/geometry or observer-frame claim; no anisotropy discovery]
+    status: INVALIDATED_PENDING_FORMALISM_REVALIDATION
+    evidence_type: blocked_source_record
+    claim_tier: C1
+    allowed_phrase: EXT-DESI-MOCK -- the prior pre-formalism DESI result is invalidated and its direct numerical artifacts are deleted; no amplitude, direction, rank, covariance, significance, consistency, tension, or component statement may be used until a successor formalism is approved and the preserved raw inputs are fully rerun
+    caveats: [the authenticated raw acquisition inputs are preserved for revalidation; data readiness does not validate the superseded analysis formalism; the official nine-artifact PR-151 result pack and terminal finalization receipt were never produced; no observational, anisotropy, geometry, observer-frame, or Bianchi-family claim]
   k5.cf4_mock_calibrated_significance:
     owner: COMMON
     status: QUARANTINED_OPEN_P0

@@ -18,6 +18,8 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 try:  # package import in tests
     from .pr151_contract import (
         ACQUISITION_MANIFEST,
@@ -45,6 +47,19 @@ AUDIT_IDS = {
     *(('abacus', i) for i in range(0, 5)),
 }
 GIB = 1024 ** 3
+SPEC_PATH = REPO / "docs/research_program/long_horizon_rescue/pr151_spec.yaml"
+FINALIZATION_READY_STATUS = "FORMALISM_REVALIDATED_READY_FOR_FINALIZATION"
+
+
+def _formalism_status() -> str:
+    try:
+        payload = yaml.safe_load(SPEC_PATH.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError):
+        return "UNREADABLE_FORMALISM_SPEC"
+    block = payload.get("formalism_invalidation") if isinstance(payload, dict) else None
+    if not isinstance(block, dict):
+        return "MISSING_FORMALISM_REVALIDATION_STATE"
+    return str(block.get("current_status", "MISSING_FORMALISM_REVALIDATION_STATE"))
 
 
 def _utc_now() -> dt.datetime:
@@ -413,8 +428,10 @@ def build_progress(target: Path, log: Path = DEFAULT_LOG,
         lock["state"] == "held" or process["state"] == "running"
     )
     ready = _acquisition_ready(observed, manifest, errors)
+    formalism_status = _formalism_status()
+    formalism_ready = formalism_status == FINALIZATION_READY_STATUS
     finalization = _finalization_state(target, manifest)
-    terminal = bool(ready and finalization.get("valid"))
+    terminal = bool(ready and formalism_ready and finalization.get("valid"))
     disk = shutil.disk_usage(target if target.exists() else target.parent)
     comparison = None
     if previous:
@@ -445,6 +462,8 @@ def build_progress(target: Path, log: Path = DEFAULT_LOG,
     }, sort_keys=True).encode()
     if terminal:
         next_action = "terminal_complete"
+    elif ready and not formalism_ready:
+        next_action = "blocked_formalism_revalidation"
     elif ready:
         next_action = "ready_for_finalize"
     elif comparison and comparison["stalled_candidate"]:
@@ -471,6 +490,11 @@ def build_progress(target: Path, log: Path = DEFAULT_LOG,
             "part_files": parts, "aria2_control_files": aria,
             "log": log_state, "manifest": manifest,
             "finalization_receipt": finalization,
+        },
+        "analysis_formalism": {
+            "status": formalism_status,
+            "ready_for_finalization": formalism_ready,
+            "required_status": FINALIZATION_READY_STATUS,
         },
         "activity": {
             "writer_lock": lock, "process_visibility": process,

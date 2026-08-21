@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import importlib.util
 import json
 from pathlib import Path
 import sys
@@ -29,14 +28,10 @@ def _sha256(path: Path) -> str:
     return "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _v8_builder():
-    spec = importlib.util.spec_from_file_location(
-        "build_egs_results_table_v8",
-        REPO_ROOT / "scripts/build_egs_results_table_v8.py")
-    mod = importlib.util.module_from_spec(spec)
-    sys.modules["build_egs_results_table_v8"] = mod
-    spec.loader.exec_module(mod)
-    return mod
+def _v8_payload() -> dict:
+    """Read the authenticated frozen v8 table without rerunning legacy inputs."""
+    path = REPO_ROOT / "legacy/cf4_p0/tables/egs_results_table_v8.json"
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _r(tid, axis, statement, key, status, evidence):
@@ -130,29 +125,21 @@ def _v9_rows() -> list[dict]:
            "measured",
            "cf4pp_vorticity_card.json"),
         _r("EXT-DESI", DATA,
-           "DESI DR1 BGS number-count dipole lane (Omega_tilt-sector cross-"
-           "check): randoms downloaded; window-corrected overdensity dipole "
-           "delta=(D-alpha R)/(alpha R), linear D=3<delta n_hat>_R on NGC+SGC "
-           "(fsky 0.28) = 9.49e-3 -- a 224x suppression of the raw footprint "
-           "value (2.13) down to the kinematic scale ~7e-3",
-           "window-corrected D=9.49e-3, dir (l,b)=(172.5,-44.7); mixes local "
-           "BGS clustering with the kinematic dipole; mask-coupling amplitude "
-           "bias + significance need release-matched mocks (residual gate)",
-           "measured_diagnostic",
-           "external_lanes_seal.json; desi_dipole_card.json"),
+           "Prior DESI DR1 BGS number-count dipole diagnostic invalidated on "
+           "2026-08-21 because its computation predates the required formalism "
+           "upgrade; the live numerical card was deleted.",
+           "no prior amplitude, direction, rank, covariance, significance, "
+           "consistency, tension, or component statement is reusable",
+           "invalidated_pending_formalism_revalidation",
+           "pr151_spec.yaml; raw acquisition inputs preserved"),
         _r("EXT-DESI-MOCK", DATA,
-           "mock-calibrated significance of the DESI BGS number-count dipole "
-           "(the rev-r197 in-house-mock pattern applied to the dipole): the "
-           "analytic shot-noise floor + an in-house LambdaCDM clustering mock "
-           "(exact ell=1 projection of the observed dN/dz -> GRF sky maps masked "
-           "to the footprint + Poisson shot, IDENTICAL estimator)",
-           "the observed dipole D=9.49e-3 is CLUSTERING-dominated (13.5 sigma "
-           "above the shot-noise floor) and CONSISTENT with LambdaCDM clustering "
-           "cosmic variance (mock |D|=0.021+/-0.009, p=0.90 at bias 1.5; robust "
-           "across bias 1.2-2.0) -- NOT an excess/anomaly; the kinematic dipole "
-           "is sub-dominant to the clustering cosmic variance at BGS depths",
-           "measured",
-           "desi_dipole_mock_card.json"),
+           "Prior in-house DESI mock-calibration result invalidated on "
+           "2026-08-21 because its computation predates the required formalism "
+           "upgrade; the live numerical card and figure were deleted.",
+           "raw acquisition provenance only; successor formalism and full rerun "
+           "required before any numerical or scientific use",
+           "invalidated_pending_formalism_revalidation",
+           "pr151_spec.yaml; no live numerical evidence"),
         _r("EXT-ACT", DATA,
            "ACT DR6 CMB-lensing low-multipole isotropy cross-check "
            "(independent-instrument): 400 baseline sims give the mean field "
@@ -375,12 +362,11 @@ def _apply_overlay(rows: list[dict]) -> list[dict]:
 
 
 def _payload() -> dict:
-    v8 = _v8_builder()
-    rows = _apply_overlay(v8._payload()["rows"]) + _v9_rows()
+    base = _v8_payload()
+    rows = _apply_overlay(base["rows"]) + _v9_rows()
     counts: dict[str, int] = {}
     for row in rows:
         counts[row["status"]] = counts.get(row["status"], 0) + 1
-    base = v8._payload()
     blockers_open = [
         (
             "CF4 P0 findings C1-K5-MV-F1, C3-K5-VCORR-ML-F1, and "
@@ -427,6 +413,7 @@ def _payload() -> dict:
         "caveats": [
             "Table rows retain their individual theorem, synthetic, and data-interpretation scopes.",
             "All CF4 P0-fed rows are blocked records with no replacement value.",
+            "EXT-DESI and EXT-DESI-MOCK are invalidated pending formalism revalidation and carry no live numerical evidence.",
             "No row identifies a Bianchi family or represents native low-ell solver output.",
         ],
         "generating_command": "python scripts/build_egs_results_table_v9.py",
@@ -443,8 +430,9 @@ def _payload() -> dict:
                    "KE-FRAME/KE-OBS/KE-DYN rows added by the executed "
                    "ten-item rotating-congruence program (REV-R181/R182); "
                    "P36/T2' retractions and the P26/P31/P35 supersessions "
-                   "are carried by THEOREM_REGISTRY.yaml; no claim-envelope "
-                   "change",
+                   "are carried by THEOREM_REGISTRY.yaml; the 2026-08-21 "
+                   "PR-151 invalidation overlay withdraws both active DESI "
+                   "numerical rows pending formalism revalidation",
     }
 
 

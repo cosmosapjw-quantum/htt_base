@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PR-151 heavy producer: DESI DR1 BGS exact-selection mock card.
+"""Invalidated historical PR-151 exact-selection producer.
 
 Loads the REAL DESI DR1 BGS_ANY randoms + data (NGC + SGC, downgraded to
 NSIDE=64), builds the exact-selection mock ensemble (drawn from the real random
@@ -8,10 +8,9 @@ the fast/high-realism two-tier covariance, the clustering/kinematic/selection
 component confusion matrix, and the DESI-survey-conditional pooled-rank null of
 the observed dipole to docs/generated/desi_exact_selection_card.json.
 
-Run ONCE (loads ~2.3 GB of randoms); PR-151's runner reads this card (the ACT
-pattern) and never re-runs the heavy read.  Because the official DESI validation
-mocks are absent, causal attribution is abandoned and only the survey-conditional
-null is reported.  Deterministic; --check verifies the card is current.
+The prior numerical output predates the required formalism upgrade and was
+deleted on 2026-08-21. The implementation remains readable as historical method
+substrate, but the command refuses before loading data or writing output.
 """
 from __future__ import annotations
 
@@ -48,6 +47,7 @@ HIGH_REALISM_TIER = 40
 NULL_MOCKS = 200
 SEED = 20260725
 REF_URL = "https://data.desi.lbl.gov/doc/releases/dr1/"
+INVALIDATION_STATUS = "INVALIDATED_PENDING_FORMALISM_REVALIDATION"
 
 
 def _load_desi_measure():
@@ -193,21 +193,13 @@ def measure() -> dict:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
-    args = parser.parse_args(argv)
-    payload = _round(measure())
-    text = json.dumps(payload, indent=2, sort_keys=True) + "\n"
-    if args.check:
-        if not OUT.is_file() or OUT.read_text() != text:
-            print("stale desi_exact_selection_card.json")
-            return 1
-        print("desi_exact_selection_card.json up to date")
-        return 0
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(text)
-    print(f"wrote {OUT.relative_to(REPO)}  status={payload.get('status')} "
-          f"obs_amp={payload.get('observed', {}).get('dipole_amplitude')} "
-          f"scn_p={payload.get('survey_conditional_null', {}).get('survey_conditional_pooled_rank_p')}")
-    return 0
+    parser.parse_args(argv)
+    print(
+        f"desi_exact_selection_card.json {INVALIDATION_STATUS}; "
+        "successor formalism and full rerun required",
+        file=sys.stderr,
+    )
+    return 7
 
 
 if __name__ == "__main__":

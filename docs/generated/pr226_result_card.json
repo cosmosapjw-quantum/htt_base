@@ -2,7 +2,8 @@
  "forbidden_claims_reaffirmed": [
   "partial DESI mocks never enter any rank/p/covariance/significance or headline",
   "each closed lane carries its own null/covariance/selection receipt",
-  "the DESI official-mock closure waits for the PR-151 acquisition terminal receipt"
+  "the prior DESI diagnostic is invalidated pending formalism revalidation",
+  "the DESI official-mock closure waits for a revalidated PR-151 terminal receipt"
  ],
  "metadata": {
   "claim_level": {
@@ -69,8 +70,9 @@
    },
    "desi": {
     "contract": "official 1000 EZmock + 25 AbacusSummit covariance (PR-151 terminal)",
-    "diagnostic_present": true,
-    "diagnostic_receipt": "desi_exact_selection_card.json",
+    "diagnostic_present": false,
+    "diagnostic_receipt": null,
+    "diagnostic_status": "INVALIDATED_PENDING_FORMALISM_REVALIDATION",
     "official_mock_closure": "BLOCKED_ON_PR151_TERMINAL",
     "partial_mocks_used_in_headline": false,
     "status": "BLOCKED_ON_PR151_TERMINAL"

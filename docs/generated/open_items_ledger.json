@@ -117,15 +117,15 @@
       "ticket_state": null
     },
     {
-      "blocker": null,
+      "blocker": "FORMALISM_UPGRADE_REVALIDATION_REQUIRED",
       "executability": "blocked",
-      "exit_gate": "higher-z tracers / density-cross-correlation to SEPARATE the clustering dipole from the kinematic dipole at BGS depths; the significance is already mock-calibrated (rev-r198: consistent with LambdaCDM clustering)",
-      "item": "DESI number-count dipole: clustering/kinematic separation (significance mock-calibrated)",
-      "note": "REV-R192/R193: randoms downloaded, window-corrected dipole D=9.49e-3 MEASURED. REV-R198: significance MOCK-CALIBRATED (desi_dipole_mock_significance.py, an in-house LambdaCDM clustering mock) -- D is CLUSTERING-dominated (13.5 sigma above the shot-noise floor) and CONSISTENT with LambdaCDM clustering cosmic variance (p=0.90), NOT an excess; only the clustering/kinematic SEPARATION (BGS low-z) remains.",
+      "exit_gate": "approve a successor formalism, independently validate it, and rerun the preserved 1000 EZmock, 25 Abacus, observed, and random-window inputs from scratch",
+      "item": "DESI number-count dipole: successor formalism and full rerun",
+      "note": "Every prior numerical DESI result was invalidated on 2026-08-21 and its direct live artifacts were deleted. Raw acquisition inputs remain preserved; data readiness alone does not authorize scientific reuse.",
       "rank": 8,
       "source": "ticket EGS3-H1-desi-number-count-dipole; registry EXT-DESI / EXT-DESI-MOCK",
       "ticket": "desi_number_count_dipole.yaml",
-      "ticket_state": "mock_calibrated_consistent_with_lcdm_clustering"
+      "ticket_state": "invalidated_pending_formalism_revalidation"
     },
     {
       "blocker": null,

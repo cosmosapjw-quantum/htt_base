@@ -1,7 +1,7 @@
 id: EGS3-H1-desi-number-count-dipole
 title: DESI DR1 BGS number-count dipole (Omega_tilt-sector cross-check)
-state: mock_calibrated_consistent_with_lcdm_clustering
-blocker: none__significance_mock_calibrated__clustering_kinematic_separation_residual
+state: invalidated_pending_formalism_revalidation
+blocker: FORMALISM_UPGRADE_REVALIDATION_REQUIRED
 owner_lane: obsstat_data
 scope: measure the DESI DR1 BGS_ANY number-count dipole (amplitude + direction)
   as an independent Omega_tilt-sector probe (the LSS matter-frame dipole vs the
@@ -20,29 +20,21 @@ obstruction: separating the survey selection function (angular + radial window)
   ~18 files per cap), which are not in-tree. Without them any footprint dipole is
   geometry-dominated; we refuse to quote a cosmological number-count dipole.
 measured_rev_r193: |
-  The DESI DR1 BGS randoms (NGC_0 1.58 GB + SGC_0 0.65 GB) were downloaded via
-  the modified fetcher (fetch.py --desi-randoms, REV-R192). scripts/
-  desi_dipole_measure.py computes the window-corrected overdensity dipole
-  delta=(D-alpha R)/(alpha R), linear D=3<delta n_hat>_R over NGC+SGC
-  (fsky 0.28): D = 9.49e-3, dir (l,b)=(172.5,-44.7), 122 deg from the CMB
-  dipole -- a 224x suppression of the raw footprint value (2.13) down to the
-  kinematic scale ~7e-3. Card docs/generated/desi_dipole_card.json; the
-  EXT-DESI lane flips blocked -> MEASURED_WINDOW_CORRECTED (diagnostic-only).
+  INVALIDATED 2026-08-21. The pre-formalism numerical result and its live card
+  were deleted; its amplitude, direction, and interpretation are intentionally
+  withdrawn and may not be reconstructed from this ticket.
 mock_calibrated_rev_r198: |
-  scripts/desi_dipole_mock_significance.py + htt/obsstat/number_count_dipole.py
-  supply the in-house LambdaCDM significance mock (the rev-r197 pattern applied
-  to the dipole): the analytic shot-noise floor separates shot noise from
-  clustering, and the exact ell=1 projection of the observed dN/dz -> GRF sky
-  maps masked to the real BGS footprint + Poisson shot (IDENTICAL estimator)
-  give the LambdaCDM null. The observed dipole D=9.49e-3 is CLUSTERING-dominated
-  (13.5 sigma above the shot-noise floor) and CONSISTENT with LambdaCDM
-  clustering cosmic variance (mock |D|=0.021+/-0.009, p=0.90 at bias 1.5; robust
-  across bias 1.2-2.0) -- NOT an excess. Card desi_dipole_mock_card.json.
-residual_gate: the dipole is CLUSTERING-dominated so the significance is now
-  mock-calibrated (consistent with LambdaCDM clustering); the remaining
-  limitation is the clustering/kinematic SEPARATION -- BGS is low-z so the total
-  dipole still mixes the clustering and kinematic components, and isolating the
-  kinematic part needs higher-z tracers / a density cross-correlation. No
-  anisotropy, geometry, family, or inference claim.
+  INVALIDATED 2026-08-21. The pre-formalism mock calibration, its numerical
+  result, and its live card and figure were deleted. No significance,
+  consistency, tension, or component statement survives.
+residual_gate: successor formalism approval, independent validation, and a full
+  rerun are required before any numerical DESI result. No anisotropy, geometry,
+  family, or inference claim.
+invalidation_20260821: |
+  The user invalidated the prior computation because it predates the required
+  formalism upgrade. Preserve the authenticated raw acquisition inputs, but do
+  not regenerate or consume any old numerical artifact. Exit only after a
+  successor formalism is specified, independently validated, and used for a
+  full rerun.
 reference: DESI DR1 LSS catalogues (BGS_ANY); Crawford 2009 / Secrest et al. 2021
   linear number-count dipole estimator; CMB kinematic dipole (Planck 2018).
