@@ -27,9 +27,9 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Sky support status | `not_directional` |
 | Null/mock status | `not_statistical` |
 | Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false without an exact factory-issued ClaimCapabilityDecision.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier.<br>Verified smoke receipts set only generic process readiness; they do not grant a ClaimCapability. |
-| Generating command | `python -m common.status_snapshot --source-commit d92395c9+dirty --write docs/generated/status_snapshot.json` |
-| Source commit | `d92395c9+dirty` |
-| Worktree state | `clean` |
+| Generating command | `python -m common.status_snapshot --source-commit 9044bc50+dirty --write docs/generated/status_snapshot.json` |
+| Source commit | `9044bc50+dirty` |
+| Worktree state | `dirty` |
 
 | Owner | Rows |
 | --- | ---: |
