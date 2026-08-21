@@ -89,7 +89,10 @@ def test_complete_support_is_acquisition_ready_but_not_terminal(tmp_path: Path) 
     assert payload["observed_support"]["audit_registry"]["declared_members"] == 15
     assert payload["terminal"]["acquisition_ready"] is True
     assert payload["terminal"]["pr151_terminal"] is False
-    assert payload["next_action"] == "ready_for_finalize"
+    assert payload["analysis_formalism"]["status"] == \
+        "INVALIDATED_PENDING_FORMALISM_REVALIDATION"
+    assert payload["analysis_formalism"]["ready_for_finalization"] is False
+    assert payload["next_action"] == "blocked_formalism_revalidation"
 
 
 def test_record_identity_swap_cannot_be_hidden_by_counts(tmp_path: Path) -> None:
@@ -201,12 +204,35 @@ def test_incomplete_finalize_refuses_before_any_subprocess(
     monkeypatch.setattr(pr151_phase, "build_progress", lambda *_: {
         "terminal": {"acquisition_ready": False}
     })
+    monkeypatch.setattr(
+        pr151_phase,
+        "_formalism_status",
+        lambda: pr151_phase.FINALIZATION_READY_STATUS,
+    )
 
     def runner(*args, **kwargs):
         calls.append(args)
         raise AssertionError("finalize subprocess must not run")
 
     assert pr151_phase.finalize(target, runner=runner) == 3
+    assert calls == []
+    assert not (target / pr151_phase.RECEIPT).exists()
+
+
+def test_invalidated_formalism_refuses_before_progress_or_subprocess(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    target = tmp_path / "target"
+    target.mkdir()
+    calls = []
+
+    def forbidden(*args, **kwargs):
+        calls.append((args, kwargs))
+        raise AssertionError("invalidated formalism must stop before work")
+
+    monkeypatch.setattr(pr151_phase, "build_progress", forbidden)
+    assert pr151_phase._formalism_status() == \
+        "INVALIDATED_PENDING_FORMALISM_REVALIDATION"
+    assert pr151_phase.finalize(target, runner=forbidden) == 7
     assert calls == []
     assert not (target / pr151_phase.RECEIPT).exists()
 
@@ -237,6 +263,11 @@ def test_terminal_receipt_binds_manifest_commands_and_artifacts(
     repo = tmp_path / "repo"
     repo.mkdir()
     monkeypatch.setattr(pr151_progress, "REPO", repo)
+    monkeypatch.setattr(
+        pr151_progress,
+        "_formalism_status",
+        lambda: pr151_progress.FINALIZATION_READY_STATUS,
+    )
     artifacts = {}
     for rel in pr151_progress.EXPECTED_ARTIFACTS:
         path = repo / rel

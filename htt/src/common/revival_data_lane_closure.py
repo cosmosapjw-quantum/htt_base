@@ -24,9 +24,9 @@ LANE_RECEIPTS = {
             "cf4_mock_significance_card.json"],
     "act": ["act_kappa_card.json", "act_raw_qe_card.json"],
 }
-# DESI diagnostic null exists, but the OFFICIAL-MOCK causal/covariance closure
-# is gated on PR-151.
-DESI_DIAGNOSTIC = "desi_exact_selection_card.json"
+# The prior DESI diagnostic was invalidated because it predates the required
+# formalism upgrade. Raw PR-151 acquisition inputs remain preserved.
+DESI_INVALIDATION_STATUS = "INVALIDATED_PENDING_FORMALISM_REVALIDATION"
 
 
 def pr151_is_terminal() -> bool:
@@ -52,8 +52,9 @@ def lane_closure() -> dict:
         }
     desi_terminal = pr151_is_terminal()
     lanes["desi"] = {
-        "diagnostic_receipt": DESI_DIAGNOSTIC,
-        "diagnostic_present": (GEN / DESI_DIAGNOSTIC).is_file(),
+        "diagnostic_receipt": None,
+        "diagnostic_present": False,
+        "diagnostic_status": DESI_INVALIDATION_STATUS,
         "official_mock_closure": "CLOSED" if desi_terminal else "BLOCKED_ON_PR151_TERMINAL",
         "status": "CLOSED_WITH_EXISTING_RECEIPT" if desi_terminal else "BLOCKED_ON_PR151_TERMINAL",
         "partial_mocks_used_in_headline": False,

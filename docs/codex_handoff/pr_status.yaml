@@ -818,15 +818,17 @@ wave19_amendment:
       file and explicit storage-swap authorization is later given
     PR4_state: observed SEVEM map public; matched simulations externally blocked
   PR-151:
-    execution_state: official_mock_acquisition_in_progress
+    execution_state: invalidated_pending_formalism_revalidation
     source_state: public DESI DR1 1000 EZmocks plus 25 AbacusSummit BGS mocks
-    acquisition: resumable tmux plus aria2 on NVMe; abandoned status withdrawn
+    acquisition: complete authenticated raw inputs preserved on NVMe; writer not running
     random_policy: one NGC and SGC random pair per mock; random index 1 for a
       preregistered 10 EZmock plus 5 Abacus sensitivity audit
     full_18_random_sets: not required for the frozen low-ell estimand because
       they are integration replications, not independent cosmological mocks
-    completion_rule: no terminal scientific result until all 1025 mock records
-      pass checksums, compact-random authentication, and final rehash
+    completion_rule: no terminal scientific result until a successor formalism
+      is approved, independently validated, and rerun against all preserved inputs
+    prior_result_state: invalidated by explicit user instruction on 2026-08-21;
+      direct numerical cards and active figure deleted; no prior value reusable
   PR-152:
     execution_state: completed_concrete_result
     result: 'ACT DR6 release-simulation conditional rank 146/401 = 0.3640897755610973'
@@ -2010,34 +2012,16 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   calibration; PR4 NPIPE is a non-numeric skip and no PR3-and-PR4 combined
   result is produced; no detection and no Bianchi-family claim; the two CF4
   P0s are untouched and stay OPEN; 102 findings OPEN; PR4 NPIPE excluded.
-  PR-151 builds a DESI DR1 BGS number-count dipole mock that matches the survey
-  selection exactly by drawing from the real random-catalogue density per cap
-  (NGC 4.08M plus SGC 1.44M, source-derived cap ratio 2.83, never hard-coded).
-  On every mock the random-to-data normalisation alpha and a systematic nuisance
-  amplitude are re-fit by the same estimator, never fixed. The RAW dipole is the
-  primary observable (amplitude 0.00949) and a nuisance-cleaned dipole is only a
-  disclosed secondary because the imaging template carries an l=1 part degenerate
-  with the dipole. A fast covariance tier is compared to a high-realism tier
-  carrying a per-mock random un-modelled l over two systematic the estimator does
-  not fit; the relative Frobenius gap shows the fast tier under-estimates the
-  covariance. A clustering kinematic selection component confusion matrix at a
-  matched dipole-scale injection shows material off-diagonal leakage (selection
-  into the dipole channel at 0.68 of the kinematic response) so the three are
-  confounded. Because the official DESI validation mocks (1000 EZmocks plus 25
-  AbacusSummit) are absent, causal attribution is abandoned per the kill rule and
-  only the two-sided survey-conditional pooled-rank null is reported (the raw
-  observed dipole is in the bulk, percentile 0.28, consistent, no excess and no
-  deficit). Six mutations killed on live guards. A multi-lane adversarial review
-  returned no P0 and ten findings all confirmed and fixed pre-commit (the
-  collinear nuisance template that silently deflated the observed dipole replaced
-  by a disclosed raw-primary plus cleaned-secondary split; the vacuous two-tier
-  validation given a genuine per-mock random un-modelled systematic and a
-  Frobenius comparison; the tautological confounded flag given a material
-  off-diagonal threshold; the one-sided consistency made two-sided so a deficit
-  is visible). DESI-survey-conditional estimator and null diagnostic only; no
-  clustering-dominated causal claim, no DESI dipole detection, no anisotropy, no
-  Bianchi-family claim; the two CF4 P0s are untouched and stay OPEN; 102 findings
-  OPEN; PR4 NPIPE excluded.
+  PR-151 prior numerical outputs are invalidated by explicit user instruction on
+  2026-08-21 because the computation predates the required formalism upgrade.
+  The three live DESI result cards and active mock-figure triple are deleted; no
+  prior amplitude, direction, rank, covariance, significance, consistency,
+  tension, or component statement is reusable. Authenticated raw acquisition
+  inputs remain preserved (1000 EZmock, 25 AbacusSummit, observed record, and
+  preregistered random-window audit). The official nine-artifact finalization
+  pack and terminal receipt were never produced. Scientific state is
+  INVALIDATED_PENDING_FORMALISM_REVALIDATION until a successor formalism is
+  approved, independently validated, and used for a full rerun.
   PR-152 is the ACT DR6 raw-QE acquisition gate. An authenticated inventory
   separates the reconstructed products the release provides (convergence data
   plus 400 Monte-Carlo sims, the QE normalisation and response, the fiducial N0,

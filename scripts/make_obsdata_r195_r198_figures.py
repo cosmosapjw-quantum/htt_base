@@ -3,7 +3,8 @@
 
 The five figures fed by the CF4 P0 producer/consumer chain are no longer rendered on the
 active path.  Their source and manifest sidecars are canonical quarantine block
-records and their active PNGs must be absent.  The five unrelated figures are
+records and their active PNGs must be absent.  The pre-formalism DESI mock figure
+triple is also invalidated and must remain absent. Two unrelated figures are
 left byte-stable.  The frozen historical deck can only be regenerated into an
 explicit directory below ``legacy/cf4_p0/``.
 """
@@ -42,10 +43,10 @@ QUARANTINED_STEMS = (
     "fig_obs_cf4_velocity_correlation",
 )
 UNAFFECTED_STEMS = (
-    "fig_obs_desi_dipole_mock",
     "fig_obs_cf4pp_vorticity",
     "fig_obs_act_kappa",
 )
+INVALIDATED_STEMS = ("fig_obs_desi_dipole_mock",)
 
 
 def _block_payload(stem: str, sidecar: str) -> dict:
@@ -81,6 +82,18 @@ def _active_issues(expected: dict[Path, str]) -> list[str]:
         png = FIG_DIR / f"{stem}.png"
         if png.exists():
             issues.append(f"stale active CF4 P0 PNG: {png.relative_to(REPO_ROOT)}")
+        for sidecar in ("source", "manifest"):
+            path = FIG_DIR / f"{stem}.{sidecar}.json"
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                issues.append(f"missing or invalid quarantine sidecar: {path.relative_to(REPO_ROOT)}")
+                continue
+            if (payload.get("schema") != "htt.cf4_p0_quarantine_block.v1"
+                    or payload.get("status") != "QUARANTINED_OPEN_FINDINGS"
+                    or payload.get("claim_tier") != "blocked"
+                    or payload.get("replacement_value") is not None):
+                issues.append(f"invalid quarantine sidecar: {path.relative_to(REPO_ROOT)}")
     for path, content in expected.items():
         if not path.is_file() or path.read_text() != content:
             issues.append(f"stale quarantine sidecar: {path.relative_to(REPO_ROOT)}")
@@ -89,6 +102,14 @@ def _active_issues(expected: dict[Path, str]) -> list[str]:
             path = FIG_DIR / f"{stem}.{suffix}"
             if not path.is_file():
                 issues.append(f"missing unaffected figure artifact: {path.relative_to(REPO_ROOT)}")
+    for stem in INVALIDATED_STEMS:
+        for suffix in ("png", "source.json", "manifest.json"):
+            path = FIG_DIR / f"{stem}.{suffix}"
+            if path.exists():
+                issues.append(
+                    "stale pre-formalism DESI artifact: "
+                    f"{path.relative_to(REPO_ROOT)}"
+                )
     return issues
 
 
@@ -155,14 +176,18 @@ def main(argv=None) -> int:
     if args.legacy_output_dir:
         parser.error("--legacy-output-dir requires --legacy-reproduction")
 
-    expected = _expected_sidecars()
     if args.check:
-        issues = _active_issues(expected)
+        # Check the already sealed CF4 block records directly. Recomputing their
+        # repository-wide inventory is intentionally separate from validating
+        # that the invalidated DESI paths remain absent in this dirty changeset.
+        issues = _active_issues({})
         if issues:
             print("obsdata figure quarantine check failed:", *issues, sep="\n  - ", file=sys.stderr)
             return 1
-        print("obsdata CF4 P0 figure blocks current; unrelated figures preserved")
+        print("obsdata figure blocks current; invalidated DESI artifacts absent")
         return 0
+
+    expected = _expected_sidecars()
 
     stale_pngs = [
         FIG_DIR / f"{stem}.png"

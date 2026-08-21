@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""EXT-DESI mock-calibrated significance of the BGS number-count dipole (REV-R198).
+"""Invalidated historical EXT-DESI mock producer (REV-R198).
 
 The rev-r193 EXT-DESI card measured the window-corrected DESI DR1 BGS dipole
 D = 9.49e-3 but could only report it as a diagnostic (the significance needed
@@ -20,8 +20,9 @@ excess. A linear-bias sensitivity brackets the null. Still a consistency test,
 NOT a clean kinematic measurement (BGS is low-z); no anisotropy/geometry/family
 claim.
 
-Outputs docs/generated/desi_dipole_mock_card.json. Deterministic; --check.
-Heavy: loads the ~2.3 GB randoms + runs the mock ensemble (run standalone).
+The prior numerical output predates the required formalism upgrade and was
+deleted on 2026-08-21. The implementation remains readable as historical method
+substrate, but the command refuses before loading data or writing output.
 """
 from __future__ import annotations
 
@@ -38,9 +39,6 @@ for root in (REPO, REPO / "htt"):
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
 
-from htt.obsstat.velocity_power import fiducial                       # noqa: E402
-from htt.obsstat import number_count_dipole as ncd                    # noqa: E402
-
 OUT = REPO / "docs/generated/desi_dipole_mock_card.json"
 COMPACT = REPO / "workdir/compact_products/desi"
 RAW = REPO / "workdir/raw/desi"
@@ -51,6 +49,7 @@ MOCK_SEED = 20260714
 BIAS_FIDUCIAL = 1.5                     # BGS linear bias
 BIAS_SENS = (1.2, 1.5, 2.0)
 CMB_KINEMATIC = 7.0e-3
+INVALIDATION_STATUS = "INVALIDATED_PENDING_FORMALISM_REVALIDATION"
 
 
 def _load_desi():
@@ -70,6 +69,9 @@ def _chi2_sigma(D, sig_per_comp):
 
 def measure() -> dict:
     import healpy as hp
+    from htt.obsstat.velocity_power import fiducial
+    from htt.obsstat import number_count_dipole as ncd
+
     desi = _load_desi()
     npix = hp.nside2npix(NSIDE)
     vec = np.asarray(hp.pix2vec(NSIDE, np.arange(npix)))
@@ -212,25 +214,13 @@ def _render(p):
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
-    args = ap.parse_args(argv)
-    card = measure()
-    rendered = _render(card)
-    if args.check:
-        if not OUT.exists() or OUT.read_text() != rendered:
-            print("STALE desi_dipole_mock_card.json", file=sys.stderr)
-            return 1
-        print("desi dipole mock card current")
-        return 0
-    OUT.write_text(rendered)
-    print(f"wrote {OUT} status={card['status']}")
-    if card["status"] == "MEASURED_MOCK_CALIBRATED":
-        print(f"  D_obs={card['observed_dipole_amplitude']} "
-              f"({card['shot_noise']['sigma_above_shot_noise']} sigma > shot)")
-        for b, r in card["lcdm_clustering_mock_null"].items():
-            print(f"  bias {b}: mock |D|={r['mock_dipole_mean']}+/-{r['mock_dipole_std']}"
-                  f" p={r['p_value']} (obs pctile {r['obs_percentile']})")
-        print(f"  headline: {card['headline']}")
-    return 0
+    ap.parse_args(argv)
+    print(
+        f"desi_dipole_mock_card.json {INVALIDATION_STATUS}; "
+        "successor formalism and full rerun required",
+        file=sys.stderr,
+    )
+    return 7
 
 
 if __name__ == "__main__":

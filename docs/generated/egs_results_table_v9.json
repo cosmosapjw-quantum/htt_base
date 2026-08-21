@@ -16,6 +16,7 @@
   "caveats": [
     "Table rows retain their individual theorem, synthetic, and data-interpretation scopes.",
     "All CF4 P0-fed rows are blocked records with no replacement value.",
+    "EXT-DESI and EXT-DESI-MOCK are invalidated pending formalism revalidation and carry no live numerical evidence.",
     "No row identifies a Bianchi family or represents native low-ell solver output."
   ],
   "claim_boundary": "conditional theorems + synthetic mechanics + real-data measurements on owned inputs; no detection, family/geometry, or native-solver result. Measured rows are model-independent descriptors; K6 is an honest structural no-go; K1 is a partial (look-elsewhere) discharge under an idealised null.",
@@ -27,7 +28,7 @@
   "implementation_scope": "common",
   "input_hashes": [
     "legacy/cf4_p0/tables/egs_results_table_v8.json:sha256:a50de53b7e314d3cef50e1db68b5d58e7a7d2205fbc83b2e1144361a8d88b5d7",
-    "scripts/build_egs_results_table_v9.py:sha256:8e993bb2ae564b19b1a105c23f1ba2953a25fcb5f7143f5d8a95b48df634d6ba"
+    "scripts/build_egs_results_table_v9.py:sha256:8b1851b85bc3cf83adfab179b4086ee8863aaeccfba7842860ebd972c268ba1a"
   ],
   "native_solver_result": false,
   "null_mock_status": "mixed_by_row",
@@ -571,18 +572,18 @@
     },
     {
       "axis": "data_interpretation",
-      "evidence": "external_lanes_seal.json; desi_dipole_card.json",
-      "key_result": "window-corrected D=9.49e-3, dir (l,b)=(172.5,-44.7); mixes local BGS clustering with the kinematic dipole; mask-coupling amplitude bias + significance need release-matched mocks (residual gate)",
-      "statement": "DESI DR1 BGS number-count dipole lane (Omega_tilt-sector cross-check): randoms downloaded; window-corrected overdensity dipole delta=(D-alpha R)/(alpha R), linear D=3<delta n_hat>_R on NGC+SGC (fsky 0.28) = 9.49e-3 -- a 224x suppression of the raw footprint value (2.13) down to the kinematic scale ~7e-3",
-      "status": "measured_diagnostic",
+      "evidence": "pr151_spec.yaml; raw acquisition inputs preserved",
+      "key_result": "no prior amplitude, direction, rank, covariance, significance, consistency, tension, or component statement is reusable",
+      "statement": "Prior DESI DR1 BGS number-count dipole diagnostic invalidated on 2026-08-21 because its computation predates the required formalism upgrade; the live numerical card was deleted.",
+      "status": "invalidated_pending_formalism_revalidation",
       "theorem_id": "EXT-DESI"
     },
     {
       "axis": "data_interpretation",
-      "evidence": "desi_dipole_mock_card.json",
-      "key_result": "the observed dipole D=9.49e-3 is CLUSTERING-dominated (13.5 sigma above the shot-noise floor) and CONSISTENT with LambdaCDM clustering cosmic variance (mock |D|=0.021+/-0.009, p=0.90 at bias 1.5; robust across bias 1.2-2.0) -- NOT an excess/anomaly; the kinematic dipole is sub-dominant to the clustering cosmic variance at BGS depths",
-      "statement": "mock-calibrated significance of the DESI BGS number-count dipole (the rev-r197 in-house-mock pattern applied to the dipole): the analytic shot-noise floor + an in-house LambdaCDM clustering mock (exact ell=1 projection of the observed dN/dz -> GRF sky maps masked to the footprint + Poisson shot, IDENTICAL estimator)",
-      "status": "measured",
+      "evidence": "pr151_spec.yaml; no live numerical evidence",
+      "key_result": "raw acquisition provenance only; successor formalism and full rerun required before any numerical or scientific use",
+      "statement": "Prior in-house DESI mock-calibration result invalidated on 2026-08-21 because its computation predates the required formalism upgrade; the live numerical card and figure were deleted.",
+      "status": "invalidated_pending_formalism_revalidation",
       "theorem_id": "EXT-DESI-MOCK"
     },
     {
@@ -663,8 +664,8 @@
   "status_counts": {
     "blocked": 1,
     "diagnostic_forward_model": 1,
-    "measured": 4,
-    "measured_diagnostic": 1,
+    "invalidated_pending_formalism_revalidation": 2,
+    "measured": 3,
     "measured_no_go": 1,
     "measured_partial": 2,
     "measured_synth": 4,
@@ -683,5 +684,5 @@
     "web_traced_refuted_readopted": 1
   },
   "transfer_source": "mixed_none_registered_external_and_proxy_by_row",
-  "v9_note": "v9 rows (EGS3-T2G/TSUM/U4v9/MESBR, K5-V9, EGS3-G12) appended per the 2026-07-10 review-response cycle; KE-FRAME/KE-OBS/KE-DYN rows added by the executed ten-item rotating-congruence program (REV-R181/R182); P36/T2' retractions and the P26/P31/P35 supersessions are carried by THEOREM_REGISTRY.yaml; no claim-envelope change"
+  "v9_note": "v9 rows (EGS3-T2G/TSUM/U4v9/MESBR, K5-V9, EGS3-G12) appended per the 2026-07-10 review-response cycle; KE-FRAME/KE-OBS/KE-DYN rows added by the executed ten-item rotating-congruence program (REV-R181/R182); P36/T2' retractions and the P26/P31/P35 supersessions are carried by THEOREM_REGISTRY.yaml; the 2026-08-21 PR-151 invalidation overlay withdraws both active DESI numerical rows pending formalism revalidation"
 }

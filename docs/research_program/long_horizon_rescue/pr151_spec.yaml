@@ -1,40 +1,44 @@
-schema: htt.long_horizon.pr151_desi_official_mocks.v2
-spec_version: 2
+schema: htt.long_horizon.pr151_desi_official_mocks.v3
+spec_version: 3
 pr_id: PR-151
-title: DESI DR1 official-mock-calibrated BGS dipole consistency result
+title: DESI DR1 official-mock lane invalidated pending formalism revalidation
 baseline_commit: 13deb4724191ab5503d93d4d4fbaed036c3bfd45
 reviewed_on: '2026-07-19'
 owner: OBSSTAT
 contributors: [DL_PIPELINE, COMMON]
 implementation_scope: [obsstat, dl_pipeline]
-artifact_mode: desi_dr1_bgs_official_mock_conditioned_result
+artifact_mode: invalidated_preformalism_result
 allowed_use:
-  - official_1000_ezmock_finite_rank_measurement
-  - separate_25_abacus_validation
-  - mock_specific_random_window_refit
-  - random_catalogue_replication_sensitivity
-  - conditional_null_consistency_or_tension_statement
+  - raw_acquisition_provenance_only
+  - successor_formalism_design_input
 public_use: false
 claim_tier: conditional
 claim_tier_ceiling: conditional
-claim_level: {scheme: roadmap_rescue_v1, level: C3}
-scientific_status: IN_PROGRESS_UNTIL_ACQUISITION_COMPLETE
-scientific_effect: concrete_reproducible_measurement
+claim_level: {scheme: roadmap_rescue_v1, level: C1}
+scientific_status: INVALIDATED_PENDING_FORMALISM_REVALIDATION
+scientific_effect: none
 transfer_source: none
+
+formalism_invalidation:
+  invalidated_on: '2026-08-21'
+  authority: explicit_user_instruction
+  reason: analysis predates the required formalism upgrade
+  raw_acquisition_inputs_preserved: true
+  prior_numerical_outputs_deleted: true
+  finalization_ready_status: FORMALISM_REVALIDATED_READY_FOR_FINALIZATION
+  current_status: INVALIDATED_PENDING_FORMALISM_REVALIDATION
+  old_numerical_claims_reusable: false
+  rerun_required: true
 
 claim_identity:
   claim_id: C-PR151-DESI-OFFICIAL-MOCK-RANK
   claim_text: >-
-    Measure the DESI DR1 BGS_BRIGHT-21.5 weighted number-count dipole over
-    0.1 <= z <= 0.4 and compare its amplitude with 1000 public DESI DR1 EZmock
-    FFA realizations using an observation-inclusive finite rank. Every mock uses
-    its own authenticated random-index-0 NGC/SGC selection window at NSIDE=64
-    and re-fits alpha and the registered nuisance amplitude. Twenty-five
-    AbacusSummit FFA mocks are a separate validation ensemble and are never
-    pooled with EZmock. Random index 1 on a frozen 10-EZmock plus 5-Abacus subset
-    quantifies single-random Monte-Carlo integration sensitivity. This is a
-    concrete official-mock-conditioned consistency/tension result, not causal
-    attribution, anisotropy evidence, geometry, or Bianchi-family identification.
+    The prior PR-151 DESI computation is invalid because it predates the required
+    formalism upgrade. The authenticated 1000 EZmock, 25 AbacusSummit, observed,
+    and random-window inputs are preserved for a future rerun, but no prior
+    amplitude, direction, finite rank, covariance, significance, consistency,
+    tension, component, anisotropy, geometry, or Bianchi-family statement is
+    reusable.
   domain: desi_dr1_bgs_number_count_dipole
   frame: official_FFA_mock_conditioned_finite_null
   claim_level_scheme: roadmap_rescue_v1
@@ -58,6 +62,7 @@ data_scope:
   official_mocks_reference: https://data.desi.lbl.gov/doc/releases/dr1/
 
 estimator:
+  status: INVALIDATED_PENDING_FORMALISM_REVALIDATION
   sample: BGS_BRIGHT-21.5
   nside: 64
   z_min_inclusive: 0.1
@@ -98,6 +103,7 @@ artifact_contract:
   check_policy: fresh_build_must_equal_disk_bytes
 
 acceptance_and_kill_switches:
+  - finalization is forbidden unless formalism_invalidation.current_status is FORMALISM_REVALIDATED_READY_FOR_FINALIZATION
   - acquisition status is complete with exactly 1000 EZmock and 25 Abacus records
   - every official mock consumes its own authenticated random-index-0 window
   - all 15 registered random-index-1 pairs produce a paired sensitivity result

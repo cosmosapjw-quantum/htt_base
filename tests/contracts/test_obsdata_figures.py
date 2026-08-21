@@ -2,8 +2,8 @@
 
 The five figure triples fed by the CF4 P0 producer/consumer chain are frozen below
 ``legacy/cf4_p0``.  Active source/manifest paths contain only the canonical
-quarantine record and no active PNG can survive.  The three unrelated figures
-remain byte-stable and retain their existing diagnostic-only manifests.
+quarantine record and no active PNG can survive. The pre-formalism DESI figure
+triple is invalidated and absent. Two unrelated figures remain byte-stable.
 """
 from __future__ import annotations
 
@@ -26,10 +26,10 @@ QUARANTINED = (
     "fig_obs_cf4_velocity_correlation",
 )
 UNAFFECTED = (
-    "fig_obs_desi_dipole_mock",
     "fig_obs_cf4pp_vorticity",
     "fig_obs_act_kappa",
 )
+INVALIDATED = ("fig_obs_desi_dipole_mock",)
 _FORBIDDEN = ("family assignment", "geometry detection")
 
 
@@ -64,8 +64,8 @@ def test_exact_historical_figure_triples_live_only_under_legacy_root():
             assert (LEGACY_FIG_DIR / f"{stem}.{suffix}").is_file()
 
 
-def test_unaffected_three_figures_and_claim_firewalls_remain_present():
-    assert len(UNAFFECTED) == 3
+def test_unaffected_two_figures_and_claim_firewalls_remain_present():
+    assert len(UNAFFECTED) == 2
     for stem in UNAFFECTED:
         assert (FIG_DIR / f"{stem}.png").is_file()
         source_path = FIG_DIR / f"{stem}.source.json"
@@ -80,6 +80,12 @@ def test_unaffected_three_figures_and_claim_firewalls_remain_present():
         blob = (source_path.read_text() + manifest_path.read_text()).lower()
         for token in _FORBIDDEN:
             assert token not in blob
+
+
+def test_preformalism_desi_figure_triple_is_absent():
+    for stem in INVALIDATED:
+        for suffix in ("png", "source.json", "manifest.json"):
+            assert not (FIG_DIR / f"{stem}.{suffix}").exists()
 
 
 def test_quarantine_sidecars_contain_no_numerical_figure_payload():

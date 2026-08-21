@@ -22,7 +22,14 @@ try:  # package import in tests
         FINALIZATION_RECEIPT,
         finalize_commands,
     )
-    from .pr151_progress import DEFAULT_LOG, DEFAULT_TARGET, REPO, build_progress
+    from .pr151_progress import (
+        DEFAULT_LOG,
+        DEFAULT_TARGET,
+        FINALIZATION_READY_STATUS,
+        REPO,
+        _formalism_status,
+        build_progress,
+    )
 except ImportError:  # direct script execution
     from pr151_contract import (
         ACQUISITION_MANIFEST,
@@ -30,7 +37,14 @@ except ImportError:  # direct script execution
         FINALIZATION_RECEIPT,
         finalize_commands,
     )
-    from pr151_progress import DEFAULT_LOG, DEFAULT_TARGET, REPO, build_progress
+    from pr151_progress import (
+        DEFAULT_LOG,
+        DEFAULT_TARGET,
+        FINALIZATION_READY_STATUS,
+        REPO,
+        _formalism_status,
+        build_progress,
+    )
 
 CommandRunner = Callable[..., subprocess.CompletedProcess]
 RECEIPT = FINALIZATION_RECEIPT
@@ -150,6 +164,14 @@ def _git_state(runner: CommandRunner) -> dict:
 
 
 def finalize(target: Path, *, runner: CommandRunner = subprocess.run) -> int:
+    formalism_status = _formalism_status()
+    if formalism_status != FINALIZATION_READY_STATUS:
+        print(
+            "PR-151 finalization blocked: formalism status is "
+            f"{formalism_status}; required={FINALIZATION_READY_STATUS}",
+            file=sys.stderr,
+        )
+        return 7
     progress = build_progress(target, DEFAULT_LOG)
     if not progress["terminal"]["acquisition_ready"]:
         return 3
