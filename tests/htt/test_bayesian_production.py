@@ -114,17 +114,40 @@ def test_authorization_requires_the_exact_pr289_runtime_type(monkeypatch: pytest
     module.ExecutionAuthorizationReceipt = ExecutionAuthorizationReceipt
     monkeypatch.setitem(sys.modules, "common.data_identity", module)
     desi = next(item for item in load_observational_lane_descriptors(SPEC) if item.lane_id == "H-DESI")
+    contract = _contract()
+    lineage = build_sampler_posterior_lineage(
+        contract=contract,
+        samples=np.array([[0.0, 1.0], [1.0, 2.0], [2.0, 3.0]]),
+        normalized_weights=np.array([0.2, 0.3, 0.5]),
+        sampler_settings={"nlive": 200, "dlogz": 0.1, "bound": "multi", "sample": "rwalk", "seed": 7},
+        resampling_rule="systematic",
+    )
+    consumer = build_posterior_consumer_plan(
+        contract=contract,
+        lineage=lineage,
+        ppc_discrepancy_ids=("amplitude",),
+        loo_block_ids=("NGC-z1", "SGC-z1"),
+    )
     with pytest.raises(ProductionBayesianError, match="exact type"):
-        assess_lane_readiness(desi, model_contract=_contract(), authorization_receipt=object())
+        assess_lane_readiness(desi, model_contract=contract, authorization_receipt=object())
     blocked = assess_lane_readiness(
         desi,
-        model_contract=_contract(),
+        model_contract=contract,
         authorization_receipt=ExecutionAuthorizationReceipt("DESI", AuthorizationStatus.NOT_AUTHORIZED),
     )
     assert blocked.status is LaneReadinessStatus.BLOCKED_OBSERVED_EXECUTION_NOT_AUTHORIZED
+    missing_lineage = assess_lane_readiness(
+        desi,
+        model_contract=contract,
+        authorization_receipt=ExecutionAuthorizationReceipt("DESI", AuthorizationStatus.AUTHORIZED),
+    )
+    assert missing_lineage.status is LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND
+    assert missing_lineage.blocked_reasons == ("sampler_lineage_or_ppc_loo_consumer_unbound",)
     ready = assess_lane_readiness(
         desi,
-        model_contract=_contract(),
+        model_contract=contract,
         authorization_receipt=ExecutionAuthorizationReceipt("DESI", AuthorizationStatus.AUTHORIZED),
+        posterior_lineage=lineage,
+        posterior_consumer_plan=consumer,
     )
     assert ready.status is LaneReadinessStatus.READY_FOR_AUTHORIZED_EXECUTION

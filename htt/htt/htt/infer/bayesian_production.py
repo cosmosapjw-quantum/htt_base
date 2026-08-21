@@ -325,6 +325,8 @@ def assess_lane_readiness(
     *,
     model_contract: ProductionModelContract | None = None,
     authorization_receipt: object | None = None,
+    posterior_lineage: SamplerPosteriorLineage | None = None,
+    posterior_consumer_plan: PosteriorConsumerPlan | None = None,
 ) -> LaneReadinessDecision:
     if type(descriptor) is not ObservationalLaneDescriptor:
         raise ProductionBayesianError("descriptor must be an exact ObservationalLaneDescriptor")
@@ -370,6 +372,25 @@ def assess_lane_readiness(
             observed_data_executed=False,
             artifact_mode="readiness_only",
             blocked_reasons=("authorization_receipt_not_authorized",),
+        )
+    if posterior_lineage is None or posterior_consumer_plan is None:
+        return LaneReadinessDecision(
+            lane_id=descriptor.lane_id,
+            status=LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND,
+            observed_data_executed=False,
+            artifact_mode="readiness_only",
+            blocked_reasons=("sampler_lineage_or_ppc_loo_consumer_unbound",),
+        )
+    if (
+        type(posterior_lineage) is not SamplerPosteriorLineage
+        or type(posterior_consumer_plan) is not PosteriorConsumerPlan
+        or posterior_lineage.model_contract_content_id != model_contract.contract_content_id
+        or posterior_consumer_plan.model_contract_content_id != model_contract.contract_content_id
+        or posterior_consumer_plan.posterior_lineage_content_id
+        != posterior_lineage.lineage_content_id
+    ):
+        raise ProductionBayesianError(
+            "posterior lineage and PPC/LOO consumer plan do not bind this model contract"
         )
     return LaneReadinessDecision(
         lane_id=descriptor.lane_id,
