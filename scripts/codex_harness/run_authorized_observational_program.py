@@ -109,17 +109,41 @@ def _dependency_reasons(card: Mapping[str, object], resolutions: Mapping[str, ob
     dependencies = card.get("depends", [])
     if not isinstance(dependencies, list):
         raise ObservationalProgramError(f"{owner_pr} has malformed dependencies")
+    contracts = card.get("dependency_contracts")
+    if not isinstance(contracts, list):
+        return tuple(f"upstream_dependency_contract_missing:{dependency}" for dependency in dependencies)
+
+    modes: dict[str, str] = {}
+    for contract in contracts:
+        if not isinstance(contract, Mapping):
+            return ("upstream_dependency_contract_malformed",)
+        upstream_id = contract.get("upstream_id")
+        mode = contract.get("mode")
+        if not isinstance(upstream_id, str) or not isinstance(mode, str) or upstream_id in modes:
+            return ("upstream_dependency_contract_malformed",)
+        modes[upstream_id] = mode
+
     reasons: list[str] = []
     for dependency in dependencies:
         if not isinstance(dependency, str) or dependency == owner_pr:
             continue
         resolution = resolutions.get(dependency)
-        if not isinstance(resolution, Mapping) or resolution.get("resolution") not in {
-            "COMPLETED_SUCCESS",
-            "COMPLETED_FAILED_WITH_RECEIPT",
-            "BLOCKED_WITH_RECEIPT",
-        }:
-            reasons.append(f"upstream_not_terminal:{dependency}")
+        mode = modes.get(dependency)
+        state = resolution.get("resolution") if isinstance(resolution, Mapping) else None
+        if mode == "requires_success":
+            if state != "COMPLETED_SUCCESS":
+                reasons.append(f"upstream_success_not_satisfied:{dependency}")
+        elif mode == "requires_terminal_receipt":
+            if state not in {
+                "COMPLETED_SUCCESS",
+                "COMPLETED_FAILED_WITH_RECEIPT",
+                "BLOCKED_WITH_RECEIPT",
+            }:
+                reasons.append(f"upstream_not_terminal:{dependency}")
+        elif mode is None:
+            reasons.append(f"upstream_dependency_contract_missing:{dependency}")
+        else:
+            reasons.append(f"upstream_dependency_contract_unsupported:{dependency}:{mode}")
     return tuple(reasons)
 
 
