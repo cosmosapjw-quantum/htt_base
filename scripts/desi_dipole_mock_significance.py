@@ -53,6 +53,10 @@ BIAS_SENS = (1.2, 1.5, 2.0)
 CMB_KINEMATIC = 7.0e-3
 
 
+class InvalidatedHistoricalProducerError(RuntimeError):
+    """PR-151 producer cannot run before a separately validated successor exists."""
+
+
 def _load_desi():
     spec = importlib.util.spec_from_file_location(
         "desi_dip", REPO / "scripts/desi_dipole_measure.py")
@@ -69,6 +73,9 @@ def _chi2_sigma(D, sig_per_comp):
 
 
 def measure() -> dict:
+    raise InvalidatedHistoricalProducerError(
+        "PR-151 historical producer is invalidated; successor formalism and independent validation are required"
+    )
     import healpy as hp
     desi = _load_desi()
     npix = hp.nside2npix(NSIDE)

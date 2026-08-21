@@ -50,6 +50,10 @@ SEED = 20260725
 REF_URL = "https://data.desi.lbl.gov/doc/releases/dr1/"
 
 
+class InvalidatedHistoricalProducerError(RuntimeError):
+    """PR-151 producer cannot run before a separately validated successor exists."""
+
+
 def _load_desi_measure():
     spec = importlib.util.spec_from_file_location(
         "desi_dip", REPO / "scripts/desi_dipole_measure.py")
@@ -97,6 +101,9 @@ def _round(obj, n=6):
 
 
 def measure() -> dict:
+    raise InvalidatedHistoricalProducerError(
+        "PR-151 historical producer is invalidated; successor formalism and independent validation are required"
+    )
     import healpy as hp
 
     desi = _load_desi_measure()

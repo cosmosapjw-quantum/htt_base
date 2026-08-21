@@ -21,16 +21,10 @@ runbooks:
   lane: PLANCK
   owner_pr: PR-290
   dependencies:
-  - PR-194
-  - PR-198
-  - PR-199
   - PR-202
-  - PR-281
-  - PR-282
   - PR-287
   - PR-288
   - PR-289
-  - PR-290
   current_state: BLOCKED_AT_ADMISSION_OR_AUTHORIZATION
   admission_work_unit: PR-289
   execution_authorization_gate: H-PLANCK
@@ -71,13 +65,9 @@ runbooks:
   lane: CF4
   owner_pr: PR-291
   dependencies:
-  - PR-195
   - PR-201
-  - PR-283
-  - PR-284
   - PR-287
   - PR-289
-  - PR-291
   current_state: BLOCKED_AT_ADMISSION_OR_AUTHORIZATION
   admission_work_unit: PR-289
   execution_authorization_gate: H-CF4
@@ -120,7 +110,6 @@ runbooks:
   dependencies:
   - PR-287
   - PR-289
-  - PR-292
   current_state: BLOCKED_AT_ADMISSION_OR_AUTHORIZATION
   admission_work_unit: PR-289
   execution_authorization_gate: H-HSC-KiDS
@@ -161,10 +150,10 @@ runbooks:
   lane: ACT
   owner_pr: PR-204
   dependencies:
-  - PR-204
-  - PR-287
-  - PR-288
-  - PR-289
+  - PR-152
+  - PR-177
+  - PR-197
+  - PR-200
   current_state: BLOCKED_AT_ADMISSION_OR_AUTHORIZATION
   admission_work_unit: PR-289
   execution_authorization_gate: H-ACT
@@ -202,9 +191,8 @@ runbooks:
   owner_pr: PR-203
   dependencies:
   - PR-151
-  - PR-178
-  - PR-203
-  - PR-289
+  - PR-197
+  - PR-200
   current_state: BLOCKED_AT_ADMISSION_OR_AUTHORIZATION
   admission_work_unit: PR-289
   execution_authorization_gate: H-DESI
@@ -244,7 +232,6 @@ runbooks:
   - PR-287
   - PR-288
   - PR-289
-  - PR-293
   current_state: BLOCKED_AT_ADMISSION_OR_AUTHORIZATION
   admission_work_unit: PR-289
   execution_authorization_gate: H-JWST
@@ -283,18 +270,20 @@ runbooks:
   dependencies:
   - PR-155
   - PR-156
-  - PR-157
-  - PR-158
-  - PR-178
   - PR-181
   - PR-205
   - PR-206
-  - PR-207
-  - PR-208
-  - PR-294
+  - PR-158
+  - PR-178
+  - PR-290
+  - PR-291
+  - PR-292
+  - PR-203
+  - PR-204
+  - PR-293
   current_state: BLOCKED_AT_ADMISSION_OR_AUTHORIZATION
   admission_work_unit: PR-289
-  execution_authorization_gate: SEPARATE_PR294_SCHEDULING_AFTER_ALL_INCLUDED_LANE_RECEIPTS
+  execution_authorization_gate: H-PR294-SCHEDULE
   admission_is_execution_authorization: false
   required_input_contract: capability-approved passed lanes only, joint covariance, principal angles,
     held-out injections, multiplicity, and mandatory abstention
