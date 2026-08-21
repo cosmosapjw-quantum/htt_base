@@ -233,6 +233,7 @@
       "PR-287",
       "PR-288",
       "PR-289",
+      "PR-299",
       "PR-204",
       "PR-198",
       "PR-199",
@@ -304,7 +305,20 @@
         "PR-204": [
           "PR-287",
           "PR-288",
-          "PR-289"
+          "PR-289",
+          "PR-299"
+        ],
+        "PR-290": [
+          "PR-299"
+        ],
+        "PR-291": [
+          "PR-299"
+        ],
+        "PR-292": [
+          "PR-299"
+        ],
+        "PR-293": [
+          "PR-299"
         ],
         "PR-205": [
           "PR-254",
@@ -16369,6 +16383,96 @@
       "solver_gate_required": false,
       "change_set_id": "CS-PR294-CROSS-PROBE",
       "publication_group_id": "PG-PR294-CROSS-PROBE"
+    },
+    {
+      "id": "PR-299",
+      "wave": 75,
+      "title": "Production Bayesian readiness after the PR-288 audit",
+      "owner": "HTT",
+      "capability": "fail_closed_general_bayesian_contract_and_observed_lane_readiness",
+      "inputs": [
+        "PR-288 terminal synthetic Bayesian semantics receipt",
+        "PR-289 exact data identity and separate execution authorization contract",
+        "Registered Planck, DESI, CF4, JWST, and ACT runner paths"
+      ],
+      "outputs": [
+        "Typed production model and weighted posterior consumer contracts",
+        "Read-only readiness decisions for every registered observed lane"
+      ],
+      "contributors": [
+        "COMMON",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "htt",
+        "common"
+      ],
+      "depends": [
+        "PR-288",
+        "PR-289"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-288",
+          "mode": "requires_terminal_receipt"
+        },
+        {
+          "upstream_id": "PR-289",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Bind arbitrary normalized likelihood/prior callables, parameter schema, data and covariance identity, rank, block partition, replicate generator, and discrepancy registry before a lane may run.",
+        "Bind weighted sampler output, ESS, settings, and resampling to the declared PPC and blockwise-LOO consumers.",
+        "Inventory every observed lane without importing a data producer, opening a payload, or producing numerical output."
+      ],
+      "files": [
+        "htt/htt/htt/infer/bayesian_production.py",
+        "scripts/codex_harness/check_observed_bayesian_readiness.py",
+        "tests/htt/test_bayesian_production.py",
+        "tests/contracts/test_observed_bayesian_readiness.py",
+        "docs/research_program/post_pr275/pr299_spec.yaml",
+        "docs/PR_DELTAS/pr-299.md"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt/htt python -m pytest -p no:cacheprovider -q tests/htt/test_bayesian_production.py tests/contracts/test_observed_bayesian_readiness.py",
+        "PYTHONPATH=htt/src:htt/htt python scripts/codex_harness/check_observed_bayesian_readiness.py --check"
+      ],
+      "dod": [
+        "Every registered lane is explicitly blocked until its exact model contract and PR-289 authorization type are present.",
+        "The sampler lineage has one exact PPC/blockwise-LOO consumer plan and reports ESS plus required nested-sampling settings.",
+        "No observed payload is opened and no observed numerical artifact is generated."
+      ],
+      "kill": "A generic authorization object marks a lane ready, a readiness check imports a producer or opens data, sampler output is detached from its PPC/LOO consumer, or any output promotes an observed or family claim.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-STATISTICS",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Production-readiness contract only; no observed inference or Bianchi-family capability follows.",
+      "forbidden": [
+        "No observed payload execution, legacy evidence reuse, MIO posterior, native validation, geometry detection, or family-identification claim."
+      ],
+      "anti_drift": [
+        "One production module, one read-only runner, two focused tests, and no global ledger or permanent process-only schema without a consumer."
+      ],
+      "roadmap_anchor": "docs/research_program/post_pr275/pr276_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "readiness_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_STATISTICS",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR299-PRODUCTION-BAYES-READINESS",
+      "publication_group_id": "PG-PR299-PRODUCTION-BAYES-READINESS"
     },
     {
       "id": "PR-295",

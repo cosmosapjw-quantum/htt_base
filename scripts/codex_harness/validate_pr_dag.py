@@ -462,7 +462,7 @@ VECTOR_TENSOR_REQUIRED_FIELDS = ADVOCATE_REQUIRED_FIELDS | {
     "solver_gate_required",
 }
 
-# --- Post-275 re-adjudication and reexecution (PR-276..294, Waves 67..74) --
+# --- Post-275 re-adjudication and reexecution (PR-276..294 plus audit PR-299) --
 # PR-276 consumes the terminal PR-190 refutation without reopening either
 # historical requires-success edge.  The remaining cards are registered as one
 # prospective programme; data execution still needs its lane-specific human
@@ -600,6 +600,14 @@ POST275_CARD_CONTRACTS = {
         ],
         "authorization": "REGISTERED_NOT_SCHEDULED",
     },
+    "PR-299": {
+        "owner": "HTT",
+        "dependencies": [
+            ("PR-288", "requires_terminal_receipt"),
+            ("PR-289", "requires_success"),
+        ],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
 }
 POST275_FULL_IDS = set(POST275_CARD_CONTRACTS)
 POST275_REQUIRED_FIELDS = VECTOR_TENSOR_REQUIRED_FIELDS | {
@@ -682,7 +690,11 @@ POST275_DEPENDENCY_OVERLAY = {
         "PR-195": ["PR-285"],
         "PR-198": ["PR-281", "PR-282", "PR-287", "PR-288", "PR-289"],
         "PR-201": ["PR-283", "PR-284", "PR-287", "PR-289"],
-        "PR-204": ["PR-287", "PR-288", "PR-289"],
+        "PR-204": ["PR-287", "PR-288", "PR-289", "PR-299"],
+        "PR-290": ["PR-299"],
+        "PR-291": ["PR-299"],
+        "PR-292": ["PR-299"],
+        "PR-293": ["PR-299"],
         "PR-205": ["PR-254", "PR-255"],
         "PR-207": ["PR-294"],
         "PR-281": ["PR-295", "PR-296", "PR-297"],
@@ -917,7 +929,7 @@ def validate_backlog(data: dict[str, Any]) -> DagInfo:
     present_post275_ids = idset & POST275_FULL_IDS
     if present_post275_ids and present_post275_ids != POST275_FULL_IDS:
         raise ValueError(
-            "post-275 intake must register PR-276..294 atomically; "
+            "post-275 intake must register PR-276..294 and audit PR-299 atomically; "
             f"missing={sorted(POST275_FULL_IDS - present_post275_ids)}"
         )
     present_pr280_root_cause_ids = idset & PR280_ROOT_CAUSE_FULL_IDS
@@ -1950,7 +1962,7 @@ def _validate_vector_tensor_slice(
 
 
 def _validate_post275_slice(cards: dict[str, Any]) -> None:
-    """Validate the atomic PR-276..294 post-275 execution programme."""
+    """Validate the historical PR-276..294 programme plus its PR-299 amendment."""
 
     spec_path = (
         Path(__file__).resolve().parents[2]
@@ -1980,8 +1992,17 @@ def _validate_post275_slice(cards: dict[str, Any]) -> None:
         "current_registered_total_after_pr280_root_cause_intake"
     ) != 244:
         raise ValueError("PR-280 root-cause card count drifted")
+    amendment = spec.get("post288_bayesian_audit_amendment")
+    if not isinstance(amendment, dict):
+        raise ValueError("PR-299 Bayesian audit amendment is missing")
+    if amendment.get("historical_prospective_scope_unchanged") != "PR-276..PR-294":
+        raise ValueError("PR-299 must not rewrite the historical post-275 scope")
+    if amendment.get("registered_successor") != "PR-299":
+        raise ValueError("PR-299 audit successor drifted")
+    if amendment.get("current_registered_total_after_pr299_audit_amendment") != 245:
+        raise ValueError("PR-299 audit card count drifted")
 
-    for pr_id in _pr_range(276, 294):
+    for pr_id in [*_pr_range(276, 294), "PR-299"]:
         card = cards[pr_id]
         expected = POST275_CARD_CONTRACTS[pr_id]
         missing_fields = sorted(POST275_REQUIRED_FIELDS - set(card))

@@ -7,13 +7,13 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | Metric | Value |
 | --- | ---: |
-| Total PRs | 244 |
-| Completed PRs | 179 |
+| Total PRs | 245 |
+| Completed PRs | 184 |
 | Blocked PRs | 3 |
 | Skipped PRs | 0 |
-| In progress | 0 |
+| In progress | 1 |
 | Background in progress | 1 |
-| Pending PRs | 33 |
+| Pending PRs | 28 |
 | Dormant external PRs | 28 |
 
 | Metadata | Value |
@@ -22,20 +22,20 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Implementation scope | `common` |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `3c3c9389ae7f350517d694551dd661dc29ca622d446a8f253823664ff94dea81` |
-| Input hashes | `docs/codex_handoff/pr_backlog.yaml:68b081d498853ed6819e93db5ea2ca35d3744339c73d27200880548eec249d95`<br>`docs/codex_handoff/pr_status.yaml:7bae1eba510946979bf94aa68e3c35d41fbfdba0e76506c367dc25579d7ab2c0`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4`<br>`docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c`<br>`docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912` |
+| Config hash | `91d1d3a6d1c98302f25432c4d22d681d95e4cceea80b947ae56918f559848559` |
+| Input hashes | `docs/codex_handoff/pr_backlog.yaml:3015202313935cee8165e3c5e53ba5b05879c5bf8ce77a3b2ab99f8cd2e3e18a`<br>`docs/codex_handoff/pr_status.yaml:3115a4d365c350b9a3cb38270005fed50edc2421c31b9ae18295b15e891ca29b`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4`<br>`docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c`<br>`docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912` |
 | Sky support status | `not_directional` |
 | Null/mock status | `not_statistical` |
 | Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false without an exact factory-issued ClaimCapabilityDecision.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier.<br>Verified smoke receipts set only generic process readiness; they do not grant a ClaimCapability. |
-| Generating command | `python -m common.status_snapshot --source-commit 73e1582d+dirty --write docs/generated/status_snapshot.json` |
-| Source commit | `73e1582d+dirty` |
+| Generating command | `python -m common.status_snapshot --source-commit b5174940+dirty --write docs/generated/status_snapshot.json` |
+| Source commit | `b5174940+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
 | --- | ---: |
 | `BASS` | 15 |
 | `COMMON` | 132 |
-| `HTT` | 46 |
+| `HTT` | 47 |
 | `MIO` | 14 |
 | `OBSSTAT` | 37 |
 
@@ -43,27 +43,28 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | --- | ---: |
 | `background_in_progress` | 1 |
 | `blocked` | 3 |
-| `completed` | 179 |
+| `completed` | 184 |
 | `dormant_external` | 28 |
-| `pending` | 33 |
+| `in_progress` | 1 |
+| `pending` | 28 |
 
 | Claim Tier | Rows |
 | --- | ---: |
 | `blocked` | 3 |
-| `diagnostic_only` | 241 |
+| `diagnostic_only` | 242 |
 
 | Artifact Readiness | Rows |
 | --- | ---: |
 | `blocked` | 3 |
-| `generated` | 179 |
-| `missing` | 62 |
+| `generated` | 184 |
+| `missing` | 58 |
 
 | Allowed Use | Rows |
 | --- | ---: |
-| `internal_only` | 244 |
+| `internal_only` | 245 |
 
 | Artifact Mode | Rows |
 | --- | ---: |
-| `governance_diagnostic` | 244 |
+| `governance_diagnostic` | 245 |
 
 This matrix is a diagnostic-only DAG rendering. It does not certify solver validation, posterior evidence, native transfer validation, or family-ID evidence.

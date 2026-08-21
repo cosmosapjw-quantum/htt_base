@@ -79,6 +79,17 @@ scope:
   user_owned_untracked_inputs_are_read_only: true
   uploaded_zip_admission_required_before_unpack: true
 
+post288_bayesian_audit_amendment:
+  historical_prospective_scope_unchanged: PR-276..PR-294
+  registered_successor: PR-299
+  current_registered_total_after_pr299_audit_amendment: 245
+  rationale: >-
+    The accepted synthetic PR-288 semantics receipt does not establish a
+    production observational inference adapter.  PR-299 is a bounded
+    preparation successor: it freezes the general contract and blocks every
+    lane until PR-289 data identity plus a separate human execution receipt
+    exist.  It does not reopen any historical PR card or authorize data use.
+
 entry_contract:
   dependency:
     upstream_id: PR-190
@@ -243,8 +254,21 @@ post275_dependency_contracts:
     mode: requires_success
   - upstream_id: PR-285
     mode: requires_success
+    required_terminal: PASS_COMPLETE_PILLAR_T_ADJUDICATION
+    success_semantics: PROCESS_COMPLETION_ONLY
+    downstream_row_contract:
+      preserve_row_verdicts: true
+      preserve_fail_inconclusive_and_blocked: true
+      preserve_exact_row_semantics: true
+      synthetic_validation_effect: NO_THEOREM_SOURCE_OBSERVED_OR_EXACTNESS_PROMOTION
   - upstream_id: PR-286
     mode: requires_success
+    required_terminal: PASS_COMPLETE_PILLAR_S_ADJUDICATION
+    success_semantics: PROCESS_COMPLETION_ONLY
+    downstream_row_contract:
+      preserve_row_verdicts: true
+      preserve_inconclusive_and_blocked: true
+      synthetic_validation_effect: NO_OBSERVED_OR_SOURCE_PROOF_PROMOTION
   PR-288:
   - upstream_id: PR-280
     mode: requires_terminal_receipt
@@ -306,6 +330,11 @@ post275_dependency_contracts:
     mode: requires_terminal_receipt
   - upstream_id: PR-293
     mode: requires_terminal_receipt
+  PR-299:
+  - upstream_id: PR-288
+    mode: requires_terminal_receipt
+  - upstream_id: PR-289
+    mode: requires_success
 
 pr280_root_cause_amendment:
   authority: PR-280 fresh cache-free inventory stop rule

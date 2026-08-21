@@ -165,6 +165,20 @@ from htt.infer.bayesian_semantics import (
     build_bayesian_semantics_receipt,
     validate_bayesian_semantics_receipt,
 )
+from htt.infer.bayesian_production import (
+    LaneReadinessDecision,
+    LaneReadinessStatus,
+    ObservationalLaneDescriptor,
+    PosteriorConsumerPlan,
+    ProductionBayesianError,
+    ProductionModelContract,
+    SamplerPosteriorLineage,
+    assess_lane_readiness,
+    build_production_model_contract,
+    build_posterior_consumer_plan,
+    build_sampler_posterior_lineage,
+    load_observational_lane_descriptors,
+)
 
 __all__ = [
     'LatentAxisModel', 'LatentAxisParams', 'dipole_projection',
@@ -239,4 +253,10 @@ __all__ = [
     'BayesianSemanticsError', 'BayesianSemanticsReceipt',
     'build_bayesian_semantics_receipt',
     'validate_bayesian_semantics_receipt',
+    'LaneReadinessDecision', 'LaneReadinessStatus',
+    'ObservationalLaneDescriptor', 'ProductionBayesianError',
+    'ProductionModelContract', 'SamplerPosteriorLineage', 'PosteriorConsumerPlan',
+    'assess_lane_readiness', 'build_production_model_contract',
+    'build_posterior_consumer_plan',
+    'build_sampler_posterior_lineage', 'load_observational_lane_descriptors',
 ]

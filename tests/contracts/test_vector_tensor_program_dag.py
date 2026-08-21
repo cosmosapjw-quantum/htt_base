@@ -261,7 +261,7 @@ def test_pr261_275_cards_match_revalidated_dag_and_common_contract() -> None:
 
     # The vector/tensor programme is complete; a later registered card may be
     # the sole foreground task without changing any PR-261..275 disposition.
-    assert status["in_progress"] in (None, "PR-276", "PR-277")
+    assert status["in_progress"] in (None, "PR-276", "PR-277", "PR-288", "PR-299")
     assert "PR-260" in status["completed"]
     assert status["execution_resolutions"]["PR-260"][
         "resolution"
@@ -309,7 +309,7 @@ def test_canonical_dag_and_compatibility_mirrors_validate() -> None:
         "--strict-rescue-slice",
     )
     assert dag.returncode == 0, dag.stdout + dag.stderr
-    assert "OK: 244 PRs, DAG valid" in dag.stdout
+    assert "OK: 245 PRs, DAG valid" in dag.stdout
 
     mirrors = _run(
         sys.executable,
