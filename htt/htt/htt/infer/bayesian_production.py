@@ -24,9 +24,13 @@ class ProductionBayesianError(BayesianSemanticsError):
 
 
 class LaneReadinessStatus(str, Enum):
+    # Keep the PR-299 wire value stable while retiring its circular meaning.
+    BLOCKED_DATA_ADMISSION_UNBOUND = "BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND"
     BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND = "BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND"
-    BLOCKED_OBSERVED_EXECUTION_NOT_AUTHORIZED = "BLOCKED_OBSERVED_EXECUTION_NOT_AUTHORIZED"
-    READY_FOR_AUTHORIZED_EXECUTION = "READY_FOR_AUTHORIZED_EXECUTION"
+    BLOCKED_HUMAN_AUTHORIZATION = "BLOCKED_HUMAN_AUTHORIZATION"
+    READY_TO_START_SAMPLER = "READY_TO_START_SAMPLER"
+    BLOCKED_SAMPLER_TERMINAL = "BLOCKED_SAMPLER_TERMINAL"
+    READY_FOR_POSTERIOR_CONSUMERS = "READY_FOR_POSTERIOR_CONSUMERS"
 
 
 _REQUIRED_SAMPLER_SETTINGS = frozenset({"nlive", "dlogz", "bound", "sample", "seed"})
@@ -347,35 +351,43 @@ def assess_lane_readiness(
     descriptor: ObservationalLaneDescriptor,
     *,
     model_contract: ProductionModelContract | None = None,
+    admission_decision: object | None = None,
+    validated_human_authorization: object | None = None,
     authorization_receipt: object | None = None,
     posterior_lineage: SamplerPosteriorLineage | None = None,
     posterior_consumer_plan: PosteriorConsumerPlan | None = None,
 ) -> LaneReadinessDecision:
     if type(descriptor) is not ObservationalLaneDescriptor:
         raise ProductionBayesianError("descriptor must be an exact ObservationalLaneDescriptor")
-    if model_contract is None:
+    if authorization_receipt is not None:
+        raise ProductionBayesianError(
+            "PR-289 NOT_AUTHORIZED receipts cannot substitute for human authorization"
+        )
+    if model_contract is None or admission_decision is None:
+        reasons = []
+        if model_contract is None:
+            reasons.append("production_model_contract_unbound")
+        if admission_decision is None:
+            reasons.append("complete_pr289_lane_admission_unbound")
         return LaneReadinessDecision(
             lane_id=descriptor.lane_id,
-            status=LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND,
+            status=LaneReadinessStatus.BLOCKED_DATA_ADMISSION_UNBOUND,
             observed_data_executed=False,
             artifact_mode="readiness_only",
-            blocked_reasons=("production_model_contract_unbound",),
+            blocked_reasons=tuple(reasons),
         )
     if type(model_contract) is not ProductionModelContract or model_contract.lane_id != descriptor.lane_id:
         raise ProductionBayesianError("production contract does not match the lane descriptor")
-    if authorization_receipt is None:
-        return LaneReadinessDecision(
-            lane_id=descriptor.lane_id,
-            status=LaneReadinessStatus.BLOCKED_OBSERVED_EXECUTION_NOT_AUTHORIZED,
-            observed_data_executed=False,
-            artifact_mode="readiness_only",
-            blocked_reasons=("missing_external_human_authorization_receipt",),
-        )
     try:
-        from common.data_identity import AuthorizationStatus, ExecutionAuthorizationReceipt
+        from common.data_identity import load_lane_registry
+        from common.human_execution_authorization import (
+            ValidatedHumanExecutionAuthorization,
+            lane_spec_content_id,
+            replay_complete_lane_admission,
+        )
     except ImportError as exc:
         raise ProductionBayesianError(
-            "PR-289 execution-authorization contract is unavailable"
+            "PR-304 admission-bound human authorization contract is unavailable"
         ) from exc
     lane_aliases = {
         "H-PLANCK": "PLANCK",
@@ -384,22 +396,54 @@ def assess_lane_readiness(
         "H-JWST": "JWST_SN",
         "H-ACT": "ACT",
     }
-    if type(authorization_receipt) is not ExecutionAuthorizationReceipt:
-        raise ProductionBayesianError("authorization receipt must use the PR-289 exact type")
-    if authorization_receipt.lane_id != lane_aliases[descriptor.lane_id]:
-        raise ProductionBayesianError("authorization receipt lane does not match the descriptor")
-    if authorization_receipt.status is not AuthorizationStatus.AUTHORIZED:
+    try:
+        lane_spec = load_lane_registry(
+            Path(__file__).resolve().parents[4]
+            / "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
+        ).lane(lane_aliases[descriptor.lane_id])
+        replayed_admission = replay_complete_lane_admission(
+            lane_spec=lane_spec, admission_decision=admission_decision
+        )
+    except (KeyError, ValueError) as exc:
+        raise ProductionBayesianError("PR-289 complete lane admission does not bind this descriptor") from exc
+    if validated_human_authorization is None:
         return LaneReadinessDecision(
             lane_id=descriptor.lane_id,
-            status=LaneReadinessStatus.BLOCKED_OBSERVED_EXECUTION_NOT_AUTHORIZED,
+            status=LaneReadinessStatus.BLOCKED_HUMAN_AUTHORIZATION,
             observed_data_executed=False,
             artifact_mode="readiness_only",
-            blocked_reasons=("authorization_receipt_not_authorized",),
+            blocked_reasons=("missing_external_human_authorization_receipt",),
+        )
+    if type(validated_human_authorization) is not ValidatedHumanExecutionAuthorization:
+        raise ProductionBayesianError("human authorization must be a validator-built PR-304 capability")
+    expected_record_ids = tuple(record.record_id for record in replayed_admission.records)
+    capability = validated_human_authorization
+    try:
+        capability.as_payload()
+    except ValueError as exc:
+        raise ProductionBayesianError("validated human authorization content identity drifted") from exc
+    if (
+        capability.receipt.lane_id != lane_spec.lane_id
+        or capability.receipt.exact_admission_record_ids != expected_record_ids
+        or capability.receipt.lane_admission_bundle_id
+        != replayed_admission.lane_admission_bundle_id
+        or capability.replayed_admission_bundle_id
+        != replayed_admission.lane_admission_bundle_id
+        or capability.replayed_lane_spec_content_id != lane_spec_content_id(lane_spec)
+    ):
+        raise ProductionBayesianError("validated human authorization lost exact admission binding")
+    if posterior_lineage is None and posterior_consumer_plan is None:
+        return LaneReadinessDecision(
+            lane_id=descriptor.lane_id,
+            status=LaneReadinessStatus.READY_TO_START_SAMPLER,
+            observed_data_executed=False,
+            artifact_mode="readiness_only",
+            blocked_reasons=(),
         )
     if posterior_lineage is None or posterior_consumer_plan is None:
         return LaneReadinessDecision(
             lane_id=descriptor.lane_id,
-            status=LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND,
+            status=LaneReadinessStatus.BLOCKED_SAMPLER_TERMINAL,
             observed_data_executed=False,
             artifact_mode="readiness_only",
             blocked_reasons=("sampler_lineage_or_ppc_loo_consumer_unbound",),
@@ -438,7 +482,7 @@ def assess_lane_readiness(
         raise ProductionBayesianError("PPC/LOO consumer plan content identity is forged or stale")
     return LaneReadinessDecision(
         lane_id=descriptor.lane_id,
-        status=LaneReadinessStatus.READY_FOR_AUTHORIZED_EXECUTION,
+        status=LaneReadinessStatus.READY_FOR_POSTERIOR_CONSUMERS,
         observed_data_executed=False,
         artifact_mode="readiness_only",
         blocked_reasons=(),

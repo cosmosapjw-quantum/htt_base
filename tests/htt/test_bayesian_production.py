@@ -1,10 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import replace
 from pathlib import Path
-from enum import Enum
-from types import ModuleType
-import sys
 
 import numpy as np
 import pytest
@@ -124,75 +120,16 @@ def test_all_registered_lanes_are_readiness_only_until_bound_and_authorized() ->
     assert tuple(item.lane_id for item in descriptors) == ("H-PLANCK", "H-DESI", "H-CF4", "H-JWST", "H-ACT")
     assert all((ROOT / path).is_file() for item in descriptors for path in item.runner_patterns)
     assert {assess_lane_readiness(item).status for item in descriptors} == {
-        LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND
+        LaneReadinessStatus.BLOCKED_DATA_ADMISSION_UNBOUND
     }
     desi = next(item for item in descriptors if item.lane_id == "H-DESI")
-    assert assess_lane_readiness(desi, model_contract=_contract()).status is LaneReadinessStatus.BLOCKED_OBSERVED_EXECUTION_NOT_AUTHORIZED
+    decision = assess_lane_readiness(desi, model_contract=_contract())
+    assert decision.status is LaneReadinessStatus.BLOCKED_DATA_ADMISSION_UNBOUND
+    assert decision.blocked_reasons == ("complete_pr289_lane_admission_unbound",)
 
 
-def test_authorization_requires_the_exact_pr289_runtime_type(monkeypatch: pytest.MonkeyPatch) -> None:
-    class AuthorizationStatus(str, Enum):
-        NOT_AUTHORIZED = "NOT_AUTHORIZED"
-        AUTHORIZED = "AUTHORIZED"
-
-    class ExecutionAuthorizationReceipt:
-        def __init__(self, lane_id: str, status: AuthorizationStatus) -> None:
-            self.lane_id = lane_id
-            self.status = status
-
-    module = ModuleType("common.data_identity")
-    module.AuthorizationStatus = AuthorizationStatus
-    module.ExecutionAuthorizationReceipt = ExecutionAuthorizationReceipt
-    monkeypatch.setitem(sys.modules, "common.data_identity", module)
+def test_pr289_receipts_cannot_substitute_for_pr304_human_capabilities() -> None:
     desi = next(item for item in load_observational_lane_descriptors(SPEC) if item.lane_id == "H-DESI")
     contract = _contract()
-    lineage = build_sampler_posterior_lineage(
-        contract=contract,
-        samples=np.array([[0.0, 1.0], [1.0, 2.0], [2.0, 3.0]]),
-        normalized_weights=np.array([0.2, 0.3, 0.5]),
-        sampler_settings={"nlive": 200, "dlogz": 0.1, "bound": "multi", "sample": "rwalk", "seed": 7},
-        resampling_rule="systematic",
-    )
-    consumer = build_posterior_consumer_plan(
-        contract=contract,
-        lineage=lineage,
-        ppc_discrepancy_ids=("amplitude",),
-        loo_block_ids=("NGC-z1", "SGC-z1"),
-    )
-    with pytest.raises(ProductionBayesianError, match="exact type"):
+    with pytest.raises(ProductionBayesianError, match="cannot substitute"):
         assess_lane_readiness(desi, model_contract=contract, authorization_receipt=object())
-    blocked = assess_lane_readiness(
-        desi,
-        model_contract=contract,
-        authorization_receipt=ExecutionAuthorizationReceipt("DESI", AuthorizationStatus.NOT_AUTHORIZED),
-    )
-    assert blocked.status is LaneReadinessStatus.BLOCKED_OBSERVED_EXECUTION_NOT_AUTHORIZED
-    missing_lineage = assess_lane_readiness(
-        desi,
-        model_contract=contract,
-        authorization_receipt=ExecutionAuthorizationReceipt("DESI", AuthorizationStatus.AUTHORIZED),
-    )
-    assert missing_lineage.status is LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND
-    assert missing_lineage.blocked_reasons == ("sampler_lineage_or_ppc_loo_consumer_unbound",)
-    ready = assess_lane_readiness(
-        desi,
-        model_contract=contract,
-        authorization_receipt=ExecutionAuthorizationReceipt("DESI", AuthorizationStatus.AUTHORIZED),
-        posterior_lineage=lineage,
-        posterior_consumer_plan=consumer,
-    )
-    assert ready.status is LaneReadinessStatus.READY_FOR_AUTHORIZED_EXECUTION
-    for forged_plan, message in (
-        (replace(consumer, ppc_discrepancy_ids=("forged",)), "registered discrepancy"),
-        (replace(consumer, ppc_discrepancy_ids=("amplitude", "amplitude")), "must be unique"),
-        (replace(consumer, loo_block_ids=("forged-block",)), "registered block partition"),
-        (replace(consumer, plan_content_id="sha256:" + "0" * 64), "forged or stale"),
-    ):
-        with pytest.raises(ProductionBayesianError, match=message):
-            assess_lane_readiness(
-                desi,
-                model_contract=contract,
-                authorization_receipt=ExecutionAuthorizationReceipt("DESI", AuthorizationStatus.AUTHORIZED),
-                posterior_lineage=lineage,
-                posterior_consumer_plan=forged_plan,
-            )

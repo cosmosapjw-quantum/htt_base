@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "policy_id": "PR304-ADMISSION-BOUND-HUMAN-AUTHORIZATION-POLICY",
+  "pr_id": "PR-304",
+  "change_set_id": "CS-PR304-ADMISSION-BOUND-HUMAN-AUTHORIZATION",
+  "publication_group_id": "PG-PR304-ADMISSION-BOUND-HUMAN-AUTHORIZATION",
+  "target_ref": "changeset/pr300-one-command-observational-readiness-20260821",
+  "target_sha": "612c2c11ad448df9d48040fb6d0e5e459b97fe8d",
+  "publication_mode": "draft_pr_only",
+  "claim_ceiling": "diagnostic_only",
+  "observed_data_executed": false,
+  "nonce_consumed": false,
+  "scientific_effect": "none",
+  "forbidden_actions": [
+    "real_authorization_issuance",
+    "authority_key_storage",
+    "nonce_consumption",
+    "observed_payload_access",
+    "data_admission",
+    "lane_execution",
+    "canary",
+    "cross_probe_scheduling",
+    "default_branch_merge",
+    "force_push",
+    "merge"
+  ],
+  "required_commands": [
+    {
+      "id": "pr304-authorization-contract",
+      "argv": ["{python}", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_human_execution_authorization.py"],
+      "timeout_seconds": 600
+    },
+    {
+      "id": "pr304-readiness-split",
+      "argv": ["{python}", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/htt/test_bayesian_production.py", "tests/contracts/test_observed_bayesian_readiness.py"],
+      "timeout_seconds": 600
+    },
+    {
+      "id": "pr304-pr289-boundary",
+      "argv": ["{python}", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_data_identity_registry_v2.py", "tests/contracts/test_pr303_pr289_integration.py"],
+      "timeout_seconds": 1200
+    },
+    {
+      "id": "pr304-dag-and-mirrors",
+      "argv": ["{python}", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "pr304-claim-language",
+      "argv": ["{python}", "-B", "scripts/check_claim_language.py", "--strict-missing", "htt/src/common/human_execution_authorization.py", "htt/htt/htt/infer/bayesian_production.py", "docs/PR_DELTAS/pr-304.md", "docs/research_program/post_pr275/pr304_spec.yaml"],
+      "timeout_seconds": 300
+    }
+  ],
+  "required_review_cells": [
+    "exact_pr289_type_and_complete_admission_replay",
+    "hmac_and_external_key_binding",
+    "record_bundle_plan_gate_scope_domain_commit_tree_binding",
+    "ttl_and_time_interval",
+    "capability_factory_boundary",
+    "pr289_not_authorized_nonpromotion",
+    "sampler_readiness_non_circularity",
+    "observed_execution_and_nonce_nonoccurrence",
+    "claim_ceiling_and_process_inflation"
+  ],
+  "terminal": "PASS_AUTHORIZATION_CONTRACT_ONLY"
+}

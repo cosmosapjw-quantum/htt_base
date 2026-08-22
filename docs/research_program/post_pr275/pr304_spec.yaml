@@ -1,0 +1,90 @@
+schema: htt.pr304.admission_bound_human_authorization.spec.v1
+pr_id: PR-304
+title: Admission-bound human authorization contract
+owner: COMMON
+contributors: [HTT]
+base_commit: 612c2c11ad448df9d48040fb6d0e5e459b97fe8d
+dependencies: [PR-300]
+capability: validate_external_human_authorization_bound_to_exact_pr289_admission
+claim_tier: diagnostic_only
+transfer_source: none
+scientific_effect: none
+observed_data_executed: false
+nonce_consumed: false
+public_use: false
+family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
+
+scope:
+  - validate a human-issued HMAC receipt with an authority key outside this repository
+  - bind the receipt to an exact registered PR-289 LaneSpec and complete replayed LaneAdmissionDecision
+  - preserve the exact ordered admission record IDs and lane admission bundle in a validator-built capability
+  - split Bayesian readiness into admission, human-authorization, sampler-start, and posterior-consumer states
+
+receipt_contract:
+  schema: common.human_execution_authorization_receipt.v1
+  mandatory_bindings:
+    - authorization_id
+    - lane_id
+    - exact_admission_record_ids
+    - lane_admission_bundle_id
+    - analysis_plan_id
+    - required_human_gate_id
+    - authorized_scope
+    - authorization_domain
+    - candidate_commit
+    - candidate_tree
+    - issued_at_utc
+    - expires_at_utc
+    - nonce
+    - authority_key_id
+    - authorization_hmac_sha256
+  hmac_payload: sorted_compact_ascii_json_including_authorization_id_excluding_hmac
+  authority_key: absolute_external_regular_file_only
+  authority_key_id: sha256_of_external_key_bytes
+  maximum_ttl_seconds: 1800
+  accepted_interval: '[issued_at_utc, expires_at_utc)'
+  registered_domain: lane_data_execution
+  registered_scopes:
+    PLANCK: admitted_planck_observed_execution
+    CF4: admitted_cf4_observed_execution
+    HSC_KIDS: admitted_hsc_kids_observed_execution
+    ACT: admitted_act_observed_execution
+    DESI: admitted_desi_observed_execution
+    JWST_SN: admitted_jwst_sn_observed_execution
+
+readiness_states:
+  - BLOCKED_DATA_ADMISSION_UNBOUND
+  - BLOCKED_HUMAN_AUTHORIZATION
+  - READY_TO_START_SAMPLER
+  - BLOCKED_SAMPLER_TERMINAL
+  - READY_FOR_POSTERIOR_CONSUMERS
+  compatibility_serialization:
+    BLOCKED_DATA_ADMISSION_UNBOUND: BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND
+  rule: >-
+    READY_TO_START_SAMPLER requires a valid admission-bound authorization and
+    production model contract but never posterior samples, weights, PPC, or
+    LOO output. Those objects are required only for READY_FOR_POSTERIOR_CONSUMERS.
+
+required_terminal:
+  terminal: PASS_AUTHORIZATION_CONTRACT_ONLY
+  admitted_lane_count: 0
+  authorized_lane_count: 0
+  executed_lane_count: 0
+  observed_data_executed: false
+  nonce_consumed: false
+
+forbidden:
+  - minting or storing a real authorization receipt or authority key
+  - mutating or subclassing PR-289 ExecutionAuthorizationReceipt into AUTHORIZED
+  - nonce consumption
+  - observed payload access, data admission, canary, lane execution, or scientific result
+  - status-string authorization
+  - legacy PR-151 numerical result or withdrawn DESI artifact
+  - default-branch merge
+
+anti_inflation:
+  max_new_production_modules: 1
+  max_new_test_modules: 1
+  max_new_runners: 0
+  no_new_global_ledger_or_status_enum: true
+  downstream_consumer: PR-305 observed execution transaction
