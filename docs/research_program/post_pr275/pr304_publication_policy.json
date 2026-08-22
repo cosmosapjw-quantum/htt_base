@@ -14,7 +14,14 @@
   "max_inventory_age_seconds": 300,
   "max_receipt_age_seconds": 1800,
   "max_authorization_ttl_seconds": 1800,
-  "publication_mode": "draft_pr_only",
+  "publication_mode": "human_reviewed_stack_merge",
+  "allowed_merge": {
+    "target_ref": "origin/changeset/pr300-one-command-observational-readiness-20260821",
+    "expected_base_sha": "612c2c11ad448df9d48040fb6d0e5e459b97fe8d",
+    "method": "merge_commit",
+    "human_approval_required": true,
+    "technical_audit_anchor": "592d3b7fb445ebb1c8b6656a0a90e2ac1abb063a"
+  },
   "claim_ceiling": "diagnostic_only",
   "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
   "observed_data_executed": false,
@@ -31,7 +38,6 @@
     "cross_probe_scheduling",
     "default_branch_merge",
     "force_push",
-    "merge",
     "retarget"
   ],
   "required_commands": [
