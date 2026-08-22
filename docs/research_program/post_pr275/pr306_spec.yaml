@@ -1,0 +1,210 @@
+schema: htt.pr306.planck_operator_closure.spec.v1
+pr_id: PR-306
+title: Planck PR3 low-ell operator closure and profiled synthetic replay
+base_commit: f3651d6627b9564115524eb969f62857ad2bd791
+dependency: PR-305
+owner: OBSSTAT
+capability: PLANCK_PR3_LOWELL_OPERATOR_CLOSURE_AND_PROFILED_SYNTHETIC_REPLAY
+claim_tier: transfer_conditional_diagnostic_only
+observed_statistic_seen: false
+observed_science_executed: false
+
+source_disposition:
+  PR290_commit: 06ac20605ebc371b0f97ad6e91c802a51a9bf764
+  current_use:
+    htt/obsstat/planck_post275_lane.py: exact typed finite-rank and covariance postconditions
+    htt/obsstat/boost_biposh_residual.py: exact beta-domain and zero-parameter boost fix
+  excluded:
+    - old HMAC authorization and observed-lane activation
+    - stale nonexecution receipt and PR-290 runner
+    - historical status, policy, and publication authority
+
+analysis_band:
+  lmin: 2
+  lmax: 5
+  map_unit: microK_CMB
+  coordinate_frame: GALACTIC
+  harmonic_convention: ORTHONORMAL_CONDON_SHORTLEY_REAL_MAP
+
+operator_order:
+  - replay exact PR-289 PLANCK identity admission
+  - validate all 13 content-bound components before use
+  - remove one weighted monopole and dipole convention
+  - commonize each pipeline to one non-amplifying target beam and pixel window
+  - apply the content-bound common mask
+  - invert the full-rank real-linear band-limited mask coupling
+  - reuse deconvolved alms for every feature
+  - extract genuine projective Majorana multipole vectors
+  - assemble one ordered SMICA/Commander same-sky row
+  - construct full joint matched-FFP10 covariance including its cross block
+  - compute covariance-whitened local response rank
+  - calibrate only against the complete ordered FFP10 inventory
+  - abstain from global claims while no valid global response exists
+
+beam_pixel:
+  formula: target_beam_l*target_pixel_l/(source_beam_l*source_pixel_l)
+  require_positive_finite_transfer: true
+  allow_amplification: false
+  component_source_identities_remain_distinct: true
+  common_target_identity_shared: true
+
+mask_inverse:
+  basis: >-
+    Y_l0, sqrt(2) Re Y_lm, sqrt(2) Im Y_lm with coefficients
+    a_l0, sqrt(2) Re a_lm, -sqrt(2) Im a_lm
+  construction: vectorized discrete HEALPix quadrature
+  relative_singular_threshold: 1.0e-10
+  condition_ceiling: 1.0e8
+  rank_deficiency_action: ABSTAIN
+  truncated_pseudoinverse_forbidden: true
+
+multipole_vectors:
+  method: projective Majorana polynomial roots
+  polynomial: sum_m sqrt(binomial(2l,l+m))*a_lm*z^(l+m)
+  stereographic_convention: z=exp(i*phi)*cot(theta/2)
+  reality: a_l_minus_m=(-1)^m*conjugate(a_lm)
+  projective_infinity_roots_preserved: true
+  antipodal_pairing_tolerance: 1.0e-7
+  sign: largest_absolute_Cartesian_component_positive
+  serialization_order: lexicographic_only
+  power_tensor_axis_is_not_a_multipole_vector: true
+
+feature_order:
+  component_order: [SMICA, Commander]
+  per_component:
+    - cl_l2
+    - cl_l3
+    - cl_l4
+    - cl_l5
+    - parity_even_over_odd_l2_l5
+    - power_tensor_gap_l2
+    - power_tensor_gap_l3
+    - multipole_l2_absdot
+    - multipole_l3_absdot_0
+    - multipole_l3_absdot_1
+    - multipole_l3_absdot_2
+    - multipole_plane_alignment_max_l2_l3
+  units:
+    cl_l2: microK_CMB^2
+    cl_l3: microK_CMB^2
+    cl_l4: microK_CMB^2
+    cl_l5: microK_CMB^2
+    all_other_features: dimensionless
+
+joint_covariance:
+  row: concat(SMICA_i,Commander_i)
+  row_identity: exact ordered shared FFP10 realization ID
+  expected_dimension: 24
+  require_rows_greater_than_dimension: true
+  require_positive_definite_full_rank: true
+  require_nonzero_cross_component_block: true
+  diagonal_or_block_diagonal_shortcut_forbidden: true
+  condition_ceiling: 1.0e10
+
+ffp10:
+  expected_null_rows: 999
+  required_arrays: [row_ids, smica_maps, commander_maps]
+  complete_ordered_unique_inventory_required: true
+  partial_profile_rows: [1, 8, 32, 128]
+  partial_profile_permission: feature_throughput_only
+  partial_p_value_forbidden: true
+  full_resolution_floor: 1/1000
+  observation_and_null_operator_must_be_identical: true
+
+response:
+  local:
+    method: symmetric fixed local-modulation finite difference
+    whitening: accepted full joint covariance Cholesky
+    relative_rank_threshold: 1.0e-8
+    absolute_rank_threshold: 1.0e-10
+  global:
+    status: MISSING
+    local_global_discrimination: ABSTAIN_GLOBAL_RESPONSE_UNAVAILABLE
+    rank_zero_substitution_forbidden: true
+
+attended_execution_plan:
+  lane: PLANCK
+  analysis_plan_id: plan:PR290-PLANCK-LOWELL-V1
+  execution_mode: planck_pr3_lowell_operator
+  bayesian_inference: false
+  worker_path: scripts/observed_runs/run_planck_pr3.py
+  worker_arguments: [--run-admitted]
+
+admitted_component_formats:
+  maps_masks_beams: numeric NPY without pickle
+  window_operators:
+    format: NPZ without pickle
+    keys: [source_pixel_window, target_beam, target_pixel_window]
+  component_covariance: numeric NPY 12_by_12 replay reference
+  pixelization: strict JSON htt.planck.pixelization.v1
+  native_selection: strict JSON htt.planck.pr3.lowell_selection.v1
+  ffp10_null_inventory:
+    format: NPZ without pickle
+    keys: [row_ids, smica_maps, commander_maps]
+
+profile:
+  stages:
+    - input
+    - beam_pixel
+    - mask_inverse
+    - map2alm
+    - multipole_vectors
+    - features
+    - covariance
+    - null_calibration
+    - global_rank
+    - serialization
+  matrix:
+    serial: [1, 8, 32, 128, full]
+    thread_2: [8, 32, 128, full]
+    process_2: [8, 32, 128, full]
+  thread_controls:
+    OMP_NUM_THREADS: '1'
+    OPENBLAS_NUM_THREADS: '1'
+    MKL_NUM_THREADS: '1'
+    NUMEXPR_NUM_THREADS: '1'
+    VECLIB_MAXIMUM_THREADS: '1'
+  required_metrics: [wall_seconds, max_rss_bytes, ordered_feature_digest, stage_seconds]
+  evidence: docs/generated/pr306_planck_synthetic_profile.json
+
+optimization:
+  applied:
+    - cache immutable real-harmonic geometry
+    - vectorize the discrete mask-coupling construction
+    - reuse one mask inverse and target transfer per cell
+    - reuse deconvolved alms across all features
+    - replace repeated leave-one-out median reconstruction with sorted sufficient statistics
+    - preserve deterministic row order across serial, thread, and process execution
+  rust_gate: KEEP_PYTHON_NO_ELIGIBLE_POST_OPTIMIZATION_LEAF
+  reason: >-
+    The remaining measured transforms and small matrix operations are already
+    NumPy, SciPy, or healpy native-library calls; there is no eligible
+    project-owned pure numeric leaf meeting the port gate.
+
+long_run_executor:
+  - process-group termination on timeout and interrupt
+  - stdout and stderr streamed to bounded files
+  - streaming SHA-256 for output files
+  - exact Python, NumPy, SciPy, healpy, import-origin, and thread-policy binding
+  - no shell, download, root, key, signature, nonce ledger, or privileged launcher
+
+claim_boundary:
+  safe:
+    - current-stack Planck operator implementation
+    - synthetic/null numerical replay and performance measurements
+    - computed synthetic local response rank
+  forbidden:
+    - observed result from this PR
+    - global tilt compatibility or detection
+    - native transfer or Bianchi family identification
+    - Q, F, Pi, or G_F promotion
+    - likelihood, prior, posterior, evidence, PPC, or LOO claim
+
+acceptance:
+  - every operator blocker listed in this spec is closed by code and hostile tests
+  - partial FFP10 rows cannot reach covariance, calibration, or p-value output
+  - all 13 profile cells are serial-equivalent in frozen row order
+  - executor regressions and long-run extensions pass
+  - observed_statistic_seen is false
+  - observed_science_executed is false
+  - independent physics, harness, numerical, and claim review has no P0 or P1
