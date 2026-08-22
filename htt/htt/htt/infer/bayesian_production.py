@@ -907,11 +907,19 @@ def _execution_plan_binding(
         raise ProductionBayesianError("execution plan argv must be a sequence")
     parsed_argv = tuple(_nonempty(item, "execution argv") for item in argv)
     output_root = _relative_path(payload["output_root"], "execution output root")
+    entrypoint = _nonempty(payload["entrypoint"], "execution entrypoint")
+    expected_entrypoint = (
+        f"{provider.manifest.provider_path}:"
+        f"{provider.manifest.log_likelihood_symbol}"
+    )
+    if entrypoint != expected_entrypoint:
+        raise ProductionBayesianError(
+            "execution plan entrypoint does not equal the registered sampler export"
+        )
     if (
         payload["lane_id"] != contract.lane_id
         or payload["model_id"] != contract.model_id
         or payload["run_mode"] != "sampler"
-        or not str(payload["entrypoint"]).startswith(provider.manifest.provider_path + ":")
         or not output_root.startswith("docs/generated/observed_runs/")
     ):
         raise ProductionBayesianError("execution plan does not bind the model/provider")
@@ -919,7 +927,7 @@ def _execution_plan_binding(
         plan_binding=binding_for(candidate, path),
         lane_id=contract.lane_id,
         model_id=contract.model_id,
-        entrypoint=_nonempty(payload["entrypoint"], "execution entrypoint"),
+        entrypoint=entrypoint,
         argv=parsed_argv,
         output_root=output_root,
         run_mode="sampler",

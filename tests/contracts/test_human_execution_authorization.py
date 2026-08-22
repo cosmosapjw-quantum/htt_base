@@ -1126,6 +1126,48 @@ def test_execution_plan_001_rejects_authorization_for_another_plan(
         )
 
 
+@pytest.mark.parametrize(
+    "entrypoint",
+    (
+        "provider.py:discrepancy",
+        "provider.py:log_likelihood_extra",
+        "provider.py:undeclared_helper",
+    ),
+    ids=("wrong-export", "suffix-collision", "undeclared-helper"),
+)
+def test_execution_plan_entrypoint_rejects_non_manifest_sampler_exports(
+    tmp_path: Path,
+    entrypoint: str,
+) -> None:
+    """A sampler plan cannot select another symbol in the provider module."""
+
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    changed = _commit_json_mutation(
+        candidate,
+        "execution-plan.json",
+        lambda payload: payload.__setitem__("entrypoint", entrypoint),
+        message="change sampler entrypoint",
+    )
+
+    with pytest.raises(
+        ProductionBayesianError,
+        match="entrypoint does not equal the registered sampler export",
+    ):
+        _bound_model(lane, decision, changed, provider)
+
+
+def test_execution_plan_exact_manifest_sampler_export_is_accepted(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+
+    model = _bound_model(lane, decision, candidate, provider)
+
+    assert model.execution_plan_content_id is not None
+
+
 def test_provider_dependency_blob_change_invalidates_bound_contract(
     tmp_path: Path,
 ) -> None:
@@ -1396,6 +1438,15 @@ def test_ci_coverage_001_runs_every_pr304_policy_command_on_pull_requests() -> N
         encoding="utf-8"
     )
     assert "pull_request:" in workflow
+    pinned_minimal_install = (
+        "python -m pip install 'pytest>=8,<9' 'PyYAML>=6,<7' 'numpy>=1.26,<3'"
+    )
+    editable_runtime_install = "python -m pip install -e './htt'"
+    assert pinned_minimal_install in workflow
+    assert editable_runtime_install in workflow
+    assert workflow.index(pinned_minimal_install) < workflow.index(
+        editable_runtime_install
+    )
     for row in policy["required_commands"]:
         command = shlex.join(row["argv"])
         assert command in workflow, f"missing PR-304 CI command: {row['id']}"
