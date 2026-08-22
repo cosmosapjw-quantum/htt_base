@@ -20,21 +20,11 @@ import sys
 import tempfile
 from typing import Mapping, Sequence
 
-import yaml
-
 
 ROOT = Path(__file__).resolve().parents[2]
 HTT_SRC = ROOT / "htt/src"
 if str(HTT_SRC) not in sys.path:
     sys.path.insert(0, str(HTT_SRC))
-
-from common.data_identity import (  # noqa: E402
-    AdmissionStatus,
-    DataIdentityError,
-    load_lane_registry,
-    replay_lane_admission_decision,
-)
-
 
 REGISTRY_RELATIVE = Path(
     "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
@@ -185,6 +175,8 @@ def validate_plan_values(values: object, *, root: Path) -> dict[str, object]:
 
 
 def _load_plan(root: Path, plan_path: str) -> tuple[dict[str, object], bytes, Path]:
+    import yaml
+
     path = _tracked_file(root, plan_path, "analysis plan")
     raw = path.read_bytes()
     try:
@@ -197,6 +189,13 @@ def _load_plan(root: Path, plan_path: str) -> tuple[dict[str, object], bytes, Pa
 
 
 def _load_admission(root: Path, path: Path):
+    from common.data_identity import (
+        AdmissionStatus,
+        DataIdentityError,
+        load_lane_registry,
+        replay_lane_admission_decision,
+    )
+
     if path.is_symlink() or not path.is_file():
         raise ObservationalProgramError("PR-289 admission must be a regular file")
     raw = path.read_bytes()
