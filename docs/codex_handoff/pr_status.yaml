@@ -1,5 +1,13 @@
-generated_on: '2026-08-11'
+generated_on: '2026-08-23'
 completed:
+- PR-306
+- PR-305
+- PR-304
+- PR-303
+- PR-302
+- PR-300
+- PR-299
+- PR-289
 - PR-288
 - PR-287
 - PR-286
@@ -189,7 +197,9 @@ blocked:
 - PR-280
 - PR-190
 - PR-172
+skipped: []
 pending:
+- PR-301
 - PR-155
 - PR-156
 - PR-157
@@ -216,8 +226,10 @@ pending:
 - PR-292
 - PR-293
 - PR-294
-- PR-299
-- PR-300
+- PR-308
+- PR-309
+- PR-310
+- PR-311
 dormant_external:
 - PR-159
 - PR-160
@@ -247,7 +259,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-289
+in_progress: PR-307
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -255,7 +267,7 @@ background_execution_contracts:
     kind: acquisition
     allowed_phase: acquire
     partial_scientific_use: forbidden
-stacked_pr_execution:
+historical_stacked_pr_execution:
   schema_version: 1
   stack_id: PROCESS_INFLATION_RECOVERY_PHASE2
   execution_mode: AUTO_STACKED_PR
@@ -577,6 +589,82 @@ stacked_pr_execution:
       dependency_hashes: {}
       gate_dispositions: {eligibility: INELIGIBLE}
       assurance_budget: {maximum: 16, consumed: 0}
+stacked_pr_execution:
+  schema_version: 1
+  stack_id: POST_PR306_OBSERVATIONAL_LANE_READINESS
+  execution_mode: AUTO_STACKED_PR
+  merge_policy: HUMAN_ONLY
+  target_sha: f69a33759869acdff78a627192c3d834d1fd67b8
+  active_implementation_pr: PR-307
+  pr_order: [PR-307, PR-308, PR-309, PR-310, PR-311]
+  prs:
+    PR-307:
+      lifecycle: ACTIVE
+      lifecycle_history: [PLANNED, ACTIVE]
+      base_sha: f69a33759869acdff78a627192c3d834d1fd67b8
+      predecessor_pr: null
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: b1c4d8216a709ff72b32b05ef2dec100bb0da43474b543b889cff631443ac370
+      dependency_hashes:
+        pr306_merge_commit: 691cdf53901f28b8260a59a5027cac05f4e54ca979d58b7d20c439c63e06e61d
+        pr306_merge_tree: be18a83ff15fd55af4fd798906206cc244c1ebe6c0babba7c8fb446eca451daf
+      gate_dispositions: {eligibility: PASS}
+      assurance_budget: {maximum: 16, consumed: 4}
+    PR-308:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-307
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: DEFERRED}
+      assurance_budget: {maximum: 16, consumed: 0}
+    PR-309:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-308
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: DEFERRED}
+      assurance_budget: {maximum: 16, consumed: 0}
+    PR-310:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-309
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: DEFERRED}
+      assurance_budget: {maximum: 16, consumed: 0}
+    PR-311:
+      lifecycle: PLANNED
+      lifecycle_history: [PLANNED]
+      base_sha: null
+      predecessor_pr: PR-310
+      predecessor_sealed_sha: null
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: DEFERRED}
+      assurance_budget: {maximum: 16, consumed: 0}
 execution_lane:
   PR-167: defensible
   PR-168: defensible
@@ -711,7 +799,98 @@ execution_lane:
   PR-295: defensible
   PR-296: defensible
   PR-297: defensible
+  PR-301: defensible
+  PR-302: defensible
+  PR-303: defensible
+  PR-304: defensible
+  PR-305: defensible
+  PR-306: defensible
+  PR-307: defensible
+  PR-308: defensible
+  PR-309: defensible
+  PR-310: defensible
+  PR-311: defensible
 execution_resolutions:
+  PR-289:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-289.md
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-21'
+    scientific_status_effect: exact_identity_admission_source_integrated_without_execution
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: identity_admission_contract
+    observed_data_executed: false
+    public_use: false
+  PR-299:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-299.md
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-21'
+    scientific_status_effect: bayesian_readiness_semantics_repaired_without_observed_inference
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: bayesian_readiness_contract
+    observed_data_executed: false
+    public_use: false
+  PR-300:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-300.md
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-21'
+    scientific_status_effect: one_command_readiness_invalidated_without_execution
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: observational_dispatch_invalidation
+    observed_data_executed: false
+    public_use: false
+  PR-302:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-302.md
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-21'
+    scientific_status_effect: historical_pr151_producer_apis_quarantined
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: historical_producer_quarantine
+    observed_data_executed: false
+    public_use: false
+  PR-303:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-303.md
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-21'
+    scientific_status_effect: exact_pr289_source_integrated_with_rootless_refusal
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: exact_source_integration
+    observed_data_executed: false
+    public_use: false
+  PR-304:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-304.md
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-22'
+    scientific_status_effect: authorization_contract_closed_without_active_authority
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: authorization_contract_only
+    observed_data_executed: false
+    public_use: false
+  PR-305:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-305.md
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-22'
+    scientific_status_effect: minimal_attended_executor_contract_closed_without_run
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: attended_executor_contract
+    observed_data_executed: false
+    public_use: false
+  PR-306:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-306.md
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-23'
+    scientific_status_effect: planck_operator_closed_with_synthetic_profile_only
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: synthetic_planck_operator_closure
+    observed_data_executed: false
+    public_use: false
   PR-288:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-288.md

@@ -235,6 +235,17 @@
       "PR-289",
       "PR-299",
       "PR-300",
+      "PR-301",
+      "PR-302",
+      "PR-303",
+      "PR-304",
+      "PR-305",
+      "PR-306",
+      "PR-307",
+      "PR-308",
+      "PR-309",
+      "PR-310",
+      "PR-311",
       "PR-204",
       "PR-198",
       "PR-199",
@@ -16814,6 +16825,852 @@
       "solver_gate_required": false,
       "change_set_id": "CS-PR297-HANDOFF-INSTALLER-CLOSURE",
       "publication_group_id": "PG-PR297-HANDOFF-INSTALLER-CLOSURE"
+    },
+    {
+      "id": "PR-301",
+      "wave": 76,
+      "title": "Superseded observed-execution contract spike",
+      "owner": "COMMON",
+      "capability": "archived_rejected_observed_execution_spike",
+      "inputs": [
+        "PR-300 invalidation tree"
+      ],
+      "outputs": [
+        "Archive-only rejected implementation identity"
+      ],
+      "contributors": [
+        "HTT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "htt"
+      ],
+      "depends": [
+        "PR-300"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-300",
+          "mode": "requires_terminal_receipt"
+        }
+      ],
+      "targets": [
+        "Preserve the rejected spike as non-authoritative history only."
+      ],
+      "files": [],
+      "tests": [
+        "python -m pytest -q tests/contracts/test_authorized_observational_program.py"
+      ],
+      "dod": [
+        "No PR-301 authorization or execution object is consumed by a successor."
+      ],
+      "kill": "Any successor imports the rejected signature, key, nonce, or launcher architecture.",
+      "cost": "low",
+      "level": "L1",
+      "scope": "pre-solver",
+      "risk": "R1-GOVERNANCE",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "not_applicable_governance_v1",
+        "level": "NOT_APPLICABLE"
+      },
+      "claim_impact": "Archive disposition only; no execution or scientific capability follows.",
+      "forbidden": [
+        "No merge authority, observed execution, native result, family identification, or scientific claim."
+      ],
+      "anti_drift": [
+        "Keep the rejected head out of all successor ancestry and source imports."
+      ],
+      "roadmap_anchor": "docs/research_program/post_pr275/pr300_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "governance_diagnostic",
+      "execution_authorization": "REGISTERED_NOT_SCHEDULED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR301-REJECTED-OBSERVED-EXECUTION-SPIKE",
+      "publication_group_id": "PG-PR301-REJECTED-OBSERVED-EXECUTION-SPIKE"
+    },
+    {
+      "id": "PR-302",
+      "wave": 76,
+      "title": "Seal invalidated PR-151 producer APIs",
+      "owner": "COMMON",
+      "capability": "pr151_historical_producers_fail_closed",
+      "inputs": [
+        "PR-300 invalidation tree"
+      ],
+      "outputs": [
+        "Typed direct-API invalidation and deterministic CLI exit 7"
+      ],
+      "contributors": [
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "obsstat"
+      ],
+      "depends": [
+        "PR-300"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-300",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Remove historical numerical producer bodies while preserving explicit invalidation."
+      ],
+      "files": [
+        "docs/PR_DELTAS/pr-302.md",
+        "scripts/desi_dipole_mock_significance.py",
+        "scripts/desi_exact_selection_card.py",
+        "tests/obsstat/test_pr151_invalidation_boundary.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/obsstat/test_pr151_invalidation_boundary.py"
+      ],
+      "dod": [
+        "Direct APIs raise typed invalidation and CLIs emit no scientific number or artifact."
+      ],
+      "kill": "A deleted PR-151 card, figure, numerical producer, or science import reappears.",
+      "cost": "low",
+      "level": "L1",
+      "scope": "pre-solver",
+      "risk": "R2-CLAIM-QUARANTINE",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "not_applicable_governance_v1",
+        "level": "NOT_APPLICABLE"
+      },
+      "claim_impact": "Historical quarantine only; no DESI result is restored.",
+      "forbidden": [
+        "No historical number, observed execution, attribution, native result, or family identification."
+      ],
+      "anti_drift": [
+        "Keep both historical CLIs stdlib-only and exit-7 fail-closed."
+      ],
+      "roadmap_anchor": "docs/PR_DELTAS/pr-302.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "governance_diagnostic",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR302-PR151-PRODUCER-SEAL",
+      "publication_group_id": "PG-PR302-PR151-PRODUCER-SEAL"
+    },
+    {
+      "id": "PR-303",
+      "wave": 76,
+      "title": "Exact PR-289 admission-source integration",
+      "owner": "COMMON",
+      "capability": "exact_pr289_source_integrated_without_authorization",
+      "inputs": [
+        "PR-302 quarantine tree",
+        "exact PR-289 source head"
+      ],
+      "outputs": [
+        "Byte-identical admission source and zero-lane rootless receipt"
+      ],
+      "contributors": [
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-302",
+        "PR-289"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-302",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-289",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Integrate exact admission types while preserving all PR-151 quarantine boundaries."
+      ],
+      "files": [
+        "docs/research_program/post_pr275/pr303_spec.yaml",
+        "docs/PR_DELTAS/pr-303.md",
+        "scripts/codex_harness/run_pr303_pr289_integration.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/contracts/test_pr303_pr289_integration.py"
+      ],
+      "dod": [
+        "Six rootless lanes are REJECTED_NOT_PRESENT and six remain NOT_AUTHORIZED."
+      ],
+      "kill": "Any stale PR-289 receipt becomes authority or any lane becomes admitted, authorized, or executed.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2-DATA-IDENTITY",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Source integration only; no data or science execution follows.",
+      "forbidden": [
+        "No substitute identity type, authorization, payload open, native result, family identification, or scientific output."
+      ],
+      "anti_drift": [
+        "Preserve the exact seven-file PR-289 source hashes."
+      ],
+      "roadmap_anchor": "docs/research_program/post_pr275/pr303_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "readiness_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR303-PR289-EXACT-INTEGRATION",
+      "publication_group_id": "PG-PR303-PR289-EXACT-INTEGRATION"
+    },
+    {
+      "id": "PR-304",
+      "wave": 76,
+      "title": "Admission-bound human authorization contract",
+      "owner": "COMMON",
+      "capability": "external_root_authorization_contract_only",
+      "inputs": [
+        "PR-303 exact admission integration"
+      ],
+      "outputs": [
+        "Fail-closed external-root authorization and readiness state split"
+      ],
+      "contributors": [
+        "HTT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "htt"
+      ],
+      "depends": [
+        "PR-303"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-303",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Bind authorization evidence to exact admission, model, runtime, rank, normalization, plan, commit, and tree."
+      ],
+      "files": [
+        "docs/research_program/post_pr275/pr304_spec.yaml",
+        "docs/PR_DELTAS/pr-304.md",
+        "htt/src/common/human_execution_authorization.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/contracts/test_human_execution_authorization.py tests/htt/test_bayesian_production.py"
+      ],
+      "dod": [
+        "Contract verification is complete while active authorities and consumed nonces remain zero."
+      ],
+      "kill": "Candidate-self-rooted authority, ambient Git influence, or premature posterior readiness appears.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-AUTHORIZATION",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "not_applicable_governance_v1",
+        "level": "NOT_APPLICABLE"
+      },
+      "claim_impact": "Authorization mechanics only; no observed execution or scientific result follows.",
+      "forbidden": [
+        "No active authority, private key, nonce consumption, payload open, native result, or family identification."
+      ],
+      "anti_drift": [
+        "Exact PR-289 sources and stale-receipt absence remain immutable."
+      ],
+      "roadmap_anchor": "docs/research_program/post_pr275/pr304_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "readiness_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR304-ADMISSION-BOUND-AUTHORIZATION",
+      "publication_group_id": "PG-PR304-ADMISSION-BOUND-AUTHORIZATION"
+    },
+    {
+      "id": "PR-305",
+      "wave": 76,
+      "title": "Minimal attended Planck executor",
+      "owner": "COMMON",
+      "capability": "PLANCK_ATTENDED_IDENTITY_ADMISSION_AND_SINGLE_LANE_EXECUTION",
+      "inputs": [
+        "PR-304 merged stack and exact PR-289 admission"
+      ],
+      "outputs": [
+        "Exact-confirmation attended Planck transaction"
+      ],
+      "contributors": [
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "obsstat"
+      ],
+      "depends": [
+        "PR-304"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-304",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Provide one Planck-only lock, start, worker, timeout, and terminal transaction under a trusted attended operator."
+      ],
+      "files": [
+        "docs/research_program/post_pr275/pr305_spec.yaml",
+        "docs/PR_DELTAS/pr-305.md",
+        "scripts/codex_harness/run_authorized_observational_program.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/contracts/test_authorized_observational_program.py"
+      ],
+      "dod": [
+        "Exact confirmation precedes start and data open; every worker terminal state is durable."
+      ],
+      "kill": "All-lane, cross-probe, shell, root, download, key, signature, or nonce architecture appears.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2-EXECUTION",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "not_applicable_governance_v1",
+        "level": "NOT_APPLICABLE"
+      },
+      "claim_impact": "Attended transaction capability only; no observed statistic is computed in this PR.",
+      "forbidden": [
+        "No unattended execution, scientific result, cross-probe run, native result, or family identification."
+      ],
+      "anti_drift": [
+        "Keep one worker, one test, no new module, schema, ledger, or Rust."
+      ],
+      "roadmap_anchor": "docs/research_program/post_pr275/pr305_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "readiness_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR305-MINIMAL-ATTENDED-PLANCK",
+      "publication_group_id": "PG-PR305-MINIMAL-ATTENDED-PLANCK"
+    },
+    {
+      "id": "PR-306",
+      "wave": 77,
+      "title": "Planck PR3 low-ell operator closure and profiled synthetic replay",
+      "owner": "OBSSTAT",
+      "capability": "PLANCK_PR3_LOWELL_OPERATOR_CLOSURE_AND_PROFILED_SYNTHETIC_REPLAY",
+      "inputs": [
+        "PR-305 attended executor",
+        "selective current-use PR-290 source"
+      ],
+      "outputs": [
+        "Planck production worker",
+        "operator closure",
+        "synthetic profile"
+      ],
+      "contributors": [
+        "COMMON",
+        "HTT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "obsstat",
+        "common"
+      ],
+      "depends": [
+        "PR-305"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-305",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Close beam/pixel, mask inverse, multipole-vector, same-sky covariance, complete FFP10, and response-rank contracts."
+      ],
+      "files": [
+        "docs/research_program/post_pr275/pr306_spec.yaml",
+        "docs/PR_DELTAS/pr-306.md",
+        "htt/obsstat/planck_pr3_operator.py",
+        "scripts/observed_runs/run_planck_pr3.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/integration/test_planck_pr3_operator.py tests/contracts/test_authorized_observational_program.py"
+      ],
+      "dod": [
+        "Synthetic/null profile passes and missing global response yields explicit abstention."
+      ],
+      "kill": "Partial FFP10 yields a p-value, same-sky components are treated independent, or an observed statistic is inspected.",
+      "cost": "very_high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-OBSSTAT",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Planck operator and synthetic validation only; no observed or family claim follows.",
+      "forbidden": [
+        "No observed run, global claim, native transfer claim, or family identification."
+      ],
+      "anti_drift": [
+        "Bind exact feature order, operator identity, FFP10 inventory, environment, and synthetic-only response rank."
+      ],
+      "roadmap_anchor": "docs/research_program/post_pr275/pr306_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "synthetic_diagnostic",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR306-PLANCK-OPERATOR-CLOSURE",
+      "publication_group_id": "PG-PR306-PLANCK-OPERATOR-CLOSURE"
+    },
+    {
+      "id": "PR-307",
+      "wave": 78,
+      "title": "CF4 current-stack affine-flow closure and shared transaction profiles",
+      "owner": "OBSSTAT",
+      "capability": "CF4_CURRENT_STACK_AFFINE_FLOW_CLOSURE_AND_ATTENDED_SINGLE_LANE_EXECUTION",
+      "inputs": [
+        "PR-306 stack",
+        "exact PR-289 CF4 admission",
+        "raw CF4 group catalogue identities"
+      ],
+      "outputs": [
+        "CF4 operator",
+        "worker",
+        "synthetic profile",
+        "typed data blocker or admission-only readiness"
+      ],
+      "contributors": [
+        "COMMON",
+        "HTT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "obsstat",
+        "common"
+      ],
+      "depends": [
+        "PR-306"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-306",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Bind row selection, full covariance, Galactic frame, sign, units, grouping, nested depth/ZoA, affine response rank, nuisance set, and abstention."
+      ],
+      "files": [
+        "docs/PR_DELTAS/pr-307.md",
+        "htt/obsstat/cf4_current_stack.py",
+        "scripts/observed_runs/run_cf4_current_stack.py",
+        "scripts/codex_harness/run_authorized_observational_program.py",
+        "tests/integration/test_cf4_current_stack.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/integration/test_cf4_current_stack.py tests/contracts/test_authorized_observational_program.py"
+      ],
+      "dod": [
+        "Full-covariance synthetic closure passes and missing or weak inputs yield a numerical-free blocker."
+      ],
+      "kill": "Diagonal covariance, arbitrary shell order, legacy CF4 P0 reuse, weak-ID point estimate, or observed execution occurs.",
+      "cost": "very_high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-OBSSTAT",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "CF4 operator readiness only; no old P0 rescue, observed result, or source label follows.",
+      "forbidden": [
+        "No legacy number, observed execution, global tilt claim, native transfer claim, or family identification."
+      ],
+      "anti_drift": [
+        "Substantive files at most six, one science module, one worker, one test, no schema, ledger, or Rust."
+      ],
+      "roadmap_anchor": "docs/PR_DELTAS/pr-307.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "synthetic_diagnostic",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR307-CF4-CURRENT-STACK-CLOSURE",
+      "publication_group_id": "PG-PR307-CF4-CURRENT-STACK-CLOSURE"
+    },
+    {
+      "id": "PR-308",
+      "wave": 79,
+      "title": "ACT DR6 validated-band operator closure",
+      "owner": "OBSSTAT",
+      "capability": "ACT_DR6_VALIDATED_BAND_OPERATOR_AND_400_SIM_CLOSURE",
+      "inputs": [
+        "PR-307 shared transaction profiles",
+        "ACT DR6 reconstructed kappa and exact 400 simulations"
+      ],
+      "outputs": [
+        "ACT worker",
+        "identical observation/null operator",
+        "full covariance",
+        "rank and injection coverage"
+      ],
+      "contributors": [
+        "COMMON",
+        "HTT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "obsstat",
+        "common"
+      ],
+      "depends": [
+        "PR-307"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-307",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Freeze 40<L<763 mask/filter/operator, cross-fit mean field, 400-row covariance, injection coverage, and response rank."
+      ],
+      "files": [
+        "docs/PR_DELTAS/pr-308.md",
+        "htt/obsstat/act_inband_modulation.py",
+        "scripts/observed_runs/run_act_dr6.py",
+        "tests/integration/test_act_dr6_current_stack.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/integration/test_act_dr6_current_stack.py"
+      ],
+      "dod": [
+        "Complete-simulation synthetic closure passes and partial inventory cannot emit rank or p-value."
+      ],
+      "kill": "Partial simulations, L<40 interpretation, pre-QE mislabeling, stale feature JSON, or observed execution occurs.",
+      "cost": "high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-OBSSTAT",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "ACT validated-band readiness only; no convergence or anisotropy result follows.",
+      "forbidden": [
+        "No raw-QE framework, observed result, global claim, native result, or family identification."
+      ],
+      "anti_drift": [
+        "One worker and test file; no raw-QE framework, schema, ledger, or Rust."
+      ],
+      "roadmap_anchor": "docs/PR_DELTAS/pr-307.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "synthetic_diagnostic",
+      "execution_authorization": "EXPLICIT_APPROVED_SEQUENCE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR308-ACT-DR6-CLOSURE",
+      "publication_group_id": "PG-PR308-ACT-DR6-CLOSURE"
+    },
+    {
+      "id": "PR-309",
+      "wave": 80,
+      "title": "JWST-SN row and covariance closure",
+      "owner": "HTT",
+      "capability": "JWST_SN_ROW_PROVENANCE_AND_SHARED_COVARIANCE_CLOSURE",
+      "inputs": [
+        "PR-308 stack",
+        "JWST source rows",
+        "separately admitted 2MRS competitor"
+      ],
+      "outputs": [
+        "Typed row report",
+        "shared zero-point and peculiar-velocity covariance",
+        "competitor-conditioned worker"
+      ],
+      "contributors": [
+        "OBSSTAT",
+        "COMMON"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "htt",
+        "obsstat"
+      ],
+      "depends": [
+        "PR-308"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-308",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Bind source, host-link uncertainty, individual error, calibration group, shared covariance, redshift, depth, direction, and separate competitors."
+      ],
+      "files": [
+        "docs/PR_DELTAS/pr-309.md",
+        "htt/obsstat/jwst_distance_consistency.py",
+        "scripts/observed_runs/run_jwst_sn.py",
+        "tests/integration/test_jwst_sn_current_stack.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/integration/test_jwst_sn_current_stack.py"
+      ],
+      "dod": [
+        "Synthetic row/covariance closure passes while absent 2MRS or row evidence yields an explicit blocker."
+      ],
+      "kill": "Positional coincidence becomes identity, covariance or provenance is missing, competitors are pooled, or old numbers reappear.",
+      "cost": "high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-STATISTICS",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Typed JWST-SN readiness only; no host identity or source detection follows.",
+      "forbidden": [
+        "No positional identity promotion, old PR-153/154 number, observed result, native result, or family identification."
+      ],
+      "anti_drift": [
+        "One science module, worker, and test; no new authorization framework, schema, ledger, or Rust."
+      ],
+      "roadmap_anchor": "docs/PR_DELTAS/pr-307.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "synthetic_diagnostic",
+      "execution_authorization": "EXPLICIT_APPROVED_SEQUENCE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR309-JWST-SN-CLOSURE",
+      "publication_group_id": "PG-PR309-JWST-SN-CLOSURE"
+    },
+    {
+      "id": "PR-310",
+      "wave": 81,
+      "title": "HSC and KiDS spin-2 operator closure",
+      "owner": "OBSSTAT",
+      "capability": "HSC_KIDS_TYPED_SPIN2_TOMOGRAPHY_AND_JOINT_RANK_CLOSURE",
+      "inputs": [
+        "PR-309 stack",
+        "separately admitted HSC Y3 and KiDS-1000 products"
+      ],
+      "outputs": [
+        "Typed spin-2 worker",
+        "tomography",
+        "pseudo-Cl or COSEBI operator",
+        "transported axis",
+        "joint covariance and rank"
+      ],
+      "contributors": [
+        "COMMON",
+        "HTT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "obsstat",
+        "common"
+      ],
+      "depends": [
+        "PR-309"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-309",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Separate survey identities and implement labelled Q/U to E/B, pure-mode oracles, tomography, transported axis, covariance, and rank."
+      ],
+      "files": [
+        "docs/PR_DELTAS/pr-310.md",
+        "htt/obsstat/hsc_kids_current_stack.py",
+        "scripts/observed_runs/run_hsc_kids.py",
+        "tests/integration/test_hsc_kids_current_stack.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/integration/test_hsc_kids_current_stack.py"
+      ],
+      "dod": [
+        "Synthetic spin-2 closure passes and absent cross-survey covariance yields explicit abstention."
+      ],
+      "kill": "Raw spin pair is renamed E/B, survey identities swap, zero cross-block is invented, or rank loss is forced to a result.",
+      "cost": "very_high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-OBSSTAT",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Spin-2 operator readiness only; no observed shear or family claim follows.",
+      "forbidden": [
+        "No wholesale PR-292 transplant, EE-only E/B claim, observed result, native result, or family identification."
+      ],
+      "anti_drift": [
+        "One science module, worker, and test; no stale authority, schema, ledger, or Rust."
+      ],
+      "roadmap_anchor": "docs/PR_DELTAS/pr-307.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "synthetic_diagnostic",
+      "execution_authorization": "EXPLICIT_APPROVED_SEQUENCE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR310-HSC-KIDS-CLOSURE",
+      "publication_group_id": "PG-PR310-HSC-KIDS-CLOSURE"
+    },
+    {
+      "id": "PR-311",
+      "wave": 82,
+      "title": "DESI successor-formalism operator closure",
+      "owner": "OBSSTAT",
+      "capability": "DESI_BGS_BRIGHT_SUCCESSOR_FORMALISM_AND_MOCK_RANK_CLOSURE",
+      "inputs": [
+        "PR-310 stack",
+        "exact DR1 BGS_BRIGHT-21.5",
+        "1000 EZmock",
+        "separate 25 Abacus"
+      ],
+      "outputs": [
+        "DESI worker",
+        "exact selection/window tomography",
+        "per-mock refit",
+        "covariance",
+        "validation and confusion matrix"
+      ],
+      "contributors": [
+        "COMMON",
+        "HTT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "obsstat",
+        "common"
+      ],
+      "depends": [
+        "PR-310"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-310",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Rebuild 0.1<=z<=0.4 NGC/SGC selection, per-mock nuisance refit, tomography, 1000-row covariance, separate 25-row validation, confusion and rank."
+      ],
+      "files": [
+        "docs/PR_DELTAS/pr-311.md",
+        "htt/obsstat/desi_successor_formalism.py",
+        "scripts/observed_runs/run_desi_bgs_bright.py",
+        "tests/integration/test_desi_successor_formalism.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/integration/test_desi_successor_formalism.py tests/obsstat/test_pr151_invalidation_boundary.py"
+      ],
+      "dod": [
+        "Complete mock synthetic closure passes and unavailable exact observed selection remains an explicit data blocker."
+      ],
+      "kill": "BGS_ANY substitution, partial mocks, fixed nuisance, EZmock/Abacus pooling, stale PR-151 output, or forced p-value occurs.",
+      "cost": "very_high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-OBSSTAT",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "DESI successor-formalism readiness only; no observed attribution or source label follows.",
+      "forbidden": [
+        "No historical producer restoration, observed result, attribution, global claim, native result, or family identification."
+      ],
+      "anti_drift": [
+        "One science module, worker, and test; preserve both historical producer exit-7 quarantines."
+      ],
+      "roadmap_anchor": "docs/PR_DELTAS/pr-307.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "synthetic_diagnostic",
+      "execution_authorization": "EXPLICIT_APPROVED_SEQUENCE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR311-DESI-SUCCESSOR-FORMALISM",
+      "publication_group_id": "PG-PR311-DESI-SUCCESSOR-FORMALISM"
     }
   ]
 }

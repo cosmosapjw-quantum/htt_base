@@ -14,12 +14,15 @@ import time
 
 import pytest
 import yaml
+import numpy as np
 
 from common.data_identity import evaluate_lane_identity, load_lane_registry
 
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNNER = ROOT / "scripts/codex_harness/run_authorized_observational_program.py"
+CF4_OPERATOR = ROOT / "htt/obsstat/cf4_current_stack.py"
+CF4_WORKER = ROOT / "scripts/observed_runs/run_cf4_current_stack.py"
 PR289_TEST = ROOT / "tests/contracts/test_data_identity_registry_v2.py"
 REGISTRY = (
     ROOT / "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
@@ -57,7 +60,12 @@ def case_factory(tmp_path: Path):
     pr289 = _load("pr289_identity_helpers", PR289_TEST)
     counter = 0
 
-    def build(worker_source: str = "raise SystemExit(0)\n", *, timeout: int = 5):
+    def build(
+        worker_source: str = "raise SystemExit(0)\n",
+        *,
+        timeout: int = 5,
+        lane: str = "PLANCK",
+    ):
         nonlocal counter
         counter += 1
         repo = tmp_path / f"repo-{counter}"
@@ -73,14 +81,18 @@ def case_factory(tmp_path: Path):
         worker.write_text(worker_source, encoding="utf-8")
         plan = repo / "docs/plan.yaml"
         plan.parent.mkdir(parents=True, exist_ok=True)
+        plan_id = {
+            "PLANCK": "plan:PR290-PLANCK-LOWELL-V1",
+            "CF4": "plan:PR291-CF4-TOMOGRAPHY-V1",
+        }[lane]
         plan.write_text(
             yaml.safe_dump(
                 {
                     "attended_execution_plan": {
-                        "analysis_plan_id": "plan:PR290-PLANCK-LOWELL-V1",
+                        "analysis_plan_id": plan_id,
                         "bayesian_inference": False,
                         "execution_mode": "identity_only",
-                        "lane": "PLANCK",
+                        "lane": lane,
                         "worker_arguments": ["--identity-worker"],
                         "worker_path": "scripts/codex_harness/run_authorized_observational_program.py",
                     }
@@ -91,10 +103,12 @@ def case_factory(tmp_path: Path):
         )
         _git(repo, "add", ".")
         _git(repo, "commit", "-qm", "fixture")
-        descriptor = pr289._valid_descriptor(tmp_path / f"data-{counter}")
+        descriptor = pr289._valid_descriptor(
+            tmp_path / f"data-{counter}", lane
+        )
         decision = evaluate_lane_identity(
             registry=load_lane_registry(REGISTRY),
-            lane_id="PLANCK",
+            lane_id=lane,
             descriptor=descriptor,
             inspected_at_utc=pr289.STAMP_A,
         )
@@ -104,7 +118,7 @@ def case_factory(tmp_path: Path):
         )
         output = tmp_path / f"output-{counter}"
         prepared = module.prepare_execution(
-            lane="PLANCK",
+            lane=lane,
             plan_path="docs/plan.yaml",
             admission_path=admission,
             output_dir=output,
@@ -147,11 +161,16 @@ def test_ATT_002_dirty_candidate_is_rejected(case_factory) -> None:
         )
 
 
-def test_ATT_003_only_PLANCK_is_accepted(case_factory) -> None:
+@pytest.mark.parametrize(
+    "lane", ("all", "ALL", "CROSS_PROBE", "cf4", " CF4", "PLANCK,CF4")
+)
+def test_ATT_003_only_exact_registered_primary_lanes_are_accepted(
+    case_factory, lane: str
+) -> None:
     module, repo, _, _, admission, output, _ = case_factory()
-    with pytest.raises(module.ObservationalProgramError, match="PLANCK"):
+    with pytest.raises(module.ObservationalProgramError, match="primary lane"):
         module.prepare_execution(
-            lane="CF4",
+            lane=lane,
             plan_path="docs/plan.yaml",
             admission_path=admission,
             output_dir=output,
@@ -359,16 +378,25 @@ def _science_case(
     *,
     worker_source: str = "raise SystemExit(0)\n",
     timeout: int = 5,
+    lane: str = "PLANCK",
 ):
-    module, repo, plan, _, admission, output, _ = case_factory()
-    science_worker = repo / "scripts/observed_runs/run_planck_pr3.py"
+    module, repo, plan, _, admission, output, _ = case_factory(lane=lane)
+    worker_relative = {
+        "PLANCK": "scripts/observed_runs/run_planck_pr3.py",
+        "CF4": "scripts/observed_runs/run_cf4_current_stack.py",
+    }[lane]
+    execution_mode = {
+        "PLANCK": "planck_pr3_lowell_operator",
+        "CF4": "cf4_current_stack_affine_operator",
+    }[lane]
+    science_worker = repo / worker_relative
     science_worker.parent.mkdir(parents=True, exist_ok=True)
     science_worker.write_text(worker_source, encoding="utf-8")
     payload = yaml.safe_load(plan.read_text(encoding="utf-8"))
     payload["attended_execution_plan"].update(
         {
-            "execution_mode": "planck_pr3_lowell_operator",
-            "worker_path": "scripts/observed_runs/run_planck_pr3.py",
+            "execution_mode": execution_mode,
+            "worker_path": worker_relative,
             "worker_arguments": ["--run-admitted"],
         }
     )
@@ -378,7 +406,7 @@ def _science_case(
     data_root = tmp_path / f"science-data-{repo.name}"
     data_root.mkdir()
     prepared = module.prepare_execution(
-        lane="PLANCK",
+        lane=lane,
         plan_path="docs/plan.yaml",
         admission_path=admission,
         output_dir=output,
@@ -401,8 +429,9 @@ def test_PR306_science_plan_binds_exact_runtime_data_root_and_worker(
         prepared["science_runtime_contract"]
     )
     runtime = prepared["science_runtime_contract"]
-    assert set(runtime["modules"]) == set(module.SCIENCE_RUNTIME_MODULES)
-    assert set(runtime["distributions"]) == set(module.SCIENCE_DISTRIBUTIONS)
+    profile = module.LANE_PROFILES["PLANCK"]
+    assert set(runtime["modules"]) == set(profile.runtime_modules)
+    assert set(runtime["distributions"]) == set(profile.runtime_distributions)
     assert all(
         row["origin_sha256"].startswith("sha256:")
         for row in runtime["modules"].values()
@@ -417,7 +446,7 @@ def test_PR306_science_runtime_is_rechecked_before_spawn(
     module, _, _, _, _, output, _, prepared = _science_case(case_factory, tmp_path)
     changed = dict(prepared["science_runtime_contract"])
     changed["python_version"] = "drifted"
-    monkeypatch.setattr(module, "_science_runtime_contract", lambda: changed)
+    monkeypatch.setattr(module, "_science_runtime_contract", lambda _profile: changed)
     with pytest.raises(module.ObservationalProgramError, match="runtime changed"):
         module.execute_prepared(prepared, prepared["acceptance_hash"])
     assert not output.exists()
@@ -545,7 +574,7 @@ def test_PR306_unhashable_execution_mode_is_blocked(case_factory) -> None:
     plan.write_text(yaml.safe_dump(payload, sort_keys=True), encoding="utf-8")
     _git(repo, "add", "docs/plan.yaml")
     _git(repo, "commit", "-qm", "invalid execution mode")
-    with pytest.raises(module.ObservationalProgramError, match="Planck plans"):
+    with pytest.raises(module.ObservationalProgramError, match="attended plan"):
         module.prepare_execution(
             lane="PLANCK",
             plan_path="docs/plan.yaml",
@@ -554,3 +583,352 @@ def test_PR306_unhashable_execution_mode_is_blocked(case_factory) -> None:
             timeout_seconds=5,
             root=repo,
         )
+
+
+def _cf4_synthetic(rows: int = 192):
+    module = _load("cf4_current_stack", CF4_OPERATOR)
+    rng = np.random.default_rng(307)
+    directions = rng.normal(size=(rows, 3))
+    directions /= np.linalg.norm(directions, axis=1)[:, None]
+    distance = np.linspace(25.0, 180.0, rows)
+    design = module.build_cf4_affine_design(directions, distance)
+    truth = np.asarray((12.0, 80.0, -45.0, 25.0, 0.20, -0.12, 0.08, -0.04, 0.06))
+    h0 = 70.0
+    vcmb = h0 * distance + design @ truth
+    sigma = np.linspace(90.0, 130.0, rows)
+    covariance = 0.04 * np.outer(sigma, sigma)
+    covariance.flat[:: rows + 1] = np.square(sigma)
+    inputs = module.Cf4OperatorInputs(
+        group_ids=np.arange(1000, 1000 + rows, dtype=np.int64),
+        galactic_longitude_deg=np.degrees(np.arctan2(directions[:, 1], directions[:, 0]))
+        % 360.0,
+        galactic_latitude_deg=np.degrees(np.arcsin(directions[:, 2])),
+        distance_mpc=distance,
+        cmb_velocity_km_s=vcmb,
+        covariance_km2_s2=covariance,
+        covariance_group_ids=np.arange(1000, 1000 + rows, dtype=np.int64),
+        selected_group_ids=np.arange(1000, 1000 + rows, dtype=np.int64),
+    )
+    config = module.Cf4OperatorConfig(
+        depth_thresholds_mpc=(120.0, 180.0),
+        zoa_half_widths_deg=(0.0, 12.0),
+        nuisance_profiles=(
+            module.Cf4NuisanceProfile(
+                profile_id="baseline",
+                h0_km_s_mpc=h0,
+                distance_scale=1.0,
+                covariance_scale=1.0,
+            ),
+            module.Cf4NuisanceProfile(
+                profile_id="distance-plus-one-percent",
+                h0_km_s_mpc=h0,
+                distance_scale=1.01,
+                covariance_scale=1.01,
+            ),
+        ),
+        minimum_singular_value_ratio=1.0e-5,
+        maximum_standardized_condition_number=1.0e5,
+    )
+    return module, inputs, config, truth
+
+
+def test_PR307_cf4_operator_is_exactly_monopole_bulk_and_stf_shear() -> None:
+    module, inputs, config, truth = _cf4_synthetic()
+    directions = module.galactic_unit_vectors(
+        inputs.galactic_longitude_deg, inputs.galactic_latitude_deg
+    )
+    design = module.build_cf4_affine_design(directions, inputs.distance_mpc)
+    assert design.shape == (len(inputs.group_ids), 9)
+    assert module.COEFFICIENT_NAMES == (
+        "monopole_km_s",
+        "bulk_x_km_s",
+        "bulk_y_km_s",
+        "bulk_z_km_s",
+        "shear_xx_km_s_mpc",
+        "shear_yy_km_s_mpc",
+        "shear_xy_km_s_mpc",
+        "shear_xz_km_s_mpc",
+        "shear_yz_km_s_mpc",
+    )
+    report = module.analyze_cf4_current_stack(inputs, config)
+    assert report["operator_contract"]["coefficient_count"] == 9
+    assert report["operator_contract"]["frame"] == "GALACTIC"
+    assert report["operator_contract"]["positive_velocity"] == "RECEDING"
+    assert report["observed_statistic_seen"] is False
+    assert report["observed_science_executed"] is False
+    assert "p_value" not in json.dumps(report)
+    assert "source_label" not in json.dumps(report)
+    baseline = report["cells"][-1]["profiles"][0]
+    assert baseline["disposition"] == "IDENTIFIED_SET_MEMBER"
+    assert np.allclose(baseline["coefficients"], truth, atol=1.0e-8)
+    first_cell = report["cells"][0]
+    assert (
+        first_cell["row_counts_by_profile"]["distance-plus-one-percent"]
+        <= first_cell["row_counts_by_profile"]["baseline"]
+    )
+    zero_velocity = 70.0 * inputs.distance_mpc
+    zero_inputs = module.Cf4OperatorInputs(
+        **{**inputs.__dict__, "cmb_velocity_km_s": zero_velocity}
+    )
+    zero_config = module.Cf4OperatorConfig(
+        **{
+            **config.__dict__,
+            "nuisance_profiles": (config.nuisance_profiles[0],),
+        }
+    )
+    zero_report = module.analyze_cf4_current_stack(zero_inputs, zero_config)
+    assert np.allclose(
+        zero_report["cells"][-1]["profiles"][0]["coefficients"], 0.0, atol=1.0e-10
+    )
+
+
+def test_PR307_cf4_full_covariance_order_rank_and_weak_id_fail_closed() -> None:
+    module, inputs, config, _ = _cf4_synthetic()
+    diagonal = np.diag(np.diag(inputs.covariance_km2_s2))
+    with pytest.raises(module.Cf4CurrentStackError, match="off-diagonal"):
+        module.analyze_cf4_current_stack(
+            module.Cf4OperatorInputs(
+                **{**inputs.__dict__, "covariance_km2_s2": diagonal}
+            ),
+            config,
+        )
+    asymmetric = inputs.covariance_km2_s2.copy()
+    asymmetric[0, 1] *= 2.0
+    nonfinite = inputs.covariance_km2_s2.copy()
+    nonfinite[0, 0] = np.nan
+    indefinite = inputs.covariance_km2_s2.copy()
+    indefinite[0, 0] = -1.0
+    for covariance, message in (
+        (asymmetric, "asymmetric"),
+        (nonfinite, "non-finite"),
+        (indefinite, "positive definite"),
+    ):
+        with pytest.raises(module.Cf4CurrentStackError, match=message):
+            module.analyze_cf4_current_stack(
+                module.Cf4OperatorInputs(
+                    **{**inputs.__dict__, "covariance_km2_s2": covariance}
+                ),
+                config,
+            )
+    with pytest.raises(module.Cf4CurrentStackError, match="row order"):
+        module.analyze_cf4_current_stack(
+            module.Cf4OperatorInputs(
+                **{
+                    **inputs.__dict__,
+                    "covariance_group_ids": inputs.covariance_group_ids[::-1],
+                }
+            ),
+            config,
+        )
+    collinear = module.Cf4OperatorInputs(
+        **{
+            **inputs.__dict__,
+            "galactic_longitude_deg": np.zeros(len(inputs.group_ids)),
+            "galactic_latitude_deg": np.zeros(len(inputs.group_ids)),
+        }
+    )
+    report = module.analyze_cf4_current_stack(collinear, config)
+    assert report["terminal_disposition"] == "RANK_DEFICIENT_ABSTAIN"
+    assert all(
+        profile["coefficients"] is None
+        for cell in report["cells"]
+        for profile in cell["profiles"]
+    )
+
+
+def test_PR307_cf4_depth_zoa_partial_order_and_semantics_are_frozen() -> None:
+    module, inputs, config, _ = _cf4_synthetic()
+    report = module.analyze_cf4_current_stack(inputs, config)
+    by_zoa: dict[float, list[int]] = {}
+    by_depth: dict[float, list[int]] = {}
+    for cell in report["cells"]:
+        by_zoa.setdefault(cell["zoa_half_width_deg"], []).append(cell["row_count"])
+        by_depth.setdefault(cell["depth_threshold_mpc"], []).append(cell["row_count"])
+    assert all(values == sorted(values) for values in by_zoa.values())
+    assert all(values == sorted(values, reverse=True) for values in by_depth.values())
+    for mutation in (
+        {"depth_thresholds_mpc": (180.0, 120.0)},
+        {"zoa_half_widths_deg": (12.0, 0.0)},
+    ):
+        with pytest.raises(module.Cf4CurrentStackError, match="strictly increasing"):
+            module.Cf4OperatorConfig(
+                **{**config.__dict__, **mutation}
+            )
+    changed_h0 = module.Cf4NuisanceProfile(
+        profile_id="independently-varied-h0",
+        h0_km_s_mpc=71.0,
+        distance_scale=1.0,
+        covariance_scale=1.0,
+    )
+    with pytest.raises(module.Cf4CurrentStackError, match="independent nuisances"):
+        module.Cf4OperatorConfig(
+            **{
+                **config.__dict__,
+                "nuisance_profiles": (config.nuisance_profiles[0], changed_h0),
+            }
+        )
+
+
+def test_PR307_cf4_attended_profile_and_post_confirm_mutations_fail_closed(
+    case_factory, tmp_path: Path, monkeypatch
+) -> None:
+    module, _, _, _, _, _, data_root, prepared = _science_case(
+        case_factory, tmp_path, lane="CF4"
+    )
+    acceptance = prepared["acceptance_payload"]
+    assert acceptance["lane"] == "CF4"
+    assert acceptance["analysis_plan_id"] == "plan:PR291-CF4-TOMOGRAPHY-V1"
+    assert acceptance["worker_path"] == "scripts/observed_runs/run_cf4_current_stack.py"
+    assert acceptance["data_root"] == str(data_root.resolve())
+    assert acceptance["result_filename"] == "cf4_current_stack_result.json"
+    assert set(module.LANE_PROFILES) == {"PLANCK", "CF4"}
+
+    monkeypatch.setattr(
+        module, "_spawn_worker", lambda *_a, **_k: pytest.fail("worker spawned")
+    )
+    mutations = {
+        "worker_arguments": ["--run-admitted", "--extra"],
+        "environment": {**prepared["environment"], "HOSTILE": "1"},
+        "output": tmp_path / "redirected",
+        "timeout_seconds": prepared["timeout_seconds"] + 1,
+        "worker": prepared["root"] / "scripts/codex_harness/run_authorized_observational_program.py",
+        "plan_file": tmp_path / "same-bytes-different-plan.json",
+    }
+    for field, value in mutations.items():
+        changed = dict(prepared)
+        changed[field] = value
+        with pytest.raises(module.ObservationalProgramError, match="confirmation binding"):
+            module.execute_prepared(changed, prepared["acceptance_hash"])
+    assert not prepared["output"].exists()
+
+
+def test_PR307_exact_external_plan_file_is_allowed_but_aliases_are_not(
+    case_factory, tmp_path: Path
+) -> None:
+    module, repo, _, _, _, _, _ = case_factory()
+    plan = tmp_path / "cf4-plan.json"
+    plan.write_text("{}\n", encoding="ascii")
+    assert module._analysis_plan_file(repo, str(plan)) == plan
+    alias = tmp_path / "cf4-plan-alias.json"
+    alias.symlink_to(plan)
+    with pytest.raises(module.ObservationalProgramError, match="absolute regular"):
+        module._analysis_plan_file(repo, str(alias))
+
+
+def test_PR307_cf4_worker_component_contract_reuses_the_exact_operator(
+    tmp_path: Path,
+) -> None:
+    worker = _load("cf4_current_stack_worker", CF4_WORKER)
+    module, inputs, config, _ = _cf4_synthetic()
+    catalogue = tmp_path / "catalogue.npz"
+    covariance = tmp_path / "covariance.npz"
+    np.savez(
+        catalogue,
+        group_id=inputs.group_ids,
+        galactic_l_deg=inputs.galactic_longitude_deg,
+        galactic_b_deg=inputs.galactic_latitude_deg,
+        distance_mpc=inputs.distance_mpc,
+        cmb_velocity_km_s=inputs.cmb_velocity_km_s,
+    )
+    np.savez(
+        covariance,
+        group_id=inputs.covariance_group_ids,
+        covariance_km2_s2=inputs.covariance_km2_s2,
+    )
+
+    def write(name: str, payload: object) -> Path:
+        path = tmp_path / name
+        path.write_text(json.dumps(payload, sort_keys=True) + "\n", encoding="ascii")
+        return path
+
+    paths = {
+        "catalogue": catalogue,
+        "covariance": covariance,
+        "row_selection": write(
+            "selection.json",
+            {
+                "selection_id": "selection:CF4:v1",
+                "ordered_group_ids": inputs.selected_group_ids.tolist(),
+            },
+        ),
+        "frame_definition": write(
+            "frame.json", {"basis": "IAU_1958", "coordinate_frame": "GALACTIC"}
+        ),
+        "sign_convention": write(
+            "sign.json",
+            {
+                "peculiar_velocity_definition": "VCMB_MINUS_H0_DISTANCE",
+                "positive_velocity": "RECEDING",
+            },
+        ),
+        "units_contract": write(
+            "units.json",
+            {
+                "angle": "deg",
+                "covariance": "(km s-1)^2",
+                "distance": "Mpc",
+                "radial_velocity": "km s-1",
+            },
+        ),
+        "grouping_definition": write(
+            "grouping.json",
+            {
+                "group_id_field": "group_id",
+                "row_unit": "CF4_GROUP",
+                "unique_group_ids": True,
+            },
+        ),
+        "depth_definition": write(
+            "depth.json",
+            {
+                "depth_thresholds_mpc": list(config.depth_thresholds_mpc),
+                "maximum_standardized_condition_number": config.maximum_standardized_condition_number,
+                "minimum_singular_value_ratio": config.minimum_singular_value_ratio,
+                "nuisance_profiles": [row.__dict__ for row in config.nuisance_profiles],
+                "rank_relative_tolerance": config.rank_relative_tolerance,
+            },
+        ),
+        "zoa_definition": write(
+            "zoa.json", {"zoa_half_widths_deg": list(config.zoa_half_widths_deg)}
+        ),
+    }
+    loaded_inputs, loaded_config = worker._load_inputs(paths)
+    direct = module.analyze_cf4_current_stack(inputs, config)
+    loaded = module.analyze_cf4_current_stack(loaded_inputs, loaded_config)
+    assert loaded["operator_identity"] == direct["operator_identity"]
+    with pytest.raises(worker.Cf4WorkerError, match="row-selection values"):
+        worker._load_inputs(paths, expected_selection_id="selection:wrong")
+    paths["sign_convention"].write_text(
+        json.dumps(
+            {
+                "peculiar_velocity_definition": "VCMB_MINUS_H0_DISTANCE",
+                "positive_velocity": "APPROACHING",
+            }
+        ),
+        encoding="ascii",
+    )
+    with pytest.raises(worker.Cf4WorkerError, match="sign convention"):
+        worker._load_inputs(paths)
+
+
+def test_PR307_cf4_synthetic_profile_never_accepts_observed_inputs(
+    tmp_path: Path,
+) -> None:
+    worker = _load("cf4_profile_worker", CF4_WORKER)
+    payload = worker.synthetic_profile(rows="1", mode="serial", workers=1)
+    assert payload["observed_statistic_seen"] is False
+    assert payload["observed_science_executed"] is False
+    assert payload["terminal_dispositions"] == ["IDENTIFIED_SET_DIAGNOSTIC"]
+    exit_code = worker.main(
+        [
+            "--synthetic-profile",
+            "--rows",
+            "1",
+            "--admission",
+            str(tmp_path / "forbidden.json"),
+            "--output",
+            str(tmp_path / "profile.json"),
+        ]
+    )
+    assert exit_code == 2
+    assert not (tmp_path / "profile.json").exists()
