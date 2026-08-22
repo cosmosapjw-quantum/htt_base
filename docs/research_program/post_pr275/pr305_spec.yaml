@@ -38,6 +38,7 @@ acceptance_binding:
 
 transaction:
   - reject root, dirty worktrees, non-Planck lanes, and incomplete admission
+  - require a repo-disjoint, dedicated, operator-owned mode-0700 output directory
   - acquire one nonblocking output flock
   - atomically write start.json before shell-free worker spawn
   - enforce timeout with a fixed environment allowlist

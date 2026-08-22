@@ -219,13 +219,18 @@ def _load_admission(root: Path, path: Path):
 def _output_path(root: Path, value: Path) -> Path:
     if not value.is_absolute():
         raise ObservationalProgramError("output directory must be absolute")
+    if value.is_symlink():
+        raise ObservationalProgramError("output directory must not be a symlink")
     output = value.resolve(strict=False)
-    try:
-        output.relative_to(root.resolve())
-    except ValueError:
-        pass
-    else:
-        raise ObservationalProgramError("output directory must stay outside the candidate worktree")
+    candidate = root.resolve()
+    for ancestor, descendant in ((candidate, output), (output, candidate)):
+        try:
+            descendant.relative_to(ancestor)
+        except ValueError:
+            continue
+        raise ObservationalProgramError("output directory must be disjoint from the candidate worktree")
+    if output.exists() and not output.is_dir():
+        raise ObservationalProgramError("existing output path must be a directory")
     if output.parent.is_symlink() or not output.parent.is_dir():
         raise ObservationalProgramError("output parent must be an existing regular directory")
     return output
@@ -384,13 +389,20 @@ def execute_prepared(prepared: Mapping[str, object], confirmation: str) -> dict[
     output.mkdir(mode=0o700, exist_ok=True)
     if output.is_symlink() or not output.is_dir():
         raise ObservationalProgramError("output directory is not regular")
-    with (output / ".attended.lock").open("a+b") as lock:
+    output_stat = output.stat()
+    if output_stat.st_uid != os.geteuid() or output_stat.st_mode & 0o077:
+        raise ObservationalProgramError("output directory must be operator-owned with mode 0700")
+    lock_path = output / ".attended.lock"
+    if lock_path.is_symlink():
+        raise ObservationalProgramError("output lock must not be a symlink")
+    with lock_path.open("a+b") as lock:
         try:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError as exc:
             raise ObservationalProgramError("output directory is already locked") from exc
-        if (output / "start.json").exists() or (output / "terminal.json").exists():
-            raise ObservationalProgramError("output directory already contains a run record")
+        unexpected = sorted(path.name for path in output.iterdir() if path.name != lock_path.name)
+        if unexpected:
+            raise ObservationalProgramError("output directory is not dedicated and empty")
         started = _timestamp()
         start = {
             "state": "STARTED",

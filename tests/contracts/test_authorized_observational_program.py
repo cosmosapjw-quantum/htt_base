@@ -211,12 +211,25 @@ def test_ATT_007_worker_receives_only_the_clean_environment(case_factory, monkey
 
 def test_ATT_008_concurrent_output_lock_is_rejected(case_factory) -> None:
     module, _, _, _, _, output, prepared = case_factory()
-    output.mkdir()
+    output.mkdir(mode=0o700)
     with (output / ".attended.lock").open("a+b") as handle:
         fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
         with pytest.raises(module.ObservationalProgramError, match="locked"):
             module.execute_prepared(prepared, prepared["acceptance_hash"])
     assert not (output / "start.json").exists()
+
+    module, _, _, _, _, output, prepared = case_factory()
+    output.mkdir(mode=0o700)
+    (output / "preexisting.bin").write_bytes(b"not this run")
+    with pytest.raises(module.ObservationalProgramError, match="dedicated"):
+        module.execute_prepared(prepared, prepared["acceptance_hash"])
+    assert not (output / "start.json").exists()
+
+    module, _, _, _, _, output, prepared = case_factory()
+    output.mkdir(mode=0o755)
+    output.chmod(0o755)
+    with pytest.raises(module.ObservationalProgramError, match="0700"):
+        module.execute_prepared(prepared, prepared["acceptance_hash"])
 
 
 def test_ATT_009_timeout_writes_terminal_and_preserves_start(case_factory) -> None:
@@ -254,6 +267,11 @@ def test_ATT_011_success_observes_start_before_worker_and_then_terminal(case_fac
 
 def test_ATT_012_preflight_failure_never_spawns_or_opens_data(case_factory, monkeypatch) -> None:
     module, repo, plan, _, admission, output, _ = case_factory()
+    with pytest.raises(module.ObservationalProgramError, match="disjoint"):
+        module.prepare_execution(
+            lane="PLANCK", plan_path="docs/plan.yaml", admission_path=admission,
+            output_dir=repo.parent, timeout_seconds=5, root=repo,
+        )
     payload = yaml.safe_load(plan.read_text(encoding="utf-8"))
     payload["attended_execution_plan"]["analysis_plan_id"] = "plan:wrong"
     plan.write_text(yaml.safe_dump(payload, sort_keys=True), encoding="utf-8")
