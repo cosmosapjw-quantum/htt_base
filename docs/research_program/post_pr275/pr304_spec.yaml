@@ -1,11 +1,11 @@
-schema: htt.pr304.admission_bound_human_authorization.spec.v2
+schema: htt.pr304.admission_bound_human_authorization.spec.v3
 pr_id: PR-304
-title: Admission-bound human authorization contract
+title: Admission-bound external authorization contract
 owner: COMMON
 contributors: [HTT]
 base_commit: 612c2c11ad448df9d48040fb6d0e5e459b97fe8d
 dependencies: [PR-303]
-capability: validate_external_human_authorization_bound_to_exact_pr289_admission
+capability: define_fail_closed_candidate_contract_for_external_human_authorization
 claim_tier: diagnostic_only
 transfer_source: none
 scientific_effect: none
@@ -15,25 +15,34 @@ public_use: false
 family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
 
 scope:
-  - verify a human-issued Ed25519 receipt against a lane-pinned public trust anchor
-  - keep every human private key outside repository and agent access
-  - bind the receipt to an exact registered PR-289 LaneSpec and complete replayed LaneAdmissionDecision
-  - treat a validated capability as cache evidence and reverify signed bytes at every readiness authority use
-  - bind the production model to ordered admission records, covariance, clean candidate, and provider code/config/environment bytes
-  - split Bayesian readiness into model/admission, human-authorization, sampler-start, and posterior-consumer states
+  - require a root-owned launcher and Ed25519 trust root outside the candidate
+  - keep every human private key, root key, and nonce store outside repository and agent access
+  - bind any future receipt to an exact PR-289 LaneSpec and complete replayed LaneAdmissionDecision
+  - make candidate validation objects non-authoritative cache evidence
+  - inspect candidate identity and resources through absolute Git and exact commit blobs
+  - bind provider code, configuration, live runtime, computed response rank, normalization evidence, and execution plan
+  - block sampler start and posterior consumers until the external launcher and PR-305 terminal receipts exist
 
 trust_model:
   algorithm: Ed25519
-  public_key_registry: docs/research_program/post_pr275/human_authority_registry.json
-  registry_binding: fixed_candidate_relative_path_not_caller_selected
-  registry_authority: exact_clean_candidate_commit_and_tree
+  trusted_launcher: /usr/local/libexec/htt-auth-launcher
+  external_root_public_key: /etc/htt/trust/root_authority_ed25519.pub
+  external_root_fingerprint: /etc/htt/trust/root_authority_ed25519.pub.sha256
+  candidate_registry: docs/research_program/post_pr275/human_authority_registry.json
+  candidate_registry_role: diagnostic_input_only
+  candidate_registry_signature_template: docs/research_program/post_pr275/human_authority_registry.signature.json
+  candidate_registry_signature_status: PENDING_EXTERNAL_ROOT_SIGNATURE
+  candidate_can_establish_authority: false
   active_signers_in_this_pr: 0
+  external_launcher_provisioned_by_this_pr: false
   private_key_location: outside_repository_and_agent_access
   private_key_handling_by_repository: forbidden
   same_process_hmac: forbidden
+  candidate_self_root: forbidden
 
 receipt_contract:
-  schema: common.human_execution_authorization_receipt.v2
+  schema: common.human_execution_authorization_receipt.v3
+  python_compatibility_name: HumanExecutionAuthorizationReceiptV1
   mandatory_bindings:
     - authorization_id
     - lane_id
@@ -43,6 +52,11 @@ receipt_contract:
     - required_human_gate_id
     - authorized_scope
     - authorization_domain
+    - model_contract_content_id
+    - runtime_environment_receipt_id
+    - computed_response_rank_receipt_id
+    - normalization_evidence_id
+    - execution_plan_content_id
     - candidate_commit
     - candidate_tree
     - issued_at_utc
@@ -51,12 +65,14 @@ receipt_contract:
     - signer_key_id
     - authorization_signature_ed25519
   signature_payload: sorted_compact_ascii_json_including_authorization_id_excluding_signature
-  signer_resolution: exact_lane_row_in_fixed_public_registry
+  signer_resolution: external_launcher_only
   maximum_ttl_seconds: 1800
   accepted_interval: '[issued_at_utc, expires_at_utc)'
-  evaluation_clock: internal_process_host_utc_not_caller_supplied
+  evaluation_clock: external_trusted_launcher_clock_not_caller_supplied
   registered_domain: lane_data_execution
-  nonce_format: 'nonce:v1:<64 lowercase hex with nondegenerate entropy shape>'
+  nonce_format: 'nonce:v1:<64 lowercase hex>'
+  nonce_generation: external_CSPRNG_required_not_proven_by_format
+  nonce_consumption: PR305_external_launcher_transaction_only
   registered_scopes:
     PLANCK: admitted_planck_observed_execution
     CF4: admitted_cf4_observed_execution
@@ -67,19 +83,28 @@ receipt_contract:
 
 candidate_contract:
   factory: build_clean_candidate_identity
+  attached_branch_required: true
   derived_from:
     - attached git branch
     - exact HEAD commit
     - exact HEAD tree
     - empty tracked and untracked status
   caller_supplied_commit_or_tree: forbidden
-  runtime_registry_resolution:
-    - PR-289 lane registry from exact clean candidate
-    - human authority registry from exact clean candidate
+  git_executable: /usr/bin/git
+  git_environment: scrubbed_minimal
+  git_alias_hook_and_replace_object_influence: disabled
+  resource_resolution:
+    - PR-289 lane registry from exact candidate commit blob
+    - candidate authority metadata from exact candidate commit blob
+    - provider manifest, code, dependencies, configuration, environment, response, normalization, and plan from exact candidate commit blobs
+  worktree_check_then_read_for_authority: forbidden
   python_installation_relative_registry_lookup: forbidden
+  immutable_detached_replay: deferred_to_external_launcher
 
 production_model_binding:
-  schema: htt.production_bayesian_contract.v2
+  schema: htt.production_bayesian_contract.v3
+  raw_callable_input: forbidden
+  provider_loader: exact_candidate_git_blob_factory
   mandatory_bindings:
     - lane_admission_bundle_id
     - ordered_admission_record_ids
@@ -87,48 +112,78 @@ production_model_binding:
     - admitted_covariance_identity
     - candidate_commit
     - candidate_tree
-    - provider_source_bindings
+    - provider_manifest_binding
+    - provider_source_and_dependency_bindings
+    - provider_code_fingerprints
     - provider_configuration_binding
     - provider_environment_binding
-  authority_use_rule: rebuild_and_compare_all_bindings_from_clean_live_candidate
+    - runtime_environment_receipt_id
+    - computed_response_rank_receipt_id
+    - normalization_evidence_id
+    - execution_plan_content_id
+  runtime_receipt:
+    - exact Python executable and implementation/version
+    - platform system and machine
+    - registered package versions
+    - NumPy native extension content identity
+  response_rank: computed_from_exact_response_matrix_with_registered_threshold
+  normalization: exact_evidence_blob_bound_to_likelihood_and_prior_identities
+  execution_plan:
+    - exact entrypoint and argv
+    - output root and run mode
+    - provider manifest identity
+    - runtime environment receipt identity
+  authority_use_rule: rebuild_and_compare_all_bindings_from_exact_candidate_blobs
 
 readiness_states:
-  registered:
+  registered_for_forward_compatibility:
     - BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND
     - BLOCKED_HUMAN_AUTHORIZATION
     - READY_TO_START_SAMPLER
     - BLOCKED_SAMPLER_TERMINAL
     - READY_FOR_POSTERIOR_CONSUMERS
+  PR304_emittable:
+    - BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND
+    - BLOCKED_HUMAN_AUTHORIZATION
+    - BLOCKED_SAMPLER_TERMINAL
+  PR304_forbidden:
+    - READY_TO_START_SAMPLER
+    - READY_FOR_POSTERIOR_CONSUMERS
+  posterior_input_rule: >-
+    Any posterior lineage or consumer plan remains BLOCKED_SAMPLER_TERMINAL
+    because PR-305 observed-run and sampler-terminal receipt types do not yet
+    exist.
   legacy_wire_status: BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND
-  rule: >-
-    READY_TO_START_SAMPLER requires an admission/provider-bound production
-    model and just-in-time Ed25519 revalidation, but never posterior samples,
-    weights, PPC, or LOO output. Those objects are required only for
-    READY_FOR_POSTERIOR_CONSUMERS.
 
-pr305_required_revalidation:
-  - reverify signed bytes against the pinned lane authority
-  - replay exact admission and clean candidate
-  - rebuild provider bindings
-  - evaluate expiry immediately before nonce consumption
-  - consume the nonce only in PR-305 after successful revalidation
+pr305_requirements:
+  - externally provision and review the root-owned trusted launcher
+  - verify a detached root signature over the authority registry and candidate identity
+  - reverify signed authorization bytes immediately before transaction authority use
+  - replay exact admission and all model/runtime/plan bindings
+  - acquire the output lock before nonce consumption
+  - consume a canonical nonce atomically only immediately before the start receipt
+  - write and fsync start and terminal receipts
+  - define observed-run and sampler-terminal identities before posterior readiness can exist
 
 required_terminal:
   terminal: PASS_AUTHORIZATION_CONTRACT_ONLY
   admitted_lane_count: 0
   authorized_lane_count: 0
   executed_lane_count: 0
+  active_authority_count: 0
   observed_data_executed: false
   nonce_consumed: false
 
 forbidden:
-  - minting or storing a real authorization receipt or human private key
-  - caller-selected trust-anchor paths
+  - minting or storing a real authorization receipt, root key, or human private key
+  - caller-selected trust-anchor or Git paths
+  - candidate-local registry activation as authority
   - mutating or subclassing PR-289 ExecutionAuthorizationReceipt into AUTHORIZED
   - nonce consumption
   - observed payload access, data admission, canary, lane execution, or scientific result
   - status-string authorization
   - legacy PR-151 numerical result or withdrawn DESI artifact
+  - starting PR-305
   - default-branch merge
 
 anti_inflation:
@@ -136,4 +191,5 @@ anti_inflation:
   max_new_test_modules: 1
   max_new_runners: 0
   no_new_global_ledger: true
+  external_contract_documents: 2
   downstream_consumer: PR-305 observed execution transaction

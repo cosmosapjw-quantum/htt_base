@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -29,12 +30,12 @@ from common.data_identity import (
     LaneSpec,
     build_not_authorized_receipt,
     canonical_sha256,
-    load_lane_registry,
+    lane_registry_from_mapping,
     replay_lane_admission_decision,
 )
 
 
-AUTHORIZATION_SCHEMA = "common.human_execution_authorization_receipt.v2"
+AUTHORIZATION_SCHEMA = "common.human_execution_authorization_receipt.v3"
 VALIDATED_AUTHORIZATION_SCHEMA = (
     "common.validated_human_execution_authorization_cache.v2"
 )
@@ -61,10 +62,32 @@ _SCOPES_BY_LANE = {
     "DESI": "admitted_desi_observed_execution",
     "JWST_SN": "admitted_jwst_sn_observed_execution",
 }
+_TRUSTED_GIT = Path("/usr/bin/git")
+_TRUSTED_GIT_ENV = {
+    "GIT_CONFIG_NOSYSTEM": "1",
+    "GIT_CONFIG_GLOBAL": "/dev/null",
+    "GIT_LITERAL_PATHSPECS": "1",
+    "GIT_NO_REPLACE_OBJECTS": "1",
+    "GIT_NO_LAZY_FETCH": "1",
+    "GIT_OPTIONAL_LOCKS": "0",
+    "LC_ALL": "C",
+    "LANG": "C",
+}
+EXTERNAL_TRUST_ROOT_PUBLIC_KEY = Path(
+    "/etc/htt/trust/root_authority_ed25519.pub"
+)
+EXTERNAL_TRUST_ROOT_FINGERPRINT = Path(
+    "/etc/htt/trust/root_authority_ed25519.pub.sha256"
+)
+TRUSTED_LAUNCHER = Path("/usr/local/libexec/htt-auth-launcher")
 
 
 class HumanExecutionAuthorizationError(ValueError):
     """Raised when authorization evidence is incomplete, stale, or forged."""
+
+
+class ExternalTrustedLauncherRequired(HumanExecutionAuthorizationError):
+    """Raised because candidate code cannot establish execution authority."""
 
 
 def _text(value: object, field: str) -> str:
@@ -137,10 +160,6 @@ def _nonce(value: object) -> str:
     if _NONCE.fullmatch(text) is None:
         raise HumanExecutionAuthorizationError(
             "nonce must equal nonce:v1 followed by 64 lowercase hex characters"
-        )
-    if len(set(text.removeprefix("nonce:v1:"))) < 8:
-        raise HumanExecutionAuthorizationError(
-            "nonce:v1 payload lacks the required high-entropy shape"
         )
     return text
 
@@ -233,11 +252,34 @@ def _canonical_base64(value: object, *, field: str, byte_length: int) -> bytes:
 
 
 def _git(repo_root: Path, *args: str) -> str:
+    """Run the system Git with no caller-selected executable or Git environment."""
+
+    if (
+        not _TRUSTED_GIT.is_absolute()
+        or not _TRUSTED_GIT.is_file()
+        or _TRUSTED_GIT.is_symlink()
+        or not os.access(_TRUSTED_GIT, os.X_OK)
+    ):
+        raise HumanExecutionAuthorizationError(
+            "trusted system Git executable is unavailable"
+        )
     try:
         completed = subprocess.run(
-            ["git", "-C", str(repo_root), *args],
+            [
+                str(_TRUSTED_GIT),
+                "-c",
+                "core.hooksPath=/dev/null",
+                "-c",
+                "core.fsmonitor=false",
+                "-c",
+                "core.untrackedCache=false",
+                "-C",
+                str(repo_root),
+                *args,
+            ],
             check=False,
             capture_output=True,
+            env=_TRUSTED_GIT_ENV,
             text=True,
             timeout=15,
         )
@@ -250,6 +292,48 @@ def _git(repo_root: Path, *args: str) -> str:
             "candidate git identity cannot be inspected"
         )
     return completed.stdout.rstrip("\n")
+
+
+def _git_bytes(repo_root: Path, *args: str) -> bytes:
+    """Binary counterpart of :func:`_git` using the same trusted boundary."""
+
+    if (
+        not _TRUSTED_GIT.is_absolute()
+        or not _TRUSTED_GIT.is_file()
+        or _TRUSTED_GIT.is_symlink()
+        or not os.access(_TRUSTED_GIT, os.X_OK)
+    ):
+        raise HumanExecutionAuthorizationError(
+            "trusted system Git executable is unavailable"
+        )
+    try:
+        completed = subprocess.run(
+            [
+                str(_TRUSTED_GIT),
+                "-c",
+                "core.hooksPath=/dev/null",
+                "-c",
+                "core.fsmonitor=false",
+                "-c",
+                "core.untrackedCache=false",
+                "-C",
+                str(repo_root),
+                *args,
+            ],
+            check=False,
+            capture_output=True,
+            env=_TRUSTED_GIT_ENV,
+            timeout=15,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise HumanExecutionAuthorizationError(
+            "candidate Git object cannot be inspected"
+        ) from exc
+    if completed.returncode != 0:
+        raise HumanExecutionAuthorizationError(
+            "candidate Git object cannot be inspected"
+        )
+    return completed.stdout
 
 
 @dataclass(frozen=True)
@@ -329,33 +413,51 @@ def revalidate_clean_candidate_identity(
     return observed
 
 
-def _candidate_resource_path(
-    candidate: CandidateIdentityV1, relative_path: Path
-) -> Path:
-    """Resolve one regular resource from the exact clean candidate tree."""
-
-    checked = revalidate_clean_candidate_identity(candidate)
-    path = checked.repo_root / relative_path
-    try:
-        resolved = path.resolve(strict=True)
-    except OSError as exc:
-        raise HumanExecutionAuthorizationError(
-            f"candidate resource is unavailable: {relative_path.as_posix()}"
-        ) from exc
+def _candidate_relative_path(value: object, field: str) -> str:
+    text = _text(value, field)
+    path = Path(text)
     if (
-        path.is_symlink()
-        or not path.is_file()
-        or resolved != path
-        or checked.repo_root not in resolved.parents
+        path.is_absolute()
+        or text != path.as_posix()
+        or text.startswith(".")
+        or ".." in path.parts
+        or any(character in text for character in ("\x00", "\n", "\r", ":"))
     ):
         raise HumanExecutionAuthorizationError(
-            f"candidate resource must be a regular in-tree file: {relative_path.as_posix()}"
+            f"{field} must be a canonical candidate-relative path"
         )
-    return path
+    return text
 
 
-def _authority_registry_path(candidate: CandidateIdentityV1) -> Path:
-    return _candidate_resource_path(candidate, _AUTHORITY_REGISTRY_RELATIVE_PATH)
+def read_candidate_blob(
+    candidate: CandidateIdentityV1, relative_path: object
+) -> bytes:
+    """Read immutable bytes addressed by ``candidate.commit:path``.
+
+    Worktree pathname reads are deliberately excluded from trust-bearing
+    registry, provider, configuration, and environment bindings.
+    """
+
+    checked = revalidate_clean_candidate_identity(candidate)
+    relative = _candidate_relative_path(relative_path, "candidate blob path")
+    object_name = f"{checked.commit}:{relative}"
+    object_type = _git(checked.repo_root, "cat-file", "-t", object_name)
+    if object_type != "blob":
+        raise HumanExecutionAuthorizationError(
+            "candidate resource is not a regular Git blob"
+        )
+    return _git_bytes(checked.repo_root, "cat-file", "blob", object_name)
+
+
+def candidate_blob_binding(
+    candidate: CandidateIdentityV1, relative_path: object
+) -> dict[str, str]:
+    relative = _candidate_relative_path(relative_path, "candidate blob path")
+    raw = read_candidate_blob(candidate, relative)
+    return {
+        "path": relative,
+        "sha256": "sha256:" + hashlib.sha256(raw).hexdigest(),
+    }
 
 
 def lane_spec_content_id(lane_spec: LaneSpec) -> str:
@@ -388,8 +490,13 @@ def replay_complete_lane_admission(
             "admission_decision must be the exact PR-289 LaneAdmissionDecision type"
         )
     try:
-        registry = load_lane_registry(
-            _candidate_resource_path(candidate_identity, _LANE_REGISTRY_RELATIVE_PATH)
+        registry = lane_registry_from_mapping(
+            _strict_json_bytes(
+                read_candidate_blob(
+                    candidate_identity, _LANE_REGISTRY_RELATIVE_PATH.as_posix()
+                ),
+                field="PR-289 lane registry Git blob",
+            )
         )
         registered_lane = registry.lane(lane_spec.lane_id)
     except DataIdentityError as exc:
@@ -473,6 +580,11 @@ class HumanExecutionAuthorizationReceiptV1:
     required_human_gate_id: str
     authorized_scope: str
     authorization_domain: str
+    model_contract_content_id: str
+    runtime_environment_receipt_id: str
+    computed_response_rank_receipt_id: str
+    normalization_evidence_id: str
+    execution_plan_content_id: str
     candidate_commit: str
     candidate_tree: str
     issued_at_utc: str
@@ -499,6 +611,11 @@ class HumanExecutionAuthorizationReceiptV1:
                     "required_human_gate_id",
                     "authorized_scope",
                     "authorization_domain",
+                    "model_contract_content_id",
+                    "runtime_environment_receipt_id",
+                    "computed_response_rank_receipt_id",
+                    "normalization_evidence_id",
+                    "execution_plan_content_id",
                     "candidate_commit",
                     "candidate_tree",
                     "issued_at_utc",
@@ -537,6 +654,23 @@ class HumanExecutionAuthorizationReceiptV1:
             authorization_domain=_text(
                 checked["authorization_domain"], "authorization_domain"
             ),
+            model_contract_content_id=_sha256_identity(
+                checked["model_contract_content_id"], "model_contract_content_id"
+            ),
+            runtime_environment_receipt_id=_sha256_identity(
+                checked["runtime_environment_receipt_id"],
+                "runtime_environment_receipt_id",
+            ),
+            computed_response_rank_receipt_id=_sha256_identity(
+                checked["computed_response_rank_receipt_id"],
+                "computed_response_rank_receipt_id",
+            ),
+            normalization_evidence_id=_sha256_identity(
+                checked["normalization_evidence_id"], "normalization_evidence_id"
+            ),
+            execution_plan_content_id=_sha256_identity(
+                checked["execution_plan_content_id"], "execution_plan_content_id"
+            ),
             candidate_commit=_git_object(
                 checked["candidate_commit"], "candidate_commit"
             ),
@@ -572,6 +706,11 @@ class HumanExecutionAuthorizationReceiptV1:
             "required_human_gate_id": self.required_human_gate_id,
             "authorized_scope": self.authorized_scope,
             "authorization_domain": self.authorization_domain,
+            "model_contract_content_id": self.model_contract_content_id,
+            "runtime_environment_receipt_id": self.runtime_environment_receipt_id,
+            "computed_response_rank_receipt_id": self.computed_response_rank_receipt_id,
+            "normalization_evidence_id": self.normalization_evidence_id,
+            "execution_plan_content_id": self.execution_plan_content_id,
             "candidate_commit": self.candidate_commit,
             "candidate_tree": self.candidate_tree,
             "issued_at_utc": self.issued_at_utc,
@@ -621,6 +760,45 @@ class ValidatedHumanExecutionAuthorization:
         }
 
 
+def validate_authorization_execution_bindings(
+    receipt: HumanExecutionAuthorizationReceiptV1,
+    *,
+    model_contract_content_id: object,
+    runtime_environment_receipt_id: object,
+    computed_response_rank_receipt_id: object,
+    normalization_evidence_id: object,
+    execution_plan_content_id: object,
+) -> None:
+    """Compare signed plan/runtime/model bindings without granting authority."""
+
+    if type(receipt) is not HumanExecutionAuthorizationReceiptV1:
+        raise HumanExecutionAuthorizationError(
+            "authorization binding check requires the exact receipt type"
+        )
+    expected = (
+        _sha256_identity(model_contract_content_id, "model_contract_content_id"),
+        _sha256_identity(
+            runtime_environment_receipt_id, "runtime_environment_receipt_id"
+        ),
+        _sha256_identity(
+            computed_response_rank_receipt_id,
+            "computed_response_rank_receipt_id",
+        ),
+        _sha256_identity(normalization_evidence_id, "normalization_evidence_id"),
+        _sha256_identity(execution_plan_content_id, "execution_plan_content_id"),
+    )
+    observed = (
+        receipt.model_contract_content_id,
+        receipt.runtime_environment_receipt_id,
+        receipt.computed_response_rank_receipt_id,
+        receipt.normalization_evidence_id,
+        receipt.execution_plan_content_id,
+    )
+    if observed != expected:
+        raise HumanExecutionAuthorizationError(
+            "authorization execution/model plan binding mismatched"
+        )
+
 @dataclass(frozen=True)
 class _TrustedAuthority:
     lane_id: str
@@ -633,13 +811,29 @@ class _TrustedAuthority:
 def _load_trusted_authority(
     lane_spec: LaneSpec, candidate_identity: CandidateIdentityV1
 ) -> _TrustedAuthority:
-    path = _authority_registry_path(candidate_identity)
-    if path.is_symlink() or not path.is_file():
-        raise HumanExecutionAuthorizationError(
-            "human authority registry must be a regular file"
-        )
+    # Candidate-resident code and registry bytes cannot establish their own
+    # trust root.  PR-304 deliberately has no authority-producing path: a
+    # root-owned launcher must verify the externally signed registry and must
+    # directly control nonce consumption and process start in the later
+    # transaction.  Keeping this rejection inside the legacy diagnostic API
+    # prevents an ACTIVE row committed by an attacker from becoming authority.
+    del lane_spec, candidate_identity
+    raise ExternalTrustedLauncherRequired(
+        "external trusted launcher validation is required; "
+        "candidate-local authority registry is diagnostic only"
+    )
+
+
+def _load_candidate_local_authority_for_diagnostics(
+    lane_spec: LaneSpec, candidate_identity: CandidateIdentityV1
+) -> _TrustedAuthority:
+    """Parse candidate-local public metadata without granting authority."""
+
     payload = _strict_json_bytes(
-        path.read_bytes(), field="human authority registry"
+        read_candidate_blob(
+            candidate_identity, _AUTHORITY_REGISTRY_RELATIVE_PATH.as_posix()
+        ),
+        field="human authority registry Git blob",
     )
     checked = _exact_mapping(
         payload,
@@ -856,16 +1050,23 @@ __all__ = [
     "AUTHORIZATION_DOMAIN",
     "AUTHORIZATION_SCHEMA",
     "CandidateIdentityV1",
+    "EXTERNAL_TRUST_ROOT_FINGERPRINT",
+    "EXTERNAL_TRUST_ROOT_PUBLIC_KEY",
+    "ExternalTrustedLauncherRequired",
     "HumanExecutionAuthorizationError",
     "HumanExecutionAuthorizationReceiptV1",
     "MAX_AUTHORIZATION_TTL",
+    "TRUSTED_LAUNCHER",
     "ValidatedHumanExecutionAuthorization",
     "admitted_covariance_identity",
     "admitted_data_identity",
     "build_clean_candidate_identity",
+    "candidate_blob_binding",
     "lane_spec_content_id",
     "replay_complete_lane_admission",
+    "read_candidate_blob",
     "revalidate_cached_human_execution_authorization",
     "revalidate_clean_candidate_identity",
     "validate_human_execution_authorization",
+    "validate_authorization_execution_bindings",
 ]

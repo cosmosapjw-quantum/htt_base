@@ -34,23 +34,19 @@ def _contract(**overrides):
         "data_identity": "sha256:" + "c" * 64,
         "covariance_identity": "sha256:" + "d" * 64,
         "block_ids": ("NGC-z1", "SGC-z1"),
-        "response_rank": 2,
-        "likelihood_normalized": True,
-        "prior_normalized": True,
-        "log_likelihood": lambda theta: -float(np.dot(theta, theta)),
-        "prior_transform": lambda unit: np.asarray(unit),
-        "replicate_generator": lambda theta, rng: np.asarray(theta) + rng.normal(size=len(theta)),
-        "discrepancies": {"amplitude": lambda observed, replicated: float(np.sum(observed - replicated))},
+        "discrepancy_ids": ("amplitude",),
     }
     values.update(overrides)
     return build_production_model_contract(**values)
 
 
-def test_contract_rejects_unnormalized_and_rank_deficient_inputs() -> None:
-    with pytest.raises(ProductionBayesianError, match="normalizations"):
-        _contract(likelihood_normalized=False)
-    with pytest.raises(ProductionBayesianError, match="rank"):
-        _contract(response_rank=1)
+def test_contract_rejects_caller_asserted_normalization_rank_and_callables() -> None:
+    with pytest.raises(ProductionBayesianError, match="computed evidence"):
+        _contract(likelihood_normalized=True)
+    with pytest.raises(ProductionBayesianError, match="computed evidence"):
+        _contract(response_rank=2)
+    with pytest.raises(ProductionBayesianError, match="factory-loaded"):
+        _contract(log_likelihood=lambda theta: -float(np.dot(theta, theta)))
     with pytest.raises(ProductionBayesianError, match="blockwise"):
         _contract(block_ids=("only",))
     with pytest.raises(ProductionBayesianError, match="support"):
@@ -87,10 +83,7 @@ def test_weighted_posterior_lineage_binds_exact_samples_weights_and_settings() -
 
 def test_ppc_consumer_plan_requires_unique_canonical_discrepancy_order() -> None:
     contract = _contract(
-        discrepancies={
-            "zeta": lambda observed, replicated: float(np.sum(observed - replicated)),
-            "amplitude": lambda observed, replicated: float(np.sum(observed - replicated)),
-        }
+        discrepancy_ids=("zeta", "amplitude")
     )
     lineage = build_sampler_posterior_lineage(
         contract=contract,

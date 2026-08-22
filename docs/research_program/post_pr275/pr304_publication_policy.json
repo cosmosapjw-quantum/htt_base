@@ -67,7 +67,7 @@
     },
     {
       "id": "pr304-claim-language",
-      "argv": ["env", "PYTHONPATH=htt:htt/src:htt/htt", "python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "htt/src/common/human_execution_authorization.py", "htt/htt/htt/infer/bayesian_production.py", "docs/PR_DELTAS/pr-304.md", "docs/research_program/post_pr275/pr304_spec.yaml", "docs/research_program/post_pr275/human_authority_registry.json"],
+      "argv": ["env", "PYTHONPATH=htt:htt/src:htt/htt", "python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "htt/src/common/human_execution_authorization.py", "htt/htt/htt/infer/bayesian_production.py", "docs/PR_DELTAS/pr-304.md", "docs/research_program/post_pr275/pr304_spec.yaml", "docs/research_program/post_pr275/human_authority_registry.json", "docs/research_program/post_pr275/human_authority_registry.signature.json", "docs/research_program/post_pr275/trusted_launcher_contract.md"],
       "timeout_seconds": 300
     },
     {
@@ -78,13 +78,16 @@
   ],
   "required_review_cells": [
     "exact_pr289_type_and_complete_admission_replay",
-    "ed25519_candidate_bound_public_trust_anchor",
+    "external_ed25519_trust_root_and_launcher_required",
+    "candidate_registry_root_signature_pending_and_non_authoritative",
+    "absolute_scrubbed_git_and_exact_blob_reads",
     "cache_non_authority_and_jit_revalidation",
-    "model_admission_covariance_provider_binding",
+    "model_admission_covariance_provider_runtime_rank_normalization_plan_binding",
     "nonce_candidate_and_internal_trusted_time_hardening",
     "ephemeral_pr289_interpreter_alias_replay",
     "pr289_not_authorized_and_status_nonpromotion",
-    "sampler_readiness_non_circularity",
+    "sampler_and_posterior_terminal_firewall",
+    "clean_merge_ref_executes_every_policy_command",
     "observed_execution_and_nonce_nonoccurrence",
     "claim_ceiling_and_process_inflation"
   ],

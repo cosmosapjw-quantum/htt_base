@@ -8,13 +8,12 @@ import inspect
 import io
 import json
 from pathlib import Path
+import shlex
 import shutil
 import subprocess
 import tarfile
 from types import SimpleNamespace
 
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 import numpy as np
 import pytest
 
@@ -32,13 +31,18 @@ from common.human_execution_authorization import (
     AUTHORIZATION_DOMAIN,
     AUTHORIZATION_SCHEMA,
     CandidateIdentityV1,
+    EXTERNAL_TRUST_ROOT_FINGERPRINT,
+    EXTERNAL_TRUST_ROOT_PUBLIC_KEY,
     HumanExecutionAuthorizationError,
     HumanExecutionAuthorizationReceiptV1,
+    TRUSTED_LAUNCHER,
     ValidatedHumanExecutionAuthorization,
     admitted_covariance_identity,
     admitted_data_identity,
     build_clean_candidate_identity,
     revalidate_cached_human_execution_authorization,
+    read_candidate_blob,
+    validate_authorization_execution_bindings,
     validate_human_execution_authorization,
 )
 from htt.infer.bayesian_production import (
@@ -50,6 +54,7 @@ from htt.infer.bayesian_production import (
     build_posterior_consumer_plan,
     build_production_model_contract,
     build_sampler_posterior_lineage,
+    capture_runtime_environment_receipt,
     revalidate_bound_production_model_contract,
 )
 
@@ -63,20 +68,8 @@ STALE_RECEIPT = ROOT / "docs/generated/pr289_data_identity_v2_receipt.json"
 EVALUATED = "2026-08-22T12:00:00Z"
 VALID_NONCE = "nonce:v1:" + hashlib.sha256(b"pr304-hostile-test-nonce").hexdigest()
 TRUSTED_KEY_ID = "H-ACT-OWNER-ED25519-V1"
-LANE_ORDER = ("PLANCK", "CF4", "HSC_KIDS", "ACT", "DESI", "JWST_SN")
-GATES = {
-    "PLANCK": "H-PLANCK",
-    "CF4": "H-CF4",
-    "HSC_KIDS": "H-HSC-KiDS",
-    "ACT": "H-ACT",
-    "DESI": "H-DESI",
-    "JWST_SN": "H-JWST",
-}
-SCOPES = {
-    lane: f"admitted_{lane.casefold()}_observed_execution" for lane in LANE_ORDER
-}
-SCOPES["HSC_KIDS"] = "admitted_hsc_kids_observed_execution"
-SCOPES["JWST_SN"] = "admitted_jwst_sn_observed_execution"
+TEST_PUBLIC_KEY = bytes(range(32))
+TEST_SIGNATURE = bytes(range(64))
 
 
 def _canonical(payload: dict[str, object]) -> bytes:
@@ -124,8 +117,91 @@ def _candidate_repo(tmp_path: Path) -> tuple[CandidateIdentityV1, SimpleNamespac
     (repo / "provider-config.json").write_text(
         '{"model":"act-contract-test","version":1}\n', encoding="utf-8"
     )
+    runtime = capture_runtime_environment_receipt(("numpy", "cryptography"))
     (repo / "environment.lock").write_text(
-        "python=3.12\nnumpy=test-fixture\n", encoding="utf-8"
+        json.dumps(
+            {
+                "schema": "htt.runtime_environment_contract.v1",
+                "required_packages": ["numpy", "cryptography"],
+                "expected_receipt": runtime.as_payload(),
+            },
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (repo / "response-matrix.json").write_text(
+        json.dumps(
+            {
+                "schema": "htt.response_matrix.v1",
+                "feature_order": ["act-amplitude"],
+                "parameter_order": ["amplitude"],
+                "matrix": [[1.0]],
+                "singular_value_threshold": 1.0e-12,
+            },
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (repo / "normalization-evidence.json").write_text(
+        json.dumps(
+            {
+                "schema": "htt.normalization_evidence.v1",
+                "likelihood": {
+                    "status": "ANALYTICALLY_NORMALIZED",
+                    "identity": "sha256:" + "1" * 64,
+                    "method_id": "analytic-gaussian-v1",
+                },
+                "prior": {
+                    "status": "ANALYTICALLY_NORMALIZED",
+                    "identity": "sha256:" + "2" * 64,
+                    "method_id": "unit-cube-transform-v1",
+                },
+            },
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (repo / "execution-plan.json").write_text(
+        json.dumps(
+            {
+                "schema": "htt.execution_plan.v1",
+                "lane_id": "H-ACT",
+                "model_id": "act-admission-bound-test-model",
+                "entrypoint": "provider.py:log_likelihood",
+                "argv": ["--mode", "sampler"],
+                "output_root": "docs/generated/observed_runs/act-test",
+                "run_mode": "sampler",
+            },
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (repo / "provider-manifest.json").write_text(
+        json.dumps(
+            {
+                "schema": "htt.provider_manifest.v1",
+                "provider_path": "provider.py",
+                "dependency_paths": [],
+                "configuration_path": "provider-config.json",
+                "environment_contract_path": "environment.lock",
+                "response_matrix_path": "response-matrix.json",
+                "normalization_evidence_path": "normalization-evidence.json",
+                "execution_plan_path": "execution-plan.json",
+                "exports": {
+                    "log_likelihood": "log_likelihood",
+                    "prior_transform": "prior_transform",
+                    "replicate_generator": "replicate_generator",
+                    "discrepancies": {"amplitude": "discrepancy"},
+                },
+            },
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
     )
     candidate_registry = repo / REGISTRY.relative_to(ROOT)
     candidate_registry.parent.mkdir(parents=True)
@@ -140,17 +216,27 @@ def _candidate_repo(tmp_path: Path) -> tuple[CandidateIdentityV1, SimpleNamespac
     )
     _git(repo, "add", "--all")
     _git(repo, "commit", "-m", "test candidate")
-    namespace: dict[str, object] = {"np": np, "__file__": str(source)}
-    exec(compile(source.read_bytes(), str(source), "exec"), namespace)
     provider = SimpleNamespace(
-        log_likelihood=namespace["log_likelihood"],
-        prior_transform=namespace["prior_transform"],
-        replicate_generator=namespace["replicate_generator"],
-        discrepancy=namespace["discrepancy"],
-        config_path="provider-config.json",
-        environment_path="environment.lock",
+        source_path="provider.py",
+        manifest_path="provider-manifest.json",
     )
     return build_clean_candidate_identity(repo), provider
+
+
+def _commit_json_mutation(
+    candidate: CandidateIdentityV1,
+    relative_path: str,
+    mutate,
+    *,
+    message: str,
+) -> CandidateIdentityV1:
+    path = candidate.repo_root / relative_path
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    mutate(payload)
+    path.write_text(json.dumps(payload, sort_keys=True) + "\n", encoding="utf-8")
+    _git(candidate.repo_root, "add", "--", relative_path)
+    _git(candidate.repo_root, "commit", "-m", message)
+    return build_clean_candidate_identity(candidate.repo_root)
 
 
 def _admitted_act(tmp_path: Path, *, payload_tag: str = "baseline"):
@@ -232,51 +318,30 @@ def _admitted_act(tmp_path: Path, *, payload_tag: str = "baseline"):
     return lane, decision
 
 
-def _install_authority_registry(
-    tmp_path: Path,
-    monkeypatch: pytest.MonkeyPatch,
+def _activate_candidate_authority(
+    candidate: CandidateIdentityV1,
     public_key: bytes,
-    *,
-    key_id: str = TRUSTED_KEY_ID,
-) -> Path:
-    authorities = {
-        lane: {
-            "status": "PENDING_HUMAN_PROVISIONING",
-            "key_id": None,
-            "public_key_base64": None,
-            "gate_id": GATES[lane],
-            "scope": SCOPES[lane],
-        }
-        for lane in LANE_ORDER
-    }
-    authorities["ACT"] = {
-        "status": "ACTIVE",
-        "key_id": key_id,
-        "public_key_base64": base64.b64encode(public_key).decode("ascii"),
-        "gate_id": GATES["ACT"],
-        "scope": SCOPES["ACT"],
-    }
-    path = tmp_path / "human-authority-registry.json"
-    path.write_text(
-        json.dumps(
+) -> CandidateIdentityV1:
+    assert len(public_key) == 32
+
+    def activate(payload: dict[str, object]) -> None:
+        authorities = payload["authorities"]
+        assert isinstance(authorities, dict)
+        row = authorities["ACT"]
+        assert isinstance(row, dict)
+        row.update(
             {
-                "schema": "common.human_authority_registry.v1",
-                "lane_order": list(LANE_ORDER),
-                "authorities": authorities,
-            },
-            indent=2,
+                "status": "ACTIVE",
+                "key_id": TRUSTED_KEY_ID,
+                "public_key_base64": base64.b64encode(public_key).decode("ascii"),
+            }
         )
-        + "\n",
-        encoding="utf-8",
-    )
-    monkeypatch.setattr(authorization, "_authority_registry_path", lambda _: path)
-    return path
 
-
-def _public_bytes(private_key: Ed25519PrivateKey) -> bytes:
-    return private_key.public_key().public_bytes(
-        encoding=serialization.Encoding.Raw,
-        format=serialization.PublicFormat.Raw,
+    return _commit_json_mutation(
+        candidate,
+        "docs/research_program/post_pr275/human_authority_registry.json",
+        activate,
+        message="activate candidate-controlled authority",
     )
 
 
@@ -284,11 +349,12 @@ def _signed_receipt(
     lane,
     decision,
     candidate: CandidateIdentityV1,
-    private_key: Ed25519PrivateKey,
+    public_key_fixture: bytes,
     *,
     signer_key_id: str = TRUSTED_KEY_ID,
     **overrides: object,
 ) -> bytes:
+    assert len(public_key_fixture) == 32
     unsigned: dict[str, object] = {
         "schema": AUTHORIZATION_SCHEMA,
         "lane_id": lane.lane_id,
@@ -298,6 +364,11 @@ def _signed_receipt(
         "required_human_gate_id": lane.required_human_gate_id,
         "authorized_scope": "admitted_act_observed_execution",
         "authorization_domain": AUTHORIZATION_DOMAIN,
+        "model_contract_content_id": "sha256:" + "3" * 64,
+        "runtime_environment_receipt_id": "sha256:" + "4" * 64,
+        "computed_response_rank_receipt_id": "sha256:" + "5" * 64,
+        "normalization_evidence_id": "sha256:" + "6" * 64,
+        "execution_plan_content_id": "sha256:" + "7" * 64,
         "candidate_commit": candidate.commit,
         "candidate_tree": candidate.tree,
         "issued_at_utc": "2026-08-22T11:45:00Z",
@@ -308,13 +379,12 @@ def _signed_receipt(
     unsigned.update(overrides)
     authorization_id = canonical_sha256(unsigned)
     signed = {"authorization_id": authorization_id, **unsigned}
-    signature = private_key.sign(_canonical(signed))
     return _canonical(
         {
             **signed,
-            "authorization_signature_ed25519": base64.b64encode(signature).decode(
-                "ascii"
-            ),
+            "authorization_signature_ed25519": base64.b64encode(
+                TEST_SIGNATURE
+            ).decode("ascii"),
         }
     )
 
@@ -348,36 +418,29 @@ def _bound_model(lane, decision, candidate: CandidateIdentityV1, provider):
         data_identity=admitted_data_identity(decision),
         covariance_identity=admitted_covariance_identity(decision),
         block_ids=("act-block-a", "act-block-b"),
-        response_rank=1,
-        likelihood_normalized=True,
-        prior_normalized=True,
-        log_likelihood=provider.log_likelihood,
-        prior_transform=provider.prior_transform,
-        replicate_generator=provider.replicate_generator,
-        discrepancies={"amplitude": provider.discrepancy},
+        discrepancy_ids=("amplitude",),
     )
     return bind_production_model_contract(
         contract=base,
         lane_spec=lane,
         admission_decision=decision,
         candidate_identity=candidate,
-        provider_configuration_path=Path(provider.config_path),
-        provider_environment_path=Path(provider.environment_path),
+        provider_manifest_path=Path(provider.manifest_path),
     )
 
 
-def test_validates_pinned_ed25519_receipt_as_non_authoritative_cache(
+def test_candidate_local_ed25519_receipt_cannot_create_authority_cache(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    signer = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    signer = TEST_PUBLIC_KEY
+    candidate = _activate_candidate_authority(candidate, signer)
     raw = _signed_receipt(lane, decision, candidate, signer)
-    cache = _validate(raw, lane, decision, candidate)
-    assert isinstance(cache, ValidatedHumanExecutionAuthorization)
-    assert cache.signed_receipt_bytes == raw
-    assert cache.receipt.nonce == VALID_NONCE
+    with pytest.raises(
+        HumanExecutionAuthorizationError, match="external trusted launcher"
+    ):
+        _validate(raw, lane, decision, candidate)
     assert build_clean_candidate_identity(candidate.repo_root) == candidate
 
 
@@ -393,9 +456,11 @@ def test_candidate_tree_supplies_lane_and_public_authority_registries(
     )
     assert replayed.lane_admission_bundle_id == decision.lane_admission_bundle_id
 
-    signer = Ed25519PrivateKey.generate()
+    signer = TEST_PUBLIC_KEY
     raw = _signed_receipt(lane, decision, candidate, signer)
-    with pytest.raises(HumanExecutionAuthorizationError, match="not active"):
+    with pytest.raises(
+        HumanExecutionAuthorizationError, match="external trusted launcher"
+    ):
         _validate(raw, lane, decision, candidate)
 
 
@@ -404,9 +469,7 @@ def test_auth_trust_001_rejects_arbitrary_self_signed_key(
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    trusted = Ed25519PrivateKey.generate()
-    attacker = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(trusted))
+    attacker = TEST_PUBLIC_KEY
     raw = _signed_receipt(
         lane,
         decision,
@@ -414,7 +477,9 @@ def test_auth_trust_001_rejects_arbitrary_self_signed_key(
         attacker,
         signer_key_id="ATTACKER-SELF-SIGNED-ED25519",
     )
-    with pytest.raises(HumanExecutionAuthorizationError, match="trusted human signer"):
+    with pytest.raises(
+        HumanExecutionAuthorizationError, match="external trusted launcher"
+    ):
         _validate(raw, lane, decision, candidate)
 
 
@@ -423,11 +488,11 @@ def test_auth_trust_002_rejects_registered_signer_drift(
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    original = Ed25519PrivateKey.generate()
-    replacement = Ed25519PrivateKey.generate()
+    original = TEST_PUBLIC_KEY
     raw = _signed_receipt(lane, decision, candidate, original)
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(replacement))
-    with pytest.raises(HumanExecutionAuthorizationError, match="signature"):
+    with pytest.raises(
+        HumanExecutionAuthorizationError, match="external trusted launcher"
+    ):
         _validate(raw, lane, decision, candidate)
 
 
@@ -436,8 +501,10 @@ def test_production_registry_is_fail_closed_pending_human_provisioning(
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    attacker = Ed25519PrivateKey.generate()
-    with pytest.raises(HumanExecutionAuthorizationError, match="not active"):
+    attacker = TEST_PUBLIC_KEY
+    with pytest.raises(
+        HumanExecutionAuthorizationError, match="external trusted launcher"
+    ):
         _validate(
             _signed_receipt(lane, decision, candidate, attacker),
             lane,
@@ -492,8 +559,7 @@ def test_rejects_resigned_binding_drift(
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    signer = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    signer = TEST_PUBLIC_KEY
     baseline = json.loads(_signed_receipt(lane, decision, candidate, signer))
     unsigned = {
         key: value
@@ -525,8 +591,7 @@ def test_rejects_invalid_time_intervals(
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    signer = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    signer = TEST_PUBLIC_KEY
     raw = _signed_receipt(
         lane,
         decision,
@@ -552,7 +617,6 @@ def test_rejects_invalid_time_intervals(
         "nonce:v1:" + "A" * 64,
         "nonce:v1:" + "a" * 63,
         "nonce:v1:" + "0" * 63 + "g",
-        "nonce:v1:" + "ab" * 32,
     ),
 )
 def test_auth_nonce_001_rejects_noncanonical_nonce(
@@ -562,8 +626,7 @@ def test_auth_nonce_001_rejects_noncanonical_nonce(
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    signer = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    signer = TEST_PUBLIC_KEY
     with pytest.raises(HumanExecutionAuthorizationError, match="nonce:v1"):
         _validate(
             _signed_receipt(lane, decision, candidate, signer, nonce=bad_nonce),
@@ -573,13 +636,31 @@ def test_auth_nonce_001_rejects_noncanonical_nonce(
         )
 
 
+def test_auth_nonce_002_accepts_canonical_shape_without_claiming_entropy(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    signer = TEST_PUBLIC_KEY
+
+    raw = _signed_receipt(
+        lane,
+        decision,
+        candidate,
+        signer,
+        nonce="nonce:v1:" + "ab" * 32,
+    )
+    with pytest.raises(HumanExecutionAuthorizationError, match="external trusted launcher"):
+        _validate(raw, lane, decision, candidate)
+
+
 def test_auth_json_001_rejects_duplicate_and_noncanonical_json(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    signer = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    signer = TEST_PUBLIC_KEY
     raw = _signed_receipt(lane, decision, candidate, signer)
     duplicate = raw.replace(
         b'{"analysis_plan_id"',
@@ -597,8 +678,7 @@ def test_auth_candidate_001_rejects_fake_and_dirty_candidate(
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    signer = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    signer = TEST_PUBLIC_KEY
     raw = _signed_receipt(lane, decision, candidate, signer)
     forged = CandidateIdentityV1(
         repo_root=candidate.repo_root,
@@ -619,9 +699,7 @@ def test_auth_cap_001_and_002_forged_cache_is_not_authority(
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    trusted = Ed25519PrivateKey.generate()
-    attacker = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(trusted))
+    attacker = TEST_PUBLIC_KEY
     attacker_raw = _signed_receipt(lane, decision, candidate, attacker)
     parsed = HumanExecutionAuthorizationReceiptV1.from_bytes(attacker_raw)
     assert not hasattr(authorization, "_VALIDATION_TOKEN")
@@ -634,7 +712,9 @@ def test_auth_cap_001_and_002_forged_cache_is_not_authority(
         validated_at_utc=EVALUATED,
         validation_content_id="sha256:" + "2" * 64,
     )
-    with pytest.raises(HumanExecutionAuthorizationError, match="signature"):
+    with pytest.raises(
+        HumanExecutionAuthorizationError, match="external trusted launcher"
+    ):
         revalidate_cached_human_execution_authorization(
             cached=forged,
             lane_spec=lane,
@@ -643,7 +723,9 @@ def test_auth_cap_001_and_002_forged_cache_is_not_authority(
         )
     raw_forged = object.__new__(ValidatedHumanExecutionAuthorization)
     object.__setattr__(raw_forged, "signed_receipt_bytes", attacker_raw)
-    with pytest.raises(HumanExecutionAuthorizationError, match="signature"):
+    with pytest.raises(
+        HumanExecutionAuthorizationError, match="external trusted launcher"
+    ):
         revalidate_cached_human_execution_authorization(
             cached=raw_forged,
             lane_spec=lane,
@@ -657,13 +739,16 @@ def test_auth_time_001_rejects_cache_after_expiry(
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    signer = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
-    cache = _validate(
-        _signed_receipt(lane, decision, candidate, signer),
-        lane,
-        decision,
-        candidate,
+    signer = TEST_PUBLIC_KEY
+    raw = _signed_receipt(lane, decision, candidate, signer)
+    cache = ValidatedHumanExecutionAuthorization(
+        signed_receipt_bytes=raw,
+        receipt=HumanExecutionAuthorizationReceiptV1.from_bytes(raw),
+        replayed_lane_spec_content_id="sha256:" + "1" * 64,
+        replayed_admission_bundle_id=decision.lane_admission_bundle_id,
+        validated_candidate_identity_id=candidate.candidate_identity_id,
+        validated_at_utc=EVALUATED,
+        validation_content_id="sha256:" + "2" * 64,
     )
     expired = datetime(2026, 8, 22, 12, 16, tzinfo=timezone.utc)
     monkeypatch.setattr(authorization, "_trusted_now_utc", lambda: expired)
@@ -690,8 +775,7 @@ def test_auth_pr289_001_rejects_not_authorized_receipt(
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    signer = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    signer = TEST_PUBLIC_KEY
     pr289 = build_not_authorized_receipt(lane, decision)
     with pytest.raises(HumanExecutionAuthorizationError, match="fields drifted"):
         _validate(_canonical(pr289.as_payload()), lane, decision, candidate)
@@ -702,8 +786,7 @@ def test_rejects_refused_admission(
 ) -> None:
     lane, admitted = _admitted_act(tmp_path)
     candidate, _ = _candidate_repo(tmp_path)
-    signer = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    signer = TEST_PUBLIC_KEY
     refused = evaluate_lane_identity(
         registry=load_lane_registry(REGISTRY),
         lane_id="ACT",
@@ -720,29 +803,21 @@ def test_rejects_refused_admission(
         )
 
 
-def test_readiness_reverifies_signed_authorization_and_bound_model(
+def test_readiness_keeps_bound_model_blocked_for_external_trusted_launcher(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, provider = _candidate_repo(tmp_path)
-    signer = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
-    cache = _validate(
-        _signed_receipt(lane, decision, candidate, signer),
-        lane,
-        decision,
-        candidate,
-    )
     model = _bound_model(lane, decision, candidate, provider)
     descriptor = ObservationalLaneDescriptor("H-ACT", ("provider.py",))
     result = assess_lane_readiness(
         descriptor,
         model_contract=model,
         admission_decision=decision,
-        validated_human_authorization=cache,
         candidate_identity=candidate,
     )
-    assert result.status is LaneReadinessStatus.READY_TO_START_SAMPLER
+    assert result.status is LaneReadinessStatus.BLOCKED_HUMAN_AUTHORIZATION
+    assert result.blocked_reasons == ("external_trusted_launcher_required",)
     assert result.observed_data_executed is False
     assert model.lane_admission_bundle_id == decision.lane_admission_bundle_id
     assert model.ordered_admission_record_ids == tuple(
@@ -751,6 +826,10 @@ def test_readiness_reverifies_signed_authorization_and_bound_model(
     assert model.admitted_covariance_identity == admitted_covariance_identity(
         decision
     )
+    assert model.runtime_environment_receipt_id is not None
+    assert model.computed_response_rank_receipt_id is not None
+    assert model.normalization_evidence_id is not None
+    assert model.execution_plan_content_id is not None
 
 
 def test_model_bind_001_rejects_bundle_a_model_b(
@@ -789,13 +868,7 @@ def test_model_bind_002_rejects_covariance_mismatch(
         data_identity=admitted_data_identity(decision),
         covariance_identity="sha256:" + "0" * 64,
         block_ids=("a", "b"),
-        response_rank=1,
-        likelihood_normalized=True,
-        prior_normalized=True,
-        log_likelihood=provider.log_likelihood,
-        prior_transform=provider.prior_transform,
-        replicate_generator=provider.replicate_generator,
-        discrepancies={"amplitude": provider.discrepancy},
+        discrepancy_ids=("amplitude",),
     )
     with pytest.raises(ProductionBayesianError, match="covariance identity"):
         bind_production_model_contract(
@@ -803,8 +876,7 @@ def test_model_bind_002_rejects_covariance_mismatch(
             lane_spec=lane,
             admission_decision=decision,
             candidate_identity=candidate,
-            provider_configuration_path=Path(provider.config_path),
-            provider_environment_path=Path(provider.environment_path),
+            provider_manifest_path=Path(provider.manifest_path),
         )
 
 
@@ -839,15 +911,9 @@ def test_model_provider_001_code_change_invalidates_contract_identity(
             admission_decision=decision,
             candidate_identity=new_candidate,
         )
-    namespace: dict[str, object] = {"np": np, "__file__": str(source)}
-    exec(compile(source.read_bytes(), str(source), "exec"), namespace)
     new_provider = SimpleNamespace(
-        log_likelihood=namespace["log_likelihood"],
-        prior_transform=namespace["prior_transform"],
-        replicate_generator=namespace["replicate_generator"],
-        discrepancy=namespace["discrepancy"],
-        config_path="provider-config.json",
-        environment_path="environment.lock",
+        source_path="provider.py",
+        manifest_path="provider-manifest.json",
     )
     rebound = _bound_model(lane, decision, new_candidate, new_provider)
     assert rebound.contract_content_id != bound.contract_content_id
@@ -860,17 +926,237 @@ def test_model_provider_001_code_change_invalidates_contract_identity(
         )
 
 
-def test_readiness_rejects_forged_cache_and_expired_cached_receipt(
+def test_model_inmem_001_rejects_callable_substituted_behind_clean_filename(
+    tmp_path: Path,
+) -> None:
+    """A forged co_filename cannot substitute runtime code for the Git blob."""
+
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    source = candidate.repo_root / "provider.py"
+    namespace: dict[str, object] = {}
+    exec(
+        compile(
+            "def log_likelihood(theta):\n    return 123456.0\n",
+            str(source),
+            "exec",
+        ),
+        namespace,
+    )
+    with pytest.raises(ProductionBayesianError, match="factory-loaded"):
+        build_production_model_contract(
+            lane_id="H-ACT",
+            model_id="malicious-in-memory-substitution",
+            parameter_schema={"amplitude": {"support": "real"}},
+            likelihood_identity="sha256:" + "1" * 64,
+            prior_identity="sha256:" + "2" * 64,
+            data_identity=admitted_data_identity(decision),
+            covariance_identity=admitted_covariance_identity(decision),
+            block_ids=("a", "b"),
+            discrepancy_ids=("amplitude",),
+            log_likelihood=namespace["log_likelihood"],
+        )
+
+
+def test_model_inmem_002_rejects_provider_default_runtime_state(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    source = candidate.repo_root / "provider.py"
+    source.write_text(
+        source.read_text(encoding="utf-8").replace(
+            "def log_likelihood(theta):",
+            "def log_likelihood(theta, scale=1.0):",
+        ),
+        encoding="utf-8",
+    )
+    _git(candidate.repo_root, "add", "--", "provider.py")
+    _git(candidate.repo_root, "commit", "-m", "add forbidden provider default")
+    changed = build_clean_candidate_identity(candidate.repo_root)
+
+    with pytest.raises(ProductionBayesianError, match="unbound runtime state"):
+        _bound_model(lane, decision, changed, provider)
+
+
+def test_runtime_env_001_rejects_live_environment_contract_mismatch(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    changed = _commit_json_mutation(
+        candidate,
+        "environment.lock",
+        lambda payload: payload["expected_receipt"].__setitem__(
+            "python_version", "0.0.0"
+        ),
+        message="forge runtime environment",
+    )
+
+    with pytest.raises(ProductionBayesianError, match="live runtime differs"):
+        _bound_model(lane, decision, changed, provider)
+
+
+def test_response_rank_001_rejects_rank_assertion_without_computed_support(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    changed = _commit_json_mutation(
+        candidate,
+        "response-matrix.json",
+        lambda payload: payload.__setitem__("matrix", [[0.0]]),
+        message="make response rank deficient",
+    )
+
+    with pytest.raises(ProductionBayesianError, match="computed response rank"):
+        _bound_model(lane, decision, changed, provider)
+
+
+def test_normalization_001_rejects_boolean_substitute_for_bound_evidence(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    changed = _commit_json_mutation(
+        candidate,
+        "normalization-evidence.json",
+        lambda payload: payload["likelihood"].__setitem__(
+            "status", "CALLER_ASSERTED_TRUE"
+        ),
+        message="forge normalization status",
+    )
+
+    with pytest.raises(ProductionBayesianError, match="does not bind the model"):
+        _bound_model(lane, decision, changed, provider)
+
+
+def test_execution_plan_001_rejects_authorization_for_another_plan(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    model = _bound_model(lane, decision, candidate, provider)
+    raw = _signed_receipt(
+        lane,
+        decision,
+        candidate,
+        TEST_PUBLIC_KEY,
+        model_contract_content_id=model.contract_content_id,
+        runtime_environment_receipt_id=model.runtime_environment_receipt_id,
+        computed_response_rank_receipt_id=model.computed_response_rank_receipt_id,
+        normalization_evidence_id=model.normalization_evidence_id,
+        execution_plan_content_id="sha256:" + "0" * 64,
+    )
+    receipt = HumanExecutionAuthorizationReceiptV1.from_bytes(raw)
+
+    with pytest.raises(
+        HumanExecutionAuthorizationError, match="plan binding mismatched"
+    ):
+        validate_authorization_execution_bindings(
+            receipt,
+            model_contract_content_id=model.contract_content_id,
+            runtime_environment_receipt_id=model.runtime_environment_receipt_id,
+            computed_response_rank_receipt_id=model.computed_response_rank_receipt_id,
+            normalization_evidence_id=model.normalization_evidence_id,
+            execution_plan_content_id=model.execution_plan_content_id,
+        )
+
+
+def test_provider_dependency_blob_change_invalidates_bound_contract(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    dependency = candidate.repo_root / "provider-dependency.txt"
+    dependency.write_text("dependency-v1\n", encoding="utf-8")
+    manifest = candidate.repo_root / provider.manifest_path
+    payload = json.loads(manifest.read_text(encoding="utf-8"))
+    payload["dependency_paths"] = ["provider-dependency.txt"]
+    manifest.write_text(json.dumps(payload, sort_keys=True) + "\n", encoding="utf-8")
+    _git(
+        candidate.repo_root,
+        "add",
+        "--",
+        "provider-dependency.txt",
+        provider.manifest_path,
+    )
+    _git(candidate.repo_root, "commit", "-m", "bind provider dependency")
+    bound_candidate = build_clean_candidate_identity(candidate.repo_root)
+    bound = _bound_model(lane, decision, bound_candidate, provider)
+
+    dependency.write_text("dependency-v2\n", encoding="utf-8")
+    _git(candidate.repo_root, "add", "--", "provider-dependency.txt")
+    _git(candidate.repo_root, "commit", "-m", "change provider dependency")
+    changed_candidate = build_clean_candidate_identity(candidate.repo_root)
+    with pytest.raises(ProductionBayesianError, match="stale or forged"):
+        revalidate_bound_production_model_contract(
+            contract=bound,
+            lane_spec=lane,
+            admission_decision=decision,
+            candidate_identity=changed_candidate,
+        )
+
+
+def test_posterior_obs_001_and_002_stay_blocked_without_pr305_terminal(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    model = _bound_model(lane, decision, candidate, provider)
+    lineage = build_sampler_posterior_lineage(
+        contract=model,
+        samples=np.asarray([[0.0], [1.0], [2.0]]),
+        normalized_weights=np.asarray([0.2, 0.3, 0.5]),
+        sampler_settings={
+            "nlive": 200,
+            "dlogz": 0.1,
+            "bound": "multi",
+            "sample": "rwalk",
+            "seed": 7,
+        },
+        resampling_rule="systematic",
+    )
+    plan = build_posterior_consumer_plan(
+        contract=model,
+        lineage=lineage,
+        ppc_discrepancy_ids=("amplitude",),
+        loo_block_ids=("act-block-a", "act-block-b"),
+    )
+    result = assess_lane_readiness(
+        ObservationalLaneDescriptor("H-ACT", ("provider.py",)),
+        model_contract=model,
+        admission_decision=decision,
+        candidate_identity=candidate,
+        posterior_lineage=lineage,
+        posterior_consumer_plan=plan,
+    )
+    assert result.status is LaneReadinessStatus.BLOCKED_SAMPLER_TERMINAL
+    assert result.blocked_reasons == (
+        "pr305_observed_run_terminal_contract_unavailable",
+    )
+    assert result.observed_data_executed is False
+
+
+def test_readiness_treats_candidate_cache_as_non_authoritative(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
     candidate, provider = _candidate_repo(tmp_path)
-    trusted = Ed25519PrivateKey.generate()
-    attacker = Ed25519PrivateKey.generate()
-    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(trusted))
+    attacker = TEST_PUBLIC_KEY
     model = _bound_model(lane, decision, candidate, provider)
     descriptor = ObservationalLaneDescriptor("H-ACT", ("provider.py",))
-    attacker_raw = _signed_receipt(lane, decision, candidate, attacker)
+    attacker_raw = _signed_receipt(
+        lane,
+        decision,
+        candidate,
+        attacker,
+        model_contract_content_id=model.contract_content_id,
+        runtime_environment_receipt_id=model.runtime_environment_receipt_id,
+        computed_response_rank_receipt_id=model.computed_response_rank_receipt_id,
+        normalization_evidence_id=model.normalization_evidence_id,
+        execution_plan_content_id=model.execution_plan_content_id,
+    )
     forged = ValidatedHumanExecutionAuthorization(
         signed_receipt_bytes=attacker_raw,
         receipt=HumanExecutionAuthorizationReceiptV1.from_bytes(attacker_raw),
@@ -880,30 +1166,15 @@ def test_readiness_rejects_forged_cache_and_expired_cached_receipt(
         validated_at_utc=EVALUATED,
         validation_content_id="sha256:" + "2" * 64,
     )
-    with pytest.raises(ProductionBayesianError, match="just-in-time"):
-        assess_lane_readiness(
-            descriptor,
-            model_contract=model,
-            admission_decision=decision,
-            validated_human_authorization=forged,
-            candidate_identity=candidate,
-        )
-    valid = _validate(
-        _signed_receipt(lane, decision, candidate, trusted),
-        lane,
-        decision,
-        candidate,
+    result = assess_lane_readiness(
+        descriptor,
+        model_contract=model,
+        admission_decision=decision,
+        validated_human_authorization=forged,
+        candidate_identity=candidate,
     )
-    expired = datetime(2026, 8, 22, 12, 16, tzinfo=timezone.utc)
-    monkeypatch.setattr(authorization, "_trusted_now_utc", lambda: expired)
-    with pytest.raises(ProductionBayesianError, match="just-in-time"):
-        assess_lane_readiness(
-            descriptor,
-            model_contract=model,
-            admission_decision=decision,
-            validated_human_authorization=valid,
-            candidate_identity=candidate,
-        )
+    assert result.status is LaneReadinessStatus.BLOCKED_HUMAN_AUTHORIZATION
+    assert result.blocked_reasons == ("external_trusted_launcher_required",)
 
 
 def test_a3_ephemeral_001_interpreter_alias_replay_leaves_stale_path_absent(
@@ -967,3 +1238,154 @@ def test_a3_ephemeral_001_interpreter_alias_replay_leaves_stale_path_absent(
         shutil.rmtree(disposable)
     assert not disposable.exists()
     assert not STALE_RECEIPT.exists()
+
+
+def test_git_env_001_candidate_identity_ignores_path_selected_git(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A PATH-prepended fake git must not control candidate identity."""
+
+    candidate, _ = _candidate_repo(tmp_path)
+    fake_bin = tmp_path / "fake-bin"
+    fake_bin.mkdir()
+    fake_git = fake_bin / "git"
+    fake_git.write_text("#!/bin/sh\nexit 97\n", encoding="utf-8")
+    fake_git.chmod(0o755)
+    monkeypatch.setenv("PATH", str(fake_bin))
+
+    assert build_clean_candidate_identity(candidate.repo_root) == candidate
+
+
+def test_git_env_002_candidate_identity_ignores_git_environment_overrides(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Ambient Git repository/object/index overrides must be scrubbed."""
+
+    candidate, _ = _candidate_repo(tmp_path)
+    attacker = tmp_path / "attacker"
+    attacker.mkdir()
+    for name in (
+        "GIT_DIR",
+        "GIT_WORK_TREE",
+        "GIT_INDEX_FILE",
+        "GIT_OBJECT_DIRECTORY",
+        "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+    ):
+        monkeypatch.setenv(name, str(attacker))
+
+    assert build_clean_candidate_identity(candidate.repo_root) == candidate
+
+
+def test_trust_root_001_candidate_local_active_key_is_never_authority(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A candidate-controlled key and matching signature cannot self-authorize."""
+
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    attacker = TEST_PUBLIC_KEY
+    candidate = _activate_candidate_authority(candidate, attacker)
+
+    with pytest.raises(
+        HumanExecutionAuthorizationError,
+        match="external trusted launcher",
+    ):
+        _validate(
+            _signed_receipt(lane, decision, candidate, attacker),
+            lane,
+            decision,
+            candidate,
+        )
+
+
+def test_trust_root_002_external_launcher_and_pending_signature_contract() -> None:
+    assert TRUSTED_LAUNCHER == Path("/usr/local/libexec/htt-auth-launcher")
+    assert EXTERNAL_TRUST_ROOT_PUBLIC_KEY == Path(
+        "/etc/htt/trust/root_authority_ed25519.pub"
+    )
+    assert EXTERNAL_TRUST_ROOT_FINGERPRINT == Path(
+        "/etc/htt/trust/root_authority_ed25519.pub.sha256"
+    )
+    sidecar = json.loads(
+        (
+            ROOT
+            / "docs/research_program/post_pr275/human_authority_registry.signature.json"
+        ).read_text(encoding="utf-8")
+    )
+    registry = ROOT / sidecar["registry_path"]
+    assert sidecar["status"] == "PENDING_EXTERNAL_ROOT_SIGNATURE"
+    assert sidecar["authority_granted"] is False
+    assert sidecar["root_authority_key_id"] is None
+    assert sidecar["registry_signature_ed25519"] is None
+    assert sidecar["registry_sha256"] == (
+        "sha256:" + hashlib.sha256(registry.read_bytes()).hexdigest()
+    )
+
+
+def test_ci_coverage_001_runs_every_pr304_policy_command_on_pull_requests() -> None:
+    policy = json.loads(
+        (
+            ROOT
+            / "docs/research_program/post_pr275/pr304_publication_policy.json"
+        ).read_text(encoding="utf-8")
+    )
+    workflow = (ROOT / ".github/workflows/repository-integrity.yml").read_text(
+        encoding="utf-8"
+    )
+    assert "pull_request:" in workflow
+    for row in policy["required_commands"]:
+        command = shlex.join(row["argv"])
+        assert command in workflow, f"missing PR-304 CI command: {row['id']}"
+
+
+def test_trust_toctou_001_worktree_authority_registry_swap_is_rejected(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    raw = _signed_receipt(lane, decision, candidate, TEST_PUBLIC_KEY)
+    registry = (
+        candidate.repo_root
+        / "docs/research_program/post_pr275/human_authority_registry.json"
+    )
+    registry.write_text("{}\n", encoding="utf-8")
+
+    with pytest.raises(HumanExecutionAuthorizationError, match="dirty"):
+        _validate(raw, lane, decision, candidate)
+
+
+def test_lane_toctou_001_worktree_lane_registry_swap_is_rejected(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    registry = candidate.repo_root / REGISTRY.relative_to(ROOT)
+    registry.write_text("{}\n", encoding="utf-8")
+
+    with pytest.raises(HumanExecutionAuthorizationError, match="dirty"):
+        authorization.replay_complete_lane_admission(
+            lane_spec=lane,
+            admission_decision=decision,
+            candidate_identity=candidate,
+        )
+
+
+def test_provider_toctou_001_worktree_resource_swap_is_rejected(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    (candidate.repo_root / "provider-config.json").write_text(
+        '{"model":"attacker"}\n', encoding="utf-8"
+    )
+
+    with pytest.raises(ProductionBayesianError, match="replay"):
+        _bound_model(lane, decision, candidate, provider)
+
+
+def test_candidate_blob_reader_returns_commit_bytes_not_pathname_bytes(
+    tmp_path: Path,
+) -> None:
+    candidate, _ = _candidate_repo(tmp_path)
+    expected = (candidate.repo_root / "provider.py").read_bytes()
+    assert read_candidate_blob(candidate, "provider.py") == expected
