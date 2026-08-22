@@ -120,11 +120,11 @@ def test_all_registered_lanes_are_readiness_only_until_bound_and_authorized() ->
     assert tuple(item.lane_id for item in descriptors) == ("H-PLANCK", "H-DESI", "H-CF4", "H-JWST", "H-ACT")
     assert all((ROOT / path).is_file() for item in descriptors for path in item.runner_patterns)
     assert {assess_lane_readiness(item).status for item in descriptors} == {
-        LaneReadinessStatus.BLOCKED_DATA_ADMISSION_UNBOUND
+        LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND
     }
     desi = next(item for item in descriptors if item.lane_id == "H-DESI")
     decision = assess_lane_readiness(desi, model_contract=_contract())
-    assert decision.status is LaneReadinessStatus.BLOCKED_DATA_ADMISSION_UNBOUND
+    assert decision.status is LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND
     assert decision.blocked_reasons == ("complete_pr289_lane_admission_unbound",)
 
 

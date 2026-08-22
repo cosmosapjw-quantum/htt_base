@@ -1,37 +1,54 @@
 from __future__ import annotations
 
+import base64
+from dataclasses import replace
 import hashlib
-import hmac
+import io
 import json
 from pathlib import Path
+import shutil
+import subprocess
+import tarfile
+from types import SimpleNamespace
 
-import pytest
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 import numpy as np
+import pytest
 
 from common.data_identity import (
     _build_registered_native_profile,
     AdmissionStatus,
+    build_not_authorized_receipt,
     canonical_sha256,
     compute_source_locator_identity,
     evaluate_lane_identity,
     load_lane_registry,
 )
+import common.human_execution_authorization as authorization
 from common.human_execution_authorization import (
     AUTHORIZATION_DOMAIN,
     AUTHORIZATION_SCHEMA,
+    CandidateIdentityV1,
     HumanExecutionAuthorizationError,
     HumanExecutionAuthorizationReceiptV1,
     ValidatedHumanExecutionAuthorization,
+    admitted_covariance_identity,
+    admitted_data_identity,
+    build_clean_candidate_identity,
+    revalidate_cached_human_execution_authorization,
     validate_human_execution_authorization,
 )
 from htt.infer.bayesian_production import (
     LaneReadinessStatus,
+    ObservationalLaneDescriptor,
     ProductionBayesianError,
     assess_lane_readiness,
+    bind_production_model_contract,
     build_posterior_consumer_plan,
     build_production_model_contract,
     build_sampler_posterior_lineage,
-    load_observational_lane_descriptors,
+    revalidate_bound_production_model_contract,
 )
 
 
@@ -40,10 +57,24 @@ REGISTRY = (
     ROOT
     / "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
 )
-COMMIT = "a" * 40
-TREE = "b" * 40
+STALE_RECEIPT = ROOT / "docs/generated/pr289_data_identity_v2_receipt.json"
 EVALUATED = "2026-08-22T12:00:00Z"
-KEY = b"test-only-external-authority-key"
+VALID_NONCE = "nonce:v1:" + hashlib.sha256(b"pr304-hostile-test-nonce").hexdigest()
+TRUSTED_KEY_ID = "H-ACT-OWNER-ED25519-V1"
+LANE_ORDER = ("PLANCK", "CF4", "HSC_KIDS", "ACT", "DESI", "JWST_SN")
+GATES = {
+    "PLANCK": "H-PLANCK",
+    "CF4": "H-CF4",
+    "HSC_KIDS": "H-HSC-KiDS",
+    "ACT": "H-ACT",
+    "DESI": "H-DESI",
+    "JWST_SN": "H-JWST",
+}
+SCOPES = {
+    lane: f"admitted_{lane.casefold()}_observed_execution" for lane in LANE_ORDER
+}
+SCOPES["HSC_KIDS"] = "admitted_hsc_kids_observed_execution"
+SCOPES["JWST_SN"] = "admitted_jwst_sn_observed_execution"
 
 
 def _canonical(payload: dict[str, object]) -> bytes:
@@ -56,25 +87,74 @@ def _canonical(payload: dict[str, object]) -> bytes:
     ).encode("ascii")
 
 
-def _admitted_act(tmp_path: Path):
+def _git(repo: Path, *args: str) -> str:
+    completed = subprocess.run(
+        ["git", "-C", str(repo), *args],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert completed.returncode == 0, completed.stderr
+    return completed.stdout.strip()
+
+
+def _candidate_repo(tmp_path: Path) -> tuple[CandidateIdentityV1, SimpleNamespace]:
+    repo = (tmp_path / "candidate").resolve()
+    repo.mkdir()
+    _git(repo, "init", "-b", "pr304-test-candidate")
+    _git(repo, "config", "user.name", "PR304 Test")
+    _git(repo, "config", "user.email", "pr304-test@example.invalid")
+    source = repo / "provider.py"
+    source.write_text(
+        "def log_likelihood(theta):\n"
+        "    return -float((theta * theta).sum())\n\n"
+        "def prior_transform(unit):\n"
+        "    return unit\n\n"
+        "def replicate_generator(theta, rng):\n"
+        "    return theta + rng.normal(size=len(theta))\n\n"
+        "def discrepancy(observed, replicated):\n"
+        "    return float((observed - replicated).sum())\n",
+        encoding="utf-8",
+    )
+    (repo / "provider-config.json").write_text(
+        '{"model":"act-contract-test","version":1}\n', encoding="utf-8"
+    )
+    (repo / "environment.lock").write_text(
+        "python=3.12\nnumpy=test-fixture\n", encoding="utf-8"
+    )
+    _git(repo, "add", "--", "provider.py", "provider-config.json", "environment.lock")
+    _git(repo, "commit", "-m", "test candidate")
+    namespace: dict[str, object] = {"np": np, "__file__": str(source)}
+    exec(compile(source.read_bytes(), str(source), "exec"), namespace)
+    provider = SimpleNamespace(
+        log_likelihood=namespace["log_likelihood"],
+        prior_transform=namespace["prior_transform"],
+        replicate_generator=namespace["replicate_generator"],
+        discrepancy=namespace["discrepancy"],
+        config_path="provider-config.json",
+        environment_path="environment.lock",
+    )
+    return build_clean_candidate_identity(repo), provider
+
+
+def _admitted_act(tmp_path: Path, *, payload_tag: str = "baseline"):
     registry = load_lane_registry(REGISTRY)
     lane = registry.lane("ACT")
-    root = tmp_path / "act-input"
-    root.mkdir()
+    root = (tmp_path / "act-input").resolve()
+    root.mkdir(parents=True)
     components: list[dict[str, object]] = []
     for ordinal, component_id in enumerate(lane.expected_component_sequence):
         relative = f"components/{ordinal:02d}-{component_id}.bin"
         path = root / relative
         path.parent.mkdir(exist_ok=True)
-        raw = f"ACT:{component_id}:{ordinal}\n".encode("ascii")
+        raw = f"ACT:{payload_tag}:{component_id}:{ordinal}\n".encode("ascii")
         path.write_bytes(raw)
-        digest = hashlib.sha256(raw).hexdigest()
         components.append(
             {
                 "component_id": component_id,
                 "relative_path": relative,
                 "byte_size": len(raw),
-                "content_sha256": digest,
+                "content_sha256": hashlib.sha256(raw).hexdigest(),
             }
         )
     evidence: dict[str, object] = {
@@ -116,7 +196,9 @@ def _admitted_act(tmp_path: Path):
     )
     evidence_path = root / "identity/evidence.json"
     evidence_path.parent.mkdir()
-    evidence_path.write_text(json.dumps(evidence, sort_keys=True) + "\n", encoding="utf-8")
+    evidence_path.write_text(
+        json.dumps(evidence, sort_keys=True) + "\n", encoding="utf-8"
+    )
     decision = evaluate_lane_identity(
         registry=registry,
         lane_id=lane.lane_id,
@@ -134,7 +216,63 @@ def _admitted_act(tmp_path: Path):
     return lane, decision
 
 
-def _payload(lane, decision, *, key: bytes = KEY, **overrides: object) -> dict[str, object]:
+def _install_authority_registry(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    public_key: bytes,
+    *,
+    key_id: str = TRUSTED_KEY_ID,
+) -> Path:
+    authorities = {
+        lane: {
+            "status": "PENDING_HUMAN_PROVISIONING",
+            "key_id": None,
+            "public_key_base64": None,
+            "gate_id": GATES[lane],
+            "scope": SCOPES[lane],
+        }
+        for lane in LANE_ORDER
+    }
+    authorities["ACT"] = {
+        "status": "ACTIVE",
+        "key_id": key_id,
+        "public_key_base64": base64.b64encode(public_key).decode("ascii"),
+        "gate_id": GATES["ACT"],
+        "scope": SCOPES["ACT"],
+    }
+    path = tmp_path / "human-authority-registry.json"
+    path.write_text(
+        json.dumps(
+            {
+                "schema": "common.human_authority_registry.v1",
+                "lane_order": list(LANE_ORDER),
+                "authorities": authorities,
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(authorization, "_AUTHORITY_REGISTRY_PATH", path)
+    return path
+
+
+def _public_bytes(private_key: Ed25519PrivateKey) -> bytes:
+    return private_key.public_key().public_bytes(
+        encoding=serialization.Encoding.Raw,
+        format=serialization.PublicFormat.Raw,
+    )
+
+
+def _signed_receipt(
+    lane,
+    decision,
+    candidate: CandidateIdentityV1,
+    private_key: Ed25519PrivateKey,
+    *,
+    signer_key_id: str = TRUSTED_KEY_ID,
+    **overrides: object,
+) -> bytes:
     unsigned: dict[str, object] = {
         "schema": AUTHORIZATION_SCHEMA,
         "lane_id": lane.lane_id,
@@ -144,77 +282,186 @@ def _payload(lane, decision, *, key: bytes = KEY, **overrides: object) -> dict[s
         "required_human_gate_id": lane.required_human_gate_id,
         "authorized_scope": "admitted_act_observed_execution",
         "authorization_domain": AUTHORIZATION_DOMAIN,
-        "candidate_commit": COMMIT,
-        "candidate_tree": TREE,
+        "candidate_commit": candidate.commit,
+        "candidate_tree": candidate.tree,
         "issued_at_utc": "2026-08-22T11:45:00Z",
         "expires_at_utc": "2026-08-22T12:15:00Z",
-        "nonce": "test-nonce-0001",
-        "authority_key_id": "sha256:" + hashlib.sha256(key).hexdigest(),
+        "nonce": VALID_NONCE,
+        "signer_key_id": signer_key_id,
     }
     unsigned.update(overrides)
-    unsigned["authorization_id"] = canonical_sha256(unsigned)
-    signed = {"authorization_id": unsigned.pop("authorization_id"), **unsigned}
-    return {
-        **signed,
-        "authorization_hmac_sha256": hmac.new(key, _canonical(signed), hashlib.sha256).hexdigest(),
-    }
+    authorization_id = canonical_sha256(unsigned)
+    signed = {"authorization_id": authorization_id, **unsigned}
+    signature = private_key.sign(_canonical(signed))
+    return _canonical(
+        {
+            **signed,
+            "authorization_signature_ed25519": base64.b64encode(signature).decode(
+                "ascii"
+            ),
+        }
+    )
 
 
-def _validate(payload: dict[str, object], lane, decision, key_path: Path):
+def _validate(raw: bytes, lane, decision, candidate: CandidateIdentityV1):
     return validate_human_execution_authorization(
-        receipt_payload=payload,
+        signed_receipt_bytes=raw,
         lane_spec=lane,
         admission_decision=decision,
-        expected_candidate_commit=COMMIT,
-        expected_candidate_tree=TREE,
+        candidate_identity=candidate,
         evaluated_at_utc=EVALUATED,
-        authority_key_path=key_path,
     )
 
 
-def test_validates_complete_admission_without_consuming_nonce(tmp_path: Path) -> None:
+def _bound_model(lane, decision, candidate: CandidateIdentityV1, provider):
+    base = build_production_model_contract(
+        lane_id="H-ACT",
+        model_id="act-admission-bound-test-model",
+        parameter_schema={"amplitude": {"support": "real", "role": "signal"}},
+        likelihood_identity="sha256:" + "1" * 64,
+        prior_identity="sha256:" + "2" * 64,
+        data_identity=admitted_data_identity(decision),
+        covariance_identity=admitted_covariance_identity(decision),
+        block_ids=("act-block-a", "act-block-b"),
+        response_rank=1,
+        likelihood_normalized=True,
+        prior_normalized=True,
+        log_likelihood=provider.log_likelihood,
+        prior_transform=provider.prior_transform,
+        replicate_generator=provider.replicate_generator,
+        discrepancies={"amplitude": provider.discrepancy},
+    )
+    return bind_production_model_contract(
+        contract=base,
+        lane_spec=lane,
+        admission_decision=decision,
+        candidate_identity=candidate,
+        provider_configuration_path=Path(provider.config_path),
+        provider_environment_path=Path(provider.environment_path),
+    )
+
+
+def test_validates_pinned_ed25519_receipt_as_non_authoritative_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     lane, decision = _admitted_act(tmp_path)
-    key_path = tmp_path.parent / "external-authority.key"
-    key_path.write_bytes(KEY)
-    validated = _validate(_payload(lane, decision), lane, decision, key_path)
-    assert isinstance(validated, ValidatedHumanExecutionAuthorization)
-    assert validated.receipt.exact_admission_record_ids == tuple(
-        record.record_id for record in decision.records
+    candidate, _ = _candidate_repo(tmp_path)
+    signer = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    raw = _signed_receipt(lane, decision, candidate, signer)
+    cache = _validate(raw, lane, decision, candidate)
+    assert isinstance(cache, ValidatedHumanExecutionAuthorization)
+    assert cache.signed_receipt_bytes == raw
+    assert cache.receipt.nonce == VALID_NONCE
+    assert build_clean_candidate_identity(candidate.repo_root) == candidate
+
+
+def test_auth_trust_001_rejects_arbitrary_self_signed_key(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    trusted = Ed25519PrivateKey.generate()
+    attacker = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(trusted))
+    raw = _signed_receipt(
+        lane,
+        decision,
+        candidate,
+        attacker,
+        signer_key_id="ATTACKER-SELF-SIGNED-ED25519",
     )
-    assert validated.replayed_admission_bundle_id == decision.lane_admission_bundle_id
-    assert validated.validated_at_utc == EVALUATED
-    assert "nonce" not in validated.as_payload()
-    object.__setattr__(validated.receipt, "candidate_tree", "f" * 40)
-    with pytest.raises(HumanExecutionAuthorizationError, match="object drifted"):
-        validated.as_payload()
+    with pytest.raises(HumanExecutionAuthorizationError, match="trusted human signer"):
+        _validate(raw, lane, decision, candidate)
+
+
+def test_auth_trust_002_rejects_registered_signer_drift(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    original = Ed25519PrivateKey.generate()
+    replacement = Ed25519PrivateKey.generate()
+    raw = _signed_receipt(lane, decision, candidate, original)
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(replacement))
+    with pytest.raises(HumanExecutionAuthorizationError, match="signature"):
+        _validate(raw, lane, decision, candidate)
+
+
+def test_production_registry_is_fail_closed_pending_human_provisioning(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    attacker = Ed25519PrivateKey.generate()
+    with pytest.raises(HumanExecutionAuthorizationError, match="not active"):
+        _validate(
+            _signed_receipt(lane, decision, candidate, attacker),
+            lane,
+            decision,
+            candidate,
+        )
 
 
 @pytest.mark.parametrize(
     ("mutation", "match"),
     (
         (lambda payload: payload.__setitem__("lane_id", "PLANCK"), "lane does not match"),
-        (lambda payload: payload.__setitem__("exact_admission_record_ids", list(reversed(payload["exact_admission_record_ids"]))), "ordering or membership"),
-        (lambda payload: payload.__setitem__("exact_admission_record_ids", payload["exact_admission_record_ids"][:-1]), "ordering or membership"),
-        (lambda payload: payload.__setitem__("exact_admission_record_ids", [payload["exact_admission_record_ids"][0]] * 2), "unique"),
-        (lambda payload: payload.__setitem__("lane_admission_bundle_id", "sha256:" + "0" * 64), "admission bundle"),
+        (
+            lambda payload: payload.__setitem__(
+                "exact_admission_record_ids",
+                list(reversed(payload["exact_admission_record_ids"])),
+            ),
+            "ordering or membership",
+        ),
+        (
+            lambda payload: payload.__setitem__(
+                "exact_admission_record_ids", payload["exact_admission_record_ids"][:-1]
+            ),
+            "ordering or membership",
+        ),
+        (
+            lambda payload: payload.__setitem__(
+                "exact_admission_record_ids",
+                [payload["exact_admission_record_ids"][0]] * 2,
+            ),
+            "unique",
+        ),
+        (
+            lambda payload: payload.__setitem__(
+                "lane_admission_bundle_id", "sha256:" + "0" * 64
+            ),
+            "admission bundle",
+        ),
         (lambda payload: payload.__setitem__("analysis_plan_id", "plan:wrong"), "analysis plan"),
         (lambda payload: payload.__setitem__("required_human_gate_id", "H-WRONG"), "human gate"),
         (lambda payload: payload.__setitem__("authorized_scope", "unknown_scope"), "scope"),
         (lambda payload: payload.__setitem__("authorization_domain", "unknown_domain"), "domain"),
-        (lambda payload: payload.__setitem__("candidate_commit", "c" * 40), "candidate commit or tree"),
-        (lambda payload: payload.__setitem__("candidate_tree", "d" * 40), "candidate commit or tree"),
+        (lambda payload: payload.__setitem__("candidate_commit", "c" * 40), "candidate identity"),
+        (lambda payload: payload.__setitem__("candidate_tree", "d" * 40), "candidate identity"),
     ),
 )
-def test_rejects_re_signed_binding_drift(tmp_path: Path, mutation, match: str) -> None:
+def test_rejects_resigned_binding_drift(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    mutation,
+    match: str,
+) -> None:
     lane, decision = _admitted_act(tmp_path)
-    key_path = tmp_path.parent / "external-authority.key"
-    key_path.write_bytes(KEY)
-    payload = _payload(lane, decision)
-    unsigned = {key: value for key, value in payload.items() if key not in {"authorization_id", "authorization_hmac_sha256"}}
+    candidate, _ = _candidate_repo(tmp_path)
+    signer = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    baseline = json.loads(_signed_receipt(lane, decision, candidate, signer))
+    unsigned = {
+        key: value
+        for key, value in baseline.items()
+        if key
+        not in {"authorization_id", "authorization_signature_ed25519", "schema"}
+    }
     mutation(unsigned)
-    payload = _payload(lane, decision, **unsigned)
+    raw = _signed_receipt(lane, decision, candidate, signer, **unsigned)
     with pytest.raises(HumanExecutionAuthorizationError, match=match):
-        _validate(payload, lane, decision, key_path)
+        _validate(raw, lane, decision, candidate)
 
 
 @pytest.mark.parametrize(
@@ -227,68 +474,187 @@ def test_rejects_re_signed_binding_drift(tmp_path: Path, mutation, match: str) -
     ),
 )
 def test_rejects_invalid_time_intervals(
-    tmp_path: Path, issued: str, expires: str, evaluated: str, match: str
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    issued: str,
+    expires: str,
+    evaluated: str,
+    match: str,
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
-    key_path = tmp_path.parent / "external-authority.key"
-    key_path.write_bytes(KEY)
-    payload = _payload(lane, decision, issued_at_utc=issued, expires_at_utc=expires)
-    with pytest.raises(HumanExecutionAuthorizationError, match=match):
-        validate_human_execution_authorization(
-            receipt_payload=payload,
-            lane_spec=lane,
-            admission_decision=decision,
-            expected_candidate_commit=COMMIT,
-            expected_candidate_tree=TREE,
-            evaluated_at_utc=evaluated,
-            authority_key_path=key_path,
-        )
-
-
-def test_rejects_noncanonical_but_parseable_timestamp(tmp_path: Path) -> None:
-    lane, decision = _admitted_act(tmp_path)
-    key_path = tmp_path.parent / "external-authority.key"
-    key_path.write_bytes(KEY)
-    payload = _payload(
+    candidate, _ = _candidate_repo(tmp_path)
+    signer = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    raw = _signed_receipt(
         lane,
         decision,
-        issued_at_utc="2026-8-22T11:45:00Z",
+        candidate,
+        signer,
+        issued_at_utc=issued,
+        expires_at_utc=expires,
     )
-    with pytest.raises(HumanExecutionAuthorizationError, match="canonical UTC timestamp"):
-        _validate(payload, lane, decision, key_path)
-
-
-def test_rejects_forged_key_pr289_receipt_and_caller_capability(tmp_path: Path) -> None:
-    lane, decision = _admitted_act(tmp_path)
-    key_path = tmp_path.parent / "external-authority.key"
-    key_path.write_bytes(KEY)
-    forged = _payload(lane, decision)
-    forged["authorization_hmac_sha256"] = "0" * 64
-    with pytest.raises(HumanExecutionAuthorizationError, match="HMAC"):
-        _validate(forged, lane, decision, key_path)
-
-    unknown_key = _payload(lane, decision, authority_key_id="sha256:" + "f" * 64)
-    with pytest.raises(HumanExecutionAuthorizationError, match="key id"):
-        _validate(unknown_key, lane, decision, key_path)
-
-    pr289 = __import__("common.data_identity", fromlist=["build_not_authorized_receipt"])
-    pr289_receipt = pr289.build_not_authorized_receipt(lane, decision)
-    with pytest.raises(HumanExecutionAuthorizationError, match="fields drifted"):
-        _validate(pr289_receipt.as_payload(), lane, decision, key_path)
-
-    receipt = HumanExecutionAuthorizationReceiptV1.from_payload(_payload(lane, decision))
-    with pytest.raises(HumanExecutionAuthorizationError, match="validator-built"):
-        ValidatedHumanExecutionAuthorization(
-            receipt=receipt,
-            replayed_lane_spec_content_id="sha256:" + "1" * 64,
-            replayed_admission_bundle_id=decision.lane_admission_bundle_id,
-            validated_at_utc=EVALUATED,
-            validation_content_id="sha256:" + "2" * 64,
+    with pytest.raises(HumanExecutionAuthorizationError, match=match):
+        validate_human_execution_authorization(
+            signed_receipt_bytes=raw,
+            lane_spec=lane,
+            admission_decision=decision,
+            candidate_identity=candidate,
+            evaluated_at_utc=evaluated,
         )
 
 
-def test_rejects_refused_admission_and_repository_key(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    "bad_nonce",
+    (
+        "short",
+        " nonce:v1:" + "a" * 64,
+        "nonce:v1:" + "A" * 64,
+        "nonce:v1:" + "a" * 63,
+        "nonce:v1:" + "0" * 63 + "g",
+        "nonce:v1:" + "ab" * 32,
+    ),
+)
+def test_auth_nonce_001_rejects_noncanonical_nonce(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    bad_nonce: str,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    signer = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    with pytest.raises(HumanExecutionAuthorizationError, match="nonce:v1"):
+        _validate(
+            _signed_receipt(lane, decision, candidate, signer, nonce=bad_nonce),
+            lane,
+            decision,
+            candidate,
+        )
+
+
+def test_auth_json_001_rejects_duplicate_and_noncanonical_json(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    signer = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    raw = _signed_receipt(lane, decision, candidate, signer)
+    duplicate = raw.replace(
+        b'{"analysis_plan_id"',
+        b'{"nonce":"nonce:v1:' + b"b" * 64 + b'","analysis_plan_id"',
+        1,
+    )
+    with pytest.raises(HumanExecutionAuthorizationError, match="duplicate key"):
+        _validate(duplicate, lane, decision, candidate)
+    with pytest.raises(HumanExecutionAuthorizationError, match="not canonical"):
+        _validate(raw + b"\n", lane, decision, candidate)
+
+
+def test_auth_candidate_001_rejects_fake_and_dirty_candidate(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    signer = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    raw = _signed_receipt(lane, decision, candidate, signer)
+    forged = CandidateIdentityV1(
+        repo_root=candidate.repo_root,
+        branch=candidate.branch,
+        commit="a" * 40,
+        tree="b" * 40,
+        candidate_identity_id="sha256:" + "c" * 64,
+    )
+    with pytest.raises(HumanExecutionAuthorizationError, match="stale or forged"):
+        _validate(raw, lane, decision, forged)
+    (candidate.repo_root / "dirty-untracked.txt").write_text("dirty\n", encoding="utf-8")
+    with pytest.raises(HumanExecutionAuthorizationError, match="dirty"):
+        _validate(raw, lane, decision, candidate)
+
+
+def test_auth_cap_001_and_002_forged_cache_is_not_authority(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    trusted = Ed25519PrivateKey.generate()
+    attacker = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(trusted))
+    attacker_raw = _signed_receipt(lane, decision, candidate, attacker)
+    parsed = HumanExecutionAuthorizationReceiptV1.from_bytes(attacker_raw)
+    assert not hasattr(authorization, "_VALIDATION_TOKEN")
+    forged = ValidatedHumanExecutionAuthorization(
+        signed_receipt_bytes=attacker_raw,
+        receipt=parsed,
+        replayed_lane_spec_content_id="sha256:" + "1" * 64,
+        replayed_admission_bundle_id=decision.lane_admission_bundle_id,
+        validated_candidate_identity_id=candidate.candidate_identity_id,
+        validated_at_utc=EVALUATED,
+        validation_content_id="sha256:" + "2" * 64,
+    )
+    with pytest.raises(HumanExecutionAuthorizationError, match="signature"):
+        revalidate_cached_human_execution_authorization(
+            cached=forged,
+            lane_spec=lane,
+            admission_decision=decision,
+            candidate_identity=candidate,
+            evaluated_at_utc=EVALUATED,
+        )
+    raw_forged = object.__new__(ValidatedHumanExecutionAuthorization)
+    object.__setattr__(raw_forged, "signed_receipt_bytes", attacker_raw)
+    with pytest.raises(HumanExecutionAuthorizationError, match="signature"):
+        revalidate_cached_human_execution_authorization(
+            cached=raw_forged,
+            lane_spec=lane,
+            admission_decision=decision,
+            candidate_identity=candidate,
+            evaluated_at_utc=EVALUATED,
+        )
+
+
+def test_auth_time_001_rejects_cache_after_expiry(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    signer = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    cache = _validate(
+        _signed_receipt(lane, decision, candidate, signer),
+        lane,
+        decision,
+        candidate,
+    )
+    with pytest.raises(HumanExecutionAuthorizationError, match="expired"):
+        revalidate_cached_human_execution_authorization(
+            cached=cache,
+            lane_spec=lane,
+            admission_decision=decision,
+            candidate_identity=candidate,
+            evaluated_at_utc="2026-08-22T12:16:00Z",
+        )
+
+
+def test_auth_pr289_001_rejects_not_authorized_receipt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    signer = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    pr289 = build_not_authorized_receipt(lane, decision)
+    with pytest.raises(HumanExecutionAuthorizationError, match="fields drifted"):
+        _validate(_canonical(pr289.as_payload()), lane, decision, candidate)
+
+
+def test_rejects_refused_admission(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     lane, admitted = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    signer = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
     refused = evaluate_lane_identity(
         registry=load_lane_registry(REGISTRY),
         lane_id="ACT",
@@ -296,106 +662,262 @@ def test_rejects_refused_admission_and_repository_key(tmp_path: Path) -> None:
         inspected_at_utc="2026-08-22T11:00:00Z",
     )
     assert refused.status is AdmissionStatus.REJECTED_NOT_PRESENT
-    external_key = tmp_path.parent / "external-authority.key"
-    external_key.write_bytes(KEY)
     with pytest.raises(HumanExecutionAuthorizationError, match="complete admitted"):
-        _validate(_payload(lane, admitted), lane, refused, external_key)
+        _validate(
+            _signed_receipt(lane, admitted, candidate, signer),
+            lane,
+            refused,
+            candidate,
+        )
 
-    in_repository_key = ROOT / ".pr304-test-authority.key"
-    with pytest.raises(HumanExecutionAuthorizationError, match="outside the repository"):
-        _validate(_payload(lane, admitted), lane, admitted, in_repository_key)
 
-
-def test_rejects_symlinked_external_authority_key(tmp_path: Path) -> None:
+def test_readiness_reverifies_signed_authorization_and_bound_model(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     lane, decision = _admitted_act(tmp_path)
-    key_path = tmp_path.parent / "external-authority.key"
-    key_path.write_bytes(KEY)
-    symlink_path = tmp_path.parent / "external-authority-link.key"
-    symlink_path.symlink_to(key_path)
-    with pytest.raises(HumanExecutionAuthorizationError, match="one external regular file"):
-        _validate(_payload(lane, decision), lane, decision, symlink_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    signer = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(signer))
+    cache = _validate(
+        _signed_receipt(lane, decision, candidate, signer),
+        lane,
+        decision,
+        candidate,
+    )
+    model = _bound_model(lane, decision, candidate, provider)
+    descriptor = ObservationalLaneDescriptor("H-ACT", ("provider.py",))
+    result = assess_lane_readiness(
+        descriptor,
+        model_contract=model,
+        admission_decision=decision,
+        validated_human_authorization=cache,
+        candidate_identity=candidate,
+        evaluated_at_utc=EVALUATED,
+    )
+    assert result.status is LaneReadinessStatus.READY_TO_START_SAMPLER
+    assert result.observed_data_executed is False
+    assert model.lane_admission_bundle_id == decision.lane_admission_bundle_id
+    assert model.ordered_admission_record_ids == tuple(
+        record.record_id for record in decision.records
+    )
+    assert model.admitted_covariance_identity == admitted_covariance_identity(
+        decision
+    )
 
 
-def test_readiness_splits_authorization_sampler_start_and_posterior_consumers(
+def test_model_bind_001_rejects_bundle_a_model_b(
+    tmp_path: Path,
+) -> None:
+    lane_a, decision_a = _admitted_act(
+        tmp_path / "admission-a", payload_tag="bundle-a"
+    )
+    lane_b, decision_b = _admitted_act(
+        tmp_path / "admission-b", payload_tag="bundle-b"
+    )
+    candidate, provider = _candidate_repo(tmp_path)
+    model_a = _bound_model(lane_a, decision_a, candidate, provider)
+    assert decision_a.lane_admission_bundle_id != decision_b.lane_admission_bundle_id
+    with pytest.raises(ProductionBayesianError, match="binding failed"):
+        assess_lane_readiness(
+            ObservationalLaneDescriptor("H-ACT", ("provider.py",)),
+            model_contract=model_a,
+            admission_decision=decision_b,
+            candidate_identity=candidate,
+        )
+    assert lane_a.as_payload() == lane_b.as_payload()
+
+
+def test_model_bind_002_rejects_covariance_mismatch(
     tmp_path: Path,
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
-    descriptor = next(
-        row
-        for row in load_observational_lane_descriptors(
-            ROOT / "docs/research_program/post_pr275/pr299_spec.yaml"
-        )
-        if row.lane_id == "H-ACT"
-    )
-    contract = build_production_model_contract(
+    candidate, provider = _candidate_repo(tmp_path)
+    base = build_production_model_contract(
         lane_id="H-ACT",
-        model_id="act-contract-test",
-        parameter_schema={"amplitude": {"support": "real", "role": "signal"}},
+        model_id="wrong-covariance-model",
+        parameter_schema={"amplitude": {"support": "real"}},
         likelihood_identity="sha256:" + "1" * 64,
         prior_identity="sha256:" + "2" * 64,
-        data_identity="sha256:" + "3" * 64,
-        covariance_identity="sha256:" + "4" * 64,
-        block_ids=("ACT-a", "ACT-b"),
+        data_identity=admitted_data_identity(decision),
+        covariance_identity="sha256:" + "0" * 64,
+        block_ids=("a", "b"),
         response_rank=1,
         likelihood_normalized=True,
         prior_normalized=True,
-        log_likelihood=lambda theta: -float(np.dot(theta, theta)),
-        prior_transform=lambda unit: np.asarray(unit),
-        replicate_generator=lambda theta, rng: np.asarray(theta) + rng.normal(size=len(theta)),
-        discrepancies={"amplitude": lambda observed, replicated: float(np.sum(observed - replicated))},
+        log_likelihood=provider.log_likelihood,
+        prior_transform=provider.prior_transform,
+        replicate_generator=provider.replicate_generator,
+        discrepancies={"amplitude": provider.discrepancy},
     )
-    assert assess_lane_readiness(descriptor, model_contract=contract).status is (
-        LaneReadinessStatus.BLOCKED_DATA_ADMISSION_UNBOUND
-    )
-    assert assess_lane_readiness(
-        descriptor, model_contract=contract, admission_decision=decision
-    ).status is LaneReadinessStatus.BLOCKED_HUMAN_AUTHORIZATION
+    with pytest.raises(ProductionBayesianError, match="covariance identity"):
+        bind_production_model_contract(
+            contract=base,
+            lane_spec=lane,
+            admission_decision=decision,
+            candidate_identity=candidate,
+            provider_configuration_path=Path(provider.config_path),
+            provider_environment_path=Path(provider.environment_path),
+        )
 
-    key_path = tmp_path.parent / "external-authority.key"
-    key_path.write_bytes(KEY)
-    validated = _validate(_payload(lane, decision), lane, decision, key_path)
-    ready = assess_lane_readiness(
-        descriptor,
-        model_contract=contract,
-        admission_decision=decision,
-        validated_human_authorization=validated,
-    )
-    assert ready.status is LaneReadinessStatus.READY_TO_START_SAMPLER
-    assert ready.observed_data_executed is False
 
+def test_model_provider_001_code_change_invalidates_contract_identity(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    bound = _bound_model(lane, decision, candidate, provider)
     lineage = build_sampler_posterior_lineage(
-        contract=contract,
-        samples=np.array([[0.0], [1.0], [2.0]]),
-        normalized_weights=np.array([0.2, 0.3, 0.5]),
-        sampler_settings={"nlive": 200, "dlogz": 0.1, "bound": "multi", "sample": "rwalk", "seed": 7},
+        contract=bound,
+        samples=np.asarray([[0.0], [1.0], [2.0]]),
+        normalized_weights=np.asarray([0.2, 0.3, 0.5]),
+        sampler_settings={
+            "nlive": 200,
+            "dlogz": 0.1,
+            "bound": "multi",
+            "sample": "rwalk",
+            "seed": 7,
+        },
         resampling_rule="systematic",
     )
-    assert assess_lane_readiness(
-        descriptor,
-        model_contract=contract,
-        admission_decision=decision,
-        validated_human_authorization=validated,
-        posterior_lineage=lineage,
-    ).status is LaneReadinessStatus.BLOCKED_SAMPLER_TERMINAL
-    consumer = build_posterior_consumer_plan(
-        contract=contract,
-        lineage=lineage,
-        ppc_discrepancy_ids=("amplitude",),
-        loo_block_ids=("ACT-a", "ACT-b"),
+    source = candidate.repo_root / "provider.py"
+    source.write_text(source.read_text(encoding="utf-8") + "\n# provider-v2\n", encoding="utf-8")
+    _git(candidate.repo_root, "add", "--", "provider.py")
+    _git(candidate.repo_root, "commit", "-m", "change provider bytes")
+    new_candidate = build_clean_candidate_identity(candidate.repo_root)
+    with pytest.raises(ProductionBayesianError, match="stale or forged"):
+        revalidate_bound_production_model_contract(
+            contract=bound,
+            lane_spec=lane,
+            admission_decision=decision,
+            candidate_identity=new_candidate,
+        )
+    namespace: dict[str, object] = {"np": np, "__file__": str(source)}
+    exec(compile(source.read_bytes(), str(source), "exec"), namespace)
+    new_provider = SimpleNamespace(
+        log_likelihood=namespace["log_likelihood"],
+        prior_transform=namespace["prior_transform"],
+        replicate_generator=namespace["replicate_generator"],
+        discrepancy=namespace["discrepancy"],
+        config_path="provider-config.json",
+        environment_path="environment.lock",
     )
-    assert assess_lane_readiness(
-        descriptor,
-        model_contract=contract,
-        admission_decision=decision,
-        validated_human_authorization=validated,
-        posterior_lineage=lineage,
-        posterior_consumer_plan=consumer,
-    ).status is LaneReadinessStatus.READY_FOR_POSTERIOR_CONSUMERS
-    object.__setattr__(validated.receipt, "candidate_commit", "e" * 40)
-    with pytest.raises(ProductionBayesianError, match="content identity drifted"):
+    rebound = _bound_model(lane, decision, new_candidate, new_provider)
+    assert rebound.contract_content_id != bound.contract_content_id
+    with pytest.raises(ProductionBayesianError, match="does not bind"):
+        build_posterior_consumer_plan(
+            contract=rebound,
+            lineage=lineage,
+            ppc_discrepancy_ids=("amplitude",),
+            loo_block_ids=("act-block-a", "act-block-b"),
+        )
+
+
+def test_readiness_rejects_forged_cache_and_expired_cached_receipt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    trusted = Ed25519PrivateKey.generate()
+    attacker = Ed25519PrivateKey.generate()
+    _install_authority_registry(tmp_path, monkeypatch, _public_bytes(trusted))
+    model = _bound_model(lane, decision, candidate, provider)
+    descriptor = ObservationalLaneDescriptor("H-ACT", ("provider.py",))
+    attacker_raw = _signed_receipt(lane, decision, candidate, attacker)
+    forged = ValidatedHumanExecutionAuthorization(
+        signed_receipt_bytes=attacker_raw,
+        receipt=HumanExecutionAuthorizationReceiptV1.from_bytes(attacker_raw),
+        replayed_lane_spec_content_id="sha256:" + "1" * 64,
+        replayed_admission_bundle_id=decision.lane_admission_bundle_id,
+        validated_candidate_identity_id=candidate.candidate_identity_id,
+        validated_at_utc=EVALUATED,
+        validation_content_id="sha256:" + "2" * 64,
+    )
+    with pytest.raises(ProductionBayesianError, match="just-in-time"):
         assess_lane_readiness(
             descriptor,
-            model_contract=contract,
+            model_contract=model,
             admission_decision=decision,
-            validated_human_authorization=validated,
+            validated_human_authorization=forged,
+            candidate_identity=candidate,
+            evaluated_at_utc=EVALUATED,
         )
+    valid = _validate(
+        _signed_receipt(lane, decision, candidate, trusted),
+        lane,
+        decision,
+        candidate,
+    )
+    with pytest.raises(ProductionBayesianError, match="just-in-time"):
+        assess_lane_readiness(
+            descriptor,
+            model_contract=model,
+            admission_decision=decision,
+            validated_human_authorization=valid,
+            candidate_identity=candidate,
+            evaluated_at_utc="2026-08-22T12:16:00Z",
+        )
+
+
+def test_a3_ephemeral_001_interpreter_alias_replay_leaves_stale_path_absent(
+    tmp_path: Path,
+) -> None:
+    assert not STALE_RECEIPT.exists()
+    archive = subprocess.run(
+        ["git", "archive", "--format=tar", "HEAD"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+    )
+    assert archive.returncode == 0, archive.stderr.decode("utf-8", errors="replace")
+    disposable = (tmp_path / "archive-root").resolve()
+    disposable.mkdir()
+    with tarfile.open(fileobj=io.BytesIO(archive.stdout), mode="r:") as handle:
+        members = handle.getmembers()
+        assert all(
+            not member.name.startswith("/") and ".." not in Path(member.name).parts
+            for member in members
+        )
+        handle.extractall(disposable)
+    receipt = disposable / "docs/generated/pr289_data_identity_v2_receipt.json"
+    interpreters = [
+        executable
+        for executable in (Path("/usr/bin/python"), Path("/usr/bin/python3"))
+        if executable.is_file()
+    ]
+    assert interpreters
+    try:
+        built = subprocess.run(
+            [
+                str(interpreters[0]),
+                "-B",
+                "scripts/codex_harness/run_pr289_data_identity_v2.py",
+                "build",
+            ],
+            cwd=disposable,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        assert built.returncode == 0, built.stderr
+        expected = hashlib.sha256(receipt.read_bytes()).hexdigest()
+        observed: list[str] = []
+        for executable in interpreters:
+            checked = subprocess.run(
+                [
+                    str(executable),
+                    "-B",
+                    "scripts/codex_harness/run_pr289_data_identity_v2.py",
+                    "check",
+                ],
+                cwd=disposable,
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            assert checked.returncode == 0, checked.stderr
+            observed.append(hashlib.sha256(receipt.read_bytes()).hexdigest())
+        assert observed == [expected] * len(interpreters)
+    finally:
+        shutil.rmtree(disposable)
+    assert not disposable.exists()
+    assert not STALE_RECEIPT.exists()

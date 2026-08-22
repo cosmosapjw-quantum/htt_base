@@ -174,10 +174,12 @@ from htt.infer.bayesian_production import (
     ProductionModelContract,
     SamplerPosteriorLineage,
     assess_lane_readiness,
+    bind_production_model_contract,
     build_production_model_contract,
     build_posterior_consumer_plan,
     build_sampler_posterior_lineage,
     load_observational_lane_descriptors,
+    revalidate_bound_production_model_contract,
 )
 
 __all__ = [
@@ -256,7 +258,9 @@ __all__ = [
     'LaneReadinessDecision', 'LaneReadinessStatus',
     'ObservationalLaneDescriptor', 'ProductionBayesianError',
     'ProductionModelContract', 'SamplerPosteriorLineage', 'PosteriorConsumerPlan',
-    'assess_lane_readiness', 'build_production_model_contract',
+    'assess_lane_readiness', 'bind_production_model_contract',
+    'build_production_model_contract',
     'build_posterior_consumer_plan',
     'build_sampler_posterior_lineage', 'load_observational_lane_descriptors',
+    'revalidate_bound_production_model_contract',
 ]

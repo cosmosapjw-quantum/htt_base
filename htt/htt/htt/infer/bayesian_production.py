@@ -8,9 +8,11 @@ must bind before nested-sampling output may feed PPC or blockwise LOO.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
+import hashlib
 from pathlib import Path
+import subprocess
 from typing import Callable, Mapping, Sequence
 
 import numpy as np
@@ -24,8 +26,6 @@ class ProductionBayesianError(BayesianSemanticsError):
 
 
 class LaneReadinessStatus(str, Enum):
-    # Keep the PR-299 wire value stable while retiring its circular meaning.
-    BLOCKED_DATA_ADMISSION_UNBOUND = "BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND"
     BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND = "BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND"
     BLOCKED_HUMAN_AUTHORIZATION = "BLOCKED_HUMAN_AUTHORIZATION"
     READY_TO_START_SAMPLER = "READY_TO_START_SAMPLER"
@@ -35,6 +35,13 @@ class LaneReadinessStatus(str, Enum):
 
 _REQUIRED_SAMPLER_SETTINGS = frozenset({"nlive", "dlogz", "bound", "sample", "seed"})
 _EXPECTED_LANES = ("H-PLANCK", "H-DESI", "H-CF4", "H-JWST", "H-ACT")
+_LANE_ALIASES = {
+    "H-PLANCK": "PLANCK",
+    "H-DESI": "DESI",
+    "H-CF4": "CF4",
+    "H-JWST": "JWST_SN",
+    "H-ACT": "ACT",
+}
 
 
 def _nonempty(value: object, field: str) -> str:
@@ -81,11 +88,20 @@ class ProductionModelContract:
     prior_transform: Callable[[np.ndarray], np.ndarray]
     replicate_generator: Callable[[np.ndarray, np.random.Generator], np.ndarray]
     discrepancies: Mapping[str, Callable[[np.ndarray, np.ndarray], float]]
+    lane_admission_bundle_id: str | None
+    ordered_admission_record_ids: tuple[str, ...]
+    admitted_data_identity: str | None
+    admitted_covariance_identity: str | None
+    candidate_commit: str | None
+    candidate_tree: str | None
+    provider_source_bindings: Mapping[str, Mapping[str, str]]
+    provider_configuration_binding: Mapping[str, str] | None
+    provider_environment_binding: Mapping[str, str] | None
     contract_content_id: str
 
     def unsigned_payload(self) -> dict[str, object]:
         return {
-            "schema": "htt.production_bayesian_contract.v1",
+            "schema": "htt.production_bayesian_contract.v2",
             "lane_id": self.lane_id,
             "model_id": self.model_id,
             "parameter_schema": {
@@ -99,6 +115,26 @@ class ProductionModelContract:
             "block_ids": list(self.block_ids),
             "response_rank": self.response_rank,
             "discrepancy_ids": sorted(self.discrepancies),
+            "lane_admission_bundle_id": self.lane_admission_bundle_id,
+            "ordered_admission_record_ids": list(self.ordered_admission_record_ids),
+            "admitted_data_identity": self.admitted_data_identity,
+            "admitted_covariance_identity": self.admitted_covariance_identity,
+            "candidate_commit": self.candidate_commit,
+            "candidate_tree": self.candidate_tree,
+            "provider_source_bindings": {
+                name: dict(binding)
+                for name, binding in sorted(self.provider_source_bindings.items())
+            },
+            "provider_configuration_binding": (
+                None
+                if self.provider_configuration_binding is None
+                else dict(self.provider_configuration_binding)
+            ),
+            "provider_environment_binding": (
+                None
+                if self.provider_environment_binding is None
+                else dict(self.provider_environment_binding)
+            ),
         }
 
 
@@ -163,11 +199,255 @@ def build_production_model_contract(
         prior_transform=prior_transform,
         replicate_generator=replicate_generator,
         discrepancies=discrepancy_map,
+        lane_admission_bundle_id=None,
+        ordered_admission_record_ids=(),
+        admitted_data_identity=None,
+        admitted_covariance_identity=None,
+        candidate_commit=None,
+        candidate_tree=None,
+        provider_source_bindings={},
+        provider_configuration_binding=None,
+        provider_environment_binding=None,
         contract_content_id="",
     )
     return ProductionModelContract(
         **{**provisional.__dict__, "contract_content_id": canonical_content_id(provisional.unsigned_payload())}
     )
+
+
+def _git(repo_root: Path, *args: str) -> str:
+    try:
+        completed = subprocess.run(
+            ["git", "-C", str(repo_root), *args],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise ProductionBayesianError(
+            "production provider Git identity cannot be inspected"
+        ) from exc
+    if completed.returncode != 0:
+        raise ProductionBayesianError(
+            "production provider path is not tracked by the candidate"
+        )
+    return completed.stdout.rstrip("\n")
+
+
+def _tracked_file_binding(repo_root: Path, raw_path: Path) -> dict[str, str]:
+    if not isinstance(raw_path, Path):
+        raise ProductionBayesianError("production provider path must be a Path")
+    path = raw_path if raw_path.is_absolute() else repo_root / raw_path
+    try:
+        resolved = path.resolve(strict=True)
+        relative = resolved.relative_to(repo_root).as_posix()
+    except (OSError, ValueError) as exc:
+        raise ProductionBayesianError(
+            "production provider path must resolve inside the candidate"
+        ) from exc
+    if path.is_symlink() or not resolved.is_file():
+        raise ProductionBayesianError(
+            "production provider path must be a regular non-symlink file"
+        )
+    _git(repo_root, "ls-files", "--error-unmatch", "--", relative)
+    return {
+        "path": relative,
+        "sha256": "sha256:" + hashlib.sha256(resolved.read_bytes()).hexdigest(),
+    }
+
+
+def _callable_source_path(function: Callable[..., object], *, field: str) -> Path:
+    code = getattr(function, "__code__", None)
+    filename = getattr(code, "co_filename", None)
+    if not isinstance(filename, str) or not filename:
+        raise ProductionBayesianError(
+            f"{field} must be a Python callable with a bindable source file"
+        )
+    return Path(filename)
+
+
+def _provider_source_bindings(
+    contract: ProductionModelContract, *, repo_root: Path
+) -> dict[str, Mapping[str, str]]:
+    functions: dict[str, Callable[..., object]] = {
+        "log_likelihood": contract.log_likelihood,
+        "prior_transform": contract.prior_transform,
+        "replicate_generator": contract.replicate_generator,
+        **{
+            f"discrepancy:{name}": function
+            for name, function in sorted(contract.discrepancies.items())
+        },
+    }
+    return {
+        role: _tracked_file_binding(
+            repo_root, _callable_source_path(function, field=role)
+        )
+        for role, function in functions.items()
+    }
+
+
+def _unbound_contract(contract: ProductionModelContract) -> ProductionModelContract:
+    provisional = replace(
+        contract,
+        lane_admission_bundle_id=None,
+        ordered_admission_record_ids=(),
+        admitted_data_identity=None,
+        admitted_covariance_identity=None,
+        candidate_commit=None,
+        candidate_tree=None,
+        provider_source_bindings={},
+        provider_configuration_binding=None,
+        provider_environment_binding=None,
+        contract_content_id="",
+    )
+    return replace(
+        provisional,
+        contract_content_id=canonical_content_id(provisional.unsigned_payload()),
+    )
+
+
+def bind_production_model_contract(
+    *,
+    contract: ProductionModelContract,
+    lane_spec: object,
+    admission_decision: object,
+    candidate_identity: object,
+    provider_configuration_path: Path,
+    provider_environment_path: Path,
+) -> ProductionModelContract:
+    """Bind a semantic model to exact admitted bytes and clean provider code."""
+
+    if type(contract) is not ProductionModelContract:
+        raise ProductionBayesianError(
+            "contract must be an exact ProductionModelContract"
+        )
+    try:
+        from common.human_execution_authorization import (
+            CandidateIdentityV1,
+            admitted_covariance_identity,
+            admitted_data_identity,
+            replay_complete_lane_admission,
+            revalidate_clean_candidate_identity,
+        )
+    except ImportError as exc:
+        raise ProductionBayesianError(
+            "PR-304 admission binding contract is unavailable"
+        ) from exc
+    if type(candidate_identity) is not CandidateIdentityV1:
+        raise ProductionBayesianError(
+            "production binding requires a factory-derived candidate identity"
+        )
+    try:
+        candidate = revalidate_clean_candidate_identity(candidate_identity)
+        replayed = replay_complete_lane_admission(
+            lane_spec=lane_spec, admission_decision=admission_decision
+        )
+        data_identity = admitted_data_identity(replayed)
+        covariance_identity = admitted_covariance_identity(replayed)
+    except ValueError as exc:
+        raise ProductionBayesianError(
+            "production model cannot replay its exact admission binding"
+        ) from exc
+    if _LANE_ALIASES.get(contract.lane_id) != replayed.lane_id:
+        raise ProductionBayesianError(
+            "production model lane does not match replayed admission"
+        )
+    if contract.data_identity != data_identity:
+        raise ProductionBayesianError(
+            "production model data identity does not equal admitted data identity"
+        )
+    if contract.covariance_identity != covariance_identity:
+        raise ProductionBayesianError(
+            "production model covariance identity does not equal admitted covariance identity"
+        )
+    base = _unbound_contract(contract)
+    source_bindings = _provider_source_bindings(base, repo_root=candidate.repo_root)
+    configuration_binding = _tracked_file_binding(
+        candidate.repo_root, provider_configuration_path
+    )
+    environment_binding = _tracked_file_binding(
+        candidate.repo_root, provider_environment_path
+    )
+    try:
+        candidate_after_read = revalidate_clean_candidate_identity(candidate)
+    except ValueError as exc:
+        raise ProductionBayesianError(
+            "production provider candidate changed during binding"
+        ) from exc
+    if candidate_after_read.as_payload() != candidate.as_payload():
+        raise ProductionBayesianError(
+            "production provider candidate changed during binding"
+        )
+    provisional = replace(
+        base,
+        lane_admission_bundle_id=replayed.lane_admission_bundle_id,
+        ordered_admission_record_ids=tuple(
+            record.record_id for record in replayed.records
+        ),
+        admitted_data_identity=data_identity,
+        admitted_covariance_identity=covariance_identity,
+        candidate_commit=candidate.commit,
+        candidate_tree=candidate.tree,
+        provider_source_bindings=source_bindings,
+        provider_configuration_binding=configuration_binding,
+        provider_environment_binding=environment_binding,
+        contract_content_id="",
+    )
+    return replace(
+        provisional,
+        contract_content_id=canonical_content_id(provisional.unsigned_payload()),
+    )
+
+
+def revalidate_bound_production_model_contract(
+    *,
+    contract: ProductionModelContract,
+    lane_spec: object,
+    admission_decision: object,
+    candidate_identity: object,
+) -> ProductionModelContract:
+    """Rebuild every binding from live clean state before an authority use."""
+
+    if type(contract) is not ProductionModelContract:
+        raise ProductionBayesianError(
+            "contract must be an exact ProductionModelContract"
+        )
+    if (
+        contract.provider_configuration_binding is None
+        or contract.provider_environment_binding is None
+    ):
+        raise ProductionBayesianError(
+            "production model contract is not admission/provider bound"
+        )
+    configuration_path = Path(
+        _nonempty(
+            contract.provider_configuration_binding.get("path"),
+            "provider configuration path",
+        )
+    )
+    environment_path = Path(
+        _nonempty(
+            contract.provider_environment_binding.get("path"),
+            "provider environment path",
+        )
+    )
+    rebuilt = bind_production_model_contract(
+        contract=_unbound_contract(contract),
+        lane_spec=lane_spec,
+        admission_decision=admission_decision,
+        candidate_identity=candidate_identity,
+        provider_configuration_path=configuration_path,
+        provider_environment_path=environment_path,
+    )
+    if (
+        rebuilt.unsigned_payload() != contract.unsigned_payload()
+        or rebuilt.contract_content_id != contract.contract_content_id
+    ):
+        raise ProductionBayesianError(
+            "production model admission or provider binding is stale or forged"
+        )
+    return rebuilt
 
 
 @dataclass(frozen=True)
@@ -353,6 +633,8 @@ def assess_lane_readiness(
     model_contract: ProductionModelContract | None = None,
     admission_decision: object | None = None,
     validated_human_authorization: object | None = None,
+    candidate_identity: object | None = None,
+    evaluated_at_utc: str | None = None,
     authorization_receipt: object | None = None,
     posterior_lineage: SamplerPosteriorLineage | None = None,
     posterior_consumer_plan: PosteriorConsumerPlan | None = None,
@@ -371,7 +653,7 @@ def assess_lane_readiness(
             reasons.append("complete_pr289_lane_admission_unbound")
         return LaneReadinessDecision(
             lane_id=descriptor.lane_id,
-            status=LaneReadinessStatus.BLOCKED_DATA_ADMISSION_UNBOUND,
+            status=LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND,
             observed_data_executed=False,
             artifact_mode="readiness_only",
             blocked_reasons=tuple(reasons),
@@ -381,31 +663,48 @@ def assess_lane_readiness(
     try:
         from common.data_identity import load_lane_registry
         from common.human_execution_authorization import (
+            CandidateIdentityV1,
             ValidatedHumanExecutionAuthorization,
-            lane_spec_content_id,
             replay_complete_lane_admission,
+            revalidate_cached_human_execution_authorization,
         )
     except ImportError as exc:
         raise ProductionBayesianError(
             "PR-304 admission-bound human authorization contract is unavailable"
         ) from exc
-    lane_aliases = {
-        "H-PLANCK": "PLANCK",
-        "H-DESI": "DESI",
-        "H-CF4": "CF4",
-        "H-JWST": "JWST_SN",
-        "H-ACT": "ACT",
-    }
     try:
         lane_spec = load_lane_registry(
             Path(__file__).resolve().parents[4]
             / "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
-        ).lane(lane_aliases[descriptor.lane_id])
+        ).lane(_LANE_ALIASES[descriptor.lane_id])
         replayed_admission = replay_complete_lane_admission(
             lane_spec=lane_spec, admission_decision=admission_decision
         )
     except (KeyError, ValueError) as exc:
         raise ProductionBayesianError("PR-289 complete lane admission does not bind this descriptor") from exc
+    if candidate_identity is None:
+        return LaneReadinessDecision(
+            lane_id=descriptor.lane_id,
+            status=LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND,
+            observed_data_executed=False,
+            artifact_mode="readiness_only",
+            blocked_reasons=("clean_candidate_identity_unbound",),
+        )
+    if type(candidate_identity) is not CandidateIdentityV1:
+        raise ProductionBayesianError(
+            "candidate identity must be factory-derived for readiness"
+        )
+    try:
+        revalidate_bound_production_model_contract(
+            contract=model_contract,
+            lane_spec=lane_spec,
+            admission_decision=replayed_admission,
+            candidate_identity=candidate_identity,
+        )
+    except (ProductionBayesianError, ValueError) as exc:
+        raise ProductionBayesianError(
+            "production model admission/provider binding failed readiness replay"
+        ) from exc
     if validated_human_authorization is None:
         return LaneReadinessDecision(
             lane_id=descriptor.lane_id,
@@ -416,22 +715,22 @@ def assess_lane_readiness(
         )
     if type(validated_human_authorization) is not ValidatedHumanExecutionAuthorization:
         raise ProductionBayesianError("human authorization must be a validator-built PR-304 capability")
-    expected_record_ids = tuple(record.record_id for record in replayed_admission.records)
-    capability = validated_human_authorization
+    if evaluated_at_utc is None:
+        raise ProductionBayesianError(
+            "readiness authority use requires an explicit evaluation time"
+        )
     try:
-        capability.as_payload()
+        revalidate_cached_human_execution_authorization(
+            cached=validated_human_authorization,
+            lane_spec=lane_spec,
+            admission_decision=replayed_admission,
+            candidate_identity=candidate_identity,
+            evaluated_at_utc=evaluated_at_utc,
+        )
     except ValueError as exc:
-        raise ProductionBayesianError("validated human authorization content identity drifted") from exc
-    if (
-        capability.receipt.lane_id != lane_spec.lane_id
-        or capability.receipt.exact_admission_record_ids != expected_record_ids
-        or capability.receipt.lane_admission_bundle_id
-        != replayed_admission.lane_admission_bundle_id
-        or capability.replayed_admission_bundle_id
-        != replayed_admission.lane_admission_bundle_id
-        or capability.replayed_lane_spec_content_id != lane_spec_content_id(lane_spec)
-    ):
-        raise ProductionBayesianError("validated human authorization lost exact admission binding")
+        raise ProductionBayesianError(
+            "signed human authorization failed just-in-time revalidation"
+        ) from exc
     if posterior_lineage is None and posterior_consumer_plan is None:
         return LaneReadinessDecision(
             lane_id=descriptor.lane_id,
@@ -498,8 +797,10 @@ __all__ = [
     "ProductionModelContract",
     "SamplerPosteriorLineage",
     "assess_lane_readiness",
+    "bind_production_model_contract",
     "build_production_model_contract",
     "build_posterior_consumer_plan",
     "build_sampler_posterior_lineage",
     "load_observational_lane_descriptors",
+    "revalidate_bound_production_model_contract",
 ]
