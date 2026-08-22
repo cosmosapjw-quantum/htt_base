@@ -25,7 +25,8 @@ scope:
 trust_model:
   algorithm: Ed25519
   public_key_registry: docs/research_program/post_pr275/human_authority_registry.json
-  registry_binding: fixed_repository_path_not_caller_selected
+  registry_binding: fixed_candidate_relative_path_not_caller_selected
+  registry_authority: exact_clean_candidate_commit_and_tree
   active_signers_in_this_pr: 0
   private_key_location: outside_repository_and_agent_access
   private_key_handling_by_repository: forbidden
@@ -53,6 +54,7 @@ receipt_contract:
   signer_resolution: exact_lane_row_in_fixed_public_registry
   maximum_ttl_seconds: 1800
   accepted_interval: '[issued_at_utc, expires_at_utc)'
+  evaluation_clock: internal_process_host_utc_not_caller_supplied
   registered_domain: lane_data_execution
   nonce_format: 'nonce:v1:<64 lowercase hex with nondegenerate entropy shape>'
   registered_scopes:
@@ -71,6 +73,10 @@ candidate_contract:
     - exact HEAD tree
     - empty tracked and untracked status
   caller_supplied_commit_or_tree: forbidden
+  runtime_registry_resolution:
+    - PR-289 lane registry from exact clean candidate
+    - human authority registry from exact clean candidate
+  python_installation_relative_registry_lookup: forbidden
 
 production_model_binding:
   schema: htt.production_bayesian_contract.v2

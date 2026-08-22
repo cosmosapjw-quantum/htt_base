@@ -46,14 +46,11 @@ MAX_AUTHORIZATION_TTL = timedelta(seconds=1800)
 _RAW_SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _GIT_OBJECT = re.compile(r"^[0-9a-f]{40}$")
 _NONCE = re.compile(r"^nonce:v1:[0-9a-f]{64}$")
-_REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
-_REGISTRY_PATH = (
-    _REPOSITORY_ROOT
-    / "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
+_LANE_REGISTRY_RELATIVE_PATH = Path(
+    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
 )
-_AUTHORITY_REGISTRY_PATH = (
-    _REPOSITORY_ROOT
-    / "docs/research_program/post_pr275/human_authority_registry.json"
+_AUTHORITY_REGISTRY_RELATIVE_PATH = Path(
+    "docs/research_program/post_pr275/human_authority_registry.json"
 )
 _LANE_ORDER = ("PLANCK", "CF4", "HSC_KIDS", "ACT", "DESI", "JWST_SN")
 _SCOPES_BY_LANE = {
@@ -111,6 +108,24 @@ def _utc(value: object, field: str) -> tuple[str, datetime]:
             f"{field} is not a canonical UTC timestamp"
         )
     return text, parsed
+
+
+def _trusted_now_utc() -> datetime:
+    """Return the process host's UTC clock for a live authority decision."""
+
+    return datetime.now(timezone.utc)
+
+
+def _trusted_evaluation_time() -> tuple[str, datetime]:
+    """Normalize the private clock seam; callers cannot supply evaluation time."""
+
+    observed = _trusted_now_utc()
+    if not isinstance(observed, datetime) or observed.tzinfo is None:
+        raise HumanExecutionAuthorizationError(
+            "trusted authorization clock must return a timezone-aware datetime"
+        )
+    evaluated = observed.astimezone(timezone.utc)
+    return evaluated.strftime("%Y-%m-%dT%H:%M:%SZ"), evaluated
 
 
 def _nonce(value: object) -> str:
@@ -314,6 +329,35 @@ def revalidate_clean_candidate_identity(
     return observed
 
 
+def _candidate_resource_path(
+    candidate: CandidateIdentityV1, relative_path: Path
+) -> Path:
+    """Resolve one regular resource from the exact clean candidate tree."""
+
+    checked = revalidate_clean_candidate_identity(candidate)
+    path = checked.repo_root / relative_path
+    try:
+        resolved = path.resolve(strict=True)
+    except OSError as exc:
+        raise HumanExecutionAuthorizationError(
+            f"candidate resource is unavailable: {relative_path.as_posix()}"
+        ) from exc
+    if (
+        path.is_symlink()
+        or not path.is_file()
+        or resolved != path
+        or checked.repo_root not in resolved.parents
+    ):
+        raise HumanExecutionAuthorizationError(
+            f"candidate resource must be a regular in-tree file: {relative_path.as_posix()}"
+        )
+    return path
+
+
+def _authority_registry_path(candidate: CandidateIdentityV1) -> Path:
+    return _candidate_resource_path(candidate, _AUTHORITY_REGISTRY_RELATIVE_PATH)
+
+
 def lane_spec_content_id(lane_spec: LaneSpec) -> str:
     if type(lane_spec) is not LaneSpec:
         raise HumanExecutionAuthorizationError(
@@ -328,9 +372,12 @@ def lane_spec_content_id(lane_spec: LaneSpec) -> str:
 
 
 def replay_complete_lane_admission(
-    *, lane_spec: LaneSpec, admission_decision: LaneAdmissionDecision
+    *,
+    lane_spec: LaneSpec,
+    admission_decision: LaneAdmissionDecision,
+    candidate_identity: CandidateIdentityV1,
 ) -> LaneAdmissionDecision:
-    """Replay one complete decision against the exact registered PR-289 lane."""
+    """Replay one complete decision against the candidate's exact PR-289 lane."""
 
     if type(lane_spec) is not LaneSpec:
         raise HumanExecutionAuthorizationError(
@@ -341,7 +388,9 @@ def replay_complete_lane_admission(
             "admission_decision must be the exact PR-289 LaneAdmissionDecision type"
         )
     try:
-        registry = load_lane_registry(_REGISTRY_PATH)
+        registry = load_lane_registry(
+            _candidate_resource_path(candidate_identity, _LANE_REGISTRY_RELATIVE_PATH)
+        )
         registered_lane = registry.lane(lane_spec.lane_id)
     except DataIdentityError as exc:
         raise HumanExecutionAuthorizationError(
@@ -581,8 +630,10 @@ class _TrustedAuthority:
     scope: str
 
 
-def _load_trusted_authority(lane_spec: LaneSpec) -> _TrustedAuthority:
-    path = _AUTHORITY_REGISTRY_PATH
+def _load_trusted_authority(
+    lane_spec: LaneSpec, candidate_identity: CandidateIdentityV1
+) -> _TrustedAuthority:
+    path = _authority_registry_path(candidate_identity)
     if path.is_symlink() or not path.is_file():
         raise HumanExecutionAuthorizationError(
             "human authority registry must be a regular file"
@@ -646,22 +697,23 @@ def _validate_signed_authorization(
     lane_spec: LaneSpec,
     admission_decision: LaneAdmissionDecision,
     candidate_identity: CandidateIdentityV1,
-    evaluated_at_utc: str,
+    evaluated: datetime,
 ) -> tuple[
     HumanExecutionAuthorizationReceiptV1,
     LaneAdmissionDecision,
     CandidateIdentityV1,
 ]:
-    replayed = replay_complete_lane_admission(
-        lane_spec=lane_spec, admission_decision=admission_decision
-    )
     candidate = revalidate_clean_candidate_identity(candidate_identity)
+    replayed = replay_complete_lane_admission(
+        lane_spec=lane_spec,
+        admission_decision=admission_decision,
+        candidate_identity=candidate,
+    )
     receipt = HumanExecutionAuthorizationReceiptV1.from_bytes(signed_receipt_bytes)
     if signed_receipt_bytes != _canonical_bytes(receipt.as_payload()):
         raise HumanExecutionAuthorizationError(
             "authorization receipt bytes are not canonical"
         )
-    _, evaluated = _utc(evaluated_at_utc, "evaluated_at_utc")
     expected_record_ids = tuple(record.record_id for record in replayed.records)
     if receipt.lane_id != lane_spec.lane_id:
         raise HumanExecutionAuthorizationError(
@@ -712,7 +764,7 @@ def _validate_signed_authorization(
         raise HumanExecutionAuthorizationError(
             "authorization is expired at evaluation"
         )
-    authority = _load_trusted_authority(lane_spec)
+    authority = _load_trusted_authority(lane_spec, candidate)
     if receipt.signer_key_id != authority.key_id:
         raise HumanExecutionAuthorizationError(
             "authorization signer is not the independently trusted human signer"
@@ -739,16 +791,16 @@ def validate_human_execution_authorization(
     lane_spec: LaneSpec,
     admission_decision: LaneAdmissionDecision,
     candidate_identity: CandidateIdentityV1,
-    evaluated_at_utc: str,
 ) -> ValidatedHumanExecutionAuthorization:
     """Validate a signed receipt and return non-authoritative cache evidence."""
 
+    evaluated_at_utc, evaluated = _trusted_evaluation_time()
     receipt, replayed, candidate = _validate_signed_authorization(
         signed_receipt_bytes=signed_receipt_bytes,
         lane_spec=lane_spec,
         admission_decision=admission_decision,
         candidate_identity=candidate_identity,
-        evaluated_at_utc=evaluated_at_utc,
+        evaluated=evaluated,
     )
     unsigned = {
         "schema": VALIDATED_AUTHORIZATION_SCHEMA,
@@ -777,7 +829,6 @@ def revalidate_cached_human_execution_authorization(
     lane_spec: LaneSpec,
     admission_decision: LaneAdmissionDecision,
     candidate_identity: CandidateIdentityV1,
-    evaluated_at_utc: str,
 ) -> HumanExecutionAuthorizationReceiptV1:
     """Reverify signed bytes; cached fields are never execution authority."""
 
@@ -790,12 +841,13 @@ def revalidate_cached_human_execution_authorization(
         raise HumanExecutionAuthorizationError(
             "authorization cache lacks signed receipt bytes"
         )
+    _, evaluated = _trusted_evaluation_time()
     receipt, _, _ = _validate_signed_authorization(
         signed_receipt_bytes=signed_receipt_bytes,
         lane_spec=lane_spec,
         admission_decision=admission_decision,
         candidate_identity=candidate_identity,
-        evaluated_at_utc=evaluated_at_utc,
+        evaluated=evaluated,
     )
     return receipt
 

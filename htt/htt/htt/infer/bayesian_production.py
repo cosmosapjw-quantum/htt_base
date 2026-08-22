@@ -341,7 +341,9 @@ def bind_production_model_contract(
     try:
         candidate = revalidate_clean_candidate_identity(candidate_identity)
         replayed = replay_complete_lane_admission(
-            lane_spec=lane_spec, admission_decision=admission_decision
+            lane_spec=lane_spec,
+            admission_decision=admission_decision,
+            candidate_identity=candidate,
         )
         data_identity = admitted_data_identity(replayed)
         covariance_identity = admitted_covariance_identity(replayed)
@@ -634,7 +636,6 @@ def assess_lane_readiness(
     admission_decision: object | None = None,
     validated_human_authorization: object | None = None,
     candidate_identity: object | None = None,
-    evaluated_at_utc: str | None = None,
     authorization_receipt: object | None = None,
     posterior_lineage: SamplerPosteriorLineage | None = None,
     posterior_consumer_plan: PosteriorConsumerPlan | None = None,
@@ -667,21 +668,12 @@ def assess_lane_readiness(
             ValidatedHumanExecutionAuthorization,
             replay_complete_lane_admission,
             revalidate_cached_human_execution_authorization,
+            revalidate_clean_candidate_identity,
         )
     except ImportError as exc:
         raise ProductionBayesianError(
             "PR-304 admission-bound human authorization contract is unavailable"
         ) from exc
-    try:
-        lane_spec = load_lane_registry(
-            Path(__file__).resolve().parents[4]
-            / "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
-        ).lane(_LANE_ALIASES[descriptor.lane_id])
-        replayed_admission = replay_complete_lane_admission(
-            lane_spec=lane_spec, admission_decision=admission_decision
-        )
-    except (KeyError, ValueError) as exc:
-        raise ProductionBayesianError("PR-289 complete lane admission does not bind this descriptor") from exc
     if candidate_identity is None:
         return LaneReadinessDecision(
             lane_id=descriptor.lane_id,
@@ -694,6 +686,19 @@ def assess_lane_readiness(
         raise ProductionBayesianError(
             "candidate identity must be factory-derived for readiness"
         )
+    try:
+        candidate = revalidate_clean_candidate_identity(candidate_identity)
+        lane_spec = load_lane_registry(
+            candidate.repo_root
+            / "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
+        ).lane(_LANE_ALIASES[descriptor.lane_id])
+        replayed_admission = replay_complete_lane_admission(
+            lane_spec=lane_spec,
+            admission_decision=admission_decision,
+            candidate_identity=candidate,
+        )
+    except (KeyError, ValueError) as exc:
+        raise ProductionBayesianError("PR-289 complete lane admission does not bind this descriptor") from exc
     try:
         revalidate_bound_production_model_contract(
             contract=model_contract,
@@ -715,17 +720,12 @@ def assess_lane_readiness(
         )
     if type(validated_human_authorization) is not ValidatedHumanExecutionAuthorization:
         raise ProductionBayesianError("human authorization must be a validator-built PR-304 capability")
-    if evaluated_at_utc is None:
-        raise ProductionBayesianError(
-            "readiness authority use requires an explicit evaluation time"
-        )
     try:
         revalidate_cached_human_execution_authorization(
             cached=validated_human_authorization,
             lane_spec=lane_spec,
             admission_decision=replayed_admission,
             candidate_identity=candidate_identity,
-            evaluated_at_utc=evaluated_at_utc,
         )
     except ValueError as exc:
         raise ProductionBayesianError(

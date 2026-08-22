@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import base64
 from dataclasses import replace
+from datetime import datetime, timezone
 import hashlib
+import inspect
 import io
 import json
 from pathlib import Path
@@ -104,6 +106,9 @@ def _candidate_repo(tmp_path: Path) -> tuple[CandidateIdentityV1, SimpleNamespac
     _git(repo, "init", "-b", "pr304-test-candidate")
     _git(repo, "config", "user.name", "PR304 Test")
     _git(repo, "config", "user.email", "pr304-test@example.invalid")
+    _git(repo, "config", "commit.gpgsign", "false")
+    _git(repo, "config", "tag.gpgsign", "false")
+    _git(repo, "config", "core.hooksPath", "/dev/null")
     source = repo / "provider.py"
     source.write_text(
         "def log_likelihood(theta):\n"
@@ -122,7 +127,18 @@ def _candidate_repo(tmp_path: Path) -> tuple[CandidateIdentityV1, SimpleNamespac
     (repo / "environment.lock").write_text(
         "python=3.12\nnumpy=test-fixture\n", encoding="utf-8"
     )
-    _git(repo, "add", "--", "provider.py", "provider-config.json", "environment.lock")
+    candidate_registry = repo / REGISTRY.relative_to(ROOT)
+    candidate_registry.parent.mkdir(parents=True)
+    shutil.copyfile(REGISTRY, candidate_registry)
+    authority_registry = (
+        repo
+        / "docs/research_program/post_pr275/human_authority_registry.json"
+    )
+    shutil.copyfile(
+        ROOT / "docs/research_program/post_pr275/human_authority_registry.json",
+        authority_registry,
+    )
+    _git(repo, "add", "--all")
     _git(repo, "commit", "-m", "test candidate")
     namespace: dict[str, object] = {"np": np, "__file__": str(source)}
     exec(compile(source.read_bytes(), str(source), "exec"), namespace)
@@ -253,7 +269,7 @@ def _install_authority_registry(
         + "\n",
         encoding="utf-8",
     )
-    monkeypatch.setattr(authorization, "_AUTHORITY_REGISTRY_PATH", path)
+    monkeypatch.setattr(authorization, "_authority_registry_path", lambda _: path)
     return path
 
 
@@ -309,8 +325,17 @@ def _validate(raw: bytes, lane, decision, candidate: CandidateIdentityV1):
         lane_spec=lane,
         admission_decision=decision,
         candidate_identity=candidate,
-        evaluated_at_utc=EVALUATED,
     )
+
+
+@pytest.fixture(autouse=True)
+def _fixed_trusted_authorization_clock(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    fixed = datetime.strptime(EVALUATED, "%Y-%m-%dT%H:%M:%SZ").replace(
+        tzinfo=timezone.utc
+    )
+    monkeypatch.setattr(authorization, "_trusted_now_utc", lambda: fixed)
 
 
 def _bound_model(lane, decision, candidate: CandidateIdentityV1, provider):
@@ -354,6 +379,24 @@ def test_validates_pinned_ed25519_receipt_as_non_authoritative_cache(
     assert cache.signed_receipt_bytes == raw
     assert cache.receipt.nonce == VALID_NONCE
     assert build_clean_candidate_identity(candidate.repo_root) == candidate
+
+
+def test_candidate_tree_supplies_lane_and_public_authority_registries(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, _ = _candidate_repo(tmp_path)
+    replayed = authorization.replay_complete_lane_admission(
+        lane_spec=lane,
+        admission_decision=decision,
+        candidate_identity=candidate,
+    )
+    assert replayed.lane_admission_bundle_id == decision.lane_admission_bundle_id
+
+    signer = Ed25519PrivateKey.generate()
+    raw = _signed_receipt(lane, decision, candidate, signer)
+    with pytest.raises(HumanExecutionAuthorizationError, match="not active"):
+        _validate(raw, lane, decision, candidate)
 
 
 def test_auth_trust_001_rejects_arbitrary_self_signed_key(
@@ -465,12 +508,12 @@ def test_rejects_resigned_binding_drift(
 
 
 @pytest.mark.parametrize(
-    ("issued", "expires", "evaluated", "match"),
+    ("issued", "expires", "match"),
     (
-        ("2026-08-22T12:01:00Z", "2026-08-22T12:10:00Z", EVALUATED, "future"),
-        ("2026-08-22T11:29:00Z", "2026-08-22T11:59:00Z", EVALUATED, "expired"),
-        ("2026-08-22T11:00:00Z", "2026-08-22T11:30:01Z", EVALUATED, "TTL"),
-        (EVALUATED, EVALUATED, EVALUATED, "empty or reversed"),
+        ("2026-08-22T12:01:00Z", "2026-08-22T12:10:00Z", "future"),
+        ("2026-08-22T11:29:00Z", "2026-08-22T11:59:00Z", "expired"),
+        ("2026-08-22T11:00:00Z", "2026-08-22T11:30:01Z", "TTL"),
+        (EVALUATED, EVALUATED, "empty or reversed"),
     ),
 )
 def test_rejects_invalid_time_intervals(
@@ -478,7 +521,6 @@ def test_rejects_invalid_time_intervals(
     monkeypatch: pytest.MonkeyPatch,
     issued: str,
     expires: str,
-    evaluated: str,
     match: str,
 ) -> None:
     lane, decision = _admitted_act(tmp_path)
@@ -499,7 +541,6 @@ def test_rejects_invalid_time_intervals(
             lane_spec=lane,
             admission_decision=decision,
             candidate_identity=candidate,
-            evaluated_at_utc=evaluated,
         )
 
 
@@ -599,7 +640,6 @@ def test_auth_cap_001_and_002_forged_cache_is_not_authority(
             lane_spec=lane,
             admission_decision=decision,
             candidate_identity=candidate,
-            evaluated_at_utc=EVALUATED,
         )
     raw_forged = object.__new__(ValidatedHumanExecutionAuthorization)
     object.__setattr__(raw_forged, "signed_receipt_bytes", attacker_raw)
@@ -609,7 +649,6 @@ def test_auth_cap_001_and_002_forged_cache_is_not_authority(
             lane_spec=lane,
             admission_decision=decision,
             candidate_identity=candidate,
-            evaluated_at_utc=EVALUATED,
         )
 
 
@@ -626,14 +665,24 @@ def test_auth_time_001_rejects_cache_after_expiry(
         decision,
         candidate,
     )
+    expired = datetime(2026, 8, 22, 12, 16, tzinfo=timezone.utc)
+    monkeypatch.setattr(authorization, "_trusted_now_utc", lambda: expired)
     with pytest.raises(HumanExecutionAuthorizationError, match="expired"):
         revalidate_cached_human_execution_authorization(
             cached=cache,
             lane_spec=lane,
             admission_decision=decision,
             candidate_identity=candidate,
-            evaluated_at_utc="2026-08-22T12:16:00Z",
         )
+
+
+def test_auth_time_002_public_authority_apis_reject_caller_backdating() -> None:
+    for authority_use in (
+        validate_human_execution_authorization,
+        revalidate_cached_human_execution_authorization,
+        assess_lane_readiness,
+    ):
+        assert "evaluated_at_utc" not in inspect.signature(authority_use).parameters
 
 
 def test_auth_pr289_001_rejects_not_authorized_receipt(
@@ -692,7 +741,6 @@ def test_readiness_reverifies_signed_authorization_and_bound_model(
         admission_decision=decision,
         validated_human_authorization=cache,
         candidate_identity=candidate,
-        evaluated_at_utc=EVALUATED,
     )
     assert result.status is LaneReadinessStatus.READY_TO_START_SAMPLER
     assert result.observed_data_executed is False
@@ -839,7 +887,6 @@ def test_readiness_rejects_forged_cache_and_expired_cached_receipt(
             admission_decision=decision,
             validated_human_authorization=forged,
             candidate_identity=candidate,
-            evaluated_at_utc=EVALUATED,
         )
     valid = _validate(
         _signed_receipt(lane, decision, candidate, trusted),
@@ -847,6 +894,8 @@ def test_readiness_rejects_forged_cache_and_expired_cached_receipt(
         decision,
         candidate,
     )
+    expired = datetime(2026, 8, 22, 12, 16, tzinfo=timezone.utc)
+    monkeypatch.setattr(authorization, "_trusted_now_utc", lambda: expired)
     with pytest.raises(ProductionBayesianError, match="just-in-time"):
         assess_lane_readiness(
             descriptor,
@@ -854,7 +903,6 @@ def test_readiness_rejects_forged_cache_and_expired_cached_receipt(
             admission_decision=decision,
             validated_human_authorization=valid,
             candidate_identity=candidate,
-            evaluated_at_utc="2026-08-22T12:16:00Z",
         )
 
 
@@ -877,14 +925,12 @@ def test_a3_ephemeral_001_interpreter_alias_replay_leaves_stale_path_absent(
             not member.name.startswith("/") and ".." not in Path(member.name).parts
             for member in members
         )
-        handle.extractall(disposable)
+        handle.extractall(disposable, filter="data")
     receipt = disposable / "docs/generated/pr289_data_identity_v2_receipt.json"
-    interpreters = [
-        executable
-        for executable in (Path("/usr/bin/python"), Path("/usr/bin/python3"))
-        if executable.is_file()
-    ]
-    assert interpreters
+    interpreters = (Path("/usr/bin/python"), Path("/usr/bin/python3"))
+    assert all(executable.is_file() for executable in interpreters), (
+        "A3-EPHEMERAL-001 requires both registered interpreter aliases"
+    )
     try:
         built = subprocess.run(
             [
@@ -916,7 +962,7 @@ def test_a3_ephemeral_001_interpreter_alias_replay_leaves_stale_path_absent(
             )
             assert checked.returncode == 0, checked.stderr
             observed.append(hashlib.sha256(receipt.read_bytes()).hexdigest())
-        assert observed == [expected] * len(interpreters)
+        assert observed == [expected, expected]
     finally:
         shutil.rmtree(disposable)
     assert not disposable.exists()
