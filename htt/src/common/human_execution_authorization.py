@@ -530,6 +530,10 @@ def replay_complete_lane_admission(
 
 
 def admitted_data_identity(decision: LaneAdmissionDecision) -> str:
+    if type(decision) is not LaneAdmissionDecision:
+        raise HumanExecutionAuthorizationError(
+            "data identity requires the exact PR-289 LaneAdmissionDecision type"
+        )
     if decision.lane_admission_bundle_id is None or not decision.records:
         raise HumanExecutionAuthorizationError("admission has no data identity")
     return canonical_sha256(
@@ -549,6 +553,10 @@ def admitted_data_identity(decision: LaneAdmissionDecision) -> str:
 
 
 def admitted_covariance_identity(decision: LaneAdmissionDecision) -> str:
+    if type(decision) is not LaneAdmissionDecision:
+        raise HumanExecutionAuthorizationError(
+            "covariance identity requires the exact PR-289 LaneAdmissionDecision type"
+        )
     rows = [
         {
             "record_id": record.record_id,

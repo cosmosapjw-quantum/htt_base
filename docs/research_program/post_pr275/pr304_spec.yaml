@@ -68,7 +68,8 @@ receipt_contract:
   signer_resolution: external_launcher_only
   maximum_ttl_seconds: 1800
   accepted_interval: '[issued_at_utc, expires_at_utc)'
-  evaluation_clock: external_trusted_launcher_clock_not_caller_supplied
+  evaluation_clock: PR304_validating_process_host_UTC_not_caller_supplied_diagnostic_only
+  PR305_evaluation_clock: external_trusted_launcher_clock_required
   registered_domain: lane_data_execution
   nonce_format: 'nonce:v1:<64 lowercase hex>'
   nonce_generation: external_CSPRNG_required_not_proven_by_format

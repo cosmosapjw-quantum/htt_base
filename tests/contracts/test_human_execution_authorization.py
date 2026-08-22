@@ -429,6 +429,19 @@ def _bound_model(lane, decision, candidate: CandidateIdentityV1, provider):
     )
 
 
+def test_admission_identity_helpers_reject_foreign_duck_types() -> None:
+    foreign = SimpleNamespace(
+        lane_admission_bundle_id="sha256:" + "0" * 64,
+        records=(),
+    )
+    for helper in (admitted_data_identity, admitted_covariance_identity):
+        with pytest.raises(
+            HumanExecutionAuthorizationError,
+            match="exact PR-289 LaneAdmissionDecision",
+        ):
+            helper(foreign)
+
+
 def test_candidate_local_ed25519_receipt_cannot_create_authority_cache(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
