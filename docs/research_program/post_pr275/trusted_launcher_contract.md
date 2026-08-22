@@ -20,7 +20,10 @@ Before any later transaction may start, that launcher must independently:
 3. verify the human receipt and its exact lane admission, model contract,
    runtime environment, computed response-rank, normalization, and execution
    plan bindings;
-4. acquire the output lock, atomically consume the nonce, write and fsync the
+4. load the already bound provider bytes only inside reviewed OS-level
+   isolation that cannot access the root key, registry signing capability, or
+   nonce store;
+5. acquire the output lock, atomically consume the nonce, write and fsync the
    start receipt, and only then start the process that may open observed data.
 
 The tracked `human_authority_registry.signature.json` is a pending schema

@@ -12,14 +12,13 @@ import ast
 from dataclasses import dataclass, replace
 from enum import Enum
 import hashlib
+import importlib
 from importlib import metadata
 import json
-import marshal
 from pathlib import Path
 import platform
 import sys
-from types import MappingProxyType
-from typing import Callable, Mapping, Sequence
+from typing import Mapping, Sequence
 
 import numpy as np
 import yaml
@@ -130,6 +129,7 @@ def _relative_path(value: object, field: str) -> str:
 @dataclass(frozen=True)
 class RuntimeEnvironmentReceiptV1:
     python_executable: str
+    python_executable_sha256: str
     python_implementation: str
     python_version: str
     platform_system: str
@@ -142,6 +142,7 @@ class RuntimeEnvironmentReceiptV1:
         return {
             "schema": "htt.runtime_environment_receipt.v1",
             "python_executable": self.python_executable,
+            "python_executable_sha256": self.python_executable_sha256,
             "python_implementation": self.python_implementation,
             "python_version": self.python_version,
             "platform_system": self.platform_system,
@@ -168,24 +169,44 @@ def capture_runtime_environment_receipt(
             raise ProductionBayesianError(
                 f"required runtime package is not installed: {package}"
             ) from exc
-    native: dict[str, str] = {}
-    for name, module in (
-        ("numpy._core._multiarray_umath", np._core._multiarray_umath),
-    ):
-        raw_path = getattr(module, "__file__", None)
-        if not isinstance(raw_path, str):
-            raise ProductionBayesianError("live native extension identity is unavailable")
-        path = Path(raw_path).resolve(strict=True)
-        with path.open("rb") as handle:
-            native[name] = "sha256:" + hashlib.file_digest(handle, "sha256").hexdigest()
+    executable = Path(sys.executable).resolve(strict=True)
+    try:
+        numpy_native = importlib.import_module("numpy._core._multiarray_umath")
+    except ModuleNotFoundError:
+        try:
+            numpy_native = importlib.import_module("numpy.core._multiarray_umath")
+        except ModuleNotFoundError as exc:
+            raise ProductionBayesianError(
+                "live NumPy native extension identity is unavailable"
+            ) from exc
+    raw_path = getattr(numpy_native, "__file__", None)
+    if not isinstance(raw_path, str):
+        raise ProductionBayesianError(
+            "live NumPy native extension identity is unavailable"
+        )
+    try:
+        native_path = Path(raw_path).resolve(strict=True)
+        with executable.open("rb") as handle:
+            executable_sha256 = (
+                "sha256:" + hashlib.file_digest(handle, "sha256").hexdigest()
+            )
+        with native_path.open("rb") as handle:
+            native_sha256 = (
+                "sha256:" + hashlib.file_digest(handle, "sha256").hexdigest()
+            )
+    except OSError as exc:
+        raise ProductionBayesianError(
+            "live executable or native extension identity is unavailable"
+        ) from exc
     provisional = RuntimeEnvironmentReceiptV1(
-        python_executable=str(Path(sys.executable).resolve(strict=True)),
+        python_executable=str(executable),
+        python_executable_sha256=executable_sha256,
         python_implementation=platform.python_implementation(),
         python_version=platform.python_version(),
         platform_system=platform.system(),
         platform_machine=platform.machine(),
         package_versions=versions,
-        native_extension_sha256=native,
+        native_extension_sha256={numpy_native.__name__: native_sha256},
         receipt_id="",
     )
     return replace(
@@ -235,13 +256,13 @@ _PROVIDER_FACTORY_TOKEN = object()
 
 @dataclass(frozen=True)
 class LoadedCandidateProviderV1:
+    """Non-executing metadata loaded from exact candidate Git blobs."""
+
     manifest: ProviderManifestV1
     source_bindings: Mapping[str, Mapping[str, str]]
     code_fingerprints: Mapping[str, str]
-    log_likelihood: Callable[[np.ndarray], float]
-    prior_transform: Callable[[np.ndarray], np.ndarray]
-    replicate_generator: Callable[[np.ndarray, np.random.Generator], np.ndarray]
-    discrepancies: Mapping[str, Callable[[np.ndarray, np.ndarray], float]]
+    export_symbols: Mapping[str, str]
+    execution_deferred_to_external_launcher: bool
     provider_content_id: str
     _construction_token: object
 
@@ -249,6 +270,10 @@ class LoadedCandidateProviderV1:
         if self._construction_token is not _PROVIDER_FACTORY_TOKEN:
             raise ProductionBayesianError(
                 "provider must be factory-loaded from candidate Git blobs"
+            )
+        if self.execution_deferred_to_external_launcher is not True:
+            raise ProductionBayesianError(
+                "candidate provider execution must remain external-launcher-only"
             )
 
     def unsigned_payload(self) -> dict[str, object]:
@@ -259,6 +284,8 @@ class LoadedCandidateProviderV1:
                 key: dict(value) for key, value in sorted(self.source_bindings.items())
             },
             "code_fingerprints": dict(sorted(self.code_fingerprints.items())),
+            "export_symbols": dict(sorted(self.export_symbols.items())),
+            "execution_state": "DEFERRED_TO_EXTERNAL_TRUSTED_LAUNCHER",
         }
 
 
@@ -283,7 +310,7 @@ def _candidate_blob_api():
 def load_candidate_provider(
     *, candidate_identity: object, manifest_path: Path
 ) -> LoadedCandidateProviderV1:
-    CandidateIdentityV1, binding_for, read_blob, revalidate = _candidate_blob_api()
+    CandidateIdentityV1, _, read_blob, revalidate = _candidate_blob_api()
     if type(candidate_identity) is not CandidateIdentityV1:
         raise ProductionBayesianError(
             "provider loading requires a factory-derived candidate identity"
@@ -293,9 +320,13 @@ def load_candidate_provider(
     try:
         candidate = revalidate(candidate_identity)
         relative_manifest = _relative_path(manifest_path.as_posix(), "provider manifest")
-        manifest_binding = binding_for(candidate, relative_manifest)
+        manifest_raw = read_blob(candidate, relative_manifest)
+        manifest_binding = {
+            "path": relative_manifest,
+            "sha256": "sha256:" + hashlib.sha256(manifest_raw).hexdigest(),
+        }
         payload = _exact_mapping(
-            _strict_json_bytes(read_blob(candidate, relative_manifest), field="provider manifest"),
+            _strict_json_bytes(manifest_raw, field="provider manifest"),
             field="provider manifest",
             fields=frozenset(
                 {
@@ -385,34 +416,43 @@ def load_candidate_provider(
         parsed = ast.parse(source, filename=f"git:{candidate.commit}:{provider_path}")
     except (SyntaxError, ValueError) as exc:
         raise ProductionBayesianError("provider Git blob is not valid Python") from exc
-    if any(isinstance(node, (ast.Import, ast.ImportFrom, ast.Global, ast.Nonlocal)) for node in ast.walk(parsed)):
-        raise ProductionBayesianError("provider imports and global mutation are forbidden")
-    dependency_blobs = {
-        path: read_blob(candidate, path) for path in dependencies
-    }
-    safe_builtins = {
-        "abs": abs,
-        "float": float,
-        "int": int,
-        "len": len,
-        "max": max,
-        "min": min,
-        "range": range,
-        "sum": sum,
-        "tuple": tuple,
-        "ValueError": ValueError,
-    }
-    namespace: dict[str, object] = {
-        "__builtins__": MappingProxyType(safe_builtins),
-        "__file__": f"git:{candidate.commit}:{provider_path}",
-        "__name__": "__htt_candidate_provider__",
-        "np": np,
-        "DEPENDENCY_BLOBS": MappingProxyType(dependency_blobs),
-    }
-    try:
-        exec(compile(parsed, namespace["__file__"], "exec"), namespace)
-    except Exception as exc:
-        raise ProductionBayesianError("candidate provider initialization failed") from exc
+    if any(
+        isinstance(node, (ast.Import, ast.ImportFrom, ast.Global, ast.Nonlocal))
+        for node in ast.walk(parsed)
+    ):
+        raise ProductionBayesianError(
+            "provider imports and global mutation are forbidden"
+        )
+    top_level: dict[str, ast.FunctionDef] = {}
+    for index, node in enumerate(parsed.body):
+        if (
+            index == 0
+            and isinstance(node, ast.Expr)
+            and isinstance(node.value, ast.Constant)
+            and isinstance(node.value.value, str)
+        ):
+            continue
+        if not isinstance(node, ast.FunctionDef):
+            raise ProductionBayesianError(
+                "candidate provider permits declarations only; execution is deferred"
+            )
+        if node.name in top_level:
+            raise ProductionBayesianError("provider definitions must be unique")
+        if (
+            node.decorator_list
+            or node.args.defaults
+            or any(default is not None for default in node.args.kw_defaults)
+            or any(
+                isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda))
+                and child is not node
+                for child in ast.walk(node)
+            )
+        ):
+            raise ProductionBayesianError(
+                f"provider export has unbound runtime state: {node.name}"
+            )
+        top_level[node.name] = node
+    dependency_blobs = {path: read_blob(candidate, path) for path in dependencies}
     roles = {
         "log_likelihood": manifest.log_likelihood_symbol,
         "prior_transform": manifest.prior_transform_symbol,
@@ -422,29 +462,32 @@ def load_candidate_provider(
             for name, symbol in sorted(manifest.discrepancy_symbols.items())
         },
     }
-    functions: dict[str, Callable[..., object]] = {}
     fingerprints: dict[str, str] = {}
     for role, symbol in roles.items():
-        function = namespace.get(symbol)
-        if not callable(function) or getattr(function, "__globals__", None) is not namespace:
-            raise ProductionBayesianError(f"provider export is not factory-loaded: {role}")
-        if (
-            getattr(function, "__closure__", None) is not None
-            or getattr(function, "__defaults__", None) is not None
-            or getattr(function, "__kwdefaults__", None) is not None
-        ):
+        definition = top_level.get(symbol)
+        if definition is None:
             raise ProductionBayesianError(
-                f"provider export has unbound runtime state: {role}"
+                f"provider export is not an exact top-level definition: {role}"
             )
-        functions[role] = function
         fingerprints[role] = "sha256:" + hashlib.sha256(
-            marshal.dumps(function.__code__)
+            ast.dump(
+                definition,
+                annotate_fields=True,
+                include_attributes=False,
+            ).encode("utf-8")
         ).hexdigest()
     bindings: dict[str, Mapping[str, str]] = {
         "manifest": manifest_binding,
-        "provider": binding_for(candidate, provider_path),
+        "provider": {
+            "path": provider_path,
+            "sha256": "sha256:" + hashlib.sha256(source).hexdigest(),
+        },
         **{
-            f"dependency:{path}": binding_for(candidate, path)
+            f"dependency:{path}": {
+                "path": path,
+                "sha256": "sha256:"
+                + hashlib.sha256(dependency_blobs[path]).hexdigest(),
+            }
             for path in dependencies
         },
     }
@@ -452,13 +495,8 @@ def load_candidate_provider(
         manifest=manifest,
         source_bindings=bindings,
         code_fingerprints=fingerprints,
-        log_likelihood=functions["log_likelihood"],
-        prior_transform=functions["prior_transform"],
-        replicate_generator=functions["replicate_generator"],
-        discrepancies={
-            name: functions[f"discrepancy:{name}"]
-            for name in manifest.discrepancy_symbols
-        },
+        export_symbols=roles,
+        execution_deferred_to_external_launcher=True,
         provider_content_id="",
         _construction_token=_PROVIDER_FACTORY_TOKEN,
     )
@@ -771,7 +809,12 @@ def _computed_response_rank(
         raise ProductionBayesianError("response matrix schema drifted")
     features = _names(payload["feature_order"], "response feature order")
     parameters = _names(payload["parameter_order"], "response parameter order")
-    matrix = np.asarray(payload["matrix"], dtype=float)
+    try:
+        matrix = np.asarray(payload["matrix"], dtype=float)
+    except (TypeError, ValueError) as exc:
+        raise ProductionBayesianError(
+            "response matrix or threshold is invalid"
+        ) from exc
     threshold = payload["singular_value_threshold"]
     if (
         matrix.shape != (len(features), len(parameters))
@@ -782,7 +825,12 @@ def _computed_response_rank(
         or float(threshold) <= 0
     ):
         raise ProductionBayesianError("response matrix or threshold is invalid")
-    rank = int(np.linalg.matrix_rank(matrix, tol=float(threshold)))
+    try:
+        rank = int(np.linalg.matrix_rank(matrix, tol=float(threshold)))
+    except np.linalg.LinAlgError as exc:
+        raise ProductionBayesianError(
+            "response matrix or threshold is invalid"
+        ) from exc
     provisional = ComputedResponseRankReceiptV1(
         response_matrix_binding=binding_for(candidate, path),
         feature_order=features,
@@ -937,7 +985,7 @@ def bind_production_model_contract(
     provider = load_candidate_provider(
         candidate_identity=candidate, manifest_path=provider_manifest_path
     )
-    if tuple(sorted(provider.discrepancies)) != base.discrepancy_ids:
+    if tuple(sorted(provider.manifest.discrepancy_symbols)) != base.discrepancy_ids:
         raise ProductionBayesianError("provider discrepancy exports drifted")
     runtime, environment_binding = _runtime_receipt_from_contract(
         candidate=candidate, provider=provider

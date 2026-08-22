@@ -979,6 +979,27 @@ def test_model_inmem_002_rejects_provider_default_runtime_state(
         _bound_model(lane, decision, changed, provider)
 
 
+def test_provider_validation_never_executes_candidate_blob(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    marker = tmp_path / "provider-executed.txt"
+    source = candidate.repo_root / "provider.py"
+    source.write_text(
+        source.read_text(encoding="utf-8")
+        + f"\nnp.savetxt({str(marker)!r}, [1.0])\n",
+        encoding="utf-8",
+    )
+    _git(candidate.repo_root, "add", "--", "provider.py")
+    _git(candidate.repo_root, "commit", "-m", "add forbidden top-level effect")
+    changed = build_clean_candidate_identity(candidate.repo_root)
+
+    with pytest.raises(ProductionBayesianError, match="execution is deferred"):
+        _bound_model(lane, decision, changed, provider)
+    assert not marker.exists()
+
+
 def test_runtime_env_001_rejects_live_environment_contract_mismatch(
     tmp_path: Path,
 ) -> None:
@@ -997,6 +1018,19 @@ def test_runtime_env_001_rejects_live_environment_contract_mismatch(
         _bound_model(lane, decision, changed, provider)
 
 
+def test_runtime_receipt_binds_executable_and_numpy_native_bytes() -> None:
+    receipt = capture_runtime_environment_receipt(("numpy", "cryptography"))
+    assert receipt.python_executable_sha256.startswith("sha256:")
+    assert len(receipt.python_executable_sha256) == 71
+    assert len(receipt.native_extension_sha256) == 1
+    name, identity = next(iter(receipt.native_extension_sha256.items()))
+    assert name in {
+        "numpy._core._multiarray_umath",
+        "numpy.core._multiarray_umath",
+    }
+    assert identity.startswith("sha256:") and len(identity) == 71
+
+
 def test_response_rank_001_rejects_rank_assertion_without_computed_support(
     tmp_path: Path,
 ) -> None:
@@ -1010,6 +1044,22 @@ def test_response_rank_001_rejects_rank_assertion_without_computed_support(
     )
 
     with pytest.raises(ProductionBayesianError, match="computed response rank"):
+        _bound_model(lane, decision, changed, provider)
+
+
+def test_response_rank_rejects_nonnumeric_matrix_as_typed_contract_error(
+    tmp_path: Path,
+) -> None:
+    lane, decision = _admitted_act(tmp_path)
+    candidate, provider = _candidate_repo(tmp_path)
+    changed = _commit_json_mutation(
+        candidate,
+        "response-matrix.json",
+        lambda payload: payload.__setitem__("matrix", [["not-a-number"]]),
+        message="malform response matrix",
+    )
+
+    with pytest.raises(ProductionBayesianError, match="response matrix"):
         _bound_model(lane, decision, changed, provider)
 
 

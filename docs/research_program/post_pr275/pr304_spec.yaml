@@ -104,7 +104,9 @@ candidate_contract:
 production_model_binding:
   schema: htt.production_bayesian_contract.v3
   raw_callable_input: forbidden
-  provider_loader: exact_candidate_git_blob_factory
+  provider_loader: nonexecuting_exact_candidate_git_blob_validator
+  candidate_code_execution_in_validation_process: forbidden
+  provider_execution: external_launcher_OS_isolation_only
   mandatory_bindings:
     - lane_admission_bundle_id
     - ordered_admission_record_ids
@@ -122,7 +124,8 @@ production_model_binding:
     - normalization_evidence_id
     - execution_plan_content_id
   runtime_receipt:
-    - exact Python executable and implementation/version
+    - exact Python executable path and content identity
+    - Python implementation and version
     - platform system and machine
     - registered package versions
     - NumPy native extension content identity
