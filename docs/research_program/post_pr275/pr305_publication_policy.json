@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "policy_id": "PR305-TRUSTED-LAUNCHER-TRANSACTION-PREPROVISIONING-POLICY",
+  "pr_id": "PR-305",
+  "change_set_id": "CS-PR305-TRUSTED-LAUNCHER-TRANSACTION-PREPROVISIONING",
+  "publication_group_id": "PG-PR305-TRUSTED-LAUNCHER-TRANSACTION-PREPROVISIONING",
+  "target_ref": "origin/changeset/pr300-one-command-observational-readiness-20260821",
+  "target_sha": "b9de03e16b1b60f4e36f62b49d968557ebb8553d",
+  "max_open_prs": 1,
+  "max_direct_to_target_prs": 1,
+  "max_prs_per_change_set": 1,
+  "max_stack_depth": 1,
+  "max_file_overlap_prs": 12,
+  "max_inventory_age_seconds": 300,
+  "max_receipt_age_seconds": 1800,
+  "max_authorization_ttl_seconds": 1800,
+  "publication_mode": "draft_pr_only",
+  "claim_ceiling": "diagnostic_only",
+  "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+  "observed_data_executed": false,
+  "production_nonce_consumed": false,
+  "active_authority_count": 0,
+  "scientific_effect": "none",
+  "forbidden_actions": [
+    "launcher_installation",
+    "root_or_lane_key_provisioning",
+    "real_registry_signature",
+    "real_authorization_issuance",
+    "production_nonce_consumption",
+    "observed_payload_access",
+    "data_admission",
+    "lane_execution",
+    "canary",
+    "ready_state_emission",
+    "start_PR306",
+    "cross_probe_scheduling",
+    "default_branch_merge",
+    "force_push",
+    "merge",
+    "retarget"
+  ],
+  "required_commands": [
+    {
+      "id": "pr305-rust-format",
+      "argv": ["cargo", "+1.94.1", "fmt", "--manifest-path", "tools/htt-auth-launcher/Cargo.toml", "--", "--check"],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "pr305-rust-tests",
+      "argv": ["cargo", "+1.94.1", "test", "--locked", "--manifest-path", "tools/htt-auth-launcher/Cargo.toml"],
+      "timeout_seconds": 1200
+    },
+    {
+      "id": "pr305-rust-release",
+      "argv": ["cargo", "+1.94.1", "build", "--release", "--locked", "--manifest-path", "tools/htt-auth-launcher/Cargo.toml"],
+      "timeout_seconds": 1200
+    },
+    {
+      "id": "pr305-python-contracts",
+      "argv": ["env", "PYTHONPATH=htt/src:htt/htt", "python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_observed_execution.py", "tests/contracts/test_pr305_preprovisioning.py"],
+      "timeout_seconds": 600
+    },
+    {
+      "id": "pr305-harness-check",
+      "argv": ["env", "PYTHONPATH=htt/src:htt/htt", "python3", "-B", "scripts/codex_harness/run_pr305_preprovisioning.py", "--check"],
+      "timeout_seconds": 600
+    },
+    {
+      "id": "pr305-pr304-boundary",
+      "argv": ["env", "PYTHONPATH=htt:htt/src:htt/htt", "python3", "-B", "-m", "pytest", "-p", "no:cacheprovider", "-q", "tests/contracts/test_human_execution_authorization.py", "tests/htt/test_bayesian_production.py", "tests/contracts/test_observed_bayesian_readiness.py"],
+      "timeout_seconds": 900
+    },
+    {
+      "id": "pr305-rootless-preflight",
+      "argv": ["env", "PYTHONPATH=htt:htt/src:htt/htt", "python3", "-B", "scripts/codex_harness/run_pr289_data_identity_v2.py", "preflight"],
+      "timeout_seconds": 600
+    },
+    {
+      "id": "pr305-mirror-sync",
+      "argv": ["env", "PYTHONPATH=htt:htt/src:htt/htt", "python3", "-B", "scripts/codex_harness/sync_pr_dag_mirrors.py", "--check"],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "pr305-dag",
+      "argv": ["env", "PYTHONPATH=htt:htt/src:htt/htt", "python3", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "pr305-claim-language",
+      "argv": ["env", "PYTHONPATH=htt:htt/src:htt/htt", "python3", "-B", "scripts/check_claim_language.py", "--strict-missing", "htt/src/common/observed_execution.py", "docs/PR_DELTAS/pr-305.md", "docs/research_program/post_pr275/pr305_spec.yaml"],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "pr305-diff-check",
+      "argv": ["git", "diff", "--check"],
+      "timeout_seconds": 300
+    }
+  ],
+  "required_review_cells": [
+    "external_root_and_detached_registry_signature",
+    "fixed_release_paths_and_test_only_overrides",
+    "canonical_root_signature_payload",
+    "exact_candidate_admission_model_runtime_rank_normalization_plan_replay",
+    "output_lock_nonce_start_worker_terminal_order",
+    "nonce_atomicity_and_permanent_reuse_refusal",
+    "terminal_receipt_on_all_exit_paths",
+    "bounded_unprivileged_worker_environment_and_access",
+    "resume_identity_and_synthetic_production_separation",
+    "exact_PR289_and_PR304_boundaries",
+    "claim_ceiling_and_process_inflation"
+  ],
+  "invalidates_review": [
+    "candidate_sha_changed",
+    "candidate_tree_changed",
+    "diff_digest_changed",
+    "production_path_or_trust_binding_changed",
+    "transaction_order_changed",
+    "nonce_or_receipt_atomicity_changed",
+    "worker_isolation_changed",
+    "claim_ceiling_changed"
+  ],
+  "terminal": "PASS_PREPROVISIONING_TRANSACTION_REHEARSAL"
+}

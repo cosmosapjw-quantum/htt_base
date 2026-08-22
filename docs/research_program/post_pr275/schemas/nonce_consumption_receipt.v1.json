@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://htt.invalid/schemas/nonce_consumption_receipt.v1.json",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_mode": {"enum": ["synthetic_fixture", "production"], "type": "string"},
+    "authorization_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "consumed_at_utc": {"pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$", "type": "string"},
+    "ledger_entry_identity": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "nonce_sha256": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "receipt_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "run_id": {"type": "string"},
+    "schema": {"const": "common.nonce_consumption_receipt.v1"}
+  },
+  "required": ["artifact_mode", "authorization_id", "consumed_at_utc", "ledger_entry_identity", "nonce_sha256", "receipt_id", "run_id", "schema"],
+  "type": "object"
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://htt.invalid/schemas/observed_run_terminal_receipt.v1.json",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_mode": {"enum": ["synthetic_fixture", "production"], "type": "string"},
+    "binding_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "ended_at_utc": {"pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$", "type": "string"},
+    "exit_code": {"type": ["integer", "null"]},
+    "observed_bytes_opened": {"type": "boolean"},
+    "output_artifact_hashes": {"additionalProperties": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"}, "type": "object"},
+    "receipt_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "schema": {"const": "common.observed_run_terminal_receipt.v1"},
+    "signal": {"type": ["integer", "null"]},
+    "started_at_utc": {"pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$", "type": "string"},
+    "stderr_sha256": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "stdout_sha256": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "terminal": {"enum": ["SUCCESS", "ERROR", "TIMEOUT", "SIGNAL"], "type": "string"},
+    "timeout": {"type": "boolean"}
+  },
+  "required": ["artifact_mode", "binding_id", "ended_at_utc", "exit_code", "observed_bytes_opened", "output_artifact_hashes", "receipt_id", "schema", "signal", "started_at_utc", "stderr_sha256", "stdout_sha256", "terminal", "timeout"],
+  "type": "object"
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://htt.invalid/schemas/observed_execution_binding.v1.json",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_mode": {"enum": ["synthetic_fixture", "production"], "type": "string"},
+    "authorization_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "binding_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "candidate_commit": {"pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$", "type": "string"},
+    "candidate_tree": {"pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$", "type": "string"},
+    "computed_response_rank_receipt_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "exact_admission_record_ids": {"items": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"}, "minItems": 1, "type": "array", "uniqueItems": true},
+    "execution_plan_content_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "lane_admission_bundle_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "lane_id": {"type": "string"},
+    "launcher_binary_sha256": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "model_contract_content_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "normalization_evidence_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "output_root": {"pattern": "^/", "type": "string"},
+    "run_id": {"type": "string"},
+    "runtime_environment_receipt_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "schema": {"const": "common.observed_execution_binding.v1"}
+  },
+  "required": ["artifact_mode", "authorization_id", "binding_id", "candidate_commit", "candidate_tree", "computed_response_rank_receipt_id", "exact_admission_record_ids", "execution_plan_content_id", "lane_admission_bundle_id", "lane_id", "launcher_binary_sha256", "model_contract_content_id", "normalization_evidence_id", "output_root", "run_id", "runtime_environment_receipt_id", "schema"],
+  "type": "object"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://htt.invalid/schemas/launcher_install_manifest.v1.json",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_mode": {"enum": ["synthetic_fixture", "production"], "type": "string"},
+    "build_profile": {"const": "release"},
+    "candidate_commit": {"pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$", "type": "string"},
+    "candidate_tree": {"pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$", "type": "string"},
+    "installed": {"type": "boolean"},
+    "launcher_binary_sha256": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "launcher_path": {"const": "/usr/local/libexec/htt-auth-launcher"},
+    "manifest_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "production_path_overrides_absent": {"const": true},
+    "rust_toolchain": {"type": "string"},
+    "schema": {"const": "common.launcher_install_manifest.v1"}
+  },
+  "required": ["artifact_mode", "build_profile", "candidate_commit", "candidate_tree", "installed", "launcher_binary_sha256", "launcher_path", "manifest_id", "production_path_overrides_absent", "rust_toolchain", "schema"],
+  "type": "object"
+}

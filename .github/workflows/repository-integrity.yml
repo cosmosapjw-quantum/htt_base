@@ -29,6 +29,7 @@ jobs:
       - name: Check out the triggering revision
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
+          fetch-depth: 0
           persist-credentials: false
       - name: Validate clean-clone harness state
         run: |
@@ -112,6 +113,7 @@ jobs:
       - name: Check out the triggering revision
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
+          fetch-depth: 0
           persist-credentials: false
       - name: Set up Python 3.12 for PyO3 discovery
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
@@ -125,3 +127,40 @@ jobs:
           cargo +1.94.1 --version
       - name: Check the locked production library
         run: cargo +1.94.1 check --locked --lib
+      - name: Install PR-305 Python contract dependencies
+        run: |
+          python -m pip install 'pytest>=8,<9' 'PyYAML>=6,<7' 'numpy>=1.26,<3'
+          python -m pip install -e './htt'
+      - name: Format, test, and build the locked launcher
+        run: |
+          cargo +1.94.1 fmt --manifest-path tools/htt-auth-launcher/Cargo.toml -- --check
+          cargo +1.94.1 test --locked --manifest-path tools/htt-auth-launcher/Cargo.toml
+          cargo +1.94.1 build --release --locked --manifest-path tools/htt-auth-launcher/Cargo.toml
+      - name: Run PR-305 Python and rehearsal contracts
+        run: |
+          env PYTHONPATH=htt/src:htt/htt python3 -B -m pytest -p no:cacheprovider -q tests/contracts/test_observed_execution.py tests/contracts/test_pr305_preprovisioning.py
+          env PYTHONPATH=htt/src:htt/htt python3 -B scripts/codex_harness/run_pr305_preprovisioning.py --check
+      - name: Re-run the PR-304 authority boundary
+        run: |
+          env PYTHONPATH=htt:htt/src:htt/htt python3 -B -m pytest -p no:cacheprovider -q tests/contracts/test_human_execution_authorization.py tests/htt/test_bayesian_production.py tests/contracts/test_observed_bayesian_readiness.py
+      - name: Run admission, DAG, mirror, and claim gates
+        run: |
+          env PYTHONPATH=htt:htt/src:htt/htt python3 -B scripts/codex_harness/run_pr289_data_identity_v2.py preflight
+          env PYTHONPATH=htt:htt/src:htt/htt python3 -B scripts/codex_harness/sync_pr_dag_mirrors.py --check
+          env PYTHONPATH=htt:htt/src:htt/htt python3 -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+          env PYTHONPATH=htt:htt/src:htt/htt python3 -B scripts/check_claim_language.py --strict-missing htt/src/common/observed_execution.py docs/PR_DELTAS/pr-305.md docs/research_program/post_pr275/pr305_spec.yaml
+          git diff --check
+      - name: Build rehearsal-only launcher manifest
+        run: |
+          env PYTHONPATH=htt/src:htt/htt python3 -B scripts/codex_harness/run_pr305_preprovisioning.py \
+            --write-ci-manifest tools/htt-auth-launcher/target/release/launcher_install_manifest.json
+          sha256sum tools/htt-auth-launcher/target/release/htt-auth-launcher
+      - name: Upload rehearsal-only launcher and manifest
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pr305-launcher-rehearsal-${{ github.sha }}
+          if-no-files-found: error
+          retention-days: 7
+          path: |
+            tools/htt-auth-launcher/target/release/htt-auth-launcher
+            tools/htt-auth-launcher/target/release/launcher_install_manifest.json

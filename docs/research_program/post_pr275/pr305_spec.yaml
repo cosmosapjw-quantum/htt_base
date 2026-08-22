@@ -1,0 +1,146 @@
+schema: htt.pr305.trusted_launcher_transaction_preprovisioning.spec.v1
+pr_id: PR-305
+title: Trusted-launcher transaction pre-provisioning
+owner: COMMON
+contributors: [HTT]
+base_commit: b9de03e16b1b60f4e36f62b49d968557ebb8553d
+dependencies: [PR-304]
+capability: rehearse_privileged_observed_execution_transaction_with_synthetic_fixtures
+claim_tier: diagnostic_only
+transfer_source: none
+scientific_effect: none
+observed_data_executed: false
+production_nonce_consumed: false
+active_authority_count: 0
+public_use: false
+family_identification_gate: BLOCKED_PRE_NATIVE_ATLAS
+
+scope:
+  - implement a standalone locked Rust launcher source package
+  - keep production trust, nonce, and run-store paths compiled and nonselectable
+  - verify canonical detached root-registry and human-authorization signatures
+  - replay exact candidate, admission, model, runtime, rank, normalization, and execution-plan bindings
+  - atomically consume only synthetic test nonces after the output lock
+  - fsync a non-opening start receipt before any worker may run
+  - sanitize and bound an unprivileged synthetic worker
+  - emit a terminal receipt for success, error, timeout, and signal outcomes
+  - expose non-authoritative Python schema validators and a deterministic rehearsal harness
+
+production_fixed_paths:
+  launcher: /usr/local/libexec/htt-auth-launcher
+  root_public_key: /etc/htt/trust/root_authority_ed25519.pub
+  root_fingerprint: /etc/htt/trust/root_authority_ed25519.pub.sha256
+  nonce_store: /var/lib/htt-auth/nonces
+  run_store: /var/lib/htt-auth/runs
+  caller_selected_overrides: forbidden
+  test_overrides: compile_time_test_feature_only
+
+root_signature_payload:
+  schema: common.human_authority_registry_root_signature.v1
+  encoding: sorted_compact_ascii_json
+  fields:
+    - registry_blob_sha256
+    - candidate_commit
+    - candidate_tree
+    - authorization_domain
+    - registry_version
+    - issued_at_utc
+    - root_authority_key_id
+  reject:
+    - duplicate_keys
+    - unknown_fields
+    - non_ascii_strings
+    - nonfinite_values
+    - noncanonical_base64
+    - alternate_serialization
+
+transaction_order:
+  - verify_launcher_and_fixed_paths
+  - inspect_exact_candidate_commit_and_tree
+  - verify_external_root_key_fingerprint
+  - verify_detached_registry_root_signature
+  - verify_human_authorization_signature
+  - replay_exact_PR289_admission
+  - replay_model_runtime_rank_normalization_and_execution_plan
+  - acquire_output_root_lock
+  - atomically_consume_nonce
+  - write_and_fsync_start_receipt_with_observed_bytes_opened_false
+  - spawn_isolated_unprivileged_worker
+  - monitor_timeout_signal_and_exit
+  - write_and_fsync_exactly_one_terminal_receipt
+  - release_lock
+
+nonce_ledger:
+  filename: sha256_of_nonce
+  create_flags: [O_CREAT, O_EXCL, O_NOFOLLOW, O_CLOEXEC]
+  mode: '0600'
+  durability:
+    - write_authorization_and_run_identity
+    - fsync_entry
+    - fsync_directory
+  replay: permanently_rejected
+  production_entry_deletion: forbidden
+  PR305_consumption: synthetic_disposable_ledger_only
+
+worker_boundary:
+  privileged_process_executes_candidate_code: false
+  account: dedicated_unprivileged
+  admitted_data_access: read_only
+  output_access: bound_output_root_only
+  trust_and_nonce_access: forbidden
+  inherited_environment: allowlist_only
+  forbidden_environment:
+    - PYTHONPATH
+    - LD_PRELOAD
+    - PYTHONUSERBASE
+    - GIT_DIR
+    - GIT_WORK_TREE
+    - GIT_INDEX_FILE
+    - GIT_OBJECT_DIRECTORY
+    - GIT_ALTERNATE_OBJECT_DIRECTORIES
+  runtime: exact_execution_plan_executable_and_hash
+  candidate_resources: manifest_declared_exact_blobs_only
+
+hostile_gates:
+  P0:
+    - LCH-ROOT-001
+    - LCH-PATH-001
+    - LCH-NONCE-001
+    - LCH-ORDER-001
+    - LCH-TERM-001
+    - LCH-ENV-001
+    - LCH-ISOLATE-001
+  P1:
+    - LCH-RESUME-001
+    - LCH-ATOMIC-001
+    - LCH-SYNTH-001
+
+required_terminal:
+  terminal: PASS_PREPROVISIONING_TRANSACTION_REHEARSAL
+  production_launcher_installed: false
+  external_root_key_provisioned: false
+  real_registry_signature_present: false
+  active_authority_count: 0
+  real_authorization_issued: false
+  production_nonce_consumed: false
+  synthetic_nonce_tests: true
+  observed_data_executed: false
+
+forbidden:
+  - modifying the seven exact PR-289 source files
+  - restoring docs/generated/pr289_data_identity_v2_receipt.json
+  - activating an authority or creating real key material
+  - installing the launcher or exposing production path overrides
+  - opening observed data or emitting either READY state
+  - starting PR-306, cross-probe work, or observed analysis
+  - merging, retargeting, force-pushing, or default-branch integration
+
+anti_inflation:
+  one_launcher_crate: true
+  one_shared_schema_module: true
+  one_contract_test_module: true
+  one_preprovisioning_test_module: true
+  one_runner: true
+  no_new_global_ledger: true
+  no_scientific_output: true
+  downstream_consumer: PR-306 launcher-compatible Planck lane worker

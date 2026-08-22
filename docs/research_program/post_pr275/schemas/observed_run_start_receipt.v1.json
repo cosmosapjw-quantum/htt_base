@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://htt.invalid/schemas/observed_run_start_receipt.v1.json",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_mode": {"enum": ["synthetic_fixture", "production"], "type": "string"},
+    "binding_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "observed_bytes_opened": {"const": false},
+    "receipt_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "schema": {"const": "common.observed_run_start_receipt.v1"},
+    "started_at_utc": {"pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$", "type": "string"}
+  },
+  "required": ["artifact_mode", "binding_id", "observed_bytes_opened", "receipt_id", "schema", "started_at_utc"],
+  "type": "object"
+}

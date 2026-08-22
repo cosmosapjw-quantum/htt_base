@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://htt.invalid/schemas/root_registry_signature_payload.v1.json",
+  "additionalProperties": false,
+  "properties": {
+    "authorization_domain": {"const": "lane_data_execution"},
+    "candidate_commit": {"pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$", "type": "string"},
+    "candidate_tree": {"pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$", "type": "string"},
+    "issued_at_utc": {"pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$", "type": "string"},
+    "registry_blob_sha256": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "registry_version": {"minimum": 1, "type": "integer"},
+    "root_authority_key_id": {"pattern": "^sha256:[0-9a-f]{64}$", "type": "string"},
+    "schema": {"const": "common.human_authority_registry_root_signature.v1"}
+  },
+  "required": ["authorization_domain", "candidate_commit", "candidate_tree", "issued_at_utc", "registry_blob_sha256", "registry_version", "root_authority_key_id", "schema"],
+  "type": "object"
+}
