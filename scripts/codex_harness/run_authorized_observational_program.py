@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 import fcntl
 import hashlib
 import importlib
+from importlib import metadata
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -47,6 +48,28 @@ THREAD_CONTROLS = {
     "NUMEXPR_NUM_THREADS": "1",
     "VECLIB_MAXIMUM_THREADS": "1",
 }
+SCIENCE_RUNTIME_MODULES = (
+    "numpy",
+    "numpy.linalg",
+    "numpy._core._multiarray_umath",
+    "numpy.linalg._umath_linalg",
+    "scipy",
+    "scipy.linalg",
+    "scipy.linalg._fblas",
+    "scipy.linalg._flapack",
+    "scipy.special",
+    "scipy.special._multiufuncs",
+    "scipy.special._gufuncs",
+    "healpy",
+    "healpy.sphtfunc",
+    "healpy.pixelfunc",
+    "healpy.rotator",
+    "healpy._healpy_sph_transform_lib",
+    "healpy._sphtools",
+    "healpy._healpy_pixel_lib",
+)
+SCIENCE_DISTRIBUTIONS = ("numpy", "scipy", "healpy")
+OBSERVED_DATA_MARKER = "observed_data_opened.json"
 PLAN_FIELDS = frozenset(
     {
         "analysis_plan_id",
@@ -187,18 +210,20 @@ def validate_plan_values(values: object, *, root: Path) -> dict[str, object]:
         raise ObservationalProgramError(
             "analysis plan identity is not the registered PLANCK plan"
         )
+    execution_mode = values["execution_mode"]
     if (
-        values["execution_mode"] not in {"identity_only", SCIENCE_EXECUTION_MODE}
+        not isinstance(execution_mode, str)
+        or execution_mode not in {"identity_only", SCIENCE_EXECUTION_MODE}
         or values["bayesian_inference"] is not False
     ):
         raise ObservationalProgramError(
             "attended Planck plans must be identity-only or the reviewed PR-306 operator"
         )
-    science = values["execution_mode"] == SCIENCE_EXECUTION_MODE
+    science = execution_mode == SCIENCE_EXECUTION_MODE
     worker_value = values["worker_path"]
     if not isinstance(worker_value, str):
         raise ObservationalProgramError("worker path must be text")
-    relative = _relative(worker_value, "worker path")
+    _relative(worker_value, "worker path")
     expected_worker = SCIENCE_WORKER_RELATIVE if science else WORKER_RELATIVE
     if worker_value != expected_worker:
         raise ObservationalProgramError(
@@ -311,6 +336,8 @@ def _environment(
     *,
     science: bool,
     candidate_root: Path = ROOT,
+    candidate_commit: str | None = None,
+    candidate_tree: str | None = None,
     runtime_contract: Mapping[str, object] | None = None,
 ) -> dict[str, str]:
     environment = {
@@ -331,6 +358,13 @@ def _environment(
             raise ObservationalProgramError("science runtime import roots are missing")
         environment.update(THREAD_CONTROLS)
         environment["HTT_ATTENDED_START_WRITTEN"] = "1"
+        if candidate_commit is None or candidate_tree is None:
+            raise ObservationalProgramError("science candidate identity is missing")
+        environment["HTT_ATTENDED_CANDIDATE_COMMIT"] = candidate_commit
+        environment["HTT_ATTENDED_CANDIDATE_TREE"] = candidate_tree
+        environment["HTT_ATTENDED_DATA_OPEN_MARKER"] = str(
+            output / OBSERVED_DATA_MARKER
+        )
         environment["PYTHONPATH"] = os.pathsep.join(
             [str(candidate_root / "htt"), str(candidate_root / "htt/src"), *roots]
         )
@@ -341,24 +375,42 @@ def _science_runtime_contract() -> dict[str, object]:
     executable = Path(sys.executable).absolute()
     modules: dict[str, dict[str, str]] = {}
     import_roots: set[str] = set()
-    for name in ("numpy", "scipy", "healpy"):
+    for name in SCIENCE_RUNTIME_MODULES:
         try:
             module = importlib.import_module(name)
         except ImportError as exc:
             raise ObservationalProgramError(
                 f"science runtime dependency {name} is unavailable"
             ) from exc
-        origin = Path(module.__file__ or "").resolve()
-        if not origin.is_file() or origin.is_symlink():
+        declared_origin = Path(module.__file__ or "")
+        if declared_origin.is_symlink():
+            raise ObservationalProgramError(
+                f"science runtime dependency {name} origin is a symlink"
+            )
+        origin = declared_origin.resolve()
+        if not origin.is_file():
             raise ObservationalProgramError(
                 f"science runtime dependency {name} has no regular origin"
             )
         modules[name] = {
-            "version": str(module.__version__),
             "origin": str(origin),
             "origin_sha256": _file_hash(origin),
         }
-        import_roots.add(str(origin.parent.parent))
+        if name in SCIENCE_DISTRIBUTIONS:
+            modules[name]["version"] = str(module.__version__)
+            import_roots.add(str(origin.parent.parent))
+    distributions: dict[str, dict[str, str]] = {}
+    for name in SCIENCE_DISTRIBUTIONS:
+        distribution = metadata.distribution(name)
+        record = distribution.read_text("RECORD")
+        if not record:
+            raise ObservationalProgramError(
+                f"science runtime distribution {name} has no RECORD"
+            )
+        distributions[name] = {
+            "version": distribution.version,
+            "record_sha256": _raw_hash(record.encode("utf-8")),
+        }
     return {
         "python_executable_path": str(executable),
         "python_executable_sha256": _file_hash(executable),
@@ -367,6 +419,7 @@ def _science_runtime_contract() -> dict[str, object]:
         "python_cache_tag": sys.implementation.cache_tag,
         "platform_machine": platform.machine(),
         "modules": modules,
+        "distributions": distributions,
         "import_roots": sorted(import_roots),
         "thread_controls": dict(THREAD_CONTROLS),
     }
@@ -404,7 +457,12 @@ def prepare_execution(
             raise ObservationalProgramError(
                 "science execution requires an absolute regular data root"
             )
-        bound_data_root: Path | None = data_root.resolve()
+        declared_data_root = data_root.absolute()
+        if declared_data_root != declared_data_root.resolve():
+            raise ObservationalProgramError(
+                "science execution forbids symlink-based data roots"
+            )
+        bound_data_root: Path | None = declared_data_root
     else:
         if data_root is not None:
             raise ObservationalProgramError(
@@ -421,6 +479,8 @@ def prepare_execution(
         output,
         science=science,
         candidate_root=root,
+        candidate_commit=commit,
+        candidate_tree=tree,
         runtime_contract=runtime_contract,
     )
     environment_contract = {
@@ -519,7 +579,10 @@ def _terminate_process_group(process: subprocess.Popen[bytes]) -> None:
         os.killpg(process.pid, signal.SIGKILL)
     except ProcessLookupError:
         return
-    process.wait(timeout=5)
+    try:
+        process.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        return
 
 
 def _spawn_worker(
@@ -574,6 +637,25 @@ def _output_hashes(output: Path) -> dict[str, str]:
             if path.is_file():
                 rows[path.relative_to(output).as_posix()] = _file_hash(path)
     return dict(sorted(rows.items()))
+
+
+def _observed_data_open_state(
+    output: Path, *, science: bool
+) -> tuple[bool, str | None]:
+    if not science:
+        return False, None
+    marker = output / OBSERVED_DATA_MARKER
+    if not marker.exists():
+        return False, None
+    if marker.is_symlink() or not marker.is_file():
+        return True, "observed-data-open marker is not a regular file"
+    try:
+        payload = _strict_json(marker.read_bytes(), "observed-data-open marker")
+    except (OSError, ObservationalProgramError) as exc:
+        return True, str(exc)
+    if dict(payload) != {"state": "OBSERVED_DATA_OPEN_ATTEMPTED"}:
+        return True, "observed-data-open marker content drifted"
+    return True, None
 
 
 def execute_prepared(
@@ -662,6 +744,7 @@ def execute_prepared(
             "analysis_plan_sha256": acceptance["analysis_plan_sha256"],
             "worker_sha256": acceptance["worker_sha256"],
             "started_at_utc": started,
+            "observed_data_opened": False,
             "observed_science_executed": False,
         }
         _atomic_json(output / "start.json", start)
@@ -707,12 +790,19 @@ def execute_prepared(
             state = "FAILED"
             exit_code = 126
             (output / "stderr.log").write_text(str(exc), encoding="utf-8")
-        output_error: str | None = None
+        observed_data_opened, marker_error = _observed_data_open_state(
+            output, science=bool(acceptance.get("science_execution"))
+        )
+        output_error: str | None = marker_error
+        if acceptance.get("science_execution") and state == "SUCCEEDED":
+            if not observed_data_opened or marker_error is not None:
+                state = "FAILED"
+                exit_code = 125
         try:
             output_hashes = _output_hashes(output)
         except ObservationalProgramError as exc:
             output_hashes = {}
-            output_error = str(exc)
+            output_error = output_error or str(exc)
             if state == "SUCCEEDED":
                 state = "FAILED"
                 exit_code = 125
@@ -734,9 +824,8 @@ def execute_prepared(
             ),
             "output_hashes": output_hashes,
             "output_error": output_error,
-            "observed_science_executed": bool(
-                acceptance.get("science_execution") and state == "SUCCEEDED"
-            ),
+            "observed_data_opened": observed_data_opened,
+            "observed_science_executed": observed_data_opened,
         }
         _atomic_json(output / "terminal.json", terminal)
         return terminal

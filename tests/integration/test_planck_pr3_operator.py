@@ -4,8 +4,10 @@ import importlib
 import json
 import os
 from pathlib import Path
+from fractions import Fraction
 import subprocess
 import sys
+from types import SimpleNamespace
 
 import healpy as hp
 import numpy as np
@@ -21,10 +23,12 @@ from obsstat.planck_pr3_operator import (
     build_mask_coupling_inverse,
     calibrate_complete_synthetic_pool,
     commonize_beam_pixel_alm,
+    component_features_from_vectors,
     covariance_whitened_response_rank,
     estimate_matched_joint_covariance,
     extract_component_features,
     extract_multipole_vectors,
+    ordered_row_id_hash,
     real_vector_to_alm,
     validate_component_operator_identities,
 )
@@ -38,6 +42,7 @@ from obsstat.boost_biposh_residual import (
 
 ROOT = Path(__file__).resolve().parents[2]
 WORKER = ROOT / "scripts/observed_runs/run_planck_pr3.py"
+PROFILE = ROOT / "docs/generated/pr306_planck_synthetic_profile.json"
 
 
 def _load_worker():
@@ -198,12 +203,44 @@ def test_same_sky_joint_covariance_preserves_pairing_and_cross_block() -> None:
 
 
 def test_partial_ffp10_inventory_can_never_calibrate_a_p_value() -> None:
-    inventory = FFP10Inventory(tuple(f"row-{index}" for index in range(128)))
+    expected = tuple(f"row-{index}" for index in range(999))
+    inventory = FFP10Inventory(
+        expected[:128], expected_identity=ordered_row_id_hash(expected)
+    )
     with pytest.raises(PlanckLaneContractError, match="partial FFP10"):
         calibrate_complete_synthetic_pool(
             observation_features=np.ones(2),
             null_features=np.ones((128, 2)),
             inventory=inventory,
+        )
+
+
+def test_complete_ffp10_inventory_is_bound_to_exact_ordered_ids() -> None:
+    expected = tuple(f"row-{index:04d}" for index in range(999))
+    identity = ordered_row_id_hash(expected)
+    FFP10Inventory(expected, expected_identity=identity).require_complete()
+    replaced = list(expected)
+    replaced[-1] = "row-replaced"
+    with pytest.raises(PlanckLaneContractError, match="identity-mismatched"):
+        FFP10Inventory(tuple(replaced), expected_identity=identity).require_complete()
+    with pytest.raises(PlanckLaneContractError, match="identity-mismatched"):
+        FFP10Inventory(
+            tuple(reversed(expected)), expected_identity=identity
+        ).require_complete()
+
+
+@pytest.mark.requires_healpy
+def test_undefined_multipole_plane_is_a_typed_abstention() -> None:
+    alm = np.zeros(hp.Alm.getsize(5), dtype=np.complex128)
+    alm[hp.Alm.getidx(5, 2, 0)] = 1.0
+    alm[hp.Alm.getidx(5, 3, 0)] = 1.0
+    alm[hp.Alm.getidx(5, 4, 0)] = 1.0
+    alm[hp.Alm.getidx(5, 5, 0)] = 1.0
+    with pytest.raises(PlanckLaneContractError, match="plane is undefined"):
+        component_features_from_vectors(
+            alm,
+            vectors2=np.tile([0.0, 0.0, 1.0], (2, 1)),
+            vectors3=np.tile([0.0, 0.0, 1.0], (3, 1)),
         )
 
 
@@ -320,9 +357,73 @@ def test_full_synthetic_profile_computes_covariance_and_rank_but_abstains_global
     assert payload["row_count"] == 999
     assert payload["covariance"]["rank"] == len(JOINT_FEATURE_IDS)
     assert payload["covariance"]["cross_block_norm"] > 0.0
-    assert payload["local_response_rank"] == 1
+    assert payload["synthetic_local_response_rank"] == 1
+    assert payload["synthetic_observation_disjoint_from_nulls"] is True
+    assert payload["synthetic_observation_sha256"].startswith("sha256:")
+    assert payload["stages"]["null_calibration"]["status"] == "EXECUTED"
+    assert payload["stages"]["global_rank"]["status"] == "EXECUTED"
+    assert payload["stages"]["serialization"]["seconds"] > 0.0
     assert (
         payload["synthetic_calibration"]["observation_kind"] == "SYNTHETIC_PROFILE_ROW"
     )
     assert payload["global_claim_boundary"] == GLOBAL_CLAIM_BOUNDARY
     assert payload["rust_gate"].startswith("KEEP_PYTHON")
+
+
+def test_profile_and_observed_result_metadata_keep_claim_boundaries() -> None:
+    worker = _load_worker()
+    profile = worker._artifact_metadata(observed=False)
+    assert profile["owner"] == "OBSSTAT"
+    assert profile["non_claim_bearing"] is True
+    assert "Bianchi family identification" in profile["forbidden_use"]
+
+    os.environ["HTT_ATTENDED_CANDIDATE_COMMIT"] = "a" * 40
+    os.environ["HTT_ATTENDED_CANDIDATE_TREE"] = "b" * 40
+    try:
+        observed = worker._artifact_metadata(observed=True)
+    finally:
+        os.environ.pop("HTT_ATTENDED_CANDIDATE_COMMIT")
+        os.environ.pop("HTT_ATTENDED_CANDIDATE_TREE")
+    assert observed["non_claim_bearing"] is False
+    assert observed["candidate_commit"] == "a" * 40
+    assert observed["candidate_tree"] == "b" * 40
+
+
+def test_observed_result_labels_synthetic_response_and_carries_provenance(
+    monkeypatch,
+) -> None:
+    worker = _load_worker()
+    monkeypatch.setenv("HTT_ATTENDED_CANDIDATE_COMMIT", "a" * 40)
+    monkeypatch.setenv("HTT_ATTENDED_CANDIDATE_TREE", "b" * 40)
+    payload = worker._observed_result_payload(
+        admission_bundle_id="sha256:" + "c" * 64,
+        observed=np.zeros(len(JOINT_FEATURE_IDS)),
+        covariance=SimpleNamespace(rank=len(JOINT_FEATURE_IDS), condition_number=2.0),
+        synthetic_response_rank=SimpleNamespace(rank=1),
+        scan=SimpleNamespace(
+            global_p=Fraction(1, 2), resolution_floor=Fraction(1, 1000)
+        ),
+        null_rows=999,
+        wall_seconds=1.0,
+    )
+    assert "local_response_rank" not in payload
+    assert payload["synthetic_local_response_rank"] == 1
+    assert "operator validation only" in payload["synthetic_local_response_source"]
+    assert payload["artifact_metadata"]["candidate_commit"] == "a" * 40
+    assert payload["observed_data_opened"] is True
+
+
+def test_committed_profile_matrix_normalizes_constant_claim_metadata() -> None:
+    payload = json.loads(PROFILE.read_text(encoding="ascii"))
+    assert len(payload["cells"]) == 13
+    assert payload["artifact_metadata"]["non_claim_bearing"] is True
+    assert payload["artifact_metadata"]["source_identity"].startswith(
+        "deterministic synthetic"
+    )
+    assert all("feature_order" not in cell for cell in payload["cells"])
+    assert all("artifact_metadata" not in cell for cell in payload["cells"])
+    assert all(
+        cell["synthetic_observation_disjoint_from_nulls"] is True
+        for cell in payload["cells"]
+        if cell["row_label"] == "full"
+    )

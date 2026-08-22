@@ -353,11 +353,17 @@ def test_ATT_012_preflight_failure_never_spawns_or_opens_data(
     assert not output.exists()
 
 
-def _science_case(case_factory, tmp_path: Path):
+def _science_case(
+    case_factory,
+    tmp_path: Path,
+    *,
+    worker_source: str = "raise SystemExit(0)\n",
+    timeout: int = 5,
+):
     module, repo, plan, _, admission, output, _ = case_factory()
     science_worker = repo / "scripts/observed_runs/run_planck_pr3.py"
     science_worker.parent.mkdir(parents=True, exist_ok=True)
-    science_worker.write_text("raise SystemExit(0)\n", encoding="utf-8")
+    science_worker.write_text(worker_source, encoding="utf-8")
     payload = yaml.safe_load(plan.read_text(encoding="utf-8"))
     payload["attended_execution_plan"].update(
         {
@@ -376,7 +382,7 @@ def _science_case(case_factory, tmp_path: Path):
         plan_path="docs/plan.yaml",
         admission_path=admission,
         output_dir=output,
-        timeout_seconds=5,
+        timeout_seconds=timeout,
         data_root=data_root,
         root=repo,
     )
@@ -395,7 +401,12 @@ def test_PR306_science_plan_binds_exact_runtime_data_root_and_worker(
         prepared["science_runtime_contract"]
     )
     runtime = prepared["science_runtime_contract"]
-    assert set(runtime["modules"]) == {"numpy", "scipy", "healpy"}
+    assert set(runtime["modules"]) == set(module.SCIENCE_RUNTIME_MODULES)
+    assert set(runtime["distributions"]) == set(module.SCIENCE_DISTRIBUTIONS)
+    assert all(
+        row["origin_sha256"].startswith("sha256:")
+        for row in runtime["modules"].values()
+    )
     assert runtime["thread_controls"] == module.THREAD_CONTROLS
     assert all(prepared["environment"][key] == "1" for key in module.THREAD_CONTROLS)
 
@@ -410,6 +421,27 @@ def test_PR306_science_runtime_is_rechecked_before_spawn(
     with pytest.raises(module.ObservationalProgramError, match="runtime changed"):
         module.execute_prepared(prepared, prepared["acceptance_hash"])
     assert not output.exists()
+
+
+def test_PR306_science_data_root_rejects_symlink_components(
+    case_factory, tmp_path: Path
+) -> None:
+    module, repo, _, _, admission, output, data_root, _ = _science_case(
+        case_factory, tmp_path
+    )
+    linked_parent = tmp_path / "linked-science-parent"
+    linked_parent.symlink_to(data_root.parent, target_is_directory=True)
+    linked_root = linked_parent / data_root.name
+    with pytest.raises(module.ObservationalProgramError, match="symlink-based"):
+        module.prepare_execution(
+            lane="PLANCK",
+            plan_path="docs/plan.yaml",
+            admission_path=admission,
+            output_dir=output,
+            timeout_seconds=5,
+            data_root=linked_root,
+            root=repo,
+        )
 
 
 def test_PR306_timeout_terminates_the_worker_process_group(case_factory) -> None:
@@ -453,3 +485,47 @@ def test_PR306_worker_logs_and_large_outputs_are_stream_hashed(case_factory) -> 
         terminal["output_hashes"]["large.bin"]
         == "sha256:" + hashlib.sha256(b"x" * 2097163).hexdigest()
     )
+
+
+@pytest.mark.parametrize("terminal_state", ["FAILED", "TIMED_OUT"])
+def test_PR306_science_failure_after_data_open_is_recorded_truthfully(
+    case_factory, tmp_path: Path, terminal_state: str
+) -> None:
+    tail = "raise SystemExit(9)\n" if terminal_state == "FAILED" else "time.sleep(60)\n"
+    source = (
+        "import json, os, time\n"
+        "from pathlib import Path\n"
+        "marker = Path(os.environ['HTT_ATTENDED_DATA_OPEN_MARKER'])\n"
+        "marker.write_text(json.dumps({'state': 'OBSERVED_DATA_OPEN_ATTEMPTED'}))\n"
+        + tail
+    )
+    module, _, _, _, _, output, _, prepared = _science_case(
+        case_factory,
+        tmp_path,
+        worker_source=source,
+        timeout=1 if terminal_state == "TIMED_OUT" else 5,
+    )
+    terminal = module.execute_prepared(prepared, prepared["acceptance_hash"])
+    assert terminal["state"] == terminal_state
+    assert terminal["observed_data_opened"] is True
+    assert terminal["observed_science_executed"] is True
+    persisted = json.loads((output / "terminal.json").read_text(encoding="ascii"))
+    assert persisted["observed_data_opened"] is True
+
+
+def test_PR306_unhashable_execution_mode_is_blocked(case_factory) -> None:
+    module, repo, plan, _, admission, output, _ = case_factory()
+    payload = yaml.safe_load(plan.read_text(encoding="utf-8"))
+    payload["attended_execution_plan"]["execution_mode"] = ["identity_only"]
+    plan.write_text(yaml.safe_dump(payload, sort_keys=True), encoding="utf-8")
+    _git(repo, "add", "docs/plan.yaml")
+    _git(repo, "commit", "-qm", "invalid execution mode")
+    with pytest.raises(module.ObservationalProgramError, match="Planck plans"):
+        module.prepare_execution(
+            lane="PLANCK",
+            plan_path="docs/plan.yaml",
+            admission_path=admission,
+            output_dir=output,
+            timeout_seconds=5,
+            root=repo,
+        )

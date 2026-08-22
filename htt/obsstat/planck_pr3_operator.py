@@ -522,17 +522,22 @@ def component_features_from_vectors(
     )
     normal2 = np.cross(vectors2[0], vectors2[1])
     norm2 = float(np.linalg.norm(normal2))
-    plane_alignment = 0.0
-    if norm2 > 1e-12:
-        normal2 /= norm2
-        candidates: list[float] = []
-        for first, second in itertools.combinations(range(3), 2):
-            normal3 = np.cross(vectors3[first], vectors3[second])
-            norm3 = float(np.linalg.norm(normal3))
-            if norm3 > 1e-12:
-                candidates.append(abs(float(normal2 @ (normal3 / norm3))))
-        if candidates:
-            plane_alignment = max(candidates)
+    if norm2 <= 1e-12:
+        raise PlanckLaneContractError(
+            "ell=2 multipole plane is undefined for coincident axes"
+        )
+    normal2 /= norm2
+    candidates: list[float] = []
+    for first, second in itertools.combinations(range(3), 2):
+        normal3 = np.cross(vectors3[first], vectors3[second])
+        norm3 = float(np.linalg.norm(normal3))
+        if norm3 > 1e-12:
+            candidates.append(abs(float(normal2 @ (normal3 / norm3))))
+    if not candidates:
+        raise PlanckLaneContractError(
+            "ell=3 multipole planes are undefined for coincident axes"
+        )
+    plane_alignment = max(candidates)
     output = np.array(
         [*band, even / odd, *gaps, dot2, *dots3, plane_alignment], dtype=float
     )
@@ -570,9 +575,24 @@ def assemble_joint_feature_row(
     return np.concatenate(rows)
 
 
+def ordered_row_id_hash(row_ids: Sequence[str]) -> str:
+    """Content-bind the exact ordered same-sky FFP10 realization IDs."""
+
+    digest = hashlib.sha256()
+    digest.update(b"htt.planck.ffp10.inventory.v1\0")
+    for row_id in row_ids:
+        if not isinstance(row_id, str) or not row_id.strip():
+            raise PlanckLaneContractError(
+                "FFP10 row IDs must be unique non-empty strings"
+            )
+        digest.update(row_id.encode("utf-8") + b"\0")
+    return "sha256:" + digest.hexdigest()
+
+
 @dataclass(frozen=True)
 class FFP10Inventory:
     row_ids: tuple[str, ...]
+    expected_identity: str
     expected_null_rows: int = EXPECTED_FFP10_NULL_ROWS
 
     def __post_init__(self) -> None:
@@ -589,23 +609,36 @@ class FFP10Inventory:
             raise PlanckLaneContractError(
                 "FFP10 row IDs must be unique non-empty strings"
             )
+        if (
+            not isinstance(self.expected_identity, str)
+            or not self.expected_identity.startswith("sha256:")
+            or len(self.expected_identity) != 71
+        ):
+            raise PlanckLaneContractError(
+                "expected FFP10 ordered inventory identity is malformed"
+            )
+        try:
+            int(self.expected_identity.removeprefix("sha256:"), 16)
+        except ValueError as exc:
+            raise PlanckLaneContractError(
+                "expected FFP10 ordered inventory identity is malformed"
+            ) from exc
 
     @property
     def complete(self) -> bool:
-        return len(self.row_ids) == self.expected_null_rows
+        return (
+            len(self.row_ids) == self.expected_null_rows
+            and self.identity == self.expected_identity
+        )
 
     @property
     def identity(self) -> str:
-        digest = hashlib.sha256()
-        digest.update(b"htt.planck.ffp10.inventory.v1\0")
-        for row_id in self.row_ids:
-            digest.update(row_id.encode("utf-8") + b"\0")
-        return "sha256:" + digest.hexdigest()
+        return ordered_row_id_hash(self.row_ids)
 
     def require_complete(self) -> None:
         if not self.complete:
             raise PlanckLaneContractError(
-                "partial FFP10 inventory cannot calibrate a p-value"
+                "partial FFP10 or identity-mismatched inventory cannot calibrate a p-value"
             )
 
 
@@ -839,10 +872,10 @@ def capability_snapshot(*, response_rank: ResponseRank | None) -> dict[str, obje
         "feature_units": list(JOINT_FEATURE_UNITS),
         "joint_covariance": "IMPLEMENTED_MATCHED_SAME_SKY_FULL_CROSS_BLOCK",
         "ffp10_inventory": "COMPLETE_INVENTORY_REQUIRED_FOR_CALIBRATION",
-        "local_response_rank": (
+        "synthetic_local_response_rank": (
             "NOT_COMPUTED" if response_rank is None else response_rank.status
         ),
-        "local_response_rank_value": (
+        "synthetic_local_response_rank_value": (
             None if response_rank is None else response_rank.rank
         ),
         "global_response_status": "MISSING",
@@ -885,6 +918,7 @@ __all__ = [
     "estimate_matched_joint_covariance",
     "extract_component_features",
     "extract_multipole_vectors",
+    "ordered_row_id_hash",
     "real_alm_layout",
     "real_vector_to_alm",
     "remove_weighted_monopole_dipole",

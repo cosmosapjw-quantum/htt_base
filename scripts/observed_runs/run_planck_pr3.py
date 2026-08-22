@@ -67,6 +67,7 @@ from obsstat.planck_pr3_operator import (  # noqa: E402
     covariance_whitened_response_rank,
     estimate_matched_joint_covariance,
     extract_multipole_vectors,
+    ordered_row_id_hash,
     real_vector_to_alm,
     remove_weighted_monopole_dipole,
 )
@@ -106,10 +107,101 @@ PROFILE_MATRIX = (
     ),
 )
 RUST_GATE = "KEEP_PYTHON_NO_ELIGIBLE_POST_OPTIMIZATION_LEAF"
+FFP10_RELEASE_ID = "planck:ffp10:pr3:cmb:same-sky:v1"
+SYNTHETIC_NULL_ROW_IDS = tuple(
+    f"FFP10-{index:04d}" for index in range(EXPECTED_FFP10_NULL_ROWS)
+)
+SYNTHETIC_NULL_INVENTORY_ID = ordered_row_id_hash(SYNTHETIC_NULL_ROW_IDS)
+REQUIRED_ADMITTED_COMPONENTS = frozenset(
+    {
+        "smica_map",
+        "commander_map",
+        "smica_mask",
+        "commander_mask",
+        "smica_beam",
+        "commander_beam",
+        "smica_window_operator",
+        "commander_window_operator",
+        "smica_covariance",
+        "commander_covariance",
+        "pixelization",
+        "native_selection",
+        "ffp10_null_inventory",
+    }
+)
+PROFILE_CONSTANT_FIELDS = (
+    "schema",
+    "capability",
+    "profile_kind",
+    "thread_controls",
+    "feature_order",
+    "global_response_status",
+    "global_claim_boundary",
+    "rust_gate",
+    "observed_statistic_seen",
+    "observed_science_executed",
+    "capability_snapshot",
+)
 
 
 class PlanckWorkerError(RuntimeError):
     """Raised when worker input, operator, or profile contracts drift."""
+
+
+def _artifact_metadata(*, observed: bool) -> dict[str, object]:
+    metadata: dict[str, object] = {
+        "owner": "OBSSTAT",
+        "scope": "Planck PR3 low-ell operator diagnostic",
+        "claim_tier": "transfer_conditional_diagnostic_only",
+        "allowed_use": [
+            "operator validation",
+            "matched-null calibration diagnostic",
+        ],
+        "forbidden_use": [
+            "global tilt claim",
+            "native transfer claim",
+            "Bianchi family identification",
+        ],
+        "source_identity": (
+            "content-bound admitted Planck PR3 products"
+            if observed
+            else "deterministic synthetic same-sky Gaussian pairs"
+        ),
+        "transfer_source": (
+            "Planck PR3 products; no native Bianchi transfer"
+            if observed
+            else "NOT_APPLICABLE_SYNTHETIC_PROFILE"
+        ),
+        "sky_support_status": (
+            "ADMITTED_PLANCK_PR3_COMMON_MASK" if observed else "SYNTHETIC_SKY_ONLY"
+        ),
+        "null_mock_status": (
+            "CONTENT_BOUND_COMPLETE_FFP10_REQUIRED"
+            if observed
+            else "SYNTHETIC_PROFILE_ROWS"
+        ),
+        "covariance_status": "MATCHED_SAME_SKY_FULL_CROSS_BLOCK",
+        "generating_procedure": "scripts/observed_runs/run_planck_pr3.py",
+        "caveats": [
+            "global response unavailable",
+            "synthetic local response is not an observed response model",
+            "family identification blocked before a native morphology atlas",
+        ],
+        "non_claim_bearing": not observed,
+    }
+    if observed:
+        commit = os.environ.get("HTT_ATTENDED_CANDIDATE_COMMIT", "")
+        tree = os.environ.get("HTT_ATTENDED_CANDIDATE_TREE", "")
+        if any(
+            len(value) != 40
+            or any(character not in "0123456789abcdef" for character in value)
+            for value in (commit, tree)
+        ):
+            raise PlanckWorkerError(
+                "attended candidate identity is missing or malformed"
+            )
+        metadata.update(candidate_commit=commit, candidate_tree=tree)
+    return metadata
 
 
 def _now() -> int:
@@ -270,6 +362,23 @@ def _evaluate_synthetic_row(
     return ordinal, smica, commander, timing
 
 
+def _evaluate_synthetic_observation(
+    context: Mapping[str, object],
+) -> tuple[np.ndarray, dict[str, float]]:
+    """Build one frozen profile observation independent of every null seed."""
+
+    started = _now()
+    smica_map, commander_map = _synthetic_pair(30_700_000, nside=int(context["nside"]))
+    input_seconds = _seconds(started)
+    smica, smica_timing, _ = _process_map(smica_map, component="SMICA", context=context)
+    commander, commander_timing, _ = _process_map(
+        commander_map, component="Commander", context=context
+    )
+    timing = {name: smica_timing[name] + commander_timing[name] for name in STAGES}
+    timing["input"] += input_seconds
+    return np.concatenate((smica, commander)), timing
+
+
 def _run_rows(
     count: int,
     *,
@@ -355,12 +464,23 @@ def build_profile(*, rows: str, mode: str, workers: int) -> dict[str, object]:
     ):
         _add_stage(stages, name, row_timing[name])
 
-    row_ids = tuple(f"FFP10-{index:04d}" for index in range(count))
+    row_ids = SYNTHETIC_NULL_ROW_IDS[:count]
     covariance = None
     response_rank = None
     synthetic_scan = None
+    synthetic_observation_digest = None
+    synthetic_observation_disjoint = None
+    local_response_rank_seconds = 0.0
     if rows == "full":
-        inventory = FFP10Inventory(row_ids)
+        inventory = FFP10Inventory(
+            row_ids, expected_identity=SYNTHETIC_NULL_INVENTORY_ID
+        )
+        started = _now()
+        nulls = np.concatenate((smica, commander), axis=1)
+        null_row_digests = {_array_digest(row) for row in nulls}
+        inventory.require_complete()
+        _add_stage(stages, "null_calibration", _seconds(started))
+
         started = _now()
         covariance = estimate_matched_joint_covariance(
             smica_row_ids=row_ids,
@@ -375,17 +495,35 @@ def build_profile(*, rows: str, mode: str, workers: int) -> dict[str, object]:
         response_rank = covariance_whitened_response_rank(
             covariance.matrix, local_response
         )
-        _add_stage(stages, "global_rank", _seconds(started))
+        local_response_rank_seconds = _seconds(started)
 
+        synthetic_observation, observation_timing = _evaluate_synthetic_observation(
+            context
+        )
+        for name in (
+            "input",
+            "beam_pixel",
+            "mask_inverse",
+            "map2alm",
+            "multipole_vectors",
+            "features",
+        ):
+            _add_stage(stages, name, observation_timing[name])
+        synthetic_observation_digest = _array_digest(synthetic_observation)
+        synthetic_observation_disjoint = (
+            synthetic_observation_digest not in null_row_digests
+        )
+        if not synthetic_observation_disjoint:
+            raise PlanckWorkerError(
+                "synthetic profile observation is duplicated in the null pool"
+            )
         started = _now()
-        synthetic_observation = np.concatenate((smica[0], commander[0]))
-        nulls = np.concatenate((smica, commander), axis=1)
         synthetic_scan = calibrate_complete_synthetic_pool(
             observation_features=synthetic_observation,
             null_features=nulls,
             inventory=inventory,
         )
-        _add_stage(stages, "null_calibration", _seconds(started))
+        _add_stage(stages, "global_rank", _seconds(started))
     else:
         for name in ("covariance", "null_calibration", "global_rank"):
             stages[name] = {
@@ -393,7 +531,6 @@ def build_profile(*, rows: str, mode: str, workers: int) -> dict[str, object]:
                 "seconds": 0.0,
             }
 
-    serialization_started = _now()
     payload: dict[str, object] = {
         "schema": SCHEMA,
         "capability": "PLANCK_PR3_LOWELL_OPERATOR_CLOSURE_AND_PROFILED_SYNTHETIC_REPLAY",
@@ -420,7 +557,17 @@ def build_profile(*, rows: str, mode: str, workers: int) -> dict[str, object]:
                 "cross_block_norm": covariance.cross_block_norm,
             }
         ),
-        "local_response_rank": None if response_rank is None else response_rank.rank,
+        "synthetic_local_response_rank": (
+            None if response_rank is None else response_rank.rank
+        ),
+        "synthetic_local_response_rank_seconds": local_response_rank_seconds,
+        "synthetic_local_response_source": (
+            "fixed-seed symmetric local-modulation probe"
+            if response_rank is not None
+            else None
+        ),
+        "synthetic_observation_sha256": synthetic_observation_digest,
+        "synthetic_observation_disjoint_from_nulls": synthetic_observation_disjoint,
         "global_response_status": "MISSING",
         "global_claim_boundary": GLOBAL_CLAIM_BOUNDARY,
         "synthetic_calibration": (
@@ -436,7 +583,10 @@ def build_profile(*, rows: str, mode: str, workers: int) -> dict[str, object]:
         "rust_gate": RUST_GATE,
         "observed_statistic_seen": False,
         "observed_science_executed": False,
+        "artifact_metadata": _artifact_metadata(observed=False),
     }
+    serialization_started = _now()
+    json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False)
     _add_stage(stages, "serialization", _seconds(serialization_started))
     payload["wall_seconds"] = _seconds(wall_started)
     payload["max_rss_bytes"] = _max_rss_bytes()
@@ -447,6 +597,12 @@ def build_profile_matrix() -> dict[str, object]:
     """Run every benchmark cell in a fresh Python process."""
 
     cells: list[dict[str, object]] = []
+    import_roots = sorted(
+        {
+            str(Path(__import__(name).__file__).resolve().parent.parent)
+            for name in ("numpy", "scipy", "healpy")
+        }
+    )
     environment = {
         "HOME": "/nonexistent",
         "LANG": "C",
@@ -454,6 +610,9 @@ def build_profile_matrix() -> dict[str, object]:
         "PATH": "/usr/bin:/bin",
         "PYTHONHASHSEED": "0",
         "PYTHONNOUSERSITE": "1",
+        "PYTHONPATH": os.pathsep.join(
+            [str(ROOT / "htt"), str(ROOT / "htt/src"), *import_roots]
+        ),
         **THREAD_CONTROLS,
     }
     with tempfile.TemporaryDirectory(prefix="htt-pr306-profile-") as temporary:
@@ -501,6 +660,30 @@ def build_profile_matrix() -> dict[str, object]:
             raise PlanckWorkerError(
                 "parallel profile differs from serial feature bytes"
             )
+    artifact_metadata = cells[0]["artifact_metadata"]
+    if any(cell["artifact_metadata"] != artifact_metadata for cell in cells):
+        raise PlanckWorkerError("profile cell artifact metadata drifted")
+    for cell in cells:
+        cell.pop("artifact_metadata")
+    cell_contract = {name: cells[0][name] for name in PROFILE_CONSTANT_FIELDS}
+    for cell in cells:
+        for name, expected in cell_contract.items():
+            if cell[name] != expected and name != "capability_snapshot":
+                raise PlanckWorkerError(f"profile cell constant {name} drifted")
+        cell.pop("capability_snapshot")
+        for name in PROFILE_CONSTANT_FIELDS:
+            if name != "capability_snapshot":
+                cell.pop(name)
+    full_serial = serial["full"]
+    cell_contract["capability_snapshot"] = capability_snapshot(response_rank=None)
+    cell_contract["capability_snapshot"].update(
+        {
+            "synthetic_local_response_rank": "LOCAL_RESPONSE_RANK_COMPUTED",
+            "synthetic_local_response_rank_value": full_serial[
+                "synthetic_local_response_rank"
+            ],
+        }
+    )
     stage_totals = {
         name: sum(
             float(cell["stages"][name]["seconds"])
@@ -518,6 +701,7 @@ def build_profile_matrix() -> dict[str, object]:
         "schema": "htt.planck_pr3_profile_matrix.v1",
         "capability": "PLANCK_PR3_LOWELL_OPERATOR_CLOSURE_AND_PROFILED_SYNTHETIC_REPLAY",
         "matrix": [list(value) for value in PROFILE_MATRIX],
+        "cell_contract": cell_contract,
         "cells": cells,
         "stage_seconds_total": stage_totals,
         "stage_fraction": stage_fractions,
@@ -536,6 +720,7 @@ def build_profile_matrix() -> dict[str, object]:
         ),
         "observed_statistic_seen": False,
         "observed_science_executed": False,
+        "artifact_metadata": artifact_metadata,
     }
 
 
@@ -591,6 +776,8 @@ def _admitted_paths(decision, *, data_root: Path) -> dict[str, Path]:
     if not isinstance(bindings, Sequence) or len(bindings) != len(decision.records):
         raise PlanckWorkerError("Planck native component bindings drifted")
     records = {record.component_id: record for record in decision.records}
+    if set(records) != REQUIRED_ADMITTED_COMPONENTS:
+        raise PlanckWorkerError("Planck admitted component inventory is incomplete")
     result: dict[str, Path] = {}
     root = data_root.resolve()
     for row in bindings:
@@ -657,30 +844,111 @@ def _load_window(path: Path, *, label: str) -> dict[str, np.ndarray]:
     return result
 
 
-def _load_ffp10(path: Path) -> tuple[tuple[str, ...], np.ndarray, np.ndarray]:
+def _load_ffp10_row_ids(
+    path: Path, *, expected_inventory_identity: str
+) -> tuple[str, ...]:
     try:
         with np.load(path, allow_pickle=False, mmap_mode="r") as bundle:
             if set(bundle.files) != {"row_ids", "smica_maps", "commander_maps"}:
                 raise PlanckWorkerError("FFP10 bundle keys drifted")
             raw_ids = np.asarray(bundle["row_ids"])
-            smica = np.asarray(bundle["smica_maps"], dtype=float)
-            commander = np.asarray(bundle["commander_maps"], dtype=float)
     except (OSError, ValueError) as exc:
         raise PlanckWorkerError("FFP10 bundle is not a safe numeric NPZ") from exc
     if raw_ids.ndim != 1 or raw_ids.dtype.kind not in "US":
         raise PlanckWorkerError("FFP10 row IDs must be a string vector")
     row_ids = tuple(str(value) for value in raw_ids.tolist())
-    FFP10Inventory(row_ids).require_complete()
+    FFP10Inventory(
+        row_ids, expected_identity=expected_inventory_identity
+    ).require_complete()
+    return row_ids
+
+
+def _process_ffp10_component(
+    path: Path,
+    *,
+    array_name: str,
+    row_ids: tuple[str, ...],
+    component: str,
+    context: Mapping[str, object],
+    chunk_rows: int = 32,
+) -> np.ndarray:
+    """Process one component stack at a time with bounded validation chunks."""
+
+    try:
+        with np.load(path, allow_pickle=False, mmap_mode="r") as bundle:
+            maps = np.asarray(bundle[array_name])
+            if maps.ndim != 2 or maps.shape[0] != len(row_ids):
+                raise PlanckWorkerError("FFP10 same-sky map pairing is incomplete")
+            features: list[np.ndarray] = []
+            for start in range(0, len(row_ids), chunk_rows):
+                chunk = maps[start : start + chunk_rows]
+                if not np.all(np.isfinite(chunk)):
+                    raise PlanckWorkerError("FFP10 map stack contains nonfinite values")
+                for pixel_map in chunk:
+                    value, _, _ = _process_map(
+                        np.asarray(pixel_map, dtype=float),
+                        component=component,
+                        context=context,
+                    )
+                    features.append(value)
+    except (KeyError, OSError, ValueError) as exc:
+        raise PlanckWorkerError("FFP10 bundle is not a safe numeric NPZ") from exc
+    return np.asarray(features, dtype=float)
+
+
+def _mark_observed_data_open_attempt() -> None:
+    output_text = os.environ.get("HTT_ATTENDED_OUTPUT_DIR", "")
+    output = Path(output_text)
     if (
-        smica.ndim != 2
-        or commander.ndim != 2
-        or smica.shape != commander.shape
-        or smica.shape[0] != len(row_ids)
-        or not np.all(np.isfinite(smica))
-        or not np.all(np.isfinite(commander))
+        not output_text
+        or not output.is_absolute()
+        or output.is_symlink()
+        or not output.is_dir()
+        or not (output / "start.json").is_file()
     ):
-        raise PlanckWorkerError("FFP10 same-sky map pairing is incomplete")
-    return row_ids, smica, commander
+        raise PlanckWorkerError("attended output/start binding is missing")
+    marker = output / "observed_data_opened.json"
+    if os.environ.get("HTT_ATTENDED_DATA_OPEN_MARKER") != str(marker):
+        raise PlanckWorkerError("observed-data-open marker binding drifted")
+    if marker.exists() or marker.is_symlink():
+        raise PlanckWorkerError("observed-data-open marker already exists")
+    _write_json(marker, {"state": "OBSERVED_DATA_OPEN_ATTEMPTED"})
+
+
+def _observed_result_payload(
+    *,
+    admission_bundle_id: str,
+    observed: np.ndarray,
+    covariance,
+    synthetic_response_rank,
+    scan,
+    null_rows: int,
+    wall_seconds: float,
+) -> dict[str, object]:
+    """Serialize one claim-bounded result without response-provenance leakage."""
+
+    return {
+        "schema": "htt.planck_pr3_lowell_result.v1",
+        "lane_admission_bundle_id": admission_bundle_id,
+        "feature_order": list(JOINT_FEATURE_IDS),
+        "observed_feature_vector": observed.tolist(),
+        "joint_covariance_rank": covariance.rank,
+        "joint_covariance_condition": covariance.condition_number,
+        "synthetic_local_response_rank": synthetic_response_rank.rank,
+        "synthetic_local_response_source": (
+            "fixed-seed symmetric local-modulation probe; operator validation only"
+        ),
+        "global_response_status": "MISSING",
+        "global_claim_boundary": GLOBAL_CLAIM_BOUNDARY,
+        "finite_global_p": str(scan.global_p),
+        "resolution_floor": str(scan.resolution_floor),
+        "ffp10_null_rows": null_rows,
+        "wall_seconds": wall_seconds,
+        "artifact_metadata": _artifact_metadata(observed=True),
+        "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+        "observed_data_opened": True,
+        "observed_science_executed": True,
+    }
 
 
 def run_admitted(*, admission_path: Path, data_root: Path) -> dict[str, object]:
@@ -690,6 +958,7 @@ def run_admitted(*, admission_path: Path, data_root: Path) -> dict[str, object]:
         raise PlanckWorkerError("attended start receipt must precede data open")
     started = _now()
     decision = _load_admission(admission_path)
+    _mark_observed_data_open_attempt()
     paths = _admitted_paths(decision, data_root=data_root)
     pixelization = _strict_json(paths["pixelization"], label="pixelization")
     selection = _strict_json(paths["native_selection"], label="native selection")
@@ -712,9 +981,21 @@ def run_admitted(*, admission_path: Path, data_root: Path) -> dict[str, object]:
         "lmax": LMAX,
         "expected_ffp10_null_rows": EXPECTED_FFP10_NULL_ROWS,
         "feature_ids": list(JOINT_FEATURE_IDS),
+        "ffp10_release_id": FFP10_RELEASE_ID,
+        "ffp10_ordered_row_ids_sha256": selection.get("ffp10_ordered_row_ids_sha256"),
     }
-    if dict(selection) != expected_selection:
+    inventory_identity = selection.get("ffp10_ordered_row_ids_sha256")
+    if (
+        dict(selection) != expected_selection
+        or not isinstance(inventory_identity, str)
+        or not inventory_identity.startswith("sha256:")
+        or len(inventory_identity) != 71
+    ):
         raise PlanckWorkerError("native low-ell selection drifted")
+    try:
+        int(inventory_identity.removeprefix("sha256:"), 16)
+    except ValueError as exc:
+        raise PlanckWorkerError("native FFP10 inventory identity is malformed") from exc
     maps = {
         component: _load_npy(
             paths[f"{component.lower()}_map"], label=f"{component} map", dimension=1
@@ -764,22 +1045,24 @@ def run_admitted(*, admission_path: Path, data_root: Path) -> dict[str, object]:
         "target_pixel": windows["SMICA"]["target_pixel_window"],
         "mask_inverse": inverse,
     }
-    row_ids, smica_null_maps, commander_null_maps = _load_ffp10(
-        paths["ffp10_null_inventory"]
+    row_ids = _load_ffp10_row_ids(
+        paths["ffp10_null_inventory"],
+        expected_inventory_identity=inventory_identity,
     )
-    smica_null: list[np.ndarray] = []
-    commander_null: list[np.ndarray] = []
-    for index in range(len(row_ids)):
-        value, _, _ = _process_map(
-            smica_null_maps[index], component="SMICA", context=context
-        )
-        smica_null.append(value)
-        value, _, _ = _process_map(
-            commander_null_maps[index], component="Commander", context=context
-        )
-        commander_null.append(value)
-    smica_matrix = np.asarray(smica_null)
-    commander_matrix = np.asarray(commander_null)
+    smica_matrix = _process_ffp10_component(
+        paths["ffp10_null_inventory"],
+        array_name="smica_maps",
+        row_ids=row_ids,
+        component="SMICA",
+        context=context,
+    )
+    commander_matrix = _process_ffp10_component(
+        paths["ffp10_null_inventory"],
+        array_name="commander_maps",
+        row_ids=row_ids,
+        component="Commander",
+        context=context,
+    )
     covariance = estimate_matched_joint_covariance(
         smica_row_ids=row_ids,
         commander_row_ids=row_ids,
@@ -808,7 +1091,7 @@ def run_admitted(*, admission_path: Path, data_root: Path) -> dict[str, object]:
         value, _, _ = _process_map(maps[key], component=component, context=context)
         observed_features.append(value)
     observed = np.concatenate(observed_features)
-    inventory = FFP10Inventory(row_ids)
+    inventory = FFP10Inventory(row_ids, expected_identity=inventory_identity)
     nulls = np.concatenate((smica_matrix, commander_matrix), axis=1)
     scan = calibrate_complete_synthetic_pool(
         observation_features=observed,
@@ -817,24 +1100,15 @@ def run_admitted(*, admission_path: Path, data_root: Path) -> dict[str, object]:
     )
     local_response = _synthetic_local_response(context=context)
     response_rank = covariance_whitened_response_rank(covariance.matrix, local_response)
-    return {
-        "schema": "htt.planck_pr3_lowell_result.v1",
-        "lane_admission_bundle_id": decision.lane_admission_bundle_id,
-        "feature_order": list(JOINT_FEATURE_IDS),
-        "observed_feature_vector": observed.tolist(),
-        "joint_covariance_rank": covariance.rank,
-        "joint_covariance_condition": covariance.condition_number,
-        "local_response_rank": response_rank.rank,
-        "global_response_status": "MISSING",
-        "global_claim_boundary": GLOBAL_CLAIM_BOUNDARY,
-        "finite_global_p": str(scan.global_p),
-        "resolution_floor": str(scan.resolution_floor),
-        "ffp10_null_rows": len(row_ids),
-        "wall_seconds": _seconds(started),
-        "claim_tier": "transfer_conditional_diagnostic_only",
-        "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
-        "observed_science_executed": True,
-    }
+    return _observed_result_payload(
+        admission_bundle_id=decision.lane_admission_bundle_id,
+        observed=observed,
+        covariance=covariance,
+        synthetic_response_rank=response_rank,
+        scan=scan,
+        null_rows=len(row_ids),
+        wall_seconds=_seconds(started),
+    )
 
 
 def _write_json(path: Path, payload: Mapping[str, object]) -> None:

@@ -65,6 +65,7 @@ multipole_vectors:
   reality: a_l_minus_m=(-1)^m*conjugate(a_lm)
   projective_infinity_roots_preserved: true
   antipodal_pairing_tolerance: 1.0e-7
+  undefined_plane_action: ABSTAIN_TYPED_ERROR
   sign: largest_absolute_Cartesian_component_positive
   serialization_order: lexicographic_only
   power_tensor_axis_is_not_a_multipole_vector: true
@@ -105,10 +106,16 @@ ffp10:
   expected_null_rows: 999
   required_arrays: [row_ids, smica_maps, commander_maps]
   complete_ordered_unique_inventory_required: true
+  release_id: planck:ffp10:pr3:cmb:same-sky:v1
+  ordered_row_ids_identity:
+    algorithm: sha256 over htt.planck.ffp10.inventory.v1 and ordered UTF-8 row IDs
+    authority: content-bound native_selection component
+    count_only_completion_forbidden: true
   partial_profile_rows: [1, 8, 32, 128]
   partial_profile_permission: feature_throughput_only
   partial_p_value_forbidden: true
   full_resolution_floor: 1/1000
+  synthetic_profile_observation: frozen independent seed absent from all null rows
   observation_and_null_operator_must_be_identical: true
 
 response:
@@ -117,6 +124,9 @@ response:
     whitening: accepted full joint covariance Cholesky
     relative_rank_threshold: 1.0e-8
     absolute_rank_threshold: 1.0e-10
+    output_name: synthetic_local_response_rank
+    allowed_use: operator validation only
+    observed_response_interpretation_forbidden: true
   global:
     status: MISSING
     local_global_discrimination: ABSTAIN_GLOBAL_RESPONSE_UNAVAILABLE
@@ -141,6 +151,7 @@ admitted_component_formats:
   ffp10_null_inventory:
     format: NPZ without pickle
     keys: [row_ids, smica_maps, commander_maps]
+    processing: one component stack at a time with bounded validation chunks
 
 profile:
   stages:
@@ -165,6 +176,11 @@ profile:
     NUMEXPR_NUM_THREADS: '1'
     VECLIB_MAXIMUM_THREADS: '1'
   required_metrics: [wall_seconds, max_rss_bytes, ordered_feature_digest, stage_seconds]
+  stage_semantics:
+    null_calibration: ordered null inventory and feature-pool validation
+    global_rank: observation-inclusive finite global rank calculation
+    serialization: actual canonical JSON encoding probe
+  constant_metadata_storage: normalized once at matrix top level
   evidence: docs/generated/pr306_planck_synthetic_profile.json
 
 optimization:
@@ -185,7 +201,8 @@ long_run_executor:
   - process-group termination on timeout and interrupt
   - stdout and stderr streamed to bounded files
   - streaming SHA-256 for output files
-  - exact Python, NumPy, SciPy, healpy, import-origin, and thread-policy binding
+  - exact Python, used Python/native module origins, distribution RECORDs, and thread-policy binding
+  - conservative observed-data-open marker propagated into every terminal state
   - no shell, download, root, key, signature, nonce ledger, or privileged launcher
 
 claim_boundary:
@@ -199,6 +216,22 @@ claim_boundary:
     - native transfer or Bianchi family identification
     - Q, F, Pi, or G_F promotion
     - likelihood, prior, posterior, evidence, PPC, or LOO claim
+
+artifact_metadata:
+  required:
+    - owner
+    - scope
+    - claim_tier
+    - source_identity
+    - transfer_source
+    - sky_support_status
+    - null_mock_status
+    - covariance_status
+    - generating_procedure
+    - allowed_use
+    - forbidden_use
+    - caveats
+  observed_result_additions: [candidate_commit, candidate_tree]
 
 acceptance:
   - every operator blocker listed in this spec is closed by code and hostile tests
