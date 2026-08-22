@@ -1,72 +1,286 @@
 from __future__ import annotations
 
+from copy import deepcopy
+import fcntl
 import importlib.util
+import json
 from pathlib import Path
+import shutil
+import subprocess
 import sys
+
+import pytest
+import yaml
+
+from common.data_identity import evaluate_lane_identity, load_lane_registry
 
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNNER = ROOT / "scripts/codex_harness/run_authorized_observational_program.py"
+PR289_TEST = ROOT / "tests/contracts/test_data_identity_registry_v2.py"
+REGISTRY = ROOT / "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
 
 
-def _module():
-    module_spec = importlib.util.spec_from_file_location("authorized_observational_program", RUNNER)
-    assert module_spec is not None and module_spec.loader is not None
-    module = importlib.util.module_from_spec(module_spec)
-    sys.modules[module_spec.name] = module
-    module_spec.loader.exec_module(module)
+def _load(name: str, path: Path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
     return module
 
 
-def test_one_command_program_covers_the_canonical_runbooks_without_execution(monkeypatch) -> None:
-    module = _module()
-    lanes = module.build_program()
-    assert [lane.lane for lane in lanes] == [
-        "PLANCK", "CF4", "HSC_KIDS", "ACT", "DESI", "JWST_SN", "CROSS_PROBE",
-    ]
-    assert all(lane.status == "BLOCKED" for lane in lanes)
-    assert any("pr151_formalism_revalidation_required" in lane.blocked_reasons for lane in lanes)
+def _git(root: Path, *args: str) -> str:
+    completed = subprocess.run(
+        ["/usr/bin/git", "-C", str(root), *args],
+        check=True,
+        text=True,
+        capture_output=True,
+        env={"HOME": "/nonexistent", "LANG": "C", "LC_ALL": "C", "PATH": "/usr/bin:/bin"},
+    )
+    return completed.stdout.strip()
+
+
+@pytest.fixture
+def case_factory(tmp_path: Path):
+    module = _load("authorized_observational_program", RUNNER)
+    pr289 = _load("pr289_identity_helpers", PR289_TEST)
+    counter = 0
+
+    def build(worker_source: str = "raise SystemExit(0)\n", *, timeout: int = 5):
+        nonlocal counter
+        counter += 1
+        repo = tmp_path / f"repo-{counter}"
+        repo.mkdir()
+        _git(repo, "init", "-q")
+        _git(repo, "config", "user.email", "fixture@example.invalid")
+        _git(repo, "config", "user.name", "fixture")
+        registry = repo / REGISTRY.relative_to(ROOT)
+        registry.parent.mkdir(parents=True)
+        shutil.copyfile(REGISTRY, registry)
+        worker = repo / "scripts/codex_harness/run_authorized_observational_program.py"
+        worker.parent.mkdir(parents=True)
+        worker.write_text(worker_source, encoding="utf-8")
+        plan = repo / "docs/plan.yaml"
+        plan.parent.mkdir(parents=True, exist_ok=True)
+        plan.write_text(
+            yaml.safe_dump(
+                {
+                    "attended_execution_plan": {
+                        "analysis_plan_id": "plan:PR290-PLANCK-LOWELL-V1",
+                        "bayesian_inference": False,
+                        "execution_mode": "identity_only",
+                        "lane": "PLANCK",
+                        "worker_arguments": ["--identity-worker"],
+                        "worker_path": "scripts/codex_harness/run_authorized_observational_program.py",
+                    }
+                },
+                sort_keys=True,
+            ),
+            encoding="utf-8",
+        )
+        _git(repo, "add", ".")
+        _git(repo, "commit", "-qm", "fixture")
+        descriptor = pr289._valid_descriptor(tmp_path / f"data-{counter}")
+        decision = evaluate_lane_identity(
+            registry=load_lane_registry(REGISTRY),
+            lane_id="PLANCK",
+            descriptor=descriptor,
+            inspected_at_utc=pr289.STAMP_A,
+        )
+        admission = tmp_path / f"admission-{counter}.json"
+        admission.write_text(json.dumps(decision.as_payload(), sort_keys=True), encoding="ascii")
+        output = tmp_path / f"output-{counter}"
+        prepared = module.prepare_execution(
+            lane="PLANCK",
+            plan_path="docs/plan.yaml",
+            admission_path=admission,
+            output_dir=output,
+            timeout_seconds=timeout,
+            root=repo,
+        )
+        return module, repo, plan, worker, admission, output, prepared
+
+    return build
+
+
+def test_ATT_001_wrong_confirmation_rejected_before_spawn(case_factory, monkeypatch) -> None:
+    module, _, _, _, _, output, prepared = case_factory()
     called = False
 
-    def forbidden_run(*_args, **_kwargs):
+    def forbidden(*_args, **_kwargs):
         nonlocal called
         called = True
-        raise AssertionError("blocked program must not invoke an analysis entrypoint")
+        raise AssertionError("worker spawned")
 
-    monkeypatch.setattr(module.subprocess, "run", forbidden_run)
-    assert module.execute_authorized(lanes) == 3
-    assert called is False
-    report = module.payload(lanes)
-    assert report["observed_data_executed"] is False
-    assert "--execute-authorized" in report["one_command"]
-    command, environment = module._command_and_environment(("PYTHONPATH=htt/src:htt", "python", "-m", "pytest"))
-    assert command == ("python", "-m", "pytest")
-    assert environment["PYTHONPATH"] == "htt/src:htt"
+    monkeypatch.setattr(module, "_spawn_worker", forbidden)
+    with pytest.raises(module.ObservationalProgramError, match="confirmation"):
+        module.execute_prepared(prepared, "sha256:" + "0" * 64)
+    assert called is False and not output.exists()
 
 
-def test_dispatcher_honors_success_and_terminal_dependency_contracts() -> None:
-    module = _module()
-    backlog = module._mapping(module.BACKLOG)
-    cards = module._cards(backlog)
+def test_ATT_002_dirty_candidate_is_rejected(case_factory) -> None:
+    module, repo, _, worker, admission, output, _ = case_factory()
+    worker.write_text("raise SystemExit(0)\n# dirty\n", encoding="utf-8")
+    with pytest.raises(module.ObservationalProgramError, match="clean"):
+        module.prepare_execution(
+            lane="PLANCK", plan_path="docs/plan.yaml", admission_path=admission,
+            output_dir=output, timeout_seconds=5, root=repo,
+        )
 
-    planck = cards["PR-290"]
-    required_success = planck["depends"][0]
-    assert module._dependency_reasons(
-        planck,
-        {required_success: {"resolution": "COMPLETED_FAILED_WITH_RECEIPT"}},
-    ) == (f"upstream_success_not_satisfied:{required_success}",) + tuple(
-        f"upstream_success_not_satisfied:{dependency}"
-        for dependency in planck["depends"][1:]
+
+def test_ATT_003_only_PLANCK_is_accepted(case_factory) -> None:
+    module, repo, _, _, admission, output, _ = case_factory()
+    with pytest.raises(module.ObservationalProgramError, match="PLANCK"):
+        module.prepare_execution(
+            lane="CF4", plan_path="docs/plan.yaml", admission_path=admission,
+            output_dir=output, timeout_seconds=5, root=repo,
+        )
+
+
+def test_ATT_004_noncanonical_PR289_admissions_are_rejected(case_factory, tmp_path: Path) -> None:
+    module, repo, _, _, admission, output, _ = case_factory()
+    accepted = json.loads(admission.read_text(encoding="ascii"))
+    refused = {**accepted, "status": "REJECTED_NOT_PRESENT", "reasons": ["missing"], "records": [], "lane_admission_bundle_id": None}
+    incomplete = deepcopy(accepted)
+    incomplete["records"] = incomplete["records"][:-1]
+    reordered = deepcopy(accepted)
+    assert len(reordered["records"]) >= 2
+    reordered["records"] = list(reversed(reordered["records"]))
+    wrong_bundle = {**accepted, "lane_admission_bundle_id": "sha256:" + "0" * 64}
+    for index, payload in enumerate((refused, incomplete, reordered, wrong_bundle)):
+        probe = tmp_path / f"invalid-{index}.json"
+        probe.write_text(json.dumps(payload, sort_keys=True), encoding="ascii")
+        with pytest.raises(module.ObservationalProgramError, match="admission"):
+            module.prepare_execution(
+                lane="PLANCK", plan_path="docs/plan.yaml", admission_path=probe,
+                output_dir=output, timeout_seconds=5, root=repo,
+            )
+
+
+def test_ATT_005_every_frozen_input_changes_the_acceptance_hash(case_factory) -> None:
+    module, _, _, _, _, _, prepared = case_factory()
+    baseline = prepared["acceptance_payload"]
+    fields = (
+        "candidate_commit", "candidate_tree",
+        "admission_decision_sha256", "analysis_plan_sha256", "worker_sha256",
+        "environment_contract_sha256", "output_dir", "timeout_seconds",
     )
+    observed = set()
+    for field in fields:
+        changed = dict(baseline)
+        changed[field] = 6 if field == "timeout_seconds" else str(changed[field]) + "-changed"
+        observed.add(module.content_hash(changed))
+    assert len(observed) == len(fields)
+    assert prepared["acceptance_hash"] not in observed
 
-    cross_probe = cards["PR-294"]
-    terminal_resolutions = {
-        dependency: {"resolution": "BLOCKED_WITH_RECEIPT"}
-        for dependency in cross_probe["depends"]
-    }
-    assert module._dependency_reasons(cross_probe, terminal_resolutions) == ()
 
-    assert module._dependency_reasons(
-        {"id": "PR-X", "depends": ["PR-Y"]},
-        {"PR-Y": {"resolution": "COMPLETED_SUCCESS"}},
-    ) == ("upstream_dependency_contract_missing:PR-Y",)
+def test_ATT_006_worker_escape_tests_path_and_shell_shape_are_rejected(case_factory) -> None:
+    module, repo, _, _, _, _, _ = case_factory()
+    for payload in (
+        {"worker_path": "../escape.py"},
+        {"worker_path": "tests/worker.py"},
+        {"worker_path": "scripts/worker.sh"},
+        {"shell": True},
+    ):
+        with pytest.raises(module.ObservationalProgramError):
+            module.validate_plan_values(
+                {
+                    "analysis_plan_id": "plan:PR290-PLANCK-LOWELL-V1",
+                    "bayesian_inference": False, "execution_mode": "identity_only",
+                    "lane": "PLANCK", "worker_arguments": ["--identity-worker"],
+                    "worker_path": "scripts/codex_harness/run_authorized_observational_program.py",
+                    **payload,
+                },
+                root=repo,
+            )
+
+
+def test_ATT_007_worker_receives_only_the_clean_environment(case_factory, monkeypatch) -> None:
+    source = "import json, os\nfrom pathlib import Path\nPath(os.environ['HTT_ATTENDED_OUTPUT_DIR'], 'env.json').write_text(json.dumps(dict(os.environ), sort_keys=True))\n"
+    module, _, _, _, _, output, prepared = case_factory(source)
+    monkeypatch.setenv("PYTHONPATH", "/tmp/hostile")
+    monkeypatch.setenv("LD_PRELOAD", "/tmp/hostile.so")
+    monkeypatch.setenv("GIT_OBJECT_DIRECTORY", "/tmp/objects")
+    terminal = module.execute_prepared(prepared, prepared["acceptance_hash"])
+    environment = json.loads((output / "env.json").read_text(encoding="utf-8"))
+    assert terminal["state"] == "SUCCEEDED"
+    assert set(environment) == set(prepared["environment"])
+    assert environment["PYTHONNOUSERSITE"] == "1"
+
+
+def test_ATT_008_concurrent_output_lock_is_rejected(case_factory) -> None:
+    module, _, _, _, _, output, prepared = case_factory()
+    output.mkdir(mode=0o700)
+    with (output / ".attended.lock").open("a+b") as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        with pytest.raises(module.ObservationalProgramError, match="locked"):
+            module.execute_prepared(prepared, prepared["acceptance_hash"])
+    assert not (output / "start.json").exists()
+
+    module, _, _, _, _, output, prepared = case_factory()
+    output.mkdir(mode=0o700)
+    (output / "preexisting.bin").write_bytes(b"not this run")
+    with pytest.raises(module.ObservationalProgramError, match="dedicated"):
+        module.execute_prepared(prepared, prepared["acceptance_hash"])
+    assert not (output / "start.json").exists()
+
+    module, _, _, _, _, output, prepared = case_factory()
+    output.mkdir(mode=0o755)
+    output.chmod(0o755)
+    with pytest.raises(module.ObservationalProgramError, match="0700"):
+        module.execute_prepared(prepared, prepared["acceptance_hash"])
+
+
+def test_ATT_009_timeout_writes_terminal_and_preserves_start(case_factory) -> None:
+    module, _, _, _, _, output, prepared = case_factory("import time\ntime.sleep(2)\n", timeout=1)
+    terminal = module.execute_prepared(prepared, prepared["acceptance_hash"])
+    assert terminal["state"] == "TIMED_OUT"
+    assert json.loads((output / "start.json").read_text())["state"] == "STARTED"
+    assert json.loads((output / "terminal.json").read_text()) == terminal
+
+
+def test_ATT_010_nonzero_and_signal_exits_write_terminal(case_factory) -> None:
+    for source, state in (
+        ("raise SystemExit(5)\n", "FAILED"),
+        ("import os, signal\nos.kill(os.getpid(), signal.SIGTERM)\n", "SIGNALED"),
+        (
+            "import os\nfrom pathlib import Path\n"
+            "Path(os.environ['HTT_ATTENDED_OUTPUT_DIR'], 'bad-link').symlink_to('/tmp')\n",
+            "FAILED",
+        ),
+    ):
+        module, _, _, _, _, output, prepared = case_factory(source)
+        terminal = module.execute_prepared(prepared, prepared["acceptance_hash"])
+        assert terminal["state"] == state
+        assert (output / "terminal.json").is_file()
+
+
+def test_ATT_011_success_observes_start_before_worker_and_then_terminal(case_factory) -> None:
+    source = "import os\nfrom pathlib import Path\nout = Path(os.environ['HTT_ATTENDED_OUTPUT_DIR'])\nassert (out / 'start.json').is_file()\n(out / 'worker.ok').write_text('ok')\n"
+    module, _, _, _, _, output, prepared = case_factory(source)
+    terminal = module.execute_prepared(prepared, prepared["acceptance_hash"])
+    assert terminal["state"] == "SUCCEEDED"
+    assert (output / "start.json").stat().st_mtime_ns <= (output / "worker.ok").stat().st_mtime_ns
+    assert (output / "terminal.json").stat().st_mtime_ns >= (output / "worker.ok").stat().st_mtime_ns
+
+
+def test_ATT_012_preflight_failure_never_spawns_or_opens_data(case_factory, monkeypatch) -> None:
+    module, repo, plan, _, admission, output, _ = case_factory()
+    with pytest.raises(module.ObservationalProgramError, match="disjoint"):
+        module.prepare_execution(
+            lane="PLANCK", plan_path="docs/plan.yaml", admission_path=admission,
+            output_dir=repo.parent, timeout_seconds=5, root=repo,
+        )
+    payload = yaml.safe_load(plan.read_text(encoding="utf-8"))
+    payload["attended_execution_plan"]["analysis_plan_id"] = "plan:wrong"
+    plan.write_text(yaml.safe_dump(payload, sort_keys=True), encoding="utf-8")
+    _git(repo, "add", "docs/plan.yaml")
+    _git(repo, "commit", "-qm", "invalid plan")
+    monkeypatch.setattr(module, "_spawn_worker", lambda *_a, **_k: pytest.fail("worker spawned"))
+    with pytest.raises(module.ObservationalProgramError, match="analysis plan"):
+        module.prepare_execution(
+            lane="PLANCK", plan_path="docs/plan.yaml", admission_path=admission,
+            output_dir=output, timeout_seconds=5, root=repo,
+        )
+    assert not output.exists()

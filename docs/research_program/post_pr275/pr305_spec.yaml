@@ -1,0 +1,60 @@
+schema: htt.pr305.minimal_attended_planck_executor.spec.v1
+pr_id: PR-305
+title: Minimal attended Planck identity-admission executor
+base_commit: b9de03e16b1b60f4e36f62b49d968557ebb8553d
+dependency: PR-304
+owner: COMMON
+capability: PLANCK_ATTENDED_IDENTITY_ADMISSION_AND_SINGLE_LANE_EXECUTION
+claim_tier: diagnostic_only
+scientific_effect: none
+observed_science_executed: false
+
+threat_model:
+  id: private_single_operator_attended_v1
+  assumptions:
+    - one trusted operator
+    - reviewed non-adversarial candidate code
+    - no hostile local co-tenants
+    - no legal nonrepudiation requirement
+  falsifiers:
+    - untrusted collaborator or candidate code
+    - unattended execution
+    - shared hostile host or required privilege boundary
+
+attended_execution_plan:
+  lane: PLANCK
+  analysis_plan_id: plan:PR290-PLANCK-LOWELL-V1
+  execution_mode: identity_only
+  bayesian_inference: false
+  worker_path: scripts/codex_harness/run_authorized_observational_program.py
+  worker_arguments: [--identity-worker]
+
+acceptance_binding:
+  - candidate commit and tree
+  - exact replayed PR-289 admission and ordered record identities
+  - this checked-in analysis plan and reviewed worker bytes
+  - clean environment contract, output directory, and timeout
+  - exact attended confirmation hash
+
+transaction:
+  - reject root, dirty worktrees, non-Planck lanes, and incomplete admission
+  - require a repo-disjoint, dedicated, operator-owned mode-0700 output directory
+  - acquire one nonblocking output flock
+  - atomically write start.json before shell-free worker spawn
+  - enforce timeout with a fixed environment allowlist
+  - atomically write terminal.json for success, failure, timeout, or signal
+
+forbidden:
+  - root launcher, keys, signatures, or nonce ledger
+  - new schema files, global ledgers, Rust, or all-lane execution
+  - PR-289 or PR-304 semantic reimplementation
+  - download, observable extraction, likelihood, p-value, figure, or public claim
+
+acceptance:
+  tests: ATT-001 through ATT-012 only
+  changed_files_max: 4
+  net_new_LOC_max: 700
+  new_modules: 0
+  new_schemas: 0
+  new_ledgers: 0
+  terminal: PASS_MINIMAL_ATTENDED_PLANCK_EXECUTOR
