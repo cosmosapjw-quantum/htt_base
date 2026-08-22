@@ -8,10 +8,17 @@ must bind before nested-sampling output may feed PPC or blockwise LOO.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+import ast
+from dataclasses import dataclass, replace
 from enum import Enum
+import hashlib
+import importlib
+from importlib import metadata
+import json
 from pathlib import Path
-from typing import Callable, Mapping, Sequence
+import platform
+import sys
+from typing import Mapping, Sequence
 
 import numpy as np
 import yaml
@@ -25,12 +32,21 @@ class ProductionBayesianError(BayesianSemanticsError):
 
 class LaneReadinessStatus(str, Enum):
     BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND = "BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND"
-    BLOCKED_OBSERVED_EXECUTION_NOT_AUTHORIZED = "BLOCKED_OBSERVED_EXECUTION_NOT_AUTHORIZED"
-    READY_FOR_AUTHORIZED_EXECUTION = "READY_FOR_AUTHORIZED_EXECUTION"
+    BLOCKED_HUMAN_AUTHORIZATION = "BLOCKED_HUMAN_AUTHORIZATION"
+    READY_TO_START_SAMPLER = "READY_TO_START_SAMPLER"
+    BLOCKED_SAMPLER_TERMINAL = "BLOCKED_SAMPLER_TERMINAL"
+    READY_FOR_POSTERIOR_CONSUMERS = "READY_FOR_POSTERIOR_CONSUMERS"
 
 
 _REQUIRED_SAMPLER_SETTINGS = frozenset({"nlive", "dlogz", "bound", "sample", "seed"})
 _EXPECTED_LANES = ("H-PLANCK", "H-DESI", "H-CF4", "H-JWST", "H-ACT")
+_LANE_ALIASES = {
+    "H-PLANCK": "PLANCK",
+    "H-DESI": "DESI",
+    "H-CF4": "CF4",
+    "H-JWST": "JWST_SN",
+    "H-ACT": "ACT",
+}
 
 
 def _nonempty(value: object, field: str) -> str:
@@ -60,9 +76,511 @@ def _names(values: Sequence[object], field: str) -> tuple[str, ...]:
     return parsed
 
 
+def _strict_json_bytes(raw: bytes, *, field: str) -> Mapping[str, object]:
+    def no_duplicates(pairs: list[tuple[str, object]]) -> dict[str, object]:
+        result: dict[str, object] = {}
+        for key, value in pairs:
+            if key in result:
+                raise ProductionBayesianError(f"{field} contains duplicate keys")
+            result[key] = value
+        return result
+
+    try:
+        payload = json.loads(
+            raw.decode("utf-8"),
+            object_pairs_hook=no_duplicates,
+            parse_constant=lambda token: (_ for _ in ()).throw(
+                ProductionBayesianError(f"{field} contains {token}")
+            ),
+        )
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise ProductionBayesianError(f"{field} is not strict UTF-8 JSON") from exc
+    if not isinstance(payload, Mapping):
+        raise ProductionBayesianError(f"{field} must contain a mapping")
+    try:
+        json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    except (TypeError, ValueError) as exc:
+        raise ProductionBayesianError(f"{field} is not canonical finite JSON") from exc
+    return payload
+
+
+def _exact_mapping(
+    value: object, *, fields: frozenset[str], field: str
+) -> Mapping[str, object]:
+    if not isinstance(value, Mapping) or set(value) != fields:
+        raise ProductionBayesianError(f"{field} fields drifted")
+    return value
+
+
+def _relative_path(value: object, field: str) -> str:
+    text = _nonempty(value, field)
+    path = Path(text)
+    if (
+        path.is_absolute()
+        or path.as_posix() != text
+        or text.startswith(".")
+        or ".." in path.parts
+        or any(character in text for character in ("\x00", "\n", "\r", ":"))
+    ):
+        raise ProductionBayesianError(f"{field} must be candidate-relative")
+    return text
+
+
+@dataclass(frozen=True)
+class RuntimeEnvironmentReceiptV1:
+    python_executable: str
+    python_executable_sha256: str
+    python_implementation: str
+    python_version: str
+    platform_system: str
+    platform_machine: str
+    package_versions: Mapping[str, str]
+    native_extension_sha256: Mapping[str, str]
+    receipt_id: str
+
+    def unsigned_payload(self) -> dict[str, object]:
+        return {
+            "schema": "htt.runtime_environment_receipt.v1",
+            "python_executable": self.python_executable,
+            "python_executable_sha256": self.python_executable_sha256,
+            "python_implementation": self.python_implementation,
+            "python_version": self.python_version,
+            "platform_system": self.platform_system,
+            "platform_machine": self.platform_machine,
+            "package_versions": dict(sorted(self.package_versions.items())),
+            "native_extension_sha256": dict(
+                sorted(self.native_extension_sha256.items())
+            ),
+        }
+
+    def as_payload(self) -> dict[str, object]:
+        return {**self.unsigned_payload(), "receipt_id": self.receipt_id}
+
+
+def capture_runtime_environment_receipt(
+    required_packages: Sequence[object],
+) -> RuntimeEnvironmentReceiptV1:
+    packages = _names(required_packages, "required runtime package")
+    versions: dict[str, str] = {}
+    for package in packages:
+        try:
+            versions[package] = metadata.version(package)
+        except metadata.PackageNotFoundError as exc:
+            raise ProductionBayesianError(
+                f"required runtime package is not installed: {package}"
+            ) from exc
+    executable = Path(sys.executable).resolve(strict=True)
+    try:
+        numpy_native = importlib.import_module("numpy._core._multiarray_umath")
+    except ModuleNotFoundError:
+        try:
+            numpy_native = importlib.import_module("numpy.core._multiarray_umath")
+        except ModuleNotFoundError as exc:
+            raise ProductionBayesianError(
+                "live NumPy native extension identity is unavailable"
+            ) from exc
+    raw_path = getattr(numpy_native, "__file__", None)
+    if not isinstance(raw_path, str):
+        raise ProductionBayesianError(
+            "live NumPy native extension identity is unavailable"
+        )
+    try:
+        native_path = Path(raw_path).resolve(strict=True)
+        with executable.open("rb") as handle:
+            executable_sha256 = (
+                "sha256:" + hashlib.file_digest(handle, "sha256").hexdigest()
+            )
+        with native_path.open("rb") as handle:
+            native_sha256 = (
+                "sha256:" + hashlib.file_digest(handle, "sha256").hexdigest()
+            )
+    except OSError as exc:
+        raise ProductionBayesianError(
+            "live executable or native extension identity is unavailable"
+        ) from exc
+    provisional = RuntimeEnvironmentReceiptV1(
+        python_executable=str(executable),
+        python_executable_sha256=executable_sha256,
+        python_implementation=platform.python_implementation(),
+        python_version=platform.python_version(),
+        platform_system=platform.system(),
+        platform_machine=platform.machine(),
+        package_versions=versions,
+        native_extension_sha256={numpy_native.__name__: native_sha256},
+        receipt_id="",
+    )
+    return replace(
+        provisional,
+        receipt_id=canonical_content_id(provisional.unsigned_payload()),
+    )
+
+
+@dataclass(frozen=True)
+class ProviderManifestV1:
+    manifest_binding: Mapping[str, str]
+    provider_path: str
+    dependency_paths: tuple[str, ...]
+    configuration_path: str
+    environment_contract_path: str
+    response_matrix_path: str
+    normalization_evidence_path: str
+    execution_plan_path: str
+    log_likelihood_symbol: str
+    prior_transform_symbol: str
+    replicate_generator_symbol: str
+    discrepancy_symbols: Mapping[str, str]
+    manifest_content_id: str
+
+    def unsigned_payload(self) -> dict[str, object]:
+        return {
+            "schema": "htt.provider_manifest.v1",
+            "manifest_binding": dict(self.manifest_binding),
+            "provider_path": self.provider_path,
+            "dependency_paths": list(self.dependency_paths),
+            "configuration_path": self.configuration_path,
+            "environment_contract_path": self.environment_contract_path,
+            "response_matrix_path": self.response_matrix_path,
+            "normalization_evidence_path": self.normalization_evidence_path,
+            "execution_plan_path": self.execution_plan_path,
+            "exports": {
+                "log_likelihood": self.log_likelihood_symbol,
+                "prior_transform": self.prior_transform_symbol,
+                "replicate_generator": self.replicate_generator_symbol,
+                "discrepancies": dict(sorted(self.discrepancy_symbols.items())),
+            },
+        }
+
+
+_PROVIDER_FACTORY_TOKEN = object()
+
+
+@dataclass(frozen=True)
+class LoadedCandidateProviderV1:
+    """Non-executing metadata loaded from exact candidate Git blobs."""
+
+    manifest: ProviderManifestV1
+    source_bindings: Mapping[str, Mapping[str, str]]
+    code_fingerprints: Mapping[str, str]
+    export_symbols: Mapping[str, str]
+    execution_deferred_to_external_launcher: bool
+    provider_content_id: str
+    _construction_token: object
+
+    def __post_init__(self) -> None:
+        if self._construction_token is not _PROVIDER_FACTORY_TOKEN:
+            raise ProductionBayesianError(
+                "provider must be factory-loaded from candidate Git blobs"
+            )
+        if self.execution_deferred_to_external_launcher is not True:
+            raise ProductionBayesianError(
+                "candidate provider execution must remain external-launcher-only"
+            )
+
+    def unsigned_payload(self) -> dict[str, object]:
+        return {
+            "schema": "htt.loaded_candidate_provider.v1",
+            "manifest_content_id": self.manifest.manifest_content_id,
+            "source_bindings": {
+                key: dict(value) for key, value in sorted(self.source_bindings.items())
+            },
+            "code_fingerprints": dict(sorted(self.code_fingerprints.items())),
+            "export_symbols": dict(sorted(self.export_symbols.items())),
+            "execution_state": "DEFERRED_TO_EXTERNAL_TRUSTED_LAUNCHER",
+        }
+
+
+def _candidate_blob_api():
+    try:
+        from common.human_execution_authorization import (
+            CandidateIdentityV1,
+            candidate_blob_binding,
+            read_candidate_blob,
+            revalidate_clean_candidate_identity,
+        )
+    except ImportError as exc:
+        raise ProductionBayesianError("PR-304 Git-blob API is unavailable") from exc
+    return (
+        CandidateIdentityV1,
+        candidate_blob_binding,
+        read_candidate_blob,
+        revalidate_clean_candidate_identity,
+    )
+
+
+def load_candidate_provider(
+    *, candidate_identity: object, manifest_path: Path
+) -> LoadedCandidateProviderV1:
+    CandidateIdentityV1, _, read_blob, revalidate = _candidate_blob_api()
+    if type(candidate_identity) is not CandidateIdentityV1:
+        raise ProductionBayesianError(
+            "provider loading requires a factory-derived candidate identity"
+        )
+    if not isinstance(manifest_path, Path):
+        raise ProductionBayesianError("provider manifest path must be a Path")
+    try:
+        candidate = revalidate(candidate_identity)
+        relative_manifest = _relative_path(manifest_path.as_posix(), "provider manifest")
+        manifest_raw = read_blob(candidate, relative_manifest)
+        manifest_binding = {
+            "path": relative_manifest,
+            "sha256": "sha256:" + hashlib.sha256(manifest_raw).hexdigest(),
+        }
+        payload = _exact_mapping(
+            _strict_json_bytes(manifest_raw, field="provider manifest"),
+            field="provider manifest",
+            fields=frozenset(
+                {
+                    "schema",
+                    "provider_path",
+                    "dependency_paths",
+                    "configuration_path",
+                    "environment_contract_path",
+                    "response_matrix_path",
+                    "normalization_evidence_path",
+                    "execution_plan_path",
+                    "exports",
+                }
+            ),
+        )
+    except ValueError as exc:
+        raise ProductionBayesianError("provider manifest Git blob is unavailable") from exc
+    if payload["schema"] != "htt.provider_manifest.v1":
+        raise ProductionBayesianError("provider manifest schema drifted")
+    raw_dependencies = payload["dependency_paths"]
+    if isinstance(raw_dependencies, (str, bytes)) or not isinstance(
+        raw_dependencies, Sequence
+    ):
+        raise ProductionBayesianError("provider dependencies must be a sequence")
+    dependencies = tuple(
+        _relative_path(item, "provider dependency") for item in raw_dependencies
+    )
+    if len(dependencies) != len(set(dependencies)):
+        raise ProductionBayesianError("provider dependencies must be unique")
+    exports = _exact_mapping(
+        payload["exports"],
+        field="provider exports",
+        fields=frozenset(
+            {
+                "log_likelihood",
+                "prior_transform",
+                "replicate_generator",
+                "discrepancies",
+            }
+        ),
+    )
+    raw_discrepancies = exports["discrepancies"]
+    if not isinstance(raw_discrepancies, Mapping) or not raw_discrepancies:
+        raise ProductionBayesianError("provider discrepancies are missing")
+    discrepancy_symbols = {
+        _nonempty(name, "discrepancy id"): _nonempty(symbol, "discrepancy symbol")
+        for name, symbol in raw_discrepancies.items()
+    }
+    provider_path = _relative_path(payload["provider_path"], "provider path")
+    manifest = ProviderManifestV1(
+        manifest_binding=manifest_binding,
+        provider_path=provider_path,
+        dependency_paths=dependencies,
+        configuration_path=_relative_path(
+            payload["configuration_path"], "provider configuration path"
+        ),
+        environment_contract_path=_relative_path(
+            payload["environment_contract_path"], "environment contract path"
+        ),
+        response_matrix_path=_relative_path(
+            payload["response_matrix_path"], "response matrix path"
+        ),
+        normalization_evidence_path=_relative_path(
+            payload["normalization_evidence_path"], "normalization evidence path"
+        ),
+        execution_plan_path=_relative_path(
+            payload["execution_plan_path"], "execution plan path"
+        ),
+        log_likelihood_symbol=_nonempty(
+            exports["log_likelihood"], "log_likelihood symbol"
+        ),
+        prior_transform_symbol=_nonempty(
+            exports["prior_transform"], "prior_transform symbol"
+        ),
+        replicate_generator_symbol=_nonempty(
+            exports["replicate_generator"], "replicate_generator symbol"
+        ),
+        discrepancy_symbols=discrepancy_symbols,
+        manifest_content_id="",
+    )
+    manifest = replace(
+        manifest,
+        manifest_content_id=canonical_content_id(manifest.unsigned_payload()),
+    )
+    source = read_blob(candidate, provider_path)
+    try:
+        parsed = ast.parse(source, filename=f"git:{candidate.commit}:{provider_path}")
+    except (SyntaxError, ValueError) as exc:
+        raise ProductionBayesianError("provider Git blob is not valid Python") from exc
+    if any(
+        isinstance(node, (ast.Import, ast.ImportFrom, ast.Global, ast.Nonlocal))
+        for node in ast.walk(parsed)
+    ):
+        raise ProductionBayesianError(
+            "provider imports and global mutation are forbidden"
+        )
+    top_level: dict[str, ast.FunctionDef] = {}
+    for index, node in enumerate(parsed.body):
+        if (
+            index == 0
+            and isinstance(node, ast.Expr)
+            and isinstance(node.value, ast.Constant)
+            and isinstance(node.value.value, str)
+        ):
+            continue
+        if not isinstance(node, ast.FunctionDef):
+            raise ProductionBayesianError(
+                "candidate provider permits declarations only; execution is deferred"
+            )
+        if node.name in top_level:
+            raise ProductionBayesianError("provider definitions must be unique")
+        if (
+            node.decorator_list
+            or node.args.defaults
+            or any(default is not None for default in node.args.kw_defaults)
+            or any(
+                isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda))
+                and child is not node
+                for child in ast.walk(node)
+            )
+        ):
+            raise ProductionBayesianError(
+                f"provider export has unbound runtime state: {node.name}"
+            )
+        top_level[node.name] = node
+    dependency_blobs = {path: read_blob(candidate, path) for path in dependencies}
+    roles = {
+        "log_likelihood": manifest.log_likelihood_symbol,
+        "prior_transform": manifest.prior_transform_symbol,
+        "replicate_generator": manifest.replicate_generator_symbol,
+        **{
+            f"discrepancy:{name}": symbol
+            for name, symbol in sorted(manifest.discrepancy_symbols.items())
+        },
+    }
+    fingerprints: dict[str, str] = {}
+    for role, symbol in roles.items():
+        definition = top_level.get(symbol)
+        if definition is None:
+            raise ProductionBayesianError(
+                f"provider export is not an exact top-level definition: {role}"
+            )
+        fingerprints[role] = "sha256:" + hashlib.sha256(
+            ast.dump(
+                definition,
+                annotate_fields=True,
+                include_attributes=False,
+            ).encode("utf-8")
+        ).hexdigest()
+    bindings: dict[str, Mapping[str, str]] = {
+        "manifest": manifest_binding,
+        "provider": {
+            "path": provider_path,
+            "sha256": "sha256:" + hashlib.sha256(source).hexdigest(),
+        },
+        **{
+            f"dependency:{path}": {
+                "path": path,
+                "sha256": "sha256:"
+                + hashlib.sha256(dependency_blobs[path]).hexdigest(),
+            }
+            for path in dependencies
+        },
+    }
+    provisional = LoadedCandidateProviderV1(
+        manifest=manifest,
+        source_bindings=bindings,
+        code_fingerprints=fingerprints,
+        export_symbols=roles,
+        execution_deferred_to_external_launcher=True,
+        provider_content_id="",
+        _construction_token=_PROVIDER_FACTORY_TOKEN,
+    )
+    return replace(
+        provisional,
+        provider_content_id=canonical_content_id(provisional.unsigned_payload()),
+    )
+
+
+@dataclass(frozen=True)
+class ComputedResponseRankReceiptV1:
+    response_matrix_binding: Mapping[str, str]
+    feature_order: tuple[str, ...]
+    parameter_order: tuple[str, ...]
+    singular_value_threshold: float
+    computed_rank: int
+    covariance_identity: str
+    lane_admission_bundle_id: str
+    receipt_id: str
+
+    def unsigned_payload(self) -> dict[str, object]:
+        return {
+            "schema": "htt.computed_response_rank_receipt.v1",
+            "response_matrix_binding": dict(self.response_matrix_binding),
+            "feature_order": list(self.feature_order),
+            "parameter_order": list(self.parameter_order),
+            "singular_value_threshold": self.singular_value_threshold,
+            "computed_rank": self.computed_rank,
+            "covariance_identity": self.covariance_identity,
+            "lane_admission_bundle_id": self.lane_admission_bundle_id,
+        }
+
+
+@dataclass(frozen=True)
+class NormalizationEvidenceV1:
+    evidence_binding: Mapping[str, str]
+    likelihood_identity: str
+    likelihood_method_id: str
+    prior_identity: str
+    prior_method_id: str
+    evidence_id: str
+
+    def unsigned_payload(self) -> dict[str, object]:
+        return {
+            "schema": "htt.normalization_evidence.v1",
+            "evidence_binding": dict(self.evidence_binding),
+            "likelihood_identity": self.likelihood_identity,
+            "likelihood_method_id": self.likelihood_method_id,
+            "prior_identity": self.prior_identity,
+            "prior_method_id": self.prior_method_id,
+        }
+
+
+@dataclass(frozen=True)
+class ExecutionPlanBindingV1:
+    plan_binding: Mapping[str, str]
+    lane_id: str
+    model_id: str
+    entrypoint: str
+    argv: tuple[str, ...]
+    output_root: str
+    run_mode: str
+    provider_manifest_content_id: str
+    runtime_environment_receipt_id: str
+    plan_content_id: str
+
+    def unsigned_payload(self) -> dict[str, object]:
+        return {
+            "schema": "htt.execution_plan_binding.v1",
+            "plan_binding": dict(self.plan_binding),
+            "lane_id": self.lane_id,
+            "model_id": self.model_id,
+            "entrypoint": self.entrypoint,
+            "argv": list(self.argv),
+            "output_root": self.output_root,
+            "run_mode": self.run_mode,
+            "provider_manifest_content_id": self.provider_manifest_content_id,
+            "runtime_environment_receipt_id": self.runtime_environment_receipt_id,
+        }
+
+
 @dataclass(frozen=True)
 class ProductionModelContract:
-    """Non-executing specification for one observable-lane likelihood."""
+    """Non-executing specification for one exact candidate-blob provider."""
 
     lane_id: str
     model_id: str
@@ -72,16 +590,28 @@ class ProductionModelContract:
     data_identity: str
     covariance_identity: str
     block_ids: tuple[str, ...]
-    response_rank: int
-    log_likelihood: Callable[[np.ndarray], float]
-    prior_transform: Callable[[np.ndarray], np.ndarray]
-    replicate_generator: Callable[[np.ndarray, np.random.Generator], np.ndarray]
-    discrepancies: Mapping[str, Callable[[np.ndarray, np.ndarray], float]]
+    discrepancy_ids: tuple[str, ...]
+    response_rank: int | None
+    lane_admission_bundle_id: str | None
+    ordered_admission_record_ids: tuple[str, ...]
+    admitted_data_identity: str | None
+    admitted_covariance_identity: str | None
+    candidate_commit: str | None
+    candidate_tree: str | None
+    provider_manifest_binding: Mapping[str, str] | None
+    provider_content_id: str | None
+    provider_source_bindings: Mapping[str, Mapping[str, str]]
+    provider_configuration_binding: Mapping[str, str] | None
+    provider_environment_binding: Mapping[str, str] | None
+    runtime_environment_receipt_id: str | None
+    computed_response_rank_receipt_id: str | None
+    normalization_evidence_id: str | None
+    execution_plan_content_id: str | None
     contract_content_id: str
 
     def unsigned_payload(self) -> dict[str, object]:
         return {
-            "schema": "htt.production_bayesian_contract.v1",
+            "schema": "htt.production_bayesian_contract.v3",
             "lane_id": self.lane_id,
             "model_id": self.model_id,
             "parameter_schema": {
@@ -94,7 +624,31 @@ class ProductionModelContract:
             "covariance_identity": self.covariance_identity,
             "block_ids": list(self.block_ids),
             "response_rank": self.response_rank,
-            "discrepancy_ids": sorted(self.discrepancies),
+            "discrepancy_ids": list(self.discrepancy_ids),
+            "lane_admission_bundle_id": self.lane_admission_bundle_id,
+            "ordered_admission_record_ids": list(self.ordered_admission_record_ids),
+            "admitted_data_identity": self.admitted_data_identity,
+            "admitted_covariance_identity": self.admitted_covariance_identity,
+            "candidate_commit": self.candidate_commit,
+            "candidate_tree": self.candidate_tree,
+            "provider_manifest_binding": (
+                None if self.provider_manifest_binding is None else dict(self.provider_manifest_binding)
+            ),
+            "provider_content_id": self.provider_content_id,
+            "provider_source_bindings": {
+                name: dict(binding)
+                for name, binding in sorted(self.provider_source_bindings.items())
+            },
+            "provider_configuration_binding": (
+                None if self.provider_configuration_binding is None else dict(self.provider_configuration_binding)
+            ),
+            "provider_environment_binding": (
+                None if self.provider_environment_binding is None else dict(self.provider_environment_binding)
+            ),
+            "runtime_environment_receipt_id": self.runtime_environment_receipt_id,
+            "computed_response_rank_receipt_id": self.computed_response_rank_receipt_id,
+            "normalization_evidence_id": self.normalization_evidence_id,
+            "execution_plan_content_id": self.execution_plan_content_id,
         }
 
 
@@ -108,14 +662,31 @@ def build_production_model_contract(
     data_identity: object,
     covariance_identity: object,
     block_ids: Sequence[object],
-    response_rank: object,
-    likelihood_normalized: object,
-    prior_normalized: object,
-    log_likelihood: Callable[[np.ndarray], float],
-    prior_transform: Callable[[np.ndarray], np.ndarray],
-    replicate_generator: Callable[[np.ndarray, np.random.Generator], np.ndarray],
-    discrepancies: Mapping[str, Callable[[np.ndarray, np.ndarray], float]],
+    discrepancy_ids: Sequence[object] | None = None,
+    response_rank: object | None = None,
+    likelihood_normalized: object | None = None,
+    prior_normalized: object | None = None,
+    log_likelihood: object | None = None,
+    prior_transform: object | None = None,
+    replicate_generator: object | None = None,
+    discrepancies: object | None = None,
 ) -> ProductionModelContract:
+    if any(
+        value is not None
+        for value in (
+            response_rank,
+            likelihood_normalized,
+            prior_normalized,
+            log_likelihood,
+            prior_transform,
+            replicate_generator,
+            discrepancies,
+        )
+    ):
+        raise ProductionBayesianError(
+            "raw callables, response rank, and normalization booleans are forbidden; "
+            "use the candidate-Git-blob factory-loaded provider and computed evidence"
+        )
     lane = _nonempty(lane_id, "lane_id")
     if lane not in _EXPECTED_LANES:
         raise ProductionBayesianError("lane_id is not a registered observational lane")
@@ -134,17 +705,9 @@ def build_production_model_contract(
     blocks = _names(block_ids, "block_ids")
     if len(blocks) < 2:
         raise ProductionBayesianError("blockwise LOO requires at least two registered blocks")
-    if type(response_rank) is not int or response_rank < len(schema):
-        raise ProductionBayesianError("response rank is deficient for the parameter schema")
-    if likelihood_normalized is not True or prior_normalized is not True:
-        raise ProductionBayesianError("likelihood and prior normalizations must be explicit")
-    if not all(callable(item) for item in (log_likelihood, prior_transform, replicate_generator)):
-        raise ProductionBayesianError("likelihood, prior transform, and replicate generator must be callable")
-    if not isinstance(discrepancies, Mapping) or not discrepancies:
-        raise ProductionBayesianError("discrepancy registry must be non-empty")
-    discrepancy_map = {str(name): function for name, function in discrepancies.items()}
-    if any(not name or not callable(function) for name, function in discrepancy_map.items()):
-        raise ProductionBayesianError("discrepancy registry must contain named callables")
+    if discrepancy_ids is None:
+        raise ProductionBayesianError("discrepancy_ids must be declared before binding")
+    declared_discrepancies = tuple(sorted(_names(discrepancy_ids, "discrepancy_ids")))
     provisional = ProductionModelContract(
         lane_id=lane,
         model_id=_nonempty(model_id, "model_id"),
@@ -154,16 +717,360 @@ def build_production_model_contract(
         data_identity=_sha256_identity(data_identity, "data_identity"),
         covariance_identity=_sha256_identity(covariance_identity, "covariance_identity"),
         block_ids=blocks,
-        response_rank=response_rank,
-        log_likelihood=log_likelihood,
-        prior_transform=prior_transform,
-        replicate_generator=replicate_generator,
-        discrepancies=discrepancy_map,
+        discrepancy_ids=declared_discrepancies,
+        response_rank=None,
+        lane_admission_bundle_id=None,
+        ordered_admission_record_ids=(),
+        admitted_data_identity=None,
+        admitted_covariance_identity=None,
+        candidate_commit=None,
+        candidate_tree=None,
+        provider_manifest_binding=None,
+        provider_content_id=None,
+        provider_source_bindings={},
+        provider_configuration_binding=None,
+        provider_environment_binding=None,
+        runtime_environment_receipt_id=None,
+        computed_response_rank_receipt_id=None,
+        normalization_evidence_id=None,
+        execution_plan_content_id=None,
         contract_content_id="",
     )
-    return ProductionModelContract(
-        **{**provisional.__dict__, "contract_content_id": canonical_content_id(provisional.unsigned_payload())}
+    return replace(
+        provisional,
+        contract_content_id=canonical_content_id(provisional.unsigned_payload()),
     )
+
+
+def _unbound_contract(contract: ProductionModelContract) -> ProductionModelContract:
+    provisional = replace(
+        contract,
+        response_rank=None,
+        lane_admission_bundle_id=None,
+        ordered_admission_record_ids=(),
+        admitted_data_identity=None,
+        admitted_covariance_identity=None,
+        candidate_commit=None,
+        candidate_tree=None,
+        provider_manifest_binding=None,
+        provider_content_id=None,
+        provider_source_bindings={},
+        provider_configuration_binding=None,
+        provider_environment_binding=None,
+        runtime_environment_receipt_id=None,
+        computed_response_rank_receipt_id=None,
+        normalization_evidence_id=None,
+        execution_plan_content_id=None,
+        contract_content_id="",
+    )
+    return replace(
+        provisional,
+        contract_content_id=canonical_content_id(provisional.unsigned_payload()),
+    )
+
+
+def _runtime_receipt_from_contract(
+    *, candidate: object, provider: LoadedCandidateProviderV1
+) -> tuple[RuntimeEnvironmentReceiptV1, Mapping[str, str]]:
+    _, binding_for, read_blob, _ = _candidate_blob_api()
+    path = provider.manifest.environment_contract_path
+    payload = _exact_mapping(
+        _strict_json_bytes(read_blob(candidate, path), field="runtime environment contract"),
+        field="runtime environment contract",
+        fields=frozenset({"schema", "required_packages", "expected_receipt"}),
+    )
+    if payload["schema"] != "htt.runtime_environment_contract.v1":
+        raise ProductionBayesianError("runtime environment contract schema drifted")
+    required = payload["required_packages"]
+    if isinstance(required, (str, bytes)) or not isinstance(required, Sequence):
+        raise ProductionBayesianError("runtime environment package inventory drifted")
+    receipt = capture_runtime_environment_receipt(required)
+    if payload["expected_receipt"] != receipt.as_payload():
+        raise ProductionBayesianError(
+            "live runtime differs from the candidate environment contract"
+        )
+    return receipt, binding_for(candidate, path)
+
+
+def _computed_response_rank(
+    *, candidate: object, provider: LoadedCandidateProviderV1,
+    covariance_identity: str, lane_admission_bundle_id: str,
+) -> ComputedResponseRankReceiptV1:
+    _, binding_for, read_blob, _ = _candidate_blob_api()
+    path = provider.manifest.response_matrix_path
+    payload = _exact_mapping(
+        _strict_json_bytes(read_blob(candidate, path), field="response matrix"),
+        field="response matrix",
+        fields=frozenset(
+            {"schema", "feature_order", "parameter_order", "matrix", "singular_value_threshold"}
+        ),
+    )
+    if payload["schema"] != "htt.response_matrix.v1":
+        raise ProductionBayesianError("response matrix schema drifted")
+    features = _names(payload["feature_order"], "response feature order")
+    parameters = _names(payload["parameter_order"], "response parameter order")
+    try:
+        matrix = np.asarray(payload["matrix"], dtype=float)
+    except (TypeError, ValueError) as exc:
+        raise ProductionBayesianError(
+            "response matrix or threshold is invalid"
+        ) from exc
+    threshold = payload["singular_value_threshold"]
+    if (
+        matrix.shape != (len(features), len(parameters))
+        or not np.all(np.isfinite(matrix))
+        or not isinstance(threshold, (int, float))
+        or isinstance(threshold, bool)
+        or not np.isfinite(float(threshold))
+        or float(threshold) <= 0
+    ):
+        raise ProductionBayesianError("response matrix or threshold is invalid")
+    try:
+        rank = int(np.linalg.matrix_rank(matrix, tol=float(threshold)))
+    except np.linalg.LinAlgError as exc:
+        raise ProductionBayesianError(
+            "response matrix or threshold is invalid"
+        ) from exc
+    provisional = ComputedResponseRankReceiptV1(
+        response_matrix_binding=binding_for(candidate, path),
+        feature_order=features,
+        parameter_order=parameters,
+        singular_value_threshold=float(threshold),
+        computed_rank=rank,
+        covariance_identity=covariance_identity,
+        lane_admission_bundle_id=lane_admission_bundle_id,
+        receipt_id="",
+    )
+    return replace(
+        provisional,
+        receipt_id=canonical_content_id(provisional.unsigned_payload()),
+    )
+
+
+def _normalization_evidence(
+    *, candidate: object, provider: LoadedCandidateProviderV1,
+    likelihood_identity: str, prior_identity: str,
+) -> NormalizationEvidenceV1:
+    _, binding_for, read_blob, _ = _candidate_blob_api()
+    path = provider.manifest.normalization_evidence_path
+    payload = _exact_mapping(
+        _strict_json_bytes(read_blob(candidate, path), field="normalization evidence"),
+        field="normalization evidence",
+        fields=frozenset({"schema", "likelihood", "prior"}),
+    )
+    if payload["schema"] != "htt.normalization_evidence.v1":
+        raise ProductionBayesianError("normalization evidence schema drifted")
+    likelihood = _exact_mapping(
+        payload["likelihood"], field="likelihood normalization",
+        fields=frozenset({"status", "identity", "method_id"}),
+    )
+    prior = _exact_mapping(
+        payload["prior"], field="prior normalization",
+        fields=frozenset({"status", "identity", "method_id"}),
+    )
+    if (
+        likelihood["status"] != "ANALYTICALLY_NORMALIZED"
+        or prior["status"] != "ANALYTICALLY_NORMALIZED"
+        or likelihood["identity"] != likelihood_identity
+        or prior["identity"] != prior_identity
+    ):
+        raise ProductionBayesianError("normalization evidence does not bind the model")
+    provisional = NormalizationEvidenceV1(
+        evidence_binding=binding_for(candidate, path),
+        likelihood_identity=likelihood_identity,
+        likelihood_method_id=_nonempty(likelihood["method_id"], "likelihood normalization method"),
+        prior_identity=prior_identity,
+        prior_method_id=_nonempty(prior["method_id"], "prior normalization method"),
+        evidence_id="",
+    )
+    return replace(
+        provisional,
+        evidence_id=canonical_content_id(provisional.unsigned_payload()),
+    )
+
+
+def _execution_plan_binding(
+    *, candidate: object, provider: LoadedCandidateProviderV1,
+    contract: ProductionModelContract, runtime_receipt: RuntimeEnvironmentReceiptV1,
+) -> ExecutionPlanBindingV1:
+    _, binding_for, read_blob, _ = _candidate_blob_api()
+    path = provider.manifest.execution_plan_path
+    payload = _exact_mapping(
+        _strict_json_bytes(read_blob(candidate, path), field="execution plan"),
+        field="execution plan",
+        fields=frozenset({"schema", "lane_id", "model_id", "entrypoint", "argv", "output_root", "run_mode"}),
+    )
+    if payload["schema"] != "htt.execution_plan.v1":
+        raise ProductionBayesianError("execution plan schema drifted")
+    argv = payload["argv"]
+    if isinstance(argv, (str, bytes)) or not isinstance(argv, Sequence):
+        raise ProductionBayesianError("execution plan argv must be a sequence")
+    parsed_argv = tuple(_nonempty(item, "execution argv") for item in argv)
+    output_root = _relative_path(payload["output_root"], "execution output root")
+    entrypoint = _nonempty(payload["entrypoint"], "execution entrypoint")
+    expected_entrypoint = (
+        f"{provider.manifest.provider_path}:"
+        f"{provider.manifest.log_likelihood_symbol}"
+    )
+    if entrypoint != expected_entrypoint:
+        raise ProductionBayesianError(
+            "execution plan entrypoint does not equal the registered sampler export"
+        )
+    if (
+        payload["lane_id"] != contract.lane_id
+        or payload["model_id"] != contract.model_id
+        or payload["run_mode"] != "sampler"
+        or not output_root.startswith("docs/generated/observed_runs/")
+    ):
+        raise ProductionBayesianError("execution plan does not bind the model/provider")
+    provisional = ExecutionPlanBindingV1(
+        plan_binding=binding_for(candidate, path),
+        lane_id=contract.lane_id,
+        model_id=contract.model_id,
+        entrypoint=entrypoint,
+        argv=parsed_argv,
+        output_root=output_root,
+        run_mode="sampler",
+        provider_manifest_content_id=provider.manifest.manifest_content_id,
+        runtime_environment_receipt_id=runtime_receipt.receipt_id,
+        plan_content_id="",
+    )
+    return replace(
+        provisional,
+        plan_content_id=canonical_content_id(provisional.unsigned_payload()),
+    )
+
+
+def bind_production_model_contract(
+    *,
+    contract: ProductionModelContract,
+    lane_spec: object,
+    admission_decision: object,
+    candidate_identity: object,
+    provider_manifest_path: Path | None = None,
+    provider_configuration_path: Path | None = None,
+    provider_environment_path: Path | None = None,
+) -> ProductionModelContract:
+    if type(contract) is not ProductionModelContract:
+        raise ProductionBayesianError("contract must be an exact ProductionModelContract")
+    if provider_configuration_path is not None or provider_environment_path is not None:
+        raise ProductionBayesianError(
+            "provider resources must come from a factory-loaded candidate manifest"
+        )
+    if not isinstance(provider_manifest_path, Path):
+        raise ProductionBayesianError("provider manifest path must be supplied")
+    try:
+        from common.human_execution_authorization import (
+            CandidateIdentityV1,
+            admitted_covariance_identity,
+            admitted_data_identity,
+            candidate_blob_binding,
+            replay_complete_lane_admission,
+            revalidate_clean_candidate_identity,
+        )
+    except ImportError as exc:
+        raise ProductionBayesianError("PR-304 admission binding contract is unavailable") from exc
+    if type(candidate_identity) is not CandidateIdentityV1:
+        raise ProductionBayesianError("production binding requires a factory-derived candidate identity")
+    try:
+        candidate = revalidate_clean_candidate_identity(candidate_identity)
+        replayed = replay_complete_lane_admission(
+            lane_spec=lane_spec,
+            admission_decision=admission_decision,
+            candidate_identity=candidate,
+        )
+        data_identity = admitted_data_identity(replayed)
+        covariance_identity = admitted_covariance_identity(replayed)
+    except ValueError as exc:
+        raise ProductionBayesianError("production model cannot replay its exact admission binding") from exc
+    if _LANE_ALIASES.get(contract.lane_id) != replayed.lane_id:
+        raise ProductionBayesianError("production model lane does not match replayed admission")
+    if contract.data_identity != data_identity:
+        raise ProductionBayesianError("production model data identity does not equal admitted data identity")
+    if contract.covariance_identity != covariance_identity:
+        raise ProductionBayesianError("production model covariance identity does not equal admitted covariance identity")
+    base = _unbound_contract(contract)
+    provider = load_candidate_provider(
+        candidate_identity=candidate, manifest_path=provider_manifest_path
+    )
+    if tuple(sorted(provider.manifest.discrepancy_symbols)) != base.discrepancy_ids:
+        raise ProductionBayesianError("provider discrepancy exports drifted")
+    runtime, environment_binding = _runtime_receipt_from_contract(
+        candidate=candidate, provider=provider
+    )
+    rank = _computed_response_rank(
+        candidate=candidate,
+        provider=provider,
+        covariance_identity=covariance_identity,
+        lane_admission_bundle_id=str(replayed.lane_admission_bundle_id),
+    )
+    if rank.parameter_order != tuple(base.parameter_schema) or rank.computed_rank < len(base.parameter_schema):
+        raise ProductionBayesianError("computed response rank is deficient for the parameter schema")
+    normalization = _normalization_evidence(
+        candidate=candidate,
+        provider=provider,
+        likelihood_identity=base.likelihood_identity,
+        prior_identity=base.prior_identity,
+    )
+    execution = _execution_plan_binding(
+        candidate=candidate,
+        provider=provider,
+        contract=base,
+        runtime_receipt=runtime,
+    )
+    configuration_binding = candidate_blob_binding(
+        candidate, provider.manifest.configuration_path
+    )
+    candidate_after = revalidate_clean_candidate_identity(candidate)
+    if candidate_after.as_payload() != candidate.as_payload():
+        raise ProductionBayesianError("production provider candidate changed during binding")
+    provisional = replace(
+        base,
+        response_rank=rank.computed_rank,
+        lane_admission_bundle_id=replayed.lane_admission_bundle_id,
+        ordered_admission_record_ids=tuple(record.record_id for record in replayed.records),
+        admitted_data_identity=data_identity,
+        admitted_covariance_identity=covariance_identity,
+        candidate_commit=candidate.commit,
+        candidate_tree=candidate.tree,
+        provider_manifest_binding=provider.manifest.manifest_binding,
+        provider_content_id=provider.provider_content_id,
+        provider_source_bindings=provider.source_bindings,
+        provider_configuration_binding=configuration_binding,
+        provider_environment_binding=environment_binding,
+        runtime_environment_receipt_id=runtime.receipt_id,
+        computed_response_rank_receipt_id=rank.receipt_id,
+        normalization_evidence_id=normalization.evidence_id,
+        execution_plan_content_id=execution.plan_content_id,
+        contract_content_id="",
+    )
+    return replace(
+        provisional,
+        contract_content_id=canonical_content_id(provisional.unsigned_payload()),
+    )
+
+
+def revalidate_bound_production_model_contract(
+    *, contract: ProductionModelContract, lane_spec: object,
+    admission_decision: object, candidate_identity: object,
+) -> ProductionModelContract:
+    if type(contract) is not ProductionModelContract:
+        raise ProductionBayesianError("contract must be an exact ProductionModelContract")
+    if contract.provider_manifest_binding is None:
+        raise ProductionBayesianError("production model contract is not admission/provider bound")
+    manifest_path = Path(
+        _nonempty(contract.provider_manifest_binding.get("path"), "provider manifest path")
+    )
+    rebuilt = bind_production_model_contract(
+        contract=_unbound_contract(contract),
+        lane_spec=lane_spec,
+        admission_decision=admission_decision,
+        candidate_identity=candidate_identity,
+        provider_manifest_path=manifest_path,
+    )
+    if rebuilt.unsigned_payload() != contract.unsigned_payload() or rebuilt.contract_content_id != contract.contract_content_id:
+        raise ProductionBayesianError("production model admission or provider binding is stale or forged")
+    return rebuilt
 
 
 @dataclass(frozen=True)
@@ -210,7 +1117,7 @@ def _consumer_plan_unsigned_payload(
 def _canonical_ppc_discrepancy_ids(contract: ProductionModelContract) -> tuple[str, ...]:
     """Return the sole stable order accepted by a posterior-consumer plan."""
 
-    return tuple(sorted(contract.discrepancies))
+    return contract.discrepancy_ids
 
 
 def build_sampler_posterior_lineage(
@@ -347,115 +1254,160 @@ def assess_lane_readiness(
     descriptor: ObservationalLaneDescriptor,
     *,
     model_contract: ProductionModelContract | None = None,
+    admission_decision: object | None = None,
+    validated_human_authorization: object | None = None,
+    candidate_identity: object | None = None,
     authorization_receipt: object | None = None,
     posterior_lineage: SamplerPosteriorLineage | None = None,
     posterior_consumer_plan: PosteriorConsumerPlan | None = None,
 ) -> LaneReadinessDecision:
     if type(descriptor) is not ObservationalLaneDescriptor:
         raise ProductionBayesianError("descriptor must be an exact ObservationalLaneDescriptor")
-    if model_contract is None:
+    if authorization_receipt is not None:
+        raise ProductionBayesianError(
+            "PR-289 NOT_AUTHORIZED receipts cannot substitute for human authorization"
+        )
+    if model_contract is None or admission_decision is None:
+        reasons = []
+        if model_contract is None:
+            reasons.append("production_model_contract_unbound")
+        if admission_decision is None:
+            reasons.append("complete_pr289_lane_admission_unbound")
         return LaneReadinessDecision(
             lane_id=descriptor.lane_id,
             status=LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND,
             observed_data_executed=False,
             artifact_mode="readiness_only",
-            blocked_reasons=("production_model_contract_unbound",),
+            blocked_reasons=tuple(reasons),
         )
     if type(model_contract) is not ProductionModelContract or model_contract.lane_id != descriptor.lane_id:
         raise ProductionBayesianError("production contract does not match the lane descriptor")
-    if authorization_receipt is None:
-        return LaneReadinessDecision(
-            lane_id=descriptor.lane_id,
-            status=LaneReadinessStatus.BLOCKED_OBSERVED_EXECUTION_NOT_AUTHORIZED,
-            observed_data_executed=False,
-            artifact_mode="readiness_only",
-            blocked_reasons=("missing_external_human_authorization_receipt",),
-        )
     try:
-        from common.data_identity import AuthorizationStatus, ExecutionAuthorizationReceipt
+        from common.data_identity import lane_registry_from_mapping
+        from common.human_execution_authorization import (
+            CandidateIdentityV1,
+            ExternalTrustedLauncherRequired,
+            ValidatedHumanExecutionAuthorization,
+            read_candidate_blob,
+            replay_complete_lane_admission,
+            validate_authorization_execution_bindings,
+            revalidate_cached_human_execution_authorization,
+            revalidate_clean_candidate_identity,
+        )
     except ImportError as exc:
         raise ProductionBayesianError(
-            "PR-289 execution-authorization contract is unavailable"
+            "PR-304 admission-bound human authorization contract is unavailable"
         ) from exc
-    lane_aliases = {
-        "H-PLANCK": "PLANCK",
-        "H-DESI": "DESI",
-        "H-CF4": "CF4",
-        "H-JWST": "JWST_SN",
-        "H-ACT": "ACT",
-    }
-    if type(authorization_receipt) is not ExecutionAuthorizationReceipt:
-        raise ProductionBayesianError("authorization receipt must use the PR-289 exact type")
-    if authorization_receipt.lane_id != lane_aliases[descriptor.lane_id]:
-        raise ProductionBayesianError("authorization receipt lane does not match the descriptor")
-    if authorization_receipt.status is not AuthorizationStatus.AUTHORIZED:
-        return LaneReadinessDecision(
-            lane_id=descriptor.lane_id,
-            status=LaneReadinessStatus.BLOCKED_OBSERVED_EXECUTION_NOT_AUTHORIZED,
-            observed_data_executed=False,
-            artifact_mode="readiness_only",
-            blocked_reasons=("authorization_receipt_not_authorized",),
-        )
-    if posterior_lineage is None or posterior_consumer_plan is None:
+    if candidate_identity is None:
         return LaneReadinessDecision(
             lane_id=descriptor.lane_id,
             status=LaneReadinessStatus.BLOCKED_PRODUCTION_MODEL_CONTRACT_UNBOUND,
             observed_data_executed=False,
             artifact_mode="readiness_only",
-            blocked_reasons=("sampler_lineage_or_ppc_loo_consumer_unbound",),
+            blocked_reasons=("clean_candidate_identity_unbound",),
         )
-    if (
-        type(posterior_lineage) is not SamplerPosteriorLineage
-        or type(posterior_consumer_plan) is not PosteriorConsumerPlan
-        or posterior_lineage.model_contract_content_id != model_contract.contract_content_id
-        or posterior_consumer_plan.model_contract_content_id != model_contract.contract_content_id
-        or posterior_consumer_plan.posterior_lineage_content_id
-        != posterior_lineage.lineage_content_id
-    ):
+    if type(candidate_identity) is not CandidateIdentityV1:
         raise ProductionBayesianError(
-            "posterior lineage and PPC/LOO consumer plan do not bind this model contract"
+            "candidate identity must be factory-derived for readiness"
         )
-    if (
-        _names(posterior_consumer_plan.ppc_discrepancy_ids, "ppc_discrepancy_ids")
-        != _canonical_ppc_discrepancy_ids(model_contract)
-    ):
+    try:
+        candidate = revalidate_clean_candidate_identity(candidate_identity)
+        lane_spec = lane_registry_from_mapping(
+            _strict_json_bytes(
+                read_candidate_blob(
+                    candidate,
+                    "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json",
+                ),
+                field="PR-289 lane registry Git blob",
+            )
+        ).lane(_LANE_ALIASES[descriptor.lane_id])
+        replayed_admission = replay_complete_lane_admission(
+            lane_spec=lane_spec,
+            admission_decision=admission_decision,
+            candidate_identity=candidate,
+        )
+    except (KeyError, ValueError) as exc:
+        raise ProductionBayesianError("PR-289 complete lane admission does not bind this descriptor") from exc
+    try:
+        revalidate_bound_production_model_contract(
+            contract=model_contract,
+            lane_spec=lane_spec,
+            admission_decision=replayed_admission,
+            candidate_identity=candidate_identity,
+        )
+    except (ProductionBayesianError, ValueError) as exc:
         raise ProductionBayesianError(
-            "PPC consumer plan does not use the exact registered discrepancy tuple"
+            "production model admission/provider binding failed readiness replay"
+        ) from exc
+    if posterior_lineage is not None or posterior_consumer_plan is not None:
+        return LaneReadinessDecision(
+            lane_id=descriptor.lane_id,
+            status=LaneReadinessStatus.BLOCKED_SAMPLER_TERMINAL,
+            observed_data_executed=False,
+            artifact_mode="readiness_only",
+            blocked_reasons=("pr305_observed_run_terminal_contract_unavailable",),
         )
-    if posterior_consumer_plan.loo_block_ids != model_contract.block_ids:
-        raise ProductionBayesianError(
-            "LOO consumer plan does not preserve the registered block partition"
+    if validated_human_authorization is None:
+        return LaneReadinessDecision(
+            lane_id=descriptor.lane_id,
+            status=LaneReadinessStatus.BLOCKED_HUMAN_AUTHORIZATION,
+            observed_data_executed=False,
+            artifact_mode="readiness_only",
+            blocked_reasons=("external_trusted_launcher_required",),
         )
-    expected_plan_content_id = canonical_content_id(
-        _consumer_plan_unsigned_payload(
+    if type(validated_human_authorization) is not ValidatedHumanExecutionAuthorization:
+        raise ProductionBayesianError("human authorization must be a validator-built PR-304 capability")
+    try:
+        validate_authorization_execution_bindings(
+            validated_human_authorization.receipt,
             model_contract_content_id=model_contract.contract_content_id,
-            posterior_lineage_content_id=posterior_lineage.lineage_content_id,
-            ppc_discrepancy_ids=posterior_consumer_plan.ppc_discrepancy_ids,
-            loo_block_ids=posterior_consumer_plan.loo_block_ids,
+            runtime_environment_receipt_id=model_contract.runtime_environment_receipt_id,
+            computed_response_rank_receipt_id=model_contract.computed_response_rank_receipt_id,
+            normalization_evidence_id=model_contract.normalization_evidence_id,
+            execution_plan_content_id=model_contract.execution_plan_content_id,
         )
-    )
-    if posterior_consumer_plan.plan_content_id != expected_plan_content_id:
-        raise ProductionBayesianError("PPC/LOO consumer plan content identity is forged or stale")
+        revalidate_cached_human_execution_authorization(
+            cached=validated_human_authorization,
+            lane_spec=lane_spec,
+            admission_decision=replayed_admission,
+            candidate_identity=candidate_identity,
+        )
+    except ExternalTrustedLauncherRequired:
+        pass
+    except ValueError as exc:
+        raise ProductionBayesianError(
+            "authorization execution/model plan binding failed"
+        ) from exc
     return LaneReadinessDecision(
         lane_id=descriptor.lane_id,
-        status=LaneReadinessStatus.READY_FOR_AUTHORIZED_EXECUTION,
+        status=LaneReadinessStatus.BLOCKED_HUMAN_AUTHORIZATION,
         observed_data_executed=False,
         artifact_mode="readiness_only",
-        blocked_reasons=(),
+        blocked_reasons=("external_trusted_launcher_required",),
     )
 
 
 __all__ = [
+    "ComputedResponseRankReceiptV1",
+    "ExecutionPlanBindingV1",
     "LaneReadinessDecision",
     "LaneReadinessStatus",
+    "LoadedCandidateProviderV1",
+    "NormalizationEvidenceV1",
     "ObservationalLaneDescriptor",
     "PosteriorConsumerPlan",
     "ProductionBayesianError",
     "ProductionModelContract",
+    "ProviderManifestV1",
+    "RuntimeEnvironmentReceiptV1",
     "SamplerPosteriorLineage",
     "assess_lane_readiness",
-    "build_production_model_contract",
+    "bind_production_model_contract",
     "build_posterior_consumer_plan",
+    "build_production_model_contract",
     "build_sampler_posterior_lineage",
+    "capture_runtime_environment_receipt",
+    "load_candidate_provider",
     "load_observational_lane_descriptors",
+    "revalidate_bound_production_model_contract",
 ]
