@@ -2,6 +2,14 @@
 
 Each claim needs owner, status, evidence, transfer source, claim tier, and caveats.
 
+## PR-289 - data identity v2 preflight
+
+| Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |
+|---|---|---|---|---|---|---|
+| PR-303 carries the exact PR-289 identity/admission source subset into the PR-300/302 invalidation tree and replays it with no candidate roots. | COMMON | IMPLEMENTED_DIAGNOSTIC_CONTRACT | `docs/research_program/post_pr275/pr303_spec.yaml`; `tests/contracts/test_pr303_pr289_integration.py`; `docs/generated/pr303_integrated_data_identity_receipt.json` | none | `roadmap_rescue_v1:C2`; diagnostic_only | The historical PR-289 candidate receipt is removed and is not integration authority. Rootless replay refuses all six lanes; it grants no lane admission or execution authorization. |
+| A complete admitted identity authorizes feature extraction, likelihood evaluation, observed statistics, figures, or public scientific use. | COMMON | FORBIDDEN / NOT_GRANTED | PR-289 authorization state machine and admission-status precedence | none | blocked | Admission binds bytes and semantic identities only. Every lane remains `NOT_AUTHORIZED` without a separate lane-specific human gate receipt. |
+| PR-289 validates a native solver, computes Q/Pi/F/G_F or Bayesian evidence, establishes morphology compatibility, or identifies a Bianchi geometry or family. | COMMON | FORBIDDEN / NOT_EVALUATED | pre-native family gate; MIO/HTT ownership boundary; claim-language gate | none | blocked | No observed data are executed and PR-151 partial acquisition is excluded. |
+
 ## PR-277 - evidence-conditioned capability authority
 
 | Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |

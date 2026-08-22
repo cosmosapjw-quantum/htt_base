@@ -7,16 +7,19 @@ triple is invalidated and absent. Two unrelated figures remain byte-stable.
 """
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
 import sys
 
+import pytest
+
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = REPO_ROOT / "scripts/make_obsdata_r195_r198_figures.py"
 FIG_DIR = REPO_ROOT / "figures/obsdata_current"
-LEGACY_FIG_DIR = REPO_ROOT / "legacy/cf4_p0/figures/obsdata_current"
+CF4_INVENTORY = REPO_ROOT / "docs/generated/cf4_p0_quarantine_inventory.json"
 
 QUARANTINED = (
     "fig_obs_cf4_mv_bulkflow",
@@ -58,10 +61,67 @@ def test_quarantined_active_pngs_are_absent_and_sidecars_are_blocks():
             assert card["artifact"]["active_png_status"] == "ABSENT_BY_QUARANTINE"
 
 
-def test_exact_historical_figure_triples_live_only_under_legacy_root():
-    for stem in QUARANTINED:
-        for suffix in ("png", "source.json", "manifest.json"):
-            assert (LEGACY_FIG_DIR / f"{stem}.{suffix}").is_file()
+def _expected_cf4_legacy_figure_paths() -> set[str]:
+    return {
+        f"legacy/cf4_p0/figures/obsdata_current/{stem}.{suffix}"
+        for stem in QUARANTINED
+        for suffix in ("png", "source.json", "manifest.json")
+    }
+
+
+def _cf4_inventory_rows() -> dict[str, dict[str, object]]:
+    payload = json.loads(CF4_INVENTORY.read_text(encoding="utf-8"))
+    entries = payload.get("entries")
+    assert isinstance(entries, list)
+
+    rows: dict[str, dict[str, object]] = {}
+    for entry in entries:
+        assert isinstance(entry, dict)
+        path = entry.get("path")
+        assert isinstance(path, str)
+        assert path not in rows
+        rows[path] = entry
+    return rows
+
+
+def test_historical_cf4_figure_triples_are_pinned_by_inventory() -> None:
+    rows = _cf4_inventory_rows()
+    expected = _expected_cf4_legacy_figure_paths()
+    assert expected <= set(rows)
+
+    for relative in sorted(expected):
+        row = rows[relative]
+        assert row["mode"] == "legacy_reproduction_only"
+        assert row["role"] == "frozen_numerical_reproduction"
+        assert row["public_use"] is False
+        digest = row["sha256"]
+        size = row["size_bytes"]
+        assert isinstance(digest, str)
+        assert len(digest) == 64
+        int(digest, 16)
+        assert type(size) is int
+        assert size > 0
+
+
+def test_materialized_cf4_legacy_figure_bytes_match_inventory_when_available() -> None:
+    rows = _cf4_inventory_rows()
+    expected = _expected_cf4_legacy_figure_paths()
+    materialized = {
+        relative for relative in expected if (REPO_ROOT / relative).is_file()
+    }
+    if not materialized:
+        pytest.skip(
+            "CF4 legacy archive is intentionally off-repo; "
+            "the tracked inventory contract was validated instead"
+        )
+
+    assert materialized == expected
+    for relative in sorted(expected):
+        path = REPO_ROOT / relative
+        assert not path.is_symlink()
+        raw = path.read_bytes()
+        assert len(raw) == rows[relative]["size_bytes"]
+        assert hashlib.sha256(raw).hexdigest() == rows[relative]["sha256"]
 
 
 def test_unaffected_two_figures_and_claim_firewalls_remain_present():

@@ -31,7 +31,7 @@ REQUIRED_COMMANDS = {
         "test ! -e .agent-harness/ACTIVE_RUN",
         "test ! -e .agent-harness/runtime/ACTIVE_RUN",
         "python3 .agent-harness/scripts/validate_harness.py",
-        "python -m pip install 'pytest>=8,<9' 'PyYAML>=6,<7'",
+        "python -m pip install 'pytest>=8,<9' 'PyYAML>=6,<7' 'numpy>=1.26,<3'",
         "python scripts/codex_harness/sync_pr_dag_mirrors.py --check",
         (
             "python scripts/codex_harness/validate_pr_dag.py "

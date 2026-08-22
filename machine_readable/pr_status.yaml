@@ -1,5 +1,6 @@
 generated_on: '2026-08-11'
 completed:
+- PR-288
 - PR-287
 - PR-286
 - PR-285
@@ -210,7 +211,6 @@ pending:
 - PR-206
 - PR-207
 - PR-208
-- PR-289
 - PR-290
 - PR-291
 - PR-292
@@ -247,7 +247,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-288
+in_progress: PR-289
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -261,7 +261,7 @@ stacked_pr_execution:
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
   target_sha: ff9ef9f45747e559c5343b463cf010dfc3a7432a
-  active_implementation_pr: PR-288
+  active_implementation_pr: PR-289
   pr_order:
   - PR-283
   - PR-284
@@ -465,14 +465,15 @@ stacked_pr_execution:
       execution_blocker: BLOCKED_CAPABILITY_ISOLATED_EXECUTOR_NOT_INSTALLED
       assurance_budget: {maximum: 16, consumed: 7}
     PR-288:
-      lifecycle: REVIEWED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      lifecycle: PR_OPEN
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED, SEALED,
+        PUSHED, PR_OPEN]
       base_sha: 319835cc4b4e2e3270a0b27787ce5d5a44ea16b7
       predecessor_pr: PR-287
       predecessor_sealed_sha: 319835cc4b4e2e3270a0b27787ce5d5a44ea16b7
-      sealed_head: null
-      pushed_ref: null
-      pr_url: null
+      sealed_head: 27df5da040e27eeaad44873ba3424ff73fb4bb09
+      pushed_ref: refs/heads/changeset/pr288-bayesian-evidence-recovery-20260811
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/385
       production_hash: 7d2ce119e4f176aacaa870f0c7bc0dc1e5e0aa843bf2984f6ac7af7d4d148a79
       dependency_hashes:
         pr288_spec: 994603817e0546a1abb10b026cb3fcb31ebf5bee829c4e452798a808e19d4233
@@ -501,20 +502,42 @@ stacked_pr_execution:
         system_default_engine: INCONCLUSIVE
         portability_replay: PASS
         review: PASS
-      assurance_budget: {maximum: 16, consumed: 6}
+        seal: PASS
+        push: PASS
+        publication: PASS
+      assurance_budget: {maximum: 16, consumed: 7}
     PR-289:
-      lifecycle: PLANNED
-      lifecycle_history: [PLANNED]
-      base_sha: null
+      lifecycle: REVIEWED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED]
+      base_sha: 27df5da040e27eeaad44873ba3424ff73fb4bb09
       predecessor_pr: PR-288
-      predecessor_sealed_sha: null
+      predecessor_sealed_sha: 27df5da040e27eeaad44873ba3424ff73fb4bb09
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: null
-      dependency_hashes: {}
-      gate_dispositions: {eligibility: INELIGIBLE}
-      assurance_budget: {maximum: 16, consumed: 0}
+      production_hash: c638eaea433bcce5a5b00140a916108d5c23b64d079c94bbb7456a343acf0d48
+      dependency_hashes:
+        pr289_spec: f4a8e89e603a1f6e4fe9cb99c422ef83407fd264328b3adaf927aafdcfb6636f
+        publication_policy: 4c282e04fb154a92861ff28cc67c0bb1dab881486b8ee3c87892053318e019a9
+        lane_registry: e72eee5fd720318367bd38b90412aa0286f521be7cb47b7a988df4e579ab167f
+        data_runbooks: b9e369041fef302e1ed172d9bd414f7ead7482625dc1d2d1a26b8f04a1ba29de
+        claim_ledger: 86389d3d0c432f6adfa66982bc36c93bfb8868f6b71a519309f7c4f8bc8d848b
+        pr289_runner: 14ed58a68f4a628644219f6df0b966d5e2cedddef0a7c32f10ce1c94a85e6ad5
+        pr289_contract_test: 1ee3fb1541a911abfd686d5cd78f75380b8847dfe5d1fd076cd48153a4f1c3c3
+        pr274_registry: 92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9
+        pr274_result: e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea
+        historical_candidate_receipt: REMOVED_NOT_INTEGRATION_AUTHORITY
+        pr303_integration_base: 4c371d1101f5e0eb19d3dea80ca40eabea5f7987
+        pr303_integration_source: 45da1bf54149864fb9d87be3a828df202ee1df7f
+        publication_integrity: 56555b55265d76bfdf5c5a78017b43b5f37e0487acad0660679744c6ccc717ec
+        dag_validator: 126ccf63e3a6d835584426e4c3d157be5482b1f7df39d0985638370366b40afc
+        claim_linter: b012559244031e6e65b1cea6e90ac7e0dbbbdc5906ea1236384ea9ee791d3677
+        salvage_audit: c42b44641a7655edc36c11e23a747433275285a4f342a824fa69dda88bd6f436
+      gate_dispositions: {eligibility: PASS, implementation: PASS, validation: PASS,
+        code: PASS, physics: PASS, statistics: PASS, claim: PASS,
+        harness: PASS, portability_replay: PASS, review: PASS,
+        integration: PASS_SOURCE_INTEGRATION_ONLY}
+      assurance_budget: {maximum: 16, consumed: 14}
     PR-290:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
@@ -689,6 +712,25 @@ execution_lane:
   PR-296: defensible
   PR-297: defensible
 execution_resolutions:
+  PR-288:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-288.md
+    review_receipt: .agent-harness/runs/pr288-final-seal-closeout-20260811/RUN_SUMMARY.json
+    review_receipt_sha256: c6ce9a5442cd138225759982e1d19e69ac2816bd7a94b7491e8d00e3ef87eaa0
+    publication_receipt_sha256: 01d530fdb50966deab11dc56b4f3ae59ba6aae2b29fce9616c3fee209c32a75d
+    candidate_sha: 27df5da040e27eeaad44873ba3424ff73fb4bb09
+    sealed_head: 27df5da040e27eeaad44873ba3424ff73fb4bb09
+    pushed_ref: refs/heads/changeset/pr288-bayesian-evidence-recovery-20260811
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/385
+    resolved_on: '2026-08-11'
+    scientific_status_effect: bounded_bayesian_semantics_engine_crosscheck_ppc_and_conditional_loocv_recovered
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: synthetic_bayesian_diagnostic
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    assurance_budget_consumed: 7
+    success_dependency_satisfied: true
   PR-287:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-287.md
