@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import hashlib
 import importlib
 import json
+import math
 import os
 from pathlib import Path
 from fractions import Fraction
@@ -80,7 +82,7 @@ def _profile_cli(
         cwd=ROOT,
         env=environment,
         check=True,
-        timeout=60,
+        timeout=120 if rows == "full" else 60,
     )
     return json.loads(output.read_text(encoding="ascii"))
 
@@ -141,6 +143,30 @@ def test_mask_inverse_abstains_on_empty_or_rank_deficient_support() -> None:
     tiny[:4] = 1.0
     with pytest.raises(PlanckLaneContractError, match="rank deficient|condition"):
         build_mask_coupling_inverse(tiny)
+
+
+@pytest.mark.requires_healpy
+def test_chunked_mask_inverse_matches_direct_dense_coupling() -> None:
+    import scipy.special
+
+    nside = 8
+    npix = hp.nside2npix(nside)
+    mask = np.linspace(0.2, 1.0, npix)
+    inverse = build_mask_coupling_inverse(mask)
+    theta, phi = hp.pix2ang(nside, np.arange(npix))
+    columns = []
+    for ell in range(2, 6):
+        for m in range(ell + 1):
+            harmonic = scipy.special.sph_harm_y(ell, m, theta, phi)
+            if m == 0:
+                columns.append(harmonic.real)
+            else:
+                columns.extend(
+                    (math.sqrt(2.0) * harmonic.real, math.sqrt(2.0) * harmonic.imag)
+                )
+    design = np.column_stack(columns)
+    expected = (4.0 * math.pi / npix) * (design.T @ (mask[:, None] * design))
+    np.testing.assert_allclose(inverse.matrix, expected, rtol=1e-13, atol=1e-13)
 
 
 @pytest.mark.requires_healpy
@@ -314,6 +340,65 @@ def _identity(component: str) -> dict[str, str]:
     }
 
 
+def _admitted_path_fixture(data_root: Path):
+    worker = _load_worker()
+    bindings = []
+    records = []
+    for component in sorted(worker.REQUIRED_ADMITTED_COMPONENTS):
+        relative = f"components/{component}.bin"
+        path = data_root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(component.encode("ascii"))
+        digest = "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
+        bindings.append({"component_id": component, "relative_path": relative})
+        records.append(
+            SimpleNamespace(
+                component_id=component,
+                byte_size=path.stat().st_size,
+                content_sha256=digest,
+                native_identity_profile={"component_bindings": bindings},
+            )
+        )
+    return worker, SimpleNamespace(records=tuple(records))
+
+
+def test_admitted_paths_reject_parent_symlink_alias(tmp_path: Path) -> None:
+    data_root = tmp_path / "data"
+    data_root.mkdir()
+    worker, decision = _admitted_path_fixture(data_root)
+    real = data_root / "components"
+    alias = data_root / "alias"
+    alias.symlink_to(real, target_is_directory=True)
+    decision.records[0].native_identity_profile["component_bindings"][0][
+        "relative_path"
+    ] = f"alias/{decision.records[0].component_id}.bin"
+    with pytest.raises(worker.PlanckWorkerError, match="symlink"):
+        worker._admitted_paths(decision, data_root=data_root)
+
+
+def test_admitted_paths_reject_hardlink_alias(tmp_path: Path) -> None:
+    data_root = tmp_path / "data"
+    data_root.mkdir()
+    worker, decision = _admitted_path_fixture(data_root)
+    first = decision.records[0]
+    original = data_root / "components" / f"{first.component_id}.bin"
+    alias = data_root / "components" / f"{first.component_id}-alias.bin"
+    os.link(original, alias)
+    first.native_identity_profile["component_bindings"][0]["relative_path"] = (
+        f"components/{first.component_id}-alias.bin"
+    )
+    with pytest.raises(worker.PlanckWorkerError, match="hardlink"):
+        worker._admitted_paths(decision, data_root=data_root)
+
+
+def test_declared_pixelization_must_match_mask_derived_nside() -> None:
+    worker = _load_worker()
+    inverse = SimpleNamespace(nside=16)
+    assert worker._require_declared_nside(inverse, 16) == 16
+    with pytest.raises(worker.PlanckWorkerError, match="declared nside"):
+        worker._require_declared_nside(inverse, 32)
+
+
 def test_component_inputs_remain_distinct_while_derived_operator_is_shared() -> None:
     rows = {"SMICA": _identity("SMICA"), "Commander": _identity("Commander")}
     assert (
@@ -427,3 +512,6 @@ def test_committed_profile_matrix_normalizes_constant_claim_metadata() -> None:
         for cell in payload["cells"]
         if cell["row_label"] == "full"
     )
+    assert "capability_snapshot" not in payload["cell_contract"]
+    capability = payload["cell_contract"]["full_inventory_capability_snapshot"]
+    assert capability["synthetic_local_response_rank_value"] == 1

@@ -463,6 +463,31 @@ def test_PR306_timeout_terminates_the_worker_process_group(case_factory) -> None
     assert not Path(f"/proc/{child_pid}").exists()
 
 
+def test_PR306_process_lookup_race_still_reaps_worker(
+    case_factory, monkeypatch
+) -> None:
+    module, *_ = case_factory()
+
+    class ExitedProcess:
+        pid = 306
+
+        def __init__(self) -> None:
+            self.wait_calls: list[int] = []
+
+        def wait(self, *, timeout: int):
+            self.wait_calls.append(timeout)
+            return 0
+
+    process = ExitedProcess()
+
+    def missing_group(_pid: int, _signal: int) -> None:
+        raise ProcessLookupError
+
+    monkeypatch.setattr(module.os, "killpg", missing_group)
+    module._terminate_process_group(process)
+    assert process.wait_calls == [5]
+
+
 def test_PR306_worker_logs_and_large_outputs_are_stream_hashed(case_factory) -> None:
     source = (
         "import os, sys\n"

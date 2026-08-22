@@ -566,23 +566,16 @@ class WorkerOutcome:
 
 
 def _terminate_process_group(process: subprocess.Popen[bytes]) -> None:
-    try:
-        os.killpg(process.pid, signal.SIGTERM)
-    except ProcessLookupError:
-        return
-    try:
-        process.wait(timeout=5)
-        return
-    except subprocess.TimeoutExpired:
-        pass
-    try:
-        os.killpg(process.pid, signal.SIGKILL)
-    except ProcessLookupError:
-        return
-    try:
-        process.wait(timeout=5)
-    except subprocess.TimeoutExpired:
-        return
+    for requested_signal in (signal.SIGTERM, signal.SIGKILL):
+        try:
+            os.killpg(process.pid, requested_signal)
+        except ProcessLookupError:
+            pass
+        try:
+            process.wait(timeout=5)
+            return
+        except subprocess.TimeoutExpired:
+            continue
 
 
 def _spawn_worker(

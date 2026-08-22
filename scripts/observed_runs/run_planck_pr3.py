@@ -44,6 +44,8 @@ for _path in (ROOT / "htt", ROOT / "htt/src"):
 from common.data_identity import (  # noqa: E402
     AdmissionStatus,
     DataIdentityError,
+    _regular_beneath,
+    _stream_sha256,
     load_lane_registry,
     replay_lane_admission_decision,
 )
@@ -675,14 +677,18 @@ def build_profile_matrix() -> dict[str, object]:
             if name != "capability_snapshot":
                 cell.pop(name)
     full_serial = serial["full"]
-    cell_contract["capability_snapshot"] = capability_snapshot(response_rank=None)
-    cell_contract["capability_snapshot"].update(
+    full_inventory_capability = capability_snapshot(response_rank=None)
+    full_inventory_capability.update(
         {
             "synthetic_local_response_rank": "LOCAL_RESPONSE_RANK_COMPUTED",
             "synthetic_local_response_rank_value": full_serial[
                 "synthetic_local_response_rank"
             ],
         }
+    )
+    cell_contract.pop("capability_snapshot")
+    cell_contract["full_inventory_capability_snapshot"] = (
+        full_inventory_capability
     )
     stage_totals = {
         name: sum(
@@ -769,7 +775,12 @@ def _load_admission(path: Path):
 
 
 def _admitted_paths(decision, *, data_root: Path) -> dict[str, Path]:
-    if not data_root.is_absolute() or data_root.is_symlink() or not data_root.is_dir():
+    if (
+        not data_root.is_absolute()
+        or data_root.is_symlink()
+        or not data_root.is_dir()
+        or data_root.resolve() != data_root
+    ):
         raise PlanckWorkerError("data root must be an absolute regular directory")
     profile = decision.records[0].native_identity_profile
     bindings = profile.get("component_bindings")
@@ -779,7 +790,7 @@ def _admitted_paths(decision, *, data_root: Path) -> dict[str, Path]:
     if set(records) != REQUIRED_ADMITTED_COMPONENTS:
         raise PlanckWorkerError("Planck admitted component inventory is incomplete")
     result: dict[str, Path] = {}
-    root = data_root.resolve()
+    root = data_root
     for row in bindings:
         if not isinstance(row, Mapping):
             raise PlanckWorkerError("Planck component binding is not a mapping")
@@ -791,19 +802,23 @@ def _admitted_paths(decision, *, data_root: Path) -> dict[str, Path]:
             or component not in records
         ):
             raise PlanckWorkerError("Planck component binding identity drifted")
-        candidate = root / relative
-        if candidate.is_symlink() or not candidate.is_file():
-            raise PlanckWorkerError(f"{component} is not a regular admitted file")
         try:
-            candidate.resolve().relative_to(root)
-        except ValueError as exc:
-            raise PlanckWorkerError(f"{component} escapes the admitted root") from exc
-        info = candidate.stat()
+            candidate, info = _regular_beneath(
+                root,
+                Path(relative),
+                f"Planck component {component}",
+            )
+            digest = "sha256:" + _stream_sha256(
+                candidate,
+                field_name=f"Planck component {component}",
+                expected_info=info,
+            )
+        except DataIdentityError as exc:
+            raise PlanckWorkerError(
+                f"{component} is not an exact admitted file: {exc}"
+            ) from exc
         record = records[component]
-        if (
-            info.st_size != record.byte_size
-            or _sha256_file(candidate) != record.content_sha256
-        ):
+        if info.st_size != record.byte_size or digest != record.content_sha256:
             raise PlanckWorkerError(f"{component} no longer matches the admission")
         result[component] = candidate
     if set(result) != set(records):
@@ -821,6 +836,16 @@ def _load_npy(path: Path, *, label: str, dimension: int | None = None) -> np.nda
     ):
         raise PlanckWorkerError(f"{label} shape or finiteness drifted")
     return value
+
+
+def _require_declared_nside(
+    inverse: MaskCouplingInverse, declared_nside: int
+) -> int:
+    if inverse.nside != declared_nside:
+        raise PlanckWorkerError(
+            "admitted map pixelization differs from the declared nside"
+        )
+    return declared_nside
 
 
 def _load_window(path: Path, *, label: str) -> dict[str, np.ndarray]:
@@ -1034,7 +1059,7 @@ def run_admitted(*, admission_path: Path, data_root: Path) -> dict[str, object]:
         raise PlanckWorkerError("SMICA/Commander common target transfer differs")
     inverse = build_mask_coupling_inverse(common_mask, lmin=LMIN, lmax=LMAX)
     context = {
-        "nside": int(pixelization["nside"]),
+        "nside": _require_declared_nside(inverse, pixelization["nside"]),
         "common_mask": common_mask,
         "source_beams": {"SMICA": beams["SMICA"], "Commander": beams["COMMANDER"]},
         "source_pixels": {

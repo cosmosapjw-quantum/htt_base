@@ -9,7 +9,6 @@ p-value, and a missing global response is an explicit abstention.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from functools import lru_cache
 import hashlib
 import itertools
 import math
@@ -310,25 +309,29 @@ class MaskCouplingInverse:
         return self.matrix.shape[0]
 
 
-@lru_cache(maxsize=8)
-def _real_harmonic_design(nside: int, lmin: int, lmax: int) -> np.ndarray:
-    """Return one cached immutable real-harmonic geometry matrix."""
+def _real_harmonic_design_block(
+    nside: int,
+    pixels: np.ndarray,
+    *,
+    lmin: int,
+    lmax: int,
+) -> np.ndarray:
+    """Evaluate a bounded pixel block of the frozen real-harmonic basis."""
 
     hp = _healpy()
     from scipy.special import sph_harm_y
 
-    theta, phi = hp.pix2ang(nside, np.arange(hp.nside2npix(nside)))
-    columns: list[np.ndarray] = []
-    for ell, m, kind in real_alm_layout(lmin=lmin, lmax=lmax):
+    theta, phi = hp.pix2ang(nside, pixels)
+    layout = real_alm_layout(lmin=lmin, lmax=lmax)
+    design = np.empty((pixels.size, len(layout)), dtype=float)
+    for column, (ell, m, kind) in enumerate(layout):
         harmonic = sph_harm_y(ell, m, theta, phi)
         if m == 0:
-            columns.append(np.asarray(harmonic.real, dtype=float))
+            design[:, column] = harmonic.real
         elif kind == "real":
-            columns.append(math.sqrt(2.0) * harmonic.real)
+            design[:, column] = math.sqrt(2.0) * harmonic.real
         else:
-            columns.append(math.sqrt(2.0) * harmonic.imag)
-    design = np.ascontiguousarray(np.column_stack(columns), dtype=float)
-    design.flags.writeable = False
+            design[:, column] = math.sqrt(2.0) * harmonic.imag
     return design
 
 
@@ -351,9 +354,22 @@ def build_mask_coupling_inverse(
         )
     if not 0.0 < relative_threshold < 1.0 or condition_ceiling <= 1.0:
         raise PlanckLaneContractError("mask-inverse thresholds are invalid")
-    design = _real_harmonic_design(nside, lmin, lmax)
+    dimension = len(real_alm_layout(lmin=lmin, lmax=lmax))
+    coupling = np.zeros((dimension, dimension), dtype=float)
+    chunk_size = min(weights.size, 65_536)
+    for start in range(0, weights.size, chunk_size):
+        stop = min(weights.size, start + chunk_size)
+        pixels = np.arange(start, stop)
+        weighted_design = _real_harmonic_design_block(
+            nside,
+            pixels,
+            lmin=lmin,
+            lmax=lmax,
+        )
+        weighted_design *= np.sqrt(weights[start:stop])[:, None]
+        coupling += weighted_design.T @ weighted_design
     pixel_area = 4.0 * math.pi / weights.size
-    coupling = pixel_area * (design.T @ (weights[:, None] * design))
+    coupling *= pixel_area
     singular_values = np.linalg.svd(coupling, compute_uv=False)
     largest = float(singular_values[0])
     smallest = float(singular_values[-1])

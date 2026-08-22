@@ -175,7 +175,7 @@ profile:
     MKL_NUM_THREADS: '1'
     NUMEXPR_NUM_THREADS: '1'
     VECLIB_MAXIMUM_THREADS: '1'
-  required_metrics: [wall_seconds, max_rss_bytes, ordered_feature_digest, stage_seconds]
+  required_metrics: [wall_seconds, max_rss_bytes, joint_features_sha256, stage_seconds]
   stage_semantics:
     null_calibration: ordered null inventory and feature-pool validation
     global_rank: observation-inclusive finite global rank calculation
@@ -185,8 +185,8 @@ profile:
 
 optimization:
   applied:
-    - cache immutable real-harmonic geometry
-    - vectorize the discrete mask-coupling construction
+    - evaluate real-harmonic geometry in bounded pixel chunks
+    - vectorize and accumulate the discrete mask-coupling construction
     - reuse one mask inverse and target transfer per cell
     - reuse deconvolved alms across all features
     - replace repeated leave-one-out median reconstruction with sorted sufficient statistics
