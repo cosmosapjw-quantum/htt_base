@@ -103,9 +103,11 @@ class ExactBoostOperator:
     """
 
     def __init__(self, nside: int = 64, lmax: int = LMAX, beta: float = BETA):
+        if not np.isfinite(beta) or abs(float(beta)) >= 1.0:
+            raise ValueError("beta must be finite with absolute value below one")
         self.nside = nside
         self.lmax = lmax
-        self.beta = beta
+        self.beta = float(beta)
         npix = hp.nside2npix(nside)
         theta, phi = hp.pix2ang(nside, np.arange(npix))
         n_hat = np.stack(
@@ -117,9 +119,9 @@ class ExactBoostOperator:
             axis=1,
         )
         b_vec = hp.rotator.dir2vec(DIPOLE_L_DEG, DIPOLE_B_DEG, lonlat=True)
-        beta_vec = beta * np.asarray(b_vec)
-        gamma = 1.0 / np.sqrt(1.0 - beta**2)
-        b_hat = beta_vec / beta
+        b_hat = np.asarray(b_vec, dtype=float)
+        b_hat /= np.linalg.norm(b_hat)
+        gamma = 1.0 / np.sqrt(1.0 - self.beta**2)
         mu = n_hat @ b_hat
         # Consistent exact pair for the LINE-OF-SIGHT direction n (from
         # observer toward the sky) of a photon observed at n: the
@@ -129,14 +131,14 @@ class ExactBoostOperator:
         # and the thermodynamic temperature transforms with the SAME
         # (1 - beta mu) Doppler pairing:
         #   T_obs(n) = T_cmb(n_cmb) / (gamma (1 - beta mu)).
-        par_coeff = (mu - beta) / (1.0 - beta * mu)
+        par_coeff = (mu - self.beta) / (1.0 - self.beta * mu)
         perp = n_hat - mu[:, None] * b_hat[None, :]
         n_ab = (
             par_coeff[:, None] * b_hat[None, :]
-            + perp / (gamma * (1.0 - beta * mu))[:, None]
+            + perp / (gamma * (1.0 - self.beta * mu))[:, None]
         )
         n_ab /= np.linalg.norm(n_ab, axis=1, keepdims=True)
-        self.doppler = 1.0 / (gamma * (1.0 - beta * mu))
+        self.doppler = 1.0 / (gamma * (1.0 - self.beta * mu))
         theta_ab = np.arccos(np.clip(n_ab[:, 2], -1.0, 1.0))
         phi_ab = np.mod(np.arctan2(n_ab[:, 1], n_ab[:, 0]), 2.0 * np.pi)
         self._theta_ab = theta_ab
