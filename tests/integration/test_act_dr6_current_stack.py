@@ -136,12 +136,51 @@ def test_pr308_injection_coverage_uses_full_covariance() -> None:
         estimates,
         response=np.eye(5),
         covariance=covariance,
+        injection_stage="PRE_QE_END_TO_END",
     )
 
     assert receipt["acceptance_interval"][0] <= 0.95
     assert receipt["acceptance_interval"][1] >= 0.95
-    assert receipt["injection_stage"] == "PRE_QE_OR_END_TO_END_ONLY"
+    assert receipt["injection_stage"] == "PRE_QE_END_TO_END"
     assert receipt["status"] == "INJECTION_COVERAGE_PASS"
+
+
+@pytest.mark.parametrize(
+    "injection_stage",
+    ("PRE_QE_END_TO_END", "END_TO_END_RELEASE_RECONSTRUCTION"),
+)
+def test_pr308_injection_stage_is_preserved_exactly(
+    injection_stage: str,
+) -> None:
+    worker = _worker()
+    rng = np.random.default_rng(30_802)
+    truth = rng.normal(scale=0.1, size=(200, 5))
+    estimates = truth + rng.normal(scale=0.1, size=(200, 5))
+
+    receipt = worker._injection_coverage(
+        truth,
+        estimates,
+        response=np.eye(5),
+        covariance=np.eye(5),
+        injection_stage=injection_stage,
+    )
+
+    assert receipt["injection_stage"] == injection_stage
+
+
+def test_pr308_injection_stage_rejects_a_collapsed_or_post_qe_label() -> None:
+    worker = _worker()
+    rows = np.zeros((200, 5))
+
+    for stage in ("PRE_QE_OR_END_TO_END_ONLY", "POST_QE_MAP_INJECTION"):
+        with pytest.raises(worker.ActWorkerError, match="injection stage"):
+            worker._injection_coverage(
+                rows,
+                rows,
+                response=np.eye(5),
+                covariance=np.eye(5),
+                injection_stage=stage,
+            )
 
 
 def test_pr308_trivially_overconservative_injection_coverage_abstains() -> None:
@@ -153,6 +192,7 @@ def test_pr308_trivially_overconservative_injection_coverage_abstains() -> None:
         truth,
         response=np.eye(5),
         covariance=np.eye(5),
+        injection_stage="END_TO_END_RELEASE_RECONSTRUCTION",
     )
 
     assert receipt["coverage_fraction"] == 1.0
@@ -217,6 +257,7 @@ def test_pr308_partial_ensemble_stops_before_covariance_or_rank(
             response=response,
             injection_truth=truth,
             injection_estimates=estimates,
+            injection_stage="END_TO_END_RELEASE_RECONSTRUCTION",
         )
     assert called is False
 
@@ -232,6 +273,7 @@ def test_pr308_observed_state_and_rank_emission_cannot_diverge() -> None:
             response=response,
             injection_truth=truth,
             injection_estimates=estimates,
+            injection_stage="END_TO_END_RELEASE_RECONSTRUCTION",
             emit_rank=False,
             observed_execution=True,
         )
@@ -247,17 +289,81 @@ def test_pr308_synthetic_closure_has_no_scientific_result() -> None:
         response=response,
         injection_truth=truth,
         injection_estimates=estimates,
+        injection_stage="END_TO_END_RELEASE_RECONSTRUCTION",
     )
 
     assert result["simulation_count"] == 400
     assert result["covariance"]["status"] == "FULL_COVARIANCE_VALID"
     assert result["response_rank"]["rank"] == 5
     assert result["injection_coverage"]["status"] == "INJECTION_COVERAGE_PASS"
+    assert result["injection_coverage"]["injection_stage"] == (
+        "END_TO_END_RELEASE_RECONSTRUCTION"
+    )
+    assert result["analysis_contract"]["analysis_id"] == (
+        "ACT_DR6_INBAND_Y2_MODULATION_V1"
+    )
+    assert result["analysis_contract"]["supersedes"] == "ACT_DR6_KAPPA"
+    assert result["analysis_contract"]["multiplicity"] == 2
+    assert result["analysis_contract"]["estimand_fingerprint"].startswith(
+        "estid-"
+    )
     assert result["terminal_disposition"] == "SYNTHETIC_OPERATOR_CLOSURE_PASS"
     assert result["p_value"] is None
     assert result["scientific_result"] is None
     assert result["observed_statistic_seen"] is False
     assert result["observed_science_executed"] is False
+
+
+def test_pr308_successor_lineage_starts_from_the_exact_pr134_act_contract() -> None:
+    worker = _worker()
+    canonical = json.loads(
+        (ROOT / "docs/generated/pr134_contract_registry.json").read_text(
+            encoding="utf-8"
+        )
+    )["contracts"]["ACT_DR6_KAPPA"]
+
+    predecessor = worker.AnalysisContract.from_payload(
+        worker.ACT_PREDECESSOR_CONTRACT
+    ).canonical_payload()
+    successor = worker._registered_act_estimand()
+
+    assert predecessor == canonical
+    assert successor["analysis_id"] == "ACT_DR6_INBAND_Y2_MODULATION_V1"
+    assert successor["selection_window"] == (
+        "act_dr6_baseline_mask_strict_integer_ell_41_762"
+    )
+    assert successor["estimand"] == (
+        "five_component_real_y2_fractional_variance_modulation_empirical_upper_rank"
+    )
+    assert successor["supersedes"] == "ACT_DR6_KAPPA"
+    assert successor["multiplicity"] == 2
+
+
+def test_pr308_observed_rank_requires_the_registered_successor_estimand(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    worker = _worker()
+    observed, simulations, response, truth, estimates = _full_rank_case()
+
+    def refuse(_self: object, _analysis_id: str) -> None:
+        raise worker.EstimandRegistryError("forced registry refusal")
+
+    monkeypatch.setattr(
+        worker.EstimandRegistry,
+        "require_registered_for_inference",
+        refuse,
+    )
+    with pytest.raises(worker.ActWorkerError, match="estimand registry"):
+        worker.analyze_feature_ensemble(
+            observed,
+            simulations,
+            response=response,
+            injection_truth=truth,
+            injection_estimates=estimates,
+            injection_stage="END_TO_END_RELEASE_RECONSTRUCTION",
+            emit_rank=True,
+            observed_execution=True,
+        )
 
 
 @pytest.mark.parametrize("rows", ("1", "8", "32", "128", "full"))

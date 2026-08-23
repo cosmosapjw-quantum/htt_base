@@ -48,6 +48,11 @@ from common.data_identity import (  # noqa: E402
     load_lane_registry,
     replay_lane_admission_decision,
 )
+from common.estimand_registry import (  # noqa: E402
+    AnalysisContract,
+    EstimandRegistry,
+    EstimandRegistryError,
+)
 from obsstat.act_inband_modulation import (  # noqa: E402
     ActInbandModulationError,
     build_mask_design,
@@ -77,10 +82,67 @@ CHI2_5_95 = 11.070497693516351
 COVERAGE_NOMINAL = 0.95
 COVERAGE_Z_95 = 1.959963984540054
 MINIMUM_RESPONSE_SINGULAR_VALUE_RATIO = 1.0e-8
+ALLOWED_INJECTION_STAGES = frozenset(
+    {"PRE_QE_END_TO_END", "END_TO_END_RELEASE_RECONSTRUCTION"}
+)
+ACT_ANALYSIS_ID = "ACT_DR6_INBAND_Y2_MODULATION_V1"
+ACT_PREDECESSOR_CONTRACT = {
+    "analysis_id": "ACT_DR6_KAPPA",
+    "target_population": "cmb_lensing_convergence",
+    "observation_unit": "harmonic_alm",
+    "dependence_cluster": "reconstruction_noise_covariance",
+    "selection_window": "act_dr6_lensing_mask_fsky",
+    "preprocessing": "mean_field_debiased_band_power_over_sim_ensemble",
+    "estimand": "low_ell_band_power_excess_upper_limit",
+    "nuisance_family": "mean_field_n0_n1_bias",
+    "prior_null_multiplicity": "act_400_sim_ensemble",
+    "allowed_transformations": "ell_band_choice_two_to_ten_only",
+    "generative_branch": "stochastic_covariance_factor",
+}
+ACT_INBAND_CONTRACT = {
+    "analysis_id": ACT_ANALYSIS_ID,
+    "target_population": "cmb_lensing_convergence",
+    "observation_unit": "released_reconstructed_kappa_alm",
+    "dependence_cluster": "reconstruction_noise_covariance",
+    "selection_window": "act_dr6_baseline_mask_strict_integer_ell_41_762",
+    "preprocessing": (
+        "observation_inclusive_401_unit_crossfit_identical_feature_operator"
+    ),
+    "estimand": (
+        "five_component_real_y2_fractional_variance_modulation_empirical_upper_rank"
+    ),
+    "nuisance_family": "mask_mean_field_response_and_full_feature_covariance",
+    "prior_null_multiplicity": (
+        "act_400_sim_ensemble_with_lowell_to_inband_revision_multiplicity"
+    ),
+    "allowed_transformations": (
+        "frozen_feature_order_full_covariance_response_whitening_only"
+    ),
+    "generative_branch": "stochastic_covariance_factor",
+    "supersedes": "ACT_DR6_KAPPA",
+}
 
 
 class ActWorkerError(RuntimeError):
     """Raised when the frozen ACT worker contract fails closed."""
+
+
+def _registered_act_estimand() -> dict[str, object]:
+    """Build and gate the exact successor lineage bound into this worker."""
+
+    registry = EstimandRegistry()
+    try:
+        registry.register(AnalysisContract.from_payload(ACT_PREDECESSOR_CONTRACT))
+        contract = AnalysisContract.from_payload(ACT_INBAND_CONTRACT)
+        fingerprint = registry.register(contract)
+        registry.require_registered_for_inference(ACT_ANALYSIS_ID)
+    except EstimandRegistryError as exc:
+        raise ActWorkerError("ACT estimand registry refused inference") from exc
+    return {
+        **contract.canonical_payload(),
+        "estimand_fingerprint": fingerprint,
+        "multiplicity": registry.multiplicity(ACT_ANALYSIS_ID),
+    }
 
 
 def _finite_matrix(
@@ -202,7 +264,10 @@ def _injection_coverage(
     *,
     response: Sequence[Sequence[float]] | np.ndarray,
     covariance: Sequence[Sequence[float]] | np.ndarray,
+    injection_stage: str,
 ) -> dict[str, object]:
+    if injection_stage not in ALLOWED_INJECTION_STAGES:
+        raise ActWorkerError("injection stage is not an admitted end-to-end stage")
     truth_rows = _finite_matrix(truth, label="injection truth")
     estimate_rows = _finite_matrix(estimates, label="injection estimates")
     response_matrix = _finite_matrix(response, label="injection response")
@@ -243,7 +308,7 @@ def _injection_coverage(
         "acceptance_interval": interval,
         "interval_method": "WILSON_SCORE_TWO_SIDED",
         "full_covariance_used": True,
-        "injection_stage": "PRE_QE_OR_END_TO_END_ONLY",
+        "injection_stage": injection_stage,
         "status": "INJECTION_COVERAGE_PASS" if passed else "INJECTION_COVERAGE_FAILED_ABSTAIN",
     }
 
@@ -255,6 +320,7 @@ def analyze_feature_ensemble(
     response: Sequence[Sequence[float]] | np.ndarray,
     injection_truth: Sequence[Sequence[float]] | np.ndarray,
     injection_estimates: Sequence[Sequence[float]] | np.ndarray,
+    injection_stage: str,
     emit_rank: bool = False,
     observed_execution: bool = False,
 ) -> dict[str, object]:
@@ -268,6 +334,7 @@ def analyze_feature_ensemble(
     simulation_rows = _finite_matrix(simulations, label="simulation features")
     if simulation_rows.shape != (EXACT_SIMULATION_COUNT, 5):
         raise ActWorkerError("analysis requires exactly 400 ordered release simulations")
+    analysis_contract = _registered_act_estimand()
     corrected_observed, corrected_nulls = _cross_fit_mean_field(
         observed_row, simulation_rows
     )
@@ -278,6 +345,7 @@ def analyze_feature_ensemble(
         injection_estimates,
         response=response,
         covariance=covariance["matrix"],
+        injection_stage=injection_stage,
     )
     if response_receipt["status"] != "FINITE_RESPONSE_RANK":
         disposition = str(response_receipt["status"])
@@ -301,6 +369,7 @@ def analyze_feature_ensemble(
         "capability": "ACT_DR6_VALIDATED_BAND_OPERATOR_AND_400_SIM_CLOSURE",
         "analysis_support": EXPECTED_SUPPORT,
         "feature_order": list(FEATURE_ORDER),
+        "analysis_contract": analysis_contract,
         "operator_identity": "IDENTICAL_RELEASE_KAPPA_MASK_STRICT_BAND_FEATURE_OPERATOR",
         "mean_field": {
             "method": "OBSERVATION_INCLUSIVE_401_UNIT_LEAVE_ONE_OUT_FEATURE_SPACE",
@@ -425,6 +494,7 @@ def synthetic_profile(*, rows: str, mode: str, workers: int) -> dict[str, object
             response=np.eye(5),
             injection_truth=truth,
             injection_estimates=estimates,
+            injection_stage="END_TO_END_RELEASE_RECONSTRUCTION",
         )
         closure = str(report["terminal_disposition"])
     closure_seconds = time.perf_counter() - closure_started
@@ -678,6 +748,7 @@ def _run_admitted(*, admission_path: Path, data_root: Path) -> dict[str, object]
         response=response["response_matrix"],
         injection_truth=response["injection_truth"],
         injection_estimates=response["injection_estimates"],
+        injection_stage=str(response["injection_stage"]),
         emit_rank=True,
         observed_execution=True,
     )
