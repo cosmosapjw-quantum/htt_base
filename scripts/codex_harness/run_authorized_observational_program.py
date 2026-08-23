@@ -85,6 +85,17 @@ ACT_RUNTIME_MODULES = (
     "healpy._healpy_pixel_lib",
 )
 ACT_DISTRIBUTIONS = ("numpy", "healpy")
+JWST_SN_RUNTIME_MODULES = (
+    "numpy",
+    "numpy.linalg",
+    "numpy._core._multiarray_umath",
+    "numpy.linalg._umath_linalg",
+    "scipy",
+    "scipy.linalg",
+    "scipy.stats",
+    "scipy.special",
+)
+JWST_SN_DISTRIBUTIONS = ("numpy", "scipy")
 OBSERVED_DATA_MARKER = "observed_data_opened.json"
 PLAN_FIELDS = frozenset(
     {
@@ -149,6 +160,20 @@ LANE_PROFILES = {
         ),
     )
 }
+JWST_SN_PROFILE = LaneProfile(
+    lane="JWST_SN",
+    deployment_profile="private_single_operator_attended_v1",
+    analysis_plan_id="plan:PR293-JWST-SN-V1",
+    science_execution_mode="jwst_sn_row_covariance_operator",
+    science_worker_relative="scripts/observed_runs/run_jwst_sn.py",
+    science_worker_arguments=("--run-admitted",),
+    result_filename="jwst_sn_result.json",
+    runtime_modules=JWST_SN_RUNTIME_MODULES,
+    runtime_distributions=JWST_SN_DISTRIBUTIONS,
+)
+# Keep the predecessor map byte-compatible for its historical exact-set
+# contract while routing every new consumer through the complete registry.
+REGISTERED_LANE_PROFILES = {**LANE_PROFILES, "JWST_SN": JWST_SN_PROFILE}
 
 
 class ObservationalProgramError(RuntimeError):
@@ -156,11 +181,11 @@ class ObservationalProgramError(RuntimeError):
 
 
 def _lane_profile(lane: object) -> LaneProfile:
-    if not isinstance(lane, str) or lane not in LANE_PROFILES:
+    if not isinstance(lane, str) or lane not in REGISTERED_LANE_PROFILES:
         raise ObservationalProgramError(
             "attended executor requires one exact registered primary lane"
         )
-    return LANE_PROFILES[lane]
+    return REGISTERED_LANE_PROFILES[lane]
 
 
 def canonical_bytes(value: object) -> bytes:
@@ -1035,7 +1060,9 @@ def _identity_worker() -> int:
     if os.geteuid() == 0:
         return 2
     lane = os.environ.get("HTT_ATTENDED_LANE")
-    if lane not in LANE_PROFILES:
+    try:
+        _lane_profile(lane)
+    except ObservationalProgramError:
         return 3
     print(
         json.dumps(
