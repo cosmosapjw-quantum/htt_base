@@ -71,6 +71,20 @@ CF4_RUNTIME_MODULES = (
     "numpy.linalg._umath_linalg",
 )
 CF4_DISTRIBUTIONS = ("numpy",)
+ACT_RUNTIME_MODULES = (
+    "numpy",
+    "numpy.linalg",
+    "numpy._core._multiarray_umath",
+    "numpy.linalg._umath_linalg",
+    "healpy",
+    "healpy.fitsfunc",
+    "healpy.sphtfunc",
+    "healpy.pixelfunc",
+    "healpy._healpy_sph_transform_lib",
+    "healpy._sphtools",
+    "healpy._healpy_pixel_lib",
+)
+ACT_DISTRIBUTIONS = ("numpy", "healpy")
 OBSERVED_DATA_MARKER = "observed_data_opened.json"
 PLAN_FIELDS = frozenset(
     {
@@ -121,6 +135,17 @@ LANE_PROFILES = {
             result_filename="cf4_current_stack_result.json",
             runtime_modules=CF4_RUNTIME_MODULES,
             runtime_distributions=CF4_DISTRIBUTIONS,
+        ),
+        LaneProfile(
+            lane="ACT",
+            deployment_profile="private_single_operator_attended_v1",
+            analysis_plan_id="plan:PR204-ACT-LENSING-V1",
+            science_execution_mode="act_dr6_validated_band_operator",
+            science_worker_relative="scripts/observed_runs/run_act_dr6.py",
+            science_worker_arguments=("--run-admitted",),
+            result_filename="act_dr6_result.json",
+            runtime_modules=ACT_RUNTIME_MODULES,
+            runtime_distributions=ACT_DISTRIBUTIONS,
         ),
     )
 }
