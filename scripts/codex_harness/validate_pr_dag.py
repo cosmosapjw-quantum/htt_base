@@ -660,7 +660,7 @@ PR280_ROOT_CAUSE_CARD_CONTRACTS = {
 }
 PR280_ROOT_CAUSE_FULL_IDS = set(PR280_ROOT_CAUSE_CARD_CONTRACTS)
 POST300_OBSERVATIONAL_LANE_IDS = {
-    f"PR-{number}" for number in range(301, 313)
+    f"PR-{number}" for number in range(301, 314)
 }
 POST300_OBSERVATIONAL_CARD_CONTRACTS = {
     "PR-301": {
@@ -706,9 +706,14 @@ POST300_OBSERVATIONAL_CARD_CONTRACTS = {
         "dependencies": [("PR-306", "requires_success")],
         "authorization": "EXPLICIT_USER_AUTHORIZED",
     },
+    "PR-313": {
+        "owner": "COMMON",
+        "dependencies": [("PR-306", "requires_success")],
+        "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
     "PR-308": {
         "owner": "OBSSTAT",
-        "dependencies": [("PR-312", "requires_success")],
+        "dependencies": [("PR-313", "requires_success")],
         "authorization": "EXPLICIT_APPROVED_SEQUENCE",
     },
     "PR-309": {
@@ -1019,7 +1024,7 @@ def validate_backlog(data: dict[str, Any]) -> DagInfo:
     present_post300_ids = idset & POST300_OBSERVATIONAL_LANE_IDS
     if present_post300_ids and present_post300_ids != POST300_OBSERVATIONAL_LANE_IDS:
         raise ValueError(
-            "post-300 observational-lane intake must register PR-301..312 "
+            "post-300 observational-lane intake must register PR-301..313 "
             "atomically; "
             f"missing={sorted(POST300_OBSERVATIONAL_LANE_IDS - present_post300_ids)}"
         )
@@ -1274,6 +1279,31 @@ def _validate_rescue_status(status: dict[str, Any], info: DagInfo) -> None:
             if not (repo_root / str(failed_pr307[field])).is_file():
                 raise ValueError(
                     f"PR-307 failed superseded resolution {field} is missing"
+                )
+    if "PR-313" in info.ids:
+        failed_pr312 = resolutions.get("PR-312")
+        if not isinstance(failed_pr312, dict):
+            raise ValueError("PR-312 failed superseded resolution is missing")
+        expected_pr312_fields = {
+            "resolution": "COMPLETED_FAILED_WITH_RECEIPT",
+            "receipt": "docs/PR_DELTAS/pr-313.md",
+            "failed_candidate_delta": "docs/PR_DELTAS/pr-312.md",
+            "candidate_sha": "6fcb90f24254d7d0d15dc78e8c117f5a883795da",
+            "success_dependency_satisfied": False,
+            "observed_data_executed": False,
+            "public_use": False,
+            "public_result_emitted": False,
+        }
+        for field, expected in expected_pr312_fields.items():
+            if failed_pr312.get(field) != expected:
+                raise ValueError(
+                    f"PR-312 failed superseded resolution {field} drifted"
+                )
+        repo_root = Path(__file__).resolve().parents[2]
+        for field in ("receipt", "failed_candidate_delta"):
+            if not (repo_root / str(failed_pr312[field])).is_file():
+                raise ValueError(
+                    f"PR-312 failed superseded resolution {field} is missing"
                 )
 
 
@@ -2149,6 +2179,10 @@ def validate_post300_observational_slice(cards: dict[str, Any]) -> None:
         raise ValueError("PR-312 must supersede the failed PR-307 attempt")
     if len(cards["PR-312"]["dod"]) != 1:
         raise ValueError("PR-312 definition of done must remain one complete sentence")
+    if cards["PR-313"].get("supersedes_failed_attempt") != "PR-312":
+        raise ValueError("PR-313 must supersede the failed PR-312 attempt")
+    if len(cards["PR-313"]["dod"]) != 1:
+        raise ValueError("PR-313 definition of done must remain one complete sentence")
 
 
 def _validate_post275_slice(cards: dict[str, Any]) -> None:

@@ -32,6 +32,7 @@ PR280_ROOT_CAUSE_IDS = ["PR-295", "PR-296", "PR-297"]
 POST300_OBSERVATIONAL_LANE_IDS = [
     *[f"PR-{number:03d}" for number in range(301, 308)],
     "PR-312",
+    "PR-313",
     *[f"PR-{number:03d}" for number in range(308, 312)],
 ]
 COMMON_CARD_FIELDS = {
@@ -130,12 +131,12 @@ def test_post275_cards_are_atomic_complete_and_claim_limited() -> None:
     backlog = _yaml(BACKLOG)
     cards = {card["id"]: card for card in backlog["prs"]}
     ordered_ids = list(cards)
-    assert len(cards) == 258
+    assert len(cards) == 259
     post275_start = ordered_ids.index("PR-276")
     assert ordered_ids[post275_start : post275_start + 21] == POST275_AUDIT_IDS
     root_cause_start = ordered_ids.index("PR-295")
     assert ordered_ids[root_cause_start : root_cause_start + 3] == PR280_ROOT_CAUSE_IDS
-    assert ordered_ids[-12:] == POST300_OBSERVATIONAL_LANE_IDS
+    assert ordered_ids[-13:] == POST300_OBSERVATIONAL_LANE_IDS
     assert set(POST275_IDS) <= set(backlog["policy"]["topological_order"])
     assert set(PR280_ROOT_CAUSE_IDS) <= set(
         backlog["policy"]["topological_order"]
@@ -232,7 +233,7 @@ def test_post275_dependency_dag_and_pending_amendments_match_spec() -> None:
         "--strict-rescue-slice",
     )
     assert result.returncode == 0, result.stdout + result.stderr
-    assert "OK: 258 PRs, DAG valid" in result.stdout
+    assert "OK: 259 PRs, DAG valid" in result.stdout
 
 
 def test_post300_validator_rejects_contract_and_claim_boundary_drift() -> None:
@@ -269,6 +270,11 @@ def test_post300_validator_rejects_contract_and_claim_boundary_drift() -> None:
     with pytest.raises(ValueError, match="definition of done"):
         validate_post300_observational_slice(cards)
 
+    cards = _cards()
+    del cards["PR-313"]["supersedes_failed_attempt"]
+    with pytest.raises(ValueError, match="PR-313 must supersede"):
+        validate_post300_observational_slice(cards)
+
 
 @pytest.mark.parametrize(
     "field",
@@ -297,6 +303,33 @@ def test_pr312_rejects_wrong_pr307_failed_receipt() -> None:
         _validate_rescue_status(status, validate_backlog(_yaml(BACKLOG)))
 
 
+@pytest.mark.parametrize(
+    "field",
+    (
+        "success_dependency_satisfied",
+        "observed_data_executed",
+        "public_use",
+        "public_result_emitted",
+    ),
+)
+def test_pr313_rejects_false_pr312_failed_resolution_flags(field: str) -> None:
+    status = deepcopy(_yaml(STATUS))
+    status["execution_resolutions"]["PR-312"][field] = True
+
+    with pytest.raises(ValueError, match=field):
+        _validate_rescue_status(status, validate_backlog(_yaml(BACKLOG)))
+
+
+def test_pr313_rejects_wrong_pr312_failed_receipt() -> None:
+    status = deepcopy(_yaml(STATUS))
+    status["execution_resolutions"]["PR-312"]["receipt"] = (
+        "docs/PR_DELTAS/does-not-exist.md"
+    )
+
+    with pytest.raises(ValueError, match="receipt"):
+        _validate_rescue_status(status, validate_backlog(_yaml(BACKLOG)))
+
+
 def test_status_is_total_and_preserves_negative_chronology() -> None:
     status = _yaml(STATUS)
     states: dict[str, str] = {}
@@ -313,10 +346,12 @@ def test_status_is_total_and_preserves_negative_chronology() -> None:
     if status.get("in_progress") is not None:
         assert status["in_progress"] not in states
         states[status["in_progress"]] = "in_progress"
-    assert len(states) == 258
+    assert len(states) == 259
     assert states["PR-190"] == "blocked"
     assert states["PR-172"] == "blocked"
     assert states["PR-184"] == "completed"
+    assert states["PR-312"] == "blocked"
+    assert states["PR-313"] == "in_progress"
     assert status["execution_resolutions"]["PR-190"][
         "resolution"
     ] == "COMPLETED_FAILED_WITH_RECEIPT"
@@ -468,9 +503,9 @@ def test_generated_status_surfaces_cover_current_dag_and_worktree() -> None:
     ledger = json.loads(
         (ROOT / "docs/generated/claim_ledger.json").read_text(encoding="utf-8")
     )
-    assert snapshot["metadata"]["total_prs"] == 258
-    assert len(snapshot["rows"]) == 258
-    assert len(ledger["rows"]) == 258
+    assert snapshot["metadata"]["total_prs"] == 259
+    assert len(snapshot["rows"]) == 259
+    assert len(ledger["rows"]) == 259
     short_head = _run("git", "rev-parse", "--short=8", "HEAD").stdout.strip()
     short_parent = _run("git", "rev-parse", "--short=8", "HEAD^").stdout.strip()
     allowed_sources = {f"{short_head}+dirty", f"{short_parent}+dirty"}
@@ -535,7 +570,7 @@ def test_generated_status_surfaces_cover_current_dag_and_worktree() -> None:
         assert hashlib.sha256(path.read_bytes()).hexdigest() == expected
     assert snapshot["metadata"]["worktree_state"] == "dirty"
     matrix = (ROOT / "docs/generated/status_matrix.md").read_text(encoding="utf-8")
-    assert "| Total PRs | 258 |" in matrix
+    assert "| Total PRs | 259 |" in matrix
     assert "| In progress | 1 |" in matrix or "| In progress | 0 |" in matrix
 
 

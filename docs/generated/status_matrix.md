@@ -7,9 +7,9 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | Metric | Value |
 | --- | ---: |
-| Total PRs | 258 |
+| Total PRs | 259 |
 | Completed PRs | 193 |
-| Blocked PRs | 4 |
+| Blocked PRs | 5 |
 | Skipped PRs | 0 |
 | In progress | 1 |
 | Background in progress | 1 |
@@ -22,19 +22,19 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Implementation scope | `common` |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `c816d4099684938479e93e26bb1b81fffd560960a91f92237131c4d77eaf73b1` |
-| Input hashes | `docs/codex_handoff/pr_backlog.yaml:fdf180d9f85a2bdd7f891806db16bf114a88d7dde2c87ac0bff215b493251b69`<br>`docs/codex_handoff/pr_status.yaml:a6ab0f5221c55f3304496174aa01ae3008ebc422cfb296da1f8ac074b05ca5cc`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4`<br>`docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c`<br>`docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912` |
+| Config hash | `9fbc5883dcbcfa0f5d2c6f2f84599464c002f6d94c651702f6dc3796d08c5b79` |
+| Input hashes | `docs/codex_handoff/pr_backlog.yaml:3a3689e66abf188c612035765189c4e3cef2745ecfc4ef12043705ef556c10f4`<br>`docs/codex_handoff/pr_status.yaml:ce65010d350575da8f0bea3d843637e64d755f8162f6eb1a256f12961ed0b56b`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4`<br>`docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c`<br>`docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912` |
 | Sky support status | `not_directional` |
 | Null/mock status | `not_statistical` |
 | Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false without an exact factory-issued ClaimCapabilityDecision.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier.<br>Verified smoke receipts set only generic process readiness; they do not grant a ClaimCapability. |
-| Generating command | `python -m common.status_snapshot --write docs/generated/status_snapshot.json` |
-| Source commit | `ab9bc299+dirty` |
+| Generating command | `python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --gate-outputs docs/codex_handoff/artifact_gate_outputs.yaml --execution-receipts docs/research_program/post_pr275/test_execution_receipts_v4.yaml --source-commit 6fcb90f2+dirty --write docs/generated/status_snapshot.json` |
+| Source commit | `6fcb90f2+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
 | --- | ---: |
 | `BASS` | 15 |
-| `COMMON` | 138 |
+| `COMMON` | 139 |
 | `HTT` | 48 |
 | `MIO` | 14 |
 | `OBSSTAT` | 43 |
@@ -42,7 +42,7 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | State | Rows |
 | --- | ---: |
 | `background_in_progress` | 1 |
-| `blocked` | 4 |
+| `blocked` | 5 |
 | `completed` | 193 |
 | `dormant_external` | 28 |
 | `in_progress` | 1 |
@@ -50,21 +50,21 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | Claim Tier | Rows |
 | --- | ---: |
-| `blocked` | 4 |
+| `blocked` | 5 |
 | `diagnostic_only` | 254 |
 
 | Artifact Readiness | Rows |
 | --- | ---: |
-| `blocked` | 4 |
+| `blocked` | 5 |
 | `generated` | 193 |
 | `missing` | 61 |
 
 | Allowed Use | Rows |
 | --- | ---: |
-| `internal_only` | 258 |
+| `internal_only` | 259 |
 
 | Artifact Mode | Rows |
 | --- | ---: |
-| `governance_diagnostic` | 258 |
+| `governance_diagnostic` | 259 |
 
 This matrix is a diagnostic-only DAG rendering. It does not certify solver validation, posterior evidence, native transfer validation, or family-ID evidence.

@@ -195,6 +195,7 @@ completed:
 - PR-251
 blocked:
 - PR-307
+- PR-312
 - PR-280
 - PR-190
 - PR-172
@@ -260,7 +261,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-312
+in_progress: PR-313
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -596,10 +597,25 @@ stacked_pr_execution:
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
   target_sha: f69a33759869acdff78a627192c3d834d1fd67b8
-  active_implementation_pr: PR-312
-  pr_order: [PR-312, PR-308, PR-309, PR-310, PR-311]
+  active_implementation_pr: PR-313
+  pr_order: [PR-312, PR-313, PR-308, PR-309, PR-310, PR-311]
   prs:
     PR-312:
+      lifecycle: FAILED
+      lifecycle_history: [PLANNED, ACTIVE, FAILED]
+      base_sha: f69a33759869acdff78a627192c3d834d1fd67b8
+      predecessor_pr: null
+      predecessor_sealed_sha: null
+      sealed_head: 6fcb90f24254d7d0d15dc78e8c117f5a883795da
+      pushed_ref: null
+      pr_url: null
+      production_hash: 6abe1c6a5c4cc885e05d8a0e66b7e2f95f33abc48c9548ca0475c960dd2ac78c
+      dependency_hashes:
+        pr306_merge_commit: 691cdf53901f28b8260a59a5027cac05f4e54ca979d58b7d20c439c63e06e61d
+        pr306_merge_tree: be18a83ff15fd55af4fd798906206cc244c1ebe6c0babba7c8fb446eca451daf
+      gate_dispositions: {eligibility: FAIL, final_review: STOP_INVALID}
+      assurance_budget: {maximum: 16, consumed: 3}
+    PR-313:
       lifecycle: ACTIVE
       lifecycle_history: [PLANNED, ACTIVE]
       base_sha: f69a33759869acdff78a627192c3d834d1fd67b8
@@ -608,17 +624,16 @@ stacked_pr_execution:
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: 6abe1c6a5c4cc885e05d8a0e66b7e2f95f33abc48c9548ca0475c960dd2ac78c
+      production_hash: 6a8aee26ca1471be98dfa27932612abfa42926d7869dd07d3cbc648deb2a0d5a
       dependency_hashes:
-        pr306_merge_commit: 691cdf53901f28b8260a59a5027cac05f4e54ca979d58b7d20c439c63e06e61d
-        pr306_merge_tree: be18a83ff15fd55af4fd798906206cc244c1ebe6c0babba7c8fb446eca451daf
+        failed_pr312_candidate: 6fcb90f24254d7d0d15dc78e8c117f5a883795da
       gate_dispositions: {eligibility: PASS}
       assurance_budget: {maximum: 16, consumed: 0}
     PR-308:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
       base_sha: null
-      predecessor_pr: PR-312
+      predecessor_pr: PR-313
       predecessor_sealed_sha: null
       sealed_head: null
       pushed_ref: null
@@ -807,6 +822,7 @@ execution_lane:
   PR-305: defensible
   PR-306: defensible
   PR-307: defensible
+  PR-313: defensible
   PR-308: defensible
   PR-309: defensible
   PR-310: defensible
@@ -827,6 +843,21 @@ execution_resolutions:
     transfer_source: none
     observed_data_executed: false
     public_use: false
+  PR-312:
+    resolution: COMPLETED_FAILED_WITH_RECEIPT
+    receipt: docs/PR_DELTAS/pr-313.md
+    failed_candidate_delta: docs/PR_DELTAS/pr-312.md
+    candidate_sha: 6fcb90f24254d7d0d15dc78e8c117f5a883795da
+    pr_url: null
+    success_dependency_satisfied: false
+    resolved_on: '2026-08-23'
+    scientific_status_effect: generated_status_provenance_failed_final_review
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: synthetic_cf4_failed_candidate
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    public_result_emitted: false
   PR-289:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-289.md

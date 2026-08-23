@@ -243,6 +243,7 @@
       "PR-306",
       "PR-307",
       "PR-312",
+      "PR-313",
       "PR-308",
       "PR-309",
       "PR-310",
@@ -17433,13 +17434,90 @@
       "publication_group_id": "PG-PR312-CF4-SUPERSEDING-REPAIR"
     },
     {
+      "id": "PR-313",
+      "wave": 79,
+      "title": "CF4 generated-status provenance closeout",
+      "owner": "COMMON",
+      "capability": "CF4_REVIEWED_SCIENCE_WITH_GIT_BOUND_STATUS_PROVENANCE",
+      "inputs": [
+        "PR-306 stack",
+        "failed PR-312 candidate and final review evidence"
+      ],
+      "outputs": [
+        "PR-312 failed receipt",
+        "regenerated status provenance",
+        "PR-308 dependency repair"
+      ],
+      "contributors": [
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-306"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-306",
+          "mode": "requires_success"
+        }
+      ],
+      "supersedes_failed_attempt": "PR-312",
+      "targets": [
+        "Preserve reviewed CF4 science bytes while binding generated status consumers to the exact failed PR-312 candidate."
+      ],
+      "files": [
+        "docs/research_program/post_pr275/pr313_spec.yaml",
+        "docs/PR_DELTAS/pr-313.md",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/generated/status_snapshot.json"
+      ],
+      "tests": [
+        "python -m pytest -q tests/pr_cards/test_pr_276_post275_reconciliation.py tests/contracts/test_vector_tensor_program_dag.py"
+      ],
+      "dod": [
+        "Generated source provenance, failed-terminal status, synchronized mirrors, and the complete PR-312 matrix pass without production changes."
+      ],
+      "kill": "Stale generated source identity, false PR-312 success, production-code drift, or observed execution occurs.",
+      "cost": "low",
+      "level": "L1",
+      "scope": "pre-solver",
+      "risk": "R2-HARNESS",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Status provenance closeout only; no scientific or execution promotion follows.",
+      "forbidden": [
+        "No science or executor edit, observed result, native result, authorization path, or family identification."
+      ],
+      "anti_drift": [
+        "Production changes and new modules, runners, schemas, ledger types, authorization paths, and Rust remain zero."
+      ],
+      "roadmap_anchor": "docs/research_program/post_pr275/pr313_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "process_status_only",
+      "execution_authorization": "EXPLICIT_APPROVED_SEQUENCE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR313-CF4-STATUS-PROVENANCE",
+      "publication_group_id": "PG-PR313-CF4-STATUS-PROVENANCE"
+    },
+    {
       "id": "PR-308",
       "wave": 80,
       "title": "ACT DR6 validated-band operator closure",
       "owner": "OBSSTAT",
       "capability": "ACT_DR6_VALIDATED_BAND_OPERATOR_AND_400_SIM_CLOSURE",
       "inputs": [
-        "PR-312 repaired shared transaction profile",
+        "PR-313 reviewed CF4 stack",
         "ACT DR6 reconstructed kappa and exact 400 simulations"
       ],
       "outputs": [
@@ -17458,11 +17536,11 @@
         "common"
       ],
       "depends": [
-        "PR-312"
+        "PR-313"
       ],
       "dependency_contracts": [
         {
-          "upstream_id": "PR-312",
+          "upstream_id": "PR-313",
           "mode": "requires_success"
         }
       ],
