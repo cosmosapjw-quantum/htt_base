@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Attended, single-lane Planck identity-admission executor.
+"""Attended, one-at-a-time primary-lane identity-admission executor.
 
 This private-workstation runner binds one reviewed worker to an exact clean
 candidate and a replayed PR-289 admission.  It does not authorize unattended
@@ -34,13 +34,8 @@ if str(HTT_SRC) not in sys.path:
 REGISTRY_RELATIVE = Path(
     "docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json"
 )
-LANE = "PLANCK"
-PROFILE = "private_single_operator_attended_v1"
 WORKER_RELATIVE = "scripts/codex_harness/run_authorized_observational_program.py"
 WORKER_ARGUMENTS = ["--identity-worker"]
-SCIENCE_WORKER_RELATIVE = "scripts/observed_runs/run_planck_pr3.py"
-SCIENCE_WORKER_ARGUMENTS = ["--run-admitted"]
-SCIENCE_EXECUTION_MODE = "planck_pr3_lowell_operator"
 THREAD_CONTROLS = {
     "OMP_NUM_THREADS": "1",
     "OPENBLAS_NUM_THREADS": "1",
@@ -48,7 +43,7 @@ THREAD_CONTROLS = {
     "NUMEXPR_NUM_THREADS": "1",
     "VECLIB_MAXIMUM_THREADS": "1",
 }
-SCIENCE_RUNTIME_MODULES = (
+PLANCK_RUNTIME_MODULES = (
     "numpy",
     "numpy.linalg",
     "numpy._core._multiarray_umath",
@@ -68,7 +63,14 @@ SCIENCE_RUNTIME_MODULES = (
     "healpy._sphtools",
     "healpy._healpy_pixel_lib",
 )
-SCIENCE_DISTRIBUTIONS = ("numpy", "scipy", "healpy")
+PLANCK_DISTRIBUTIONS = ("numpy", "scipy", "healpy")
+CF4_RUNTIME_MODULES = (
+    "numpy",
+    "numpy.linalg",
+    "numpy._core._multiarray_umath",
+    "numpy.linalg._umath_linalg",
+)
+CF4_DISTRIBUTIONS = ("numpy",)
 OBSERVED_DATA_MARKER = "observed_data_opened.json"
 PLAN_FIELDS = frozenset(
     {
@@ -82,8 +84,58 @@ PLAN_FIELDS = frozenset(
 )
 
 
+@dataclass(frozen=True)
+class LaneProfile:
+    lane: str
+    deployment_profile: str
+    analysis_plan_id: str
+    science_execution_mode: str
+    science_worker_relative: str
+    science_worker_arguments: tuple[str, ...]
+    result_filename: str
+    runtime_modules: tuple[str, ...]
+    runtime_distributions: tuple[str, ...]
+
+
+LANE_PROFILES = {
+    profile.lane: profile
+    for profile in (
+        LaneProfile(
+            lane="PLANCK",
+            deployment_profile="private_single_operator_attended_v1",
+            analysis_plan_id="plan:PR290-PLANCK-LOWELL-V1",
+            science_execution_mode="planck_pr3_lowell_operator",
+            science_worker_relative="scripts/observed_runs/run_planck_pr3.py",
+            science_worker_arguments=("--run-admitted",),
+            result_filename="planck_pr3_result.json",
+            runtime_modules=PLANCK_RUNTIME_MODULES,
+            runtime_distributions=PLANCK_DISTRIBUTIONS,
+        ),
+        LaneProfile(
+            lane="CF4",
+            deployment_profile="private_single_operator_attended_v1",
+            analysis_plan_id="plan:PR291-CF4-TOMOGRAPHY-V1",
+            science_execution_mode="cf4_current_stack_affine_operator",
+            science_worker_relative="scripts/observed_runs/run_cf4_current_stack.py",
+            science_worker_arguments=("--run-admitted",),
+            result_filename="cf4_current_stack_result.json",
+            runtime_modules=CF4_RUNTIME_MODULES,
+            runtime_distributions=CF4_DISTRIBUTIONS,
+        ),
+    )
+}
+
+
 class ObservationalProgramError(RuntimeError):
     """Raised before any worker starts when the attended contract drifts."""
+
+
+def _lane_profile(lane: object) -> LaneProfile:
+    if not isinstance(lane, str) or lane not in LANE_PROFILES:
+        raise ObservationalProgramError(
+            "attended executor requires one exact registered primary lane"
+        )
+    return LANE_PROFILES[lane]
 
 
 def canonical_bytes(value: object) -> bytes:
@@ -199,35 +251,59 @@ def _tracked_file(root: Path, value: str, label: str) -> Path:
     return path
 
 
-def validate_plan_values(values: object, *, root: Path) -> dict[str, object]:
+def _analysis_plan_file(root: Path, value: str) -> Path:
+    candidate = Path(value)
+    if not candidate.is_absolute():
+        return _tracked_file(root, value, "analysis plan")
+    if (
+        candidate.is_symlink()
+        or not candidate.is_file()
+        or candidate.absolute() != candidate.resolve()
+    ):
+        raise ObservationalProgramError(
+            "external analysis plan must be an absolute regular file"
+        )
+    return candidate
+
+
+def validate_plan_values(
+    values: object,
+    *,
+    root: Path,
+    profile: LaneProfile | None = None,
+) -> dict[str, object]:
     if not isinstance(values, Mapping) or set(values) != PLAN_FIELDS:
         raise ObservationalProgramError(
             "attended plan fields drifted or request shell execution"
         )
-    if values["lane"] != LANE:
-        raise ObservationalProgramError("attended plan permits PLANCK only")
-    if values["analysis_plan_id"] != "plan:PR290-PLANCK-LOWELL-V1":
+    resolved_profile = _lane_profile(values["lane"])
+    if profile is not None and resolved_profile != profile:
+        raise ObservationalProgramError("requested lane and attended plan are cross-wired")
+    if values["analysis_plan_id"] != resolved_profile.analysis_plan_id:
         raise ObservationalProgramError(
-            "analysis plan identity is not the registered PLANCK plan"
+            "analysis plan identity is not registered for the selected lane"
         )
     execution_mode = values["execution_mode"]
     if (
         not isinstance(execution_mode, str)
-        or execution_mode not in {"identity_only", SCIENCE_EXECUTION_MODE}
+        or execution_mode
+        not in {"identity_only", resolved_profile.science_execution_mode}
         or values["bayesian_inference"] is not False
     ):
         raise ObservationalProgramError(
-            "attended Planck plans must be identity-only or the reviewed PR-306 operator"
+            "attended plan must select identity-only or the reviewed lane operator"
         )
-    science = execution_mode == SCIENCE_EXECUTION_MODE
+    science = execution_mode == resolved_profile.science_execution_mode
     worker_value = values["worker_path"]
     if not isinstance(worker_value, str):
         raise ObservationalProgramError("worker path must be text")
     _relative(worker_value, "worker path")
-    expected_worker = SCIENCE_WORKER_RELATIVE if science else WORKER_RELATIVE
+    expected_worker = (
+        resolved_profile.science_worker_relative if science else WORKER_RELATIVE
+    )
     if worker_value != expected_worker:
         raise ObservationalProgramError(
-            "worker must equal the reviewed Planck entrypoint"
+            "worker must equal the reviewed selected-lane entrypoint"
         )
     worker = _tracked_file(root, worker_value, "worker")
     raw_arguments = values["worker_arguments"]
@@ -244,23 +320,30 @@ def validate_plan_values(values: object, *, root: Path) -> dict[str, object]:
         )
     ):
         raise ObservationalProgramError("worker arguments are malformed")
-    expected_arguments = SCIENCE_WORKER_ARGUMENTS if science else WORKER_ARGUMENTS
+    expected_arguments = (
+        list(resolved_profile.science_worker_arguments)
+        if science
+        else WORKER_ARGUMENTS
+    )
     if list(raw_arguments) != expected_arguments:
         raise ObservationalProgramError(
-            "worker arguments do not select the reviewed Planck mode"
+            "worker arguments do not select the reviewed lane mode"
         )
     return {
         **dict(values),
         "worker": worker,
         "worker_arguments": list(raw_arguments),
         "science_execution": science,
+        "profile": resolved_profile,
     }
 
 
-def _load_plan(root: Path, plan_path: str) -> tuple[dict[str, object], bytes, Path]:
+def _load_plan(
+    root: Path, plan_path: str, profile: LaneProfile
+) -> tuple[dict[str, object], bytes, Path]:
     import yaml
 
-    path = _tracked_file(root, plan_path, "analysis plan")
+    path = _analysis_plan_file(root, plan_path)
     raw = path.read_bytes()
     try:
         payload = yaml.safe_load(raw)
@@ -269,13 +352,15 @@ def _load_plan(root: Path, plan_path: str) -> tuple[dict[str, object], bytes, Pa
     if not isinstance(payload, Mapping):
         raise ObservationalProgramError("analysis plan document must be a mapping")
     return (
-        validate_plan_values(payload.get("attended_execution_plan"), root=root),
+        validate_plan_values(
+            payload.get("attended_execution_plan"), root=root, profile=profile
+        ),
         raw,
         path,
     )
 
 
-def _load_admission(root: Path, path: Path):
+def _load_admission(root: Path, path: Path, profile: LaneProfile):
     from common.data_identity import (
         AdmissionStatus,
         DataIdentityError,
@@ -297,12 +382,12 @@ def _load_admission(root: Path, path: Path):
         ) from exc
     if (
         decision.status is not AdmissionStatus.ADMITTED_IDENTITY_ONLY
-        or decision.lane_id != LANE
+        or decision.lane_id != profile.lane
         or not decision.records
         or decision.lane_admission_bundle_id is None
     ):
         raise ObservationalProgramError(
-            "PR-289 admission is not complete PLANCK identity admission"
+            "PR-289 admission is not complete selected-lane identity admission"
         )
     return decision, raw
 
@@ -334,6 +419,7 @@ def _output_path(root: Path, value: Path) -> Path:
 def _environment(
     output: Path,
     *,
+    profile: LaneProfile,
     science: bool,
     candidate_root: Path = ROOT,
     candidate_commit: str | None = None,
@@ -342,7 +428,7 @@ def _environment(
 ) -> dict[str, str]:
     environment = {
         "HOME": "/nonexistent",
-        "HTT_ATTENDED_LANE": LANE,
+        "HTT_ATTENDED_LANE": profile.lane,
         "HTT_ATTENDED_OUTPUT_DIR": str(output),
         "LANG": "C",
         "LC_ALL": "C",
@@ -371,11 +457,11 @@ def _environment(
     return environment
 
 
-def _science_runtime_contract() -> dict[str, object]:
+def _science_runtime_contract(profile: LaneProfile) -> dict[str, object]:
     executable = Path(sys.executable).absolute()
     modules: dict[str, dict[str, str]] = {}
     import_roots: set[str] = set()
-    for name in SCIENCE_RUNTIME_MODULES:
+    for name in profile.runtime_modules:
         try:
             module = importlib.import_module(name)
         except ImportError as exc:
@@ -396,11 +482,11 @@ def _science_runtime_contract() -> dict[str, object]:
             "origin": str(origin),
             "origin_sha256": _file_hash(origin),
         }
-        if name in SCIENCE_DISTRIBUTIONS:
+        if name in profile.runtime_distributions:
             modules[name]["version"] = str(module.__version__)
             import_roots.add(str(origin.parent.parent))
     distributions: dict[str, dict[str, str]] = {}
-    for name in SCIENCE_DISTRIBUTIONS:
+    for name in profile.runtime_distributions:
         distribution = metadata.distribution(name)
         record = distribution.read_text("RECORD")
         if not record:
@@ -437,15 +523,14 @@ def prepare_execution(
 ) -> dict[str, object]:
     if os.geteuid() == 0:
         raise ObservationalProgramError("attended executor never runs as root")
-    if lane != LANE:
-        raise ObservationalProgramError("replacement PR-305 accepts PLANCK only")
+    profile = _lane_profile(lane)
     if type(timeout_seconds) is not int or not 1 <= timeout_seconds <= 86_400:
         raise ObservationalProgramError(
             "timeout must be an integer from 1 through 86400"
         )
     root = root.resolve()
     commit, tree = _candidate_identity(root)
-    plan, plan_raw, plan_file = _load_plan(root, plan_path)
+    plan, plan_raw, plan_file = _load_plan(root, plan_path, profile)
     science = bool(plan["science_execution"])
     if science:
         if (
@@ -469,14 +554,15 @@ def prepare_execution(
                 "identity-only execution forbids a data root"
             )
         bound_data_root = None
-    decision, admission_raw = _load_admission(root, admission_path)
+    decision, admission_raw = _load_admission(root, admission_path, profile)
     output = _output_path(root, output_dir)
     worker = plan["worker"]
     assert isinstance(worker, Path)
     worker_raw = worker.read_bytes()
-    runtime_contract = _science_runtime_contract() if science else None
+    runtime_contract = _science_runtime_contract(profile) if science else None
     environment = _environment(
         output,
+        profile=profile,
         science=science,
         candidate_root=root,
         candidate_commit=commit,
@@ -490,22 +576,26 @@ def prepare_execution(
     record_ids = [record.record_id for record in decision.records]
     acceptance = {
         "schema": "htt.attended_execution_acceptance.v1",
-        "deployment_profile": PROFILE,
-        "lane": LANE,
+        "deployment_profile": profile.deployment_profile,
+        "lane": profile.lane,
         "candidate_commit": commit,
         "candidate_tree": tree,
         "worktree_clean": True,
         "admission_decision_sha256": _raw_hash(admission_raw),
         "lane_admission_bundle_id": decision.lane_admission_bundle_id,
         "ordered_record_ids_sha256": content_hash(record_ids),
+        "ordered_record_ids": record_ids,
         "analysis_plan_path": plan_path,
+        "analysis_plan_id": profile.analysis_plan_id,
         "analysis_plan_sha256": _raw_hash(plan_raw),
         "worker_path": str(worker.relative_to(root)),
         "worker_sha256": _raw_hash(worker_raw),
+        "worker_arguments": list(plan["worker_arguments"]),
         "environment_contract_sha256": content_hash(environment_contract),
         "output_dir": str(output),
         "timeout_seconds": timeout_seconds,
         "science_execution": science,
+        "result_filename": profile.result_filename,
     }
     if science:
         acceptance["data_root"] = str(bound_data_root)
@@ -516,6 +606,7 @@ def prepare_execution(
         )
     return {
         "root": root,
+        "profile": profile,
         "plan_file": plan_file,
         "admission_file": admission_path,
         "worker": worker,
@@ -651,6 +742,94 @@ def _observed_data_open_state(
     return True, None
 
 
+def _confirmation_profile(prepared: Mapping[str, object]) -> LaneProfile:
+    """Rebind every value consumed after attended confirmation."""
+
+    acceptance = prepared.get("acceptance_payload")
+    expected = prepared.get("acceptance_hash")
+    if (
+        not isinstance(acceptance, Mapping)
+        or not isinstance(expected, str)
+        or content_hash(dict(acceptance)) != expected
+    ):
+        raise ObservationalProgramError("confirmation binding payload drifted")
+    profile = _lane_profile(acceptance.get("lane"))
+    if (
+        prepared.get("profile") != profile
+        or acceptance.get("deployment_profile") != profile.deployment_profile
+        or acceptance.get("analysis_plan_id") != profile.analysis_plan_id
+        or acceptance.get("result_filename") != profile.result_filename
+    ):
+        raise ObservationalProgramError("confirmation binding lane profile drifted")
+    science = acceptance.get("science_execution") is True
+    expected_worker = (
+        profile.science_worker_relative if science else WORKER_RELATIVE
+    )
+    expected_arguments = (
+        list(profile.science_worker_arguments) if science else WORKER_ARGUMENTS
+    )
+    root = prepared.get("root")
+    worker = prepared.get("worker")
+    plan_file = prepared.get("plan_file")
+    output = prepared.get("output")
+    timeout = prepared.get("timeout_seconds")
+    environment = prepared.get("environment")
+    if (
+        not isinstance(root, Path)
+        or not isinstance(worker, Path)
+        or not isinstance(plan_file, Path)
+        or not isinstance(acceptance.get("analysis_plan_path"), str)
+    ):
+        raise ObservationalProgramError("confirmation binding path shape drifted")
+    if plan_file != _analysis_plan_file(root, acceptance["analysis_plan_path"]):
+        raise ObservationalProgramError("confirmation binding plan path drifted")
+    try:
+        worker_relative = worker.relative_to(root).as_posix()
+    except ValueError as exc:
+        raise ObservationalProgramError(
+            "confirmation binding worker escaped candidate"
+        ) from exc
+    if (
+        worker_relative != expected_worker
+        or acceptance.get("worker_path") != expected_worker
+        or prepared.get("worker_arguments") != expected_arguments
+        or acceptance.get("worker_arguments") != expected_arguments
+    ):
+        raise ObservationalProgramError("confirmation binding worker drifted")
+    if (
+        not isinstance(environment, Mapping)
+        or content_hash(
+            {
+                "python_executable": str(Path(sys.executable).absolute()),
+                "variables": dict(environment),
+            }
+        )
+        != acceptance.get("environment_contract_sha256")
+    ):
+        raise ObservationalProgramError("confirmation binding environment drifted")
+    if (
+        not isinstance(output, Path)
+        or str(output) != acceptance.get("output_dir")
+        or type(timeout) is not int
+        or timeout != acceptance.get("timeout_seconds")
+    ):
+        raise ObservationalProgramError("confirmation binding output or timeout drifted")
+    if science:
+        data_root = prepared.get("data_root")
+        runtime = prepared.get("science_runtime_contract")
+        if (
+            not isinstance(data_root, Path)
+            or str(data_root) != acceptance.get("data_root")
+            or not isinstance(runtime, Mapping)
+            or content_hash(dict(runtime))
+            != acceptance.get("science_runtime_contract_sha256")
+        ):
+            raise ObservationalProgramError(
+                "confirmation binding science runtime or data root drifted"
+            )
+    return profile
+
+
 def execute_prepared(
     prepared: Mapping[str, object], confirmation: str
 ) -> dict[str, object]:
@@ -661,6 +840,7 @@ def execute_prepared(
         )
     if os.geteuid() == 0:
         raise ObservationalProgramError("attended executor never runs as root")
+    profile = _confirmation_profile(prepared)
     root = prepared["root"]
     output = prepared["output"]
     assert isinstance(root, Path) and isinstance(output, Path)
@@ -672,7 +852,7 @@ def execute_prepared(
     ):
         raise ObservationalProgramError("candidate changed after confirmation")
     if acceptance.get("science_execution"):
-        if content_hash(_science_runtime_contract()) != acceptance.get(
+        if content_hash(_science_runtime_contract(profile)) != acceptance.get(
             "science_runtime_contract_sha256"
         ):
             raise ObservationalProgramError(
@@ -732,7 +912,7 @@ def execute_prepared(
             "acceptance_hash": expected,
             "candidate_commit": acceptance["candidate_commit"],
             "candidate_tree": acceptance["candidate_tree"],
-            "lane": LANE,
+            "lane": profile.lane,
             "admission_bundle_id": acceptance["lane_admission_bundle_id"],
             "analysis_plan_sha256": acceptance["analysis_plan_sha256"],
             "worker_sha256": acceptance["worker_sha256"],
@@ -763,7 +943,7 @@ def execute_prepared(
                         "--data-root",
                         str(data_root),
                         "--output",
-                        str(output / "planck_pr3_result.json"),
+                        str(output / profile.result_filename),
                     ]
                 )
             completed = _spawn_worker(
@@ -825,15 +1005,19 @@ def execute_prepared(
 
 
 def _identity_worker() -> int:
-    """Acknowledge the already replayed Planck identity without opening data."""
+    """Acknowledge an already replayed primary-lane identity without data."""
 
     if os.geteuid() == 0:
         return 2
-    if os.environ.get("HTT_ATTENDED_LANE") != LANE:
+    lane = os.environ.get("HTT_ATTENDED_LANE")
+    if lane not in LANE_PROFILES:
         return 3
     print(
         json.dumps(
-            {"state": "PLANCK_IDENTITY_REPLAYED", "observed_science_executed": False},
+            {
+                "state": f"{lane}_IDENTITY_REPLAYED",
+                "observed_science_executed": False,
+            },
             sort_keys=True,
         )
     )

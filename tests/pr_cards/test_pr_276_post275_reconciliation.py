@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 import json
 import hashlib
 import re
@@ -7,7 +8,14 @@ import subprocess
 from pathlib import Path
 import sys
 
+import pytest
 import yaml
+
+from scripts.codex_harness.validate_pr_dag import (
+    _validate_rescue_status,
+    validate_backlog,
+    validate_post300_observational_slice,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -21,6 +29,12 @@ RUNNER = ROOT / "scripts/codex_harness/run_pr276_reconciliation.py"
 POST275_IDS = [f"PR-{number:03d}" for number in range(276, 295)]
 POST275_AUDIT_IDS = [*POST275_IDS, "PR-299", "PR-300"]
 PR280_ROOT_CAUSE_IDS = ["PR-295", "PR-296", "PR-297"]
+POST300_OBSERVATIONAL_LANE_IDS = [
+    *[f"PR-{number:03d}" for number in range(301, 308)],
+    "PR-312",
+    "PR-313",
+    *[f"PR-{number:03d}" for number in range(308, 312)],
+]
 COMMON_CARD_FIELDS = {
     "owner",
     "depends",
@@ -116,9 +130,13 @@ def test_verified_pr190_merge_and_terminal_entry_contract_are_frozen() -> None:
 def test_post275_cards_are_atomic_complete_and_claim_limited() -> None:
     backlog = _yaml(BACKLOG)
     cards = {card["id"]: card for card in backlog["prs"]}
-    assert len(cards) == 246
-    assert list(cards)[-24:-3] == POST275_AUDIT_IDS
-    assert list(cards)[-3:] == PR280_ROOT_CAUSE_IDS
+    ordered_ids = list(cards)
+    assert len(cards) == 259
+    post275_start = ordered_ids.index("PR-276")
+    assert ordered_ids[post275_start : post275_start + 21] == POST275_AUDIT_IDS
+    root_cause_start = ordered_ids.index("PR-295")
+    assert ordered_ids[root_cause_start : root_cause_start + 3] == PR280_ROOT_CAUSE_IDS
+    assert ordered_ids[-13:] == POST300_OBSERVATIONAL_LANE_IDS
     assert set(POST275_IDS) <= set(backlog["policy"]["topological_order"])
     assert set(PR280_ROOT_CAUSE_IDS) <= set(
         backlog["policy"]["topological_order"]
@@ -134,6 +152,21 @@ def test_post275_cards_are_atomic_complete_and_claim_limited() -> None:
         forbidden = " ".join(card["forbidden"]).lower()
         assert "native" in forbidden
         assert "family-identification" in forbidden
+
+    for pr_id in POST300_OBSERVATIONAL_LANE_IDS:
+        card = cards[pr_id]
+        assert not (COMMON_CARD_FIELDS - set(card)), pr_id
+        assert card["claim_tier_ceiling"] == "diagnostic_only"
+        assert card["public_use"] is False
+        assert card["spec_first_required"] is True
+        assert card["solver_gate_required"] is False
+        assert card["scientific_status_on_intake"] == "OPEN"
+        assert len(card["targets"]) == 1
+        assert len(card["forbidden"]) == 1
+        assert len(card["anti_drift"]) == 1
+        forbidden = card["forbidden"][0].lower()
+        assert "native" in forbidden
+        assert "family identification" in forbidden
 
     policy = json.loads(PUBLICATION_POLICY.read_text(encoding="utf-8"))
     assert policy["change_set_id"] == cards["PR-276"]["change_set_id"]
@@ -200,7 +233,101 @@ def test_post275_dependency_dag_and_pending_amendments_match_spec() -> None:
         "--strict-rescue-slice",
     )
     assert result.returncode == 0, result.stdout + result.stderr
-    assert "OK: 246 PRs, DAG valid" in result.stdout
+    assert "OK: 259 PRs, DAG valid" in result.stdout
+
+
+def test_post300_validator_rejects_contract_and_claim_boundary_drift() -> None:
+    cards = _cards()
+    validate_post300_observational_slice(cards)
+
+    cards["PR-307"]["owner"] = "COMMON"
+    with pytest.raises(ValueError, match="PR-307 post-300 owner drifted"):
+        validate_post300_observational_slice(cards)
+
+    cards = _cards()
+    cards["PR-308"]["depends"] = ["PR-306"]
+    with pytest.raises(ValueError, match="PR-308 post-300 dependencies drifted"):
+        validate_post300_observational_slice(cards)
+
+    cards = _cards()
+    cards["PR-309"]["forbidden"] = ["No observed result."]
+    with pytest.raises(ValueError, match="PR-309 forbidden actions omit"):
+        validate_post300_observational_slice(cards)
+
+    cards = _cards()
+    cards["PR-309"]["forbidden"] = [
+        "No observed result, native result, or family-identification claim."
+    ]
+    validate_post300_observational_slice(cards)
+
+    cards = _cards()
+    del cards["PR-312"]["supersedes_failed_attempt"]
+    with pytest.raises(ValueError, match="must supersede"):
+        validate_post300_observational_slice(cards)
+
+    cards = _cards()
+    cards["PR-312"]["dod"] = ["fragment one", "fragment two"]
+    with pytest.raises(ValueError, match="definition of done"):
+        validate_post300_observational_slice(cards)
+
+    cards = _cards()
+    del cards["PR-313"]["supersedes_failed_attempt"]
+    with pytest.raises(ValueError, match="PR-313 must supersede"):
+        validate_post300_observational_slice(cards)
+
+
+@pytest.mark.parametrize(
+    "field",
+    (
+        "success_dependency_satisfied",
+        "observed_data_executed",
+        "public_use",
+        "public_result_emitted",
+    ),
+)
+def test_pr312_rejects_false_pr307_failed_resolution_flags(field: str) -> None:
+    status = deepcopy(_yaml(STATUS))
+    status["execution_resolutions"]["PR-307"][field] = True
+
+    with pytest.raises(ValueError, match=field):
+        _validate_rescue_status(status, validate_backlog(_yaml(BACKLOG)))
+
+
+def test_pr312_rejects_wrong_pr307_failed_receipt() -> None:
+    status = deepcopy(_yaml(STATUS))
+    status["execution_resolutions"]["PR-307"]["receipt"] = (
+        "docs/PR_DELTAS/does-not-exist.md"
+    )
+
+    with pytest.raises(ValueError, match="receipt"):
+        _validate_rescue_status(status, validate_backlog(_yaml(BACKLOG)))
+
+
+@pytest.mark.parametrize(
+    "field",
+    (
+        "success_dependency_satisfied",
+        "observed_data_executed",
+        "public_use",
+        "public_result_emitted",
+    ),
+)
+def test_pr313_rejects_false_pr312_failed_resolution_flags(field: str) -> None:
+    status = deepcopy(_yaml(STATUS))
+    status["execution_resolutions"]["PR-312"][field] = True
+
+    with pytest.raises(ValueError, match=field):
+        _validate_rescue_status(status, validate_backlog(_yaml(BACKLOG)))
+
+
+def test_pr313_rejects_wrong_pr312_failed_receipt() -> None:
+    status = deepcopy(_yaml(STATUS))
+    status["execution_resolutions"]["PR-312"]["receipt"] = (
+        "docs/PR_DELTAS/does-not-exist.md"
+    )
+
+    with pytest.raises(ValueError, match="receipt"):
+        _validate_rescue_status(status, validate_backlog(_yaml(BACKLOG)))
 
 
 def test_status_is_total_and_preserves_negative_chronology() -> None:
@@ -219,10 +346,12 @@ def test_status_is_total_and_preserves_negative_chronology() -> None:
     if status.get("in_progress") is not None:
         assert status["in_progress"] not in states
         states[status["in_progress"]] = "in_progress"
-    assert len(states) == 246
+    assert len(states) == 259
     assert states["PR-190"] == "blocked"
     assert states["PR-172"] == "blocked"
     assert states["PR-184"] == "completed"
+    assert states["PR-312"] == "blocked"
+    assert states["PR-313"] == "in_progress"
     assert status["execution_resolutions"]["PR-190"][
         "resolution"
     ] == "COMPLETED_FAILED_WITH_RECEIPT"
@@ -374,9 +503,9 @@ def test_generated_status_surfaces_cover_current_dag_and_worktree() -> None:
     ledger = json.loads(
         (ROOT / "docs/generated/claim_ledger.json").read_text(encoding="utf-8")
     )
-    assert snapshot["metadata"]["total_prs"] == 246
-    assert len(snapshot["rows"]) == 246
-    assert len(ledger["rows"]) == 246
+    assert snapshot["metadata"]["total_prs"] == 259
+    assert len(snapshot["rows"]) == 259
+    assert len(ledger["rows"]) == 259
     short_head = _run("git", "rev-parse", "--short=8", "HEAD").stdout.strip()
     short_parent = _run("git", "rev-parse", "--short=8", "HEAD^").stdout.strip()
     allowed_sources = {f"{short_head}+dirty", f"{short_parent}+dirty"}
@@ -441,7 +570,7 @@ def test_generated_status_surfaces_cover_current_dag_and_worktree() -> None:
         assert hashlib.sha256(path.read_bytes()).hexdigest() == expected
     assert snapshot["metadata"]["worktree_state"] == "dirty"
     matrix = (ROOT / "docs/generated/status_matrix.md").read_text(encoding="utf-8")
-    assert "| Total PRs | 246 |" in matrix
+    assert "| Total PRs | 259 |" in matrix
     assert "| In progress | 1 |" in matrix or "| In progress | 0 |" in matrix
 
 

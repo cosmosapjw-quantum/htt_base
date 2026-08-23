@@ -659,6 +659,79 @@ PR280_ROOT_CAUSE_CARD_CONTRACTS = {
     },
 }
 PR280_ROOT_CAUSE_FULL_IDS = set(PR280_ROOT_CAUSE_CARD_CONTRACTS)
+POST300_OBSERVATIONAL_LANE_IDS = {
+    f"PR-{number}" for number in range(301, 314)
+}
+POST300_OBSERVATIONAL_CARD_CONTRACTS = {
+    "PR-301": {
+        "owner": "COMMON",
+        "dependencies": [("PR-300", "requires_terminal_receipt")],
+        "authorization": "REGISTERED_NOT_SCHEDULED",
+    },
+    "PR-302": {
+        "owner": "COMMON",
+        "dependencies": [("PR-300", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-303": {
+        "owner": "COMMON",
+        "dependencies": [
+            ("PR-302", "requires_success"),
+            ("PR-289", "requires_success"),
+        ],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-304": {
+        "owner": "COMMON",
+        "dependencies": [("PR-303", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-305": {
+        "owner": "COMMON",
+        "dependencies": [("PR-304", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-306": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-305", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-307": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-306", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-312": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-306", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-313": {
+        "owner": "COMMON",
+        "dependencies": [("PR-306", "requires_success")],
+        "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
+    "PR-308": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-313", "requires_success")],
+        "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
+    "PR-309": {
+        "owner": "HTT",
+        "dependencies": [("PR-308", "requires_success")],
+        "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
+    "PR-310": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-309", "requires_success")],
+        "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
+    "PR-311": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-310", "requires_success")],
+        "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
+}
 PR280_DIRECT_CONSUMERS = {
     "PR-281",
     "PR-282",
@@ -948,6 +1021,17 @@ def validate_backlog(data: dict[str, Any]) -> DagInfo:
         )
     if present_pr280_root_cause_ids and present_post275_ids != POST275_FULL_IDS:
         raise ValueError("PR-280 root-cause intake requires the full post-275 programme")
+    present_post300_ids = idset & POST300_OBSERVATIONAL_LANE_IDS
+    if present_post300_ids and present_post300_ids != POST300_OBSERVATIONAL_LANE_IDS:
+        raise ValueError(
+            "post-300 observational-lane intake must register PR-301..313 "
+            "atomically; "
+            f"missing={sorted(POST300_OBSERVATIONAL_LANE_IDS - present_post300_ids)}"
+        )
+    if present_post300_ids and present_post275_ids != POST275_FULL_IDS:
+        raise ValueError(
+            "post-300 observational-lane intake requires the full post-275 programme"
+        )
     prereqs = {pr["id"]: list(pr.get("depends") or []) for pr in prs}
     missing_deps = sorted({dep for deps in prereqs.values() for dep in deps if dep not in idset})
     if missing_deps:
@@ -1169,6 +1253,58 @@ def _validate_rescue_status(status: dict[str, Any], info: DagInfo) -> None:
             "terminal rescue cards require execution resolution receipts: "
             f"{missing_receipts}"
         )
+    if "PR-312" in info.ids:
+        failed_pr307 = resolutions.get("PR-307")
+        if not isinstance(failed_pr307, dict):
+            raise ValueError("PR-307 failed superseded resolution is missing")
+        expected_pr307_fields = {
+            "resolution": "COMPLETED_FAILED_WITH_RECEIPT",
+            "receipt": "docs/PR_DELTAS/pr-312.md",
+            "failed_candidate_delta": "docs/PR_DELTAS/pr-307.md",
+            "success_dependency_satisfied": False,
+            "observed_data_executed": False,
+            "public_use": False,
+        }
+        for field, expected in expected_pr307_fields.items():
+            if failed_pr307.get(field) != expected:
+                raise ValueError(
+                    f"PR-307 failed superseded resolution {field} drifted"
+                )
+        if failed_pr307.get("public_result_emitted", False) is not False:
+            raise ValueError(
+                "PR-307 failed superseded resolution public_result_emitted drifted"
+            )
+        repo_root = Path(__file__).resolve().parents[2]
+        for field in ("receipt", "failed_candidate_delta"):
+            if not (repo_root / str(failed_pr307[field])).is_file():
+                raise ValueError(
+                    f"PR-307 failed superseded resolution {field} is missing"
+                )
+    if "PR-313" in info.ids:
+        failed_pr312 = resolutions.get("PR-312")
+        if not isinstance(failed_pr312, dict):
+            raise ValueError("PR-312 failed superseded resolution is missing")
+        expected_pr312_fields = {
+            "resolution": "COMPLETED_FAILED_WITH_RECEIPT",
+            "receipt": "docs/PR_DELTAS/pr-313.md",
+            "failed_candidate_delta": "docs/PR_DELTAS/pr-312.md",
+            "candidate_sha": "6fcb90f24254d7d0d15dc78e8c117f5a883795da",
+            "success_dependency_satisfied": False,
+            "observed_data_executed": False,
+            "public_use": False,
+            "public_result_emitted": False,
+        }
+        for field, expected in expected_pr312_fields.items():
+            if failed_pr312.get(field) != expected:
+                raise ValueError(
+                    f"PR-312 failed superseded resolution {field} drifted"
+                )
+        repo_root = Path(__file__).resolve().parents[2]
+        for field in ("receipt", "failed_candidate_delta"):
+            if not (repo_root / str(failed_pr312[field])).is_file():
+                raise ValueError(
+                    f"PR-312 failed superseded resolution {field} is missing"
+                )
 
 
 def validate_long_horizon_rescue_slice(
@@ -1288,6 +1424,16 @@ def validate_long_horizon_rescue_slice(
             "PR-280 root-cause intake must be atomic; "
             f"missing={sorted(pr280_root_cause_ids - actual_pr280_root_cause_ids)}"
         )
+    actual_post300_ids = actual_ids & POST300_OBSERVATIONAL_LANE_IDS
+    if actual_post300_ids and actual_post275_ids != post275_ids:
+        raise ValueError(
+            "post-300 observational-lane cards require the full post-275 slice"
+        )
+    if actual_post300_ids and actual_post300_ids != POST300_OBSERVATIONAL_LANE_IDS:
+        raise ValueError(
+            "post-300 observational-lane intake must be atomic; "
+            f"missing={sorted(POST300_OBSERVATIONAL_LANE_IDS - actual_post300_ids)}"
+        )
     if actual_foundation_ids:
         policy = data.get("policy") or {}
         expected_overlay = (
@@ -1321,6 +1467,7 @@ def validate_long_horizon_rescue_slice(
     expected_total += len(actual_vector_tensor_ids)
     expected_total += len(actual_post275_ids)
     expected_total += len(actual_pr280_root_cause_ids)
+    expected_total += len(actual_post300_ids)
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -1609,6 +1756,8 @@ def validate_long_horizon_rescue_slice(
         _validate_vector_tensor_slice(cards, actual_vector_tensor_ids)
     if actual_post275_ids:
         _validate_post275_slice(cards)
+    if actual_post300_ids:
+        validate_post300_observational_slice(cards)
     if actual_pr280_root_cause_ids:
         _validate_pr280_root_cause_slice(cards)
 
@@ -1964,6 +2113,76 @@ def _validate_vector_tensor_slice(
                 raise ValueError(
                     f"{pr_id} forbidden actions omit the {boundary} boundary"
                 )
+
+
+def validate_post300_observational_slice(cards: dict[str, Any]) -> None:
+    """Validate the bounded PR-301..312 observational-readiness sequence."""
+
+    for pr_id in sorted(POST300_OBSERVATIONAL_CARD_CONTRACTS):
+        card = cards[pr_id]
+        expected = POST300_OBSERVATIONAL_CARD_CONTRACTS[pr_id]
+        missing_fields = sorted(POST275_REQUIRED_FIELDS - set(card))
+        if missing_fields:
+            raise ValueError(
+                f"{pr_id} missing post-300 programme fields: {missing_fields}"
+            )
+        expected_contracts = [
+            {"upstream_id": upstream_id, "mode": mode}
+            for upstream_id, mode in expected["dependencies"]
+        ]
+        expected_depends = [row["upstream_id"] for row in expected_contracts]
+        if card.get("depends") != expected_depends:
+            raise ValueError(f"{pr_id} post-300 dependencies drifted")
+        if card.get("dependency_contracts") != expected_contracts:
+            raise ValueError(f"{pr_id} post-300 dependency modes drifted")
+        if card.get("owner") != expected["owner"]:
+            raise ValueError(f"{pr_id} post-300 owner drifted")
+        if card.get("execution_authorization") != expected["authorization"]:
+            raise ValueError(f"{pr_id} execution authorization drifted")
+        for field in ("capability", "kill", "change_set_id", "publication_group_id"):
+            _require_nonempty_string(card.get(field), f"{pr_id}.{field}")
+        for field in (
+            "inputs",
+            "outputs",
+            "contributors",
+            "implementation_scopes",
+            "targets",
+            "files",
+            "tests",
+            "dod",
+            "forbidden",
+            "anti_drift",
+        ):
+            values = _require_string_list(card, field)
+            if field in {"targets", "forbidden", "anti_drift"} and len(values) != 1:
+                raise ValueError(f"{pr_id} {field} must be one complete contract sentence")
+        if (
+            card.get("activation_state") != "PENDING"
+            or card.get("execution_lane") != "defensible"
+            or card.get("scientific_status_on_intake") != "OPEN"
+            or card.get("public_use") is not False
+            or card.get("spec_first_required") is not True
+            or card.get("solver_gate_required") is not False
+            or card.get("claim_tier_ceiling") != "diagnostic_only"
+        ):
+            raise ValueError(
+                f"{pr_id} must remain PENDING, internal, OPEN, spec-first, "
+                "solver-independent, and diagnostic-only"
+            )
+        forbidden_text = " ".join(card["forbidden"]).lower().replace("-", " ")
+        for boundary in ("native", "family identification"):
+            if boundary not in forbidden_text:
+                raise ValueError(
+                    f"{pr_id} forbidden actions omit the {boundary} boundary"
+                )
+    if cards["PR-312"].get("supersedes_failed_attempt") != "PR-307":
+        raise ValueError("PR-312 must supersede the failed PR-307 attempt")
+    if len(cards["PR-312"]["dod"]) != 1:
+        raise ValueError("PR-312 definition of done must remain one complete sentence")
+    if cards["PR-313"].get("supersedes_failed_attempt") != "PR-312":
+        raise ValueError("PR-313 must supersede the failed PR-312 attempt")
+    if len(cards["PR-313"]["dod"]) != 1:
+        raise ValueError("PR-313 definition of done must remain one complete sentence")
 
 
 def _validate_post275_slice(cards: dict[str, Any]) -> None:
