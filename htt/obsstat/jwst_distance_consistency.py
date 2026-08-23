@@ -15,6 +15,8 @@ NGC 4258 anchor covariance.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
+import json
 import math
 from typing import Mapping, Sequence
 
@@ -289,6 +291,11 @@ PR309_FEATURE_ORDER = (
     "DEPTH_CENTERED",
 )
 PR309_COMPETITOR_ORDER = ("CF4", "2MRS")
+PR309_PREDICTION_SCOPE = "SYNTHETIC_OPERATOR_ORACLE_ONLY"
+PR309_SYNTHETIC_COMPETITOR_IDENTITIES = {
+    "CF4": ("synthetic-cf4-forward-v1", "synthetic-only"),
+    "2MRS": ("synthetic-2mrs-forward-v1", "synthetic-only"),
+}
 PR309_HOST_LINKAGE_BASES = frozenset(
     {
         "SOURCE_REPORTED_HOST_IDENTITY",
@@ -365,6 +372,53 @@ def _nonempty(value: object, *, label: str) -> str:
     if not isinstance(value, str) or not value.strip():
         raise JWSTSNCurrentStackError(f"{label} must be non-empty text")
     return value
+
+
+def _sha256_digest(value: object, *, label: str) -> str:
+    digest = _nonempty(value, label=label)
+    if len(digest) != 64:
+        raise JWSTSNCurrentStackError(f"{label} must be a SHA-256 digest")
+    try:
+        int(digest, 16)
+    except ValueError as exc:
+        raise JWSTSNCurrentStackError(f"{label} must be a SHA-256 digest") from exc
+    return digest.lower()
+
+
+def pr309_competitor_transform_identity(
+    *,
+    competitor_id: str,
+    model_identity: object,
+    source_release: object,
+    input_sha256: object,
+    provider_sha256: object,
+    parameters_sha256: object,
+    predicted_delta_mag: object,
+) -> str:
+    """Bind one admitted transform's input, code/config, semantics, and output."""
+
+    if competitor_id not in PR309_COMPETITOR_SEMANTIC_CONTRACTS:
+        raise JWSTSNCurrentStackError("unknown competitor transformation")
+    try:
+        prediction = np.asarray(predicted_delta_mag, dtype="<f8")
+    except (TypeError, ValueError) as exc:
+        raise JWSTSNCurrentStackError("competitor prediction is malformed") from exc
+    if prediction.ndim != 1 or not np.all(np.isfinite(prediction)):
+        raise JWSTSNCurrentStackError("competitor prediction is malformed")
+    payload = {
+        "competitor_id": competitor_id,
+        "model_identity": _nonempty(model_identity, label="competitor model identity"),
+        "source_release": _nonempty(source_release, label="competitor source release"),
+        "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
+        "prediction_scope": PR309_PREDICTION_SCOPE,
+        **PR309_COMPETITOR_SEMANTIC_CONTRACTS[competitor_id],
+        "input_sha256": _sha256_digest(input_sha256, label="transform input hash"),
+        "provider_sha256": _sha256_digest(provider_sha256, label="transform provider hash"),
+        "parameters_sha256": _sha256_digest(parameters_sha256, label="transform parameters hash"),
+        "output_sha256": hashlib.sha256(prediction.tobytes(order="C")).hexdigest(),
+    }
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(encoded).hexdigest()
 
 
 def _finite_number(value: object, *, label: str) -> float:
@@ -644,6 +698,10 @@ def build_pr309_inputs(
     competitor_order = tuple(row.get("competitor_id") for row in normalized_competitors)
     if competitor_order != PR309_COMPETITOR_ORDER:
         raise JWSTSNCurrentStackError("CF4 and 2MRS competitors are required separately")
+    if len({row.get("model_identity") for row in normalized_competitors}) != len(
+        normalized_competitors
+    ):
+        raise JWSTSNCurrentStackError("competitor model identities must remain distinct")
     predictions: dict[str, np.ndarray] = {}
     metadata: dict[str, dict[str, str]] = {}
     for row in normalized_competitors:
@@ -652,11 +710,15 @@ def build_pr309_inputs(
             "model_identity",
             "source_release",
             "model_role",
+            "prediction_scope",
             "input_frame",
             "prediction_frame",
             "prediction_unit",
             "observable_delta_definition",
             "frame_transformation_role",
+            "frame_transformation_input_sha256",
+            "frame_transformation_provider_sha256",
+            "frame_transformation_parameters_sha256",
             "frame_transformation_identity",
             "predicted_delta_mag",
         }:
@@ -675,23 +737,56 @@ def build_pr309_inputs(
             raise JWSTSNCurrentStackError("competitor prediction is malformed") from exc
         if prediction.shape != (count,) or not np.all(np.isfinite(prediction)):
             raise JWSTSNCurrentStackError("competitor prediction is malformed")
+        model_identity = _nonempty(
+            row["model_identity"], label="competitor model identity"
+        )
+        source_release = _nonempty(
+            row["source_release"], label="competitor source release"
+        )
+        prediction_scope = _nonempty(
+            row["prediction_scope"], label="competitor prediction scope"
+        )
+        if (
+            prediction_scope != PR309_PREDICTION_SCOPE
+            or (model_identity, source_release)
+            != PR309_SYNTHETIC_COMPETITOR_IDENTITIES[competitor_id]
+        ):
+            raise JWSTSNCurrentStackError(
+                "no registered admitted competitor forward model is available"
+            )
+        input_sha256 = _sha256_digest(
+            row["frame_transformation_input_sha256"], label="transform input hash"
+        )
+        provider_sha256 = _sha256_digest(
+            row["frame_transformation_provider_sha256"], label="transform provider hash"
+        )
+        parameters_sha256 = _sha256_digest(
+            row["frame_transformation_parameters_sha256"],
+            label="transform parameters hash",
+        )
+        expected_identity = pr309_competitor_transform_identity(
+            competitor_id=competitor_id,
+            model_identity=model_identity,
+            source_release=source_release,
+            input_sha256=input_sha256,
+            provider_sha256=provider_sha256,
+            parameters_sha256=parameters_sha256,
+            predicted_delta_mag=prediction,
+        )
+        if row["frame_transformation_identity"] != expected_identity:
+            raise JWSTSNCurrentStackError("competitor transform binding drifted")
         predictions[competitor_id] = prediction
         metadata[competitor_id] = {
-            "model_identity": _nonempty(
-                row["model_identity"], label="competitor model identity"
-            ),
-            "source_release": _nonempty(
-                row["source_release"], label="competitor source release"
-            ),
+            "model_identity": model_identity,
+            "source_release": source_release,
             "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
+            "prediction_scope": prediction_scope,
             **semantic_contract,
-            "frame_transformation_identity": _nonempty(
-                row["frame_transformation_identity"],
-                label="competitor frame transformation identity",
-            ),
+            "frame_transformation_input_sha256": input_sha256,
+            "frame_transformation_provider_sha256": provider_sha256,
+            "frame_transformation_parameters_sha256": parameters_sha256,
+            "frame_transformation_identity": expected_identity,
         }
-    if len({row["model_identity"] for row in metadata.values()}) != len(metadata):
-        raise JWSTSNCurrentStackError("competitor model identities must remain distinct")
     if np.allclose(
         predictions["CF4"], predictions["2MRS"], atol=0.0, rtol=0.0
     ):

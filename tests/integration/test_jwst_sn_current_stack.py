@@ -28,117 +28,14 @@ def _load(path: Path, name: str):
     return module
 
 
+_FIXTURE_WORKER = _load(WORKER_PATH, "pr309_fixture_worker")
+
+
 def _payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
-    row_ids = [f"JWST-{index:03d}" for index in range(rows)]
-    angles = np.linspace(0.1, 5.9, rows)
-    latitude = np.linspace(-52.0, 57.0, rows)
-    depth = np.linspace(18.0, 118.0, rows)
-    redshift = 0.0015 + depth / 31_000.0 + 3.0e-5 * np.sin(angles)
-    source_rows = {
-        "row_order": row_ids,
-        "rows": [
-            {
-                "row_id": row_id,
-                "source_id": f"doi:10.0000/source-{index // 6}",
-                "source_release": f"release-{index // 6}",
-                "source_locator": f"table:row:{index}",
-                "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
-                "observable_delta_unit": "mag",
-                "observable_delta_mag": float(
-                    0.015 * np.sin(angles[index])
-                    + 0.006 * np.cos(2.0 * angles[index])
-                ),
-            }
-            for index, row_id in enumerate(row_ids)
-        ],
-    }
-    host_rows = {
-        "row_order": row_ids,
-        "rows": [
-            {
-                "row_id": row_id,
-                "host_id": f"HOST-{index:03d}",
-                "host_linkage_basis": "SOURCE_REPORTED_HOST_IDENTITY",
-                "host_linkage_probability": 0.96,
-                "host_linkage_sigma_mag": 0.008 + 0.0002 * (index % 3),
-                "redshift": float(redshift[index]),
-                "depth_mpc": float(depth[index]),
-                "galactic_l_deg": float(np.degrees(angles[index]) % 360.0),
-                "galactic_b_deg": float(latitude[index]),
-                **science.PR309_SEMANTIC_CONTRACT,
-            }
-            for index, row_id in enumerate(row_ids)
-        ],
-    }
-    groups = [f"CAL-{index % 4}" for index in range(rows)]
-    individual_errors = {
-        "row_order": row_ids,
-        "rows": [
-            {
-                "row_id": row_id,
-                "sigma_individual_mag": 0.035 + 0.001 * (index % 5),
-                "calibration_group": groups[index],
-            }
-            for index, row_id in enumerate(row_ids)
-        ],
-    }
-    group_covariance = np.full((4, 4), 1.0e-5)
-    np.fill_diagonal(group_covariance, 1.6e-4)
-    separation = np.abs(np.subtract.outer(np.arange(rows), np.arange(rows)))
-    peculiar = 5.0e-5 * np.exp(-separation / 5.0)
-    covariance = {
-        "row_order": row_ids,
-        "calibration_group_order": ["CAL-0", "CAL-1", "CAL-2", "CAL-3"],
-        "shared_zero_point_covariance_mag2": group_covariance.tolist(),
-        "peculiar_velocity_covariance_mag2": peculiar.tolist(),
-        "maximum_condition_number": 1.0e10,
-    }
-    cf4 = (
-        0.02 * np.sin(2.0 * angles) + 0.004 * np.square(depth / depth.max())
-    ).tolist()
-    two_mrs = (0.017 * np.cos(angles) - 0.003 * redshift / redshift.max()).tolist()
-    competitor_model = {
-        "row_order": row_ids,
-        "competitors": [
-            {
-                "competitor_id": "CF4",
-                "model_identity": "synthetic-cf4-forward-v1",
-                "source_release": "synthetic-only",
-                "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
-                "input_frame": "CMB",
-                "prediction_frame": "CMB",
-                "prediction_unit": "mag",
-                "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
-                "frame_transformation_role": "NATIVE_CMB_FRAME_FORWARD_MODEL",
-                "frame_transformation_identity": "synthetic:cf4:cmb-frame:v1",
-                "predicted_delta_mag": cf4,
-            },
-            {
-                "competitor_id": "2MRS",
-                "model_identity": "synthetic-2mrs-forward-v1",
-                "source_release": "synthetic-only",
-                "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
-                "input_frame": "SOLAR_SYSTEM_BARYCENTER",
-                "prediction_frame": "CMB",
-                "prediction_unit": "mag",
-                "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
-                "frame_transformation_role": "BARYCENTRIC_TO_CMB_FORWARD_MODEL",
-                "frame_transformation_identity": "synthetic:2mrs:barycentric-to-cmb:v1",
-                "predicted_delta_mag": two_mrs,
-            },
-        ],
-    }
-    return (
-        source_rows,
-        host_rows,
-        individual_errors,
-        covariance,
-        competitor_model,
-    )
+    return _FIXTURE_WORKER._synthetic_payloads(rows)
 
 
-def _inputs(rows: int = 24):
-    source_rows, host_rows, errors, covariance, competitors = _payloads(rows)
+def _build(source_rows, host_rows, errors, covariance, competitors):
     return science.build_pr309_inputs(
         source_rows=source_rows,
         host_rows=host_rows,
@@ -148,10 +45,14 @@ def _inputs(rows: int = 24):
     )
 
 
+def _inputs(rows: int = 24):
+    return _build(*_payloads(rows))
+
+
 def test_pr309_builds_typed_rows_and_full_shared_covariance() -> None:
     inputs = _inputs()
 
-    assert inputs.row_ids[0] == "JWST-000"
+    assert inputs.row_ids[0] == "SYNTH-JWST-000"
     assert inputs.feature_order == science.PR309_FEATURE_ORDER
     assert inputs.competitor_order == ("CF4", "2MRS")
     assert inputs.total_covariance_mag2.shape == (24, 24)
@@ -160,7 +61,9 @@ def test_pr309_builds_typed_rows_and_full_shared_covariance() -> None:
         - np.diag(np.diag(inputs.total_covariance_mag2))
     ) > 0
     assert set(inputs.calibration_groups) == {"CAL-0", "CAL-1", "CAL-2", "CAL-3"}
-    assert all(row["source_id"].startswith("doi:") for row in inputs.row_report)
+    assert all(
+        row["source_id"].startswith("synthetic:source:") for row in inputs.row_report
+    )
     assert all(row["host_linkage_probability"] < 1.0 for row in inputs.row_report)
     assert all(
         row["host_identity_status"] == "MARGINALIZED_LINKAGE_NOT_IDENTITY"
@@ -182,95 +85,49 @@ def test_pr309_rejects_positional_host_identity() -> None:
     host_rows["rows"][0]["host_linkage_basis"] = "POSITIONAL_COINCIDENCE"
 
     with pytest.raises(science.JWSTSNCurrentStackError, match="positional"):
-        science.build_pr309_inputs(
-            source_rows=source_rows,
-            host_rows=host_rows,
-            individual_errors=errors,
-            covariance=covariance,
-            competitor_model=competitors,
-        )
+        _build(source_rows, host_rows, errors, covariance, competitors)
 
     source_rows, host_rows, errors, covariance, competitors = _payloads()
     host_rows["rows"][0]["host_linkage_basis"] = (
         "NON_POSITIONAL_CATALOGUE_CROSS_ID"
     )
-    assert science.build_pr309_inputs(
-        source_rows=source_rows,
-        host_rows=host_rows,
-        individual_errors=errors,
-        covariance=covariance,
-        competitor_model=competitors,
-    ).row_ids[0] == "JWST-000"
+    assert _build(source_rows, host_rows, errors, covariance, competitors).row_ids[
+        0
+    ] == "SYNTH-JWST-000"
 
 
 def test_pr309_rejects_row_order_or_provenance_drift() -> None:
     source_rows, host_rows, errors, covariance, competitors = _payloads()
     host_rows["row_order"] = list(reversed(host_rows["row_order"]))
     with pytest.raises(science.JWSTSNCurrentStackError, match="row order"):
-        science.build_pr309_inputs(
-            source_rows=source_rows,
-            host_rows=host_rows,
-            individual_errors=errors,
-            covariance=covariance,
-            competitor_model=competitors,
-        )
+        _build(source_rows, host_rows, errors, covariance, competitors)
 
 
 def test_pr309_direction_redshift_depth_semantics_are_frozen() -> None:
     source_rows, host_rows, errors, covariance, competitors = _payloads()
     host_rows["rows"][0]["coordinate_frame"] = "ICRS"
     with pytest.raises(science.JWSTSNCurrentStackError, match="semantic"):
-        science.build_pr309_inputs(
-            source_rows=source_rows,
-            host_rows=host_rows,
-            individual_errors=errors,
-            covariance=covariance,
-            competitor_model=competitors,
-        )
+        _build(source_rows, host_rows, errors, covariance, competitors)
 
     source_rows, host_rows, errors, covariance, competitors = _payloads()
     host_rows["rows"][0]["redshift_frame"] = "HELIOCENTRIC"
     with pytest.raises(science.JWSTSNCurrentStackError, match="semantic"):
-        science.build_pr309_inputs(
-            source_rows=source_rows,
-            host_rows=host_rows,
-            individual_errors=errors,
-            covariance=covariance,
-            competitor_model=competitors,
-        )
+        _build(source_rows, host_rows, errors, covariance, competitors)
 
     source_rows, host_rows, errors, covariance, competitors = _payloads()
     source_rows["rows"][0]["source_locator"] = ""
     with pytest.raises(science.JWSTSNCurrentStackError, match="source provenance"):
-        science.build_pr309_inputs(
-            source_rows=source_rows,
-            host_rows=host_rows,
-            individual_errors=errors,
-            covariance=covariance,
-            competitor_model=competitors,
-        )
+        _build(source_rows, host_rows, errors, covariance, competitors)
 
     source_rows, host_rows, errors, covariance, competitors = _payloads()
     source_rows["rows"][0]["observable_delta_definition"] = "METHOD_B_MINUS_METHOD_A_MAG"
     with pytest.raises(science.JWSTSNCurrentStackError, match="observable"):
-        science.build_pr309_inputs(
-            source_rows=source_rows,
-            host_rows=host_rows,
-            individual_errors=errors,
-            covariance=covariance,
-            competitor_model=competitors,
-        )
+        _build(source_rows, host_rows, errors, covariance, competitors)
 
     source_rows, host_rows, errors, covariance, competitors = _payloads()
     competitors["competitors"][1]["frame_transformation_role"] = "RAW_NO_TRANSFORM"
     with pytest.raises(science.JWSTSNCurrentStackError, match="frame"):
-        science.build_pr309_inputs(
-            source_rows=source_rows,
-            host_rows=host_rows,
-            individual_errors=errors,
-            covariance=covariance,
-            competitor_model=competitors,
-        )
+        _build(source_rows, host_rows, errors, covariance, competitors)
 
 
 def test_pr309_rejects_diagonalized_shared_covariance() -> None:
@@ -283,24 +140,53 @@ def test_pr309_rejects_diagonalized_shared_covariance() -> None:
     ).tolist()
 
     with pytest.raises(science.JWSTSNCurrentStackError, match="off-diagonal"):
-        science.build_pr309_inputs(
-            source_rows=source_rows,
-            host_rows=host_rows,
-            individual_errors=errors,
-            covariance=covariance,
-            competitor_model=competitors,
-        )
+        _build(source_rows, host_rows, errors, covariance, competitors)
 
     source_rows, host_rows, errors, covariance, competitors = _payloads()
     covariance["maximum_condition_number"] = 1.0e12
     with pytest.raises(science.JWSTSNCurrentStackError, match="ill-conditioned"):
-        science.build_pr309_inputs(
-            source_rows=source_rows,
-            host_rows=host_rows,
-            individual_errors=errors,
-            covariance=covariance,
-            competitor_model=competitors,
+        _build(source_rows, host_rows, errors, covariance, competitors)
+
+
+@pytest.mark.parametrize(
+    "field",
+    (
+        "frame_transformation_identity",
+        "frame_transformation_input_sha256",
+        "frame_transformation_provider_sha256",
+        "frame_transformation_parameters_sha256",
+        "predicted_delta_mag",
+    ),
+)
+def test_pr309_rejects_unbound_2mrs_transform_identity(field: str) -> None:
+    source_rows, host_rows, errors, covariance, competitors = _payloads()
+    row = competitors["competitors"][1]
+    if field == "predicted_delta_mag":
+        row[field][0] += 1.0e-6
+    else:
+        row[field] = "0" * 64
+    with pytest.raises(science.JWSTSNCurrentStackError, match="binding"):
+        _build(source_rows, host_rows, errors, covariance, competitors)
+
+
+def test_pr309_rejects_content_bound_raw_2mrs_provider() -> None:
+    source_rows, host_rows, errors, covariance, competitors = _payloads()
+    row = competitors["competitors"][1]
+    row["model_identity"] = "heasarc-2mrs-raw-redshift-column"
+    row["source_release"] = "HEASARC_twomassrsc_raw"
+    row["frame_transformation_identity"] = (
+        science.pr309_competitor_transform_identity(
+            competitor_id="2MRS",
+            model_identity=row["model_identity"],
+            source_release=row["source_release"],
+            input_sha256=row["frame_transformation_input_sha256"],
+            provider_sha256=row["frame_transformation_provider_sha256"],
+            parameters_sha256=row["frame_transformation_parameters_sha256"],
+            predicted_delta_mag=row["predicted_delta_mag"],
         )
+    )
+    with pytest.raises(science.JWSTSNCurrentStackError, match="registered"):
+        _build(source_rows, host_rows, errors, covariance, competitors)
 
 
 def test_pr309_missing_2mrs_stops_before_response_rank(
@@ -317,13 +203,7 @@ def test_pr309_missing_2mrs_stops_before_response_rank(
 
     monkeypatch.setattr(science, "_whitened_rank", forbidden)
     with pytest.raises(science.JWSTSNCurrentStackError, match="CF4.*2MRS"):
-        science.build_pr309_inputs(
-            source_rows=source_rows,
-            host_rows=host_rows,
-            individual_errors=errors,
-            covariance=covariance,
-            competitor_model=competitors,
-        )
+        _build(source_rows, host_rows, errors, covariance, competitors)
     assert reached_rank is False
 
 
@@ -333,13 +213,7 @@ def test_pr309_rejects_a_disguised_duplicate_competitor() -> None:
         competitors["competitors"][0]["model_identity"]
     )
     with pytest.raises(science.JWSTSNCurrentStackError, match="identities"):
-        science.build_pr309_inputs(
-            source_rows=source_rows,
-            host_rows=host_rows,
-            individual_errors=errors,
-            covariance=covariance,
-            competitor_model=competitors,
-        )
+        _build(source_rows, host_rows, errors, covariance, competitors)
 
 
 def test_pr309_synthetic_closure_keeps_competitors_separate(
