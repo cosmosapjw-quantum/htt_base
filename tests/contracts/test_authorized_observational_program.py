@@ -84,6 +84,7 @@ def case_factory(tmp_path: Path):
         plan_id = {
             "PLANCK": "plan:PR290-PLANCK-LOWELL-V1",
             "CF4": "plan:PR291-CF4-TOMOGRAPHY-V1",
+            "ACT": "plan:PR204-ACT-LENSING-V1",
         }[lane]
         plan.write_text(
             yaml.safe_dump(
@@ -384,10 +385,12 @@ def _science_case(
     worker_relative = {
         "PLANCK": "scripts/observed_runs/run_planck_pr3.py",
         "CF4": "scripts/observed_runs/run_cf4_current_stack.py",
+        "ACT": "scripts/observed_runs/run_act_dr6.py",
     }[lane]
     execution_mode = {
         "PLANCK": "planck_pr3_lowell_operator",
         "CF4": "cf4_current_stack_affine_operator",
+        "ACT": "act_dr6_validated_band_operator",
     }[lane]
     science_worker = repo / worker_relative
     science_worker.parent.mkdir(parents=True, exist_ok=True)
@@ -798,7 +801,7 @@ def test_PR307_cf4_attended_profile_and_post_confirm_mutations_fail_closed(
     assert acceptance["worker_path"] == "scripts/observed_runs/run_cf4_current_stack.py"
     assert acceptance["data_root"] == str(data_root.resolve())
     assert acceptance["result_filename"] == "cf4_current_stack_result.json"
-    assert set(module.LANE_PROFILES) == {"PLANCK", "CF4"}
+    assert set(module.LANE_PROFILES) == {"PLANCK", "CF4", "ACT"}
 
     monkeypatch.setattr(
         module, "_spawn_worker", lambda *_a, **_k: pytest.fail("worker spawned")
@@ -816,6 +819,33 @@ def test_PR307_cf4_attended_profile_and_post_confirm_mutations_fail_closed(
         changed[field] = value
         with pytest.raises(module.ObservationalProgramError, match="confirmation binding"):
             module.execute_prepared(changed, prepared["acceptance_hash"])
+    assert not prepared["output"].exists()
+
+
+def test_PR308_act_attended_profile_binds_exact_admission_runtime_and_worker(
+    case_factory, tmp_path: Path, monkeypatch
+) -> None:
+    module, _, _, _, _, _, data_root, prepared = _science_case(
+        case_factory, tmp_path, lane="ACT"
+    )
+    acceptance = prepared["acceptance_payload"]
+    runtime = prepared["science_runtime_contract"]
+    assert acceptance["lane"] == "ACT"
+    assert acceptance["analysis_plan_id"] == "plan:PR204-ACT-LENSING-V1"
+    assert acceptance["worker_path"] == "scripts/observed_runs/run_act_dr6.py"
+    assert acceptance["worker_arguments"] == ["--run-admitted"]
+    assert acceptance["data_root"] == str(data_root.resolve())
+    assert acceptance["result_filename"] == "act_dr6_result.json"
+    assert set(runtime["distributions"]) == {"numpy", "healpy"}
+    assert "scipy" not in runtime["modules"]
+
+    monkeypatch.setattr(
+        module, "_spawn_worker", lambda *_a, **_k: pytest.fail("worker spawned")
+    )
+    changed = dict(prepared)
+    changed["worker_arguments"] = ["--run-admitted", "--extra"]
+    with pytest.raises(module.ObservationalProgramError, match="confirmation binding"):
+        module.execute_prepared(changed, prepared["acceptance_hash"])
     assert not prepared["output"].exists()
 
 
