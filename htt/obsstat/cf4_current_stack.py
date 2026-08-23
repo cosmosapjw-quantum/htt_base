@@ -247,6 +247,31 @@ def _rank_diagnostics(
     return rank, ratio, condition, pass_floor
 
 
+def _trace_only_membership(
+    whitened_design: np.ndarray, whitened_response: np.ndarray
+) -> tuple[bool, float, float]:
+    """Test numerical membership in the exact isotropic-trace subspace."""
+
+    trace = whitened_design[:, 0]
+    denominator = float(trace @ trace)
+    coefficient = float(trace @ whitened_response) / denominator
+    residual_norm = float(
+        np.linalg.norm(whitened_response - coefficient * trace)
+    )
+    scale = max(
+        float(np.linalg.norm(whitened_response)),
+        float(np.linalg.norm(coefficient * trace)),
+        1.0,
+    )
+    tolerance = (
+        64.0
+        * np.finfo(float).eps
+        * max(len(whitened_response), 1)
+        * scale
+    )
+    return bool(residual_norm <= tolerance), residual_norm, float(tolerance)
+
+
 def _fit_profile(
     *,
     directions: np.ndarray,
@@ -315,6 +340,15 @@ def _fit_profile(
             "diagnostics": diagnostics,
         }
     whitened_response = np.linalg.solve(cholesky, response)
+    no_flow_member, no_flow_residual, no_flow_tolerance = _trace_only_membership(
+        whitened_design, whitened_response
+    )
+    diagnostics.update(
+        {
+            "trace_only_residual_norm": no_flow_residual,
+            "trace_only_numerical_tolerance": no_flow_tolerance,
+        }
+    )
     normal = whitened_design.T @ whitened_design
     coefficient_covariance = np.linalg.inv(normal)
     coefficients = coefficient_covariance @ (
@@ -325,6 +359,7 @@ def _fit_profile(
         "disposition": "IDENTIFIED_SET_MEMBER",
         "coefficients": coefficients.tolist(),
         "coefficient_covariance": coefficient_covariance.tolist(),
+        "no_flow_member": no_flow_member,
         "diagnostics": diagnostics,
     }
 
@@ -399,17 +434,18 @@ def analyze_cf4_current_stack(
                     )
                 )
             dispositions.extend(str(profile["disposition"]) for profile in profiles)
-            members = [
-                profile["coefficients"][1:]
+            member_profiles = [
+                profile
                 for profile in profiles
                 if profile["coefficients"] is not None
             ]
+            members = [profile["coefficients"][1:] for profile in member_profiles]
             identified_set: Mapping[str, object]
             if len(members) == len(config.nuisance_profiles):
                 member_array = np.asarray(members, dtype=float)
                 contains_exact_no_flow = any(
-                    np.array_equal(member, np.zeros(8, dtype=float))
-                    for member in member_array
+                    profile["no_flow_member"] is True
+                    for profile in member_profiles
                 )
                 identified_set = {
                     "status": "BOUNDED_DIAGNOSTIC_SET",

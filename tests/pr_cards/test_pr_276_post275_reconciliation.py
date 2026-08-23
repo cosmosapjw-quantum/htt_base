@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 import json
 import hashlib
 import re
@@ -11,6 +12,8 @@ import pytest
 import yaml
 
 from scripts.codex_harness.validate_pr_dag import (
+    _validate_rescue_status,
+    validate_backlog,
     validate_post300_observational_slice,
 )
 
@@ -255,6 +258,38 @@ def test_post300_validator_rejects_contract_and_claim_boundary_drift() -> None:
         "No observed result, native result, or family-identification claim."
     ]
     validate_post300_observational_slice(cards)
+
+    cards = _cards()
+    del cards["PR-312"]["supersedes_failed_attempt"]
+    with pytest.raises(ValueError, match="must supersede"):
+        validate_post300_observational_slice(cards)
+
+    cards = _cards()
+    cards["PR-312"]["dod"] = ["fragment one", "fragment two"]
+    with pytest.raises(ValueError, match="definition of done"):
+        validate_post300_observational_slice(cards)
+
+
+@pytest.mark.parametrize(
+    "field",
+    ("success_dependency_satisfied", "observed_data_executed", "public_use"),
+)
+def test_pr312_rejects_false_pr307_failed_resolution_flags(field: str) -> None:
+    status = deepcopy(_yaml(STATUS))
+    status["execution_resolutions"]["PR-307"][field] = True
+
+    with pytest.raises(ValueError, match=field):
+        _validate_rescue_status(status, validate_backlog(_yaml(BACKLOG)))
+
+
+def test_pr312_rejects_wrong_pr307_failed_receipt() -> None:
+    status = deepcopy(_yaml(STATUS))
+    status["execution_resolutions"]["PR-307"]["receipt"] = (
+        "docs/PR_DELTAS/does-not-exist.md"
+    )
+
+    with pytest.raises(ValueError, match="receipt"):
+        _validate_rescue_status(status, validate_backlog(_yaml(BACKLOG)))
 
 
 def test_status_is_total_and_preserves_negative_chronology() -> None:

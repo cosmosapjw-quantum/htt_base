@@ -1248,6 +1248,29 @@ def _validate_rescue_status(status: dict[str, Any], info: DagInfo) -> None:
             "terminal rescue cards require execution resolution receipts: "
             f"{missing_receipts}"
         )
+    if "PR-312" in info.ids:
+        failed_pr307 = resolutions.get("PR-307")
+        if not isinstance(failed_pr307, dict):
+            raise ValueError("PR-307 failed superseded resolution is missing")
+        expected_pr307_fields = {
+            "resolution": "COMPLETED_FAILED_WITH_RECEIPT",
+            "receipt": "docs/PR_DELTAS/pr-312.md",
+            "failed_candidate_delta": "docs/PR_DELTAS/pr-307.md",
+            "success_dependency_satisfied": False,
+            "observed_data_executed": False,
+            "public_use": False,
+        }
+        for field, expected in expected_pr307_fields.items():
+            if failed_pr307.get(field) != expected:
+                raise ValueError(
+                    f"PR-307 failed superseded resolution {field} drifted"
+                )
+        repo_root = Path(__file__).resolve().parents[2]
+        for field in ("receipt", "failed_candidate_delta"):
+            if not (repo_root / str(failed_pr307[field])).is_file():
+                raise ValueError(
+                    f"PR-307 failed superseded resolution {field} is missing"
+                )
 
 
 def validate_long_horizon_rescue_slice(
@@ -2118,6 +2141,10 @@ def validate_post300_observational_slice(cards: dict[str, Any]) -> None:
                 raise ValueError(
                     f"{pr_id} forbidden actions omit the {boundary} boundary"
                 )
+    if cards["PR-312"].get("supersedes_failed_attempt") != "PR-307":
+        raise ValueError("PR-312 must supersede the failed PR-307 attempt")
+    if len(cards["PR-312"]["dod"]) != 1:
+        raise ValueError("PR-312 definition of done must remain one complete sentence")
 
 
 def _validate_post275_slice(cards: dict[str, Any]) -> None:

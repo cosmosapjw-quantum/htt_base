@@ -35,7 +35,7 @@ def _independent_affine_case(*, no_flow: bool):
     distance = np.linspace(24.0, 180.0, rows)
     h0 = 70.0
     if no_flow:
-        trace_over_three = 0.0
+        trace_over_three = 0.35
         bulk = np.zeros(3)
         shear = np.zeros((3, 3))
     else:
@@ -113,7 +113,8 @@ def test_pr312_exact_no_flow_member_forces_typed_abstention() -> None:
     result = worker.analyze_cf4_current_stack(inputs, config)
     identified_set = result["cells"][0]["identified_set"]
 
-    assert np.array_equal(identified_set["joint_flow_members"], np.zeros((1, 8)))
+    assert np.max(np.abs(identified_set["joint_flow_members"])) < 1.0e-10
+    assert result["cells"][0]["profiles"][0]["no_flow_member"] is True
     assert (
         identified_set["no_flow_calibration_status"]
         == "EXACT_NO_FLOW_MEMBER_ABSTAIN"
