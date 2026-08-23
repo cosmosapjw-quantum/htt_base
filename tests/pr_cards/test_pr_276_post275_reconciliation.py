@@ -272,7 +272,12 @@ def test_post300_validator_rejects_contract_and_claim_boundary_drift() -> None:
 
 @pytest.mark.parametrize(
     "field",
-    ("success_dependency_satisfied", "observed_data_executed", "public_use"),
+    (
+        "success_dependency_satisfied",
+        "observed_data_executed",
+        "public_use",
+        "public_result_emitted",
+    ),
 )
 def test_pr312_rejects_false_pr307_failed_resolution_flags(field: str) -> None:
     status = deepcopy(_yaml(STATUS))

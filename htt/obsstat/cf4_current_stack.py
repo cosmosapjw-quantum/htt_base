@@ -261,8 +261,9 @@ def _trace_only_membership(
     scale = max(
         float(np.linalg.norm(whitened_response)),
         float(np.linalg.norm(coefficient * trace)),
-        1.0,
     )
+    if scale == 0.0:
+        return True, residual_norm, 0.0
     tolerance = (
         64.0
         * np.finfo(float).eps

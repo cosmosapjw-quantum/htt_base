@@ -1265,6 +1265,10 @@ def _validate_rescue_status(status: dict[str, Any], info: DagInfo) -> None:
                 raise ValueError(
                     f"PR-307 failed superseded resolution {field} drifted"
                 )
+        if failed_pr307.get("public_result_emitted", False) is not False:
+            raise ValueError(
+                "PR-307 failed superseded resolution public_result_emitted drifted"
+            )
         repo_root = Path(__file__).resolve().parents[2]
         for field in ("receipt", "failed_candidate_delta"):
             if not (repo_root / str(failed_pr307[field])).is_file():

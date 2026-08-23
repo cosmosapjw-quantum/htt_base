@@ -122,6 +122,30 @@ def test_pr312_exact_no_flow_member_forces_typed_abstention() -> None:
     assert result["terminal_disposition"] == "EXACT_NO_FLOW_MEMBER_ABSTAIN"
 
 
+@pytest.mark.parametrize(("no_flow", "expected"), ((True, True), (False, False)))
+def test_pr312_no_flow_membership_is_covariance_scale_invariant(
+    no_flow: bool, expected: bool
+) -> None:
+    worker, inputs, baseline, _ = _independent_affine_case(no_flow=no_flow)
+    original = baseline.nuisance_profiles[0]
+    config = worker.Cf4OperatorConfig(
+        depth_thresholds_mpc=baseline.depth_thresholds_mpc,
+        zoa_half_widths_deg=baseline.zoa_half_widths_deg,
+        nuisance_profiles=(
+            worker.Cf4NuisanceProfile(
+                original.profile_id,
+                original.h0_km_s_mpc,
+                original.distance_scale,
+                1.0e16,
+            ),
+        ),
+    )
+
+    result = worker.analyze_cf4_current_stack(inputs, config)
+
+    assert result["cells"][0]["profiles"][0]["no_flow_member"] is expected
+
+
 @pytest.mark.parametrize("rows", ("1", "8", "32", "128", "full"))
 def test_pr307_synthetic_profile_is_observation_free(
     tmp_path: Path, rows: str
