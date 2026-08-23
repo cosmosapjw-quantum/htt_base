@@ -809,26 +809,10 @@ def _competitor_diagnostic(
     if rank["rank"] != rank["expected_rank"]:
         return {
             "status": "NON_IDENTIFIED_ABSTAIN",
-            "point_estimate": None,
-            "standard_error": None,
+            "response_rank": rank,
         }
-    try:
-        lower = np.linalg.cholesky(inputs.total_covariance_mag2)
-        design_white = np.linalg.solve(lower, augmented)
-        values_white = np.linalg.solve(lower, inputs.observable_delta_mag)
-        orthogonal, triangular = np.linalg.qr(design_white, mode="reduced")
-        coefficients = np.linalg.solve(triangular, orthogonal.T @ values_white)
-        triangular_inverse = np.linalg.solve(
-            triangular, np.eye(triangular.shape[0], dtype=float)
-        )
-        residual = values_white - design_white @ coefficients
-    except np.linalg.LinAlgError as exc:
-        raise JWSTSNCurrentStackError("competitor GLS solve failed") from exc
     return {
-        "status": "IDENTIFIED_DIAGNOSTIC_ONLY",
-        "point_estimate": float(coefficients[-1]),
-        "standard_error": float(np.linalg.norm(triangular_inverse[-1])),
-        "whitened_residual_sum_squares": float(residual @ residual),
+        "status": "NUMERICALLY_FULL_RANK_DIAGNOSTIC_ONLY",
         "response_rank": rank,
         **inputs.competitor_metadata[competitor_id],
     }
@@ -839,7 +823,12 @@ def analyze_pr309_current_stack(
     *,
     observed: bool,
 ) -> dict[str, object]:
-    """Return separate competitor diagnostics or an explicit rank abstention."""
+    """Return separate response-rank diagnostics or an explicit abstention.
+
+    PR-309 closes input, covariance, and response preparation only.  It does
+    not fit competitor amplitudes; model-conditioned point inference requires
+    a separately registered HTT analysis contract.
+    """
 
     if type(observed) is not bool:
         raise JWSTSNCurrentStackError("observed state must be one boolean")

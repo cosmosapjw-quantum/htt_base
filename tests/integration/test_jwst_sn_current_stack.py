@@ -213,7 +213,13 @@ def test_pr309_synthetic_closure_keeps_competitors_separate(
     assert result["response_rank"]["rank"] == len(science.PR309_FEATURE_ORDER)
     assert list(result["competitor_conditioned_diagnostics"]) == ["CF4", "2MRS"]
     assert all(
-        item["status"] == "IDENTIFIED_DIAGNOSTIC_ONLY"
+        item["status"] == "NUMERICALLY_FULL_RANK_DIAGNOSTIC_ONLY"
+        for item in result["competitor_conditioned_diagnostics"].values()
+    )
+    assert all(
+        "point_estimate" not in item
+        and "standard_error" not in item
+        and "whitened_residual_sum_squares" not in item
         for item in result["competitor_conditioned_diagnostics"].values()
     )
     assert "combined_competitor" not in json.dumps(result)
@@ -253,13 +259,14 @@ def test_pr309_competitor_collinearity_abstains_only_that_lane() -> None:
     result = science.analyze_pr309_current_stack(changed, observed=False)
     assert result["terminal_disposition"] == "WEAK_COMPETITOR_IDENTIFICATION_ABSTAIN"
     assert result["competitor_conditioned_diagnostics"]["CF4"]["status"] == (
-        "IDENTIFIED_DIAGNOSTIC_ONLY"
+        "NUMERICALLY_FULL_RANK_DIAGNOSTIC_ONLY"
     )
-    assert result["competitor_conditioned_diagnostics"]["2MRS"] == {
-        "status": "NON_IDENTIFIED_ABSTAIN",
-        "point_estimate": None,
-        "standard_error": None,
-    }
+    assert result["competitor_conditioned_diagnostics"]["2MRS"]["status"] == (
+        "NON_IDENTIFIED_ABSTAIN"
+    )
+    assert "point_estimate" not in result["competitor_conditioned_diagnostics"][
+        "2MRS"
+    ]
     assert result["forced_source_label"] is None
 
     inputs = _inputs()
@@ -274,11 +281,31 @@ def test_pr309_competitor_collinearity_abstains_only_that_lane() -> None:
     )
     result = science.analyze_pr309_current_stack(changed, observed=False)
     assert result["terminal_disposition"] == "WEAK_COMPETITOR_IDENTIFICATION_ABSTAIN"
-    assert result["competitor_conditioned_diagnostics"]["2MRS"] == {
-        "status": "NON_IDENTIFIED_ABSTAIN",
-        "point_estimate": None,
-        "standard_error": None,
-    }
+    assert result["competitor_conditioned_diagnostics"]["2MRS"]["status"] == (
+        "NON_IDENTIFIED_ABSTAIN"
+    )
+
+
+def test_pr309_above_floor_rank_diagnostic_does_not_become_a_point_fit() -> None:
+    inputs = _inputs()
+    response = science._response_design(inputs)
+    trial = np.sin(np.arange(len(inputs.row_ids), dtype=float) * 1.2345)
+    trial -= response @ np.linalg.lstsq(response, trial, rcond=None)[0]
+    trial /= np.linalg.norm(trial)
+    competitors = dict(inputs.competitor_predictions_mag)
+    competitors["2MRS"] = response[:, 0] + 1.0e-5 * trial
+    changed = science.JWSTSNCurrentStackInputs(
+        **{**inputs.__dict__, "competitor_predictions_mag": competitors}
+    )
+
+    result = science.analyze_pr309_current_stack(changed, observed=False)
+    diagnostic = result["competitor_conditioned_diagnostics"]["2MRS"]
+
+    assert diagnostic["response_rank"]["minimum_singular_value_ratio"] > 1.0e-6
+    assert diagnostic["status"] == "NUMERICALLY_FULL_RANK_DIAGNOSTIC_ONLY"
+    assert "point_estimate" not in diagnostic
+    assert "standard_error" not in diagnostic
+    assert "whitened_residual_sum_squares" not in diagnostic
 
 
 def test_pr309_does_not_call_historical_pr153_result_builders(
