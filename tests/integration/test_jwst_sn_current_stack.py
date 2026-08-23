@@ -42,6 +42,8 @@ def _payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
                 "source_id": f"doi:10.0000/source-{index // 6}",
                 "source_release": f"release-{index // 6}",
                 "source_locator": f"table:row:{index}",
+                "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
+                "observable_delta_unit": "mag",
                 "observable_delta_mag": float(
                     0.015 * np.sin(angles[index])
                     + 0.006 * np.cos(2.0 * angles[index])
@@ -103,6 +105,12 @@ def _payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
                 "model_identity": "synthetic-cf4-forward-v1",
                 "source_release": "synthetic-only",
                 "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
+                "input_frame": "CMB",
+                "prediction_frame": "CMB",
+                "prediction_unit": "mag",
+                "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
+                "frame_transformation_role": "NATIVE_CMB_FRAME_FORWARD_MODEL",
+                "frame_transformation_identity": "synthetic:cf4:cmb-frame:v1",
                 "predicted_delta_mag": cf4,
             },
             {
@@ -110,6 +118,12 @@ def _payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
                 "model_identity": "synthetic-2mrs-forward-v1",
                 "source_release": "synthetic-only",
                 "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
+                "input_frame": "SOLAR_SYSTEM_BARYCENTER",
+                "prediction_frame": "CMB",
+                "prediction_unit": "mag",
+                "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
+                "frame_transformation_role": "BARYCENTRIC_TO_CMB_FORWARD_MODEL",
+                "frame_transformation_identity": "synthetic:2mrs:barycentric-to-cmb:v1",
                 "predicted_delta_mag": two_mrs,
             },
         ],
@@ -236,6 +250,28 @@ def test_pr309_direction_redshift_depth_semantics_are_frozen() -> None:
             competitor_model=competitors,
         )
 
+    source_rows, host_rows, errors, covariance, competitors = _payloads()
+    source_rows["rows"][0]["observable_delta_definition"] = "METHOD_B_MINUS_METHOD_A_MAG"
+    with pytest.raises(science.JWSTSNCurrentStackError, match="observable"):
+        science.build_pr309_inputs(
+            source_rows=source_rows,
+            host_rows=host_rows,
+            individual_errors=errors,
+            covariance=covariance,
+            competitor_model=competitors,
+        )
+
+    source_rows, host_rows, errors, covariance, competitors = _payloads()
+    competitors["competitors"][1]["frame_transformation_role"] = "RAW_NO_TRANSFORM"
+    with pytest.raises(science.JWSTSNCurrentStackError, match="frame"):
+        science.build_pr309_inputs(
+            source_rows=source_rows,
+            host_rows=host_rows,
+            individual_errors=errors,
+            covariance=covariance,
+            competitor_model=competitors,
+        )
+
 
 def test_pr309_rejects_diagonalized_shared_covariance() -> None:
     source_rows, host_rows, errors, covariance, competitors = _payloads()
@@ -306,7 +342,16 @@ def test_pr309_rejects_a_disguised_duplicate_competitor() -> None:
         )
 
 
-def test_pr309_synthetic_closure_keeps_competitors_separate() -> None:
+def test_pr309_synthetic_closure_keeps_competitors_separate(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        science.np.linalg,
+        "inv",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(
+            AssertionError("normal-matrix inversion is unstable")
+        ),
+    )
     result = science.analyze_pr309_current_stack(_inputs(), observed=False)
 
     assert result["terminal_disposition"] == "SYNTHETIC_OPERATOR_CLOSURE_PASS"
@@ -361,6 +406,24 @@ def test_pr309_competitor_collinearity_abstains_only_that_lane() -> None:
         "standard_error": None,
     }
     assert result["forced_source_label"] is None
+
+    inputs = _inputs()
+    response = science._response_design(inputs)
+    trial = np.sin(np.arange(len(inputs.row_ids), dtype=float) * 1.2345)
+    trial -= response @ np.linalg.lstsq(response, trial, rcond=None)[0]
+    trial /= np.linalg.norm(trial)
+    competitors = dict(inputs.competitor_predictions_mag)
+    competitors["2MRS"] = response[:, 0] + 1.0e-7 * trial
+    changed = science.JWSTSNCurrentStackInputs(
+        **{**inputs.__dict__, "competitor_predictions_mag": competitors}
+    )
+    result = science.analyze_pr309_current_stack(changed, observed=False)
+    assert result["terminal_disposition"] == "WEAK_COMPETITOR_IDENTIFICATION_ABSTAIN"
+    assert result["competitor_conditioned_diagnostics"]["2MRS"] == {
+        "status": "NON_IDENTIFIED_ABSTAIN",
+        "point_estimate": None,
+        "standard_error": None,
+    }
 
 
 def test_pr309_does_not_call_historical_pr153_result_builders(
@@ -477,6 +540,13 @@ def test_pr309_acceptance_does_not_open_a_jwst_payload(
     )
 
     assert prepared["acceptance_payload"]["lane"] == "JWST_SN"
+    assert prepared["acceptance_payload"]["candidate_commit"] == "1" * 40
+    assert prepared["acceptance_payload"]["candidate_tree"] == "2" * 40
+    assert prepared["acceptance_payload"]["ordered_record_ids"] == [
+        "record:jwst:test"
+    ]
+    assert prepared["acceptance_payload"]["timeout_seconds"] == 300
+    assert prepared["acceptance_payload"]["environment_contract_sha256"]
     assert not (output / "start.json").exists()
     assert not (output / dispatcher.OBSERVED_DATA_MARKER).exists()
 

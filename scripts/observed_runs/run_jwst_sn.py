@@ -48,6 +48,8 @@ from common.data_identity import (  # noqa: E402
 )
 from obsstat.jwst_distance_consistency import (  # noqa: E402
     JWSTSNCurrentStackError,
+    PR309_COMPETITOR_SEMANTIC_CONTRACTS,
+    PR309_OBSERVABLE_CONTRACT,
     PR309_SEMANTIC_CONTRACT,
     analyze_pr309_current_stack,
     build_pr309_inputs,
@@ -242,6 +244,7 @@ def _synthetic_payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
                 "source_id": f"synthetic:source:{index // 6}",
                 "source_release": "synthetic-pr309",
                 "source_locator": f"generated-row:{index}",
+                **PR309_OBSERVABLE_CONTRACT,
                 "observable_delta_mag": float(
                     0.015 * np.sin(angles[index])
                     + 0.006 * np.cos(2.0 * angles[index])
@@ -299,6 +302,8 @@ def _synthetic_payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
                 "model_identity": "synthetic-cf4-forward-v1",
                 "source_release": "synthetic-only",
                 "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
+                **PR309_COMPETITOR_SEMANTIC_CONTRACTS["CF4"],
+                "frame_transformation_identity": "synthetic:cf4:cmb-frame:v1",
                 "predicted_delta_mag": (
                     0.02 * np.sin(2.0 * angles)
                     + 0.004 * np.square(depth / depth.max())
@@ -309,6 +314,10 @@ def _synthetic_payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
                 "model_identity": "synthetic-2mrs-forward-v1",
                 "source_release": "synthetic-only",
                 "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
+                **PR309_COMPETITOR_SEMANTIC_CONTRACTS["2MRS"],
+                "frame_transformation_identity": (
+                    "synthetic:2mrs:barycentric-to-cmb:v1"
+                ),
                 "predicted_delta_mag": (
                     0.017 * np.cos(angles)
                     - 0.003 * redshift / redshift.max()

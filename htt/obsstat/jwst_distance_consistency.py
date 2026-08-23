@@ -296,8 +296,12 @@ PR309_HOST_LINKAGE_BASES = frozenset(
         "AMBIGUOUS_HOST_MARGINALIZED",
     }
 )
-PR309_MINIMUM_SINGULAR_VALUE_RATIO = 1.0e-8
+PR309_MINIMUM_SINGULAR_VALUE_RATIO = 1.0e-6
 PR309_MAXIMUM_COVARIANCE_CONDITION = 1.0e10
+PR309_OBSERVABLE_CONTRACT = {
+    "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
+    "observable_delta_unit": "mag",
+}
 PR309_SEMANTIC_CONTRACT = {
     "coordinate_frame": "GALACTIC_IAU_1958",
     "direction_unit": "degree",
@@ -305,6 +309,22 @@ PR309_SEMANTIC_CONTRACT = {
     "redshift_definition": "SOURCE_REPORTED_HOST_REDSHIFT_TRANSFORMED_TO_CMB",
     "depth_definition": "SOURCE_REPORTED_DISTANCE",
     "depth_unit": "Mpc",
+}
+PR309_COMPETITOR_SEMANTIC_CONTRACTS = {
+    "CF4": {
+        "input_frame": "CMB",
+        "prediction_frame": "CMB",
+        "prediction_unit": "mag",
+        "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
+        "frame_transformation_role": "NATIVE_CMB_FRAME_FORWARD_MODEL",
+    },
+    "2MRS": {
+        "input_frame": "SOLAR_SYSTEM_BARYCENTER",
+        "prediction_frame": "CMB",
+        "prediction_unit": "mag",
+        "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
+        "frame_transformation_role": "BARYCENTRIC_TO_CMB_FORWARD_MODEL",
+    },
 }
 
 
@@ -441,9 +461,15 @@ def build_pr309_inputs(
             "source_id",
             "source_release",
             "source_locator",
+            *PR309_OBSERVABLE_CONTRACT,
             "observable_delta_mag",
         }:
             raise JWSTSNCurrentStackError("source row fields drifted")
+        if any(
+            row.get(key) != value
+            for key, value in PR309_OBSERVABLE_CONTRACT.items()
+        ):
+            raise JWSTSNCurrentStackError("observable semantic contract drifted")
         try:
             provenance = {
                 "source_id": _nonempty(row["source_id"], label="source provenance"),
@@ -626,12 +652,23 @@ def build_pr309_inputs(
             "model_identity",
             "source_release",
             "model_role",
+            "input_frame",
+            "prediction_frame",
+            "prediction_unit",
+            "observable_delta_definition",
+            "frame_transformation_role",
+            "frame_transformation_identity",
             "predicted_delta_mag",
         }:
             raise JWSTSNCurrentStackError("competitor fields drifted")
         competitor_id = str(row["competitor_id"])
         if row["model_role"] != "SEPARATE_DIRECTION_DEPTH_COMPETITOR":
             raise JWSTSNCurrentStackError("competitors cannot be pooled")
+        semantic_contract = PR309_COMPETITOR_SEMANTIC_CONTRACTS[competitor_id]
+        if any(row.get(key) != value for key, value in semantic_contract.items()):
+            raise JWSTSNCurrentStackError(
+                "competitor frame or observable semantics drifted"
+            )
         try:
             prediction = np.asarray(row["predicted_delta_mag"], dtype=float)
         except (TypeError, ValueError) as exc:
@@ -647,6 +684,11 @@ def build_pr309_inputs(
                 row["source_release"], label="competitor source release"
             ),
             "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
+            **semantic_contract,
+            "frame_transformation_identity": _nonempty(
+                row["frame_transformation_identity"],
+                label="competitor frame transformation identity",
+            ),
         }
     if len({row["model_identity"] for row in metadata.values()}) != len(metadata):
         raise JWSTSNCurrentStackError("competitor model identities must remain distinct")
@@ -678,6 +720,7 @@ def build_pr309_inputs(
                 or linkage_probabilities[index] < 1.0
                 else "ADMITTED_NON_POSITIONAL_IDENTITY_EVIDENCE"
             ),
+            **PR309_OBSERVABLE_CONTRACT,
             **PR309_SEMANTIC_CONTRACT,
         }
         for index, row_id in enumerate(row_ids)
@@ -698,7 +741,7 @@ def build_pr309_inputs(
         competitor_order=PR309_COMPETITOR_ORDER,
         competitor_predictions_mag=predictions,
         competitor_metadata=metadata,
-        semantic_contract=dict(PR309_SEMANTIC_CONTRACT),
+        semantic_contract={**PR309_SEMANTIC_CONTRACT, **PR309_OBSERVABLE_CONTRACT},
     )
 
 
@@ -768,16 +811,18 @@ def _competitor_diagnostic(
         lower = np.linalg.cholesky(inputs.total_covariance_mag2)
         design_white = np.linalg.solve(lower, augmented)
         values_white = np.linalg.solve(lower, inputs.observable_delta_mag)
-        normal = design_white.T @ design_white
-        normal_inverse = np.linalg.inv(normal)
-        coefficients = normal_inverse @ design_white.T @ values_white
+        orthogonal, triangular = np.linalg.qr(design_white, mode="reduced")
+        coefficients = np.linalg.solve(triangular, orthogonal.T @ values_white)
+        triangular_inverse = np.linalg.solve(
+            triangular, np.eye(triangular.shape[0], dtype=float)
+        )
         residual = values_white - design_white @ coefficients
     except np.linalg.LinAlgError as exc:
         raise JWSTSNCurrentStackError("competitor GLS solve failed") from exc
     return {
         "status": "IDENTIFIED_DIAGNOSTIC_ONLY",
         "point_estimate": float(coefficients[-1]),
-        "standard_error": float(math.sqrt(normal_inverse[-1, -1])),
+        "standard_error": float(np.linalg.norm(triangular_inverse[-1])),
         "whitened_residual_sum_squares": float(residual @ residual),
         "response_rank": rank,
         **inputs.competitor_metadata[competitor_id],
