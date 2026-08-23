@@ -1,7 +1,8 @@
 """Current-stack CF4 affine-flow observable.
 
-The operator fits exactly a radial monopole, a three-vector bulk flow, and a
-five-dimensional symmetric trace-free shear.  It consumes a full covariance
+The operator fits exactly the radial projection of an isotropic affine trace,
+a three-vector bulk flow, and a five-dimensional symmetric trace-free shear.
+It consumes a full covariance
 whose row order is bound to the catalogue, evaluates a predeclared finite set
 of nuisance profiles, and abstains whenever either the nine-column affine
 response or the eight-column flow response is weakly identified.
@@ -21,7 +22,7 @@ import numpy as np
 
 
 COEFFICIENT_NAMES = (
-    "monopole_km_s",
+    "isotropic_trace_over_3_km_s_mpc",
     "bulk_x_km_s",
     "bulk_y_km_s",
     "bulk_z_km_s",
@@ -147,7 +148,7 @@ def galactic_unit_vectors(
 def build_cf4_affine_design(
     directions: np.ndarray, distance_mpc: np.ndarray
 ) -> np.ndarray:
-    """Build the exact ``M + 3 B + 5 S_STF`` radial design."""
+    """Build the exact ``trace/3 + 3 B + 5 S_STF`` radial design."""
 
     direction = np.asarray(directions, dtype=float)
     distance = np.asarray(distance_mpc, dtype=float)
@@ -165,7 +166,7 @@ def build_cf4_affine_design(
     nx, ny, nz = direction.T
     return np.column_stack(
         (
-            np.ones(len(distance)),
+            distance,
             nx,
             ny,
             nz,
@@ -278,11 +279,11 @@ def _fit_profile(
     rank, ratio, condition, affine_floor = _rank_diagnostics(
         whitened_design, config
     )
-    monopole = whitened_design[:, :1]
+    trace = whitened_design[:, :1]
     flow = whitened_design[:, 1:]
-    if np.linalg.norm(monopole) > 0.0:
-        flow = flow - monopole @ (
-            np.linalg.solve(monopole.T @ monopole, monopole.T @ flow)
+    if np.linalg.norm(trace) > 0.0:
+        flow = flow - trace @ (
+            np.linalg.solve(trace.T @ trace, trace.T @ flow)
         )
     flow_rank, flow_ratio, flow_condition, flow_floor = _rank_diagnostics(
         flow, config
@@ -406,6 +407,10 @@ def analyze_cf4_current_stack(
             identified_set: Mapping[str, object]
             if len(members) == len(config.nuisance_profiles):
                 member_array = np.asarray(members, dtype=float)
+                contains_exact_no_flow = any(
+                    np.array_equal(member, np.zeros(8, dtype=float))
+                    for member in member_array
+                )
                 identified_set = {
                     "status": "BOUNDED_DIAGNOSTIC_SET",
                     "profile_ids": [
@@ -415,7 +420,11 @@ def analyze_cf4_current_stack(
                     "componentwise_projection_bounds": np.column_stack(
                         (member_array.min(axis=0), member_array.max(axis=0))
                     ).tolist(),
-                    "no_flow_calibration_status": "UNAVAILABLE_ABSTAIN",
+                    "no_flow_calibration_status": (
+                        "EXACT_NO_FLOW_MEMBER_ABSTAIN"
+                        if contains_exact_no_flow
+                        else "UNAVAILABLE_ABSTAIN"
+                    ),
                     "source_response_status": "UNAVAILABLE_ABSTAIN",
                 }
             else:
@@ -447,11 +456,36 @@ def analyze_cf4_current_stack(
         terminal = "WEAK_ID_ABSTAIN"
     elif any(value != "IDENTIFIED_SET_MEMBER" for value in dispositions):
         terminal = "UNDETERMINED_ABSTAIN"
+    elif any(
+        cell["identified_set"]["no_flow_calibration_status"]
+        == "EXACT_NO_FLOW_MEMBER_ABSTAIN"
+        for cell in cells
+    ):
+        terminal = "EXACT_NO_FLOW_MEMBER_ABSTAIN"
+    elif any(
+        cell["identified_set"]["no_flow_calibration_status"]
+        == "UNAVAILABLE_ABSTAIN"
+        for cell in cells
+    ):
+        terminal = "NO_FLOW_CALIBRATION_UNAVAILABLE_ABSTAIN"
     else:
         terminal = "IDENTIFIED_SET_DIAGNOSTIC"
     contract = {
-        "basis": "M_PLUS_3B_PLUS_5_STF",
+        "basis": "TRACE_OVER_3_PLUS_3B_PLUS_5_STF",
         "coefficient_count": 9,
+        "coefficient_names": list(COEFFICIENT_NAMES),
+        "coefficient_units": [
+            "km s-1 Mpc-1",
+            "km s-1",
+            "km s-1",
+            "km s-1",
+            "km s-1 Mpc-1",
+            "km s-1 Mpc-1",
+            "km s-1 Mpc-1",
+            "km s-1 Mpc-1",
+            "km s-1 Mpc-1",
+        ],
+        "isotropic_trace_convention": "coefficient_equals_trace_over_3",
         "frame": "GALACTIC",
         "positive_velocity": "RECEDING",
         "distance_units": "Mpc",

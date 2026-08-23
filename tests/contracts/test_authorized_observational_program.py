@@ -591,10 +591,20 @@ def _cf4_synthetic(rows: int = 192):
     directions = rng.normal(size=(rows, 3))
     directions /= np.linalg.norm(directions, axis=1)[:, None]
     distance = np.linspace(25.0, 180.0, rows)
-    design = module.build_cf4_affine_design(directions, distance)
-    truth = np.asarray((12.0, 80.0, -45.0, 25.0, 0.20, -0.12, 0.08, -0.04, 0.06))
+    truth = np.asarray((0.12, 80.0, -45.0, 25.0, 0.20, -0.12, 0.08, -0.04, 0.06))
+    bulk = truth[1:4]
+    shear = np.asarray(
+        (
+            (truth[4], truth[6], truth[7]),
+            (truth[6], truth[5], truth[8]),
+            (truth[7], truth[8], -truth[4] - truth[5]),
+        )
+    )
+    gradient = truth[0] * np.eye(3) + shear
     h0 = 70.0
-    vcmb = h0 * distance + design @ truth
+    vcmb = h0 * distance + directions @ bulk + distance * np.einsum(
+        "ni,ij,nj->n", directions, gradient, directions
+    )
     sigma = np.linspace(90.0, 130.0, rows)
     covariance = 0.04 * np.outer(sigma, sigma)
     covariance.flat[:: rows + 1] = np.square(sigma)
@@ -632,15 +642,16 @@ def _cf4_synthetic(rows: int = 192):
     return module, inputs, config, truth
 
 
-def test_PR307_cf4_operator_is_exactly_monopole_bulk_and_stf_shear() -> None:
+def test_PR312_cf4_operator_is_exactly_trace_bulk_and_stf_shear() -> None:
     module, inputs, config, truth = _cf4_synthetic()
     directions = module.galactic_unit_vectors(
         inputs.galactic_longitude_deg, inputs.galactic_latitude_deg
     )
     design = module.build_cf4_affine_design(directions, inputs.distance_mpc)
     assert design.shape == (len(inputs.group_ids), 9)
+    assert np.array_equal(design[:, 0], inputs.distance_mpc)
     assert module.COEFFICIENT_NAMES == (
-        "monopole_km_s",
+        "isotropic_trace_over_3_km_s_mpc",
         "bulk_x_km_s",
         "bulk_y_km_s",
         "bulk_z_km_s",
@@ -652,6 +663,7 @@ def test_PR307_cf4_operator_is_exactly_monopole_bulk_and_stf_shear() -> None:
     )
     report = module.analyze_cf4_current_stack(inputs, config)
     assert report["operator_contract"]["coefficient_count"] == 9
+    assert report["operator_contract"]["coefficient_units"][0] == "km s-1 Mpc-1"
     assert report["operator_contract"]["frame"] == "GALACTIC"
     assert report["operator_contract"]["positive_velocity"] == "RECEDING"
     assert report["observed_statistic_seen"] is False
@@ -680,6 +692,11 @@ def test_PR307_cf4_operator_is_exactly_monopole_bulk_and_stf_shear() -> None:
     assert np.allclose(
         zero_report["cells"][-1]["profiles"][0]["coefficients"], 0.0, atol=1.0e-10
     )
+    assert (
+        zero_report["cells"][-1]["identified_set"]["no_flow_calibration_status"]
+        == "EXACT_NO_FLOW_MEMBER_ABSTAIN"
+    )
+    assert zero_report["terminal_disposition"] == "EXACT_NO_FLOW_MEMBER_ABSTAIN"
 
 
 def test_PR307_cf4_full_covariance_order_rank_and_weak_id_fail_closed() -> None:
@@ -918,7 +935,9 @@ def test_PR307_cf4_synthetic_profile_never_accepts_observed_inputs(
     payload = worker.synthetic_profile(rows="1", mode="serial", workers=1)
     assert payload["observed_statistic_seen"] is False
     assert payload["observed_science_executed"] is False
-    assert payload["terminal_dispositions"] == ["IDENTIFIED_SET_DIAGNOSTIC"]
+    assert payload["terminal_dispositions"] == [
+        "NO_FLOW_CALIBRATION_UNAVAILABLE_ABSTAIN"
+    ]
     exit_code = worker.main(
         [
             "--synthetic-profile",

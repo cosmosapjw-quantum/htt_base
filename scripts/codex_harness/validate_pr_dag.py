@@ -660,7 +660,7 @@ PR280_ROOT_CAUSE_CARD_CONTRACTS = {
 }
 PR280_ROOT_CAUSE_FULL_IDS = set(PR280_ROOT_CAUSE_CARD_CONTRACTS)
 POST300_OBSERVATIONAL_LANE_IDS = {
-    f"PR-{number}" for number in range(301, 312)
+    f"PR-{number}" for number in range(301, 313)
 }
 POST300_OBSERVATIONAL_CARD_CONTRACTS = {
     "PR-301": {
@@ -701,9 +701,14 @@ POST300_OBSERVATIONAL_CARD_CONTRACTS = {
         "dependencies": [("PR-306", "requires_success")],
         "authorization": "EXPLICIT_USER_AUTHORIZED",
     },
+    "PR-312": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-306", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
     "PR-308": {
         "owner": "OBSSTAT",
-        "dependencies": [("PR-307", "requires_success")],
+        "dependencies": [("PR-312", "requires_success")],
         "authorization": "EXPLICIT_APPROVED_SEQUENCE",
     },
     "PR-309": {
@@ -1014,7 +1019,7 @@ def validate_backlog(data: dict[str, Any]) -> DagInfo:
     present_post300_ids = idset & POST300_OBSERVATIONAL_LANE_IDS
     if present_post300_ids and present_post300_ids != POST300_OBSERVATIONAL_LANE_IDS:
         raise ValueError(
-            "post-300 observational-lane intake must register PR-301..311 "
+            "post-300 observational-lane intake must register PR-301..312 "
             "atomically; "
             f"missing={sorted(POST300_OBSERVATIONAL_LANE_IDS - present_post300_ids)}"
         )
@@ -2054,7 +2059,7 @@ def _validate_vector_tensor_slice(
 
 
 def validate_post300_observational_slice(cards: dict[str, Any]) -> None:
-    """Validate the bounded PR-301..311 observational-readiness sequence."""
+    """Validate the bounded PR-301..312 observational-readiness sequence."""
 
     for pr_id in sorted(POST300_OBSERVATIONAL_CARD_CONTRACTS):
         card = cards[pr_id]

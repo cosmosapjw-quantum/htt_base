@@ -26,6 +26,101 @@ def _load_worker():
     return module
 
 
+def _independent_affine_case(*, no_flow: bool):
+    worker = _load_worker()
+    rng = np.random.default_rng(312)
+    rows = 96
+    directions = rng.normal(size=(rows, 3))
+    directions /= np.linalg.norm(directions, axis=1)[:, None]
+    distance = np.linspace(24.0, 180.0, rows)
+    h0 = 70.0
+    if no_flow:
+        trace_over_three = 0.0
+        bulk = np.zeros(3)
+        shear = np.zeros((3, 3))
+    else:
+        trace_over_three = 0.35
+        bulk = np.asarray((24.0, -13.0, 7.0))
+        shear = np.asarray(
+            (
+                (0.08, 0.03, -0.02),
+                (0.03, -0.05, 0.01),
+                (-0.02, 0.01, -0.03),
+            )
+        )
+    gradient = trace_over_three * np.eye(3) + shear
+    peculiar = directions @ bulk + distance * np.einsum(
+        "ni,ij,nj->n", directions, gradient, directions
+    )
+    sigma = np.linspace(85.0, 125.0, rows)
+    covariance = 0.025 * np.outer(sigma, sigma)
+    covariance.flat[:: rows + 1] = np.square(sigma)
+    ids = np.arange(312000, 312000 + rows, dtype=np.int64)
+    inputs = worker.Cf4OperatorInputs(
+        group_ids=ids,
+        galactic_longitude_deg=(
+            np.degrees(np.arctan2(directions[:, 1], directions[:, 0])) % 360.0
+        ),
+        galactic_latitude_deg=np.degrees(np.arcsin(directions[:, 2])),
+        distance_mpc=distance,
+        cmb_velocity_km_s=h0 * distance + peculiar,
+        covariance_km2_s2=covariance,
+        covariance_group_ids=ids.copy(),
+        selected_group_ids=ids.copy(),
+    )
+    config = worker.Cf4OperatorConfig(
+        depth_thresholds_mpc=(180.0,),
+        zoa_half_widths_deg=(0.0,),
+        nuisance_profiles=(
+            worker.Cf4NuisanceProfile("independent", h0, 1.0, 1.0),
+        ),
+    )
+    truth = np.asarray(
+        (
+            trace_over_three,
+            *bulk,
+            shear[0, 0],
+            shear[1, 1],
+            shear[0, 1],
+            shear[0, 2],
+            shear[1, 2],
+        )
+    )
+    return worker, inputs, config, truth
+
+
+def test_pr312_recovers_independent_affine_trace_without_flow_leakage() -> None:
+    worker, inputs, config, truth = _independent_affine_case(no_flow=False)
+
+    result = worker.analyze_cf4_current_stack(inputs, config)
+    profile = result["cells"][0]["profiles"][0]
+
+    assert np.allclose(profile["coefficients"], truth, atol=1.0e-10)
+    assert (
+        result["operator_contract"]["coefficient_names"][0]
+        == "isotropic_trace_over_3_km_s_mpc"
+    )
+    assert result["operator_contract"]["coefficient_units"][0] == "km s-1 Mpc-1"
+    assert (
+        result["terminal_disposition"]
+        == "NO_FLOW_CALIBRATION_UNAVAILABLE_ABSTAIN"
+    )
+
+
+def test_pr312_exact_no_flow_member_forces_typed_abstention() -> None:
+    worker, inputs, config, _ = _independent_affine_case(no_flow=True)
+
+    result = worker.analyze_cf4_current_stack(inputs, config)
+    identified_set = result["cells"][0]["identified_set"]
+
+    assert np.array_equal(identified_set["joint_flow_members"], np.zeros((1, 8)))
+    assert (
+        identified_set["no_flow_calibration_status"]
+        == "EXACT_NO_FLOW_MEMBER_ABSTAIN"
+    )
+    assert result["terminal_disposition"] == "EXACT_NO_FLOW_MEMBER_ABSTAIN"
+
+
 @pytest.mark.parametrize("rows", ("1", "8", "32", "128", "full"))
 def test_pr307_synthetic_profile_is_observation_free(
     tmp_path: Path, rows: str
@@ -70,7 +165,9 @@ def test_pr307_synthetic_profile_is_observation_free(
     assert payload["row_label"] == rows
     assert payload["observed_statistic_seen"] is False
     assert payload["observed_science_executed"] is False
-    assert payload["terminal_dispositions"] == ["IDENTIFIED_SET_DIAGNOSTIC"]
+    assert payload["terminal_dispositions"] == [
+        "NO_FLOW_CALIBRATION_UNAVAILABLE_ABSTAIN"
+    ]
 
 
 def test_pr307_synthetic_profile_rejects_admission_and_data_root(

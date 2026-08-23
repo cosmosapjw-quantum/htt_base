@@ -194,6 +194,7 @@ completed:
 - PR-180
 - PR-251
 blocked:
+- PR-307
 - PR-280
 - PR-190
 - PR-172
@@ -259,7 +260,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-307
+in_progress: PR-312
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -595,10 +596,10 @@ stacked_pr_execution:
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
   target_sha: f69a33759869acdff78a627192c3d834d1fd67b8
-  active_implementation_pr: PR-307
-  pr_order: [PR-307, PR-308, PR-309, PR-310, PR-311]
+  active_implementation_pr: PR-312
+  pr_order: [PR-312, PR-308, PR-309, PR-310, PR-311]
   prs:
-    PR-307:
+    PR-312:
       lifecycle: ACTIVE
       lifecycle_history: [PLANNED, ACTIVE]
       base_sha: f69a33759869acdff78a627192c3d834d1fd67b8
@@ -607,17 +608,17 @@ stacked_pr_execution:
       sealed_head: null
       pushed_ref: null
       pr_url: null
-      production_hash: b1c4d8216a709ff72b32b05ef2dec100bb0da43474b543b889cff631443ac370
+      production_hash: 6abe1c6a5c4cc885e05d8a0e66b7e2f95f33abc48c9548ca0475c960dd2ac78c
       dependency_hashes:
         pr306_merge_commit: 691cdf53901f28b8260a59a5027cac05f4e54ca979d58b7d20c439c63e06e61d
         pr306_merge_tree: be18a83ff15fd55af4fd798906206cc244c1ebe6c0babba7c8fb446eca451daf
       gate_dispositions: {eligibility: PASS}
-      assurance_budget: {maximum: 16, consumed: 4}
+      assurance_budget: {maximum: 16, consumed: 0}
     PR-308:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
       base_sha: null
-      predecessor_pr: PR-307
+      predecessor_pr: PR-312
       predecessor_sealed_sha: null
       sealed_head: null
       pushed_ref: null
@@ -810,7 +811,20 @@ execution_lane:
   PR-309: defensible
   PR-310: defensible
   PR-311: defensible
+  PR-312: defensible
 execution_resolutions:
+  PR-307:
+    resolution: COMPLETED_FAILED_WITH_RECEIPT
+    receipt: docs/PR_DELTAS/pr-312.md
+    candidate_sha: 435ce9b5dd59118dc5aab29bf76692c9ecad3452
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/395
+    success_dependency_satisfied: false
+    resolved_on: '2026-08-23'
+    scientific_status_effect: affine_trace_and_no_flow_terminal_contract_failed_final_review
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: synthetic_cf4_failed_candidate
+    observed_data_executed: false
+    public_use: false
   PR-289:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-289.md
