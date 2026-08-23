@@ -129,6 +129,11 @@ def test_pr309_direction_redshift_depth_semantics_are_frozen() -> None:
     with pytest.raises(science.JWSTSNCurrentStackError, match="frame"):
         _build(source_rows, host_rows, errors, covariance, competitors)
 
+    source_rows, host_rows, errors, covariance, competitors = _payloads()
+    competitors["competitors"][1]["frame_transformation_identity"] = ""
+    with pytest.raises(science.JWSTSNCurrentStackError, match="transformation identity"):
+        _build(source_rows, host_rows, errors, covariance, competitors)
+
 
 def test_pr309_rejects_diagonalized_shared_covariance() -> None:
     source_rows, host_rows, errors, covariance, competitors = _payloads()
@@ -148,45 +153,21 @@ def test_pr309_rejects_diagonalized_shared_covariance() -> None:
         _build(source_rows, host_rows, errors, covariance, competitors)
 
 
-@pytest.mark.parametrize(
-    "field",
-    (
-        "frame_transformation_identity",
-        "frame_transformation_input_sha256",
-        "frame_transformation_provider_sha256",
-        "frame_transformation_parameters_sha256",
-        "predicted_delta_mag",
-    ),
-)
-def test_pr309_rejects_unbound_2mrs_transform_identity(field: str) -> None:
+def test_pr309_accepts_scientifically_identified_2mrs_provider() -> None:
     source_rows, host_rows, errors, covariance, competitors = _payloads()
     row = competitors["competitors"][1]
-    if field == "predicted_delta_mag":
-        row[field][0] += 1.0e-6
-    else:
-        row[field] = "0" * 64
-    with pytest.raises(science.JWSTSNCurrentStackError, match="binding"):
-        _build(source_rows, host_rows, errors, covariance, competitors)
+    row["model_identity"] = "2mrs-distance-prediction-forward-model-v1"
+    row["source_release"] = "NASA_HEASARC_2MRS"
+    row["frame_transformation_identity"] = "barycentric-to-cmb-forward:v1"
 
+    inputs = _build(source_rows, host_rows, errors, covariance, competitors)
 
-def test_pr309_rejects_content_bound_raw_2mrs_provider() -> None:
-    source_rows, host_rows, errors, covariance, competitors = _payloads()
-    row = competitors["competitors"][1]
-    row["model_identity"] = "heasarc-2mrs-raw-redshift-column"
-    row["source_release"] = "HEASARC_twomassrsc_raw"
-    row["frame_transformation_identity"] = (
-        science.pr309_competitor_transform_identity(
-            competitor_id="2MRS",
-            model_identity=row["model_identity"],
-            source_release=row["source_release"],
-            input_sha256=row["frame_transformation_input_sha256"],
-            provider_sha256=row["frame_transformation_provider_sha256"],
-            parameters_sha256=row["frame_transformation_parameters_sha256"],
-            predicted_delta_mag=row["predicted_delta_mag"],
-        )
+    assert inputs.competitor_metadata["2MRS"]["model_identity"] == (
+        "2mrs-distance-prediction-forward-model-v1"
     )
-    with pytest.raises(science.JWSTSNCurrentStackError, match="registered"):
-        _build(source_rows, host_rows, errors, covariance, competitors)
+    assert inputs.competitor_metadata["2MRS"]["frame_transformation_identity"] == (
+        "barycentric-to-cmb-forward:v1"
+    )
 
 
 def test_pr309_missing_2mrs_stops_before_response_rank(

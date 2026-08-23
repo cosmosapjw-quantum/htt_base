@@ -22,7 +22,6 @@ for _name, _value in THREAD_CONTROLS.items():
     os.environ[_name] = _value
 
 import argparse
-import hashlib
 import json
 from pathlib import Path
 import resource
@@ -54,7 +53,6 @@ from obsstat.jwst_distance_consistency import (  # noqa: E402
     PR309_SEMANTIC_CONTRACT,
     analyze_pr309_current_stack,
     build_pr309_inputs,
-    pr309_competitor_transform_identity,
 )
 
 
@@ -300,7 +298,6 @@ def _synthetic_payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
         depth / depth.max()
     )
     two_mrs_prediction = 0.017 * np.cos(angles) - 0.003 * redshift / redshift.max()
-    provider_sha256 = _stream_sha256(Path(__file__))
     competitor_model = {
         "row_order": row_ids,
         "competitors": [
@@ -309,15 +306,8 @@ def _synthetic_payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
                 "model_identity": "synthetic-cf4-forward-v1",
                 "source_release": "synthetic-only",
                 "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
-                "prediction_scope": "SYNTHETIC_OPERATOR_ORACLE_ONLY",
                 **PR309_COMPETITOR_SEMANTIC_CONTRACTS["CF4"],
-                "frame_transformation_input_sha256": hashlib.sha256(
-                    np.asarray(depth, dtype="<f8").tobytes()
-                ).hexdigest(),
-                "frame_transformation_provider_sha256": provider_sha256,
-                "frame_transformation_parameters_sha256": hashlib.sha256(
-                    b"pr309-synthetic-cf4-parameters-v1"
-                ).hexdigest(),
+                "frame_transformation_identity": "synthetic-cf4-cmb-forward:v1",
                 "predicted_delta_mag": cf4_prediction.tolist(),
             },
             {
@@ -325,29 +315,12 @@ def _synthetic_payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
                 "model_identity": "synthetic-2mrs-forward-v1",
                 "source_release": "synthetic-only",
                 "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
-                "prediction_scope": "SYNTHETIC_OPERATOR_ORACLE_ONLY",
                 **PR309_COMPETITOR_SEMANTIC_CONTRACTS["2MRS"],
-                "frame_transformation_input_sha256": hashlib.sha256(
-                    np.asarray(redshift, dtype="<f8").tobytes()
-                ).hexdigest(),
-                "frame_transformation_provider_sha256": provider_sha256,
-                "frame_transformation_parameters_sha256": hashlib.sha256(
-                    b"pr309-synthetic-2mrs-parameters-v1"
-                ).hexdigest(),
+                "frame_transformation_identity": "synthetic-barycentric-to-cmb:v1",
                 "predicted_delta_mag": two_mrs_prediction.tolist(),
             },
         ],
     }
-    for row in competitor_model["competitors"]:
-        row["frame_transformation_identity"] = pr309_competitor_transform_identity(
-            competitor_id=row["competitor_id"],
-            model_identity=row["model_identity"],
-            source_release=row["source_release"],
-            input_sha256=row["frame_transformation_input_sha256"],
-            provider_sha256=row["frame_transformation_provider_sha256"],
-            parameters_sha256=row["frame_transformation_parameters_sha256"],
-            predicted_delta_mag=row["predicted_delta_mag"],
-        )
     return source_rows, host_rows, individual_errors, covariance, competitor_model
 
 
