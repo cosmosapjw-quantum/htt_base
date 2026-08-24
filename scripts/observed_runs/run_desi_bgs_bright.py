@@ -539,9 +539,15 @@ def synthetic_profile(
         confusion_templates=confusion,
         observed=False,
     )
+    profile = _base_profile(rows, started)
+    profile_metadata = profile.pop("artifact_metadata")
     return {
         **report,
-        **_base_profile(rows, started),
+        **profile,
+        "artifact_metadata": {
+            **report["artifact_metadata"],
+            **profile_metadata,
+        },
         "mode": mode,
         "workers": workers,
         "thread_controls": dict(THREAD_CONTROLS),

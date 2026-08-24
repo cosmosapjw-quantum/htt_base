@@ -34,6 +34,7 @@ EXPECTED_EZMOCK_REALIZATIONS = tuple(range(1, 1001))
 EXPECTED_ABACUS_REALIZATIONS = tuple(range(25))
 RANK_RELATIVE_TOLERANCE = 1.0e-6
 MAXIMUM_COVARIANCE_CONDITION = 1.0e12
+ABACUS_MAX_MEAN_SHIFT_RMS_RATIO = 3.0
 SELECTION_DERIVATION_ID = (
     "desi:dr1:v1.5:bgs-bright-mr21.5-official-clustering-selection"
 )
@@ -109,10 +110,10 @@ def validate_selection(selection: DESISelection) -> None:
     if (
         selection.release_id != "DESI_DR1_LSS_IRON_V1_5"
         or selection.tracer != "BGS_BRIGHT-21.5"
-        or not math.isclose(selection.base_apparent_r_limit, 19.5)
-        or not math.isclose(selection.absolute_magnitude_max, -21.5)
-        or not math.isclose(selection.z_min, 0.1)
-        or not math.isclose(selection.z_max, 0.4)
+        or selection.base_apparent_r_limit != 19.5
+        or selection.absolute_magnitude_max != -21.5
+        or selection.z_min != 0.1
+        or selection.z_max != 0.4
         or selection.caps != CAP_ORDER
         or selection.window_ids
         != ("desi:dr1:ngc:random0", "desi:dr1:sgc:random0")
@@ -235,12 +236,8 @@ def fit_realization(
         raise DESISuccessorError("DESI realization input is required")
     if (
         realization.tracer != selection.tracer
-        or not math.isclose(
-            realization.base_apparent_r_limit, selection.base_apparent_r_limit
-        )
-        or not math.isclose(
-            realization.absolute_magnitude_max, selection.absolute_magnitude_max
-        )
+        or realization.base_apparent_r_limit != selection.base_apparent_r_limit
+        or realization.absolute_magnitude_max != selection.absolute_magnitude_max
         or realization.selection_id != selection.selection_id
         or realization.window_ids != selection.window_ids
         or realization.operator_id != selection.operator_id
@@ -511,13 +508,26 @@ def analyze_successor_formalism(
     whitened_difference = np.linalg.solve(
         np.linalg.cholesky(support.covariance), difference
     )
+    abacus_shift_norm = float(np.linalg.norm(whitened_difference))
+    abacus_reference_rms = math.sqrt(
+        len(FEATURE_ORDER)
+        * (1.0 / support.abacus_count + 1.0 / support.ezmock_count)
+    )
+    abacus_shift_ratio = abacus_shift_norm / abacus_reference_rms
+    abacus_validation_status = (
+        "PASS_HELD_OUT_MEAN_SHIFT"
+        if abacus_shift_ratio <= ABACUS_MAX_MEAN_SHIFT_RMS_RATIO
+        else "FAIL_HELD_OUT_MEAN_SHIFT"
+    )
     result: dict[str, object] = {
         "terminal_disposition": (
-            "SYNTHETIC_OPERATOR_CLOSURE_PASS"
-            if rank["status"] == "FULL_INCREMENTAL_RANK" and not observed
+            "NON_IDENTIFIED_ABSTAIN"
+            if rank["status"] != "FULL_INCREMENTAL_RANK"
+            else "ABACUS_HELD_OUT_VALIDATION_FAILED"
+            if abacus_validation_status != "PASS_HELD_OUT_MEAN_SHIFT"
             else "OBSERVED_OPERATOR_DIAGNOSTIC_COMPLETE"
-            if rank["status"] == "FULL_INCREMENTAL_RANK"
-            else "NON_IDENTIFIED_ABSTAIN"
+            if observed
+            else "SYNTHETIC_OPERATOR_CLOSURE_PASS"
         ),
         "selection": {
             "release_id": selection.release_id,
@@ -549,7 +559,11 @@ def analyze_successor_formalism(
         "abacus_validation": {
             "count": support.abacus_count,
             "pooled_with_ezmock": False,
-            "whitened_mean_shift_norm": float(np.linalg.norm(whitened_difference)),
+            "whitened_mean_shift_norm": abacus_shift_norm,
+            "finite_ensemble_reference_rms": abacus_reference_rms,
+            "mean_shift_rms_ratio": abacus_shift_ratio,
+            "maximum_mean_shift_rms_ratio": ABACUS_MAX_MEAN_SHIFT_RMS_RATIO,
+            "status": abacus_validation_status,
             "role": support.abacus_role,
         },
         "response_rank": rank,
@@ -566,6 +580,7 @@ def analyze_successor_formalism(
                 else "synthetic_operator_diagnostic"
             ),
             "claim_tier": "diagnostic_only",
+            "transfer_source": selection.transfer_source,
             "covariance_status": "FULL_EZMOCK_1000_COVARIANCE",
             "null_mock_status": "EZMOCK_1000_WITH_ABACUS_25_HELD_OUT",
             "public_use": False,

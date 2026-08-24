@@ -146,9 +146,13 @@ def complete_case(science):
     (
         ("tracer", "BGS_ANY"),
         ("base_apparent_r_limit", 21.5),
+        ("base_apparent_r_limit", 19.50000001),
         ("absolute_magnitude_max", 21.5),
+        ("absolute_magnitude_max", -21.49999999),
         ("z_min", 0.0),
+        ("z_min", 0.100000001),
         ("z_max", 0.5),
+        ("z_max", 0.399999999),
         ("caps", ("SGC", "NGC")),
         ("selection_derivation_id", "locally-invented-selection"),
         ("transfer_source", "external"),
@@ -220,6 +224,8 @@ def test_pr311_refit_is_bound_to_cap_window_and_identical_operator(science) -> N
     baseline = _realization(science, "EZMOCK", 0)
     for mutation in (
         {"tracer": "BGS_ANY"},
+        {"base_apparent_r_limit": 19.50000001},
+        {"absolute_magnitude_max": -21.49999999},
         {"window_ids": tuple(reversed(baseline.window_ids))},
         {"operator_id": "different-null-operator"},
     ):
@@ -366,6 +372,38 @@ def test_pr311_abacus_rows_change_validation_but_not_covariance(
         replay["abacus_validation"]["whitened_mean_shift_norm"]
         != baseline["abacus_validation"]["whitened_mean_shift_norm"]
     )
+
+
+def test_pr311_catastrophic_abacus_shift_vetoes_closure(
+    science, complete_case
+) -> None:
+    selection, ezmock, abacus, nuisance, candidate, confusion = complete_case
+    shifted = []
+    for row in abacus:
+        fitted = science.fit_realization(row, selection)
+        shifted.append(
+            science.DESIFitResult(
+                **{**fitted.__dict__, "features": fitted.features + 1.0}
+            )
+        )
+    result = science.analyze_successor_formalism(
+        ezmock,
+        tuple(shifted),
+        selection=selection,
+        nuisance_response=nuisance,
+        candidate_response=candidate,
+        confusion_templates=confusion,
+        observed=False,
+    )
+    validation = result["abacus_validation"]
+    assert result["terminal_disposition"] == "ABACUS_HELD_OUT_VALIDATION_FAILED"
+    assert validation["status"] == "FAIL_HELD_OUT_MEAN_SHIFT"
+    assert (
+        validation["mean_shift_rms_ratio"]
+        > validation["maximum_mean_shift_rms_ratio"]
+    )
+    assert result["p_value"] is None
+    assert result["forced_source_label"] is None
 
 
 def test_pr311_response_rank_is_scale_invariant(science, complete_case) -> None:
@@ -761,6 +799,17 @@ def test_pr311_output_has_no_inference_attribution_or_family_surface(worker) -> 
     assert result["p_value"] is None
     assert result["forced_source_label"] is None
     assert result["component_confusion"]["causal_attribution_identified"] is False
+    assert result["abacus_validation"]["status"] == "PASS_HELD_OUT_MEAN_SHIFT"
+    assert result["artifact_metadata"]["covariance_status"] == (
+        "FULL_EZMOCK_1000_COVARIANCE"
+    )
+    assert result["artifact_metadata"]["null_mock_status"] == (
+        "EZMOCK_1000_WITH_ABACUS_25_HELD_OUT"
+    )
+    assert result["artifact_metadata"]["transfer_source"] == "none"
+    assert "causal_component_attribution" in result["artifact_metadata"][
+        "forbidden_uses"
+    ]
 
     keys: set[str] = set()
 
