@@ -691,8 +691,8 @@ stacked_pr_execution:
         data_admission: BLOCKED_NOT_PRESENT}
       assurance_budget: {maximum: 16, consumed: 3}
     PR-311:
-      lifecycle: IMPLEMENTED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
+      lifecycle: VALIDATED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
       base_sha: 00fbc5c7bf11765fb2f49cf68ea3ea3ee6cc489f
       predecessor_pr: PR-310
       predecessor_sealed_sha: 7a25636fb6cf2fdc1e0613c93b9ce25e5b1d2f02
@@ -708,6 +708,7 @@ stacked_pr_execution:
       gate_dispositions: {eligibility: PASS, local_focused_matrix: PASS,
         official_selection_contract: REPAIRED,
         first_review: REPAIR, closeout_review: REPAIR,
+        repair_matrix: PASS, repair_closeout_review: PENDING,
         data_admission: BLOCKED_NOT_PRESENT}
       assurance_budget: {maximum: 16, consumed: 3}
 execution_lane:
