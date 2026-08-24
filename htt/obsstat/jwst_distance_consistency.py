@@ -14,7 +14,9 @@ NGC 4258 anchor covariance.
 """
 from __future__ import annotations
 
+from dataclasses import dataclass
 import math
+from typing import Mapping, Sequence
 
 import numpy as np
 from scipy.stats import binomtest, chi2, norm, t
@@ -272,4 +274,650 @@ def build_distance_result(rows: list[dict], aggregate_rows: list[dict]) -> dict:
             "expanded aggregate rows are source-reported statistical summaries, not host-level refits",
             "overlapping aggregate samples are not combined without their covariance",
         ],
+    }
+
+
+# PR-309 current-stack closure.  This surface is intentionally separate from
+# the historical PR-153 published-table result builders above: it consumes an
+# exact PR-289 row-level admission and never reuses a PR-153/154 number.
+PR309_FEATURE_ORDER = (
+    "MONOPOLE",
+    "GALACTIC_X",
+    "GALACTIC_Y",
+    "GALACTIC_Z",
+    "REDSHIFT_CENTERED",
+    "DEPTH_CENTERED",
+)
+PR309_COMPETITOR_ORDER = ("CF4", "2MRS")
+PR309_HOST_LINKAGE_BASES = frozenset(
+    {
+        "SOURCE_REPORTED_HOST_IDENTITY",
+        "NON_POSITIONAL_CATALOGUE_CROSS_ID",
+        "AMBIGUOUS_HOST_MARGINALIZED",
+    }
+)
+PR309_MINIMUM_SINGULAR_VALUE_RATIO = 1.0e-6
+PR309_MAXIMUM_COVARIANCE_CONDITION = 1.0e10
+PR309_OBSERVABLE_CONTRACT = {
+    "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
+    "observable_delta_unit": "mag",
+}
+PR309_SEMANTIC_CONTRACT = {
+    "coordinate_frame": "GALACTIC_IAU_1958",
+    "direction_unit": "degree",
+    "redshift_frame": "CMB",
+    "redshift_definition": "SOURCE_REPORTED_HOST_REDSHIFT_TRANSFORMED_TO_CMB",
+    "depth_definition": "SOURCE_REPORTED_DISTANCE",
+    "depth_unit": "Mpc",
+}
+PR309_COMPETITOR_SEMANTIC_CONTRACTS = {
+    "CF4": {
+        "input_frame": "CMB",
+        "prediction_frame": "CMB",
+        "prediction_unit": "mag",
+        "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
+        "frame_transformation_role": "NATIVE_CMB_FRAME_FORWARD_MODEL",
+    },
+    "2MRS": {
+        "input_frame": "SOLAR_SYSTEM_BARYCENTER",
+        "prediction_frame": "CMB",
+        "prediction_unit": "mag",
+        "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
+        "frame_transformation_role": "BARYCENTRIC_TO_CMB_FORWARD_MODEL",
+    },
+}
+
+
+class JWSTSNCurrentStackError(ValueError):
+    """Raised when the PR-309 row/covariance contract fails closed."""
+
+
+@dataclass(frozen=True)
+class JWSTSNCurrentStackInputs:
+    """Typed, ordered JWST-SN rows and their complete covariance model."""
+
+    row_ids: tuple[str, ...]
+    row_report: tuple[dict[str, object], ...]
+    observable_delta_mag: np.ndarray
+    host_linkage_sigma_mag: np.ndarray
+    redshift: np.ndarray
+    depth_mpc: np.ndarray
+    direction_unit_vectors: np.ndarray
+    individual_sigma_mag: np.ndarray
+    calibration_groups: tuple[str, ...]
+    shared_zero_point_covariance_mag2: np.ndarray
+    peculiar_velocity_covariance_mag2: np.ndarray
+    total_covariance_mag2: np.ndarray
+    competitor_order: tuple[str, ...]
+    competitor_predictions_mag: dict[str, np.ndarray]
+    competitor_metadata: dict[str, dict[str, str]]
+    semantic_contract: dict[str, str]
+    feature_order: tuple[str, ...] = PR309_FEATURE_ORDER
+
+
+def _mapping(value: object, *, label: str) -> Mapping[str, object]:
+    if not isinstance(value, Mapping):
+        raise JWSTSNCurrentStackError(f"{label} must be a mapping")
+    return value
+
+
+def _nonempty(value: object, *, label: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise JWSTSNCurrentStackError(f"{label} must be non-empty text")
+    return value
+
+
+def _finite_number(value: object, *, label: str) -> float:
+    if isinstance(value, bool):
+        raise JWSTSNCurrentStackError(f"{label} must be finite")
+    try:
+        result = float(value)
+    except (TypeError, ValueError) as exc:
+        raise JWSTSNCurrentStackError(f"{label} must be finite") from exc
+    if not math.isfinite(result):
+        raise JWSTSNCurrentStackError(f"{label} must be finite")
+    return result
+
+
+def _ordered_rows(
+    payload: object,
+    *,
+    label: str,
+) -> tuple[tuple[str, ...], list[Mapping[str, object]]]:
+    document = _mapping(payload, label=label)
+    if set(document) != {"row_order", "rows"}:
+        raise JWSTSNCurrentStackError(f"{label} fields drifted")
+    order = document["row_order"]
+    rows = document["rows"]
+    if (
+        isinstance(order, (str, bytes))
+        or not isinstance(order, Sequence)
+        or isinstance(rows, (str, bytes))
+        or not isinstance(rows, Sequence)
+        or len(order) != len(rows)
+        or len(order) < len(PR309_FEATURE_ORDER) + 1
+    ):
+        raise JWSTSNCurrentStackError(f"{label} row order is incomplete")
+    row_ids = tuple(_nonempty(value, label=f"{label} row id") for value in order)
+    if len(row_ids) != len(set(row_ids)):
+        raise JWSTSNCurrentStackError(f"{label} row order contains duplicates")
+    normalized = [_mapping(row, label=f"{label} row") for row in rows]
+    if tuple(row.get("row_id") for row in normalized) != row_ids:
+        raise JWSTSNCurrentStackError(f"{label} row order and rows differ")
+    return row_ids, normalized
+
+
+def _finite_matrix(value: object, *, size: int, label: str) -> np.ndarray:
+    try:
+        matrix = np.asarray(value, dtype=float)
+    except (TypeError, ValueError) as exc:
+        raise JWSTSNCurrentStackError(f"{label} must be a finite square matrix") from exc
+    if matrix.shape != (size, size) or not np.all(np.isfinite(matrix)):
+        raise JWSTSNCurrentStackError(f"{label} must be a finite square matrix")
+    if not np.allclose(matrix, matrix.T, atol=1.0e-14, rtol=1.0e-12):
+        raise JWSTSNCurrentStackError(f"{label} must be symmetric")
+    eigenvalues = np.linalg.eigvalsh(0.5 * (matrix + matrix.T))
+    if eigenvalues[0] < -1.0e-12 * max(1.0, float(np.max(np.abs(eigenvalues)))):
+        raise JWSTSNCurrentStackError(f"{label} must be positive semidefinite")
+    return 0.5 * (matrix + matrix.T)
+
+
+def _has_off_diagonal(matrix: np.ndarray) -> bool:
+    off_diagonal = matrix - np.diag(np.diag(matrix))
+    return bool(np.any(np.abs(off_diagonal) > 1.0e-15))
+
+
+def _galactic_unit_vectors(longitude_deg: np.ndarray, latitude_deg: np.ndarray) -> np.ndarray:
+    longitude = np.radians(longitude_deg)
+    latitude = np.radians(latitude_deg)
+    cosine = np.cos(latitude)
+    return np.column_stack(
+        (cosine * np.cos(longitude), cosine * np.sin(longitude), np.sin(latitude))
+    )
+
+
+def build_pr309_inputs(
+    *,
+    source_rows: object,
+    host_rows: object,
+    individual_errors: object,
+    covariance: object,
+    competitor_model: object,
+) -> JWSTSNCurrentStackInputs:
+    """Validate and join the exact five-component PR-289 JWST-SN bundle."""
+
+    row_ids, sources = _ordered_rows(source_rows, label="source rows")
+    host_order, hosts = _ordered_rows(host_rows, label="host rows")
+    error_order, errors = _ordered_rows(individual_errors, label="individual errors")
+    if host_order != row_ids or error_order != row_ids:
+        raise JWSTSNCurrentStackError("JWST-SN component row order drifted")
+    count = len(row_ids)
+
+    source_values: list[float] = []
+    source_provenance: list[dict[str, str]] = []
+    for row in sources:
+        if set(row) != {
+            "row_id",
+            "source_id",
+            "source_release",
+            "source_locator",
+            *PR309_OBSERVABLE_CONTRACT,
+            "observable_delta_mag",
+        }:
+            raise JWSTSNCurrentStackError("source row fields drifted")
+        if any(
+            row.get(key) != value
+            for key, value in PR309_OBSERVABLE_CONTRACT.items()
+        ):
+            raise JWSTSNCurrentStackError("observable semantic contract drifted")
+        try:
+            provenance = {
+                "source_id": _nonempty(row["source_id"], label="source provenance"),
+                "source_release": _nonempty(
+                    row["source_release"], label="source provenance"
+                ),
+                "source_locator": _nonempty(
+                    row["source_locator"], label="source provenance"
+                ),
+            }
+        except JWSTSNCurrentStackError as exc:
+            raise JWSTSNCurrentStackError("source provenance is incomplete") from exc
+        source_provenance.append(provenance)
+        source_values.append(
+            _finite_number(row["observable_delta_mag"], label="observable delta")
+        )
+
+    host_ids: list[str] = []
+    linkage_bases: list[str] = []
+    linkage_probabilities: list[float] = []
+    linkage_sigma: list[float] = []
+    redshift: list[float] = []
+    depth: list[float] = []
+    longitude: list[float] = []
+    latitude: list[float] = []
+    for row in hosts:
+        if set(row) != {
+            "row_id",
+            "host_id",
+            "host_linkage_basis",
+            "host_linkage_probability",
+            "host_linkage_sigma_mag",
+            "redshift",
+            "depth_mpc",
+            "galactic_l_deg",
+            "galactic_b_deg",
+            *PR309_SEMANTIC_CONTRACT,
+        }:
+            raise JWSTSNCurrentStackError("host row fields drifted")
+        host_ids.append(_nonempty(row["host_id"], label="host identity"))
+        basis = _nonempty(row["host_linkage_basis"], label="host linkage basis")
+        if basis not in PR309_HOST_LINKAGE_BASES:
+            raise JWSTSNCurrentStackError(
+                "positional coincidence is not a physical host identity"
+            )
+        linkage_bases.append(basis)
+        probability = _finite_number(
+            row["host_linkage_probability"], label="host linkage probability"
+        )
+        sigma = _finite_number(
+            row["host_linkage_sigma_mag"], label="host linkage uncertainty"
+        )
+        if (
+            not 0.0 < probability <= 1.0
+            or sigma < 0.0
+            or (probability < 1.0 and sigma <= 0.0)
+        ):
+            raise JWSTSNCurrentStackError("host linkage uncertainty is invalid")
+        linkage_probabilities.append(probability)
+        linkage_sigma.append(sigma)
+        if any(row.get(key) != value for key, value in PR309_SEMANTIC_CONTRACT.items()):
+            raise JWSTSNCurrentStackError(
+                "redshift/depth/direction semantic contract drifted"
+            )
+        redshift_value = _finite_number(row["redshift"], label="redshift")
+        depth_value = _finite_number(row["depth_mpc"], label="depth")
+        lon_value = _finite_number(row["galactic_l_deg"], label="Galactic longitude")
+        lat_value = _finite_number(row["galactic_b_deg"], label="Galactic latitude")
+        if (
+            redshift_value <= 0.0
+            or depth_value <= 0.0
+            or not 0.0 <= lon_value < 360.0
+            or not -90.0 <= lat_value <= 90.0
+        ):
+            raise JWSTSNCurrentStackError("redshift/depth/direction support is invalid")
+        redshift.append(redshift_value)
+        depth.append(depth_value)
+        longitude.append(lon_value)
+        latitude.append(lat_value)
+
+    individual_sigma: list[float] = []
+    calibration_groups: list[str] = []
+    for row in errors:
+        if set(row) != {"row_id", "sigma_individual_mag", "calibration_group"}:
+            raise JWSTSNCurrentStackError("individual-error row fields drifted")
+        sigma = _finite_number(
+            row["sigma_individual_mag"], label="individual uncertainty"
+        )
+        if sigma <= 0.0:
+            raise JWSTSNCurrentStackError("individual uncertainty must be positive")
+        individual_sigma.append(sigma)
+        calibration_groups.append(
+            _nonempty(row["calibration_group"], label="calibration group")
+        )
+
+    covariance_payload = _mapping(covariance, label="covariance")
+    if set(covariance_payload) != {
+        "row_order",
+        "calibration_group_order",
+        "shared_zero_point_covariance_mag2",
+        "peculiar_velocity_covariance_mag2",
+        "maximum_condition_number",
+    }:
+        raise JWSTSNCurrentStackError("covariance fields drifted")
+    if tuple(covariance_payload["row_order"]) != row_ids:
+        raise JWSTSNCurrentStackError("covariance row order drifted")
+    group_order_raw = covariance_payload["calibration_group_order"]
+    if isinstance(group_order_raw, (str, bytes)) or not isinstance(
+        group_order_raw, Sequence
+    ):
+        raise JWSTSNCurrentStackError("calibration-group order is malformed")
+    group_order = tuple(
+        _nonempty(value, label="calibration group") for value in group_order_raw
+    )
+    if (
+        len(group_order) != len(set(group_order))
+        or set(group_order) != set(calibration_groups)
+    ):
+        raise JWSTSNCurrentStackError("calibration-group identity drifted")
+    group_covariance = _finite_matrix(
+        covariance_payload["shared_zero_point_covariance_mag2"],
+        size=len(group_order),
+        label="shared zero-point covariance",
+    )
+    peculiar_covariance = _finite_matrix(
+        covariance_payload["peculiar_velocity_covariance_mag2"],
+        size=count,
+        label="peculiar-velocity covariance",
+    )
+    group_index = {group: index for index, group in enumerate(group_order)}
+    design = np.zeros((count, len(group_order)), dtype=float)
+    design[np.arange(count), [group_index[group] for group in calibration_groups]] = 1.0
+    shared_covariance = design @ group_covariance @ design.T
+    if not _has_off_diagonal(shared_covariance) or not _has_off_diagonal(
+        peculiar_covariance
+    ):
+        raise JWSTSNCurrentStackError(
+            "shared zero-point and peculiar-velocity covariance require off-diagonal support"
+        )
+    total_covariance = (
+        np.diag(np.square(individual_sigma) + np.square(linkage_sigma))
+        + shared_covariance
+        + peculiar_covariance
+    )
+    maximum_condition = _finite_number(
+        covariance_payload["maximum_condition_number"],
+        label="maximum covariance condition number",
+    )
+    condition = float(np.linalg.cond(total_covariance))
+    eigenvalues = np.linalg.eigvalsh(total_covariance)
+    if (
+        maximum_condition != PR309_MAXIMUM_COVARIANCE_CONDITION
+        or eigenvalues[0] <= 0.0
+        or not math.isfinite(condition)
+        or condition > maximum_condition
+    ):
+        raise JWSTSNCurrentStackError("full covariance is singular or ill-conditioned")
+
+    competitor_payload = _mapping(competitor_model, label="competitor model")
+    if set(competitor_payload) != {"row_order", "competitors"}:
+        raise JWSTSNCurrentStackError("competitor-model fields drifted")
+    if tuple(competitor_payload["row_order"]) != row_ids:
+        raise JWSTSNCurrentStackError("competitor-model row order drifted")
+    competitor_rows = competitor_payload["competitors"]
+    if isinstance(competitor_rows, (str, bytes)) or not isinstance(
+        competitor_rows, Sequence
+    ):
+        raise JWSTSNCurrentStackError("CF4 and 2MRS competitors are required separately")
+    normalized_competitors = [
+        _mapping(row, label="competitor row") for row in competitor_rows
+    ]
+    competitor_order = tuple(row.get("competitor_id") for row in normalized_competitors)
+    if competitor_order != PR309_COMPETITOR_ORDER:
+        raise JWSTSNCurrentStackError("CF4 and 2MRS competitors are required separately")
+    if len({row.get("model_identity") for row in normalized_competitors}) != len(
+        normalized_competitors
+    ):
+        raise JWSTSNCurrentStackError("competitor model identities must remain distinct")
+    predictions: dict[str, np.ndarray] = {}
+    metadata: dict[str, dict[str, str]] = {}
+    for row in normalized_competitors:
+        if set(row) != {
+            "competitor_id",
+            "model_identity",
+            "source_release",
+            "model_role",
+            "input_frame",
+            "prediction_frame",
+            "prediction_unit",
+            "observable_delta_definition",
+            "frame_transformation_role",
+            "frame_transformation_identity",
+            "predicted_delta_mag",
+        }:
+            raise JWSTSNCurrentStackError("competitor fields drifted")
+        competitor_id = str(row["competitor_id"])
+        if row["model_role"] != "SEPARATE_DIRECTION_DEPTH_COMPETITOR":
+            raise JWSTSNCurrentStackError("competitors cannot be pooled")
+        semantic_contract = PR309_COMPETITOR_SEMANTIC_CONTRACTS[competitor_id]
+        if any(row.get(key) != value for key, value in semantic_contract.items()):
+            raise JWSTSNCurrentStackError(
+                "competitor frame or observable semantics drifted"
+            )
+        try:
+            prediction = np.asarray(row["predicted_delta_mag"], dtype=float)
+        except (TypeError, ValueError) as exc:
+            raise JWSTSNCurrentStackError("competitor prediction is malformed") from exc
+        if prediction.shape != (count,) or not np.all(np.isfinite(prediction)):
+            raise JWSTSNCurrentStackError("competitor prediction is malformed")
+        model_identity = _nonempty(
+            row["model_identity"], label="competitor model identity"
+        )
+        source_release = _nonempty(
+            row["source_release"], label="competitor source release"
+        )
+        transformation_identity = _nonempty(
+            row["frame_transformation_identity"],
+            label="competitor frame transformation identity",
+        )
+        predictions[competitor_id] = prediction
+        metadata[competitor_id] = {
+            "model_identity": model_identity,
+            "source_release": source_release,
+            "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
+            **semantic_contract,
+            "frame_transformation_identity": transformation_identity,
+        }
+    if np.allclose(
+        predictions["CF4"], predictions["2MRS"], atol=0.0, rtol=0.0
+    ):
+        raise JWSTSNCurrentStackError("competitor predictions must remain distinct")
+
+    directions = _galactic_unit_vectors(
+        np.asarray(longitude, dtype=float), np.asarray(latitude, dtype=float)
+    )
+    row_report = tuple(
+        {
+            "row_id": row_id,
+            **source_provenance[index],
+            "host_id": host_ids[index],
+            "host_linkage_basis": linkage_bases[index],
+            "host_linkage_probability": linkage_probabilities[index],
+            "host_linkage_sigma_mag": linkage_sigma[index],
+            "individual_sigma_mag": individual_sigma[index],
+            "calibration_group": calibration_groups[index],
+            "redshift": redshift[index],
+            "depth_mpc": depth[index],
+            "galactic_l_deg": longitude[index],
+            "galactic_b_deg": latitude[index],
+            "host_identity_status": (
+                "MARGINALIZED_LINKAGE_NOT_IDENTITY"
+                if linkage_bases[index] == "AMBIGUOUS_HOST_MARGINALIZED"
+                or linkage_probabilities[index] < 1.0
+                else "ADMITTED_NON_POSITIONAL_IDENTITY_EVIDENCE"
+            ),
+            **PR309_OBSERVABLE_CONTRACT,
+            **PR309_SEMANTIC_CONTRACT,
+        }
+        for index, row_id in enumerate(row_ids)
+    )
+    return JWSTSNCurrentStackInputs(
+        row_ids=row_ids,
+        row_report=row_report,
+        observable_delta_mag=np.asarray(source_values, dtype=float),
+        host_linkage_sigma_mag=np.asarray(linkage_sigma, dtype=float),
+        redshift=np.asarray(redshift, dtype=float),
+        depth_mpc=np.asarray(depth, dtype=float),
+        direction_unit_vectors=directions,
+        individual_sigma_mag=np.asarray(individual_sigma, dtype=float),
+        calibration_groups=tuple(calibration_groups),
+        shared_zero_point_covariance_mag2=shared_covariance,
+        peculiar_velocity_covariance_mag2=peculiar_covariance,
+        total_covariance_mag2=total_covariance,
+        competitor_order=PR309_COMPETITOR_ORDER,
+        competitor_predictions_mag=predictions,
+        competitor_metadata=metadata,
+        semantic_contract={**PR309_SEMANTIC_CONTRACT, **PR309_OBSERVABLE_CONTRACT},
+    )
+
+
+def _center_scale(values: np.ndarray) -> np.ndarray:
+    centered = np.asarray(values, dtype=float) - float(np.mean(values))
+    scale = float(np.linalg.norm(centered))
+    return centered / scale if scale > 0.0 else np.zeros_like(centered)
+
+
+def _response_design(inputs: JWSTSNCurrentStackInputs) -> np.ndarray:
+    rows = len(inputs.row_ids)
+    directions = np.asarray(inputs.direction_unit_vectors, dtype=float)
+    if directions.shape != (rows, 3) or not np.all(np.isfinite(directions)):
+        raise JWSTSNCurrentStackError("direction response is malformed")
+    return np.column_stack(
+        (
+            np.ones(rows),
+            directions,
+            _center_scale(inputs.redshift),
+            _center_scale(inputs.depth_mpc),
+        )
+    )
+
+
+def _whitened_rank(
+    design: np.ndarray,
+    covariance: np.ndarray,
+    *,
+    minimum_ratio: float = PR309_MINIMUM_SINGULAR_VALUE_RATIO,
+) -> dict[str, object]:
+    try:
+        whitened = np.linalg.solve(np.linalg.cholesky(covariance), design)
+    except np.linalg.LinAlgError as exc:
+        raise JWSTSNCurrentStackError("response whitening failed") from exc
+    column_norms = np.linalg.norm(whitened, axis=0)
+    if not np.all(np.isfinite(column_norms)):
+        raise JWSTSNCurrentStackError("response column normalization failed")
+    nonzero_columns = column_norms > np.finfo(float).eps
+    scaled = np.zeros_like(whitened)
+    scaled[:, nonzero_columns] = (
+        whitened[:, nonzero_columns] / column_norms[nonzero_columns]
+    )
+    try:
+        singular_values = np.linalg.svd(scaled, compute_uv=False)
+    except np.linalg.LinAlgError as exc:
+        raise JWSTSNCurrentStackError("response rank factorization failed") from exc
+    expected = int(design.shape[1])
+    largest = float(singular_values[0]) if singular_values.size else 0.0
+    threshold = largest * minimum_ratio
+    rank = int(np.sum(singular_values > threshold)) if largest > 0.0 else 0
+    ratio = float(singular_values[-1] / largest) if largest > 0.0 else 0.0
+    return {
+        "rank": rank,
+        "expected_rank": expected,
+        "minimum_singular_value_ratio": ratio,
+        "threshold_ratio": minimum_ratio,
+        "whitening": "cholesky_left",
+        "column_scaling": "covariance_whitened_l2",
+        "threshold_basis": "largest_singular_value_after_column_scaling",
+        "status": "FULL_RANK" if rank == expected else "RANK_DEFICIENT_ABSTAIN",
+    }
+
+
+def _competitor_diagnostic(
+    *,
+    inputs: JWSTSNCurrentStackInputs,
+    base_design: np.ndarray,
+    competitor_id: str,
+) -> dict[str, object]:
+    augmented = np.column_stack(
+        (base_design, inputs.competitor_predictions_mag[competitor_id])
+    )
+    rank = _whitened_rank(augmented, inputs.total_covariance_mag2)
+    if rank["rank"] != rank["expected_rank"]:
+        return {
+            "status": "NON_IDENTIFIED_ABSTAIN",
+            "response_rank": rank,
+        }
+    return {
+        "status": "NUMERICALLY_FULL_RANK_DIAGNOSTIC_ONLY",
+        "response_rank": rank,
+        **inputs.competitor_metadata[competitor_id],
+    }
+
+
+def _host_linkage_blocked_rows(inputs: JWSTSNCurrentStackInputs) -> list[str]:
+    blocked_row_ids: list[str] = []
+    for row in inputs.row_report:
+        row_id = row.get("row_id")
+        if not isinstance(row_id, str) or not row_id:
+            raise JWSTSNCurrentStackError("host-linkage row identity drifted")
+        if row.get("host_identity_status") != "ADMITTED_NON_POSITIONAL_IDENTITY_EVIDENCE":
+            blocked_row_ids.append(row_id)
+    return blocked_row_ids
+
+
+def analyze_pr309_current_stack(
+    inputs: JWSTSNCurrentStackInputs,
+    *,
+    observed: bool,
+) -> dict[str, object]:
+    """Return separate response-rank diagnostics or an explicit abstention.
+
+    PR-309 closes input, covariance, and response preparation only.  It does
+    not fit competitor amplitudes; model-conditioned point inference requires
+    a separately registered HTT analysis contract.
+    """
+
+    if type(observed) is not bool:
+        raise JWSTSNCurrentStackError("observed state must be one boolean")
+    blocked_host_rows = _host_linkage_blocked_rows(inputs)
+    response_rank: dict[str, object] | None = None
+    diagnostics: dict[str, dict[str, object]] = {}
+    if blocked_host_rows:
+        terminal = "HOST_LINKAGE_COVARIATE_MARGINALIZATION_REQUIRED"
+    else:
+        base_design = _response_design(inputs)
+        response_rank = _whitened_rank(base_design, inputs.total_covariance_mag2)
+        if response_rank["rank"] != response_rank["expected_rank"]:
+            terminal = "RANK_DEFICIENT_ABSTAIN"
+        else:
+            diagnostics = {
+                competitor_id: _competitor_diagnostic(
+                    inputs=inputs,
+                    base_design=base_design,
+                    competitor_id=competitor_id,
+                )
+                for competitor_id in inputs.competitor_order
+            }
+            if any(
+                item["status"] == "NON_IDENTIFIED_ABSTAIN"
+                for item in diagnostics.values()
+            ):
+                terminal = "WEAK_COMPETITOR_IDENTIFICATION_ABSTAIN"
+            else:
+                terminal = (
+                    "OBSERVED_DESCRIPTIVE_OPERATOR_COMPLETE"
+                    if observed
+                    else "SYNTHETIC_OPERATOR_CLOSURE_PASS"
+                )
+    return {
+        "format": "JWST_SN_CURRENT_STACK_TYPED_REPORT",
+        "lane": "JWST_SN",
+        "row_count": len(inputs.row_ids),
+        "row_order": list(inputs.row_ids),
+        "row_report": list(inputs.row_report),
+        "feature_order": list(inputs.feature_order),
+        "semantic_contract": dict(inputs.semantic_contract),
+        "covariance": {
+            "status": "FULL_SHARED_COVARIANCE_VALID",
+            "shape": list(inputs.total_covariance_mag2.shape),
+            "condition_number": float(np.linalg.cond(inputs.total_covariance_mag2)),
+            "shared_zero_point_off_diagonal": _has_off_diagonal(
+                inputs.shared_zero_point_covariance_mag2
+            ),
+            "peculiar_velocity_off_diagonal": _has_off_diagonal(
+                inputs.peculiar_velocity_covariance_mag2
+            ),
+        },
+        "response_rank": response_rank,
+        "competitor_order": list(inputs.competitor_order),
+        "competitor_combination_performed": False,
+        "competitor_conditioned_diagnostics": diagnostics,
+        "terminal_disposition": terminal,
+        "forced_source_label": None,
+        "p_value": None,
+        "family_identification": "FORBIDDEN",
+        "claim_boundary": (
+            "row-provenance and shared-covariance diagnostic only; no host identity "
+            "promotion, source attribution, cosmological inference, or family identification"
+        ),
+        "observed_statistic_seen": observed,
+        "observed_science_executed": observed,
     }
