@@ -1,0 +1,466 @@
+schema: htt.audit_compiled_pr.v3
+identity:
+  package_id: THEORY_PROMOTION_RECONCILIATION_REPAIR
+  canonical_pr_id: null
+  canonical_pr_id_policy: ALLOCATE_APPEND_ONLY_FROM_LIVE_DAG
+  audited_pull_request: 405
+  audited_base_sha: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
+  audited_head_sha: 463f0999949bf8534c60ad7973b7342705c2e3d6
+  audited_head_tree: 20eb3e3e117633bc83e743bea45ed024048441e1
+  risk_class: high
+  owner: COMMON
+  observed_data_used: false
+  native_solver_in_scope: false
+  family_identification_allowed: false
+  concurrent_plan_pull_request: 406
+  package_audited_plan_head_sha: 3ffa49ab3edfcbad63ebce4aabed48c70f70684d
+  concurrent_plan_head_sha: 179ae4216082ca9b6c685f5bdba6bb269a0e273a
+  concurrent_plan_head_tree: 1a3d61c8c5e44d130f2b3b01a1091bac1f426db3
+  live_revalidation_date: '2026-08-25'
+  plan_overlay_precedence: STRICTER_FAIL_CLOSED_RULE_CONTROLS
+objective:
+  statement: Preserve the useful PR-405 audit evidence while replacing its circular candidate-universe claim and conflated scientific terminal state with a source-generated candidate surface, typed truth/evidence/replay/release statuses, a repaired PR-284 finite-fixture CAS contract, content-bound evidence, and permanent regressions for every identified P0/P1 class.
+  observable_success: A linear append-only sequence produces a current downstream theory overlay whose scientific rows are source-bound and class-typed, whose PR-284 finite fixture is established without promoting the broad reverse-martingale theorem, and whose clean focused CI and fresh-context review contain zero P0/P1 findings.
+global_constraints:
+- Preserve PR-406 as planning evidence; do not execute its single-mega-PR shape without this overlay.
+- Do not rewrite frozen PR-275, PR-285, PR-286, PR-190, PR-270, or PR-284 historical receipts.
+- Do not assign a canonical PR number before re-reading the live DAG.
+- Do not reorder an existing DAG node or modify an existing dependency.
+- The complete pre-existing topological order must remain an exact prefix.
+- Do not count synthetic validation as a theorem or observational result.
+- Do not treat missing source, engine, data, or replay as refutation.
+- Do not let engine availability change mathematical truth status.
+- Do not add security, signing, nonce, authorization, or generic ledger frameworks.
+- No observed-data, native-transfer, geometry-detection, or Bianchi-family claim.
+- Every production edit begins with a failing scientific regression test.
+- One work unit contains one independently rejectable scientific invariant family.
+dag_integration:
+  mode: append_only_after_predecessor_terminal
+  predecessor:
+    github_pr: 405
+    exact_head: 463f0999949bf8534c60ad7973b7342705c2e3d6
+    required_terminal_receipt: true
+  live_reread_required:
+  - docs/codex_handoff/pr_backlog.yaml
+  - docs/codex_handoff/pr_status.yaml
+  - machine_readable/pr_backlog.yaml
+  - machine_readable/pr_status.yaml
+  - open concurrent stacked pull requests
+  allocation:
+    tool: existing_repository_DAG_generator
+    hard_coded_pr_ids_forbidden: true
+  prefix_invariant:
+    command: python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+    expect: existing ordered node sequence is byte-for-byte an exact prefix
+    stop: BLOCKED_DAG_PREFIX_DRIFT
+  ordered_new_nodes:
+  - TPR-A-STATUS-ONTOLOGY
+  - TPR-B-CANDIDATE-CLOSURE
+  - TPR-C-PR284-CAS-REPAIR
+  - TPR-D-EVIDENCE-CI
+  - TPR-E1-PR197-RANK-RESOLUTION
+  - TPR-E2-PR210-FRAME-BRIDGE
+  - TPR-E3-PR216-CONSTRAINT-ATTAINMENT
+  - TPR-E4-PR222-CF4-BINDING
+  - TPR-E5-PR223-MOMENT-CONE
+  - TPR-F-CURRENT-OVERLAY
+preconditions:
+- id: PRE-000
+  command: git rev-parse HEAD HEAD^{tree}
+  expect: exact PR-406 head/tree 179ae4216082ca9b6c685f5bdba6bb269a0e273a / 1a3d61c8c5e44d130f2b3b01a1091bac1f426db3, or a recorded stacked successor
+- id: PRE-001
+  command: git rev-parse HEAD HEAD^{tree}
+  expect: exact audited head/tree or a recorded stacked successor
+- id: PRE-002
+  command: git status --porcelain=v1 --untracked-files=all
+  expect: empty
+- id: PRE-003
+  command: python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+  expect: exit=0
+- id: PRE-004
+  command: python - <<'PY' import json p='docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json' d=json.load(open(p)) assert d['counts']['scientific_candidate_count']==157 assert d['proof_replays']['PR284_NEW']['exact_computed_values']['slack']=='7/36' PY
+  expect: audited PR-405 matrix identity is present
+- id: PRE-005
+  command: git diff --check
+  expect: exit=0
+severity_policy:
+  P0:
+  - silent wrong mathematical truth/refutation state
+  - unproved complete candidate universe or campaign exhaustion
+  - classifying an inventory/adjudication pass as a proof or experiment
+  - allowing release status to imply truth or truth to imply current release
+  P1:
+  - missing load-bearing evidence binding, negative test, formal domain, or clean-CI cell
+  - synthetic result counted as theorem
+  - partial implementation reported complete
+  - CAS axis or backend label stronger than executed semantics
+invariants:
+- id: INV-001
+  severity_if_violated: P0
+  statement: Candidate-universe completeness requires a deterministic source extractor and scoped-candidate declaration closure.
+  mechanical_check:
+    test: tests/contracts/test_theory_promotion_reconciliation.py::test_scoped_candidate_extractor_detects_injected_sixth_candidate
+  stop: BLOCKED_CANDIDATE_UNIVERSE_NOT_CLOSED
+- id: INV-002
+  severity_if_violated: P0
+  statement: scientific_attempted requires a proof, formal execution, preregistered experiment, counterexample, or failed-proof artifact.
+  mechanical_check:
+    test: tests/contracts/test_theory_promotion_reconciliation.py::test_scientific_attempt_requires_scientific_receipt
+  stop: BLOCKED_ATTEMPT_SEMANTICS_INVALID
+- id: INV-003
+  severity_if_violated: P0
+  statement: Mathematical truth, evidence class, current replay, and release eligibility are separate fields.
+  mechanical_check:
+    test: tests/contracts/test_theory_promotion_reconciliation.py::test_truth_status_is_invariant_under_engine_availability
+  stop: BLOCKED_SCIENCE_STATUS_ONTOLOGY_INVALID
+- id: INV-004
+  severity_if_violated: P0
+  statement: CAS conflict requires incompatible scientific outputs, a valid counterexample, or incompatible domain assumptions.
+  mechanical_check:
+    test: tests/contracts/test_theory_promotion_reconciliation.py::test_cas_conflict_requires_incompatible_scientific_outputs
+  stop: BLOCKED_FALSE_CAS_CONFLICT
+- id: INV-005
+  severity_if_violated: P1
+  statement: Publication-facing counts are partitioned by exact theorem, conditional theorem, negative result, synthetic validation, and unresolved/open classes.
+  mechanical_check:
+    test: tests/contracts/test_theory_promotion_reconciliation.py::test_public_counts_are_partitioned_by_result_class
+  stop: BLOCKED_UNTYPED_SCIENTIFIC_COUNT
+- id: INV-006
+  severity_if_violated: P1
+  statement: Every established/refuted result has exact content-bound evidence and a resolvable fragment or symbol.
+  mechanical_check:
+    test: tests/contracts/test_theory_promotion_reconciliation.py::test_every_established_candidate_has_resolvable_content_bound_evidence
+  stop: BLOCKED_EVIDENCE_REFERENCE_UNBOUND
+- id: INV-007
+  severity_if_violated: P1
+  statement: PR-284 axes consume one content-bound fixture and derive rather than duplicate conditional expectations and event values.
+  mechanical_check:
+    test: tests/contracts/test_pr284_finite_path_cas.py::test_all_axes_consume_one_content_bound_fixture
+  stop: BLOCKED_CAS_FIXTURE_DRIFT
+- id: INV-008
+  severity_if_violated: P1
+  statement: A named CAS backend must perform substantive work or be explicitly classified as same-algorithm engine replay.
+  mechanical_check:
+    test: tests/contracts/test_pr284_finite_path_cas.py::test_axis_backend_relevance_is_substantive_or_axis_is_renamed
+  stop: BLOCKED_AXIS_RELEVANCE_UNPROVED
+- id: INV-009
+  severity_if_violated: P1
+  statement: Claim-scope exclusions are validated against matrix/report output and are not literal booleans in axis programs.
+  mechanical_check:
+    test: tests/contracts/test_pr284_finite_path_cas.py::test_general_theorem_scope_is_validated_not_literal_true
+  stop: BLOCKED_CLAIM_SCOPE_NOT_MECHANICAL
+- id: INV-010
+  severity_if_violated: P1
+  statement: Lean distinguishes allowed foundational axioms from forbidden scientific assumptions and proves typed finite probability semantics or is labelled formal arithmetic only.
+  mechanical_check:
+    test: tests/contracts/test_pr284_finite_path_cas.py::test_lean_axiom_and_semantics_policy
+  stop: BLOCKED_FORMAL_CONTRACT_INVALID
+- id: INV-011
+  severity_if_violated: P1
+  statement: All load-bearing matrix, CAS, evidence, and replay validators execute in the existing clean pull-request workflow.
+  mechanical_check:
+    command: inspect and execute the focused theory-promotion workflow step
+  stop: BLOCKED_LOAD_BEARING_CI_MISSING
+- id: INV-012
+  severity_if_violated: P1
+  statement: PR-197, PR-210, PR-216, PR-222, and PR-223 failure classes each have a permanent scientific regression gate.
+  mechanical_check:
+    command: run the five dedicated focused work-unit suites
+  stop: BLOCKED_RECURRING_SCIENCE_FAILURE_NOT_REGRESSED
+work_units:
+- id: TPR-A-STATUS-ONTOLOGY
+  title: Split scientific truth, evidence, replay, and release status
+  depends_on:
+  - PR405_TERMINAL_RECEIPT
+  allowed_paths:
+  - docs/research_program/theory_promotion/**
+  - scripts/validate_theory_promotion_matrix.py
+  - tests/contracts/test_theory_promotion_reconciliation.py
+  - canonical DAG/status mirrors generated from the live DAG
+  forbidden_paths:
+  - frozen historical receipt contents
+  - data/canonical/**
+  - legacy/**
+  red_tests:
+  - test_truth_status_is_invariant_under_engine_availability
+  - test_missing_source_is_not_an_attempted_proof
+  - test_cas_conflict_requires_incompatible_scientific_outputs
+  implementation:
+  - Introduce truth_status, evidence_status, replay_status, and release_status.
+  - Reclassify every row from actual receipt type, not source-status prose.
+  - Preserve PR-405 V1 matrix as audit evidence; emit a V2 corrected projection.
+  - Classify PR-284 finite fixture truth as established and current CAS4 release as blocked/incomplete.
+  verification:
+    command: PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/contracts/test_theory_promotion_reconciliation.py
+  completion_evidence:
+  - old_new_state_transition_table
+  - all_rows_reclassified_count
+  - mutation_log
+  - exact V1 preservation hash
+  stop: BLOCKED_SCIENCE_STATUS_ONTOLOGY_INVALID
+- id: TPR-B-CANDIDATE-CLOSURE
+  title: Generate candidate surface and semantic relation graph
+  depends_on:
+  - TPR-A-STATUS-ONTOLOGY
+  allowed_paths:
+  - docs/research_program/theory_promotion/**
+  - scripts/extract_theory_candidates.py
+  - scripts/validate_theory_candidate_graph.py
+  - tests/contracts/test_theory_promotion_reconciliation.py
+  - generated DAG/status mirrors
+  red_tests:
+  - test_scoped_candidate_extractor_detects_injected_sixth_candidate
+  - test_complete_universe_wording_requires_extractor_closure
+  - test_unique_theorem_count_refuses_with_unadjudicated_semantic_links
+  implementation:
+  - Generate broad candidates from frozen registries and adjudication rows.
+  - Require every scoped candidate to come from a source-bound declaration record.
+  - Build typed edges EQUIVALENT, SUBSUMES, NARROWER_CORE, NEGATIVE_SUPPORT, and SYNTHETIC_SUBRESULT.
+  - Report enumerated_surface_complete until extractor-closure tests pass.
+  - Forbid unique theorem count while any established node lacks relation adjudication.
+  verification:
+    command: PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/contracts/test_theory_promotion_reconciliation.py
+  completion_evidence:
+  - source_surface_manifest
+  - scoped_candidate_registry_hash
+  - graph_component_report
+  - injected_candidate_RED_GREEN_log
+  stop: BLOCKED_CANDIDATE_UNIVERSE_NOT_CLOSED
+- id: TPR-C-PR284-CAS-REPAIR
+  title: Repair finite-fixture CAS semantics and scope
+  depends_on:
+  - TPR-B-CANDIDATE-CLOSURE
+  allowed_paths:
+  - docs/research_program/theory_promotion/pr284_finite_path/**
+  - scripts/validate_pr284_finite_path.py
+  - tests/contracts/test_pr284_finite_path_cas.py
+  - generated DAG/status mirrors
+  red_tests:
+  - test_all_axes_consume_one_content_bound_fixture
+  - test_axis_backend_relevance_is_substantive_or_axis_is_renamed
+  - test_general_theorem_scope_is_validated_not_literal_true
+  - test_lean_foundational_axiom_allowlist_is_preregistered
+  - test_lean_axis_derives_expectations_from_weighted_partitions_or_is_downgraded
+  implementation:
+  - Create one canonical fixture JSON with weights, target, partitions, lambda, and inclusive event rule.
+  - Make each axis parse the fixture or consume generated constants bound to its hash.
+  - Rename Wolfram/Sage axes if xAct/Singular is not scientifically used.
+  - Replace general_theorem_not_promoted constants with a matrix/report scope validator.
+  - Preregister allowed foundational Lean axioms and continue to reject source axiom, sorry, native_decide, and unbound assumptions.
+  - Formalize weighted partition expectations in Lean or label the axis FORMAL_ARITHMETIC_REPLAY.
+  - Replace CAS_CONFLICT with COMPLETE_PASS, INCOMPLETE_BLOCKED, CONTRACT_MISMATCH, or SCIENTIFIC_CONFLICT.
+  verification:
+    command: PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/contracts/test_pr284_finite_path_cas.py
+  completion_evidence:
+  - canonical_fixture_sha256
+  - per_axis_input_projection_hash
+  - per_axis_output
+  - scope_validator_receipt
+  - Lean_axiom_receipt
+  - exact arithmetic projection
+  stop: BLOCKED_PR284_CAS_CONTRACT
+- id: TPR-D-EVIDENCE-CI
+  title: Bind candidate evidence and execute focused clean CI
+  depends_on:
+  - TPR-C-PR284-CAS-REPAIR
+  allowed_paths:
+  - docs/research_program/theory_promotion/**
+  - scripts/validate_theory_promotion_matrix.py
+  - tests/contracts/test_theory_promotion_reconciliation.py
+  - tests/contracts/test_pr284_finite_path_cas.py
+  - .github/workflows/repository-integrity.yml
+  - generated DAG/status mirrors
+  red_tests:
+  - test_every_established_candidate_has_resolvable_content_bound_evidence
+  - test_current_replay_summary_is_backed_by_exact_receipts
+  implementation:
+  - Add path/blob/fragment/symbol/statement/evidence-class/replay fields for every established or refuted result.
+  - Persist exact 48/8 and 357/4 command receipts or replace them with current focused runs.
+  - Add matrix validation, candidate graph validation, PR-284 package, and scientific projection replay to the existing workflow.
+  - Do not add a new workflow and do not require an unrelated full local suite.
+  verification:
+    command: run exact pull-request merge-ref Repository integrity workflow
+  completion_evidence:
+  - clean_CI_run_ids
+  - evidence_manifest_sha256
+  - current_replay_receipts
+  - projection_hash
+  stop: BLOCKED_EVIDENCE_OR_CI_INCOMPLETE
+- id: TPR-E1-PR197-RANK-RESOLUTION
+  title: Make exchangeable-rank claims resolution-aware
+  depends_on:
+  - TPR-D-EVIDENCE-CI
+  red_tests:
+  - test_alpha_below_finite_resolution_refuses
+  - test_arbitrary_exchangeable_tie_blocks
+  implementation:
+  - Require 1/(n+1) <= alpha for advertised alpha-level rejection capability.
+  - Preserve conservative ties and test arbitrary tie blocks.
+  stop: BLOCKED_FINITE_RANK_RESOLUTION
+- id: TPR-E2-PR210-FRAME-BRIDGE
+  title: Replace relabelling with a typed nonempty frame transform
+  depends_on:
+  - TPR-E1-PR197-RANK-RESOLUTION
+  red_tests:
+  - test_frame_bridge_rejects_empty_validity_domain
+  - test_frame_bridge_executes_registered_transform
+  implementation:
+  - Bind source/target congruence, sign, units, perturbative order, and nonempty validity domain.
+  - Refuse scalar-copy plus frame-label change as a transform.
+  stop: BLOCKED_FRAME_TRANSFORM_NOT_DERIVED
+- id: TPR-E3-PR216-CONSTRAINT-ATTAINMENT
+  title: Derive branch-complete homogeneous constraints
+  depends_on:
+  - TPR-E2-PR210-FRAME-BRIDGE
+  red_tests:
+  - test_zero_spatial_gradient_does_not_erase_connection_or_structure_terms
+  - test_constraint_witness_requires_all_branch_terms
+  implementation:
+  - Derive Gauss, momentum, connection/structure-constant, curl/vorticity, and momentum-flux terms for each claimed branch.
+  - Keep local constraint witness separate from global Einstein-matter development.
+  stop: BLOCKED_CONSTRAINT_ATTAINMENT_INCOMPLETE
+- id: TPR-E4-PR222-CF4-BINDING
+  title: Bind conditional linear algebra to physical CF4 components
+  depends_on:
+  - TPR-E3-PR216-CONSTRAINT-ATTAINMENT
+  red_tests:
+  - test_cf4_matrix_requires_window_transfer_covariance_frame_and_units
+  - test_hard_coded_matrix_cannot_emit_physical_claim
+  implementation:
+  - Preserve exact rank/GLS facts as conditional algebra.
+  - Require admitted physical component identities before CF4 interpretation.
+  stop: BLOCKED_CF4_PHYSICAL_BINDING
+- id: TPR-E5-PR223-MOMENT-CONE
+  title: Establish the physical PSD moment cone
+  depends_on:
+  - TPR-E4-PR222-CF4-BINDING
+  red_tests:
+  - test_physical_moment_cone_rejects_negative_weights
+  - test_psd_zero_mean_tensor_has_constructive_antipodal_decomposition
+  implementation:
+  - Require nonnegative normalized weights.
+  - Prove PSD necessity and constructive antipodal eigendecomposition for zero first moment.
+  - Keep random signed samples outside the physical-cone theorem.
+  stop: BLOCKED_MOMENT_CONE_NOT_PHYSICAL
+- id: TPR-F-CURRENT-OVERLAY
+  title: Generate the current downstream typed theory overlay
+  depends_on:
+  - TPR-E5-PR223-MOMENT-CONE
+  allowed_paths:
+  - docs/research_program/theory_promotion/**
+  - docs/generated/theory_promotion/**
+  - current overlay consumers
+  - generated DAG/status mirrors
+  implementation:
+  - Preserve all frozen historical reports.
+  - Emit exact theorem, premise-conditional theorem, exact negative result, and synthetic validation in separate sections.
+  - Carry current replay and release status independently.
+  - Report no unique theorem count until the semantic graph closes.
+  - Publish no observed, native-transfer, geometry, or family claim.
+  verification:
+    command: run focused overlay tests, matrix validator, claim-language scan, DAG prefix check, and clean merge-ref CI
+  completion_evidence:
+  - final_overlay_sha256
+  - exact_statement_table
+  - semantic_component_report
+  - P0_P1_zero_review_receipt
+  stop: BLOCKED_CURRENT_OVERLAY_NOT_READY
+verification:
+  targeted:
+  - command: PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/contracts/test_theory_promotion_reconciliation.py
+    expect: all pass
+  - command: PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/contracts/test_pr284_finite_path_cas.py
+    expect: all executable axes pass their corrected applicability contracts; blocked axes remain typed
+  regression:
+  - command: python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+    expect: exit=0
+  - command: python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+    expect: existing topological order is exact prefix
+  - command: git diff --check
+    expect: exit=0
+  negative:
+  - inject an unregistered sixth scoped candidate
+  - remove a proof receipt while retaining scientific_attempted=true
+  - toggle Wolfram availability and verify truth status is invariant
+  - make two CAS axes return different exact values
+  - mutate one fixture field in only one axis
+  - replace a source fragment with a missing heading
+  - count one synthetic validation as a theorem
+  - insert a negative moment weight
+  - pass alpha below the finite rank floor
+  - submit an empty frame-transform domain
+  metamorphic:
+  - candidate ordering changes no statement identities or graph components
+  - engine availability changes replay/release but not truth
+  - equivalent-claim relabelling changes no component count
+  - exact rational fixture serialization changes no scientific projection
+  clean_CI:
+    workflow: existing Repository integrity
+    required_steps:
+    - theory promotion matrix and candidate graph
+    - PR-284 corrected finite fixture
+    - content-bound evidence replay
+    - existing repository/package/Rust and prior lane steps unchanged
+completion_evidence:
+  required:
+  - allocated_DAG_node_ids
+  - predecessor_terminal_receipt
+  - original_DAG_order_hash
+  - regenerated_DAG_order_hash
+  - proof_existing_order_is_exact_prefix
+  - base_sha
+  - final_sha
+  - final_tree
+  - git_status_porcelain
+  - git_diff_stat
+  - git_diff_check
+  - RED_logs
+  - GREEN_logs
+  - exact_test_outputs
+  - clean_CI_run_ids
+  - V1_artifact_preservation_hashes
+  - V2_matrix_hash
+  - evidence_manifest_hash
+  - PR284_fixture_hash
+  - PR284_truth_evidence_replay_release_projection
+  - unresolved_blockers
+  - observed_data_used_boolean
+  - P0_remaining
+  - P1_remaining
+agent_policy:
+  ask_user_questions: false
+  guessing_across_spec_boundary: forbidden
+  unresolved_spec_action: BLOCKED_BY_UNRESOLVED_SPEC
+  changing_expected_scientific_outputs_to_fit_code: forbidden
+  weakening_or_deleting_tests: forbidden
+  suppressing_failures: forbidden
+  rewriting_historical_receipts: forbidden
+  inventing_DAG_ids: forbidden
+  security_or_antitamper_infrastructure: forbidden
+  same_agent_final_authority: false
+  partial_success_reported_as_complete: forbidden
+review_gate:
+  fresh_context_required: true
+  reviewer_may_modify_code_on_first_pass: false
+  reviewer_input:
+  - audited_base_sha
+  - final_sha
+  - final_diff
+  - this_contract
+  - P0_P1_threat_catalog
+  - RED_logs
+  - GREEN_logs
+  - clean_CI_logs
+  - state_transition_table
+  - candidate_graph
+  - PR284_fixture_and_axis_receipts
+  - evidence_manifest
+  reviewer_output:
+  - severity
+  - exact_file_and_line
+  - violated_invariant
+  - reproducer
+  - missing_test_or_assertion
+  pass_condition:
+    P0: 0
+    P1: 0
