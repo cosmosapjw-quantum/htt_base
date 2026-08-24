@@ -37,7 +37,7 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[2]
-for _path in (ROOT / "htt", ROOT / "htt/src"):
+for _path in (ROOT, ROOT / "htt", ROOT / "htt/src"):
     if str(_path) not in sys.path:
         sys.path.insert(0, str(_path))
 
@@ -50,6 +50,7 @@ from common.data_identity import (  # noqa: E402
     replay_lane_admission_decision,
 )
 from obsstat.boost_biposh_residual import ExactBoostOperator  # noqa: E402
+from obsstat.planck_post275_lane import validate_full_joint_covariance  # noqa: E402
 from obsstat.planck_pr3_operator import (  # noqa: E402
     COMPONENT_FEATURE_IDS,
     EXPECTED_FFP10_NULL_ROWS,
@@ -110,6 +111,11 @@ PROFILE_MATRIX = (
 )
 RUST_GATE = "KEEP_PYTHON_NO_ELIGIBLE_POST_OPTIMIZATION_LEAF"
 FFP10_RELEASE_ID = "planck:ffp10:pr3:cmb:same-sky:v1"
+SMICA_EXISTING_NULL_ROWS = 300
+SMICA_EXISTING_ROW_IDS = tuple(
+    f"FFP10-SMICA-CMBNOISE-{index:05d}" for index in range(SMICA_EXISTING_NULL_ROWS)
+)
+SMICA_EXISTING_INVENTORY_ID = ordered_row_id_hash(SMICA_EXISTING_ROW_IDS)
 SYNTHETIC_NULL_ROW_IDS = tuple(
     f"FFP10-{index:04d}" for index in range(EXPECTED_FFP10_NULL_ROWS)
 )
@@ -240,6 +246,54 @@ def _array_digest(value: np.ndarray) -> str:
     digest.update(repr(array.shape).encode("ascii") + b"\0")
     digest.update(memoryview(array).cast("B"))
     return "sha256:" + digest.hexdigest()
+
+
+def _atomic_npy(path: Path, value: np.ndarray) -> None:
+    """Write one deterministic numeric replay input without pickle."""
+
+    temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    try:
+        with temporary.open("xb") as handle:
+            np.save(handle, np.asarray(value, dtype=np.float64), allow_pickle=False)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def write_compact_smica_observed_replay_input(
+    *, output_dir: Path, smica_map: np.ndarray, nside: int
+) -> dict[str, object]:
+    """Retain the one band-limited SMICA map used by the diagnostic."""
+
+    import healpy as hp
+
+    value = np.asarray(smica_map, dtype=np.float64)
+    if (
+        not hp.isnsideok(nside)
+        or value.shape != (hp.nside2npix(nside),)
+        or not np.all(np.isfinite(value))
+        or output_dir.is_symlink()
+        or not output_dir.is_dir()
+    ):
+        raise PlanckWorkerError("compact SMICA replay input is malformed")
+    filename = "planck_pr3_observed_smica_bandlimited.npy"
+    path = output_dir / filename
+    if path.exists() or path.is_symlink():
+        raise PlanckWorkerError("compact SMICA replay output already exists")
+    _atomic_npy(path, value)
+    return {
+        "filename": filename,
+        "sha256": _sha256_file(path),
+        "shape": [value.size],
+        "representation": "NUMPY_NPY_FLOAT64_NO_PICKLE",
+        "map_unit": "microK_CMB",
+        "coordinate_frame": "GALACTIC",
+        "ordering": "RING",
+        "lmax": LMAX,
+        "null_ensemble_scope": "FFP10_SMICA_CMB_PLUS_NOISE_300",
+    }
 
 
 def _max_rss_bytes() -> int:
@@ -848,6 +902,547 @@ def _require_declared_nside(
     return declared_nside
 
 
+def build_smica_operator_context(
+    *,
+    smica_map: np.ndarray,
+    mask: np.ndarray,
+    beam: np.ndarray,
+    window: Mapping[str, np.ndarray],
+    declared_nside: int,
+) -> dict[str, object]:
+    """Build the PR-306 operator for one explicitly SMICA-only diagnostic."""
+
+    values = np.asarray(smica_map, dtype=float)
+    selected_mask = np.asarray(mask, dtype=float)
+    selected_beam = np.asarray(beam, dtype=float)
+    required_window = {
+        "source_pixel_window",
+        "target_beam",
+        "target_pixel_window",
+    }
+    if (
+        values.ndim != 1
+        or selected_mask.shape != values.shape
+        or set(window) != required_window
+        or not np.all(np.isfinite(values))
+        or not np.all(np.isfinite(selected_mask))
+        or not np.all(np.isfinite(selected_beam))
+    ):
+        raise PlanckWorkerError("SMICA-only operator inputs are malformed")
+    source_pixel = np.asarray(window["source_pixel_window"], dtype=float)
+    target_beam = np.asarray(window["target_beam"], dtype=float)
+    target_pixel = np.asarray(window["target_pixel_window"], dtype=float)
+    if (
+        selected_beam.shape != target_beam.shape
+        or source_pixel.shape != target_pixel.shape
+        or not np.array_equal(selected_beam, target_beam)
+        or not np.all(np.isfinite(source_pixel))
+        or not np.all(np.isfinite(target_pixel))
+    ):
+        raise PlanckWorkerError("SMICA-only beam/pixel commonization drifted")
+    inverse = build_mask_coupling_inverse(
+        selected_mask, lmin=LMIN, lmax=LMAX
+    )
+    return {
+        "pipeline_scope": "SMICA_ONLY",
+        "nside": _require_declared_nside(inverse, declared_nside),
+        "common_mask": selected_mask,
+        "source_beams": {"SMICA": selected_beam},
+        "source_pixels": {"SMICA": source_pixel},
+        "target_beam": target_beam,
+        "target_pixel": target_pixel,
+        "mask_inverse": inverse,
+    }
+
+
+def analyze_smica_feature_rows(
+    *,
+    observed_features: object,
+    null_features: object,
+    row_ids: Sequence[str],
+) -> dict[str, object]:
+    """Calibrate the complete 300-row SMICA-only feature family."""
+
+    identifiers = tuple(row_ids)
+    if len(identifiers) != SMICA_EXISTING_NULL_ROWS:
+        raise PlanckWorkerError("SMICA calibration requires the exact 300 null rows")
+    if identifiers != SMICA_EXISTING_ROW_IDS:
+        raise PlanckWorkerError("SMICA null row identity or order drifted")
+    observed = np.asarray(observed_features, dtype=float)
+    nulls = np.asarray(null_features, dtype=float)
+    dimension = len(COMPONENT_FEATURE_IDS)
+    if (
+        observed.shape != (dimension,)
+        or nulls.shape != (SMICA_EXISTING_NULL_ROWS, dimension)
+        or not np.all(np.isfinite(observed))
+        or not np.all(np.isfinite(nulls))
+    ):
+        raise PlanckWorkerError("SMICA feature matrix is incomplete or malformed")
+    covariance = np.cov(nulls, rowvar=False, ddof=1)
+    validation = _smica_covariance_diagnostics(covariance)
+    inventory = FFP10Inventory(
+        identifiers,
+        expected_identity=SMICA_EXISTING_INVENTORY_ID,
+        expected_null_rows=SMICA_EXISTING_NULL_ROWS,
+    )
+    scan = calibrate_complete_synthetic_pool(
+        observation_features=observed,
+        null_features=nulls,
+        inventory=inventory,
+    )
+    return {
+        "pipeline_scope": "SMICA_ONLY",
+        "feature_order": list(COMPONENT_FEATURE_IDS),
+        "observed_feature_vector": observed.tolist(),
+        "covariance_rank": int(validation["rank"]),
+        "covariance_condition": float(validation["standardized_condition"]),
+        "covariance_raw_condition": float(validation["raw_condition"]),
+        "covariance_condition_basis": "DIAGONAL_STANDARDIZED",
+        "covariance_whitening": "AVAILABLE_CHOLESKY_LEFT_NOT_USED_BY_RANK_SCAN",
+        "null_rows": SMICA_EXISTING_NULL_ROWS,
+        "null_semantics": "FFP10_CMB_PLUS_NOISE_PAIRED_BY_ID",
+        "null_ordered_row_ids_sha256": SMICA_EXISTING_INVENTORY_ID,
+        "finite_feature_family_p": str(scan.global_p),
+        "resolution_floor": str(scan.resolution_floor),
+        "local_feature_p": [str(value) for value in scan.local_p],
+        "commander_robustness": "NOT_EVALUATED",
+        "joint_covariance": "NOT_APPLICABLE_SMICA_ONLY",
+        "local_response_rank": "NOT_COMPUTED_SMICA_ONLY",
+        "global_response_status": "MISSING",
+        "global_claim_boundary": GLOBAL_CLAIM_BOUNDARY,
+        "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    }
+
+
+def _smica_covariance_diagnostics(
+    covariance: object, *, condition_ceiling: float = 1.0e10
+) -> dict[str, object]:
+    """Validate covariance without making the gate depend on feature units."""
+
+    matrix = np.asarray(covariance, dtype=float)
+    dimension = len(COMPONENT_FEATURE_IDS)
+    if (
+        matrix.shape != (dimension, dimension)
+        or not np.all(np.isfinite(matrix))
+        or not np.allclose(matrix, matrix.T, rtol=1.0e-12, atol=1.0e-15)
+    ):
+        raise PlanckWorkerError("SMICA covariance shape or finiteness drifted")
+    variances = np.diag(matrix)
+    if np.any(variances <= 0.0):
+        raise PlanckWorkerError("SMICA covariance has a nonpositive variance")
+    scales = np.sqrt(variances)
+    standardized = matrix / np.outer(scales, scales)
+    try:
+        validation = validate_full_joint_covariance(
+            standardized, COMPONENT_FEATURE_IDS
+        )
+        np.linalg.cholesky(matrix)
+    except (PlanckLaneContractError, np.linalg.LinAlgError) as exc:
+        raise PlanckWorkerError("SMICA covariance is not full positive definite") from exc
+    standardized_condition = float(validation["condition_number"])
+    if (
+        not math.isfinite(standardized_condition)
+        or standardized_condition > condition_ceiling
+    ):
+        raise PlanckWorkerError(
+            "SMICA standardized covariance exceeds the condition ceiling"
+        )
+    eigenvalues = np.linalg.eigvalsh(matrix)
+    raw_condition = float(eigenvalues[-1] / eigenvalues[0])
+    return {
+        "rank": int(validation["rank"]),
+        "standardized_condition": standardized_condition,
+        "raw_condition": raw_condition,
+    }
+
+
+def _canonical_hash(payload: Mapping[str, object]) -> str:
+    raw = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+        allow_nan=False,
+    ).encode("ascii")
+    return "sha256:" + hashlib.sha256(raw).hexdigest()
+
+
+def _require_git_identity(value: str, *, label: str) -> str:
+    if len(value) != 40 or any(character not in "0123456789abcdef" for character in value):
+        raise PlanckWorkerError(f"{label} must be one lowercase git object ID")
+    return value
+
+
+def _current_git_identity() -> tuple[str, str]:
+    """Return the exact commit and tree containing the executing worker."""
+
+    try:
+        completed = subprocess.run(
+            ["git", "rev-parse", "HEAD", "HEAD^{tree}"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise PlanckWorkerError("current checkout identity is unavailable") from exc
+    values = tuple(line.strip() for line in completed.stdout.splitlines())
+    if len(values) != 2:
+        raise PlanckWorkerError("current checkout identity is malformed")
+    return (
+        _require_git_identity(values[0], label="current commit"),
+        _require_git_identity(values[1], label="current tree"),
+    )
+
+
+def _smica_plan_components(plan: Mapping[str, object]) -> dict[str, Path]:
+    if (
+        plan.get("format") != "PLANCK_PR3_SMICA_EXISTING_PLAN_V1"
+        or plan.get("pipeline_scope") != "SMICA_ONLY"
+        or plan.get("ordered_row_ids_sha256") != SMICA_EXISTING_INVENTORY_ID
+        or plan.get("observed_temperature_payload_opened") is not False
+    ):
+        raise PlanckWorkerError("SMICA existing-data plan identity drifted")
+    raw_components = plan.get("components")
+    if not isinstance(raw_components, Mapping):
+        raise PlanckWorkerError("SMICA plan components are missing")
+    required = {"mask", "beam", "window", "null", "covariance", "selection"}
+    if set(raw_components) != required:
+        raise PlanckWorkerError("SMICA plan component inventory drifted")
+    result: dict[str, Path] = {}
+    for name in sorted(required):
+        row = raw_components[name]
+        if not isinstance(row, Mapping):
+            raise PlanckWorkerError(f"SMICA plan component {name} is malformed")
+        path_text = row.get("path")
+        expected_size = row.get("byte_size")
+        expected_hash = row.get("sha256")
+        if not isinstance(path_text, str) or not isinstance(expected_size, int):
+            raise PlanckWorkerError(f"SMICA plan component {name} identity is malformed")
+        path = Path(path_text)
+        if (
+            not path.is_absolute()
+            or path.is_symlink()
+            or not path.is_file()
+            or path.resolve() != path
+            or path.stat().st_size != expected_size
+            or _sha256_file(path) != expected_hash
+        ):
+            raise PlanckWorkerError(f"SMICA plan component {name} no longer matches")
+        result[name] = path
+    return result
+
+
+def smica_existing_acceptance(
+    *,
+    plan_path: Path,
+    output_dir: Path,
+    candidate_commit: str,
+    candidate_tree: str,
+) -> dict[str, object]:
+    """Compute the exact attended confirmation surface without observed open."""
+
+    plan = _strict_json(plan_path, label="SMICA existing-data plan")
+    _smica_plan_components(plan)
+    observed = plan.get("observed_smica")
+    if not isinstance(observed, Mapping):
+        raise PlanckWorkerError("SMICA observed source identity is missing")
+    path_text = observed.get("path")
+    expected_size = observed.get("byte_size")
+    if not isinstance(path_text, str) or not isinstance(expected_size, int):
+        raise PlanckWorkerError("SMICA observed source identity is malformed")
+    observed_path = Path(path_text)
+    if (
+        not observed_path.is_absolute()
+        or observed_path.is_symlink()
+        or not observed_path.is_file()
+        or observed_path.resolve() != observed_path
+        or observed_path.stat().st_size != expected_size
+        or observed_path.name != observed.get("filename")
+    ):
+        raise PlanckWorkerError("SMICA observed source is not the identified product")
+    if not output_dir.is_absolute() or output_dir.is_symlink():
+        raise PlanckWorkerError("SMICA output directory must be absolute and regular")
+    requested_commit = _require_git_identity(
+        candidate_commit, label="candidate commit"
+    )
+    requested_tree = _require_git_identity(candidate_tree, label="candidate tree")
+    current_commit, current_tree = _current_git_identity()
+    if (requested_commit, requested_tree) != (current_commit, current_tree):
+        raise PlanckWorkerError("candidate identity does not equal current checkout")
+    payload = {
+        "capability": "PLANCK_PR3_SMICA_EXISTING_DATA_DIAGNOSTIC",
+        "candidate_commit": requested_commit,
+        "candidate_tree": requested_tree,
+        "plan_sha256": _sha256_file(plan_path),
+        "observed_source": {
+            "filename": observed_path.name,
+            "byte_size": expected_size,
+            "release_identity": plan.get("release_identity"),
+        },
+        "null_ordered_row_ids_sha256": SMICA_EXISTING_INVENTORY_ID,
+        "worker_sha256": _sha256_file(Path(__file__).resolve()),
+        "output_dir": str(output_dir),
+    }
+    return {**payload, "acceptance_hash": _canonical_hash(payload)}
+
+
+def _load_smica_existing_rows(
+    *, plan: Mapping[str, object], components: Mapping[str, Path]
+) -> tuple[dict[str, object], tuple[str, ...], np.ndarray, Mapping[str, object]]:
+    selection = _strict_json(components["selection"], label="SMICA selection")
+    if (
+        selection.get("pipeline_scope") != "SMICA_ONLY"
+        or selection.get("expected_null_rows") != SMICA_EXISTING_NULL_ROWS
+        or selection.get("null_semantics")
+        != "FFP10_CMB_PLUS_NOISE_PAIRED_BY_ID"
+        or selection.get("ordered_row_ids_sha256") != SMICA_EXISTING_INVENTORY_ID
+        or selection.get("feature_ids") != list(COMPONENT_FEATURE_IDS)
+    ):
+        raise PlanckWorkerError("SMICA selection contract drifted")
+    try:
+        with np.load(components["null"], allow_pickle=False, mmap_mode="r") as bundle:
+            if set(bundle.files) != {"row_ids", "smica_maps"}:
+                raise PlanckWorkerError("SMICA null bundle keys drifted")
+            raw_ids = np.asarray(bundle["row_ids"])
+            maps = np.asarray(bundle["smica_maps"])
+    except (OSError, ValueError) as exc:
+        raise PlanckWorkerError("SMICA null bundle is not safe numeric NPZ") from exc
+    row_ids = tuple(str(value) for value in raw_ids.tolist())
+    if row_ids != SMICA_EXISTING_ROW_IDS:
+        raise PlanckWorkerError("SMICA null row identity or order drifted")
+    nside = selection.get("nside")
+    if type(nside) is not int:
+        raise PlanckWorkerError("SMICA output nside is malformed")
+    return dict(selection), row_ids, maps, plan
+
+
+def _smica_result_projection(payload: Mapping[str, object]) -> dict[str, object]:
+    if payload.get("format") != "PLANCK_PR3_SMICA_EXISTING_RESULT_V1":
+        raise PlanckWorkerError("SMICA result format drifted")
+    projection = json.loads(
+        json.dumps(payload, sort_keys=True, ensure_ascii=True, allow_nan=False)
+    )
+    projection.pop("wall_seconds", None)
+    return projection
+
+
+def _append_fsynced(path: Path, text_value: str) -> None:
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(text_value)
+        handle.flush()
+        os.fsync(handle.fileno())
+
+
+def run_smica_existing_attended(
+    *,
+    plan_path: Path,
+    output_dir: Path,
+    candidate_commit: str,
+    candidate_tree: str,
+    confirmation: str,
+) -> dict[str, object]:
+    """Run the complete local SMICA diagnostic after exact attended confirm."""
+
+    acceptance = smica_existing_acceptance(
+        plan_path=plan_path,
+        output_dir=output_dir,
+        candidate_commit=candidate_commit,
+        candidate_tree=candidate_tree,
+    )
+    if confirmation != acceptance["acceptance_hash"]:
+        raise PlanckWorkerError("SMICA attended confirmation does not match")
+    if output_dir.exists():
+        if not output_dir.is_dir() or any(output_dir.iterdir()):
+            raise PlanckWorkerError("SMICA output directory must be new or empty")
+    else:
+        output_dir.mkdir(parents=True)
+    _write_json(output_dir / "acceptance.json", acceptance)
+    _write_json(
+        output_dir / "start.json",
+        {
+            "state": "STARTED_BEFORE_OBSERVED_OPEN",
+            "acceptance_hash": acceptance["acceptance_hash"],
+            "candidate_commit": candidate_commit,
+            "candidate_tree": candidate_tree,
+        },
+    )
+    started = _now()
+    try:
+        plan = _strict_json(plan_path, label="SMICA existing-data plan")
+        components = _smica_plan_components(plan)
+        selection, row_ids, _, _ = _load_smica_existing_rows(
+            plan=plan, components=components
+        )
+        nside = int(selection["nside"])
+        observed_row = plan["observed_smica"]
+        observed_path = Path(str(observed_row["path"]))
+        from scripts.observed_runs.prepare_planck_pr3_admission import (
+            read_temperature_fits,
+            reduce_temperature_map,
+        )
+
+        loaded = read_temperature_fits(
+            observed_path,
+            allowed_column_names=("I_STOKES",),
+            declared_coordinate_frame="GALACTIC",
+        )
+        observed_map = reduce_temperature_map(
+            loaded.values,
+            source_unit=loaded.unit,
+            source_ordering=loaded.ordering,
+            output_nside=nside,
+        )
+        mask = _load_npy(components["mask"], label="SMICA mask", dimension=1)
+        beam = _load_npy(components["beam"], label="SMICA beam", dimension=1)
+        window = _load_window(components["window"], label="SMICA window")
+        context = build_smica_operator_context(
+            smica_map=observed_map,
+            mask=mask,
+            beam=beam,
+            window=window,
+            declared_nside=nside,
+        )
+        null_features = _process_ffp10_component(
+            components["null"],
+            array_name="smica_maps",
+            row_ids=row_ids,
+            component="SMICA",
+            context=context,
+        )
+        observed_features, _, _ = _process_map(
+            observed_map, component="SMICA", context=context
+        )
+        diagnostic = analyze_smica_feature_rows(
+            observed_features=observed_features,
+            null_features=null_features,
+            row_ids=row_ids,
+        )
+        replay = write_compact_smica_observed_replay_input(
+            output_dir=output_dir, smica_map=observed_map, nside=nside
+        )
+        stored_covariance = _load_npy(
+            components["covariance"], label="SMICA covariance", dimension=2
+        )
+        replay_covariance = np.cov(null_features, rowvar=False, ddof=1)
+        if not np.array_equal(stored_covariance, replay_covariance):
+            raise PlanckWorkerError("SMICA stored covariance differs from replay")
+        result = {
+            "format": "PLANCK_PR3_SMICA_EXISTING_RESULT_V1",
+            **diagnostic,
+            "acceptance_hash": acceptance["acceptance_hash"],
+            "candidate_commit": candidate_commit,
+            "candidate_tree": candidate_tree,
+            "source_release": plan["release_identity"],
+            "observed_smica_filename": observed_path.name,
+            "observed_smica_sha256": _sha256_file(observed_path),
+            "compact_observed_replay_input": replay,
+            "wall_seconds": _seconds(started),
+            "observed_statistic_seen": True,
+            "observed_science_executed": True,
+            "claim_tier": "diagnostic_only",
+            "forbidden_claims": [
+                "Commander robustness",
+                "joint Planck component-separation closure",
+                "global response",
+                "source attribution",
+                "native solver result",
+                "Bianchi family identification",
+            ],
+        }
+        _write_json(output_dir / "result.json", result)
+        result_hash = _sha256_file(output_dir / "result.json")
+        _write_json(
+            output_dir / "terminal.json",
+            {
+                "state": "SUCCEEDED",
+                "result_sha256": result_hash,
+                "observed_science_executed": True,
+            },
+        )
+        _append_fsynced(output_dir / "stdout.log", "SMICA diagnostic completed\n")
+        (output_dir / "stderr.log").touch()
+        return result
+    except BaseException as exc:
+        _write_json(
+            output_dir / "terminal.json",
+            {
+                "state": "FAILED",
+                "error_type": type(exc).__name__,
+                "error": str(exc),
+                "scientific_result_emitted": False,
+            },
+        )
+        _append_fsynced(output_dir / "stderr.log", f"{type(exc).__name__}: {exc}\n")
+        raise
+
+
+def replay_smica_existing_result(
+    *, plan_path: Path, source_output_dir: Path, replay_output: Path
+) -> dict[str, object]:
+    """Replay the diagnostic from retained compact inputs without raw FITS."""
+
+    plan = _strict_json(plan_path, label="SMICA existing-data plan")
+    components = _smica_plan_components(plan)
+    selection, row_ids, _, _ = _load_smica_existing_rows(
+        plan=plan, components=components
+    )
+    expected = _strict_json(
+        source_output_dir / "result.json", label="SMICA source result"
+    )
+    compact = expected.get("compact_observed_replay_input")
+    if not isinstance(compact, Mapping):
+        raise PlanckWorkerError("SMICA compact replay identity is missing")
+    observed_path = source_output_dir / str(compact.get("filename"))
+    if _sha256_file(observed_path) != compact.get("sha256"):
+        raise PlanckWorkerError("SMICA compact observed replay hash drifted")
+    observed_map = _load_npy(
+        observed_path, label="compact observed SMICA", dimension=1
+    )
+    mask = _load_npy(components["mask"], label="SMICA mask", dimension=1)
+    beam = _load_npy(components["beam"], label="SMICA beam", dimension=1)
+    window = _load_window(components["window"], label="SMICA window")
+    context = build_smica_operator_context(
+        smica_map=observed_map,
+        mask=mask,
+        beam=beam,
+        window=window,
+        declared_nside=int(selection["nside"]),
+    )
+    null_features = _process_ffp10_component(
+        components["null"],
+        array_name="smica_maps",
+        row_ids=row_ids,
+        component="SMICA",
+        context=context,
+    )
+    observed_features, _, _ = _process_map(
+        observed_map, component="SMICA", context=context
+    )
+    diagnostic = analyze_smica_feature_rows(
+        observed_features=observed_features,
+        null_features=null_features,
+        row_ids=row_ids,
+    )
+    replayed = dict(expected)
+    for key, value in diagnostic.items():
+        replayed[key] = value
+    if _smica_result_projection(replayed) != _smica_result_projection(expected):
+        raise PlanckWorkerError("SMICA compact replay differs from source result")
+    _write_json(
+        replay_output,
+        {
+            "state": "REPLAY_MATCH",
+            "source_result_sha256": _sha256_file(source_output_dir / "result.json"),
+            "scientific_projection_sha256": _canonical_hash(
+                _smica_result_projection(expected)
+            ),
+            "observed_raw_reopened": False,
+        },
+    )
+    return dict(_strict_json(replay_output, label="SMICA replay result"))
+
+
 def _load_window(path: Path, *, label: str) -> dict[str, np.ndarray]:
     try:
         with np.load(path, allow_pickle=False) as bundle:
@@ -1153,12 +1748,22 @@ def main(argv: Sequence[str] | None = None) -> int:
     mode.add_argument("--synthetic-profile", action="store_true")
     mode.add_argument("--synthetic-profile-matrix", action="store_true")
     mode.add_argument("--run-admitted", action="store_true")
+    mode.add_argument("--print-smica-existing-acceptance", action="store_true")
+    mode.add_argument("--run-smica-existing", action="store_true")
+    mode.add_argument("--replay-smica-existing", action="store_true")
     parser.add_argument("--rows", choices=ROW_LABELS)
     parser.add_argument("--mode", choices=PROFILE_MODES, default="serial")
     parser.add_argument("--workers", type=int, default=1)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--admission", type=Path)
     parser.add_argument("--data-root", type=Path)
+    parser.add_argument("--plan", type=Path)
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--candidate-commit")
+    parser.add_argument("--candidate-tree")
+    parser.add_argument("--confirm")
+    parser.add_argument("--source-output-dir", type=Path)
+    parser.add_argument("--replay-output", type=Path)
     args = parser.parse_args(argv)
     try:
         if args.synthetic_profile:
@@ -1183,7 +1788,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                     "profile matrix forbids row and admitted inputs"
                 )
             payload = build_profile_matrix()
-        else:
+        elif args.run_admitted:
             if (
                 args.rows is not None
                 or args.admission is None
@@ -1194,6 +1799,59 @@ def main(argv: Sequence[str] | None = None) -> int:
                 )
             payload = run_admitted(
                 admission_path=args.admission, data_root=args.data_root
+            )
+        elif args.print_smica_existing_acceptance:
+            if any(
+                value is None
+                for value in (
+                    args.plan,
+                    args.output_dir,
+                    args.candidate_commit,
+                    args.candidate_tree,
+                )
+            ):
+                raise PlanckWorkerError(
+                    "SMICA acceptance requires plan, output-dir, commit, and tree"
+                )
+            payload = smica_existing_acceptance(
+                plan_path=args.plan,
+                output_dir=args.output_dir,
+                candidate_commit=args.candidate_commit,
+                candidate_tree=args.candidate_tree,
+            )
+        elif args.run_smica_existing:
+            if any(
+                value is None
+                for value in (
+                    args.plan,
+                    args.output_dir,
+                    args.candidate_commit,
+                    args.candidate_tree,
+                    args.confirm,
+                )
+            ):
+                raise PlanckWorkerError(
+                    "SMICA run requires plan, output-dir, commit, tree, and confirm"
+                )
+            payload = run_smica_existing_attended(
+                plan_path=args.plan,
+                output_dir=args.output_dir,
+                candidate_commit=args.candidate_commit,
+                candidate_tree=args.candidate_tree,
+                confirmation=args.confirm,
+            )
+        else:
+            if any(
+                value is None
+                for value in (args.plan, args.source_output_dir, args.replay_output)
+            ):
+                raise PlanckWorkerError(
+                    "SMICA replay requires plan, source-output-dir, and replay-output"
+                )
+            payload = replay_smica_existing_result(
+                plan_path=args.plan,
+                source_output_dir=args.source_output_dir,
+                replay_output=args.replay_output,
             )
         if args.output is None:
             print(json.dumps(payload, sort_keys=True, allow_nan=False))

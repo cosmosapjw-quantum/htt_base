@@ -1,5 +1,8 @@
 generated_on: '2026-08-24'
 completed:
+- PR-314
+- PR-311
+- PR-310
 - PR-309
 - PR-308
 - PR-313
@@ -231,7 +234,6 @@ pending:
 - PR-292
 - PR-293
 - PR-294
-- PR-311
 dormant_external:
 - PR-159
 - PR-160
@@ -261,7 +263,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-310
+in_progress: null
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -596,9 +598,9 @@ stacked_pr_execution:
   stack_id: POST_PR306_OBSERVATIONAL_LANE_READINESS
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
-  target_sha: 5de7992c313a874013b78b81a45c562cbb9d2e08
-  active_implementation_pr: PR-310
-  pr_order: [PR-312, PR-313, PR-308, PR-309, PR-310, PR-311]
+  target_sha: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
+  active_implementation_pr: null
+  pr_order: [PR-312, PR-313, PR-308, PR-309, PR-310, PR-311, PR-314]
   prs:
     PR-312:
       lifecycle: FAILED
@@ -691,26 +693,56 @@ stacked_pr_execution:
         data_admission: BLOCKED_NOT_PRESENT}
       assurance_budget: {maximum: 16, consumed: 3}
     PR-311:
-      lifecycle: VALIDATED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
+      lifecycle: COMPLETE
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, COMPLETE]
       base_sha: 00fbc5c7bf11765fb2f49cf68ea3ea3ee6cc489f
       predecessor_pr: PR-310
       predecessor_sealed_sha: 7a25636fb6cf2fdc1e0613c93b9ce25e5b1d2f02
-      sealed_head: null
-      pushed_ref: null
-      pr_url: null
-      production_hash: null
+      sealed_head: a89563d26d69322134078565e9a4ccef86cdf83c
+      pushed_ref: refs/heads/changeset/pr311-desi-successor-formalism-closure-20260824
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/402
+      production_hash: a7d849c41b5fcac7135d1a38706c7c2f2ed06f72d650e269dff6fd6e20d49919
       dependency_hashes:
         pr310_merge_commit: e7b9872f7ad977c3bbaba9677ce6450e79c2cb82
         pr310_merge_tree: 72cce873347297a2393c03ee2156140dc7641ae5
         official_selection_contract_merge: 00fbc5c7bf11765fb2f49cf68ea3ea3ee6cc489f
         official_selection_contract_tree: b3ee9770aa4a6fdef16b3514c193d0f5f6033d66
+        merge_commit: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
+        merge_tree: 5901e12457e4ae677f0b74c0c8fdd8257987f084
+        repository_integrity_run_id: '32703234461'
       gate_dispositions: {eligibility: PASS, local_focused_matrix: PASS,
         official_selection_contract: REPAIRED,
         first_review: REPAIR, closeout_review: REPAIR,
-        repair_matrix: PASS, repair_closeout_review: PENDING,
+        repair_matrix: PASS, repair_closeout_review: PASS, clean_ci: PASS,
         data_admission: BLOCKED_NOT_PRESENT}
       assurance_budget: {maximum: 16, consumed: 3}
+    PR-314:
+      lifecycle: COMPLETE
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED, SEALED, COMPLETE]
+      base_sha: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
+      predecessor_pr: PR-311
+      predecessor_sealed_sha: a89563d26d69322134078565e9a4ccef86cdf83c
+      sealed_head: 4360e544b456f9fc1f7c7dfbcc0682811c2faf6d
+      pushed_ref: refs/heads/changeset/pr314-planck-pr3-attended-analysis-20260824
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/403
+      production_hash: 602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2
+      dependency_hashes:
+        pr311_merge_commit: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
+        pr311_merge_tree: 5901e12457e4ae677f0b74c0c8fdd8257987f084
+        pr306_operator_head: e79aea1311798c512f58e56b7f4d9b49e31b951f
+        scientific_execution_commit: b6411109a54d4f2ac05bc60cac270d936c1b9417
+        scientific_execution_tree: ab2d595e2d6246f5f3a5fa91e49694499d05276c
+        result_sha256: 898d08fc7c70205fbb8c7580fbaef1074357a8b3255ac77afd8273b92511da97
+        replay_sha256: dc6c6e53601239ec49618769392f3e7a67f06303c2b77a5c8a6699ed94067234
+      gate_dispositions: {eligibility: PASS,
+        smica_existing_source_preflight: PASS_EXACT_300_CMB_PLUS_NOISE,
+        full_joint_planck: DEFERRED_INCOMPLETE_COMMANDER,
+        observed_execution: PASS_SMICA_ONLY_300_FFP10,
+        reproducible_output: PASS_REPLAY_MATCH,
+        final_science_review: PASS_P0_P1_ZERO,
+        other_local_lanes: BLOCKED_NO_COMPLETE_CANONICAL_ADMISSION,
+        desi_download: DEFERRED_BY_SEQUENCE}
+      assurance_budget: {maximum: 16, consumed: 2}
 execution_lane:
   PR-167: defensible
   PR-168: defensible
@@ -857,8 +889,54 @@ execution_lane:
   PR-309: defensible
   PR-310: defensible
   PR-311: defensible
+  PR-314: defensible
   PR-312: defensible
 execution_resolutions:
+  PR-314:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-314.md
+    candidate_sha: 4360e544b456f9fc1f7c7dfbcc0682811c2faf6d
+    merge_commit: null
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/403
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-24'
+    scientific_status_effect: planck_pr3_smica_ffp10_300_conditional_diagnostic_completed
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: observed_smica_diagnostic_only
+    transfer_source: none
+    observed_data_executed: true
+    public_use: false
+    public_result_emitted: false
+  PR-311:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-311.md
+    candidate_sha: a89563d26d69322134078565e9a4ccef86cdf83c
+    merge_commit: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/402
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-24'
+    scientific_status_effect: desi_successor_formalism_operator_closed_without_observed_execution
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: synthetic_desi_operator_closure
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    public_result_emitted: false
+  PR-310:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-310.md
+    candidate_sha: 7a25636fb6cf2fdc1e0613c93b9ce25e5b1d2f02
+    merge_commit: e7b9872f7ad977c3bbaba9677ce6450e79c2cb82
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/399
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-24'
+    scientific_status_effect: hsc_kids_spin2_operator_closed_without_observed_execution
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: synthetic_hsc_kids_operator_closure
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    public_result_emitted: false
   PR-309:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-309.md

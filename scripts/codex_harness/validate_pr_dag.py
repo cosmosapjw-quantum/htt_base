@@ -660,7 +660,7 @@ PR280_ROOT_CAUSE_CARD_CONTRACTS = {
 }
 PR280_ROOT_CAUSE_FULL_IDS = set(PR280_ROOT_CAUSE_CARD_CONTRACTS)
 POST300_OBSERVATIONAL_LANE_IDS = {
-    f"PR-{number}" for number in range(301, 314)
+    f"PR-{number}" for number in range(301, 315)
 }
 POST300_OBSERVATIONAL_CARD_CONTRACTS = {
     "PR-301": {
@@ -730,6 +730,11 @@ POST300_OBSERVATIONAL_CARD_CONTRACTS = {
         "owner": "OBSSTAT",
         "dependencies": [("PR-310", "requires_success")],
         "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
+    "PR-314": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-311", "requires_success")],
+        "authorization": "EXACT_ATTENDED_CONFIRMATION",
     },
 }
 PR280_DIRECT_CONSUMERS = {
