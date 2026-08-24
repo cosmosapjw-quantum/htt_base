@@ -1,0 +1,786 @@
+schema: htt.audit_compiled_pr.v3.1
+
+identity:
+  proposed_pr_id: PR-316
+  title: Reproducible theory-candidate ledger and typed evidence promotion
+  risk_class: high
+  owner: COMMON
+  contributors: [BASS, OBSSTAT, HTT]
+  audited_pull_request: 405
+  audited_base_sha: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
+  audited_head_sha: 463f0999949bf8534c60ad7973b7342705c2e3d6
+  audited_head_tree: 20eb3e3e117633bc83e743bea45ed024048441e1
+  audited_matrix_blob_sha: 56af1713ef8c4718598e10012819d5ab62c6e37a
+  audited_report_blob_sha: 7db3422b827e8a10cf73e5fafc9cd265ad033742
+  capability: REPRODUCIBLE_THEORY_CANDIDATE_LEDGER_AND_TYPED_EVIDENCE_PROMOTION
+  deployment_profile: private_single_researcher_local_v1
+  observed_data: forbidden
+  native_solver_result: forbidden
+  family_identification: forbidden
+
+DAG_integration:
+  planning_branch_mutates_DAG: false
+  implementation_registration:
+    mode: append_only_after_live_terminal_tail
+    proposed_serial_predecessor: PR-315
+    evidence_dependency:
+      github_pull_request: 405
+      required_state: exact_terminal_receipt
+    preconditions:
+      - PR-314 has an exact terminal disposition
+      - PR-315 has an exact terminal disposition
+      - PR-405 has an exact terminal head or failed-with-receipt identity
+    procedure:
+      - read the live canonical DAG and every current mirror
+      - record the complete ordered preexisting node list and dependency map
+      - use the existing project-owned registration and mirror-generation path
+      - append PR-316 after the live terminal tail
+      - regenerate every canonical and machine-readable mirror in one transaction
+      - assert that the old ordered node list is an exact prefix of the new list
+      - assert that every preexisting dependency object is byte-equivalent after canonical serialization
+    stop_if:
+      - code: BLOCKED_PREDECESSOR_NOT_TERMINAL
+        condition: PR-314, PR-315, or PR-405 lacks the required terminal identity
+      - code: BLOCKED_DAG_REGISTRATION_PATH_UNRESOLVED
+        condition: no existing project-owned append and sync path can be identified without inventing one
+      - code: BLOCKED_DAG_PREFIX_DRIFT
+        condition: any existing node, order position, dependency, or resolution changes
+    forbidden:
+      - manually reorder the backlog
+      - rewrite an existing dependency to make PR-316 eligible
+      - claim success for an open or failed predecessor
+      - update only one mirror
+      - add a second DAG framework
+
+severity_policy:
+  P0:
+    definition: >-
+      Silent wrong scientific state, false exhaustive coverage, a false theorem
+      or refutation, an invalid terminal count used as campaign truth, mutation
+      of frozen evidence, or a provenance break that makes a scientific result
+      appear established without its exact source and attempt receipt.
+    merge_gate: zero
+  P1:
+    definition: >-
+      Missing load-bearing regression, ambiguous attempt semantics, evidence
+      kind collapse, nonportable CAS receipt, false-negative formal-proof gate,
+      manually selected scoped child, incomplete current replay, or partial
+      implementation represented as terminally complete.
+    merge_gate: zero
+  P2:
+    definition: >-
+      Non-load-bearing terminology, overbroad backend label, portability
+      weakness, or evidence-schema clarity defect that cannot alter the
+      scientific terminal state under the P0 and P1 gates.
+  P3:
+    definition: Editorial or optional maintainability issue with no scientific effect.
+
+objective:
+  statement: >-
+    Replace the self-assembled PR-405 terminal matrix with a versioned,
+    reproducibly generated source-to-candidate ledger whose candidate coverage,
+    proof-or-experiment attempt semantics, scoped-child derivation, evidence
+    kind, release state, CAS receipts, and independent review are mechanically
+    verified while preserving all PR-405 artifacts unchanged.
+  observable_success: >-
+    A clean candidate generates one source manifest, one typed candidate ledger,
+    one human-readable report, and one portable CAS evidence index from exact
+    repository inputs. Deleting or adding a source claim, misclassifying a
+    non-attempt, corrupting an evidence hash, broadening a scoped claim, or
+    introducing a forbidden Lean axiom fails closed.
+
+source_of_truth:
+  frozen_audit_inputs:
+    - path: docs/research_program/theory_promotion/THEORY_PROMOTION_AUDIT_V1.md
+      git_blob_sha: 7db3422b827e8a10cf73e5fafc9cd265ad033742
+      mutation: forbidden
+    - path: docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json
+      git_blob_sha: 56af1713ef8c4718598e10012819d5ab62c6e37a
+      mutation: forbidden
+    - path: docs/research_program/theory_promotion/pr284_finite_path/CAS_CONTRACT.json
+      git_blob_sha: 6b1cb6295cd2d9e0fcc33b2bf684c880c6ea6943
+      mutation: forbidden
+    - path: docs/research_program/theory_promotion/pr284_finite_path/CAS_ADJUDICATION.json
+      git_blob_sha: ff3cd301db0d92b34c813aaa6573d54dca717d8e
+      mutation: forbidden
+  canonical_scientific_sources:
+    - docs/research_program/vector_tensor/proofs/**
+    - docs/research_program/post_pr275/**
+    - docs/research_program/strengthening/**
+    - docs/PR_DELTAS/**
+    - REVISION_DELTAS/**
+    - formal/**
+    - formal_mathlib/**
+  precedence:
+    - exact source statement and frozen assumptions
+    - exact proof, experiment, or counterexample receipt
+    - later scoped adjudication that preserves the parent statement
+    - generated ledger
+    - narrative report
+
+scope:
+  create_or_modify:
+    - scripts/theory_promotion/build_candidate_ledger.py
+    - scripts/theory_promotion/verify_candidate_ledger.py
+    - scripts/theory_promotion/run_cas_evidence.py
+    - tests/contracts/test_theory_promotion_ledger_v2.py
+    - tests/integration/test_theory_promotion_cas_v2.py
+    - docs/research_program/theory_promotion/v2/CANDIDATE_SOURCE_MANIFEST_V2.json
+    - docs/research_program/theory_promotion/v2/CANDIDATE_LEDGER_V2.json
+    - docs/research_program/theory_promotion/v2/THEORY_PROMOTION_REPORT_V2.md
+    - docs/research_program/theory_promotion/v2/CAS_EVIDENCE_INDEX_V2.json
+    - docs/research_program/theory_promotion/v2/cas_receipts/**
+    - docs/research_program/theory_promotion/pr316_spec.yaml
+    - docs/PR_DELTAS/pr-316.md
+    - .github/workflows/repository-integrity.yml
+    - docs/codex_handoff/pr_backlog.yaml
+    - docs/codex_handoff/pr_backlog.json
+    - machine_readable/pr_backlog.yaml
+    - machine_readable/pr_backlog.json
+    - docs/codex_handoff/pr_status.yaml
+    - machine_readable/pr_status.yaml
+    - direct fixed-count or generated-status consumers proven by a failing test
+  read_only_inputs:
+    - docs/research_program/theory_promotion/THEORY_PROMOTION_AUDIT_V1.md
+    - docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json
+    - docs/research_program/theory_promotion/pr284_finite_path/**
+    - historical PR-190, PR-270, and PR-284 proof and adjudication artifacts
+    - PR-285 and PR-286 adjudication outputs
+  forbidden_paths:
+    - data/canonical/**
+    - legacy/**
+    - docs/generated/pr314_planck_pr3_smica_existing_result.json
+    - docs/generated/pr314_planck_pr3_smica_existing_replay.json
+    - PR-289 exact seven-source files
+  hard_limits:
+    new_security_or_authorization_frameworks: 0
+    new_generic_ledger_frameworks: 0
+    new_workflows: 0
+    new_Rust_code: 0
+    historical_receipts_rewritten: 0
+    frozen_PR405_files_modified: 0
+    observed_payloads_opened: 0
+  forbidden_changes:
+    - alter a source statement, premise, expected value, or scientific result to make a test pass
+    - infer premises from a title-only source
+    - count an administrative classification attempt as a proof or experiment
+    - manually add a scoped child outside the registered derivation rules
+    - collapse theorem, conditional theorem, negative theorem, and synthetic validation into one theorem count
+    - convert a blocked or unavailable CAS axis into PASS
+    - reinterpret the PR-405 Lean result as a historical PASS
+    - weaken current publication, transfer, geometry, or family-identification firewalls
+    - implement keys, signatures, nonces, root launchers, or anti-tamper machinery
+
+canonical_generation_policy:
+  deterministic_serialization:
+    JSON:
+      encoding: UTF-8
+      sort_keys: true
+      separators: compact
+      allow_nan: false
+      terminal_newline: true
+    Markdown:
+      generation_order: stable candidate and semantic-component order
+  volatile_fields:
+    forbidden_in_canonical_outputs:
+      - wall_clock_timestamp
+      - hostname
+      - absolute_home_path
+      - process_id
+      - temporary_directory
+    permitted_only_in_raw_receipts:
+      - started_at
+      - completed_at
+      - wall_seconds
+  raw_receipts:
+    path: docs/research_program/theory_promotion/v2/cas_receipts/**
+    role: immutable execution evidence
+  canonical_index:
+    path: docs/research_program/theory_promotion/v2/CAS_EVIDENCE_INDEX_V2.json
+    rule: contains content hashes and typed dispositions, not volatile host fields
+  clean_CI_rule: >-
+    Clean CI regenerates canonical manifest, ledger, index, and report from
+    source files and frozen raw receipts. CI runs available open-tool axes and
+    typed blocked-axis simulations; it does not fabricate unavailable licensed
+    execution or require volatile receipts to byte-match another host.
+
+preconditions:
+  - id: PRE-001
+    command: git rev-parse HEAD HEAD^{tree}
+    expect: >-
+      exact PR-405 head and tree 463f0999949bf8534c60ad7973b7342705c2e3d6 /
+      20eb3e3e117633bc83e743bea45ed024048441e1, or an explicitly
+      recorded stacked successor preserving those bytes
+  - id: PRE-002
+    command: git status --porcelain=v1 --untracked-files=all
+    expect: empty
+  - id: PRE-003
+    command: git hash-object docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json
+    expect: 56af1713ef8c4718598e10012819d5ab62c6e37a
+  - id: PRE-004
+    command: git hash-object docs/research_program/theory_promotion/THEORY_PROMOTION_AUDIT_V1.md
+    expect: 7db3422b827e8a10cf73e5fafc9cd265ad033742
+  - id: PRE-005
+    command: >-
+      python scripts/codex_harness/sync_pr_dag_mirrors.py --check &&
+      python scripts/codex_harness/validate_pr_dag.py
+      docs/codex_handoff/pr_backlog.yaml
+      --status docs/codex_handoff/pr_status.yaml
+      --strict-rescue-slice
+    expect: exit=0 before registration
+
+candidate_schema:
+  source_entry_required_fields:
+    - source_entry_id
+    - source_path
+    - source_locator
+    - source_blob_sha256
+    - source_statement
+    - source_statement_identity_sha256
+    - source_kind
+    - discovery_rule_id
+  candidate_required_fields:
+    - candidate_id
+    - parent_candidate_id
+    - source_entry_ids
+    - statement
+    - statement_identity_sha256
+    - assumptions
+    - domains
+    - exclusions
+    - evidence_kind
+    - evidence_state
+    - current_release_state
+    - administrative_adjudication_attempted
+    - proof_or_experiment_attempted
+    - attempt_receipt_paths
+    - evidence_paths
+    - semantic_link_group
+    - scoped_child_rule_id
+    - claim_ceiling
+  enums:
+    source_kind:
+      - REGISTERED_CLAIM
+      - PROOF_OBLIGATION
+      - EXPERIMENT_OBLIGATION
+      - NARROW_ESTABLISHED_CORE
+      - NEGATIVE_COUNTEREXAMPLE
+      - PROPOSAL
+      - EXCLUDED_NONCLAIM
+    evidence_kind:
+      - EXACT_THEOREM
+      - CONDITIONAL_THEOREM
+      - NEGATIVE_THEOREM
+      - SYNTHETIC_VALIDATION
+      - NUMERICAL_EXAMPLE
+      - OTHER
+    evidence_state:
+      - ESTABLISHED
+      - REFUTED
+      - UNRESOLVED
+      - DEFERRED
+      - NOT_ATTEMPTED
+    current_release_state:
+      - ELIGIBLE
+      - BLOCKED_STALE_BINDING
+      - BLOCKED_INCOMPLETE_REPLAY
+      - BLOCKED_REQUIRED_CAPABILITY
+      - BLOCKED_INDEPENDENT_REVIEW
+      - HISTORICAL_ONLY
+
+invariants:
+  - id: INV-001
+    severity_if_violated: P0
+    statement: >-
+      The candidate universe is generated from a checked canonical source
+      manifest; every discovered source entry is represented by exactly one
+      candidate relation or one typed exclusion.
+    mechanical_checks:
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_manifest_discovers_every_registered_claim_or_exclusion
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_removing_one_source_entry_breaks_coverage
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_inserting_unclassified_claim_breaks_coverage
+  - id: INV-002
+    severity_if_violated: P0
+    statement: >-
+      A candidate is UNRESOLVED only when a concrete proof or experiment attempt
+      receipt exists. Title inspection, source lookup, missing signature, or
+      administrative adjudication alone is not a scientific attempt.
+    mechanical_checks:
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_unresolved_requires_scientific_attempt_receipt
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_missing_signature_is_not_scientific_attempt
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_reference_resolved_not_readjudicated_is_not_scientific_attempt
+  - id: INV-003
+    severity_if_violated: P0
+    statement: >-
+      Every ESTABLISHED or REFUTED candidate binds an exact source statement,
+      assumptions, domain, evidence kind, evidence artifact, and source and
+      evidence content identity.
+    mechanical_checks:
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_established_and_refuted_rows_are_content_bound
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_evidence_hash_mutation_blocks_terminal_state
+  - id: INV-004
+    severity_if_violated: P0
+    statement: Frozen PR-405 report, matrix, contract, adjudication, and axis sources remain byte-identical.
+    mechanical_check:
+      test: tests/contracts/test_theory_promotion_ledger_v2.py::test_pr405_frozen_inputs_are_unchanged
+  - id: INV-005
+    severity_if_violated: P0
+    statement: >-
+      The PR-190 refutation remains restricted to the registered Bianchi-I
+      hypersurface-normal lower and interior targets and never broadens to tilted
+      or non-normal congruences.
+    mechanical_check:
+      test: tests/contracts/test_theory_promotion_ledger_v2.py::test_pr190_negative_scope_replays_exactly
+  - id: INV-006
+    severity_if_violated: P1
+    statement: >-
+      Scoped child candidates are derived by registered source rules and bind a
+      parent; no manually curated supplemental list controls the count.
+    mechanical_checks:
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_scoped_children_are_derived_from_typed_source_fields
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_manual_scoped_child_injection_is_rejected
+  - id: INV-007
+    severity_if_violated: P1
+    statement: >-
+      Evidence state, evidence kind, and current release state are separate.
+      Synthetic validations are never counted as theorems and blocked current
+      release does not erase historical exact evidence.
+    mechanical_checks:
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_evidence_state_kind_and_release_are_orthogonal
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_synthetic_validation_never_enters_theorem_count
+  - id: INV-008
+    severity_if_violated: P1
+    statement: >-
+      Semantic duplicate groups have a deterministic representative and member
+      rule; source-row counts and deduplicated scientific-component counts are
+      reported separately.
+    mechanical_check:
+      test: tests/contracts/test_theory_promotion_ledger_v2.py::test_semantic_components_have_one_deterministic_representative
+  - id: INV-009
+    severity_if_violated: P1
+    statement: >-
+      The PR-284 fixture is recomputed exactly. No engine may use literal output
+      as proof of computation, and claim-ceiling checks are performed by the
+      artifact verifier rather than by a literal axis boolean.
+    mechanical_checks:
+      - test: tests/integration/test_theory_promotion_cas_v2.py::test_pr284_fixture_values_are_exact
+      - test: tests/integration/test_theory_promotion_cas_v2.py::test_axis_payload_values_are_derived_not_literal_only
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_fixture_claim_ceiling_is_statically_verified
+  - id: INV-010
+    severity_if_violated: P1
+    statement: >-
+      A Lean proof may depend only on propext, Classical.choice, and Quot.sound.
+      sorryAx, Lean.trustCompiler, custom axioms, forbidden native evaluation,
+      partial declarations, and unsafe declarations fail closed.
+    mechanical_checks:
+      - test: tests/integration/test_theory_promotion_cas_v2.py::test_lean_standard_three_axioms_are_allowed
+      - test: tests/integration/test_theory_promotion_cas_v2.py::test_lean_sorry_custom_and_trusted_axioms_are_rejected
+  - id: INV-011
+    severity_if_violated: P1
+    statement: >-
+      Every CAS receipt content-binds the contract, run spec, runner, program,
+      toolchain, dependency tree, environment, stdout, stderr, exit code, and
+      derived status. Blocked is distinct from missing and conflict.
+    mechanical_checks:
+      - test: tests/integration/test_theory_promotion_cas_v2.py::test_cas_receipt_is_portable_and_content_bound
+      - test: tests/integration/test_theory_promotion_cas_v2.py::test_blocked_axis_is_not_missing_or_mathematical_conflict
+  - id: INV-012
+    severity_if_violated: P1
+    statement: >-
+      The exact current replay command matrix and raw logs support every reported
+      pass and fail count; narrative-only counts cannot gate release.
+    mechanical_check:
+      test: tests/contracts/test_theory_promotion_ledger_v2.py::test_current_replay_counts_are_derived_from_command_receipts
+  - id: INV-013
+    severity_if_violated: P1
+    statement: >-
+      Clean pull-request CI regenerates and byte-compares every canonical v2
+      output and runs every load-bearing negative mutation.
+    mechanical_checks:
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_v2_outputs_are_byte_reproducible
+      - test: tests/contracts/test_theory_promotion_ledger_v2.py::test_repository_integrity_runs_theory_promotion_v2
+  - id: INV-014
+    severity_if_violated: P1
+    statement: >-
+      A fresh-context read-only reviewer receipt with exact input hashes and
+      P0 and P1 zero is required before current_release_state can be ELIGIBLE.
+    mechanical_check:
+      test: tests/contracts/test_theory_promotion_ledger_v2.py::test_independent_review_receipt_is_required_for_release_eligibility
+
+threat_catalog:
+  - id: THREAT-001
+    severity: P0
+    agent_failure: silently omit a source claim and recompute a clean universe hash
+    killed_by: [INV-001]
+  - id: THREAT-002
+    severity: P0
+    agent_failure: label missing-source or missing-signature rows UNRESOLVED to reduce NOT_ATTEMPTED
+    killed_by: [INV-002]
+  - id: THREAT-003
+    severity: P0
+    agent_failure: promote a row using a stale or mismatched source or evidence artifact
+    killed_by: [INV-003]
+  - id: THREAT-004
+    severity: P0
+    agent_failure: edit PR-405 historical evidence instead of producing a versioned successor
+    killed_by: [INV-004]
+  - id: THREAT-005
+    severity: P0
+    agent_failure: broaden the PR-190 normal-frame obstruction to all congruences
+    killed_by: [INV-005]
+  - id: THREAT-006
+    severity: P1
+    agent_failure: manually cherry-pick only attractive narrow cores
+    killed_by: [INV-006]
+  - id: THREAT-007
+    severity: P1
+    agent_failure: report synthetic PASS rows as proved theorems
+    killed_by: [INV-007]
+  - id: THREAT-008
+    severity: P1
+    agent_failure: overfit theorem count by counting duplicate source rows
+    killed_by: [INV-008]
+  - id: THREAT-009
+    severity: P1
+    agent_failure: emit expected PR-284 values and a hard-coded claim firewall without deriving either
+    killed_by: [INV-009]
+  - id: THREAT-010
+    severity: P1
+    agent_failure: reject Lean standard axioms or permit sorry and trusted execution
+    killed_by: [INV-010]
+  - id: THREAT-011
+    severity: P1
+    agent_failure: serialize a locally asserted CAS adjudication without portable execution provenance
+    killed_by: [INV-011]
+  - id: THREAT-012
+    severity: P1
+    agent_failure: copy test counts into prose without a command receipt
+    killed_by: [INV-012]
+  - id: THREAT-013
+    severity: P1
+    agent_failure: report completion after local success while clean CI does not run the new science
+    killed_by: [INV-013]
+  - id: THREAT-014
+    severity: P1
+    agent_failure: let the implementation context approve its own scientific terminal state
+    killed_by: [INV-014]
+
+failure_modes:
+  - id: FM-001
+    severity: P0
+    trigger: discovered source entry is absent from both candidate and exclusion relations
+    stop: BLOCKED_CANDIDATE_COVERAGE_INCOMPLETE
+    detection: tests/contracts/test_theory_promotion_ledger_v2.py::test_removing_one_source_entry_breaks_coverage
+  - id: FM-002
+    severity: P0
+    trigger: UNRESOLVED row has no concrete proof or experiment attempt receipt
+    stop: BLOCKED_INVALID_ATTEMPT_TAXONOMY
+    detection: tests/contracts/test_theory_promotion_ledger_v2.py::test_unresolved_requires_scientific_attempt_receipt
+  - id: FM-003
+    severity: P0
+    trigger: ESTABLISHED or REFUTED row lacks exact statement, domain, or evidence binding
+    stop: BLOCKED_TERMINAL_EVIDENCE_UNBOUND
+    detection: tests/contracts/test_theory_promotion_ledger_v2.py::test_established_and_refuted_rows_are_content_bound
+  - id: FM-004
+    severity: P1
+    trigger: child candidate was manually inserted rather than derived from source fields
+    stop: BLOCKED_POSTHOC_SCOPED_CANDIDATE
+    detection: tests/contracts/test_theory_promotion_ledger_v2.py::test_manual_scoped_child_injection_is_rejected
+  - id: FM-005
+    severity: P1
+    trigger: synthetic validation contributes to theorem count
+    stop: BLOCKED_EVIDENCE_KIND_COLLAPSE
+    detection: tests/contracts/test_theory_promotion_ledger_v2.py::test_synthetic_validation_never_enters_theorem_count
+  - id: FM-006
+    severity: P1
+    trigger: Lean receipt contains nonstandard or forbidden axioms
+    stop: BLOCKED_FORMAL_TRUST_BOUNDARY
+    detection: tests/integration/test_theory_promotion_cas_v2.py::test_lean_sorry_custom_and_trusted_axioms_are_rejected
+  - id: FM-007
+    severity: P1
+    trigger: blocked, unexecuted, or failed CAS axis is serialized as PASS, missing-free, or mathematical conflict
+    stop: BLOCKED_CAS_STATUS_MODEL_INVALID
+    detection: tests/integration/test_theory_promotion_cas_v2.py::test_blocked_axis_is_not_missing_or_mathematical_conflict
+  - id: FM-008
+    severity: P1
+    trigger: committed canonical v2 outputs differ from a clean regeneration
+    stop: BLOCKED_GENERATED_LEDGER_DRIFT
+    detection: tests/contracts/test_theory_promotion_ledger_v2.py::test_v2_outputs_are_byte_reproducible
+  - id: FM-009
+    severity: P1
+    trigger: fresh reviewer receipt is absent, authored by implementation context, or has P0 or P1 findings
+    stop: BLOCKED_INDEPENDENT_REVIEW
+    detection: tests/contracts/test_theory_promotion_ledger_v2.py::test_independent_review_receipt_is_required_for_release_eligibility
+
+implementation:
+  ordered_steps:
+    - id: STEP-000
+      name: Append-only DAG registration
+      action: >-
+        After the required terminal receipts exist, register PR-316 through the
+        existing project-owned path, regenerate mirrors, and prove that every
+        preexisting node and edge is unchanged.
+      files:
+        - docs/codex_handoff/pr_backlog.yaml
+        - docs/codex_handoff/pr_backlog.json
+        - machine_readable/pr_backlog.yaml
+        - machine_readable/pr_backlog.json
+        - docs/codex_handoff/pr_status.yaml
+        - machine_readable/pr_status.yaml
+      red_test: tests/contracts/test_theory_promotion_ledger_v2.py::test_pr316_registration_preserves_existing_dag_prefix_and_edges
+      stop_on_failure: BLOCKED_DAG_PREFIX_DRIFT
+    - id: STEP-001
+      name: Freeze source-discovery schema and RED coverage mutations
+      action: >-
+        Add tests that enumerate canonical source kinds, delete one source row,
+        insert one unclassified theorem-like row, and require exact candidate or
+        exclusion coverage before writing the generator.
+      files:
+        - tests/contracts/test_theory_promotion_ledger_v2.py
+        - docs/research_program/theory_promotion/pr316_spec.yaml
+      expected_RED:
+        - missing build_candidate_ledger interfaces
+        - PR-405 self-contained coverage hash does not detect external insertion or omission
+    - id: STEP-002
+      name: Implement deterministic source manifest and candidate generator
+      action: >-
+        Implement stable source discovery, source locators, content identities,
+        typed exclusions, deterministic ordering, and canonical JSON output.
+      files:
+        - scripts/theory_promotion/build_candidate_ledger.py
+        - scripts/theory_promotion/verify_candidate_ledger.py
+        - docs/research_program/theory_promotion/v2/CANDIDATE_SOURCE_MANIFEST_V2.json
+      required_interfaces:
+        - 'discover_source_entries(repo_root: Path) -> tuple[SourceEntry, ...]'
+        - 'derive_candidates(entries: Sequence[SourceEntry], evidence_index: Mapping[str, object]) -> tuple[Candidate, ...]'
+        - 'canonical_payload_sha256(payload: Mapping[str, object]) -> str'
+        - 'verify_source_coverage(entries: Sequence[SourceEntry], candidates: Sequence[Candidate], exclusions: Sequence[Exclusion]) -> None'
+    - id: STEP-003
+      name: Repair attempt taxonomy and typed terminal states
+      action: >-
+        Derive administrative and scientific attempt booleans from distinct
+        receipts, enforce the evidence-state truth table, and regenerate counts
+        without copying PR-405 values.
+      truth_table:
+        - when: {proof_or_experiment_attempted: false, explicit_dependency_blocker: false}
+          evidence_state: NOT_ATTEMPTED
+        - when: {proof_or_experiment_attempted: false, explicit_dependency_blocker: true}
+          evidence_state: DEFERRED
+        - when: {proof_or_experiment_attempted: true, attempt_settled: false}
+          evidence_state: UNRESOLVED
+        - when: {proof_or_experiment_attempted: true, exact_statement_passed: true}
+          evidence_state: ESTABLISHED
+        - when: {proof_or_experiment_attempted: true, exact_statement_refuted: true}
+          evidence_state: REFUTED
+    - id: STEP-004
+      name: Derive scoped children and semantic components
+      action: >-
+        Generate child candidates from typed narrow-core, synthetic-cell, and
+        negative-obstruction fields, bind every child to a parent, and compute
+        deterministic semantic components. Emit no numeric unique-theorem count
+        unless every component has a closed representative rule.
+    - id: STEP-005
+      name: Build portable CAS evidence runner and corrected trust policy
+      action: >-
+        Run each available axis in a scrubbed subprocess, preserve blocked axes,
+        content-bind programs and transcripts, allow only Lean's standard three
+        axioms, reject trust escapes, and move claim-ceiling checks to the static
+        ledger verifier.
+      files:
+        - scripts/theory_promotion/run_cas_evidence.py
+        - tests/integration/test_theory_promotion_cas_v2.py
+        - docs/research_program/theory_promotion/v2/CAS_EVIDENCE_INDEX_V2.json
+        - docs/research_program/theory_promotion/v2/cas_receipts/**
+      axis_policy:
+        wolfram:
+          mathematical_role: exact rational replay
+          xact_role: availability_disclosure_only_unless_tensor_operation_is_executed
+        sympy:
+          mathematical_role: exact rational replay
+        sage:
+          mathematical_role: exact rational replay
+          singular_role: availability_disclosure_only_unless_singular_operation_is_executed
+        lean:
+          mathematical_role: kernel_checked_exact_fixture
+          allowed_axioms: [propext, Classical.choice, Quot.sound]
+          forbidden_axioms: [sorryAx, Lean.trustCompiler]
+    - id: STEP-006
+      name: Generate versioned v2 ledger and report
+      action: >-
+        Generate the manifest, ledger, evidence index, and report from code,
+        preserve PR-405, report source-row, evidence-kind, semantic-component,
+        and release-state counts separately, and explain every PR-405 delta.
+      required_report_sections:
+        - frozen PR-405 evidence status
+        - terminal taxonomy corrections
+        - exact accepted mathematical results
+        - synthetic validations separated from theorems
+        - semantic duplicate components
+        - PR-190 scope boundary
+        - PR-284 fixture and four-axis replay state
+        - current publication blockers
+        - PR-405 to PR-316 count-delta table
+    - id: STEP-007
+      name: Add exact clean-CI gate
+      action: >-
+        Add one step to the existing Repository-integrity workflow that runs the
+        ledger tests, open-tool CAS tests, typed blocked-axis simulations,
+        generator verification, and canonical byte comparison. Do not add a
+        workflow or require unavailable licensed software to pass.
+    - id: STEP-008
+      name: Seal candidate and obtain fresh-context review
+      action: >-
+        Seal the exact candidate, collect the completion bundle, and dispatch a
+        reviewer that did not implement the change. The first pass is read-only.
+        P0 or P1 returns the work to implementation.
+      files:
+        - docs/research_program/theory_promotion/v2/INDEPENDENT_REVIEW_RECEIPT_V2.json
+        - docs/PR_DELTAS/pr-316.md
+
+verification:
+  targeted:
+    - command: >-
+        PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q
+        tests/contracts/test_theory_promotion_ledger_v2.py
+        tests/integration/test_theory_promotion_cas_v2.py
+      expect: all selected tests pass with zero xfail introduced by PR-316
+  generation:
+    - command: >-
+        python scripts/theory_promotion/build_candidate_ledger.py
+        --repo-root .
+        --output-root docs/research_program/theory_promotion/v2
+      expect: exit=0 and deterministic canonical artifacts
+    - command: >-
+        python scripts/theory_promotion/verify_candidate_ledger.py
+        --repo-root .
+        --manifest docs/research_program/theory_promotion/v2/CANDIDATE_SOURCE_MANIFEST_V2.json
+        --ledger docs/research_program/theory_promotion/v2/CANDIDATE_LEDGER_V2.json
+        --cas-index docs/research_program/theory_promotion/v2/CAS_EVIDENCE_INDEX_V2.json
+      expect: exit=0
+    - command: git diff --exit-code -- docs/research_program/theory_promotion/v2
+      expect: exit=0 after clean canonical regeneration
+  DAG:
+    - command: python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+      expect: exit=0
+    - command: >-
+        python scripts/codex_harness/validate_pr_dag.py
+        docs/codex_handoff/pr_backlog.yaml
+        --status docs/codex_handoff/pr_status.yaml
+        --strict-rescue-slice
+      expect: exit=0 and old node and dependency prefix unchanged
+  regression:
+    - command: git hash-object docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json
+      expect: 56af1713ef8c4718598e10012819d5ab62c6e37a
+    - command: git hash-object docs/research_program/theory_promotion/THEORY_PROMOTION_AUDIT_V1.md
+      expect: 7db3422b827e8a10cf73e5fafc9cd265ad033742
+    - command: git diff --check
+      expect: exit=0
+  negative_mutations:
+    - remove one canonical source entry and require coverage failure
+    - insert one unclassified theorem-like source row and require coverage failure
+    - set UNRESOLVED on a row without an attempt receipt and require failure
+    - replace a source hash on an ESTABLISHED row and require failure
+    - manually add or remove a scoped child and require failure
+    - relabel a synthetic validation as a theorem and require failure
+    - mutate a semantic representative or group member and require failure
+    - hard-code a claim-ceiling true boolean without static verification and require failure
+    - add Lean sorryAx, Lean.trustCompiler, custom axiom, native_decide, partial, or unsafe and require failure
+    - mutate CAS program, transcript, dependency identity, argv, or status and require failure
+    - delete the independent review receipt and require release-state failure
+  full_relevant_suite:
+    - existing Repository-integrity workflow including the new bounded theory-promotion v2 step
+    - existing package smoke and Rust compile jobs unchanged
+
+completion_evidence:
+  required:
+    - audited_base_sha
+    - audited_head_sha
+    - final_sha
+    - final_tree
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - preexisting_DAG_order_sha256
+    - post_registration_DAG_order_sha256
+    - preexisting_dependency_map_sha256
+    - post_registration_dependency_map_sha256
+    - source_manifest_sha256
+    - candidate_ledger_sha256
+    - CAS_evidence_index_sha256
+    - generated_report_sha256
+    - PR405_frozen_blob_checks
+    - attempt_taxonomy_delta_table
+    - evidence_kind_count_table
+    - semantic_component_count_table
+    - PR190_scope_replay_result
+    - PR284_exact_fixture_result
+    - available_axis_receipts
+    - blocked_axis_receipts
+    - RED_logs
+    - GREEN_logs
+    - clean_CI_run_ids
+    - independent_review_receipt_sha256
+    - unresolved_blockers
+    - observed_data_opened_boolean
+    - native_solver_executed_boolean
+  forbidden_completion_shortcuts:
+    - test summary without raw command receipt
+    - generated count copied from PR-405
+    - reviewer conclusion authored by implementation context
+    - local-only PASS presented as clean-CI PASS
+    - unresolved source or evidence binding represented as terminal success
+
+agent_policy:
+  ask_user_questions: false
+  search_repo_docs_tests_before_blocking: required
+  guessing_across_specification_boundary: forbidden
+  unresolved_spec_action: BLOCKED_BY_UNRESOLVED_SPEC
+  changing_scientific_expectations_to_fit_implementation: forbidden
+  weakening_or_deleting_tests: forbidden
+  suppressing_failures: forbidden
+  editing_frozen_PR405_artifacts: forbidden
+  security_or_antitamper_infrastructure: forbidden
+  new_assurance_framework: forbidden
+  same_agent_final_authority: false
+  partial_success_reporting: exact_and_nonterminal
+  blocker_is_valid_terminal: true
+
+review_gate:
+  fresh_context_required: true
+  reviewer_may_modify_code_on_first_pass: false
+  reviewer_input:
+    - exact audited base and head and tree
+    - exact final SHA and tree and diff
+    - this compiled contract
+    - source manifest
+    - generated candidate ledger
+    - CAS evidence index and raw receipts
+    - RED and GREEN logs
+    - clean CI logs
+    - PR-405 to PR-316 delta tables
+  reviewer_must_ignore:
+    - implementation agent confidence
+    - narrative claims not backed by source or receipt hashes
+  reviewer_output_schema:
+    - severity
+    - file_and_line_or_json_pointer
+    - violated_invariant
+    - exact_reproducer
+    - missing_or_weak_test
+    - scientific_impact
+  pass_condition: {P0: 0, P1: 0}
+  on_failure: return findings to implementation context and rerun the full affected gates
+
+claim_boundary:
+  allowed:
+    - observation-independent exact or premise-conditional results at explicitly bound scope
+    - exact negative theorem at explicitly bound scope
+    - separately labelled finite synthetic method validation
+    - reproducible evidence-state and current-release-state inventory
+    - explicit unresolved, deferred, not-attempted, and blocked states
+  forbidden:
+    - unique theorem count without completed semantic-component rules
+    - synthetic validation called a theorem or observational result
+    - candidate-universe completeness without source-to-ledger coverage proof
+    - current publication promotion with stale or incomplete replay
+    - observed-data, native-transfer, geometry-detection, or Bianchi-family claim
