@@ -82,6 +82,11 @@ def _raw(module, survey: str, *, q=None, u=None, bins=None):
             else [0.4] * q_values.size
         ),
         weights=weights,
+        sky_xy_radians=(
+            np.asarray([[0.0, 0.0], [0.2, 0.1], [0.5, 0.4], [0.8, 0.7]])
+            if q_values.size == 4
+            else np.zeros((q_values.size, 2))
+        ),
     )
 
 
@@ -116,6 +121,7 @@ def _tomography(module, survey: str):
         _labelled(module, survey),
         n_z_weights=np.asarray([1.0, 1.2, 0.9, 1.1]),
         mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7]),
+        flat_sky_wavevector=(2.0, 1.0),
         bins=(
             module.TomographyBin(
                 survey_id=survey,
@@ -296,6 +302,7 @@ def test_pr310_raw_pair_cannot_be_relabelled_as_eb() -> None:
             weights=raw.weights,
             provider_id="constructor-bypass",
         )
+    assert not hasattr(module.LabelledEBField, "_from_provider")
     with pytest.raises(module.HscKidsCurrentStackError, match="output order"):
         module.label_eb(
             raw,
@@ -317,6 +324,7 @@ def test_pr310_tomography_executes_and_is_row_permutation_invariant() -> None:
         bin_index=raw.bin_index[permutation],
         redshift=raw.redshift[permutation],
         weights=raw.weights[permutation],
+        sky_xy_radians=raw.sky_xy_radians[permutation],
     )
     labelled = module.label_eb(
         permuted,
@@ -331,6 +339,7 @@ def test_pr310_tomography_executes_and_is_row_permutation_invariant() -> None:
         bins=baseline.bins,
         n_z_weights=np.asarray([1.0, 1.2, 0.9, 1.1])[permutation],
         mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7])[permutation],
+        flat_sky_wavevector=baseline.flat_sky_wavevector,
     )
     np.testing.assert_allclose(replay.pseudo_features, baseline.pseudo_features)
 
@@ -341,6 +350,7 @@ def test_pr310_tomography_executes_and_is_row_permutation_invariant() -> None:
         bin_index=np.asarray([0, 1, 1, 1]),
         redshift=np.asarray([0.4, 0.8, 0.9, 1.0]),
         weights=raw.weights,
+        sky_xy_radians=raw.sky_xy_radians,
     )
     changed_labelled = module.label_eb(
         changed,
@@ -353,6 +363,7 @@ def test_pr310_tomography_executes_and_is_row_permutation_invariant() -> None:
         bins=baseline.bins,
         n_z_weights=np.asarray([1.0, 1.2, 0.9, 1.1]),
         mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7]),
+        flat_sky_wavevector=baseline.flat_sky_wavevector,
     )
     assert not np.allclose(changed_result.pseudo_features, baseline.pseudo_features)
 
@@ -370,6 +381,7 @@ def test_pr310_tomography_rejects_survey_nz_or_response_exchange() -> None:
             bins=tuple(bins),
             n_z_weights=np.ones(4),
             mask_weights=np.ones(4),
+            flat_sky_wavevector=(2.0, 1.0),
         )
 
 
@@ -385,6 +397,7 @@ def test_pr310_tomography_nz_calibration_and_response_are_executable() -> None:
         bins=tuple(bins),
         n_z_weights=np.asarray([1.0, 1.2, 0.9, 1.1]),
         mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7]),
+        flat_sky_wavevector=baseline.flat_sky_wavevector,
     )
     assert not np.allclose(changed.pseudo_features, baseline.pseudo_features)
     changed_nz = module.execute_tomography(
@@ -392,6 +405,7 @@ def test_pr310_tomography_nz_calibration_and_response_are_executable() -> None:
         bins=baseline.bins,
         n_z_weights=np.asarray([2.0, 0.5, 0.9, 1.1]),
         mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7]),
+        flat_sky_wavevector=baseline.flat_sky_wavevector,
     )
     assert not np.allclose(changed_nz.pseudo_features, baseline.pseudo_features)
 
@@ -714,6 +728,7 @@ def test_pr310_result_metadata_is_truthful_and_proportional() -> None:
     assert metadata["artifact_mode"] == "synthetic_operator_diagnostic"
     assert metadata["claim_tier"] == "diagnostic_only"
     assert metadata["null_mock_status"] == "NO_NULL_ENSEMBLE_BOUND"
+    assert metadata["covariance_status"] == "FULL_CROSS_SURVEY_COVARIANCE_VALID"
     assert metadata["public_use"] is False
     assert metadata["allowed_use"] == "internal_operator_validation"
     assert "family_identification" in metadata["forbidden_uses"]
@@ -721,6 +736,54 @@ def test_pr310_result_metadata_is_truthful_and_proportional() -> None:
         "HSC": "HSC_S19A_Y3",
         "KiDS": "KIDS_1000_DR4_1",
     }
+
+
+def test_pr310_pseudo_power_consumes_sky_coordinates_and_fourier_mode() -> None:
+    module = _science()
+    raw = _raw(module, "HSC")
+    sky = np.asarray([[0.0, 0.0], [0.2, 0.1], [0.5, 0.4], [0.8, 0.7]])
+    positioned = module.RawSpin2Field(**{**raw.__dict__, "sky_xy_radians": sky})
+    labelled = module.label_eb(
+        positioned,
+        provider_matrix=_provider_matrix(),
+        provider_id="hsc-registered-nonlocal-eb-v1",
+        output_order="E_THEN_B",
+    )
+    baseline = _tomography(module, "HSC")
+    measured = module.execute_tomography(
+        labelled,
+        bins=baseline.bins,
+        n_z_weights=np.asarray([1.0, 1.2, 0.9, 1.1]),
+        mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7]),
+        flat_sky_wavevector=(2.0, 1.0),
+    )
+    shifted_sky = sky.copy()
+    shifted_sky[1, 0] += 0.13
+    shifted = module.RawSpin2Field(**{**raw.__dict__, "sky_xy_radians": shifted_sky})
+    shifted_labelled = module.label_eb(
+        shifted,
+        provider_matrix=_provider_matrix(),
+        provider_id="hsc-registered-nonlocal-eb-v1",
+        output_order="E_THEN_B",
+    )
+    changed = module.execute_tomography(
+        shifted_labelled,
+        bins=baseline.bins,
+        n_z_weights=np.asarray([1.0, 1.2, 0.9, 1.1]),
+        mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7]),
+        flat_sky_wavevector=(2.0, 1.0),
+    )
+    different_mode = module.execute_tomography(
+        labelled,
+        bins=baseline.bins,
+        n_z_weights=np.asarray([1.0, 1.2, 0.9, 1.1]),
+        mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7]),
+        flat_sky_wavevector=(3.0, 1.0),
+    )
+    assert measured.flat_sky_wavevector == (2.0, 1.0)
+    assert all(":k=2,1:" in name for name in measured.feature_order)
+    assert not np.allclose(measured.pseudo_features, changed.pseudo_features)
+    assert not np.allclose(measured.pseudo_features, different_mode.pseudo_features)
 
 
 def test_pr310_worker_rebinds_exact_attended_admission(monkeypatch) -> None:

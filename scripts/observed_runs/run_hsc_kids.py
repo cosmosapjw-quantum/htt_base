@@ -298,6 +298,7 @@ def _survey_analysis(
         bin_index=product.get("bin_index"),
         redshift=product.get("redshift"),
         weights=product.get("weights"),
+        sky_xy_radians=product.get("sky_xy_radians"),
     )
     labelled: LabelledEBField = label_eb(
         raw,
@@ -326,6 +327,7 @@ def _survey_analysis(
         bins=bins,
         n_z_weights=n_z.get("row_weights"),
         mask_weights=mask.get("row_weights"),
+        flat_sky_wavevector=mask.get("flat_sky_wavevector"),
     )
     operator = PseudoClOperator.build(
         operator_id=mask.get("operator_id"),
@@ -423,7 +425,11 @@ def analyze_documents(
         "transfer_source": "none",
         "source_releases": source_releases,
         "sky_mask_status": "SURVEY_SPECIFIC_MASK_OPERATOR_BOUND",
-        "covariance_status": report.get("terminal_disposition"),
+        "covariance_status": (
+            report.get("joint_covariance", {}).get("status")
+            if isinstance(report.get("joint_covariance"), Mapping)
+            else "JOINT_COVARIANCE_REQUIRED_ABSTAIN"
+        ),
         "null_mock_status": "NO_NULL_ENSEMBLE_BOUND",
         "generating_procedure": "scripts/observed_runs/run_hsc_kids.py",
         "allowed_use": "internal_operator_validation",
@@ -479,6 +485,7 @@ def _synthetic_documents() -> dict[str, Mapping[str, object]]:
                 edges[2] - 0.1,
             ],
             "weights": [1.0, 2.0, 1.5, 0.5],
+            "sky_xy_radians": [[0.0, 0.0], [0.2, 0.1], [0.5, 0.4], [0.8, 0.7]],
         }
         calibration_component = (
             "hsc_shear_calibration" if survey == "HSC" else "kids_shear_response"
@@ -511,7 +518,7 @@ def _synthetic_documents() -> dict[str, Mapping[str, object]]:
             "bins": bins,
         }
         order = tuple(
-            f"{survey}:{bins[left]['bin_id']}x{bins[right]['bin_id']}:{mode}"
+            f"{survey}:{bins[left]['bin_id']}x{bins[right]['bin_id']}:k=2,1:{mode}"
             for left in range(2)
             for right in range(left, 2)
             for mode in ("EE", "BB")
@@ -531,6 +538,7 @@ def _synthetic_documents() -> dict[str, Mapping[str, object]]:
             "mixing_matrix": mixing.tolist(),
             "inverse_matrix": np.linalg.inv(mixing).tolist(),
             "row_weights": [1.0, 0.8, 0.9, 0.7],
+            "flat_sky_wavevector": [2.0, 1.0],
             "pure_e_pseudo_response": (mixing @ pure_e).tolist(),
             "pure_b_pseudo_response": (mixing @ pure_b).tolist(),
         }

@@ -136,6 +136,7 @@ class RawSpin2Field:
     bin_index: np.ndarray
     redshift: np.ndarray
     weights: np.ndarray
+    sky_xy_radians: np.ndarray
 
     def __post_init__(self) -> None:
         _validate_survey_identity(self.identity)
@@ -143,12 +144,14 @@ class RawSpin2Field:
         gamma2 = _finite_vector(self.gamma2, label="gamma2")
         redshift = _finite_vector(self.redshift, label="redshift")
         weights = _finite_vector(self.weights, label="weights")
+        sky = _finite_matrix(self.sky_xy_radians, label="flat-sky coordinates")
         bins = np.asarray(self.bin_index)
         if (
             gamma1.shape != gamma2.shape
             or gamma1.shape != redshift.shape
             or gamma1.shape != weights.shape
             or bins.shape != gamma1.shape
+            or sky.shape != (gamma1.size, 2)
             or not np.issubdtype(bins.dtype, np.integer)
             or np.any(bins < 0)
             or np.any(redshift < 0.0)
@@ -160,6 +163,7 @@ class RawSpin2Field:
         object.__setattr__(self, "bin_index", bins.astype(int, copy=True))
         object.__setattr__(self, "redshift", redshift.copy())
         object.__setattr__(self, "weights", weights.copy())
+        object.__setattr__(self, "sky_xy_radians", sky.copy())
 
 
 @dataclass(frozen=True, init=False)
@@ -170,34 +174,9 @@ class LabelledEBField:
     bin_index: np.ndarray
     redshift: np.ndarray
     weights: np.ndarray
+    sky_xy_radians: np.ndarray
     provider_id: str
     output_order: str = "E_THEN_B"
-
-    @classmethod
-    def _from_provider(
-        cls,
-        *,
-        identity: SurveyIdentity,
-        e_mode: np.ndarray,
-        b_mode: np.ndarray,
-        bin_index: np.ndarray,
-        redshift: np.ndarray,
-        weights: np.ndarray,
-        provider_id: str,
-    ) -> "LabelledEBField":
-        result = object.__new__(cls)
-        for name, value in (
-            ("identity", identity),
-            ("e_mode", e_mode.copy()),
-            ("b_mode", b_mode.copy()),
-            ("bin_index", bin_index.copy()),
-            ("redshift", redshift.copy()),
-            ("weights", weights.copy()),
-            ("provider_id", provider_id),
-            ("output_order", "E_THEN_B"),
-        ):
-            object.__setattr__(result, name, value)
-        return result
 
 
 def rotate_raw_components(field: RawSpin2Field, angle_radians: float) -> RawSpin2Field:
@@ -214,6 +193,7 @@ def rotate_raw_components(field: RawSpin2Field, angle_radians: float) -> RawSpin
         bin_index=field.bin_index,
         redshift=field.redshift,
         weights=field.weights,
+        sky_xy_radians=field.sky_xy_radians,
     )
 
 
@@ -260,15 +240,21 @@ def label_eb(
             "E/B provider must be a normalized nonlocal spin-2 transform"
         )
     output = matrix @ np.concatenate([field.gamma1, field.gamma2])
-    return LabelledEBField._from_provider(
-        identity=field.identity,
-        e_mode=output[:rows],
-        b_mode=output[rows:],
-        bin_index=field.bin_index.copy(),
-        redshift=field.redshift.copy(),
-        weights=field.weights.copy(),
-        provider_id=provider,
-    )
+    result = object.__new__(LabelledEBField)
+    values = {
+        "identity": field.identity,
+        "e_mode": output[:rows],
+        "b_mode": output[rows:],
+        "bin_index": field.bin_index,
+        "redshift": field.redshift,
+        "weights": field.weights,
+        "sky_xy_radians": field.sky_xy_radians,
+        "provider_id": provider,
+        "output_order": "E_THEN_B",
+    }
+    for name, value in values.items():
+        object.__setattr__(result, name, value.copy() if isinstance(value, np.ndarray) else value)
+    return result
 
 
 @dataclass(frozen=True)
@@ -291,6 +277,7 @@ class TomographyResult:
     bins: tuple[TomographyBin, ...]
     feature_order: tuple[str, ...]
     pseudo_features: np.ndarray
+    flat_sky_wavevector: tuple[float, float]
 
 
 def execute_tomography(
@@ -299,8 +286,9 @@ def execute_tomography(
     bins: Sequence[TomographyBin],
     n_z_weights: object,
     mask_weights: object,
+    flat_sky_wavevector: object,
 ) -> TomographyResult:
-    """Execute weighted E/B auto/cross-bin features in frozen pair order."""
+    """Execute masked flat-sky E/B pseudo-power in frozen pair order."""
 
     if not isinstance(field, LabelledEBField) or isinstance(bins, (str, bytes)):
         raise HscKidsCurrentStackError("labelled E/B tomography input is required")
@@ -311,6 +299,9 @@ def execute_tomography(
         raise HscKidsCurrentStackError("tomography row weights are incomplete")
     if np.any(nz <= 0.0) or np.any(mask <= 0.0):
         raise HscKidsCurrentStackError("tomography row weights must be positive")
+    wavevector = _finite_vector(flat_sky_wavevector, label="flat-sky wavevector")
+    if wavevector.shape != (2,) or float(np.linalg.norm(wavevector)) <= 0.0:
+        raise HscKidsCurrentStackError("flat-sky wavevector must be nonzero and two-dimensional")
     if len(ordered) < 2 or tuple(row.bin_index for row in ordered) != tuple(
         range(len(ordered))
     ):
@@ -354,30 +345,35 @@ def execute_tomography(
     if set(np.unique(field.bin_index)) != set(range(len(ordered))):
         raise HscKidsCurrentStackError("row assignments are outside tomography bins")
 
-    e_means: list[float] = []
-    b_means: list[float] = []
+    e_modes: list[complex] = []
+    b_modes: list[complex] = []
     for row in ordered:
         selected = field.bin_index == row.bin_index
         effective = field.weights[selected] * nz[selected] * mask[selected]
         correction = row.shear_calibration_factor / row.response_factor
-        e_means.append(
-            correction * float(np.average(field.e_mode[selected], weights=effective))
-        )
-        b_means.append(
-            correction * float(np.average(field.b_mode[selected], weights=effective))
-        )
+        phase = np.exp(-1j * (field.sky_xy_radians[selected] @ wavevector))
+        normalization = float(np.sum(effective))
+        e_modes.append(correction * np.sum(effective * field.e_mode[selected] * phase) / normalization)
+        b_modes.append(correction * np.sum(effective * field.b_mode[selected] * phase) / normalization)
     names: list[str] = []
     values: list[float] = []
+    wave_label = ",".join(f"{value:g}" for value in wavevector)
     for left in range(len(ordered)):
         for right in range(left, len(ordered)):
-            stem = f"{field.identity.survey_id}:{ordered[left].bin_id}x{ordered[right].bin_id}"
+            stem = f"{field.identity.survey_id}:{ordered[left].bin_id}x{ordered[right].bin_id}:k={wave_label}"
             names.extend((f"{stem}:EE", f"{stem}:BB"))
-            values.extend((e_means[left] * e_means[right], b_means[left] * b_means[right]))
+            values.extend(
+                (
+                    float(np.real(e_modes[left] * np.conjugate(e_modes[right]))),
+                    float(np.real(b_modes[left] * np.conjugate(b_modes[right]))),
+                )
+            )
     return TomographyResult(
         survey_id=field.identity.survey_id,
         bins=ordered,
         feature_order=tuple(names),
         pseudo_features=np.asarray(values, dtype=float),
+        flat_sky_wavevector=(float(wavevector[0]), float(wavevector[1])),
     )
 
 
