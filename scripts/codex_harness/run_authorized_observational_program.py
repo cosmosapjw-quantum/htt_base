@@ -96,6 +96,13 @@ JWST_SN_RUNTIME_MODULES = (
     "scipy.special",
 )
 JWST_SN_DISTRIBUTIONS = ("numpy", "scipy")
+HSC_KIDS_RUNTIME_MODULES = (
+    "numpy",
+    "numpy.linalg",
+    "numpy._core._multiarray_umath",
+    "numpy.linalg._umath_linalg",
+)
+HSC_KIDS_DISTRIBUTIONS = ("numpy",)
 OBSERVED_DATA_MARKER = "observed_data_opened.json"
 PLAN_FIELDS = frozenset(
     {
@@ -171,9 +178,24 @@ JWST_SN_PROFILE = LaneProfile(
     runtime_modules=JWST_SN_RUNTIME_MODULES,
     runtime_distributions=JWST_SN_DISTRIBUTIONS,
 )
+HSC_KIDS_PROFILE = LaneProfile(
+    lane="HSC_KIDS",
+    deployment_profile="private_single_operator_attended_v1",
+    analysis_plan_id="plan:PR292-HSC-KIDS-SPIN2-V1",
+    science_execution_mode="hsc_kids_typed_spin2_joint_operator",
+    science_worker_relative="scripts/observed_runs/run_hsc_kids.py",
+    science_worker_arguments=("--run-admitted",),
+    result_filename="hsc_kids_result.json",
+    runtime_modules=HSC_KIDS_RUNTIME_MODULES,
+    runtime_distributions=HSC_KIDS_DISTRIBUTIONS,
+)
 # Keep the predecessor map byte-compatible for its historical exact-set
 # contract while routing every new consumer through the complete registry.
-REGISTERED_LANE_PROFILES = {**LANE_PROFILES, "JWST_SN": JWST_SN_PROFILE}
+REGISTERED_LANE_PROFILES = {
+    **LANE_PROFILES,
+    "JWST_SN": JWST_SN_PROFILE,
+    "HSC_KIDS": HSC_KIDS_PROFILE,
+}
 
 
 class ObservationalProgramError(RuntimeError):
@@ -475,6 +497,9 @@ def _environment(
     candidate_commit: str | None = None,
     candidate_tree: str | None = None,
     runtime_contract: Mapping[str, object] | None = None,
+    admission_sha256: str | None = None,
+    admission_bundle_id: str | None = None,
+    ordered_record_ids_sha256: str | None = None,
 ) -> dict[str, str]:
     environment = {
         "HOME": "/nonexistent",
@@ -496,8 +521,22 @@ def _environment(
         environment["HTT_ATTENDED_START_WRITTEN"] = "1"
         if candidate_commit is None or candidate_tree is None:
             raise ObservationalProgramError("science candidate identity is missing")
+        if not all(
+            isinstance(value, str) and value
+            for value in (
+                admission_sha256,
+                admission_bundle_id,
+                ordered_record_ids_sha256,
+            )
+        ):
+            raise ObservationalProgramError("science admission binding is missing")
         environment["HTT_ATTENDED_CANDIDATE_COMMIT"] = candidate_commit
         environment["HTT_ATTENDED_CANDIDATE_TREE"] = candidate_tree
+        environment["HTT_ATTENDED_ADMISSION_SHA256"] = str(admission_sha256)
+        environment["HTT_ATTENDED_ADMISSION_BUNDLE_ID"] = str(admission_bundle_id)
+        environment["HTT_ATTENDED_ORDERED_RECORD_IDS_SHA256"] = str(
+            ordered_record_ids_sha256
+        )
         environment["HTT_ATTENDED_DATA_OPEN_MARKER"] = str(
             output / OBSERVED_DATA_MARKER
         )
@@ -605,6 +644,9 @@ def prepare_execution(
             )
         bound_data_root = None
     decision, admission_raw = _load_admission(root, admission_path, profile)
+    record_ids = [record.record_id for record in decision.records]
+    admission_sha256 = _raw_hash(admission_raw)
+    record_ids_sha256 = content_hash(record_ids)
     output = _output_path(root, output_dir)
     worker = plan["worker"]
     assert isinstance(worker, Path)
@@ -618,12 +660,14 @@ def prepare_execution(
         candidate_commit=commit,
         candidate_tree=tree,
         runtime_contract=runtime_contract,
+        admission_sha256=admission_sha256,
+        admission_bundle_id=decision.lane_admission_bundle_id,
+        ordered_record_ids_sha256=record_ids_sha256,
     )
     environment_contract = {
         "python_executable": str(Path(sys.executable).absolute()),
         "variables": environment,
     }
-    record_ids = [record.record_id for record in decision.records]
     acceptance = {
         "schema": "htt.attended_execution_acceptance.v1",
         "deployment_profile": profile.deployment_profile,
@@ -631,9 +675,9 @@ def prepare_execution(
         "candidate_commit": commit,
         "candidate_tree": tree,
         "worktree_clean": True,
-        "admission_decision_sha256": _raw_hash(admission_raw),
+        "admission_decision_sha256": admission_sha256,
         "lane_admission_bundle_id": decision.lane_admission_bundle_id,
-        "ordered_record_ids_sha256": content_hash(record_ids),
+        "ordered_record_ids_sha256": record_ids_sha256,
         "ordered_record_ids": record_ids,
         "analysis_plan_path": plan_path,
         "analysis_plan_id": profile.analysis_plan_id,

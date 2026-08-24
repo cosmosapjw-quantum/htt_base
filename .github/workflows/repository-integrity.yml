@@ -82,6 +82,16 @@ jobs:
             scripts/observed_runs/run_jwst_sn.py \
             --synthetic-profile \
             --output "${RUNNER_TEMP}/pr309-jwst-synthetic.json"
+      - name: Run PR-310 HSC-KiDS closure contracts
+        run: |
+          env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
+            tests/integration/test_hsc_kids_current_stack.py \
+            tests/contracts/test_authorized_observational_program.py
+          env PYTHONPATH=htt:htt/src:htt/htt python \
+            scripts/observed_runs/run_hsc_kids.py \
+            --synthetic-profile \
+            --rows full \
+            --output "${RUNNER_TEMP}/pr310-hsc-kids-synthetic.json"
       - name: Run architecture boundary contract
         run: python -m pytest -q scripts/architecture/test_import_boundaries.py
 
