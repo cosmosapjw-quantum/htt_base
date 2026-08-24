@@ -32,8 +32,10 @@ No observed payload was opened. No observed statistic, native transfer result,
 geometry detection, or Bianchi-family identification enters this report.
 
 The complete 152-row reconciliation is
-`THEORY_PROMOTION_MATRIX_V1.json`. Its rows are evidence dispositions, not
-theorem counts.
+`THEORY_PROMOTION_MATRIX_V1.json`. The same matrix seals a 157-candidate
+scientific universe: the 152 broad adjudication rows plus five independently
+reportable scoped candidates. These are evidence dispositions and scoped
+candidates, not unique-theorem counts.
 
 ## Mechanical coverage
 
@@ -58,6 +60,81 @@ activity did not expand the acceptance set. The search covered DAG cards,
 existing PR and revision deltas, all-ref history, theorem/signature registries,
 proof registries, CAS contracts/adjudications, formal sources, and GitHub PR
 metadata. A theorem-like name or a completed PR was never treated as proof.
+
+## Scientific-candidate terminal taxonomy
+
+Every candidate in the sealed universe now has exactly one of five terminal
+states:
+
+- `PROMOTED`: its exact registered proof or experiment passed at the declared
+  scientific scope;
+- `REFUTED`: an actual attempted proof or experiment produced an explicit
+  counterexample or failure;
+- `UNRESOLVED`: a real attempt was made, but it did not settle the candidate;
+- `DEFERRED`: the candidate is postponed for an explicit recorded dependency,
+  capability, data, or scope reason;
+- `NOT_ATTEMPTED`: the candidate was proposed, but no real proof or experiment
+  addressing it was run.
+
+The governing non-equivalence is:
+
+```text
+NOT_ATTEMPTED != REFUTED
+```
+
+An unavailable source, a missing data or solver capability, a stale replay, or
+the absence of a proof is not a refutation. The only `REFUTED` broad candidate
+in this audit is the PR-190 attainability claim, for which exact same-frame
+counterexamples are recorded. In particular, the two restricted J1/J2 rows
+remain `UNRESOLVED`: their adjudication was attempted, but the exact source
+statements were unavailable and the counterexamples were not independently
+replayed in that cell.
+
+The current terminal counts are:
+
+| Terminal state | Candidates |
+|---|---:|
+| `PROMOTED` | 36 |
+| `REFUTED` | 1 |
+| `UNRESOLVED` | 107 |
+| `DEFERRED` | 2 |
+| `NOT_ATTEMPTED` | 11 |
+| **Total** | **157** |
+
+The 36 `PROMOTED` candidates comprise the 32 broad PASS rows and four scoped
+results inside broader non-PASS rows: the `VT-T8` local chart, the `VT-T13`
+chain rule, the PR-190 normal-vorticity obstruction, and the `VT-S14`
+synthetic positive cell. `PROMOTED` here is scientific and scope-local. It does
+not override the separate current-head publication gate, which remains
+`STOP_INVALID_FOR_CURRENT_PROMOTION` where replay or release bindings are not
+closed.
+
+The finite PR-284 path is `UNRESOLVED`, not `REFUTED`: the four-axis attempt was
+real, but its aggregate is `CAS_CONFLICT`. The eleven proposals listed in the
+priority proof backlog are `NOT_ATTEMPTED`, not failed theorems.
+
+The matrix contains a machine-checkable coverage proof over the ordered
+candidate universe, sealed as
+`8e83989a568cefabfdf3a887ed0c1588ad91f44c83dec5a4ec167561e83bf8bc`.
+It reports zero missing states, zero unknown states, zero duplicate candidate
+identities, and zero `NOT_ATTEMPTED`/`REFUTED` overlap.
+
+The campaign sentence `No scientific result survived.` is **not eligible**.
+Its gate is:
+
+```text
+coverage_complete
+and PROMOTED_count == 0
+and NOT_ATTEMPTED_count == 0
+and every state is in {REFUTED, UNRESOLVED, DEFERRED}
+```
+
+Coverage completeness alone is necessary but insufficient. This campaign has
+36 scoped promoted results and 11 unattempted proposals. More generally, a
+campaign closeout may only claim that every candidate was consumed after the
+complete universe lies in
+`PROMOTED | REFUTED | UNRESOLVED | DEFERRED`; it cannot silently count
+`NOT_ATTEMPTED` as failure.
 
 ## What had been missed or suppressed
 
@@ -308,7 +385,7 @@ This note must distinguish an exact theorem, a premise-conditional theorem, and
 a finite synthetic experiment. No synthetic row becomes a theorem or an
 observational result by being included in the same document.
 
-## Priority proof backlog
+## Priority proof backlog (`NOT_ATTEMPTED`)
 
 The following proposals were registered but never independently proved. This
 order maximizes scientific leverage while respecting dependencies:
@@ -378,7 +455,10 @@ watchdog:
   production_modules_added: 0
   global_ledgers_added: 0
   observed_data_opened: false
-  claim_promotions_made: 0
+  current_head_publication_promotions_made: 0
+  scientific_candidates_promoted_at_exact_evidence_scope: 36
+  scientific_candidates_not_attempted: 11
+  no_scientific_result_survived_eligible: false
   historical_receipts_rewritten: 0
   scientific_outputs:
     - one complete reconciliation matrix
