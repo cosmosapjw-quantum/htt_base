@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -242,3 +243,61 @@ def test_prepare_orchestration_keeps_observed_temperature_closed(
     assert result["pipeline_scope"] == "SMICA_ONLY"
     assert result["covariance_rank"] == 12
     assert result["observed_temperature_payload_opened"] is False
+
+
+def test_direct_script_context_can_import_the_planck_worker(tmp_path: Path) -> None:
+    pythonpath = os.pathsep.join(
+        str(ROOT / relative) for relative in ("htt", "htt/src", "htt/htt")
+    )
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            (
+                f"import runpy; runpy.run_path({str(SCRIPT)!r}, "
+                "run_name='pr314_preparer'); "
+                "import scripts.observed_runs.run_planck_pr3"
+            ),
+        ],
+        cwd=tmp_path,
+        env={**os.environ, "PYTHONPATH": pythonpath},
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+
+
+def test_complete_compact_null_is_validated_and_reused(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    module = _preparer()
+    cmb = tmp_path / "cmb"
+    noise = tmp_path / "noise"
+    _write_inventory(cmb, kind="cmb")
+    _write_inventory(noise, kind="noise")
+    output = tmp_path / "prepared"
+    component = output / "components"
+    component.mkdir(parents=True)
+    row_ids = np.asarray(
+        [f"FFP10-SMICA-CMBNOISE-{index:05d}" for index in range(300)],
+        dtype="U27",
+    )
+    maps = np.zeros((300, hp.nside2npix(4)), dtype=np.float64)
+    expected = component / "smica_ffp10_cmb_plus_noise_300.npz"
+    np.savez(expected, row_ids=row_ids, smica_maps=maps)
+    monkeypatch.setattr(
+        module,
+        "reduce_smica_cmb_plus_noise",
+        lambda **kwargs: pytest.fail("a complete compact bundle was recomputed"),
+    )
+
+    actual = module.write_smica_existing_null_inventory(
+        cmb_root=cmb,
+        noise_root=noise,
+        output_root=output,
+        output_nside=4,
+    )
+
+    assert actual == expected

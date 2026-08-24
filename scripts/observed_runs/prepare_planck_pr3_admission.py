@@ -15,10 +15,15 @@ import json
 import os
 import re
 from pathlib import Path
+import sys
 from typing import Mapping, NamedTuple, Sequence
 
 import numpy as np
 
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 LMIN = 2
 LMAX = 5
@@ -451,9 +456,34 @@ def write_smica_existing_null_inventory(
     import healpy as hp
 
     pairs = inspect_smica_cmb_noise_inventory(cmb_root=cmb_root, noise_root=noise_root)
+    shape = (SMICA_EXISTING_NULL_ROWS, hp.nside2npix(output_nside))
+    output = output_root / "components/smica_ffp10_cmb_plus_noise_300.npz"
+    expected_row_ids = tuple(
+        f"FFP10-SMICA-CMBNOISE-{index:05d}" for index in pairs
+    )
+    if output.exists():
+        if output.is_symlink() or not output.is_file():
+            raise PlanckPreparationError("SMICA compact null output is not regular")
+        try:
+            with np.load(output, allow_pickle=False) as bundle:
+                if set(bundle.files) != {"row_ids", "smica_maps"}:
+                    raise PlanckPreparationError("SMICA compact null keys drifted")
+                row_ids = tuple(str(value) for value in bundle["row_ids"].tolist())
+                maps = np.asarray(bundle["smica_maps"])
+                if (
+                    row_ids != expected_row_ids
+                    or maps.shape != shape
+                    or maps.dtype != np.dtype("float64")
+                    or not np.all(np.isfinite(maps))
+                ):
+                    raise PlanckPreparationError(
+                        "SMICA compact null identity or values drifted"
+                    )
+        except (OSError, ValueError) as exc:
+            raise PlanckPreparationError("SMICA compact null could not be read") from exc
+        return output
     scratch = output_root / ".pr314-smica-null-reduction"
     scratch.mkdir(parents=True, exist_ok=True)
-    shape = (SMICA_EXISTING_NULL_ROWS, hp.nside2npix(output_nside))
     rows_path = scratch / "smica_maps.npy"
     done_path = scratch / "completed.npy"
     if rows_path.exists():
@@ -494,10 +524,7 @@ def write_smica_existing_null_inventory(
         completed.flush()
     if not np.all(completed):
         raise PlanckPreparationError("SMICA null-reduction checkpoint is incomplete")
-    row_ids = np.asarray(
-        [f"FFP10-SMICA-CMBNOISE-{index:05d}" for index in pairs], dtype="U27"
-    )
-    output = output_root / "components/smica_ffp10_cmb_plus_noise_300.npz"
+    row_ids = np.asarray(expected_row_ids, dtype="U27")
     _atomic_npz(output, row_ids=row_ids, smica_maps=np.asarray(rows))
     rows_path.unlink()
     done_path.unlink()
