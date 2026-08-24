@@ -23,7 +23,7 @@ acceptance:
   - id: PR314-SMICA-NULL-001
     pass: each of exactly 300 rows is CMB_i plus noise_i before one reduction and is never pooled with the separate 999-row CMB-only ensemble
   - id: PR314-SMICA-OPERATOR-001
-    pass: observation and nulls share one frozen operator and the twelve-dimensional covariance is full-rank, off-diagonal, and below the declared condition ceiling
+    pass: observation and nulls share one frozen operator; the raw twelve-dimensional covariance is full positive definite and off-diagonal, while its diagonal-standardized condition is below the declared unit-invariant ceiling
   - id: PR314-SMICA-ATTENDED-001
     pass: exact attended confirmation and start.json precede the observed temperature read, and result, terminal, and log files are produced
   - id: PR314-SMICA-REPLAY-001
@@ -49,6 +49,27 @@ execution_contract:
   download_in_worker: forbidden
   raw_deletion: forbidden
   compact_replay_required: true
+  candidate_identity: current_git_commit_and_tree_exact_match
+  covariance_condition_basis: DIAGONAL_STANDARDIZED
+
+execution_evidence:
+  status: PLANCK_PR3_SMICA_DIAGNOSTIC_REPLAYED
+  observed_statistic_seen: true
+  observed_science_executed: true
+  candidate_commit: b6411109a54d4f2ac05bc60cac270d936c1b9417
+  candidate_tree: ab2d595e2d6246f5f3a5fa91e49694499d05276c
+  acceptance_hash: sha256:82e427f2ba8c0c63516c6b52d9bcc46f36ad4610865c292860aca74fbb3f07c9
+  result: docs/generated/pr314_planck_pr3_smica_existing_result.json
+  result_sha256: 898d08fc7c70205fbb8c7580fbaef1074357a8b3255ac77afd8273b92511da97
+  replay: docs/generated/pr314_planck_pr3_smica_existing_replay.json
+  replay_sha256: dc6c6e53601239ec49618769392f3e7a67f06303c2b77a5c8a6699ed94067234
+  replay_state: REPLAY_MATCH
+  observed_raw_reopened_during_replay: false
+  covariance_rank: 12
+  covariance_condition: 1279.9885708671413
+  covariance_raw_condition: 11395606370.999586
+  finite_feature_family_p: 19/43
+  resolution_floor: 1/301
 
 deferred:
   - full PR-289 thirteen-component PLANCK admission
