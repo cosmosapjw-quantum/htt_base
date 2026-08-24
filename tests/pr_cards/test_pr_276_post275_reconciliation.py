@@ -355,7 +355,7 @@ def test_status_is_total_and_preserves_negative_chronology() -> None:
     assert states["PR-184"] == "completed"
     assert states["PR-312"] == "blocked"
     assert states["PR-313"] == "completed"
-    assert states["PR-314"] == "in_progress"
+    assert states["PR-314"] == "completed"
     assert status["execution_resolutions"]["PR-190"][
         "resolution"
     ] == "COMPLETED_FAILED_WITH_RECEIPT"

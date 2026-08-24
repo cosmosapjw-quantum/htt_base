@@ -1,5 +1,6 @@
 generated_on: '2026-08-24'
 completed:
+- PR-314
 - PR-311
 - PR-310
 - PR-309
@@ -262,7 +263,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-314
+in_progress: null
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -598,7 +599,7 @@ stacked_pr_execution:
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
   target_sha: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
-  active_implementation_pr: PR-314
+  active_implementation_pr: null
   pr_order: [PR-312, PR-313, PR-308, PR-309, PR-310, PR-311, PR-314]
   prs:
     PR-312:
@@ -716,25 +717,32 @@ stacked_pr_execution:
         data_admission: BLOCKED_NOT_PRESENT}
       assurance_budget: {maximum: 16, consumed: 3}
     PR-314:
-      lifecycle: ACTIVE
-      lifecycle_history: [PLANNED, ACTIVE]
+      lifecycle: COMPLETE
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, REVIEWED, SEALED, COMPLETE]
       base_sha: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
       predecessor_pr: PR-311
       predecessor_sealed_sha: a89563d26d69322134078565e9a4ccef86cdf83c
-      sealed_head: null
+      sealed_head: 4360e544b456f9fc1f7c7dfbcc0682811c2faf6d
       pushed_ref: refs/heads/changeset/pr314-planck-pr3-attended-analysis-20260824
-      pr_url: null
-      production_hash: null
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/403
+      production_hash: 602e35a92eec4bc0a2ec6ae113f07bfc6933322fb69fe8dee416e5a67217e2a2
       dependency_hashes:
         pr311_merge_commit: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
         pr311_merge_tree: 5901e12457e4ae677f0b74c0c8fdd8257987f084
         pr306_operator_head: e79aea1311798c512f58e56b7f4d9b49e31b951f
+        scientific_execution_commit: b6411109a54d4f2ac05bc60cac270d936c1b9417
+        scientific_execution_tree: ab2d595e2d6246f5f3a5fa91e49694499d05276c
+        result_sha256: 898d08fc7c70205fbb8c7580fbaef1074357a8b3255ac77afd8273b92511da97
+        replay_sha256: dc6c6e53601239ec49618769392f3e7a67f06303c2b77a5c8a6699ed94067234
       gate_dispositions: {eligibility: PASS,
         smica_existing_source_preflight: PASS_EXACT_300_CMB_PLUS_NOISE,
         full_joint_planck: DEFERRED_INCOMPLETE_COMMANDER,
-        observed_execution: NOT_STARTED, reproducible_output: NOT_STARTED,
+        observed_execution: PASS_SMICA_ONLY_300_FFP10,
+        reproducible_output: PASS_REPLAY_MATCH,
+        final_science_review: PASS_P0_P1_ZERO,
+        other_local_lanes: BLOCKED_NO_COMPLETE_CANONICAL_ADMISSION,
         desi_download: DEFERRED_BY_SEQUENCE}
-      assurance_budget: {maximum: 16, consumed: 1}
+      assurance_budget: {maximum: 16, consumed: 2}
 execution_lane:
   PR-167: defensible
   PR-168: defensible
@@ -884,6 +892,21 @@ execution_lane:
   PR-314: defensible
   PR-312: defensible
 execution_resolutions:
+  PR-314:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-314.md
+    candidate_sha: 4360e544b456f9fc1f7c7dfbcc0682811c2faf6d
+    merge_commit: null
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/403
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-24'
+    scientific_status_effect: planck_pr3_smica_ffp10_300_conditional_diagnostic_completed
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: observed_smica_diagnostic_only
+    transfer_source: none
+    observed_data_executed: true
+    public_use: false
+    public_result_emitted: false
   PR-311:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-311.md
