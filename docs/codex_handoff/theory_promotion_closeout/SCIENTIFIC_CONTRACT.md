@@ -50,6 +50,12 @@ campaign_completion_status:
   OPEN | COMPLETE
 ```
 
+Machine outputs must use the canonical enum values above. Narrative audit labels
+`EXACT_ENGINE_REPLAY` and `HAND_DERIVATION_AND_EXACT_COUNTEREXAMPLE` are
+descriptive aliases only and normalize respectively to
+`EXACT_SYMBOLIC_IDENTITY` and the ordered pair
+`[HAND_DERIVATION, EXACT_COUNTEREXAMPLE]`.
+
 No field is automatically derived from another. In particular:
 
 ```text
