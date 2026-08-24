@@ -14192,14 +14192,14 @@ prs:
   title: DESI successor-formalism operator closure
   owner: OBSSTAT
   capability: DESI_BGS_BRIGHT_SUCCESSOR_FORMALISM_AND_MOCK_RANK_CLOSURE
-  inputs: [PR-310 stack, exact DR1 BGS_BRIGHT-21.5, 1000 EZmock, separate 25 Abacus]
+  inputs: [PR-310 stack, exact DR1 BGS BRIGHT r<19.5 and BGS_BRIGHT-21.5 M_r<-21.5 selection, 1000 EZmock, separate 25 Abacus]
   outputs: [DESI worker, exact selection/window tomography, per-mock refit, covariance, validation and confusion matrix]
   contributors: [COMMON, HTT]
   adjudicator_role: independent_non_author_reviewer
   implementation_scopes: [obsstat, common]
   depends: [PR-310]
   dependency_contracts: [{upstream_id: PR-310, mode: requires_success}]
-  targets: ["Rebuild 0.1<=z<=0.4 NGC/SGC selection, per-mock nuisance refit, tomography, 1000-row covariance, separate 25-row validation, confusion and rank."]
+  targets: ["Rebuild strict 0.1<z<0.4 NGC/SGC selection, per-mock nuisance refit, tomography, 1000-row covariance, separate 25-row validation, confusion and rank."]
   files: [docs/PR_DELTAS/pr-311.md, htt/obsstat/desi_successor_formalism.py, scripts/observed_runs/run_desi_bgs_bright.py, tests/integration/test_desi_successor_formalism.py]
   tests: [python -m pytest -q tests/integration/test_desi_successor_formalism.py tests/obsstat/test_pr151_invalidation_boundary.py]
   dod: [Complete mock synthetic closure passes and unavailable exact observed selection remains an explicit data blocker.]
