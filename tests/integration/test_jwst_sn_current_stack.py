@@ -64,9 +64,10 @@ def test_pr309_builds_typed_rows_and_full_shared_covariance() -> None:
     assert all(
         row["source_id"].startswith("synthetic:source:") for row in inputs.row_report
     )
-    assert all(row["host_linkage_probability"] < 1.0 for row in inputs.row_report)
+    assert all(row["host_linkage_probability"] == 1.0 for row in inputs.row_report)
+    assert all(row["host_linkage_sigma_mag"] == 0.0 for row in inputs.row_report)
     assert all(
-        row["host_identity_status"] == "MARGINALIZED_LINKAGE_NOT_IDENTITY"
+        row["host_identity_status"] == "ADMITTED_NON_POSITIONAL_IDENTITY_EVIDENCE"
         for row in inputs.row_report
     )
     expected_same_group = 1.6e-4 + covariance_value(0, 4, rows=24)
@@ -245,6 +246,69 @@ def test_pr309_rank_loss_abstains_without_point_estimate() -> None:
     assert result["competitor_conditioned_diagnostics"] == {}
     assert result["forced_source_label"] is None
     assert result["p_value"] is None
+
+
+def test_pr309_rank_is_invariant_to_nonzero_competitor_scaling() -> None:
+    inputs = _inputs()
+    baseline = science.analyze_pr309_current_stack(inputs, observed=False)
+    scales = (1.0e-6, 1.0e-3, 1.0, 1.0e3, 1.0e6)
+
+    for competitor_id in science.PR309_COMPETITOR_ORDER:
+        expected = baseline["competitor_conditioned_diagnostics"][competitor_id]
+        for scale in scales:
+            competitors = dict(inputs.competitor_predictions_mag)
+            competitors[competitor_id] = competitors[competitor_id] * scale
+            changed = science.JWSTSNCurrentStackInputs(
+                **{**inputs.__dict__, "competitor_predictions_mag": competitors}
+            )
+
+            result = science.analyze_pr309_current_stack(changed, observed=False)
+            diagnostic = result["competitor_conditioned_diagnostics"][competitor_id]
+
+            assert result["terminal_disposition"] == baseline["terminal_disposition"]
+            assert diagnostic["status"] == expected["status"]
+            assert diagnostic["response_rank"]["rank"] == expected["response_rank"]["rank"]
+            assert diagnostic["response_rank"]["expected_rank"] == expected[
+                "response_rank"
+            ]["expected_rank"]
+            assert diagnostic["response_rank"]["whitening"] == "cholesky_left"
+            assert diagnostic["response_rank"]["column_scaling"] == (
+                "covariance_whitened_l2"
+            )
+            assert diagnostic["response_rank"]["threshold_basis"] == (
+                "largest_singular_value_after_column_scaling"
+            )
+
+
+def test_pr309_nonexact_host_linkage_abstains_before_rank(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def forbidden(*_args, **_kwargs):
+        raise AssertionError("response rank reached before host abstention")
+
+    monkeypatch.setattr(science, "_whitened_rank", forbidden)
+    mutations = (
+        ("SOURCE_REPORTED_HOST_IDENTITY", 0.96, 0.008),
+        ("AMBIGUOUS_HOST_MARGINALIZED", 1.0, 0.008),
+    )
+    for basis, probability, sigma in mutations:
+        source_rows, host_rows, errors, covariance, competitors = _payloads()
+        host_rows["rows"][0].update(
+            {
+                "host_linkage_basis": basis,
+                "host_linkage_probability": probability,
+                "host_linkage_sigma_mag": sigma,
+            }
+        )
+        inputs = _build(source_rows, host_rows, errors, covariance, competitors)
+
+        result = science.analyze_pr309_current_stack(inputs, observed=False)
+
+        assert result["terminal_disposition"] == (
+            "HOST_LINKAGE_COVARIATE_MARGINALIZATION_REQUIRED"
+        )
+        assert result["response_rank"] is None
+        assert result["competitor_conditioned_diagnostics"] == {}
 
 
 def test_pr309_competitor_collinearity_abstains_only_that_lane() -> None:

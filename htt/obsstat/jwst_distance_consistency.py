@@ -779,9 +779,20 @@ def _whitened_rank(
 ) -> dict[str, object]:
     try:
         whitened = np.linalg.solve(np.linalg.cholesky(covariance), design)
-        singular_values = np.linalg.svd(whitened, compute_uv=False)
     except np.linalg.LinAlgError as exc:
         raise JWSTSNCurrentStackError("response whitening failed") from exc
+    column_norms = np.linalg.norm(whitened, axis=0)
+    if not np.all(np.isfinite(column_norms)):
+        raise JWSTSNCurrentStackError("response column normalization failed")
+    nonzero_columns = column_norms > np.finfo(float).eps
+    scaled = np.zeros_like(whitened)
+    scaled[:, nonzero_columns] = (
+        whitened[:, nonzero_columns] / column_norms[nonzero_columns]
+    )
+    try:
+        singular_values = np.linalg.svd(scaled, compute_uv=False)
+    except np.linalg.LinAlgError as exc:
+        raise JWSTSNCurrentStackError("response rank factorization failed") from exc
     expected = int(design.shape[1])
     largest = float(singular_values[0]) if singular_values.size else 0.0
     threshold = largest * minimum_ratio
@@ -792,6 +803,9 @@ def _whitened_rank(
         "expected_rank": expected,
         "minimum_singular_value_ratio": ratio,
         "threshold_ratio": minimum_ratio,
+        "whitening": "cholesky_left",
+        "column_scaling": "covariance_whitened_l2",
+        "threshold_basis": "largest_singular_value_after_column_scaling",
         "status": "FULL_RANK" if rank == expected else "RANK_DEFICIENT_ABSTAIN",
     }
 
@@ -818,6 +832,17 @@ def _competitor_diagnostic(
     }
 
 
+def _host_linkage_blocked_rows(inputs: JWSTSNCurrentStackInputs) -> list[str]:
+    blocked_row_ids: list[str] = []
+    for row in inputs.row_report:
+        row_id = row.get("row_id")
+        if not isinstance(row_id, str) or not row_id:
+            raise JWSTSNCurrentStackError("host-linkage row identity drifted")
+        if row.get("host_identity_status") != "ADMITTED_NON_POSITIONAL_IDENTITY_EVIDENCE":
+            blocked_row_ids.append(row_id)
+    return blocked_row_ids
+
+
 def analyze_pr309_current_stack(
     inputs: JWSTSNCurrentStackInputs,
     *,
@@ -832,31 +857,36 @@ def analyze_pr309_current_stack(
 
     if type(observed) is not bool:
         raise JWSTSNCurrentStackError("observed state must be one boolean")
-    base_design = _response_design(inputs)
-    response_rank = _whitened_rank(base_design, inputs.total_covariance_mag2)
+    blocked_host_rows = _host_linkage_blocked_rows(inputs)
+    response_rank: dict[str, object] | None = None
     diagnostics: dict[str, dict[str, object]] = {}
-    if response_rank["rank"] != response_rank["expected_rank"]:
-        terminal = "RANK_DEFICIENT_ABSTAIN"
+    if blocked_host_rows:
+        terminal = "HOST_LINKAGE_COVARIATE_MARGINALIZATION_REQUIRED"
     else:
-        diagnostics = {
-            competitor_id: _competitor_diagnostic(
-                inputs=inputs,
-                base_design=base_design,
-                competitor_id=competitor_id,
-            )
-            for competitor_id in inputs.competitor_order
-        }
-        if any(
-            item["status"] == "NON_IDENTIFIED_ABSTAIN"
-            for item in diagnostics.values()
-        ):
-            terminal = "WEAK_COMPETITOR_IDENTIFICATION_ABSTAIN"
+        base_design = _response_design(inputs)
+        response_rank = _whitened_rank(base_design, inputs.total_covariance_mag2)
+        if response_rank["rank"] != response_rank["expected_rank"]:
+            terminal = "RANK_DEFICIENT_ABSTAIN"
         else:
-            terminal = (
-                "OBSERVED_DESCRIPTIVE_OPERATOR_COMPLETE"
-                if observed
-                else "SYNTHETIC_OPERATOR_CLOSURE_PASS"
-            )
+            diagnostics = {
+                competitor_id: _competitor_diagnostic(
+                    inputs=inputs,
+                    base_design=base_design,
+                    competitor_id=competitor_id,
+                )
+                for competitor_id in inputs.competitor_order
+            }
+            if any(
+                item["status"] == "NON_IDENTIFIED_ABSTAIN"
+                for item in diagnostics.values()
+            ):
+                terminal = "WEAK_COMPETITOR_IDENTIFICATION_ABSTAIN"
+            else:
+                terminal = (
+                    "OBSERVED_DESCRIPTIVE_OPERATOR_COMPLETE"
+                    if observed
+                    else "SYNTHETIC_OPERATOR_CLOSURE_PASS"
+                )
     return {
         "format": "JWST_SN_CURRENT_STACK_TYPED_REPORT",
         "lane": "JWST_SN",

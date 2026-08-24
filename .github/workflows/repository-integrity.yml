@@ -72,6 +72,15 @@ jobs:
           env PYTHONPATH=htt:htt/src:htt/htt python3 -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
           env PYTHONPATH=htt:htt/src:htt/htt python3 -B scripts/check_claim_language.py --strict-missing htt/src/common/human_execution_authorization.py htt/htt/htt/infer/bayesian_production.py docs/PR_DELTAS/pr-304.md docs/research_program/post_pr275/pr304_spec.yaml docs/research_program/post_pr275/human_authority_registry.json docs/research_program/post_pr275/human_authority_registry.signature.json docs/research_program/post_pr275/trusted_launcher_contract.md
           git diff --check
+      - name: Run PR-309 JWST-SN closure contracts
+        run: |
+          env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
+            tests/integration/test_jwst_sn_current_stack.py \
+            tests/contracts/test_authorized_observational_program.py
+          env PYTHONPATH=htt:htt/src:htt/htt python \
+            scripts/observed_runs/run_jwst_sn.py \
+            --synthetic-profile \
+            --output "${RUNNER_TEMP}/pr309-jwst-synthetic.json"
       - name: Run architecture boundary contract
         run: python -m pytest -q scripts/architecture/test_import_boundaries.py
 
