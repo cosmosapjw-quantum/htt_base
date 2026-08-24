@@ -669,34 +669,48 @@ stacked_pr_execution:
         data_admission: BLOCKED_NOT_PRESENT}
       assurance_budget: {maximum: 16, consumed: 3}
     PR-310:
-      lifecycle: VALIDATED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
-      base_sha: 5de7992c313a874013b78b81a45c562cbb9d2e08
+      lifecycle: COMPLETE
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, COMPLETE]
+      base_sha: 81cb1d9ce4287810cd77ec4639560b32be7ecc93
       predecessor_pr: PR-309
       predecessor_sealed_sha: 2b2b8d7989f74c59568bc9814f8304d7d6fed17d
-      sealed_head: 3353b7d88f38862f48ddf16abccc68138a1a4642
-      pushed_ref: null
-      pr_url: null
-      production_hash: d32ea03dbd57fee32f6a5765ceda617f4700404a5b9ffdb5b911698afb94577e
+      sealed_head: 7a25636fb6cf2fdc1e0613c93b9ce25e5b1d2f02
+      pushed_ref: refs/heads/changeset/pr310-hsc-kids-spin2-operator-closure-20260824
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/399
+      production_hash: d5127b67de688c1d235845c14bcc64c9df4b649412ee54649ed3662770e6336d
       dependency_hashes:
         pr309_merge_commit: 5de7992c313a874013b78b81a45c562cbb9d2e08
         pr309_merge_tree: 287801918ed5f832d2a4d1ae3350f80251a97e45
-      gate_dispositions: {eligibility: PASS, local_matrix: PASS, first_review: REPAIR,
+        compatibility_merge_commit: 81cb1d9ce4287810cd77ec4639560b32be7ecc93
+        compatibility_merge_tree: 58d65afa70ccd052f30690637d87c632e662bac7
+        technical_audit_head: 29dddbf015fe0e54947b50235495796ef5bf3844
+        merge_commit: e7b9872f7ad977c3bbaba9677ce6450e79c2cb82
+        merge_tree: 72cce873347297a2393c03ee2156140dc7641ae5
+      gate_dispositions: {eligibility: PASS, local_matrix: PASS, final_review: PASS,
+        clean_ci: PASS,
         data_admission: BLOCKED_NOT_PRESENT}
-      assurance_budget: {maximum: 16, consumed: 1}
+      assurance_budget: {maximum: 16, consumed: 3}
     PR-311:
-      lifecycle: PLANNED
-      lifecycle_history: [PLANNED]
-      base_sha: null
+      lifecycle: VALIDATED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
+      base_sha: 00fbc5c7bf11765fb2f49cf68ea3ea3ee6cc489f
       predecessor_pr: PR-310
-      predecessor_sealed_sha: null
+      predecessor_sealed_sha: 7a25636fb6cf2fdc1e0613c93b9ce25e5b1d2f02
       sealed_head: null
       pushed_ref: null
       pr_url: null
       production_hash: null
-      dependency_hashes: {}
-      gate_dispositions: {eligibility: DEFERRED}
-      assurance_budget: {maximum: 16, consumed: 0}
+      dependency_hashes:
+        pr310_merge_commit: e7b9872f7ad977c3bbaba9677ce6450e79c2cb82
+        pr310_merge_tree: 72cce873347297a2393c03ee2156140dc7641ae5
+        official_selection_contract_merge: 00fbc5c7bf11765fb2f49cf68ea3ea3ee6cc489f
+        official_selection_contract_tree: b3ee9770aa4a6fdef16b3514c193d0f5f6033d66
+      gate_dispositions: {eligibility: PASS, local_focused_matrix: PASS,
+        official_selection_contract: REPAIRED,
+        first_review: REPAIR, closeout_review: REPAIR,
+        repair_matrix: PASS, repair_closeout_review: PENDING,
+        data_admission: BLOCKED_NOT_PRESENT}
+      assurance_budget: {maximum: 16, consumed: 3}
 execution_lane:
   PR-167: defensible
   PR-168: defensible

@@ -92,6 +92,16 @@ jobs:
             --synthetic-profile \
             --rows full \
             --output "${RUNNER_TEMP}/pr310-hsc-kids-synthetic.json"
+      - name: Run PR-311 DESI successor-formalism contracts
+        run: |
+          env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
+            tests/integration/test_desi_successor_formalism.py \
+            tests/obsstat/test_pr151_invalidation_boundary.py
+          env PYTHONPATH=htt:htt/src:htt/htt python \
+            scripts/observed_runs/run_desi_bgs_bright.py \
+            --synthetic-profile \
+            --rows full \
+            --output "${RUNNER_TEMP}/pr311-desi-synthetic.json"
       - name: Run architecture boundary contract
         run: python -m pytest -q scripts/architecture/test_import_boundaries.py
 

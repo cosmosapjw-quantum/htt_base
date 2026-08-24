@@ -103,6 +103,13 @@ HSC_KIDS_RUNTIME_MODULES = (
     "numpy.linalg._umath_linalg",
 )
 HSC_KIDS_DISTRIBUTIONS = ("numpy",)
+DESI_RUNTIME_MODULES = (
+    "numpy",
+    "numpy.linalg",
+    "numpy._core._multiarray_umath",
+    "numpy.linalg._umath_linalg",
+)
+DESI_DISTRIBUTIONS = ("numpy",)
 OBSERVED_DATA_MARKER = "observed_data_opened.json"
 PLAN_FIELDS = frozenset(
     {
@@ -189,12 +196,24 @@ HSC_KIDS_PROFILE = LaneProfile(
     runtime_modules=HSC_KIDS_RUNTIME_MODULES,
     runtime_distributions=HSC_KIDS_DISTRIBUTIONS,
 )
+DESI_PROFILE = LaneProfile(
+    lane="DESI",
+    deployment_profile="private_single_operator_attended_v1",
+    analysis_plan_id="plan:PR203-DESI-BGS-V1",
+    science_execution_mode="desi_bgs_bright_successor_operator",
+    science_worker_relative="scripts/observed_runs/run_desi_bgs_bright.py",
+    science_worker_arguments=("--run-admitted",),
+    result_filename="desi_bgs_bright_result.json",
+    runtime_modules=DESI_RUNTIME_MODULES,
+    runtime_distributions=DESI_DISTRIBUTIONS,
+)
 # Keep the predecessor map byte-compatible for its historical exact-set
 # contract while routing every new consumer through the complete registry.
 REGISTERED_LANE_PROFILES = {
     **LANE_PROFILES,
     "JWST_SN": JWST_SN_PROFILE,
     "HSC_KIDS": HSC_KIDS_PROFILE,
+    "DESI": DESI_PROFILE,
 }
 
 
