@@ -1,0 +1,149 @@
+schema: htt.physmath_research_loop_closeout.v1
+identity:
+  audited_pr: 407
+  audited_head: bdad91a204c424030cd6d0e562232b6965a42900
+  audited_tree: c3cd19442e525aaf1b1e683c1920568513e18da5
+  research_harness: physmath-research-harness-gpt56(20260824-172831)
+  goal: close_existing_observation_independent_results_without_new_theory
+research_contract:
+  primary_rq: Which already-present exact results survive source, proof, replay, novelty,
+    and scope audit, and what is the smallest append-only closeout?
+  in_scope:
+  - PR284 finite fixture
+  - PR190 normal-vorticity obstruction
+  - VT-T5/T6/T7
+  - VT-T8 restricted local chart
+  - VT-T13 chain rule
+  - VT-S14 synthetic validation
+  - status/evidence/replay/release projection
+  - survivor publication triage
+  out_of_scope:
+  - general reverse martingale theorem
+  - global orbit separation
+  - full invariant ring
+  - new frame transformation
+  - new branch-complete constraints
+  - new physical moment-cone theorem
+  - observed data or native Bianchi transfer
+  completion_bar:
+  - survivor statements are exact and source-bound
+  - evidence precedes status
+  - survivor release is independent of campaign exhaustion
+  - no new theorem is required
+  - P0 and P1 have mechanical detection
+evidence_ledger:
+- id: PR284_REGISTERED_FINITE_FIXTURE
+  status: SUPPORTED
+  direct_evidence:
+  - exact enumeration
+  - SymPy exact replay
+  - Sage exact replay
+  - Lean arithmetic replay
+  limits:
+  - one four-atom fixture
+  - not a general theorem
+- id: PR190_NORMAL_VORTICITY_OBSTRUCTION
+  status: SUPPORTED
+  direct_evidence:
+  - Frobenius/normal-congruence argument
+  - exact target mismatch
+  limits:
+  - same frame
+  - hypersurface-normal Bianchi-I
+  - not arbitrary tilt
+- id: VT_T8_LOCAL_CHART
+  status: SUPPORTED
+  direct_evidence:
+  - factorized Jacobian
+  - nonzero rational witness
+  - dimension 14
+  limits:
+  - local
+  - simple spectrum
+  - cyclic reference
+  - novelty unassessed
+- id: VT_T13_CHAIN_RULE
+  status: SUPPORTED
+  direct_evidence:
+  - direct trace differentiation
+  limits:
+  - not full covariant dynamics
+- id: VT_S14_SYNTHETIC
+  status: SUPPORTED
+  direct_evidence:
+  - preregistered positive cell
+  - negative control
+  limits:
+  - synthetic only
+- id: COMPLETE_157_CANDIDATE_UNIVERSE
+  status: UNSUPPORTED
+  direct_evidence:
+  - coverage of audit-selected IDs only
+  limits:
+  - cannot exhaust all reportable narrower consequences
+- id: UNTYPED_36_PROMOTED_COUNT
+  status: UNSUPPORTED
+  direct_evidence:
+  - mixed theorem, negative, and synthetic classes
+  limits:
+  - not a unique theorem count
+hypothesis_graph:
+- id: H1
+  statement: Execute PR407 unchanged
+  decision: REJECT
+- id: H2
+  statement: Patch command and DAG details only
+  decision: REJECT
+- id: H3
+  statement: Research-first survivor closeout followed by bounded coding
+  decision: PROMOTE
+adversarial_gate:
+  roles:
+  - claim-source reviewer
+  - physics/mathematics reviewer
+  - status-ontology reviewer
+  - novelty/publication reviewer
+  - DAG and implementation reviewer
+  verdict: REPAIR_EXECUTION_ORDER_AND_SCOPE
+  P0: 3
+  P1: 10
+physics_math_validation:
+  PR284_fraction_replay:
+    probability: 1/2
+    bound: 25/36
+    slack: 7/36
+    status: PASS
+  VT_T8_dimension: 5+12-3=14
+  VT_T8_witness_jacobian: '50331648'
+  VT_T13_derivative: 3*sqrt(6)*(I2*tr(sigma^2 sigma_dot)-I3*tr(sigma sigma_dot))/I2^(5/2)
+  status: PASS_AT_RESTRICTED_SCOPES
+external_decision_gate:
+  PR407: PRESERVE_NOT_IMPLEMENT
+  core_closeout: PROCEED_AFTER_PR407_TERMINAL
+  new_theory_debt: DEFER
+survivors:
+- id: VT_T8_LOCAL_CHART
+  role: PRIMARY_NOTE_CANDIDATE
+  novelty: UNASSESSED
+- id: PR190_OBSTRUCTION
+  role: NEGATIVE_APPLICATION
+  novelty: APPLICATION_SPECIFIC_UNASSESSED
+- id: VT_T5_T6_T7_T13
+  role: SUPPORTING_LEMMAS
+- id: PR284_FIXTURE
+  role: INTERNAL_REGRESSION
+- id: VT_S14
+  role: SYNTHETIC_VALIDATION
+negative_results_and_deferred:
+- global orbit separation not established
+- invariant-ring completeness not established
+- broad reverse-martingale theorem not established
+- full covariant evolution not established
+- PR197/210/216/222/223 excluded from closeout critical path
+closeout:
+  research_decision: SURVIVOR_ONLY_CLOSEOUT
+  coding_handoff_ready: true
+  open_uncertainties:
+  - VT-T8 statement-level novelty
+  - PR190 application novelty
+  - current exact replay of historical evidence
