@@ -42,15 +42,50 @@ Required fields:
 
 ```yaml
 truth_status: ESTABLISHED | REFUTED | OPEN | NOT_ASSESSED
-evidence_status: EXACT_PROOF | CONDITIONAL_PROOF | EXACT_NEGATIVE_RESULT | SYNTHETIC_VALIDATION | INCOMPLETE | UNAVAILABLE
+evidence_status: EXACT_PROOF | PREMISE_CONDITIONAL_PROOF | EXACT_NEGATIVE_RESULT | PREREGISTERED_SYNTHETIC_VALIDATION | INCOMPLETE | UNAVAILABLE
 replay_status: CURRENT_PASS | HISTORICAL_PASS_CURRENT_INCOMPLETE | CURRENT_BLOCKED | CURRENT_FAIL | NOT_RUN
 release_status: ELIGIBLE | BLOCKED | NOT_APPLICABLE
 ```
+
+These four fields do not replace the owner-mandated five-state campaign
+disposition.
 
 Mechanical gate:
 
 ```text
 test_truth_status_is_invariant_under_engine_availability
+```
+
+## P0-406-002 — the five-state campaign disposition must remain explicit
+
+Every scientific candidate must still end with exactly one of:
+
+```yaml
+campaign_disposition: PROMOTED | REFUTED | UNRESOLVED | DEFERRED | NOT_ATTEMPTED
+```
+
+The live PR-406 evidence-state transition is mapped totally and without
+collapsing states:
+
+```yaml
+ESTABLISHED: PROMOTED
+REFUTED: REFUTED
+UNRESOLVED: UNRESOLVED
+DEFERRED: DEFERRED
+NOT_ATTEMPTED: NOT_ATTEMPTED
+```
+
+`NOT_ATTEMPTED` is never evidence for `REFUTED`. A campaign closeout may use
+the sentence “No scientific result survived.” only after deterministic source
+closure, classification of every candidate, zero `NOT_ATTEMPTED` rows, and
+zero `PROMOTED` rows are proved mechanically.
+
+Mechanical gates:
+
+```text
+test_campaign_disposition_mapping_is_total_and_noncollapsing
+test_not_attempted_is_never_refuted
+test_no_surviving_result_sentence_requires_coverage_proof
 ```
 
 ## P1-406-001 — one planned PR contains too many independently rejectable risks
@@ -105,7 +140,7 @@ preserve_PR406: true
 execute_PR406_as_written: false
 required_action: APPLY_STRICTER_OVERLAY_THEN_DECOMPOSE
 canonical_DAG_mutation_in_this_overlay: false
-P0_added: 1
+P0_added: 2
 P1_added: 4
 ```
 

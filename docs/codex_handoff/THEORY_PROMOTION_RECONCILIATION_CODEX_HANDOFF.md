@@ -45,21 +45,39 @@ Preserve these results:
 
 ```yaml
 PR284_REGISTERED_FINITE_FIXTURE:
+  campaign_disposition: PROMOTED
   truth_status: ESTABLISHED
+  evidence_status: EXACT_PROOF
+  replay_status: CURRENT_BLOCKED
+  release_status: BLOCKED
   scope: one exact four-atom fixture only
   broad_reverse_martingale_theorem: NOT_ESTABLISHED
   current_CAS4_release: BLOCKED_INCOMPLETE_CONTRACT
 
 PR190_NORMAL_VORTICITY_OBSTRUCTION:
-  truth_status: ESTABLISHED_NEGATIVE_RESULT
+  campaign_disposition: PROMOTED
+  truth_status: ESTABLISHED
+  evidence_status: EXACT_NEGATIVE_RESULT
+  replay_status: HISTORICAL_PASS_CURRENT_INCOMPLETE
+  release_status: BLOCKED
   scope: registered homogeneous Bianchi-I hypersurface-normal frame
 
 VT_T8_LOCAL_CHART:
-  truth_status: ESTABLISHED_RESTRICTED
+  campaign_disposition: PROMOTED
+  truth_status: ESTABLISHED
+  evidence_status: PREMISE_CONDITIONAL_PROOF
+  replay_status: HISTORICAL_PASS_CURRENT_INCOMPLETE
+  release_status: BLOCKED
+  scope: nonzero-Jacobian open locus
   global_orbit_separation: NOT_ESTABLISHED
 
 VT_T13_CHAIN_RULE_CORE:
-  truth_status: ESTABLISHED_RESTRICTED
+  campaign_disposition: PROMOTED
+  truth_status: ESTABLISHED
+  evidence_status: PREMISE_CONDITIONAL_PROOF
+  replay_status: HISTORICAL_PASS_CURRENT_INCOMPLETE
+  release_status: BLOCKED
+  scope: differentiable STF sigma with I2 greater than zero
   full_covariant_evolution_law: NOT_ESTABLISHED
 ```
 
@@ -124,19 +142,35 @@ with exact file/line/evidence, rather than guessing.
 
 ## Required state model
 
-Replace the overloaded terminal state with four independent fields:
+Preserve one owner-mandated campaign disposition and separate it from the four
+scientific/evidence fields:
 
 ```yaml
-truth_status:
-evidence_status:
-replay_status:
-release_status:
+campaign_disposition: PROMOTED | REFUTED | UNRESOLVED | DEFERRED | NOT_ATTEMPTED
+truth_status: ESTABLISHED | REFUTED | OPEN | NOT_ASSESSED
+evidence_status: EXACT_PROOF | PREMISE_CONDITIONAL_PROOF | EXACT_NEGATIVE_RESULT | PREREGISTERED_SYNTHETIC_VALIDATION | INCOMPLETE | UNAVAILABLE
+replay_status: CURRENT_PASS | HISTORICAL_PASS_CURRENT_INCOMPLETE | CURRENT_BLOCKED | CURRENT_FAIL | NOT_RUN
+release_status: ELIGIBLE | BLOCKED | NOT_APPLICABLE
 ```
 
 Engine availability may change `replay_status` or `release_status`. It may not
 change `truth_status`.
 
 A classification or inventory scan is not a proof/experiment receipt.
+
+Map the live PR-406 five-state evidence model without collapsing any state:
+
+```yaml
+ESTABLISHED: PROMOTED
+REFUTED: REFUTED
+UNRESOLVED: UNRESOLVED
+DEFERRED: DEFERRED
+NOT_ATTEMPTED: NOT_ATTEMPTED
+```
+
+`NOT_ATTEMPTED != REFUTED` is a mandatory tested invariant. The sentence “No
+scientific result survived.” additionally requires deterministic candidate
+coverage, zero `NOT_ATTEMPTED` rows, and zero `PROMOTED` rows.
 
 ## Candidate surface
 
@@ -224,11 +258,13 @@ Every established or refuted candidate must have:
 
 ```yaml
 candidate_id:
+campaign_disposition:
 statement_identity_sha256:
 path:
 git_blob_or_sha256:
 fragment_or_symbol:
 evidence_class:
+evidence_status:
 replay_receipt:
 truth_status:
 replay_status:
@@ -293,8 +329,12 @@ net_LOC:
 V1_artifact_preservation_hashes:
 V2_matrix_sha256:
 candidate_surface_status:
+campaign_disposition_counts:
+campaign_closeout_coverage_proof:
+not_attempted_count:
 semantic_graph_status:
 PR284_fixture_sha256:
+PR284_campaign_disposition:
 PR284_truth_status:
 PR284_evidence_status:
 PR284_replay_status:

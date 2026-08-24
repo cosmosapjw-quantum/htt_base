@@ -24,7 +24,10 @@ Where PR-406 and this overlay differ, the stricter fail-closed rule controls:
 3. typed Lean probability semantics or explicit arithmetic-only downgrade;
 4. one content-bound fixture across CAS axes;
 5. permanent separate regressions for PR-197/210/216/222/223;
-6. no canonical PR number before a live DAG reread and generator allocation.
+6. no canonical PR number before a live DAG reread and generator allocation;
+7. preserve `PROMOTED | REFUTED | UNRESOLVED | DEFERRED | NOT_ATTEMPTED` as
+   the owner-mandated campaign disposition, orthogonal to truth, evidence,
+   replay, and release status; `NOT_ATTEMPTED` is never `REFUTED`.
 
 Do not execute either plan until PR-405 and all serial predecessors required by
 the live DAG have exact terminal receipts.

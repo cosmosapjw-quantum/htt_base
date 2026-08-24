@@ -68,6 +68,28 @@
       "trigger": "engine availability or assurance policy changes mathematical truth status, or historical truth status implies current release"
     },
     {
+      "affected_paths": [
+        "docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json",
+        "docs/codex_handoff/pr316_theory_promotion_audit_compiled_exec_plan.yaml"
+      ],
+      "id": "P0-TP-004",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_campaign_disposition_mapping_is_total_and_noncollapsing"
+        },
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_not_attempted_is_never_refuted"
+        },
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_no_surviving_result_sentence_requires_coverage_proof"
+        }
+      ],
+      "severity": "P0",
+      "stop": "BLOCKED_CAMPAIGN_DISPOSITION_INCOMPLETE",
+      "title": "Owner-mandated five-state campaign disposition erased or collapsed",
+      "trigger": "a candidate lacks PROMOTED/REFUTED/UNRESOLVED/DEFERRED/NOT_ATTEMPTED, NOT_ATTEMPTED is mapped to REFUTED, or campaign closeout is claimed without source closure"
+    },
+    {
       "id": "P1-TP-001",
       "required_detection": [
         {
@@ -226,28 +248,43 @@
   },
   "preserved_scientific_results": [
     {
+      "campaign_disposition": "PROMOTED",
+      "evidence_status": "EXACT_PROOF",
       "id": "PR284_REGISTERED_FINITE_FIXTURE",
-      "release_status": "BLOCKED_CAS4_CONTRACT_INCOMPLETE",
+      "release_status": "BLOCKED",
+      "replay_status": "CURRENT_BLOCKED",
       "scope": "one exact four-atom fixture only",
       "truth_status": "ESTABLISHED"
     },
     {
+      "campaign_disposition": "PROMOTED",
+      "evidence_status": "EXACT_NEGATIVE_RESULT",
       "id": "PR190_NORMAL_VORTICITY_OBSTRUCTION",
+      "release_status": "BLOCKED",
+      "replay_status": "HISTORICAL_PASS_CURRENT_INCOMPLETE",
       "scope": "registered homogeneous Bianchi-I hypersurface-normal frame",
-      "truth_status": "ESTABLISHED_NEGATIVE_RESULT"
+      "truth_status": "ESTABLISHED"
     },
     {
+      "campaign_disposition": "PROMOTED",
+      "evidence_status": "PREMISE_CONDITIONAL_PROOF",
       "id": "VT_T8_LOCAL_CHART",
+      "release_status": "BLOCKED",
+      "replay_status": "HISTORICAL_PASS_CURRENT_INCOMPLETE",
       "scope": "registered rational witness/local chart only",
-      "truth_status": "ESTABLISHED_RESTRICTED"
+      "truth_status": "ESTABLISHED"
     },
     {
+      "campaign_disposition": "PROMOTED",
+      "evidence_status": "PREMISE_CONDITIONAL_PROOF",
       "id": "VT_T13_CHAIN_RULE_CORE",
+      "release_status": "BLOCKED",
+      "replay_status": "HISTORICAL_PASS_CURRENT_INCOMPLETE",
       "scope": "differentiable STF sigma with I2>0",
-      "truth_status": "ESTABLISHED_RESTRICTED"
+      "truth_status": "ESTABLISHED"
     }
   ],
-  "schema": "htt.theory_promotion_p0_p1_threat_catalog.v1",
+  "schema": "htt.theory_promotion_p0_p1_threat_catalog.v1.1",
   "severity_policy": {
     "P0": "Wrong or silently incomplete scientific state, candidate universe, theorem/refutation status, or release authority.",
     "P1": "A load-bearing evidence, boundary, replay, formalization, or regression gap that can invalidate a major conclusion.",

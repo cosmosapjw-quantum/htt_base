@@ -200,6 +200,12 @@ an incomplete/mismatched assurance contract, not `CAS_CONFLICT`.
 Required replacement:
 
 ```yaml
+campaign_disposition:
+  - PROMOTED
+  - REFUTED
+  - UNRESOLVED
+  - DEFERRED
+  - NOT_ATTEMPTED
 truth_status:
   - ESTABLISHED
   - REFUTED
@@ -224,14 +230,23 @@ release_status:
   - NOT_APPLICABLE
 ```
 
+`campaign_disposition` is the owner-required proof/experiment workflow
+outcome. It is orthogonal to the four scientific/evidence fields and may not
+be erased by them. In particular, `NOT_ATTEMPTED` and `REFUTED` are distinct
+states.
+
 For PR-284:
 
 ```yaml
+campaign_disposition: PROMOTED
 truth_status: ESTABLISHED
 scope: REGISTERED_FINITE_FOUR_ATOM_FIXTURE_ONLY
-evidence_status: EXACT_ENUMERATION_AND_FORMAL_ARITHMETIC
-replay_status: CURRENT_PARTIAL
-release_status: BLOCKED_CAS4_CONTRACT_INCOMPLETE
+evidence_status: EXACT_PROOF
+evidence_detail: EXACT_ENUMERATION_AND_FORMAL_ARITHMETIC
+replay_status: CURRENT_BLOCKED
+replay_detail: TWO_EXACT_ENGINES_PASS_ONE_FORMAL_ARITHMETIC_COMPILES_ONE_AXIS_BLOCKED
+release_status: BLOCKED
+release_detail: CAS4_CONTRACT_INCOMPLETE
 aggregate_cas_status: INCOMPLETE_BLOCKED
 ```
 

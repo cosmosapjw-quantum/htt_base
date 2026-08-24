@@ -20,7 +20,7 @@ identity:
   plan_overlay_precedence: STRICTER_FAIL_CLOSED_RULE_CONTROLS
 objective:
   statement: Preserve the useful PR-405 audit evidence while replacing its circular candidate-universe claim and conflated scientific terminal state with a source-generated candidate surface, typed truth/evidence/replay/release statuses, a repaired PR-284 finite-fixture CAS contract, content-bound evidence, and permanent regressions for every identified P0/P1 class.
-  observable_success: A linear append-only sequence produces a current downstream theory overlay whose scientific rows are source-bound and class-typed, whose PR-284 finite fixture is established without promoting the broad reverse-martingale theorem, and whose clean focused CI and fresh-context review contain zero P0/P1 findings.
+  observable_success: A linear append-only sequence produces a current downstream theory overlay whose scientific rows are source-bound and class-typed, whose five-state campaign dispositions are total and noncollapsing, whose PR-284 finite fixture is established without promoting the broad reverse-martingale theorem, and whose clean focused CI and fresh-context review contain zero P0/P1 findings.
 global_constraints:
 - Preserve PR-406 as planning evidence; do not execute its single-mega-PR shape without this overlay.
 - Do not rewrite frozen PR-275, PR-285, PR-286, PR-190, PR-270, or PR-284 historical receipts.
@@ -29,6 +29,7 @@ global_constraints:
 - The complete pre-existing topological order must remain an exact prefix.
 - Do not count synthetic validation as a theorem or observational result.
 - Do not treat missing source, engine, data, or replay as refutation.
+- Preserve exactly one PROMOTED, REFUTED, UNRESOLVED, DEFERRED, or NOT_ATTEMPTED campaign disposition for every candidate; NOT_ATTEMPTED is never REFUTED.
 - Do not let engine availability change mathematical truth status.
 - Do not add security, signing, nonce, authorization, or generic ledger frameworks.
 - No observed-data, native-transfer, geometry-detection, or Bianchi-family claim.
@@ -89,11 +90,64 @@ severity_policy:
   - unproved complete candidate universe or campaign exhaustion
   - classifying an inventory/adjudication pass as a proof or experiment
   - allowing release status to imply truth or truth to imply current release
+  - erasing or collapsing the owner-mandated five-state campaign disposition
   P1:
   - missing load-bearing evidence binding, negative test, formal domain, or clean-CI cell
   - synthetic result counted as theorem
   - partial implementation reported complete
   - CAS axis or backend label stronger than executed semantics
+status_model:
+  campaign_disposition:
+    enum:
+    - PROMOTED
+    - REFUTED
+    - UNRESOLVED
+    - DEFERRED
+    - NOT_ATTEMPTED
+    owner_role: proof_or_experiment_campaign_outcome
+  truth_status:
+    enum:
+    - ESTABLISHED
+    - REFUTED
+    - OPEN
+    - NOT_ASSESSED
+  evidence_status:
+    enum:
+    - EXACT_PROOF
+    - PREMISE_CONDITIONAL_PROOF
+    - EXACT_NEGATIVE_RESULT
+    - PREREGISTERED_SYNTHETIC_VALIDATION
+    - INCOMPLETE
+    - UNAVAILABLE
+  replay_status:
+    enum:
+    - CURRENT_PASS
+    - HISTORICAL_PASS_CURRENT_INCOMPLETE
+    - CURRENT_BLOCKED
+    - CURRENT_FAIL
+    - NOT_RUN
+  release_status:
+    enum:
+    - ELIGIBLE
+    - BLOCKED
+    - NOT_APPLICABLE
+  live_evidence_state_to_campaign_disposition:
+    ESTABLISHED: PROMOTED
+    REFUTED: REFUTED
+    UNRESOLVED: UNRESOLVED
+    DEFERRED: DEFERRED
+    NOT_ATTEMPTED: NOT_ATTEMPTED
+  noncollapsing_invariants:
+  - NOT_ATTEMPTED != REFUTED
+  - every generated candidate has exactly one campaign_disposition
+  - engine availability changes replay or release only
+  campaign_closeout:
+    deterministic_source_closure_required: true
+    all_candidates_classified_required: true
+    not_attempted_count_must_equal: 0
+    no_scientific_result_survived_sentence_requires:
+      campaign_closeout_coverage_proof: PASS
+      promoted_count_must_equal: 0
 invariants:
 - id: INV-001
   severity_if_violated: P0
@@ -113,6 +167,14 @@ invariants:
   mechanical_check:
     test: tests/contracts/test_theory_promotion_reconciliation.py::test_truth_status_is_invariant_under_engine_availability
   stop: BLOCKED_SCIENCE_STATUS_ONTOLOGY_INVALID
+- id: INV-003A
+  severity_if_violated: P0
+  statement: Every candidate retains one owner-mandated five-state campaign disposition under a total noncollapsing mapping; NOT_ATTEMPTED is never REFUTED and campaign closeout requires source-closure proof.
+  mechanical_checks:
+  - test: tests/contracts/test_theory_promotion_reconciliation.py::test_campaign_disposition_mapping_is_total_and_noncollapsing
+  - test: tests/contracts/test_theory_promotion_reconciliation.py::test_not_attempted_is_never_refuted
+  - test: tests/contracts/test_theory_promotion_reconciliation.py::test_no_surviving_result_sentence_requires_coverage_proof
+  stop: BLOCKED_CAMPAIGN_DISPOSITION_INCOMPLETE
 - id: INV-004
   severity_if_violated: P0
   statement: CAS conflict requires incompatible scientific outputs, a valid counterexample, or incompatible domain assumptions.
@@ -169,7 +231,7 @@ invariants:
   stop: BLOCKED_RECURRING_SCIENCE_FAILURE_NOT_REGRESSED
 work_units:
 - id: TPR-A-STATUS-ONTOLOGY
-  title: Split scientific truth, evidence, replay, and release status
+  title: Preserve campaign disposition while splitting truth, evidence, replay, and release status
   depends_on:
   - PR405_TERMINAL_RECEIPT
   allowed_paths:
@@ -183,17 +245,23 @@ work_units:
   - legacy/**
   red_tests:
   - test_truth_status_is_invariant_under_engine_availability
+  - test_campaign_disposition_mapping_is_total_and_noncollapsing
+  - test_not_attempted_is_never_refuted
+  - test_no_surviving_result_sentence_requires_coverage_proof
   - test_missing_source_is_not_an_attempted_proof
   - test_cas_conflict_requires_incompatible_scientific_outputs
   implementation:
-  - Introduce truth_status, evidence_status, replay_status, and release_status.
+  - Introduce campaign_disposition, truth_status, evidence_status, replay_status, and release_status from the single canonical status_model above.
+  - Map ESTABLISHED to PROMOTED and preserve REFUTED, UNRESOLVED, DEFERRED, and NOT_ATTEMPTED without collapsing any state.
   - Reclassify every row from actual receipt type, not source-status prose.
   - Preserve PR-405 V1 matrix as audit evidence; emit a V2 corrected projection.
-  - Classify PR-284 finite fixture truth as established and current CAS4 release as blocked/incomplete.
+  - Classify the PR-284 finite fixture as campaign PROMOTED, truth ESTABLISHED, evidence EXACT_PROOF, replay CURRENT_BLOCKED, and release BLOCKED.
   verification:
     command: PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/contracts/test_theory_promotion_reconciliation.py
   completion_evidence:
   - old_new_state_transition_table
+  - total_noncollapsing_campaign_disposition_mapping
+  - campaign_closeout_coverage_proof
   - all_rows_reclassified_count
   - mutation_log
   - exact V1 preservation hash
@@ -355,7 +423,9 @@ work_units:
   - Preserve all frozen historical reports.
   - Emit exact theorem, premise-conditional theorem, exact negative result, and synthetic validation in separate sections.
   - Carry current replay and release status independently.
+  - Carry campaign disposition independently and refuse closeout while any generated candidate remains NOT_ATTEMPTED.
   - Report no unique theorem count until the semantic graph closes.
+  - Emit “No scientific result survived.” only with a closed candidate surface, zero NOT_ATTEMPTED rows, and zero PROMOTED rows.
   - Publish no observed, native-transfer, geometry, or family claim.
   verification:
     command: run focused overlay tests, matrix validator, claim-language scan, DAG prefix check, and clean merge-ref CI
@@ -363,6 +433,8 @@ work_units:
   - final_overlay_sha256
   - exact_statement_table
   - semantic_component_report
+  - campaign_disposition_counts
+  - campaign_closeout_coverage_proof
   - P0_P1_zero_review_receipt
   stop: BLOCKED_CURRENT_OVERLAY_NOT_READY
 verification:
@@ -381,6 +453,9 @@ verification:
   negative:
   - inject an unregistered sixth scoped candidate
   - remove a proof receipt while retaining scientific_attempted=true
+  - map NOT_ATTEMPTED to REFUTED
+  - omit one campaign disposition from the legacy transition table
+  - emit the no-surviving-result sentence with an open source surface or a PROMOTED row
   - toggle Wolfram availability and verify truth status is invariant
   - make two CAS axes return different exact values
   - mutate one fixture field in only one axis
@@ -392,6 +467,7 @@ verification:
   metamorphic:
   - candidate ordering changes no statement identities or graph components
   - engine availability changes replay/release but not truth
+  - legacy evidence-state relabelling preserves all five campaign dispositions injectively
   - equivalent-claim relabelling changes no component count
   - exact rational fixture serialization changes no scientific projection
   clean_CI:
@@ -423,6 +499,9 @@ completion_evidence:
   - evidence_manifest_hash
   - PR284_fixture_hash
   - PR284_truth_evidence_replay_release_projection
+  - campaign_disposition_transition_table
+  - campaign_disposition_counts
+  - campaign_closeout_coverage_proof
   - unresolved_blockers
   - observed_data_used_boolean
   - P0_remaining
