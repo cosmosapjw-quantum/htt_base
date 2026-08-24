@@ -17,6 +17,7 @@ for _name, _value in THREAD_CONTROLS.items():
     os.environ[_name] = _value
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import resource
@@ -35,9 +36,9 @@ for _path in (ROOT / "htt", ROOT / "htt/src"):
 
 from common.data_identity import (  # noqa: E402
     AdmissionStatus,
+    canonical_sha256,
     DataIdentityError,
     _regular_beneath,
-    _stream_sha256,
     load_lane_registry,
     replay_lane_admission_decision,
 )
@@ -52,6 +53,7 @@ from obsstat.hsc_kids_current_stack import (  # noqa: E402
     execute_tomography,
     label_eb,
     parallel_transport_axis,
+    transported_headless_axis_alignment,
     validate_survey_pair,
 )
 
@@ -81,7 +83,7 @@ class HscKidsWorkerError(RuntimeError):
     """Raised before an HSC/KiDS result when the worker contract drifts."""
 
 
-def _strict_json(path: Path, *, label: str) -> Mapping[str, object]:
+def _strict_json_bytes(raw: bytes, *, label: str) -> Mapping[str, object]:
     def unique(pairs: list[tuple[str, object]]) -> dict[str, object]:
         result: dict[str, object] = {}
         for key, value in pairs:
@@ -94,9 +96,7 @@ def _strict_json(path: Path, *, label: str) -> Mapping[str, object]:
         raise HscKidsWorkerError(f"{label} contains non-finite constant {value}")
 
     try:
-        payload = json.loads(
-            path.read_bytes(), object_pairs_hook=unique, parse_constant=reject_constant
-        )
+        payload = json.loads(raw, object_pairs_hook=unique, parse_constant=reject_constant)
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise HscKidsWorkerError(f"{label} is not strict JSON") from exc
     if not isinstance(payload, Mapping):
@@ -104,11 +104,31 @@ def _strict_json(path: Path, *, label: str) -> Mapping[str, object]:
     return payload
 
 
+def _raw_hash(raw: bytes) -> str:
+    return "sha256:" + hashlib.sha256(raw).hexdigest()
+
+
+def _validate_attended_admission_binding(raw: bytes, decision) -> None:
+    record_ids = [record.record_id for record in decision.records]
+    if (
+        os.environ.get("HTT_ATTENDED_ADMISSION_SHA256") != _raw_hash(raw)
+        or os.environ.get("HTT_ATTENDED_ADMISSION_BUNDLE_ID")
+        != decision.lane_admission_bundle_id
+        or os.environ.get("HTT_ATTENDED_ORDERED_RECORD_IDS_SHA256")
+        != canonical_sha256(record_ids)
+    ):
+        raise HscKidsWorkerError("attended admission acceptance binding drifted")
+
+
 def _load_admission(path: Path):
+    try:
+        raw = path.read_bytes()
+    except OSError as exc:
+        raise HscKidsWorkerError("HSC/KiDS admission replay failed") from exc
     try:
         registry = load_lane_registry(REGISTRY)
         decision = replay_lane_admission_decision(
-            _strict_json(path, label="HSC/KiDS admission"), registry=registry
+            _strict_json_bytes(raw, label="HSC/KiDS admission"), registry=registry
         )
     except (DataIdentityError, HscKidsWorkerError) as exc:
         raise HscKidsWorkerError(f"HSC/KiDS admission replay failed: {exc}") from exc
@@ -119,6 +139,7 @@ def _load_admission(path: Path):
         or decision.lane_admission_bundle_id is None
     ):
         raise HscKidsWorkerError("HSC/KiDS admission is not complete identity admission")
+    _validate_attended_admission_binding(raw, decision)
     return decision
 
 
@@ -141,7 +162,9 @@ def _mark_observed_data_open_attempt() -> None:
     _write_json(marker, {"state": "OBSERVED_DATA_OPEN_ATTEMPTED"})
 
 
-def _admitted_paths(decision, *, data_root: Path) -> dict[str, Path]:
+def _admitted_documents(
+    decision, *, data_root: Path
+) -> dict[str, Mapping[str, object]]:
     if (
         not data_root.is_absolute()
         or data_root.is_symlink()
@@ -161,7 +184,7 @@ def _admitted_paths(decision, *, data_root: Path) -> dict[str, Path]:
         or tuple(row.get("component_id") for row in rows) != REQUIRED_COMPONENTS
     ):
         raise HscKidsWorkerError("HSC/KiDS component binding order drifted")
-    result: dict[str, Path] = {}
+    result: dict[str, Mapping[str, object]] = {}
     for row in rows:
         component = row.get("component_id")
         relative = row.get("relative_path")
@@ -169,15 +192,19 @@ def _admitted_paths(decision, *, data_root: Path) -> dict[str, Path]:
             raise HscKidsWorkerError("HSC/KiDS component binding identity drifted")
         try:
             path, info = _regular_beneath(data_root, Path(relative), str(component))
-            digest = "sha256:" + _stream_sha256(
-                path, field_name=str(component), expected_info=info
-            )
+            raw = path.read_bytes()
         except DataIdentityError as exc:
             raise HscKidsWorkerError(f"{component} is not an exact admitted file") from exc
+        except OSError as exc:
+            raise HscKidsWorkerError(f"{component} could not be read") from exc
         record = records[str(component)]
-        if info.st_size != record.byte_size or digest != record.content_sha256:
+        if (
+            info.st_size != record.byte_size
+            or len(raw) != record.byte_size
+            or _raw_hash(raw) != record.content_sha256
+        ):
             raise HscKidsWorkerError(f"{component} no longer matches admission")
-        result[str(component)] = path
+        result[str(component)] = _strict_json_bytes(raw, label=str(component))
     return result
 
 
@@ -269,6 +296,7 @@ def _survey_analysis(
         gamma1=(gamma1 - additive_gamma1) * component_correction,
         gamma2=(gamma2 - additive_gamma2) * component_correction,
         bin_index=product.get("bin_index"),
+        redshift=product.get("redshift"),
         weights=product.get("weights"),
     )
     labelled: LabelledEBField = label_eb(
@@ -288,25 +316,50 @@ def _survey_analysis(
             n_z_id=str(row.get("n_z_id")),
             calibration_id=str(row.get("calibration_id")),
             response_id=str(row.get("response_id")),
+            shear_calibration_factor=float(row.get("shear_calibration_factor")),
+            response_factor=float(row.get("response_factor")),
         )
         for row in bin_rows
     )
-    tomography = execute_tomography(labelled, bins=bins)
+    tomography = execute_tomography(
+        labelled,
+        bins=bins,
+        n_z_weights=n_z.get("row_weights"),
+        mask_weights=mask.get("row_weights"),
+    )
     operator = PseudoClOperator.build(
         operator_id=mask.get("operator_id"),
         mask_id=mask.get("mask_id"),
         feature_order=tuple(mask.get("feature_order", ())),
         mixing_matrix=mask.get("mixing_matrix"),
         inverse_matrix=mask.get("inverse_matrix"),
+        pure_e_pseudo_response=mask.get("pure_e_pseudo_response"),
+        pure_b_pseudo_response=mask.get("pure_b_pseudo_response"),
     )
-    features = operator.apply(tomography.true_features, feature_order=tomography.feature_order)
+    features = operator.deconvolve(
+        tomography.pseudo_features, feature_order=tomography.feature_order
+    )
     operator.pure_mode_oracle()
     return tomography, operator, features
 
 
 def analyze_documents(
-    documents: Mapping[str, Mapping[str, object]], *, observed: bool
+    documents: Mapping[str, Mapping[str, object]],
+    *,
+    execution_mode: str,
+    admission_context: Mapping[str, object] | None = None,
 ) -> dict[str, object]:
+    if execution_mode not in {"SYNTHETIC_PROFILE", "ADMITTED_OBSERVED"}:
+        raise HscKidsWorkerError("execution mode is not registered")
+    observed = execution_mode == "ADMITTED_OBSERVED"
+    if observed and (
+        not isinstance(admission_context, Mapping)
+        or not admission_context.get("lane_admission_bundle_id")
+        or not admission_context.get("ordered_record_ids")
+    ):
+        raise HscKidsWorkerError("observed execution requires admission context")
+    if not observed and admission_context is not None:
+        raise HscKidsWorkerError("synthetic execution forbids admission context")
     if set(documents) != set(REQUIRED_COMPONENTS):
         raise HscKidsWorkerError("HSC/KiDS fifteen-component bundle is incomplete")
     hsc_identity = _identity(documents, "HSC")
@@ -334,6 +387,13 @@ def analyze_documents(
     transported = parallel_transport_axis(
         start=axis.get("start"), end=axis.get("end"), tangent=axis.get("tangent")
     )
+    alignment = transported_headless_axis_alignment(
+        start=axis.get("start"),
+        end=axis.get("end"),
+        left_tangent=axis.get("tangent"),
+        right_tangent=axis.get("comparison_tangent"),
+    )
+    response_order = tuple(cross.get("response_feature_order", ()))
     report = analyze_joint_response(
         hsc_features=hsc_features,
         kids_features=kids_features,
@@ -344,11 +404,44 @@ def analyze_documents(
         cross_covariance=cross.get("matrix"),
         nuisance_response=cross.get("nuisance_response"),
         candidate_response=cross.get("candidate_response"),
+        response_feature_order=response_order,
         observed=observed,
     )
+    source_releases = {
+        "HSC": hsc_identity.release_id,
+        "KiDS": kids_identity.release_id,
+    }
+    artifact_metadata = {
+        "owner": "OBSSTAT",
+        "scope": "HSC/KiDS typed spin-2 operator diagnostic",
+        "artifact_mode": (
+            "admitted_observed_operator_diagnostic"
+            if observed
+            else "synthetic_operator_diagnostic"
+        ),
+        "claim_tier": "diagnostic_only",
+        "transfer_source": "none",
+        "source_releases": source_releases,
+        "sky_mask_status": "SURVEY_SPECIFIC_MASK_OPERATOR_BOUND",
+        "covariance_status": report.get("terminal_disposition"),
+        "null_mock_status": "NO_NULL_ENSEMBLE_BOUND",
+        "generating_procedure": "scripts/observed_runs/run_hsc_kids.py",
+        "allowed_use": "internal_operator_validation",
+        "forbidden_uses": [
+            "p_value",
+            "source_attribution",
+            "family_identification",
+            "global_claim",
+        ],
+        "caveats": [
+            "no cross-survey release covariance is currently admitted",
+            "rank loss or missing covariance requires abstention",
+        ],
+        "public_use": False,
+    }
     return {
         **report,
-        "survey_releases": {"HSC": hsc_identity.release_id, "KiDS": kids_identity.release_id},
+        "survey_releases": source_releases,
         "operator_family": "TYPED_PSEUDO_CL",
         "pure_mode_oracles": {
             "HSC": hsc_operator.pure_mode_oracle(),
@@ -359,6 +452,8 @@ def analyze_documents(
             "KiDS": [float(value) for value in kids_features],
         },
         "transported_headless_axis": [float(value) for value in transported],
+        "transported_headless_alignment": alignment,
+        "artifact_metadata": artifact_metadata,
     }
 
 
@@ -377,8 +472,22 @@ def _synthetic_documents() -> dict[str, Mapping[str, object]]:
             "gamma1": [1.0, 0.4, -0.3, 0.2],
             "gamma2": [0.2, -0.5, 0.7, -0.1],
             "bin_index": [0, 0, 1, 1],
+            "redshift": [
+                edges[0] + 0.1,
+                edges[1] - 0.1,
+                edges[1] + 0.1,
+                edges[2] - 0.1,
+            ],
             "weights": [1.0, 2.0, 1.5, 0.5],
         }
+        calibration_component = (
+            "hsc_shear_calibration" if survey == "HSC" else "kids_shear_response"
+        )
+        calibration_role = (
+            "multiplicative_shear_calibration"
+            if survey == "HSC"
+            else "lensfit_shear_response"
+        )
         bins = [
             {
                 "survey_id": survey,
@@ -386,13 +495,21 @@ def _synthetic_documents() -> dict[str, Mapping[str, object]]:
                 "bin_id": f"{prefix}-z{index}",
                 "z_min": edges[index],
                 "z_max": edges[index + 1],
-                "n_z_id": f"{prefix}-nz-{index}",
-                "calibration_id": f"{prefix}-cal-{index}",
-                "response_id": f"{prefix}-response-{index}",
+                "n_z_id": f"{prefix}_n_z:{prefix}-z{index}",
+                "calibration_id": f"{calibration_component}:{prefix}-z{index}",
+                "response_id": (
+                    f"{calibration_component}:{calibration_role}:{prefix}-z{index}"
+                ),
+                "shear_calibration_factor": (1.01 if index == 0 else 0.98),
+                "response_factor": (0.99 if index == 0 else 1.02),
             }
             for index in range(2)
         ]
-        documents[f"{prefix}_n_z"] = {"survey_id": survey, "bins": bins}
+        documents[f"{prefix}_n_z"] = {
+            "survey_id": survey,
+            "row_weights": [1.0, 1.2, 0.9, 1.1],
+            "bins": bins,
+        }
         order = tuple(
             f"{survey}:{bins[left]['bin_id']}x{bins[right]['bin_id']}:{mode}"
             for left in range(2)
@@ -404,6 +521,8 @@ def _synthetic_documents() -> dict[str, Mapping[str, object]]:
         mixing = np.eye(size)
         for index in range(size):
             mixing[index, (index + 1) % size] = 0.04
+        pure_e = np.asarray([name.endswith(":EE") for name in order], dtype=float)
+        pure_b = np.asarray([name.endswith(":BB") for name in order], dtype=float)
         documents[f"{prefix}_mask"] = {
             "survey_id": survey,
             "operator_id": f"{prefix}-pseudo-cl-v1",
@@ -411,6 +530,9 @@ def _synthetic_documents() -> dict[str, Mapping[str, object]]:
             "feature_order": list(order),
             "mixing_matrix": mixing.tolist(),
             "inverse_matrix": np.linalg.inv(mixing).tolist(),
+            "row_weights": [1.0, 0.8, 0.9, 0.7],
+            "pure_e_pseudo_response": (mixing @ pure_e).tolist(),
+            "pure_b_pseudo_response": (mixing @ pure_b).tolist(),
         }
         documents[f"{prefix}_randoms"] = {
             "survey_id": survey,
@@ -422,13 +544,20 @@ def _synthetic_documents() -> dict[str, Mapping[str, object]]:
             "additive_gamma1": [0.0, 0.0, 0.0, 0.0],
             "additive_gamma2": [0.0, 0.0, 0.0, 0.0],
         }
-        calibration_component = (
-            "hsc_shear_calibration" if survey == "HSC" else "kids_shear_response"
-        )
         rows = 4
+        row = np.arange(rows, dtype=float)[:, None]
+        mode = np.arange(rows, dtype=float)[None, :]
+        nonlocal_basis = np.sqrt(2.0 / rows) * np.cos(
+            np.pi * (row + 0.5) * mode / rows
+        )
+        nonlocal_basis[:, 0] /= np.sqrt(2.0)
         c = 1.0 / np.sqrt(2.0)
-        identity = np.eye(rows)
-        provider = np.block([[c * identity, c * identity], [-c * identity, c * identity]])
+        provider = np.block(
+            [
+                [c * nonlocal_basis, c * nonlocal_basis],
+                [-c * nonlocal_basis, c * nonlocal_basis],
+            ]
+        )
         documents[calibration_component] = {
             "survey_id": survey,
             "provider_id": f"{prefix}-registered-nonlocal-eb-v1",
@@ -457,10 +586,12 @@ def _synthetic_documents() -> dict[str, Mapping[str, object]]:
         "matrix": (0.08 * np.eye(size)).tolist(),
         "nuisance_response": np.column_stack([np.ones_like(x), x]).tolist(),
         "candidate_response": np.column_stack([np.sin(1.7 * x), np.cos(2.3 * x)]).tolist(),
+        "response_feature_order": [*orders["HSC"], *orders["KiDS"]],
         "axis_transport": {
             "start": [1.0, 0.0, 0.0],
             "end": [0.0, 1.0, 0.0],
             "tangent": [0.0, 1.0, 0.0],
+            "comparison_tangent": [-1.0, 0.0, 0.0],
         },
     }
     return documents
@@ -473,7 +604,7 @@ def synthetic_profile(*, rows: str) -> dict[str, object]:
     report: dict[str, object] | None = None
     documents = _synthetic_documents()
     for _ in range(PROFILE_ROWS[rows]):
-        report = analyze_documents(documents, observed=False)
+        report = analyze_documents(documents, execution_mode="SYNTHETIC_PROFILE")
     assert report is not None
     return {
         **report,
@@ -490,26 +621,30 @@ def synthetic_profile(*, rows: str) -> dict[str, object]:
 def run_admitted(*, admission_path: Path, data_root: Path) -> dict[str, object]:
     decision = _load_admission(admission_path)
     _mark_observed_data_open_attempt()
-    paths = _admitted_paths(decision, data_root=data_root)
-    documents = {
-        component: _strict_json(path, label=component) for component, path in paths.items()
-    }
-    report = analyze_documents(documents, observed=True)
+    documents = _admitted_documents(decision, data_root=data_root)
+    record_ids = [record.record_id for record in decision.records]
+    report = analyze_documents(
+        documents,
+        execution_mode="ADMITTED_OBSERVED",
+        admission_context={
+            "lane_admission_bundle_id": decision.lane_admission_bundle_id,
+            "ordered_record_ids": record_ids,
+        },
+    )
+    report["artifact_metadata"].update(
+        {
+            "candidate_commit": os.environ.get("HTT_ATTENDED_CANDIDATE_COMMIT"),
+            "candidate_tree": os.environ.get("HTT_ATTENDED_CANDIDATE_TREE"),
+            "input_identity": {
+                "lane_admission_bundle_id": decision.lane_admission_bundle_id,
+                "ordered_record_ids": record_ids,
+            },
+        }
+    )
     return {
         **report,
         "lane_admission_bundle_id": decision.lane_admission_bundle_id,
-        "ordered_record_ids": [record.record_id for record in decision.records],
-        "artifact_metadata": {
-            "owner": "OBSSTAT",
-            "scope": "HSC/KiDS typed spin-2 operator diagnostic",
-            "claim_tier": "diagnostic_only",
-            "transfer_source": "none",
-            "covariance_status": "FULL_ADMITTED_CROSS_SURVEY_COVARIANCE",
-            "null_mock_status": "ADMITTED_SURVEY_PRODUCTS",
-            "public_use": False,
-            "candidate_commit": os.environ.get("HTT_ATTENDED_CANDIDATE_COMMIT"),
-            "candidate_tree": os.environ.get("HTT_ATTENDED_CANDIDATE_TREE"),
-        },
+        "ordered_record_ids": record_ids,
     }
 
 

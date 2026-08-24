@@ -7,6 +7,7 @@ import json
 import math
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -75,14 +76,29 @@ def _raw(module, survey: str, *, q=None, u=None, bins=None):
         gamma1=q_values,
         gamma2=u_values,
         bin_index=np.asarray(bins if bins is not None else [0, 0, 1, 1]),
+        redshift=np.asarray(
+            ([0.4, 0.6, 0.8, 1.0] if survey == "HSC" else [0.2, 0.4, 0.6, 0.8])
+            if q_values.size == 4
+            else [0.4] * q_values.size
+        ),
         weights=weights,
     )
 
 
 def _provider_matrix(rows: int = 4) -> np.ndarray:
+    row = np.arange(rows, dtype=float)[:, None]
+    mode = np.arange(rows, dtype=float)[None, :]
+    nonlocal_basis = np.sqrt(2.0 / rows) * np.cos(
+        math.pi * (row + 0.5) * mode / rows
+    )
+    nonlocal_basis[:, 0] /= math.sqrt(2.0)
     c = 1.0 / math.sqrt(2.0)
-    identity = np.eye(rows)
-    return np.block([[c * identity, c * identity], [-c * identity, c * identity]])
+    return np.block(
+        [
+            [c * nonlocal_basis, c * nonlocal_basis],
+            [-c * nonlocal_basis, c * nonlocal_basis],
+        ]
+    )
 
 
 def _labelled(module, survey: str):
@@ -95,8 +111,11 @@ def _labelled(module, survey: str):
 
 
 def _tomography(module, survey: str):
+    identity = _survey_identity(module, survey)
     return module.execute_tomography(
         _labelled(module, survey),
+        n_z_weights=np.asarray([1.0, 1.2, 0.9, 1.1]),
+        mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7]),
         bins=(
             module.TomographyBin(
                 survey_id=survey,
@@ -104,9 +123,14 @@ def _tomography(module, survey: str):
                 bin_id=f"{survey.lower()}-z0",
                 z_min=(0.3 if survey == "HSC" else 0.1),
                 z_max=(0.7 if survey == "HSC" else 0.5),
-                n_z_id=f"{survey.lower()}-nz-0",
-                calibration_id=f"{survey.lower()}-cal-0",
-                response_id=f"{survey.lower()}-response-0",
+                n_z_id=f"{identity.n_z_component}:{survey.lower()}-z0",
+                calibration_id=f"{identity.calibration_component}:{survey.lower()}-z0",
+                response_id=(
+                    f"{identity.calibration_component}:{identity.calibration_role}:"
+                    f"{survey.lower()}-z0"
+                ),
+                shear_calibration_factor=1.01,
+                response_factor=0.99,
             ),
             module.TomographyBin(
                 survey_id=survey,
@@ -114,9 +138,14 @@ def _tomography(module, survey: str):
                 bin_id=f"{survey.lower()}-z1",
                 z_min=(0.7 if survey == "HSC" else 0.5),
                 z_max=(1.2 if survey == "HSC" else 0.9),
-                n_z_id=f"{survey.lower()}-nz-1",
-                calibration_id=f"{survey.lower()}-cal-1",
-                response_id=f"{survey.lower()}-response-1",
+                n_z_id=f"{identity.n_z_component}:{survey.lower()}-z1",
+                calibration_id=f"{identity.calibration_component}:{survey.lower()}-z1",
+                response_id=(
+                    f"{identity.calibration_component}:{identity.calibration_role}:"
+                    f"{survey.lower()}-z1"
+                ),
+                shear_calibration_factor=0.98,
+                response_factor=1.02,
             ),
         ),
     )
@@ -127,12 +156,16 @@ def _operator(module, feature_order: tuple[str, ...]):
     mixing = np.eye(size)
     for index in range(size):
         mixing[index, (index + 1) % size] = 0.04
+    pure_e = np.asarray([name.endswith(":EE") for name in feature_order], dtype=float)
+    pure_b = np.asarray([name.endswith(":BB") for name in feature_order], dtype=float)
     return module.PseudoClOperator.build(
         operator_id="pseudo-cl-current-stack-v1",
         mask_id="nontrivial-synthetic-mask-v1",
         feature_order=feature_order,
         mixing_matrix=mixing,
         inverse_matrix=np.linalg.inv(mixing),
+        pure_e_pseudo_response=mixing @ pure_e,
+        pure_b_pseudo_response=mixing @ pure_b,
     )
 
 
@@ -141,8 +174,8 @@ def _joint_case(module):
     kids = _tomography(module, "KiDS")
     hsc_operator = _operator(module, hsc.feature_order)
     kids_operator = _operator(module, kids.feature_order)
-    hsc_features = hsc_operator.apply(hsc.true_features)
-    kids_features = kids_operator.apply(kids.true_features)
+    hsc_features = hsc_operator.deconvolve(hsc.pseudo_features)
+    kids_features = kids_operator.deconvolve(kids.pseudo_features)
     count = len(hsc_features)
     hsc_covariance = 1.8 * np.eye(count)
     kids_covariance = 1.5 * np.eye(count)
@@ -188,7 +221,9 @@ def test_pr310_rejects_exchanged_survey_components() -> None:
 def test_pr310_worker_applies_survey_specific_psf_and_calibration() -> None:
     worker = _worker()
     baseline_documents = worker._synthetic_documents()
-    baseline = worker.analyze_documents(baseline_documents, observed=False)
+    baseline = worker.analyze_documents(
+        baseline_documents, execution_mode="SYNTHETIC_PROFILE"
+    )
 
     calibration_changed = json.loads(json.dumps(baseline_documents))
     calibration_changed["hsc_shear_calibration"]["component_correction"] = [
@@ -197,7 +232,9 @@ def test_pr310_worker_applies_survey_specific_psf_and_calibration() -> None:
         1.25,
         1.25,
     ]
-    recalibrated = worker.analyze_documents(calibration_changed, observed=False)
+    recalibrated = worker.analyze_documents(
+        calibration_changed, execution_mode="SYNTHETIC_PROFILE"
+    )
     assert recalibrated["typed_feature_vectors"]["HSC"] != baseline[
         "typed_feature_vectors"
     ]["HSC"]
@@ -207,7 +244,9 @@ def test_pr310_worker_applies_survey_specific_psf_and_calibration() -> None:
 
     psf_changed = json.loads(json.dumps(baseline_documents))
     psf_changed["hsc_psf"]["additive_gamma1"] = [0.1, 0.1, 0.1, 0.1]
-    corrected = worker.analyze_documents(psf_changed, observed=False)
+    corrected = worker.analyze_documents(
+        psf_changed, execution_mode="SYNTHETIC_PROFILE"
+    )
     assert corrected["typed_feature_vectors"]["HSC"] != baseline[
         "typed_feature_vectors"
     ]["HSC"]
@@ -240,6 +279,23 @@ def test_pr310_raw_pair_cannot_be_relabelled_as_eb() -> None:
             provider_id="raw-alias",
             output_order="E_THEN_B",
         )
+    with pytest.raises(module.HscKidsCurrentStackError, match="normalized nonlocal"):
+        module.label_eb(
+            raw,
+            provider_matrix=2.0 * np.eye(8),
+            provider_id="scaled-raw-alias",
+            output_order="E_THEN_B",
+        )
+    with pytest.raises(TypeError):
+        module.LabelledEBField(
+            identity=raw.identity,
+            e_mode=raw.gamma1,
+            b_mode=raw.gamma2,
+            bin_index=raw.bin_index,
+            redshift=raw.redshift,
+            weights=raw.weights,
+            provider_id="constructor-bypass",
+        )
     with pytest.raises(module.HscKidsCurrentStackError, match="output order"):
         module.label_eb(
             raw,
@@ -259,6 +315,7 @@ def test_pr310_tomography_executes_and_is_row_permutation_invariant() -> None:
         gamma1=raw.gamma1[permutation],
         gamma2=raw.gamma2[permutation],
         bin_index=raw.bin_index[permutation],
+        redshift=raw.redshift[permutation],
         weights=raw.weights[permutation],
     )
     labelled = module.label_eb(
@@ -269,14 +326,20 @@ def test_pr310_tomography_executes_and_is_row_permutation_invariant() -> None:
         provider_id="hsc-registered-nonlocal-eb-v1",
         output_order="E_THEN_B",
     )
-    replay = module.execute_tomography(labelled, bins=baseline.bins)
-    np.testing.assert_allclose(replay.true_features, baseline.true_features)
+    replay = module.execute_tomography(
+        labelled,
+        bins=baseline.bins,
+        n_z_weights=np.asarray([1.0, 1.2, 0.9, 1.1])[permutation],
+        mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7])[permutation],
+    )
+    np.testing.assert_allclose(replay.pseudo_features, baseline.pseudo_features)
 
     changed = module.RawSpin2Field(
         identity=raw.identity,
         gamma1=raw.gamma1,
         gamma2=raw.gamma2,
         bin_index=np.asarray([0, 1, 1, 1]),
+        redshift=np.asarray([0.4, 0.8, 0.9, 1.0]),
         weights=raw.weights,
     )
     changed_labelled = module.label_eb(
@@ -285,8 +348,13 @@ def test_pr310_tomography_executes_and_is_row_permutation_invariant() -> None:
         provider_id="hsc-registered-nonlocal-eb-v1",
         output_order="E_THEN_B",
     )
-    changed_result = module.execute_tomography(changed_labelled, bins=baseline.bins)
-    assert not np.allclose(changed_result.true_features, baseline.true_features)
+    changed_result = module.execute_tomography(
+        changed_labelled,
+        bins=baseline.bins,
+        n_z_weights=np.asarray([1.0, 1.2, 0.9, 1.1]),
+        mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7]),
+    )
+    assert not np.allclose(changed_result.pseudo_features, baseline.pseudo_features)
 
 
 def test_pr310_tomography_rejects_survey_nz_or_response_exchange() -> None:
@@ -297,7 +365,35 @@ def test_pr310_tomography_rejects_survey_nz_or_response_exchange() -> None:
         **{**bins[0].__dict__, "n_z_id": "kids-nz-0"}
     )
     with pytest.raises(module.HscKidsCurrentStackError, match="survey-specific"):
-        module.execute_tomography(labelled, bins=tuple(bins))
+        module.execute_tomography(
+            labelled,
+            bins=tuple(bins),
+            n_z_weights=np.ones(4),
+            mask_weights=np.ones(4),
+        )
+
+
+def test_pr310_tomography_nz_calibration_and_response_are_executable() -> None:
+    module = _science()
+    baseline = _tomography(module, "HSC")
+    bins = list(baseline.bins)
+    bins[0] = module.TomographyBin(
+        **{**bins[0].__dict__, "response_factor": 0.77}
+    )
+    changed = module.execute_tomography(
+        _labelled(module, "HSC"),
+        bins=tuple(bins),
+        n_z_weights=np.asarray([1.0, 1.2, 0.9, 1.1]),
+        mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7]),
+    )
+    assert not np.allclose(changed.pseudo_features, baseline.pseudo_features)
+    changed_nz = module.execute_tomography(
+        _labelled(module, "HSC"),
+        bins=baseline.bins,
+        n_z_weights=np.asarray([2.0, 0.5, 0.9, 1.1]),
+        mask_weights=np.asarray([1.0, 0.8, 0.9, 0.7]),
+    )
+    assert not np.allclose(changed_nz.pseudo_features, baseline.pseudo_features)
 
 
 def test_pr310_pseudo_cl_recovers_both_pure_modes_under_nontrivial_mask() -> None:
@@ -306,13 +402,30 @@ def test_pr310_pseudo_cl_recovers_both_pure_modes_under_nontrivial_mask() -> Non
     operator = _operator(module, tomography.feature_order)
 
     oracle = operator.pure_mode_oracle()
-    recovered = operator.apply(tomography.true_features)
+    recovered = operator.deconvolve(tomography.pseudo_features)
 
     assert oracle["pure_e_to_b_max_abs"] <= 1.0e-14
     assert oracle["pure_b_to_e_max_abs"] <= 1.0e-14
     assert oracle["status"] == "TWO_WAY_PURE_MODE_PASS"
-    np.testing.assert_allclose(recovered, tomography.true_features, atol=1.0e-12)
     assert np.any(np.abs(operator.mixing_matrix - np.eye(len(recovered))) > 0.0)
+
+
+def test_pr310_pure_mode_oracle_is_independent_of_coupling_inverse() -> None:
+    module = _science()
+    tomography = _tomography(module, "HSC")
+    operator = _operator(module, tomography.feature_order)
+    drifted = operator.mixing_matrix.copy()
+    drifted[1, 0] += 0.25
+    with pytest.raises(module.HscKidsCurrentStackError, match="pure-mode"):
+        module.PseudoClOperator.build(
+            operator_id="drifted",
+            mask_id="same-injection-oracle",
+            feature_order=tomography.feature_order,
+            mixing_matrix=drifted,
+            inverse_matrix=np.linalg.inv(drifted),
+            pure_e_pseudo_response=operator.pure_e_pseudo_response,
+            pure_b_pseudo_response=operator.pure_b_pseudo_response,
+        ).pure_mode_oracle()
 
 
 def test_pr310_pseudo_cl_rejects_feature_order_and_mask_inverse_drift() -> None:
@@ -321,8 +434,8 @@ def test_pr310_pseudo_cl_rejects_feature_order_and_mask_inverse_drift() -> None:
     operator = _operator(module, tomography.feature_order)
 
     with pytest.raises(module.HscKidsCurrentStackError, match="feature order"):
-        operator.apply(
-            tomography.true_features,
+        operator.deconvolve(
+            tomography.pseudo_features,
             feature_order=tuple(reversed(tomography.feature_order)),
         )
     with pytest.raises(module.HscKidsCurrentStackError, match="mask-coupling"):
@@ -332,6 +445,8 @@ def test_pr310_pseudo_cl_rejects_feature_order_and_mask_inverse_drift() -> None:
             feature_order=tomography.feature_order,
             mixing_matrix=operator.mixing_matrix,
             inverse_matrix=np.eye(len(tomography.feature_order)),
+            pure_e_pseudo_response=operator.pure_e_pseudo_response,
+            pure_b_pseudo_response=operator.pure_b_pseudo_response,
         )
 
 
@@ -349,7 +464,12 @@ def test_pr310_shortest_geodesic_transport_and_headless_axis() -> None:
         tangent=transported,
     )
     np.testing.assert_allclose(recovered, [0.0, 1.0, 0.0], atol=1.0e-14)
-    assert module.headless_axis_alignment(transported, -transported) == 1.0
+    assert module.transported_headless_axis_alignment(
+        start=np.asarray([1.0, 0.0, 0.0]),
+        end=np.asarray([0.0, 1.0, 0.0]),
+        left_tangent=np.asarray([0.0, 1.0, 0.0]),
+        right_tangent=-transported,
+    ) == 1.0
 
     with pytest.raises(module.HscKidsCurrentStackError, match="antipodal"):
         module.parallel_transport_axis(
@@ -384,6 +504,7 @@ def test_pr310_joint_covariance_abstains_before_rank(mutation: str) -> None:
         cross_covariance=cross,
         nuisance_response=case["nuisance"],
         candidate_response=case["candidate"],
+        response_feature_order=(*case["hsc"].feature_order, *case["kids"].feature_order),
         observed=False,
     )
     assert result["terminal_disposition"] == "JOINT_COVARIANCE_REQUIRED_ABSTAIN"
@@ -405,6 +526,7 @@ def test_pr310_rank_is_scale_stable_and_overlap_abstains() -> None:
         cross_covariance=case["cross_covariance"],
         nuisance_response=case["nuisance"],
         candidate_response=case["candidate"],
+        response_feature_order=(*case["hsc"].feature_order, *case["kids"].feature_order),
         observed=False,
     )
     assert baseline["terminal_disposition"] == "SYNTHETIC_OPERATOR_CLOSURE_PASS"
@@ -419,6 +541,7 @@ def test_pr310_rank_is_scale_stable_and_overlap_abstains() -> None:
             cross_covariance=case["cross_covariance"],
             nuisance_response=case["nuisance"],
             candidate_response=scale * case["candidate"],
+            response_feature_order=(*case["hsc"].feature_order, *case["kids"].feature_order),
             observed=False,
         )
         assert result["response_rank"]["status"] == "FULL_INCREMENTAL_RANK"
@@ -435,11 +558,32 @@ def test_pr310_rank_is_scale_stable_and_overlap_abstains() -> None:
         cross_covariance=case["cross_covariance"],
         nuisance_response=case["nuisance"],
         candidate_response=overlap,
+        response_feature_order=(*case["hsc"].feature_order, *case["kids"].feature_order),
         observed=False,
     )
     assert result["terminal_disposition"] == "NON_IDENTIFIED_ABSTAIN"
     assert result["p_value"] is None
     assert result["forced_source_label"] is None
+
+
+def test_pr310_response_rows_are_bound_to_exact_feature_order() -> None:
+    module = _science()
+    case = _joint_case(module)
+    order = (*case["hsc"].feature_order, *case["kids"].feature_order)
+    with pytest.raises(module.HscKidsCurrentStackError, match="response feature order"):
+        module.analyze_joint_response(
+            hsc_features=case["hsc_features"],
+            kids_features=case["kids_features"],
+            hsc_feature_order=case["hsc"].feature_order,
+            kids_feature_order=case["kids"].feature_order,
+            hsc_covariance=case["hsc_covariance"],
+            kids_covariance=case["kids_covariance"],
+            cross_covariance=case["cross_covariance"],
+            nuisance_response=case["nuisance"][::-1],
+            candidate_response=case["candidate"][::-1],
+            response_feature_order=tuple(reversed(order)),
+            observed=False,
+        )
 
 
 @pytest.mark.parametrize("rows", ("1", "8", "32", "128", "full"))
@@ -532,8 +676,95 @@ def test_pr310_synthetic_output_has_no_inference_or_family_surface() -> None:
         '"q_policy"',
         '"pi_exceedance"',
         '"g_f"',
-        '"family_identification"',
     ):
         assert forbidden not in encoded
+    assert "family_identification" in result["artifact_metadata"]["forbidden_uses"]
     assert result["p_value"] is None
     assert result["forced_source_label"] is None
+
+
+def test_pr310_observed_mode_requires_admission_context_and_flags_are_monotone() -> None:
+    worker = _worker()
+    documents = worker._synthetic_documents()
+    with pytest.raises(worker.HscKidsWorkerError, match="admission context"):
+        worker.analyze_documents(documents, execution_mode="ADMITTED_OBSERVED")
+
+    mutated = json.loads(json.dumps(documents))
+    size = len(mutated["hsc_kids_cross_covariance"]["matrix"])
+    mutated["hsc_kids_cross_covariance"]["matrix"] = [
+        [0.0] * size for _ in range(size)
+    ]
+    result = worker.analyze_documents(
+        mutated,
+        execution_mode="ADMITTED_OBSERVED",
+        admission_context={
+            "lane_admission_bundle_id": "sha256:" + "1" * 64,
+            "ordered_record_ids": ["sha256:" + "2" * 64],
+        },
+    )
+    assert result["terminal_disposition"] == "JOINT_COVARIANCE_REQUIRED_ABSTAIN"
+    assert result["observed_statistic_seen"] is True
+    assert result["observed_science_executed"] is True
+
+
+def test_pr310_result_metadata_is_truthful_and_proportional() -> None:
+    result = _worker().synthetic_profile(rows="1")
+    metadata = result["artifact_metadata"]
+    assert metadata["owner"] == "OBSSTAT"
+    assert metadata["artifact_mode"] == "synthetic_operator_diagnostic"
+    assert metadata["claim_tier"] == "diagnostic_only"
+    assert metadata["null_mock_status"] == "NO_NULL_ENSEMBLE_BOUND"
+    assert metadata["public_use"] is False
+    assert metadata["allowed_use"] == "internal_operator_validation"
+    assert "family_identification" in metadata["forbidden_uses"]
+    assert metadata["source_releases"] == {
+        "HSC": "HSC_S19A_Y3",
+        "KiDS": "KIDS_1000_DR4_1",
+    }
+
+
+def test_pr310_worker_rebinds_exact_attended_admission(monkeypatch) -> None:
+    worker = _worker()
+    raw = b'{"admission":"A"}'
+    record_ids = ["sha256:" + "2" * 64, "sha256:" + "3" * 64]
+    decision = SimpleNamespace(
+        lane_admission_bundle_id="sha256:" + "1" * 64,
+        records=tuple(SimpleNamespace(record_id=value) for value in record_ids),
+    )
+    monkeypatch.setenv("HTT_ATTENDED_ADMISSION_SHA256", worker._raw_hash(raw))
+    monkeypatch.setenv(
+        "HTT_ATTENDED_ADMISSION_BUNDLE_ID", decision.lane_admission_bundle_id
+    )
+    monkeypatch.setenv(
+        "HTT_ATTENDED_ORDERED_RECORD_IDS_SHA256",
+        worker.canonical_sha256(record_ids),
+    )
+    worker._validate_attended_admission_binding(raw, decision)
+    monkeypatch.setenv("HTT_ATTENDED_ADMISSION_SHA256", "sha256:" + "0" * 64)
+    with pytest.raises(worker.HscKidsWorkerError, match="acceptance binding"):
+        worker._validate_attended_admission_binding(raw, decision)
+
+
+def test_pr310_dispatcher_passes_acceptance_bound_admission_environment(
+    tmp_path: Path,
+) -> None:
+    dispatcher = _load("pr310_binding_dispatcher", DISPATCHER)
+    profile = dispatcher._lane_profile("HSC_KIDS")
+    environment = dispatcher._environment(
+        tmp_path,
+        profile=profile,
+        science=True,
+        candidate_root=ROOT,
+        candidate_commit="a" * 40,
+        candidate_tree="b" * 40,
+        runtime_contract={"import_roots": [str(tmp_path)]},
+        admission_sha256="sha256:" + "1" * 64,
+        admission_bundle_id="sha256:" + "2" * 64,
+        ordered_record_ids_sha256="sha256:" + "3" * 64,
+    )
+    assert environment["HTT_ATTENDED_ADMISSION_SHA256"] == "sha256:" + "1" * 64
+    assert environment["HTT_ATTENDED_ADMISSION_BUNDLE_ID"] == "sha256:" + "2" * 64
+    assert (
+        environment["HTT_ATTENDED_ORDERED_RECORD_IDS_SHA256"]
+        == "sha256:" + "3" * 64
+    )

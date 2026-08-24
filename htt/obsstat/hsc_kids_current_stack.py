@@ -134,38 +134,70 @@ class RawSpin2Field:
     gamma1: np.ndarray
     gamma2: np.ndarray
     bin_index: np.ndarray
+    redshift: np.ndarray
     weights: np.ndarray
 
     def __post_init__(self) -> None:
         _validate_survey_identity(self.identity)
         gamma1 = _finite_vector(self.gamma1, label="gamma1")
         gamma2 = _finite_vector(self.gamma2, label="gamma2")
+        redshift = _finite_vector(self.redshift, label="redshift")
         weights = _finite_vector(self.weights, label="weights")
         bins = np.asarray(self.bin_index)
         if (
             gamma1.shape != gamma2.shape
+            or gamma1.shape != redshift.shape
             or gamma1.shape != weights.shape
             or bins.shape != gamma1.shape
             or not np.issubdtype(bins.dtype, np.integer)
             or np.any(bins < 0)
+            or np.any(redshift < 0.0)
             or np.any(weights <= 0.0)
         ):
             raise HscKidsCurrentStackError("raw spin-2 row arrays are inconsistent")
         object.__setattr__(self, "gamma1", gamma1.copy())
         object.__setattr__(self, "gamma2", gamma2.copy())
         object.__setattr__(self, "bin_index", bins.astype(int, copy=True))
+        object.__setattr__(self, "redshift", redshift.copy())
         object.__setattr__(self, "weights", weights.copy())
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, init=False)
 class LabelledEBField:
     identity: SurveyIdentity
     e_mode: np.ndarray
     b_mode: np.ndarray
     bin_index: np.ndarray
+    redshift: np.ndarray
     weights: np.ndarray
     provider_id: str
     output_order: str = "E_THEN_B"
+
+    @classmethod
+    def _from_provider(
+        cls,
+        *,
+        identity: SurveyIdentity,
+        e_mode: np.ndarray,
+        b_mode: np.ndarray,
+        bin_index: np.ndarray,
+        redshift: np.ndarray,
+        weights: np.ndarray,
+        provider_id: str,
+    ) -> "LabelledEBField":
+        result = object.__new__(cls)
+        for name, value in (
+            ("identity", identity),
+            ("e_mode", e_mode.copy()),
+            ("b_mode", b_mode.copy()),
+            ("bin_index", bin_index.copy()),
+            ("redshift", redshift.copy()),
+            ("weights", weights.copy()),
+            ("provider_id", provider_id),
+            ("output_order", "E_THEN_B"),
+        ):
+            object.__setattr__(result, name, value)
+        return result
 
 
 def rotate_raw_components(field: RawSpin2Field, angle_radians: float) -> RawSpin2Field:
@@ -180,6 +212,7 @@ def rotate_raw_components(field: RawSpin2Field, angle_radians: float) -> RawSpin
         gamma1=cosine * field.gamma1 + sine * field.gamma2,
         gamma2=cosine * field.gamma2 - sine * field.gamma1,
         bin_index=field.bin_index,
+        redshift=field.redshift,
         weights=field.weights,
     )
 
@@ -204,14 +237,35 @@ def label_eb(
         raise HscKidsCurrentStackError("E/B provider matrix shape drifted")
     if np.allclose(matrix, np.eye(2 * rows), rtol=0.0, atol=1.0e-15):
         raise HscKidsCurrentStackError("raw spin pair cannot be relabelled as E/B")
-    if np.linalg.matrix_rank(matrix) != 2 * rows:
-        raise HscKidsCurrentStackError("E/B provider is rank deficient")
+    orthogonal = np.allclose(
+        matrix.T @ matrix, np.eye(2 * rows), atol=1.0e-12, rtol=1.0e-12
+    )
+    source_rows = np.arange(2 * rows) % rows
+    support = [
+        len(set(source_rows[np.flatnonzero(np.abs(line) > 1.0e-12)]))
+        for line in matrix
+    ]
+    cross_components = all(
+        np.any(np.abs(line[:rows]) > 1.0e-12)
+        and np.any(np.abs(line[rows:]) > 1.0e-12)
+        for line in matrix
+    )
+    if (
+        np.linalg.matrix_rank(matrix) != 2 * rows
+        or not orthogonal
+        or (rows > 1 and min(support) < 2)
+        or not cross_components
+    ):
+        raise HscKidsCurrentStackError(
+            "E/B provider must be a normalized nonlocal spin-2 transform"
+        )
     output = matrix @ np.concatenate([field.gamma1, field.gamma2])
-    return LabelledEBField(
+    return LabelledEBField._from_provider(
         identity=field.identity,
         e_mode=output[:rows],
         b_mode=output[rows:],
         bin_index=field.bin_index.copy(),
+        redshift=field.redshift.copy(),
         weights=field.weights.copy(),
         provider_id=provider,
     )
@@ -227,6 +281,8 @@ class TomographyBin:
     n_z_id: str
     calibration_id: str
     response_id: str
+    shear_calibration_factor: float
+    response_factor: float
 
 
 @dataclass(frozen=True)
@@ -234,19 +290,27 @@ class TomographyResult:
     survey_id: str
     bins: tuple[TomographyBin, ...]
     feature_order: tuple[str, ...]
-    true_features: np.ndarray
+    pseudo_features: np.ndarray
 
 
 def execute_tomography(
     field: LabelledEBField,
     *,
     bins: Sequence[TomographyBin],
+    n_z_weights: object,
+    mask_weights: object,
 ) -> TomographyResult:
     """Execute weighted E/B auto/cross-bin features in frozen pair order."""
 
     if not isinstance(field, LabelledEBField) or isinstance(bins, (str, bytes)):
         raise HscKidsCurrentStackError("labelled E/B tomography input is required")
     ordered = tuple(bins)
+    nz = _finite_vector(n_z_weights, label="tomographic n(z) weights")
+    mask = _finite_vector(mask_weights, label="tomographic mask weights")
+    if nz.shape != field.weights.shape or mask.shape != field.weights.shape:
+        raise HscKidsCurrentStackError("tomography row weights are incomplete")
+    if np.any(nz <= 0.0) or np.any(mask <= 0.0):
+        raise HscKidsCurrentStackError("tomography row weights must be positive")
     if len(ordered) < 2 or tuple(row.bin_index for row in ordered) != tuple(
         range(len(ordered))
     ):
@@ -262,13 +326,31 @@ def execute_tomography(
             or (index and not math.isclose(ordered[index - 1].z_max, row.z_min))
         ):
             raise HscKidsCurrentStackError("tomography redshift bins must be contiguous")
-        if not all(
-            _text(value, label="tomography identity").lower().startswith(prefix)
-            for value in (row.bin_id, row.n_z_id, row.calibration_id, row.response_id)
+        expected_ids = (
+            f"{field.identity.n_z_component}:{row.bin_id}",
+            f"{field.identity.calibration_component}:{row.bin_id}",
+            f"{field.identity.calibration_component}:"
+            f"{field.identity.calibration_role}:{row.bin_id}",
+        )
+        if (
+            not _text(row.bin_id, label="tomography bin id").lower().startswith(prefix)
+            or (row.n_z_id, row.calibration_id, row.response_id) != expected_ids
         ):
             raise HscKidsCurrentStackError("tomography identities must remain survey-specific")
-        if not np.any(field.bin_index == row.bin_index):
+        selected = field.bin_index == row.bin_index
+        upper_ok = field.redshift <= row.z_max if index == len(ordered) - 1 else field.redshift < row.z_max
+        if (
+            not np.any(selected)
+            or not np.all((field.redshift[selected] >= row.z_min) & upper_ok[selected])
+        ):
             raise HscKidsCurrentStackError("tomography bin is metadata-only or empty")
+        if (
+            not math.isfinite(row.shear_calibration_factor)
+            or not math.isfinite(row.response_factor)
+            or row.shear_calibration_factor <= 0.0
+            or row.response_factor <= 0.0
+        ):
+            raise HscKidsCurrentStackError("tomography calibration/response is invalid")
     if set(np.unique(field.bin_index)) != set(range(len(ordered))):
         raise HscKidsCurrentStackError("row assignments are outside tomography bins")
 
@@ -276,8 +358,14 @@ def execute_tomography(
     b_means: list[float] = []
     for row in ordered:
         selected = field.bin_index == row.bin_index
-        e_means.append(float(np.average(field.e_mode[selected], weights=field.weights[selected])))
-        b_means.append(float(np.average(field.b_mode[selected], weights=field.weights[selected])))
+        effective = field.weights[selected] * nz[selected] * mask[selected]
+        correction = row.shear_calibration_factor / row.response_factor
+        e_means.append(
+            correction * float(np.average(field.e_mode[selected], weights=effective))
+        )
+        b_means.append(
+            correction * float(np.average(field.b_mode[selected], weights=effective))
+        )
     names: list[str] = []
     values: list[float] = []
     for left in range(len(ordered)):
@@ -289,7 +377,7 @@ def execute_tomography(
         survey_id=field.identity.survey_id,
         bins=ordered,
         feature_order=tuple(names),
-        true_features=np.asarray(values, dtype=float),
+        pseudo_features=np.asarray(values, dtype=float),
     )
 
 
@@ -300,6 +388,8 @@ class PseudoClOperator:
     feature_order: tuple[str, ...]
     mixing_matrix: np.ndarray
     inverse_matrix: np.ndarray
+    pure_e_pseudo_response: np.ndarray
+    pure_b_pseudo_response: np.ndarray
 
     @classmethod
     def build(
@@ -310,6 +400,8 @@ class PseudoClOperator:
         feature_order: Sequence[str],
         mixing_matrix: object,
         inverse_matrix: object,
+        pure_e_pseudo_response: object,
+        pure_b_pseudo_response: object,
     ) -> "PseudoClOperator":
         order = tuple(_text(item, label="feature id") for item in feature_order)
         if not order or len(order) != len(set(order)):
@@ -323,46 +415,62 @@ class PseudoClOperator:
             raise HscKidsCurrentStackError("pure-mode oracle requires a nontrivial mask")
         if not np.allclose(inverse @ matrix, np.eye(size), atol=1.0e-12, rtol=1.0e-12):
             raise HscKidsCurrentStackError("mask-coupling inverse is invalid")
+        pure_e_response = _finite_vector(
+            pure_e_pseudo_response, label="independent pure-E pseudo response"
+        )
+        pure_b_response = _finite_vector(
+            pure_b_pseudo_response, label="independent pure-B pseudo response"
+        )
+        if pure_e_response.shape != (size,) or pure_b_response.shape != (size,):
+            raise HscKidsCurrentStackError("pure-mode response shape drifted")
         return cls(
             operator_id=_text(operator_id, label="operator id"),
             mask_id=_text(mask_id, label="mask id"),
             feature_order=order,
             mixing_matrix=matrix.copy(),
             inverse_matrix=inverse.copy(),
+            pure_e_pseudo_response=pure_e_response.copy(),
+            pure_b_pseudo_response=pure_b_response.copy(),
         )
 
-    def apply(
+    def deconvolve(
         self,
-        true_features: object,
+        pseudo_features: object,
         *,
         feature_order: Sequence[str] | None = None,
     ) -> np.ndarray:
         if feature_order is not None and tuple(feature_order) != self.feature_order:
             raise HscKidsCurrentStackError("pseudo-Cl feature order drifted")
-        values = _finite_vector(true_features, label="true bandpowers")
+        values = _finite_vector(pseudo_features, label="pseudo bandpowers")
         if values.shape != (len(self.feature_order),):
-            raise HscKidsCurrentStackError("true bandpower order is incomplete")
-        return self.inverse_matrix @ (self.mixing_matrix @ values)
+            raise HscKidsCurrentStackError("pseudo bandpower order is incomplete")
+        return self.inverse_matrix @ values
 
     def pure_mode_oracle(self) -> dict[str, object]:
         e_indices = [index for index, name in enumerate(self.feature_order) if name.endswith(":EE")]
         b_indices = [index for index, name in enumerate(self.feature_order) if name.endswith(":BB")]
         if not e_indices or len(e_indices) != len(b_indices):
             raise HscKidsCurrentStackError("two-way E/B feature order is incomplete")
-        pure_e = np.zeros(len(self.feature_order))
-        pure_b = np.zeros(len(self.feature_order))
-        pure_e[e_indices] = 1.0
-        pure_b[b_indices] = 1.0
-        recovered_e = self.apply(pure_e)
-        recovered_b = self.apply(pure_b)
+        recovered_e = self.deconvolve(self.pure_e_pseudo_response)
+        recovered_b = self.deconvolve(self.pure_b_pseudo_response)
         e_to_b = float(np.max(np.abs(recovered_e[b_indices])))
         b_to_e = float(np.max(np.abs(recovered_b[e_indices])))
+        e_amplitude_error = float(np.max(np.abs(recovered_e[e_indices] - 1.0)))
+        b_amplitude_error = float(np.max(np.abs(recovered_b[b_indices] - 1.0)))
         tolerance = 1.0e-12
-        if e_to_b > tolerance or b_to_e > tolerance:
+        if (
+            e_to_b > tolerance
+            or b_to_e > tolerance
+            or e_amplitude_error > tolerance
+            or b_amplitude_error > tolerance
+        ):
             raise HscKidsCurrentStackError("two-way pure-mode leakage oracle failed")
         return {
             "pure_e_to_b_max_abs": e_to_b,
             "pure_b_to_e_max_abs": b_to_e,
+            "pure_e_amplitude_error": e_amplitude_error,
+            "pure_b_amplitude_error": b_amplitude_error,
+            "oracle_source": "independent_mask_injection_response",
             "status": "TWO_WAY_PURE_MODE_PASS",
         }
 
@@ -404,8 +512,17 @@ def parallel_transport_axis(*, start: object, end: object, tangent: object) -> n
     return transported / norm
 
 
-def headless_axis_alignment(left: object, right: object) -> float:
-    return abs(float(np.dot(_unit_vector(left, label="left axis"), _unit_vector(right, label="right axis"))))
+def transported_headless_axis_alignment(
+    *, start: object, end: object, left_tangent: object, right_tangent: object
+) -> float:
+    endpoint = _unit_vector(end, label="transport endpoint")
+    right = _unit_vector(right_tangent, label="comparison tangent")
+    if not math.isclose(float(np.dot(endpoint, right)), 0.0, abs_tol=1.0e-12):
+        raise HscKidsCurrentStackError("comparison axis is not tangent at endpoint")
+    transported = parallel_transport_axis(
+        start=start, end=endpoint, tangent=left_tangent
+    )
+    return abs(float(np.dot(transported, right)))
 
 
 def _valid_covariance(matrix: object, *, size: int) -> np.ndarray | None:
@@ -502,6 +619,7 @@ def analyze_joint_response(
     cross_covariance: object | None,
     nuisance_response: object,
     candidate_response: object,
+    response_feature_order: Sequence[str],
     observed: bool,
 ) -> dict[str, object]:
     """Validate full covariance and report scale-stable incremental rank."""
@@ -512,6 +630,7 @@ def analyze_joint_response(
     kids = _finite_vector(kids_features, label="KiDS features")
     hsc_order = tuple(hsc_feature_order)
     kids_order = tuple(kids_feature_order)
+    joint_order = (*hsc_order, *kids_order)
     if (
         len(hsc_order) != hsc.size
         or len(kids_order) != kids.size
@@ -521,6 +640,8 @@ def analyze_joint_response(
         or not all(name.startswith("KiDS:") for name in kids_order)
     ):
         raise HscKidsCurrentStackError("joint feature order drifted")
+    if tuple(response_feature_order) != joint_order:
+        raise HscKidsCurrentStackError("response feature order drifted")
     hsc_cov = _valid_covariance(hsc_covariance, size=hsc.size)
     kids_cov = _valid_covariance(kids_covariance, size=kids.size)
     try:
@@ -545,8 +666,8 @@ def analyze_joint_response(
             "response_rank": None,
             "p_value": None,
             "forced_source_label": None,
-            "observed_statistic_seen": False,
-            "observed_science_executed": False,
+            "observed_statistic_seen": bool(observed),
+            "observed_science_executed": bool(observed),
         }
     rank = _whitened_incremental_rank(
         joint_covariance, nuisance_response, candidate_response
@@ -560,7 +681,7 @@ def analyze_joint_response(
     )
     return {
         "capability": "HSC_KIDS_TYPED_SPIN2_TOMOGRAPHY_AND_JOINT_RANK_CLOSURE",
-        "feature_order": [*hsc_order, *kids_order],
+        "feature_order": list(joint_order),
         "joint_covariance": {
             "status": "FULL_CROSS_SURVEY_COVARIANCE_VALID",
             "cross_block_nonzero": True,
