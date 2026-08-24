@@ -1,15 +1,30 @@
-schema: htt.audit_compiled_pr.v1
+schema: htt.audit_compiled_pr.v2
 
 identity:
   proposed_pr_id: PR-315
-  title: Planck SMICA mask-conditioned low-ell rerun and portable feature replay
+  title: Planck SMICA joint cut-sky low-ell robustness and portable feature replay
   risk: high
   owner: OBSSTAT
   audited_predecessor: PR-314
   audited_base_sha: 883a7cf41116e6740b1bac9b76a5e9c6b3fd188e
+  audited_base_tree: de7b83aac8a5357e9cfee518924ab6c0a0972fb3
   audited_result_sha256: 898d08fc7c70205fbb8c7580fbaef1074357a8b3255ac77afd8273b92511da97
-  capability: PLANCK_SMICA_MASK_CONDITIONED_LOWELL_RERUN_AND_PORTABLE_FEATURE_REPLAY
+  capability: PLANCK_SMICA_JOINT_CUTSKY_LOWELL_ROBUSTNESS_AND_PORTABLE_FEATURE_REPLAY
   deployment_profile: private_single_researcher_local_v1
+
+fast_path_contract:
+  user_authorized: true
+  primary_component: SMICA
+  primary_null_rows: 300
+  primary_null_semantics: FFP10_CMB_PLUS_NOISE_PAIRED_BY_ID
+  commander_required: false
+  CMB_only_999_required: false
+  full_repository_suite_required_locally: false
+  forbidden_drift:
+    - expand scope merely to wait for Commander
+    - pool 999 CMB-only rows with 300 primary rows
+    - replace focused direct-consumer verification with generic assurance work
+    - select an operator branch from its observed rank
 
 DAG_integration:
   mode: append_only_successor
@@ -22,20 +37,23 @@ DAG_integration:
     - change_existing_dependencies
     - delete_or_relabel_PR314_evidence
   first_repository_step: >-
-    Register PR-315 after PR-314 using the existing DAG generator and regenerate
-    all canonical/machine-readable mirrors. If PR-314 closes failed, depend on
-    its terminal receipt rather than pretending success.
+    After PR-314 has an exact terminal disposition, register PR-315 as its
+    append-only successor with the existing DAG generator and regenerate the
+    canonical and machine-readable mirrors. If PR-314 closes without merge,
+    bind its exact terminal receipt; never invent predecessor success.
 
 objective:
   statement: >-
-    Replace the pre-mask full-sky l<=5 projection with a mask-conditioned
-    high-resolution low-ell estimator, rerun the exact SMICA observation and
-    300 paired FFP10 CMB-plus-noise rows, and publish a feature-level portable
-    replay while preserving the original PR-314 output as provisional evidence.
+    Preserve the exact PR-314 delivered-full-sky SMICA result, add a
+    mathematically correct joint monopole/dipole plus ell=2..5
+    mask-conditioned estimator, rerun the same exact 300-pair fast slice, and
+    export a feature-level portable replay and an explicit old-versus-new
+    scientific comparison.
   observable_success: >-
-    A clean reviewed candidate produces one exact new result, an independently
-    reproducible 12+300x12 feature package, and an explicit old-versus-new
-    comparison without Commander, global, source, or family claims.
+    One reviewed candidate emits the frozen PR-314 result unchanged, one
+    separately named joint cut-sky result, one portable 12+300x12 feature
+    package, and a branch comparison without Commander, global, source,
+    Bayesian, cross-probe or Bianchi claims.
 
 scope:
   allowed_paths:
@@ -59,7 +77,7 @@ scope:
     - docs/codex_handoff/pr_status.yaml
     - machine_readable/pr_status.yaml
     - scripts/codex_harness/validate_post300_dag.py
-    - direct fixed-count consumers proven by failing tests
+    - direct fixed-count consumers proven by a failing test
   forbidden_paths:
     - data/canonical/**
     - legacy/**
@@ -75,15 +93,17 @@ scope:
   forbidden_changes:
     - change expected scientific output merely to pass a test
     - pool CMB-only and CMB-plus-noise rows
-    - describe reused noise rows as independent
+    - describe reused or paired rows as more independent than they are
     - add Commander values without complete Commander inputs
     - weaken claim ceiling or family-identification firewall
-    - remove the original PR-314 result
+    - remove or overwrite the original PR-314 result
+    - make the joint cut-sky branch primary after inspecting observed ranks
+    - use sequential monopole/dipole removal as a substitute for the joint fit
 
 preconditions:
   - id: PRE-001
-    command: git rev-parse HEAD
-    expect: audited PR-314 head or an explicitly recorded stacked successor
+    command: git rev-parse HEAD HEAD^{tree}
+    expect: exact PR-314 terminal head/tree or a recorded stacked successor
   - id: PRE-002
     command: git status --porcelain=v1 --untracked-files=all
     expect: empty
@@ -93,7 +113,7 @@ preconditions:
       tests/integration/test_planck_pr3_admission_preparation.py
       tests/integration/test_planck_pr3_current_stack.py
       tests/integration/test_planck_pr3_operator.py
-    expect: current baseline PASS
+    expect: baseline PASS
   - id: PRE-004
     command: sha256sum docs/generated/pr314_planck_pr3_smica_existing_result.json
     expect: 898d08fc7c70205fbb8c7580fbaef1074357a8b3255ac77afd8273b92511da97
@@ -102,121 +122,187 @@ invariants:
   - id: SCI-001
     severity_if_violated: P0
     statement: >-
-      Pixels with zero common-mask weight cannot alter the primary retained
-      l=2..5 coefficients or any derived feature.
+      The cut-sky estimator profiles monopole, dipole and all retained
+      ell=2..5 real harmonics in one joint weighted linear system, or by an
+      exactly equivalent FWL projection of both data and retained design.
     mechanical_check:
-      test: tests/integration/test_planck_pr3_operator.py::test_masked_region_contamination_cannot_change_primary_lowell_features
+      test: tests/integration/test_planck_pr3_operator.py::test_joint_cutsky_fit_recovers_known_lowell_with_arbitrary_monopole_dipole
   - id: SCI-002
-    severity_if_violated: P0
-    statement: Observation and every primary null row use byte-identical high-resolution mask-conditioned operator code and configuration.
+    severity_if_violated: P1
+    statement: >-
+      Pixels with zero common-mask weight cannot alter the joint cut-sky
+      retained coefficients or any derived feature.
     mechanical_check:
-      test: tests/integration/test_planck_pr3_current_stack.py::test_observation_and_null_operator_identity_is_exact
+      test: tests/integration/test_planck_pr3_operator.py::test_masked_region_contamination_cannot_change_joint_cutsky_features
   - id: SCI-003
     severity_if_violated: P0
-    statement: The primary null is exactly 300 ordered paired SMICA CMB-plus-noise rows and is never pooled with CMB-only rows.
+    statement: >-
+      Observation and every primary null row use byte-identical joint cut-sky
+      operator code and configuration.
     mechanical_check:
-      test: tests/integration/test_planck_pr3_admission_preparation.py::test_primary_pair_manifest_is_exact_ordered_and_hash_bound
+      test: tests/integration/test_planck_pr3_current_stack.py::test_observation_and_null_joint_operator_identity_is_exact
   - id: SCI-004
     severity_if_violated: P0
-    statement: A partial or mismatched primary inventory emits no rank fraction or result.
+    statement: >-
+      The primary null remains exactly 300 ordered paired SMICA CMB-plus-noise
+      rows and is never pooled with CMB-only rows.
     mechanical_check:
-      test: tests/integration/test_planck_pr3_current_stack.py::test_partial_or_mismatched_rerun_emits_no_result
+      test: tests/integration/test_planck_pr3_admission_preparation.py::test_primary_pair_manifest_is_exact_ordered_and_hash_bound
   - id: SCI-005
     severity_if_violated: P0
-    statement: Any undefined multipole-vector plane or ill-conditioned mask fit produces a typed abstention.
+    statement: A partial, mismatched or reordered primary inventory emits no result.
     mechanical_check:
-      test: tests/integration/test_planck_pr3_operator.py::test_primary_lowell_fit_abstains_on_rank_or_plane_failure
+      test: tests/integration/test_planck_pr3_current_stack.py::test_partial_or_mismatched_rerun_emits_no_result
   - id: SCI-006
-    severity_if_violated: P1
-    statement: The original two-sided family remains frozen; any directed-tail family has a pre-data registry and a separate name.
+    severity_if_violated: P0
+    statement: >-
+      A singular or over-conditioned joint normal matrix, undefined
+      multipole-vector plane, or unstable beam/pixel transfer produces a typed
+      abstention.
     mechanical_check:
-      test: tests/integration/test_planck_pr3_current_stack.py::test_tail_registry_is_exact_and_not_selected_from_observed_ranks
+      test: tests/integration/test_planck_pr3_operator.py::test_joint_cutsky_fit_abstains_on_rank_condition_or_plane_failure
   - id: SCI-007
     severity_if_violated: P1
-    statement: The observed raw map and each raw CMB/noise pair are SHA-256 bound before attended execution.
+    statement: >-
+      PR-314 remains the frozen delivered-product two-sided omnibus and the
+      joint cut-sky branch is separately named; neither branch is selected by
+      observed outcome.
     mechanical_check:
-      test: tests/integration/test_planck_pr3_admission_preparation.py::test_raw_observation_and_pair_manifest_are_acceptance_bound
+      test: tests/integration/test_planck_pr3_current_stack.py::test_branch_and_tail_registry_are_frozen_before_rerun
   - id: SCI-008
     severity_if_violated: P1
-    statement: The portable feature package alone exactly reproduces covariance, local ranks, and family rank.
+    statement: >-
+      The raw observed map, common mask, all 300 raw CMB files, all 300 raw
+      noise files and exact pair order are hash-bound before attended execution.
     mechanical_check:
-      test: tests/integration/test_planck_pr3_current_stack.py::test_portable_feature_package_recomputes_exact_result
+      test: tests/integration/test_planck_pr3_admission_preparation.py::test_raw_observation_and_pair_manifest_are_acceptance_bound
   - id: SCI-009
     severity_if_violated: P1
-    statement: The PR-314 result is retained and explicitly marked provisional/superseded rather than overwritten.
+    statement: >-
+      The portable feature package alone exactly reproduces covariance
+      diagnostics, all local ranks and the family rank.
     mechanical_check:
-      command: python scripts/check_claim_language.py --strict-missing docs/PR_DELTAS/pr-315.md docs/research_program/post_pr275/pr315_planck_smica_rerun_report.md
+      test: tests/integration/test_planck_pr3_current_stack.py::test_portable_feature_package_recomputes_exact_result
   - id: SCI-010
     severity_if_violated: P1
-    statement: PR-315 load-bearing tests and portable replay run in clean pull-request CI.
+    statement: >-
+      The original PR-314 result is retained and explicitly compared, not
+      silently replaced.
     mechanical_check:
-      command: inspect .github/workflows/repository-integrity.yml and run the exact step
+      command: >-
+        python scripts/check_claim_language.py --strict-missing
+        docs/PR_DELTAS/pr-315.md
+        docs/research_program/post_pr275/pr315_planck_smica_rerun_report.md
+  - id: SCI-011
+    severity_if_violated: P1
+    statement: PR-315 tests and portable replay execute in clean pull-request CI.
+    mechanical_check:
+      command: inspect and execute the PR-315 Repository-integrity step
 
 failure_modes:
   - id: FM-001
     severity: P0
-    trigger: contamination confined to masked pixels changes the primary features
+    trigger: sequential nuisance removal changes retained coefficients on a cut sky
     required_detection: SCI-001
-    stop: BLOCKED_MASK_ORDER_NOT_CLOSED
+    stop: BLOCKED_JOINT_NUISANCE_PROFILE_NOT_CLOSED
   - id: FM-002
-    severity: P0
-    trigger: observation and nulls use different reduction/mask/transfer order
+    severity: P1
+    trigger: masked-only contamination changes the joint cut-sky branch
     required_detection: SCI-002
-    stop: BLOCKED_OBSERVATION_NULL_OPERATOR_MISMATCH
+    stop: BLOCKED_MASK_CONDITIONED_ROBUSTNESS
   - id: FM-003
     severity: P0
-    trigger: fewer than 300 pairs, wrong order, duplicate pair, or CMB-only pooling reaches calibration
-    required_detection: SCI-003 and SCI-004
-    stop: BLOCKED_PRIMARY_NULL_INVENTORY
+    trigger: observation and null rows use different operator order or configuration
+    required_detection: SCI-003
+    stop: BLOCKED_OBSERVATION_NULL_OPERATOR_MISMATCH
   - id: FM-004
-    severity: P1
-    trigger: feature tail direction is selected after inspecting PR-314 or PR-315 ranks
-    required_detection: SCI-006
-    stop: BLOCKED_POST_HOC_ESTIMAND
+    severity: P0
+    trigger: fewer than 300 pairs, wrong order, duplicate pair or CMB-only pooling reaches calibration
+    required_detection: SCI-004 and SCI-005
+    stop: BLOCKED_PRIMARY_NULL_INVENTORY
   - id: FM-005
     severity: P1
-    trigger: result cannot be recomputed without off-repo map-level products
-    required_detection: SCI-008
-    stop: BLOCKED_PORTABLE_REPLAY_INCOMPLETE
+    trigger: branch or tail family is selected after observed result inspection
+    required_detection: SCI-007
+    stop: BLOCKED_POST_HOC_ESTIMAND
   - id: FM-006
     severity: P1
-    trigger: new result silently replaces PR-314 without a numerical delta report
+    trigger: result cannot be recomputed from the feature package without raw maps
     required_detection: SCI-009
+    stop: BLOCKED_PORTABLE_REPLAY_INCOMPLETE
+  - id: FM-007
+    severity: P1
+    trigger: new result silently replaces or relabels PR-314
+    required_detection: SCI-010
     stop: BLOCKED_RESULT_PROVENANCE
 
 implementation:
   ordered_steps:
     - id: STEP-000
-      action: Register PR-315 append-only after PR-314 and regenerate existing DAG/status mirrors with current generators.
-      must_preserve: [all existing PR order and dependencies]
+      action: >-
+        Register PR-315 append-only after the exact PR-314 terminal
+        disposition and regenerate existing DAG/status mirrors with current
+        generators.
+      must_preserve:
+        - every existing PR order and dependency
     - id: STEP-001
-      action: Add RED masked-contamination, operator-identity, pair-manifest, portable-replay, and tail-registry tests before production edits.
-      expect_before_patch: at least the mask-order oracle fails on the PR-314 operator
+      action: >-
+        Add RED tests for joint nuisance recovery, masked contamination,
+        observation/null identity, pair manifest, portable replay and frozen
+        branch/tail registry before production edits.
+      expect_before_patch:
+        - joint nuisance known-alm oracle fails on the PR-314 path
+        - masked contamination oracle fails on the legacy branch
     - id: STEP-002
       action: >-
-        Implement a chunked weighted high-resolution fit for monopole/dipole and
-        real l=2..5 harmonics on common-mask support. Do not materialize a full
-        high-resolution design matrix. Record normal-matrix condition and
-        residual tolerance.
+        Implement a chunked joint weighted fit over the 36 real harmonics
+        ell=0..5. Retain the 32 ell=2..5 coefficients. Do not materialize a
+        full high-resolution design matrix.
       files:
         - htt/obsstat/planck_pr3_operator.py
         - scripts/observed_runs/prepare_planck_pr3_admission.py
+      record:
+        - basis_order
+        - mask_hash
+        - normal_matrix_hash
+        - condition_number
+        - singular_floor
+        - weighted_residual_norm
     - id: STEP-003
-      action: Freeze source/target beam and pixel-window semantics for the high-resolution fit and add analytic known-alm recovery tests.
+      action: >-
+        Freeze source/target beam and pixel-window semantics and apply the
+        transfer to retained coefficients after the joint masked fit.
     - id: STEP-004
-      action: Add raw observation and exact 300-pair SHA manifests to the plan and attended acceptance.
+      action: >-
+        Generate an ordered raw-input manifest and bind its digest in attended
+        acceptance before the observed rerun.
     - id: STEP-005
-      action: Export and verify a compact feature-level package with observed row, null matrix, covariance, row IDs, feature order, tails, and hashes.
+      action: >-
+        Preserve the PR-314 full-sky branch and add the joint cut-sky branch as
+        a separately named estimator. Freeze branch roles before observing new
+        ranks.
     - id: STEP-006
-      action: Add the exact PR-315 matrix and feature replay to existing Repository-integrity CI; do not create a new workflow.
+      action: >-
+        Export and verify a compact feature package with observed row, null
+        matrix, covariance, row IDs, feature order/units, tail registry and
+        input/operator hashes.
     - id: STEP-007
-      action: Run all 300 primary rows and the observed map with the new operator. Do not run directed-tail sensitivity until its registry is frozen.
+      action: >-
+        Add the exact PR-315 matrix and portable replay to the existing
+        Repository-integrity workflow; do not create a new workflow.
     - id: STEP-008
-      action: Produce an old-versus-new table for all 12 features, local ranks, family rank, covariance diagnostics, and runtime/RSS.
+      action: >-
+        Rerun exactly 300 primary pairs and the observed SMICA map with the
+        joint cut-sky branch. Recompute the frozen PR-314 branch only as a
+        comparison/replay.
     - id: STEP-009
-      action: Run sensitivity branches separately: delivered full-sky/inpainted map and legacy PR-314 operator. Never choose the primary branch from their observed outcome.
+      action: >-
+        Produce a twelve-feature old/new table, local and family ranks,
+        covariance diagnostics, runtime/RSS and operator hashes.
     - id: STEP-010
-      action: Freeze outputs, collect evidence, and hand the final diff to a fresh-context reviewer who did not implement the patch.
+      action: >-
+        Hand the final diff, RED/GREEN logs, feature package and comparison to
+        a fresh-context reviewer that did not implement the patch.
 
 verification:
   targeted:
@@ -229,23 +315,29 @@ verification:
   regression:
     - command: python scripts/codex_harness/sync_pr_dag_mirrors.py --check
       expect: exit=0
-    - command: python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
-      expect: exit=0 and existing topological order preserved with PR-315 appended after PR-314
+    - command: >-
+        python scripts/codex_harness/validate_pr_dag.py
+        docs/codex_handoff/pr_backlog.yaml
+        --status docs/codex_handoff/pr_status.yaml
+        --strict-rescue-slice
+      expect: PR-315 appended after PR-314 and all prior order preserved
     - command: git diff --check
       expect: exit=0
   negative:
-    - test: masked-only contamination oracle
-    - test: partial/mismatched pair inventory
-    - test: wrong raw SHA or pair order
-    - test: observation/null operator digest mismatch
-    - test: singular mask normal matrix
-    - test: post-hoc tail-registry mutation
-    - test: portable feature matrix row or feature-order mutation
+    - arbitrary monopole/dipole with known retained coefficients
+    - masked-only contamination
+    - partial/reordered/duplicate pair inventory
+    - wrong raw SHA or pair order
+    - observation/null operator digest mismatch
+    - singular or over-conditioned joint normal matrix
+    - post-hoc branch/tail registry mutation
+    - portable package row/feature/cell corruption
   metamorphic:
-    - masked-region contamination amplitude from 1 to 1e8 leaves primary result unchanged
-    - consistent row permutation plus manifest/covariance permutation leaves result unchanged
-    - nonzero feature-unit rescaling leaves finite ranks unchanged
-    - raw map to compact feature package replay is exact within registered numeric tolerance
+    - monopole/dipole rescaling leaves retained joint-fit coefficients unchanged
+    - zero-mask contamination amplitude 1 through 1e8 leaves joint cut-sky features unchanged
+    - consistent row permutation plus manifest permutation leaves finite ranks unchanged
+    - nonzero feature-unit rescaling with matching tail orientation leaves finite ranks unchanged
+    - raw execution and portable feature replay have identical scientific projection
   clean_CI:
     - Repository contracts
     - Python package smoke
@@ -262,12 +354,14 @@ completion_evidence:
     - git_diff_stat
     - git_diff_check
     - DAG_and_mirror_results
-    - RED_test_log_before_patch
-    - GREEN_test_log_after_patch
+    - RED_joint_nuisance_log
+    - RED_mask_oracle_log
+    - GREEN_logs
     - clean_CI_run_ids
     - raw_input_manifest_hash
     - feature_package_hash
-    - result_hash
+    - PR314_result_hash
+    - PR315_result_hash
     - old_new_scientific_comparison
     - unresolved_blockers
     - observed_statistic_seen_boolean
@@ -280,6 +374,7 @@ agent_policy:
   suppress_failures: forbidden
   security_or_antitamper_infrastructure: forbidden
   same_agent_final_authority: false
+  broaden_fast_path: forbidden
 
 review_gate:
   fresh_context_required: true
@@ -304,13 +399,17 @@ review_gate:
 
 claim_boundary:
   allowed:
-    - SMICA-only mask-conditioned conditional finite-rank diagnostic
-    - exact old-versus-new sensitivity statement
+    - frozen PR-314 delivered-full-sky SMICA conditional rank
+    - separately named joint cut-sky SMICA conditional rank
+    - exact operator-order robustness comparison
+    - exact 300-pair empirical calibration statement
   forbidden:
+    - unconditional p-value
     - Commander robustness
     - joint Planck result
-    - unconditional p-value
     - global response
     - source attribution
+    - Bayesian evidence without a registered model
     - native solver result
     - Bianchi family identification
+    - cross-probe result
