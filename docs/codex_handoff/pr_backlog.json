@@ -248,6 +248,7 @@
       "PR-309",
       "PR-310",
       "PR-311",
+      "PR-314",
       "PR-204",
       "PR-198",
       "PR-199",
@@ -17829,6 +17830,87 @@
       "solver_gate_required": false,
       "change_set_id": "CS-PR311-DESI-SUCCESSOR-FORMALISM",
       "publication_group_id": "PG-PR311-DESI-SUCCESSOR-FORMALISM"
+    },
+    {
+      "id": "PR-314",
+      "wave": 84,
+      "title": "Planck PR3 SMICA-only existing-data diagnostic",
+      "owner": "OBSSTAT",
+      "capability": "PLANCK_PR3_SMICA_EXISTING_DATA_DIAGNOSTIC_AND_REPLAY",
+      "inputs": [
+        "PR-311 stack",
+        "PR-306 Planck operator",
+        "observed SMICA PR3 map",
+        "exact 300 paired SMICA FFP10 CMB-plus-noise rows"
+      ],
+      "outputs": [
+        "Attended SMICA-only finite diagnostic",
+        "independently replayed compact output",
+        "or numerical-result-free blocker"
+      ],
+      "contributors": [
+        "HTT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "obsstat"
+      ],
+      "depends": [
+        "PR-311"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-311",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Use the locally complete SMICA-only 300-row CMB-plus-noise ensemble now, run the frozen operator only after attended start, and retain a raw-free replay surface without claiming joint Planck closure."
+      ],
+      "files": [
+        "docs/PR_DELTAS/pr-314.md",
+        "docs/research_program/post_pr275/pr314_spec.yaml",
+        "scripts/observed_runs/prepare_planck_pr3_admission.py",
+        "scripts/observed_runs/run_planck_pr3.py",
+        "tests/integration/test_planck_pr3_admission_preparation.py",
+        "tests/integration/test_planck_pr3_current_stack.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/integration/test_planck_pr3_admission_preparation.py tests/integration/test_planck_pr3_current_stack.py tests/integration/test_planck_pr3_operator.py"
+      ],
+      "dod": [
+        "Exact 300-row CMB-plus-noise inventory passes before data opening; attended SMICA output independently replays",
+        "or incomplete inputs terminate without a statistic."
+      ],
+      "kill": "Partial or mismatched null inventory emits a p-value, CMB-only and CMB-plus-noise rows are pooled, plan mode opens observed temperature data, or replay disagrees.",
+      "cost": "high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-OBSSTAT",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "SMICA-only Planck low-ell observer-side diagnostic; no Commander robustness, joint Planck, global, geometry, source, native-solver, or family-identification claim follows.",
+      "forbidden": [
+        "No DESI download, cross-probe, partial-inventory statistic, existing Planck raw deletion, native result, or family identification in this work unit."
+      ],
+      "anti_drift": [
+        "Reuse the PR-306 operator; do not invent a substitute full PR-289 admission, schema family, ledger, authorization framework, Rust, or security machinery."
+      ],
+      "roadmap_anchor": "docs/research_program/post_pr275/pr314_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "observed_diagnostic_or_data_blocker",
+      "execution_authorization": "EXACT_ATTENDED_CONFIRMATION",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR314-PLANCK-PR3-ANALYSIS",
+      "publication_group_id": "PG-PR314-PLANCK-PR3-ANALYSIS"
     }
   ]
 }

@@ -1,0 +1,74 @@
+schema_version: 1
+pr_id: PR-314
+title: Planck PR3 SMICA-only existing-data diagnostic
+depends_on:
+  - PR-311
+science_dependency:
+  planck_operator: PR-306
+owner: OBSSTAT
+claim_tier: diagnostic_only
+named_capability: PLANCK_PR3_SMICA_EXISTING_DATA_DIAGNOSTIC_AND_REPLAY
+
+scope:
+  - identify the local Planck PR3 SMICA temperature map and common temperature mask without opening the observed temperature array during preflight
+  - require exactly 300 paired SMICA FFP10 CMB and noise realizations with IDs 00000 through 00299
+  - add CMB_i and noise_i in delivered K_CMB before applying the frozen low-ell reduction
+  - apply the same SMICA beam, pixel window, mask inverse, harmonic convention, and twelve-feature operator to observation and nulls
+  - require a full positive-definite twelve-dimensional covariance and calibrate an observation-inclusive finite feature-family rank over 301 rows
+  - retain compact observed and null inputs and independently replay the diagnostic without reopening the raw observed FITS
+
+acceptance:
+  - id: PR314-SMICA-SOURCE-001
+    pass: metadata-only preflight finds the observed SMICA product, mask, and exact CMB/noise IDs 00000 through 00299; missing or extra required rows block before statistics
+  - id: PR314-SMICA-NULL-001
+    pass: each of exactly 300 rows is CMB_i plus noise_i before one reduction and is never pooled with the separate 999-row CMB-only ensemble
+  - id: PR314-SMICA-OPERATOR-001
+    pass: observation and nulls share one frozen operator and the twelve-dimensional covariance is full-rank, off-diagonal, and below the declared condition ceiling
+  - id: PR314-SMICA-ATTENDED-001
+    pass: exact attended confirmation and start.json precede the observed temperature read, and result, terminal, and log files are produced
+  - id: PR314-SMICA-REPLAY-001
+    pass: compact replay reproduces the scientific projection and does not reopen the raw observed FITS
+  - id: PR314-SMICA-CLAIM-001
+    pass: the result says SMICA_ONLY and explicitly leaves Commander robustness, joint covariance, local response rank, global response, native transfer, and family identification unevaluated or blocked
+
+input_contract:
+  release: Planck PR3 R3.00 and FFP10 v3
+  observed_component: smica_map
+  common_mask: Planck PR3 common temperature mask
+  exact_null_row_count: 300
+  exact_null_ids: 00000-00299
+  per_row_semantics: smica_cmb_i_plus_smica_noise_i
+  native_temperature_unit: K_CMB
+  analysis_temperature_unit: microK_CMB
+  direction_frame: Galactic
+
+execution_contract:
+  pipeline_scope: SMICA_ONLY
+  attended_confirmation: exact_acceptance_hash
+  start_record_before_observed_open: true
+  download_in_worker: forbidden
+  raw_deletion: forbidden
+  compact_replay_required: true
+
+deferred:
+  - full PR-289 thirteen-component PLANCK admission
+  - Commander acquisition and SMICA-Commander same-sky joint covariance
+  - complete 999-pair joint calibration
+  - DESI execution or download
+  - storage deletion or compression closeout
+  - cross-probe comparison
+
+forbidden:
+  - a statistic from fewer than 300 paired CMB-plus-noise rows
+  - pooling CMB-only and CMB-plus-noise ensembles
+  - presenting SMICA-only output as full Planck component-separation robustness
+  - a local or global response claim without a registered response
+  - a geometry, source-attribution, native-solver, or Bianchi-family claim
+  - new keys, signatures, nonces, ledgers, schema families, Rust, or security frameworks
+
+terminal:
+  success: PLANCK_PR3_SMICA_DIAGNOSTIC_REPLAYED
+  data_blocker: PLANCK_PR3_SMICA_INPUT_INCOMPLETE_NO_SCIENTIFIC_RESULT
+  observed_claim_ceiling: diagnostic_only
+  commander_robustness: NOT_EVALUATED
+  family_identification: BLOCKED_PRE_NATIVE_ATLAS
