@@ -542,7 +542,6 @@ def write_smica_existing_operator_components(
     """Freeze the complete SMICA-only covariance and local execution plan."""
 
     import healpy as hp
-    from obsstat.planck_post275_lane import validate_full_joint_covariance
     from obsstat.planck_pr3_operator import COMPONENT_FEATURE_IDS, ordered_row_id_hash
     from scripts.observed_runs import run_planck_pr3 as worker
 
@@ -588,9 +587,10 @@ def write_smica_existing_operator_components(
         context=context,
     )
     covariance = np.cov(features, rowvar=False, ddof=1)
-    validation = validate_full_joint_covariance(covariance, COMPONENT_FEATURE_IDS)
-    if float(validation["condition_number"]) > 1.0e10:
-        raise PlanckPreparationError("SMICA covariance exceeds condition ceiling")
+    try:
+        validation = worker._smica_covariance_diagnostics(covariance)
+    except worker.PlanckWorkerError as exc:
+        raise PlanckPreparationError(str(exc)) from exc
     _atomic_npy(paths["covariance"], covariance)
     inventory_identity = ordered_row_id_hash(row_ids)
     _atomic_json(
@@ -605,6 +605,7 @@ def write_smica_existing_operator_components(
             "map_unit": "microK_CMB",
             "coordinate_frame": "GALACTIC",
             "beam_outside_analysis_band": "ELL_0_1_UNIT_NOOP_AFTER_REMOVAL",
+            "covariance_condition_basis": "DIAGONAL_STANDARDIZED",
             "feature_ids": list(COMPONENT_FEATURE_IDS),
             "expected_null_rows": SMICA_EXISTING_NULL_ROWS,
             "null_semantics": "FFP10_CMB_PLUS_NOISE_PAIRED_BY_ID",
@@ -639,6 +640,7 @@ def write_smica_existing_operator_components(
         "components": components,
         "ordered_row_ids_sha256": inventory_identity,
         "beam_outside_analysis_band": "ELL_0_1_UNIT_NOOP_AFTER_REMOVAL",
+        "covariance_condition_basis": "DIAGONAL_STANDARDIZED",
         "observed_temperature_payload_opened": False,
         "observed_statistic_seen": False,
         "commander_robustness": "NOT_EVALUATED",
@@ -651,7 +653,8 @@ def write_smica_existing_operator_components(
         "null_rows": SMICA_EXISTING_NULL_ROWS,
         "null_ordered_row_ids_sha256": inventory_identity,
         "covariance_rank": int(validation["rank"]),
-        "covariance_condition": float(validation["condition_number"]),
+        "covariance_condition": float(validation["standardized_condition"]),
+        "covariance_raw_condition": float(validation["raw_condition"]),
     }
 
 

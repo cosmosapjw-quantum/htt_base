@@ -71,6 +71,32 @@ def test_smica_only_partial_or_pooled_inventory_cannot_emit_a_p_value() -> None:
         )
 
 
+def test_smica_covariance_gate_is_invariant_to_feature_units() -> None:
+    worker = importlib.import_module("scripts.observed_runs.run_planck_pr3")
+    rng = np.random.default_rng(316)
+    observed = rng.normal(size=12)
+    nulls = rng.normal(size=(300, 12))
+    scales = np.geomspace(1.0e-3, 1.0e3, 12)
+
+    baseline = worker.analyze_smica_feature_rows(
+        observed_features=observed,
+        null_features=nulls,
+        row_ids=worker.SMICA_EXISTING_ROW_IDS,
+    )
+    rescaled = worker.analyze_smica_feature_rows(
+        observed_features=observed * scales,
+        null_features=nulls * scales,
+        row_ids=worker.SMICA_EXISTING_ROW_IDS,
+    )
+
+    assert rescaled["covariance_condition_basis"] == "DIAGONAL_STANDARDIZED"
+    assert rescaled["covariance_condition"] == pytest.approx(
+        baseline["covariance_condition"], rel=1.0e-12
+    )
+    assert rescaled["finite_feature_family_p"] == baseline["finite_feature_family_p"]
+    assert rescaled["local_feature_p"] == baseline["local_feature_p"]
+
+
 def test_smica_attended_acceptance_is_exact_and_mismatch_precedes_start(
     tmp_path: Path,
 ) -> None:

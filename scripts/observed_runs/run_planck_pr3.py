@@ -979,11 +979,7 @@ def analyze_smica_feature_rows(
     ):
         raise PlanckWorkerError("SMICA feature matrix is incomplete or malformed")
     covariance = np.cov(nulls, rowvar=False, ddof=1)
-    validation = validate_full_joint_covariance(
-        covariance, COMPONENT_FEATURE_IDS
-    )
-    if float(validation["condition_number"]) > 1.0e10:
-        raise PlanckWorkerError("SMICA covariance exceeds the condition ceiling")
+    validation = _smica_covariance_diagnostics(covariance)
     inventory = FFP10Inventory(
         identifiers,
         expected_identity=SMICA_EXISTING_INVENTORY_ID,
@@ -999,8 +995,10 @@ def analyze_smica_feature_rows(
         "feature_order": list(COMPONENT_FEATURE_IDS),
         "observed_feature_vector": observed.tolist(),
         "covariance_rank": int(validation["rank"]),
-        "covariance_condition": float(validation["condition_number"]),
-        "covariance_whitening": "CHOLESKY_LEFT",
+        "covariance_condition": float(validation["standardized_condition"]),
+        "covariance_raw_condition": float(validation["raw_condition"]),
+        "covariance_condition_basis": "DIAGONAL_STANDARDIZED",
+        "covariance_whitening": "AVAILABLE_CHOLESKY_LEFT_NOT_USED_BY_RANK_SCAN",
         "null_rows": SMICA_EXISTING_NULL_ROWS,
         "null_semantics": "FFP10_CMB_PLUS_NOISE_PAIRED_BY_ID",
         "null_ordered_row_ids_sha256": SMICA_EXISTING_INVENTORY_ID,
@@ -1013,6 +1011,48 @@ def analyze_smica_feature_rows(
         "global_response_status": "MISSING",
         "global_claim_boundary": GLOBAL_CLAIM_BOUNDARY,
         "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    }
+
+
+def _smica_covariance_diagnostics(
+    covariance: object, *, condition_ceiling: float = 1.0e10
+) -> dict[str, object]:
+    """Validate covariance without making the gate depend on feature units."""
+
+    matrix = np.asarray(covariance, dtype=float)
+    dimension = len(COMPONENT_FEATURE_IDS)
+    if (
+        matrix.shape != (dimension, dimension)
+        or not np.all(np.isfinite(matrix))
+        or not np.allclose(matrix, matrix.T, rtol=1.0e-12, atol=1.0e-15)
+    ):
+        raise PlanckWorkerError("SMICA covariance shape or finiteness drifted")
+    variances = np.diag(matrix)
+    if np.any(variances <= 0.0):
+        raise PlanckWorkerError("SMICA covariance has a nonpositive variance")
+    scales = np.sqrt(variances)
+    standardized = matrix / np.outer(scales, scales)
+    try:
+        validation = validate_full_joint_covariance(
+            standardized, COMPONENT_FEATURE_IDS
+        )
+        np.linalg.cholesky(matrix)
+    except (PlanckLaneContractError, np.linalg.LinAlgError) as exc:
+        raise PlanckWorkerError("SMICA covariance is not full positive definite") from exc
+    standardized_condition = float(validation["condition_number"])
+    if (
+        not math.isfinite(standardized_condition)
+        or standardized_condition > condition_ceiling
+    ):
+        raise PlanckWorkerError(
+            "SMICA standardized covariance exceeds the condition ceiling"
+        )
+    eigenvalues = np.linalg.eigvalsh(matrix)
+    raw_condition = float(eigenvalues[-1] / eigenvalues[0])
+    return {
+        "rank": int(validation["rank"]),
+        "standardized_condition": standardized_condition,
+        "raw_condition": raw_condition,
     }
 
 
