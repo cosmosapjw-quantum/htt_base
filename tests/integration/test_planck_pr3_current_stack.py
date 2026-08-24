@@ -2,11 +2,42 @@ from __future__ import annotations
 
 import importlib
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 
 import healpy as hp
 import numpy as np
 import pytest
+
+
+ROOT = Path(__file__).resolve().parents[2]
+WORKER = ROOT / "scripts/observed_runs/run_planck_pr3.py"
+
+
+def test_direct_worker_context_can_import_the_preparer(tmp_path: Path) -> None:
+    pythonpath = os.pathsep.join(
+        str(ROOT / relative) for relative in ("htt", "htt/src", "htt/htt")
+    )
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            (
+                f"import runpy; runpy.run_path({str(WORKER)!r}, "
+                "run_name='pr314_worker'); "
+                "import scripts.observed_runs.prepare_planck_pr3_admission"
+            ),
+        ],
+        cwd=tmp_path,
+        env={**os.environ, "PYTHONPATH": pythonpath},
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert completed.returncode == 0, completed.stderr
 
 
 @pytest.mark.requires_healpy

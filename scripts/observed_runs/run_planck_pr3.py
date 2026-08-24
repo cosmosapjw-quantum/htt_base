@@ -37,7 +37,7 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[2]
-for _path in (ROOT / "htt", ROOT / "htt/src"):
+for _path in (ROOT, ROOT / "htt", ROOT / "htt/src"):
     if str(_path) not in sys.path:
         sys.path.insert(0, str(_path))
 
