@@ -96,6 +96,13 @@ JWST_SN_RUNTIME_MODULES = (
     "scipy.special",
 )
 JWST_SN_DISTRIBUTIONS = ("numpy", "scipy")
+HSC_KIDS_RUNTIME_MODULES = (
+    "numpy",
+    "numpy.linalg",
+    "numpy._core._multiarray_umath",
+    "numpy.linalg._umath_linalg",
+)
+HSC_KIDS_DISTRIBUTIONS = ("numpy",)
 OBSERVED_DATA_MARKER = "observed_data_opened.json"
 PLAN_FIELDS = frozenset(
     {
@@ -171,9 +178,24 @@ JWST_SN_PROFILE = LaneProfile(
     runtime_modules=JWST_SN_RUNTIME_MODULES,
     runtime_distributions=JWST_SN_DISTRIBUTIONS,
 )
+HSC_KIDS_PROFILE = LaneProfile(
+    lane="HSC_KIDS",
+    deployment_profile="private_single_operator_attended_v1",
+    analysis_plan_id="plan:PR292-HSC-KIDS-SPIN2-V1",
+    science_execution_mode="hsc_kids_typed_spin2_joint_operator",
+    science_worker_relative="scripts/observed_runs/run_hsc_kids.py",
+    science_worker_arguments=("--run-admitted",),
+    result_filename="hsc_kids_result.json",
+    runtime_modules=HSC_KIDS_RUNTIME_MODULES,
+    runtime_distributions=HSC_KIDS_DISTRIBUTIONS,
+)
 # Keep the predecessor map byte-compatible for its historical exact-set
 # contract while routing every new consumer through the complete registry.
-REGISTERED_LANE_PROFILES = {**LANE_PROFILES, "JWST_SN": JWST_SN_PROFILE}
+REGISTERED_LANE_PROFILES = {
+    **LANE_PROFILES,
+    "JWST_SN": JWST_SN_PROFILE,
+    "HSC_KIDS": HSC_KIDS_PROFILE,
+}
 
 
 class ObservationalProgramError(RuntimeError):

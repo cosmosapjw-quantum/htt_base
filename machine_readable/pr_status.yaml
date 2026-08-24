@@ -1,5 +1,6 @@
-generated_on: '2026-08-23'
+generated_on: '2026-08-24'
 completed:
+- PR-309
 - PR-308
 - PR-313
 - PR-306
@@ -230,7 +231,6 @@ pending:
 - PR-292
 - PR-293
 - PR-294
-- PR-310
 - PR-311
 dormant_external:
 - PR-159
@@ -261,7 +261,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-309
+in_progress: PR-310
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -596,8 +596,8 @@ stacked_pr_execution:
   stack_id: POST_PR306_OBSERVATIONAL_LANE_READINESS
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
-  target_sha: f49e96aa51e4acdb24e4587c548f5f6ea4922f52
-  active_implementation_pr: PR-309
+  target_sha: 5de7992c313a874013b78b81a45c562cbb9d2e08
+  active_implementation_pr: PR-310
   pr_order: [PR-312, PR-313, PR-308, PR-309, PR-310, PR-311]
   prs:
     PR-312:
@@ -650,32 +650,38 @@ stacked_pr_execution:
         data_admission: BLOCKED_NOT_PRESENT}
       assurance_budget: {maximum: 16, consumed: 2}
     PR-309:
-      lifecycle: ACTIVE
-      lifecycle_history: [PLANNED, ACTIVE]
+      lifecycle: COMPLETE
+      lifecycle_history: [PLANNED, ACTIVE, COMPLETE]
       base_sha: f49e96aa51e4acdb24e4587c548f5f6ea4922f52
       predecessor_pr: PR-308
       predecessor_sealed_sha: ab88feb98bc8b05f59ea3a4b3b87ccf846692d1e
+      sealed_head: 2b2b8d7989f74c59568bc9814f8304d7d6fed17d
+      pushed_ref: refs/heads/changeset/pr309-jwst-sn-row-covariance-closure-20260823
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/398
+      production_hash: c6a3ac0699e8559d521793383ea70b112aa8b469c7025e60104c36045f06d47e
+      dependency_hashes:
+        pr308_merge_commit: f49e96aa51e4acdb24e4587c548f5f6ea4922f52
+        pr308_merge_tree: baa7ec40e01092587a445d241fd2f1d3e0f8404e
+        technical_audit_head: d2671f858df73c4148e9afdf46724d2c1b0fd577
+        merge_commit: 5de7992c313a874013b78b81a45c562cbb9d2e08
+        merge_tree: 287801918ed5f832d2a4d1ae3350f80251a97e45
+      gate_dispositions: {eligibility: PASS, final_review: PASS, clean_ci: PASS,
+        data_admission: BLOCKED_NOT_PRESENT}
+      assurance_budget: {maximum: 16, consumed: 3}
+    PR-310:
+      lifecycle: ACTIVE
+      lifecycle_history: [PLANNED, ACTIVE]
+      base_sha: 5de7992c313a874013b78b81a45c562cbb9d2e08
+      predecessor_pr: PR-309
+      predecessor_sealed_sha: 2b2b8d7989f74c59568bc9814f8304d7d6fed17d
       sealed_head: null
       pushed_ref: null
       pr_url: null
       production_hash: null
       dependency_hashes:
-        pr308_merge_commit: f49e96aa51e4acdb24e4587c548f5f6ea4922f52
-        pr308_merge_tree: baa7ec40e01092587a445d241fd2f1d3e0f8404e
+        pr309_merge_commit: 5de7992c313a874013b78b81a45c562cbb9d2e08
+        pr309_merge_tree: 287801918ed5f832d2a4d1ae3350f80251a97e45
       gate_dispositions: {eligibility: PASS, data_admission: BLOCKED_NOT_PRESENT}
-      assurance_budget: {maximum: 16, consumed: 0}
-    PR-310:
-      lifecycle: PLANNED
-      lifecycle_history: [PLANNED]
-      base_sha: null
-      predecessor_pr: PR-309
-      predecessor_sealed_sha: null
-      sealed_head: null
-      pushed_ref: null
-      pr_url: null
-      production_hash: null
-      dependency_hashes: {}
-      gate_dispositions: {eligibility: DEFERRED}
       assurance_budget: {maximum: 16, consumed: 0}
     PR-311:
       lifecycle: PLANNED
@@ -838,6 +844,21 @@ execution_lane:
   PR-311: defensible
   PR-312: defensible
 execution_resolutions:
+  PR-309:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-309.md
+    candidate_sha: 2b2b8d7989f74c59568bc9814f8304d7d6fed17d
+    merge_commit: 5de7992c313a874013b78b81a45c562cbb9d2e08
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/398
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-24'
+    scientific_status_effect: jwst_sn_row_covariance_operator_closed_without_observed_execution
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: synthetic_jwst_sn_operator_closure
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    public_result_emitted: false
   PR-308:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-308.md
