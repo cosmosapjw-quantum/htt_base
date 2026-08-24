@@ -9,6 +9,7 @@ import sys
 import healpy as hp
 import numpy as np
 import pytest
+from astropy.io import fits
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -112,6 +113,23 @@ def test_bandlimited_reduction_converts_kcmb_to_microkcmb_explicitly() -> None:
             source_ordering="RING",
             output_nside=8,
         )
+
+
+def test_release_beam_zeros_outside_analysis_band_become_noop(tmp_path: Path) -> None:
+    module = _preparer()
+    path = tmp_path / "smica.fits"
+    beam = np.array([0.0, 0.0, 1.2, 1.1, 1.0, 0.9], dtype=np.float32)
+    beam_hdu = fits.BinTableHDU.from_columns(
+        [fits.Column(name="INT_BEAM", format="1E", array=beam)]
+    )
+    fits.HDUList(
+        [fits.PrimaryHDU(), fits.BinTableHDU.from_columns([]), beam_hdu]
+    ).writeto(path)
+
+    selected = module.read_temperature_beam(path)
+
+    np.testing.assert_array_equal(selected[:2], np.ones(2))
+    np.testing.assert_array_equal(selected[2:], beam[2:].astype(np.float64))
 
 
 def test_smica_existing_preflight_is_metadata_only_and_exact(tmp_path: Path) -> None:

@@ -20,6 +20,7 @@ from typing import Mapping, NamedTuple, Sequence
 import numpy as np
 
 
+LMIN = 2
 LMAX = 5
 MISSING_OFFICIAL_FFP10_CMB_REALIZATION = 970
 SMICA_EXISTING_NULL_ROWS = 300
@@ -295,7 +296,12 @@ def read_temperature_fits(
 
 
 def read_temperature_beam(path: Path) -> np.ndarray:
-    """Read the delivered intensity beam through the frozen analysis band."""
+    """Read the delivered intensity beam through the frozen analysis band.
+
+    The PR3 SMICA product stores zero placeholders at ell=0 and ell=1.  Those
+    modes are removed before the retained ell=2..5 operator, so their transfer
+    is frozen to a unit no-op instead of being divided by the release zeros.
+    """
 
     from astropy.io import fits
 
@@ -311,8 +317,9 @@ def read_temperature_beam(path: Path) -> np.ndarray:
     selected = beam[: LMAX + 1].copy()
     if selected.size != LMAX + 1 or not np.all(np.isfinite(selected)):
         raise PlanckPreparationError("temperature beam does not cover l=0..5")
-    if np.any(selected <= 0.0):
-        raise PlanckPreparationError("temperature beam is not positive")
+    if np.any(selected[LMIN:] <= 0.0):
+        raise PlanckPreparationError("temperature beam is not positive in l=2..5")
+    selected[:LMIN] = 1.0
     return selected
 
 
@@ -570,6 +577,7 @@ def write_smica_existing_operator_components(
             "ordering": "RING",
             "map_unit": "microK_CMB",
             "coordinate_frame": "GALACTIC",
+            "beam_outside_analysis_band": "ELL_0_1_UNIT_NOOP_AFTER_REMOVAL",
             "feature_ids": list(COMPONENT_FEATURE_IDS),
             "expected_null_rows": SMICA_EXISTING_NULL_ROWS,
             "null_semantics": "FFP10_CMB_PLUS_NOISE_PAIRED_BY_ID",
@@ -603,6 +611,7 @@ def write_smica_existing_operator_components(
         },
         "components": components,
         "ordered_row_ids_sha256": inventory_identity,
+        "beam_outside_analysis_band": "ELL_0_1_UNIT_NOOP_AFTER_REMOVAL",
         "observed_temperature_payload_opened": False,
         "observed_statistic_seen": False,
         "commander_robustness": "NOT_EVALUATED",
