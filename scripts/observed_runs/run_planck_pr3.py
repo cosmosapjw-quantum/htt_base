@@ -1073,6 +1073,28 @@ def _require_git_identity(value: str, *, label: str) -> str:
     return value
 
 
+def _current_git_identity() -> tuple[str, str]:
+    """Return the exact commit and tree containing the executing worker."""
+
+    try:
+        completed = subprocess.run(
+            ["git", "rev-parse", "HEAD", "HEAD^{tree}"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise PlanckWorkerError("current checkout identity is unavailable") from exc
+    values = tuple(line.strip() for line in completed.stdout.splitlines())
+    if len(values) != 2:
+        raise PlanckWorkerError("current checkout identity is malformed")
+    return (
+        _require_git_identity(values[0], label="current commit"),
+        _require_git_identity(values[1], label="current tree"),
+    )
+
+
 def _smica_plan_components(plan: Mapping[str, object]) -> dict[str, Path]:
     if (
         plan.get("format") != "PLANCK_PR3_SMICA_EXISTING_PLAN_V1"
@@ -1141,12 +1163,17 @@ def smica_existing_acceptance(
         raise PlanckWorkerError("SMICA observed source is not the identified product")
     if not output_dir.is_absolute() or output_dir.is_symlink():
         raise PlanckWorkerError("SMICA output directory must be absolute and regular")
+    requested_commit = _require_git_identity(
+        candidate_commit, label="candidate commit"
+    )
+    requested_tree = _require_git_identity(candidate_tree, label="candidate tree")
+    current_commit, current_tree = _current_git_identity()
+    if (requested_commit, requested_tree) != (current_commit, current_tree):
+        raise PlanckWorkerError("candidate identity does not equal current checkout")
     payload = {
         "capability": "PLANCK_PR3_SMICA_EXISTING_DATA_DIAGNOSTIC",
-        "candidate_commit": _require_git_identity(
-            candidate_commit, label="candidate commit"
-        ),
-        "candidate_tree": _require_git_identity(candidate_tree, label="candidate tree"),
+        "candidate_commit": requested_commit,
+        "candidate_tree": requested_tree,
         "plan_sha256": _sha256_file(plan_path),
         "observed_source": {
             "filename": observed_path.name,

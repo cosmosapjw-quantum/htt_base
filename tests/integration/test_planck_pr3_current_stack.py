@@ -132,11 +132,19 @@ def test_smica_attended_acceptance_is_exact_and_mismatch_precedes_start(
         encoding="ascii",
     )
     output = tmp_path / "output"
+    candidate_commit, candidate_tree = worker._current_git_identity()
+    with pytest.raises(worker.PlanckWorkerError, match="current checkout"):
+        worker.smica_existing_acceptance(
+            plan_path=plan,
+            output_dir=output,
+            candidate_commit="a" * 40,
+            candidate_tree=candidate_tree,
+        )
     acceptance = worker.smica_existing_acceptance(
         plan_path=plan,
         output_dir=output,
-        candidate_commit="a" * 40,
-        candidate_tree="b" * 40,
+        candidate_commit=candidate_commit,
+        candidate_tree=candidate_tree,
     )
 
     assert acceptance["acceptance_hash"].startswith("sha256:")
@@ -144,8 +152,8 @@ def test_smica_attended_acceptance_is_exact_and_mismatch_precedes_start(
         worker.run_smica_existing_attended(
             plan_path=plan,
             output_dir=output,
-            candidate_commit="a" * 40,
-            candidate_tree="b" * 40,
+            candidate_commit=candidate_commit,
+            candidate_tree=candidate_tree,
             confirmation="sha256:" + "0" * 64,
         )
     assert not output.exists()
@@ -203,17 +211,18 @@ def test_smica_existing_attended_run_and_compact_replay_match(
     )
     plan = Path(operator["plan_path"])
     output = tmp_path / "result"
+    candidate_commit, candidate_tree = worker._current_git_identity()
     acceptance = worker.smica_existing_acceptance(
         plan_path=plan,
         output_dir=output,
-        candidate_commit="a" * 40,
-        candidate_tree="b" * 40,
+        candidate_commit=candidate_commit,
+        candidate_tree=candidate_tree,
     )
     result = worker.run_smica_existing_attended(
         plan_path=plan,
         output_dir=output,
-        candidate_commit="a" * 40,
-        candidate_tree="b" * 40,
+        candidate_commit=candidate_commit,
+        candidate_tree=candidate_tree,
         confirmation=acceptance["acceptance_hash"],
     )
     replay = worker.replay_smica_existing_result(
