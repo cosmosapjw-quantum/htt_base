@@ -669,20 +669,21 @@ stacked_pr_execution:
         data_admission: BLOCKED_NOT_PRESENT}
       assurance_budget: {maximum: 16, consumed: 3}
     PR-310:
-      lifecycle: ACTIVE
-      lifecycle_history: [PLANNED, ACTIVE]
+      lifecycle: VALIDATED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
       base_sha: 5de7992c313a874013b78b81a45c562cbb9d2e08
       predecessor_pr: PR-309
       predecessor_sealed_sha: 2b2b8d7989f74c59568bc9814f8304d7d6fed17d
-      sealed_head: null
+      sealed_head: 3353b7d88f38862f48ddf16abccc68138a1a4642
       pushed_ref: null
       pr_url: null
-      production_hash: null
+      production_hash: d32ea03dbd57fee32f6a5765ceda617f4700404a5b9ffdb5b911698afb94577e
       dependency_hashes:
         pr309_merge_commit: 5de7992c313a874013b78b81a45c562cbb9d2e08
         pr309_merge_tree: 287801918ed5f832d2a4d1ae3350f80251a97e45
-      gate_dispositions: {eligibility: PASS, data_admission: BLOCKED_NOT_PRESENT}
-      assurance_budget: {maximum: 16, consumed: 0}
+      gate_dispositions: {eligibility: PASS, local_matrix: PASS, first_review: REPAIR,
+        data_admission: BLOCKED_NOT_PRESENT}
+      assurance_budget: {maximum: 16, consumed: 1}
     PR-311:
       lifecycle: PLANNED
       lifecycle_history: [PLANNED]
