@@ -1,0 +1,72 @@
+#!/bin/sh
+set -eu
+
+script_dir=${0%/*}
+if [ "$script_dir" = "$0" ]; then
+  script_dir=.
+fi
+script_dir=$(CDPATH= cd -- "$script_dir" && pwd)
+
+repo_root=$script_dir
+while [ ! -f "$repo_root/formal/lean-toolchain" ]; do
+  parent=${repo_root%/*}
+  if [ "$parent" = "$repo_root" ]; then
+    echo "could not locate formal/lean-toolchain" >&2
+    exit 2
+  fi
+  repo_root=$parent
+done
+
+if ! cmp -s "$repo_root/formal/lean-toolchain" "$repo_root/formal_mathlib/lean-toolchain"; then
+  echo "formal and formal_mathlib toolchains differ" >&2
+  exit 2
+fi
+
+mathlib_project="$repo_root/formal_mathlib"
+if [ ! -d "$mathlib_project/.lake/packages/mathlib" ]; then
+  primary_root=$(git -C "$repo_root" worktree list --porcelain | sed -n 's/^worktree //p' | head -n 1)
+  cached_project="$primary_root/formal_mathlib"
+  if [ ! -d "$cached_project/.lake/packages/mathlib" ]; then
+    echo "pinned formal_mathlib dependency cache is unavailable; run lake update" >&2
+    exit 2
+  fi
+  if ! cmp -s "$mathlib_project/lake-manifest.json" "$cached_project/lake-manifest.json"; then
+    echo "cached mathlib manifest differs from candidate manifest" >&2
+    exit 2
+  fi
+  if ! cmp -s "$mathlib_project/lean-toolchain" "$cached_project/lean-toolchain"; then
+    echo "cached mathlib toolchain differs from candidate toolchain" >&2
+    exit 2
+  fi
+  mathlib_project="$cached_project"
+fi
+
+lean_source="$script_dir/PR284FinitePathAxis.lean"
+if grep -Eq 'native_decide|^[[:space:]]*axiom[[:space:]]' "$lean_source"; then
+  echo "forbidden native_decide or source axiom in Lean axis" >&2
+  exit 1
+fi
+
+if ! build_log=$(CDPATH= cd -- "$mathlib_project" && lake env lean -DwarningAsError=true "$lean_source" 2>&1); then
+  echo "$build_log" >&2
+  exit 1
+fi
+if ! echo "$build_log" | grep -Fq 'PR284FinitePath.axisProofBundle : AxisProofBundle'; then
+  echo "compiled source did not expose the typed obligation bundle" >&2
+  exit 1
+fi
+
+if ! axiom_log=$(
+  awk '1; END { print "#print axioms PR284FinitePath.axisProofBundle" }' "$lean_source" |
+    (CDPATH= cd -- "$mathlib_project" && lake env lean -DwarningAsError=true /dev/stdin) 2>&1
+); then
+  echo "$axiom_log" >&2
+  exit 1
+fi
+if echo "$axiom_log" | grep -Fq 'depends on axioms:'; then
+  echo "typed obligation bundle has transitive axiom dependencies" >&2
+  echo "$axiom_log" >&2
+  exit 1
+fi
+
+echo '{"checks":{"common_target_centered":true,"registered_second_moment":true,"fine_to_middle_conditional_expectation":true,"middle_to_coarse_conditional_expectation":true,"reverse_tower_on_all_atoms":true,"path_maximum_squares":true,"inclusive_event_mass":true,"doob_bound_exact":true,"event_within_doob_bound":true,"general_theorem_not_promoted":true},"computed":{"centered_mean":"0","second_moment":"5","middle_values":"[-2,-2,2,2]","coarse_values":"[0,0,0,0]","path_maximum_squares":"[9,4,4,9]","threshold_squared":"36/5","event_probability":"1/2","doob_bound":"25/36","bound_slack":"7/36"},"counterexample":null,"domain_assumption_diff":[]}'

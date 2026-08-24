@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "identity": {
+    "contract_id": "CAS-PR284-FINITE-REGISTERED-PATH-001",
+    "contract_version": 1,
+    "claim_ids": [
+      "PR284-FINITE-REGISTERED-REVERSE-TOWER",
+      "PR284-FINITE-REGISTERED-PATH-MAXIMUM-BOUND"
+    ],
+    "statement_class": "exact_finite_probability_theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/post_pr275/pr284_spec.yaml",
+        "sha256": "01db7946146246961c14fdaef2cc30ddde03a06944c40257d6c7b5cd92572da6"
+      },
+      {
+        "path": "htt/src/common/depth_path_calibration.py",
+        "sha256": "c8ff7f37844f769797ba6c5740750651f540d7c9f122f8f8d9e2ac37bfd9e70a"
+      },
+      {
+        "path": "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml",
+        "sha256": "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e"
+      },
+      {
+        "path": "docs/generated/pr284_depth_path_doob_receipt.json",
+        "sha256": "8b6d40d1c8517c88dd3b4209b68e5660bf29bcbd1e7ea4ce40d7993218a428ea"
+      }
+    ],
+    "claim_ceiling": "theorem_candidate",
+    "adjudicator": "independent_non_author_reviewer"
+  },
+  "semantics": {
+    "exact_statement": "On the registered four-atom law with weights (1/4,1/4,1/4,1/4), common target X=(-3,-1,1,3), and decreasing partitions {{0},{1},{2},{3}}, {{0,1},{2,3}}, {{0,1,2,3}}, the exact conditional expectations are M0=(-3,-1,1,3), M1=(-2,-2,2,2), M2=(0,0,0,0). They obey the finite reverse-tower identities. E[X]=0 and E[X^2]=5. At lambda=6/5, the inclusive event max_j |Mj|^2 >= lambda^2 E[X^2] has exact probability 1/2, and 1/2 <= 25/36 = 1/lambda^2. This is only the registered finite fixture theorem.",
+    "symbol_type_domain_map": {
+      "Omega": "Fin 4 with uniform rational mass 1/4",
+      "X": "Omega to rational, values (-3,-1,1,3)",
+      "M0": "conditional expectation on the singleton partition",
+      "M1": "conditional expectation on blocks {0,1} and {2,3}",
+      "M2": "conditional expectation on the one-block partition",
+      "lambda": "positive rational 6/5"
+    },
+    "frame_signature_units_conventions": {
+      "probability_space": "finite exact rational atoms",
+      "partition_direction": "fine_to_coarse, decreasing information",
+      "event_comparison": "inclusive exact rational squares",
+      "normalization": "registered E[X^2]"
+    },
+    "assumptions": [
+      "all four atom weights equal 1/4 and are positive",
+      "the common target is exactly (-3,-1,1,3)",
+      "the middle partition is exactly {0,1}|{2,3}",
+      "the coarse partition is exactly {0,1,2,3}",
+      "lambda is exactly 6/5",
+      "the event includes equality"
+    ],
+    "positivity_nonzero_conditions": [
+      "1/4 > 0",
+      "E[X^2]=5 > 0",
+      "lambda=6/5 > 0"
+    ],
+    "branches": [
+      "the one registered PR-284 finite atomic fixture"
+    ],
+    "exclusions": [
+      "No convergence theorem is asserted.",
+      "No optional-stopping theorem is asserted.",
+      "No claim is made that support nesting creates a filtration.",
+      "No observed-data calibration or significance is asserted.",
+      "No general if-and-only-if statement from II-3.2 is promoted."
+    ],
+    "singular_loci": [
+      "zero-mass conditional cells are outside the fixture",
+      "a changed target, partition, atom weight, threshold, or event rule is a different theorem"
+    ],
+    "order_of_limits": [],
+    "boundary_or_initial_conditions": [
+      "M0=(-3,-1,1,3)",
+      "M1=(-2,-2,2,2)",
+      "M2=(0,0,0,0)"
+    ]
+  },
+  "target": {
+    "canonical_form": "Exact rational centering, second moment, conditional expectations, tower equalities, path maxima, event mass, and conservative bound for the registered fixture.",
+    "equivalence_relation": "exact equality and order over the rational numbers",
+    "invariants": [
+      "registered atom order",
+      "registered partition blocks",
+      "registered threshold",
+      "inclusive event rule"
+    ],
+    "exact_test_obligations": [
+      "common_target_centered",
+      "registered_second_moment",
+      "fine_to_middle_conditional_expectation",
+      "middle_to_coarse_conditional_expectation",
+      "reverse_tower_on_all_atoms",
+      "path_maximum_squares",
+      "inclusive_event_mass",
+      "doob_bound_exact",
+      "event_within_doob_bound",
+      "general_theorem_not_promoted"
+    ],
+    "expected_exact_values": {
+      "centered_mean": "0",
+      "second_moment": "5",
+      "middle_values": "[-2,-2,2,2]",
+      "coarse_values": "[0,0,0,0]",
+      "path_maximum_squares": "[9,4,4,9]",
+      "threshold_squared": "36/5",
+      "event_probability": "1/2",
+      "doob_bound": "25/36",
+      "bound_slack": "7/36"
+    },
+    "numeric_test_vectors": [
+      {
+        "id": "PR284-REGISTERED-FOUR-ATOM-FIXTURE",
+        "weights": ["1/4", "1/4", "1/4", "1/4"],
+        "target": ["-3", "-1", "1", "3"],
+        "lambda": "6/5"
+      }
+    ],
+    "approximation_order": "exact",
+    "numeric_precision_digits": 100,
+    "absolute_tolerance": "0",
+    "relative_tolerance": "0",
+    "forbidden_shortcuts": [
+      "Do not read another axis script, derivation, or result before submitting.",
+      "Do not replace direct enumeration by the desired inequality as an assumption.",
+      "Do not change the atom order, partition, target, threshold, or inclusive event rule.",
+      "Do not promote this fixture to a general reverse-martingale, convergence, or optional-stopping theorem.",
+      "Do not treat a missing engine, package, or license as a pass."
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "Independently replay the finite rational fixture in Wolfram Language with xAct loaded and recorded.",
+      "required_outputs": ["script", "engine transcript", "runner-observed JSON payload"],
+      "pinned_toolchain": {"wolfram": "15.0.0", "xact": "1.3.0"},
+      "resource_limit": {"wall_seconds": 1800}
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "Independently derive every conditional mean, event atom, and rational inequality in SymPy.",
+      "required_outputs": ["script", "engine transcript", "runner-observed JSON payload"],
+      "pinned_toolchain": {"python": "shared project interpreter", "sympy": "1.14.0"},
+      "resource_limit": {"wall_seconds": 1800}
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "Independently derive the exact rational fixture in SageMath and record the Singular backend version.",
+      "required_outputs": ["script", "engine transcript", "runner-observed JSON payload"],
+      "pinned_toolchain": {"sage": "10.9", "singular": "4.3.2"},
+      "resource_limit": {"wall_seconds": 1800}
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "Compile a mathlib proof of the exact registered fixture without axioms or native_decide.",
+      "required_outputs": ["Lean source", "typed AxisProofBundle", "build receipt", "runner-observed JSON payload"],
+      "pinned_toolchain": {"source": "formal/lean-toolchain", "mathlib_revision": "v4.31.0"},
+      "resource_limit": {"wall_seconds": 3600}
+    }
+  },
+  "independence": {
+    "mode": "blind-results",
+    "permitted_inputs": [
+      "this contract",
+      "the assignment required inputs",
+      "the assigned axis program only"
+    ],
+    "forbidden_sibling_paths": [
+      ".agent-harness/runs/*/results/*",
+      ".agent-harness/runs/*/artifacts/*",
+      "docs/research_program/theory_promotion/pr284_finite_path/axes/<other-axis>/*"
+    ],
+    "script_result_ownership": "per-axis execution results are unique and withheld until adjudication",
+    "correlation_disclosure": "The main writer authored the four tracked engine programs; independent engines and blind axis agents provide separate execution evidence, not independent human authorship."
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "R3 requires CAS_4AXIS_PASS; majority vote is forbidden",
+    "invalidation_triggers": [
+      "contract_hash_change",
+      "source_input_hash_change",
+      "assumption_or_domain_diff",
+      "unpinned_toolchain",
+      "axis_program_change"
+    ]
+  }
+}
