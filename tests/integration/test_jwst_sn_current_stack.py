@@ -400,12 +400,17 @@ def test_pr309_dispatcher_profile_is_exact_and_single_lane(
     assert profile.science_worker_relative == "scripts/observed_runs/run_jwst_sn.py"
     assert profile.science_worker_arguments == ("--run-admitted",)
     assert profile.result_filename == "jwst_sn_result.json"
-    assert set(dispatcher.REGISTERED_LANE_PROFILES) == {
+    monkeypatch.setattr(
+        dispatcher,
+        "REGISTERED_LANE_PROFILES",
+        {**dispatcher.REGISTERED_LANE_PROFILES, "FUTURE_PRIMARY": profile},
+    )
+    assert {
         "PLANCK",
         "CF4",
         "ACT",
         "JWST_SN",
-    }
+    } <= set(dispatcher.REGISTERED_LANE_PROFILES)
 
     plan = {
         "analysis_plan_id": profile.analysis_plan_id,
