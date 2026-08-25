@@ -1,0 +1,67 @@
+schema: htt.mes_methodology_recovery.invariant_matrix.v1
+rows:
+  - requirement: MES is the publication spine and generic low-ell is a control
+    invariant: Every MES-labelled result binds an active MES anchor state and mes_methodology_role
+    failure_mode: FM-P0-001
+    detector: result-schema and claim-contract test
+    work_unit: MR-WU-005
+  - requirement: No scalar-to-orientation fabrication
+    invariant: Vector/STF factories require direction-indexed data or a physical response
+    failure_mode: FM-P0-002
+    detector: scalar-only negative construction test
+    work_unit: MR-WU-004
+  - requirement: Local/global identification is depth-supported
+    invariant: rank(P_nuis C^-1/2 [R_L R_G]) equals the declared parameter rank
+    failure_mode: FM-P0-003
+    detector: single-shell and proportional-profile ablations
+    work_unit: MR-WU-006
+  - requirement: Active MES authority only
+    invariant: No observed runner imports a quarantined legacy MES consumer
+    failure_mode: FM-P0-004
+    detector: static import scan plus branch-status test
+    work_unit: MR-WU-003
+  - requirement: Channel-matched physical stress
+    invariant: numerator channel_key equals MESAnchorSpec.channel_key
+    failure_mode: FM-P0-005
+    detector: cross-frame and cross-channel mutations
+    work_unit: MR-WU-004
+  - requirement: One-way MES semantics
+    invariant: No converse, evidence, occupancy or family language in an MES result
+    failure_mode: FM-P0-006
+    detector: claim-language lint
+    work_unit: MR-WU-008
+  - requirement: Exact finite-null validity
+    invariant: The complete observation/null scoring map is row-permutation equivariant
+    failure_mode: FM-P0-007
+    detector: row permutation, observation swap and tie mutations
+    work_unit: MR-WU-005
+  - requirement: Known Planck cut-sky defect is closed
+    invariant: Exact PR315 terminal is an ancestry and evidence precondition
+    failure_mode: FM-P1-001
+    detector: terminal-receipt validator
+    work_unit: MR-WU-002
+  - requirement: Self-normalisation is not information gain
+    invariant: A rowwise anchor is typed as a nonlinear statistic, not independent evidence
+    failure_mode: FM-P1-002
+    detector: manifest and prose lint
+    work_unit: MR-WU-005
+  - requirement: Physical responses replace support indicators
+    invariant: Every response matrix binds source, version, frame, depth and parameter identity
+    failure_mode: FM-P1-003
+    detector: missing-response STOP plus response-receipt tests
+    work_unit: MR-WU-006
+  - requirement: Shared multipole dependence is retained
+    invariant: Anchor and morphology rows share one source and covariance identity
+    failure_mode: FM-P1-004
+    detector: source/covariance mutation tests
+    work_unit: MR-WU-003
+  - requirement: Directional moment realizability is explicit
+    invariant: A nonnegative-measure branch requires PSD trace-one second moment
+    failure_mode: FM-P1-005
+    detector: eigenvalue and trace mutation tests
+    work_unit: MR-WU-004
+  - requirement: Existing DAG is an exact prefix
+    invariant: Old node order, edges and resolutions are unchanged after append
+    failure_mode: FM-P1-006
+    detector: strict DAG validator plus exact old-prefix receipt
+    work_unit: MR-WU-000
