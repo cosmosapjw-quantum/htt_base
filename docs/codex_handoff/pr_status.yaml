@@ -1,5 +1,9 @@
-generated_on: '2026-08-24'
+generated_on: '2026-08-25'
 completed:
+- PR-318
+- PR-317
+- PR-311
+- PR-310
 - PR-309
 - PR-308
 - PR-313
@@ -231,7 +235,7 @@ pending:
 - PR-292
 - PR-293
 - PR-294
-- PR-311
+- PR-320
 dormant_external:
 - PR-159
 - PR-160
@@ -261,7 +265,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-310
+in_progress: PR-319
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -597,8 +601,8 @@ stacked_pr_execution:
   execution_mode: AUTO_STACKED_PR
   merge_policy: HUMAN_ONLY
   target_sha: 5de7992c313a874013b78b81a45c562cbb9d2e08
-  active_implementation_pr: PR-310
-  pr_order: [PR-312, PR-313, PR-308, PR-309, PR-310, PR-311]
+  active_implementation_pr: PR-319
+  pr_order: [PR-312, PR-313, PR-308, PR-309, PR-310, PR-311, PR-317, PR-318, PR-319, PR-320]
   prs:
     PR-312:
       lifecycle: FAILED
@@ -691,26 +695,84 @@ stacked_pr_execution:
         data_admission: BLOCKED_NOT_PRESENT}
       assurance_budget: {maximum: 16, consumed: 3}
     PR-311:
-      lifecycle: VALIDATED
-      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED]
+      lifecycle: COMPLETE
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, COMPLETE]
       base_sha: 00fbc5c7bf11765fb2f49cf68ea3ea3ee6cc489f
       predecessor_pr: PR-310
       predecessor_sealed_sha: 7a25636fb6cf2fdc1e0613c93b9ce25e5b1d2f02
-      sealed_head: null
-      pushed_ref: null
-      pr_url: null
+      sealed_head: a89563d26d69322134078565e9a4ccef86cdf83c
+      pushed_ref: refs/heads/changeset/pr311-desi-successor-formalism-closure-20260824
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/402
       production_hash: null
       dependency_hashes:
         pr310_merge_commit: e7b9872f7ad977c3bbaba9677ce6450e79c2cb82
         pr310_merge_tree: 72cce873347297a2393c03ee2156140dc7641ae5
         official_selection_contract_merge: 00fbc5c7bf11765fb2f49cf68ea3ea3ee6cc489f
         official_selection_contract_tree: b3ee9770aa4a6fdef16b3514c193d0f5f6033d66
+        merge_commit: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
+        merge_tree: 5901e12457e4ae677f0b74c0c8fdd8257987f084
       gate_dispositions: {eligibility: PASS, local_focused_matrix: PASS,
         official_selection_contract: REPAIRED,
         first_review: REPAIR, closeout_review: REPAIR,
-        repair_matrix: PASS, repair_closeout_review: PENDING,
+        repair_matrix: PASS, repair_closeout_review: PASS, clean_ci: PASS,
         data_admission: BLOCKED_NOT_PRESENT}
       assurance_budget: {maximum: 16, consumed: 3}
+    PR-317:
+      lifecycle: COMPLETE
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, COMPLETE]
+      base_sha: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
+      predecessor_pr: PR-311
+      predecessor_sealed_sha: a89563d26d69322134078565e9a4ccef86cdf83c
+      sealed_head: 9bef56202496660a4f4a233cdf08ceb8c13a2477
+      pushed_ref: refs/heads/changeset/pr317-desi-existing-data-analysis-20260825
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {candidate_tree: e8d6647ab7bc267dc4b19f554d053885f8478a8e}
+      gate_dispositions: {eligibility: PASS, final_review: PASS,
+        data_compatibility: BLOCKED_EXISTING_RAW_INSUFFICIENT_FOR_PR311}
+      assurance_budget: {maximum: 8, consumed: 2}
+    PR-318:
+      lifecycle: COMPLETE
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED, VALIDATED, COMPLETE]
+      base_sha: 9bef56202496660a4f4a233cdf08ceb8c13a2477
+      predecessor_pr: PR-317
+      predecessor_sealed_sha: 9bef56202496660a4f4a233cdf08ceb8c13a2477
+      sealed_head: f549f8f95937ea395b26e9f5361bd1fc04ece893
+      pushed_ref: refs/heads/changeset/pr318-desi-input-preparation-20260825
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {candidate_tree: d8daab02a52e676f32df87382668a6001c8395ec}
+      gate_dispositions: {eligibility: PASS, final_review: PASS,
+        observed_catalogue_opened: false, data_admission: BLOCKED_SCHEMA_AND_FRAME}
+      assurance_budget: {maximum: 8, consumed: 2}
+    PR-319:
+      lifecycle: IMPLEMENTED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
+      base_sha: f549f8f95937ea395b26e9f5361bd1fc04ece893
+      predecessor_pr: PR-318
+      predecessor_sealed_sha: f549f8f95937ea395b26e9f5361bd1fc04ece893
+      sealed_head: 44016e4af2f41cf566be653d448dad8b434da38e
+      pushed_ref: refs/heads/changeset/pr319-jwst-2mrs-neural-field-20260825
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/409
+      production_hash: null
+      dependency_hashes: {candidate_tree: 828532cadb047ea9b637de3249353458233ef229}
+      gate_dispositions: {eligibility: PASS, focused_tests: PASS,
+        final_review: PENDING, observed_execution: false}
+      assurance_budget: {maximum: 8, consumed: 1}
+    PR-320:
+      lifecycle: IMPLEMENTED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
+      base_sha: 44016e4af2f41cf566be653d448dad8b434da38e
+      predecessor_pr: PR-319
+      predecessor_sealed_sha: 44016e4af2f41cf566be653d448dad8b434da38e
+      sealed_head: null
+      pushed_ref: null
+      pr_url: null
+      production_hash: null
+      dependency_hashes: {}
+      gate_dispositions: {eligibility: PASS, red_tests: PASS,
+        focused_tests: PASS, final_review: PENDING, observed_execution: false}
+      assurance_budget: {maximum: 8, consumed: 1}
 execution_lane:
   PR-167: defensible
   PR-168: defensible
@@ -858,7 +920,69 @@ execution_lane:
   PR-310: defensible
   PR-311: defensible
   PR-312: defensible
+  PR-317: defensible
+  PR-318: defensible
+  PR-319: defensible
+  PR-320: defensible
 execution_resolutions:
+  PR-318:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-318.md
+    candidate_sha: f549f8f95937ea395b26e9f5361bd1fc04ece893
+    pr_url: null
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-25'
+    scientific_status_effect: desi_tomographic_input_preparation_completed_without_observed_execution
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: data_admission_preflight
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    public_result_emitted: false
+  PR-317:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-317.md
+    candidate_sha: 9bef56202496660a4f4a233cdf08ceb8c13a2477
+    pr_url: null
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-25'
+    scientific_status_effect: desi_existing_data_compatibility_blocker_recorded_without_observed_execution
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: data_admission_preflight
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    public_result_emitted: false
+  PR-311:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-311.md
+    candidate_sha: a89563d26d69322134078565e9a4ccef86cdf83c
+    merge_commit: aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/402
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-24'
+    scientific_status_effect: desi_successor_formalism_operator_closed_without_observed_execution
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: synthetic_desi_operator_closure
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    public_result_emitted: false
+  PR-310:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-310.md
+    candidate_sha: 7a25636fb6cf2fdc1e0613c93b9ce25e5b1d2f02
+    merge_commit: e7b9872f7ad977c3bbaba9677ce6450e79c2cb82
+    pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/399
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-24'
+    scientific_status_effect: hsc_kids_typed_spin2_operator_closed_without_observed_execution
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: synthetic_hsc_kids_operator_closure
+    transfer_source: none
+    observed_data_executed: false
+    public_use: false
+    public_result_emitted: false
   PR-309:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-309.md

@@ -1,4 +1,4 @@
-generated_on: '2026-07-30'
+generated_on: '2026-08-25'
 scope: htt_base_pre_native_lowell_solver_codex_dag_v2
 policy:
   topological_order:
@@ -261,6 +261,10 @@ policy:
   - PR-294
   - PR-207
   - PR-208
+  - PR-317
+  - PR-318
+  - PR-319
+  - PR-320
   dependency_overlays:
     schema: htt.pr_dependency_overlay.v1
     authority: PR-276
@@ -14225,3 +14229,155 @@ prs:
   solver_gate_required: false
   change_set_id: CS-PR311-DESI-SUCCESSOR-FORMALISM
   publication_group_id: PG-PR311-DESI-SUCCESSOR-FORMALISM
+- id: PR-317
+  wave: 84
+  title: DESI existing-data compatibility preflight
+  owner: OBSSTAT
+  capability: DESI_EXISTING_DATA_SUCCESSOR_FORMALISM_COMPATIBILITY_PREFLIGHT
+  inputs: [PR-311 terminal stack, authenticated existing DESI DR1 acquisition]
+  outputs: [typed schema and tomography-window compatibility blocker]
+  contributors: [COMMON]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [obsstat]
+  depends: [PR-311]
+  dependency_contracts: [{upstream_id: PR-311, mode: requires_success}]
+  targets: ["Determine whether already-present DESI inputs can enter PR-311 without opening observed rows or inventing magnitudes or tomographic windows."]
+  files: [docs/PR_DELTAS/pr-317.md, scripts/observed_runs/run_desi_bgs_bright.py, tests/integration/test_desi_successor_formalism.py]
+  tests: [python -m pytest -q tests/integration/test_desi_successor_formalism.py tests/obsstat/test_pr151_invalidation_boundary.py]
+  dod: [Exact existing-data incompatibilities produce a typed no-number terminal before observed row access.]
+  kill: Observed rows open, missing magnitudes are invented, or one angular window is broadcast across tomography.
+  cost: medium
+  level: L2
+  scope: pre-solver
+  risk: R2-OBSSTAT
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C1}
+  claim_impact: Input compatibility result only; no observed DESI statistic follows.
+  forbidden: ["No observed statistic, BGS_ANY substitution, PR-151 resurrection, source attribution, or family identification."]
+  anti_drift: ["No new science module, downloader, schema, ledger, authorization path, or Rust."]
+  roadmap_anchor: docs/PR_DELTAS/pr-317.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: data_admission_preflight
+  execution_authorization: EXPLICIT_APPROVED_SEQUENCE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_OBSERVED_EXECUTION
+  solver_gate_required: false
+  change_set_id: CS-PR317-DESI-EXISTING-DATA-PREFLIGHT
+  publication_group_id: PG-PR317-DESI-EXISTING-DATA-PREFLIGHT
+- id: PR-318
+  wave: 85
+  title: DESI input preparation and bounded public acquisition
+  owner: OBSSTAT
+  capability: DESI_TOMOGRAPHIC_RANDOM_WINDOW_INPUT_PREPARATION
+  inputs: [PR-317 terminal blocker, authenticated retained random catalogues]
+  outputs: [three-bin observed random-window preparation and input receipt]
+  contributors: [COMMON]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [obsstat]
+  depends: [PR-317]
+  dependency_contracts: [{upstream_id: PR-317, mode: requires_terminal_receipt}]
+  targets: ["Prepare the missing three-bin random-window input without opening the observed clustering catalogue."]
+  files: [docs/PR_DELTAS/pr-318.md, dl_pipeline/scripts/download_desi_dr1_mocks.py, tests/contracts/test_desi_dr1_mock_acquisition.py]
+  tests: [python -m pytest -q tests/contracts/test_desi_dr1_mock_acquisition.py tests/obsstat/test_pr151_invalidation_boundary.py]
+  dod: [Tomographic random-window preparation is reproducible and observed catalogue rows remain unopened.]
+  kill: A validated input is overwritten, observed rows open, or redshift-integrated windows are silently reused as tomography.
+  cost: medium
+  level: L2
+  scope: pre-solver
+  risk: R2-DATA
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C1}
+  claim_impact: Input preparation only; no observed DESI statistic follows.
+  forbidden: ["No observed statistic, credential guessing, full raw redownload, source attribution, or family identification."]
+  anti_drift: ["No new science module, global downloader framework, schema, ledger, authorization path, or Rust."]
+  roadmap_anchor: docs/PR_DELTAS/pr-318.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: data_admission_preflight
+  execution_authorization: EXPLICIT_APPROVED_SEQUENCE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_OBSERVED_EXECUTION
+  solver_gate_required: false
+  change_set_id: CS-PR318-DESI-INPUT-PREPARATION
+  publication_group_id: PG-PR318-DESI-INPUT-PREPARATION
+- id: PR-319
+  wave: 86
+  title: JWST-SN 2024 2MRS neural-field competitor binding
+  owner: OBSSTAT
+  capability: JWST_SN_LILOW_2024_2MRS_NEURAL_VELOCITY_TEMPLATE
+  inputs: [PR-318 terminal stack, public Lilow-Ganeshaiah Veena-Nusser 2024 neural field]
+  outputs: [exact field identity, grid and radial-evaluation contract, rank-only competitor template]
+  contributors: [HTT, COMMON]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [obsstat]
+  depends: [PR-318]
+  dependency_contracts: [{upstream_id: PR-318, mode: requires_terminal_receipt}]
+  targets: ["Replace the unavailable private 2026 2MRS reconstruction with the exact public 2024 neural velocity field without inventing a magnitude conversion or covariance."]
+  files: [docs/PR_DELTAS/pr-319.md, docs/research_program/post_pr275/pr319_spec.yaml, htt/obsstat/jwst_distance_consistency.py, scripts/observed_runs/run_jwst_sn.py, tests/integration/test_jwst_sn_current_stack.py]
+  tests: [python -m pytest -q tests/integration/test_jwst_sn_current_stack.py]
+  dod: [Exact eight-member identity, grid/frame/unit conventions, interpolation domain, and published bulk-flow convention pass.]
+  kill: Raw catalogue rows, a private 2026 label, RMSE-as-covariance, synthetic admitted field, or invented magnitude conversion reaches rank.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: R3-OBSSTAT
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  claim_impact: Rank-only 2MRS velocity-template binding; no JWST result or source label follows.
+  forbidden: ["No external-byte redistribution, observed statistic, competitor fit, p-value, source attribution, or family identification."]
+  anti_drift: ["Five changed files; no new module, schema, ledger, authorization path, downloader, or Rust."]
+  roadmap_anchor: docs/research_program/post_pr275/pr319_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: readiness_only
+  execution_authorization: EXPLICIT_APPROVED_SEQUENCE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_OBSERVED_EXECUTION
+  solver_gate_required: false
+  change_set_id: CS-PR319-JWST-2MRS-NEURAL-FIELD
+  publication_group_id: PG-PR319-JWST-2MRS-NEURAL-FIELD
+- id: PR-320
+  wave: 87
+  title: HSC-KiDS paired same-sky joint-covariance derivation
+  owner: OBSSTAT
+  capability: HSC_KIDS_PAIRED_SAME_SKY_JOINT_COVARIANCE_AND_LOCAL_STRUCTURAL_RANK
+  inputs: [PR-319 terminal stack, paired same-sky HSC and KiDS null feature rows]
+  outputs: [full joint sample covariance, whitening gate, local structural-rank diagnostic]
+  contributors: [HTT, COMMON]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [obsstat]
+  depends: [PR-319]
+  dependency_contracts: [{upstream_id: PR-319, mode: requires_terminal_receipt}]
+  targets: ["Derive HSC auto, KiDS auto, and cross blocks from one ordered paired same-sky null ensemble and abstain when cross information or whitening is absent."]
+  files: [docs/PR_DELTAS/pr-320.md, docs/research_program/post_pr275/pr320_spec.yaml, htt/obsstat/hsc_kids_current_stack.py, scripts/observed_runs/run_hsc_kids.py, tests/integration/test_hsc_kids_current_stack.py]
+  tests: [python -m pytest -q tests/integration/test_hsc_kids_current_stack.py]
+  dod: [The N-minus-one joint estimator, row identities, zero-cross evidence, singular-covariance refusal, and local structural-rank boundary pass focused tests.]
+  kill: An arbitrary matrix, block-diagonal zero-fill, unmatched rows, singular whitening, or local rank is promoted to a result or global identification.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: R3-STATISTICS
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  claim_impact: Synthetic paired-null covariance closure only; observed HSC-KiDS remains blocked.
+  forbidden: ["No observed result, independence approximation, pseudoinverse rank, likelihood, p-value, source attribution, or family identification."]
+  anti_drift: ["One existing science module, worker, and test plus delta/spec; no generic covariance framework, schema, ledger, authorization path, or Rust."]
+  roadmap_anchor: docs/research_program/post_pr275/pr320_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: synthetic_diagnostic
+  execution_authorization: EXPLICIT_APPROVED_SEQUENCE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_OBSERVED_EXECUTION
+  solver_gate_required: false
+  change_set_id: CS-PR320-HSC-KIDS-PAIRED-COVARIANCE
+  publication_group_id: PG-PR320-HSC-KIDS-PAIRED-COVARIANCE
