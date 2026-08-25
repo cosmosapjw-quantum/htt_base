@@ -8,6 +8,7 @@ E/B; an explicit registered linear provider must transform them first.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 import math
 from typing import Mapping, Sequence
 
@@ -40,6 +41,32 @@ SURVEY_COMPONENT_CONTRACTS = {
         "calibration_role": "lensfit_shear_response",
     },
 }
+
+HSC_SACC_TRACER_ORDER = ("wl_0", "wl_1", "wl_2", "wl_3")
+HSC_SACC_TRACER_PAIRS = tuple(
+    (left, right)
+    for left_index, left in enumerate(HSC_SACC_TRACER_ORDER)
+    for right in HSC_SACC_TRACER_ORDER[left_index:]
+)
+HSC_SACC_ELL_ORDER = (
+    150.0,
+    250.0,
+    350.0,
+    500.0,
+    700.0,
+    900.0,
+    1200.0,
+    1600.0,
+    2000.0,
+    2600.0,
+    3400.0,
+    4200.0,
+    5400.0,
+    7000.0,
+    8600.0,
+    11000.0,
+    14200.0,
+)
 
 
 class HscKidsCurrentStackError(ValueError):
@@ -905,4 +932,337 @@ def analyze_joint_response(
         "forced_source_label": None,
         "observed_statistic_seen": bool(observed),
         "observed_science_executed": bool(observed),
+    }
+
+
+def analyze_hsc_released_sacc(
+    *,
+    data_type: str,
+    tracer_order: Sequence[str],
+    tracer_quantities: Sequence[str],
+    tracer_z: Sequence[Sequence[float]],
+    tracer_nz: Sequence[Sequence[float]],
+    tracer_pairs: Sequence[Sequence[str]],
+    ell_by_pair: Sequence[Sequence[float]],
+    window_shapes: Sequence[Sequence[int]],
+    window_column_sums: Sequence[Sequence[float]],
+    window_support_sha256_float64_le: str,
+    window_weight_sha256_float64_le: str,
+    window_support_identical_across_pairs: bool,
+    window_weight_pair_count: int,
+    data_vector: object,
+    covariance: object,
+    loader_version: str,
+    legacy_stored_order: bool,
+    legacy_order_crosscheck: Mapping[str, bool],
+    observed_payload_validated: bool,
+) -> dict[str, object]:
+    """Validate the exact HSC Fourier-SACC release surface without inference.
+
+    This is deliberately a sibling of the paired HSC/KiDS operator.  It binds
+    the released HSC E-mode vector, covariance, tomography ordering, and
+    bandpower windows, but it neither invents a reference prediction nor turns
+    an EE-only release into an E/B or cross-survey result.
+    """
+
+    if data_type != "cl_ee":
+        raise HscKidsCurrentStackError("HSC SACC must contain E-mode cl_ee only")
+    tracers = _canonical_text_tuple(
+        tracer_order, label="HSC SACC tracer order", expected_size=4
+    )
+    if tracers != HSC_SACC_TRACER_ORDER:
+        raise HscKidsCurrentStackError("HSC SACC tracer order drifted")
+    quantities = _canonical_text_tuple(
+        tracer_quantities, label="HSC SACC tracer quantity", expected_size=4
+    )
+    if quantities != ("galaxy_shear",) * 4:
+        raise HscKidsCurrentStackError("HSC SACC tracer quantity drifted")
+
+    if len(tracer_z) != 4 or len(tracer_nz) != 4:
+        raise HscKidsCurrentStackError("HSC SACC N(z) must bind all four tracers")
+    source_redshift_distributions: dict[str, dict[str, object]] = {}
+    for name, raw_z, raw_nz in zip(tracers, tracer_z, tracer_nz, strict=True):
+        z = _finite_vector(raw_z, label=f"HSC SACC {name} N(z) support")
+        nz = _finite_vector(raw_nz, label=f"HSC SACC {name} N(z) density")
+        if z.shape != nz.shape or z.size < 2 or np.any(np.diff(z) <= 0.0):
+            raise HscKidsCurrentStackError(
+                "HSC SACC N(z) support must be shape-matched and strictly increasing"
+            )
+        if np.any(nz < 0.0):
+            raise HscKidsCurrentStackError("HSC SACC N(z) must be nonnegative")
+        widths = np.diff(z)
+        integral = float(np.sum(widths * (nz[:-1] + nz[1:]) / 2.0))
+        if not math.isfinite(integral) or integral <= 0.0:
+            raise HscKidsCurrentStackError("HSC SACC N(z) integral must be positive")
+        source_redshift_distributions[name] = {
+            "z_sha256": hashlib.sha256(
+                np.asarray(z, dtype="<f8").tobytes(order="C")
+            ).hexdigest(),
+            "nz_sha256": hashlib.sha256(
+                np.asarray(nz, dtype="<f8").tobytes(order="C")
+            ).hexdigest(),
+            "sample_count": int(z.size),
+            "z_min": float(z[0]),
+            "z_max": float(z[-1]),
+            "integral_raw": integral,
+        }
+
+    pairs = tuple(tuple(pair) for pair in tracer_pairs)
+    if pairs != HSC_SACC_TRACER_PAIRS:
+        raise HscKidsCurrentStackError("HSC SACC tomographic pair order drifted")
+    if legacy_stored_order is not True:
+        raise HscKidsCurrentStackError("HSC SACC stored row order was not bound")
+    order_checks = (
+        "row_values_match_payload_mean",
+        "pair_blocks_contiguous",
+        "pair_selection_indices_match",
+        "pair_selection_values_match",
+        "covariance_selection_indices_match",
+    )
+    if not isinstance(legacy_order_crosscheck, Mapping) or any(
+        legacy_order_crosscheck.get(name) is not True for name in order_checks
+    ):
+        raise HscKidsCurrentStackError(
+            "HSC SACC independent legacy ordering crosscheck failed"
+        )
+    if loader_version != "2.1.2":
+        raise HscKidsCurrentStackError("HSC SACC loader version drifted")
+    if observed_payload_validated is not True:
+        raise HscKidsCurrentStackError("HSC SACC observed payload was not validated")
+
+    ell_rows = tuple(tuple(float(value) for value in row) for row in ell_by_pair)
+    if len(ell_rows) != len(HSC_SACC_TRACER_PAIRS) or any(
+        row != HSC_SACC_ELL_ORDER for row in ell_rows
+    ):
+        raise HscKidsCurrentStackError("HSC SACC bandpower ell order drifted")
+
+    shapes = tuple(tuple(int(value) for value in row) for row in window_shapes)
+    if shapes != ((15274, 17),) * len(HSC_SACC_TRACER_PAIRS):
+        raise HscKidsCurrentStackError("HSC SACC bandpower window shape drifted")
+    if len(window_column_sums) != len(HSC_SACC_TRACER_PAIRS):
+        raise HscKidsCurrentStackError("HSC SACC bandpower window count drifted")
+    window_sums = tuple(
+        _finite_vector(row, label="HSC SACC window column sums")
+        for row in window_column_sums
+    )
+    if any(row.size != 17 or np.any(row <= 0.0) for row in window_sums):
+        raise HscKidsCurrentStackError("HSC SACC bandpower window support drifted")
+
+    def validated_sha256(value: object, *, label: str) -> str:
+        if not isinstance(value, str) or len(value) != 64:
+            raise HscKidsCurrentStackError(f"{label} SHA-256 identity drifted")
+        try:
+            int(value, 16)
+        except ValueError as exc:
+            raise HscKidsCurrentStackError(
+                f"{label} SHA-256 identity drifted"
+            ) from exc
+        return value.lower()
+
+    support_sha256 = validated_sha256(
+        window_support_sha256_float64_le, label="HSC SACC window support"
+    )
+    weight_sha256 = validated_sha256(
+        window_weight_sha256_float64_le, label="HSC SACC window weights"
+    )
+    if (
+        window_support_identical_across_pairs is not True
+        or window_weight_pair_count != len(HSC_SACC_TRACER_PAIRS)
+    ):
+        raise HscKidsCurrentStackError("HSC SACC canonical window identity drifted")
+
+    vector = _finite_vector(data_vector, label="HSC SACC released data")
+    if vector.size != 170:
+        raise HscKidsCurrentStackError("HSC SACC released data length drifted")
+    cov = _finite_matrix(covariance, label="HSC SACC covariance")
+    if cov.shape != (170, 170):
+        raise HscKidsCurrentStackError("HSC SACC covariance shape drifted")
+    if not np.allclose(cov, cov.T, rtol=1.0e-12, atol=0.0):
+        raise HscKidsCurrentStackError("HSC SACC covariance is not symmetric")
+    try:
+        np.linalg.cholesky(cov)
+    except np.linalg.LinAlgError as exc:
+        raise HscKidsCurrentStackError(
+            "HSC SACC covariance is not positive definite"
+        ) from exc
+    eigenvalues = np.linalg.eigvalsh(cov)
+    condition = float(eigenvalues[-1] / eigenvalues[0])
+
+    fiducial_band_indices = tuple(
+        index
+        for index, ell in enumerate(HSC_SACC_ELL_ORDER)
+        if 300.0 < ell < 1800.0
+    )
+    if fiducial_band_indices != (2, 3, 4, 5, 6, 7):
+        raise HscKidsCurrentStackError("HSC SACC fiducial ell selection drifted")
+    fiducial_indices = np.asarray(
+        [
+            pair_index * len(HSC_SACC_ELL_ORDER) + band_index
+            for pair_index in range(len(pairs))
+            for band_index in fiducial_band_indices
+        ],
+        dtype=int,
+    )
+    fiducial_vector = np.asarray(vector[fiducial_indices], dtype="<f8")
+    fiducial_covariance = np.asarray(
+        cov[np.ix_(fiducial_indices, fiducial_indices)], dtype="<f8"
+    )
+    fiducial_eigenvalues = np.linalg.eigvalsh(fiducial_covariance)
+    if fiducial_vector.size != 60 or fiducial_covariance.shape != (60, 60):
+        raise HscKidsCurrentStackError("HSC SACC fiducial covariance slice drifted")
+    try:
+        np.linalg.cholesky(fiducial_covariance)
+    except np.linalg.LinAlgError as exc:
+        raise HscKidsCurrentStackError(
+            "HSC SACC fiducial covariance is not positive definite"
+        ) from exc
+
+    def array_sha256(value: np.ndarray) -> str:
+        return hashlib.sha256(
+            np.asarray(value, dtype="<f8").tobytes(order="C")
+        ).hexdigest()
+
+    ordered_index_sha256 = hashlib.sha256(
+        np.asarray(fiducial_indices, dtype="<i8").tobytes(order="C")
+    ).hexdigest()
+
+    return {
+        "schema": "htt.pr321.hsc_sacc_repaired_result.v1",
+        "capability": "HSC_S19A_Y3_FOURIER_SACC_RELEASE_VECTOR_READINESS",
+        "release_id": "HSC_S19A_Y3",
+        "tracer_order": list(tracers),
+        "tomographic_pair_order": [list(pair) for pair in pairs],
+        "full_release": {
+            "data_type": data_type,
+            "tracer_count": len(tracers),
+            "pair_count": len(pairs),
+            "bandpowers_per_pair": len(HSC_SACC_ELL_ORDER),
+            "vector_size": int(vector.size),
+            "covariance_shape": [170, 170],
+            "role": "ARCHIVE_AND_INSPECTION_ONLY",
+            "status": "FULL_RELEASE_SNAPSHOT_BOUND_NOT_FIDUCIAL_SCIENCE_SELECTION",
+            "data_vector_sha256_float64_le": array_sha256(vector),
+            "covariance_sha256_float64_le": array_sha256(cov),
+        },
+        "fiducial_selection": {
+            "selection_id": "HSC_Y3_DALAL23_300_LT_ELL_LT_1800_V1",
+            "ell_min_exclusive": 300.0,
+            "ell_max_exclusive": 1800.0,
+            "retained_bin_indices_per_pair": list(fiducial_band_indices),
+            "retained_ell_centres": [
+                HSC_SACC_ELL_ORDER[index] for index in fiducial_band_indices
+            ],
+            "vector_size": int(fiducial_vector.size),
+            "covariance_shape": [60, 60],
+            "ordered_index_sha256": ordered_index_sha256,
+            "data_vector_sha256_float64_le": array_sha256(fiducial_vector),
+            "covariance_sha256_float64_le": array_sha256(fiducial_covariance),
+            "rank": int(np.linalg.matrix_rank(fiducial_covariance)),
+            "condition_number": float(
+                fiducial_eigenvalues[-1] / fiducial_eigenvalues[0]
+            ),
+            "status": "OFFICIAL_FIDUCIAL_SCALE_SELECTION_BOUND",
+            "ordered_index_encoding": "INT64_LE_C_ORDER",
+            "minimum_eigenvalue": float(fiducial_eigenvalues[0]),
+            "cholesky_ready": True,
+        },
+        "source_redshift_distributions": source_redshift_distributions,
+        "legacy_order_crosscheck": {
+            "status": "INDEPENDENT_SACC_API_CROSSCHECK_PASS",
+            **{name: True for name in order_checks},
+        },
+        "window_operator": {
+            "status": "BANDPOWER_WINDOWS_BOUND",
+            "pair_count": len(pairs),
+            "bandpowers_per_pair": len(HSC_SACC_ELL_ORDER),
+            "harmonic_support_size": shapes[0][0],
+            "column_sum_min": float(min(np.min(row) for row in window_sums)),
+            "column_sum_max": float(max(np.max(row) for row in window_sums)),
+            "theory_requirement": "CONVOLVE_THEORY_WITH_STORED_WINDOWS",
+            "window_support_sha256_float64_le": support_sha256,
+            "window_weight_sha256_float64_le": weight_sha256,
+            "window_weight_encoding": (
+                "ORDERED_TOMOGRAPHIC_PAIR_CONCATENATED_FLOAT64_LE_C_ORDER"
+            ),
+            "support_identical_across_pairs": True,
+        },
+        "covariance": {
+            "status": "FULL_RELEASE_COVARIANCE_CHOLESKY_READY",
+            "shape": [170, 170],
+            "rank": int(np.linalg.matrix_rank(cov)),
+            "minimum_eigenvalue": float(eigenvalues[0]),
+            "condition_number": condition,
+            "diagonalized": False,
+            "likelihood_ready": False,
+        },
+        "response_rank": {
+            "status": "NOT_EVALUATED",
+            "rank": None,
+            "reason": "NO_PREDECLARED_HSC_RESPONSE_OR_REFERENCE",
+        },
+        "reference_status": "FIDUCIAL_REFERENCE_VECTOR_STILL_REQUIRED",
+        "terminal_disposition": (
+            "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
+        ),
+        "directional_and_MES_boundary": {
+            "directional_support_status": (
+                "NONE_COMPRESSED_ROTATION_INVARIANT_POWER_SPECTRA"
+            ),
+            "MES_methodology_role": "SCALAR_TOMOGRAPHIC_CONTROL_ONLY",
+            "vector_tensor_moment_eligibility": (
+                "FORBIDDEN_NO_DIRECTION_INDEXED_FIELD"
+            ),
+            "local_boost_global_tilt_eligibility": (
+                "NOT_APPLICABLE_NO_DIRECTIONAL_RESPONSE"
+            ),
+            "CMB_MES_anchor_compatibility": (
+                "BLOCKED_CROSS_CHANNEL_NO_PHYSICAL_TRANSFER"
+            ),
+        },
+        "likelihood_ready": False,
+        "p_value": None,
+        "source_label": None,
+        "family_identification": "FORBIDDEN",
+        "observed_state": {
+            "observed_payload_validated": True,
+            "observed_released_data_vector_parsed": True,
+            "observed_summary_statistic_present": True,
+            "observed_statistic_seen": True,
+            "htt_derived_statistic_computed": False,
+            "observed_science_inference_executed": False,
+        },
+        "artifact_metadata": {
+            "owner": "OBSSTAT",
+            "artifact_mode": "released_vector_readiness_diagnostic",
+            "claim_tier": "diagnostic_only",
+            "loader": "sacc==2.1.2",
+            "public_use": False,
+            "scope": (
+                "exact_HSC_only_released_EE_vector_Nz_windows_full_and_"
+                "fiducial_covariance"
+            ),
+            "transfer_source": "none",
+            "null_mock_status": "NOT_PROVIDED_NOT_EVALUATED",
+            "unit_status": "SACC_NATIVE_CL_EE_NO_CONVERSION",
+            "normalization_status": "APPLY_STORED_BANDPOWER_WINDOWS",
+            "covariance_status": (
+                "FULL_RELEASE_COVARIANCE_CHOLESKY_READY_NOT_LIKELIHOOD_READY"
+            ),
+            "response_rank_status": "NOT_EVALUATED",
+            "allowed_use": (
+                "preregistered_fiducial_window_convolved_HSC_only_reference"
+            ),
+            "caveats": [
+                "EE_only_no_EB_closure",
+                "no_predeclared_reference_or_finite_null_ensemble",
+                "no_cross_survey_covariance_or_result",
+                "scalar_tomographic_control_only_no_directional_MES_field",
+            ],
+            "forbidden_uses": [
+                "cross_survey_result",
+                "p_value_without_finite_nulls",
+                "source_attribution",
+                "family_identification",
+            ],
+        },
     }

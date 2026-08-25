@@ -265,7 +265,8 @@
       "PR-317",
       "PR-318",
       "PR-319",
-      "PR-320"
+      "PR-320",
+      "PR-321"
     ],
     "dependency_overlays": {
       "schema": "htt.pr_dependency_overlay.v1",
@@ -18142,6 +18143,88 @@
       "solver_gate_required": false,
       "change_set_id": "CS-PR320-HSC-KIDS-PAIRED-COVARIANCE",
       "publication_group_id": "PG-PR320-HSC-KIDS-PAIRED-COVARIANCE"
+    },
+    {
+      "id": "PR-321",
+      "wave": 88,
+      "title": "HSC S19A/Y3 Fourier-SACC released-vector readiness",
+      "owner": "OBSSTAT",
+      "capability": "HSC_S19A_Y3_FOURIER_SACC_RELEASE_VECTOR_READINESS",
+      "inputs": [
+        "PR-320 terminal stack",
+        "exact official HSC S19A/Y3 Fourier-space SACC"
+      ],
+      "outputs": [
+        "HSC-only tomography",
+        "bandpower-window",
+        "and full-covariance readiness diagnostic"
+      ],
+      "contributors": [
+        "COMMON"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "obsstat"
+      ],
+      "depends": [
+        "PR-320"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-320",
+          "mode": "requires_terminal_receipt"
+        }
+      ],
+      "targets": [
+        "Bind the released HSC EE vector, tomography order, stored windows, and covariance without inventing a reference or KiDS information."
+      ],
+      "files": [
+        "docs/PR_DELTAS/pr-321.md",
+        "docs/research_program/post_pr275/pr321_spec.yaml",
+        "docs/research_program/post_pr275/pr321_hsc_sacc_report.md",
+        "docs/generated/pr321_hsc_sacc_result.json",
+        "htt/obsstat/hsc_kids_current_stack.py",
+        "scripts/observed_runs/run_hsc_kids.py",
+        "tests/integration/test_hsc_kids_current_stack.py"
+      ],
+      "tests": [
+        "python -m pytest -q tests/integration/test_hsc_kids_current_stack.py"
+      ],
+      "dod": [
+        "The exact SACC snapshot",
+        "EE/tomography ordering",
+        "windows",
+        "and positive-definite full covariance pass while inference remains blocked pending a preregistered reference."
+      ],
+      "kill": "File identity and parsed payload differ, a numerical bandpower is committed, or readiness is promoted to a p-value, E/B closure, cross-survey result, or source label.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2-OBSSTAT",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "HSC-only released-vector readiness; no cosmological or HSC-KiDS result follows.",
+      "forbidden": [
+        "No observed statistic, likelihood, p-value, E/B closure, cross-survey inference, source attribution, or family identification."
+      ],
+      "anti_drift": [
+        "Seven scientific files and net additions at most 700; no new module, runner, schema, ledger, authorization path, downloader, or Rust."
+      ],
+      "roadmap_anchor": "docs/research_program/post_pr275/pr321_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "readiness_only",
+      "execution_authorization": "EXPLICIT_APPROVED_SEQUENCE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "POST275_OBSERVED_EXECUTION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR321-HSC-SACC-FAST-ANALYSIS",
+      "publication_group_id": "PG-PR321-HSC-SACC-FAST-ANALYSIS"
     }
   ]
 }

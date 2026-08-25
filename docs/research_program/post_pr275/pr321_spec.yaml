@@ -1,0 +1,89 @@
+schema_version: 1
+pr_id: PR-321
+title: HSC S19A/Y3 Fourier-space SACC released-vector inspection
+base:
+  commit: a968e11461ed28c8d5cc1244f0122edc704579c4
+  tree: 3e1f1cf27683d122618de6b8296dbc1ca4f6f27f
+input:
+  release: HSC_S19A_Y3
+  product: dalal23/hsc_y3_fourier_space_data_vector.sacc
+  byte_size: 22340160
+  sha256: a28f9e2e088e92d96d2d87083a6eeeac4c0c84c6b48e033bd3d1dc1bf0d8958f
+  source_identity: HSC_OFFICIAL_S19A_SHAPE_CATALOG_PDR3_DALAL23_FOURIER_SACC
+runtime:
+  loader: sacc==2.1.2
+  environment_status: DECLARED_LOCAL_RESEARCH_RUNTIME
+  hermetic_package_dependency: false
+  consequence: clean environments without this exact loader must stop before payload access
+scope:
+  - inspect and bind this one complete SACC file only after its identity is frozen
+  - reuse its declared HSC-only data vector, tracers, windows and covariance
+  - emit either a covariance-bound HSC-only diagnostic or a typed blocker
+  - keep the concurrent user-owned catalogue downloader read-only
+semantic_boundary:
+  - one HSC-only release-vector readiness cell
+  - no likelihood, null inference, KiDS result, or MES directional result
+  - released cl_ee preserves tomography but contains no direction-indexed field
+  - CMB MES anchors are incompatible without a channel-matched physical transfer
+substantive_paths:
+  exact_allowlist:
+    - htt/obsstat/hsc_kids_current_stack.py
+    - scripts/observed_runs/run_hsc_kids.py
+    - tests/integration/test_hsc_kids_current_stack.py
+    - docs/PR_DELTAS/pr-321.md
+    - docs/research_program/post_pr275/pr321_spec.yaml
+    - docs/research_program/post_pr275/pr321_hsc_sacc_report.md
+generated_and_mirror_paths:
+  derived_only: true
+  exact_allowlist:
+    - docs/generated/pr321_hsc_sacc_result.json
+    - docs/codex_handoff/pr_status.yaml
+    - machine_readable/pr_status.yaml
+claim_ceiling:
+  tier: diagnostic_only
+  allowed:
+    - HSC-only released-vector and covariance diagnostic
+    - exact input and operator replay report
+  forbidden:
+    - HSC-KiDS combined result
+    - invented or zero-filled cross-survey covariance
+    - p-value without a predeclared finite null ensemble
+    - source attribution
+    - cross-probe synthesis
+    - Bianchi family identification
+execution:
+  observed_payload_open_before_identity_check: forbidden
+  kids_payload_open: forbidden
+  observed_statistic_seen_on_spec_freeze: false
+  observed_science_executed_on_spec_freeze: false
+observed_state_after_exact_replay:
+  observed_payload_validated: true
+  observed_released_data_vector_parsed: true
+  observed_summary_statistic_present: true
+  observed_statistic_seen: true
+  htt_derived_statistic_computed: false
+  observed_science_inference_executed: false
+MES_boundary:
+  directional_support_status: NONE_COMPRESSED_ROTATION_INVARIANT_POWER_SPECTRA
+  methodology_role: SCALAR_TOMOGRAPHIC_CONTROL_ONLY
+  vector_tensor_moment_eligibility: FORBIDDEN_NO_DIRECTION_INDEXED_FIELD
+  local_boost_global_tilt_eligibility: NOT_APPLICABLE_NO_DIRECTIONAL_RESPONSE
+  CMB_anchor_compatibility: BLOCKED_CROSS_CHANNEL_NO_PHYSICAL_TRANSFER
+pass:
+  - exact SACC hash and byte size match
+  - supported data types, tracer ordering, covariance and window semantics are explicit
+  - raw N(z) integrals and exact z/nz hashes are bound without rewriting the arrays
+  - canonical window support, ordered pair weights and fiducial indices are content-bound
+  - focused tests and independent review have no P0 or P1
+  - generated result/report is reproducible from the exact SACC or records a typed blocker
+stop:
+  - SACC hash or size drifts
+  - required covariance or window semantics are absent
+  - a KiDS or cross-survey result is manufactured
+  - the active downloader or growing tract files are mutated
+anti_inflation:
+  new_science_modules_max: 0
+  new_global_schemas: 0
+  new_global_ledgers: 0
+  new_authorization_paths: 0
+  rust: forbidden

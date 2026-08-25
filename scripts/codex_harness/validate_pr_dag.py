@@ -737,6 +737,7 @@ POST311_OBSERVATIONAL_CONTINUATION_IDS = {
     "PR-318",
     "PR-319",
     "PR-320",
+    "PR-321",
 }
 POST311_OBSERVATIONAL_CONTINUATION_CONTRACTS = {
     "PR-317": {
@@ -757,6 +758,11 @@ POST311_OBSERVATIONAL_CONTINUATION_CONTRACTS = {
     "PR-320": {
         "owner": "OBSSTAT",
         "dependencies": [("PR-319", "requires_terminal_receipt")],
+        "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
+    "PR-321": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-320", "requires_terminal_receipt")],
         "authorization": "EXPLICIT_APPROVED_SEQUENCE",
     },
 }
@@ -1066,7 +1072,7 @@ def validate_backlog(data: dict[str, Any]) -> DagInfo:
         and present_post311_ids != POST311_OBSERVATIONAL_CONTINUATION_IDS
     ):
         raise ValueError(
-            "post-311 observational continuation must register PR-317..320 "
+            "post-311 observational continuation must register PR-317..321 "
             "atomically; "
             f"missing={sorted(POST311_OBSERVATIONAL_CONTINUATION_IDS - present_post311_ids)}"
         )
@@ -2244,7 +2250,7 @@ def validate_post300_observational_slice(cards: dict[str, Any]) -> None:
 
 
 def validate_post311_observational_continuation(cards: dict[str, Any]) -> None:
-    """Validate the append-only PR-317..320 scientific-readiness continuation."""
+    """Validate the append-only PR-317..321 scientific-readiness continuation."""
 
     for pr_id in sorted(POST311_OBSERVATIONAL_CONTINUATION_CONTRACTS):
         card = cards[pr_id]

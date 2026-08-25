@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -11,6 +12,7 @@ from types import SimpleNamespace
 
 import numpy as np
 import pytest
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -1000,3 +1002,580 @@ def test_pr310_dispatcher_passes_acceptance_bound_admission_environment(
         environment["HTT_ATTENDED_ORDERED_RECORD_IDS_SHA256"]
         == "sha256:" + "3" * 64
     )
+
+
+def _pr321_sacc_payload(module):
+    tracer_order = ("wl_0", "wl_1", "wl_2", "wl_3")
+    tracer_pairs = tuple(
+        (left, right)
+        for left_index, left in enumerate(tracer_order)
+        for right in tracer_order[left_index:]
+    )
+    ell = (
+        150.0,
+        250.0,
+        350.0,
+        500.0,
+        700.0,
+        900.0,
+        1200.0,
+        1600.0,
+        2000.0,
+        2600.0,
+        3400.0,
+        4200.0,
+        5400.0,
+        7000.0,
+        8600.0,
+        11000.0,
+        14200.0,
+    )
+    tracer_z = tuple(np.linspace(0.0, 3.0, 8) for _ in tracer_order)
+    tracer_nz = tuple(
+        np.exp(-0.5 * ((z - mean) / 0.35) ** 2)
+        for z, mean in zip(tracer_z, (0.5, 0.8, 1.1, 1.4), strict=True)
+    )
+    return {
+        "data_type": "cl_ee",
+        "tracer_order": tracer_order,
+        "tracer_quantities": ("galaxy_shear",) * 4,
+        "tracer_z": tracer_z,
+        "tracer_nz": tracer_nz,
+        "tracer_pairs": tracer_pairs,
+        "ell_by_pair": (ell,) * 10,
+        "window_shapes": ((15274, 17),) * 10,
+        "window_column_sums": (tuple(np.ones(17)),) * 10,
+        "window_support_sha256_float64_le": "1" * 64,
+        "window_weight_sha256_float64_le": "2" * 64,
+        "window_support_identical_across_pairs": True,
+        "window_weight_pair_count": 10,
+        "data_vector": np.linspace(1.0e-10, 2.0e-9, 170),
+        "covariance": np.diag(np.linspace(1.0e-24, 2.0e-22, 170)),
+        "loader_version": "2.1.2",
+        "legacy_stored_order": True,
+        "legacy_order_crosscheck": {
+            "row_values_match_payload_mean": True,
+            "pair_blocks_contiguous": True,
+            "pair_selection_indices_match": True,
+            "pair_selection_values_match": True,
+            "covariance_selection_indices_match": True,
+        },
+        "observed_payload_validated": True,
+    }
+
+
+def test_pr321_requires_and_binds_four_nz_tracers() -> None:
+    module = _science()
+    payload = _pr321_sacc_payload(module)
+    result = module.analyze_hsc_released_sacc(**payload)
+
+    binding = result["source_redshift_distributions"]
+    assert list(binding) == list(payload["tracer_order"])
+    for row, z, nz in zip(
+        binding.values(), payload["tracer_z"], payload["tracer_nz"], strict=True
+    ):
+        assert row["z_sha256"] == hashlib.sha256(
+            np.asarray(z, dtype="<f8").tobytes()
+        ).hexdigest()
+        assert row["nz_sha256"] == hashlib.sha256(
+            np.asarray(nz, dtype="<f8").tobytes()
+        ).hexdigest()
+        assert row["sample_count"] == 8
+        expected_integral = np.sum(np.diff(z) * (nz[:-1] + nz[1:]) / 2.0)
+        assert row["integral_raw"] == pytest.approx(expected_integral)
+
+    missing = _pr321_sacc_payload(module)
+    missing["tracer_nz"] = missing["tracer_nz"][:3]
+    with pytest.raises(module.HscKidsCurrentStackError, match="N\\(z\\).*four"):
+        module.analyze_hsc_released_sacc(**missing)
+
+    nonpositive = _pr321_sacc_payload(module)
+    nonpositive["tracer_nz"] = (
+        np.zeros(8),
+        *nonpositive["tracer_nz"][1:],
+    )
+    with pytest.raises(module.HscKidsCurrentStackError, match="N\\(z\\).*positive"):
+        module.analyze_hsc_released_sacc(**nonpositive)
+
+
+def test_pr321_rejects_malformed_source_nz() -> None:
+    module = _science()
+
+    shape_mismatch = _pr321_sacc_payload(module)
+    shape_mismatch["tracer_nz"] = (
+        shape_mismatch["tracer_nz"][0][:-1],
+        *shape_mismatch["tracer_nz"][1:],
+    )
+
+    nonmonotonic = _pr321_sacc_payload(module)
+    bad_z = nonmonotonic["tracer_z"][0].copy()
+    bad_z[3] = bad_z[2]
+    nonmonotonic["tracer_z"] = (bad_z, *nonmonotonic["tracer_z"][1:])
+
+    negative = _pr321_sacc_payload(module)
+    bad_negative_nz = negative["tracer_nz"][0].copy()
+    bad_negative_nz[3] = -1.0
+    negative["tracer_nz"] = (bad_negative_nz, *negative["tracer_nz"][1:])
+
+    nonfinite = _pr321_sacc_payload(module)
+    bad_nonfinite_nz = nonfinite["tracer_nz"][0].copy()
+    bad_nonfinite_nz[3] = np.nan
+    nonfinite["tracer_nz"] = (
+        bad_nonfinite_nz,
+        *nonfinite["tracer_nz"][1:],
+    )
+
+    for payload, message in (
+        (shape_mismatch, "shape-matched"),
+        (nonmonotonic, "strictly increasing"),
+        (negative, "nonnegative"),
+        (nonfinite, "finite"),
+    ):
+        with pytest.raises(module.HscKidsCurrentStackError, match=message):
+            module.analyze_hsc_released_sacc(**payload)
+
+
+def test_pr321_generated_result_conforms_expected_result_schema() -> None:
+    expected = yaml.safe_load(
+        (
+            ROOT
+            / "docs/codex_handoff/pr321_reaudit/EXPECTED_RESULT_SCHEMA.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    actual = json.loads(
+        (ROOT / "docs/generated/pr321_hsc_sacc_result.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    def require_expected_shape(expected_value, actual_value, path: str) -> None:
+        if isinstance(expected_value, dict):
+            assert isinstance(actual_value, dict), f"{path} must be an object"
+            for key, child in expected_value.items():
+                assert key in actual_value, f"missing required result path {path}.{key}"
+                require_expected_shape(child, actual_value[key], f"{path}.{key}")
+            return
+        if expected_value == "<derived>":
+            assert actual_value is not None, f"{path} must contain a derived value"
+            return
+        assert actual_value == expected_value, f"{path} drifted"
+
+    require_expected_shape(expected, actual, "result")
+
+
+def test_pr321_fiducial_indices_and_covariance_slice() -> None:
+    module = _science()
+    payload = _pr321_sacc_payload(module)
+    result = module.analyze_hsc_released_sacc(**payload)
+
+    expected_indices = [
+        pair_index * 17 + band_index
+        for pair_index in range(10)
+        for band_index in range(2, 8)
+    ]
+    vector = np.asarray(payload["data_vector"], dtype="<f8")[expected_indices]
+    covariance = np.asarray(payload["covariance"], dtype="<f8")[
+        np.ix_(expected_indices, expected_indices)
+    ]
+    fiducial = result["fiducial_selection"]
+    assert fiducial["selection_id"] == "HSC_Y3_DALAL23_300_LT_ELL_LT_1800_V1"
+    assert fiducial["ell_min_exclusive"] == 300.0
+    assert fiducial["ell_max_exclusive"] == 1800.0
+    assert fiducial["retained_bin_indices_per_pair"] == list(range(2, 8))
+    assert fiducial["retained_ell_centres"] == [
+        350.0, 500.0, 700.0, 900.0, 1200.0, 1600.0
+    ]
+    assert fiducial["ordered_index_sha256"] == hashlib.sha256(
+        np.asarray(expected_indices, dtype="<i8").tobytes()
+    ).hexdigest()
+    assert fiducial["vector_size"] == 60
+    assert fiducial["data_vector_sha256_float64_le"] == hashlib.sha256(
+        vector.tobytes()
+    ).hexdigest()
+    assert fiducial["covariance_shape"] == [60, 60]
+    assert fiducial["covariance_sha256_float64_le"] == hashlib.sha256(
+        covariance.tobytes()
+    ).hexdigest()
+    assert fiducial["rank"] == 60
+    assert fiducial["minimum_eigenvalue"] > 0.0
+    assert result["terminal_disposition"] == (
+        "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
+    )
+
+
+def test_pr321_window_and_fiducial_digests_mutate(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    module = _science()
+    worker = _worker()
+
+    baseline_payload = _pr321_sacc_payload(module)
+    baseline = module.analyze_hsc_released_sacc(**baseline_payload)
+
+    vector_mutation = _pr321_sacc_payload(module)
+    mutated_vector = vector_mutation["data_vector"].copy()
+    mutated_vector[2] += 1.0e-14
+    vector_mutation["data_vector"] = mutated_vector
+    changed_vector = module.analyze_hsc_released_sacc(**vector_mutation)
+    assert (
+        baseline["fiducial_selection"]["data_vector_sha256_float64_le"]
+        != changed_vector["fiducial_selection"]["data_vector_sha256_float64_le"]
+    )
+
+    covariance_mutation = _pr321_sacc_payload(module)
+    mutated_covariance = covariance_mutation["covariance"].copy()
+    mutated_covariance[2, 2] *= 1.0001
+    covariance_mutation["covariance"] = mutated_covariance
+    changed_covariance = module.analyze_hsc_released_sacc(**covariance_mutation)
+    assert (
+        baseline["fiducial_selection"]["covariance_sha256_float64_le"]
+        != changed_covariance["fiducial_selection"][
+            "covariance_sha256_float64_le"
+        ]
+    )
+
+    def fake_sacc_module(
+        support: np.ndarray,
+        weights: np.ndarray,
+    ) -> SimpleNamespace:
+        tracer_names = module.HSC_SACC_TRACER_ORDER
+        pairs = module.HSC_SACC_TRACER_PAIRS
+        mean = np.linspace(1.0e-10, 2.0e-9, 170)
+        window = SimpleNamespace(values=support, weight=weights)
+        rows = [
+            SimpleNamespace(
+                tracers=pair,
+                value=float(mean[pair_index * 17 + band_index]),
+                tags={
+                    "ell": module.HSC_SACC_ELL_ORDER[band_index],
+                    "window": window,
+                    "window_ind": band_index,
+                },
+            )
+            for pair_index, pair in enumerate(pairs)
+            for band_index in range(17)
+        ]
+        tracers = {
+            name: SimpleNamespace(
+                quantity="galaxy_shear",
+                z=np.linspace(0.0, 3.0, 8),
+                nz=np.linspace(0.1, 1.0, 8),
+            )
+            for name in tracer_names
+        }
+
+        def pair_indices(*, data_type: str, tracers: tuple[str, str]) -> np.ndarray:
+            assert data_type == "cl_ee"
+            pair_index = pairs.index(tuple(tracers))
+            return np.arange(pair_index * 17, (pair_index + 1) * 17)
+
+        def pair_mean(*, data_type: str, tracers: tuple[str, str]) -> np.ndarray:
+            return mean[pair_indices(data_type=data_type, tracers=tracers)]
+
+        payload = SimpleNamespace(
+            get_data_types=lambda: ("cl_ee",),
+            tracers=tracers,
+            data=rows,
+            covariance=SimpleNamespace(dense=np.eye(170)),
+            mean=mean,
+            indices=pair_indices,
+            get_mean=pair_mean,
+        )
+
+        def load_fits(_source: object) -> SimpleNamespace:
+            print(
+                "Warning: The FITS format without the 'sacc_ordering' column "
+                "is deprecated\n"
+                "Assuming data rows are in the correct order as it was before "
+                "version 1.0."
+            )
+            return payload
+
+        return SimpleNamespace(
+            __version__="2.1.2",
+            Sacc=SimpleNamespace(load_fits=load_fits),
+        )
+
+    support = np.arange(15274, dtype=float)
+    weights = np.ones((15274, 17), dtype=float)
+    monkeypatch.setitem(sys.modules, "sacc", fake_sacc_module(support, weights))
+    baseline_windows = worker._load_hsc_sacc(worker.BytesIO(b"baseline"))
+
+    changed_support = support.copy()
+    changed_support[0] += 0.5
+    monkeypatch.setitem(
+        sys.modules,
+        "sacc",
+        fake_sacc_module(changed_support, weights),
+    )
+    support_windows = worker._load_hsc_sacc(worker.BytesIO(b"support"))
+    assert (
+        baseline_windows["window_support_sha256_float64_le"]
+        != support_windows["window_support_sha256_float64_le"]
+    )
+
+    changed_weights = weights.copy()
+    changed_weights[0, 0] += 0.5
+    monkeypatch.setitem(
+        sys.modules,
+        "sacc",
+        fake_sacc_module(support, changed_weights),
+    )
+    weight_windows = worker._load_hsc_sacc(worker.BytesIO(b"weights"))
+    assert (
+        baseline_windows["window_weight_sha256_float64_le"]
+        != weight_windows["window_weight_sha256_float64_le"]
+    )
+
+
+def test_pr321_legacy_order_crosschecks_mean_pair_api_and_covariance() -> None:
+    module = _science()
+    payload = _pr321_sacc_payload(module)
+    result = module.analyze_hsc_released_sacc(**payload)
+    assert result["legacy_order_crosscheck"] == {
+        "status": "INDEPENDENT_SACC_API_CROSSCHECK_PASS",
+        **payload["legacy_order_crosscheck"],
+    }
+
+    for key in payload["legacy_order_crosscheck"]:
+        drifted = _pr321_sacc_payload(module)
+        drifted["legacy_order_crosscheck"] = {
+            **drifted["legacy_order_crosscheck"],
+            key: False,
+        }
+        with pytest.raises(module.HscKidsCurrentStackError, match="ordering crosscheck"):
+            module.analyze_hsc_released_sacc(**drifted)
+
+
+def test_pr321_sacc_is_scalar_tomographic_control_not_directional_mes_input() -> None:
+    module = _science()
+    result = module.analyze_hsc_released_sacc(**_pr321_sacc_payload(module))
+    boundary = result["directional_and_MES_boundary"]
+    assert boundary == {
+        "directional_support_status": (
+            "NONE_COMPRESSED_ROTATION_INVARIANT_POWER_SPECTRA"
+        ),
+        "MES_methodology_role": "SCALAR_TOMOGRAPHIC_CONTROL_ONLY",
+        "vector_tensor_moment_eligibility": (
+            "FORBIDDEN_NO_DIRECTION_INDEXED_FIELD"
+        ),
+        "local_boost_global_tilt_eligibility": (
+            "NOT_APPLICABLE_NO_DIRECTIONAL_RESPONSE"
+        ),
+        "CMB_MES_anchor_compatibility": (
+            "BLOCKED_CROSS_CHANNEL_NO_PHYSICAL_TRANSFER"
+        ),
+    }
+
+
+def test_pr321_rejects_cmb_mes_anchor_without_channel_matched_transfer() -> None:
+    module = _science()
+    result = module.analyze_hsc_released_sacc(**_pr321_sacc_payload(module))
+    boundary = result["directional_and_MES_boundary"]
+    assert (
+        boundary["CMB_MES_anchor_compatibility"]
+        == "BLOCKED_CROSS_CHANNEL_NO_PHYSICAL_TRANSFER"
+    )
+    assert result["artifact_metadata"]["transfer_source"] == "none"
+    assert result["response_rank"]["rank"] is None
+
+
+def test_pr321_status_urls_are_bound_to_correct_internal_prs() -> None:
+    status = (ROOT / "docs/codex_handoff/pr_status.yaml").read_text(encoding="utf-8")
+    mirror = (ROOT / "machine_readable/pr_status.yaml").read_text(encoding="utf-8")
+    assert status == mirror
+    pr289 = status[status.index("    PR-289:") : status.index("    PR-290:")]
+    pr321 = status[status.index("    PR-321:") : status.index("execution_lane:")]
+    assert "https://github.com/cosmosapjw-quantum/htt_base/pull/386" in pr289
+    assert "https://github.com/cosmosapjw-quantum/htt_base/pull/412" in pr321
+    assert (
+        "data_readiness: "
+        "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
+    ) in pr321
+
+
+def test_pr321_semantic_scope_replaces_false_loc_cap() -> None:
+    spec = (ROOT / "docs/research_program/post_pr275/pr321_spec.yaml").read_text(
+        encoding="utf-8"
+    )
+    delta = (ROOT / "docs/PR_DELTAS/pr-321.md").read_text(encoding="utf-8")
+    combined = spec + "\n" + delta
+    assert "semantic_boundary:" in spec
+    assert "exact_allowlist:" in spec
+    assert "generated_and_mirror_paths:" in spec
+    assert "net additions at most 700" not in combined
+    assert "new_science_modules_max: 0" in spec
+
+
+def test_pr321_hsc_sacc_contract_is_hsc_only_and_covariance_bound() -> None:
+    module = _science()
+    result = module.analyze_hsc_released_sacc(**_pr321_sacc_payload(module))
+
+    assert result["terminal_disposition"] == (
+        "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
+    )
+    assert result["full_release"]["vector_size"] == 170
+    assert result["covariance"]["rank"] == 170
+    assert result["window_operator"]["pair_count"] == 10
+    assert result["window_operator"]["bandpowers_per_pair"] == 17
+    assert result["window_operator"]["window_support_sha256_float64_le"] == "1" * 64
+    assert result["window_operator"]["window_weight_sha256_float64_le"] == "2" * 64
+    assert result["reference_status"] == "FIDUCIAL_REFERENCE_VECTOR_STILL_REQUIRED"
+    assert result["observed_state"] == {
+        "observed_payload_validated": True,
+        "observed_released_data_vector_parsed": True,
+        "observed_summary_statistic_present": True,
+        "observed_statistic_seen": True,
+        "htt_derived_statistic_computed": False,
+        "observed_science_inference_executed": False,
+    }
+    assert result["response_rank"]["status"] == "NOT_EVALUATED"
+    assert result["response_rank"]["rank"] is None
+    metadata = result["artifact_metadata"]
+    assert (metadata["transfer_source"], metadata["null_mock_status"]) == (
+        "none", "NOT_PROVIDED_NOT_EVALUATED")
+    assert metadata["unit_status"] == "SACC_NATIVE_CL_EE_NO_CONVERSION"
+    assert metadata["response_rank_status"] == "NOT_EVALUATED"
+    assert len(metadata["caveats"]) == 4
+    assert result["p_value"] is None
+    assert result["source_label"] is None
+    assert result["family_identification"] == "FORBIDDEN"
+    assert "KiDS" not in json.dumps(result)
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    [
+        ("data_type", "cl_bb", "E-mode"),
+        ("tracer_order", ("wl_1", "wl_0", "wl_2", "wl_3"), "tracer order"),
+        ("legacy_stored_order", False, "stored row order"),
+    ],
+)
+def test_pr321_hsc_sacc_rejects_release_semantic_drift(
+    field: str, value: object, message: str
+) -> None:
+    module = _science()
+    payload = _pr321_sacc_payload(module)
+    payload[field] = value
+    with pytest.raises(module.HscKidsCurrentStackError, match=message):
+        module.analyze_hsc_released_sacc(**payload)
+
+
+def test_pr321_hsc_sacc_rejects_missing_window_or_covariance_support() -> None:
+    module = _science()
+    payload = _pr321_sacc_payload(module)
+    payload["window_shapes"] = ((15274, 17),) * 9
+    with pytest.raises(module.HscKidsCurrentStackError, match="window"):
+        module.analyze_hsc_released_sacc(**payload)
+
+    payload = _pr321_sacc_payload(module)
+    payload["window_weight_sha256_float64_le"] = "not-a-digest"
+    with pytest.raises(module.HscKidsCurrentStackError, match="window weights"):
+        module.analyze_hsc_released_sacc(**payload)
+
+    payload = _pr321_sacc_payload(module)
+    payload["window_weight_pair_count"] = 9
+    with pytest.raises(module.HscKidsCurrentStackError, match="window identity"):
+        module.analyze_hsc_released_sacc(**payload)
+
+    payload = _pr321_sacc_payload(module)
+    payload["covariance"] = np.ones((170, 170))
+    with pytest.raises(module.HscKidsCurrentStackError, match="positive definite"):
+        module.analyze_hsc_released_sacc(**payload)
+
+
+def test_pr321_worker_rejects_input_drift_before_sacc_load(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    worker = _worker()
+    source = tmp_path / "hsc.sacc"
+    source.write_bytes(b"not-the-frozen-sacc")
+    loaded = False
+
+    def forbidden(_path: Path):
+        nonlocal loaded
+        loaded = True
+        raise AssertionError("SACC payload loaded before identity rejection")
+
+    monkeypatch.setattr(worker, "_load_hsc_sacc", forbidden)
+    with pytest.raises(worker.HscKidsWorkerError, match="identity"):
+        worker.inspect_hsc_sacc(
+            path=source,
+            confirmation_sha256=worker.PR321_HSC_SACC_SHA256,
+        )
+    assert loaded is False
+
+
+def test_pr321_worker_emits_no_observed_values_or_inference_surface(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    worker = _worker()
+    science = _science()
+    source = tmp_path / "hsc.sacc"
+    source.write_bytes(b"synthetic-sacc-contract")
+    digest = hashlib.sha256(source.read_bytes()).hexdigest()
+    monkeypatch.setattr(worker, "PR321_HSC_SACC_SHA256", digest)
+    monkeypatch.setattr(worker, "PR321_HSC_SACC_SIZE", source.stat().st_size)
+    monkeypatch.setattr(worker, "_load_hsc_sacc", lambda _path: _pr321_sacc_payload(science))
+
+    result = worker.inspect_hsc_sacc(path=source, confirmation_sha256=digest)
+    encoded = json.dumps(result, sort_keys=True)
+    assert result["terminal_disposition"] == (
+        "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
+    )
+    assert result["input_identity"]["sha256"] == digest
+    assert result["input_identity"]["byte_size"] == source.stat().st_size
+    assert result["observed_state"] == {
+        "observed_payload_validated": True,
+        "observed_released_data_vector_parsed": True,
+        "observed_summary_statistic_present": True,
+        "observed_statistic_seen": True,
+        "htt_derived_statistic_computed": False,
+        "observed_science_inference_executed": False,
+    }
+    assert '"data_vector":' not in encoded
+    assert '"likelihood"' not in encoded
+    assert '"posterior"' not in encoded
+    assert '"KiDS"' not in encoded
+
+
+def test_pr321_worker_binds_hash_and_parse_to_one_open_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    worker = _worker()
+    science = _science()
+    source = tmp_path / "hsc.sacc"
+    original = b"frozen-sacc-bytes"
+    replacement = b"changed-sacc-byte"
+    assert len(original) == len(replacement)
+    source.write_bytes(original)
+    digest = hashlib.sha256(original).hexdigest()
+    monkeypatch.setattr(worker, "PR321_HSC_SACC_SHA256", digest)
+    monkeypatch.setattr(worker, "PR321_HSC_SACC_SIZE", len(original))
+
+    parsed_bytes = []
+    def replace_path_then_load(source_input: object):
+        staged = tmp_path / "replacement.sacc"
+        staged.write_bytes(replacement)
+        staged.replace(source)
+        parsed_bytes.append(
+            source_input.getvalue() if hasattr(source_input, "getvalue")
+            else Path(source_input).read_bytes()
+        )
+        return _pr321_sacc_payload(science)
+    monkeypatch.setattr(worker, "_load_hsc_sacc", replace_path_then_load)
+    result = worker.inspect_hsc_sacc(path=source, confirmation_sha256=digest)
+    assert parsed_bytes == [original]
+    assert source.read_bytes() == replacement
+    assert result["input_identity"]["sha256"] == digest
+
+
+def test_pr321_loader_recognizes_the_exact_direct_legacy_order_notice() -> None:
+    worker = _worker()
+    notice = (
+        "Warning: The FITS format without the 'sacc_ordering' column is deprecated\n"
+        "Assuming data rows are in the correct order as it was before version 1.0.\n"
+    )
+    assert worker._legacy_sacc_order_notice(notice) is True
+    assert worker._legacy_sacc_order_notice("") is False
+    assert worker._legacy_sacc_order_notice("unrelated loader output\n") is False

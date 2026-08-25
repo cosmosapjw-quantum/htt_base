@@ -18,13 +18,14 @@ for _name, _value in THREAD_CONTROLS.items():
 
 import argparse
 import hashlib
+from io import BytesIO
 import json
 from pathlib import Path
 import resource
 import sys
 import tempfile
 import time
-from typing import Mapping, Sequence
+from typing import BinaryIO, Mapping, Sequence
 
 import numpy as np
 
@@ -43,6 +44,7 @@ from common.data_identity import (  # noqa: E402
     replay_lane_admission_decision,
 )
 from obsstat.hsc_kids_current_stack import (  # noqa: E402
+    analyze_hsc_released_sacc,
     HscKidsCurrentStackError,
     LabelledEBField,
     PseudoClOperator,
@@ -78,6 +80,10 @@ REQUIRED_COMPONENTS = (
     "hsc_kids_cross_covariance",
 )
 PROFILE_ROWS = {"1": 1, "8": 8, "32": 32, "128": 128, "full": 256}
+PR321_HSC_SACC_SIZE = 22340160
+PR321_HSC_SACC_SHA256 = (
+    "a28f9e2e088e92d96d2d87083a6eeeac4c0c84c6b48e033bd3d1dc1bf0d8958f"
+)
 
 
 class HscKidsWorkerError(RuntimeError):
@@ -107,6 +113,207 @@ def _strict_json_bytes(raw: bytes, *, label: str) -> Mapping[str, object]:
 
 def _raw_hash(raw: bytes) -> str:
     return "sha256:" + hashlib.sha256(raw).hexdigest()
+
+
+def _file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _array_sha256(value: object) -> str:
+    array = np.asarray(value, dtype="<f8", order="C")
+    return hashlib.sha256(array.tobytes(order="C")).hexdigest()
+
+
+def _legacy_sacc_order_notice(output: str) -> bool:
+    return output.splitlines() == [
+        "Warning: The FITS format without the 'sacc_ordering' column is deprecated",
+        "Assuming data rows are in the correct order as it was before version 1.0.",
+    ]
+
+
+def _load_hsc_sacc(source: BinaryIO) -> Mapping[str, object]:
+    try:
+        from contextlib import redirect_stdout
+        from io import StringIO
+        import sacc
+    except ImportError as exc:
+        raise HscKidsWorkerError(
+            "HSC SACC inspection requires the declared local sacc==2.1.2 runtime"
+        ) from exc
+    if getattr(sacc, "__version__", None) != "2.1.2":
+        raise HscKidsWorkerError("HSC SACC loader version must equal 2.1.2")
+    try:
+        loader_output = StringIO()
+        with redirect_stdout(loader_output):
+            payload = sacc.Sacc.load_fits(source)
+    except Exception as exc:
+        raise HscKidsWorkerError("HSC SACC FITS loading failed") from exc
+    direct_output = loader_output.getvalue()
+    legacy_warning = _legacy_sacc_order_notice(direct_output)
+    if direct_output and not legacy_warning:
+        raise HscKidsWorkerError("HSC SACC loader emitted unexpected output")
+    data_types = tuple(payload.get_data_types())
+    if data_types != ("cl_ee",):
+        raise HscKidsWorkerError("HSC SACC data-type inventory drifted")
+    tracer_order = tuple(payload.tracers)
+    tracer_quantities = tuple(payload.tracers[name].quantity for name in tracer_order)
+    tracer_z = tuple(
+        np.asarray(payload.tracers[name].z, dtype=float) for name in tracer_order
+    )
+    tracer_nz = tuple(
+        np.asarray(payload.tracers[name].nz, dtype=float) for name in tracer_order
+    )
+
+    pairs: list[tuple[str, str]] = []
+    pair_rows: dict[tuple[str, str], list[object]] = {}
+    row_values: list[float] = []
+    row_indices_by_pair: dict[tuple[str, str], list[int]] = {}
+    for row_index, row in enumerate(payload.data):
+        pair = tuple(row.tracers)
+        if len(pair) != 2:
+            raise HscKidsWorkerError("HSC SACC tracer-pair shape drifted")
+        typed_pair = (str(pair[0]), str(pair[1]))
+        if typed_pair not in pair_rows:
+            pairs.append(typed_pair)
+            pair_rows[typed_pair] = []
+            row_indices_by_pair[typed_pair] = []
+        pair_rows[typed_pair].append(row)
+        row_indices_by_pair[typed_pair].append(row_index)
+        row_values.append(float(row.value))
+
+    ell_by_pair: list[tuple[float, ...]] = []
+    window_shapes: list[tuple[int, int]] = []
+    window_column_sums: list[tuple[float, ...]] = []
+    canonical_window_support: np.ndarray | None = None
+    window_weight_hasher = hashlib.sha256()
+    pair_selection_indices_match = True
+    pair_selection_values_match = True
+    covariance_selection_indices_match = True
+    dense_covariance = np.asarray(payload.covariance.dense, dtype=float)
+    for pair in pairs:
+        rows = pair_rows[pair]
+        if len(rows) != 17:
+            raise HscKidsWorkerError("HSC SACC bandpower block length drifted")
+        ell_by_pair.append(tuple(float(row.tags["ell"]) for row in rows))
+        first_window = rows[0].tags["window"]
+        weights = np.asarray(first_window.weight, dtype=float)
+        values = np.asarray(first_window.values, dtype=float)
+        if values.shape != (weights.shape[0],):
+            raise HscKidsWorkerError("HSC SACC window harmonic support drifted")
+        for index, row in enumerate(rows):
+            window = row.tags["window"]
+            if (
+                int(row.tags["window_ind"]) != index
+                or not np.array_equal(np.asarray(window.values), values)
+                or not np.array_equal(np.asarray(window.weight), weights)
+            ):
+                raise HscKidsWorkerError("HSC SACC window row binding drifted")
+        support_float64_le = np.asarray(values, dtype="<f8", order="C")
+        weights_float64_le = np.asarray(weights, dtype="<f8", order="C")
+        if canonical_window_support is None:
+            canonical_window_support = support_float64_le.copy()
+        elif not np.array_equal(support_float64_le, canonical_window_support):
+            raise HscKidsWorkerError(
+                "HSC SACC window harmonic support differs across tracer pairs"
+            )
+        window_weight_hasher.update(weights_float64_le.tobytes(order="C"))
+        window_shapes.append(tuple(int(value) for value in weights.shape))
+        window_column_sums.append(tuple(float(value) for value in weights.sum(axis=0)))
+        stored_indices = np.asarray(row_indices_by_pair[pair], dtype=int)
+        api_indices = np.asarray(
+            payload.indices(data_type="cl_ee", tracers=pair), dtype=int
+        )
+        api_values = np.asarray(
+            payload.get_mean(data_type="cl_ee", tracers=pair), dtype=float
+        )
+        stored_values = np.asarray([row.value for row in rows], dtype=float)
+        pair_selection_indices_match &= np.array_equal(api_indices, stored_indices)
+        pair_selection_values_match &= np.array_equal(api_values, stored_values)
+        covariance_selection_indices_match &= np.array_equal(
+            dense_covariance[np.ix_(api_indices, api_indices)],
+            dense_covariance[np.ix_(stored_indices, stored_indices)],
+        )
+
+    payload_mean = np.asarray(payload.mean, dtype=float)
+    row_values_array = np.asarray(row_values, dtype=float)
+    expected_blocks = [
+        list(range(pair_index * 17, (pair_index + 1) * 17))
+        for pair_index in range(len(pairs))
+    ]
+    pair_blocks_contiguous = (
+        [row_indices_by_pair[pair] for pair in pairs] == expected_blocks
+    )
+    if canonical_window_support is None:
+        raise HscKidsWorkerError("HSC SACC window inventory is empty")
+
+    return {
+        "data_type": data_types[0],
+        "tracer_order": tracer_order,
+        "tracer_quantities": tracer_quantities,
+        "tracer_z": tracer_z,
+        "tracer_nz": tracer_nz,
+        "tracer_pairs": tuple(pairs),
+        "ell_by_pair": tuple(ell_by_pair),
+        "window_shapes": tuple(window_shapes),
+        "window_column_sums": tuple(window_column_sums),
+        "window_support_sha256_float64_le": hashlib.sha256(
+            canonical_window_support.tobytes(order="C")
+        ).hexdigest(),
+        "window_weight_sha256_float64_le": window_weight_hasher.hexdigest(),
+        "window_support_identical_across_pairs": True,
+        "window_weight_pair_count": len(pairs),
+        "data_vector": payload_mean,
+        "covariance": dense_covariance,
+        "loader_version": "2.1.2",
+        "legacy_stored_order": legacy_warning,
+        "legacy_order_crosscheck": {
+            "row_values_match_payload_mean": np.array_equal(
+                row_values_array, payload_mean
+            ),
+            "pair_blocks_contiguous": pair_blocks_contiguous,
+            "pair_selection_indices_match": bool(pair_selection_indices_match),
+            "pair_selection_values_match": bool(pair_selection_values_match),
+            "covariance_selection_indices_match": bool(
+                covariance_selection_indices_match
+            ),
+        },
+        "observed_payload_validated": True,
+    }
+
+
+def inspect_hsc_sacc(
+    *, path: Path, confirmation_sha256: str
+) -> dict[str, object]:
+    if confirmation_sha256 != PR321_HSC_SACC_SHA256:
+        raise HscKidsWorkerError("HSC SACC confirmation identity drifted")
+    if not path.is_file() or path.is_symlink():
+        raise HscKidsWorkerError("HSC SACC identity requires one regular file")
+    try:
+        raw = path.read_bytes()
+    except OSError as exc:
+        raise HscKidsWorkerError("HSC SACC identity open failed") from exc
+    if len(raw) != PR321_HSC_SACC_SIZE:
+        raise HscKidsWorkerError("HSC SACC identity byte size drifted")
+    digest = hashlib.sha256(raw).hexdigest()
+    if digest != PR321_HSC_SACC_SHA256:
+        raise HscKidsWorkerError("HSC SACC identity SHA-256 drifted")
+    inputs = _load_hsc_sacc(BytesIO(raw))
+    result = analyze_hsc_released_sacc(**inputs)
+    result["input_identity"] = {
+        "source_release": "HSC_S19A_Y3",
+        "product": "dalal23/hsc_y3_fourier_space_data_vector.sacc",
+        "byte_size": PR321_HSC_SACC_SIZE,
+        "sha256": digest,
+        "data_vector_sha256_float64_le": _array_sha256(inputs["data_vector"]),
+        "covariance_sha256_float64_le": _array_sha256(inputs["covariance"]),
+    }
+    result["generating_procedure"] = "scripts/observed_runs/run_hsc_kids.py"
+    result["worker_sha256"] = _file_sha256(Path(__file__))
+    return result
 
 
 def _validate_attended_admission_binding(raw: bytes, decision) -> None:
@@ -785,20 +992,44 @@ def main(argv: list[str] | None = None) -> int:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--synthetic-profile", action="store_true")
     mode.add_argument("--run-admitted", action="store_true")
+    mode.add_argument("--inspect-hsc-sacc", action="store_true")
     parser.add_argument("--rows", choices=tuple(PROFILE_ROWS), default="full")
     parser.add_argument("--admission", type=Path)
     parser.add_argument("--data-root", type=Path)
+    parser.add_argument("--hsc-sacc", type=Path)
+    parser.add_argument("--confirm-input-sha256")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
         if args.synthetic_profile:
-            if args.admission is not None or args.data_root is not None:
+            if any(
+                value is not None
+                for value in (
+                    args.admission,
+                    args.data_root,
+                    args.hsc_sacc,
+                    args.confirm_input_sha256,
+                )
+            ):
                 raise HscKidsWorkerError("synthetic profile forbids admission and data root")
             payload = synthetic_profile(rows=args.rows)
-        else:
+        elif args.run_admitted:
             if args.admission is None or args.data_root is None:
                 raise HscKidsWorkerError("admitted run requires admission and data root")
+            if args.hsc_sacc is not None or args.confirm_input_sha256 is not None:
+                raise HscKidsWorkerError("admitted run forbids HSC-only SACC arguments")
             payload = run_admitted(admission_path=args.admission, data_root=args.data_root)
+        else:
+            if args.admission is not None or args.data_root is not None:
+                raise HscKidsWorkerError("HSC-only SACC inspection forbids admission inputs")
+            if args.hsc_sacc is None or args.confirm_input_sha256 is None:
+                raise HscKidsWorkerError(
+                    "HSC-only SACC inspection requires path and exact confirmation"
+                )
+            payload = inspect_hsc_sacc(
+                path=args.hsc_sacc,
+                confirmation_sha256=args.confirm_input_sha256,
+            )
         _write_json(args.output, payload)
         print(json.dumps(payload, sort_keys=True, allow_nan=False))
         return 0
