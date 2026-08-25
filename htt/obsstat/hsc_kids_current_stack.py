@@ -1039,6 +1039,11 @@ def analyze_hsc_released_sacc(
             "diagonalized": False,
             "likelihood_ready": False,
         },
+        "response_rank": {
+            "status": "NOT_EVALUATED",
+            "rank": None,
+            "reason": "NO_PREDECLARED_HSC_RESPONSE_OR_REFERENCE",
+        },
         "reference_status": "PREDECLARED_REFERENCE_REQUIRED",
         "terminal_disposition": "READY_FOR_WINDOW_CONVOLVED_REFERENCE",
         "p_value": None,
@@ -1053,7 +1058,19 @@ def analyze_hsc_released_sacc(
             "claim_tier": "diagnostic_only",
             "loader": "sacc==2.1.2",
             "public_use": False,
+            "scope": "exact_HSC_only_released_EE_vector_windows_and_covariance",
+            "transfer_source": "none",
+            "null_mock_status": "NOT_PROVIDED_NOT_EVALUATED",
+            "unit_status": "SACC_NATIVE_CL_EE_NO_CONVERSION",
+            "normalization_status": "APPLY_STORED_BANDPOWER_WINDOWS",
+            "covariance_status": (
+                "FULL_RELEASE_COVARIANCE_CHOLESKY_READY_NOT_LIKELIHOOD_READY"
+            ),
+            "response_rank_status": "NOT_EVALUATED",
             "allowed_use": "window_convolved_HSC_only_reference_preparation",
+            "caveats": ["EE_only_no_EB_closure",
+                        "no_predeclared_reference_or_finite_null_ensemble",
+                        "no_cross_survey_covariance_or_result"],
             "forbidden_uses": [
                 "cross_survey_result",
                 "p_value_without_finite_nulls",

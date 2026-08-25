@@ -18,13 +18,14 @@ for _name, _value in THREAD_CONTROLS.items():
 
 import argparse
 import hashlib
+from io import BytesIO
 import json
 from pathlib import Path
 import resource
 import sys
 import tempfile
 import time
-from typing import Mapping, Sequence
+from typing import BinaryIO, Mapping, Sequence
 
 import numpy as np
 
@@ -134,7 +135,7 @@ def _legacy_sacc_order_notice(output: str) -> bool:
     ]
 
 
-def _load_hsc_sacc(path: Path) -> Mapping[str, object]:
+def _load_hsc_sacc(source: BinaryIO) -> Mapping[str, object]:
     try:
         from contextlib import redirect_stdout
         from io import StringIO
@@ -148,7 +149,7 @@ def _load_hsc_sacc(path: Path) -> Mapping[str, object]:
     try:
         loader_output = StringIO()
         with redirect_stdout(loader_output):
-            payload = sacc.Sacc.load_fits(path)
+            payload = sacc.Sacc.load_fits(source)
     except Exception as exc:
         raise HscKidsWorkerError("HSC SACC FITS loading failed") from exc
     direct_output = loader_output.getvalue()
@@ -220,12 +221,16 @@ def inspect_hsc_sacc(
         raise HscKidsWorkerError("HSC SACC confirmation identity drifted")
     if not path.is_file() or path.is_symlink():
         raise HscKidsWorkerError("HSC SACC identity requires one regular file")
-    if path.stat().st_size != PR321_HSC_SACC_SIZE:
+    try:
+        raw = path.read_bytes()
+    except OSError as exc:
+        raise HscKidsWorkerError("HSC SACC identity open failed") from exc
+    if len(raw) != PR321_HSC_SACC_SIZE:
         raise HscKidsWorkerError("HSC SACC identity byte size drifted")
-    digest = _file_sha256(path)
+    digest = hashlib.sha256(raw).hexdigest()
     if digest != PR321_HSC_SACC_SHA256:
         raise HscKidsWorkerError("HSC SACC identity SHA-256 drifted")
-    inputs = _load_hsc_sacc(path)
+    inputs = _load_hsc_sacc(BytesIO(raw))
     result = analyze_hsc_released_sacc(**inputs)
     result["input_identity"] = {
         "source_release": "HSC_S19A_Y3",

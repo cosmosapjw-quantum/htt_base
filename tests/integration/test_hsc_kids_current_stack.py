@@ -1058,6 +1058,14 @@ def test_pr321_hsc_sacc_contract_is_hsc_only_and_covariance_bound() -> None:
     assert result["observed_payload_validated"] is True
     assert result["observed_statistic_seen"] is False
     assert result["observed_science_executed"] is False
+    assert result["response_rank"]["status"] == "NOT_EVALUATED"
+    assert result["response_rank"]["rank"] is None
+    metadata = result["artifact_metadata"]
+    assert (metadata["transfer_source"], metadata["null_mock_status"]) == (
+        "none", "NOT_PROVIDED_NOT_EVALUATED")
+    assert metadata["unit_status"] == "SACC_NATIVE_CL_EE_NO_CONVERSION"
+    assert metadata["response_rank_status"] == "NOT_EVALUATED"
+    assert len(metadata["caveats"]) == 3
     assert result["p_value"] is None
     assert result["forced_source_label"] is None
     assert "KiDS" not in json.dumps(result)
@@ -1140,6 +1148,37 @@ def test_pr321_worker_emits_no_observed_values_or_inference_surface(
     assert '"likelihood"' not in encoded
     assert '"posterior"' not in encoded
     assert '"KiDS"' not in encoded
+
+
+def test_pr321_worker_binds_hash_and_parse_to_one_open_file(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    worker = _worker()
+    science = _science()
+    source = tmp_path / "hsc.sacc"
+    original = b"frozen-sacc-bytes"
+    replacement = b"changed-sacc-byte"
+    assert len(original) == len(replacement)
+    source.write_bytes(original)
+    digest = hashlib.sha256(original).hexdigest()
+    monkeypatch.setattr(worker, "PR321_HSC_SACC_SHA256", digest)
+    monkeypatch.setattr(worker, "PR321_HSC_SACC_SIZE", len(original))
+
+    parsed_bytes = []
+    def replace_path_then_load(source_input: object):
+        staged = tmp_path / "replacement.sacc"
+        staged.write_bytes(replacement)
+        staged.replace(source)
+        parsed_bytes.append(
+            source_input.getvalue() if hasattr(source_input, "getvalue")
+            else Path(source_input).read_bytes()
+        )
+        return _pr321_sacc_payload(science)
+    monkeypatch.setattr(worker, "_load_hsc_sacc", replace_path_then_load)
+    result = worker.inspect_hsc_sacc(path=source, confirmation_sha256=digest)
+    assert parsed_bytes == [original]
+    assert source.read_bytes() == replacement
+    assert result["input_identity"]["sha256"] == digest
 
 
 def test_pr321_loader_recognizes_the_exact_direct_legacy_order_notice() -> None:
