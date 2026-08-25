@@ -8,6 +8,7 @@ E/B; an explicit registered linear provider must transform them first.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 import math
 from typing import Mapping, Sequence
 
@@ -939,6 +940,8 @@ def analyze_hsc_released_sacc(
     data_type: str,
     tracer_order: Sequence[str],
     tracer_quantities: Sequence[str],
+    tracer_z: Sequence[Sequence[float]],
+    tracer_nz: Sequence[Sequence[float]],
     tracer_pairs: Sequence[Sequence[str]],
     ell_by_pair: Sequence[Sequence[float]],
     window_shapes: Sequence[Sequence[int]],
@@ -947,6 +950,7 @@ def analyze_hsc_released_sacc(
     covariance: object,
     loader_version: str,
     legacy_stored_order: bool,
+    legacy_order_crosscheck: Mapping[str, bool],
     observed_payload_validated: bool,
 ) -> dict[str, object]:
     """Validate the exact HSC Fourier-SACC release surface without inference.
@@ -970,11 +974,62 @@ def analyze_hsc_released_sacc(
     if quantities != ("galaxy_shear",) * 4:
         raise HscKidsCurrentStackError("HSC SACC tracer quantity drifted")
 
+    if len(tracer_z) != 4 or len(tracer_nz) != 4:
+        raise HscKidsCurrentStackError("HSC SACC N(z) must bind all four tracers")
+    nz_binding: list[dict[str, object]] = []
+    for name, raw_z, raw_nz in zip(tracers, tracer_z, tracer_nz, strict=True):
+        z = _finite_vector(raw_z, label=f"HSC SACC {name} N(z) support")
+        nz = _finite_vector(raw_nz, label=f"HSC SACC {name} N(z) density")
+        if z.shape != nz.shape or z.size < 2 or np.any(np.diff(z) <= 0.0):
+            raise HscKidsCurrentStackError(
+                "HSC SACC N(z) support must be shape-matched and strictly increasing"
+            )
+        if np.any(nz < 0.0):
+            raise HscKidsCurrentStackError("HSC SACC N(z) must be nonnegative")
+        widths = np.diff(z)
+        integral = float(np.sum(widths * (nz[:-1] + nz[1:]) / 2.0))
+        if not math.isfinite(integral) or integral <= 0.0:
+            raise HscKidsCurrentStackError("HSC SACC N(z) integral must be positive")
+        weighted = float(
+            np.sum(widths * ((z * nz)[:-1] + (z * nz)[1:]) / 2.0)
+        )
+        nz_binding.append(
+            {
+                "name": name,
+                "z_sha256_float64_le": hashlib.sha256(
+                    np.asarray(z, dtype="<f8").tobytes(order="C")
+                ).hexdigest(),
+                "nz_sha256_float64_le": hashlib.sha256(
+                    np.asarray(nz, dtype="<f8").tobytes(order="C")
+                ).hexdigest(),
+                "sample_count": int(z.size),
+                "z_min": float(z[0]),
+                "z_max": float(z[-1]),
+                "strictly_increasing_z": True,
+                "nz_nonnegative": True,
+                "integral_positive": True,
+                "normalized_mean_z": weighted / integral,
+            }
+        )
+
     pairs = tuple(tuple(pair) for pair in tracer_pairs)
     if pairs != HSC_SACC_TRACER_PAIRS:
         raise HscKidsCurrentStackError("HSC SACC tomographic pair order drifted")
     if legacy_stored_order is not True:
         raise HscKidsCurrentStackError("HSC SACC stored row order was not bound")
+    order_checks = (
+        "row_values_match_payload_mean",
+        "pair_blocks_contiguous",
+        "pair_selection_indices_match",
+        "pair_selection_values_match",
+        "covariance_selection_indices_match",
+    )
+    if not isinstance(legacy_order_crosscheck, Mapping) or any(
+        legacy_order_crosscheck.get(name) is not True for name in order_checks
+    ):
+        raise HscKidsCurrentStackError(
+            "HSC SACC independent legacy ordering crosscheck failed"
+        )
     if loader_version != "2.1.2":
         raise HscKidsCurrentStackError("HSC SACC loader version drifted")
     if observed_payload_validated is not True:
@@ -1015,6 +1070,40 @@ def analyze_hsc_released_sacc(
     eigenvalues = np.linalg.eigvalsh(cov)
     condition = float(eigenvalues[-1] / eigenvalues[0])
 
+    fiducial_band_indices = tuple(
+        index
+        for index, ell in enumerate(HSC_SACC_ELL_ORDER)
+        if 300.0 < ell < 1800.0
+    )
+    if fiducial_band_indices != (2, 3, 4, 5, 6, 7):
+        raise HscKidsCurrentStackError("HSC SACC fiducial ell selection drifted")
+    fiducial_indices = np.asarray(
+        [
+            pair_index * len(HSC_SACC_ELL_ORDER) + band_index
+            for pair_index in range(len(pairs))
+            for band_index in fiducial_band_indices
+        ],
+        dtype=int,
+    )
+    fiducial_vector = np.asarray(vector[fiducial_indices], dtype="<f8")
+    fiducial_covariance = np.asarray(
+        cov[np.ix_(fiducial_indices, fiducial_indices)], dtype="<f8"
+    )
+    fiducial_eigenvalues = np.linalg.eigvalsh(fiducial_covariance)
+    if fiducial_vector.size != 60 or fiducial_covariance.shape != (60, 60):
+        raise HscKidsCurrentStackError("HSC SACC fiducial covariance slice drifted")
+    try:
+        np.linalg.cholesky(fiducial_covariance)
+    except np.linalg.LinAlgError as exc:
+        raise HscKidsCurrentStackError(
+            "HSC SACC fiducial covariance is not positive definite"
+        ) from exc
+
+    def array_sha256(value: np.ndarray) -> str:
+        return hashlib.sha256(
+            np.asarray(value, dtype="<f8").tobytes(order="C")
+        ).hexdigest()
+
     return {
         "capability": "HSC_S19A_Y3_FOURIER_SACC_RELEASE_VECTOR_READINESS",
         "release_id": "HSC_S19A_Y3",
@@ -1022,6 +1111,40 @@ def analyze_hsc_released_sacc(
         "tracer_order": list(tracers),
         "tomographic_pair_order": [list(pair) for pair in pairs],
         "data_vector_size": int(vector.size),
+        "n_z_binding": {
+            "status": "FOUR_TRACER_NZ_BOUND",
+            "tracers": nz_binding,
+        },
+        "full_release": {
+            "status": "FULL_RELEASE_SNAPSHOT_BOUND_NOT_FIDUCIAL_SCIENCE_SELECTION",
+            "data_vector_size": int(vector.size),
+            "data_vector_sha256_float64_le": array_sha256(vector),
+            "covariance_shape": [170, 170],
+            "covariance_sha256_float64_le": array_sha256(cov),
+        },
+        "fiducial_selection": {
+            "status": "OFFICIAL_FIDUCIAL_SCALE_SELECTION_BOUND",
+            "selection_rule": "300_LT_ELL_LT_1800",
+            "ell_centers": [HSC_SACC_ELL_ORDER[index] for index in fiducial_band_indices],
+            "indices": fiducial_indices.tolist(),
+            "data_vector_size": int(fiducial_vector.size),
+            "data_vector_sha256_float64_le": array_sha256(fiducial_vector),
+            "covariance": {
+                "shape": [60, 60],
+                "sha256_float64_le": array_sha256(fiducial_covariance),
+                "rank": int(np.linalg.matrix_rank(fiducial_covariance)),
+                "minimum_eigenvalue": float(fiducial_eigenvalues[0]),
+                "condition_number": float(
+                    fiducial_eigenvalues[-1] / fiducial_eigenvalues[0]
+                ),
+                "cholesky_ready": True,
+                "likelihood_ready": False,
+            },
+        },
+        "legacy_order_crosscheck": {
+            "status": "INDEPENDENT_SACC_API_CROSSCHECK_PASS",
+            **{name: True for name in order_checks},
+        },
         "window_operator": {
             "status": "BANDPOWER_WINDOWS_BOUND",
             "pair_count": len(pairs),
@@ -1034,7 +1157,8 @@ def analyze_hsc_released_sacc(
         "covariance": {
             "status": "FULL_RELEASE_COVARIANCE_CHOLESKY_READY",
             "shape": [170, 170],
-            "rank": 170,
+            "rank": int(np.linalg.matrix_rank(cov)),
+            "minimum_eigenvalue": float(eigenvalues[0]),
             "condition_number": condition,
             "diagonalized": False,
             "likelihood_ready": False,
@@ -1044,8 +1168,14 @@ def analyze_hsc_released_sacc(
             "rank": None,
             "reason": "NO_PREDECLARED_HSC_RESPONSE_OR_REFERENCE",
         },
-        "reference_status": "PREDECLARED_REFERENCE_REQUIRED",
-        "terminal_disposition": "READY_FOR_WINDOW_CONVOLVED_REFERENCE",
+        "reference_status": "FIDUCIAL_REFERENCE_VECTOR_STILL_REQUIRED",
+        "terminal_disposition": (
+            "READY_FOR_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE_SPECIFICATION"
+        ),
+        "mes_methodology_role": "SCALAR_TOMOGRAPHIC_CONTROL_ONLY",
+        "directional_information_status": "PROJECTED_OUT_IN_TOMOGRAPHIC_CL_EE",
+        "mes_vector_tensor_status": "NOT_APPLICABLE_NO_DIRECTION_INDEXED_FIELD",
+        "local_global_status": "NOT_APPLICABLE_NO_DIRECTIONAL_RESPONSE",
         "p_value": None,
         "forced_source_label": None,
         "global_identification": "NOT_ESTABLISHED",
@@ -1058,7 +1188,10 @@ def analyze_hsc_released_sacc(
             "claim_tier": "diagnostic_only",
             "loader": "sacc==2.1.2",
             "public_use": False,
-            "scope": "exact_HSC_only_released_EE_vector_windows_and_covariance",
+            "scope": (
+                "exact_HSC_only_released_EE_vector_Nz_windows_full_and_"
+                "fiducial_covariance"
+            ),
             "transfer_source": "none",
             "null_mock_status": "NOT_PROVIDED_NOT_EVALUATED",
             "unit_status": "SACC_NATIVE_CL_EE_NO_CONVERSION",
@@ -1067,10 +1200,13 @@ def analyze_hsc_released_sacc(
                 "FULL_RELEASE_COVARIANCE_CHOLESKY_READY_NOT_LIKELIHOOD_READY"
             ),
             "response_rank_status": "NOT_EVALUATED",
-            "allowed_use": "window_convolved_HSC_only_reference_preparation",
-            "caveats": ["EE_only_no_EB_closure",
-                        "no_predeclared_reference_or_finite_null_ensemble",
-                        "no_cross_survey_covariance_or_result"],
+            "allowed_use": "fiducial_window_convolved_HSC_only_reference_specification",
+            "caveats": [
+                "EE_only_no_EB_closure",
+                "no_predeclared_reference_or_finite_null_ensemble",
+                "no_cross_survey_covariance_or_result",
+                "scalar_tomographic_control_only_no_directional_MES_field",
+            ],
             "forbidden_uses": [
                 "cross_survey_result",
                 "p_value_without_finite_nulls",

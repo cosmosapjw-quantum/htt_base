@@ -1029,10 +1029,17 @@ def _pr321_sacc_payload(module):
         11000.0,
         14200.0,
     )
+    tracer_z = tuple(np.linspace(0.0, 3.0, 8) for _ in tracer_order)
+    tracer_nz = tuple(
+        np.exp(-0.5 * ((z - mean) / 0.35) ** 2)
+        for z, mean in zip(tracer_z, (0.5, 0.8, 1.1, 1.4), strict=True)
+    )
     return {
         "data_type": "cl_ee",
         "tracer_order": tracer_order,
         "tracer_quantities": ("galaxy_shear",) * 4,
+        "tracer_z": tracer_z,
+        "tracer_nz": tracer_nz,
         "tracer_pairs": tracer_pairs,
         "ell_by_pair": (ell,) * 10,
         "window_shapes": ((15274, 17),) * 10,
@@ -1041,20 +1048,161 @@ def _pr321_sacc_payload(module):
         "covariance": np.diag(np.linspace(1.0e-24, 2.0e-22, 170)),
         "loader_version": "2.1.2",
         "legacy_stored_order": True,
+        "legacy_order_crosscheck": {
+            "row_values_match_payload_mean": True,
+            "pair_blocks_contiguous": True,
+            "pair_selection_indices_match": True,
+            "pair_selection_values_match": True,
+            "covariance_selection_indices_match": True,
+        },
         "observed_payload_validated": True,
     }
+
+
+def test_pr321_requires_and_binds_four_nz_tracers() -> None:
+    module = _science()
+    payload = _pr321_sacc_payload(module)
+    result = module.analyze_hsc_released_sacc(**payload)
+
+    binding = result["n_z_binding"]
+    assert binding["status"] == "FOUR_TRACER_NZ_BOUND"
+    assert [row["name"] for row in binding["tracers"]] == list(
+        payload["tracer_order"]
+    )
+    for row, z, nz in zip(
+        binding["tracers"], payload["tracer_z"], payload["tracer_nz"], strict=True
+    ):
+        assert row["z_sha256_float64_le"] == hashlib.sha256(
+            np.asarray(z, dtype="<f8").tobytes()
+        ).hexdigest()
+        assert row["nz_sha256_float64_le"] == hashlib.sha256(
+            np.asarray(nz, dtype="<f8").tobytes()
+        ).hexdigest()
+        assert row["strictly_increasing_z"] is True
+        assert row["nz_nonnegative"] is True
+        assert row["integral_positive"] is True
+        assert row["sample_count"] == 8
+
+    missing = _pr321_sacc_payload(module)
+    missing["tracer_nz"] = missing["tracer_nz"][:3]
+    with pytest.raises(module.HscKidsCurrentStackError, match="N\\(z\\).*four"):
+        module.analyze_hsc_released_sacc(**missing)
+
+    nonpositive = _pr321_sacc_payload(module)
+    nonpositive["tracer_nz"] = (
+        np.zeros(8),
+        *nonpositive["tracer_nz"][1:],
+    )
+    with pytest.raises(module.HscKidsCurrentStackError, match="N\\(z\\).*positive"):
+        module.analyze_hsc_released_sacc(**nonpositive)
+
+
+def test_pr321_fiducial_indices_and_covariance_slice() -> None:
+    module = _science()
+    payload = _pr321_sacc_payload(module)
+    result = module.analyze_hsc_released_sacc(**payload)
+
+    expected_indices = [
+        pair_index * 17 + band_index
+        for pair_index in range(10)
+        for band_index in range(2, 8)
+    ]
+    vector = np.asarray(payload["data_vector"], dtype="<f8")[expected_indices]
+    covariance = np.asarray(payload["covariance"], dtype="<f8")[
+        np.ix_(expected_indices, expected_indices)
+    ]
+    fiducial = result["fiducial_selection"]
+    assert fiducial["selection_rule"] == "300_LT_ELL_LT_1800"
+    assert fiducial["ell_centers"] == [350.0, 500.0, 700.0, 900.0, 1200.0, 1600.0]
+    assert fiducial["indices"] == expected_indices
+    assert fiducial["data_vector_size"] == 60
+    assert fiducial["data_vector_sha256_float64_le"] == hashlib.sha256(
+        vector.tobytes()
+    ).hexdigest()
+    assert fiducial["covariance"]["shape"] == [60, 60]
+    assert fiducial["covariance"]["sha256_float64_le"] == hashlib.sha256(
+        covariance.tobytes()
+    ).hexdigest()
+    assert fiducial["covariance"]["rank"] == 60
+    assert fiducial["covariance"]["minimum_eigenvalue"] > 0.0
+    assert result["terminal_disposition"] == (
+        "READY_FOR_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE_SPECIFICATION"
+    )
+
+
+def test_pr321_legacy_order_crosschecks_mean_pair_api_and_covariance() -> None:
+    module = _science()
+    payload = _pr321_sacc_payload(module)
+    result = module.analyze_hsc_released_sacc(**payload)
+    assert result["legacy_order_crosscheck"] == {
+        "status": "INDEPENDENT_SACC_API_CROSSCHECK_PASS",
+        **payload["legacy_order_crosscheck"],
+    }
+
+    for key in payload["legacy_order_crosscheck"]:
+        drifted = _pr321_sacc_payload(module)
+        drifted["legacy_order_crosscheck"] = {
+            **drifted["legacy_order_crosscheck"],
+            key: False,
+        }
+        with pytest.raises(module.HscKidsCurrentStackError, match="ordering crosscheck"):
+            module.analyze_hsc_released_sacc(**drifted)
+
+
+def test_pr321_mes_role_is_scalar_control_only() -> None:
+    module = _science()
+    result = module.analyze_hsc_released_sacc(**_pr321_sacc_payload(module))
+    assert result["mes_methodology_role"] == "SCALAR_TOMOGRAPHIC_CONTROL_ONLY"
+    assert (
+        result["directional_information_status"]
+        == "PROJECTED_OUT_IN_TOMOGRAPHIC_CL_EE"
+    )
+    assert (
+        result["mes_vector_tensor_status"]
+        == "NOT_APPLICABLE_NO_DIRECTION_INDEXED_FIELD"
+    )
+    assert result["local_global_status"] == "NOT_APPLICABLE_NO_DIRECTIONAL_RESPONSE"
+
+
+def test_pr321_status_urls_are_bound_to_correct_internal_prs() -> None:
+    status = (ROOT / "docs/codex_handoff/pr_status.yaml").read_text(encoding="utf-8")
+    mirror = (ROOT / "machine_readable/pr_status.yaml").read_text(encoding="utf-8")
+    assert status == mirror
+    pr289 = status[status.index("    PR-289:") : status.index("    PR-290:")]
+    pr321 = status[status.index("    PR-321:") : status.index("execution_lane:")]
+    assert "https://github.com/cosmosapjw-quantum/htt_base/pull/386" in pr289
+    assert "https://github.com/cosmosapjw-quantum/htt_base/pull/412" in pr321
+    assert (
+        "data_readiness: "
+        "READY_FOR_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE_SPECIFICATION"
+    ) in pr321
+
+
+def test_pr321_semantic_scope_replaces_false_loc_cap() -> None:
+    spec = (ROOT / "docs/research_program/post_pr275/pr321_spec.yaml").read_text(
+        encoding="utf-8"
+    )
+    delta = (ROOT / "docs/PR_DELTAS/pr-321.md").read_text(encoding="utf-8")
+    combined = spec + "\n" + delta
+    assert "semantic_boundary:" in spec
+    assert "exact_allowlist:" in spec
+    assert "generated_and_mirror_paths:" in spec
+    assert "net additions at most 700" not in combined
+    assert "new_science_modules_max: 0" in spec
 
 
 def test_pr321_hsc_sacc_contract_is_hsc_only_and_covariance_bound() -> None:
     module = _science()
     result = module.analyze_hsc_released_sacc(**_pr321_sacc_payload(module))
 
-    assert result["terminal_disposition"] == "READY_FOR_WINDOW_CONVOLVED_REFERENCE"
+    assert result["terminal_disposition"] == (
+        "READY_FOR_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE_SPECIFICATION"
+    )
     assert result["data_vector_size"] == 170
     assert result["covariance"]["rank"] == 170
     assert result["window_operator"]["pair_count"] == 10
     assert result["window_operator"]["bandpowers_per_pair"] == 17
-    assert result["reference_status"] == "PREDECLARED_REFERENCE_REQUIRED"
+    assert result["reference_status"] == "FIDUCIAL_REFERENCE_VECTOR_STILL_REQUIRED"
     assert result["observed_payload_validated"] is True
     assert result["observed_statistic_seen"] is False
     assert result["observed_science_executed"] is False
@@ -1065,7 +1213,7 @@ def test_pr321_hsc_sacc_contract_is_hsc_only_and_covariance_bound() -> None:
         "none", "NOT_PROVIDED_NOT_EVALUATED")
     assert metadata["unit_status"] == "SACC_NATIVE_CL_EE_NO_CONVERSION"
     assert metadata["response_rank_status"] == "NOT_EVALUATED"
-    assert len(metadata["caveats"]) == 3
+    assert len(metadata["caveats"]) == 4
     assert result["p_value"] is None
     assert result["forced_source_label"] is None
     assert "KiDS" not in json.dumps(result)
@@ -1138,7 +1286,9 @@ def test_pr321_worker_emits_no_observed_values_or_inference_surface(
 
     result = worker.inspect_hsc_sacc(path=source, confirmation_sha256=digest)
     encoded = json.dumps(result, sort_keys=True)
-    assert result["terminal_disposition"] == "READY_FOR_WINDOW_CONVOLVED_REFERENCE"
+    assert result["terminal_disposition"] == (
+        "READY_FOR_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE_SPECIFICATION"
+    )
     assert result["input_identity"]["sha256"] == digest
     assert result["input_identity"]["byte_size"] == source.stat().st_size
     assert result["observed_payload_validated"] is True

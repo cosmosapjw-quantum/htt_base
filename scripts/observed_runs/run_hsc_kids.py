@@ -161,10 +161,18 @@ def _load_hsc_sacc(source: BinaryIO) -> Mapping[str, object]:
         raise HscKidsWorkerError("HSC SACC data-type inventory drifted")
     tracer_order = tuple(payload.tracers)
     tracer_quantities = tuple(payload.tracers[name].quantity for name in tracer_order)
+    tracer_z = tuple(
+        np.asarray(payload.tracers[name].z, dtype=float) for name in tracer_order
+    )
+    tracer_nz = tuple(
+        np.asarray(payload.tracers[name].nz, dtype=float) for name in tracer_order
+    )
 
     pairs: list[tuple[str, str]] = []
     pair_rows: dict[tuple[str, str], list[object]] = {}
-    for row in payload.data:
+    row_values: list[float] = []
+    row_indices_by_pair: dict[tuple[str, str], list[int]] = {}
+    for row_index, row in enumerate(payload.data):
         pair = tuple(row.tracers)
         if len(pair) != 2:
             raise HscKidsWorkerError("HSC SACC tracer-pair shape drifted")
@@ -172,11 +180,18 @@ def _load_hsc_sacc(source: BinaryIO) -> Mapping[str, object]:
         if typed_pair not in pair_rows:
             pairs.append(typed_pair)
             pair_rows[typed_pair] = []
+            row_indices_by_pair[typed_pair] = []
         pair_rows[typed_pair].append(row)
+        row_indices_by_pair[typed_pair].append(row_index)
+        row_values.append(float(row.value))
 
     ell_by_pair: list[tuple[float, ...]] = []
     window_shapes: list[tuple[int, int]] = []
     window_column_sums: list[tuple[float, ...]] = []
+    pair_selection_indices_match = True
+    pair_selection_values_match = True
+    covariance_selection_indices_match = True
+    dense_covariance = np.asarray(payload.covariance.dense, dtype=float)
     for pair in pairs:
         rows = pair_rows[pair]
         if len(rows) != 17:
@@ -197,19 +212,56 @@ def _load_hsc_sacc(source: BinaryIO) -> Mapping[str, object]:
                 raise HscKidsWorkerError("HSC SACC window row binding drifted")
         window_shapes.append(tuple(int(value) for value in weights.shape))
         window_column_sums.append(tuple(float(value) for value in weights.sum(axis=0)))
+        stored_indices = np.asarray(row_indices_by_pair[pair], dtype=int)
+        api_indices = np.asarray(
+            payload.indices(data_type="cl_ee", tracers=pair), dtype=int
+        )
+        api_values = np.asarray(
+            payload.get_mean(data_type="cl_ee", tracers=pair), dtype=float
+        )
+        stored_values = np.asarray([row.value for row in rows], dtype=float)
+        pair_selection_indices_match &= np.array_equal(api_indices, stored_indices)
+        pair_selection_values_match &= np.array_equal(api_values, stored_values)
+        covariance_selection_indices_match &= np.array_equal(
+            dense_covariance[np.ix_(api_indices, api_indices)],
+            dense_covariance[np.ix_(stored_indices, stored_indices)],
+        )
+
+    payload_mean = np.asarray(payload.mean, dtype=float)
+    row_values_array = np.asarray(row_values, dtype=float)
+    expected_blocks = [
+        list(range(pair_index * 17, (pair_index + 1) * 17))
+        for pair_index in range(len(pairs))
+    ]
+    pair_blocks_contiguous = (
+        [row_indices_by_pair[pair] for pair in pairs] == expected_blocks
+    )
 
     return {
         "data_type": data_types[0],
         "tracer_order": tracer_order,
         "tracer_quantities": tracer_quantities,
+        "tracer_z": tracer_z,
+        "tracer_nz": tracer_nz,
         "tracer_pairs": tuple(pairs),
         "ell_by_pair": tuple(ell_by_pair),
         "window_shapes": tuple(window_shapes),
         "window_column_sums": tuple(window_column_sums),
-        "data_vector": np.asarray(payload.mean, dtype=float),
-        "covariance": np.asarray(payload.covariance.dense, dtype=float),
+        "data_vector": payload_mean,
+        "covariance": dense_covariance,
         "loader_version": "2.1.2",
         "legacy_stored_order": legacy_warning,
+        "legacy_order_crosscheck": {
+            "row_values_match_payload_mean": np.array_equal(
+                row_values_array, payload_mean
+            ),
+            "pair_blocks_contiguous": pair_blocks_contiguous,
+            "pair_selection_indices_match": bool(pair_selection_indices_match),
+            "pair_selection_values_match": bool(pair_selection_values_match),
+            "covariance_selection_indices_match": bool(
+                covariance_selection_indices_match
+            ),
+        },
         "observed_payload_validated": True,
     }
 

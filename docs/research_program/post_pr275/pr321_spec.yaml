@@ -1,6 +1,6 @@
 schema_version: 1
 pr_id: PR-321
-title: HSC S19A/Y3 Fourier-space SACC fast analysis
+title: HSC S19A/Y3 Fourier-space SACC released-vector inspection
 base:
   commit: a968e11461ed28c8d5cc1244f0122edc704579c4
   tree: 3e1f1cf27683d122618de6b8296dbc1ca4f6f27f
@@ -20,6 +20,23 @@ scope:
   - reuse its declared HSC-only data vector, tracers, windows and covariance
   - emit either a covariance-bound HSC-only diagnostic or a typed blocker
   - keep the concurrent user-owned catalogue downloader read-only
+semantic_boundary:
+  - one HSC-only release-vector readiness cell
+  - no likelihood, null inference, KiDS result, or MES directional result
+substantive_paths:
+  exact_allowlist:
+    - htt/obsstat/hsc_kids_current_stack.py
+    - scripts/observed_runs/run_hsc_kids.py
+    - tests/integration/test_hsc_kids_current_stack.py
+    - docs/PR_DELTAS/pr-321.md
+    - docs/research_program/post_pr275/pr321_spec.yaml
+    - docs/research_program/post_pr275/pr321_hsc_sacc_report.md
+generated_and_mirror_paths:
+  derived_only: true
+  exact_allowlist:
+    - docs/generated/pr321_hsc_sacc_result.json
+    - docs/codex_handoff/pr_status.yaml
+    - machine_readable/pr_status.yaml
 claim_ceiling:
   tier: diagnostic_only
   allowed:
