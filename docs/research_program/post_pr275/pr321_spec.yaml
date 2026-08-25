@@ -23,6 +23,8 @@ scope:
 semantic_boundary:
   - one HSC-only release-vector readiness cell
   - no likelihood, null inference, KiDS result, or MES directional result
+  - released cl_ee preserves tomography but contains no direction-indexed field
+  - CMB MES anchors are incompatible without a channel-matched physical transfer
 substantive_paths:
   exact_allowlist:
     - htt/obsstat/hsc_kids_current_stack.py
@@ -54,9 +56,24 @@ execution:
   kids_payload_open: forbidden
   observed_statistic_seen_on_spec_freeze: false
   observed_science_executed_on_spec_freeze: false
+observed_state_after_exact_replay:
+  observed_payload_validated: true
+  observed_released_data_vector_parsed: true
+  observed_summary_statistic_present: true
+  observed_statistic_seen: true
+  htt_derived_statistic_computed: false
+  observed_science_inference_executed: false
+MES_boundary:
+  directional_support_status: NONE_COMPRESSED_ROTATION_INVARIANT_POWER_SPECTRA
+  methodology_role: SCALAR_TOMOGRAPHIC_CONTROL_ONLY
+  vector_tensor_moment_eligibility: FORBIDDEN_NO_DIRECTION_INDEXED_FIELD
+  local_boost_global_tilt_eligibility: NOT_APPLICABLE_NO_DIRECTIONAL_RESPONSE
+  CMB_anchor_compatibility: BLOCKED_CROSS_CHANNEL_NO_PHYSICAL_TRANSFER
 pass:
   - exact SACC hash and byte size match
   - supported data types, tracer ordering, covariance and window semantics are explicit
+  - raw N(z) integrals and exact z/nz hashes are bound without rewriting the arrays
+  - canonical window support, ordered pair weights and fiducial indices are content-bound
   - focused tests and independent review have no P0 or P1
   - generated result/report is reproducible from the exact SACC or records a typed blocker
 stop:

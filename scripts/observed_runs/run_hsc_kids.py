@@ -188,6 +188,8 @@ def _load_hsc_sacc(source: BinaryIO) -> Mapping[str, object]:
     ell_by_pair: list[tuple[float, ...]] = []
     window_shapes: list[tuple[int, int]] = []
     window_column_sums: list[tuple[float, ...]] = []
+    canonical_window_support: np.ndarray | None = None
+    window_weight_hasher = hashlib.sha256()
     pair_selection_indices_match = True
     pair_selection_values_match = True
     covariance_selection_indices_match = True
@@ -210,6 +212,15 @@ def _load_hsc_sacc(source: BinaryIO) -> Mapping[str, object]:
                 or not np.array_equal(np.asarray(window.weight), weights)
             ):
                 raise HscKidsWorkerError("HSC SACC window row binding drifted")
+        support_float64_le = np.asarray(values, dtype="<f8", order="C")
+        weights_float64_le = np.asarray(weights, dtype="<f8", order="C")
+        if canonical_window_support is None:
+            canonical_window_support = support_float64_le.copy()
+        elif not np.array_equal(support_float64_le, canonical_window_support):
+            raise HscKidsWorkerError(
+                "HSC SACC window harmonic support differs across tracer pairs"
+            )
+        window_weight_hasher.update(weights_float64_le.tobytes(order="C"))
         window_shapes.append(tuple(int(value) for value in weights.shape))
         window_column_sums.append(tuple(float(value) for value in weights.sum(axis=0)))
         stored_indices = np.asarray(row_indices_by_pair[pair], dtype=int)
@@ -236,6 +247,8 @@ def _load_hsc_sacc(source: BinaryIO) -> Mapping[str, object]:
     pair_blocks_contiguous = (
         [row_indices_by_pair[pair] for pair in pairs] == expected_blocks
     )
+    if canonical_window_support is None:
+        raise HscKidsWorkerError("HSC SACC window inventory is empty")
 
     return {
         "data_type": data_types[0],
@@ -247,6 +260,12 @@ def _load_hsc_sacc(source: BinaryIO) -> Mapping[str, object]:
         "ell_by_pair": tuple(ell_by_pair),
         "window_shapes": tuple(window_shapes),
         "window_column_sums": tuple(window_column_sums),
+        "window_support_sha256_float64_le": hashlib.sha256(
+            canonical_window_support.tobytes(order="C")
+        ).hexdigest(),
+        "window_weight_sha256_float64_le": window_weight_hasher.hexdigest(),
+        "window_support_identical_across_pairs": True,
+        "window_weight_pair_count": len(pairs),
         "data_vector": payload_mean,
         "covariance": dense_covariance,
         "loader_version": "2.1.2",

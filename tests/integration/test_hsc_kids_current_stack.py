@@ -1044,6 +1044,10 @@ def _pr321_sacc_payload(module):
         "ell_by_pair": (ell,) * 10,
         "window_shapes": ((15274, 17),) * 10,
         "window_column_sums": (tuple(np.ones(17)),) * 10,
+        "window_support_sha256_float64_le": "1" * 64,
+        "window_weight_sha256_float64_le": "2" * 64,
+        "window_support_identical_across_pairs": True,
+        "window_weight_pair_count": 10,
         "data_vector": np.linspace(1.0e-10, 2.0e-9, 170),
         "covariance": np.diag(np.linspace(1.0e-24, 2.0e-22, 170)),
         "loader_version": "2.1.2",
@@ -1082,6 +1086,8 @@ def test_pr321_requires_and_binds_four_nz_tracers() -> None:
         assert row["nz_nonnegative"] is True
         assert row["integral_positive"] is True
         assert row["sample_count"] == 8
+        expected_integral = np.sum(np.diff(z) * (nz[:-1] + nz[1:]) / 2.0)
+        assert row["integral_raw"] == pytest.approx(expected_integral)
 
     missing = _pr321_sacc_payload(module)
     missing["tracer_nz"] = missing["tracer_nz"][:3]
@@ -1115,6 +1121,9 @@ def test_pr321_fiducial_indices_and_covariance_slice() -> None:
     assert fiducial["selection_rule"] == "300_LT_ELL_LT_1800"
     assert fiducial["ell_centers"] == [350.0, 500.0, 700.0, 900.0, 1200.0, 1600.0]
     assert fiducial["indices"] == expected_indices
+    assert fiducial["ordered_index_sha256"] == hashlib.sha256(
+        np.asarray(expected_indices, dtype="<i8").tobytes()
+    ).hexdigest()
     assert fiducial["data_vector_size"] == 60
     assert fiducial["data_vector_sha256_float64_le"] == hashlib.sha256(
         vector.tobytes()
@@ -1126,7 +1135,7 @@ def test_pr321_fiducial_indices_and_covariance_slice() -> None:
     assert fiducial["covariance"]["rank"] == 60
     assert fiducial["covariance"]["minimum_eigenvalue"] > 0.0
     assert result["terminal_disposition"] == (
-        "READY_FOR_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE_SPECIFICATION"
+        "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
     )
 
 
@@ -1149,19 +1158,37 @@ def test_pr321_legacy_order_crosschecks_mean_pair_api_and_covariance() -> None:
             module.analyze_hsc_released_sacc(**drifted)
 
 
-def test_pr321_mes_role_is_scalar_control_only() -> None:
+def test_pr321_sacc_is_scalar_tomographic_control_not_directional_mes_input() -> None:
     module = _science()
     result = module.analyze_hsc_released_sacc(**_pr321_sacc_payload(module))
-    assert result["mes_methodology_role"] == "SCALAR_TOMOGRAPHIC_CONTROL_ONLY"
+    boundary = result["directional_and_MES_boundary"]
+    assert boundary == {
+        "directional_support_status": (
+            "NONE_COMPRESSED_ROTATION_INVARIANT_POWER_SPECTRA"
+        ),
+        "MES_methodology_role": "SCALAR_TOMOGRAPHIC_CONTROL_ONLY",
+        "vector_tensor_moment_eligibility": (
+            "FORBIDDEN_NO_DIRECTION_INDEXED_FIELD"
+        ),
+        "local_boost_global_tilt_eligibility": (
+            "NOT_APPLICABLE_NO_DIRECTIONAL_RESPONSE"
+        ),
+        "CMB_MES_anchor_compatibility": (
+            "BLOCKED_CROSS_CHANNEL_NO_PHYSICAL_TRANSFER"
+        ),
+    }
+
+
+def test_pr321_rejects_cmb_mes_anchor_without_channel_matched_transfer() -> None:
+    module = _science()
+    result = module.analyze_hsc_released_sacc(**_pr321_sacc_payload(module))
+    boundary = result["directional_and_MES_boundary"]
     assert (
-        result["directional_information_status"]
-        == "PROJECTED_OUT_IN_TOMOGRAPHIC_CL_EE"
+        boundary["CMB_MES_anchor_compatibility"]
+        == "BLOCKED_CROSS_CHANNEL_NO_PHYSICAL_TRANSFER"
     )
-    assert (
-        result["mes_vector_tensor_status"]
-        == "NOT_APPLICABLE_NO_DIRECTION_INDEXED_FIELD"
-    )
-    assert result["local_global_status"] == "NOT_APPLICABLE_NO_DIRECTIONAL_RESPONSE"
+    assert result["artifact_metadata"]["transfer_source"] == "none"
+    assert result["response_rank"]["rank"] is None
 
 
 def test_pr321_status_urls_are_bound_to_correct_internal_prs() -> None:
@@ -1174,7 +1201,7 @@ def test_pr321_status_urls_are_bound_to_correct_internal_prs() -> None:
     assert "https://github.com/cosmosapjw-quantum/htt_base/pull/412" in pr321
     assert (
         "data_readiness: "
-        "READY_FOR_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE_SPECIFICATION"
+        "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
     ) in pr321
 
 
@@ -1196,15 +1223,21 @@ def test_pr321_hsc_sacc_contract_is_hsc_only_and_covariance_bound() -> None:
     result = module.analyze_hsc_released_sacc(**_pr321_sacc_payload(module))
 
     assert result["terminal_disposition"] == (
-        "READY_FOR_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE_SPECIFICATION"
+        "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
     )
     assert result["data_vector_size"] == 170
     assert result["covariance"]["rank"] == 170
     assert result["window_operator"]["pair_count"] == 10
     assert result["window_operator"]["bandpowers_per_pair"] == 17
+    assert result["window_operator"]["window_support_sha256_float64_le"] == "1" * 64
+    assert result["window_operator"]["window_weight_sha256_float64_le"] == "2" * 64
     assert result["reference_status"] == "FIDUCIAL_REFERENCE_VECTOR_STILL_REQUIRED"
     assert result["observed_payload_validated"] is True
-    assert result["observed_statistic_seen"] is False
+    assert result["observed_released_data_vector_parsed"] is True
+    assert result["observed_summary_statistic_present"] is True
+    assert result["observed_statistic_seen"] is True
+    assert result["htt_derived_statistic_computed"] is False
+    assert result["observed_science_inference_executed"] is False
     assert result["observed_science_executed"] is False
     assert result["response_rank"]["status"] == "NOT_EVALUATED"
     assert result["response_rank"]["rank"] is None
@@ -1215,7 +1248,9 @@ def test_pr321_hsc_sacc_contract_is_hsc_only_and_covariance_bound() -> None:
     assert metadata["response_rank_status"] == "NOT_EVALUATED"
     assert len(metadata["caveats"]) == 4
     assert result["p_value"] is None
+    assert result["source_label"] is None
     assert result["forced_source_label"] is None
+    assert result["family_identification"] == "FORBIDDEN"
     assert "KiDS" not in json.dumps(result)
 
 
@@ -1242,6 +1277,16 @@ def test_pr321_hsc_sacc_rejects_missing_window_or_covariance_support() -> None:
     payload = _pr321_sacc_payload(module)
     payload["window_shapes"] = ((15274, 17),) * 9
     with pytest.raises(module.HscKidsCurrentStackError, match="window"):
+        module.analyze_hsc_released_sacc(**payload)
+
+    payload = _pr321_sacc_payload(module)
+    payload["window_weight_sha256_float64_le"] = "not-a-digest"
+    with pytest.raises(module.HscKidsCurrentStackError, match="window weights"):
+        module.analyze_hsc_released_sacc(**payload)
+
+    payload = _pr321_sacc_payload(module)
+    payload["window_weight_pair_count"] = 9
+    with pytest.raises(module.HscKidsCurrentStackError, match="window identity"):
         module.analyze_hsc_released_sacc(**payload)
 
     payload = _pr321_sacc_payload(module)
@@ -1287,12 +1332,16 @@ def test_pr321_worker_emits_no_observed_values_or_inference_surface(
     result = worker.inspect_hsc_sacc(path=source, confirmation_sha256=digest)
     encoded = json.dumps(result, sort_keys=True)
     assert result["terminal_disposition"] == (
-        "READY_FOR_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE_SPECIFICATION"
+        "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
     )
     assert result["input_identity"]["sha256"] == digest
     assert result["input_identity"]["byte_size"] == source.stat().st_size
     assert result["observed_payload_validated"] is True
-    assert result["observed_statistic_seen"] is False
+    assert result["observed_released_data_vector_parsed"] is True
+    assert result["observed_summary_statistic_present"] is True
+    assert result["observed_statistic_seen"] is True
+    assert result["htt_derived_statistic_computed"] is False
+    assert result["observed_science_inference_executed"] is False
     assert result["observed_science_executed"] is False
     assert '"data_vector":' not in encoded
     assert '"likelihood"' not in encoded

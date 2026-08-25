@@ -780,14 +780,17 @@ stacked_pr_execution:
       base_sha: a968e11461ed28c8d5cc1244f0122edc704579c4
       predecessor_pr: PR-320
       predecessor_sealed_sha: a968e11461ed28c8d5cc1244f0122edc704579c4
-      sealed_head: 67087eefee876b25a99b021e0d0e8f0831226646
+      sealed_head: null
       pushed_ref: refs/heads/changeset/pr321-hsc-s19a-sacc-fast-analysis-20260825
       pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/412
-      production_hash: dc29fe3aaa17dc223c243c4abc142578d2ac66348718a15a967dda6f04f1e4ac
-      dependency_hashes: {candidate_tree: 8f122f174d7daf77021f9b88f5076e832c945d3d}
+      production_hash: 11c973e9b200fdcaaf0a027995d350ca0813d6bffab05a7f8f8daffde7c0855d
+      dependency_hashes: {candidate_tree: PENDING_FRESH_CONTEXT_REVIEW,
+        worker_sha256: 8189ba2b946caffe530115a8c85a01e4699cdd155c02d24690c5e35792fbddb8,
+        result_sha256: 3fdd297c8a04551c64f9791e7794f0ed8224b67f7bd14ae0022a47b83e342526}
       gate_dispositions: {eligibility: PASS, focused_tests: PASS,
         final_review: PENDING_FRESH_CONTEXT_REVIEW, observed_execution: false,
-        data_readiness: READY_FOR_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE_SPECIFICATION}
+        observed_statistic_seen: true, htt_inference_executed: false,
+        data_readiness: READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE}
       assurance_budget: {maximum: 8, consumed: 4}
 execution_lane:
   PR-167: defensible
