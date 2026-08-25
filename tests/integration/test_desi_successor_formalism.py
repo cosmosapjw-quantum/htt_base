@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import builtins
 import importlib.util
 import json
 from pathlib import Path
@@ -878,7 +879,7 @@ def test_pr317_current_raw_schema_stops_before_observed_statistic(worker) -> Non
     assert report["forced_source_label"] is None
 
 
-def test_pr317_hypothetical_complete_schema_is_not_blocked(worker) -> None:
+def test_pr317_hypothetical_complete_schema_has_no_declared_blocker(worker) -> None:
     magnitude_columns = {
         "RA",
         "DEC",
@@ -902,6 +903,136 @@ def test_pr317_hypothetical_complete_schema_is_not_blocked(worker) -> None:
         random_window_cap_shape=(3, 12 * 64 * 64),
     )
 
-    assert report["terminal_disposition"] == "RAW_SCHEMA_COMPATIBLE_WITH_PR311"
+    assert report["terminal_disposition"] == "PREFLIGHT_NO_DECLARED_SCHEMA_BLOCKER"
     assert report["blockers"] == []
     assert report["observed_statistic_seen"] is False
+
+
+def _pr317_acquisition_payload(window: Path) -> dict[str, object]:
+    records = [
+        {"family": "ezmock", "realization": value}
+        for value in range(1, 1001)
+    ] + [
+        {"family": "abacus", "realization": value}
+        for value in range(25)
+    ]
+    return {
+        "schema": "htt.desi_dr1_mock_acquisition.v2",
+        "status": "complete",
+        "authenticated_counts": {"abacus": 25, "ezmock": 1000},
+        "final_full_data_rehash": True,
+        "aggregate_input_hash": "sha256:" + "a" * 64,
+        "observed": {
+            "sample": "DESI_DR1_BGS_BRIGHT-21.5",
+            "data_files": [],
+            "random_window": {"path": str(window)},
+        },
+        "records": records,
+    }
+
+
+def _patch_pr317_schema_readers(worker, monkeypatch, tmp_path: Path) -> None:
+    def manifest_paths(_rows, *, label: str):
+        stem = label.replace("[", "-").replace("]", "")
+        return (tmp_path / f"{stem}-NGC.fits", tmp_path / f"{stem}-SGC.fits")
+
+    def fits_columns(path: Path):
+        base = {"RA", "DEC", "Z", "WEIGHT"}
+        if "Abacus" in path.name:
+            return frozenset(base | {"R_MAG_APP", "R_MAG_ABS"})
+        return frozenset(base)
+
+    monkeypatch.setattr(worker, "_manifest_paths", manifest_paths)
+    monkeypatch.setattr(worker, "_manifest_window", lambda _row, *, label: tmp_path / "window.npz")
+    monkeypatch.setattr(worker, "_fits_column_names", fits_columns)
+    monkeypatch.setattr(
+        worker,
+        "_window_contract",
+        lambda _path: (frozenset({"NGC", "SGC", "nside", "zmin", "zmax"}), (49152,)),
+    )
+
+
+def test_pr317_manifest_preflight_reaches_typed_no_number_blocker(
+    worker, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    window = tmp_path / "window.npz"
+    window.touch()
+    manifest = tmp_path / "acquisition.json"
+    manifest.write_text(json.dumps(_pr317_acquisition_payload(window)), encoding="utf-8")
+    _patch_pr317_schema_readers(worker, monkeypatch, tmp_path)
+
+    report = worker.preflight_existing_acquisition(manifest)
+
+    assert report["terminal_disposition"] == "BLOCKED_EXISTING_RAW_INSUFFICIENT_FOR_PR311"
+    assert report["acquisition"]["ezmock_realizations"] == 1000
+    assert report["acquisition"]["abacus_realizations"] == 25
+    assert report["observed_payload_rows_read"] is False
+    assert report["observed_statistic_seen"] is False
+    assert report["p_value"] is None
+
+
+@pytest.mark.parametrize("drift", ["count", "family", "sample"])
+def test_pr317_manifest_preflight_rejects_identity_drift(
+    worker,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    drift: str,
+) -> None:
+    window = tmp_path / "window.npz"
+    window.touch()
+    payload = _pr317_acquisition_payload(window)
+    if drift == "count":
+        payload["authenticated_counts"] = {"abacus": 25, "ezmock": 999}
+    elif drift == "family":
+        payload["records"][0]["family"] = "wrong"
+    else:
+        payload["observed"]["sample"] = "DESI_DR1_BGS_ANY"
+    manifest = tmp_path / f"{drift}.json"
+    manifest.write_text(json.dumps(payload), encoding="utf-8")
+    _patch_pr317_schema_readers(worker, monkeypatch, tmp_path)
+
+    with pytest.raises(worker.DESIWorkerError):
+        worker.preflight_existing_acquisition(manifest)
+
+
+def test_pr317_cli_writes_the_preflight_payload(
+    worker, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys
+) -> None:
+    manifest = tmp_path / "acquisition.json"
+    output = tmp_path / "preflight.json"
+    expected = {
+        "terminal_disposition": "BLOCKED_EXISTING_RAW_INSUFFICIENT_FOR_PR311",
+        "observed_statistic_seen": False,
+        "observed_science_executed": False,
+    }
+    monkeypatch.setattr(worker, "preflight_existing_acquisition", lambda path: expected)
+
+    assert worker.main(
+        [
+            "--preflight-existing-raw",
+            "--acquisition-manifest",
+            str(manifest),
+            "--output",
+            str(output),
+        ]
+    ) == 0
+    assert json.loads(output.read_text(encoding="utf-8")) == expected
+    assert json.loads(capsys.readouterr().out) == expected
+
+
+def test_pr317_missing_astropy_is_a_typed_preflight_blocker(
+    worker, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    original_import = builtins.__import__
+
+    def import_without_astropy(name, *args, **kwargs):
+        if name == "astropy.io" or name.startswith("astropy."):
+            raise ModuleNotFoundError("No module named 'astropy'")
+        return original_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", import_without_astropy)
+    with pytest.raises(
+        worker.DESIWorkerError,
+        match="DESI_FITS_HEADER_INSPECTION_DEPENDENCY_UNAVAILABLE:astropy",
+    ):
+        worker._fits_column_names(tmp_path / "catalog.fits")

@@ -120,7 +120,7 @@ def classify_existing_raw_compatibility(
         "terminal_disposition": (
             "BLOCKED_EXISTING_RAW_INSUFFICIENT_FOR_PR311"
             if blockers
-            else "RAW_SCHEMA_COMPATIBLE_WITH_PR311"
+            else "PREFLIGHT_NO_DECLARED_SCHEMA_BLOCKER"
         ),
         "blockers": blockers,
         "observed_statistic_seen": False,
@@ -140,6 +140,10 @@ def _fits_column_names(path: Path) -> frozenset[str]:
             if len(hdus) < 2 or hdus[1].columns is None:
                 raise DESIWorkerError(f"DESI FITS table is missing: {path}")
             return frozenset(str(name) for name in hdus[1].columns.names)
+    except ImportError as exc:
+        raise DESIWorkerError(
+            "DESI_FITS_HEADER_INSPECTION_DEPENDENCY_UNAVAILABLE:astropy"
+        ) from exc
     except (OSError, ValueError, IndexError) as exc:
         raise DESIWorkerError(f"DESI FITS header could not be inspected: {path}") from exc
 
@@ -231,10 +235,12 @@ def preflight_existing_acquisition(path: Path) -> dict[str, object]:
     ):
         raise DESIWorkerError("DESI realization inventory is incomplete or reordered")
 
+    ez_example = next(row for row in ez_rows if row.get("realization") == 1)
+    ab_example = next(row for row in ab_rows if row.get("realization") == 0)
     representatives = {
         "OBSERVED": observed_paths,
-        "EZMOCK": _manifest_paths(ez_rows[0].get("data_files"), label="EZmock[1]"),
-        "ABACUS": _manifest_paths(ab_rows[0].get("data_files"), label="Abacus[0]"),
+        "EZMOCK": _manifest_paths(ez_example.get("data_files"), label="EZmock[1]"),
+        "ABACUS": _manifest_paths(ab_example.get("data_files"), label="Abacus[0]"),
     }
     common_columns = {
         family: frozenset.intersection(*(_fits_column_names(item) for item in paths))
@@ -242,8 +248,8 @@ def preflight_existing_acquisition(path: Path) -> dict[str, object]:
     }
     windows = [
         observed_window_path,
-        _manifest_window(ez_rows[0], label="EZmock[1]"),
-        _manifest_window(ab_rows[0], label="Abacus[0]"),
+        _manifest_window(ez_example, label="EZmock[1]"),
+        _manifest_window(ab_example, label="Abacus[0]"),
     ]
     contracts = [_window_contract(item) for item in windows]
     window_keys = frozenset.intersection(*(row[0] for row in contracts))
