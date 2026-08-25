@@ -69,6 +69,9 @@ OBS_RANDOM = (
 NSIDE = 64
 ZMIN = 0.1
 ZMAX = 0.4
+TOMOGRAPHY_EDGES = (0.1, 0.2, 0.3, 0.4)
+TOMOGRAPHY_BIN_IDS = ("z0.1-0.2", "z0.2-0.3", "z0.3-0.4")
+TOMOGRAPHY_ENDPOINT_CONVENTION = "(0.1,0.2),[0.2,0.3),[0.3,0.4)"
 CHUNK_ROWS = 1_000_000
 EXTRACTION_CONFIG = {
     "schema": "htt.desi_mock_window_extraction.v1",
@@ -83,6 +86,27 @@ EXTRACTION_CONFIG = {
 }
 EXTRACTION_CONFIG_SHA256 = hashlib.sha256(
     json.dumps(EXTRACTION_CONFIG, sort_keys=True, separators=(",", ":")).encode()
+).hexdigest()
+TOMOGRAPHIC_EXTRACTION_CONFIG = {
+    "schema": "htt.desi_mock_window_extraction.v2",
+    "nside": NSIDE,
+    "ordering": "RING",
+    "coordinate_input": "ICRS_RA_DEC_degrees",
+    "z_min_exclusive": ZMIN,
+    "z_max_exclusive": ZMAX,
+    "weight_column": "WEIGHT",
+    "mask_application": "none_pre_mask",
+    "dtype": "float64",
+    "tomography_edges": list(TOMOGRAPHY_EDGES),
+    "tomography_bin_ids": list(TOMOGRAPHY_BIN_IDS),
+    "endpoint_convention": TOMOGRAPHY_ENDPOINT_CONVENTION,
+}
+TOMOGRAPHIC_EXTRACTION_CONFIG_SHA256 = hashlib.sha256(
+    json.dumps(
+        TOMOGRAPHIC_EXTRACTION_CONFIG,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode()
 ).hexdigest()
 
 
@@ -328,9 +352,191 @@ def random_pixel_counts(path: Path, nside: int = NSIDE) -> dict:
             "n_selected": selected, "weight_sum": weight_sum}
 
 
+def tomographic_random_pixel_counts(path: Path, nside: int = NSIDE) -> dict:
+    """Reduce one random catalogue into the frozen strict three-bin window."""
+    import healpy as hp
+    from astropy.io import fits
+
+    counts = np.zeros((3, hp.nside2npix(nside)), dtype=np.float64)
+    selected = np.zeros(3, dtype=np.int64)
+    weight_sum = np.zeros(3, dtype=np.float64)
+    with fits.open(path, memmap=True, lazy_load_hdus=True) as hdus:
+        table = hdus[1].data
+        names = set(table.columns.names)
+        required = {"RA", "DEC", "Z", "WEIGHT"}
+        if not required.issubset(names):
+            raise ValueError(f"{path} lacks required columns {sorted(required - names)}")
+        n_rows = len(table)
+        for start in range(0, n_rows, CHUNK_ROWS):
+            stop = min(start + CHUNK_ROWS, n_rows)
+            sl = slice(start, stop)
+            ra = _column(table, "RA", sl)
+            dec = _column(table, "DEC", sl)
+            z = _column(table, "Z", sl)
+            weight = _column(table, "WEIGHT", sl)
+            valid = (
+                np.isfinite(ra)
+                & np.isfinite(dec)
+                & np.isfinite(z)
+                & np.isfinite(weight)
+                & (weight > 0)
+            )
+            bin_masks = (
+                valid & (z > 0.1) & (z < 0.2),
+                valid & (z >= 0.2) & (z < 0.3),
+                valid & (z >= 0.3) & (z < 0.4),
+            )
+            for index, keep in enumerate(bin_masks):
+                if not np.any(keep):
+                    continue
+                pix = hp.ang2pix(nside, ra[keep], dec[keep], lonlat=True)
+                counts[index] += np.bincount(
+                    pix, weights=weight[keep], minlength=counts.shape[1]
+                )
+                selected[index] += int(np.count_nonzero(keep))
+                weight_sum[index] += float(np.sum(weight[keep]))
+    if np.any(selected == 0) or np.any(weight_sum <= 0):
+        raise ValueError(f"one or more frozen tomography bins are empty in {path}")
+    return {
+        "counts": counts,
+        "n_rows": int(n_rows),
+        "n_selected": selected.astype(int).tolist(),
+        "weight_sum": weight_sum.astype(float).tolist(),
+    }
+
+
 def _compact_paths(directory: Path, random_index: int) -> tuple[Path, Path]:
     stem = f"random_window_r{random_index}_nside{NSIDE}"
     return directory / f"{stem}.npz", directory / f"{stem}.json"
+
+
+def _tomographic_compact_paths(
+    directory: Path, random_index: int
+) -> tuple[Path, Path]:
+    stem = f"random_window_r{random_index}_tomo3_nside{NSIDE}"
+    return directory / f"{stem}.npz", directory / f"{stem}.json"
+
+
+def _tomographic_compact_valid(
+    npz_path: Path, meta_path: Path, source: dict[str, str]
+) -> dict | None:
+    if not npz_path.is_file() or not meta_path.is_file():
+        return None
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    if (
+        meta.get("schema") != "htt.desi_mock_random_window.v2"
+        or meta.get("source_sha256") != source
+        or meta.get("compact_sha256") != sha256(npz_path)
+        or meta.get("extraction_config_sha256")
+        != TOMOGRAPHIC_EXTRACTION_CONFIG_SHA256
+        or meta.get("tomography_edges") != list(TOMOGRAPHY_EDGES)
+        or meta.get("tomography_bin_ids") != list(TOMOGRAPHY_BIN_IDS)
+        or meta.get("endpoint_convention") != TOMOGRAPHY_ENDPOINT_CONVENTION
+        or meta.get("coordinate_frame") != "ICRS"
+    ):
+        return None
+    with np.load(npz_path) as data:
+        if (
+            int(data["nside"]) != NSIDE
+            or set(("NGC", "SGC", "tomography_edges")) - set(data.files)
+            or not np.array_equal(data["tomography_edges"], TOMOGRAPHY_EDGES)
+            or data["NGC"].shape != data["SGC"].shape
+        ):
+            return None
+        for cap in ("NGC", "SGC"):
+            array = np.asarray(data[cap])
+            sums = np.asarray(meta["caps"][cap]["weight_sum"], dtype=float)
+            if (
+                array.shape != (3, 12 * NSIDE * NSIDE)
+                or array.dtype != np.dtype("float64")
+                or not np.all(np.isfinite(array))
+                or np.any(array < 0)
+                or sums.shape != (3,)
+                or not np.allclose(
+                    array.sum(axis=1), sums, rtol=1e-12, atol=1e-8
+                )
+            ):
+                return None
+    return {
+        "path": str(npz_path),
+        "sha256": meta["compact_sha256"],
+        "metadata_path": str(meta_path),
+        "metadata_sha256": sha256(meta_path),
+        "random_index": meta["random_index"],
+        "source_sha256": source,
+        "caps": meta["caps"],
+    }
+
+
+def compact_tomographic_random_pair(
+    directory: Path,
+    names: tuple[str, str],
+    expected: dict[str, str],
+    random_index: int,
+    target: Path,
+    *,
+    retain_raw: bool,
+) -> dict:
+    """Write a side-by-side three-bin product without changing legacy windows."""
+    if not retain_raw:
+        raise ValueError("PR-318 preparation does not delete raw random catalogues")
+    source = {name: expected[name] for name in names}
+    for name in names:
+        raw = directory / name
+        raw.resolve().relative_to(target.resolve())
+        if not raw.is_file() or sha256(raw) != expected[name]:
+            raise ValueError(f"tomographic source identity failed: {raw}")
+    npz_path, meta_path = _tomographic_compact_paths(directory, random_index)
+    valid = _tomographic_compact_valid(npz_path, meta_path, source)
+    if valid is not None:
+        return valid
+    loaded = {
+        "NGC": tomographic_random_pixel_counts(directory / names[0]),
+        "SGC": tomographic_random_pixel_counts(directory / names[1]),
+    }
+    temp = npz_path.with_suffix(npz_path.suffix + ".tmp")
+    ensure_data_dir(npz_path.parent)
+    with temp.open("wb") as handle:
+        np.savez_compressed(
+            handle,
+            NGC=loaded["NGC"]["counts"],
+            SGC=loaded["SGC"]["counts"],
+            nside=np.asarray(NSIDE),
+            tomography_edges=np.asarray(TOMOGRAPHY_EDGES),
+            random_index=np.asarray(random_index),
+        )
+        handle.flush()
+        os.fsync(handle.fileno())
+    temp.replace(npz_path)
+    compact_hash = sha256(npz_path)
+    caps = {
+        cap: {key: value for key, value in row.items() if key != "counts"}
+        for cap, row in loaded.items()
+    }
+    meta = {
+        "schema": "htt.desi_mock_random_window.v2",
+        "owner": "DL_PIPELINE",
+        "claim_tier": "input_provenance_only",
+        "nside": NSIDE,
+        "ordering": "RING",
+        "coordinate_frame": "ICRS",
+        "tomography_edges": list(TOMOGRAPHY_EDGES),
+        "tomography_bin_ids": list(TOMOGRAPHY_BIN_IDS),
+        "endpoint_convention": TOMOGRAPHY_ENDPOINT_CONVENTION,
+        "extraction_config": TOMOGRAPHIC_EXTRACTION_CONFIG,
+        "extraction_config_sha256": TOMOGRAPHIC_EXTRACTION_CONFIG_SHA256,
+        "random_index": random_index,
+        "source_sha256": source,
+        "compact_path": str(npz_path),
+        "compact_sha256": compact_hash,
+        "caps": caps,
+        "raw_retained": True,
+    }
+    _atomic_json(meta_path, meta)
+    valid = _tomographic_compact_valid(npz_path, meta_path, source)
+    if valid is None:
+        raise RuntimeError(f"tomographic window verification failed: {npz_path}")
+    return valid
 
 
 def _compact_valid(npz_path: Path, meta_path: Path, source: dict[str, str]) -> dict | None:
@@ -629,6 +835,48 @@ def process_observed(target: Path, jobs: int) -> dict:
     return record
 
 
+def prepare_existing_observed_tomography(target: Path) -> dict:
+    """Prepare only the observed random window; never open observed data rows."""
+    directory = target / "observed/v1.5"
+    receipt = directory / OBS_SHA
+    if not receipt.is_file():
+        raise FileNotFoundError(f"missing observed checksum receipt: {receipt}")
+    expected = parse_receipt(receipt)
+    if not set(OBS_RANDOM).issubset(expected):
+        raise ValueError("official receipt lacks the observed random pair")
+    window = compact_tomographic_random_pair(
+        directory,
+        OBS_RANDOM,
+        expected,
+        0,
+        target,
+        retain_raw=True,
+    )
+    record = {
+        "schema": "htt.desi_observed_tomographic_preparation.v1",
+        "owner": "DL_PIPELINE",
+        "claim_tier": "input_provenance_only",
+        "sample": "DESI_DR1_BGS_BRIGHT-21.5",
+        "source_release": "DESI_DR1_LSS_IRON_V1_5",
+        "tomographic_random_window": window,
+        "remaining_blockers": [
+            "OBSERVED_ROW_MAGNITUDE_EVIDENCE_UNAVAILABLE",
+            "EZMOCK_ROW_MAGNITUDE_EVIDENCE_UNAVAILABLE",
+            "MOCK_TOMOGRAPHIC_RANDOM_WINDOWS_UNAVAILABLE",
+            "WINDOW_DIRECTION_FRAME_REVIEW_REQUIRED",
+        ],
+        "observed_data_catalogue_opened": False,
+        "observed_payload_rows_read": False,
+        "observed_statistic_seen": False,
+        "observed_science_executed": False,
+        "p_value": None,
+        "forced_source_label": None,
+    }
+    record_path = directory / "desi_pr318_observed_tomographic_preparation.json"
+    _atomic_json(record_path, record)
+    return {**record, "record_path": str(record_path), "record_sha256": sha256(record_path)}
+
+
 def _all_records(target: Path) -> list[dict]:
     records = []
     for family, ids in (("ezmock", range(1, 1001)), ("abacus", range(25))):
@@ -725,19 +973,27 @@ def main(argv=None) -> int:
     parser.add_argument("--audit-abacus-count", type=int, default=5)
     parser.add_argument("--skip-final-rehash", action="store_true",
                         help="development/partial runs only; a complete manifest requires the final rehash")
+    parser.add_argument(
+        "--prepare-observed-tomography-only",
+        action="store_true",
+        help="derive the three-bin window from retained randoms without opening observed data",
+    )
     args = parser.parse_args(argv)
     if args.aria_jobs < 1 or args.batch_size < 1:
         parser.error("--aria-jobs and --batch-size must be positive")
     if not 1 <= args.ez_start <= args.ez_stop <= 1000:
         parser.error("EZmock range must satisfy 1 <= start <= stop <= 1000")
-    if shutil.which("aria2c") is None:
-        raise SystemExit("aria2c is required for the resumable DESI stage")
-
     # Keep the lexical repository-side path until the storage guard has
     # inspected it. Resolving first would follow a broken redirect and could
     # recreate its target on the system disk while the external volume is
     # unmounted.
     target = ensure_data_dir(args.target.expanduser())
+    if args.prepare_observed_tomography_only:
+        record = prepare_existing_observed_tomography(target)
+        print(json.dumps(record, sort_keys=True))
+        return 0
+    if shutil.which("aria2c") is None:
+        raise SystemExit("aria2c is required for the resumable DESI stage")
     started = time.time()
     if args.skip_observed:
         observed_path = target / "observed/v1.5/acquisition_record.json"
