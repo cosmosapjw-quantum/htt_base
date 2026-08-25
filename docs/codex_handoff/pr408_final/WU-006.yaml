@@ -1,0 +1,142 @@
+schema: audit-compiled-work-unit/v1
+id: WU-006
+title: Typed survivor overlay
+
+authority:
+  base_sha: RESOLVE_FROM_WU005_TERMINAL_RECEIPT
+  branch: ALLOCATE_FROM_LIVE_DAG
+  upstream_dependencies: [WU-005]
+  required_ancestor: bdad91a204c424030cd6d0e562232b6965a42900
+
+objective:
+  statement: Generate current publication-facing output only from completed research-decision receipts while preserving all historical campaign dispositions.
+  observable_success: The overlay has closed orthogonal enums, exact release blockers, no universal surface claim, and no unique-theorem count.
+  non_goals:
+    - campaign exhaustion
+    - historical receipt rewrite
+    - creation of a new scientific result
+
+risk:
+  class: high
+  P0_failure_modes: [FM-OVERLAY-RECEIPT, FM-OVERLAY-PARENT]
+  P1_failure_modes: [FM-P1-004]
+
+scope:
+  allowed_paths:
+    - scripts/build_theory_survivor_overlay.py
+    - tests/contracts/test_theory_survivor_overlay.py
+    - docs/generated/theory_promotion/**
+    - docs/research_program/theory_promotion/closeout/**
+  forbidden_paths:
+    - frozen historical artifacts
+  forbidden_changes:
+    - Do not project status without a research-decision receipt
+    - Do not count synthetic validation as theorem
+    - Do not block an eligible survivor solely because campaign NOT_ATTEMPTED rows remain
+    - Do not rewrite historical campaign dispositions
+
+preconditions:
+  - id: PRE-501
+    command: validate WU-001 through WU-005 terminal receipts
+    expect: all PASS or typed BLOCKED with no omitted included survivor
+  - id: PRE-502
+    command: git status --porcelain=v1 --untracked-files=all
+    expect: empty
+
+invariants:
+  - id: INV-501
+    severity_if_violated: P0
+    statement: No current truth, replay, novelty, release, or publication role is projected without a completed research-decision receipt.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_theory_survivor_overlay.py -k receipt
+      expect: pass
+  - id: INV-502
+    severity_if_violated: P1
+    statement: Evidence modality and replay status use independent closed enums; aliases such as CURRENT_PARTIAL are forbidden in canonical output.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_theory_survivor_overlay.py -k enum
+      expect: pass
+  - id: INV-503
+    severity_if_violated: P0
+    statement: Broad parent and narrow child remain separately visible, and the child never rewrites the parent.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_theory_survivor_overlay.py -k parent_child
+      expect: pass
+  - id: INV-504
+    severity_if_violated: P1
+    statement: Survivor release is independent of unrelated campaign exhaustion.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_theory_survivor_overlay.py -k campaign_open
+      expect: pass
+
+failure_modes:
+  - id: FM-OVERLAY-RECEIPT
+    severity: P0
+    trigger: canonical output contains a status without a research-decision receipt
+    required_detection:
+      test: test_status_projection_refuses_without_research_decision_receipt
+  - id: FM-OVERLAY-PARENT
+    severity: P0
+    trigger: narrow child replaces broad parent status or claim surface
+    required_detection:
+      test: test_overlay_preserves_broad_parent_and_narrow_child
+  - id: FM-P1-004
+    severity: P1
+    trigger: evidence and replay vocabularies drift or collapse
+    required_detection:
+      test: test_evidence_and_replay_enums_are_orthogonal_and_closed
+
+implementation:
+  ordered_steps:
+    - id: STEP-501
+      files: [tests/contracts/test_theory_survivor_overlay.py]
+      action: Add RED receipt, enum, parent-child, campaign-open/release, and claim-boundary tests.
+      must_preserve: []
+    - id: STEP-502
+      files: [scripts/build_theory_survivor_overlay.py]
+      action: Implement deterministic projection solely from completed research-decision receipts.
+      must_preserve: [historical campaign dispositions]
+    - id: STEP-503
+      files: [docs/generated/theory_promotion/THEORY_SURVIVOR_OVERLAY_V1.json]
+      action: Generate canonical machine output and concise human summary.
+      must_preserve: [no unique theorem count, no universal candidate claim]
+
+verification:
+  targeted:
+    - pytest -q tests/contracts/test_theory_survivor_overlay.py
+  negative:
+    - remove one research receipt
+    - use CURRENT_PARTIAL
+    - count synthetic validation as theorem
+    - hide a broad failed or unresolved parent
+    - block a survivor solely because NOT_ATTEMPTED rows remain
+  regression:
+    - run the overlay twice and compare canonical bytes
+    - git diff --check
+  integration: []
+  full_relevant_suite: []
+
+completion_evidence:
+  required:
+    - overlay_sha256
+    - research_receipt_manifest
+    - enum_validation_receipt
+    - parent_child_projection_receipt
+    - claim_language_scan
+    - final_git_head
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - unresolved_blockers
+
+agent_policy:
+  ask_user_questions: false
+  guessing_across_spec_boundary: forbidden
+  unresolved_spec_action: BLOCKED_BY_UNRESOLVED_SPEC
+  changing_tests_to_fit_implementation: forbidden
+  suppressing_failures: forbidden
+  rewrite_historical_receipts: forbidden
+
+review_gate:
+  fresh_context_required: true
+  pass_condition: {P0: 0, P1: 0}
