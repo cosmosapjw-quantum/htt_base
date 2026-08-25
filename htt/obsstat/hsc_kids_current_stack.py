@@ -530,9 +530,9 @@ def transported_headless_axis_alignment(
     return abs(float(np.dot(transported, right)))
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, init=False)
 class PairedSameSkyJointCovariance:
-    """A sample covariance derived from row-paired same-sky null features."""
+    """Factory-only evidence derived from row-paired same-sky null features."""
 
     hsc_feature_order: tuple[str, ...]
     kids_feature_order: tuple[str, ...]
@@ -677,31 +677,42 @@ def derive_paired_same_sky_joint_covariance(
                 whitening_status = "CHOLESKY_READY_WITHIN_CONDITION_LIMIT"
 
     hsc_size = hsc.shape[1]
-    return PairedSameSkyJointCovariance(
-        hsc_feature_order=hsc_order,
-        kids_feature_order=kids_order,
-        hsc_feature_units=hsc_units,
-        kids_feature_units=kids_units,
-        hsc_normalization_ids=hsc_norms,
-        kids_normalization_ids=kids_norms,
-        realization_ids=hsc_ids,
-        realization_source_identity=source_identity,
-        sky_realization_role=sky_realization_role,
-        overlap_support_identity=overlap_identity,
-        hsc_operator_identity=hsc_operator,
-        kids_operator_identity=kids_operator,
-        centering_rule=centering_rule,
-        denominator_rule=denominator_rule,
-        sample_count=joint.shape[0],
-        joint_covariance=covariance,
-        hsc_covariance=covariance[:hsc_size, :hsc_size],
-        kids_covariance=covariance[hsc_size:, hsc_size:],
-        cross_covariance=covariance[:hsc_size, hsc_size:],
-        covariance_rank=covariance_rank,
-        psd_tolerance=psd_tolerance,
-        condition_number=condition_number,
-        whitening_status=whitening_status,
-    )
+    immutable_arrays: dict[str, np.ndarray] = {}
+    for name, array in {
+        "joint_covariance": covariance,
+        "hsc_covariance": covariance[:hsc_size, :hsc_size],
+        "kids_covariance": covariance[hsc_size:, hsc_size:],
+        "cross_covariance": covariance[:hsc_size, hsc_size:],
+    }.items():
+        frozen = np.array(array, dtype=float, copy=True)
+        frozen.setflags(write=False)
+        immutable_arrays[name] = frozen
+    values = {
+        "hsc_feature_order": hsc_order,
+        "kids_feature_order": kids_order,
+        "hsc_feature_units": hsc_units,
+        "kids_feature_units": kids_units,
+        "hsc_normalization_ids": hsc_norms,
+        "kids_normalization_ids": kids_norms,
+        "realization_ids": hsc_ids,
+        "realization_source_identity": source_identity,
+        "sky_realization_role": sky_realization_role,
+        "overlap_support_identity": overlap_identity,
+        "hsc_operator_identity": hsc_operator,
+        "kids_operator_identity": kids_operator,
+        "centering_rule": centering_rule,
+        "denominator_rule": denominator_rule,
+        "sample_count": joint.shape[0],
+        **immutable_arrays,
+        "covariance_rank": covariance_rank,
+        "psd_tolerance": psd_tolerance,
+        "condition_number": condition_number,
+        "whitening_status": whitening_status,
+    }
+    evidence = object.__new__(PairedSameSkyJointCovariance)
+    for field_name, value in values.items():
+        object.__setattr__(evidence, field_name, value)
+    return evidence
 
 
 def _svd_rank(matrix: np.ndarray, *, threshold_ratio: float) -> tuple[int, list[float]]:

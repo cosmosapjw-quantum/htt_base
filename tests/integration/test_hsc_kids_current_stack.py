@@ -541,6 +541,18 @@ def test_pr320_paired_same_sky_covariance_matches_joint_sample_covariance() -> N
     assert evidence.sky_realization_role == "PAIRED_SAME_SKY_COSMIC_REALIZATION"
 
 
+def test_pr320_covariance_evidence_cannot_be_directly_constructed() -> None:
+    module = _science()
+    case = _joint_case(module)
+
+    with pytest.raises(TypeError):
+        module.PairedSameSkyJointCovariance(
+            **case["covariance_evidence"].__dict__
+        )
+    with pytest.raises(ValueError):
+        case["covariance_evidence"].joint_covariance[0, 0] = 0.0
+
+
 def test_pr320_missing_cross_information_abstains_before_rank() -> None:
     module = _science()
     case = _joint_case(module)

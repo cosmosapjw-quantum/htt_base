@@ -3,7 +3,7 @@ pr_id: PR-320
 title: HSC-KiDS paired same-sky joint-covariance derivation
 capability: HSC_KIDS_PAIRED_SAME_SKY_JOINT_COVARIANCE_AND_LOCAL_STRUCTURAL_RANK
 predecessor:
-  commit: 44016e4af2f41cf566be653d448dad8b434da38e
+  commit: 7db710ae588fcb9c157d17d1478261c03ffe24e5
 claim_ceiling: synthetic_joint_covariance_and_local_structural_rank_only
 
 source_boundary:
@@ -44,6 +44,7 @@ pass:
   - row-order, unit, feature-order, normalization, and operator drift fail closed
   - an evidenced zero cross block remains valid cross information
   - a singular sample covariance never reaches Cholesky whitening or rank
+  - covariance evidence cannot be directly instantiated outside the paired-row factory
   - a legacy arbitrary cross matrix has no covariance authority
   - synthetic HSC and KiDS rows share one latent-sky realization identity
 
