@@ -82,10 +82,11 @@ jobs:
             scripts/observed_runs/run_jwst_sn.py \
             --synthetic-profile \
             --output "${RUNNER_TEMP}/pr309-jwst-synthetic.json"
-      - name: Run PR-310 HSC-KiDS closure contracts
+      - name: Run PR-310/321 HSC-KiDS closure contracts
         run: |
           env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
             tests/integration/test_hsc_kids_current_stack.py \
+            tests/contracts/test_pr321_reaudit_plan.py \
             tests/contracts/test_authorized_observational_program.py
           env PYTHONPATH=htt:htt/src:htt/htt python \
             scripts/observed_runs/run_hsc_kids.py \

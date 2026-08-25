@@ -1098,6 +1098,43 @@ def test_pr321_requires_and_binds_four_nz_tracers() -> None:
         module.analyze_hsc_released_sacc(**nonpositive)
 
 
+def test_pr321_rejects_malformed_source_nz() -> None:
+    module = _science()
+
+    shape_mismatch = _pr321_sacc_payload(module)
+    shape_mismatch["tracer_nz"] = (
+        shape_mismatch["tracer_nz"][0][:-1],
+        *shape_mismatch["tracer_nz"][1:],
+    )
+
+    nonmonotonic = _pr321_sacc_payload(module)
+    bad_z = nonmonotonic["tracer_z"][0].copy()
+    bad_z[3] = bad_z[2]
+    nonmonotonic["tracer_z"] = (bad_z, *nonmonotonic["tracer_z"][1:])
+
+    negative = _pr321_sacc_payload(module)
+    bad_negative_nz = negative["tracer_nz"][0].copy()
+    bad_negative_nz[3] = -1.0
+    negative["tracer_nz"] = (bad_negative_nz, *negative["tracer_nz"][1:])
+
+    nonfinite = _pr321_sacc_payload(module)
+    bad_nonfinite_nz = nonfinite["tracer_nz"][0].copy()
+    bad_nonfinite_nz[3] = np.nan
+    nonfinite["tracer_nz"] = (
+        bad_nonfinite_nz,
+        *nonfinite["tracer_nz"][1:],
+    )
+
+    for payload, message in (
+        (shape_mismatch, "shape-matched"),
+        (nonmonotonic, "strictly increasing"),
+        (negative, "nonnegative"),
+        (nonfinite, "finite"),
+    ):
+        with pytest.raises(module.HscKidsCurrentStackError, match=message):
+            module.analyze_hsc_released_sacc(**payload)
+
+
 def test_pr321_generated_result_conforms_expected_result_schema() -> None:
     expected = yaml.safe_load(
         (
@@ -1163,6 +1200,131 @@ def test_pr321_fiducial_indices_and_covariance_slice() -> None:
     assert fiducial["minimum_eigenvalue"] > 0.0
     assert result["terminal_disposition"] == (
         "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
+    )
+
+
+def test_pr321_window_and_fiducial_digests_mutate(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    module = _science()
+    worker = _worker()
+
+    baseline_payload = _pr321_sacc_payload(module)
+    baseline = module.analyze_hsc_released_sacc(**baseline_payload)
+
+    vector_mutation = _pr321_sacc_payload(module)
+    mutated_vector = vector_mutation["data_vector"].copy()
+    mutated_vector[2] += 1.0e-14
+    vector_mutation["data_vector"] = mutated_vector
+    changed_vector = module.analyze_hsc_released_sacc(**vector_mutation)
+    assert (
+        baseline["fiducial_selection"]["data_vector_sha256_float64_le"]
+        != changed_vector["fiducial_selection"]["data_vector_sha256_float64_le"]
+    )
+
+    covariance_mutation = _pr321_sacc_payload(module)
+    mutated_covariance = covariance_mutation["covariance"].copy()
+    mutated_covariance[2, 2] *= 1.0001
+    covariance_mutation["covariance"] = mutated_covariance
+    changed_covariance = module.analyze_hsc_released_sacc(**covariance_mutation)
+    assert (
+        baseline["fiducial_selection"]["covariance_sha256_float64_le"]
+        != changed_covariance["fiducial_selection"][
+            "covariance_sha256_float64_le"
+        ]
+    )
+
+    def fake_sacc_module(
+        support: np.ndarray,
+        weights: np.ndarray,
+    ) -> SimpleNamespace:
+        tracer_names = module.HSC_SACC_TRACER_ORDER
+        pairs = module.HSC_SACC_TRACER_PAIRS
+        mean = np.linspace(1.0e-10, 2.0e-9, 170)
+        window = SimpleNamespace(values=support, weight=weights)
+        rows = [
+            SimpleNamespace(
+                tracers=pair,
+                value=float(mean[pair_index * 17 + band_index]),
+                tags={
+                    "ell": module.HSC_SACC_ELL_ORDER[band_index],
+                    "window": window,
+                    "window_ind": band_index,
+                },
+            )
+            for pair_index, pair in enumerate(pairs)
+            for band_index in range(17)
+        ]
+        tracers = {
+            name: SimpleNamespace(
+                quantity="galaxy_shear",
+                z=np.linspace(0.0, 3.0, 8),
+                nz=np.linspace(0.1, 1.0, 8),
+            )
+            for name in tracer_names
+        }
+
+        def pair_indices(*, data_type: str, tracers: tuple[str, str]) -> np.ndarray:
+            assert data_type == "cl_ee"
+            pair_index = pairs.index(tuple(tracers))
+            return np.arange(pair_index * 17, (pair_index + 1) * 17)
+
+        def pair_mean(*, data_type: str, tracers: tuple[str, str]) -> np.ndarray:
+            return mean[pair_indices(data_type=data_type, tracers=tracers)]
+
+        payload = SimpleNamespace(
+            get_data_types=lambda: ("cl_ee",),
+            tracers=tracers,
+            data=rows,
+            covariance=SimpleNamespace(dense=np.eye(170)),
+            mean=mean,
+            indices=pair_indices,
+            get_mean=pair_mean,
+        )
+
+        def load_fits(_source: object) -> SimpleNamespace:
+            print(
+                "Warning: The FITS format without the 'sacc_ordering' column "
+                "is deprecated\n"
+                "Assuming data rows are in the correct order as it was before "
+                "version 1.0."
+            )
+            return payload
+
+        return SimpleNamespace(
+            __version__="2.1.2",
+            Sacc=SimpleNamespace(load_fits=load_fits),
+        )
+
+    support = np.arange(15274, dtype=float)
+    weights = np.ones((15274, 17), dtype=float)
+    monkeypatch.setitem(sys.modules, "sacc", fake_sacc_module(support, weights))
+    baseline_windows = worker._load_hsc_sacc(worker.BytesIO(b"baseline"))
+
+    changed_support = support.copy()
+    changed_support[0] += 0.5
+    monkeypatch.setitem(
+        sys.modules,
+        "sacc",
+        fake_sacc_module(changed_support, weights),
+    )
+    support_windows = worker._load_hsc_sacc(worker.BytesIO(b"support"))
+    assert (
+        baseline_windows["window_support_sha256_float64_le"]
+        != support_windows["window_support_sha256_float64_le"]
+    )
+
+    changed_weights = weights.copy()
+    changed_weights[0, 0] += 0.5
+    monkeypatch.setitem(
+        sys.modules,
+        "sacc",
+        fake_sacc_module(support, changed_weights),
+    )
+    weight_windows = worker._load_hsc_sacc(worker.BytesIO(b"weights"))
+    assert (
+        baseline_windows["window_weight_sha256_float64_le"]
+        != weight_windows["window_weight_sha256_float64_le"]
     )
 
 
