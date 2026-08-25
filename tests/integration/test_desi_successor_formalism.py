@@ -846,3 +846,62 @@ def test_pr311_does_not_import_invalidated_pr151_producers() -> None:
     assert "desi_exact_selection_card" not in combined
     assert "desi_official_mock_card.json" not in combined
     assert "docs/generated/desi_dipole_card.json" not in combined
+
+
+def test_pr317_current_raw_schema_stops_before_observed_statistic(worker) -> None:
+    report = worker.classify_existing_raw_compatibility(
+        observed_columns={"RA", "DEC", "Z", "WEIGHT", "flux_r_dered"},
+        ezmock_columns={"RA", "DEC", "Z", "WEIGHT", "NX"},
+        abacus_columns={
+            "RA",
+            "DEC",
+            "Z",
+            "WEIGHT",
+            "R_MAG_APP",
+            "R_MAG_ABS",
+        },
+        random_window_keys={"NGC", "SGC", "nside", "zmin", "zmax"},
+        random_window_cap_shape=(12 * 64 * 64,),
+    )
+
+    assert report["terminal_disposition"] == (
+        "BLOCKED_EXISTING_RAW_INSUFFICIENT_FOR_PR311"
+    )
+    assert report["blockers"] == [
+        "OBSERVED_ROW_MAGNITUDE_EVIDENCE_UNAVAILABLE",
+        "EZMOCK_ROW_MAGNITUDE_EVIDENCE_UNAVAILABLE",
+        "TOMOGRAPHIC_RANDOM_WINDOW_UNAVAILABLE",
+    ]
+    assert report["observed_statistic_seen"] is False
+    assert report["observed_science_executed"] is False
+    assert report["p_value"] is None
+    assert report["forced_source_label"] is None
+
+
+def test_pr317_hypothetical_complete_schema_is_not_blocked(worker) -> None:
+    magnitude_columns = {
+        "RA",
+        "DEC",
+        "Z",
+        "WEIGHT",
+        "R_MAG_APP",
+        "R_MAG_ABS",
+    }
+    report = worker.classify_existing_raw_compatibility(
+        observed_columns=magnitude_columns,
+        ezmock_columns=magnitude_columns,
+        abacus_columns=magnitude_columns,
+        random_window_keys={
+            "NGC",
+            "SGC",
+            "nside",
+            "zmin",
+            "zmax",
+            "tomography_edges",
+        },
+        random_window_cap_shape=(3, 12 * 64 * 64),
+    )
+
+    assert report["terminal_disposition"] == "RAW_SCHEMA_COMPATIBLE_WITH_PR311"
+    assert report["blockers"] == []
+    assert report["observed_statistic_seen"] is False

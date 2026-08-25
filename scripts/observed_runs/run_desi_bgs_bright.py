@@ -69,10 +69,230 @@ REQUIRED_COMPONENT_SEQUENCE = (
     *("abacus_inventory" for _ in EXPECTED_ABACUS_REALIZATIONS),
 )
 PROFILE_ROWS = {"1": 1, "8": 8, "32": 32, "128": 128, "full": 1025}
+RAW_REQUIRED_COLUMNS = frozenset({"RA", "DEC", "Z", "WEIGHT"})
+RAW_MAGNITUDE_COLUMNS = frozenset({"R_MAG_APP", "R_MAG_ABS"})
+RAW_WINDOW_KEYS = frozenset({"NGC", "SGC", "nside", "zmin", "zmax"})
+RAW_TOMOGRAPHY_KEY = "tomography_edges"
+RAW_WINDOW_CAP_SHAPE = (3, 12 * 64 * 64)
 
 
 class DESIWorkerError(RuntimeError):
     """Raised before a DESI result when the worker contract drifts."""
+
+
+def classify_existing_raw_compatibility(
+    *,
+    observed_columns: set[str] | frozenset[str],
+    ezmock_columns: set[str] | frozenset[str],
+    abacus_columns: set[str] | frozenset[str],
+    random_window_keys: set[str] | frozenset[str],
+    random_window_cap_shape: tuple[int, ...],
+) -> dict[str, object]:
+    """Classify whether authenticated raw products can enter PR-311.
+
+    This is a schema-only preflight.  It deliberately does not read galaxy
+    rows, fit the observer statistic, or infer missing selection/window data.
+    """
+
+    families = {
+        "OBSERVED": frozenset(observed_columns),
+        "EZMOCK": frozenset(ezmock_columns),
+        "ABACUS": frozenset(abacus_columns),
+    }
+    blockers: list[str] = []
+    for family, columns in families.items():
+        if not RAW_REQUIRED_COLUMNS <= columns:
+            blockers.append(f"{family}_BASE_COLUMNS_UNAVAILABLE")
+    if not RAW_MAGNITUDE_COLUMNS <= families["OBSERVED"]:
+        blockers.append("OBSERVED_ROW_MAGNITUDE_EVIDENCE_UNAVAILABLE")
+    if not RAW_MAGNITUDE_COLUMNS <= families["EZMOCK"]:
+        blockers.append("EZMOCK_ROW_MAGNITUDE_EVIDENCE_UNAVAILABLE")
+    if not RAW_MAGNITUDE_COLUMNS <= families["ABACUS"]:
+        blockers.append("ABACUS_ROW_MAGNITUDE_EVIDENCE_UNAVAILABLE")
+    window_keys = frozenset(random_window_keys)
+    if (
+        not RAW_WINDOW_KEYS <= window_keys
+        or RAW_TOMOGRAPHY_KEY not in window_keys
+        or tuple(random_window_cap_shape) != RAW_WINDOW_CAP_SHAPE
+    ):
+        blockers.append("TOMOGRAPHIC_RANDOM_WINDOW_UNAVAILABLE")
+    return {
+        "terminal_disposition": (
+            "BLOCKED_EXISTING_RAW_INSUFFICIENT_FOR_PR311"
+            if blockers
+            else "RAW_SCHEMA_COMPATIBLE_WITH_PR311"
+        ),
+        "blockers": blockers,
+        "observed_statistic_seen": False,
+        "observed_science_executed": False,
+        "p_value": None,
+        "forced_source_label": None,
+    }
+
+
+def _fits_column_names(path: Path) -> frozenset[str]:
+    """Read only a FITS table header and return its column-name contract."""
+
+    try:
+        from astropy.io import fits
+
+        with fits.open(path, memmap=True, lazy_load_hdus=True) as hdus:
+            if len(hdus) < 2 or hdus[1].columns is None:
+                raise DESIWorkerError(f"DESI FITS table is missing: {path}")
+            return frozenset(str(name) for name in hdus[1].columns.names)
+    except (OSError, ValueError, IndexError) as exc:
+        raise DESIWorkerError(f"DESI FITS header could not be inspected: {path}") from exc
+
+
+def _window_contract(path: Path) -> tuple[frozenset[str], tuple[int, ...]]:
+    try:
+        with np.load(path, allow_pickle=False) as data:
+            keys = frozenset(data.files)
+            if "NGC" not in data or "SGC" not in data:
+                raise DESIWorkerError(f"DESI random window lacks cap arrays: {path}")
+            ngc_shape = tuple(np.asarray(data["NGC"]).shape)
+            sgc_shape = tuple(np.asarray(data["SGC"]).shape)
+    except (OSError, ValueError) as exc:
+        raise DESIWorkerError(f"DESI random window could not be inspected: {path}") from exc
+    if ngc_shape != sgc_shape:
+        raise DESIWorkerError(f"DESI random-window cap shapes disagree: {path}")
+    return keys, ngc_shape
+
+
+def _manifest_paths(rows: object, *, label: str) -> tuple[Path, Path]:
+    if not isinstance(rows, list) or len(rows) != 2:
+        raise DESIWorkerError(f"{label} must contain one NGC and one SGC file")
+    paths: list[Path] = []
+    for row in rows:
+        if not isinstance(row, Mapping):
+            raise DESIWorkerError(f"{label} file identity is malformed")
+        raw_path, size = row.get("path"), row.get("size_bytes")
+        path = Path(raw_path) if isinstance(raw_path, str) else Path()
+        if (
+            type(size) is not int
+            or not path.is_absolute()
+            or not path.is_file()
+            or path.stat().st_size != size
+        ):
+            raise DESIWorkerError(f"{label} file is absent or size-drifted")
+        paths.append(path)
+    return tuple(sorted(paths, key=lambda item: ("SGC" in item.name, item.name)))
+
+
+def _manifest_window(row: Mapping[str, object], *, label: str) -> Path:
+    windows = row.get("random_windows")
+    window = windows.get("0") if isinstance(windows, Mapping) else None
+    raw_path = window.get("path") if isinstance(window, Mapping) else None
+    path = Path(raw_path) if isinstance(raw_path, str) else Path()
+    if not path.is_absolute() or not path.is_file():
+        raise DESIWorkerError(f"{label} random window is absent")
+    return path
+
+
+def preflight_existing_acquisition(path: Path) -> dict[str, object]:
+    """Inspect the complete local acquisition without evaluating a statistic."""
+
+    payload = _strict_json_file(path, label="DESI acquisition manifest")
+    records = payload.get("records")
+    observed = payload.get("observed")
+    if (
+        payload.get("schema") != "htt.desi_dr1_mock_acquisition.v2"
+        or payload.get("status") != "complete"
+        or payload.get("authenticated_counts") != {"abacus": 25, "ezmock": 1000}
+        or payload.get("final_full_data_rehash") is not True
+        or not isinstance(payload.get("aggregate_input_hash"), str)
+        or not isinstance(records, list)
+        or len(records) != 1025
+        or not isinstance(observed, Mapping)
+        or observed.get("sample") != "DESI_DR1_BGS_BRIGHT-21.5"
+    ):
+        raise DESIWorkerError("DESI acquisition is not the exact completed DR1 slice")
+
+    observed_window = observed.get("random_window")
+    if (
+        not isinstance(observed_window, Mapping)
+        or not isinstance(observed_window.get("path"), str)
+    ):
+        raise DESIWorkerError("DESI observed acquisition identity is malformed")
+    observed_paths = _manifest_paths(observed.get("data_files"), label="observed data")
+    observed_window_path = Path(str(observed_window["path"]))
+    if not observed_window_path.is_absolute() or not observed_window_path.is_file():
+        raise DESIWorkerError("DESI observed random window is absent")
+
+    typed_records = [row for row in records if isinstance(row, Mapping)]
+    if len(typed_records) != len(records):
+        raise DESIWorkerError("DESI acquisition contains a non-object record")
+    ez_rows = [row for row in typed_records if row.get("family") == "ezmock"]
+    ab_rows = [row for row in typed_records if row.get("family") == "abacus"]
+    ez = sorted(row.get("realization") for row in ez_rows)
+    ab = sorted(row.get("realization") for row in ab_rows)
+    if ez != list(EXPECTED_EZMOCK_REALIZATIONS) or ab != list(
+        EXPECTED_ABACUS_REALIZATIONS
+    ):
+        raise DESIWorkerError("DESI realization inventory is incomplete or reordered")
+
+    representatives = {
+        "OBSERVED": observed_paths,
+        "EZMOCK": _manifest_paths(ez_rows[0].get("data_files"), label="EZmock[1]"),
+        "ABACUS": _manifest_paths(ab_rows[0].get("data_files"), label="Abacus[0]"),
+    }
+    common_columns = {
+        family: frozenset.intersection(*(_fits_column_names(item) for item in paths))
+        for family, paths in representatives.items()
+    }
+    windows = [
+        observed_window_path,
+        _manifest_window(ez_rows[0], label="EZmock[1]"),
+        _manifest_window(ab_rows[0], label="Abacus[0]"),
+    ]
+    contracts = [_window_contract(item) for item in windows]
+    window_keys = frozenset.intersection(*(row[0] for row in contracts))
+    window_shapes = {row[1] for row in contracts}
+    if len(window_shapes) != 1:
+        raise DESIWorkerError("DESI random-window shapes drift across the inventory")
+    window_shape = next(iter(window_shapes))
+
+    report = classify_existing_raw_compatibility(
+        observed_columns=set(common_columns["OBSERVED"]),
+        ezmock_columns=set(common_columns["EZMOCK"]),
+        abacus_columns=set(common_columns["ABACUS"]),
+        random_window_keys=set(window_keys),
+        random_window_cap_shape=window_shape,
+    )
+    return {
+        "report_type": "DESI_EXISTING_RAW_PR311_COMPATIBILITY_PREFLIGHT",
+        **report,
+        "acquisition": {
+            "manifest": str(path.resolve()),
+            "aggregate_input_hash": payload["aggregate_input_hash"],
+            "final_full_data_rehash": True,
+            "observed_catalogues": 2,
+            "ezmock_realizations": len(ez),
+            "abacus_realizations": len(ab),
+        },
+        "schema_evidence": {
+            "common_columns": {
+                family: sorted(columns)
+                for family, columns in common_columns.items()
+            },
+            "random_window_keys": sorted(window_keys),
+            "random_window_cap_shape": list(window_shape),
+            "representative_fits_headers_inspected": 6,
+            "representative_random_windows_inspected": len(windows),
+        },
+        "observed_file_headers_inspected": True,
+        "observed_payload_rows_read": False,
+        "required_next_action": (
+            "materialize exact per-tomographic-bin mock random windows and "
+            "bind official-product selection evidence before PR-311 execution"
+        ),
+        "artifact_metadata": {
+            "owner": "OBSSTAT",
+            "artifact_mode": "input_compatibility_blocker",
+            "claim_tier": "diagnostic_only",
+            "public_use": False,
+        },
+    }
 
 
 def _strict_json_bytes(raw: bytes, *, label: str) -> Mapping[str, object]:
@@ -644,20 +864,40 @@ def main(argv: list[str] | None = None) -> int:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--synthetic-profile", action="store_true")
     mode.add_argument("--run-admitted", action="store_true")
+    mode.add_argument("--preflight-existing-raw", action="store_true")
     parser.add_argument("--rows", choices=tuple(PROFILE_ROWS), default="full")
     parser.add_argument("--mode", choices=("serial", "thread", "process"), default="serial")
     parser.add_argument("--workers", type=int, default=2)
     parser.add_argument("--admission", type=Path)
     parser.add_argument("--data-root", type=Path)
+    parser.add_argument("--acquisition-manifest", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
-        if args.synthetic_profile:
-            if args.admission is not None or args.data_root is not None:
+        if args.preflight_existing_raw:
+            if (
+                args.acquisition_manifest is None
+                or args.admission is not None
+                or args.data_root is not None
+            ):
+                raise DESIWorkerError(
+                    "existing-raw preflight requires only the acquisition manifest"
+                )
+            payload = preflight_existing_acquisition(args.acquisition_manifest)
+        elif args.synthetic_profile:
+            if (
+                args.admission is not None
+                or args.data_root is not None
+                or args.acquisition_manifest is not None
+            ):
                 raise DESIWorkerError("synthetic profile forbids admission and data root")
             payload = synthetic_profile(rows=args.rows, mode=args.mode, workers=args.workers)
         else:
-            if args.admission is None or args.data_root is None:
+            if (
+                args.admission is None
+                or args.data_root is None
+                or args.acquisition_manifest is not None
+            ):
                 raise DESIWorkerError("admitted run requires admission and data root")
             payload = run_admitted(admission_path=args.admission, data_root=args.data_root)
         _write_json(args.output, payload)
