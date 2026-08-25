@@ -14,6 +14,7 @@ identity:
   native_solver_used: false
 
 controlling_inputs:
+  controlling_planning_pr: 408
   research_loop: docs/codex_handoff/theory_promotion_closeout/RESEARCH_LOOP_CLOSEOUT.yaml
   scientific_contract: docs/codex_handoff/theory_promotion_closeout/SCIENTIFIC_CONTRACT.md
   validation_matrix: docs/codex_handoff/theory_promotion_closeout/VALIDATION_MATRIX.yaml
@@ -33,7 +34,10 @@ objective:
 
 global_constraints:
   - Do not modify any canonical DAG file in this planning PR.
-  - Future implementation requires the exact PR-407 terminal receipt.
+  - PR-407 is transitive audited evidence, not the controlling implementation predecessor.
+  - Future implementation requires exact terminal identities for PR-407 and PR-408.
+  - Resolve the PR-408 terminal commit and tree at implementation start; do not hard-code this planning PR's moving head into its own content.
+  - The implementation branch must descend from the resolved PR-408 terminal commit.
   - Re-read the live DAG before allocating canonical IDs.
   - Preserve every preexisting node and edge as an exact prefix.
   - Evidence and claim-source audit precede all truth/status decisions.
@@ -48,12 +52,20 @@ global_constraints:
   - One work unit contains one independently rejectable scientific invariant family.
 
 dag_integration:
-  mode: append_only_after_exact_PR407_terminal
-  required_predecessor:
+  mode: append_only_after_controlling_PR408_terminal
+  audited_input:
     github_pr: 407
     head: bdad91a204c424030cd6d0e562232b6965a42900
     tree: c3cd19442e525aaf1b1e683c1920568513e18da5
+    role: TRANSITIVE_AUDITED_EVIDENCE
     exact_terminal_receipt: required
+  controlling_predecessor:
+    github_pr: 408
+    branch: analysis/pr407-physmath-survivor-closeout-audit-20260825
+    exact_terminal_receipt: required
+    required_disposition: APPROVED_FOR_IMPLEMENTATION
+    resolve_commit_and_tree_at_implementation_start: true
+    implementation_branch_must_descend_from_resolved_commit: true
   live_reread:
     - docs/codex_handoff/pr_backlog.yaml
     - docs/codex_handoff/pr_status.yaml
@@ -75,6 +87,7 @@ dag_integration:
     every_old_resolution_unchanged: true
   stops:
     - BLOCKED_PREDECESSOR_TERMINAL_RECEIPT
+    - BLOCKED_CONTROLLING_PR408_TERMINAL_RECEIPT
     - BLOCKED_DAG_PREFIX_DRIFT
     - BLOCKED_DAG_ID_NOT_ALLOCATED
 
@@ -180,10 +193,11 @@ survivor_manifest:
     VT_T13_CHAIN_RULE_CORE: SUPPORTING_LEMMA
     VT_S14_SYNTHETIC_CELL: SYNTHETIC_VALIDATION
 
+core_work_unit_count: 5
 core_work_units:
   - id: CLOSEOUT-A-RESEARCH-EVIDENCE-FREEZE
     title: Freeze survivor statements and content-bound evidence before status
-    depends_on: [EXACT_PR407_TERMINAL]
+    depends_on: [EXACT_PR407_AUDITED_INPUT_TERMINAL, EXACT_PR408_CONTROLLING_TERMINAL]
     allowed_paths:
       - docs/research_program/theory_promotion/**
       - docs/codex_handoff/theory_promotion_closeout/**
@@ -319,15 +333,18 @@ preconditions:
     command: git merge-base --is-ancestor bdad91a204c424030cd6d0e562232b6965a42900 HEAD
     expect: exit=0
   - id: PRE-004
+    observable: resolve PR 408 terminal receipt to exact commit and tree, then prove the implementation branch descends from that commit
+    expect: resolved identity present and ancestry exit=0
+  - id: PRE-005
     command: git status --porcelain=v1 --untracked-files=all
     expect: empty
-  - id: PRE-005
+  - id: PRE-006
     command: python scripts/codex_harness/sync_pr_dag_mirrors.py --check
     expect: exit=0
-  - id: PRE-006
+  - id: PRE-007
     command: python -m pytest -q tests/contracts/test_theory_survivor_closeout.py --collect-only
     expect: exit=0 after the first RED-test commit
-  - id: PRE-007
+  - id: PRE-008
     command: git diff --check
     expect: exit=0
 
@@ -350,7 +367,8 @@ verification:
     - count VT-S14 as a theorem
     - call VT-T8 global orbit separation
     - call PR284 a general reverse-martingale theorem
-    - run implementation without exact PR407 terminal
+    - run implementation without exact PR407 audited-input terminal
+    - run implementation without exact PR408 controlling terminal commit and tree
   metamorphic:
     - engine availability changes replay but not truth
     - candidate ordering changes no statement identity
@@ -360,6 +378,9 @@ verification:
 completion_evidence:
   required:
     - exact_PR407_terminal_receipt
+    - exact_PR408_terminal_receipt
+    - exact_PR408_terminal_commit
+    - exact_PR408_terminal_tree
     - allocated_DAG_node_ids
     - before_DAG_snapshot_hashes
     - after_DAG_snapshot_hashes

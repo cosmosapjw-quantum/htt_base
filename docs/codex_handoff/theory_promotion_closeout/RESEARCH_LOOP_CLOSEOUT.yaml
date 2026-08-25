@@ -119,7 +119,8 @@ physics_math_validation:
   status: PASS_AT_RESTRICTED_SCOPES
 external_decision_gate:
   PR407: PRESERVE_NOT_IMPLEMENT
-  core_closeout: PROCEED_AFTER_PR407_TERMINAL
+  PR408: CONTROLLING_PLANNING_CONTRACT_PENDING_TERMINAL
+  core_closeout: BLOCKED_PENDING_PR408_TERMINAL_AND_RESEARCH_CLOSEOUT
   new_theory_debt: DEFER
 survivors:
 - id: VT_T8_LOCAL_CHART
@@ -142,7 +143,12 @@ negative_results_and_deferred:
 - PR197/210/216/222/223 excluded from closeout critical path
 closeout:
   research_decision: SURVIVOR_ONLY_CLOSEOUT
-  coding_handoff_ready: true
+  planning_contract_ready_for_review: true
+  coding_handoff_ready: false
+  coding_handoff_blockers:
+  - exact PR408 terminal commit and tree
+  - current exact survivor replay
+  - statement-level novelty decisions where publication is requested
   open_uncertainties:
   - VT-T8 statement-level novelty
   - PR190 application novelty

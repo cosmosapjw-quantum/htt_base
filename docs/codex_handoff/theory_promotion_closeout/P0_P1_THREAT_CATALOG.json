@@ -33,6 +33,16 @@
       "trigger": "a registered source extractor is described as exhausting all reportable mathematical subclaims"
     },
     {
+      "id": "P0-408-001",
+      "required_detection": [
+        "test_implementation_requires_exact_pr408_terminal_ancestry"
+      ],
+      "severity": "P0",
+      "stop": "BLOCKED_CONTROLLING_PR408_TERMINAL_RECEIPT",
+      "title": "Corrective planning successor omitted from implementation ancestry",
+      "trigger": "implementation requires PR407 but does not require an approved PR408 disposition or resolve and descend from the terminal commit and tree of controlling PR408"
+    },
+    {
       "id": "P1-407-001",
       "required_detection": [
         "test_survivor_release_is_independent_of_not_attempted_count"
@@ -131,6 +141,16 @@
       "stop": "BLOCKED_RESEARCH_CODING_HANDOFF_INCOMPLETE",
       "title": "Research-to-code contract implicit",
       "trigger": "no durable research contract/evidence ledger/decision gate or coding scientific contract/validation matrix"
+    },
+    {
+      "id": "P1-408-001",
+      "required_detection": [
+        "test_coding_handoff_refuses_open_research_closeout"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_RESEARCH_CLOSEOUT_INCOMPLETE",
+      "title": "Coding handoff marked ready before research closeout",
+      "trigger": "coding_handoff_ready is true while exact replay or publication-required novelty decisions remain open"
     }
   ],
   "identity": {

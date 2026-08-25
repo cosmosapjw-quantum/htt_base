@@ -2,8 +2,21 @@ schema: htt.physmath_coding_loop_task_contract.v1
 identity:
   audited_pr: 407
   audited_head: bdad91a204c424030cd6d0e562232b6965a42900
+  controlling_planning_pr: 408
   coding_harness: physmath-coding-harness-gpt56(20260824-172831)
   current_task_layer: design
+preconditions:
+  controlling_planning_pr:
+    github_pr: 408
+    branch: analysis/pr407-physmath-survivor-closeout-audit-20260825
+    exact_terminal_receipt: required
+    required_disposition: APPROVED_FOR_IMPLEMENTATION
+    resolve_commit_and_tree_at_implementation_start: true
+  audited_input_pr:
+    github_pr: 407
+    head: bdad91a204c424030cd6d0e562232b6965a42900
+    tree: c3cd19442e525aaf1b1e683c1920568513e18da5
+  research_handoff_ready_required: true
 task_contract:
   user_visible_goal: produce a current survivor overlay for already-established theory
     results without developing new theory

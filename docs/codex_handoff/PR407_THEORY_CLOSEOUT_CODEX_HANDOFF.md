@@ -11,6 +11,8 @@ docs/codex_handoff/theory_promotion_closeout/AUDIT_COMPILED_EXEC_PLAN.yaml
 This is a survivor closeout, not a new-theory programme and not a generic
 repository cleanup.
 
+PR #408 is the controlling planning contract. PR #407 remains transitive audited evidence at its frozen head and tree; it is not by itself sufficient to authorize implementation.
+
 The controlling order is:
 
 ```text
@@ -28,6 +30,9 @@ repository: cosmosapjw-quantum/htt_base
 audited_PR: 407
 audited_head: bdad91a204c424030cd6d0e562232b6965a42900
 audited_tree: c3cd19442e525aaf1b1e683c1920568513e18da5
+controlling_planning_PR: 408
+controlling_branch: analysis/pr407-physmath-survivor-closeout-audit-20260825
+controlling_terminal_identity: RESOLVE_EXACT_COMMIT_AND_TREE_AT_IMPLEMENTATION_START
 operating_profile: private_single_researcher_local_v1
 observed_data_used: false
 ```
@@ -52,18 +57,24 @@ as audit evidence.
 
 Do not allocate a canonical PR number in advance.
 
-1. require an exact terminal disposition for PR #407;
-2. re-read the live DAG and all open stacked PRs;
-3. verify PR-405, PR-406, and PR-407 ancestry with `git merge-base`;
-4. snapshot the ordered node IDs, edges, and execution resolutions;
-5. use the existing generator to allocate only the core closeout units;
-6. prove that the old node and edge surfaces are exact prefixes;
-7. stop on any drift.
+1. require an exact terminal disposition for the audited PR #407 input;
+2. require the exact PR-408 terminal commit and tree, resolved after this
+   planning PR reaches its human-approved terminal state;
+3. start implementation only from a commit descended from that resolved
+   PR-408 terminal commit;
+4. re-read the live DAG and all open stacked PRs;
+5. verify PR-405, PR-406, and PR-407 ancestry with `git merge-base`;
+6. snapshot the ordered node IDs, edges, and execution resolutions;
+7. use the existing generator to allocate only the five A--E core closeout
+   units;
+8. prove that the old node and edge surfaces are exact prefixes;
+9. stop on any drift.
 
 Typed stops:
 
 ```text
 BLOCKED_PREDECESSOR_TERMINAL_RECEIPT
+BLOCKED_CONTROLLING_PR408_TERMINAL_RECEIPT
 BLOCKED_DAG_PREFIX_DRIFT
 BLOCKED_DAG_ID_NOT_ALLOCATED
 ```
@@ -306,6 +317,9 @@ same_agent_final_authority: false
 
 ```yaml
 exact_PR407_terminal_receipt:
+exact_PR408_terminal_receipt:
+exact_PR408_terminal_commit:
+exact_PR408_terminal_tree:
 allocated_DAG_node_ids:
 old_DAG_snapshot_hashes:
 new_DAG_snapshot_hashes:

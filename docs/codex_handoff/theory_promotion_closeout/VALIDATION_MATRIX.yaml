@@ -61,8 +61,13 @@ requirements:
   level: scientific
   expected: PASS
 - id: DAG-001
-  requirement: PR407 exact terminal is controlling predecessor
-  check: test_implementation_requires_exact_pr407_terminal
+  requirement: PR407 exact terminal is preserved as transitive audited evidence
+  check: test_implementation_preserves_exact_pr407_audited_input_terminal
+  level: operational
+  expected: PASS
+- id: DAG-001A
+  requirement: approved PR408 terminal disposition, commit, and tree control implementation ancestry
+  check: test_implementation_requires_exact_pr408_terminal_ancestry
   level: operational
   expected: PASS
 - id: DAG-002
@@ -87,6 +92,11 @@ requirements:
   expected:
     P0: 0
     P1: 0
+- id: RES-001
+  requirement: coding handoff remains blocked until research closeout is complete
+  check: test_coding_handoff_refuses_open_research_closeout
+  level: scientific
+  expected: PASS
 status_values:
 - PASS
 - CONCERN
