@@ -1,0 +1,122 @@
+schema: audit-compiled-work-unit/v1
+id: WU-003
+title: PR-190 scoped negative-application closeout
+
+authority:
+  base_sha: RESOLVE_FROM_WU002_TERMINAL_RECEIPT
+  branch: ALLOCATE_FROM_LIVE_DAG
+  upstream_dependencies: [WU-002]
+  required_ancestor: bdad91a204c424030cd6d0e562232b6965a42900
+
+objective:
+  statement: Replay and classify only the registered same-frame hypersurface-normal Bianchi-I vorticity obstruction and assess its application-specific novelty.
+  observable_success: One exact negative-result receipt states W2=0 and rejects only the two registered nonzero same-frame targets.
+  non_goals:
+    - arbitrary tilted-frame no-go
+    - all-Bianchi no-go
+    - new general vorticity theorem
+
+risk:
+  class: medium
+  P0_failure_modes: [FM-PR190-SCOPE]
+  P1_failure_modes: [FM-PR190-NOVELTY]
+
+scope:
+  allowed_paths:
+    - tests/contracts/test_pr190_negative_application.py
+    - docs/research_program/theory_promotion/closeout/**
+    - frozen PR190 source references
+  forbidden_paths:
+    - frozen PR190 receipt contents
+    - observed-lane artifacts
+  forbidden_changes:
+    - Do not generalize from hypersurface-normal to tilted congruences
+    - Do not hide the broad attainability FAIL
+    - Do not claim novelty from the standard Frobenius fact alone
+
+preconditions:
+  - id: PRE-201
+    command: validate WU-002 terminal receipt
+    expect: PASS
+  - id: PRE-202
+    command: git status --porcelain=v1 --untracked-files=all
+    expect: empty
+
+invariants:
+  - id: INV-201
+    severity_if_violated: P0
+    statement: The obstruction remains restricted to the registered same-frame hypersurface-normal Bianchi-I branch.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_pr190_negative_application.py -k scope
+      expect: pass
+  - id: INV-202
+    severity_if_violated: P0
+    statement: The exact targets 1/25 and 3/100 are incompatible with W2=0 and no other target is inferred.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_pr190_negative_application.py -k targets
+      expect: pass
+  - id: INV-203
+    severity_if_violated: P1
+    statement: Publication role requires a comparison between the standard irrotational-congruence fact and the registered-target application.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_pr190_negative_application.py -k novelty
+      expect: pass
+
+failure_modes:
+  - id: FM-PR190-SCOPE
+    severity: P0
+    trigger: the result is extended to a tilted frame or all Bianchi models
+    required_detection:
+      test: test_pr190_obstruction_refuses_tilted_or_all_bianchi_extension
+  - id: FM-PR190-NOVELTY
+    severity: P1
+    trigger: the standard zero-vorticity fact is labelled novel without an application comparison
+    required_detection:
+      test: test_pr190_publication_role_requires_application_novelty_matrix
+
+implementation:
+  ordered_steps:
+    - id: STEP-201
+      files: [tests/contracts/test_pr190_negative_application.py]
+      action: Add RED frame, target, broad-parent, and novelty tests.
+      must_preserve: []
+    - id: STEP-202
+      files: [docs/research_program/theory_promotion/closeout/PR190_RESEARCH_DECISION.json]
+      action: Bind Frobenius source, registered targets, historical and current replay, exact scope, novelty, and application role.
+      must_preserve: [broad attainability FAIL]
+
+verification:
+  targeted:
+    - pytest -q tests/contracts/test_pr190_negative_application.py
+  negative:
+    - replace normal congruence with a tilted congruence
+    - claim all-Bianchi nonexistence
+    - remove one registered target
+  regression:
+    - git diff --check
+  integration: []
+  full_relevant_suite: []
+
+completion_evidence:
+  required:
+    - exact_scope_receipt
+    - target_contradiction_receipt
+    - novelty_matrix
+    - research_decision_receipt
+    - final_git_head
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - unresolved_blockers
+
+agent_policy:
+  ask_user_questions: false
+  guessing_across_spec_boundary: forbidden
+  unresolved_spec_action: BLOCKED_BY_UNRESOLVED_SPEC
+  changing_tests_to_fit_implementation: forbidden
+  suppressing_failures: forbidden
+  new_theory_on_closeout_path: forbidden
+
+review_gate:
+  fresh_context_required: true
+  pass_condition: {P0: 0, P1: 0}
