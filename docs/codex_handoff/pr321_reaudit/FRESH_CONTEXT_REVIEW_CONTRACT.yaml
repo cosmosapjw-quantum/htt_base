@@ -1,0 +1,25 @@
+schema: htt.pr321.hsc_sacc_repair_fresh_review.v1
+context: fresh_context_read_only
+inputs:
+- 43e27e8c93eb18195ceca41a22c90b7e6dd014bf
+- final SHA/tree
+- base..final diff
+- AUDIT_COMPILED_REPAIR_PLAN.yaml
+- P0_P1_THREAT_CATALOG.json
+- focused test logs
+- real-file compact result and hash
+- strict DAG/mirror logs
+excluded_authority:
+- implementer explanation
+- old PR body test counts
+finding_schema:
+  severity: P0|P1|P2|P3
+  file: path
+  line_or_symbol: location
+  violated_invariant: INV or exact statement
+  reproducer: command or evidence
+  explanation: scientific defect
+first_pass_code_changes_allowed: false
+pass_condition:
+  P0: 0
+  P1: 0
