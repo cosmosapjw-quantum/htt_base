@@ -12,10 +12,12 @@ preconditions:
     exact_terminal_receipt: required
     required_disposition: APPROVED_FOR_IMPLEMENTATION
     resolve_commit_and_tree_at_implementation_start: true
+    implementation_branch_must_descend_from_resolved_commit: true
   audited_input_pr:
     github_pr: 407
     head: bdad91a204c424030cd6d0e562232b6965a42900
     tree: c3cd19442e525aaf1b1e683c1920568513e18da5
+    exact_terminal_receipt: required
   research_handoff_ready_required: true
 task_contract:
   user_visible_goal: produce a current survivor overlay for already-established theory
@@ -55,6 +57,8 @@ baseline:
   - 463f0999949bf8534c60ad7973b7342705c2e3d6
   - 179ae4216082ca9b6c685f5bdba6bb269a0e273a
   - bdad91a204c424030cd6d0e562232b6965a42900
+  required_dynamic_ancestry:
+  - resolved_PR408_terminal_commit
   required_reproductions:
   - PR284 probability=1/2 bound=25/36 slack=7/36
   - VT-T8 dimension=14 determinant=50331648
