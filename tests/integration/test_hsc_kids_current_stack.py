@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -1000,3 +1001,153 @@ def test_pr310_dispatcher_passes_acceptance_bound_admission_environment(
         environment["HTT_ATTENDED_ORDERED_RECORD_IDS_SHA256"]
         == "sha256:" + "3" * 64
     )
+
+
+def _pr321_sacc_payload(module):
+    tracer_order = ("wl_0", "wl_1", "wl_2", "wl_3")
+    tracer_pairs = tuple(
+        (left, right)
+        for left_index, left in enumerate(tracer_order)
+        for right in tracer_order[left_index:]
+    )
+    ell = (
+        150.0,
+        250.0,
+        350.0,
+        500.0,
+        700.0,
+        900.0,
+        1200.0,
+        1600.0,
+        2000.0,
+        2600.0,
+        3400.0,
+        4200.0,
+        5400.0,
+        7000.0,
+        8600.0,
+        11000.0,
+        14200.0,
+    )
+    return {
+        "data_type": "cl_ee",
+        "tracer_order": tracer_order,
+        "tracer_quantities": ("galaxy_shear",) * 4,
+        "tracer_pairs": tracer_pairs,
+        "ell_by_pair": (ell,) * 10,
+        "window_shapes": ((15274, 17),) * 10,
+        "window_column_sums": (tuple(np.ones(17)),) * 10,
+        "data_vector": np.linspace(1.0e-10, 2.0e-9, 170),
+        "covariance": np.diag(np.linspace(1.0e-24, 2.0e-22, 170)),
+        "loader_version": "2.1.2",
+        "legacy_stored_order": True,
+        "observed_payload_validated": True,
+    }
+
+
+def test_pr321_hsc_sacc_contract_is_hsc_only_and_covariance_bound() -> None:
+    module = _science()
+    result = module.analyze_hsc_released_sacc(**_pr321_sacc_payload(module))
+
+    assert result["terminal_disposition"] == "READY_FOR_WINDOW_CONVOLVED_REFERENCE"
+    assert result["data_vector_size"] == 170
+    assert result["covariance"]["rank"] == 170
+    assert result["window_operator"]["pair_count"] == 10
+    assert result["window_operator"]["bandpowers_per_pair"] == 17
+    assert result["reference_status"] == "PREDECLARED_REFERENCE_REQUIRED"
+    assert result["observed_payload_validated"] is True
+    assert result["observed_statistic_seen"] is False
+    assert result["observed_science_executed"] is False
+    assert result["p_value"] is None
+    assert result["forced_source_label"] is None
+    assert "KiDS" not in json.dumps(result)
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    [
+        ("data_type", "cl_bb", "E-mode"),
+        ("tracer_order", ("wl_1", "wl_0", "wl_2", "wl_3"), "tracer order"),
+        ("legacy_stored_order", False, "stored row order"),
+    ],
+)
+def test_pr321_hsc_sacc_rejects_release_semantic_drift(
+    field: str, value: object, message: str
+) -> None:
+    module = _science()
+    payload = _pr321_sacc_payload(module)
+    payload[field] = value
+    with pytest.raises(module.HscKidsCurrentStackError, match=message):
+        module.analyze_hsc_released_sacc(**payload)
+
+
+def test_pr321_hsc_sacc_rejects_missing_window_or_covariance_support() -> None:
+    module = _science()
+    payload = _pr321_sacc_payload(module)
+    payload["window_shapes"] = ((15274, 17),) * 9
+    with pytest.raises(module.HscKidsCurrentStackError, match="window"):
+        module.analyze_hsc_released_sacc(**payload)
+
+    payload = _pr321_sacc_payload(module)
+    payload["covariance"] = np.ones((170, 170))
+    with pytest.raises(module.HscKidsCurrentStackError, match="positive definite"):
+        module.analyze_hsc_released_sacc(**payload)
+
+
+def test_pr321_worker_rejects_input_drift_before_sacc_load(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    worker = _worker()
+    source = tmp_path / "hsc.sacc"
+    source.write_bytes(b"not-the-frozen-sacc")
+    loaded = False
+
+    def forbidden(_path: Path):
+        nonlocal loaded
+        loaded = True
+        raise AssertionError("SACC payload loaded before identity rejection")
+
+    monkeypatch.setattr(worker, "_load_hsc_sacc", forbidden)
+    with pytest.raises(worker.HscKidsWorkerError, match="identity"):
+        worker.inspect_hsc_sacc(
+            path=source,
+            confirmation_sha256=worker.PR321_HSC_SACC_SHA256,
+        )
+    assert loaded is False
+
+
+def test_pr321_worker_emits_no_observed_values_or_inference_surface(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    worker = _worker()
+    science = _science()
+    source = tmp_path / "hsc.sacc"
+    source.write_bytes(b"synthetic-sacc-contract")
+    digest = hashlib.sha256(source.read_bytes()).hexdigest()
+    monkeypatch.setattr(worker, "PR321_HSC_SACC_SHA256", digest)
+    monkeypatch.setattr(worker, "PR321_HSC_SACC_SIZE", source.stat().st_size)
+    monkeypatch.setattr(worker, "_load_hsc_sacc", lambda _path: _pr321_sacc_payload(science))
+
+    result = worker.inspect_hsc_sacc(path=source, confirmation_sha256=digest)
+    encoded = json.dumps(result, sort_keys=True)
+    assert result["terminal_disposition"] == "READY_FOR_WINDOW_CONVOLVED_REFERENCE"
+    assert result["input_identity"]["sha256"] == digest
+    assert result["input_identity"]["byte_size"] == source.stat().st_size
+    assert result["observed_payload_validated"] is True
+    assert result["observed_statistic_seen"] is False
+    assert result["observed_science_executed"] is False
+    assert '"data_vector":' not in encoded
+    assert '"likelihood"' not in encoded
+    assert '"posterior"' not in encoded
+    assert '"KiDS"' not in encoded
+
+
+def test_pr321_loader_recognizes_the_exact_direct_legacy_order_notice() -> None:
+    worker = _worker()
+    notice = (
+        "Warning: The FITS format without the 'sacc_ordering' column is deprecated\n"
+        "Assuming data rows are in the correct order as it was before version 1.0.\n"
+    )
+    assert worker._legacy_sacc_order_notice(notice) is True
+    assert worker._legacy_sacc_order_notice("") is False
+    assert worker._legacy_sacc_order_notice("unrelated loader output\n") is False

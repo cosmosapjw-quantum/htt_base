@@ -41,6 +41,32 @@ SURVEY_COMPONENT_CONTRACTS = {
     },
 }
 
+HSC_SACC_TRACER_ORDER = ("wl_0", "wl_1", "wl_2", "wl_3")
+HSC_SACC_TRACER_PAIRS = tuple(
+    (left, right)
+    for left_index, left in enumerate(HSC_SACC_TRACER_ORDER)
+    for right in HSC_SACC_TRACER_ORDER[left_index:]
+)
+HSC_SACC_ELL_ORDER = (
+    150.0,
+    250.0,
+    350.0,
+    500.0,
+    700.0,
+    900.0,
+    1200.0,
+    1600.0,
+    2000.0,
+    2600.0,
+    3400.0,
+    4200.0,
+    5400.0,
+    7000.0,
+    8600.0,
+    11000.0,
+    14200.0,
+)
+
 
 class HscKidsCurrentStackError(ValueError):
     """Raised when the PR-310 science contract fails closed."""
@@ -905,4 +931,134 @@ def analyze_joint_response(
         "forced_source_label": None,
         "observed_statistic_seen": bool(observed),
         "observed_science_executed": bool(observed),
+    }
+
+
+def analyze_hsc_released_sacc(
+    *,
+    data_type: str,
+    tracer_order: Sequence[str],
+    tracer_quantities: Sequence[str],
+    tracer_pairs: Sequence[Sequence[str]],
+    ell_by_pair: Sequence[Sequence[float]],
+    window_shapes: Sequence[Sequence[int]],
+    window_column_sums: Sequence[Sequence[float]],
+    data_vector: object,
+    covariance: object,
+    loader_version: str,
+    legacy_stored_order: bool,
+    observed_payload_validated: bool,
+) -> dict[str, object]:
+    """Validate the exact HSC Fourier-SACC release surface without inference.
+
+    This is deliberately a sibling of the paired HSC/KiDS operator.  It binds
+    the released HSC E-mode vector, covariance, tomography ordering, and
+    bandpower windows, but it neither invents a reference prediction nor turns
+    an EE-only release into an E/B or cross-survey result.
+    """
+
+    if data_type != "cl_ee":
+        raise HscKidsCurrentStackError("HSC SACC must contain E-mode cl_ee only")
+    tracers = _canonical_text_tuple(
+        tracer_order, label="HSC SACC tracer order", expected_size=4
+    )
+    if tracers != HSC_SACC_TRACER_ORDER:
+        raise HscKidsCurrentStackError("HSC SACC tracer order drifted")
+    quantities = _canonical_text_tuple(
+        tracer_quantities, label="HSC SACC tracer quantity", expected_size=4
+    )
+    if quantities != ("galaxy_shear",) * 4:
+        raise HscKidsCurrentStackError("HSC SACC tracer quantity drifted")
+
+    pairs = tuple(tuple(pair) for pair in tracer_pairs)
+    if pairs != HSC_SACC_TRACER_PAIRS:
+        raise HscKidsCurrentStackError("HSC SACC tomographic pair order drifted")
+    if legacy_stored_order is not True:
+        raise HscKidsCurrentStackError("HSC SACC stored row order was not bound")
+    if loader_version != "2.1.2":
+        raise HscKidsCurrentStackError("HSC SACC loader version drifted")
+    if observed_payload_validated is not True:
+        raise HscKidsCurrentStackError("HSC SACC observed payload was not validated")
+
+    ell_rows = tuple(tuple(float(value) for value in row) for row in ell_by_pair)
+    if len(ell_rows) != len(HSC_SACC_TRACER_PAIRS) or any(
+        row != HSC_SACC_ELL_ORDER for row in ell_rows
+    ):
+        raise HscKidsCurrentStackError("HSC SACC bandpower ell order drifted")
+
+    shapes = tuple(tuple(int(value) for value in row) for row in window_shapes)
+    if shapes != ((15274, 17),) * len(HSC_SACC_TRACER_PAIRS):
+        raise HscKidsCurrentStackError("HSC SACC bandpower window shape drifted")
+    if len(window_column_sums) != len(HSC_SACC_TRACER_PAIRS):
+        raise HscKidsCurrentStackError("HSC SACC bandpower window count drifted")
+    window_sums = tuple(
+        _finite_vector(row, label="HSC SACC window column sums")
+        for row in window_column_sums
+    )
+    if any(row.size != 17 or np.any(row <= 0.0) for row in window_sums):
+        raise HscKidsCurrentStackError("HSC SACC bandpower window support drifted")
+
+    vector = _finite_vector(data_vector, label="HSC SACC released data")
+    if vector.size != 170:
+        raise HscKidsCurrentStackError("HSC SACC released data length drifted")
+    cov = _finite_matrix(covariance, label="HSC SACC covariance")
+    if cov.shape != (170, 170):
+        raise HscKidsCurrentStackError("HSC SACC covariance shape drifted")
+    if not np.allclose(cov, cov.T, rtol=1.0e-12, atol=0.0):
+        raise HscKidsCurrentStackError("HSC SACC covariance is not symmetric")
+    try:
+        np.linalg.cholesky(cov)
+    except np.linalg.LinAlgError as exc:
+        raise HscKidsCurrentStackError(
+            "HSC SACC covariance is not positive definite"
+        ) from exc
+    eigenvalues = np.linalg.eigvalsh(cov)
+    condition = float(eigenvalues[-1] / eigenvalues[0])
+
+    return {
+        "capability": "HSC_S19A_Y3_FOURIER_SACC_RELEASE_VECTOR_READINESS",
+        "release_id": "HSC_S19A_Y3",
+        "data_type": data_type,
+        "tracer_order": list(tracers),
+        "tomographic_pair_order": [list(pair) for pair in pairs],
+        "data_vector_size": int(vector.size),
+        "window_operator": {
+            "status": "BANDPOWER_WINDOWS_BOUND",
+            "pair_count": len(pairs),
+            "bandpowers_per_pair": len(HSC_SACC_ELL_ORDER),
+            "harmonic_support_size": shapes[0][0],
+            "column_sum_min": float(min(np.min(row) for row in window_sums)),
+            "column_sum_max": float(max(np.max(row) for row in window_sums)),
+            "theory_requirement": "CONVOLVE_THEORY_WITH_STORED_WINDOWS",
+        },
+        "covariance": {
+            "status": "FULL_RELEASE_COVARIANCE_CHOLESKY_READY",
+            "shape": [170, 170],
+            "rank": 170,
+            "condition_number": condition,
+            "diagonalized": False,
+            "likelihood_ready": False,
+        },
+        "reference_status": "PREDECLARED_REFERENCE_REQUIRED",
+        "terminal_disposition": "READY_FOR_WINDOW_CONVOLVED_REFERENCE",
+        "p_value": None,
+        "forced_source_label": None,
+        "global_identification": "NOT_ESTABLISHED",
+        "observed_payload_validated": True,
+        "observed_statistic_seen": False,
+        "observed_science_executed": False,
+        "artifact_metadata": {
+            "owner": "OBSSTAT",
+            "artifact_mode": "released_vector_readiness_diagnostic",
+            "claim_tier": "diagnostic_only",
+            "loader": "sacc==2.1.2",
+            "public_use": False,
+            "allowed_use": "window_convolved_HSC_only_reference_preparation",
+            "forbidden_uses": [
+                "cross_survey_result",
+                "p_value_without_finite_nulls",
+                "source_attribution",
+                "family_identification",
+            ],
+        },
     }
