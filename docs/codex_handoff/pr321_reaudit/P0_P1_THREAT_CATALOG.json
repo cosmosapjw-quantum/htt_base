@@ -1,0 +1,59 @@
+{
+  "findings": [
+    {
+      "consequence": "Known large-scale systematics and unvalidated small-scale modelling enter science.",
+      "detector": "test_pr321_fiducial_indices_and_covariance_slice",
+      "id": "PR321-FM-P1-001",
+      "name": "FULL_RELEASE_VECTOR_USED_AS_FIDUCIAL_SCIENCE_VECTOR",
+      "severity": "P1",
+      "stop": "BLOCKED_HSC_FIDUCIAL_SCALE_SELECTION",
+      "trigger": "All 170 values enter a reference/likelihood without the registered 300<ell<1800 selection."
+    },
+    {
+      "consequence": "A weak-lensing theory vector cannot be evaluated reproducibly.",
+      "detector": "test_pr321_requires_and_binds_four_nz_tracers",
+      "id": "PR321-FM-P1-002",
+      "name": "TRACER_NZ_OMITTED_FROM_REFERENCE_READINESS",
+      "severity": "P1",
+      "stop": "BLOCKED_HSC_TRACER_NZ",
+      "trigger": "Reference-ready status is emitted without four validated z/nz tracer arrays."
+    },
+    {
+      "consequence": "Pair, data-vector, window and covariance indices may be semantically misaligned.",
+      "detector": "test_pr321_legacy_order_crosschecks_mean_pair_api_and_covariance",
+      "id": "PR321-FM-P1-003",
+      "name": "LEGACY_SACC_ORDER_NOT_INDEPENDENTLY_CROSSCHECKED",
+      "severity": "P1",
+      "stop": "BLOCKED_HSC_SACC_ORDERING",
+      "trigger": "The deprecated loader warning alone authorizes scientific row ordering."
+    },
+    {
+      "consequence": "Directional information that the product does not contain is fabricated.",
+      "detector": "test_pr321_mes_role_is_scalar_control_only",
+      "id": "PR321-FM-P1-004",
+      "name": "SCALAR_TOMOGRAPHIC_CONTROL_MASQUERADES_AS_MES_DIRECTIONAL_DATA",
+      "severity": "P1",
+      "stop": "BLOCKED_NO_DIRECTION_INDEXED_HSC_FIELD",
+      "trigger": "Tomographic EE spectra are consumed as vector/STF or local/global MES evidence."
+    },
+    {
+      "consequence": "Continuation and audit provenance point to the wrong implementation.",
+      "detector": "test_pr321_status_urls_are_bound_to_correct_internal_prs",
+      "id": "PR321-FM-P1-005",
+      "name": "PR_URL_STATUS_PROVENANCE_MISBOUND",
+      "severity": "P1",
+      "stop": "BLOCKED_PR321_STATUS_PROVENANCE",
+      "trigger": "PR #412 is assigned to PR-289 and absent from PR-321."
+    },
+    {
+      "consequence": "The completion gate can report PASS while its own contract is false.",
+      "detector": "test_pr321_semantic_scope_replaces_false_loc_cap",
+      "id": "PR321-FM-P1-006",
+      "name": "ANTI_DRIFT_METRIC_CONTRACT_ALREADY_VIOLATED",
+      "severity": "P1",
+      "stop": "BLOCKED_PR321_SCOPE_CONTRACT",
+      "trigger": "The committed PR claims a file/LOC cap smaller than its actual diff."
+    }
+  ],
+  "schema": "htt.pr321.reaudit.threat_catalog.v1"
+}
