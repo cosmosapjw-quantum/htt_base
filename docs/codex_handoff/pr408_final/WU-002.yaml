@@ -1,0 +1,130 @@
+schema: audit-compiled-work-unit/v1
+id: WU-002
+title: Invariant and local-geometry research closeout
+
+authority:
+  base_sha: RESOLVE_FROM_WU001_TERMINAL_RECEIPT
+  branch: ALLOCATE_FROM_LIVE_DAG
+  upstream_dependencies: [WU-001]
+  required_ancestor: bdad91a204c424030cd6d0e562232b6965a42900
+
+objective:
+  statement: Close VT-T5, VT-T6, VT-T7, VT-T8, and VT-T13 evidence, domains, current replay, slice scope, semantic relations, and statement-level novelty as one coherent publication bundle.
+  observable_success: A research-decision receipt independently classifies every lemma and either certifies or downgrades the VT-T8 local-quotient wording.
+  non_goals:
+    - global orbit separation
+    - invariant-ring completeness
+    - full covariant dynamics
+
+risk:
+  class: high
+  P0_failure_modes: []
+  P1_failure_modes: [FM-P1-001, FM-P1-002]
+
+scope:
+  allowed_paths:
+    - docs/research_program/vector_tensor/**
+    - tests/contracts/test_invariant_geometry_closeout.py
+    - tests/contracts/test_theory_publication_roles.py
+    - docs/research_program/theory_promotion/closeout/**
+  forbidden_paths:
+    - frozen PR270 receipt contents
+    - observed-lane artifacts
+  forbidden_changes:
+    - Do not infer a quotient chart from dimension count alone
+    - Do not infer global separation from a local Jacobian
+    - Do not declare novelty without a comparison matrix
+    - Do not change exact identities or witnesses to fit tests
+
+preconditions:
+  - id: PRE-101
+    command: validate WU-001 terminal receipt and registered survivor surface
+    expect: PASS
+  - id: PRE-102
+    command: git status --porcelain=v1 --untracked-files=all
+    expect: empty
+
+invariants:
+  - id: INV-101
+    severity_if_violated: P1
+    statement: VT-T8 quotient wording requires a resolved local transverse eigenframe-slice receipt; otherwise it downgrades to a full-rank Jacobian statement on the registered slice.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_invariant_geometry_closeout.py -k vt_t8
+      expect: pass
+  - id: INV-102
+    severity_if_violated: P1
+    statement: Publication-ready requires a completed statement-level prior-art matrix.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_theory_publication_roles.py -k novelty
+      expect: pass
+  - id: INV-103
+    severity_if_violated: P0
+    statement: VT-T5 through VT-T7 and VT-T13 retain their exact assumptions, singular loci, and forbidden extensions.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_invariant_geometry_closeout.py -k exact
+      expect: pass
+
+failure_modes:
+  - id: FM-P1-001
+    severity: P1
+    trigger: publication-ready without a nearest-prior-art comparison
+    required_detection:
+      test: test_publication_ready_requires_completed_novelty_matrix
+  - id: FM-P1-002
+    severity: P1
+    trigger: quotient wording with only slice-Jacobian evidence
+    required_detection:
+      test: test_vt_t8_quotient_claim_requires_transverse_slice_receipt_or_downgrades
+
+implementation:
+  ordered_steps:
+    - id: STEP-101
+      files: [tests/contracts/test_invariant_geometry_closeout.py, tests/contracts/test_theory_publication_roles.py]
+      action: Add RED tests for exact identities, singular loci, slice-to-quotient scope, forbidden global claims, and novelty evidence.
+      must_preserve: []
+    - id: STEP-102
+      files: [docs/research_program/theory_promotion/closeout/INVARIANT_GEOMETRY_RESEARCH_DECISION.json]
+      action: Resolve source, evidence, replay, domain, and publication role with RETAIN, NARROW, DEFER, or EXCLUDE outcomes.
+      must_preserve: [broad parent statuses]
+    - id: STEP-103
+      files: [docs/research_program/theory_promotion/closeout/INVARIANT_GEOMETRY_PRIOR_ART_MATRIX.json]
+      action: Record search queries, nearest prior art, exact overlap dimensions, differences, and independent novelty decision.
+      must_preserve: [no novelty presumption]
+
+verification:
+  targeted:
+    - pytest -q tests/contracts/test_invariant_geometry_closeout.py tests/contracts/test_theory_publication_roles.py
+  negative:
+    - remove transverse-slice evidence
+    - claim global separation
+    - claim novelty without a comparison row
+    - drop the I2 greater than zero condition from VT-T13
+  regression:
+    - git diff --check
+  integration: []
+  full_relevant_suite: []
+
+completion_evidence:
+  required:
+    - exact_replay_receipts
+    - slice_scope_receipt
+    - prior_art_search_log
+    - novelty_matrix
+    - research_decision_receipt
+    - final_git_head
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - unresolved_blockers
+
+agent_policy:
+  ask_user_questions: false
+  guessing_across_spec_boundary: forbidden
+  unresolved_spec_action: BLOCKED_BY_UNRESOLVED_SPEC
+  changing_tests_to_fit_implementation: forbidden
+  suppressing_failures: forbidden
+  new_theory_on_closeout_path: forbidden
+
+review_gate:
+  fresh_context_required: true
+  pass_condition: {P0: 0, P1: 0}
