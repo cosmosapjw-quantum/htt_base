@@ -980,7 +980,7 @@ def analyze_hsc_released_sacc(
 
     if len(tracer_z) != 4 or len(tracer_nz) != 4:
         raise HscKidsCurrentStackError("HSC SACC N(z) must bind all four tracers")
-    nz_binding: list[dict[str, object]] = []
+    source_redshift_distributions: dict[str, dict[str, object]] = {}
     for name, raw_z, raw_nz in zip(tracers, tracer_z, tracer_nz, strict=True):
         z = _finite_vector(raw_z, label=f"HSC SACC {name} N(z) support")
         nz = _finite_vector(raw_nz, label=f"HSC SACC {name} N(z) density")
@@ -994,24 +994,18 @@ def analyze_hsc_released_sacc(
         integral = float(np.sum(widths * (nz[:-1] + nz[1:]) / 2.0))
         if not math.isfinite(integral) or integral <= 0.0:
             raise HscKidsCurrentStackError("HSC SACC N(z) integral must be positive")
-        nz_binding.append(
-            {
-                "name": name,
-                "z_sha256_float64_le": hashlib.sha256(
-                    np.asarray(z, dtype="<f8").tobytes(order="C")
-                ).hexdigest(),
-                "nz_sha256_float64_le": hashlib.sha256(
-                    np.asarray(nz, dtype="<f8").tobytes(order="C")
-                ).hexdigest(),
-                "sample_count": int(z.size),
-                "z_min": float(z[0]),
-                "z_max": float(z[-1]),
-                "integral_raw": integral,
-                "strictly_increasing_z": True,
-                "nz_nonnegative": True,
-                "integral_positive": True,
-            }
-        )
+        source_redshift_distributions[name] = {
+            "z_sha256": hashlib.sha256(
+                np.asarray(z, dtype="<f8").tobytes(order="C")
+            ).hexdigest(),
+            "nz_sha256": hashlib.sha256(
+                np.asarray(nz, dtype="<f8").tobytes(order="C")
+            ).hexdigest(),
+            "sample_count": int(z.size),
+            "z_min": float(z[0]),
+            "z_max": float(z[-1]),
+            "integral_raw": integral,
+        }
 
     pairs = tuple(tuple(pair) for pair in tracer_pairs)
     if pairs != HSC_SACC_TRACER_PAIRS:
@@ -1133,45 +1127,46 @@ def analyze_hsc_released_sacc(
     ).hexdigest()
 
     return {
+        "schema": "htt.pr321.hsc_sacc_repaired_result.v1",
         "capability": "HSC_S19A_Y3_FOURIER_SACC_RELEASE_VECTOR_READINESS",
         "release_id": "HSC_S19A_Y3",
-        "data_type": data_type,
         "tracer_order": list(tracers),
         "tomographic_pair_order": [list(pair) for pair in pairs],
-        "data_vector_size": int(vector.size),
-        "n_z_binding": {
-            "status": "FOUR_TRACER_NZ_BOUND",
-            "tracers": nz_binding,
-        },
         "full_release": {
-            "status": "FULL_RELEASE_SNAPSHOT_BOUND_NOT_FIDUCIAL_SCIENCE_SELECTION",
-            "role": "ARCHIVE_AND_INSPECTION_ONLY",
-            "data_vector_size": int(vector.size),
-            "data_vector_sha256_float64_le": array_sha256(vector),
+            "data_type": data_type,
+            "tracer_count": len(tracers),
+            "pair_count": len(pairs),
+            "bandpowers_per_pair": len(HSC_SACC_ELL_ORDER),
+            "vector_size": int(vector.size),
             "covariance_shape": [170, 170],
+            "role": "ARCHIVE_AND_INSPECTION_ONLY",
+            "status": "FULL_RELEASE_SNAPSHOT_BOUND_NOT_FIDUCIAL_SCIENCE_SELECTION",
+            "data_vector_sha256_float64_le": array_sha256(vector),
             "covariance_sha256_float64_le": array_sha256(cov),
         },
         "fiducial_selection": {
-            "status": "OFFICIAL_FIDUCIAL_SCALE_SELECTION_BOUND",
-            "selection_rule": "300_LT_ELL_LT_1800",
-            "ell_centers": [HSC_SACC_ELL_ORDER[index] for index in fiducial_band_indices],
-            "indices": fiducial_indices.tolist(),
+            "selection_id": "HSC_Y3_DALAL23_300_LT_ELL_LT_1800_V1",
+            "ell_min_exclusive": 300.0,
+            "ell_max_exclusive": 1800.0,
+            "retained_bin_indices_per_pair": list(fiducial_band_indices),
+            "retained_ell_centres": [
+                HSC_SACC_ELL_ORDER[index] for index in fiducial_band_indices
+            ],
+            "vector_size": int(fiducial_vector.size),
+            "covariance_shape": [60, 60],
             "ordered_index_sha256": ordered_index_sha256,
-            "ordered_index_encoding": "INT64_LE_C_ORDER",
-            "data_vector_size": int(fiducial_vector.size),
             "data_vector_sha256_float64_le": array_sha256(fiducial_vector),
-            "covariance": {
-                "shape": [60, 60],
-                "sha256_float64_le": array_sha256(fiducial_covariance),
-                "rank": int(np.linalg.matrix_rank(fiducial_covariance)),
-                "minimum_eigenvalue": float(fiducial_eigenvalues[0]),
-                "condition_number": float(
-                    fiducial_eigenvalues[-1] / fiducial_eigenvalues[0]
-                ),
-                "cholesky_ready": True,
-                "likelihood_ready": False,
-            },
+            "covariance_sha256_float64_le": array_sha256(fiducial_covariance),
+            "rank": int(np.linalg.matrix_rank(fiducial_covariance)),
+            "condition_number": float(
+                fiducial_eigenvalues[-1] / fiducial_eigenvalues[0]
+            ),
+            "status": "OFFICIAL_FIDUCIAL_SCALE_SELECTION_BOUND",
+            "ordered_index_encoding": "INT64_LE_C_ORDER",
+            "minimum_eigenvalue": float(fiducial_eigenvalues[0]),
+            "cholesky_ready": True,
         },
+        "source_redshift_distributions": source_redshift_distributions,
         "legacy_order_crosscheck": {
             "status": "INDEPENDENT_SACC_API_CROSSCHECK_PASS",
             **{name: True for name in order_checks},
@@ -1227,15 +1222,15 @@ def analyze_hsc_released_sacc(
         "likelihood_ready": False,
         "p_value": None,
         "source_label": None,
-        "forced_source_label": None,
         "family_identification": "FORBIDDEN",
-        "observed_payload_validated": True,
-        "observed_released_data_vector_parsed": True,
-        "observed_summary_statistic_present": True,
-        "observed_statistic_seen": True,
-        "htt_derived_statistic_computed": False,
-        "observed_science_inference_executed": False,
-        "observed_science_executed": False,
+        "observed_state": {
+            "observed_payload_validated": True,
+            "observed_released_data_vector_parsed": True,
+            "observed_summary_statistic_present": True,
+            "observed_statistic_seen": True,
+            "htt_derived_statistic_computed": False,
+            "observed_science_inference_executed": False,
+        },
         "artifact_metadata": {
             "owner": "OBSSTAT",
             "artifact_mode": "released_vector_readiness_diagnostic",

@@ -14,13 +14,19 @@ statistic was seen; no HTT-derived statistic or science inference was executed.
   `a28f9e2e088e92d96d2d87083a6eeeac4c0c84c6b48e033bd3d1dc1bf0d8958f`
 - loader: `sacc==2.1.2`
 - candidate base before repair: commit `8751557bdba616879cf238998d435b959bbc2eeb`
-- worker SHA-256: `8189ba2b946caffe530115a8c85a01e4699cdd155c02d24690c5e35792fbddb8`
+- science module SHA-256:
+  `4bd7d8090e32682c998665b637b6bf5117449af1dcaee6e2df4b72fddf21e821`
+- worker SHA-256:
+  `8189ba2b946caffe530115a8c85a01e4699cdd155c02d24690c5e35792fbddb8`
 - compact result: `docs/generated/pr321_hsc_sacc_result.json`, SHA-256
-  `3fdd297c8a04551c64f9791e7794f0ed8224b67f7bd14ae0022a47b83e342526`
+  `34dc946fec94c2c62f2733b6360dd4a5481906704c88ee46f0145aea3bc6d0cb`
 
 Hashing and parsing consume one byte snapshot, preventing a path replacement
 from mixing one file identity with another decoded payload. The result stores
 only decoded vector/covariance hashes, not numerical bandpowers.
+It also conforms to the controlling
+`htt.pr321.hsc_sacc_repaired_result.v1` machine shape; this repair changes no
+scientific value or claim boundary.
 
 ## Bound surface and interpretation
 

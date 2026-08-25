@@ -12,6 +12,7 @@ from types import SimpleNamespace
 
 import numpy as np
 import pytest
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -1068,23 +1069,17 @@ def test_pr321_requires_and_binds_four_nz_tracers() -> None:
     payload = _pr321_sacc_payload(module)
     result = module.analyze_hsc_released_sacc(**payload)
 
-    binding = result["n_z_binding"]
-    assert binding["status"] == "FOUR_TRACER_NZ_BOUND"
-    assert [row["name"] for row in binding["tracers"]] == list(
-        payload["tracer_order"]
-    )
+    binding = result["source_redshift_distributions"]
+    assert list(binding) == list(payload["tracer_order"])
     for row, z, nz in zip(
-        binding["tracers"], payload["tracer_z"], payload["tracer_nz"], strict=True
+        binding.values(), payload["tracer_z"], payload["tracer_nz"], strict=True
     ):
-        assert row["z_sha256_float64_le"] == hashlib.sha256(
+        assert row["z_sha256"] == hashlib.sha256(
             np.asarray(z, dtype="<f8").tobytes()
         ).hexdigest()
-        assert row["nz_sha256_float64_le"] == hashlib.sha256(
+        assert row["nz_sha256"] == hashlib.sha256(
             np.asarray(nz, dtype="<f8").tobytes()
         ).hexdigest()
-        assert row["strictly_increasing_z"] is True
-        assert row["nz_nonnegative"] is True
-        assert row["integral_positive"] is True
         assert row["sample_count"] == 8
         expected_integral = np.sum(np.diff(z) * (nz[:-1] + nz[1:]) / 2.0)
         assert row["integral_raw"] == pytest.approx(expected_integral)
@@ -1103,6 +1098,34 @@ def test_pr321_requires_and_binds_four_nz_tracers() -> None:
         module.analyze_hsc_released_sacc(**nonpositive)
 
 
+def test_pr321_generated_result_conforms_expected_result_schema() -> None:
+    expected = yaml.safe_load(
+        (
+            ROOT
+            / "docs/codex_handoff/pr321_reaudit/EXPECTED_RESULT_SCHEMA.yaml"
+        ).read_text(encoding="utf-8")
+    )
+    actual = json.loads(
+        (ROOT / "docs/generated/pr321_hsc_sacc_result.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    def require_expected_shape(expected_value, actual_value, path: str) -> None:
+        if isinstance(expected_value, dict):
+            assert isinstance(actual_value, dict), f"{path} must be an object"
+            for key, child in expected_value.items():
+                assert key in actual_value, f"missing required result path {path}.{key}"
+                require_expected_shape(child, actual_value[key], f"{path}.{key}")
+            return
+        if expected_value == "<derived>":
+            assert actual_value is not None, f"{path} must contain a derived value"
+            return
+        assert actual_value == expected_value, f"{path} drifted"
+
+    require_expected_shape(expected, actual, "result")
+
+
 def test_pr321_fiducial_indices_and_covariance_slice() -> None:
     module = _science()
     payload = _pr321_sacc_payload(module)
@@ -1118,22 +1141,26 @@ def test_pr321_fiducial_indices_and_covariance_slice() -> None:
         np.ix_(expected_indices, expected_indices)
     ]
     fiducial = result["fiducial_selection"]
-    assert fiducial["selection_rule"] == "300_LT_ELL_LT_1800"
-    assert fiducial["ell_centers"] == [350.0, 500.0, 700.0, 900.0, 1200.0, 1600.0]
-    assert fiducial["indices"] == expected_indices
+    assert fiducial["selection_id"] == "HSC_Y3_DALAL23_300_LT_ELL_LT_1800_V1"
+    assert fiducial["ell_min_exclusive"] == 300.0
+    assert fiducial["ell_max_exclusive"] == 1800.0
+    assert fiducial["retained_bin_indices_per_pair"] == list(range(2, 8))
+    assert fiducial["retained_ell_centres"] == [
+        350.0, 500.0, 700.0, 900.0, 1200.0, 1600.0
+    ]
     assert fiducial["ordered_index_sha256"] == hashlib.sha256(
         np.asarray(expected_indices, dtype="<i8").tobytes()
     ).hexdigest()
-    assert fiducial["data_vector_size"] == 60
+    assert fiducial["vector_size"] == 60
     assert fiducial["data_vector_sha256_float64_le"] == hashlib.sha256(
         vector.tobytes()
     ).hexdigest()
-    assert fiducial["covariance"]["shape"] == [60, 60]
-    assert fiducial["covariance"]["sha256_float64_le"] == hashlib.sha256(
+    assert fiducial["covariance_shape"] == [60, 60]
+    assert fiducial["covariance_sha256_float64_le"] == hashlib.sha256(
         covariance.tobytes()
     ).hexdigest()
-    assert fiducial["covariance"]["rank"] == 60
-    assert fiducial["covariance"]["minimum_eigenvalue"] > 0.0
+    assert fiducial["rank"] == 60
+    assert fiducial["minimum_eigenvalue"] > 0.0
     assert result["terminal_disposition"] == (
         "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
     )
@@ -1225,20 +1252,21 @@ def test_pr321_hsc_sacc_contract_is_hsc_only_and_covariance_bound() -> None:
     assert result["terminal_disposition"] == (
         "READY_FOR_PREREGISTERED_FIDUCIAL_WINDOW_CONVOLVED_REFERENCE"
     )
-    assert result["data_vector_size"] == 170
+    assert result["full_release"]["vector_size"] == 170
     assert result["covariance"]["rank"] == 170
     assert result["window_operator"]["pair_count"] == 10
     assert result["window_operator"]["bandpowers_per_pair"] == 17
     assert result["window_operator"]["window_support_sha256_float64_le"] == "1" * 64
     assert result["window_operator"]["window_weight_sha256_float64_le"] == "2" * 64
     assert result["reference_status"] == "FIDUCIAL_REFERENCE_VECTOR_STILL_REQUIRED"
-    assert result["observed_payload_validated"] is True
-    assert result["observed_released_data_vector_parsed"] is True
-    assert result["observed_summary_statistic_present"] is True
-    assert result["observed_statistic_seen"] is True
-    assert result["htt_derived_statistic_computed"] is False
-    assert result["observed_science_inference_executed"] is False
-    assert result["observed_science_executed"] is False
+    assert result["observed_state"] == {
+        "observed_payload_validated": True,
+        "observed_released_data_vector_parsed": True,
+        "observed_summary_statistic_present": True,
+        "observed_statistic_seen": True,
+        "htt_derived_statistic_computed": False,
+        "observed_science_inference_executed": False,
+    }
     assert result["response_rank"]["status"] == "NOT_EVALUATED"
     assert result["response_rank"]["rank"] is None
     metadata = result["artifact_metadata"]
@@ -1249,7 +1277,6 @@ def test_pr321_hsc_sacc_contract_is_hsc_only_and_covariance_bound() -> None:
     assert len(metadata["caveats"]) == 4
     assert result["p_value"] is None
     assert result["source_label"] is None
-    assert result["forced_source_label"] is None
     assert result["family_identification"] == "FORBIDDEN"
     assert "KiDS" not in json.dumps(result)
 
@@ -1336,13 +1363,14 @@ def test_pr321_worker_emits_no_observed_values_or_inference_surface(
     )
     assert result["input_identity"]["sha256"] == digest
     assert result["input_identity"]["byte_size"] == source.stat().st_size
-    assert result["observed_payload_validated"] is True
-    assert result["observed_released_data_vector_parsed"] is True
-    assert result["observed_summary_statistic_present"] is True
-    assert result["observed_statistic_seen"] is True
-    assert result["htt_derived_statistic_computed"] is False
-    assert result["observed_science_inference_executed"] is False
-    assert result["observed_science_executed"] is False
+    assert result["observed_state"] == {
+        "observed_payload_validated": True,
+        "observed_released_data_vector_parsed": True,
+        "observed_summary_statistic_present": True,
+        "observed_statistic_seen": True,
+        "htt_derived_statistic_computed": False,
+        "observed_science_inference_executed": False,
+    }
     assert '"data_vector":' not in encoded
     assert '"likelihood"' not in encoded
     assert '"posterior"' not in encoded
