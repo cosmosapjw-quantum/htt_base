@@ -1,0 +1,111 @@
+schema: audit-compiled-work-unit/v1
+id: WU-005
+title: VT-S14 synthetic-validation closeout
+
+authority:
+  base_sha: RESOLVE_FROM_WU004_TERMINAL_RECEIPT
+  branch: ALLOCATE_FROM_LIVE_DAG
+  upstream_dependencies: [WU-004]
+  required_ancestor: bdad91a204c424030cd6d0e562232b6965a42900
+
+objective:
+  statement: Bind the registered positive synthetic cell and proportional-design negative control and prevent theorem, observation, or family-identification escalation.
+  observable_success: The synthetic result replays and is emitted only as preregistered method validation.
+  non_goals:
+    - theorem
+    - observational result
+    - Bianchi-family identification
+
+risk:
+  class: low
+  P0_failure_modes: [FM-VTS14-CLASS]
+  P1_failure_modes: []
+
+scope:
+  allowed_paths:
+    - tests/contracts/test_vt_s14_synthetic_closeout.py
+    - docs/research_program/theory_promotion/closeout/**
+    - frozen VT-S14 references
+  forbidden_paths:
+    - observed data
+    - native-solver outputs
+  forbidden_changes:
+    - Do not omit the negative control
+    - Do not relabel synthetic evidence as theorem or observation
+    - Do not change expected synthetic output to fit code
+
+preconditions:
+  - id: PRE-401
+    command: validate WU-004 terminal receipt
+    expect: PASS
+  - id: PRE-402
+    command: git status --porcelain=v1 --untracked-files=all
+    expect: empty
+
+invariants:
+  - id: INV-401
+    severity_if_violated: P0
+    statement: Synthetic validation is never emitted as theorem, observation, or family identification.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_vt_s14_synthetic_closeout.py -k claim_class
+      expect: pass
+  - id: INV-402
+    severity_if_violated: P1
+    statement: The positive cell and nonidentified proportional-design control are both present and replayed.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_vt_s14_synthetic_closeout.py -k replay
+      expect: pass
+
+failure_modes:
+  - id: FM-VTS14-CLASS
+    severity: P0
+    trigger: synthetic output is promoted to theorem or observed evidence
+    required_detection:
+      test: test_vt_s14_synthetic_result_cannot_emit_theorem_observation_or_family_claim
+
+implementation:
+  ordered_steps:
+    - id: STEP-401
+      files: [tests/contracts/test_vt_s14_synthetic_closeout.py]
+      action: Add RED claim-class, positive-cell, negative-control, and replay tests.
+      must_preserve: []
+    - id: STEP-402
+      files: [docs/research_program/theory_promotion/closeout/VT_S14_RESEARCH_DECISION.json]
+      action: Bind the positive cell, negative control, exact exclusions, and synthetic-validation role.
+      must_preserve: [broad blocked program status]
+
+verification:
+  targeted:
+    - pytest -q tests/contracts/test_vt_s14_synthetic_closeout.py
+  negative:
+    - label as theorem
+    - label as observed result
+    - omit the negative control
+    - emit family identification
+  regression:
+    - git diff --check
+  integration: []
+  full_relevant_suite: []
+
+completion_evidence:
+  required:
+    - synthetic_replay_receipt
+    - positive_and_negative_cell_manifest
+    - claim_class_receipt
+    - research_decision_receipt
+    - final_git_head
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - unresolved_blockers
+
+agent_policy:
+  ask_user_questions: false
+  guessing_across_spec_boundary: forbidden
+  changing_tests_to_fit_implementation: forbidden
+  suppressing_failures: forbidden
+  claiming_unexecuted_work: forbidden
+
+review_gate:
+  fresh_context_required: true
+  pass_condition: {P0: 0, P1: 0}
