@@ -1,0 +1,142 @@
+schema: htt.mes_methodology_recovery.research_decisions.v1
+authority:
+  base_branch: changeset/pr320-hsc-kids-cross-covariance-20260825
+  base_sha: a968e11461ed28c8d5cc1244f0122edc704579c4
+status_axes: [truth_status, evidence_status, replay_status, release_status]
+decisions:
+  - id: MR-THEOREM-001
+    title: Scalar-only O3-equivariant no-go
+    truth_status: ESTABLISHED
+    evidence_status: ANALYTIC_PROOF_PLUS_WOLFRAM_GENERATOR_SOLVE
+    replay_status: EXTERNAL_WOLFRAM_PASS_PENDING_REPO_REPLAY
+    release_status: METHOD_LEMMA_CANDIDATE
+    statement: >-
+      Without independently supplied directional structure, every O(3)-equivariant
+      map from rotational scalars to a polar/axial vector or STF2 tensor is zero.
+    forbidden_extensions:
+      - scalar MES anchor determines an axis
+      - scalar MES anchor determines tensor components
+  - id: MR-THEOREM-002
+    title: Directional scalar moment reconstruction
+    truth_status: ESTABLISHED
+    evidence_status: EXACT_SPHERE_INTEGRATION
+    replay_status: EXTERNAL_WOLFRAM_PASS_PENDING_REPO_REPLAY
+    release_status: CENTRAL_METHOD_PROPOSITION_CANDIDATE
+    statement: >-
+      V_a=3/(4pi) integral q(n)n_a dOmega and
+      T_ab=15/(8pi) integral q(n)n_<a n_b> dOmega exactly reconstruct the
+      l=1 vector and l=2 STF tensor of a full-sky directional scalar field.
+    implementation_boundary: Masked or discrete data require a registered quadrature or joint harmonic fit.
+  - id: MR-THEOREM-003
+    title: MES anchor scale-shape and response-rank invariance
+    truth_status: ESTABLISHED
+    evidence_status: LINEAR_ALGEBRA_PLUS_WOLFRAM_CONGRUENCE
+    replay_status: EXTERNAL_WOLFRAM_PASS_PENDING_REPO_REPLAY
+    release_status: CENTRAL_METHOD_PROPOSITION_CANDIDATE
+    statement: >-
+      Positive fixed scalar anchors rescale amplitudes but preserve normalized
+      directions, tensor eigenspaces, homogeneous shape invariants, response rank
+      and response subspaces.
+    caveat: A row-dependent self-anchor is a new nonlinear statistic and needs symmetric null calibration.
+  - id: MR-THEOREM-004
+    title: Local/global single-shell no-go and depth criterion
+    truth_status: ESTABLISHED
+    evidence_status: FISHER_FACTORISATION_PLUS_WOLFRAM
+    replay_status: EXTERNAL_WOLFRAM_PASS_PENDING_REPO_REPLAY
+    release_status: CENTRAL_IDENTIFICATION_THEOREM_CANDIDATE
+    statement: >-
+      For V_i=f_L(z_i) beta_L+f_G(z_i) beta_G+noise, the six-parameter Fisher
+      determinant is det(K_depth)^3 det(S_direction)^2. One shell is
+      nonidentified; identification requires independent depth profiles and
+      full directional support after nuisance projection.
+  - id: MR-THEOREM-005
+    title: Finite reverse-martingale depth-path Doob theorem
+    truth_status: ESTABLISHED
+    evidence_status: ANALYTIC_REVERSE_TIME_DOOB_PROOF
+    replay_status: PAPER_PROOF_PENDING_OPTIONAL_LEAN
+    release_status: STATISTICAL_FOUNDATION_LEMMA
+    statement: >-
+      For any finite decreasing filtration G_j and X in L2,
+      P(max_j |E[X|G_j]|^2 >= lambda^2 E[X^2]) <= 1/lambda^2.
+    not_proved:
+      - nested sky masks are sigma fields
+      - data-fitted rung estimators are conditional expectations
+      - observed calibration is free
+  - id: MR-THEOREM-006
+    title: Row-equivariant nested finite-rank validity
+    truth_status: ESTABLISHED
+    evidence_status: EXCHANGEABILITY_PROOF_PLUS_EXISTING_PR197
+    replay_status: CURRENT_PLANCK_IMPLEMENTATION_CONSISTENT_REGRESSION_REQUIRED
+    release_status: STATISTICAL_FOUNDATION_LEMMA
+    statement: >-
+      A permutation-equivariant complete observation/null scoring map preserves
+      exchangeability; conservative observation-inclusive ranks are super-uniform,
+      including nested family scores when every layer is equivariant.
+  - id: MR-THEOREM-007
+    title: Zero-mean spherical second-moment cone
+    truth_status: ESTABLISHED
+    evidence_status: CONSTRUCTIVE_SPECTRAL_ANTIPODAL_PROOF
+    replay_status: EXTERNAL_WOLFRAM_PASS_PENDING_FORMAL_REPLAY
+    release_status: SUPPORTING_REALIZABILITY_LEMMA
+    statement: >-
+      M is the second moment of a zero-mean antipodal probability measure on S2
+      iff M is PSD and trace one.
+    not_proved: [higher_moment_cone, nonzero_mean_joint_moment_cone, dynamical_attainability]
+  - id: MR-THEOREM-008
+    title: VT-T8 eigenframe-slice transversality
+    truth_status: ESTABLISHED_ON_ORDERED_SIMPLE_SPECTRUM_BRANCH
+    evidence_status: INFINITESIMAL_ORBIT_JACOBIAN_PLUS_EXISTING_14D_JACOBIAN
+    replay_status: EXTERNAL_WOLFRAM_PASS_LOCAL_SAGE_LEAN_REQUIRED
+    release_status: CENTRAL_PROPOSITION_PENDING_DISCRETE_BRANCH_AND_NOVELTY
+    statement: >-
+      The diagonal STF eigenframe slice is transverse to the continuous SO(3)
+      orbit on the simple-spectrum locus.
+  - id: MR-NEGATIVE-009
+    title: Broad J1/J2 anchor conjectures
+    truth_status: REFUTED_OR_RESTRICTED
+    evidence_status: EXISTING_PR254_EXACT_COUNTEREXAMPLES
+    replay_status: CURRENT_REPLAY_REQUIRED_BEFORE_LEDGER_PROJECTION
+    release_status: NEGATIVE_METHOD_RESULT
+    statement: Only the one-way anchor-containment implication survives.
+  - id: MR-STAT-010
+    title: PR197 exact finite-rank resolution
+    truth_status: ESTABLISHED
+    evidence_status: ANALYTIC_FORMULA_PLUS_EXISTING_EXACT_ENUMERATION
+    replay_status: CURRENT_IMPLEMENTATION_PRESENT
+    release_status: METHOD_LEMMA
+    statement: >-
+      Worst-case conservative rank size is floor(alpha(m+1))/(m+1), ties cannot
+      increase rejection, and alpha=0.05 first has a nonempty rejection region
+      at m=19 calibration rows.
+  - id: MR-BLOCK-011
+    title: Physical frame and boost bridge
+    truth_status: NOT_ASSESSED_FULLY
+    evidence_status: TYPED_BRIDGE_ONLY
+    replay_status: LOCAL_XACT_REQUIRED
+    release_status: BLOCKED
+    blocked_reason: PR210 enforces typing but does not derive the physical covariant transformation used by observational responses.
+  - id: MR-BLOCK-012
+    title: Branch-complete homogeneous constraints
+    truth_status: PARTIAL
+    evidence_status: ALGEBRAIC_AND_SELECTED_CONSTRAINT_WITNESSES
+    replay_status: LOCAL_XACT_AND_NATIVE_SOLVER_REQUIRED
+    release_status: BLOCKED_FOR_GLOBAL_ATTAINABILITY
+  - id: MR-BLOCK-013
+    title: Non-geodesic MES vorticity and acceleration coefficients
+    truth_status: OPEN_SOURCE_UNAVAILABLE
+    evidence_status: UNVERIFIED_PRINT_ONLY
+    replay_status: BLOCKED_PRIMARY_SOURCE
+    release_status: FORBIDDEN
+  - id: MR-DATA-014
+    title: PR314 observed-row active MES diagnostic
+    truth_status: DERIVED_FROM_FROZEN_LEGACY_OPERATOR_OUTPUT
+    evidence_status: ACTIVE_GEODESIC_MES_FORMULA_APPLIED_TO_COMMITTED_C2_C3
+    replay_status: WOLFRAM_AND_INDEPENDENT_ARITHMETIC_MATCH
+    release_status: DIAGNOSTIC_ONLY_PENDING_PR315_AND_NULL_RERUN
+    values:
+      epsilon2: 3.222100796619276e-6
+      epsilon3: 6.017158726898917e-6
+      B_sigma: 1.2245084701385934e-5
+      B_omega: 4.296134395492368e-7
+      Sigma2_max: 2.249131490161738e-10
+      W2_max: 2.768515611619886e-13
