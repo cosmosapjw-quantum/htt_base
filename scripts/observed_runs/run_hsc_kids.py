@@ -50,6 +50,7 @@ from obsstat.hsc_kids_current_stack import (  # noqa: E402
     SurveyIdentity,
     TomographyBin,
     analyze_joint_response,
+    derive_paired_same_sky_joint_covariance,
     execute_tomography,
     label_eb,
     parallel_transport_axis,
@@ -385,6 +386,76 @@ def analyze_documents(
         or tuple(cross.get("kids_feature_order", ())) != kids_tomography.feature_order
     ):
         raise HscKidsWorkerError("cross covariance feature order drifted")
+    covariance_evidence = None
+    covariance_branch = cross.get("covariance_branch")
+    if covariance_branch == "PAIRED_SAME_SKY_NULLS":
+        if (
+            cross.get("hsc_operator_identity") != hsc_operator.operator_id
+            or cross.get("kids_operator_identity") != kids_operator.operator_id
+        ):
+            raise HscKidsWorkerError("paired-null operator identity drifted")
+        try:
+            covariance_evidence = derive_paired_same_sky_joint_covariance(
+                hsc_null_features=cross.get("hsc_null_features"),
+                kids_null_features=cross.get("kids_null_features"),
+                hsc_feature_order=hsc_tomography.feature_order,
+                kids_feature_order=kids_tomography.feature_order,
+                hsc_feature_units=tuple(
+                    str(value)
+                    for value in _sequence(
+                        cross.get("hsc_feature_units"), label="HSC feature units"
+                    )
+                ),
+                kids_feature_units=tuple(
+                    str(value)
+                    for value in _sequence(
+                        cross.get("kids_feature_units"), label="KiDS feature units"
+                    )
+                ),
+                hsc_normalization_ids=tuple(
+                    str(value)
+                    for value in _sequence(
+                        cross.get("hsc_normalization_ids"),
+                        label="HSC normalization IDs",
+                    )
+                ),
+                kids_normalization_ids=tuple(
+                    str(value)
+                    for value in _sequence(
+                        cross.get("kids_normalization_ids"),
+                        label="KiDS normalization IDs",
+                    )
+                ),
+                hsc_realization_ids=tuple(
+                    str(value)
+                    for value in _sequence(
+                        cross.get("hsc_realization_ids"),
+                        label="HSC realization IDs",
+                    )
+                ),
+                kids_realization_ids=tuple(
+                    str(value)
+                    for value in _sequence(
+                        cross.get("kids_realization_ids"),
+                        label="KiDS realization IDs",
+                    )
+                ),
+                realization_source_identity=str(
+                    cross.get("realization_source_identity", "")
+                ),
+                sky_realization_role=str(cross.get("sky_realization_role", "")),
+                overlap_support_identity=str(
+                    cross.get("overlap_support_identity", "")
+                ),
+                hsc_operator_identity=str(cross.get("hsc_operator_identity", "")),
+                kids_operator_identity=str(cross.get("kids_operator_identity", "")),
+                centering_rule=str(cross.get("centering_rule", "")),
+                denominator_rule=str(cross.get("denominator_rule", "")),
+            )
+        except HscKidsCurrentStackError as exc:
+            raise HscKidsWorkerError(
+                "paired same-sky covariance evidence is invalid"
+            ) from exc
     axis = _mapping(cross.get("axis_transport"), label="axis transport")
     transported = parallel_transport_axis(
         start=axis.get("start"), end=axis.get("end"), tangent=axis.get("tangent")
@@ -401,9 +472,7 @@ def analyze_documents(
         kids_features=kids_features,
         hsc_feature_order=hsc_tomography.feature_order,
         kids_feature_order=kids_tomography.feature_order,
-        hsc_covariance=hsc_covariance.get("matrix"),
-        kids_covariance=kids_covariance.get("matrix"),
-        cross_covariance=cross.get("matrix"),
+        joint_covariance_evidence=covariance_evidence,
         nuisance_response=cross.get("nuisance_response"),
         candidate_response=cross.get("candidate_response"),
         response_feature_order=response_order,
@@ -428,9 +497,15 @@ def analyze_documents(
         "covariance_status": (
             report.get("joint_covariance", {}).get("status")
             if isinstance(report.get("joint_covariance"), Mapping)
-            else "JOINT_COVARIANCE_REQUIRED_ABSTAIN"
+            else "CROSS_INFORMATION_ABSENT_ABSTAIN"
         ),
-        "null_mock_status": "NO_NULL_ENSEMBLE_BOUND",
+        "null_mock_status": (
+            "PAIRED_SAME_SKY_SYNTHETIC_NULLS_BOUND"
+            if covariance_evidence is not None and not observed
+            else "PAIRED_SAME_SKY_NULLS_BOUND"
+            if covariance_evidence is not None
+            else "NO_PAIRED_SAME_SKY_NULL_ENSEMBLE_BOUND"
+        ),
         "generating_procedure": "scripts/observed_runs/run_hsc_kids.py",
         "allowed_use": "internal_operator_validation",
         "forbidden_uses": [
@@ -440,8 +515,10 @@ def analyze_documents(
             "global_claim",
         ],
         "caveats": [
-            "no cross-survey release covariance is currently admitted",
-            "rank loss or missing covariance requires abstention",
+            "joint covariance is derived only from ordered paired same-sky null rows",
+            "official HSC/KiDS releases do not provide an admitted joint null ensemble",
+            "local structural rank is not global or practical identification",
+            "singular covariance or missing cross information requires abstention",
         ],
         "public_use": False,
     }
@@ -585,13 +662,45 @@ def _synthetic_documents() -> dict[str, Mapping[str, object]]:
         documents[f"{prefix}_covariance"] = {
             "feature_order": list(order),
             "matrix": (1.8 * np.eye(size) if survey == "HSC" else 1.5 * np.eye(size)).tolist(),
+            "role": "SINGLE_SURVEY_REFERENCE_ONLY_NOT_USED_FOR_JOINT_DERIVATION",
         }
     size = len(orders["HSC"])
     x = np.linspace(-1.0, 1.0, 2 * size)
+    rng = np.random.default_rng(20260825)
+    null_count = 64
+    shared = rng.normal(size=(null_count, 4))
+    hsc_null = shared @ rng.normal(size=(4, size)) + rng.normal(
+        scale=0.35, size=(null_count, size)
+    )
+    kids_null = shared @ rng.normal(size=(4, size)) + rng.normal(
+        scale=0.35, size=(null_count, size)
+    )
+    realization_ids = [
+        f"synthetic-same-sky-{index:03d}" for index in range(null_count)
+    ]
     documents["hsc_kids_cross_covariance"] = {
         "hsc_feature_order": list(orders["HSC"]),
         "kids_feature_order": list(orders["KiDS"]),
-        "matrix": (0.08 * np.eye(size)).tolist(),
+        "covariance_branch": "PAIRED_SAME_SKY_NULLS",
+        "hsc_null_features": hsc_null.tolist(),
+        "kids_null_features": kids_null.tolist(),
+        "hsc_feature_units": ["dimensionless_shear_squared"] * size,
+        "kids_feature_units": ["dimensionless_shear_squared"] * size,
+        "hsc_normalization_ids": [
+            f"{name}:SYNTHETIC_PSEUDO_CL_V1" for name in orders["HSC"]
+        ],
+        "kids_normalization_ids": [
+            f"{name}:SYNTHETIC_PSEUDO_CL_V1" for name in orders["KiDS"]
+        ],
+        "hsc_realization_ids": realization_ids,
+        "kids_realization_ids": realization_ids,
+        "realization_source_identity": "synthetic-paired-same-sky-null-v1",
+        "sky_realization_role": "PAIRED_SAME_SKY_COSMIC_REALIZATION",
+        "overlap_support_identity": "synthetic-common-overlap-support-v1",
+        "hsc_operator_identity": "hsc-pseudo-cl-v1",
+        "kids_operator_identity": "kids-pseudo-cl-v1",
+        "centering_rule": "JOINT_SAMPLE_MEAN",
+        "denominator_rule": "N_MINUS_ONE",
         "nuisance_response": np.column_stack([np.ones_like(x), x]).tolist(),
         "candidate_response": np.column_stack([np.sin(1.7 * x), np.cos(2.3 * x)]).tolist(),
         "response_feature_order": [*orders["HSC"], *orders["KiDS"]],

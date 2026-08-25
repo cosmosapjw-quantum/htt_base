@@ -72,6 +72,15 @@ def _finite_matrix(value: object, *, label: str) -> np.ndarray:
     return array
 
 
+def _canonical_text_tuple(
+    values: Sequence[str], *, label: str, expected_size: int
+) -> tuple[str, ...]:
+    result = tuple(_text(value, label=f"{label} entry") for value in values)
+    if len(result) != expected_size:
+        raise HscKidsCurrentStackError(f"{label} length drifted")
+    return result
+
+
 @dataclass(frozen=True)
 class SurveyIdentity:
     survey_id: str
@@ -521,21 +530,178 @@ def transported_headless_axis_alignment(
     return abs(float(np.dot(transported, right)))
 
 
-def _valid_covariance(matrix: object, *, size: int) -> np.ndarray | None:
-    try:
-        covariance = _finite_matrix(matrix, label="covariance")
-    except HscKidsCurrentStackError:
-        return None
-    if covariance.shape != (size, size):
-        return None
-    if not np.allclose(covariance, covariance.T, atol=1.0e-12, rtol=1.0e-12):
-        return None
-    try:
-        np.linalg.cholesky(covariance)
-    except np.linalg.LinAlgError:
-        return None
-    condition = float(np.linalg.cond(covariance))
-    return covariance if math.isfinite(condition) and condition <= MAXIMUM_COVARIANCE_CONDITION else None
+@dataclass(frozen=True)
+class PairedSameSkyJointCovariance:
+    """A sample covariance derived from row-paired same-sky null features."""
+
+    hsc_feature_order: tuple[str, ...]
+    kids_feature_order: tuple[str, ...]
+    hsc_feature_units: tuple[str, ...]
+    kids_feature_units: tuple[str, ...]
+    hsc_normalization_ids: tuple[str, ...]
+    kids_normalization_ids: tuple[str, ...]
+    realization_ids: tuple[str, ...]
+    realization_source_identity: str
+    sky_realization_role: str
+    overlap_support_identity: str
+    hsc_operator_identity: str
+    kids_operator_identity: str
+    centering_rule: str
+    denominator_rule: str
+    sample_count: int
+    joint_covariance: np.ndarray
+    hsc_covariance: np.ndarray
+    kids_covariance: np.ndarray
+    cross_covariance: np.ndarray
+    covariance_rank: int
+    psd_tolerance: float
+    condition_number: float | None
+    whitening_status: str
+
+
+def derive_paired_same_sky_joint_covariance(
+    *,
+    hsc_null_features: object,
+    kids_null_features: object,
+    hsc_feature_order: Sequence[str],
+    kids_feature_order: Sequence[str],
+    hsc_feature_units: Sequence[str],
+    kids_feature_units: Sequence[str],
+    hsc_normalization_ids: Sequence[str],
+    kids_normalization_ids: Sequence[str],
+    hsc_realization_ids: Sequence[str],
+    kids_realization_ids: Sequence[str],
+    realization_source_identity: str,
+    sky_realization_role: str,
+    overlap_support_identity: str,
+    hsc_operator_identity: str,
+    kids_operator_identity: str,
+    centering_rule: str = "JOINT_SAMPLE_MEAN",
+    denominator_rule: str = "N_MINUS_ONE",
+) -> PairedSameSkyJointCovariance:
+    """Derive one full covariance from paired HSC/KiDS null rows.
+
+    The pairing is scientific evidence: the two feature rows must be generated
+    from the same cosmic realization on a declared common support.  An exact
+    zero cross block is therefore an estimated result, not missing information.
+    """
+
+    hsc = _finite_matrix(hsc_null_features, label="HSC paired-null features")
+    kids = _finite_matrix(kids_null_features, label="KiDS paired-null features")
+    if hsc.shape[0] != kids.shape[0] or hsc.shape[0] < 2:
+        raise HscKidsCurrentStackError(
+            "paired same-sky nulls require at least two aligned rows"
+        )
+    hsc_order = _canonical_text_tuple(
+        hsc_feature_order, label="HSC feature order", expected_size=hsc.shape[1]
+    )
+    kids_order = _canonical_text_tuple(
+        kids_feature_order, label="KiDS feature order", expected_size=kids.shape[1]
+    )
+    if not all(name.startswith("HSC:") for name in hsc_order) or not all(
+        name.startswith("KiDS:") for name in kids_order
+    ):
+        raise HscKidsCurrentStackError("paired covariance survey feature order drifted")
+    hsc_units = _canonical_text_tuple(
+        hsc_feature_units, label="HSC feature units", expected_size=hsc.shape[1]
+    )
+    kids_units = _canonical_text_tuple(
+        kids_feature_units, label="KiDS feature units", expected_size=kids.shape[1]
+    )
+    hsc_norms = _canonical_text_tuple(
+        hsc_normalization_ids,
+        label="HSC normalization IDs",
+        expected_size=hsc.shape[1],
+    )
+    kids_norms = _canonical_text_tuple(
+        kids_normalization_ids,
+        label="KiDS normalization IDs",
+        expected_size=kids.shape[1],
+    )
+    if len(set((*hsc_norms, *kids_norms))) != hsc.shape[1] + kids.shape[1]:
+        raise HscKidsCurrentStackError("paired covariance normalization IDs are not unique")
+
+    hsc_ids = _canonical_text_tuple(
+        hsc_realization_ids,
+        label="HSC realization IDs",
+        expected_size=hsc.shape[0],
+    )
+    kids_ids = _canonical_text_tuple(
+        kids_realization_ids,
+        label="KiDS realization IDs",
+        expected_size=kids.shape[0],
+    )
+    if hsc_ids != kids_ids or len(set(hsc_ids)) != len(hsc_ids):
+        raise HscKidsCurrentStackError(
+            "paired same-sky realization IDs must be identical, ordered, and unique"
+        )
+    if sky_realization_role != "PAIRED_SAME_SKY_COSMIC_REALIZATION":
+        raise HscKidsCurrentStackError("paired null sky-realization role drifted")
+    if centering_rule != "JOINT_SAMPLE_MEAN" or denominator_rule != "N_MINUS_ONE":
+        raise HscKidsCurrentStackError("paired sample-covariance estimator drifted")
+
+    source_identity = _text(
+        realization_source_identity, label="realization source identity"
+    )
+    overlap_identity = _text(
+        overlap_support_identity, label="overlap support identity"
+    )
+    hsc_operator = _text(hsc_operator_identity, label="HSC operator identity")
+    kids_operator = _text(kids_operator_identity, label="KiDS operator identity")
+
+    joint = np.column_stack([hsc, kids])
+    centered = joint - np.mean(joint, axis=0, keepdims=True)
+    covariance = (centered.T @ centered) / float(joint.shape[0] - 1)
+    covariance = 0.5 * (covariance + covariance.T)
+    eigenvalues = np.linalg.eigvalsh(covariance)
+    spectral_scale = max(
+        float(np.max(np.abs(eigenvalues))), np.finfo(float).tiny
+    )
+    psd_tolerance = (
+        64.0 * np.finfo(float).eps * covariance.shape[0] * spectral_scale
+    )
+    if float(eigenvalues[0]) < -psd_tolerance:
+        raise HscKidsCurrentStackError("derived joint covariance is not positive semidefinite")
+    covariance_rank = int(np.count_nonzero(eigenvalues > psd_tolerance))
+    condition_number: float | None = None
+    whitening_status = "COVARIANCE_VALID_WHITENING_UNAVAILABLE"
+    if covariance_rank == covariance.shape[0]:
+        condition = float(np.linalg.cond(covariance))
+        try:
+            np.linalg.cholesky(covariance)
+        except np.linalg.LinAlgError:
+            pass
+        else:
+            if math.isfinite(condition) and condition <= MAXIMUM_COVARIANCE_CONDITION:
+                condition_number = condition
+                whitening_status = "CHOLESKY_READY_WITHIN_CONDITION_LIMIT"
+
+    hsc_size = hsc.shape[1]
+    return PairedSameSkyJointCovariance(
+        hsc_feature_order=hsc_order,
+        kids_feature_order=kids_order,
+        hsc_feature_units=hsc_units,
+        kids_feature_units=kids_units,
+        hsc_normalization_ids=hsc_norms,
+        kids_normalization_ids=kids_norms,
+        realization_ids=hsc_ids,
+        realization_source_identity=source_identity,
+        sky_realization_role=sky_realization_role,
+        overlap_support_identity=overlap_identity,
+        hsc_operator_identity=hsc_operator,
+        kids_operator_identity=kids_operator,
+        centering_rule=centering_rule,
+        denominator_rule=denominator_rule,
+        sample_count=joint.shape[0],
+        joint_covariance=covariance,
+        hsc_covariance=covariance[:hsc_size, :hsc_size],
+        kids_covariance=covariance[hsc_size:, hsc_size:],
+        cross_covariance=covariance[:hsc_size, hsc_size:],
+        covariance_rank=covariance_rank,
+        psd_tolerance=psd_tolerance,
+        condition_number=condition_number,
+        whitening_status=whitening_status,
+    )
 
 
 def _svd_rank(matrix: np.ndarray, *, threshold_ratio: float) -> tuple[int, list[float]]:
@@ -588,7 +754,7 @@ def _whitened_incremental_rank(
     expected = int(candidate.shape[1])
     return {
         "status": (
-            "FULL_INCREMENTAL_RANK"
+            "LOCAL_STRUCTURAL_FULL_INCREMENTAL_RANK"
             if incremental == expected
             else "NON_IDENTIFIED_ABSTAIN"
         ),
@@ -610,15 +776,13 @@ def analyze_joint_response(
     kids_features: object,
     hsc_feature_order: Sequence[str],
     kids_feature_order: Sequence[str],
-    hsc_covariance: object,
-    kids_covariance: object,
-    cross_covariance: object | None,
+    joint_covariance_evidence: PairedSameSkyJointCovariance | None,
     nuisance_response: object,
     candidate_response: object,
     response_feature_order: Sequence[str],
     observed: bool,
 ) -> dict[str, object]:
-    """Validate full covariance and report scale-stable incremental rank."""
+    """Validate paired-null covariance and report local structural rank."""
 
     if type(observed) is not bool:
         raise HscKidsCurrentStackError("observed state must be one boolean")
@@ -638,28 +802,71 @@ def analyze_joint_response(
         raise HscKidsCurrentStackError("joint feature order drifted")
     if tuple(response_feature_order) != joint_order:
         raise HscKidsCurrentStackError("response feature order drifted")
-    hsc_cov = _valid_covariance(hsc_covariance, size=hsc.size)
-    kids_cov = _valid_covariance(kids_covariance, size=kids.size)
-    try:
-        cross = _finite_matrix(cross_covariance, label="cross covariance")
-    except HscKidsCurrentStackError:
-        cross = np.empty((0, 0))
-    covariance_valid = (
-        hsc_cov is not None
-        and kids_cov is not None
-        and cross.shape == (hsc.size, kids.size)
-        and bool(np.any(np.abs(cross) > 1.0e-15))
-    )
-    joint_covariance: np.ndarray | None = None
-    if covariance_valid:
-        joint_covariance = np.block([[hsc_cov, cross], [cross.T, kids_cov]])
-        joint_covariance = _valid_covariance(joint_covariance, size=hsc.size + kids.size)
-        covariance_valid = joint_covariance is not None
-    if not covariance_valid or joint_covariance is None:
+    if joint_covariance_evidence is None:
         return {
             "capability": "HSC_KIDS_TYPED_SPIN2_TOMOGRAPHY_AND_JOINT_RANK_CLOSURE",
-            "terminal_disposition": "JOINT_COVARIANCE_REQUIRED_ABSTAIN",
+            "joint_covariance": {
+                "status": "CROSS_INFORMATION_ABSENT_ABSTAIN",
+                "cross_block_evidenced": False,
+                "likelihood_ready": False,
+            },
+            "terminal_disposition": "NON_IDENTIFIED_CROSS_SURVEY_COVARIANCE",
             "response_rank": None,
+            "p_value": None,
+            "forced_source_label": None,
+            "observed_statistic_seen": bool(observed),
+            "observed_science_executed": bool(observed),
+        }
+    if not isinstance(joint_covariance_evidence, PairedSameSkyJointCovariance):
+        raise HscKidsCurrentStackError(
+            "joint covariance must come from the paired same-sky factory"
+        )
+    evidence = joint_covariance_evidence
+    if evidence.hsc_feature_order != hsc_order or evidence.kids_feature_order != kids_order:
+        raise HscKidsCurrentStackError("paired covariance feature order drifted")
+    joint_covariance = evidence.joint_covariance
+    if joint_covariance.shape != (hsc.size + kids.size, hsc.size + kids.size):
+        raise HscKidsCurrentStackError("paired joint covariance shape drifted")
+    covariance_report = {
+        "status": "PAIRED_SAME_SKY_JOINT_COVARIANCE_VALID",
+        "derivation": "CENTERED_PAIRED_ROW_SAMPLE_COVARIANCE",
+        "centering_rule": evidence.centering_rule,
+        "denominator_rule": evidence.denominator_rule,
+        "sample_count": evidence.sample_count,
+        "covariance_rank": evidence.covariance_rank,
+        "dimension": int(joint_covariance.shape[0]),
+        "psd_tolerance": evidence.psd_tolerance,
+        "condition_number": evidence.condition_number,
+        "whitening_status": evidence.whitening_status,
+        "cross_block_evidenced": True,
+        "cross_block_zero": bool(
+            np.all(np.abs(evidence.cross_covariance) <= evidence.psd_tolerance)
+        ),
+        "diagonalized": False,
+        "covariance_unit_rule": "OUTER_PRODUCT_OF_ORDERED_FEATURE_UNITS",
+        "feature_units": [*evidence.hsc_feature_units, *evidence.kids_feature_units],
+        "normalization_ids": [
+            *evidence.hsc_normalization_ids,
+            *evidence.kids_normalization_ids,
+        ],
+        "realization_source_identity": evidence.realization_source_identity,
+        "sky_realization_role": evidence.sky_realization_role,
+        "overlap_support_identity": evidence.overlap_support_identity,
+        "operator_identities": {
+            "HSC": evidence.hsc_operator_identity,
+            "KiDS": evidence.kids_operator_identity,
+        },
+        "likelihood_ready": False,
+        "finite_mock_precision_correction": None,
+    }
+    if evidence.whitening_status != "CHOLESKY_READY_WITHIN_CONDITION_LIMIT":
+        return {
+            "capability": "HSC_KIDS_TYPED_SPIN2_TOMOGRAPHY_AND_JOINT_RANK_CLOSURE",
+            "feature_order": list(joint_order),
+            "joint_covariance": covariance_report,
+            "terminal_disposition": "COVARIANCE_VALID_WHITENING_UNAVAILABLE",
+            "response_rank": None,
+            "global_identification": "NOT_ESTABLISHED",
             "p_value": None,
             "forced_source_label": None,
             "observed_statistic_seen": bool(observed),
@@ -670,22 +877,18 @@ def analyze_joint_response(
     )
     terminal = (
         "SYNTHETIC_OPERATOR_CLOSURE_PASS"
-        if rank["status"] == "FULL_INCREMENTAL_RANK" and not observed
+        if rank["status"] == "LOCAL_STRUCTURAL_FULL_INCREMENTAL_RANK" and not observed
         else "OBSERVED_OPERATOR_DIAGNOSTIC_COMPLETE"
-        if rank["status"] == "FULL_INCREMENTAL_RANK"
+        if rank["status"] == "LOCAL_STRUCTURAL_FULL_INCREMENTAL_RANK"
         else "NON_IDENTIFIED_ABSTAIN"
     )
     return {
         "capability": "HSC_KIDS_TYPED_SPIN2_TOMOGRAPHY_AND_JOINT_RANK_CLOSURE",
         "feature_order": list(joint_order),
-        "joint_covariance": {
-            "status": "FULL_CROSS_SURVEY_COVARIANCE_VALID",
-            "cross_block_nonzero": True,
-            "condition_number": float(np.linalg.cond(joint_covariance)),
-            "diagonalized": False,
-        },
+        "joint_covariance": covariance_report,
         "response_rank": rank,
         "terminal_disposition": terminal,
+        "global_identification": "NOT_ESTABLISHED",
         "global_claim_boundary": "NO_VALID_GLOBAL_RESPONSE_NO_GLOBAL_CLAIM",
         "p_value": None,
         "forced_source_label": None,

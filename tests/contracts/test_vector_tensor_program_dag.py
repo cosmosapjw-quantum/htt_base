@@ -273,9 +273,13 @@ def test_pr261_275_cards_match_revalidated_dag_and_common_contract() -> None:
         "PR-309",
         "PR-310",
         "PR-311",
-        "PR-312",
-        "PR-313",
-    )
+            "PR-312",
+            "PR-313",
+            "PR-317",
+            "PR-318",
+            "PR-319",
+            "PR-320",
+        )
     assert "PR-260" in status["completed"]
     assert status["execution_resolutions"]["PR-260"][
         "resolution"
@@ -323,7 +327,7 @@ def test_canonical_dag_and_compatibility_mirrors_validate() -> None:
         "--strict-rescue-slice",
     )
     assert dag.returncode == 0, dag.stdout + dag.stderr
-    assert "OK: 259 PRs, DAG valid" in dag.stdout
+    assert "OK: 263 PRs, DAG valid" in dag.stdout
 
     mirrors = _run(
         sys.executable,

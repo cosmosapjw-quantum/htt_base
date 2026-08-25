@@ -732,6 +732,34 @@ POST300_OBSERVATIONAL_CARD_CONTRACTS = {
         "authorization": "EXPLICIT_APPROVED_SEQUENCE",
     },
 }
+POST311_OBSERVATIONAL_CONTINUATION_IDS = {
+    "PR-317",
+    "PR-318",
+    "PR-319",
+    "PR-320",
+}
+POST311_OBSERVATIONAL_CONTINUATION_CONTRACTS = {
+    "PR-317": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-311", "requires_success")],
+        "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
+    "PR-318": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-317", "requires_terminal_receipt")],
+        "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
+    "PR-319": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-318", "requires_terminal_receipt")],
+        "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
+    "PR-320": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-319", "requires_terminal_receipt")],
+        "authorization": "EXPLICIT_APPROVED_SEQUENCE",
+    },
+}
 PR280_DIRECT_CONSUMERS = {
     "PR-281",
     "PR-282",
@@ -1031,6 +1059,20 @@ def validate_backlog(data: dict[str, Any]) -> DagInfo:
     if present_post300_ids and present_post275_ids != POST275_FULL_IDS:
         raise ValueError(
             "post-300 observational-lane intake requires the full post-275 programme"
+        )
+    present_post311_ids = idset & POST311_OBSERVATIONAL_CONTINUATION_IDS
+    if (
+        present_post311_ids
+        and present_post311_ids != POST311_OBSERVATIONAL_CONTINUATION_IDS
+    ):
+        raise ValueError(
+            "post-311 observational continuation must register PR-317..320 "
+            "atomically; "
+            f"missing={sorted(POST311_OBSERVATIONAL_CONTINUATION_IDS - present_post311_ids)}"
+        )
+    if present_post311_ids and present_post300_ids != POST300_OBSERVATIONAL_LANE_IDS:
+        raise ValueError(
+            "post-311 observational continuation requires the full post-300 slice"
         )
     prereqs = {pr["id"]: list(pr.get("depends") or []) for pr in prs}
     missing_deps = sorted({dep for deps in prereqs.values() for dep in deps if dep not in idset})
@@ -1434,6 +1476,19 @@ def validate_long_horizon_rescue_slice(
             "post-300 observational-lane intake must be atomic; "
             f"missing={sorted(POST300_OBSERVATIONAL_LANE_IDS - actual_post300_ids)}"
         )
+    actual_post311_ids = actual_ids & POST311_OBSERVATIONAL_CONTINUATION_IDS
+    if (
+        actual_post311_ids
+        and actual_post311_ids != POST311_OBSERVATIONAL_CONTINUATION_IDS
+    ):
+        raise ValueError(
+            "post-311 observational continuation must be atomic; "
+            f"missing={sorted(POST311_OBSERVATIONAL_CONTINUATION_IDS - actual_post311_ids)}"
+        )
+    if actual_post311_ids and actual_post300_ids != POST300_OBSERVATIONAL_LANE_IDS:
+        raise ValueError(
+            "post-311 observational continuation requires the full post-300 slice"
+        )
     if actual_foundation_ids:
         policy = data.get("policy") or {}
         expected_overlay = (
@@ -1468,6 +1523,7 @@ def validate_long_horizon_rescue_slice(
     expected_total += len(actual_post275_ids)
     expected_total += len(actual_pr280_root_cause_ids)
     expected_total += len(actual_post300_ids)
+    expected_total += len(actual_post311_ids)
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -1758,6 +1814,8 @@ def validate_long_horizon_rescue_slice(
         _validate_post275_slice(cards)
     if actual_post300_ids:
         validate_post300_observational_slice(cards)
+    if actual_post311_ids:
+        validate_post311_observational_continuation(cards)
     if actual_pr280_root_cause_ids:
         _validate_pr280_root_cause_slice(cards)
 
@@ -2183,6 +2241,66 @@ def validate_post300_observational_slice(cards: dict[str, Any]) -> None:
         raise ValueError("PR-313 must supersede the failed PR-312 attempt")
     if len(cards["PR-313"]["dod"]) != 1:
         raise ValueError("PR-313 definition of done must remain one complete sentence")
+
+
+def validate_post311_observational_continuation(cards: dict[str, Any]) -> None:
+    """Validate the append-only PR-317..320 scientific-readiness continuation."""
+
+    for pr_id in sorted(POST311_OBSERVATIONAL_CONTINUATION_CONTRACTS):
+        card = cards[pr_id]
+        expected = POST311_OBSERVATIONAL_CONTINUATION_CONTRACTS[pr_id]
+        missing_fields = sorted(POST275_REQUIRED_FIELDS - set(card))
+        if missing_fields:
+            raise ValueError(
+                f"{pr_id} missing continuation fields: {missing_fields}"
+            )
+        expected_contracts = [
+            {"upstream_id": upstream_id, "mode": mode}
+            for upstream_id, mode in expected["dependencies"]
+        ]
+        if card.get("dependency_contracts") != expected_contracts:
+            raise ValueError(f"{pr_id} continuation dependency modes drifted")
+        expected_depends = [row["upstream_id"] for row in expected_contracts]
+        if card.get("depends") != expected_depends:
+            raise ValueError(f"{pr_id} continuation dependencies drifted")
+        if card.get("owner") != expected["owner"]:
+            raise ValueError(f"{pr_id} continuation owner drifted")
+        if card.get("execution_authorization") != expected["authorization"]:
+            raise ValueError(f"{pr_id} continuation authorization drifted")
+        for field in ("capability", "kill", "change_set_id", "publication_group_id"):
+            _require_nonempty_string(card.get(field), f"{pr_id}.{field}")
+        for field in (
+            "inputs",
+            "outputs",
+            "contributors",
+            "implementation_scopes",
+            "targets",
+            "files",
+            "tests",
+            "dod",
+            "forbidden",
+            "anti_drift",
+        ):
+            _require_string_list(card, field)
+        if (
+            card.get("activation_state") != "PENDING"
+            or card.get("execution_lane") != "defensible"
+            or card.get("scientific_status_on_intake") != "OPEN"
+            or card.get("public_use") is not False
+            or card.get("spec_first_required") is not True
+            or card.get("solver_gate_required") is not False
+            or card.get("claim_tier_ceiling") != "diagnostic_only"
+        ):
+            raise ValueError(
+                f"{pr_id} continuation must remain PENDING, internal, OPEN, "
+                "spec-first, solver-independent, and diagnostic-only"
+            )
+        forbidden_text = " ".join(card["forbidden"]).lower().replace("-", " ")
+        for boundary in ("observed", "family identification"):
+            if boundary not in forbidden_text:
+                raise ValueError(
+                    f"{pr_id} continuation forbidden actions omit {boundary!r}"
+                )
 
 
 def _validate_post275_slice(cards: dict[str, Any]) -> None:

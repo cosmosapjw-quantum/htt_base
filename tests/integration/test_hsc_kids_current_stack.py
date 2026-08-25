@@ -183,9 +183,39 @@ def _joint_case(module):
     hsc_features = hsc_operator.deconvolve(hsc.pseudo_features)
     kids_features = kids_operator.deconvolve(kids.pseudo_features)
     count = len(hsc_features)
-    hsc_covariance = 1.8 * np.eye(count)
-    kids_covariance = 1.5 * np.eye(count)
-    cross_covariance = 0.08 * np.eye(count)
+    rng = np.random.default_rng(20260825)
+    sample_count = 64
+    shared = rng.normal(size=(sample_count, 4))
+    hsc_null = shared @ rng.normal(size=(4, count)) + rng.normal(
+        scale=0.35, size=(sample_count, count)
+    )
+    kids_null = shared @ rng.normal(size=(4, count)) + rng.normal(
+        scale=0.35, size=(sample_count, count)
+    )
+    realization_ids = tuple(
+        f"synthetic-same-sky-{index:03d}" for index in range(sample_count)
+    )
+    evidence = module.derive_paired_same_sky_joint_covariance(
+        hsc_null_features=hsc_null,
+        kids_null_features=kids_null,
+        hsc_feature_order=hsc.feature_order,
+        kids_feature_order=kids.feature_order,
+        hsc_feature_units=("dimensionless_shear_squared",) * count,
+        kids_feature_units=("dimensionless_shear_squared",) * count,
+        hsc_normalization_ids=tuple(
+            f"{name}:SYNTHETIC_PSEUDO_CL_V1" for name in hsc.feature_order
+        ),
+        kids_normalization_ids=tuple(
+            f"{name}:SYNTHETIC_PSEUDO_CL_V1" for name in kids.feature_order
+        ),
+        hsc_realization_ids=realization_ids,
+        kids_realization_ids=realization_ids,
+        realization_source_identity="synthetic-paired-same-sky-null-v1",
+        sky_realization_role="PAIRED_SAME_SKY_COSMIC_REALIZATION",
+        overlap_support_identity="synthetic-common-overlap-support-v1",
+        hsc_operator_identity="hsc-pseudo-cl-current-stack-v1",
+        kids_operator_identity="kids-pseudo-cl-current-stack-v1",
+    )
     joint_features = np.concatenate([hsc_features, kids_features])
     x = np.linspace(-1.0, 1.0, joint_features.size)
     nuisance = np.column_stack([np.ones_like(x), x])
@@ -197,9 +227,10 @@ def _joint_case(module):
         "kids_operator": kids_operator,
         "hsc_features": hsc_features,
         "kids_features": kids_features,
-        "hsc_covariance": hsc_covariance,
-        "kids_covariance": kids_covariance,
-        "cross_covariance": cross_covariance,
+        "hsc_null": hsc_null,
+        "kids_null": kids_null,
+        "realization_ids": realization_ids,
+        "covariance_evidence": evidence,
         "nuisance": nuisance,
         "candidate": candidate,
     }
@@ -493,38 +524,158 @@ def test_pr310_shortest_geodesic_transport_and_headless_axis() -> None:
         )
 
 
-@pytest.mark.parametrize("mutation", ("missing", "zero", "asymmetric", "indefinite"))
-def test_pr310_joint_covariance_abstains_before_rank(mutation: str) -> None:
+def test_pr320_paired_same_sky_covariance_matches_joint_sample_covariance() -> None:
     module = _science()
     case = _joint_case(module)
-    cross = case["cross_covariance"].copy()
-    hsc = case["hsc_covariance"].copy()
-    if mutation == "missing":
-        cross = None
-    elif mutation == "zero":
-        cross[:] = 0.0
-    elif mutation == "asymmetric":
-        hsc[0, 1] = 0.4
-    else:
-        hsc[0, 0] = -1.0
+    evidence = case["covariance_evidence"]
+    expected = np.cov(
+        np.column_stack([case["hsc_null"], case["kids_null"]]),
+        rowvar=False,
+        ddof=1,
+    )
+
+    np.testing.assert_allclose(evidence.joint_covariance, expected, rtol=0.0, atol=1.0e-12)
+    assert evidence.sample_count == 64
+    assert evidence.centering_rule == "JOINT_SAMPLE_MEAN"
+    assert evidence.denominator_rule == "N_MINUS_ONE"
+    assert evidence.sky_realization_role == "PAIRED_SAME_SKY_COSMIC_REALIZATION"
+
+
+def test_pr320_missing_cross_information_abstains_before_rank() -> None:
+    module = _science()
+    case = _joint_case(module)
 
     result = module.analyze_joint_response(
         hsc_features=case["hsc_features"],
         kids_features=case["kids_features"],
         hsc_feature_order=case["hsc"].feature_order,
         kids_feature_order=case["kids"].feature_order,
-        hsc_covariance=hsc,
-        kids_covariance=case["kids_covariance"],
-        cross_covariance=cross,
+        joint_covariance_evidence=None,
         nuisance_response=case["nuisance"],
         candidate_response=case["candidate"],
         response_feature_order=(*case["hsc"].feature_order, *case["kids"].feature_order),
         observed=False,
     )
-    assert result["terminal_disposition"] == "JOINT_COVARIANCE_REQUIRED_ABSTAIN"
+    assert result["terminal_disposition"] == "NON_IDENTIFIED_CROSS_SURVEY_COVARIANCE"
     assert result["response_rank"] is None
     assert result["p_value"] is None
     assert result["forced_source_label"] is None
+
+
+def test_pr320_paired_realization_order_mismatch_is_rejected() -> None:
+    module = _science()
+    case = _joint_case(module)
+    with pytest.raises(module.HscKidsCurrentStackError, match="realization IDs"):
+        module.derive_paired_same_sky_joint_covariance(
+            hsc_null_features=case["hsc_null"],
+            kids_null_features=case["kids_null"],
+            hsc_feature_order=case["hsc"].feature_order,
+            kids_feature_order=case["kids"].feature_order,
+            hsc_feature_units=("dimensionless",) * case["hsc_null"].shape[1],
+            kids_feature_units=("dimensionless",) * case["kids_null"].shape[1],
+            hsc_normalization_ids=case["hsc"].feature_order,
+            kids_normalization_ids=case["kids"].feature_order,
+            hsc_realization_ids=case["realization_ids"],
+            kids_realization_ids=tuple(reversed(case["realization_ids"])),
+            realization_source_identity="synthetic-paired-same-sky-null-v1",
+            sky_realization_role="PAIRED_SAME_SKY_COSMIC_REALIZATION",
+            overlap_support_identity="synthetic-common-overlap-support-v1",
+            hsc_operator_identity="hsc-pseudo-cl-current-stack-v1",
+            kids_operator_identity="kids-pseudo-cl-current-stack-v1",
+        )
+
+
+def test_pr320_feature_unit_shape_drift_is_rejected() -> None:
+    module = _science()
+    case = _joint_case(module)
+    with pytest.raises(module.HscKidsCurrentStackError, match="feature units length"):
+        module.derive_paired_same_sky_joint_covariance(
+            hsc_null_features=case["hsc_null"],
+            kids_null_features=case["kids_null"],
+            hsc_feature_order=case["hsc"].feature_order,
+            kids_feature_order=case["kids"].feature_order,
+            hsc_feature_units=("dimensionless",),
+            kids_feature_units=("dimensionless",) * case["kids_null"].shape[1],
+            hsc_normalization_ids=case["hsc"].feature_order,
+            kids_normalization_ids=case["kids"].feature_order,
+            hsc_realization_ids=case["realization_ids"],
+            kids_realization_ids=case["realization_ids"],
+            realization_source_identity="synthetic-paired-same-sky-null-v1",
+            sky_realization_role="PAIRED_SAME_SKY_COSMIC_REALIZATION",
+            overlap_support_identity="synthetic-common-overlap-support-v1",
+            hsc_operator_identity="hsc-pseudo-cl-current-stack-v1",
+            kids_operator_identity="kids-pseudo-cl-current-stack-v1",
+        )
+
+
+def test_pr320_evidenced_zero_cross_block_is_not_missing_information() -> None:
+    module = _science()
+    evidence = module.derive_paired_same_sky_joint_covariance(
+        hsc_null_features=np.asarray([[-1.0], [-1.0], [1.0], [1.0]]),
+        kids_null_features=np.asarray([[-1.0], [1.0], [-1.0], [1.0]]),
+        hsc_feature_order=("HSC:h0",),
+        kids_feature_order=("KiDS:k0",),
+        hsc_feature_units=("dimensionless",),
+        kids_feature_units=("dimensionless",),
+        hsc_normalization_ids=("HSC:h0:norm-v1",),
+        kids_normalization_ids=("KiDS:k0:norm-v1",),
+        hsc_realization_ids=("r0", "r1", "r2", "r3"),
+        kids_realization_ids=("r0", "r1", "r2", "r3"),
+        realization_source_identity="orthogonal-paired-null-v1",
+        sky_realization_role="PAIRED_SAME_SKY_COSMIC_REALIZATION",
+        overlap_support_identity="common-support-v1",
+        hsc_operator_identity="hsc-op-v1",
+        kids_operator_identity="kids-op-v1",
+    )
+    result = module.analyze_joint_response(
+        hsc_features=[0.0],
+        kids_features=[0.0],
+        hsc_feature_order=("HSC:h0",),
+        kids_feature_order=("KiDS:k0",),
+        joint_covariance_evidence=evidence,
+        nuisance_response=[[1.0], [0.0]],
+        candidate_response=[[0.0], [1.0]],
+        response_feature_order=("HSC:h0", "KiDS:k0"),
+        observed=False,
+    )
+    assert result["joint_covariance"]["cross_block_evidenced"] is True
+    assert result["joint_covariance"]["cross_block_zero"] is True
+    assert result["response_rank"]["status"] == "LOCAL_STRUCTURAL_FULL_INCREMENTAL_RANK"
+
+
+def test_pr320_psd_singular_joint_covariance_stops_before_whitening() -> None:
+    module = _science()
+    evidence = module.derive_paired_same_sky_joint_covariance(
+        hsc_null_features=[[-1.0], [1.0]],
+        kids_null_features=[[-2.0], [2.0]],
+        hsc_feature_order=("HSC:h0",),
+        kids_feature_order=("KiDS:k0",),
+        hsc_feature_units=("dimensionless",),
+        kids_feature_units=("dimensionless",),
+        hsc_normalization_ids=("HSC:h0:norm-v1",),
+        kids_normalization_ids=("KiDS:k0:norm-v1",),
+        hsc_realization_ids=("r0", "r1"),
+        kids_realization_ids=("r0", "r1"),
+        realization_source_identity="rank-one-paired-null-v1",
+        sky_realization_role="PAIRED_SAME_SKY_COSMIC_REALIZATION",
+        overlap_support_identity="common-support-v1",
+        hsc_operator_identity="hsc-op-v1",
+        kids_operator_identity="kids-op-v1",
+    )
+    result = module.analyze_joint_response(
+        hsc_features=[0.0],
+        kids_features=[0.0],
+        hsc_feature_order=("HSC:h0",),
+        kids_feature_order=("KiDS:k0",),
+        joint_covariance_evidence=evidence,
+        nuisance_response=[[1.0], [0.0]],
+        candidate_response=[[0.0], [1.0]],
+        response_feature_order=("HSC:h0", "KiDS:k0"),
+        observed=False,
+    )
+    assert result["terminal_disposition"] == "COVARIANCE_VALID_WHITENING_UNAVAILABLE"
+    assert result["joint_covariance"]["status"] == "PAIRED_SAME_SKY_JOINT_COVARIANCE_VALID"
+    assert result["response_rank"] is None
 
 
 def test_pr310_rank_is_scale_stable_and_overlap_abstains() -> None:
@@ -535,9 +686,7 @@ def test_pr310_rank_is_scale_stable_and_overlap_abstains() -> None:
         kids_features=case["kids_features"],
         hsc_feature_order=case["hsc"].feature_order,
         kids_feature_order=case["kids"].feature_order,
-        hsc_covariance=case["hsc_covariance"],
-        kids_covariance=case["kids_covariance"],
-        cross_covariance=case["cross_covariance"],
+        joint_covariance_evidence=case["covariance_evidence"],
         nuisance_response=case["nuisance"],
         candidate_response=case["candidate"],
         response_feature_order=(*case["hsc"].feature_order, *case["kids"].feature_order),
@@ -550,15 +699,13 @@ def test_pr310_rank_is_scale_stable_and_overlap_abstains() -> None:
             kids_features=case["kids_features"],
             hsc_feature_order=case["hsc"].feature_order,
             kids_feature_order=case["kids"].feature_order,
-            hsc_covariance=case["hsc_covariance"],
-            kids_covariance=case["kids_covariance"],
-            cross_covariance=case["cross_covariance"],
+            joint_covariance_evidence=case["covariance_evidence"],
             nuisance_response=case["nuisance"],
             candidate_response=scale * case["candidate"],
             response_feature_order=(*case["hsc"].feature_order, *case["kids"].feature_order),
             observed=False,
         )
-        assert result["response_rank"]["status"] == "FULL_INCREMENTAL_RANK"
+        assert result["response_rank"]["status"] == "LOCAL_STRUCTURAL_FULL_INCREMENTAL_RANK"
         assert result["response_rank"]["incremental_rank"] == 2
 
     overlap = np.column_stack([case["nuisance"][:, 0], case["nuisance"][:, 0]])
@@ -567,9 +714,7 @@ def test_pr310_rank_is_scale_stable_and_overlap_abstains() -> None:
         kids_features=case["kids_features"],
         hsc_feature_order=case["hsc"].feature_order,
         kids_feature_order=case["kids"].feature_order,
-        hsc_covariance=case["hsc_covariance"],
-        kids_covariance=case["kids_covariance"],
-        cross_covariance=case["cross_covariance"],
+        joint_covariance_evidence=case["covariance_evidence"],
         nuisance_response=case["nuisance"],
         candidate_response=overlap,
         response_feature_order=(*case["hsc"].feature_order, *case["kids"].feature_order),
@@ -590,9 +735,7 @@ def test_pr310_response_rows_are_bound_to_exact_feature_order() -> None:
             kids_features=case["kids_features"],
             hsc_feature_order=case["hsc"].feature_order,
             kids_feature_order=case["kids"].feature_order,
-            hsc_covariance=case["hsc_covariance"],
-            kids_covariance=case["kids_covariance"],
-            cross_covariance=case["cross_covariance"],
+            joint_covariance_evidence=case["covariance_evidence"],
             nuisance_response=case["nuisance"][::-1],
             candidate_response=case["candidate"][::-1],
             response_feature_order=tuple(reversed(order)),
@@ -704,10 +847,10 @@ def test_pr310_observed_mode_requires_admission_context_and_flags_are_monotone()
         worker.analyze_documents(documents, execution_mode="ADMITTED_OBSERVED")
 
     mutated = json.loads(json.dumps(documents))
-    size = len(mutated["hsc_kids_cross_covariance"]["matrix"])
-    mutated["hsc_kids_cross_covariance"]["matrix"] = [
-        [0.0] * size for _ in range(size)
-    ]
+    mutated["hsc_kids_cross_covariance"] = {
+        **mutated["hsc_kids_cross_covariance"],
+        "covariance_branch": "CROSS_INFORMATION_ABSENT",
+    }
     result = worker.analyze_documents(
         mutated,
         execution_mode="ADMITTED_OBSERVED",
@@ -716,9 +859,23 @@ def test_pr310_observed_mode_requires_admission_context_and_flags_are_monotone()
             "ordered_record_ids": ["sha256:" + "2" * 64],
         },
     )
-    assert result["terminal_disposition"] == "JOINT_COVARIANCE_REQUIRED_ABSTAIN"
+    assert result["terminal_disposition"] == "NON_IDENTIFIED_CROSS_SURVEY_COVARIANCE"
     assert result["observed_statistic_seen"] is True
     assert result["observed_science_executed"] is True
+
+
+def test_pr320_legacy_arbitrary_cross_matrix_has_no_covariance_authority() -> None:
+    worker = _worker()
+    documents = json.loads(json.dumps(worker._synthetic_documents()))
+    cross = documents["hsc_kids_cross_covariance"]
+    size = len(cross["hsc_feature_order"])
+    cross["covariance_branch"] = "LEGACY_ARBITRARY_MATRIX"
+    cross["matrix"] = (0.08 * np.eye(size)).tolist()
+
+    result = worker.analyze_documents(documents, execution_mode="SYNTHETIC_PROFILE")
+    assert result["terminal_disposition"] == "NON_IDENTIFIED_CROSS_SURVEY_COVARIANCE"
+    assert result["joint_covariance"]["cross_block_evidenced"] is False
+    assert result["response_rank"] is None
 
 
 def test_pr310_result_metadata_is_truthful_and_proportional() -> None:
@@ -727,8 +884,8 @@ def test_pr310_result_metadata_is_truthful_and_proportional() -> None:
     assert metadata["owner"] == "OBSSTAT"
     assert metadata["artifact_mode"] == "synthetic_operator_diagnostic"
     assert metadata["claim_tier"] == "diagnostic_only"
-    assert metadata["null_mock_status"] == "NO_NULL_ENSEMBLE_BOUND"
-    assert metadata["covariance_status"] == "FULL_CROSS_SURVEY_COVARIANCE_VALID"
+    assert metadata["null_mock_status"] == "PAIRED_SAME_SKY_SYNTHETIC_NULLS_BOUND"
+    assert metadata["covariance_status"] == "PAIRED_SAME_SKY_JOINT_COVARIANCE_VALID"
     assert metadata["public_use"] is False
     assert metadata["allowed_use"] == "internal_operator_validation"
     assert "family_identification" in metadata["forbidden_uses"]
