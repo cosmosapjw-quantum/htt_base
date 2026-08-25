@@ -224,6 +224,29 @@ def test_pr319_admitted_mode_rejects_a_synthetic_template_source() -> None:
         _build(*payloads, competitor_mode="ADMITTED_FIELD")
 
 
+def test_pr319_admitted_mode_rejects_caller_supplied_2mrs_field_values() -> None:
+    source_rows, host_rows, errors, covariance, competitors = _payloads()
+    competitors["competitors"][0]["template_value_source"] = (
+        "ADMITTED_CF4_FORWARD_MODEL"
+    )
+    competitors["competitors"][1]["template_value_source"] = (
+        "LILOW_2024_FIELD_TRILINEAR_RADIAL_PROJECTION"
+    )
+
+    with pytest.raises(
+        science.JWSTSNCurrentStackError,
+        match="exact admitted neural-array evaluation",
+    ):
+        _build(
+            source_rows,
+            host_rows,
+            errors,
+            covariance,
+            competitors,
+            competitor_mode="ADMITTED_FIELD",
+        )
+
+
 def test_pr319_trilinear_radial_projection_and_domain_refusal() -> None:
     shape = science.PR319_2MRS_GRID_SHAPE
     coordinate = (

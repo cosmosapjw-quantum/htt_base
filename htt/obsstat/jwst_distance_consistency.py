@@ -843,6 +843,11 @@ def build_pr309_inputs(
         )
         if row["template_value_source"] != expected_template_source:
             raise JWSTSNCurrentStackError("competitor template source drifted")
+        if competitor_mode == "ADMITTED_FIELD" and competitor_id == "2MRS":
+            raise JWSTSNCurrentStackError(
+                "2MRS admitted mode requires exact admitted neural-array "
+                "evaluation; caller-supplied field values have no authority"
+            )
         try:
             template = np.asarray(row["template_values"], dtype=float)
         except (TypeError, ValueError) as exc:

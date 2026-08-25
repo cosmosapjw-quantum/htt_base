@@ -43,6 +43,8 @@ pass:
   - the published R=50 h^-1 Mpc bulk-flow convention is independently replayed
   - raw 2MRS catalogue rows and the private 2026 reconstruction are rejected
   - admitted execution cannot consume a synthetic template source
+  - admitted execution cannot consume caller-supplied neural-field values;
+    the exact released arrays must be admitted and evaluated by the registered operator
   - missing or invalid interpolation support fails before response rank
 
 terminal:
@@ -51,7 +53,7 @@ terminal:
   scientific_execution: NOT_EXECUTED
   observed_statistic_seen: false
   observed_science_executed: false
-  release_status: BLOCKED_DATA_LICENSE_AND_COMPLETE_JWST_ADMISSION
+  release_status: BLOCKED_ARRAY_ADMISSION_EVALUATION_AND_DATA_LICENSE
 
 forbidden:
   - observed JWST-SN execution
@@ -60,3 +62,4 @@ forbidden:
   - family identification
   - redistribution of external field bytes
   - claim that pointwise RMSE is a covariance
+  - caller-supplied observed 2MRS template values
