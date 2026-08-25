@@ -1,0 +1,129 @@
+schema: audit-compiled-work-unit/v1
+id: WU-004
+title: PR-284 internal exact-example closeout
+
+authority:
+  base_sha: RESOLVE_FROM_WU003_TERMINAL_RECEIPT
+  branch: ALLOCATE_FROM_LIVE_DAG
+  upstream_dependencies: [WU-003]
+  required_ancestor: bdad91a204c424030cd6d0e562232b6965a42900
+
+objective:
+  statement: Reproduce the registered four-atom fixture and classify each evidence modality honestly without promoting a broad reverse-martingale theorem.
+  observable_success: One canonical fixture reproduces 1/2, 25/36, and 7/36 and is emitted only as an internal regression or worked example.
+  non_goals:
+    - general reverse-martingale theorem
+    - optional stopping or convergence
+    - new Lean probability formalization
+    - four-axis majority promotion
+
+risk:
+  class: medium
+  P0_failure_modes: [FM-PR284-VALUE, FM-PR284-SCOPE]
+  P1_failure_modes: [FM-PR284-EVIDENCE]
+
+scope:
+  allowed_paths:
+    - docs/research_program/theory_promotion/pr284_finite_path/**
+    - tests/contracts/test_pr284_internal_example.py
+    - docs/research_program/theory_promotion/closeout/**
+  forbidden_paths:
+    - frozen historical PR284 receipt contents
+  forbidden_changes:
+    - Do not change the inclusive event or exact fractions
+    - Do not label arithmetic replay as a typed probability proof
+    - Do not infer a general theorem from the fixture
+
+preconditions:
+  - id: PRE-301
+    command: validate WU-003 terminal receipt
+    expect: PASS
+  - id: PRE-302
+    command: git status --porcelain=v1 --untracked-files=all
+    expect: empty
+
+invariants:
+  - id: INV-301
+    severity_if_violated: P0
+    statement: The canonical fixture derives probability 1/2, bound 25/36, and slack 7/36 exactly.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_pr284_internal_example.py -k exact_fraction
+      expect: pass
+  - id: INV-302
+    severity_if_violated: P0
+    statement: The broad reverse-martingale candidate remains distinct and unresolved.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_pr284_internal_example.py -k broad_parent
+      expect: pass
+  - id: INV-303
+    severity_if_violated: P1
+    statement: Lean arithmetic replay, exact enumeration, and engine replay remain separate evidence modalities.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_pr284_internal_example.py -k evidence
+      expect: pass
+
+failure_modes:
+  - id: FM-PR284-VALUE
+    severity: P0
+    trigger: fixture mutation changes exact arithmetic without a failed test
+    required_detection:
+      test: test_pr284_exact_fraction_projection
+  - id: FM-PR284-SCOPE
+    severity: P0
+    trigger: finite example is reported as a general theorem
+    required_detection:
+      test: test_pr284_fixture_cannot_promote_broad_parent
+  - id: FM-PR284-EVIDENCE
+    severity: P1
+    trigger: formal arithmetic replay is reported as typed probability proof
+    required_detection:
+      test: test_pr284_lean_axis_is_arithmetic_replay_unless_probability_semantics_exist
+
+implementation:
+  ordered_steps:
+    - id: STEP-301
+      files: [tests/contracts/test_pr284_internal_example.py]
+      action: Add exact Fraction, fixture-mutation, evidence-class, and scope RED tests.
+      must_preserve: []
+    - id: STEP-302
+      files: [docs/research_program/theory_promotion/closeout/PR284_RESEARCH_DECISION.json]
+      action: Record finite enumeration, exact engine replay, formal arithmetic replay, broad-parent exclusion, and internal role.
+      must_preserve: [broad parent unresolved, historical CAS receipt]
+
+verification:
+  targeted:
+    - pytest -q tests/contracts/test_pr284_internal_example.py
+  negative:
+    - change inclusive to strict event
+    - mutate lambda or one partition
+    - label result as general theorem
+    - label arithmetic replay as probability proof
+  regression:
+    - git diff --check
+  integration: []
+  full_relevant_suite: []
+
+completion_evidence:
+  required:
+    - canonical_fixture_sha256
+    - exact_fraction_receipt
+    - evidence_modality_table
+    - broad_parent_child_relation
+    - research_decision_receipt
+    - final_git_head
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - unresolved_blockers
+
+agent_policy:
+  ask_user_questions: false
+  guessing_across_spec_boundary: forbidden
+  unresolved_spec_action: BLOCKED_BY_UNRESOLVED_SPEC
+  changing_tests_to_fit_implementation: forbidden
+  suppressing_failures: forbidden
+  new_theory_on_closeout_path: forbidden
+
+review_gate:
+  fresh_context_required: true
+  pass_condition: {P0: 0, P1: 0}
