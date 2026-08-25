@@ -1,0 +1,18 @@
+schema: htt.mes_recovery.pr321_integration_delta.v1
+PR321:
+  eligible_as_MR_WU_007_directional_lane: false
+  role: SCALAR_TOMOGRAPHIC_CONTROL_ONLY
+  reason: Compressed C_ell spectra retain tomography but no sky direction or m-phase.
+planning_ancestry:
+  PR411_head: 5a3825f903546891fd90e3d708481707d59babf4
+  PR321_repair_head: RESOLVE_AFTER_REPAIR
+  required: The MES implementation branch must descend from both the repaired PR321
+    data stack and the unchanged PR411 package.
+  blocked_token: BLOCKED_MES_PLAN_NOT_DESCENDED_FROM_REPAIRED_PR321
+DAG:
+  existing_PR321_position: preserve
+  new_node_for_reaudit: false
+  MES_work_units: append only after live reread and repaired PR321 terminal
+future_HSC_directional_candidate:
+  input: object-level HSC shape catalogue with RA/Dec, e1/e2, tomography and masks
+  status: DEFERRED_REQUIRES_EXACT_ADMISSION_AND_DIRECTIONAL_OPERATOR
