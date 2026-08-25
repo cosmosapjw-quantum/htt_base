@@ -35,13 +35,22 @@ def _payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
     return _FIXTURE_WORKER._synthetic_payloads(rows)
 
 
-def _build(source_rows, host_rows, errors, covariance, competitors):
+def _build(
+    source_rows,
+    host_rows,
+    errors,
+    covariance,
+    competitors,
+    *,
+    competitor_mode: str = "SYNTHETIC_CONTRACT",
+):
     return science.build_pr309_inputs(
         source_rows=source_rows,
         host_rows=host_rows,
         individual_errors=errors,
         covariance=covariance,
         competitor_model=competitors,
+        competitor_mode=competitor_mode,
     )
 
 
@@ -126,13 +135,13 @@ def test_pr309_direction_redshift_depth_semantics_are_frozen() -> None:
         _build(source_rows, host_rows, errors, covariance, competitors)
 
     source_rows, host_rows, errors, covariance, competitors = _payloads()
-    competitors["competitors"][1]["frame_transformation_role"] = "RAW_NO_TRANSFORM"
+    competitors["competitors"][1]["coordinate_role"] = "RAW_NO_TRANSFORM"
     with pytest.raises(science.JWSTSNCurrentStackError, match="frame"):
         _build(source_rows, host_rows, errors, covariance, competitors)
 
     source_rows, host_rows, errors, covariance, competitors = _payloads()
-    competitors["competitors"][1]["frame_transformation_identity"] = ""
-    with pytest.raises(science.JWSTSNCurrentStackError, match="transformation identity"):
+    competitors["competitors"][1]["coordinate_identity"] = ""
+    with pytest.raises(science.JWSTSNCurrentStackError, match="coordinate identity"):
         _build(source_rows, host_rows, errors, covariance, competitors)
 
 
@@ -154,21 +163,96 @@ def test_pr309_rejects_diagonalized_shared_covariance() -> None:
         _build(source_rows, host_rows, errors, covariance, competitors)
 
 
-def test_pr309_accepts_scientifically_identified_2mrs_provider() -> None:
+def test_pr319_binds_the_exact_2024_2mrs_neural_velocity_field() -> None:
+    inputs = _inputs()
+    metadata = inputs.competitor_metadata["2MRS"]
+
+    assert metadata["model_identity"] == (
+        "LILOW_GANESHAIAH_VEENA_NUSSER_2024_2MRS_NEURAL_VELOCITY_FIELD"
+    )
+    assert metadata["paper_identity"] == "arXiv:2404.02278v2"
+    assert metadata["repository_commit"] == (
+        "c4c141357f6c99d0d0f30784a1116afa204d91f6"
+    )
+    assert metadata["velocity_frame"] == "CMB"
+    assert metadata["coordinate_frame"] == "GALACTIC_COMOVING_CARTESIAN"
+    assert metadata["template_unit"] == "km/s"
+    assert metadata["grid_shape"] == [128, 128, 128]
+    assert metadata["field_component_sha256"] == (
+        science.PR319_2MRS_NEURAL_FIELD_MEMBER_SHA256
+    )
+    assert metadata["field_byte_license_status"] == (
+        "UNRESOLVED_NO_REDISTRIBUTION"
+    )
+    assert metadata["uncertainty_role"] == (
+        "POINTWISE_VALIDATION_RMSE_NOT_COVARIANCE"
+    )
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    (
+        ("model_identity", "NUSSER_2026_PRIVATE_RECONSTRUCTION"),
+        ("source_release", "NASA_HEASARC_RAW_2MRS_CATALOG"),
+        ("input_frame", "SOLAR_SYSTEM_BARYCENTER"),
+        ("velocity_frame", "HELIOCENTRIC"),
+        ("field_byte_license_status", "GPL_3_ASSUMED_FOR_EXTERNAL_DATA"),
+    ),
+)
+def test_pr319_rejects_legacy_raw_or_misidentified_2mrs_models(
+    field: str, value: str
+) -> None:
     source_rows, host_rows, errors, covariance, competitors = _payloads()
-    row = competitors["competitors"][1]
-    row["model_identity"] = "2mrs-distance-prediction-forward-model-v1"
-    row["source_release"] = "NASA_HEASARC_2MRS"
-    row["frame_transformation_identity"] = "barycentric-to-cmb-forward:v1"
+    competitors["competitors"][1][field] = value
 
-    inputs = _build(source_rows, host_rows, errors, covariance, competitors)
+    with pytest.raises(science.JWSTSNCurrentStackError, match="2MRS neural field"):
+        _build(source_rows, host_rows, errors, covariance, competitors)
 
-    assert inputs.competitor_metadata["2MRS"]["model_identity"] == (
-        "2mrs-distance-prediction-forward-model-v1"
+
+def test_pr319_requires_all_eight_content_bound_field_members() -> None:
+    source_rows, host_rows, errors, covariance, competitors = _payloads()
+    hashes = competitors["competitors"][1]["field_component_sha256"]
+    hashes.pop("density_error.npy")
+
+    with pytest.raises(science.JWSTSNCurrentStackError, match="member hashes"):
+        _build(source_rows, host_rows, errors, covariance, competitors)
+
+
+def test_pr319_admitted_mode_rejects_a_synthetic_template_source() -> None:
+    payloads = _payloads()
+    with pytest.raises(science.JWSTSNCurrentStackError, match="template source"):
+        _build(*payloads, competitor_mode="ADMITTED_FIELD")
+
+
+def test_pr319_trilinear_radial_projection_and_domain_refusal() -> None:
+    shape = science.PR319_2MRS_GRID_SHAPE
+    coordinate = (
+        np.arange(shape[0], dtype=np.float32) - (shape[0] - 1) / 2.0
+    ) * science.PR319_2MRS_CELL_SIZE_HMPC
+    x_velocity = np.broadcast_to(coordinate[:, None, None], shape)
+    y_velocity = np.broadcast_to(coordinate[None, :, None], shape)
+    z_velocity = np.broadcast_to(coordinate[None, None, :], shape)
+    radial = science.evaluate_pr319_2mrs_neural_radial_velocity(
+        x_velocity=x_velocity,
+        y_velocity=y_velocity,
+        z_velocity=z_velocity,
+        galactic_l_deg=[0.0, 90.0],
+        galactic_b_deg=[0.0, 0.0],
+        depth_mpc=[20.0 / science.PR319_2MRS_HUBBLE_H] * 2,
+        hubble_h=science.PR319_2MRS_HUBBLE_H,
     )
-    assert inputs.competitor_metadata["2MRS"]["frame_transformation_identity"] == (
-        "barycentric-to-cmb-forward:v1"
-    )
+    assert radial == pytest.approx([20.0, 20.0], abs=1.0e-5)
+
+    with pytest.raises(science.JWSTSNCurrentStackError, match="valid sphere"):
+        science.evaluate_pr319_2mrs_neural_radial_velocity(
+            x_velocity=x_velocity,
+            y_velocity=y_velocity,
+            z_velocity=z_velocity,
+            galactic_l_deg=[0.0],
+            galactic_b_deg=[0.0],
+            depth_mpc=[science.PR319_2MRS_VALID_RADIUS_HMPC / science.PR319_2MRS_HUBBLE_H],
+            hubble_h=science.PR319_2MRS_HUBBLE_H,
+        )
 
 
 def test_pr309_missing_2mrs_stops_before_response_rank(
@@ -256,10 +340,10 @@ def test_pr309_rank_is_invariant_to_nonzero_competitor_scaling() -> None:
     for competitor_id in science.PR309_COMPETITOR_ORDER:
         expected = baseline["competitor_conditioned_diagnostics"][competitor_id]
         for scale in scales:
-            competitors = dict(inputs.competitor_predictions_mag)
+            competitors = dict(inputs.competitor_templates)
             competitors[competitor_id] = competitors[competitor_id] * scale
             changed = science.JWSTSNCurrentStackInputs(
-                **{**inputs.__dict__, "competitor_predictions_mag": competitors}
+                **{**inputs.__dict__, "competitor_templates": competitors}
             )
 
             result = science.analyze_pr309_current_stack(changed, observed=False)
@@ -314,10 +398,10 @@ def test_pr309_nonexact_host_linkage_abstains_before_rank(
 def test_pr309_competitor_collinearity_abstains_only_that_lane() -> None:
     inputs = _inputs()
     response = science._response_design(inputs)
-    competitors = dict(inputs.competitor_predictions_mag)
+    competitors = dict(inputs.competitor_templates)
     competitors["2MRS"] = response[:, 0].copy()
     changed = science.JWSTSNCurrentStackInputs(
-        **{**inputs.__dict__, "competitor_predictions_mag": competitors}
+        **{**inputs.__dict__, "competitor_templates": competitors}
     )
 
     result = science.analyze_pr309_current_stack(changed, observed=False)
@@ -338,10 +422,10 @@ def test_pr309_competitor_collinearity_abstains_only_that_lane() -> None:
     trial = np.sin(np.arange(len(inputs.row_ids), dtype=float) * 1.2345)
     trial -= response @ np.linalg.lstsq(response, trial, rcond=None)[0]
     trial /= np.linalg.norm(trial)
-    competitors = dict(inputs.competitor_predictions_mag)
+    competitors = dict(inputs.competitor_templates)
     competitors["2MRS"] = response[:, 0] + 1.0e-7 * trial
     changed = science.JWSTSNCurrentStackInputs(
-        **{**inputs.__dict__, "competitor_predictions_mag": competitors}
+        **{**inputs.__dict__, "competitor_templates": competitors}
     )
     result = science.analyze_pr309_current_stack(changed, observed=False)
     assert result["terminal_disposition"] == "WEAK_COMPETITOR_IDENTIFICATION_ABSTAIN"
@@ -356,10 +440,10 @@ def test_pr309_above_floor_rank_diagnostic_does_not_become_a_point_fit() -> None
     trial = np.sin(np.arange(len(inputs.row_ids), dtype=float) * 1.2345)
     trial -= response @ np.linalg.lstsq(response, trial, rcond=None)[0]
     trial /= np.linalg.norm(trial)
-    competitors = dict(inputs.competitor_predictions_mag)
+    competitors = dict(inputs.competitor_templates)
     competitors["2MRS"] = response[:, 0] + 1.0e-5 * trial
     changed = science.JWSTSNCurrentStackInputs(
-        **{**inputs.__dict__, "competitor_predictions_mag": competitors}
+        **{**inputs.__dict__, "competitor_templates": competitors}
     )
 
     result = science.analyze_pr309_current_stack(changed, observed=False)

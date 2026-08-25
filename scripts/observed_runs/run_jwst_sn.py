@@ -48,6 +48,9 @@ from common.data_identity import (  # noqa: E402
 )
 from obsstat.jwst_distance_consistency import (  # noqa: E402
     JWSTSNCurrentStackError,
+    PR319_2MRS_FIELD_COMPONENT_ORDER,
+    PR319_2MRS_NEURAL_FIELD_CONTRACT,
+    PR319_2MRS_NEURAL_FIELD_MEMBER_SHA256,
     PR309_COMPETITOR_SEMANTIC_CONTRACTS,
     PR309_OBSERVABLE_CONTRACT,
     PR309_SEMANTIC_CONTRACT,
@@ -198,6 +201,7 @@ def _load_inputs(paths: Mapping[str, Path]):
             competitor_model=_strict_json(
                 paths["competitor_model"], label="competitor model"
             ),
+            competitor_mode="ADMITTED_FIELD",
         )
     except JWSTSNCurrentStackError as exc:
         raise JWSTSNWorkerError(f"JWST-SN input contract failed: {exc}") from exc
@@ -307,17 +311,22 @@ def _synthetic_payloads(rows: int = 24) -> tuple[dict, dict, dict, dict, dict]:
                 "source_release": "synthetic-only",
                 "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
                 **PR309_COMPETITOR_SEMANTIC_CONTRACTS["CF4"],
-                "frame_transformation_identity": "synthetic-cf4-cmb-forward:v1",
-                "predicted_delta_mag": cf4_prediction.tolist(),
+                "coordinate_identity": "synthetic-cf4-cmb-forward:v1",
+                "template_value_source": "SYNTHETIC_CONTRACT_ORACLE",
+                "template_values": cf4_prediction.tolist(),
             },
             {
                 "competitor_id": "2MRS",
-                "model_identity": "synthetic-2mrs-forward-v1",
-                "source_release": "synthetic-only",
+                **PR319_2MRS_NEURAL_FIELD_CONTRACT,
                 "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
                 **PR309_COMPETITOR_SEMANTIC_CONTRACTS["2MRS"],
-                "frame_transformation_identity": "synthetic-barycentric-to-cmb:v1",
-                "predicted_delta_mag": two_mrs_prediction.tolist(),
+                "coordinate_identity": "lilow-2024-grid-cell-centers:v1",
+                "field_component_order": list(PR319_2MRS_FIELD_COMPONENT_ORDER),
+                "field_component_sha256": dict(
+                    PR319_2MRS_NEURAL_FIELD_MEMBER_SHA256
+                ),
+                "template_value_source": "SYNTHETIC_CONTRACT_ORACLE",
+                "template_values": two_mrs_prediction.tolist(),
             },
         ],
     }
@@ -338,6 +347,7 @@ def synthetic_profile() -> dict[str, object]:
         individual_errors=errors,
         covariance=covariance,
         competitor_model=competitors,
+        competitor_mode="SYNTHETIC_CONTRACT",
     )
     report = analyze_pr309_current_stack(inputs, observed=False)
     return {

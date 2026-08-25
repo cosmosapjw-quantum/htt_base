@@ -313,18 +313,64 @@ PR309_SEMANTIC_CONTRACT = {
 PR309_COMPETITOR_SEMANTIC_CONTRACTS = {
     "CF4": {
         "input_frame": "CMB",
-        "prediction_frame": "CMB",
-        "prediction_unit": "mag",
-        "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
-        "frame_transformation_role": "NATIVE_CMB_FRAME_FORWARD_MODEL",
+        "template_frame": "CMB",
+        "template_unit": "mag",
+        "template_definition": "METHOD_A_MINUS_METHOD_B_MAG_RESPONSE_TEMPLATE",
+        "coordinate_role": "NATIVE_CMB_FRAME_FORWARD_MODEL",
     },
     "2MRS": {
-        "input_frame": "SOLAR_SYSTEM_BARYCENTER",
-        "prediction_frame": "CMB",
-        "prediction_unit": "mag",
-        "observable_delta_definition": "METHOD_A_MINUS_METHOD_B_MAG",
-        "frame_transformation_role": "BARYCENTRIC_TO_CMB_FORWARD_MODEL",
+        "input_frame": "GALACTIC_COMOVING_CARTESIAN",
+        "template_frame": "CMB",
+        "template_unit": "km/s",
+        "template_definition": "RADIAL_PECULIAR_VELOCITY_RESPONSE_TEMPLATE",
+        "coordinate_role": "NATIVE_CMB_FRAME_NEURAL_VELOCITY_FIELD",
     },
+}
+PR319_2MRS_GRID_SHAPE = (128, 128, 128)
+PR319_2MRS_BOX_SIDE_HMPC = 400.0
+PR319_2MRS_CELL_SIZE_HMPC = 3.125
+PR319_2MRS_VALID_RADIUS_HMPC = 200.0
+PR319_2MRS_HUBBLE_H = 0.6711
+PR319_2MRS_FIELD_COMPONENT_ORDER = (
+    "density.npy",
+    "xVelocity.npy",
+    "yVelocity.npy",
+    "zVelocity.npy",
+    "density_error.npy",
+    "xVelocity_error.npy",
+    "yVelocity_error.npy",
+    "zVelocity_error.npy",
+)
+PR319_2MRS_NEURAL_FIELD_MEMBER_SHA256 = {
+    "density.npy": "sha256:fe6afc85a42458dcc6f3a740cc575aaf0387944fad8f039045ae4eeea3b59c09",
+    "xVelocity.npy": "sha256:50edf12e9dd8a79959071eda57ccd197f2cfba2bae5233210ab6243541aa4643",
+    "yVelocity.npy": "sha256:c125f3d97aa8f9ed34110285e018df0849d955b62f0a472cebb34d196e2cb447",
+    "zVelocity.npy": "sha256:ae1e0dfadf48c27afcf7f30c53c2e978f7edeab3506c9e446ed7f73770b207d6",
+    "density_error.npy": "sha256:634639062221acff6a52db9185c7745abdecfcce5cd051bfbaff76981b9cda4d",
+    "xVelocity_error.npy": "sha256:71cb34d1639f48a6cc22ba76d0f5c56756cc89f4b9f714c719a718c531a60114",
+    "yVelocity_error.npy": "sha256:76396094a770b5874bc82779e4a95ad1ef5ad4683ba7cf321981cd377de26e26",
+    "zVelocity_error.npy": "sha256:5b53329d64107503ddf93e69f0df52c26de109e87a2bc97c6b3c8b18e6c0c846",
+}
+PR319_2MRS_NEURAL_FIELD_CONTRACT = {
+    "model_identity": "LILOW_GANESHAIAH_VEENA_NUSSER_2024_2MRS_NEURAL_VELOCITY_FIELD",
+    "source_release": "PUBLIC_2MRS_NEURALNET_ARRAYS_ACCESSED_2026_08_25",
+    "paper_identity": "arXiv:2404.02278v2",
+    "publisher_doi": "10.1051/0004-6361/202450219",
+    "repository_url": "https://github.com/rlilow/2MRS-NeuralNet",
+    "repository_commit": "c4c141357f6c99d0d0f30784a1116afa204d91f6",
+    "coordinate_frame": "GALACTIC_COMOVING_CARTESIAN",
+    "velocity_frame": "CMB",
+    "grid_shape": list(PR319_2MRS_GRID_SHAPE),
+    "box_side_hmpc": PR319_2MRS_BOX_SIDE_HMPC,
+    "cell_size_hmpc": PR319_2MRS_CELL_SIZE_HMPC,
+    "grid_center_convention": "CELL_CENTER_Q_N_EQUALS_N_MINUS_63_5_TIMES_3_125_HMPC",
+    "gaussian_smoothing_width_hmpc": 3.0,
+    "valid_radius_hmpc": PR319_2MRS_VALID_RADIUS_HMPC,
+    "hubble_h": PR319_2MRS_HUBBLE_H,
+    "row_evaluation_rule": "TRILINEAR_THEN_OUTWARD_GALACTIC_RADIAL_PROJECTION",
+    "radial_sign_convention": "POSITIVE_AWAY_FROM_OBSERVER",
+    "uncertainty_role": "POINTWISE_VALIDATION_RMSE_NOT_COVARIANCE",
+    "field_byte_license_status": "UNRESOLVED_NO_REDISTRIBUTION",
 }
 
 
@@ -349,8 +395,9 @@ class JWSTSNCurrentStackInputs:
     peculiar_velocity_covariance_mag2: np.ndarray
     total_covariance_mag2: np.ndarray
     competitor_order: tuple[str, ...]
-    competitor_predictions_mag: dict[str, np.ndarray]
-    competitor_metadata: dict[str, dict[str, str]]
+    competitor_templates: dict[str, np.ndarray]
+    competitor_metadata: dict[str, dict[str, object]]
+    competitor_mode: str
     semantic_contract: dict[str, str]
     feature_order: tuple[str, ...] = PR309_FEATURE_ORDER
 
@@ -436,6 +483,105 @@ def _galactic_unit_vectors(longitude_deg: np.ndarray, latitude_deg: np.ndarray) 
     )
 
 
+def evaluate_pr319_2mrs_neural_radial_velocity(
+    *,
+    x_velocity: object,
+    y_velocity: object,
+    z_velocity: object,
+    galactic_l_deg: object,
+    galactic_b_deg: object,
+    depth_mpc: object,
+    hubble_h: float,
+) -> np.ndarray:
+    """Evaluate the 2024 2MRS NN field without inventing a magnitude model.
+
+    The released Cartesian CMB-frame components are interpolated at the
+    source-reported host position and projected onto the outward Galactic
+    radial unit vector.  Pointwise RMSE arrays are deliberately not accepted:
+    they are not a spatial or cross-component covariance.
+    """
+
+    if not math.isclose(
+        float(hubble_h), PR319_2MRS_HUBBLE_H, rel_tol=0.0, abs_tol=0.0
+    ):
+        raise JWSTSNCurrentStackError("2MRS neural field hubble-h identity drifted")
+    fields: list[np.ndarray] = []
+    for value, label in (
+        (x_velocity, "xVelocity.npy"),
+        (y_velocity, "yVelocity.npy"),
+        (z_velocity, "zVelocity.npy"),
+    ):
+        try:
+            field = np.asarray(value)
+        except (TypeError, ValueError) as exc:
+            raise JWSTSNCurrentStackError(
+                f"2MRS neural field {label} is malformed"
+            ) from exc
+        if field.shape != PR319_2MRS_GRID_SHAPE or field.dtype.kind not in "fc":
+            raise JWSTSNCurrentStackError(
+                f"2MRS neural field {label} shape or dtype drifted"
+            )
+        fields.append(field)
+    try:
+        longitude = np.asarray(galactic_l_deg, dtype=float)
+        latitude = np.asarray(galactic_b_deg, dtype=float)
+        depth = np.asarray(depth_mpc, dtype=float)
+    except (TypeError, ValueError) as exc:
+        raise JWSTSNCurrentStackError("2MRS neural field query is malformed") from exc
+    if (
+        longitude.ndim != 1
+        or longitude.shape != latitude.shape
+        or longitude.shape != depth.shape
+        or longitude.size == 0
+        or not np.all(np.isfinite(longitude))
+        or not np.all(np.isfinite(latitude))
+        or not np.all(np.isfinite(depth))
+        or np.any((longitude < 0.0) | (longitude >= 360.0))
+        or np.any((latitude < -90.0) | (latitude > 90.0))
+        or np.any(depth <= 0.0)
+    ):
+        raise JWSTSNCurrentStackError("2MRS neural field query is malformed")
+    directions = _galactic_unit_vectors(longitude, latitude)
+    positions_hmpc = directions * (depth * PR319_2MRS_HUBBLE_H)[:, None]
+    radii = np.linalg.norm(positions_hmpc, axis=1)
+    if np.any(radii >= PR319_2MRS_VALID_RADIUS_HMPC - 1.0e-12):
+        raise JWSTSNCurrentStackError("2MRS neural field query leaves valid sphere")
+    fractional = (
+        positions_hmpc / PR319_2MRS_CELL_SIZE_HMPC
+        + (PR319_2MRS_GRID_SHAPE[0] - 1) / 2.0
+    )
+    lower = np.floor(fractional).astype(int)
+    upper = lower + 1
+    if np.any(lower < 0) or np.any(upper >= PR319_2MRS_GRID_SHAPE[0]):
+        raise JWSTSNCurrentStackError("2MRS neural field interpolation is out of bounds")
+    weights = fractional - lower
+    velocity = np.empty((longitude.size, 3), dtype=float)
+    for row_index in range(longitude.size):
+        for component, field in enumerate(fields):
+            value = 0.0
+            for dx in (0, 1):
+                for dy in (0, 1):
+                    for dz in (0, 1):
+                        index = (
+                            lower[row_index, 0] + dx,
+                            lower[row_index, 1] + dy,
+                            lower[row_index, 2] + dz,
+                        )
+                        corner = float(field[index])
+                        if not math.isfinite(corner):
+                            raise JWSTSNCurrentStackError(
+                                "2MRS neural field interpolation touches invalid support"
+                            )
+                        weight = (
+                            (weights[row_index, 0] if dx else 1.0 - weights[row_index, 0])
+                            * (weights[row_index, 1] if dy else 1.0 - weights[row_index, 1])
+                            * (weights[row_index, 2] if dz else 1.0 - weights[row_index, 2])
+                        )
+                        value += weight * corner
+            velocity[row_index, component] = value
+    return np.einsum("ij,ij->i", velocity, directions)
+
+
 def build_pr309_inputs(
     *,
     source_rows: object,
@@ -443,8 +589,12 @@ def build_pr309_inputs(
     individual_errors: object,
     covariance: object,
     competitor_model: object,
+    competitor_mode: str,
 ) -> JWSTSNCurrentStackInputs:
     """Validate and join the exact five-component PR-289 JWST-SN bundle."""
+
+    if competitor_mode not in {"SYNTHETIC_CONTRACT", "ADMITTED_FIELD"}:
+        raise JWSTSNCurrentStackError("competitor mode is not registered")
 
     row_ids, sources = _ordered_rows(source_rows, label="source rows")
     host_order, hosts = _ordered_rows(host_rows, label="host rows")
@@ -648,59 +798,105 @@ def build_pr309_inputs(
         normalized_competitors
     ):
         raise JWSTSNCurrentStackError("competitor model identities must remain distinct")
-    predictions: dict[str, np.ndarray] = {}
-    metadata: dict[str, dict[str, str]] = {}
+    templates: dict[str, np.ndarray] = {}
+    metadata: dict[str, dict[str, object]] = {}
+    common_fields = {
+        "competitor_id",
+        "model_identity",
+        "source_release",
+        "model_role",
+        "input_frame",
+        "template_frame",
+        "template_unit",
+        "template_definition",
+        "coordinate_role",
+        "coordinate_identity",
+        "template_value_source",
+        "template_values",
+    }
     for row in normalized_competitors:
-        if set(row) != {
-            "competitor_id",
-            "model_identity",
-            "source_release",
-            "model_role",
-            "input_frame",
-            "prediction_frame",
-            "prediction_unit",
-            "observable_delta_definition",
-            "frame_transformation_role",
-            "frame_transformation_identity",
-            "predicted_delta_mag",
-        }:
-            raise JWSTSNCurrentStackError("competitor fields drifted")
         competitor_id = str(row["competitor_id"])
+        neural_fields = set(PR319_2MRS_NEURAL_FIELD_CONTRACT) | {
+            "field_component_order",
+            "field_component_sha256",
+        }
+        expected_fields = common_fields | (neural_fields if competitor_id == "2MRS" else set())
+        if set(row) != expected_fields:
+            raise JWSTSNCurrentStackError("competitor fields drifted")
         if row["model_role"] != "SEPARATE_DIRECTION_DEPTH_COMPETITOR":
             raise JWSTSNCurrentStackError("competitors cannot be pooled")
         semantic_contract = PR309_COMPETITOR_SEMANTIC_CONTRACTS[competitor_id]
         if any(row.get(key) != value for key, value in semantic_contract.items()):
             raise JWSTSNCurrentStackError(
-                "competitor frame or observable semantics drifted"
+                "2MRS neural field frame or template semantics drifted"
+                if competitor_id == "2MRS"
+                else "competitor frame or template semantics drifted"
             )
+        expected_template_source = (
+            "SYNTHETIC_CONTRACT_ORACLE"
+            if competitor_mode == "SYNTHETIC_CONTRACT"
+            else (
+                "LILOW_2024_FIELD_TRILINEAR_RADIAL_PROJECTION"
+                if competitor_id == "2MRS"
+                else "ADMITTED_CF4_FORWARD_MODEL"
+            )
+        )
+        if row["template_value_source"] != expected_template_source:
+            raise JWSTSNCurrentStackError("competitor template source drifted")
         try:
-            prediction = np.asarray(row["predicted_delta_mag"], dtype=float)
+            template = np.asarray(row["template_values"], dtype=float)
         except (TypeError, ValueError) as exc:
-            raise JWSTSNCurrentStackError("competitor prediction is malformed") from exc
-        if prediction.shape != (count,) or not np.all(np.isfinite(prediction)):
-            raise JWSTSNCurrentStackError("competitor prediction is malformed")
+            raise JWSTSNCurrentStackError("competitor template is malformed") from exc
+        if template.shape != (count,) or not np.all(np.isfinite(template)):
+            raise JWSTSNCurrentStackError("competitor template is malformed")
         model_identity = _nonempty(
             row["model_identity"], label="competitor model identity"
         )
         source_release = _nonempty(
             row["source_release"], label="competitor source release"
         )
-        transformation_identity = _nonempty(
-            row["frame_transformation_identity"],
-            label="competitor frame transformation identity",
+        coordinate_identity = _nonempty(
+            row["coordinate_identity"],
+            label="competitor coordinate identity",
         )
-        predictions[competitor_id] = prediction
+        extra_metadata: dict[str, object] = {}
+        if competitor_id == "2MRS":
+            if any(
+                row.get(key) != value
+                for key, value in PR319_2MRS_NEURAL_FIELD_CONTRACT.items()
+            ):
+                raise JWSTSNCurrentStackError("2MRS neural field identity drifted")
+            component_order = row["field_component_order"]
+            member_hashes = row["field_component_sha256"]
+            if (
+                isinstance(component_order, (str, bytes))
+                or not isinstance(component_order, Sequence)
+                or list(component_order) != list(PR319_2MRS_FIELD_COMPONENT_ORDER)
+            ):
+                raise JWSTSNCurrentStackError("2MRS neural field member order drifted")
+            if member_hashes != PR319_2MRS_NEURAL_FIELD_MEMBER_SHA256:
+                raise JWSTSNCurrentStackError("2MRS neural field member hashes drifted")
+            extra_metadata = {
+                **PR319_2MRS_NEURAL_FIELD_CONTRACT,
+                "field_component_order": list(PR319_2MRS_FIELD_COMPONENT_ORDER),
+                "field_component_sha256": dict(
+                    PR319_2MRS_NEURAL_FIELD_MEMBER_SHA256
+                ),
+            }
+        templates[competitor_id] = template
         metadata[competitor_id] = {
             "model_identity": model_identity,
             "source_release": source_release,
             "model_role": "SEPARATE_DIRECTION_DEPTH_COMPETITOR",
             **semantic_contract,
-            "frame_transformation_identity": transformation_identity,
+            "coordinate_identity": coordinate_identity,
+            "template_value_source": expected_template_source,
+            **extra_metadata,
         }
     if np.allclose(
-        predictions["CF4"], predictions["2MRS"], atol=0.0, rtol=0.0
+        templates["CF4"], templates["2MRS"], atol=0.0, rtol=0.0
     ):
-        raise JWSTSNCurrentStackError("competitor predictions must remain distinct")
+        raise JWSTSNCurrentStackError("competitor templates must remain distinct")
 
     directions = _galactic_unit_vectors(
         np.asarray(longitude, dtype=float), np.asarray(latitude, dtype=float)
@@ -744,8 +940,9 @@ def build_pr309_inputs(
         peculiar_velocity_covariance_mag2=peculiar_covariance,
         total_covariance_mag2=total_covariance,
         competitor_order=PR309_COMPETITOR_ORDER,
-        competitor_predictions_mag=predictions,
+        competitor_templates=templates,
         competitor_metadata=metadata,
+        competitor_mode=competitor_mode,
         semantic_contract={**PR309_SEMANTIC_CONTRACT, **PR309_OBSERVABLE_CONTRACT},
     )
 
@@ -817,7 +1014,7 @@ def _competitor_diagnostic(
     competitor_id: str,
 ) -> dict[str, object]:
     augmented = np.column_stack(
-        (base_design, inputs.competitor_predictions_mag[competitor_id])
+        (base_design, inputs.competitor_templates[competitor_id])
     )
     rank = _whitened_rank(augmented, inputs.total_covariance_mag2)
     if rank["rank"] != rank["expected_rank"]:
@@ -857,6 +1054,10 @@ def analyze_pr309_current_stack(
 
     if type(observed) is not bool:
         raise JWSTSNCurrentStackError("observed state must be one boolean")
+    if observed and inputs.competitor_mode != "ADMITTED_FIELD":
+        raise JWSTSNCurrentStackError(
+            "observed execution requires admitted competitor field templates"
+        )
     blocked_host_rows = _host_linkage_blocked_rows(inputs)
     response_rank: dict[str, object] | None = None
     diagnostics: dict[str, dict[str, object]] = {}
@@ -908,6 +1109,7 @@ def analyze_pr309_current_stack(
         },
         "response_rank": response_rank,
         "competitor_order": list(inputs.competitor_order),
+        "competitor_mode": inputs.competitor_mode,
         "competitor_combination_performed": False,
         "competitor_conditioned_diagnostics": diagnostics,
         "terminal_disposition": terminal,

@@ -1,0 +1,62 @@
+schema: htt.observational_readiness_pr.v1
+pr_id: PR-319
+title: JWST-SN 2024 2MRS neural-field competitor binding
+capability: JWST_SN_LILOW_2024_2MRS_NEURAL_VELOCITY_TEMPLATE
+predecessor:
+  commit: f549f8f95937ea395b26e9f5361bd1fc04ece893
+claim_ceiling: diagnostic_only_response_rank
+
+source:
+  paper: arXiv:2404.02278v2
+  doi: 10.1051/0004-6361/202450219
+  repository: https://github.com/rlilow/2MRS-NeuralNet
+  repository_commit: c4c141357f6c99d0d0f30784a1116afa204d91f6
+  upstream_release_state: public_mutable_share_without_version_or_checksums
+  local_member_identity: exact_sha256_bound
+  redistribution: blocked_pending_data_license_clarification
+
+operator:
+  input: [xVelocity.npy, yVelocity.npy, zVelocity.npy]
+  grid_shape: [128, 128, 128]
+  coordinate_frame: GALACTIC_COMOVING_CARTESIAN
+  coordinate_unit: h^-1 Mpc
+  velocity_frame: CMB
+  velocity_unit: km/s
+  hubble_h: 0.6711
+  cell_size_hmpc: 3.125
+  valid_radius_hmpc: 200.0
+  interpolation: trilinear_cell_centered
+  projection: outward_positive_galactic_radial
+  output_role: rank_only_direction_depth_competitor_template
+  forbidden_conversion: unregistered_radial_velocity_to_distance_modulus
+
+uncertainty:
+  released_error_arrays: pointwise_mock_validation_RMSE
+  covariance_role: none
+  forbidden:
+    - manufacture_spatial_covariance
+    - manufacture_cross_component_covariance
+    - use_RMSE_as_likelihood_covariance
+
+pass:
+  - exact eight-member hashes and source semantics are validated
+  - the published R=50 h^-1 Mpc bulk-flow convention is independently replayed
+  - raw 2MRS catalogue rows and the private 2026 reconstruction are rejected
+  - admitted execution cannot consume a synthetic template source
+  - missing or invalid interpolation support fails before response rank
+
+terminal:
+  implementation: PASS_MODEL_BINDING_ONLY
+  data_identity: LOCAL_EXACT_BYTES_AVAILABLE
+  scientific_execution: NOT_EXECUTED
+  observed_statistic_seen: false
+  observed_science_executed: false
+  release_status: BLOCKED_DATA_LICENSE_AND_COMPLETE_JWST_ADMISSION
+
+forbidden:
+  - observed JWST-SN execution
+  - competitor amplitude fit or p-value
+  - source attribution
+  - family identification
+  - redistribution of external field bytes
+  - claim that pointwise RMSE is a covariance
