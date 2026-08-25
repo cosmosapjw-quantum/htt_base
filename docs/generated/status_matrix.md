@@ -7,13 +7,13 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | Metric | Value |
 | --- | ---: |
-| Total PRs | 263 |
+| Total PRs | 264 |
 | Completed PRs | 200 |
 | Blocked PRs | 5 |
 | Skipped PRs | 0 |
 | In progress | 1 |
 | Background in progress | 1 |
-| Pending PRs | 28 |
+| Pending PRs | 29 |
 | Dormant external PRs | 28 |
 
 | Metadata | Value |
@@ -22,13 +22,13 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Implementation scope | `common` |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `cc54d5c7b86541819a729b2e09ae82386427b67fd537a2e43833f464bef67bf7` |
-| Input hashes | `docs/codex_handoff/pr_backlog.yaml:a3db4ee876cda0962a7fe1c0b4198d7906aecbe9a5c6b097bc905e2154594e88`<br>`docs/codex_handoff/pr_status.yaml:50866524d65a36bed19504d506635c3e629e9fb6b70c431a9dfef1bec779219d`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4`<br>`docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c`<br>`docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912` |
+| Config hash | `d3eddefe0bf190ec72e2d4dcdc3f9d1bb61ec502112743eb760162e906f0bfcc` |
+| Input hashes | `docs/codex_handoff/pr_backlog.yaml:5f70c5751bff08563fdb69d3f807f92a6598c308c27eeeb78f4a5ac6c2a41cea`<br>`docs/codex_handoff/pr_status.yaml:2a7efec888816f34aeb4f64f74effd5c68fc84e0762e9de24a5becc06aea33db`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4`<br>`docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c`<br>`docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912` |
 | Sky support status | `not_directional` |
 | Null/mock status | `not_statistical` |
 | Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false without an exact factory-issued ClaimCapabilityDecision.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier.<br>Verified smoke receipts set only generic process readiness; they do not grant a ClaimCapability. |
-| Generating command | `python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --write docs/generated/status_snapshot.json` |
-| Source commit | `f71f9951+dirty` |
+| Generating command | `python -m common.status_snapshot --write docs/generated/status_snapshot.json` |
+| Source commit | `67087eef+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
@@ -37,7 +37,7 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | `COMMON` | 139 |
 | `HTT` | 48 |
 | `MIO` | 14 |
-| `OBSSTAT` | 47 |
+| `OBSSTAT` | 48 |
 
 | State | Rows |
 | --- | ---: |
@@ -46,25 +46,25 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | `completed` | 200 |
 | `dormant_external` | 28 |
 | `in_progress` | 1 |
-| `pending` | 28 |
+| `pending` | 29 |
 
 | Claim Tier | Rows |
 | --- | ---: |
 | `blocked` | 5 |
-| `diagnostic_only` | 258 |
+| `diagnostic_only` | 259 |
 
 | Artifact Readiness | Rows |
 | --- | ---: |
 | `blocked` | 5 |
 | `generated` | 200 |
-| `missing` | 58 |
+| `missing` | 59 |
 
 | Allowed Use | Rows |
 | --- | ---: |
-| `internal_only` | 263 |
+| `internal_only` | 264 |
 
 | Artifact Mode | Rows |
 | --- | ---: |
-| `governance_diagnostic` | 263 |
+| `governance_diagnostic` | 264 |
 
 This matrix is a diagnostic-only DAG rendering. It does not certify solver validation, posterior evidence, native transfer validation, or family-ID evidence.

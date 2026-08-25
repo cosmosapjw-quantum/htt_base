@@ -236,6 +236,7 @@ pending:
 - PR-293
 - PR-294
 - PR-320
+- PR-321
 dormant_external:
 - PR-159
 - PR-160
@@ -532,7 +533,7 @@ historical_stacked_pr_execution:
       predecessor_sealed_sha: 27df5da040e27eeaad44873ba3424ff73fb4bb09
       sealed_head: null
       pushed_ref: null
-      pr_url: null
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/412
       production_hash: c638eaea433bcce5a5b00140a916108d5c23b64d079c94bbb7456a343acf0d48
       dependency_hashes:
         pr289_spec: f4a8e89e603a1f6e4fe9cb99c422ef83407fd264328b3adaf927aafdcfb6636f
@@ -602,7 +603,7 @@ stacked_pr_execution:
   merge_policy: HUMAN_ONLY
   target_sha: 5de7992c313a874013b78b81a45c562cbb9d2e08
   active_implementation_pr: PR-319
-  pr_order: [PR-312, PR-313, PR-308, PR-309, PR-310, PR-311, PR-317, PR-318, PR-319, PR-320]
+  pr_order: [PR-312, PR-313, PR-308, PR-309, PR-310, PR-311, PR-317, PR-318, PR-319, PR-320, PR-321]
   prs:
     PR-312:
       lifecycle: FAILED
@@ -751,28 +752,43 @@ stacked_pr_execution:
       base_sha: f549f8f95937ea395b26e9f5361bd1fc04ece893
       predecessor_pr: PR-318
       predecessor_sealed_sha: f549f8f95937ea395b26e9f5361bd1fc04ece893
-      sealed_head: 44016e4af2f41cf566be653d448dad8b434da38e
+      sealed_head: 7db710ae588fcb9c157d17d1478261c03ffe24e5
       pushed_ref: refs/heads/changeset/pr319-jwst-2mrs-neural-field-20260825
       pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/409
       production_hash: null
-      dependency_hashes: {candidate_tree: 828532cadb047ea9b637de3249353458233ef229}
+      dependency_hashes: {candidate_tree: cfddf48cce2d391efba3a84bcec0597ce4cecec4}
       gate_dispositions: {eligibility: PASS, focused_tests: PASS,
-        final_review: PENDING, observed_execution: false}
-      assurance_budget: {maximum: 8, consumed: 1}
+        final_review: PASS, observed_execution: false}
+      assurance_budget: {maximum: 8, consumed: 2}
     PR-320:
       lifecycle: IMPLEMENTED
       lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
-      base_sha: 44016e4af2f41cf566be653d448dad8b434da38e
+      base_sha: 7db710ae588fcb9c157d17d1478261c03ffe24e5
       predecessor_pr: PR-319
-      predecessor_sealed_sha: 44016e4af2f41cf566be653d448dad8b434da38e
-      sealed_head: null
-      pushed_ref: null
-      pr_url: null
+      predecessor_sealed_sha: 7db710ae588fcb9c157d17d1478261c03ffe24e5
+      sealed_head: a968e11461ed28c8d5cc1244f0122edc704579c4
+      pushed_ref: refs/heads/changeset/pr320-hsc-kids-cross-covariance-20260825
+      pr_url: https://github.com/cosmosapjw-quantum/htt_base/pull/410
       production_hash: null
-      dependency_hashes: {}
+      dependency_hashes: {candidate_tree: 3e1f1cf27683d122618de6b8296dbc1ca4f6f27f}
       gate_dispositions: {eligibility: PASS, red_tests: PASS,
-        focused_tests: PASS, final_review: PENDING, observed_execution: false}
-      assurance_budget: {maximum: 8, consumed: 1}
+        focused_tests: PASS, final_review: PASS, observed_execution: false}
+      assurance_budget: {maximum: 8, consumed: 2}
+    PR-321:
+      lifecycle: IMPLEMENTED
+      lifecycle_history: [PLANNED, ACTIVE, IMPLEMENTED]
+      base_sha: a968e11461ed28c8d5cc1244f0122edc704579c4
+      predecessor_pr: PR-320
+      predecessor_sealed_sha: a968e11461ed28c8d5cc1244f0122edc704579c4
+      sealed_head: 67087eefee876b25a99b021e0d0e8f0831226646
+      pushed_ref: refs/heads/changeset/pr321-hsc-s19a-sacc-fast-analysis-20260825
+      pr_url: null
+      production_hash: dc29fe3aaa17dc223c243c4abc142578d2ac66348718a15a967dda6f04f1e4ac
+      dependency_hashes: {candidate_tree: 8f122f174d7daf77021f9b88f5076e832c945d3d}
+      gate_dispositions: {eligibility: PASS, focused_tests: PASS,
+        final_review: PASS, observed_execution: false,
+        data_readiness: READY_FOR_WINDOW_CONVOLVED_REFERENCE}
+      assurance_budget: {maximum: 8, consumed: 4}
 execution_lane:
   PR-167: defensible
   PR-168: defensible
@@ -924,6 +940,7 @@ execution_lane:
   PR-318: defensible
   PR-319: defensible
   PR-320: defensible
+  PR-321: defensible
 execution_resolutions:
   PR-318:
     resolution: COMPLETED_SUCCESS
