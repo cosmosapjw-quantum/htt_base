@@ -1,0 +1,24 @@
+{
+  "command": "wolframscript -file wolfram/mes_methodology_recovery_proofs.wls",
+  "exit_code": 0,
+  "observed_at": "2026-08-26T01:09:51Z",
+  "stdout_payload": {
+    "schema": "htt.mes_methodology_recovery.wolfram.v1",
+    "wolfram_version": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+    "all_pass": true,
+    "checks": {
+      "scalar_to_vector_no_go": true,
+      "scalar_to_stf2_no_go": true,
+      "directional_dipole_recovery": true,
+      "directional_stf2_recovery": true,
+      "eigenframe_slice_transverse_simple_spectrum": true,
+      "local_global_fisher_factorization": true,
+      "invertible_anchor_fisher_congruence": true,
+      "finite_rank_formula_n1_100": true,
+      "finite_rank_ties_conservative_n1_100": true,
+      "zero_mean_antipodal_construction": true,
+      "second_moment_antipodal_construction": true
+    },
+    "first_nonzero_rank_rejection_alpha_0p05": [19, 0.05]
+  }
+}

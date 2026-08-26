@@ -1,0 +1,216 @@
+{
+  "schema_version": 2,
+  "contract_id": "CAS-PR323-MES-METHODOLOGY-CORE-001",
+  "contract_sha256": "910fd4e002e4c5af1be441253e236b4ffa16f6a71815cf6618417b6b5d5b850c",
+  "aggregate_status": "CAS_4AXIS_PASS",
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "axis_statuses": {
+    "wolfram_xact": "PASS",
+    "sympy": "PASS",
+    "sage_singular": "PASS",
+    "lean": "PASS"
+  },
+  "missing_axes": [],
+  "exceptions_applied": [],
+  "errors": [],
+  "adjudicated_at": "2026-08-26T01:34:09+00:00",
+  "note": "CAS_4AXIS_PASS requires all 4 contract-required axes to satisfy the risk-scaled contract under one contract hash; majority vote is structurally forbidden. Runner observation establishes only the CAS evidence component; it does not establish scientific validity, novelty, or overall claim readiness. Local observation is not a security attestation.",
+  "verification_state": "RUNNER_OBSERVED_EXECUTION",
+  "evidence_origin": "runner_observed_local_subprocess",
+  "execution_evidence": {
+    "wolfram_xact": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "wolfram_xact",
+      "argv": [
+        "wolframscript",
+        "-file",
+        "docs/generated/mes_methodology_recovery/cas/axes/wolfram_xact/axis_program.wls"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "wolframscript -code <version+xAct probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "---------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nXACT_LOAD_OK\n"
+      },
+      "started_at": "2026-08-26T01:33:27+00:00",
+      "completed_at": "2026-08-26T01:33:45+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\":{\"scalar_to_vector_no_go\":true,\"scalar_to_stf2_no_go\":true,\"directional_dipole_recovery\":true,\"directional_stf2_recovery\":true,\"eigenframe_slice_transverse_simple_spectrum\":true,\"local_global_fisher_factorization\":true,\"invertible_anchor_fisher_congruence\":true,\"finite_rank_formula_n1_100\":true,\"finite_rank_ties_conservative_n1_100\":true,\"zero_mean_antipodal_construction\":true,\"second_moment_antipodal_construction\":true},\"domain_assumption_diff\":[],\"counterexample\":null,\"tool_versions\":{\"wolfram\":\"15.0.0 for Linux x86 (64-bit) (May 26, 2026)\",\"xact_loaded\":true}}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "scalar_to_vector_no_go": true,
+          "scalar_to_stf2_no_go": true,
+          "directional_dipole_recovery": true,
+          "directional_stf2_recovery": true,
+          "eigenframe_slice_transverse_simple_spectrum": true,
+          "local_global_fisher_factorization": true,
+          "invertible_anchor_fisher_congruence": true,
+          "finite_rank_formula_n1_100": true,
+          "finite_rank_ties_conservative_n1_100": true,
+          "zero_mean_antipodal_construction": true,
+          "second_moment_antipodal_construction": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    },
+    "sympy": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "sympy",
+      "argv": [
+        "python",
+        "docs/generated/mes_methodology_recovery/cas/axes/sympy/axis_program.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "/usr/bin/python3 -c <sympy exact factor probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "1.14.0\n"
+      },
+      "started_at": "2026-08-26T01:33:46+00:00",
+      "completed_at": "2026-08-26T01:33:47+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "*2*r**2*(k11*k22 - k12**2)**3\"},\"scalar_to_stf2_no_go\":{\"coefficient_matrix_shape\":[27,5],\"method\":\"commutator equations [J_i,T]=0 in five independent STF2 coordinates\",\"nullity\":0,\"pass\":true,\"rank\":5,\"trace\":\"0\"},\"scalar_to_vector_no_go\":{\"coefficient_matrix_shape\":[9,3],\"method\":\"rank and nullspace of the vertically stacked infinitesimal SO(3) generators\",\"nullity\":0,\"pass\":true,\"rank\":3},\"second_moment_antipodal_construction\":{\"expected\":[[\"lambda1\",\"0\",\"0\"],[\"0\",\"lambda2\",\"0\"],[\"0\",\"0\",\"lambda3\"]],\"method\":\"exact dyadic sum of the six antipodal support points\",\"pass\":true,\"second_moment\":[[\"lambda1\",\"0\",\"0\"],[\"0\",\"lambda2\",\"0\"],[\"0\",\"0\",\"lambda3\"]],\"trace\":\"lambda1 + lambda2 + lambda3\"},\"zero_mean_antipodal_construction\":{\"mean\":[\"0\",\"0\",\"0\"],\"method\":\"paired support at plus and minus each Cartesian spectral axis\",\"pass\":true,\"probability_conditions\":\"lambda_i >= 0 and lambda1+lambda2+lambda3=1\"}},\"engine\":\"SymPy\",\"engine_version\":\"1.14.0\",\"input_bindings\":{\"contract\":{\"matches_expected\":true,\"path\":\"docs/generated/mes_methodology_recovery/cas/CAS_CONTRACT.json\",\"sha256\":\"910fd4e002e4c5af1be441253e236b4ffa16f6a71815cf6618417b6b5d5b850c\"},\"sources\":[{\"matches_expected\":true,\"path\":\"docs/codex_handoff/mes_methodology_recovery/RESEARCH_DECISION_LEDGER.yaml\",\"sha256\":\"e4d98b5907eb09a13c04658aeee3db23a3d0995a8378e5d4c3e627141ccc0b62\"},{\"matches_expected\":true,\"path\":\"docs/codex_handoff/mes_methodology_recovery/ADVERSARIAL_SCIENCE_AUDIT.md\",\"sha256\":\"6ac385bca9dfebbcbf32a746ef6b7c38022313053b4f0df2ab0f7c0c8f17324a\"},{\"matches_expected\":true,\"path\":\"docs/codex_handoff/mes_methodology_recovery/LOCAL_FORMALIZATION_TASKS.yaml\",\"sha256\":\"3868acaf3e065b484b3943ae69886916f322ae8184f83214c8454a1c7e15fe52\"},{\"matches_expected\":true,\"path\":\"wolfram/mes_methodology_recovery_proofs.wls\",\"sha256\":\"738666f3993471dd461b0f07e35783ac3b0604ee10dbe00ba0e2e4477d4b4930\"}]},\"numeric_quadrature_used\":false,\"python_version\":\"3.12.3\",\"schema\":\"htt.agent_harness.sympy_engine_transcript.v1\"}}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "directional_dipole_recovery": true,
+          "directional_stf2_recovery": true,
+          "eigenframe_slice_transverse_simple_spectrum": true,
+          "finite_rank_formula_n1_100": true,
+          "finite_rank_ties_conservative_n1_100": true,
+          "invertible_anchor_fisher_congruence": true,
+          "local_global_fisher_factorization": true,
+          "scalar_to_stf2_no_go": true,
+          "scalar_to_vector_no_go": true,
+          "second_moment_antipodal_construction": true,
+          "zero_mean_antipodal_construction": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    },
+    "sage_singular": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "sage_singular",
+      "argv": [
+        "sage",
+        "docs/generated/mes_methodology_recovery/cas/axes/sage_singular/axis_program.sage"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "sage -c <exact factor + singular version probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n"
+      },
+      "started_at": "2026-08-26T01:33:54+00:00",
+      "completed_at": "2026-08-26T01:34:02+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "\":\"5\",\"invertibility_localization\":\"det(D) != 0 via exact adjugate identities\",\"matrix_residual\":[\"0\",\"0\",\"0\",\"0\"],\"scaled_tensor\":[\"1/5\",\"0\",\"0\",\"0\",\"-1/5\",\"0\",\"0\",\"0\",\"0\"],\"scaled_vector\":[\"1/5\",\"2/5\",\"3/5\"]},\"local_global_fisher_factorization\":{\"determinant\":\"dirr^2 * dirq^2 * dirp^2 * (-k12^2 + k11*k22)^3\",\"independent_depth_rank\":6,\"independent_fisher_determinant\":\"900\",\"one_shell_depth_determinant\":\"0\",\"one_shell_depth_rank\":1,\"one_shell_fisher_rank\":3,\"registered_form\":\"det(K)^3 det(S)^2\"},\"scalar_to_stf2_no_go\":{\"singular_groebner_basis\":[\"ta\",\"tb\",\"tc\",\"td\",\"te\",\"tf\"],\"solution_ideal\":\"origin ideal in the six symmetric tensor coordinates\"},\"scalar_to_vector_no_go\":{\"singular_groebner_basis\":[\"vx\",\"vy\",\"vz\"],\"solution_ideal\":\"origin ideal (vx, vy, vz)\"},\"second_moment_antipodal_construction\":{\"probability_conditions\":\"lambda_i >= 0 and sum lambda_i = 1\",\"second_moment\":[\"lambda1\",\"0\",\"0\",\"0\",\"lambda2\",\"0\",\"0\",\"0\",\"lambda3\"]},\"zero_mean_antipodal_construction\":{\"mean\":[\"0\",\"0\",\"0\"]}},\"rings\":{\"anchor_congruence\":\"Multivariate Polynomial Ring in r11, r12, r21, r22, c11, c12, c22, d11, d12, d21, d22 over Rational Field\",\"antipodal_construction\":\"Multivariate Polynomial Ring in lambda1, lambda2, lambda3 over Rational Field\",\"directional_moments\":\"Multivariate Polynomial Ring in v1, v2, v3, s11, s22, s12, s13, s23 over Rational Field\",\"eigenframe_slice\":\"Multivariate Polynomial Ring in ell1, ell2, ell3, a12, a13, a23 over Rational Field\",\"fisher_factorization\":\"Multivariate Polynomial Ring in k11, k12, k22, dirp, dirq, dirr over Rational Field\",\"stf2_fixed_subspace\":\"Multivariate Polynomial Ring in ta, tb, tc, td, te, tf over Rational Field\",\"vector_fixed_subspace\":\"Multivariate Polynomial Ring in vx, vy, vz over Rational Field\"},\"toolchain\":{\"host_singular_command\":\"Singular --version\",\"host_singular_exit\":0,\"host_singular_first_line\":\"Singular for x86_64-Linux version 4.4.1 (44100, 64 bit) Jan 2025\",\"sage\":\"10.9\",\"sage_singular_backend_version_code\":\"44100\"}}}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "directional_dipole_recovery": true,
+          "directional_stf2_recovery": true,
+          "eigenframe_slice_transverse_simple_spectrum": true,
+          "finite_rank_formula_n1_100": true,
+          "finite_rank_ties_conservative_n1_100": true,
+          "invertible_anchor_fisher_congruence": true,
+          "local_global_fisher_factorization": true,
+          "scalar_to_stf2_no_go": true,
+          "scalar_to_vector_no_go": true,
+          "second_moment_antipodal_construction": true,
+          "zero_mean_antipodal_construction": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    },
+    "lean": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "lean",
+      "argv": [
+        "bash",
+        "docs/generated/mes_methodology_recovery/cas/axes/lean/axis_program"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 3600,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 lean --version",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+        "pinned_toolchain": "leanprover/lean4:v4.31.0"
+      },
+      "started_at": "2026-08-26T01:34:02+00:00",
+      "completed_at": "2026-08-26T01:34:09+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\":{\"scalar_to_vector_no_go\":true,\"scalar_to_stf2_no_go\":true,\"directional_dipole_recovery\":true,\"directional_stf2_recovery\":true,\"eigenframe_slice_transverse_simple_spectrum\":true,\"local_global_fisher_factorization\":true,\"invertible_anchor_fisher_congruence\":true,\"finite_rank_formula_n1_100\":true,\"finite_rank_ties_conservative_n1_100\":true,\"zero_mean_antipodal_construction\":true,\"second_moment_antipodal_construction\":true},\"domain_assumption_diff\":[],\"counterexample\":null}\n",
+      "stderr_tail": "tic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\n/home/cosmosapjw/worktrees/htt-mes-integration-20260826/docs/generated/mes_methodology_recovery/cas/axes/lean/PR323MESMethodologyCore.lean:156:4: warning: 'ring' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\n/home/cosmosapjw/worktrees/htt-mes-integration-20260826/docs/generated/mes_methodology_recovery/cas/axes/lean/PR323MESMethodologyCore.lean:295:4: warning: try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`\n/home/cosmosapjw/worktrees/htt-mes-integration-20260826/docs/generated/mes_methodology_recovery/cas/axes/lean/PR323MESMethodologyCore.lean:302:13: warning: Variable name `hm₁` is not explicitly referenced.\n\nThe binding can be removed (if unused) or named `_` (if used implicitly).\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n/home/cosmosapjw/worktrees/htt-mes-integration-20260826/docs/generated/mes_methodology_recovery/cas/axes/lean/PR323MESMethodologyCore.lean:302:27: warning: Variable name `hm₁₀₀` is not explicitly referenced.\n\nThe binding can be removed (if unused) or named `_` (if used implicitly).\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n/home/cosmosapjw/worktrees/htt-mes-integration-20260826/docs/generated/mes_methodology_recovery/cas/axes/lean/PR323MESMethodologyCore.lean:337:4: warning: this tactic is never executed\n\nNote: This linter can be disabled with `set_option linter.unreachableTactic false`\n/home/cosmosapjw/worktrees/htt-mes-integration-20260826/docs/generated/mes_methodology_recovery/cas/axes/lean/PR323MESMethodologyCore.lean:337:4: warning: 'ring' tactic does nothing\n\nNote: This linter can be disabled with `set_option linter.unusedTactic false`\n'PR323MESMethodologyCore.registeredProofBundle' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "scalar_to_vector_no_go": true,
+          "scalar_to_stf2_no_go": true,
+          "directional_dipole_recovery": true,
+          "directional_stf2_recovery": true,
+          "eigenframe_slice_transverse_simple_spectrum": true,
+          "local_global_fisher_factorization": true,
+          "invertible_anchor_fisher_congruence": true,
+          "finite_rank_formula_n1_100": true,
+          "finite_rank_ties_conservative_n1_100": true,
+          "zero_mean_antipodal_construction": true,
+          "second_moment_antipodal_construction": true
+        },
+        "domain_assumption_diff": [],
+        "counterexample": null
+      }
+    }
+  },
+  "claim_promotion_cas_eligible": true,
+  "claim_promotion_cas_requirement": "SATISFIED"
+}
