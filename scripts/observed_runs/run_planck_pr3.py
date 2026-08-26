@@ -2154,6 +2154,106 @@ def run_pr315_joint_cutsky_attended(
         raise
 
 
+def export_pr315_portable_evidence(
+    *, source_output_dir: Path, portable_output_dir: Path
+) -> dict[str, object]:
+    """Export the map-free PR-315 package and self-contained result card."""
+
+    terminal_path = source_output_dir / "terminal.json"
+    result_path = source_output_dir / "result.json"
+    comparison_path = source_output_dir / "pr314_pr315_comparison.json"
+    terminal = _strict_json(terminal_path, label="PR-315 terminal receipt")
+    source_result = _strict_json(result_path, label="PR-315 source result")
+    comparison = _strict_json(comparison_path, label="PR-315 comparison")
+    if (
+        terminal.get("state") != "SUCCEEDED"
+        or terminal.get("result_sha256") != _sha256_file(result_path)
+        or source_result.get("format")
+        != "PLANCK_PR3_SMICA_JOINT_CUTSKY_RESULT_V1"
+        or source_result.get("MES_result") is not False
+        or source_result.get("generic_control_preserved") is not True
+        or source_result.get("comparison_sha256")
+        != _sha256_file(comparison_path)
+        or comparison.get("benchmark_result_sha256")
+        != PR314_FROZEN_RESULT_SHA256
+        or comparison.get("benchmark_family_rank") != "133/301"
+        or comparison.get("generic_control_preserved") is not True
+        or comparison.get("MES_result") is not False
+    ):
+        raise PlanckWorkerError("PR-315 source execution receipt drifted")
+    source_package = source_output_dir / "pr315_joint_cutsky_features.npz"
+    source_metadata = source_output_dir / "pr315_joint_cutsky_features.json"
+    source_replay = replay_pr315_feature_package(
+        package_path=source_package, metadata_path=source_metadata
+    )
+    try:
+        with np.load(source_package, allow_pickle=False) as bundle:
+            observed = np.asarray(bundle["observed_features"], dtype=float)
+            nulls = np.asarray(bundle["null_features"], dtype=float)
+            row_ids = tuple(str(value) for value in bundle["row_ids"].tolist())
+    except (KeyError, OSError, ValueError) as exc:
+        raise PlanckWorkerError("PR-315 source feature package is malformed") from exc
+    operator_identity = source_result.get("operator_identity")
+    raw_manifest_sha256 = source_result.get("raw_input_manifest_sha256")
+    if not isinstance(operator_identity, Mapping) or not isinstance(
+        raw_manifest_sha256, str
+    ):
+        raise PlanckWorkerError("PR-315 source provenance is incomplete")
+    target_package = (
+        portable_output_dir / "pr315_planck_smica_feature_replay.npz"
+    )
+    target_metadata = (
+        portable_output_dir / "pr315_planck_smica_feature_replay.json"
+    )
+    package_receipt = write_pr315_feature_package(
+        package_path=target_package,
+        metadata_path=target_metadata,
+        observed_features=observed,
+        null_features=nulls,
+        row_ids=row_ids,
+        operator_identity=operator_identity,
+        raw_input_manifest_sha256=raw_manifest_sha256,
+    )
+    target_replay = replay_pr315_feature_package(
+        package_path=target_package, metadata_path=target_metadata
+    )
+    if (
+        target_replay["scientific_projection_sha256"]
+        != source_replay["scientific_projection_sha256"]
+    ):
+        raise PlanckWorkerError("portable PR-315 export changed scientific content")
+    portable_result = dict(source_result)
+    portable_result["feature_package"] = package_receipt
+    portable_result["portable_replay_scientific_projection_sha256"] = (
+        target_replay["scientific_projection_sha256"]
+    )
+    portable_result["old_new_comparison"] = comparison
+    portable_result["comparison_filename"] = (
+        "pr315_planck_smica_result.json#old_new_comparison"
+    )
+    portable_result["source_execution_comparison_sha256"] = portable_result.pop(
+        "comparison_sha256"
+    )
+    portable_result["source_execution_result_sha256"] = _sha256_file(result_path)
+    portable_result["source_execution_terminal_sha256"] = _sha256_file(
+        terminal_path
+    )
+    portable_result["portable_result_generated_from_maps"] = False
+    portable_result_path = portable_output_dir / "pr315_planck_smica_result.json"
+    _write_json(portable_result_path, portable_result)
+    return {
+        "state": "PORTABLE_REPLAY_MATCH",
+        "feature_package_sha256": package_receipt["package_sha256"],
+        "feature_metadata_sha256": package_receipt["metadata_sha256"],
+        "scientific_projection_sha256": target_replay[
+            "scientific_projection_sha256"
+        ],
+        "portable_result_sha256": _sha256_file(portable_result_path),
+        "source_execution_result_sha256": _sha256_file(result_path),
+        "raw_maps_reopened": False,
+    }
+
+
 def _load_window(path: Path, *, label: str) -> dict[str, np.ndarray]:
     try:
         with np.load(path, allow_pickle=False) as bundle:
@@ -2464,6 +2564,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     mode.add_argument("--replay-smica-existing", action="store_true")
     mode.add_argument("--print-pr315-joint-acceptance", action="store_true")
     mode.add_argument("--run-pr315-joint-cutsky", action="store_true")
+    mode.add_argument("--export-pr315-portable", action="store_true")
     parser.add_argument("--rows", choices=ROW_LABELS)
     parser.add_argument("--mode", choices=PROFILE_MODES, default="serial")
     parser.add_argument("--workers", type=int, default=1)
@@ -2480,6 +2581,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--raw-manifest", type=Path)
     parser.add_argument("--compact-observed", type=Path)
     parser.add_argument("--benchmark-result", type=Path)
+    parser.add_argument("--portable-output-dir", type=Path)
     args = parser.parse_args(argv)
     try:
         if args.synthetic_profile:
@@ -2595,7 +2697,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 candidate_commit=args.candidate_commit,
                 candidate_tree=args.candidate_tree,
             )
-        else:
+        elif args.run_pr315_joint_cutsky:
             if any(
                 value is None
                 for value in (
@@ -2622,6 +2724,15 @@ def main(argv: Sequence[str] | None = None) -> int:
                 candidate_commit=args.candidate_commit,
                 candidate_tree=args.candidate_tree,
                 confirmation=args.confirm,
+            )
+        else:
+            if args.source_output_dir is None or args.portable_output_dir is None:
+                raise PlanckWorkerError(
+                    "PR-315 export requires source-output-dir and portable-output-dir"
+                )
+            payload = export_pr315_portable_evidence(
+                source_output_dir=args.source_output_dir,
+                portable_output_dir=args.portable_output_dir,
             )
         if args.output is None:
             print(json.dumps(payload, sort_keys=True, allow_nan=False))
