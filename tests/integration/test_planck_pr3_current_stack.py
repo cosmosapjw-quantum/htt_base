@@ -155,3 +155,31 @@ def test_frozen_pr314_133_of_301_control_is_preserved_in_comparison() -> None:
     assert comparison["generic_control_preserved"] is True
     assert comparison["MES_result"] is False
     assert len(comparison["feature_rows"]) == 12
+
+
+def test_committed_pr315_feature_replay_is_map_free_and_exact() -> None:
+    worker = _worker()
+    generated = Path("docs/generated")
+    package = generated / "pr315_planck_smica_feature_replay.npz"
+    metadata = generated / "pr315_planck_smica_feature_replay.json"
+    result_path = generated / "pr315_planck_smica_result.json"
+    replay = worker.replay_pr315_feature_package(
+        package_path=package, metadata_path=metadata
+    )
+    result = json.loads(result_path.read_text(encoding="ascii"))
+
+    assert replay["raw_maps_reopened"] is False
+    assert replay["scientific_projection_sha256"] == (
+        result["portable_replay_scientific_projection_sha256"]
+    )
+    assert replay["feature_package_sha256"] == (
+        result["feature_package"]["package_sha256"]
+    )
+    assert result["source_execution_result_sha256"] == (
+        "sha256:e80865e8e48ff49fe72d8db40952cc1598768081526eeac30b63e6308f03a15e"
+    )
+    assert result["PR314_benchmark_family_rank"] == "133/301"
+    assert result["PR315_joint_cutsky_family_rank"] == "133/301"
+    assert result["MES_result"] is False
+    assert result["generic_control_preserved"] is True
+    assert len(result["old_new_comparison"]["feature_rows"]) == 12

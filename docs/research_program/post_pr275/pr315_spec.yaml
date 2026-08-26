@@ -1,0 +1,72 @@
+schema: htt.planck.pr315_spec.v1
+identity:
+  canonical_work_unit: PR-324
+  planning_alias: MSI-WU-002
+  recovered_methodology_id: PR-315
+  owner: OBSSTAT
+  implementation_base: f0932a13d15663418dd257230b85a03b2b686afd
+  observed_execution_commit: 8cca592d4c9411517e52fc10ed8f5a0f16d59f9a
+  observed_execution_tree: 0716e44d7347cd32119b22e81fb5d5817b831dc0
+scope:
+  capability: PLANCK_SMICA_JOINT_CUTSKY_LOWELL_ROBUSTNESS_AND_PORTABLE_FEATURE_REPLAY
+  pipeline: SMICA_ONLY
+  null_rows: 300
+  null_semantics: FFP10_CMB_PLUS_NOISE_PAIRED_BY_ID
+  ordered_row_ids_sha256: sha256:f40e60de955bb241543e81215636485af9bb3429ec1de983093c476e6592671f
+  claim_tier: diagnostic_only
+  result_role: PREDECLARED_ROBUSTNESS_BRANCH
+  mes_result: false
+  generic_control_role: FROZEN_PR314_BENCHMARK_CONTROL_NOT_MES
+estimator:
+  estimator_id: joint_weighted_real_harmonic_l0_l5_retain_l2_l5:v1
+  fit:
+    weight: W
+    jointly_profiled_real_harmonics: ell_0_through_5
+    basis_dimension: 36
+    retained_real_harmonics: ell_2_through_5
+    retained_dimension: 32
+    implementation: chunked_normal_equations_without_full_pixel_design_materialization
+  transfer_order: JOINT_MASKED_FIT_THEN_BEAM_PIXEL_COMMONIZATION
+  rank_relative_threshold: 1.0e-10
+  condition_ceiling: 1.0e8
+  observed_operator:
+    mask_sha256: sha256:34390a5c2d9c1462af87d51a9a3e88971781b23054d923563723531b7f30ea94
+    normal_matrix_sha256: sha256:dcb2da89c1a7b4c55d98c86797bee815c65258101f52dca24b69a8fe6435f349
+    operator_sha256: sha256:a4713d44b6057dcd241a79391abb7f4960f7aa39b20eac51cd979627352b8061
+    condition_number: 6.207503806461874
+    singular_floor: 0.15998865113244762
+branch_and_tail_freeze:
+  selection_rule: NO_BRANCH_SELECTED_FROM_OBSERVED_OUTCOME
+  benchmark_result_sha256: sha256:898d08fc7c70205fbb8c7580fbaef1074357a8b3255ac77afd8273b92511da97
+  feature_order: common.COMPONENT_FEATURE_IDS
+  tails: TWO_SIDED_FOR_ALL_12_FEATURES
+input_provenance:
+  release_identity: Planck PR3 R3.00 plus FFP10 v3
+  raw_input_manifest_sha256: sha256:a1007a2fc6c8e680b397d86bcf383a7f1f4e608891fe3a980e64588512a86394
+  raw_input_manifest_file_sha256: sha256:61fc9f3b0f46b0e98ccdc094f592c4219a461cd4656917fca957ea769dc9bfa3
+  observed_smica_sha256: sha256:60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac
+  temperature_mask_sha256: sha256:23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4
+  compact_observed_sha256: sha256:681fae58f57c61d814010db73ba74e3dcad169ceddb9f6ac60454c8499108823
+  compact_primary_null_sha256: sha256:b6852ca155bd88a2e1a20ba78670cddc61c01c6a40e1e87375a2936514a031ca
+  execution_representation: PR314_EXACT_REDUCED_SMICA_MAPS_BOUND_TO_RAW_MANIFEST
+portable_outputs:
+  result: docs/generated/pr315_planck_smica_result.json
+  feature_package: docs/generated/pr315_planck_smica_feature_replay.npz
+  feature_metadata: docs/generated/pr315_planck_smica_feature_replay.json
+  feature_package_sha256: sha256:b262425eb4f3a879513c02644bcbdd3ab313e487d101f6a29cb85284c30f845b
+  feature_metadata_sha256: sha256:fba7ff60c3beaa762ba0e46247c191af59b226e1b4d2464b16f2a8174d1e454a
+  scientific_projection_sha256: sha256:8b0aadf1897703f32c0904ad6cc6f5db41766c896382f21e709a6cd212d81750
+claim_boundary:
+  allowed:
+  - frozen PR-314 SMICA benchmark finite rank
+  - separately named joint cut-sky SMICA finite rank
+  - exact operator-order robustness comparison
+  - exact 300-pair empirical calibration statement
+  forbidden:
+  - MES result
+  - unconditional p-value
+  - Commander robustness
+  - joint Planck result
+  - local-versus-global source attribution
+  - native solver result
+  - Bianchi family identification

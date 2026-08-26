@@ -100,6 +100,12 @@ jobs:
             --synthetic-profile \
             --rows full \
             --output "${RUNNER_TEMP}/pr310-hsc-kids-synthetic.json"
+      - name: Run PR-324 joint cut-sky and portable replay contracts
+        run: |
+          env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
+            tests/integration/test_planck_pr3_admission_preparation.py \
+            tests/integration/test_planck_pr3_current_stack.py \
+            tests/integration/test_planck_pr3_operator.py
       - name: Run PR-311 DESI successor-formalism contracts
         run: |
           env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
