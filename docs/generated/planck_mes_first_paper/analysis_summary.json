@@ -27,7 +27,8 @@
       "allowed_use": [
         "conditional finite-ensemble rank reporting",
         "paired operator-sensitivity description",
-        "map-free draft reproduction"
+        "map-free draft reproduction",
+        "squared normalized MES ceiling-coordinate diagnostics"
       ],
       "artifact_mode": "DRAFT_NONAUTHORITATIVE",
       "category": "DIAGNOSTIC_DATA",
@@ -47,7 +48,8 @@
       "allowed_use": [
         "conditional finite-ensemble rank reporting",
         "paired operator-sensitivity description",
-        "map-free draft reproduction"
+        "map-free draft reproduction",
+        "squared normalized MES ceiling-coordinate diagnostics"
       ],
       "artifact_mode": "DRAFT_NONAUTHORITATIVE",
       "category": "DIAGNOSTIC_DATA",
@@ -67,7 +69,8 @@
       "allowed_use": [
         "conditional finite-ensemble rank reporting",
         "paired operator-sensitivity description",
-        "map-free draft reproduction"
+        "map-free draft reproduction",
+        "squared normalized MES ceiling-coordinate diagnostics"
       ],
       "artifact_mode": "DRAFT_NONAUTHORITATIVE",
       "category": "DIAGNOSTIC_DATA",
@@ -87,7 +90,8 @@
       "allowed_use": [
         "conditional finite-ensemble rank reporting",
         "paired operator-sensitivity description",
-        "map-free draft reproduction"
+        "map-free draft reproduction",
+        "squared normalized MES ceiling-coordinate diagnostics"
       ],
       "artifact_mode": "DRAFT_NONAUTHORITATIVE",
       "category": "DIAGNOSTIC_DATA",
@@ -107,7 +111,8 @@
       "allowed_use": [
         "conditional finite-ensemble rank reporting",
         "paired operator-sensitivity description",
-        "map-free draft reproduction"
+        "map-free draft reproduction",
+        "squared normalized MES ceiling-coordinate diagnostics"
       ],
       "artifact_mode": "DRAFT_NONAUTHORITATIVE",
       "category": "DIAGNOSTIC",
@@ -129,7 +134,8 @@
       "allowed_use": [
         "conditional finite-ensemble rank reporting",
         "paired operator-sensitivity description",
-        "map-free draft reproduction"
+        "map-free draft reproduction",
+        "squared normalized MES ceiling-coordinate diagnostics"
       ],
       "artifact_mode": "DRAFT_NONAUTHORITATIVE",
       "category": "DIAGNOSTIC",
@@ -151,7 +157,8 @@
       "allowed_use": [
         "conditional finite-ensemble rank reporting",
         "paired operator-sensitivity description",
-        "map-free draft reproduction"
+        "map-free draft reproduction",
+        "squared normalized MES ceiling-coordinate diagnostics"
       ],
       "artifact_mode": "DRAFT_NONAUTHORITATIVE",
       "category": "DIAGNOSTIC",
@@ -173,7 +180,8 @@
       "allowed_use": [
         "conditional finite-ensemble rank reporting",
         "paired operator-sensitivity description",
-        "map-free draft reproduction"
+        "map-free draft reproduction",
+        "squared normalized MES ceiling-coordinate diagnostics"
       ],
       "artifact_mode": "DRAFT_NONAUTHORITATIVE",
       "category": "DIAGNOSTIC",
@@ -193,7 +201,7 @@
     }
   },
   "claim_boundaries": {
-    "allowed_interpretation": "conditional finite-null result with a morphology-driven minimum",
+    "allowed_interpretation": "conditional finite-null result with a morphology-sourced observation-row minimum and coordinate-family-dependent rank",
     "covariance_role": "DIAGNOSTIC_ONLY_NOT_USED_BY_RANK_SCAN_OR_LIKELIHOOD",
     "directional_support": "BLOCKED_DIRECTIONAL_SUPPORT",
     "family_identification": "BLOCKED_PRE_NATIVE_ATLAS",
@@ -228,7 +236,7 @@
           "feature_id": "mes_sigma_anchor",
           "index": 0,
           "is_observed_minimum": true,
-          "label": "$\\Sigma_{2,\\max}$",
+          "label": "$\\Sigma^2_{\\max}$",
           "local_rank": {
             "decimal": 0.24584717607973422,
             "denominator": 301,
@@ -237,14 +245,14 @@
             "reduced_fraction": "74/301"
           },
           "observed_value": 2.400087022175844e-10,
-          "role": "ROWWISE_REALIZATION_CONDITIONAL_MES_AMPLITUDE_ANCHOR",
+          "role": "ROWWISE_REALIZATION_CONDITIONAL_SQUARED_NORMALIZED_MES_CEILING",
           "unit": "dimensionless"
         },
         {
           "feature_id": "mes_omega_anchor",
           "index": 1,
           "is_observed_minimum": true,
-          "label": "$W_{2,\\max}$",
+          "label": "$W^2_{\\max}$",
           "local_rank": {
             "decimal": 0.24584717607973422,
             "denominator": 301,
@@ -253,7 +261,7 @@
             "reduced_fraction": "74/301"
           },
           "observed_value": 3.0061887930898035e-13,
-          "role": "ROWWISE_REALIZATION_CONDITIONAL_MES_AMPLITUDE_ANCHOR",
+          "role": "ROWWISE_REALIZATION_CONDITIONAL_SQUARED_NORMALIZED_MES_CEILING",
           "unit": "dimensionless"
         }
       ],
@@ -1718,7 +1726,7 @@
           "feature_id": "mes_sigma_anchor",
           "index": 0,
           "is_observed_minimum": false,
-          "label": "$\\Sigma_{2,\\max}$",
+          "label": "$\\Sigma^2_{\\max}$",
           "local_rank": {
             "decimal": 0.24584717607973422,
             "denominator": 301,
@@ -1727,14 +1735,14 @@
             "reduced_fraction": "74/301"
           },
           "observed_value": 2.400087022175844e-10,
-          "role": "ROWWISE_REALIZATION_CONDITIONAL_MES_AMPLITUDE_ANCHOR",
+          "role": "ROWWISE_REALIZATION_CONDITIONAL_SQUARED_NORMALIZED_MES_CEILING",
           "unit": "dimensionless"
         },
         {
           "feature_id": "mes_omega_anchor",
           "index": 1,
           "is_observed_minimum": false,
-          "label": "$W_{2,\\max}$",
+          "label": "$W^2_{\\max}$",
           "local_rank": {
             "decimal": 0.24584717607973422,
             "denominator": 301,
@@ -1743,7 +1751,7 @@
             "reduced_fraction": "74/301"
           },
           "observed_value": 3.0061887930898035e-13,
-          "role": "ROWWISE_REALIZATION_CONDITIONAL_MES_AMPLITUDE_ANCHOR",
+          "role": "ROWWISE_REALIZATION_CONDITIONAL_SQUARED_NORMALIZED_MES_CEILING",
           "unit": "dimensionless"
         },
         {
@@ -1896,7 +1904,7 @@
           "reduced_fraction": "16/301"
         }
       },
-      "role": "primary typed MES-anchor plus morphology family",
+      "role": "primary typed squared MES-ceiling plus morphology family",
       "row_count": 301,
       "row_permutation_equivariant": true,
       "row_scores": [
@@ -3399,17 +3407,20 @@
   "mes_coordinate_authority": {
     "active_factory": "common.statistical_foundations.registered_geodesic_mes_anchors",
     "conditioning": "REALIZATION_CONDITIONAL_SAME_ROW",
+    "coordinate_semantics": "SQUARED_NORMALIZED_ONE_WAY_MES_CEILINGS",
     "epsilon_formula": "sqrt((2*l+1)*C_l/(4*pi))/T0",
     "independent_information_gain": false,
     "omega_formula_check": "(3/2)*((2/15)*epsilon_2)^2",
+    "omega_target_invariant": "omega_ab_omega_ab_over_6H2",
     "residual_dipole_attribution": "SAG_OBSERVER_MOTION_EPS1_ZERO",
     "row_operator": "obsstat.mes_row_anchor.build_mes_row_anchor_pool",
     "shared_data_dependence": true,
-    "sigma_formula_check": "(3/2)*(3*epsilon_2+(3/7)*epsilon_3)^2"
+    "sigma_formula_check": "(3/2)*(3*epsilon_2+(3/7)*epsilon_3)^2",
+    "sigma_target_invariant": "sigma_ab_sigma_ab_over_6H2"
   },
   "morphology_minimum_reproduced_without_anchors": true,
   "owner": "OBSSTAT",
-  "primary_interpretation": "The MES family rank is not unusually small in the frozen ensemble; the smallest coordinate rank is morphology-driven, while both anchors have rank 74/301.",
+  "primary_interpretation": "The MES family rank is not unusually small in the frozen ensemble; the observation-row minimum is morphology-driven, while both squared normalized MES ceilings have rank 74/301. The full family rank remains coordinate-family dependent.",
   "public_use": false,
   "raw_maps_reopened": false,
   "row_ids": [

@@ -71,6 +71,8 @@ FORBIDDEN_CLAIM_STRINGS = (
     "bianchi family identified",
     "native-solver evidence",
     "publication ready",
+    "MES amplitude coordinates",
+    "the result is therefore morphology-driven rather than anchor-driven",
 )
 
 GENERIC_FEATURE_IDS = (
@@ -125,7 +127,7 @@ FAMILY_SPECS = (
     FamilySpec(
         "MES_10",
         MES_FEATURE_IDS,
-        "primary typed MES-anchor plus morphology family",
+        "primary typed squared MES-ceiling plus morphology family",
     ),
     FamilySpec(
         "ANCHORS_ONLY_2",
@@ -140,6 +142,9 @@ FAMILY_SPECS = (
 )
 FAMILY_IDS = tuple(spec.family_id for spec in FAMILY_SPECS)
 
+MES_SIGMA_TEX = r"\Sigma^2_{\max}"
+MES_OMEGA_TEX = r"W^2_{\max}"
+
 FEATURE_LABELS = {
     "cl_l2": r"$C_2$",
     "cl_l3": r"$C_3$",
@@ -147,8 +152,8 @@ FEATURE_LABELS = {
     "cl_l5": r"$C_5$",
     "epsilon_2": r"$\epsilon_2$",
     "epsilon_3": r"$\epsilon_3$",
-    "mes_sigma_anchor": r"$\Sigma_{2,\max}$",
-    "mes_omega_anchor": r"$W_{2,\max}$",
+    "mes_sigma_anchor": rf"${MES_SIGMA_TEX}$",
+    "mes_omega_anchor": rf"${MES_OMEGA_TEX}$",
     "parity_even_over_odd_l2_l5": "parity",
     "power_tensor_gap_l2": r"$G_2$",
     "power_tensor_gap_l3": r"$G_3$",
@@ -204,6 +209,59 @@ REFERENCES_BIB = r"""@article{MaartensEllisStoeger1995,
   year    = {2010},
   doi     = {10.2202/1544-6115.1585},
   eprint  = {1603.05766},
+  archivePrefix = {arXiv}
+}
+
+@misc{BarberRamdas2026,
+  author  = {Rina Foygel Barber and Aaditya Ramdas},
+  title   = {Monte Carlo testing: non-asymptotic guarantees without joint exchangeability},
+  year    = {2026},
+  eprint  = {2607.23010},
+  archivePrefix = {arXiv},
+  primaryClass = {stat.ME}
+}
+
+@article{CopiHutererStarkman2004,
+  author  = {Craig J. Copi and Dragan Huterer and Glenn D. Starkman},
+  title   = {Multipole Vectors---A New Representation of the CMB Sky and Evidence for Statistical Anisotropy or Non-Gaussianity at $2\leq\ell\leq8$},
+  journal = {Physical Review D},
+  volume  = {70},
+  pages   = {043515},
+  year    = {2004},
+  doi     = {10.1103/PhysRevD.70.043515},
+  eprint  = {astro-ph/0310511},
+  archivePrefix = {arXiv}
+}
+
+@misc{Weeks2004,
+  author  = {Jeffrey R. Weeks},
+  title   = {Maxwell's Multipole Vectors and the CMB},
+  year    = {2004},
+  eprint  = {astro-ph/0412231},
+  archivePrefix = {arXiv}
+}
+
+@article{AluriRalstonWeltman2017,
+  author  = {Pavan K. Aluri and John P. Ralston and Amanda Weltman},
+  title   = {Alignments of parity even/odd-only multipoles in CMB},
+  journal = {Monthly Notices of the Royal Astronomical Society},
+  volume  = {472},
+  pages   = {2410--2421},
+  year    = {2017},
+  doi     = {10.1093/mnras/stx2112},
+  eprint  = {1703.07070},
+  archivePrefix = {arXiv}
+}
+
+@article{Planck2018IV,
+  author  = {{Planck Collaboration}},
+  title   = {Planck 2018 results. IV. Diffuse component separation},
+  journal = {Astronomy \& Astrophysics},
+  volume  = {641},
+  pages   = {A4},
+  year    = {2020},
+  doi     = {10.1051/0004-6361/201833881},
+  eprint  = {1807.06208},
   archivePrefix = {arXiv}
 }
 
@@ -489,7 +547,7 @@ def _feature_role(feature_id: str) -> str:
     if feature_id.startswith("epsilon_"):
         return "DIMENSIONLESS_MULTIPOLE_AMPLITUDE_COORDINATE"
     if feature_id.startswith("mes_"):
-        return "ROWWISE_REALIZATION_CONDITIONAL_MES_AMPLITUDE_ANCHOR"
+        return "ROWWISE_REALIZATION_CONDITIONAL_SQUARED_NORMALIZED_MES_CEILING"
     return "DIMENSIONLESS_IRREDUCIBLE_MORPHOLOGY"
 
 
@@ -564,6 +622,7 @@ def _artifact_registry() -> dict[str, dict[str, object]]:
             "conditional finite-ensemble rank reporting",
             "paired operator-sensitivity description",
             "map-free draft reproduction",
+            "squared normalized MES ceiling-coordinate diagnostics",
         ],
         "transfer_source": "Planck PR3 delivered SMICA products; no native Bianchi transfer",
         "null_status": "EXACT_300_ORDERED_FFP10_SMICA_CMB_PLUS_NOISE_PAIRS",
@@ -707,6 +766,9 @@ def compute_analysis() -> dict[str, object]:
             "epsilon_formula": "sqrt((2*l+1)*C_l/(4*pi))/T0",
             "sigma_formula_check": "(3/2)*(3*epsilon_2+(3/7)*epsilon_3)^2",
             "omega_formula_check": "(3/2)*((2/15)*epsilon_2)^2",
+            "sigma_target_invariant": "sigma_ab_sigma_ab_over_6H2",
+            "omega_target_invariant": "omega_ab_omega_ab_over_6H2",
+            "coordinate_semantics": "SQUARED_NORMALIZED_ONE_WAY_MES_CEILINGS",
             "conditioning": "REALIZATION_CONDITIONAL_SAME_ROW",
             "shared_data_dependence": True,
             "independent_information_gain": False,
@@ -727,13 +789,15 @@ def compute_analysis() -> dict[str, object]:
             "family_identification": "BLOCKED_PRE_NATIVE_ATLAS",
             "covariance_role": "DIAGNOSTIC_ONLY_NOT_USED_BY_RANK_SCAN_OR_LIKELIHOOD",
             "allowed_interpretation": (
-                "conditional finite-null result with a morphology-driven minimum"
+                "conditional finite-null result with a morphology-sourced "
+                "observation-row minimum and coordinate-family-dependent rank"
             ),
         },
         "primary_interpretation": (
             "The MES family rank is not unusually small in the frozen ensemble; "
-            "the smallest coordinate rank is morphology-driven, while both anchors "
-            "have rank 74/301."
+            "the observation-row minimum is morphology-driven, while both squared "
+            "normalized MES ceilings have rank 74/301. The full family rank remains "
+            "coordinate-family dependent."
         ),
         "raw_maps_reopened": False,
         "generating_command": (
@@ -959,8 +1023,8 @@ def _plot_anchor_dependence(summary: Mapping[str, object], path: Path) -> None:
     fig, axis = plt.subplots(figsize=(6.6, 5.4), constrained_layout=True)
     axis.scatter(anchors[1:, 0] / x_scale, anchors[1:, 1] / y_scale, s=14, alpha=0.45, color="#777777", label="paired FFP10 rows")
     axis.scatter(anchors[0, 0] / x_scale, anchors[0, 1] / y_scale, s=70, color="#c43c39", edgecolor="black", linewidth=0.6, label="SMICA observation", zorder=3)
-    axis.set_xlabel(r"$\Sigma_{2,\max}\,/\,10^{-10}$")
-    axis.set_ylabel(r"$W_{2,\max}\,/\,10^{-13}$")
+    axis.set_xlabel(rf"${MES_SIGMA_TEX}\,/\,10^{{-10}}$")
+    axis.set_ylabel(rf"${MES_OMEGA_TEX}\,/\,10^{{-13}}$")
     axis.set_title("Same-row MES-anchor dependence")
     axis.legend(frameon=False)
     axis.text(
@@ -1082,7 +1146,7 @@ def render_manuscript(summary: Mapping[str, object]) -> str:
 \maketitle
 
 \begin{{abstract}}
-The large-angle cosmic microwave background provides direct constraints on departures from an almost--Friedmann--Lema\^itre--Robertson--Walker geometry, but the Maartens--Ellis--Stoeger (MES) bounds are one-way, premise-dependent ceilings rather than measurements of shear, vorticity, or geometric family. We apply typed geodesic MES ceiling coordinates to corrected Planck PR3 SMICA low-multipole features and calibrate them with the same frozen operator on 300 ordered paired FFP10 CMB+noise realizations. The analysis combines two realization-conditional MES amplitude coordinates with eight dimensionless irreducible morphology coordinates and uses observation-inclusive leave-one-out finite ranks. The MES-family rank is ${_tex_rank(mes_rank)}\simeq {mes_rank['decimal']:.3f}$, compared with ${_tex_rank(generic_rank)}\simeq {generic_rank['decimal']:.3f}$ for a separately frozen generic twelve-feature benchmark. The smallest coordinate rank is ${_tex_rank(mes_min)}\simeq {mes_min['decimal']:.3f}$ and comes from an octupole multipole-vector coordinate; the two MES anchors each have rank $74/301\simeq {74/301:.3f}$. The result is therefore morphology-driven rather than anchor-driven and supplies a conditional finite-null methods application, not a physical or geometric identification.
+The large-angle cosmic microwave background provides direct constraints on departures from an almost--Friedmann--Lema\^itre--Robertson--Walker geometry, but the Maartens--Ellis--Stoeger (MES) bounds are one-way, premise-dependent ceilings rather than measurements of shear, vorticity, or geometric family. We apply typed geodesic squared normalized MES ceiling coordinates to corrected Planck PR3 SMICA low-multipole features and calibrate them with the same frozen operator on 300 ordered paired FFP10 CMB+noise realizations. The analysis combines two realization-conditional squared normalized MES ceiling coordinates with eight dimensionless irreducible morphology coordinates and uses observation-inclusive leave-one-out finite ranks. The MES-family rank is ${_tex_rank(mes_rank)}\simeq {mes_rank['decimal']:.3f}$, compared with ${_tex_rank(generic_rank)}\simeq {generic_rank['decimal']:.3f}$ for a separately frozen generic twelve-feature benchmark. The smallest coordinate rank is ${_tex_rank(mes_min)}\simeq {mes_min['decimal']:.3f}$ and comes from an octupole multipole-vector coordinate; the two MES ceilings each have rank $74/301\simeq {74/301:.3f}$. The observation-row minimum is morphology-driven rather than anchor-driven. The full family rank nevertheless remains coordinate-family dependent, because adding the two MES ceilings changes the complete-pool row-score distribution. This is a conditional finite-null methods application, not a physical or geometric identification.
 \end{{abstract}}
 
 \section{{Introduction and scope}}
@@ -1093,7 +1157,7 @@ Large-angle CMB studies also face a statistical family-selection problem. Correl
 Our scope is narrow: construct typed same-row MES coordinates from corrected $C_2$ and $C_3$, combine them with eight frozen morphology coordinates, evaluate all six predeclared family variants, and state the remaining nonidentification boundaries. This draft neither reopens maps nor extends the ensemble after seeing the result.
 
 \section{{Planck PR3 observation and paired FFP10 null ensemble}}
-The observation is Planck PR3 SMICA temperature data represented by the committed joint cut-sky low-$\ell$ feature row. The null pool contains 300 exact ordered pairs of FFP10 SMICA CMB and noise realizations. Every row has the same mask, harmonic convention, beam/pixel commonization, feature order, and numerical operator. The portable generic row is
+The observation is Planck PR3 SMICA temperature data represented by the committed joint cut-sky low-$\ell$ feature row; SMICA and the PR3 component products are described by Planck Collaboration IV \cite{{Planck2018IV}}. The null pool contains 300 exact ordered pairs of FFP10 SMICA CMB and noise realizations. Every row has the same mask, harmonic convention, beam/pixel commonization, feature order, and numerical operator. The portable generic row is
 \[
 (C_2,C_3,C_4,C_5,\mathcal P,G_2,G_3,d_2,d_{{3,0}},d_{{3,1}},d_{{3,2}},A_{{23}}).
 \]
@@ -1102,21 +1166,48 @@ The primary scope is conditional on this one SMICA row and this fixed pool. Othe
 \section{{Corrected joint cut-sky low-ell features}}
 The corrected estimator fits all real harmonics through $\ell=5$ simultaneously on the weighted cut sky. Monopole and dipole coefficients are nuisance terms in the same fit as the retained $\ell=2,\ldots,5$ modes; only after the masked fit are retained coefficients mapped to the common beam/pixel convention. The registered basis and retained dimensions are {corrected['basis_dimension']} and {corrected['retained_dimension']}, respectively. The condition number is {corrected['condition_number']:.7g}, and the relative singular floor is {corrected['singular_floor']:.6g}. The corrected generic family reproduces the frozen ${_tex_rank(generic_rank)}$ benchmark rank.
 
-\section{{Typed MES realization-conditional coordinates}}
+\section{{Typed squared normalized MES realization-conditional ceilings}}
 For each row,
 \[
 \epsilon_\ell=\frac{{1}}{{T_0}}\left[\frac{{(2\ell+1)C_\ell}}{{4\pi}}\right]^{{1/2}}.
 \]
-Under the registered SAG observer-motion branch, the residual cosmological dipole attribution is $\epsilon_1=0$. The active geodesic MES factory then gives
+Under the registered SAG observer-motion branch, the residual cosmological dipole attribution is $\epsilon_1=0$. Define the squared normalized targets
 \[
-\Sigma_{{2,\max}}=\frac32\left(3\epsilon_2+\frac37\epsilon_3\right)^2,
+\Sigma^2\equiv\frac{{\sigma_{{ab}}\sigma^{{ab}}}}{{6H^2}},
 \qquad
-W_{{2,\max}}=\frac32\left(\frac{{2}}{{15}}\epsilon_2\right)^2.
+W^2\equiv\frac{{\omega_{{ab}}\omega^{{ab}}}}{{6H^2}}.
 \]
-These quantities are typed one-way ceiling coordinates under the declared assumptions. They are deterministic functions of each row's $C_2$ and $C_3$, share the same data, and are not observed physical shear or vorticity. The MES family is
+The active geodesic MES factory supplies the one-way ceilings
 \[
-(\Sigma_{{2,\max}},W_{{2,\max}},\mathcal P,G_2,G_3,d_2,d_{{3,0}},d_{{3,1}},d_{{3,2}},A_{{23}}).
+\Sigma^2\leq\Sigma^2_{{\max}}=\frac32\left(3\epsilon_2+\frac37\epsilon_3\right)^2,
+\qquad
+W^2\leq W^2_{{\max}}=\frac32\left(\frac{{2}}{{15}}\epsilon_2\right)^2.
 \]
+These squared normalized MES ceiling coordinates are deterministic functions of each row's $C_2$ and $C_3$, share the same data, and are not observed physical shear or vorticity. The MES family is
+\[
+(\Sigma^2_{{\max}},W^2_{{\max}},\mathcal P,G_2,G_3,d_2,d_{{3,0}},d_{{3,1}},d_{{3,2}},A_{{23}}).
+\]
+
+\begin{{table}}[ht]
+\centering
+\small
+\caption{{Premises and normalization of the registered MES ceiling coordinates. These assumptions are part of the interpretation, not conclusions inferred from the data.}}
+\begin{{tabular}}{{p{{0.24\linewidth}}p{{0.66\linewidth}}}}
+\toprule
+Item & Registered premise \\
+\midrule
+Congruence & geodesic \\
+Regime & linear almost-EGS \\
+Dipole attribution & SAG observer-motion; residual $\epsilon_1=0$ \\
+Conditioning & realization-conditional same-row \\
+Shear normalization & $\sigma_{{ab}}\sigma^{{ab}}/(6H^2)$ \\
+Vorticity normalization & $\omega_{{ab}}\omega^{{ab}}/(6H^2)$ \\
+$C_1/C_2$ status & premise-dependent derivative hierarchy \\
+Converse & forbidden; a ceiling coordinate is not a measured invariant \\
+\bottomrule
+\end{{tabular}}
+\label{{tab:mes-premises}}
+\end{{table}}
 
 \section{{Observation-inclusive finite-null family statistic}}
 Let $X_{{ij}}$ be coordinate $j$ of row $i$ in the complete $N=301$ pool. For every two-sided coordinate, $m_{{ij}}$ is the median after excluding row $i$, and $D_{{ij}}=|X_{{ij}}-m_{{ij}}|$. The local complete-pool rank is
@@ -1127,7 +1218,10 @@ With $r_i=\min_j p_{{ij}}$, the family rank for the observation is
 \[
 p_{{\rm fam}}=\frac1N\sum_{{i=1}}^N\mathbf 1(r_i\le r_{{\rm obs}}).
 \]
-This operator is equivariant under complete-row permutations, includes the selected row, and treats ties conservatively. Its numerical rank is conditional on the frozen pool and is not a probability statement beyond it.
+This operator is equivariant under complete-row permutations, includes the selected row, and treats ties conservatively.
+
+\paragraph{{Calibration premise.}}
+Under the null premise that the observed SMICA row and the 300 processed FFP10 rows are jointly exchangeable under the null, the complete row-scoring map is permutation-equivariant. Hence the observation-inclusive family rank is super-uniform, with conservative treatment of ties \cite{{PhipsonSmyth2010,BarberRamdas2026}}. If FFP10 does not faithfully represent the observational null, the reported fractions remain exact empirical ranks relative to the frozen pool, but they do not inherit unconditional Type-I-error calibration. Arithmetic exactness of the finite-pool rank is therefore distinct from scientific fidelity of the null model.
 
 \section{{Results}}
 \subsection{{Coordinate-wise ranks}}
@@ -1144,12 +1238,12 @@ Coordinate & Observed value & Finite rank \\
 \label{{tab:coordinate-ranks}}
 \end{{table}}
 
-The two anchors each have rank $74/301$, whereas the smallest coordinate rank is ${_tex_rank(mes_min)}$ from $d_{{3,0}}$. The same $d_{{3,0}}$ minimum and rank occur in the morphology-only family. Thus the observed minimum is morphology-driven.
+The two squared normalized MES ceilings each have rank $74/301$, whereas the smallest coordinate rank is ${_tex_rank(mes_min)}$ from $d_{{3,0}}$. The same $d_{{3,0}}$ minimum and rank occur in the morphology-only family. Thus the observation-row minimum is morphology-driven rather than anchor-driven. This statement concerns the minimum coordinate only, not the complete-pool family-rank distribution.
 
 \begin{{figure}}[ht]
 \centering
 \includegraphics[width=0.96\linewidth]{{figure_local_rank_profile.pdf}}
-\caption{{Observation-inclusive local ranks for the generic and MES families. Red marks the family minimum; blue marks typed MES anchors. This C2 diagnostic shows coordinate ranks only and supplies no directional or geometric identification.}}
+\caption{{Observation-inclusive local ranks for the generic and MES families. Red marks the family minimum; blue marks the squared normalized MES ceiling coordinates. This C2 diagnostic shows coordinate ranks only and supplies no directional or geometric identification.}}
 \label{{fig:local-ranks}}
 \end{{figure}}
 
@@ -1168,7 +1262,7 @@ Family & Purpose & Global rank & Minimum coordinate \\
 \label{{tab:family-decomposition}}
 \end{{table}}
 
-Removing $C_4$ and $C_5$ changes the global rank from ${_tex_rank(generic_rank)}$ to ${_tex_rank(families['RAW_REDUCED_10']['global_rank'])}$. Replacing $(C_2,C_3)$ by $(\epsilon_2,\epsilon_3)$ gives ${_tex_rank(families['EPS_REDUCED_10']['global_rank'])}$, and replacing those amplitudes by the two registered MES coordinates gives ${_tex_rank(mes_rank)}$. The anchors-only and morphology-only ranks are ${_tex_rank(anchors_only['global_rank'])}$ and ${_tex_rank(morphology['global_rank'])}$. No difference between these fractions is assigned a separate significance.
+Removing $C_4$ and $C_5$ changes the global rank from ${_tex_rank(generic_rank)}$ to ${_tex_rank(families['RAW_REDUCED_10']['global_rank'])}$. Replacing $(C_2,C_3)$ by $(\epsilon_2,\epsilon_3)$ gives ${_tex_rank(families['EPS_REDUCED_10']['global_rank'])}$, and replacing those amplitudes by the two registered squared normalized MES ceiling coordinates gives ${_tex_rank(mes_rank)}$. The ceilings-only and morphology-only ranks are ${_tex_rank(anchors_only['global_rank'])}$ and ${_tex_rank(morphology['global_rank'])}$. No difference between these fractions is assigned a separate significance.
 
 Across all 301 rows the anchor Pearson correlation is {dependence['pearson_r']:.6f}, and the Spearman correlation is {dependence['spearman_rho']:.6f}. The two-by-two correlation block has numerical rank {dependence['correlation_block_rank']} and condition number {dependence['correlation_block_condition_number']:.3f}. These values quantify strong shared same-row dependence; they do not establish additional information.
 
@@ -1203,7 +1297,7 @@ Family A & Family B & Spearman $\rho$ \\
 \begin{{figure}}[ht]
 \centering
 \includegraphics[width=0.72\linewidth]{{figure_anchor_dependence.pdf}}
-\caption{{Dependence of the two realization-conditional MES anchors across the fixed pool. Their strong association is expected from shared $C_2,C_3$ inputs and does not imply two independent channels.}}
+\caption{{Dependence of the two realization-conditional squared normalized MES ceilings across the fixed pool. Their strong association is expected from shared $C_2,C_3$ inputs and does not imply two independent channels.}}
 \label{{fig:anchor-dependence}}
 \end{{figure}}
 
@@ -1211,14 +1305,49 @@ Family A & Family B & Spearman $\rho$ \\
 The MES-family rank ${_tex_rank(mes_rank)}$ and generic-control rank ${_tex_rank(generic_rank)}$ are outputs of two different predeclared coordinate families on the same rows. The decomposition in Table~\ref{{tab:family-decomposition}} shows that the change combines removal of two raw amplitudes with two coordinate transformations. It is therefore inappropriate to attribute the full numerical change to MES physics.
 
 \section{{Interpretation and limitations}}
-The primary result is a null result within the frozen finite ensemble: the family rank is not unusually small, and the minimum coordinate is an octupole morphology statistic rather than either MES anchor. This supports the operational use and map-free calibration of typed MES ceiling coordinates, while supplying no measurement of physical shear or vorticity.
+The primary result is a null result within the frozen finite ensemble: the family rank is not unusually small, and the observation-row minimum coordinate is an octupole morphology statistic rather than either MES ceiling. The full family rank nevertheless remains coordinate-family dependent, because adding the two MES ceilings changes the complete-pool row-score distribution. This supports the operational use and map-free calibration of typed MES ceiling coordinates, while supplying no measurement of physical shear or vorticity.
 
 The main limitations are one SMICA component-separation product, 300 paired CMB+noise rows, realization-conditional same-row anchors, no direction-indexed source field in the portable package, no physical response that separates local and global contributions, and no native-solver morphology atlas. Planck-only local/global separation is nonidentified, and scalar coordinates cannot construct a direction or STF object. The pooled ten-dimensional covariance is a conditioning diagnostic only; it is absent from the rank scan and from any likelihood.
 
 \section{{Conclusion}}
-We constructed a typed, row-equivariant finite-null application of geodesic MES ceiling coordinates to Planck PR3 low-multipole morphology. Within the frozen SMICA plus 300 paired FFP10 ensemble, the ten-coordinate family rank is ${_tex_rank(mes_rank)}$, while the smallest coordinate rank is ${_tex_rank(mes_min)}$ and is morphology-driven. The analysis is a reproducible methodological bridge and conditional null result. It does not identify a physical source, distinguish local from global kinematics, or select a Bianchi geometry.
+We constructed a typed, row-equivariant finite-null application of geodesic squared normalized MES ceiling coordinates to Planck PR3 low-multipole morphology. Within the frozen SMICA plus 300 paired FFP10 ensemble, the ten-coordinate family rank is ${_tex_rank(mes_rank)}$. Its observation-row minimum is ${_tex_rank(mes_min)}$ and is morphology-driven rather than anchor-driven. The family rank remains coordinate-family dependent: the morphology-only rank is ${_tex_rank(morphology['global_rank'])}$, while adding the two ceilings changes the complete-pool row-score distribution and gives ${_tex_rank(mes_rank)}$. The analysis is a reproducible methodological bridge and conditional null result. It does not identify a physical source, distinguish local from global kinematics, or select a Bianchi geometry.
 
 \appendix
+\section{{Exact morphology definitions and conventions}}
+The eight morphology coordinates use the same frozen operator on every row. The even-to-odd low-multipole power ratio is
+\[
+\mathcal P=\frac{{C_2+C_4}}{{C_3+C_5}}.
+\]
+For each $\ell\in\{{2,3\}}$, let $A^{{(\ell)}}$ be the real symmetric trace-one angular-momentum power tensor, with ordered eigenvalues $\lambda_{{\ell,1}}\leq\lambda_{{\ell,2}}\leq\lambda_{{\ell,3}}$. The registered power-tensor gap is
+\[
+G_\ell=\lambda_{{\ell,3}}-\lambda_{{\ell,2}}.
+\]
+This construction follows the angular-momentum power-tensor family of directional statistics \cite{{AluriRalstonWeltman2017}}.
+
+Multipole vectors are extracted from the Majorana polynomial
+\[
+P_\ell(z)=\sum_{{m=-\ell}}^\ell
+\sqrt{{\binom{{2\ell}}{{\ell+m}}}}\,a_{{\ell m}}z^{{\ell+m}},
+\]
+using orthonormal Condon--Shortley harmonics and $z=e^{{i\phi}}\cot(\theta/2)$. Antipodally paired roots define unoriented axes $\boldsymbol v_{{\ell,i}}$; the stored representative has its largest-absolute Cartesian component positive \cite{{CopiHutererStarkman2004,Weeks2004}}. The quadrupole coordinate is
+\[
+d_2=\left|\boldsymbol v_{{2,1}}\!\cdot\!\boldsymbol v_{{2,2}}\right|.
+\]
+For the octupole, the three absolute pairwise products are sorted in ascending order:
+\[
+(d_{{3,0}},d_{{3,1}},d_{{3,2}})
+=\operatorname{{sort}}\left\{{
+\left|\boldsymbol v_{{3,i}}\!\cdot\!\boldsymbol v_{{3,j}}\right|:
+1\leq i<j\leq3
+\right\}}.
+\]
+Finally, define the normalized quadrupole plane normal $\widehat{{\boldsymbol n}}_2$ from $\boldsymbol v_{{2,1}}\times\boldsymbol v_{{2,2}}$ and the three normalized octupole plane normals $\widehat{{\boldsymbol n}}_{{3,ij}}$ from $\boldsymbol v_{{3,i}}\times\boldsymbol v_{{3,j}}$. The plane-alignment coordinate is
+\[
+A_{{23}}=\max_{{i<j}}
+\left|\widehat{{\boldsymbol n}}_2\!\cdot\!\widehat{{\boldsymbol n}}_{{3,ij}}\right|.
+\]
+Degenerate coincident axes make the corresponding plane undefined and are rejected by the frozen operator rather than assigned an artificial direction.
+
 \section{{Exact feature and tail registry}}
 Every listed coordinate uses a two-sided tail and the same observation-inclusive scan.
 \begin{{description}}

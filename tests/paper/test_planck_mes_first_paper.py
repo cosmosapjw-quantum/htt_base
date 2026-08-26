@@ -190,13 +190,55 @@ def test_forbidden_claims_are_absent(
     manuscript = (built_package["paper_dir"] / "main.tex").read_text(
         encoding="utf-8"
     )
+    references = (built_package["paper_dir"] / "references.bib").read_text(
+        encoding="utf-8"
+    )
     lowered = manuscript.lower()
     for forbidden in builder.FORBIDDEN_CLAIM_STRINGS:
         assert forbidden.lower() not in lowered
     assert "TO_BE_COMPUTED" not in manuscript
     assert "TO_BE_GENERATED" not in manuscript
-    assert "morphology-driven" in manuscript
+    assert builder.MES_SIGMA_TEX == r"\Sigma^2_{\max}"
+    assert builder.MES_OMEGA_TEX == r"W^2_{\max}"
+    assert r"\Sigma^2_{\max}" in manuscript
+    assert r"W^2_{\max}" in manuscript
+    assert r"\Sigma_{2,\max}" not in manuscript
+    assert r"W_{2,\max}" not in manuscript
+    assert "squared normalized MES ceiling coordinates" in manuscript
+    assert "jointly exchangeable under the null" in manuscript
+    assert "super-uniform" in manuscript
+    assert "exact empirical ranks relative to the frozen pool" in manuscript
+    assert "unconditional Type-I-error calibration" in manuscript
+    assert r"\mathcal P=\frac{C_2+C_4}{C_3+C_5}" in manuscript
+    assert r"G_\ell=\lambda_{\ell,3}-\lambda_{\ell,2}" in manuscript
+    assert (
+        r"d_2=\left|\boldsymbol v_{2,1}\!\cdot\!\boldsymbol v_{2,2}\right|"
+        in manuscript
+    )
+    assert "Majorana polynomial" in manuscript
+    assert "SAG observer-motion" in manuscript
+    assert "premise-dependent derivative hierarchy" in manuscript
+    assert (
+        "The observation-row minimum is morphology-driven rather than "
+        "anchor-driven."
+    ) in manuscript
+    assert (
+        "The full family rank nevertheless remains coordinate-family dependent"
+        in manuscript
+    )
+    assert (
+        "The result is therefore morphology-driven rather than anchor-driven"
+        not in manuscript
+    )
     assert "nonidentified" in manuscript
+    for citation_key in (
+        "BarberRamdas2026",
+        "CopiHutererStarkman2004",
+        "Weeks2004",
+        "AluriRalstonWeltman2017",
+        "Planck2018IV",
+    ):
+        assert f"{{{citation_key}," in references
 
 
 def test_required_tables_figures_and_summary_are_generated(
