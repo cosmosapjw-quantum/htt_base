@@ -185,3 +185,50 @@ execution, capability promotion, or scientific release.
   acquire-only at 540/1000 EZmocks plus active batch 55 and 0/25 Abacus.
 - Replan: no DAG edge change. Execute PR-296 next, then PR-297; recompute the
   PR-280 aggregate only after both pass. Do not use partial PR-151 data.
+
+## Checkpoint 205 — MES stack PR-322 through PR-326 completed (2026-08-26)
+
+- Completed: 205/273 (75.09%); dependency-weighted 80.28%; registered critical
+  path 92.59%. Progress increased; no DAG replan is required.
+- Changed packages/surfaces: COMMON typed MES anchors/directional state,
+  OBSSTAT row anchors/directional moments, exact Planck replay integration,
+  theorem/evidence receipts, tests, and generated status sidecars.
+- Verification: PR-326 repaired targeted matrix 23 passed; directly affected
+  theory/anchor/Planck/import matrix 22 passed; syntax, claim/legacy scan,
+  snapshot generation, and checkpoint generation pass. Strict DAG/status and
+  mirror checks are the remaining closeout commands.
+- Preserved failures: the sealed PR-326 fresh review reported P0=0/P1=3. The
+  frame/convention, semantic self-promotion, and ill-conditioned-design
+  counterexamples remain in its result envelope; one repair pass closed all
+  three with permanent negative tests.
+- Claim-tier drift: none. The bridge and row anchors remain
+  `diagnostic_only`; science is `OPEN_UNCHANGED`; no native/family, physical
+  stress, local/global, posterior/evidence, or public-use promotion occurred.
+- Subagents: the PR-326 mapper, physics audit, and fresh reviewer are complete;
+  all associated runs are closed or terminal and no subagent remains active.
+- Open blockers: the Planck package has no direction-indexed support; PR-327
+  must emit only scalar MES morphology and retain
+  `BLOCKED_DIRECTIONAL_SUPPORT`. PR-329 must terminate
+  `BLOCKED_NO_ELIGIBLE_DIRECTIONAL_LOWZ_LANE` if no six-criterion lane passes.
+- Next: execute PR-327, then PR-328, PR-329, and PR-330 in canonical order. No
+  planning successor or DAG-edge change is authorized.
+
+## External re-audit handoff — completed through PR-327 (2026-08-26)
+
+- Completed: 206/273 = 75.46%; dependency-weighted 80.57%; critical path
+  75/81 = 92.59%. No checkpoint is due before 210 completed cards.
+- PR-327 candidate `57c74157...`, tree `9ab94444...`, exports the exact
+  observed-plus-300-null MES morphology package and primary finite rank
+  `98/301`; the frozen generic control remains separately `133/301`.
+- One fresh blind-results review passed with P0=0/P1=0. Strict result SHA-256:
+  `5ad5047b...`; its independent oracle reproduced all ranks and covariance
+  diagnostics.
+- Final focused verification: 89 directly affected tests and 62 status/claim
+  contract tests passed; DAG, mirrors, claim scan, portable receipt assertions,
+  and diff check passed.
+- Claim-tier drift: none. Direction remains blocked, Planck-only local/global
+  remains nonidentified, family identification remains pre-native blocked,
+  and public use remains false.
+- Per user instruction, PR-328 through PR-330 remain pending. There is no
+  foreground card until the external re-audit is accepted; no new plan, PR
+  close, merge, or scientific promotion occurred.

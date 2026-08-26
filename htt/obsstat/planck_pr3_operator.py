@@ -71,6 +71,9 @@ MULTIPOLE_VECTOR_CONVENTION = (
     "largest-absolute Cartesian component positive"
 )
 GLOBAL_CLAIM_BOUNDARY = "ABSTAIN_GLOBAL_RESPONSE_UNAVAILABLE"
+JOINT_CUTSKY_ESTIMATOR_ID = "joint_weighted_real_harmonic_l0_l5_retain_l2_l5:v1"
+JOINT_CUTSKY_TOTAL_DIMENSION = 36
+JOINT_CUTSKY_RETAINED_DIMENSION = 32
 
 
 def _healpy():
@@ -309,6 +312,46 @@ class MaskCouplingInverse:
         return self.matrix.shape[0]
 
 
+@dataclass(frozen=True)
+class JointCutSkyOperator:
+    """One fixed weighted real-harmonic design shared by every sky row."""
+
+    normal_matrix: np.ndarray
+    mask: np.ndarray
+    singular_values: tuple[float, ...]
+    condition_number: float
+    relative_threshold: float
+    condition_ceiling: float
+    lmin: int
+    lmax: int
+    retained_lmin: int
+    nside: int
+    mask_sha256: str
+    normal_matrix_sha256: str
+    operator_sha256: str
+    basis_order: tuple[tuple[int, int, str], ...]
+    retained_indices: tuple[int, ...]
+
+    @property
+    def dimension(self) -> int:
+        return self.normal_matrix.shape[0]
+
+    @property
+    def retained_dimension(self) -> int:
+        return len(self.retained_indices)
+
+
+@dataclass(frozen=True)
+class JointCutSkyFit:
+    """Retained low-ell coefficients and fit diagnostics for one sky row."""
+
+    retained_alm: np.ndarray
+    retained_coefficients: np.ndarray
+    all_coefficients: np.ndarray
+    weighted_residual_norm: float
+    operator_sha256: str
+
+
 def _real_harmonic_design_block(
     nside: int,
     pixels: np.ndarray,
@@ -333,6 +376,230 @@ def _real_harmonic_design_block(
         else:
             design[:, column] = math.sqrt(2.0) * harmonic.imag
     return design
+
+
+def _canonical_json_sha256(payload: Mapping[str, object], *, role: str) -> str:
+    import json
+
+    digest = hashlib.sha256()
+    digest.update(role.encode("ascii") + b"\0")
+    digest.update(
+        json.dumps(
+            payload,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=True,
+            allow_nan=False,
+        ).encode("ascii")
+    )
+    return "sha256:" + digest.hexdigest()
+
+
+def build_joint_cutsky_operator(
+    mask: object,
+    *,
+    lmin: int = 0,
+    lmax: int = LMAX,
+    retained_lmin: int = LMIN,
+    relative_threshold: float = 1e-10,
+    condition_ceiling: float = 1e8,
+) -> JointCutSkyOperator:
+    """Build the chunked joint weighted fit for all real modes in one band.
+
+    The PR-315 branch uses ``lmin=0``, ``lmax=5`` and retains ``ell=2..5``.
+    Allowing narrower bands is useful only for negative controls; the observed
+    worker rejects anything other than the frozen 36-to-32 configuration.
+    """
+
+    hp = _healpy()
+    weights = _finite_vector(mask, label="analysis mask")
+    try:
+        nside = hp.npix2nside(weights.size)
+    except ValueError as exc:
+        raise PlanckLaneContractError("analysis mask is not HEALPix") from exc
+    if (
+        np.any(weights < 0.0)
+        or np.any(weights > 1.0)
+        or np.count_nonzero(weights) == 0
+    ):
+        raise PlanckLaneContractError(
+            "analysis mask weights must lie in [0,1] with support"
+        )
+    if (
+        not 0 <= lmin <= retained_lmin <= lmax
+        or not 0.0 < relative_threshold < 1.0
+        or condition_ceiling <= 1.0
+    ):
+        raise PlanckLaneContractError("joint cut-sky configuration is invalid")
+
+    basis = real_alm_layout(lmin=lmin, lmax=lmax)
+    retained = tuple(
+        index for index, (ell, _, _) in enumerate(basis) if ell >= retained_lmin
+    )
+    normal = np.zeros((len(basis), len(basis)), dtype=float)
+    chunk_size = min(weights.size, 65_536)
+    for start in range(0, weights.size, chunk_size):
+        stop = min(weights.size, start + chunk_size)
+        local_weights = weights[start:stop]
+        support = local_weights > 0.0
+        if not np.any(support):
+            continue
+        pixels = np.arange(start, stop, dtype=np.int64)[support]
+        design = _real_harmonic_design_block(
+            nside,
+            pixels,
+            lmin=lmin,
+            lmax=lmax,
+        )
+        weighted = design * np.sqrt(local_weights[support])[:, None]
+        normal += weighted.T @ weighted
+    pixel_area = 4.0 * math.pi / weights.size
+    normal *= pixel_area
+    singular_values = np.linalg.svd(normal, compute_uv=False)
+    largest = float(singular_values[0])
+    smallest = float(singular_values[-1])
+    if smallest <= relative_threshold * largest:
+        raise PlanckLaneContractError(
+            "joint cut-sky normal matrix is rank deficient at the frozen threshold"
+        )
+    condition = largest / smallest
+    if not math.isfinite(condition) or condition > condition_ceiling:
+        raise PlanckLaneContractError(
+            "joint cut-sky normal matrix exceeds the frozen condition ceiling"
+        )
+
+    mask_sha256 = _sha256_array(weights, role="common_analysis_mask")
+    normal_sha256 = _sha256_array(normal, role="joint_cutsky_normal_matrix")
+    identity = {
+        "estimator_id": JOINT_CUTSKY_ESTIMATOR_ID,
+        "lmin": lmin,
+        "lmax": lmax,
+        "retained_lmin": retained_lmin,
+        "basis_order": [list(row) for row in basis],
+        "mask_sha256": mask_sha256,
+        "normal_matrix_sha256": normal_sha256,
+        "relative_threshold": relative_threshold,
+        "condition_ceiling": condition_ceiling,
+    }
+    return JointCutSkyOperator(
+        normal_matrix=normal,
+        mask=weights.copy(),
+        singular_values=tuple(float(value) for value in singular_values),
+        condition_number=condition,
+        relative_threshold=relative_threshold,
+        condition_ceiling=condition_ceiling,
+        lmin=lmin,
+        lmax=lmax,
+        retained_lmin=retained_lmin,
+        nside=nside,
+        mask_sha256=mask_sha256,
+        normal_matrix_sha256=normal_sha256,
+        operator_sha256=_canonical_json_sha256(
+            identity, role="joint_cutsky_operator_identity"
+        ),
+        basis_order=basis,
+        retained_indices=retained,
+    )
+
+
+def fit_joint_cutsky_alm(
+    pixel_map: object,
+    *,
+    mask: object,
+    operator: JointCutSkyOperator,
+    source_beam: object,
+    source_pixel_window: object,
+    target_beam: object,
+    target_pixel_window: object,
+) -> JointCutSkyFit:
+    """Profile nuisance and retained harmonics in one weighted linear solve."""
+
+    if not isinstance(operator, JointCutSkyOperator):
+        raise PlanckLaneContractError("joint cut-sky operator type drifted")
+    values = _finite_vector(pixel_map, label="temperature map")
+    weights = _finite_vector(mask, label="analysis mask")
+    if values.shape != weights.shape or values.shape != operator.mask.shape:
+        raise PlanckLaneContractError("map and joint cut-sky mask pixelization differ")
+    if (
+        _sha256_array(weights, role="common_analysis_mask") != operator.mask_sha256
+        or not np.array_equal(weights, operator.mask)
+    ):
+        raise PlanckLaneContractError("joint cut-sky mask differs from its operator")
+
+    rhs = np.zeros(operator.dimension, dtype=float)
+    weighted_square = 0.0
+    chunk_size = min(values.size, 65_536)
+    for start in range(0, values.size, chunk_size):
+        stop = min(values.size, start + chunk_size)
+        local_weights = weights[start:stop]
+        support = local_weights > 0.0
+        if not np.any(support):
+            continue
+        pixels = np.arange(start, stop, dtype=np.int64)[support]
+        design = _real_harmonic_design_block(
+            operator.nside,
+            pixels,
+            lmin=operator.lmin,
+            lmax=operator.lmax,
+        )
+        selected_values = values[start:stop][support]
+        selected_weights = local_weights[support]
+        rhs += design.T @ (selected_weights * selected_values)
+        weighted_square += float(
+            np.dot(selected_weights, selected_values * selected_values)
+        )
+    pixel_area = 4.0 * math.pi / values.size
+    rhs *= pixel_area
+    weighted_square *= pixel_area
+    try:
+        coefficients = np.linalg.solve(operator.normal_matrix, rhs)
+    except np.linalg.LinAlgError as exc:  # defensive: construction already gates rank
+        raise PlanckLaneContractError("joint cut-sky solve became singular") from exc
+    if not np.all(np.isfinite(coefficients)):
+        raise PlanckLaneContractError("joint cut-sky coefficients became nonfinite")
+
+    residual_square = float(
+        weighted_square
+        - 2.0 * coefficients @ rhs
+        + coefficients @ operator.normal_matrix @ coefficients
+    )
+    roundoff_floor = 128.0 * np.finfo(float).eps * max(
+        1.0, weighted_square, abs(float(coefficients @ rhs))
+    )
+    if residual_square < -roundoff_floor:
+        raise PlanckLaneContractError("joint cut-sky residual norm became negative")
+    weighted_residual_norm = math.sqrt(max(0.0, residual_square))
+
+    full_alm = real_vector_to_alm(
+        coefficients, lmin=operator.lmin, lmax=operator.lmax
+    )
+    commonized = commonize_beam_pixel_alm(
+        full_alm,
+        source_beam=source_beam,
+        source_pixel_window=source_pixel_window,
+        target_beam=target_beam,
+        target_pixel_window=target_pixel_window,
+        lmax=operator.lmax,
+    )
+    retained_coefficients = alm_to_real_vector(
+        commonized,
+        lmin=operator.retained_lmin,
+        lmax=operator.lmax,
+    )
+    if retained_coefficients.size != operator.retained_dimension:
+        raise PlanckLaneContractError("joint cut-sky retained dimension drifted")
+    retained_alm = real_vector_to_alm(
+        retained_coefficients,
+        lmin=operator.retained_lmin,
+        lmax=operator.lmax,
+    )
+    return JointCutSkyFit(
+        retained_alm=retained_alm,
+        retained_coefficients=retained_coefficients,
+        all_coefficients=coefficients,
+        weighted_residual_norm=weighted_residual_norm,
+        operator_sha256=operator.operator_sha256,
+    )
 
 
 def build_mask_coupling_inverse(
@@ -914,6 +1181,11 @@ __all__ = [
     "GLOBAL_CLAIM_BOUNDARY",
     "JOINT_FEATURE_IDS",
     "JOINT_FEATURE_UNITS",
+    "JOINT_CUTSKY_ESTIMATOR_ID",
+    "JOINT_CUTSKY_RETAINED_DIMENSION",
+    "JOINT_CUTSKY_TOTAL_DIMENSION",
+    "JointCutSkyFit",
+    "JointCutSkyOperator",
     "JointCovariance",
     "LMAX",
     "LMIN",
@@ -924,6 +1196,7 @@ __all__ = [
     "SCHEMA_VERSION",
     "alm_to_real_vector",
     "assemble_joint_feature_row",
+    "build_joint_cutsky_operator",
     "build_mask_coupling_inverse",
     "calibrate_complete_synthetic_pool",
     "capability_snapshot",
@@ -934,6 +1207,7 @@ __all__ = [
     "estimate_matched_joint_covariance",
     "extract_component_features",
     "extract_multipole_vectors",
+    "fit_joint_cutsky_alm",
     "ordered_row_id_hash",
     "real_alm_layout",
     "real_vector_to_alm",

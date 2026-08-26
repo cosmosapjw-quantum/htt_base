@@ -20,6 +20,7 @@ from obsstat.planck_pr3_operator import (
     FFP10Inventory,
     GLOBAL_CLAIM_BOUNDARY,
     JOINT_FEATURE_IDS,
+    JOINT_CUTSKY_TOTAL_DIMENSION,
     PlanckLaneContractError,
     alm_to_real_vector,
     build_mask_coupling_inverse,
@@ -30,6 +31,8 @@ from obsstat.planck_pr3_operator import (
     estimate_matched_joint_covariance,
     extract_component_features,
     extract_multipole_vectors,
+    build_joint_cutsky_operator,
+    fit_joint_cutsky_alm,
     ordered_row_id_hash,
     real_vector_to_alm,
     validate_component_operator_identities,
@@ -167,6 +170,99 @@ def test_chunked_mask_inverse_matches_direct_dense_coupling() -> None:
     design = np.column_stack(columns)
     expected = (4.0 * math.pi / npix) * (design.T @ (mask[:, None] * design))
     np.testing.assert_allclose(inverse.matrix, expected, rtol=1e-13, atol=1e-13)
+
+
+@pytest.mark.requires_healpy
+def test_joint_cutsky_fit_recovers_known_lowell_with_arbitrary_monopole_dipole() -> None:
+    nside = 8
+    npix = hp.nside2npix(nside)
+    _, _, z = hp.pix2vec(nside, np.arange(npix))
+    mask = (np.abs(z) > 0.18).astype(float)
+    mask[(np.abs(z) > 0.18) & (np.abs(z) < 0.34)] = 0.35
+    operator = build_joint_cutsky_operator(mask)
+    assert operator.dimension == JOINT_CUTSKY_TOTAL_DIMENSION == 36
+
+    rng = np.random.default_rng(315_001)
+    full_coefficients = rng.normal(size=36)
+    # Make the nuisance amplitudes deliberately much larger than the retained
+    # signal so a sequential nuisance subtraction cannot pass accidentally.
+    full_coefficients[:4] *= 1.0e4
+    full_alm = real_vector_to_alm(full_coefficients, lmin=0, lmax=5)
+    sky = hp.alm2map(full_alm, nside=nside, lmax=5)
+    fit = fit_joint_cutsky_alm(
+        sky,
+        mask=mask,
+        operator=operator,
+        source_beam=np.ones(6),
+        source_pixel_window=np.ones(6),
+        target_beam=np.ones(6),
+        target_pixel_window=np.ones(6),
+    )
+
+    np.testing.assert_allclose(
+        alm_to_real_vector(fit.retained_alm, lmin=2, lmax=5),
+        full_coefficients[4:],
+        rtol=2.0e-10,
+        atol=2.0e-10,
+    )
+    assert fit.weighted_residual_norm < 1.0e-8
+
+
+@pytest.mark.requires_healpy
+def test_masked_region_contamination_cannot_change_joint_cutsky_features() -> None:
+    nside = 8
+    npix = hp.nside2npix(nside)
+    _, _, z = hp.pix2vec(nside, np.arange(npix))
+    mask = (np.abs(z) > 0.25).astype(float)
+    operator = build_joint_cutsky_operator(mask)
+    rng = np.random.default_rng(315_002)
+    coefficients = rng.normal(size=36)
+    sky = hp.alm2map(
+        real_vector_to_alm(coefficients, lmin=0, lmax=5),
+        nside=nside,
+        lmax=5,
+    )
+
+    baseline = fit_joint_cutsky_alm(
+        sky,
+        mask=mask,
+        operator=operator,
+        source_beam=np.ones(6),
+        source_pixel_window=np.ones(6),
+        target_beam=np.ones(6),
+        target_pixel_window=np.ones(6),
+    )
+    for amplitude in (1.0, 1.0e4, 1.0e8):
+        contaminated = sky.copy()
+        contaminated[mask == 0.0] += amplitude * rng.normal(
+            size=np.count_nonzero(mask == 0.0)
+        )
+        replay = fit_joint_cutsky_alm(
+            contaminated,
+            mask=mask,
+            operator=operator,
+            source_beam=np.ones(6),
+            source_pixel_window=np.ones(6),
+            target_beam=np.ones(6),
+            target_pixel_window=np.ones(6),
+        )
+        np.testing.assert_array_equal(replay.retained_coefficients, baseline.retained_coefficients)
+
+
+@pytest.mark.requires_healpy
+def test_joint_cutsky_fit_abstains_on_rank_condition_or_plane_failure() -> None:
+    tiny = np.zeros(hp.nside2npix(8))
+    tiny[:4] = 1.0
+    with pytest.raises(PlanckLaneContractError, match="rank deficient|condition"):
+        build_joint_cutsky_operator(tiny)
+
+    alm = np.zeros(hp.Alm.getsize(5), dtype=np.complex128)
+    alm[hp.Alm.getidx(5, 2, 0)] = 1.0
+    alm[hp.Alm.getidx(5, 3, 0)] = 1.0
+    alm[hp.Alm.getidx(5, 4, 0)] = 1.0
+    alm[hp.Alm.getidx(5, 5, 0)] = 1.0
+    with pytest.raises(PlanckLaneContractError, match="plane is undefined"):
+        extract_component_features(alm)
 
 
 @pytest.mark.requires_healpy

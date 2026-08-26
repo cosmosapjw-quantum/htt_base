@@ -1,309 +1,86 @@
 # Current Project State
 
-Date: 2026-08-09
+Date: 2026-08-26
 
-This is a current-state handoff, not a historical receipt. Historical candidate
-and review details remain in Git history, `docs/PR_DELTAS/`, and frozen harness
-runs.
+## Authority and workspace
 
-## Baseline
+- Repository: `cosmosapjw-quantum/htt_base`.
+- Accepted integration start: `8b6028abcde18c87591789f6ba53e81157fa4eba`.
+- Integration merge authority: `1ace5692bb6778ee8d5b99c112fc84dc2ec8cb72`.
+- Isolated worktree: `/home/cosmosapjw/worktrees/htt-mes-integration-20260826`.
+- Review branch: `changeset/pr324-mes-methodology-stack-20260826`.
+- The original checkout and unrelated dirty/untracked work remain untouched.
 
-- Canonical target: `research/pr04-multicomponent`.
-- Verified merge HEAD: `feeb89387d949f41276bec56a6becc08af613214`.
-- That remote merge contains the reviewed PR-281 orbit/type acceptance
-  closure together with the PR-280 terminal inventory, PR-151
-  acquisition-path repair, and successful PR-295, PR-296, and PR-297
-  active-core repairs. PR-282 started only after PR-281 ancestry and GitHub
-  merge state were verified.
-- PR-190 is `COMPLETED_FAILED_WITH_RECEIPT`. Its registered full typed
-  attainability statement is refuted; `success_dependency_satisfied=false`.
-- PR-280 is likewise a historical `COMPLETED_FAILED_WITH_RECEIPT` with
-  `success_dependency_satisfied=false`. PR-295, PR-296, and PR-297 satisfy the
-  separate downstream stop-release condition without rewriting that receipt.
-- Work proceeds in the isolated branch
-  `changeset/pr282-exact-parity-readiness`. The main user checkout and
-  all user-owned untracked inputs remain untouched.
+## Canonical state at the external re-audit handoff
 
-## Canonical orchestration state
+- DAG: 273 valid immutable cards.
+- Completed: 206/273 = 75.46%.
+- Dependency-weighted completion: 80.57%.
+- Critical-path completion: 75/81 = 92.59%.
+- Foreground: none. PR-328 is pending and was not started.
+- Pending: 33; terminal blocked receipts: 5; dormant external/native: 28.
+- Background-only: PR-151; partial acquisition data remain inadmissible here.
+- The user stopped implementation after PR-327 for an external re-audit.
+  PR-328 through PR-330 retain their registered order and dependencies.
 
-- DAG: 244 cards; validation passes.
-- Completed: 179/244 = 73.36%.
-- Dependency-weighted completion: 76.65%.
-- Critical-path completion: 98.70%.
-- In progress: none.
-- Pending: 33.
-- Blocked terminal receipts: PR-190, PR-172, and PR-280.
-- Dormant external/native: 28.
-- Background acquisition: PR-151 only.
-- PR-283, PR-284, PR-285, PR-286, PR-288, and PR-289 are dependency-ready.
-  Canonical topological order selects PR-283 first.
+## MES stack completed through PR-327
 
-The lower count percentage reflects atomic registration through PR-297; it is
-bookkeeping, not scientific regression or readiness evidence.
+- PR-322 allocated the append-only canonical prefix PR-322..PR-330.
+- PR-323 preserved the recovered theory/CAS receipts and typed unresolved local
+  formal tasks without status promotion.
+- PR-324 repaired the PR-315 joint cut-sky exact-300 replay while preserving
+  the five exact PR-314 evidence blobs and the generic `133/301` control.
+- PR-325 produced 301 typed rowwise active geodesic MES anchors.
+- PR-326 implemented the direction-indexed vector/STF bridge while retaining
+  scalar refusal, unverified raw-sample bandlimit/parity semantics, typed
+  frame/convention binding, condition gating, and physical-response refusal.
+- PR-327 applied one preregistered row operator to the observed SMICA row and
+  exactly 300 paired null rows. The portable MES morphology result is
+  `98/301` (`14/43`), separate from the frozen generic control `133/301`
+  (`19/43`). The pooled diagnostic covariance has standardized rank 10/10 and
+  condition number `1417.0996104456196`; it is not a likelihood covariance.
+- PR-327 remains `diagnostic_only` / C2, non-public, and transfer-conditional.
+  Directional support is `BLOCKED_DIRECTIONAL_SUPPORT`, Planck-only
+  local/global status is `SINGLE_SHELL_LOCAL_GLOBAL_NONIDENTIFIED`, and family
+  identification remains `BLOCKED_PRE_NATIVE_ATLAS`.
 
-## Scientific authority
+## Review and verification
 
-- `JointAnisotropyState` is the current state authority.
-- Scalar x_C is a lossy signed compatibility projection available only through
-  `LegacyProjectionReport` with BC1/BC2, state, frame, comparator, units, and
-  loss/cancellation disclosure.
-- PR-191 and PR-205 retain their closed `requires_success` edges from PR-190.
-  PR-276 consumes PR-190 only through `requires_terminal_receipt`.
-- PR-172 remains the historical failed B-projector result; PR-184 is the
-  registered completed successor. No additional repair event exists.
-- PR-270 is completed. Its frozen adjudication remains at
-  `docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json`.
-- Only G1 through G8 have registered statements and pass conditions. G9
-  through G12 are undefined and are not gates.
-- PR-277's reviewed contract separates named claim capabilities from DAG
-  state. A capability decision requires an exact evidence closure, trusted
-  evidence receipt, identity-bound adjudication, and receipt-covered
-  capability/action/outcome/ceiling binding.
-- Active graph invalidation/recalibration/reexecution edges automatically
-  block only their declared capability set. Caller omission cannot clear them.
+- Reviewed scientific candidate:
+  `57c74157344c19b217b61c445f4d25c5f646cd18`, tree
+  `9ab944440a57c66bb9cb5a56d331c757bbb483ec`.
+- One fresh blind-results review passed with `P0=0`, `P1=0`. Its strict result
+  is
+  `.agent-harness/runs/pr327-final-review-20260826/results/PR327-FINAL-REVIEW.json`
+  with SHA-256
+  `5ad5047b97fad48293aa9fcfece8ac63b8b3b0a32f784c90ee11b7f807c1e190`.
+- The tracked portable audit summary is
+  `docs/generated/planck_mes_morphology/external_reaudit_handoff.json`. It
+  records the local result/oracle hashes and requires a fresh external replay;
+  it is not merge or scientific authority.
+- The reviewer independently reproduced `98/301`, all ten local rank
+  numerators, covariance rank 10/10, and the declared condition number.
+- Targeted PR-327 tests: 8 passed. Directly affected anchor/Planck/control
+  regressions: 81 passed in the sealed review; the combined local matrix was
+  also run as 89 passed. Claim scan and diff check passed.
+- No full repository suite was run because no distinct failure class required
+  it.
 
-## Claim and data boundary
+## Remaining scientific blockers
 
-- No data product was admitted by PR-274 and no observed-data execution was
-  performed.
-- `G-CI-H`, `H-PLANCK`, `H-CF4`, `H-HSC-KiDS`, `H-ACT`, `H-DESI`, and
-  `H-JWST` are all `NOT_AUTHORIZED`.
-- Admission and execution authorization are separate receipts.
-- MIO remains diagnostic-only; HTT alone owns likelihood, posterior, evidence,
-  PPC, and LOOCV.
-- Native low-ell solver work, a native morphology atlas, and Bianchi-family
-  identification remain outside scope.
-- Current claims are diagnostic or receipt-bearing negative results only;
-  public use remains false.
+- The Planck package has no direction-indexed support; a scalar cannot create a
+  vector, axis, or STF tensor.
+- `LOCAL-XACT-001` remains `BLOCKED_FRAME_TRANSFORM_DERIVATION`; no physical
+  local/global response is invented from the algebraic rank receipt.
+- A future PR-329 must select the first lane satisfying all six registered
+  low-z criteria or terminate exactly
+  `BLOCKED_NO_ELIGIBLE_DIRECTIONAL_LOWZ_LANE`. PR-321 HSC SACC is not a
+  directional lane.
+- The native low-ell solver and morphology atlas remain external/dormant.
 
-## PR-277 scope
+No source-only or superseded branch was bulk merged, no PR was closed or
+merged automatically, and no security, publication, posterior/evidence,
+native-solver, geometry, or family-identification authority was added.
 
-PR-277 introduces the evidence-conditioned `ClaimCapabilityDecision`,
-versioned theorem/data/mask/covariance/transfer/estimand identities, typed
-lifecycle invalidation edges, owner firewalls, and fail-closed generated-status
-fallbacks. It does not execute data, change scientific numbers, reopen failed
-statements, validate a native solver or atlas, or grant publication or family
-identification.
-
-Generated status rows now treat `artifact_gate_outputs.yaml` as compatibility
-annotations only. In the absence of an independently revalidated capability
-decision, every row remains internal-only and non-production; DAG completion
-cannot promote it.
-
-Governing spec:
-`docs/research_program/post_pr275/pr277_spec.yaml`.
-
-The first mutable review failed on capability relabelling and caller-omittable
-graph invalidations; both receipts are preserved and both defects are repaired.
-The second claim review passed those boundaries. Its regression companion
-found a test-coverage gap in the exact owner matrix, now closed with all 55
-capability/owner pairs. Immutable content R1 was structurally partial. R2
-preserved a claim PASS but failed overall after a raw builder fabricated a
-granted pre-native family capability. R3 preserved only its claim result after
-the other tool turn produced no envelope. R4 preserved a claim PASS and a
-physics/harness FAIL: low-level raw allocation could copy valid fields and emit
-trust-bearing records. R5 then reproduced an exposed public-issuer closure
-marker on exact SHA `3be8d16e...`; later broad prior-run searches invalidated
-both reviewers' blind-results status, so R5 is abandoned and not acceptance.
-Majority vote was not used in any failure. The current repair gives the public
-issuer no closure marker, binds registration to the exact validated issuer
-frame, and revalidates every trust-bearing field against the exact evidence
-and adjudication context on every public use. Registration is a misuse guard,
-not scientific authority; a relabelled record fails even after deliberate
-registration-layer perturbation. Exact content R6 passed all 19 policy cells
-on `a19d98e5...`, including a 54-check independent oracle, and its run closed
-normally. Canonical PR-277 status is `COMPLETED_SUCCESS`; this is a governance
-contract result only. Its reviewed delivery is merged at `a780043...`. All
-data and scientific public-release gates remain closed.
-
-## PR-278 scope and current result
-
-PR-278 freezes the exact Tier-A source at merge `a780043...`, separates 28
-family rows into 19 currently reviewable rows, one non-terminal T-OMK hold,
-and eight named event gates, and preserves all 62 dual-axis rows as individual
-`INCONCLUSIVE` results because no exact terminal-receipt crosswalk exists.
-
-The current family ledger contains 14 `GRANT`, 12 `HOLD`, one D-ACT
-`DOWNGRADE`, and one D-K1 `INCONCLUSIVE`. A lane `GRANT` is only admissibility
-for later PR-157 aggregation. It creates no capability, readiness, scientific
-status, CF4 P0 rescue, public use, native status, posterior/evidence result, or
-family identification.
-
-The first mutable pre-freeze review blocked a stale v1 delivery-policy pointer
-and six rows whose reviewer identity had been synthesized after the fact. The
-v1 panel inputs and failing reviews are preserved. The active v2 delivery
-successor binds policy v2 without rewriting those bytes, ingestion now rejects
-missing or assignment-mismatched principals, a blind six-row review at result
-SHA `13ef7078...` binds exact reviewer and author principals, and the complete
-repaired mutable review passed at `1578b8f7...`.
-
-Immutable content R1 on `f5e2ff7a...` then failed one independent portability
-check: `check-source` mixed current PR status with its base-snapshot hash. The
-strict-valid failure is preserved at `aef9ad24...`. The repair now resolves
-historical status/backlog from Git commit `a780043...`, promotes the exact
-mapper result identity through a compact self-addressed receipt, and requires
-source regeneration in the delivery policy. Focused validation passes 258
-tests. R1 is invalidated by these bytes and cannot authorize completion.
-
-Immutable content R2 passed all 21 policy cells on amended content commit
-`34ec32aa...` and seal `35fae6bf...`; result `c5ddc511...`, coverage
-`c86fcc64...`, and oracle `266822a5...` report no blocker. Canonical PR-278 is
-therefore `COMPLETED_SUCCESS`, while scientific status remains `OPEN_UNCHANGED`
-and public use remains false.
-
-PR-278 is merged at `1b0e4200...`; its receipt-level result and claim boundary
-remain unchanged.
-
-## PR-279 scope and current result
-
-PR-279 creates a portable exact projection of 222 historical internal work
-units, keeps 19 prospective work units separate, and keeps 366 GitHub
-publication/review records in a distinct identity space. It normalizes the
-legacy action vocabulary into eleven registered dispositions without changing
-the source text.
-
-The registered outputs contain 12 content-addressed invalidation roots, 58
-typed lifecycle nodes, 212 PR-277 recalibration/reexecution edges, five narrow
-supersession edges, one explicitly withheld PR-248/PR-252 hash contradiction,
-45 data-artifact groups split 20/14/5/6, 13 failure-debt rows, and seven
-non-executing data runbooks. No data lane is admitted, authorized, or executed.
-
-Exact content `404c4907...` passed a clean-room immutable review with all 23
-policy cells and 23/23 bounded mutations. An earlier reviewer independence
-contamination is preserved as `error/not_examined` and is not acceptance
-evidence. Canonical PR-279 is `COMPLETED_SUCCESS`; scientific status remains
-`OPEN_UNCHANGED`, and public use is false. At that historical checkpoint,
-PR-280 was the sole unblocked next node; PR-280 has since closed with a failed
-terminal receipt and three exact successors.
-
-PR-279's closeout review and merge requirements were subsequently satisfied.
-That delivery granted no ruleset change, data execution, capability promotion,
-or scientific release.
-
-## PR-280 terminal inventory and PR-295/PR-296/PR-297 repairs (2026-08-08)
-
-PR-280 is terminal `COMPLETED_FAILED_WITH_RECEIPT`, with three exact
-active-core successors. PR-295 is now the first successful successor: content
-commit `824a0c40...` physically relocates the CAMB 1.6.6 oracle outside the
-installed BASS project, repairs direct-runner and exception lifecycle
-classification, and makes wheel staging resilient to a deleted-module cache.
-The frozen numerical seal remains byte-identical at SHA-256 `43d4d88b...`.
-
-PR-296 is the second successful successor. Content commit `3b090aea...`
-replaces the unrelated constraint/shear projection denominator with one
-parent-resolved linear primordial amplitude shared by the Tier-B integrator and
-LoS normalization. Ordinary callable grids are resolved in parent k-order
-before process-pool creation, while bias and linear-probe paths remain raw
-through subtraction and divide exactly once. The exact frozen 65-point,
-four-worker progressive node passed in 1545.36 seconds at exactly the
-`ten_orders` tier. Strict Route-B bit-level closure remains open and XFAIL.
-
-PR-297 is the third successful successor. Content commit `0d9c98db...`
-derives every claim-registry spec dependency into clean repo-scoped handoffs,
-preflights every installer write root and destination before the first write,
-and refuses symlinked, non-directory, non-regular, or multiply-linked target
-layouts. Its exact R4 code, harness, and claim reviews all passed after R1,
-R2, and R3 failures were preserved and repaired.
-
-Canonical status records 177/244 completed (72.54%) and dependency-weighted
-completion 76.01%. PR-280 remains a failed terminal receipt with its own
-`success_dependency_satisfied=false`. All three named successors now pass, so
-the separate downstream stop-release condition is satisfied without mutating
-the failed receipt. The earlier aggregate-field wording in the historical
-PR-297 delta is superseded by the PR-281 status-integrity correction; the
-historical delta remains preserved rather than rewritten.
-At that 2026-08-08 checkpoint, PR-281, PR-282, PR-283, PR-284, PR-285,
-PR-286, PR-288, and PR-289 were dependency-ready, with PR-281 first in
-canonical topological order.
-
-The PR-295 artifact is a governance/external-transfer diagnostic with
-`TransferSource.external_transfer`. Scientific status is `OPEN_UNCHANGED`,
-observed-data execution and public use are false, and no native transfer,
-posterior/evidence, geometry, morphology-family, or family-identification
-claim is granted.
-
-The PR-296 artifact is a BASS-owned, pre-solver `diagnostic_only` C1
-`synthetic_diagnostic` with `transfer_source=none`. It restores only Python
-PSTF D2 progressive software non-regression. Scientific status remains
-`OPEN_UNCHANGED`; no observed data, null result, native transfer, posterior,
-geometry, morphology, or family-identification claim is granted.
-
-The PR-297 artifact is a COMMON-owned `diagnostic_only`
-`governance_diagnostic` with `transfer_source=none`. It restores repository
-handoff portability and path isolation only. Scientific status remains
-`OPEN_UNCHANGED`; no observed data, native transfer, posterior, public release,
-geometry, morphology, or family-identification claim is granted.
-
-## PR-281 orbit/type acceptance closure (2026-08-09)
-
-PR-281 content commit `f9edd792...` registers the finite-principal-stratum
-dimension/rank table 12-to-9, 15-to-12, and 18-to-15 together with the nonzero
-single-vector U(1) counterexample 3-to-1. It exposes replay-bound uncovered
-response directions without equating quotient rank, response rank, or data
-identifiability. Exact former V1 joint-state and type-report modules remain
-byte-preserved for PR-269 and PR-273 historical replay, and every relocation
-consumer binds the exact canonical successor path.
-
-R1 and R2 code findings remain retained in their failed review envelopes. The
-R3 code/harness and physics/claim reviews passed all 14 required cells, with
-clean system-Python suites of 24 focused, 79 adjacent, 24 PR-269 replay, and
-27 PR-273 replay tests. The newer NumPy/SciPy virtual-environment differential
-is retained as a cross-environment byte-replay limitation, not regraded as
-scientific equivalence.
-
-Canonical status records 178/244 completed (72.95%), dependency-weighted
-completion 76.33%, and critical-path completion 98.70%. The next checkpoint is
-at 180 completions, so no five-PR checkpoint is due. PR-282 is first in
-canonical topological order among the seven dependency-ready cards.
-
-The PR-281 artifact is a COMMON-owned C2 `diagnostic_only`
-`synthetic_diagnostic` with `transfer_source=none`. Scientific status remains
-`OPEN_UNCHANGED`; generic orbit separation, degree completeness, and global
-chart completeness remain `UNPROVEN`. No observed data, native transfer,
-posterior/evidence, geometry, morphology-family, public-use, or
-family-identification claim is granted.
-
-PR-151 remains acquisition-only on the external volume. At the checkpoint,
-590/1000 EZmocks were receipt-complete and batch 60 was actively advancing;
-Abacus was 0/25. Partial files remain forbidden for scientific use. The
-recent five-batch median implies roughly 59 hours for the remaining EZmock
-batches; no restart-from-zero condition is present.
-
-## PR-282 exact parity method readiness (2026-08-09)
-
-PR-282 content commit `73e1582d...` executes a closed synthetic
-parity-equivariance contract with exact rational arithmetic. The registered
-orientation-reversing orthogonal action is explicitly checked to satisfy
-`P^2=I`; the weighted Krylov estimator maps exactly from `-115/3` to `115/3`
-with zero relation residual. All registered mutation results must be complete,
-ordered, executed, activated, killed, and internally consistent before G3 can
-return `PASS_EXECUTABLE_P_EQUIVARIANCE`.
-
-The receipt resolves the authoritative Pillar-S
-`TF-09-PARITY-SIGN-EXACTNESS` record while preserving its
-`NOT_ADJUDICATED` source status. It also registers only an exact convex
-arithmetic e-value merge conditional on individually valid e-values under one
-common null and prespecified weights. H1 and H3 remain unestablished; observed
-masks, mask deconvolution, covariance/null execution, physical parity, native
-transfer, and family identification remain outside the result.
-
-The first immutable candidate is retained as FAIL because its terminal could
-accept missing or inconsistent mutation evidence, its reflection parser did
-not enforce the involution, and its source/provenance binding was incomplete.
-The repaired R2 code, harness, physics/stat, and claim reviews all pass the
-16-cell policy matrix; the frozen R2 run summary is
-`.agent-harness/runs/pr282-candidate-review-r2-20260809/RUN_SUMMARY.json`.
-
-Canonical status now records 179/244 completed (73.36%),
-dependency-weighted completion 76.65%, and critical-path completion 98.70%.
-No five-PR checkpoint is due until 180 completions. PR-283 is first among six
-dependency-ready cards.
-
-The PR-282 artifact is OBSSTAT-owned C2 `diagnostic_only`
-`synthetic_diagnostic` with `transfer_source=none`, observed-data execution
-false, public use false, scientific status `OPEN_UNCHANGED`, and family gate
-`BLOCKED_PRE_NATIVE_ATLAS`. PR-290 retains separate data-execution authority.
-PR-151 remains acquisition-only: 600/1000 EZmocks were authenticated at the
-latest read-only probe, batch 61 was actively growing, and Abacus remained
-0/25. No restart-from-zero condition is present, and partial data remains
-forbidden for science.
+Generated status authority is `docs/generated/status_snapshot.json`,
+`docs/generated/claim_ledger.json`, and `docs/generated/status_matrix.md`.

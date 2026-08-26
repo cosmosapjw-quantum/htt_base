@@ -21,6 +21,7 @@ for _name in (
 
 import argparse
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+from fractions import Fraction
 import hashlib
 import json
 import math
@@ -37,7 +38,7 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[2]
-for _path in (ROOT / "htt", ROOT / "htt/src"):
+for _path in (ROOT, ROOT / "htt", ROOT / "htt/src"):
     if str(_path) not in sys.path:
         sys.path.insert(0, str(_path))
 
@@ -50,17 +51,24 @@ from common.data_identity import (  # noqa: E402
     replay_lane_admission_decision,
 )
 from obsstat.boost_biposh_residual import ExactBoostOperator  # noqa: E402
+from obsstat.planck_post275_lane import validate_full_joint_covariance  # noqa: E402
 from obsstat.planck_pr3_operator import (  # noqa: E402
     COMPONENT_FEATURE_IDS,
+    COMPONENT_FEATURE_UNITS,
     EXPECTED_FFP10_NULL_ROWS,
     FFP10Inventory,
     GLOBAL_CLAIM_BOUNDARY,
+    JOINT_CUTSKY_ESTIMATOR_ID,
+    JOINT_CUTSKY_RETAINED_DIMENSION,
+    JOINT_CUTSKY_TOTAL_DIMENSION,
     JOINT_FEATURE_IDS,
     LMAX,
     LMIN,
+    JointCutSkyOperator,
     MaskCouplingInverse,
     PlanckLaneContractError,
     alm_to_real_vector,
+    build_joint_cutsky_operator,
     build_mask_coupling_inverse,
     calibrate_complete_synthetic_pool,
     capability_snapshot,
@@ -69,6 +77,7 @@ from obsstat.planck_pr3_operator import (  # noqa: E402
     covariance_whitened_response_rank,
     estimate_matched_joint_covariance,
     extract_multipole_vectors,
+    fit_joint_cutsky_alm,
     ordered_row_id_hash,
     real_vector_to_alm,
     remove_weighted_monopole_dipole,
@@ -110,6 +119,15 @@ PROFILE_MATRIX = (
 )
 RUST_GATE = "KEEP_PYTHON_NO_ELIGIBLE_POST_OPTIMIZATION_LEAF"
 FFP10_RELEASE_ID = "planck:ffp10:pr3:cmb:same-sky:v1"
+SMICA_EXISTING_NULL_ROWS = 300
+SMICA_EXISTING_ROW_IDS = tuple(
+    f"FFP10-SMICA-CMBNOISE-{index:05d}" for index in range(SMICA_EXISTING_NULL_ROWS)
+)
+SMICA_EXISTING_INVENTORY_ID = ordered_row_id_hash(SMICA_EXISTING_ROW_IDS)
+PR315_JOINT_CUTSKY_ESTIMATOR_ID = JOINT_CUTSKY_ESTIMATOR_ID
+PR314_FROZEN_RESULT_SHA256 = (
+    "sha256:898d08fc7c70205fbb8c7580fbaef1074357a8b3255ac77afd8273b92511da97"
+)
 SYNTHETIC_NULL_ROW_IDS = tuple(
     f"FFP10-{index:04d}" for index in range(EXPECTED_FFP10_NULL_ROWS)
 )
@@ -206,6 +224,50 @@ def _artifact_metadata(*, observed: bool) -> dict[str, object]:
     return metadata
 
 
+def _pr315_claim_metadata(
+    *, artifact_mode: str, generating_procedure: str, generating_command: str
+) -> dict[str, object]:
+    """Return the explicit downstream claim-lane metadata for PR-315."""
+
+    return {
+        "owner": "OBSSTAT",
+        "scope": "Planck PR3 SMICA ell=2..5 joint cut-sky robustness diagnostic",
+        "artifact_mode": artifact_mode,
+        "claim_tier": "diagnostic_only",
+        "transfer_source": (
+            "Planck PR3 delivered SMICA beam/pixel products; no native Bianchi transfer"
+        ),
+        "sky_support_status": (
+            "GALACTIC_SMICA_CUTSKY_COMMON_TEMPERATURE_MASK_NSIDE16"
+        ),
+        "null_mock_status": (
+            "EXACT_300_ORDERED_FFP10_SMICA_CMB_PLUS_NOISE_PAIRS"
+        ),
+        "covariance_status": (
+            "EMPIRICAL_FULL_RANK_12X12_FROM_EXACT_PRIMARY_NULL"
+        ),
+        "generating_procedure": generating_procedure,
+        "generating_command": generating_command,
+        "allowed_use": [
+            "operator-order robustness comparison",
+            "matched finite-null diagnostic calibration",
+            "map-free feature-level replay",
+        ],
+        "caveats": [
+            "single SMICA shell only; Commander robustness not evaluated",
+            "finite ranks are conditional on the exact 300 paired null rows",
+            "Planck alone cannot identify local boost versus global tilt",
+            "this generic feature control is not an MES result",
+            "native-solver and Bianchi-family identification remain blocked",
+        ],
+        "registered_claim_provenance": {
+            "claim_id": "C-PR135-FINITE-NULL-RANK",
+            "status": "CONDITIONAL_MECHANICS_ONLY",
+            "claim_promotion": False,
+        },
+    }
+
+
 def _now() -> int:
     return time.perf_counter_ns()
 
@@ -240,6 +302,54 @@ def _array_digest(value: np.ndarray) -> str:
     digest.update(repr(array.shape).encode("ascii") + b"\0")
     digest.update(memoryview(array).cast("B"))
     return "sha256:" + digest.hexdigest()
+
+
+def _atomic_npy(path: Path, value: np.ndarray) -> None:
+    """Write one deterministic numeric replay input without pickle."""
+
+    temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    try:
+        with temporary.open("xb") as handle:
+            np.save(handle, np.asarray(value, dtype=np.float64), allow_pickle=False)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def write_compact_smica_observed_replay_input(
+    *, output_dir: Path, smica_map: np.ndarray, nside: int
+) -> dict[str, object]:
+    """Retain the one band-limited SMICA map used by the diagnostic."""
+
+    import healpy as hp
+
+    value = np.asarray(smica_map, dtype=np.float64)
+    if (
+        not hp.isnsideok(nside)
+        or value.shape != (hp.nside2npix(nside),)
+        or not np.all(np.isfinite(value))
+        or output_dir.is_symlink()
+        or not output_dir.is_dir()
+    ):
+        raise PlanckWorkerError("compact SMICA replay input is malformed")
+    filename = "planck_pr3_observed_smica_bandlimited.npy"
+    path = output_dir / filename
+    if path.exists() or path.is_symlink():
+        raise PlanckWorkerError("compact SMICA replay output already exists")
+    _atomic_npy(path, value)
+    return {
+        "filename": filename,
+        "sha256": _sha256_file(path),
+        "shape": [value.size],
+        "representation": "NUMPY_NPY_FLOAT64_NO_PICKLE",
+        "map_unit": "microK_CMB",
+        "coordinate_frame": "GALACTIC",
+        "ordering": "RING",
+        "lmax": LMAX,
+        "null_ensemble_scope": "FFP10_SMICA_CMB_PLUS_NOISE_300",
+    }
 
 
 def _max_rss_bytes() -> int:
@@ -301,38 +411,61 @@ def _process_map(
 
     timings = {name: 0.0 for name in STAGES}
     mask = np.asarray(context["common_mask"], dtype=float)
-    inverse = context["mask_inverse"]
-    if not isinstance(inverse, MaskCouplingInverse):
-        raise PlanckWorkerError("mask-inverse context drifted")
+    if context.get("estimator_id") == PR315_JOINT_CUTSKY_ESTIMATOR_ID:
+        operator = context.get("joint_cutsky_operator")
+        joint_cutsky_operator_identity(context)
+        started = _now()
+        try:
+            fit = fit_joint_cutsky_alm(
+                pixel_map,
+                mask=mask,
+                operator=operator,
+                source_beam=context["source_beams"][component],
+                source_pixel_window=context["source_pixels"][component],
+                target_beam=context["target_beam"],
+                target_pixel_window=context["target_pixel"],
+            )
+        except PlanckLaneContractError as exc:
+            raise PlanckWorkerError(f"joint cut-sky fit abstained: {exc}") from exc
+        alm = fit.retained_alm
+        timings["mask_inverse"] += _seconds(started)
+    else:
+        inverse = context["mask_inverse"]
+        if not isinstance(inverse, MaskCouplingInverse):
+            raise PlanckWorkerError("mask-inverse context drifted")
 
-    started = _now()
-    cleaned = remove_weighted_monopole_dipole(pixel_map, mask)
-    timings["input"] += _seconds(started)
+        started = _now()
+        cleaned = remove_weighted_monopole_dipole(pixel_map, mask)
+        timings["input"] += _seconds(started)
 
-    started = _now()
-    raw_alm = hp.map2alm(cleaned, lmax=LMAX, iter=0, pol=False)
-    timings["map2alm"] += _seconds(started)
+        started = _now()
+        raw_alm = hp.map2alm(cleaned, lmax=LMAX, iter=0, pol=False)
+        timings["map2alm"] += _seconds(started)
 
-    started = _now()
-    common_alm = commonize_beam_pixel_alm(
-        raw_alm,
-        source_beam=context["source_beams"][component],
-        source_pixel_window=context["source_pixels"][component],
-        target_beam=context["target_beam"],
-        target_pixel_window=context["target_pixel"],
-        lmax=LMAX,
-    )
-    common_map = hp.alm2map(common_alm, nside=inverse.nside, lmax=LMAX, pol=False)
-    timings["beam_pixel"] += _seconds(started)
+        started = _now()
+        common_alm = commonize_beam_pixel_alm(
+            raw_alm,
+            source_beam=context["source_beams"][component],
+            source_pixel_window=context["source_pixels"][component],
+            target_beam=context["target_beam"],
+            target_pixel_window=context["target_pixel"],
+            lmax=LMAX,
+        )
+        common_map = hp.alm2map(
+            common_alm, nside=inverse.nside, lmax=LMAX, pol=False
+        )
+        timings["beam_pixel"] += _seconds(started)
 
-    started = _now()
-    pseudo = hp.map2alm(mask * common_map, lmax=LMAX, iter=0, pol=False)
-    timings["map2alm"] += _seconds(started)
+        started = _now()
+        pseudo = hp.map2alm(mask * common_map, lmax=LMAX, iter=0, pol=False)
+        timings["map2alm"] += _seconds(started)
 
-    started = _now()
-    solved = inverse.inverse @ alm_to_real_vector(pseudo, lmin=LMIN, lmax=LMAX)
-    alm = real_vector_to_alm(solved, lmin=LMIN, lmax=LMAX)
-    timings["mask_inverse"] += _seconds(started)
+        started = _now()
+        solved = inverse.inverse @ alm_to_real_vector(
+            pseudo, lmin=LMIN, lmax=LMAX
+        )
+        alm = real_vector_to_alm(solved, lmin=LMIN, lmax=LMAX)
+        timings["mask_inverse"] += _seconds(started)
 
     started = _now()
     vectors2 = extract_multipole_vectors(alm, ell=2, lmax=LMAX)
@@ -848,6 +981,1397 @@ def _require_declared_nside(
     return declared_nside
 
 
+def build_smica_operator_context(
+    *,
+    smica_map: np.ndarray,
+    mask: np.ndarray,
+    beam: np.ndarray,
+    window: Mapping[str, np.ndarray],
+    declared_nside: int,
+) -> dict[str, object]:
+    """Build the PR-306 operator for one explicitly SMICA-only diagnostic."""
+
+    values = np.asarray(smica_map, dtype=float)
+    selected_mask = np.asarray(mask, dtype=float)
+    selected_beam = np.asarray(beam, dtype=float)
+    required_window = {
+        "source_pixel_window",
+        "target_beam",
+        "target_pixel_window",
+    }
+    if (
+        values.ndim != 1
+        or selected_mask.shape != values.shape
+        or set(window) != required_window
+        or not np.all(np.isfinite(values))
+        or not np.all(np.isfinite(selected_mask))
+        or not np.all(np.isfinite(selected_beam))
+    ):
+        raise PlanckWorkerError("SMICA-only operator inputs are malformed")
+    source_pixel = np.asarray(window["source_pixel_window"], dtype=float)
+    target_beam = np.asarray(window["target_beam"], dtype=float)
+    target_pixel = np.asarray(window["target_pixel_window"], dtype=float)
+    if (
+        selected_beam.shape != target_beam.shape
+        or source_pixel.shape != target_pixel.shape
+        or not np.array_equal(selected_beam, target_beam)
+        or not np.all(np.isfinite(source_pixel))
+        or not np.all(np.isfinite(target_pixel))
+    ):
+        raise PlanckWorkerError("SMICA-only beam/pixel commonization drifted")
+    inverse = build_mask_coupling_inverse(
+        selected_mask, lmin=LMIN, lmax=LMAX
+    )
+    return {
+        "pipeline_scope": "SMICA_ONLY",
+        "nside": _require_declared_nside(inverse, declared_nside),
+        "common_mask": selected_mask,
+        "source_beams": {"SMICA": selected_beam},
+        "source_pixels": {"SMICA": source_pixel},
+        "target_beam": target_beam,
+        "target_pixel": target_pixel,
+        "mask_inverse": inverse,
+    }
+
+
+def build_smica_joint_cutsky_context(
+    *,
+    smica_map: np.ndarray,
+    mask: np.ndarray,
+    beam: np.ndarray,
+    window: Mapping[str, np.ndarray],
+    declared_nside: int,
+) -> dict[str, object]:
+    """Build the frozen PR-315 36-column joint cut-sky estimator context."""
+
+    values = np.asarray(smica_map, dtype=float)
+    selected_mask = np.asarray(mask, dtype=float)
+    selected_beam = np.asarray(beam, dtype=float)
+    required_window = {
+        "source_pixel_window",
+        "target_beam",
+        "target_pixel_window",
+    }
+    if (
+        values.ndim != 1
+        or selected_mask.shape != values.shape
+        or set(window) != required_window
+        or not np.all(np.isfinite(values))
+        or not np.all(np.isfinite(selected_mask))
+        or not np.all(np.isfinite(selected_beam))
+        or type(declared_nside) is not int
+    ):
+        raise PlanckWorkerError("SMICA joint cut-sky inputs are malformed")
+    source_pixel = np.asarray(window["source_pixel_window"], dtype=float)
+    target_beam = np.asarray(window["target_beam"], dtype=float)
+    target_pixel = np.asarray(window["target_pixel_window"], dtype=float)
+    if (
+        selected_beam.shape != target_beam.shape
+        or source_pixel.shape != target_pixel.shape
+        or selected_beam.size <= LMAX
+        or source_pixel.size <= LMAX
+        or not np.array_equal(selected_beam, target_beam)
+        or not np.all(np.isfinite(source_pixel))
+        or not np.all(np.isfinite(target_pixel))
+    ):
+        raise PlanckWorkerError("SMICA joint cut-sky transfer semantics drifted")
+    try:
+        operator = build_joint_cutsky_operator(
+            selected_mask,
+            lmin=0,
+            lmax=LMAX,
+            retained_lmin=LMIN,
+        )
+    except PlanckLaneContractError as exc:
+        raise PlanckWorkerError(f"joint cut-sky operator abstained: {exc}") from exc
+    if operator.nside != declared_nside:
+        raise PlanckWorkerError(
+            "admitted map pixelization differs from the declared nside"
+        )
+    context: dict[str, object] = {
+        "pipeline_scope": "SMICA_ONLY_PR315_JOINT_CUTSKY",
+        "estimator_id": PR315_JOINT_CUTSKY_ESTIMATOR_ID,
+        "nside": declared_nside,
+        "common_mask": selected_mask,
+        "source_beams": {"SMICA": selected_beam},
+        "source_pixels": {"SMICA": source_pixel},
+        "target_beam": target_beam,
+        "target_pixel": target_pixel,
+        "joint_cutsky_operator": operator,
+    }
+    joint_cutsky_operator_identity(context)
+    return context
+
+
+def joint_cutsky_operator_identity(
+    context: Mapping[str, object],
+) -> dict[str, object]:
+    """Return the exact observation/null operator identity for PR-315."""
+
+    operator = context.get("joint_cutsky_operator")
+    if not isinstance(operator, JointCutSkyOperator):
+        raise PlanckWorkerError("joint cut-sky operator identity is missing")
+    if (
+        context.get("estimator_id") != PR315_JOINT_CUTSKY_ESTIMATOR_ID
+        or operator.lmin != 0
+        or operator.lmax != LMAX
+        or operator.retained_lmin != LMIN
+        or operator.dimension != JOINT_CUTSKY_TOTAL_DIMENSION
+        or operator.retained_dimension != JOINT_CUTSKY_RETAINED_DIMENSION
+    ):
+        raise PlanckWorkerError("joint cut-sky estimator is not the frozen 36-column fit")
+    return {
+        "estimator_id": PR315_JOINT_CUTSKY_ESTIMATOR_ID,
+        "basis_dimension": operator.dimension,
+        "retained_dimension": operator.retained_dimension,
+        "basis_order": [list(row) for row in operator.basis_order],
+        "mask_sha256": operator.mask_sha256,
+        "normal_matrix_sha256": operator.normal_matrix_sha256,
+        "operator_sha256": operator.operator_sha256,
+        "condition_number": operator.condition_number,
+        "singular_floor": operator.singular_values[-1],
+        "relative_threshold": operator.relative_threshold,
+        "condition_ceiling": operator.condition_ceiling,
+        "transfer_order": "JOINT_MASKED_FIT_THEN_BEAM_PIXEL_COMMONIZATION",
+    }
+
+
+def require_observation_null_operator_identity(
+    observation: Mapping[str, object], null: Mapping[str, object]
+) -> str:
+    """Fail closed unless observation and primary null share one operator."""
+
+    try:
+        observation_identity = dict(observation)
+        null_identity = dict(null)
+        observation_hash = _canonical_hash(observation_identity)
+        null_hash = _canonical_hash(null_identity)
+    except (TypeError, ValueError) as exc:
+        raise PlanckWorkerError("observation/null operator identity is malformed") from exc
+    if observation_identity != null_identity or observation_hash != null_hash:
+        raise PlanckWorkerError("observation/null operator identity mismatch")
+    return observation_hash
+
+
+def pr315_branch_tail_registry() -> dict[str, object]:
+    """Return the pre-observation branch roles and two-sided tail family."""
+
+    return {
+        "format": "PLANCK_PR315_BRANCH_TAIL_REGISTRY_V1",
+        "benchmark_control": {
+            "role": "FROZEN_PR314_BENCHMARK_CONTROL_NOT_MES",
+            "result_sha256": PR314_FROZEN_RESULT_SHA256,
+            "estimator": "PR314_DELIVERED_FULL_SKY_SEQUENTIAL_BENCHMARK",
+        },
+        "joint_cutsky": {
+            "role": "PREDECLARED_ROBUSTNESS_BRANCH",
+            "estimator": PR315_JOINT_CUTSKY_ESTIMATOR_ID,
+            "basis_dimension": JOINT_CUTSKY_TOTAL_DIMENSION,
+            "retained_dimension": JOINT_CUTSKY_RETAINED_DIMENSION,
+        },
+        "feature_order": list(COMPONENT_FEATURE_IDS),
+        "tails": ["two-sided"] * len(COMPONENT_FEATURE_IDS),
+        "selection_rule": "NO_BRANCH_SELECTED_FROM_OBSERVED_OUTCOME",
+    }
+
+
+def validate_pr315_branch_tail_registry(
+    registry: Mapping[str, object],
+) -> dict[str, object]:
+    """Reject any post-hoc mutation of the PR-315 estimand registry."""
+
+    expected = pr315_branch_tail_registry()
+    try:
+        candidate = json.loads(
+            json.dumps(registry, sort_keys=True, allow_nan=False, ensure_ascii=True)
+        )
+    except (TypeError, ValueError) as exc:
+        raise PlanckWorkerError("PR-315 branch/tail registry is malformed") from exc
+    if candidate != expected:
+        raise PlanckWorkerError("PR-315 branch/tail registry drifted")
+    return candidate
+
+
+def analyze_smica_feature_rows(
+    *,
+    observed_features: object,
+    null_features: object,
+    row_ids: Sequence[str],
+) -> dict[str, object]:
+    """Calibrate the complete 300-row SMICA-only feature family."""
+
+    identifiers = tuple(row_ids)
+    if len(identifiers) != SMICA_EXISTING_NULL_ROWS:
+        raise PlanckWorkerError("SMICA calibration requires the exact 300 null rows")
+    if identifiers != SMICA_EXISTING_ROW_IDS:
+        raise PlanckWorkerError("SMICA null row identity or order drifted")
+    observed = np.asarray(observed_features, dtype=float)
+    nulls = np.asarray(null_features, dtype=float)
+    dimension = len(COMPONENT_FEATURE_IDS)
+    if (
+        observed.shape != (dimension,)
+        or nulls.shape != (SMICA_EXISTING_NULL_ROWS, dimension)
+        or not np.all(np.isfinite(observed))
+        or not np.all(np.isfinite(nulls))
+    ):
+        raise PlanckWorkerError("SMICA feature matrix is incomplete or malformed")
+    covariance = np.cov(nulls, rowvar=False, ddof=1)
+    validation = _smica_covariance_diagnostics(covariance)
+    inventory = FFP10Inventory(
+        identifiers,
+        expected_identity=SMICA_EXISTING_INVENTORY_ID,
+        expected_null_rows=SMICA_EXISTING_NULL_ROWS,
+    )
+    scan = calibrate_complete_synthetic_pool(
+        observation_features=observed,
+        null_features=nulls,
+        inventory=inventory,
+    )
+    return {
+        "pipeline_scope": "SMICA_ONLY",
+        "feature_order": list(COMPONENT_FEATURE_IDS),
+        "observed_feature_vector": observed.tolist(),
+        "covariance_rank": int(validation["rank"]),
+        "covariance_condition": float(validation["standardized_condition"]),
+        "covariance_raw_condition": float(validation["raw_condition"]),
+        "covariance_condition_basis": "DIAGONAL_STANDARDIZED",
+        "covariance_whitening": "AVAILABLE_CHOLESKY_LEFT_NOT_USED_BY_RANK_SCAN",
+        "null_rows": SMICA_EXISTING_NULL_ROWS,
+        "null_semantics": "FFP10_CMB_PLUS_NOISE_PAIRED_BY_ID",
+        "null_ordered_row_ids_sha256": SMICA_EXISTING_INVENTORY_ID,
+        "finite_feature_family_p": str(scan.global_p),
+        "resolution_floor": str(scan.resolution_floor),
+        "local_feature_p": [str(value) for value in scan.local_p],
+        "commander_robustness": "NOT_EVALUATED",
+        "joint_covariance": "NOT_APPLICABLE_SMICA_ONLY",
+        "local_response_rank": "NOT_COMPUTED_SMICA_ONLY",
+        "global_response_status": "MISSING",
+        "global_claim_boundary": GLOBAL_CLAIM_BOUNDARY,
+        "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    }
+
+
+def _smica_covariance_diagnostics(
+    covariance: object, *, condition_ceiling: float = 1.0e10
+) -> dict[str, object]:
+    """Validate covariance without making the gate depend on feature units."""
+
+    matrix = np.asarray(covariance, dtype=float)
+    dimension = len(COMPONENT_FEATURE_IDS)
+    if (
+        matrix.shape != (dimension, dimension)
+        or not np.all(np.isfinite(matrix))
+        or not np.allclose(matrix, matrix.T, rtol=1.0e-12, atol=1.0e-15)
+    ):
+        raise PlanckWorkerError("SMICA covariance shape or finiteness drifted")
+    variances = np.diag(matrix)
+    if np.any(variances <= 0.0):
+        raise PlanckWorkerError("SMICA covariance has a nonpositive variance")
+    scales = np.sqrt(variances)
+    standardized = matrix / np.outer(scales, scales)
+    try:
+        validation = validate_full_joint_covariance(
+            standardized, COMPONENT_FEATURE_IDS
+        )
+        np.linalg.cholesky(matrix)
+    except (PlanckLaneContractError, np.linalg.LinAlgError) as exc:
+        raise PlanckWorkerError("SMICA covariance is not full positive definite") from exc
+    standardized_condition = float(validation["condition_number"])
+    if (
+        not math.isfinite(standardized_condition)
+        or standardized_condition > condition_ceiling
+    ):
+        raise PlanckWorkerError(
+            "SMICA standardized covariance exceeds the condition ceiling"
+        )
+    eigenvalues = np.linalg.eigvalsh(matrix)
+    raw_condition = float(eigenvalues[-1] / eigenvalues[0])
+    return {
+        "rank": int(validation["rank"]),
+        "standardized_condition": standardized_condition,
+        "raw_condition": raw_condition,
+    }
+
+
+def _canonical_hash(payload: Mapping[str, object]) -> str:
+    raw = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+        allow_nan=False,
+    ).encode("ascii")
+    return "sha256:" + hashlib.sha256(raw).hexdigest()
+
+
+def _pr315_feature_scientific_projection(
+    diagnostic: Mapping[str, object],
+) -> dict[str, object]:
+    keys = (
+        "pipeline_scope",
+        "feature_order",
+        "observed_feature_vector",
+        "covariance_rank",
+        "covariance_condition",
+        "covariance_raw_condition",
+        "covariance_condition_basis",
+        "null_rows",
+        "null_semantics",
+        "null_ordered_row_ids_sha256",
+        "finite_feature_family_p",
+        "resolution_floor",
+        "local_feature_p",
+        "global_response_status",
+        "global_claim_boundary",
+        "family_identification_gate",
+    )
+    if any(key not in diagnostic for key in keys):
+        raise PlanckWorkerError("PR-315 scientific projection is incomplete")
+    return {key: diagnostic[key] for key in keys}
+
+
+def write_pr315_feature_package(
+    *,
+    package_path: Path,
+    metadata_path: Path,
+    observed_features: object,
+    null_features: object,
+    row_ids: Sequence[str],
+    operator_identity: Mapping[str, object],
+    raw_input_manifest_sha256: str | None = None,
+) -> dict[str, object]:
+    """Write the portable 12 plus 300-by-12 PR-315 replay surface."""
+
+    observed = np.asarray(observed_features, dtype=float)
+    nulls = np.asarray(null_features, dtype=float)
+    identifiers = tuple(row_ids)
+    diagnostic = analyze_smica_feature_rows(
+        observed_features=observed,
+        null_features=nulls,
+        row_ids=identifiers,
+    )
+    identity = json.loads(
+        json.dumps(operator_identity, sort_keys=True, ensure_ascii=True, allow_nan=False)
+    )
+    if (
+        not isinstance(identity, Mapping)
+        or identity.get("estimator_id") != PR315_JOINT_CUTSKY_ESTIMATOR_ID
+        or identity.get("basis_dimension") != JOINT_CUTSKY_TOTAL_DIMENSION
+        or identity.get("retained_dimension") != JOINT_CUTSKY_RETAINED_DIMENSION
+    ):
+        raise PlanckWorkerError("PR-315 feature package operator identity drifted")
+    if raw_input_manifest_sha256 is not None and (
+        not isinstance(raw_input_manifest_sha256, str)
+        or not raw_input_manifest_sha256.startswith("sha256:")
+        or len(raw_input_manifest_sha256) != 71
+    ):
+        raise PlanckWorkerError("PR-315 raw-input manifest hash is malformed")
+    covariance = np.cov(nulls, rowvar=False, ddof=1)
+    registry = validate_pr315_branch_tail_registry(pr315_branch_tail_registry())
+    package_path.parent.mkdir(parents=True, exist_ok=True)
+    metadata_path.parent.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(
+        package_path,
+        observed_features=observed,
+        null_features=nulls,
+        covariance=covariance,
+        row_ids=np.asarray(identifiers),
+        feature_ids=np.asarray(COMPONENT_FEATURE_IDS),
+        feature_units=np.asarray(COMPONENT_FEATURE_UNITS),
+        tails=np.asarray(registry["tails"]),
+    )
+    projection_sha256 = _canonical_hash(
+        _pr315_feature_scientific_projection(diagnostic)
+    )
+    metadata = {
+        "format": "PLANCK_PR3_SMICA_JOINT_CUTSKY_FEATURE_PACKAGE_V1",
+        **_pr315_claim_metadata(
+            artifact_mode="claim_bearing_frozen_feature_replay",
+            generating_procedure=(
+                "scripts.observed_runs.run_planck_pr3.write_pr315_feature_package"
+            ),
+            generating_command=(
+                "python scripts/observed_runs/run_planck_pr3.py "
+                "--export-pr315-portable [content-bound arguments]"
+            ),
+        ),
+        "package_filename": package_path.name,
+        "package_byte_size": package_path.stat().st_size,
+        "package_sha256": _sha256_file(package_path),
+        "operator_identity": identity,
+        "operator_identity_sha256": _canonical_hash(identity),
+        "raw_input_manifest_sha256": raw_input_manifest_sha256,
+        "null_ordered_row_ids_sha256": SMICA_EXISTING_INVENTORY_ID,
+        "branch_tail_registry": registry,
+        "scientific_projection_sha256": projection_sha256,
+        "global_claim_boundary": GLOBAL_CLAIM_BOUNDARY,
+        "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    }
+    _write_json(metadata_path, metadata)
+    return {
+        **metadata,
+        "metadata_sha256": _sha256_file(metadata_path),
+    }
+
+
+def replay_pr315_feature_package(
+    *,
+    package_path: Path,
+    metadata_path: Path,
+    require_claim_metadata: bool = True,
+) -> dict[str, object]:
+    """Recompute the PR-315 scientific projection without reopening maps."""
+
+    metadata = _strict_json(metadata_path, label="PR-315 feature metadata")
+    if (
+        metadata.get("format")
+        != "PLANCK_PR3_SMICA_JOINT_CUTSKY_FEATURE_PACKAGE_V1"
+        or metadata.get("package_filename") != package_path.name
+        or metadata.get("package_byte_size") != package_path.stat().st_size
+        or metadata.get("package_sha256") != _sha256_file(package_path)
+    ):
+        raise PlanckWorkerError("PR-315 feature package hash or identity drifted")
+    expected_claim_metadata = _pr315_claim_metadata(
+        artifact_mode="claim_bearing_frozen_feature_replay",
+        generating_procedure=(
+            "scripts.observed_runs.run_planck_pr3.write_pr315_feature_package"
+        ),
+        generating_command=(
+            "python scripts/observed_runs/run_planck_pr3.py "
+            "--export-pr315-portable [content-bound arguments]"
+        ),
+    )
+    if require_claim_metadata and any(
+        metadata.get(key) != value
+        for key, value in expected_claim_metadata.items()
+    ):
+        raise PlanckWorkerError("PR-315 feature claim metadata drifted")
+    registry = metadata.get("branch_tail_registry")
+    if not isinstance(registry, Mapping):
+        raise PlanckWorkerError("PR-315 branch/tail registry is missing")
+    validate_pr315_branch_tail_registry(registry)
+    identity = metadata.get("operator_identity")
+    if (
+        not isinstance(identity, Mapping)
+        or metadata.get("operator_identity_sha256") != _canonical_hash(identity)
+        or identity.get("estimator_id") != PR315_JOINT_CUTSKY_ESTIMATOR_ID
+        or identity.get("basis_dimension") != JOINT_CUTSKY_TOTAL_DIMENSION
+        or identity.get("retained_dimension") != JOINT_CUTSKY_RETAINED_DIMENSION
+    ):
+        raise PlanckWorkerError("PR-315 feature operator identity drifted")
+    try:
+        with np.load(package_path, allow_pickle=False) as bundle:
+            expected_keys = {
+                "observed_features",
+                "null_features",
+                "covariance",
+                "row_ids",
+                "feature_ids",
+                "feature_units",
+                "tails",
+            }
+            if set(bundle.files) != expected_keys:
+                raise PlanckWorkerError("PR-315 feature package keys drifted")
+            observed = np.asarray(bundle["observed_features"], dtype=float)
+            nulls = np.asarray(bundle["null_features"], dtype=float)
+            covariance = np.asarray(bundle["covariance"], dtype=float)
+            row_ids = tuple(str(value) for value in bundle["row_ids"].tolist())
+            feature_ids = tuple(str(value) for value in bundle["feature_ids"].tolist())
+            feature_units = tuple(
+                str(value) for value in bundle["feature_units"].tolist()
+            )
+            tails = tuple(str(value) for value in bundle["tails"].tolist())
+    except (KeyError, OSError, ValueError) as exc:
+        raise PlanckWorkerError("PR-315 feature package is not safe numeric NPZ") from exc
+    if (
+        feature_ids != COMPONENT_FEATURE_IDS
+        or feature_units != COMPONENT_FEATURE_UNITS
+        or tails != tuple(registry["tails"])
+        or metadata.get("null_ordered_row_ids_sha256")
+        != SMICA_EXISTING_INVENTORY_ID
+    ):
+        raise PlanckWorkerError("PR-315 feature package schema drifted")
+    diagnostic = analyze_smica_feature_rows(
+        observed_features=observed,
+        null_features=nulls,
+        row_ids=row_ids,
+    )
+    recomputed_covariance = np.cov(nulls, rowvar=False, ddof=1)
+    if not np.array_equal(covariance, recomputed_covariance):
+        raise PlanckWorkerError("PR-315 portable covariance differs from replay")
+    projection_sha256 = _canonical_hash(
+        _pr315_feature_scientific_projection(diagnostic)
+    )
+    if projection_sha256 != metadata.get("scientific_projection_sha256"):
+        raise PlanckWorkerError("PR-315 portable scientific projection drifted")
+    return {
+        **diagnostic,
+        "scientific_projection_sha256": projection_sha256,
+        "feature_package_sha256": metadata["package_sha256"],
+        "feature_metadata_sha256": _sha256_file(metadata_path),
+        "operator_identity_sha256": metadata["operator_identity_sha256"],
+        "raw_maps_reopened": False,
+    }
+
+
+def _require_git_identity(value: str, *, label: str) -> str:
+    if len(value) != 40 or any(character not in "0123456789abcdef" for character in value):
+        raise PlanckWorkerError(f"{label} must be one lowercase git object ID")
+    return value
+
+
+def _current_git_identity() -> tuple[str, str]:
+    """Return the exact commit and tree containing the executing worker."""
+
+    try:
+        completed = subprocess.run(
+            ["git", "rev-parse", "HEAD", "HEAD^{tree}"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise PlanckWorkerError("current checkout identity is unavailable") from exc
+    values = tuple(line.strip() for line in completed.stdout.splitlines())
+    if len(values) != 2:
+        raise PlanckWorkerError("current checkout identity is malformed")
+    return (
+        _require_git_identity(values[0], label="current commit"),
+        _require_git_identity(values[1], label="current tree"),
+    )
+
+
+def _smica_plan_components(plan: Mapping[str, object]) -> dict[str, Path]:
+    if (
+        plan.get("format") != "PLANCK_PR3_SMICA_EXISTING_PLAN_V1"
+        or plan.get("pipeline_scope") != "SMICA_ONLY"
+        or plan.get("ordered_row_ids_sha256") != SMICA_EXISTING_INVENTORY_ID
+        or plan.get("observed_temperature_payload_opened") is not False
+    ):
+        raise PlanckWorkerError("SMICA existing-data plan identity drifted")
+    raw_components = plan.get("components")
+    if not isinstance(raw_components, Mapping):
+        raise PlanckWorkerError("SMICA plan components are missing")
+    required = {"mask", "beam", "window", "null", "covariance", "selection"}
+    if set(raw_components) != required:
+        raise PlanckWorkerError("SMICA plan component inventory drifted")
+    result: dict[str, Path] = {}
+    for name in sorted(required):
+        row = raw_components[name]
+        if not isinstance(row, Mapping):
+            raise PlanckWorkerError(f"SMICA plan component {name} is malformed")
+        path_text = row.get("path")
+        expected_size = row.get("byte_size")
+        expected_hash = row.get("sha256")
+        if not isinstance(path_text, str) or not isinstance(expected_size, int):
+            raise PlanckWorkerError(f"SMICA plan component {name} identity is malformed")
+        path = Path(path_text)
+        if (
+            not path.is_absolute()
+            or path.is_symlink()
+            or not path.is_file()
+            or path.resolve() != path
+            or path.stat().st_size != expected_size
+            or _sha256_file(path) != expected_hash
+        ):
+            raise PlanckWorkerError(f"SMICA plan component {name} no longer matches")
+        result[name] = path
+    return result
+
+
+def smica_existing_acceptance(
+    *,
+    plan_path: Path,
+    output_dir: Path,
+    candidate_commit: str,
+    candidate_tree: str,
+) -> dict[str, object]:
+    """Compute the exact attended confirmation surface without observed open."""
+
+    plan = _strict_json(plan_path, label="SMICA existing-data plan")
+    _smica_plan_components(plan)
+    observed = plan.get("observed_smica")
+    if not isinstance(observed, Mapping):
+        raise PlanckWorkerError("SMICA observed source identity is missing")
+    path_text = observed.get("path")
+    expected_size = observed.get("byte_size")
+    if not isinstance(path_text, str) or not isinstance(expected_size, int):
+        raise PlanckWorkerError("SMICA observed source identity is malformed")
+    observed_path = Path(path_text)
+    if (
+        not observed_path.is_absolute()
+        or observed_path.is_symlink()
+        or not observed_path.is_file()
+        or observed_path.resolve() != observed_path
+        or observed_path.stat().st_size != expected_size
+        or observed_path.name != observed.get("filename")
+    ):
+        raise PlanckWorkerError("SMICA observed source is not the identified product")
+    if not output_dir.is_absolute() or output_dir.is_symlink():
+        raise PlanckWorkerError("SMICA output directory must be absolute and regular")
+    requested_commit = _require_git_identity(
+        candidate_commit, label="candidate commit"
+    )
+    requested_tree = _require_git_identity(candidate_tree, label="candidate tree")
+    current_commit, current_tree = _current_git_identity()
+    if (requested_commit, requested_tree) != (current_commit, current_tree):
+        raise PlanckWorkerError("candidate identity does not equal current checkout")
+    payload = {
+        "capability": "PLANCK_PR3_SMICA_EXISTING_DATA_DIAGNOSTIC",
+        "candidate_commit": requested_commit,
+        "candidate_tree": requested_tree,
+        "plan_sha256": _sha256_file(plan_path),
+        "observed_source": {
+            "filename": observed_path.name,
+            "byte_size": expected_size,
+            "release_identity": plan.get("release_identity"),
+        },
+        "null_ordered_row_ids_sha256": SMICA_EXISTING_INVENTORY_ID,
+        "worker_sha256": _sha256_file(Path(__file__).resolve()),
+        "output_dir": str(output_dir),
+    }
+    return {**payload, "acceptance_hash": _canonical_hash(payload)}
+
+
+def _load_smica_existing_rows(
+    *, plan: Mapping[str, object], components: Mapping[str, Path]
+) -> tuple[dict[str, object], tuple[str, ...], np.ndarray, Mapping[str, object]]:
+    selection = _strict_json(components["selection"], label="SMICA selection")
+    if (
+        selection.get("pipeline_scope") != "SMICA_ONLY"
+        or selection.get("expected_null_rows") != SMICA_EXISTING_NULL_ROWS
+        or selection.get("null_semantics")
+        != "FFP10_CMB_PLUS_NOISE_PAIRED_BY_ID"
+        or selection.get("ordered_row_ids_sha256") != SMICA_EXISTING_INVENTORY_ID
+        or selection.get("feature_ids") != list(COMPONENT_FEATURE_IDS)
+    ):
+        raise PlanckWorkerError("SMICA selection contract drifted")
+    try:
+        with np.load(components["null"], allow_pickle=False, mmap_mode="r") as bundle:
+            if set(bundle.files) != {"row_ids", "smica_maps"}:
+                raise PlanckWorkerError("SMICA null bundle keys drifted")
+            raw_ids = np.asarray(bundle["row_ids"])
+            maps = np.asarray(bundle["smica_maps"])
+    except (OSError, ValueError) as exc:
+        raise PlanckWorkerError("SMICA null bundle is not safe numeric NPZ") from exc
+    row_ids = tuple(str(value) for value in raw_ids.tolist())
+    if row_ids != SMICA_EXISTING_ROW_IDS:
+        raise PlanckWorkerError("SMICA null row identity or order drifted")
+    nside = selection.get("nside")
+    if type(nside) is not int:
+        raise PlanckWorkerError("SMICA output nside is malformed")
+    return dict(selection), row_ids, maps, plan
+
+
+def _smica_result_projection(payload: Mapping[str, object]) -> dict[str, object]:
+    if payload.get("format") != "PLANCK_PR3_SMICA_EXISTING_RESULT_V1":
+        raise PlanckWorkerError("SMICA result format drifted")
+    projection = json.loads(
+        json.dumps(payload, sort_keys=True, ensure_ascii=True, allow_nan=False)
+    )
+    projection.pop("wall_seconds", None)
+    return projection
+
+
+def _append_fsynced(path: Path, text_value: str) -> None:
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(text_value)
+        handle.flush()
+        os.fsync(handle.fileno())
+
+
+def run_smica_existing_attended(
+    *,
+    plan_path: Path,
+    output_dir: Path,
+    candidate_commit: str,
+    candidate_tree: str,
+    confirmation: str,
+) -> dict[str, object]:
+    """Run the complete local SMICA diagnostic after exact attended confirm."""
+
+    acceptance = smica_existing_acceptance(
+        plan_path=plan_path,
+        output_dir=output_dir,
+        candidate_commit=candidate_commit,
+        candidate_tree=candidate_tree,
+    )
+    if confirmation != acceptance["acceptance_hash"]:
+        raise PlanckWorkerError("SMICA attended confirmation does not match")
+    if output_dir.exists():
+        if not output_dir.is_dir() or any(output_dir.iterdir()):
+            raise PlanckWorkerError("SMICA output directory must be new or empty")
+    else:
+        output_dir.mkdir(parents=True)
+    _write_json(output_dir / "acceptance.json", acceptance)
+    _write_json(
+        output_dir / "start.json",
+        {
+            "state": "STARTED_BEFORE_OBSERVED_OPEN",
+            "acceptance_hash": acceptance["acceptance_hash"],
+            "candidate_commit": candidate_commit,
+            "candidate_tree": candidate_tree,
+        },
+    )
+    started = _now()
+    try:
+        plan = _strict_json(plan_path, label="SMICA existing-data plan")
+        components = _smica_plan_components(plan)
+        selection, row_ids, _, _ = _load_smica_existing_rows(
+            plan=plan, components=components
+        )
+        nside = int(selection["nside"])
+        observed_row = plan["observed_smica"]
+        observed_path = Path(str(observed_row["path"]))
+        from scripts.observed_runs.prepare_planck_pr3_admission import (
+            read_temperature_fits,
+            reduce_temperature_map,
+        )
+
+        loaded = read_temperature_fits(
+            observed_path,
+            allowed_column_names=("I_STOKES",),
+            declared_coordinate_frame="GALACTIC",
+        )
+        observed_map = reduce_temperature_map(
+            loaded.values,
+            source_unit=loaded.unit,
+            source_ordering=loaded.ordering,
+            output_nside=nside,
+        )
+        mask = _load_npy(components["mask"], label="SMICA mask", dimension=1)
+        beam = _load_npy(components["beam"], label="SMICA beam", dimension=1)
+        window = _load_window(components["window"], label="SMICA window")
+        context = build_smica_operator_context(
+            smica_map=observed_map,
+            mask=mask,
+            beam=beam,
+            window=window,
+            declared_nside=nside,
+        )
+        null_features = _process_ffp10_component(
+            components["null"],
+            array_name="smica_maps",
+            row_ids=row_ids,
+            component="SMICA",
+            context=context,
+        )
+        observed_features, _, _ = _process_map(
+            observed_map, component="SMICA", context=context
+        )
+        diagnostic = analyze_smica_feature_rows(
+            observed_features=observed_features,
+            null_features=null_features,
+            row_ids=row_ids,
+        )
+        replay = write_compact_smica_observed_replay_input(
+            output_dir=output_dir, smica_map=observed_map, nside=nside
+        )
+        stored_covariance = _load_npy(
+            components["covariance"], label="SMICA covariance", dimension=2
+        )
+        replay_covariance = np.cov(null_features, rowvar=False, ddof=1)
+        if not np.array_equal(stored_covariance, replay_covariance):
+            raise PlanckWorkerError("SMICA stored covariance differs from replay")
+        result = {
+            "format": "PLANCK_PR3_SMICA_EXISTING_RESULT_V1",
+            **diagnostic,
+            "acceptance_hash": acceptance["acceptance_hash"],
+            "candidate_commit": candidate_commit,
+            "candidate_tree": candidate_tree,
+            "source_release": plan["release_identity"],
+            "observed_smica_filename": observed_path.name,
+            "observed_smica_sha256": _sha256_file(observed_path),
+            "compact_observed_replay_input": replay,
+            "wall_seconds": _seconds(started),
+            "observed_statistic_seen": True,
+            "observed_science_executed": True,
+            "claim_tier": "diagnostic_only",
+            "forbidden_claims": [
+                "Commander robustness",
+                "joint Planck component-separation closure",
+                "global response",
+                "source attribution",
+                "native solver result",
+                "Bianchi family identification",
+            ],
+        }
+        _write_json(output_dir / "result.json", result)
+        result_hash = _sha256_file(output_dir / "result.json")
+        _write_json(
+            output_dir / "terminal.json",
+            {
+                "state": "SUCCEEDED",
+                "result_sha256": result_hash,
+                "observed_science_executed": True,
+            },
+        )
+        _append_fsynced(output_dir / "stdout.log", "SMICA diagnostic completed\n")
+        (output_dir / "stderr.log").touch()
+        return result
+    except BaseException as exc:
+        _write_json(
+            output_dir / "terminal.json",
+            {
+                "state": "FAILED",
+                "error_type": type(exc).__name__,
+                "error": str(exc),
+                "scientific_result_emitted": False,
+            },
+        )
+        _append_fsynced(output_dir / "stderr.log", f"{type(exc).__name__}: {exc}\n")
+        raise
+
+
+def replay_smica_existing_result(
+    *, plan_path: Path, source_output_dir: Path, replay_output: Path
+) -> dict[str, object]:
+    """Replay the diagnostic from retained compact inputs without raw FITS."""
+
+    plan = _strict_json(plan_path, label="SMICA existing-data plan")
+    components = _smica_plan_components(plan)
+    selection, row_ids, _, _ = _load_smica_existing_rows(
+        plan=plan, components=components
+    )
+    expected = _strict_json(
+        source_output_dir / "result.json", label="SMICA source result"
+    )
+    compact = expected.get("compact_observed_replay_input")
+    if not isinstance(compact, Mapping):
+        raise PlanckWorkerError("SMICA compact replay identity is missing")
+    observed_path = source_output_dir / str(compact.get("filename"))
+    if _sha256_file(observed_path) != compact.get("sha256"):
+        raise PlanckWorkerError("SMICA compact observed replay hash drifted")
+    observed_map = _load_npy(
+        observed_path, label="compact observed SMICA", dimension=1
+    )
+    mask = _load_npy(components["mask"], label="SMICA mask", dimension=1)
+    beam = _load_npy(components["beam"], label="SMICA beam", dimension=1)
+    window = _load_window(components["window"], label="SMICA window")
+    context = build_smica_operator_context(
+        smica_map=observed_map,
+        mask=mask,
+        beam=beam,
+        window=window,
+        declared_nside=int(selection["nside"]),
+    )
+    null_features = _process_ffp10_component(
+        components["null"],
+        array_name="smica_maps",
+        row_ids=row_ids,
+        component="SMICA",
+        context=context,
+    )
+    observed_features, _, _ = _process_map(
+        observed_map, component="SMICA", context=context
+    )
+    diagnostic = analyze_smica_feature_rows(
+        observed_features=observed_features,
+        null_features=null_features,
+        row_ids=row_ids,
+    )
+    replayed = dict(expected)
+    for key, value in diagnostic.items():
+        replayed[key] = value
+    if _smica_result_projection(replayed) != _smica_result_projection(expected):
+        raise PlanckWorkerError("SMICA compact replay differs from source result")
+    _write_json(
+        replay_output,
+        {
+            "state": "REPLAY_MATCH",
+            "source_result_sha256": _sha256_file(source_output_dir / "result.json"),
+            "scientific_projection_sha256": _canonical_hash(
+                _smica_result_projection(expected)
+            ),
+            "observed_raw_reopened": False,
+        },
+    )
+    return dict(_strict_json(replay_output, label="SMICA replay result"))
+
+
+def _load_pr315_raw_input_manifest(
+    path: Path, *, verify_files: bool
+) -> dict[str, object]:
+    from scripts.observed_runs.prepare_planck_pr3_admission import (
+        PlanckPreparationError,
+        validate_raw_input_manifest,
+    )
+
+    payload = _strict_json(path, label="PR-315 raw-input manifest")
+    try:
+        return validate_raw_input_manifest(payload, verify_files=verify_files)
+    except PlanckPreparationError as exc:
+        raise PlanckWorkerError(f"PR-315 raw-input manifest failed: {exc}") from exc
+
+
+def _rank_over_exact_pool(value: object, *, total: int = 301) -> str:
+    try:
+        scaled = Fraction(str(value)) * total
+    except (ValueError, ZeroDivisionError) as exc:
+        raise PlanckWorkerError("finite rank is malformed") from exc
+    if scaled.denominator != 1 or not 1 <= scaled.numerator <= total:
+        raise PlanckWorkerError("finite rank is not on the exact 301-point grid")
+    return f"{scaled.numerator}/{total}"
+
+
+def compare_pr314_pr315_results(
+    *, benchmark: Mapping[str, object], joint: Mapping[str, object]
+) -> dict[str, object]:
+    """Build the predeclared twelve-feature benchmark/robustness comparison."""
+
+    old_features = np.asarray(benchmark.get("observed_feature_vector"), dtype=float)
+    new_features = np.asarray(joint.get("observed_feature_vector"), dtype=float)
+    old_local = benchmark.get("local_feature_p")
+    new_local = joint.get("local_feature_p")
+    if (
+        old_features.shape != (len(COMPONENT_FEATURE_IDS),)
+        or new_features.shape != old_features.shape
+        or not np.all(np.isfinite(old_features))
+        or not np.all(np.isfinite(new_features))
+        or not isinstance(old_local, list)
+        or not isinstance(new_local, list)
+        or len(old_local) != len(COMPONENT_FEATURE_IDS)
+        or len(new_local) != len(COMPONENT_FEATURE_IDS)
+    ):
+        raise PlanckWorkerError("PR-314/PR-315 comparison inputs are malformed")
+    rows = []
+    for index, feature_id in enumerate(COMPONENT_FEATURE_IDS):
+        rows.append(
+            {
+                "feature_id": feature_id,
+                "unit": COMPONENT_FEATURE_UNITS[index],
+                "PR314_benchmark_value": float(old_features[index]),
+                "PR315_joint_cutsky_value": float(new_features[index]),
+                "joint_minus_benchmark": float(
+                    new_features[index] - old_features[index]
+                ),
+                "PR314_local_rank": _rank_over_exact_pool(old_local[index]),
+                "PR315_local_rank": _rank_over_exact_pool(new_local[index]),
+                "tail": "two-sided",
+            }
+        )
+    return {
+        "format": "PLANCK_PR314_PR315_SCIENTIFIC_COMPARISON_V1",
+        **_pr315_claim_metadata(
+            artifact_mode="claim_bearing_frozen_operator_comparison",
+            generating_procedure=(
+                "scripts.observed_runs.run_planck_pr3.compare_pr314_pr315_results"
+            ),
+            generating_command=(
+                "python scripts/observed_runs/run_planck_pr3.py "
+                "--run-pr315-joint-cutsky [content-bound arguments]"
+            ),
+        ),
+        "branch_tail_registry": pr315_branch_tail_registry(),
+        "benchmark_result_sha256": PR314_FROZEN_RESULT_SHA256,
+        "benchmark_family_rank": _rank_over_exact_pool(
+            benchmark.get("finite_feature_family_p")
+        ),
+        "joint_cutsky_family_rank": _rank_over_exact_pool(
+            joint.get("finite_feature_family_p")
+        ),
+        "feature_rows": rows,
+        "interpretation": (
+            "operator-order robustness comparison on the same exact 300-pair "
+            "SMICA slice; neither branch is selected by the observed outcome"
+        ),
+        "generic_control_preserved": True,
+        "MES_result": False,
+        "global_claim_boundary": GLOBAL_CLAIM_BOUNDARY,
+        "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+    }
+
+
+def pr315_joint_cutsky_acceptance(
+    *,
+    plan_path: Path,
+    raw_manifest_path: Path,
+    compact_observed_path: Path,
+    benchmark_result_path: Path,
+    output_dir: Path,
+    candidate_commit: str,
+    candidate_tree: str,
+) -> dict[str, object]:
+    """Bind the PR-315 rerun before any compact temperature array is opened."""
+
+    plan = _strict_json(plan_path, label="SMICA existing-data plan")
+    components = _smica_plan_components(plan)
+    manifest = _load_pr315_raw_input_manifest(
+        raw_manifest_path, verify_files=False
+    )
+    benchmark_hash = _sha256_file(benchmark_result_path)
+    if benchmark_hash != PR314_FROZEN_RESULT_SHA256:
+        raise PlanckWorkerError("frozen PR-314 benchmark result hash drifted")
+    benchmark = _strict_json(benchmark_result_path, label="frozen PR-314 result")
+    compact = benchmark.get("compact_observed_replay_input")
+    observed_manifest = manifest.get("observed_smica")
+    mask_manifest = manifest.get("temperature_mask")
+    observed_plan = plan.get("observed_smica")
+    mask_plan = plan.get("temperature_mask_source")
+    if (
+        not isinstance(compact, Mapping)
+        or not isinstance(observed_manifest, Mapping)
+        or not isinstance(mask_manifest, Mapping)
+        or not isinstance(observed_plan, Mapping)
+        or not isinstance(mask_plan, Mapping)
+        or observed_manifest.get("path") != observed_plan.get("path")
+        or observed_manifest.get("byte_size") != observed_plan.get("byte_size")
+        or observed_manifest.get("sha256") != benchmark.get("observed_smica_sha256")
+        or mask_manifest.get("path") != mask_plan.get("path")
+        or mask_manifest.get("byte_size") != mask_plan.get("byte_size")
+        or compact.get("sha256") != _sha256_file(compact_observed_path)
+        or compact.get("shape") != [3072]
+        or components["null"].stat().st_size <= 0
+    ):
+        raise PlanckWorkerError("PR-315 source/compact identity binding drifted")
+    if not output_dir.is_absolute() or output_dir.is_symlink():
+        raise PlanckWorkerError("PR-315 output directory must be absolute and regular")
+    requested_commit = _require_git_identity(candidate_commit, label="candidate commit")
+    requested_tree = _require_git_identity(candidate_tree, label="candidate tree")
+    current_commit, current_tree = _current_git_identity()
+    if (requested_commit, requested_tree) != (current_commit, current_tree):
+        raise PlanckWorkerError("candidate identity does not equal current checkout")
+    registry = validate_pr315_branch_tail_registry(pr315_branch_tail_registry())
+    payload = {
+        "capability": (
+            "PLANCK_SMICA_JOINT_CUTSKY_LOWELL_ROBUSTNESS_AND_PORTABLE_FEATURE_REPLAY"
+        ),
+        "candidate_commit": requested_commit,
+        "candidate_tree": requested_tree,
+        "plan_sha256": _sha256_file(plan_path),
+        "raw_input_manifest_file_sha256": _sha256_file(raw_manifest_path),
+        "raw_input_manifest_sha256": manifest["manifest_sha256"],
+        "compact_observed_sha256": compact["sha256"],
+        "primary_null_bundle_sha256": _sha256_file(components["null"]),
+        "benchmark_result_sha256": benchmark_hash,
+        "branch_tail_registry_sha256": _canonical_hash(registry),
+        "worker_sha256": _sha256_file(Path(__file__).resolve()),
+        "output_dir": str(output_dir),
+        "observed_temperature_array_opened": False,
+    }
+    return {**payload, "acceptance_hash": _canonical_hash(payload)}
+
+
+def run_pr315_joint_cutsky_attended(
+    *,
+    plan_path: Path,
+    raw_manifest_path: Path,
+    compact_observed_path: Path,
+    benchmark_result_path: Path,
+    output_dir: Path,
+    candidate_commit: str,
+    candidate_tree: str,
+    confirmation: str,
+) -> dict[str, object]:
+    """Execute the separately named joint cut-sky exact-300 robustness lane."""
+
+    acceptance = pr315_joint_cutsky_acceptance(
+        plan_path=plan_path,
+        raw_manifest_path=raw_manifest_path,
+        compact_observed_path=compact_observed_path,
+        benchmark_result_path=benchmark_result_path,
+        output_dir=output_dir,
+        candidate_commit=candidate_commit,
+        candidate_tree=candidate_tree,
+    )
+    if confirmation != acceptance["acceptance_hash"]:
+        raise PlanckWorkerError("PR-315 attended confirmation does not match")
+    if output_dir.exists():
+        if not output_dir.is_dir() or any(output_dir.iterdir()):
+            raise PlanckWorkerError("PR-315 output directory must be new or empty")
+    else:
+        output_dir.mkdir(parents=True)
+    _write_json(output_dir / "acceptance.json", acceptance)
+    _write_json(
+        output_dir / "start.json",
+        {
+            "state": "STARTED_BEFORE_COMPACT_TEMPERATURE_OPEN",
+            "acceptance_hash": acceptance["acceptance_hash"],
+            "candidate_commit": candidate_commit,
+            "candidate_tree": candidate_tree,
+        },
+    )
+    started = _now()
+    try:
+        plan = _strict_json(plan_path, label="SMICA existing-data plan")
+        components = _smica_plan_components(plan)
+        selection, row_ids, _, _ = _load_smica_existing_rows(
+            plan=plan, components=components
+        )
+        observed_map = _load_npy(
+            compact_observed_path,
+            label="compact observed SMICA",
+            dimension=1,
+        )
+        mask = _load_npy(components["mask"], label="SMICA mask", dimension=1)
+        beam = _load_npy(components["beam"], label="SMICA beam", dimension=1)
+        window = _load_window(components["window"], label="SMICA window")
+        context = build_smica_joint_cutsky_context(
+            smica_map=observed_map,
+            mask=mask,
+            beam=beam,
+            window=window,
+            declared_nside=int(selection["nside"]),
+        )
+        observation_operator = joint_cutsky_operator_identity(context)
+        null_operator = joint_cutsky_operator_identity(context)
+        operator_identity_sha256 = require_observation_null_operator_identity(
+            observation_operator, null_operator
+        )
+        null_features = _process_ffp10_component(
+            components["null"],
+            array_name="smica_maps",
+            row_ids=row_ids,
+            component="SMICA",
+            context=context,
+        )
+        observed_features, _, _ = _process_map(
+            observed_map, component="SMICA", context=context
+        )
+        diagnostic = analyze_smica_feature_rows(
+            observed_features=observed_features,
+            null_features=null_features,
+            row_ids=row_ids,
+        )
+        package_receipt = write_pr315_feature_package(
+            package_path=output_dir / "pr315_joint_cutsky_features.npz",
+            metadata_path=output_dir / "pr315_joint_cutsky_features.json",
+            observed_features=observed_features,
+            null_features=null_features,
+            row_ids=row_ids,
+            operator_identity=observation_operator,
+            raw_input_manifest_sha256=str(
+                acceptance["raw_input_manifest_sha256"]
+            ),
+        )
+        portable_replay = replay_pr315_feature_package(
+            package_path=output_dir / "pr315_joint_cutsky_features.npz",
+            metadata_path=output_dir / "pr315_joint_cutsky_features.json",
+        )
+        benchmark = _strict_json(
+            benchmark_result_path, label="frozen PR-314 result"
+        )
+        comparison = compare_pr314_pr315_results(
+            benchmark=benchmark, joint=diagnostic
+        )
+        _write_json(output_dir / "pr314_pr315_comparison.json", comparison)
+        result = {
+            "format": "PLANCK_PR3_SMICA_JOINT_CUTSKY_RESULT_V1",
+            **_pr315_claim_metadata(
+                artifact_mode="claim_bearing_frozen_exact_300_result",
+                generating_procedure=(
+                    "scripts.observed_runs.run_planck_pr3."
+                    "run_pr315_joint_cutsky_attended"
+                ),
+                generating_command=(
+                    "python scripts/observed_runs/run_planck_pr3.py "
+                    "--run-pr315-joint-cutsky [content-bound arguments]"
+                ),
+            ),
+            **diagnostic,
+            "pipeline_scope": "SMICA_ONLY_PR315_JOINT_CUTSKY",
+            "estimator_id": PR315_JOINT_CUTSKY_ESTIMATOR_ID,
+            "estimator_role": "PREDECLARED_ROBUSTNESS_BRANCH",
+            "acceptance_hash": acceptance["acceptance_hash"],
+            "candidate_commit": candidate_commit,
+            "candidate_tree": candidate_tree,
+            "raw_input_manifest_sha256": acceptance[
+                "raw_input_manifest_sha256"
+            ],
+            "raw_input_manifest_file_sha256": acceptance[
+                "raw_input_manifest_file_sha256"
+            ],
+            "execution_input_representation": (
+                "PR314_EXACT_REDUCED_SMICA_MAPS_BOUND_TO_RAW_MANIFEST"
+            ),
+            "raw_temperature_arrays_reopened": False,
+            "operator_identity": observation_operator,
+            "operator_identity_sha256": operator_identity_sha256,
+            "feature_package": package_receipt,
+            "portable_replay_scientific_projection_sha256": portable_replay[
+                "scientific_projection_sha256"
+            ],
+            "comparison_filename": "pr314_pr315_comparison.json",
+            "comparison_sha256": _sha256_file(
+                output_dir / "pr314_pr315_comparison.json"
+            ),
+            "PR314_benchmark_family_rank": comparison[
+                "benchmark_family_rank"
+            ],
+            "PR315_joint_cutsky_family_rank": comparison[
+                "joint_cutsky_family_rank"
+            ],
+            "generic_control_preserved": True,
+            "MES_result": False,
+            "source_release": plan["release_identity"],
+            "wall_seconds": _seconds(started),
+            "peak_rss_kib": int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss),
+            "observed_statistic_seen": True,
+            "observed_science_executed": True,
+            "forbidden_claims": [
+                "MES result",
+                "Commander robustness",
+                "joint Planck component-separation closure",
+                "global response",
+                "source attribution",
+                "native solver result",
+                "Bianchi family identification",
+            ],
+        }
+        _write_json(output_dir / "result.json", result)
+        _write_json(
+            output_dir / "terminal.json",
+            {
+                "state": "SUCCEEDED",
+                "result_sha256": _sha256_file(output_dir / "result.json"),
+                "feature_package_sha256": package_receipt["package_sha256"],
+                "portable_replay": "MATCH",
+                "observed_science_executed": True,
+            },
+        )
+        return result
+    except BaseException as exc:
+        _write_json(
+            output_dir / "terminal.json",
+            {
+                "state": "FAILED",
+                "error_type": type(exc).__name__,
+                "error": str(exc),
+                "scientific_result_emitted": False,
+            },
+        )
+        raise
+
+
+def export_pr315_portable_evidence(
+    *, source_output_dir: Path, portable_output_dir: Path
+) -> dict[str, object]:
+    """Export the map-free PR-315 package and self-contained result card."""
+
+    terminal_path = source_output_dir / "terminal.json"
+    result_path = source_output_dir / "result.json"
+    comparison_path = source_output_dir / "pr314_pr315_comparison.json"
+    terminal = _strict_json(terminal_path, label="PR-315 terminal receipt")
+    source_result = _strict_json(result_path, label="PR-315 source result")
+    comparison = _strict_json(comparison_path, label="PR-315 comparison")
+    if (
+        terminal.get("state") != "SUCCEEDED"
+        or terminal.get("result_sha256") != _sha256_file(result_path)
+        or source_result.get("format")
+        != "PLANCK_PR3_SMICA_JOINT_CUTSKY_RESULT_V1"
+        or source_result.get("MES_result") is not False
+        or source_result.get("generic_control_preserved") is not True
+        or source_result.get("comparison_sha256")
+        != _sha256_file(comparison_path)
+        or comparison.get("benchmark_result_sha256")
+        != PR314_FROZEN_RESULT_SHA256
+        or comparison.get("benchmark_family_rank") != "133/301"
+        or comparison.get("generic_control_preserved") is not True
+        or comparison.get("MES_result") is not False
+    ):
+        raise PlanckWorkerError("PR-315 source execution receipt drifted")
+    source_package = source_output_dir / "pr315_joint_cutsky_features.npz"
+    source_metadata = source_output_dir / "pr315_joint_cutsky_features.json"
+    source_replay = replay_pr315_feature_package(
+        package_path=source_package,
+        metadata_path=source_metadata,
+        require_claim_metadata=False,
+    )
+    try:
+        with np.load(source_package, allow_pickle=False) as bundle:
+            observed = np.asarray(bundle["observed_features"], dtype=float)
+            nulls = np.asarray(bundle["null_features"], dtype=float)
+            row_ids = tuple(str(value) for value in bundle["row_ids"].tolist())
+    except (KeyError, OSError, ValueError) as exc:
+        raise PlanckWorkerError("PR-315 source feature package is malformed") from exc
+    operator_identity = source_result.get("operator_identity")
+    raw_manifest_sha256 = source_result.get("raw_input_manifest_sha256")
+    if not isinstance(operator_identity, Mapping) or not isinstance(
+        raw_manifest_sha256, str
+    ):
+        raise PlanckWorkerError("PR-315 source provenance is incomplete")
+    target_package = (
+        portable_output_dir / "pr315_planck_smica_feature_replay.npz"
+    )
+    target_metadata = (
+        portable_output_dir / "pr315_planck_smica_feature_replay.json"
+    )
+    package_receipt = write_pr315_feature_package(
+        package_path=target_package,
+        metadata_path=target_metadata,
+        observed_features=observed,
+        null_features=nulls,
+        row_ids=row_ids,
+        operator_identity=operator_identity,
+        raw_input_manifest_sha256=raw_manifest_sha256,
+    )
+    target_replay = replay_pr315_feature_package(
+        package_path=target_package, metadata_path=target_metadata
+    )
+    if (
+        target_replay["scientific_projection_sha256"]
+        != source_replay["scientific_projection_sha256"]
+    ):
+        raise PlanckWorkerError("portable PR-315 export changed scientific content")
+    comparison = dict(comparison)
+    comparison.update(
+        _pr315_claim_metadata(
+            artifact_mode="claim_bearing_frozen_operator_comparison",
+            generating_procedure=(
+                "scripts.observed_runs.run_planck_pr3.compare_pr314_pr315_results"
+            ),
+            generating_command=(
+                "python scripts/observed_runs/run_planck_pr3.py "
+                "--run-pr315-joint-cutsky [content-bound arguments]"
+            ),
+        )
+    )
+    portable_result = dict(source_result)
+    portable_result.update(
+        _pr315_claim_metadata(
+            artifact_mode="claim_bearing_frozen_exact_300_result",
+            generating_procedure=(
+                "scripts.observed_runs.run_planck_pr3."
+                "run_pr315_joint_cutsky_attended"
+            ),
+            generating_command=(
+                "python scripts/observed_runs/run_planck_pr3.py "
+                "--run-pr315-joint-cutsky [content-bound arguments]"
+            ),
+        )
+    )
+    portable_result["feature_package"] = package_receipt
+    portable_result["portable_replay_scientific_projection_sha256"] = (
+        target_replay["scientific_projection_sha256"]
+    )
+    portable_result["old_new_comparison"] = comparison
+    portable_result["comparison_filename"] = (
+        "pr315_planck_smica_result.json#old_new_comparison"
+    )
+    portable_result["source_execution_comparison_sha256"] = portable_result.pop(
+        "comparison_sha256"
+    )
+    portable_result["source_execution_result_sha256"] = _sha256_file(result_path)
+    portable_result["source_execution_terminal_sha256"] = _sha256_file(
+        terminal_path
+    )
+    portable_result["portable_result_generated_from_maps"] = False
+    portable_result_path = portable_output_dir / "pr315_planck_smica_result.json"
+    _write_json(portable_result_path, portable_result)
+    return {
+        "state": "PORTABLE_REPLAY_MATCH",
+        "feature_package_sha256": package_receipt["package_sha256"],
+        "feature_metadata_sha256": package_receipt["metadata_sha256"],
+        "scientific_projection_sha256": target_replay[
+            "scientific_projection_sha256"
+        ],
+        "portable_result_sha256": _sha256_file(portable_result_path),
+        "source_execution_result_sha256": _sha256_file(result_path),
+        "raw_maps_reopened": False,
+    }
+
+
 def _load_window(path: Path, *, label: str) -> dict[str, np.ndarray]:
     try:
         with np.load(path, allow_pickle=False) as bundle:
@@ -1153,12 +2677,29 @@ def main(argv: Sequence[str] | None = None) -> int:
     mode.add_argument("--synthetic-profile", action="store_true")
     mode.add_argument("--synthetic-profile-matrix", action="store_true")
     mode.add_argument("--run-admitted", action="store_true")
+    mode.add_argument("--print-smica-existing-acceptance", action="store_true")
+    mode.add_argument("--run-smica-existing", action="store_true")
+    mode.add_argument("--replay-smica-existing", action="store_true")
+    mode.add_argument("--print-pr315-joint-acceptance", action="store_true")
+    mode.add_argument("--run-pr315-joint-cutsky", action="store_true")
+    mode.add_argument("--export-pr315-portable", action="store_true")
     parser.add_argument("--rows", choices=ROW_LABELS)
     parser.add_argument("--mode", choices=PROFILE_MODES, default="serial")
     parser.add_argument("--workers", type=int, default=1)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--admission", type=Path)
     parser.add_argument("--data-root", type=Path)
+    parser.add_argument("--plan", type=Path)
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--candidate-commit")
+    parser.add_argument("--candidate-tree")
+    parser.add_argument("--confirm")
+    parser.add_argument("--source-output-dir", type=Path)
+    parser.add_argument("--replay-output", type=Path)
+    parser.add_argument("--raw-manifest", type=Path)
+    parser.add_argument("--compact-observed", type=Path)
+    parser.add_argument("--benchmark-result", type=Path)
+    parser.add_argument("--portable-output-dir", type=Path)
     args = parser.parse_args(argv)
     try:
         if args.synthetic_profile:
@@ -1183,7 +2724,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                     "profile matrix forbids row and admitted inputs"
                 )
             payload = build_profile_matrix()
-        else:
+        elif args.run_admitted:
             if (
                 args.rows is not None
                 or args.admission is None
@@ -1194,6 +2735,122 @@ def main(argv: Sequence[str] | None = None) -> int:
                 )
             payload = run_admitted(
                 admission_path=args.admission, data_root=args.data_root
+            )
+        elif args.print_smica_existing_acceptance:
+            if any(
+                value is None
+                for value in (
+                    args.plan,
+                    args.output_dir,
+                    args.candidate_commit,
+                    args.candidate_tree,
+                )
+            ):
+                raise PlanckWorkerError(
+                    "SMICA acceptance requires plan, output-dir, commit, and tree"
+                )
+            payload = smica_existing_acceptance(
+                plan_path=args.plan,
+                output_dir=args.output_dir,
+                candidate_commit=args.candidate_commit,
+                candidate_tree=args.candidate_tree,
+            )
+        elif args.run_smica_existing:
+            if any(
+                value is None
+                for value in (
+                    args.plan,
+                    args.output_dir,
+                    args.candidate_commit,
+                    args.candidate_tree,
+                    args.confirm,
+                )
+            ):
+                raise PlanckWorkerError(
+                    "SMICA run requires plan, output-dir, commit, tree, and confirm"
+                )
+            payload = run_smica_existing_attended(
+                plan_path=args.plan,
+                output_dir=args.output_dir,
+                candidate_commit=args.candidate_commit,
+                candidate_tree=args.candidate_tree,
+                confirmation=args.confirm,
+            )
+        elif args.replay_smica_existing:
+            if any(
+                value is None
+                for value in (args.plan, args.source_output_dir, args.replay_output)
+            ):
+                raise PlanckWorkerError(
+                    "SMICA replay requires plan, source-output-dir, and replay-output"
+                )
+            payload = replay_smica_existing_result(
+                plan_path=args.plan,
+                source_output_dir=args.source_output_dir,
+                replay_output=args.replay_output,
+            )
+        elif args.print_pr315_joint_acceptance:
+            if any(
+                value is None
+                for value in (
+                    args.plan,
+                    args.raw_manifest,
+                    args.compact_observed,
+                    args.benchmark_result,
+                    args.output_dir,
+                    args.candidate_commit,
+                    args.candidate_tree,
+                )
+            ):
+                raise PlanckWorkerError(
+                    "PR-315 acceptance requires plan, raw manifest, compact "
+                    "observation, benchmark, output-dir, commit, and tree"
+                )
+            payload = pr315_joint_cutsky_acceptance(
+                plan_path=args.plan,
+                raw_manifest_path=args.raw_manifest,
+                compact_observed_path=args.compact_observed,
+                benchmark_result_path=args.benchmark_result,
+                output_dir=args.output_dir,
+                candidate_commit=args.candidate_commit,
+                candidate_tree=args.candidate_tree,
+            )
+        elif args.run_pr315_joint_cutsky:
+            if any(
+                value is None
+                for value in (
+                    args.plan,
+                    args.raw_manifest,
+                    args.compact_observed,
+                    args.benchmark_result,
+                    args.output_dir,
+                    args.candidate_commit,
+                    args.candidate_tree,
+                    args.confirm,
+                )
+            ):
+                raise PlanckWorkerError(
+                    "PR-315 run requires plan, raw manifest, compact observation, "
+                    "benchmark, output-dir, commit, tree, and confirm"
+                )
+            payload = run_pr315_joint_cutsky_attended(
+                plan_path=args.plan,
+                raw_manifest_path=args.raw_manifest,
+                compact_observed_path=args.compact_observed,
+                benchmark_result_path=args.benchmark_result,
+                output_dir=args.output_dir,
+                candidate_commit=args.candidate_commit,
+                candidate_tree=args.candidate_tree,
+                confirmation=args.confirm,
+            )
+        else:
+            if args.source_output_dir is None or args.portable_output_dir is None:
+                raise PlanckWorkerError(
+                    "PR-315 export requires source-output-dir and portable-output-dir"
+                )
+            payload = export_pr315_portable_evidence(
+                source_output_dir=args.source_output_dir,
+                portable_output_dir=args.portable_output_dir,
             )
         if args.output is None:
             print(json.dumps(payload, sort_keys=True, allow_nan=False))

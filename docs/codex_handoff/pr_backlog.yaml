@@ -266,6 +266,15 @@ policy:
   - PR-319
   - PR-320
   - PR-321
+  - PR-322
+  - PR-323
+  - PR-324
+  - PR-325
+  - PR-326
+  - PR-327
+  - PR-328
+  - PR-329
+  - PR-330
   dependency_overlays:
     schema: htt.pr_dependency_overlay.v1
     authority: PR-276
@@ -14420,3 +14429,354 @@ prs:
   solver_gate_required: false
   change_set_id: CS-PR321-HSC-SACC-FAST-ANALYSIS
   publication_group_id: PG-PR321-HSC-SACC-FAST-ANALYSIS
+- id: PR-322
+  wave: 89
+  title: MES stack terminal binding and append-only allocation
+  owner: COMMON
+  capability: MES_STACK_TERMINAL_BINDING_AND_APPEND_ONLY_DAG_ALLOCATION
+  inputs: [accepted integration head 8b6028abcde18c87591789f6ba53e81157fa4eba, integration merge 1ace5692bb6778ee8d5b99c112fc84dc2ec8cb72, exact PR411 PR404 and PR403 imports]
+  outputs: [immutable 264-card DAG prefix receipt, canonical PR-322 through PR-330 allocation, synchronized mirrors]
+  contributors: [OBSSTAT, HTT]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [common]
+  depends: []
+  dependency_contracts: []
+  targets: ["Validate the accepted integrated ancestry and exact imports, preserve every prior card and edge byte-semantically, and allocate the nine accepted MES implementation units after the live PR-321 tail."]
+  files: [docs/PR_DELTAS/pr-322.md, docs/generated/mes_stack_implementation/dag_prefix_receipt.json, docs/codex_handoff/pr_backlog.yaml, docs/codex_handoff/pr_status.yaml, machine_readable/pr_backlog.yaml, machine_readable/pr_status.yaml, scripts/codex_harness/validate_pr_dag.py, tests/contracts/test_mes_stack_implementation_dag.py]
+  tests: [python -m pytest -q tests/contracts/test_mes_stack_implementation_dag.py tests/contracts/test_mes_stack_integration_plan.py tests/contracts/test_mes_methodology_recovery_contract.py, python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice, python scripts/codex_harness/sync_pr_dag_mirrors.py --check]
+  dod: [The accepted integration head and both merge parents validate, all source imports retain identity, the first 264 cards are an exact sealed prefix, and every canonical and machine-readable mirror agrees.]
+  kill: Any ancestry mismatch, source-import drift, prior-card mutation, edge rewrite, non-append allocation, or successor planning package stops the unit.
+  cost: medium
+  level: L2
+  scope: pre-solver
+  risk: R3-COMMON
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C0}
+  claim_impact: Process and ancestry binding only; no scientific result or status promotion follows.
+  forbidden: ["No security architecture, bulk source-branch merge, native-solver claim, observed-result claim, or family identification."]
+  anti_drift: ["The existing 264 cards, their order, dependencies, and existing terminal resolutions remain unchanged; PR-314 evidence and PR-411 imports remain exact."]
+  roadmap_anchor: docs/codex_handoff/mes_stack_integration/AUDIT_COMPILED_EXEC_PLAN.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: process_control
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: MES_STACK_IMPLEMENTATION
+  solver_gate_required: false
+  change_set_id: CS-PR322-MES-STACK-ALLOCATION
+  publication_group_id: PG-PR322-MES-STACK-IMPLEMENTATION
+  planning_alias: MSI-WU-000
+- id: PR-323
+  wave: 90
+  title: MES methodology theory receipts and formal blockers
+  owner: COMMON
+  capability: MES_METHODOLOGY_THEORY_RECEIPTS_AND_FORMAL_BLOCKERS
+  inputs: [PR-322 accepted stack binding, exact PR411 research decisions and Wolfram proof script]
+  outputs: [content-bound theorem receipt, four-axis CAS result envelopes, typed unresolved formal blockers]
+  contributors: [HTT, OBSSTAT]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [common]
+  depends: [PR-322]
+  dependency_contracts: [{upstream_id: PR-322, mode: requires_success}]
+  targets: ["Replay the established MES lemmas and preserve separate truth, evidence, replay, and release states while routing xAct, Sage/Singular, and Lean obligations to content-bound receipts or exact blockers."]
+  files: [docs/PR_DELTAS/pr-323.md, docs/research_program/post_pr275/mes_methodology_theorems.yaml, docs/generated/mes_methodology_recovery/theory_receipts.json, wolfram/mes_methodology_recovery_proofs.wls, tests/contracts/test_mes_methodology_theorems.py]
+  tests: [wolframscript -file wolfram/mes_methodology_recovery_proofs.wls, python -m pytest -q tests/contracts/test_mes_methodology_theorems.py]
+  dod: [Every accepted theorem has a content-bound proof or replay result, every missing formal axis remains a typed blocker, and no unavailable non-geodesic source is promoted.]
+  kill: A replay status is projected as truth, a blocked branch is promoted, or a four-axis result is claimed with a missing unregistered axis.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: R3-THEORY
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  claim_impact: Method-lemma receipts under stated assumptions only; no observed or native result follows.
+  forbidden: ["No non-geodesic coefficient promotion, native-solver claim, posterior evidence, Bianchi geometry claim, or family identification."]
+  anti_drift: ["Exact PR411 source bytes remain unchanged and local tool failure stays BLOCKED rather than being replaced by a smaller proof claim."]
+  roadmap_anchor: docs/codex_handoff/mes_methodology_recovery/AUDIT_COMPILED_EXEC_PLAN.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: proof_receipt
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: MES_STACK_IMPLEMENTATION
+  solver_gate_required: false
+  change_set_id: CS-PR323-MES-THEORY-RECEIPTS
+  publication_group_id: PG-PR322-MES-STACK-IMPLEMENTATION
+  planning_alias: MSI-WU-001
+- id: PR-324
+  wave: 91
+  title: Planck SMICA joint cut-sky exact-pair repair
+  owner: OBSSTAT
+  capability: PLANCK_SMICA_JOINT_CUTSKY_EXACT_300_PAIR_REPAIR
+  inputs: [PR-322 accepted stack binding, exact PR315 contract, immutable PR314 evidence, exact ordered 300-pair SMICA fast path]
+  outputs: [joint cut-sky estimator, portable feature replay, exact old-versus-new conditional comparison]
+  contributors: [COMMON]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [obsstat]
+  depends: [PR-322]
+  dependency_contracts: [{upstream_id: PR-322, mode: requires_success}]
+  targets: ["Implement the imported PR315 joint monopole/dipole plus ell=2..5 cut-sky contract on the repaired current stack and rerun the exact ordered 300 paired SMICA rows without modifying PR314 evidence."]
+  files: [docs/PR_DELTAS/pr-324.md, scripts/observed_runs/prepare_planck_pr3_admission.py, scripts/observed_runs/run_planck_pr3.py, htt/obsstat/planck_pr3_operator.py, htt/obsstat/planck_post275_lane.py, tests/integration/test_planck_pr3_admission_preparation.py, tests/integration/test_planck_pr3_current_stack.py, tests/integration/test_planck_pr3_operator.py, docs/generated/pr315_planck_smica_feature_replay.json, docs/generated/pr315_planck_smica_result.json]
+  tests: [PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/integration/test_planck_pr3_admission_preparation.py tests/integration/test_planck_pr3_current_stack.py tests/integration/test_planck_pr3_operator.py]
+  dod: [Known-alm recovery, masked contamination refusal, observation-null operator identity, exact ordered-pair admission, portable replay, and exact 301-row execution pass while PR314 remains unchanged.]
+  kill: Sequential nuisance fitting, incomplete or reordered pair inventory, observed-rank branch selection, raw-input drift, or PR314 byte mutation stops the unit.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: R3-OBSSTAT
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  claim_impact: Exact SMICA and FFP10 conditional robustness comparison only.
+  forbidden: ["No Commander or 999-row expansion, unconditional p-value, native-solver result, source attribution, or family identification."]
+  anti_drift: ["The five PR314 evidence files and 133/301 benchmark remain exact, and one immutable joint operator configuration serves observation and null rows."]
+  roadmap_anchor: docs/codex_handoff/pr315_audit_compiled_exec_plan.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: observed_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: MES_STACK_IMPLEMENTATION
+  solver_gate_required: false
+  change_set_id: CS-PR324-PLANCK-JOINT-CUTSKY
+  publication_group_id: PG-PR322-MES-STACK-IMPLEMENTATION
+  planning_alias: MSI-WU-002
+- id: PR-325
+  wave: 92
+  title: Rowwise active geodesic MES anchors
+  owner: OBSSTAT
+  capability: ROWWISE_ACTIVE_GEODESIC_MES_ANCHORS
+  inputs: [PR-323 theory receipt, PR-324 corrected observation and exact null rows, active typed MES authority]
+  outputs: [301 content-bound typed anchor states, shared source and covariance identity, row-equivariance receipt]
+  contributors: [COMMON]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [obsstat, common]
+  depends: [PR-323, PR-324]
+  dependency_contracts: [{upstream_id: PR-323, mode: requires_success}, {upstream_id: PR-324, mode: requires_success}]
+  targets: ["Compute verified geodesic MES anchors for the corrected observation and every exact null row through one pure active-authority operator with explicit residual-dipole attribution."]
+  files: [docs/PR_DELTAS/pr-325.md, htt/obsstat/mes_row_anchor.py, tests/obsstat/test_mes_row_anchor.py, scripts/observed_runs/run_planck_mes_morphology.py]
+  tests: [python -m pytest -q tests/obsstat/test_mes_row_anchor.py tests/contracts/test_mes_observed_authority.py]
+  dod: [All 301 rows carry typed geodesic anchors with exact shared identities, row permutation and observation-swap metamorphics pass, and the legacy Planck MES module is absent from the observed import graph.]
+  kill: Legacy coefficients, guessed dipole attribution, channel mismatch, row asymmetry, or hidden shared-data dependence stops the unit.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: R3-OBSSTAT
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  claim_impact: Rowwise premise-conditional anchor coordinates only; no independent information or physical-source claim follows.
+  forbidden: ["No legacy MES import, independent-information language, physical source attribution, native-solver result, or family identification."]
+  anti_drift: ["Observation and null rows use the identical anchor function and source/covariance binding; non-geodesic coefficients remain forbidden."]
+  roadmap_anchor: docs/codex_handoff/mes_stack_integration/AUDIT_COMPILED_EXEC_PLAN.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: observed_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: MES_STACK_IMPLEMENTATION
+  solver_gate_required: false
+  change_set_id: CS-PR325-ROWWISE-MES-ANCHORS
+  publication_group_id: PG-PR322-MES-STACK-IMPLEMENTATION
+  planning_alias: MSI-WU-003
+- id: PR-326
+  wave: 93
+  title: Direction-indexed MES vector and STF bridge
+  owner: COMMON
+  capability: DIRECTION_INDEXED_MES_VECTOR_STF_BRIDGE
+  inputs: [PR-323 theorem receipt, PR-325 typed row anchors, direction-indexed scalar fields or registered physical responses]
+  outputs: [typed observer-space MES index, dipole and STF moments, realizability and physical-stress refusal gates]
+  contributors: [OBSSTAT, HTT]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [common, obsstat]
+  depends: [PR-323, PR-325]
+  dependency_contracts: [{upstream_id: PR-323, mode: requires_success}, {upstream_id: PR-325, mode: requires_success}]
+  targets: ["Implement the legal O(3)-equivariant direction-indexed scalar-to-vector/STF bridge with exact normalization, amplitude-shape separation, and scalar-only refusal."]
+  files: [docs/PR_DELTAS/pr-326.md, htt/src/common/mes_directional_state.py, htt/obsstat/mes_directional_moments.py, tests/common/test_mes_directional_state.py, tests/obsstat/test_mes_directional_moments.py]
+  tests: [python -m pytest -q tests/common/test_mes_directional_state.py tests/obsstat/test_mes_directional_moments.py]
+  dod: [Scalar-only construction refuses, analytic dipole and STF fixtures recover exactly, O3 rotation and parity tests pass, positive-anchor rescaling preserves shape, and moment realizability is explicit.]
+  kill: Any scalar value creates orientation, a channel mismatch passes, parity is wrong, or a non-realizable moment is promoted.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: R3-COMMON
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  claim_impact: Calibrated observer-space morphology coordinates only; physical shear, vorticity, tilt, and geometry remain response-dependent.
+  forbidden: ["No scalar-to-direction fabrication, physical shear or vorticity identification, native-solver claim, geometry detection, or family identification."]
+  anti_drift: ["Anchor amplitude, normalized shape, frame, parity, transfer identity, and physical-response status remain separate typed fields."]
+  roadmap_anchor: docs/codex_handoff/mes_stack_integration/AUDIT_COMPILED_EXEC_PLAN.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: method_validation
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: MES_STACK_IMPLEMENTATION
+  solver_gate_required: false
+  change_set_id: CS-PR326-MES-DIRECTIONAL-BRIDGE
+  publication_group_id: PG-PR322-MES-STACK-IMPLEMENTATION
+  planning_alias: MSI-WU-004
+- id: PR-327
+  wave: 94
+  title: Exact 300-pair Planck MES morphology analysis
+  owner: OBSSTAT
+  capability: EXACT_300_PAIR_PLANCK_MES_MORPHOLOGY_ANALYSIS
+  inputs: [PR-324 corrected exact-pair replay, PR-325 row anchors, PR-326 directional bridge]
+  outputs: [portable observation plus 300-null MES morphology package, finite ranks, Planck-only nonidentification]
+  contributors: [COMMON, HTT]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [obsstat]
+  depends: [PR-324, PR-325, PR-326]
+  dependency_contracts: [{upstream_id: PR-324, mode: requires_success}, {upstream_id: PR-325, mode: requires_success}, {upstream_id: PR-326, mode: requires_success}]
+  targets: ["Apply one preregistered MES-anchored nonlinear row operator to observed SMICA and the identical exact 300 paired null rows, export portable finite ranks, and retain the generic result as a benchmark control."]
+  files: [docs/PR_DELTAS/pr-327.md, scripts/observed_runs/run_planck_mes_morphology.py, docs/generated/planck_mes_morphology, tests/integration/test_planck_mes_morphology.py]
+  tests: [python -m pytest -q tests/integration/test_planck_mes_morphology.py]
+  dod: [The exact 301-row portable package replays anchors, irreducible shapes, covariance and ranks; observation swaps and row permutations agree; PR314 remains a 133/301 control; Planck-only local/global status abstains.]
+  kill: Generic low-ell replaces the MES spine, observation and null operators differ, self-anchors are counted as independent information, or Planck alone identifies local versus global.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: R3-OBSSTAT
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  claim_impact: Exact SMICA and FFP10 conditional MES morphology ranks with single-shell nonidentification only.
+  forbidden: ["No unconditional p-value, posterior evidence, local/global identification, native-solver result, geometry detection, or family identification."]
+  anti_drift: ["The generic 12-feature result remains benchmark_control and the full row operator, including its self-anchor, stays exchangeable across all 301 rows."]
+  roadmap_anchor: docs/codex_handoff/mes_stack_integration/AUDIT_COMPILED_EXEC_PLAN.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: observed_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: MES_STACK_IMPLEMENTATION
+  solver_gate_required: false
+  change_set_id: CS-PR327-PLANCK-MES-MORPHOLOGY
+  publication_group_id: PG-PR322-MES-STACK-IMPLEMENTATION
+  planning_alias: MSI-WU-005
+- id: PR-328
+  wave: 95
+  title: Physical local and global response identifiability
+  owner: HTT
+  capability: PHYSICAL_LOCAL_GLOBAL_RESPONSE_IDENTIFIABILITY
+  inputs: [PR-323 theory receipts, PR-326 directional state, content-bound frame and depth response receipts]
+  outputs: [physical response interface, nuisance-projected whitened rank, identified-set or typed nonidentification]
+  contributors: [COMMON, OBSSTAT]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [htt]
+  depends: [PR-323, PR-326]
+  dependency_contracts: [{upstream_id: PR-323, mode: requires_success}, {upstream_id: PR-326, mode: requires_success}]
+  targets: ["Replace support indicators with content-bound physical local-boost and global-tilt responses and enforce exact nuisance-projected covariance-whitened rank before any conditional identification."]
+  files: [docs/PR_DELTAS/pr-328.md, htt/htt/htt/infer/mes_local_global_response.py, tests/htt/test_mes_local_global_identifiability.py, docs/generated/mes_local_global_response]
+  tests: [PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/htt/test_mes_local_global_identifiability.py]
+  dod: [One shell, proportional profiles, rank-deficient nuisance projection, and missing physical responses abstain; independent content-bound profiles can reach conditional rank without forcing a source label.]
+  kill: A support indicator is treated as physics, a single shell identifies two vector sources, a pseudoinverse hides rank loss, or a missing frame response is guessed.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: R3-HTT
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  claim_impact: Local/global discrimination candidate or typed nonidentification under explicit physical response assumptions only.
+  forbidden: ["No posterior or evidence module, forced source attribution, Planck-only identification, native-solver result, or family identification."]
+  anti_drift: ["Response source, version, frame, units, depth, covariance, nuisance projection, and parameter identity are mandatory content fields."]
+  roadmap_anchor: docs/codex_handoff/mes_stack_integration/AUDIT_COMPILED_EXEC_PLAN.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: method_validation
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: MES_STACK_IMPLEMENTATION
+  solver_gate_required: false
+  change_set_id: CS-PR328-LOCAL-GLOBAL-RESPONSE
+  publication_group_id: PG-PR322-MES-STACK-IMPLEMENTATION
+  planning_alias: MSI-WU-006
+- id: PR-329
+  wave: 96
+  title: First eligible directional low-redshift MES lane
+  owner: HTT
+  capability: FIRST_ELIGIBLE_DIRECTIONAL_LOWZ_MES_LANE
+  inputs: [PR-327 Planck MES package, PR-328 physical response terminal, live admitted low-redshift lane inventory]
+  outputs: [deterministic six-criterion eligibility decision, first eligible lane result or exact blocked terminal]
+  contributors: [OBSSTAT, COMMON]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [htt, obsstat]
+  depends: [PR-327, PR-328]
+  dependency_contracts: [{upstream_id: PR-327, mode: requires_success}, {upstream_id: PR-328, mode: requires_terminal_receipt}]
+  targets: ["Evaluate live low-redshift candidates in deterministic order and run only the first lane with direction, depth, exact admission, covariance or valid nulls, physical local/global responses, and bound frame and units."]
+  files: [docs/PR_DELTAS/pr-329.md, tests/integration/test_mes_tomographic_local_global.py, docs/generated/mes_tomographic]
+  tests: [PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/integration/test_mes_tomographic_local_global.py]
+  dod: [The six-criterion gate is mechanically reproducible and either the first eligible lane yields conditional identification or honest abstention, or no eligible lane emits BLOCKED_NO_ELIGIBLE_DIRECTIONAL_LOWZ_LANE.]
+  kill: PR321 HSC SACC is treated as directional, an unadmitted lane is guessed from availability, covariance or frames are omitted, or missing physics is synthesized.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: R3-HTT
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  claim_impact: First-lane conditional local/global diagnostic or exact no-eligible-lane blocker only.
+  forbidden: ["No HSC SACC direction fabrication, unadmitted data, posterior evidence, native-solver result, geometry detection, or family identification."]
+  anti_drift: ["Availability is not eligibility; every admitted lane must bind direction, depth, covariance or nulls, physical responses, frame, and units before execution."]
+  roadmap_anchor: docs/codex_handoff/mes_stack_integration/AUDIT_COMPILED_EXEC_PLAN.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: observed_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: MES_STACK_IMPLEMENTATION
+  solver_gate_required: false
+  change_set_id: CS-PR329-LOWZ-MES-LANE
+  publication_group_id: PG-PR322-MES-STACK-IMPLEMENTATION
+  planning_alias: MSI-WU-007
+- id: PR-330
+  wave: 97
+  title: MES portable evidence and independent review
+  owner: COMMON
+  capability: MES_PORTABLE_EVIDENCE_AND_INDEPENDENT_REVIEW
+  inputs: [PR-327 portable Planck MES result, PR-328 local/global response terminal, exact source disposition ledger]
+  outputs: [portable evidence bundle, focused CI receipt, fresh read-only review, differential audit, human-action PR disposition list]
+  contributors: [OBSSTAT, HTT]
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes: [common, obsstat, htt]
+  depends: [PR-327, PR-328]
+  dependency_contracts: [{upstream_id: PR-327, mode: requires_success}, {upstream_id: PR-328, mode: requires_terminal_receipt}]
+  targets: ["Package replayable MES results and blockers, run directly affected existing CI and claim gates, obtain fresh read-only review, and list human-only dispositions without closing or merging any source PR."]
+  files: [docs/PR_DELTAS/pr-330.md, docs/generated/mes_methodology_recovery, .github/workflows/repository-integrity.yml, tests/contracts/test_mes_publication_claims.py]
+  tests: [python -m pytest -q tests/contracts/test_mes_publication_claims.py tests/integration/test_planck_mes_morphology.py tests/htt/test_mes_local_global_identifiability.py, python scripts/check_claim_language.py --strict-missing docs/PR_DELTAS/pr-330.md]
+  dod: [Every reported value replays from portable evidence, directly affected CI passes, fresh review has zero P0 and P1 findings, blockers remain typed, and every source PR has a human-action disposition.]
+  kill: A result is nonportable, forbidden claim language appears, a unique source artifact is stranded, P0 or P1 remains, or any PR is automatically closed or merged.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: R3-COMMON
+  claim_tier_ceiling: diagnostic_only
+  claim_level: {scheme: roadmap_rescue_v1, level: C2}
+  claim_impact: Portable diagnostic evidence and review state only; publication and scientific authority remain separate human decisions.
+  forbidden: ["No automatic PR close or merge, new planning framework, raw restricted data, native-solver claim, geometry detection, or family identification."]
+  anti_drift: ["Generic control, MES result, formal blockers, local/global status, low-z eligibility, remote PR state, and publication authority remain separate reported fields."]
+  roadmap_anchor: docs/codex_handoff/mes_stack_integration/AUDIT_COMPILED_EXEC_PLAN.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: evidence_bundle
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: MES_STACK_IMPLEMENTATION
+  solver_gate_required: false
+  change_set_id: CS-PR330-MES-PORTABLE-REVIEW
+  publication_group_id: PG-PR322-MES-STACK-IMPLEMENTATION
+  planning_alias: MSI-WU-008

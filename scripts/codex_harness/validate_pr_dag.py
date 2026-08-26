@@ -766,6 +766,79 @@ POST311_OBSERVATIONAL_CONTINUATION_CONTRACTS = {
         "authorization": "EXPLICIT_APPROVED_SEQUENCE",
     },
 }
+MES_STACK_IMPLEMENTATION_IDS = {
+    f"PR-{number}" for number in range(322, 331)
+}
+MES_STACK_IMPLEMENTATION_CONTRACTS = {
+    "PR-322": {
+        "planning_alias": "MSI-WU-000",
+        "owner": "COMMON",
+        "dependencies": [],
+    },
+    "PR-323": {
+        "planning_alias": "MSI-WU-001",
+        "owner": "COMMON",
+        "dependencies": [("PR-322", "requires_success")],
+    },
+    "PR-324": {
+        "planning_alias": "MSI-WU-002",
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-322", "requires_success")],
+    },
+    "PR-325": {
+        "planning_alias": "MSI-WU-003",
+        "owner": "OBSSTAT",
+        "dependencies": [
+            ("PR-323", "requires_success"),
+            ("PR-324", "requires_success"),
+        ],
+    },
+    "PR-326": {
+        "planning_alias": "MSI-WU-004",
+        "owner": "COMMON",
+        "dependencies": [
+            ("PR-323", "requires_success"),
+            ("PR-325", "requires_success"),
+        ],
+    },
+    "PR-327": {
+        "planning_alias": "MSI-WU-005",
+        "owner": "OBSSTAT",
+        "dependencies": [
+            ("PR-324", "requires_success"),
+            ("PR-325", "requires_success"),
+            ("PR-326", "requires_success"),
+        ],
+    },
+    "PR-328": {
+        "planning_alias": "MSI-WU-006",
+        "owner": "HTT",
+        "dependencies": [
+            ("PR-323", "requires_success"),
+            ("PR-326", "requires_success"),
+        ],
+    },
+    "PR-329": {
+        "planning_alias": "MSI-WU-007",
+        "owner": "HTT",
+        "dependencies": [
+            ("PR-327", "requires_success"),
+            ("PR-328", "requires_terminal_receipt"),
+        ],
+    },
+    "PR-330": {
+        "planning_alias": "MSI-WU-008",
+        "owner": "COMMON",
+        "dependencies": [
+            ("PR-327", "requires_success"),
+            ("PR-328", "requires_terminal_receipt"),
+        ],
+    },
+}
+MES_STACK_PREFIX_RECEIPT = (
+    Path(__file__).resolve().parents[2]
+    / "docs/generated/mes_stack_implementation/dag_prefix_receipt.json"
+)
 PR280_DIRECT_CONSUMERS = {
     "PR-281",
     "PR-282",
@@ -1079,6 +1152,16 @@ def validate_backlog(data: dict[str, Any]) -> DagInfo:
     if present_post311_ids and present_post300_ids != POST300_OBSERVATIONAL_LANE_IDS:
         raise ValueError(
             "post-311 observational continuation requires the full post-300 slice"
+        )
+    present_mes_stack_ids = idset & MES_STACK_IMPLEMENTATION_IDS
+    if present_mes_stack_ids and present_mes_stack_ids != MES_STACK_IMPLEMENTATION_IDS:
+        raise ValueError(
+            "MES stack implementation must register PR-322..330 atomically; "
+            f"missing={sorted(MES_STACK_IMPLEMENTATION_IDS - present_mes_stack_ids)}"
+        )
+    if present_mes_stack_ids and present_post311_ids != POST311_OBSERVATIONAL_CONTINUATION_IDS:
+        raise ValueError(
+            "MES stack implementation requires the full post-311 continuation"
         )
     prereqs = {pr["id"]: list(pr.get("depends") or []) for pr in prs}
     missing_deps = sorted({dep for deps in prereqs.values() for dep in deps if dep not in idset})
@@ -1495,6 +1578,16 @@ def validate_long_horizon_rescue_slice(
         raise ValueError(
             "post-311 observational continuation requires the full post-300 slice"
         )
+    actual_mes_stack_ids = actual_ids & MES_STACK_IMPLEMENTATION_IDS
+    if actual_mes_stack_ids and actual_post311_ids != POST311_OBSERVATIONAL_CONTINUATION_IDS:
+        raise ValueError(
+            "MES stack implementation requires the full post-311 continuation"
+        )
+    if actual_mes_stack_ids and actual_mes_stack_ids != MES_STACK_IMPLEMENTATION_IDS:
+        raise ValueError(
+            "MES stack implementation must be atomic; "
+            f"missing={sorted(MES_STACK_IMPLEMENTATION_IDS - actual_mes_stack_ids)}"
+        )
     if actual_foundation_ids:
         policy = data.get("policy") or {}
         expected_overlay = (
@@ -1530,6 +1623,7 @@ def validate_long_horizon_rescue_slice(
     expected_total += len(actual_pr280_root_cause_ids)
     expected_total += len(actual_post300_ids)
     expected_total += len(actual_post311_ids)
+    expected_total += len(actual_mes_stack_ids)
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -1822,6 +1916,8 @@ def validate_long_horizon_rescue_slice(
         validate_post300_observational_slice(cards)
     if actual_post311_ids:
         validate_post311_observational_continuation(cards)
+    if actual_mes_stack_ids:
+        validate_mes_stack_implementation(cards, data, status=status)
     if actual_pr280_root_cause_ids:
         _validate_pr280_root_cause_slice(cards)
 
@@ -2307,6 +2403,138 @@ def validate_post311_observational_continuation(cards: dict[str, Any]) -> None:
                 raise ValueError(
                     f"{pr_id} continuation forbidden actions omit {boundary!r}"
                 )
+
+
+def _canonical_payload_sha256(payload: object) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            payload,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def validate_mes_stack_implementation(
+    cards: dict[str, Any],
+    backlog: dict[str, Any],
+    *,
+    status: dict[str, Any] | None,
+) -> None:
+    """Validate the accepted append-only PR-322..330 MES implementation slice."""
+
+    try:
+        receipt = json.loads(MES_STACK_PREFIX_RECEIPT.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"MES implementation DAG prefix receipt is unreadable: {exc}") from exc
+    if receipt.get("schema") != "htt.mes_stack_implementation.dag_prefix_receipt.v1":
+        raise ValueError("MES implementation DAG prefix receipt schema drifted")
+
+    prefix_count = receipt.get("prefix_count")
+    all_cards = backlog.get("prs")
+    if type(prefix_count) is not int or not isinstance(all_cards, list):
+        raise ValueError("MES implementation DAG prefix receipt is malformed")
+    prefix = all_cards[:prefix_count]
+    prefix_ids = [card.get("id") for card in prefix if isinstance(card, dict)]
+    prefix_edges = [
+        {
+            "id": card.get("id"),
+            "depends": card.get("depends") or [],
+            "dependency_contracts": card.get("dependency_contracts") or [],
+        }
+        for card in prefix
+        if isinstance(card, dict)
+    ]
+    prefix_checks = {
+        "prefix_ids_sha256": _canonical_payload_sha256(prefix_ids),
+        "prefix_cards_sha256": _canonical_payload_sha256(prefix),
+        "prefix_edges_sha256": _canonical_payload_sha256(prefix_edges),
+    }
+    for field, actual in prefix_checks.items():
+        if receipt.get(field) != actual:
+            raise ValueError(f"MES implementation DAG prefix {field} drifted")
+    if (
+        len(prefix_ids) != prefix_count
+        or prefix_ids[:1] != [receipt.get("prefix_first_id")]
+        or prefix_ids[-1:] != [receipt.get("prefix_last_id")]
+    ):
+        raise ValueError("MES implementation DAG prefix identity or length drifted")
+
+    expected_ids = [f"PR-{number}" for number in range(322, 331)]
+    if [card.get("id") for card in all_cards[-len(expected_ids) :]] != expected_ids:
+        raise ValueError("MES implementation cards must be the exact PR-322..330 tail")
+
+    for pr_id in expected_ids:
+        card = cards[pr_id]
+        expected = MES_STACK_IMPLEMENTATION_CONTRACTS[pr_id]
+        missing_fields = sorted((POST275_REQUIRED_FIELDS | {"planning_alias"}) - set(card))
+        if missing_fields:
+            raise ValueError(f"{pr_id} missing MES implementation fields: {missing_fields}")
+        expected_contracts = [
+            {"upstream_id": upstream_id, "mode": mode}
+            for upstream_id, mode in expected["dependencies"]
+        ]
+        if card.get("dependency_contracts") != expected_contracts:
+            raise ValueError(f"{pr_id} MES dependency modes drifted")
+        if card.get("depends") != [row["upstream_id"] for row in expected_contracts]:
+            raise ValueError(f"{pr_id} MES dependencies drifted")
+        if card.get("owner") != expected["owner"]:
+            raise ValueError(f"{pr_id} MES owner drifted")
+        if card.get("planning_alias") != expected["planning_alias"]:
+            raise ValueError(f"{pr_id} MES planning alias drifted")
+        for field in ("capability", "kill", "change_set_id", "publication_group_id"):
+            _require_nonempty_string(card.get(field), f"{pr_id}.{field}")
+        for field in (
+            "inputs",
+            "outputs",
+            "contributors",
+            "implementation_scopes",
+            "targets",
+            "files",
+            "tests",
+            "dod",
+            "forbidden",
+            "anti_drift",
+        ):
+            _require_string_list(card, field)
+        if (
+            card.get("activation_state") != "PENDING"
+            or card.get("execution_lane") != "defensible"
+            or card.get("execution_authorization") != "EXPLICIT_USER_AUTHORIZED"
+            or card.get("scientific_status_on_intake") != "OPEN"
+            or card.get("public_use") is not False
+            or card.get("spec_first_required") is not True
+            or card.get("solver_gate_required") is not False
+            or card.get("claim_tier_ceiling") != "diagnostic_only"
+            or card.get("track") != "MES_STACK_IMPLEMENTATION"
+        ):
+            raise ValueError(
+                f"{pr_id} must remain user-authorized, PENDING, internal, "
+                "OPEN, spec-first, solver-independent, and diagnostic-only"
+            )
+        forbidden_text = " ".join(card["forbidden"]).lower().replace("-", " ")
+        for boundary in ("native", "family identification"):
+            if boundary not in forbidden_text:
+                raise ValueError(
+                    f"{pr_id} MES forbidden actions omit {boundary!r}"
+                )
+
+    if status is not None:
+        resolutions = status.get("execution_resolutions") or {}
+        if not isinstance(resolutions, dict):
+            raise ValueError("status execution_resolutions must be a mapping")
+        prefix_id_set = set(prefix_ids)
+        old_resolutions = {
+            pr_id: value
+            for pr_id, value in resolutions.items()
+            if pr_id in prefix_id_set
+        }
+        actual = _canonical_payload_sha256(old_resolutions)
+        if receipt.get("prefix_execution_resolutions_sha256") != actual:
+            raise ValueError(
+                "MES implementation DAG prefix execution resolutions drifted"
+            )
 
 
 def _validate_post275_slice(cards: dict[str, Any]) -> None:

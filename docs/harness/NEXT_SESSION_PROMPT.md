@@ -1,86 +1,58 @@
-# Next Session Prompt
+# Next Session Prompt — external re-audit handoff
 
-PR-295 is canonically complete in the isolated worktree
-`/home/cosmosapjw/worktrees/htt-pr295-external-boundary-20260808` on branch
-`changeset/pr295-external-boundary-repair`.
+Audit the existing candidate first; do not recreate it and do not start a new
+planning successor.
 
-## Authority and current state
+## Exact checkout
 
-- Entry target: `eaaff9db2636099e8286fb81acc1e652b018fbc5`.
-- PR-295 content commit: `824a0c40ba63e130ae2eeb35b93b1ece6fc16e88`.
-- Canonical DAG: 244 valid cards; 175 completed; 37 pending; three terminal
-  blocked; 28 dormant; no foreground card; PR-151 background-only.
-- Completion: 71.72%; dependency-weighted: 74.09%; critical path: 98.70%.
-- PR-296 and PR-297 are dependency-ready. Execute PR-296 first, then PR-297.
-- PR-280 remains `COMPLETED_FAILED_WITH_RECEIPT`; its aggregate success flag is
-  false until both remaining successors pass. PR-281--294 remain held.
+- Repository: `cosmosapjw-quantum/htt_base`.
+- Branch: `changeset/pr324-mes-methodology-stack-20260826`.
+- Accepted integration start: `8b6028abcde18c87591789f6ba53e81157fa4eba`.
+- Reviewed PR-327 candidate:
+  `57c74157344c19b217b61c445f4d25c5f646cd18`.
+- Reviewed tree: `9ab944440a57c66bb9cb5a56d331c757bbb483ec`.
+- The branch tip also contains the status/handoff closeout for external review;
+  resolve that exact tip with `git rev-parse HEAD HEAD^{tree}` after checkout.
 
-## Closed PR-295 result
+## Audit boundary
 
-- The CAMB 1.6.6 visibility oracle moved from the installed BASS tree to
-  `scripts/oracles/egs2_camb_visibility.py`.
-- Production scanner, direct runner, exact CAMB-absence classification,
-  numerical/internal failure classification, clean/dirty wheel identity,
-  editable wheel, symlink guard, and deleted-module wheel absence all pass.
-- Historical seal SHA-256 `43d4d88b...` and blob `55b26999...` remain
-  byte-identical.
-- Final exact staged fingerprint `9d12f3b9...` passed strict adjudication at
-  `.agent-harness/runs/pr295-postfix-review-20260808/results/pr295_final_candidate_review_20260808.json`.
-- Scientific status remains `OPEN_UNCHANGED`; transfer source is
-  `external_transfer`; artifact mode is governance/diagnostic; observed-data
-  execution and public use are false.
+- PR-322 through PR-327 are complete. PR-328 through PR-330 are pending and
+  must not be inferred as executed.
+- Primary PR-327 MES result: `98/301` (`14/43`).
+- Frozen generic PR-314 benchmark control: `133/301` (`19/43`), not MES.
+- Preserve the five exact PR-314 Git blobs and the SMICA-only exact-300 fast
+  path. Commander and 999 CMB-only rows are not prerequisites.
+- Directional state must remain `BLOCKED_DIRECTIONAL_SUPPORT`; Planck-only
+  local/global state must remain `SINGLE_SHELL_LOCAL_GLOBAL_NONIDENTIFIED`.
+- No legacy `planck_mes_bounds.py`, scalar-to-direction construction,
+  source-only branch merge, PR close/merge, security expansion, native result,
+  or family-identification claim is allowed.
 
-## PR-151 background acquisition
-
-- Resume target: `/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks`.
-- tmux session: `pr151_acquire_20260808`.
-- Checkpoint state: 540/1000 EZmocks complete, batch 55 active, 0/25 Abacus,
-  about 736 GiB free.
-- Recent cadence implies roughly 2.5--3 days for remaining EZmock batches.
-- Do not restart from zero, start finalize, or use partial files scientifically.
-
-## Next DAG slice: PR-296
-
-1. Rebuild the shared context and read the exact PR-296 card and PR-280
-   terminal receipt.
-2. Reproduce only
-   `htt.bass.spectrum.test_d2_pstf_progressive_closure::test_python_pstf_closure_does_not_regress`
-   on the latest merged target.
-3. Use `$htt-dag-orchestrator`, `$htt-physics-math-audit`,
-   `$htt-scientific-code-validation`, and `$htt-adversarial-review-loop`;
-   add harness/claim skills only if touched surfaces require them.
-4. Keep PR-296 isolated from PR-297 and from PR-151 data. Preserve the raw
-   failure, derive the smallest meaningful physics repair, run the PR card and
-   adjacent smoke tests, obtain exact independent review, then commit/PR/CI/merge.
-5. Proceed to PR-297 only after PR-296 is merged and the remote target is
-   re-resolved.
-
-## Required PR-295 closeout verification
+## Minimum replay
 
 ```bash
-PYTHONPATH=htt/src:htt:htt/htt python -m pytest \
-  -p no:cacheprovider -o addopts= -q \
-  htt/bass/validation/test_external_code_policy.py
-PYTHONPATH=htt/src:htt:htt/htt python -m pytest \
-  -p no:cacheprovider -o addopts= -q \
-  research_gates/egs2/tests/test_egs2_camb_crosscheck.py
-PYTHONPATH=htt/src:htt:htt/htt python \
-  scripts/run_egs2_camb_crosscheck_seal.py --check
-python scripts/codex_harness/validate_pr_dag.py \
-  docs/codex_handoff/pr_backlog.yaml
-python scripts/codex_harness/sync_pr_dag_mirrors.py --check
-python scripts/codex_harness/progress_report.py \
-  docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml \
-  --checkpoint-every 5
+PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
+  tests/integration/test_planck_mes_morphology.py \
+  tests/obsstat/test_mes_row_anchor.py \
+  tests/integration/test_planck_pr3_current_stack.py \
+  tests/integration/test_planck_pr3_operator.py \
+  tests/contracts/test_authorized_observational_program.py
+python scripts/check_claim_language.py --strict-missing docs/PR_DELTAS/pr-327.md
+python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+git diff --check
 ```
 
-## Hard stops
+The strict independent review result is
+`.agent-harness/runs/pr327-final-review-20260826/results/PR327-FINAL-REVIEW.json`
+(SHA-256
+`5ad5047b97fad48293aa9fcfece8ac63b8b3b0a32f784c90ee11b7f807c1e190`).
+It reports `P0=0`, `P1=0` for the reviewed scientific candidate.
+The tracked cross-clone summary is
+`docs/generated/planck_mes_morphology/external_reaudit_handoff.json`; external
+reviewers must rerun the commands rather than treating that summary as an
+acceptance vote.
 
-- Any production external-code import, scanner exemption, stale deleted module
-  in a wheel, or cleanup outside the guarded project build tree.
-- Any CAMB internal/numerical failure relabelled tool unavailable.
-- Any mutation of the frozen numerical seal or historical audit manifests
-  without an explicit successor receipt.
-- Any external-to-native promotion, observed-data use, HTT/MIO ownership
-  collapse, geometry detection, or pre-native family identification.
-- Any partial PR-151 file used before terminal acquisition/admission.
+Do not resume PR-328 until the human accepts the external re-audit. If resumed,
+use the existing PR-328 card and preserve the current
+`BLOCKED_FRAME_TRANSFORM_DERIVATION` receipt rather than guessing a physical
+response.
