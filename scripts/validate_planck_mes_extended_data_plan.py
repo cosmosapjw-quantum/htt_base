@@ -16,6 +16,7 @@ PKG = ROOT / PKG_REL
 BASE_SHA = "3cdeaba39e164c911a26c5daa37f0e15b29614d3"
 BASE_TREE = "47bdbb72aae62ca4280a96897f80028b1b910c20"
 BASE_BRANCH = "changeset/pr324-mes-methodology-stack-20260826"
+PACKAGE_HEAD = "0932f02acc4b9baf5375b4d943afe7ea83d3c8bc"
 EXPECTED_WUS = [f"PED-WU-{index:03d}" for index in range(1, 5)]
 EXPECTED_BUNDLES = {
     "planck_ffp10",
@@ -48,30 +49,34 @@ EXPECTED_ROUTES = {
     "spt_actdr4_bk_crosscmb_controls",
     "pr171_theory_sources",
 }
+PACKAGE_FILES = {
+    "PACKAGE_INDEX.yaml",
+    "AUTHORITY_AND_SCOPE.yaml",
+    "DATA_AVAILABILITY_SNAPSHOT.yaml",
+    "DATA_ROUTE_MATRIX.yaml",
+    "P0_P1_THREAT_CATALOG.json",
+    "INVARIANT_TEST_MATRIX.yaml",
+    "AUDIT_COMPILED_EXEC_PLAN.yaml",
+    "FRESH_CONTEXT_REVIEW_CONTRACT.yaml",
+    "FINAL_DIFFERENTIAL_AUDIT_CONTRACT.yaml",
+    "PROCESS_COST_ASSESSMENT.yaml",
+    "AUDIT_COMPILED_PLAN.md",
+    "CODEX_HANDOFF.md",
+}
 PLAN_ONLY_ALLOWED = {
-    str(PKG_REL / name)
-    for name in (
-        "PACKAGE_INDEX.yaml",
-        "AUTHORITY_AND_SCOPE.yaml",
-        "DATA_AVAILABILITY_SNAPSHOT.yaml",
-        "DATA_ROUTE_MATRIX.yaml",
-        "P0_P1_THREAT_CATALOG.json",
-        "INVARIANT_TEST_MATRIX.yaml",
-        "AUDIT_COMPILED_EXEC_PLAN.yaml",
-        "FRESH_CONTEXT_REVIEW_CONTRACT.yaml",
-        "FINAL_DIFFERENTIAL_AUDIT_CONTRACT.yaml",
-        "PROCESS_COST_ASSESSMENT.yaml",
-        "AUDIT_COMPILED_PLAN.md",
-        "CODEX_HANDOFF.md",
-    )
-} | {
+    *(str(PKG_REL / name) for name in PACKAGE_FILES),
     "scripts/validate_planck_mes_extended_data_plan.py",
     "tests/contracts/test_planck_mes_extended_data_plan.py",
 }
+WORKFLOW_REQUIRED = (
+    "Run Planck MES extended-data planning contracts",
+    "python scripts/validate_planck_mes_extended_data_plan.py",
+    "python -m pytest -q tests/contracts/test_planck_mes_extended_data_plan.py",
+)
 
 
 class PlanValidationError(RuntimeError):
-    """Raised when the audit-compiled package is incomplete or self-contradictory."""
+    """Raised when the audit-compiled package is incomplete or contradictory."""
 
 
 def fail(message: str) -> None:
@@ -79,39 +84,46 @@ def fail(message: str) -> None:
 
 
 def load_yaml(package: Path, name: str) -> Any:
-    path = package / name
     try:
-        return yaml.safe_load(path.read_text(encoding="utf-8"))
+        return yaml.safe_load((package / name).read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, yaml.YAMLError) as exc:
         fail(f"invalid YAML {name}: {exc}")
 
 
 def load_json(package: Path, name: str) -> Any:
-    path = package / name
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return json.loads((package / name).read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         fail(f"invalid JSON {name}: {exc}")
 
 
-def run_git(root: Path, *args: str, check: bool = True) -> str:
+def run_git(root: Path, *args: str) -> str:
     result = subprocess.run(
-        ["git", *args],
-        cwd=root,
-        text=True,
-        capture_output=True,
-        check=False,
+        ["git", *args], cwd=root, text=True, capture_output=True, check=False
     )
-    if check and result.returncode != 0:
+    if result.returncode != 0:
         fail(f"git {' '.join(args)} failed: {result.stderr.strip()}")
     return result.stdout.strip()
 
 
-def _nonempty_string(value: object) -> bool:
+def git_is_ancestor(root: Path, ancestor: str, descendant: str = "HEAD") -> bool:
+    return (
+        subprocess.run(
+            ["git", "merge-base", "--is-ancestor", ancestor, descendant],
+            cwd=root,
+            text=True,
+            capture_output=True,
+            check=False,
+        ).returncode
+        == 0
+    )
+
+
+def nonempty(value: object) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
-def _validate_work_unit(row: Mapping[str, Any]) -> None:
+def validate_work_unit(row: Mapping[str, Any]) -> None:
     required = {
         "schema",
         "id",
@@ -134,11 +146,11 @@ def _validate_work_unit(row: Mapping[str, Any]) -> None:
         fail(f"work-unit keys drifted for {row.get('id')}")
     if row["schema"] != "audit-compiled-work-unit/v1":
         fail(f"work-unit schema drifted for {row['id']}")
-    transition = row["transition"]
+    transition = row.get("transition")
     if not isinstance(transition, Mapping):
         fail(f"work-unit transition missing for {row['id']}")
     for key in ("pass_next_executable_action", "fail_next_action"):
-        if not _nonempty_string(transition.get(key)):
+        if not nonempty(transition.get(key)):
             fail(f"work-unit lacks {key}: {row['id']}")
     if not row.get("implementation", {}).get("ordered_steps"):
         fail(f"work-unit has no implementation steps: {row['id']}")
@@ -162,17 +174,14 @@ def validate_package(
 
     index = load_yaml(package, "PACKAGE_INDEX.yaml")
     required_files = index.get("files")
-    if not isinstance(required_files, list) or set(required_files) != {
-        path.name for path in package.iterdir() if path.is_file()
-    }:
+    actual_files = {path.name for path in package.iterdir() if path.is_file()}
+    if not isinstance(required_files, list) or set(required_files) != actual_files:
         fail("package index and package file set differ")
-    missing = sorted(name for name in required_files if not (package / name).is_file())
-    if missing:
-        fail(f"missing package files: {missing}")
+    if set(required_files) != PACKAGE_FILES:
+        fail("package index coverage drifted")
 
     authority = load_yaml(package, "AUTHORITY_AND_SCOPE.yaml")
-    base = authority.get("canonical_base", {})
-    if base != {
+    if authority.get("canonical_base") != {
         "repository": "cosmosapjw-quantum/htt_base",
         "branch": BASE_BRANCH,
         "sha": BASE_SHA,
@@ -241,13 +250,12 @@ def validate_package(
         if not isinstance(row, Mapping):
             fail("threat row is not a mapping")
         identifier = row.get("id")
-        if not _nonempty_string(identifier) or identifier in threat_ids:
+        if not nonempty(identifier) or identifier in threat_ids:
             fail(f"duplicate or malformed threat id: {identifier}")
         threat_ids.add(identifier)
         if row.get("severity") not in {"P0", "P1"}:
             fail(f"non-P0/P1 row in threat catalogue: {identifier}")
-        detection = row.get("detection", {})
-        if not _nonempty_string(detection.get("executable")):
+        if not nonempty(row.get("detection", {}).get("executable")):
             fail(f"threat lacks executable detector: {identifier}")
         if type(row.get("current_task_blocking")) is not bool:
             fail(f"threat lacks blocking relevance: {identifier}")
@@ -262,7 +270,7 @@ def validate_package(
             f"missing={sorted(threat_ids-mapped)} extra={sorted(mapped-threat_ids)}"
         )
     for row in matrix:
-        if not _nonempty_string(row.get("pass_transition")):
+        if not nonempty(row.get("pass_transition")):
             fail(f"matrix row lacks pass transition: {row.get('failure_mode')}")
 
     plan = load_yaml(package, "AUDIT_COMPILED_EXEC_PLAN.yaml")
@@ -272,7 +280,7 @@ def validate_package(
     if not isinstance(work_units, list) or [row.get("id") for row in work_units] != EXPECTED_WUS:
         fail("work-unit records drifted")
     for row in work_units:
-        _validate_work_unit(row)
+        validate_work_unit(row)
 
     policy = plan.get("global_transition_policy", {})
     if (
@@ -287,7 +295,7 @@ def validate_package(
     if (
         fresh.get("mode") != "READ_ONLY_FIRST_PASS"
         or fresh.get("pass_condition") != {"P0": 0, "P1": 0}
-        or not _nonempty_string(fresh.get("pass_transition"))
+        or not nonempty(fresh.get("pass_transition"))
         or "No further review" not in fresh.get("stopping_rule", "")
     ):
         fail("fresh-context review contract drifted")
@@ -296,7 +304,7 @@ def validate_package(
     if (
         final.get("pass_condition") != {"P0": 0, "P1": 0}
         or not final.get("must_not_reconsider")
-        or not _nonempty_string(final.get("pass_transition"))
+        or not nonempty(final.get("pass_transition"))
     ):
         fail("final differential audit contract drifted")
 
@@ -316,24 +324,27 @@ def validate_package(
             if forbidden in text:
                 fail(f"placeholder remains in {markdown_name}: {forbidden}")
 
+    workflow = (root / ".github/workflows/repository-integrity.yml").read_text(
+        encoding="utf-8"
+    )
+    for required in WORKFLOW_REQUIRED:
+        if required not in workflow:
+            fail(f"workflow missing extended-data contract: {required}")
+
     if check_git:
-        ancestor = subprocess.run(
-            ["git", "merge-base", "--is-ancestor", BASE_SHA, "HEAD"],
-            cwd=root,
-            text=True,
-            capture_output=True,
-            check=False,
-        )
-        if ancestor.returncode != 0:
+        if not git_is_ancestor(root, BASE_SHA):
             fail("canonical base is not an ancestor of HEAD")
-        base_tree = run_git(root, "rev-parse", f"{BASE_SHA}^{{tree}}")
-        if base_tree != BASE_TREE:
+        if not git_is_ancestor(root, PACKAGE_HEAD):
+            fail("frozen package snapshot is not an ancestor of HEAD")
+        if run_git(root, "rev-parse", f"{BASE_SHA}^{{tree}}") != BASE_TREE:
             fail("canonical base tree drifted")
-        changed = set(
+        changed = {
             line
-            for line in run_git(root, "diff", "--name-only", BASE_SHA, "HEAD").splitlines()
+            for line in run_git(
+                root, "diff", "--name-only", BASE_SHA, PACKAGE_HEAD
+            ).splitlines()
             if line
-        )
+        }
         if not changed:
             fail("planning package produced no changed files")
         unexpected = sorted(changed - PLAN_ONLY_ALLOWED)
@@ -343,6 +354,7 @@ def validate_package(
     return {
         "schema": "htt.planck_mes_extended_data.plan_validation.v1",
         "status": "PASS",
+        "package_snapshot": PACKAGE_HEAD,
         "work_units": EXPECTED_WUS,
         "failure_modes": len(threat_ids),
         "P0": sum(row["severity"] == "P0" for row in threats),
@@ -408,12 +420,13 @@ def main() -> int:
     args = parse_args()
     try:
         if args.implementation_diff:
-            if args.implementation_diff == "-":
-                paths = sys.stdin.read().splitlines()
-            else:
-                paths = Path(args.implementation_diff).read_text(
-                    encoding="utf-8"
-                ).splitlines()
+            paths = (
+                sys.stdin.read().splitlines()
+                if args.implementation_diff == "-"
+                else Path(args.implementation_diff)
+                .read_text(encoding="utf-8")
+                .splitlines()
+            )
             payload = validate_implementation_diff(paths)
         else:
             payload = validate_package(check_git=not args.skip_git)
