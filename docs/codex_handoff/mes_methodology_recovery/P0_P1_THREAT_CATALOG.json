@@ -1,0 +1,122 @@
+{
+  "schema": "htt.mes_methodology_recovery.threat_catalog.v1",
+  "failure_modes": [
+    {
+      "id": "FM-P0-001",
+      "severity": "P0",
+      "name": "GENERIC_LOWELL_CONTROL_REPLACES_MES_METHOD_SPINE",
+      "trigger": "A generic low-ell rank is presented as the HTT/MES method result.",
+      "consequence": "The project answers a different scientific question.",
+      "detector": "Result schema requires mes_anchor_state_ref and mes_methodology_role for every MES-labelled result.",
+      "prevention": "PR314/PR315 generic ranks remain benchmark_control only."
+    },
+    {
+      "id": "FM-P0-002",
+      "severity": "P0",
+      "name": "SCALAR_ONLY_DIRECTION_OR_TENSOR_FABRICATION",
+      "trigger": "A vector, axis or STF tensor is constructed from scalar MES values without directional data or a physical response map.",
+      "consequence": "O(3) covariance is violated and scientific content is fabricated.",
+      "detector": "tests/common/test_mes_directional_state.py::test_scalar_only_construction_refused",
+      "prevention": "Factory requires a direction-indexed scalar field, harmonics, or typed physical response."
+    },
+    {
+      "id": "FM-P0-003",
+      "severity": "P0",
+      "name": "SINGLE_SHELL_LOCAL_GLOBAL_IDENTIFICATION",
+      "trigger": "Local and global tilt receive an identified status from one shell or proportional depth profiles.",
+      "consequence": "A structurally nonidentified decomposition is reported as science.",
+      "detector": "tests/htt/test_mes_local_global_identifiability.py::test_one_shell_and_proportional_profiles_abstain",
+      "prevention": "Require full nuisance-projected whitened rank and independent depth profiles."
+    },
+    {
+      "id": "FM-P0-004",
+      "severity": "P0",
+      "name": "LEGACY_MES_COEFFICIENT_REACTIVATION",
+      "trigger": "Observed code imports quarantined planck_mes_bounds.py or historical scalar formulas.",
+      "consequence": "Nonauthoritative, materially different bounds reach results.",
+      "detector": "tests/contracts/test_mes_observed_authority.py::test_no_legacy_mes_imports",
+      "prevention": "Observed code may use only common.statistical_foundations typed MES anchors."
+    },
+    {
+      "id": "FM-P0-005",
+      "severity": "P0",
+      "name": "CROSS_CHANNEL_UNTYPED_MES_RATIO",
+      "trigger": "A numerator is divided by an anchor with mismatched sector, frame, congruence, normalization or branch.",
+      "consequence": "A dimensionless-looking but physically meaningless score is emitted.",
+      "detector": "tests/common/test_mes_anchor_stress.py::test_channel_mismatch_refused",
+      "prevention": "Require exact channel_key equality and typed partial-identification status."
+    },
+    {
+      "id": "FM-P0-006",
+      "severity": "P0",
+      "name": "MES_BOUND_USED_AS_CONVERSE_OR_EVIDENCE",
+      "trigger": "Small MES stress is described as FLRW proof, occupancy, probability, evidence or family identification.",
+      "consequence": "A one-way premise-conditional bound is reversed.",
+      "detector": "tests/contracts/test_mes_claim_language.py",
+      "prevention": "Allowed use is limited to one-way premise stress and calibrated morphology coordinates."
+    },
+    {
+      "id": "FM-P0-007",
+      "severity": "P0",
+      "name": "OBSERVATION_NULL_OPERATOR_OR_ANCHOR_ASYMMETRY",
+      "trigger": "Observation and null rows use different map, anchor, normalisation, shape or family-score code.",
+      "consequence": "Finite-rank calibration loses exchangeability.",
+      "detector": "tests/obsstat/test_mes_row_equivariance.py::test_row_permutation_observation_swap_and_ties",
+      "prevention": "Use one pure row operator and one permutation-equivariant pooled scorer."
+    },
+    {
+      "id": "FM-P1-001",
+      "severity": "P1",
+      "name": "PR315_CUTSKY_PREDECESSOR_NOT_TERMINAL",
+      "trigger": "MES Planck execution starts from the frozen PR314 estimator.",
+      "consequence": "Publication-facing anchors inherit the known cut-sky semantic defect.",
+      "detector": "BLOCKED_PR315_TERMINAL_RECEIPT",
+      "prevention": "Exact PR315 terminal receipt is a hard precondition."
+    },
+    {
+      "id": "FM-P1-002",
+      "severity": "P1",
+      "name": "ROWWISE_SELF_ANCHOR_CALLED_INDEPENDENT_INFORMATION",
+      "trigger": "An anchor derived from the same row is called information gain or independent evidence.",
+      "consequence": "A deterministic nonlinear reparameterisation is double-counted.",
+      "detector": "tests/contracts/test_mes_self_anchor_claims.py",
+      "prevention": "Label it a preregistered nonlinear statistic and calibrate it symmetrically."
+    },
+    {
+      "id": "FM-P1-003",
+      "severity": "P1",
+      "name": "PHYSICAL_GLOBAL_RESPONSE_MISSING",
+      "trigger": "Support-indicator templates are used as physical local/global responses.",
+      "consequence": "Response rank has no physical model meaning.",
+      "detector": "BLOCKED_PHYSICAL_GLOBAL_RESPONSE",
+      "prevention": "Require content-bound covariant response matrices with source, frame and depth identities."
+    },
+    {
+      "id": "FM-P1-004",
+      "severity": "P1",
+      "name": "ANCHOR_UNCERTAINTY_OR_SHARED_DATA_DEPENDENCE_HIDDEN",
+      "trigger": "Anchor and morphology share multipoles but are reported as independent information.",
+      "consequence": "Uncertainty and apparent tightening are overstated.",
+      "detector": "tests/obsstat/test_mes_anchor_covariance_binding.py",
+      "prevention": "Bind one joint row/source/covariance identity and forbid independent-gain language."
+    },
+    {
+      "id": "FM-P1-005",
+      "severity": "P1",
+      "name": "MOMENT_REALIZABILITY_NOT_GATED",
+      "trigger": "A reconstructed directional second moment violates the declared PSD/trace/normalisation branch.",
+      "consequence": "The vector/tensor payload has no physical directional measure.",
+      "detector": "tests/common/test_mes_directional_moment_cone.py",
+      "prevention": "Apply PSD trace-one or an explicitly typed signed-field branch."
+    },
+    {
+      "id": "FM-P1-006",
+      "severity": "P1",
+      "name": "LIVE_DAG_PREFIX_DRIFT",
+      "trigger": "Recovery nodes reorder or rewrite existing DAG nodes or edges.",
+      "consequence": "Project authority and continuation order are corrupted.",
+      "detector": "Existing strict DAG validator plus exact old-prefix comparator.",
+      "prevention": "This package does not edit the DAG; implementation allocates append-only after live reread."
+    }
+  ]
+}

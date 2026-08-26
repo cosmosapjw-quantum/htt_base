@@ -1,0 +1,40 @@
+schema: htt.mes_methodology_recovery.fresh_review.v1
+mode: fresh_context_read_only
+reviewer_input:
+  - authoritative_base_sha
+  - final_sha
+  - base_to_final_diff
+  - AUDIT_COMPILED_EXEC_PLAN.yaml
+  - P0_P1_THREAT_CATALOG.json
+  - targeted_verification_logs
+  - portable_numeric_evidence
+  - unresolved_blockers
+not_authoritative:
+  - implementer_chain_of_reasoning
+  - implementer_completion_prose
+first_pass:
+  may_modify_code: false
+  output_schema:
+    severity: P0|P1|P2|P3
+    file: path
+    line_or_symbol: location
+    violated_invariant: id_or_statement
+    reproducer: command_or_minimal_evidence
+    explanation: why_defect_matters
+pass_condition:
+  P0: 0
+  P1: 0
+repair_loop:
+  - reviewer_finding
+  - implementer_repair
+  - targeted_reverification
+  - fresh_review_of_repaired_delta
+final_strong_model_audit:
+  differential_only: true
+  questions:
+    - did_implementation_violate_the_contract
+    - did_the_contract_miss_a_P0_or_P1_visible_in_the_delta
+    - was_evidence_invalid_or_misclassified
+    - did_scope_expand_beyond_authority
+    - did_the_fresh_reviewer_issue_a_false_pass_or_fail
+  do_not_restart_full_project_audit: true
