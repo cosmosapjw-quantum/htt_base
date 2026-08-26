@@ -3077,3 +3077,18 @@ Changed packages/surfaces: BASS external oracle, COMMON packaging boundary,
 EGS2 gate/runner, current audit builders, claim ledger, DAG/status, and
 generated status sidecars. No numerical artifact, observed dataset, theorem,
 HTT inference, or MIO certificate was produced.
+
+## PR-326 repaired directional MES bridge and checkpoint 205 (2026-08-26)
+
+| Command or evidence | Result | Notes |
+| --- | --- | --- |
+| sealed fresh review | FAIL, PRESERVED AND REPAIRED | Candidate `dd5aaf1...` had P0=0/P1=3: frame/convention identity loss, raw-sample semantic self-promotion, and condition `4.9188e12` rank-nine instability. Result SHA-256 `4ce10cfc...`. |
+| repaired targeted matrix | PASS | `23 passed`; includes analytic/O(3), scalar refusal, declared parity status, ell=0/1 contradictions, ell=4 alias-status, frame/convention identity, near-singular refusal, realizability, and claim-boundary tests. |
+| directly affected matrix | PASS | `22 passed`; theorem receipts, 301-row anchor pool, current Planck stack, PR-314 control, and observed legacy-import boundary. |
+| syntax and scoped claim/import scan | PASS | Both changed Python modules compile; no forbidden claim phrase or `planck_mes_bounds.py` import was found. |
+| status generation first attempt | FAIL, PRESERVED | Generator rejected PR-327 overlapping `pending` and `in_progress`; no output was accepted. The duplicate pending row was removed. |
+| status generation retry | PASS | Regenerated `status_snapshot.json`, `claim_ledger.json`, and `status_matrix.md` from repaired content head `e9387561...`. |
+| checkpoint 205 | PASS | 205/273 = 75.09%; dependency weighted 80.28%; critical path 92.59%; PR-327 foreground; no replan required. |
+
+No full repository suite was run because no distinct failure class required it.
+No reference output or scientific expectation was changed to obtain a pass.

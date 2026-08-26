@@ -1,5 +1,6 @@
 generated_on: '2026-08-26'
 completed:
+- PR-326
 - PR-325
 - PR-324
 - PR-323
@@ -242,7 +243,6 @@ pending:
 - PR-319
 - PR-320
 - PR-321
-- PR-327
 - PR-328
 - PR-329
 - PR-330
@@ -275,7 +275,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-326
+in_progress: PR-327
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -963,6 +963,28 @@ execution_lane:
   PR-329: defensible
   PR-330: defensible
 execution_resolutions:
+  PR-326:
+    resolution: COMPLETED_SUCCESS
+    receipt_verdict: COMPLETED_SUCCESS_TYPED_DIRECTIONAL_MES_BRIDGE
+    receipt: docs/PR_DELTAS/pr-326.md
+    review_receipt: .agent-harness/runs/pr326-final-review-20260826/RUN_SUMMARY.json
+    review_result_sha256: 4ce10cfc22d597351f17b695a43ffaaa3a814b8ae370a00442e439146beda1cd
+    reviewed_candidate_sha: dd5aaf1a4f6b12efa0b99c7241ba3e5d8eb63818
+    review_initial_disposition: P0_0_P1_3_REPAIRED
+    repair_candidate_sha: e938756120bb084e28a678bb0fcd733a4a6158e5
+    repair_candidate_tree_sha: 8b281a84103ca8f8dfcb90bb436c914674b7420b
+    repair_verification: targeted_23_passed_directly_affected_22_passed
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-26'
+    scientific_status_effect: typed_directional_mes_bridge_with_unverified_raw_sample_semantics_and_physical_response_refusal
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: diagnostic_only_method_bridge
+    transfer_source: none
+    observed_data_executed: false
+    directional_support_status: typed_bridge_available_but_input_support_still_required
+    generic_control_preserved: true
+    public_use: false
+    public_result_emitted: false
   PR-325:
     resolution: COMPLETED_SUCCESS
     receipt_verdict: COMPLETED_SUCCESS_301_ROW_ACTIVE_GEODESIC_ANCHORS

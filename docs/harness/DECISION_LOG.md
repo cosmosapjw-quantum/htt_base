@@ -5,6 +5,26 @@ Date: 2026-08-04
 Historical decisions remain recoverable from Git history and owning PR deltas.
 Only decisions that govern the current post-275 programme are repeated here.
 
+## D-MES-RAW-DIRECTIONAL-SEMANTICS-2026-08
+
+Raw finite directional samples cannot by themselves certify an intrinsic
+scalar/pseudoscalar parity law or a global harmonic bandlimit. PR-326 therefore
+retains `DECLARED_UNVERIFIED_BANDLIMIT_AND_PARITY`, binds the declaration into
+the estimator/state identity, rejects detectable ell=0/1 component
+contradictions, and never represents an aliased ell>2 absence as verified.
+Reopen only with an authorized, content-bound upstream harmonic/parity
+contract; a caller-provided label or digest is insufficient.
+
+## D-MES-DIRECTIONAL-FIT-CONDITION-2026-08
+
+A nominal rank-nine masked/discrete design is insufficient when its recovered
+moments are numerically unidentified. PR-326 evaluates the column-normalized
+weighted design and refuses condition number above `1e8`. The observed
+condition, threshold, frame, and exact `RIGHT_HANDED_ACTIVE_O3` convention are
+bound in estimator and state identities. Changing the threshold requires a
+new reproduced numerical criterion and corresponding tests; it is not a
+claim-promotion mechanism.
+
 ## D-TYPED-FOUNDATION
 
 `JointAnisotropyState` is current scientific state authority. Scalar x_C is a
