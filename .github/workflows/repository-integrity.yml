@@ -64,6 +64,10 @@ jobs:
           python -m pytest -q tests/contracts/test_mes_methodology_recovery_contract.py
           python scripts/validate_mes_stack_integration_plan.py
           python -m pytest -q tests/contracts/test_mes_stack_integration_plan.py
+      - name: Run Planck MES extended-data planning contracts
+        run: |
+          python scripts/validate_planck_mes_extended_data_plan.py
+          python -m pytest -q tests/contracts/test_planck_mes_extended_data_plan.py
       - name: Run clean-clone observational quarantine contracts
         run: |
           python -m pytest -q \
