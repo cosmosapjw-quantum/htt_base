@@ -58,12 +58,27 @@ jobs:
             scripts/codex_harness/test_repository_integrity_workflow.py \
             scripts/codex_harness/test_harness_enforcement.py \
             scripts/codex_harness/test_codex_assets.py
-      - name: Run MES recovery and stack-integration planning contracts
+      - name: Run PR-315 joint cut-sky implementation
         run: |
-          python scripts/validate_mes_methodology_recovery_contract.py --json
-          python -m pytest -q tests/contracts/test_mes_methodology_recovery_contract.py
-          python scripts/validate_mes_stack_integration_plan.py
-          python -m pytest -q tests/contracts/test_mes_stack_integration_plan.py
+          env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
+            tests/integration/test_planck_joint_cutsky.py
+          env PYTHONPATH=htt:htt/src:htt/htt python \
+            scripts/observed_runs/run_planck_pr315_joint_synthetic.py \
+            --rows 8 \
+            --output "${RUNNER_TEMP}/pr315-joint-synthetic.json"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          result = json.loads(
+              (Path(os.environ["RUNNER_TEMP"]) / "pr315-joint-synthetic.json").read_text()
+          )
+          assert result["status"] == "EXPLORATORY_NONAUTHORITATIVE"
+          assert result["observation_null_operator_identity"] == "PASS"
+          assert result["observed_data_executed"] is False
+          assert result["scientific_result"] is None
+          print(json.dumps(result, sort_keys=True))
+          PY
       - name: Run clean-clone observational quarantine contracts
         run: |
           python -m pytest -q \
