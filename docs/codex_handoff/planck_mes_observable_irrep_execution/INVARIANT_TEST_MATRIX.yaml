@@ -1,0 +1,194 @@
+schema: htt.planck_mes_observable_irrep.invariant_test_matrix.v1
+rows:
+- requirement: Separate observable and physical states
+  invariant: PMI-INV-LAYER-SEPARATION
+  invariant_statement: ObservableIrrepState cannot construct, subclass, alias, or impersonate JointAnisotropyState.
+  failure_mode: PMI-FM-001
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/common/test_observable_irrep_state.py::test_observable_state_cannot_construct_or_impersonate_physical_state
+  work_unit: PMI-WU-001
+  pass_transition: Observable type is admitted for adapters; physical state remains unchanged.
+- requirement: Forbid scalar-to-irrep creation
+  invariant: PMI-INV-NO-SCALAR-FABRICATION
+  invariant_statement: Scalar C_l, MES anchor, scalar row, or covariance input fails closed for observable irrep construction.
+  failure_mode: PMI-FM-002
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/obsstat/test_observable_irrep_adapter.py::test_scalar_only_inputs_fail_closed
+  work_unit: PMI-WU-001
+  pass_transition: Only harmonic/directional carriers may enter ObservableIrrepState.
+- requirement: Lock real-harmonic layout
+  invariant: PMI-INV-CARRIER-CONVENTION
+  invariant_statement: Packed alm, real-vector layout, block slices, rotation, serialization and replay share exact conventions.
+  failure_mode: PMI-FM-003
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_irrep_carrier.py::test_carrier_round_trip_and_identity_binding
+  work_unit: PMI-WU-004
+  pass_transition: Carrier may be used by morphology/template statistics.
+- requirement: Preserve unoriented-axis semantics
+  invariant: PMI-INV-AXIS-SIGN
+  invariant_statement: Axis sign flips cannot change allowed morphology or create handedness.
+  failure_mode: PMI-FM-004
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/obsstat/test_lowell_irrep_morphology.py::test_axis_sign_flips_leave_allowed_invariants_unchanged_and_forbid_signed_claims
+  work_unit: PMI-WU-006
+  pass_transition: Axis-based morphology remains an O(3)-safe descriptive projection.
+- requirement: Migrate every consumer to the new boundary
+  invariant: PMI-INV-MIGRATION-COMPLETE
+  invariant_statement: New Planck/irrep runners and packages consume typed states; no parallel untyped successor path remains.
+  failure_mode: PMI-FM-005
+  severity: P1
+  mechanical_detector: python scripts/validate_planck_mes_irrep_execution_plan.py --implementation-diff-from 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+  work_unit: PMI-WU-001
+  pass_transition: Subsequent work units use one formalism.
+- requirement: Preserve exact legacy scalar baseline
+  invariant: PMI-INV-LEGACY-RANKS
+  invariant_statement: All exact scalar ranks and frozen source identities remain unchanged.
+  failure_mode: PMI-FM-006
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_coordinate_mechanism_audit.py::test_legacy_exact_rank_locks_are_unchanged
+  work_unit: PMI-WU-002
+  pass_transition: New method results may be compared beside, never instead of, the baseline.
+- requirement: Make ECDF reducer monotone invariant
+  invariant: PMI-INV-ECDF-MONOTONE
+  invariant_statement: LOO midrank ECDF scores preserve all rows under strictly increasing coordinate transforms and ties.
+  failure_mode: PMI-FM-007
+  severity: P1
+  mechanical_detector: python -m pytest -q tests/obsstat/test_finite_null_family.py::test_loo_ecdf_midrank_is_monotone_invariant_with_ties
+  work_unit: PMI-WU-002
+  pass_transition: Reducer may enter the registered sensitivity lane.
+- requirement: Bind exact carrier provenance
+  invariant: PMI-INV-CARRIER-IDENTITY
+  invariant_statement: Every state/package identity binds numeric bytes and all declared operator/frame/transfer metadata.
+  failure_mode: PMI-FM-008
+  severity: P1
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_irrep_carrier.py::test_carrier_identity_binds_exact_numeric_content
+  work_unit: PMI-WU-004
+  pass_transition: Carrier replay is portable and attributable.
+- requirement: Freeze statistical and injection specifications
+  invariant: PMI-INV-PREREGISTRATION
+  invariant_statement: Reducer/tails/families/templates/rotations/amplitudes/rejection rules have exact registry identity before outcomes.
+  failure_mode: PMI-FM-009
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/contracts/test_planck_mes_irrep_preregistration.py
+  work_unit: PMI-WU-002
+  pass_transition: Objective execution is allowed without post-hoc tuning.
+- requirement: Protect and accurately classify inputs
+  invariant: PMI-INV-RAW-IMMUTABLE
+  invariant_statement: Exact admitted files are read-only; partial/absent products and path escapes fail closed.
+  failure_mode: PMI-FM-010
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_extended_data_inventory.py
+  work_unit: PMI-WU-003
+  pass_transition: Accepted inputs may be read once by carrier-producing runs.
+- requirement: Require carrier on every expensive map pass
+  invariant: PMI-INV-NO-CARRIER-DROP
+  invariant_statement: A successful map pass must emit both scalar projection and typed harmonic carrier.
+  failure_mode: PMI-FM-011
+  severity: P1
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_success_terminal_requires_carrier_and_scalar_projection
+  work_unit: PMI-WU-004
+  pass_transition: No repeated map pass is needed merely to recover alms.
+- requirement: Keep V1 primary immutable and V2 additive
+  invariant: PMI-INV-V1-IMMUTABLE
+  invariant_statement: Existing V1 bytes/ranks/paths remain unchanged; V2 has separate schema and outputs.
+  failure_mode: PMI-FM-012
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_v1_packages_and_exact_results_are_unchanged
+  work_unit: PMI-WU-004
+  pass_transition: V2 may be consumed as an additive methods extension.
+- requirement: Make carrier and scalar feature rows agree
+  invariant: PMI-INV-CARRIER-FEATURE-PARITY
+  invariant_statement: Scalar feature extraction from each stored carrier reproduces the stored scalar row.
+  failure_mode: PMI-FM-013
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_carrier_reproduces_every_scalar_feature_row
+  work_unit: PMI-WU-004
+  pass_transition: Scalar and irrep analyses are same-operator projections.
+- requirement: Lock the official 999 inventory
+  invariant: PMI-INV-SMICA-999-ORDER
+  invariant_statement: Exact ordered IDs and denominator are content-bound; only 00970 is absent and 00818 is included if semantically valid.
+  failure_mode: PMI-FM-014
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py::test_exact_official_999_inventory_and_order
+  work_unit: PMI-WU-005
+  pass_transition: Separate CMB-only robustness calibration may execute.
+- requirement: Forbid Commander pseudo-calibration
+  invariant: PMI-INV-COMMANDER-NO-RANK
+  invariant_statement: Commander output emits no finite rank and never opens partial files as inputs.
+  failure_mode: PMI-FM-015
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_commander_irrep.py::test_commander_cannot_emit_finite_rank_or_open_partial_inputs
+  work_unit: PMI-WU-007
+  pass_transition: Commander may be reported descriptively.
+- requirement: Apply injection through the real operator response
+  invariant: PMI-INV-OPERATOR-AWARE-INJECTION
+  invariant_statement: Every rotation has a content-bound map/transfer/operator response before carrier addition.
+  failure_mode: PMI-FM-016
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_every_template_orientation_has_content_bound_operator_response
+  work_unit: PMI-WU-006
+  pass_transition: Injection may be called operator-aware and end-to-end at the registered low-ell layer.
+- requirement: Require native template authority or defer
+  invariant: PMI-INV-NATIVE-TEMPLATE-AUTHORITY
+  invariant_statement: Native Bianchi template runs only under exact provenance; missing authority yields DEFERRED, not a fabricated run.
+  failure_mode: PMI-FM-017
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_native_bianchi_template_requires_exact_authority_or_is_deferred
+  work_unit: PMI-WU-006
+  pass_transition: Analytic lane proceeds; native lane is promoted or explicitly deferred.
+- requirement: Use exchangeable leave-one-out harmonic score
+  invariant: PMI-INV-LOO-TEMPLATE-SCORE
+  invariant_statement: Every row has LOO mean/covariance, full-rank whitening and the same orientation maximization.
+  failure_mode: PMI-FM-018
+  severity: P0
+  mechanical_detector: python -m pytest -q tests/obsstat/test_harmonic_template_score.py::test_leave_one_out_whitening_and_orientation_max_are_permutation_equivariant
+  work_unit: PMI-WU-006
+  pass_transition: Template score may receive exact finite-null calibration.
+- requirement: Track every template candidate
+  invariant: PMI-INV-CANDIDATE-COVERAGE
+  invariant_statement: Every registered template is PROMOTED, REFUTED, UNRESOLVED, DEFERRED, or NOT_ATTEMPTED.
+  failure_mode: PMI-FM-019
+  severity: P1
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_candidate_disposition_ledger_is_complete
+  work_unit: PMI-WU-006
+  pass_transition: Scientific conclusion is limited to actually evaluated candidates.
+- requirement: Force execution after this package
+  invariant: PMI-INV-NO-SUCCESSOR-PLAN
+  invariant_statement: No new plan/review package or full-suite/raw-hash detour can replace PMI-WU-001/002 objective work.
+  failure_mode: PMI-FM-020
+  severity: P1
+  mechanical_detector: python scripts/validate_planck_mes_irrep_execution_plan.py --implementation-diff-from 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+  work_unit: PMI-WU-002
+  pass_transition: First map-free result is executed before data intake.
+- requirement: Keep manuscript evidence executed and replayed
+  invariant: PMI-INV-PAPER-EVIDENCE
+  invariant_statement: Paper consumes only SUCCEEDED terminal plus MATCH replay projections at their exact claim level.
+  failure_mode: PMI-FM-021
+  severity: P1
+  mechanical_detector: python -m pytest -q tests/paper/test_planck_mes_irrep_methods_paper.py::test_paper_requires_successful_replayed_evidence_and_claim_boundaries
+  work_unit: PMI-WU-007
+  pass_transition: Revised manuscript may enter external review.
+- requirement: Classify identity mismatches before blocking
+  invariant: PMI-INV-IDENTITY-CLASSIFICATION
+  invariant_statement: Mismatches are classified as source, deterministic evidence, scientific numeric, or packaging before disposition.
+  failure_mode: PMI-FM-022
+  severity: P1
+  mechanical_detector: python -m pytest -q tests/contracts/test_planck_mes_identity_classification.py
+  work_unit: PMI-WU-003
+  pass_transition: Only scientifically authoritative mismatches block scientific execution.
+- requirement: Expose eps1 premise sensitivity
+  invariant: PMI-INV-EPS1-SENSITIVITY
+  invariant_statement: Exact coefficients and a registered eps1 grid are reported beside eps1=0 values.
+  failure_mode: PMI-FM-023
+  severity: P1
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_coordinate_mechanism_audit.py::test_eps1_sensitivity_uses_active_authority_and_full_grid
+  work_unit: PMI-WU-002
+  pass_transition: Ceiling precision is interpreted under an explicit premise band.
+- requirement: Inspect plots before claims
+  invariant: PMI-INV-PLOT-INSPECTION
+  invariant_statement: Required figures are hash-bound to inspection findings and cannot be generated-only evidence.
+  failure_mode: PMI-FM-024
+  severity: P1
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_plot_audit_binds_all_required_figures_and_findings
+  work_unit: PMI-WU-006
+  pass_transition: Plot-dependent claims may enter the result and manuscript.

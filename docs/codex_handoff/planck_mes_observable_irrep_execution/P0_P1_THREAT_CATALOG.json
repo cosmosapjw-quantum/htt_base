@@ -1,0 +1,341 @@
+{
+  "failure_modes": [
+    {
+      "consequence": "Observable morphology is falsely reported as physical anisotropy or geometry.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/common/test_observable_irrep_state.py::test_observable_state_cannot_construct_or_impersonate_physical_state",
+        "type": "test"
+      },
+      "id": "PMI-FM-001",
+      "prevention": {
+        "mechanism": "Separate types, schemas, module ownership, forbidden constructors, and claim metadata."
+      },
+      "severity": "P0",
+      "trigger": "Planck ObservableIrrepState or harmonic coefficients are inserted into JointAnisotropyState fields or labeled as physical shear, vorticity, acceleration, tilt, curvature, or Bianchi family."
+    },
+    {
+      "consequence": "Direction or tensor information is fabricated from rotation-invariant scalars.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/obsstat/test_observable_irrep_adapter.py::test_scalar_only_inputs_fail_closed",
+        "type": "test"
+      },
+      "id": "PMI-FM-002",
+      "prevention": {
+        "mechanism": "ObservableIrrepBlock constructors require exact 2*ell+1 carrier bytes or a genuine directional-moment object."
+      },
+      "severity": "P0",
+      "trigger": "A scalar C_l, MES anchor, scalar feature row, or covariance is used to fabricate a direction, axis, vector, or STF tensor."
+    },
+    {
+      "consequence": "All orientation/morphology/template results have the wrong representation, sign, normalization, or dimensions.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_irrep_carrier.py::test_carrier_round_trip_and_identity_binding",
+        "type": "test"
+      },
+      "id": "PMI-FM-003",
+      "prevention": {
+        "mechanism": "One registered layout and exact round trips among packed alm, real vector, per-ell blocks, rotations and serialization."
+      },
+      "severity": "P0",
+      "trigger": "The real-harmonic ell/m order, sqrt(2) factors, imaginary sign, frame, parity, units, or block cardinality is inconsistent across extraction, serialization, replay, or rotation."
+    },
+    {
+      "consequence": "A gauge convention is mistaken for a parity or physical direction signal.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/obsstat/test_lowell_irrep_morphology.py::test_axis_sign_flips_leave_allowed_invariants_unchanged_and_forbid_signed_claims",
+        "type": "test"
+      },
+      "id": "PMI-FM-004",
+      "prevention": {
+        "mechanism": "Keep axes typed as antipodal/unoriented; use sign-invariant Gram/plane features unless an independent oriented frame is admitted."
+      },
+      "severity": "P0",
+      "trigger": "Coordinate-dependent canonical multipole-axis signs are used as O(3)-invariant handedness or physical vector orientation."
+    },
+    {
+      "consequence": "Formalism is nominal rather than global; modules silently disagree about semantics.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python scripts/validate_planck_mes_irrep_execution_plan.py --implementation-diff-from 3cdeaba39e164c911a26c5daa37f0e15b29614d3",
+        "type": "static_contract"
+      },
+      "id": "PMI-FM-005",
+      "prevention": {
+        "mechanism": "Migration map plus import/static scans require every new consumer to use the typed carrier boundary."
+      },
+      "severity": "P1",
+      "trigger": "New runners continue passing untyped retained_alm arrays or scalar rows across module boundaries after ObservableIrrepState is introduced."
+    },
+    {
+      "consequence": "The accepted scientific baseline is rewritten instead of used for comparison.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_mes_coordinate_mechanism_audit.py::test_legacy_exact_rank_locks_are_unchanged",
+        "type": "test"
+      },
+      "id": "PMI-FM-006",
+      "prevention": {
+        "mechanism": "Exact hash/rank locks; new reducers and families live in additive result schemas."
+      },
+      "severity": "P0",
+      "trigger": "The exact historical six-family ranks, minimum feature, local ranks, row order, or source package bytes are modified instead of preserved as a baseline."
+    },
+    {
+      "consequence": "The claimed reparameterization invariance or finite-null calibration is mathematically false.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/obsstat/test_finite_null_family.py::test_loo_ecdf_midrank_is_monotone_invariant_with_ties",
+        "type": "test"
+      },
+      "id": "PMI-FM-007",
+      "prevention": {
+        "mechanism": "Integer count-based leave-one-out midrank implementation and exhaustive transform/tie/permutation tests."
+      },
+      "severity": "P1",
+      "trigger": "The ECDF reducer is not exactly leave-one-out, mishandles ties, or fails monotone-invariance/permutation-equivariance."
+    },
+    {
+      "consequence": "A numerical carrier cannot be independently replayed or attributed to its operator.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_irrep_carrier.py::test_carrier_identity_binds_exact_numeric_content",
+        "type": "test"
+      },
+      "id": "PMI-FM-008",
+      "prevention": {
+        "mechanism": "Canonical metadata, exact numeric-array content identity, row-order identity, and fail-closed replay."
+      },
+      "severity": "P1",
+      "trigger": "Carrier files omit row/order/frame/mask/beam/pixel/operator/source/layout identities, or identities bind declarations but not exact numeric content."
+    },
+    {
+      "consequence": "Method-power and anomaly statements are post-hoc and scientifically uninterpretable.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/contracts/test_planck_mes_irrep_preregistration.py",
+        "type": "test"
+      },
+      "id": "PMI-FM-009",
+      "prevention": {
+        "mechanism": "Content-bound statistic/template registries are prerequisites and result files embed their identities."
+      },
+      "severity": "P0",
+      "trigger": "Reducers, tails, family membership, templates, orientation grids, amplitude grids, or rejection rules are selected or tuned after inspecting observed or injection outcomes."
+    },
+    {
+      "consequence": "Inputs are corrupted or fabricated and a scientific run is not reproducible.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_mes_extended_data_inventory.py",
+        "type": "test"
+      },
+      "id": "PMI-FM-010",
+      "prevention": {
+        "mechanism": "Read-only root-containment, exact inventory allowlists, pre/post metadata snapshots and typed quarantine."
+      },
+      "severity": "P0",
+      "trigger": "Raw/downloaded observational inputs are mutated, symlink escapes are followed, partial files are admitted, or absent NPIPE/HSC payloads are declared available."
+    },
+    {
+      "consequence": "The expensive runtime is repeated and the vector/tensor programme remains impossible to execute from portable artifacts.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_success_terminal_requires_carrier_and_scalar_projection",
+        "type": "test"
+      },
+      "id": "PMI-FM-011",
+      "prevention": {
+        "mechanism": "Success terminal requires carrier arrays and scalar projection in the same output transaction."
+      },
+      "severity": "P1",
+      "trigger": "A large-data Planck map pass reports success while serializing only scalar features and discarding retained harmonic coefficients."
+    },
+    {
+      "consequence": "The primary result or provenance is silently changed.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_v1_packages_and_exact_results_are_unchanged",
+        "type": "test"
+      },
+      "id": "PMI-FM-012",
+      "prevention": {
+        "mechanism": "Separate V2 schemas/paths/null IDs and exact V1 hash/rank locks."
+      },
+      "severity": "P0",
+      "trigger": "The new carrier/robustness lane overwrites or replaces the frozen V1 scalar packages or is represented as a new primary without explicit authority."
+    },
+    {
+      "consequence": "Two supposedly same-operator projections are scientifically inconsistent.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_carrier_reproduces_every_scalar_feature_row",
+        "type": "test"
+      },
+      "id": "PMI-FM-013",
+      "prevention": {
+        "mechanism": "Recompute all twelve scalar features from each carrier during replay and compare under registered exact/numeric criteria."
+      },
+      "severity": "P0",
+      "trigger": "Scalar features recomputed from serialized harmonic carriers do not match the scalar features stored from the same map/operator execution."
+    },
+    {
+      "consequence": "The 1000-row denominator, finite ranks, and robustness result have false identity.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py::test_exact_official_999_inventory_and_order",
+        "type": "test"
+      },
+      "id": "PMI-FM-014",
+      "prevention": {
+        "mechanism": "Generate IDs from range(1000) excluding exactly 970; bind the ordered list and row count."
+      },
+      "severity": "P0",
+      "trigger": "The 999 inventory fills missing 00970, drops 00818, duplicates or reorders rows, or reports a denominator inconsistent with the ordered IDs."
+    },
+    {
+      "consequence": "A meaningless calibrated result or confounded component comparison is reported.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_mes_commander_irrep.py::test_commander_cannot_emit_finite_rank_or_open_partial_inputs",
+        "type": "test"
+      },
+      "id": "PMI-FM-015",
+      "prevention": {
+        "mechanism": "Observation-only schema, finite_rank_emitted=false, partial-path refusal before FITS open, and common operator identity."
+      },
+      "severity": "P0",
+      "trigger": "Three Commander simulations or partial files are used to emit a finite rank/p-value, or Commander is compared under a mismatched operator while called same-operator."
+    },
+    {
+      "consequence": "Power is measured for a different experiment than the real Planck operator and is overclaimed as end-to-end sensitivity.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_every_template_orientation_has_content_bound_operator_response",
+        "type": "test"
+      },
+      "id": "PMI-FM-016",
+      "prevention": {
+        "mechanism": "Precompute the rotated template's effective carrier by the same beam/pixel/mask/joint-fit operator and content-bind each response."
+      },
+      "severity": "P0",
+      "trigger": "Templates are added after scalar feature extraction, or directly to post-operator carriers without applying the registered orientation-dependent mask/beam/operator response, while called end-to-end."
+    },
+    {
+      "consequence": "Synthetic or stale bytes are presented as native-solver scientific evidence.",
+      "current_task_blocking": false,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_native_bianchi_template_requires_exact_authority_or_is_deferred",
+        "type": "blocked_gate"
+      },
+      "id": "PMI-FM-017",
+      "prevention": {
+        "mechanism": "Typed template admission; otherwise disposition DEFERRED_MISSING_TEMPLATE_AUTHORITY while analytic injections continue."
+      },
+      "severity": "P0",
+      "trigger": "A Bianchi VII_h template is used without exact template bytes, solver commit/tree, conventions, transfer provenance, and response/operator identity."
+    },
+    {
+      "consequence": "The complete-pool score leaks the tested row, becomes singular/regularization-dependent, or loses exchangeability.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/obsstat/test_harmonic_template_score.py::test_leave_one_out_whitening_and_orientation_max_are_permutation_equivariant",
+        "type": "test"
+      },
+      "id": "PMI-FM-018",
+      "prevention": {
+        "mechanism": "Per-row leave-one-out mean/covariance, strict full-rank Cholesky, identical frozen rotation bank, and row-permutation tests."
+      },
+      "severity": "P0",
+      "trigger": "The observation contributes to its own mean/covariance/template whitening, covariance is singular or silently regularized, or orientation maximization is not applied identically to all rows."
+    },
+    {
+      "consequence": "A negative or positive scientific conclusion is unsupported by candidate coverage.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_candidate_disposition_ledger_is_complete",
+        "type": "test"
+      },
+      "id": "PMI-FM-019",
+      "prevention": {
+        "mechanism": "Content-bound candidate registry and exhaustive terminal disposition ledger."
+      },
+      "severity": "P1",
+      "trigger": "The analytic observable-STF benchmark template, native Bianchi template, or another registered candidate silently disappears from execution or is mislabeled as refuted."
+    },
+    {
+      "consequence": "Process output replaces the requested implementation and scientific execution.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python scripts/validate_planck_mes_irrep_execution_plan.py --implementation-diff-from 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e",
+        "type": "static_contract"
+      },
+      "id": "PMI-FM-020",
+      "prevention": {
+        "mechanism": "No-successor-plan diff guard, first objective output in WU-002, full-suite=false, bounded selected-file hashing."
+      },
+      "severity": "P1",
+      "trigger": "Codex creates another planning/audit package, performs a complete unrelated raw-tree hash sweep, or runs the full repository suite before the next objective transition."
+    },
+    {
+      "consequence": "The paper reports fabricated, planned, failed, or nonauthoritative evidence.",
+      "current_task_blocking": false,
+      "detection": {
+        "executable": "python -m pytest -q tests/paper/test_planck_mes_irrep_methods_paper.py::test_paper_requires_successful_replayed_evidence_and_claim_boundaries",
+        "type": "test"
+      },
+      "id": "PMI-FM-021",
+      "prevention": {
+        "mechanism": "Paper builder accepts only terminal=SUCCEEDED and replay=MATCH projections with exact claim levels."
+      },
+      "severity": "P1",
+      "trigger": "The manuscript, abstract, claim ledger, or release metadata consumes planned, failed, unreplayed, or deferred outputs as successful scientific evidence."
+    },
+    {
+      "consequence": "A harmless packaging drift blocks science, or a real source/evidence mutation is dismissed.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/contracts/test_planck_mes_identity_classification.py",
+        "type": "test"
+      },
+      "id": "PMI-FM-022",
+      "prevention": {
+        "mechanism": "Typed A/B/C/D identity classification with separate byte and numerical acceptance rules."
+      },
+      "severity": "P1",
+      "trigger": "Any SHA mismatch is promoted directly to scientific-integrity failure without classifying immutable source, deterministic evidence, scientific numerical output, or packaging metadata."
+    },
+    {
+      "consequence": "Reported ceiling precision hides the load-bearing residual-dipole premise by orders of magnitude.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_mes_coordinate_mechanism_audit.py::test_eps1_sensitivity_uses_active_authority_and_full_grid",
+        "type": "test"
+      },
+      "id": "PMI-FM-023",
+      "prevention": {
+        "mechanism": "Freeze the exact B_sigma/B_omega coefficients and report eps1 in [0,1e-5] ceiling curves beside eps1=0."
+      },
+      "severity": "P1",
+      "trigger": "The eps1=0 branch is reported with excessive precision without the exact eps1 coefficients and a registered eps1 sensitivity band."
+    },
+    {
+      "consequence": "Visual evidence is not actually checked for residuals, instability, sign errors, or misleading trends.",
+      "current_task_blocking": true,
+      "detection": {
+        "executable": "python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_plot_audit_binds_all_required_figures_and_findings",
+        "type": "test"
+      },
+      "id": "PMI-FM-024",
+      "prevention": {
+        "mechanism": "Required figure list, file hashes, inspection findings, and terminal dependency on plot_audit.json."
+      },
+      "severity": "P1",
+      "trigger": "Required rank distributions, injection power curves, or operator-response diagnostics are generated but not inspected, or their plot audit is absent."
+    }
+  ],
+  "schema": "htt.planck_mes_observable_irrep.p0_p1_threat_catalog.v1"
+}

@@ -1,0 +1,1370 @@
+schema: htt.planck_mes_observable_irrep.audit_compiled_exec_plan.v1
+package_id: PLANCK_MES_OBSERVABLE_IRREP_EXECUTION_20260827
+authority:
+  base_branch: changeset/pr324-mes-methodology-stack-20260826
+  base_sha: 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+  base_tree: 47bdbb72aae62ca4280a96897f80028b1b910c20
+  planning_predecessor_branch: analysis/planck-mes-extended-data-execution-20260826
+  planning_predecessor_sha: 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+  planning_predecessor_tree: 274d74507542cc99bb4ea355705791fa03d15697
+  planning_branch: analysis/planck-mes-observable-irrep-execution-20260827
+ordered_work_units:
+- PMI-WU-001
+- PMI-WU-002
+- PMI-WU-003
+- PMI-WU-004
+- PMI-WU-005
+- PMI-WU-006
+- PMI-WU-007
+work_units:
+- schema: audit-compiled-work-unit/v1
+  id: PMI-WU-001
+  title: Introduce the observable-irrep SSOT and cross-layer firewalls
+  authority:
+    base_sha: 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+    planning_predecessor_sha: 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+    planning_branch: analysis/planck-mes-observable-irrep-execution-20260827
+    upstream_dependencies: []
+    implementation_base_rule: planning_branch_head_descended_from_predecessor
+    implementation_branch_pattern: changeset/planck-mes-observable-irrep-core-YYYYMMDD
+  objective:
+    statement: Create one typed observable-irrep state for low-ell harmonic carriers and route all new adapter boundaries through it without changing physical JointAnisotropyState semantics.
+    observable_success: Targeted tests pass for exact ell layouts, serialization, typed absence, directional adapter parity, scalar-only refusal, and physical/observable non-coercion; one small formalism registry is committed.
+    non_goals:
+    - no observed data execution
+    - no finite-null result
+    - no physical response operator
+    - no source mutation in joint_anisotropy_state_v1.py or orbit_catalogue_v3.py
+  risk:
+    class: critical
+    P0_failure_modes:
+    - PMI-FM-001
+    - PMI-FM-002
+    P1_failure_modes:
+    - PMI-FM-005
+  scope:
+    allowed_paths:
+    - htt/src/common/observable_irrep_state.py
+    - htt/obsstat/observable_irrep_adapter.py
+    - tests/common/test_observable_irrep_state.py
+    - tests/obsstat/test_observable_irrep_adapter.py
+    - docs/research_program/post_pr275/observable_irrep_formalism_v1.yaml
+    - scripts/architecture/test_import_boundaries.py
+    forbidden_paths:
+    - /mnt/sn850x2t/htt_base_e2e/workdir/raw/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/downloads/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/cobaya_packages/data/**
+    - machine_readable/pr_backlog.*
+    - machine_readable/pr_status.yaml
+    - htt/src/common/joint_anisotropy_state_v1.py
+    - docs/generated/planck_mes_morphology/planck_mes_morphology.npz
+    - docs/generated/pr315_planck_smica_feature_replay.npz
+    forbidden_changes:
+    - Do not edit frozen V1 scientific expected outputs or tolerances to make tests pass.
+    - Do not widen physical-state meanings to accept observed harmonic coefficients.
+    - Do not commit or mutate raw/downloaded payloads.
+    - Do not promote an exploratory or conditional output beyond its typed claim boundary.
+    - Do not add another planning, meta-audit, or reviewer package.
+  preconditions:
+  - id: PMI-PRE-001
+    command: test "$(git rev-parse origin/changeset/pr324-mes-methodology-stack-20260826)" = 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+    expect: exact canonical base SHA
+  - id: PMI-PRE-002
+    command: git merge-base --is-ancestor 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e HEAD
+    expect: planning predecessor is an ancestor
+  - id: PMI-PRE-003
+    command: python scripts/validate_planck_mes_irrep_execution_plan.py
+    expect: PASS
+  invariants:
+  - id: PMI-INV-LAYER-SEPARATION
+    severity_if_violated: P0
+    statement: ObservableIrrepState is not a subclass, alias, payload-compatible substitute, or accepted constructor input for JointAnisotropyState.
+    mechanical_check:
+      command: python -m pytest -q tests/common/test_observable_irrep_state.py::test_observable_state_cannot_construct_or_impersonate_physical_state
+      expect: PASS
+  - id: PMI-INV-NO-SCALAR-FABRICATION
+    severity_if_violated: P0
+    statement: Scalar-only inputs cannot create an observable irrep block.
+    mechanical_check:
+      command: python -m pytest -q tests/obsstat/test_observable_irrep_adapter.py::test_scalar_only_inputs_fail_closed
+      expect: PASS
+  - id: PMI-INV-IRREP-LAYOUT
+    severity_if_violated: P0
+    statement: Spin-0 ell blocks require exactly 2*ell+1 real components in the registered sign/order convention.
+    mechanical_check:
+      command: python -m pytest -q tests/common/test_observable_irrep_state.py::test_real_harmonic_layout_and_round_trip
+      expect: PASS
+  failure_modes:
+  - id: PMI-FM-001
+    severity: P0
+    trigger: Planck ObservableIrrepState or harmonic coefficients are inserted into JointAnisotropyState fields or labeled as physical shear, vorticity, acceleration, tilt, curvature, or Bianchi family.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/common/test_observable_irrep_state.py::test_observable_state_cannot_construct_or_impersonate_physical_state
+  - id: PMI-FM-002
+    severity: P0
+    trigger: A scalar C_l, MES anchor, scalar feature row, or covariance is used to fabricate a direction, axis, vector, or STF tensor.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/obsstat/test_observable_irrep_adapter.py::test_scalar_only_inputs_fail_closed
+  - id: PMI-FM-005
+    severity: P1
+    trigger: New runners continue passing untyped retained_alm arrays or scalar rows across module boundaries after ObservableIrrepState is introduced.
+    required_detection:
+      test_or_gate: python scripts/validate_planck_mes_irrep_execution_plan.py --implementation-diff-from 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+  implementation:
+    ordered_steps:
+    - id: PMI-STEP-001
+      files:
+      - tests/common/test_observable_irrep_state.py
+      - tests/obsstat/test_observable_irrep_adapter.py
+      action: Write and run RED tests for exact block cardinality, layout identity, serialization, typed absence, physical-state non-coercion, and scalar-only refusal.
+      must_preserve:
+      - existing joint-state and PR-326 directional tests
+    - id: PMI-STEP-002
+      files:
+      - htt/src/common/observable_irrep_state.py
+      action: Implement ObservableIrrepBlock, ObservableIrrepState, ObservableFieldParity, ObservableRepresentation, real_irrep_layout, canonical content identities, and strict payload replay.
+      must_preserve:
+      - dependency-light common layer
+      - no healpy import in common
+    - id: PMI-STEP-003
+      files:
+      - htt/obsstat/observable_irrep_adapter.py
+      - docs/research_program/post_pr275/observable_irrep_formalism_v1.yaml
+      action: Implement packed-alm, retained-real-vector, and PR-326 directional-moment adapters; bind frame/operator/source identities and emit the layer registry.
+      must_preserve:
+      - PR-326 ell<=2 scope
+      - no physical interpretation promotion
+    - id: PMI-STEP-004
+      files:
+      - scripts/architecture/test_import_boundaries.py
+      action: Add the smallest architecture rule that prevents obsstat observable states from importing or constructing physical state internals.
+      must_preserve:
+      - existing architecture checks
+    interfaces:
+      produces:
+      - common.observable_irrep_state.ObservableIrrepBlock
+      - common.observable_irrep_state.ObservableIrrepState
+      - obsstat.observable_irrep_adapter.observable_state_from_retained_real_vector
+      - obsstat.observable_irrep_adapter.observable_state_from_directional_moments
+      required_signatures:
+      - 'observable_state_from_retained_real_vector(*, row_id: str, coefficients: Sequence[float], ell_min: int, ell_max: int, frame: str, field_units: str, source_identity: str, operator_identity: str, mask_identity: str, beam_pixel_identity: str) -> ObservableIrrepState'
+      - 'observable_state_from_directional_moments(*, row_id: str, directional_moments: DirectionalMomentEstimate) -> ObservableIrrepState'
+  verification:
+    targeted:
+    - python -m pytest -q tests/common/test_observable_irrep_state.py tests/obsstat/test_observable_irrep_adapter.py
+    negative:
+    - python -m pytest -q tests/common/test_observable_irrep_state.py tests/obsstat/test_observable_irrep_adapter.py -k 'scalar or physical or missing or forged or layout'
+    regression:
+    - python -m pytest -q tests/common/test_mes_directional_state.py tests/contracts/test_mes_observed_authority.py tests/contracts/test_orbit_catalogue_v3.py
+    integration:
+    - python -m pytest -q scripts/architecture/test_import_boundaries.py
+    full_relevant_suite: []
+  completion_evidence:
+    required:
+    - final_git_head
+    - final_git_tree
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - executed_test_commands
+    - invariant_results
+    - objective_output_paths
+    - plot_audit_paths_when_required
+    - unresolved_blockers
+    - candidate_dispositions_when_required
+  agent_policy:
+    ask_user_questions: false
+    guessing_across_spec_boundary: forbidden
+    changing_tests_to_fit_implementation: forbidden
+    changing_reference_outputs_without_authority: forbidden
+    suppressing_failures: forbidden
+    claiming_unexecuted_work: forbidden
+    creating_successor_planning_package: forbidden
+    raw_data_mutation: forbidden
+    posthoc_statistic_or_template_selection: forbidden
+  review_gate:
+    fresh_context_required: true
+    read_only_first_pass: true
+    pass_condition:
+      P0: 0
+      P1: 0
+    stopping_rule: One fresh review and at most one targeted repair unless a new reproduced current-task P0/P1 appears.
+  transition:
+    pass_next_executable_action: Start PMI-WU-002 immediately and produce the first map-free objective result.
+    fail_next_action: Emit BLOCKED_BY_P0 or BLOCKED_BY_P1 with the exact failed invariant; do not widen either state type and do not create another plan.
+- schema: audit-compiled-work-unit/v1
+  id: PMI-WU-002
+  title: Centralize finite-null reducers and execute the coordinate-mechanism audit
+  authority:
+    base_sha: 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+    planning_predecessor_sha: 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+    planning_branch: analysis/planck-mes-observable-irrep-execution-20260827
+    upstream_dependencies:
+    - PMI-WU-001
+    implementation_base_rule: accepted_final_sha_from_PMI-WU-001_terminal
+    implementation_branch_pattern: changeset/planck-mes-coordinate-mechanism-audit-YYYYMMDD
+  objective:
+    statement: Preserve the legacy finite-null result exactly while adding a leave-one-out ECDF midrank reducer and executing the analytic/factorial/tail/tie/eps1 mechanism audit on the frozen 301-row package.
+    observable_success: A replayed map-free result reports the exact analytic identities, four-cell factorial family table, legacy-versus-ECDF ranks, registered-tail sensitivity, tie masses, N_eff, Monte Carlo scale, and eps1 curves; all historical exact ranks remain unchanged.
+    non_goals:
+    - no raw map access
+    - no change to historical Paper-A result or all-two-sided label
+    - no physical inference
+    - no independent significance claim for family-rank differences
+  risk:
+    class: critical
+    P0_failure_modes:
+    - PMI-FM-006
+    - PMI-FM-009
+    P1_failure_modes:
+    - PMI-FM-007
+    - PMI-FM-023
+    - PMI-FM-024
+  scope:
+    allowed_paths:
+    - htt/obsstat/finite_null_family.py
+    - htt/obsstat/planck_post275_lane.py
+    - scripts/observed_runs/run_planck_mes_coordinate_mechanism_audit.py
+    - tests/obsstat/test_finite_null_family.py
+    - tests/integration/test_planck_mes_coordinate_mechanism_audit.py
+    - tests/contracts/test_planck_mes_irrep_preregistration.py
+    - docs/research_program/post_pr275/planck_mes_irrep_statistic_registry.yaml
+    - docs/generated/planck_mes_coordinate_mechanism/**
+    forbidden_paths:
+    - /mnt/sn850x2t/htt_base_e2e/workdir/raw/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/downloads/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/cobaya_packages/data/**
+    - machine_readable/pr_backlog.*
+    - machine_readable/pr_status.yaml
+    - htt/src/common/joint_anisotropy_state_v1.py
+    - docs/generated/planck_mes_morphology/planck_mes_morphology.npz
+    - docs/generated/pr315_planck_smica_feature_replay.npz
+    forbidden_changes:
+    - Do not edit frozen V1 scientific expected outputs or tolerances to make tests pass.
+    - Do not widen physical-state meanings to accept observed harmonic coefficients.
+    - Do not commit or mutate raw/downloaded payloads.
+    - Do not promote an exploratory or conditional output beyond its typed claim boundary.
+    - Do not add another planning, meta-audit, or reviewer package.
+  preconditions:
+  - id: PMI-PRE-101
+    command: python -m pytest -q tests/common/test_observable_irrep_state.py tests/obsstat/test_observable_irrep_adapter.py
+    expect: PMI-WU-001 accepted
+  - id: PMI-PRE-102
+    command: test -f docs/generated/pr315_planck_smica_feature_replay.npz && test -f docs/generated/planck_mes_morphology/planck_mes_morphology.npz
+    expect: frozen map-free inputs present
+  invariants:
+  - id: PMI-INV-LEGACY-RANKS
+    severity_if_violated: P0
+    statement: The legacy reducer exactly reproduces all six historical family ranks, minimum coordinate, and MES local ranks.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_coordinate_mechanism_audit.py::test_legacy_exact_rank_locks_are_unchanged
+      expect: PASS
+  - id: PMI-INV-ECDF-MONOTONE
+    severity_if_violated: P1
+    statement: The leave-one-out midrank ECDF score is exactly invariant under strictly increasing coordinatewise transforms, including ties.
+    mechanical_check:
+      command: python -m pytest -q tests/obsstat/test_finite_null_family.py::test_loo_ecdf_midrank_is_monotone_invariant_with_ties
+      expect: PASS
+  - id: PMI-INV-FACTORIAL-SPEC
+    severity_if_violated: P0
+    statement: EPS, SQUARE_ONLY, CARRIER_ONLY, and MES families are frozen before execution and their interaction is reported without an additive decomposition claim.
+    mechanical_check:
+      command: python -m pytest -q tests/contracts/test_planck_mes_irrep_preregistration.py::test_factorial_family_and_interaction_registry_is_exact
+      expect: PASS
+  - id: PMI-INV-EPS1-SENSITIVITY
+    severity_if_violated: P1
+    statement: The exact eps1 coefficients and the complete [0,1e-5] sensitivity grid are reported without interpreting eps1 as measured.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_coordinate_mechanism_audit.py::test_eps1_sensitivity_uses_active_authority_and_full_grid
+      expect: PASS
+  - id: PMI-INV-PLOT-INSPECTION
+    severity_if_violated: P1
+    statement: Every required mechanism figure is hash-bound to a plot-audit entry with explicit findings.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_coordinate_mechanism_audit.py::test_plot_audit_binds_all_mechanism_figures
+      expect: PASS
+  failure_modes:
+  - id: PMI-FM-006
+    severity: P0
+    trigger: The exact historical six-family ranks, minimum feature, local ranks, row order, or source package bytes are modified instead of preserved as a baseline.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_coordinate_mechanism_audit.py::test_legacy_exact_rank_locks_are_unchanged
+  - id: PMI-FM-007
+    severity: P1
+    trigger: The ECDF reducer is not exactly leave-one-out, mishandles ties, or fails monotone-invariance/permutation-equivariance.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/obsstat/test_finite_null_family.py::test_loo_ecdf_midrank_is_monotone_invariant_with_ties
+  - id: PMI-FM-009
+    severity: P0
+    trigger: Reducers, tails, family membership, templates, orientation grids, amplitude grids, or rejection rules are selected or tuned after inspecting observed or injection outcomes.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/contracts/test_planck_mes_irrep_preregistration.py
+  - id: PMI-FM-023
+    severity: P1
+    trigger: The eps1=0 branch is reported with excessive precision without the exact eps1 coefficients and a registered eps1 sensitivity band.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_coordinate_mechanism_audit.py::test_eps1_sensitivity_uses_active_authority_and_full_grid
+  - id: PMI-FM-024
+    severity: P1
+    trigger: Required rank distributions, injection power curves, or operator-response diagnostics are generated but not inspected, or their plot audit is absent.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_coordinate_mechanism_audit.py::test_plot_audit_binds_all_mechanism_figures
+  implementation:
+    ordered_steps:
+    - id: PMI-STEP-101
+      files:
+      - tests/obsstat/test_finite_null_family.py
+      - tests/contracts/test_planck_mes_irrep_preregistration.py
+      action: Freeze and RED-test the legacy reducer, LOO-ECDF midrank reducer, tail registry, factorial family registry, N_eff definition, eps1 grid, and tie semantics.
+      must_preserve:
+      - existing planck_post275 public behavior
+    - id: PMI-STEP-102
+      files:
+      - htt/obsstat/finite_null_family.py
+      - htt/obsstat/planck_post275_lane.py
+      action: Implement the central reducers and make observation_inclusive_max_scan delegate to the legacy specification without changing its serialized result.
+      must_preserve:
+      - exact Fraction arithmetic
+      - observation-inclusive complete-pool semantics
+    - id: PMI-STEP-103
+      files:
+      - scripts/observed_runs/run_planck_mes_coordinate_mechanism_audit.py
+      - tests/integration/test_planck_mes_coordinate_mechanism_audit.py
+      - docs/generated/planck_mes_coordinate_mechanism/**
+      action: Execute the frozen 301-row map-free mechanism audit, including analytic round trips, the 2x2 square/mix factorial, legacy/ECDF and tail tables, tie mass, N_eff, eps1 curves, MC scale, and row-score null distributions.
+      must_preserve:
+      - no raw map access
+      - no post-hoc family changes
+    - id: PMI-STEP-104
+      files:
+      - docs/generated/planck_mes_coordinate_mechanism/**
+      action: Generate mechanism, score-distribution, and eps1-sensitivity figures; inspect them and write a hash-bound plot_audit.json before terminal success.
+      must_preserve:
+      - no visual significance claim for descriptive rank differences
+    interfaces:
+      produces:
+      - obsstat.finite_null_family.FiniteNullFamilySpec
+      - obsstat.finite_null_family.FiniteNullFamilyResult
+      - docs/generated/planck_mes_coordinate_mechanism/result.json
+      - docs/generated/planck_mes_coordinate_mechanism/replay.json
+      - docs/generated/planck_mes_coordinate_mechanism/terminal.json
+      required_signatures:
+      - 'finite_null_family_scan(rows: object, spec: FiniteNullFamilySpec, observation_index: int=0) -> FiniteNullFamilyResult'
+      - 'run_coordinate_mechanism_audit(*, source_package: Path, mes_package: Path, registry: Path, output_dir: Path) -> dict[str, object]'
+  verification:
+    targeted:
+    - python -m pytest -q tests/obsstat/test_finite_null_family.py tests/contracts/test_planck_mes_irrep_preregistration.py tests/integration/test_planck_mes_coordinate_mechanism_audit.py
+    negative:
+    - python -m pytest -q tests/obsstat/test_finite_null_family.py tests/contracts/test_planck_mes_irrep_preregistration.py tests/integration/test_planck_mes_coordinate_mechanism_audit.py -k 'tie or permutation or monotone or posthoc or eps1 or plot'
+    regression:
+    - python -m pytest -q tests/integration/test_planck_mes_morphology.py tests/paper/test_planck_mes_first_paper.py
+    integration:
+    - python scripts/observed_runs/run_planck_mes_coordinate_mechanism_audit.py --replay docs/generated/planck_mes_coordinate_mechanism
+    full_relevant_suite: []
+  completion_evidence:
+    required:
+    - final_git_head
+    - final_git_tree
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - executed_test_commands
+    - invariant_results
+    - objective_output_paths
+    - plot_audit_paths_when_required
+    - unresolved_blockers
+    - candidate_dispositions_when_required
+  agent_policy:
+    ask_user_questions: false
+    guessing_across_spec_boundary: forbidden
+    changing_tests_to_fit_implementation: forbidden
+    changing_reference_outputs_without_authority: forbidden
+    suppressing_failures: forbidden
+    claiming_unexecuted_work: forbidden
+    creating_successor_planning_package: forbidden
+    raw_data_mutation: forbidden
+    posthoc_statistic_or_template_selection: forbidden
+  review_gate:
+    fresh_context_required: true
+    read_only_first_pass: true
+    pass_condition:
+      P0: 0
+      P1: 0
+    stopping_rule: One fresh review and at most one targeted repair unless a new reproduced current-task P0/P1 appears.
+  transition:
+    pass_next_executable_action: Start PMI-WU-003; the required map-free objective transition has occurred, so further planning output is forbidden.
+    fail_next_action: On legacy-rank or identity failure emit BLOCKED_BY_P0; on ECDF/spec failure emit BLOCKED_BY_P1; preserve the legacy engine and stop.
+- schema: audit-compiled-work-unit/v1
+  id: PMI-WU-003
+  title: Verify the local Planck inventory read-only and quarantine malformed inputs
+  authority:
+    base_sha: 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+    planning_predecessor_sha: 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+    planning_branch: analysis/planck-mes-observable-irrep-execution-20260827
+    upstream_dependencies:
+    - PMI-WU-002
+    implementation_base_rule: accepted_final_sha_from_PMI-WU-002_terminal
+    implementation_branch_pattern: changeset/planck-mes-extended-data-intake-YYYYMMDD
+  objective:
+    statement: Reuse the predecessor intake semantics to verify exact local Planck inventories, quarantine partial products, admit row 00818 semantically, and preserve raw bytes.
+    observable_success: SUCCEEDED intake receipts confirm exact SMICA/Commander inventories, row-00818 FITS semantics and digest, absence of NPIPE/HSC payloads, route dispositions, and unchanged raw metadata.
+    non_goals:
+    - no scientific rank
+    - no full 910-GiB hash sweep
+    - no data download
+    - no non-Planck scientific execution
+  risk:
+    class: critical
+    P0_failure_modes:
+    - PMI-FM-010
+    P1_failure_modes:
+    - PMI-FM-020
+    - PMI-FM-022
+  scope:
+    allowed_paths:
+    - scripts/observed_runs/inspect_planck_mes_extended_data.py
+    - tests/integration/test_planck_mes_extended_data_inventory.py
+    - docs/generated/planck_mes_extended_data/**
+    forbidden_paths:
+    - /mnt/sn850x2t/htt_base_e2e/workdir/raw/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/downloads/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/cobaya_packages/data/**
+    - machine_readable/pr_backlog.*
+    - machine_readable/pr_status.yaml
+    - htt/src/common/joint_anisotropy_state_v1.py
+    - docs/generated/planck_mes_morphology/planck_mes_morphology.npz
+    - docs/generated/pr315_planck_smica_feature_replay.npz
+    forbidden_changes:
+    - Do not edit frozen V1 scientific expected outputs or tolerances to make tests pass.
+    - Do not widen physical-state meanings to accept observed harmonic coefficients.
+    - Do not commit or mutate raw/downloaded payloads.
+    - Do not promote an exploratory or conditional output beyond its typed claim boundary.
+    - Do not add another planning, meta-audit, or reviewer package.
+  preconditions:
+  - id: PMI-PRE-201
+    command: python -c "import json; p=json.load(open('docs/generated/planck_mes_coordinate_mechanism/terminal.json')); assert p['state']=='SUCCEEDED'"
+    expect: PMI-WU-002 objective executed
+  - id: PMI-PRE-202
+    command: test -d /mnt/sn850x2t/htt_base_e2e/workdir/raw
+    expect: raw root exists
+  invariants:
+  - id: PMI-INV-RAW-IMMUTABLE
+    severity_if_violated: P0
+    statement: Raw/download/package-data inputs are unchanged before and after intake.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_extended_data_inventory.py::test_raw_tree_is_read_only_and_unchanged
+      expect: PASS
+  - id: PMI-INV-EXACT-INVENTORY
+    severity_if_violated: P0
+    statement: SMICA CMB has 999 official rows excluding only 00970, noise has 300 rows, Commander has exactly three complete and four quarantined partial files, and NPIPE/HSC are absent.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_extended_data_inventory.py::test_exact_planck_inventory_and_quarantine
+      expect: PASS
+  - id: PMI-INV-00818-SEMANTIC
+    severity_if_violated: P0
+    statement: Row 00818 is admitted or blocked by FITS semantics and content digest, not size alone.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_extended_data_inventory.py::test_00818_requires_semantic_fits_receipt
+      expect: PASS
+  failure_modes:
+  - id: PMI-FM-010
+    severity: P0
+    trigger: Raw/downloaded observational inputs are mutated, symlink escapes are followed, partial files are admitted, or absent NPIPE/HSC payloads are declared available.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_extended_data_inventory.py
+  - id: PMI-FM-020
+    severity: P1
+    trigger: Codex creates another planning/audit package, performs a complete unrelated raw-tree hash sweep, or runs the full repository suite before the next objective transition.
+    required_detection:
+      test_or_gate: python scripts/validate_planck_mes_irrep_execution_plan.py --implementation-diff-from 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+  - id: PMI-FM-022
+    severity: P1
+    trigger: Any SHA mismatch is promoted directly to scientific-integrity failure without classifying immutable source, deterministic evidence, scientific numerical output, or packaging metadata.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/contracts/test_planck_mes_identity_classification.py
+  implementation:
+    ordered_steps:
+    - id: PMI-STEP-201
+      files:
+      - tests/integration/test_planck_mes_extended_data_inventory.py
+      action: Write and run RED tests for exact inventories, quarantine, row 00818, root containment, byte classification, and immutability.
+      must_preserve:
+      - existing admission behavior
+    - id: PMI-STEP-202
+      files:
+      - scripts/observed_runs/inspect_planck_mes_extended_data.py
+      - docs/generated/planck_mes_extended_data/**
+      action: Implement and execute metadata/sidecar preflight, semantic FITS checks for selected inputs, pre/post raw metadata snapshots, and portable route receipts; stream-hash each selected file on its first scientific read.
+      must_preserve:
+      - no unrelated full-tree hash
+      - no raw writes
+    interfaces:
+      produces:
+      - docs/generated/planck_mes_extended_data/intake_summary.json
+      - docs/generated/planck_mes_extended_data/route_receipt.json
+      - /mnt/sn850x2t/htt_base_e2e/workdir/analysis/planck_mes_observable_irrep/intake_manifest.json
+      required_signatures:
+      - 'inspect_planck_mes_extended_data(*, workdir: Path, portable_output: Path, full_output: Path, verify_selected: bool) -> dict[str, object]'
+  verification:
+    targeted:
+    - python -m pytest -q tests/integration/test_planck_mes_extended_data_inventory.py
+    negative:
+    - python -m pytest -q tests/integration/test_planck_mes_extended_data_inventory.py -k 'partial or absent or 00818 or mutation or symlink'
+    regression:
+    - python -m pytest -q tests/integration/test_planck_pr3_admission_preparation.py tests/integration/test_planck_pr3_current_stack.py
+    integration: []
+    full_relevant_suite: []
+  completion_evidence:
+    required:
+    - final_git_head
+    - final_git_tree
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - executed_test_commands
+    - invariant_results
+    - objective_output_paths
+    - plot_audit_paths_when_required
+    - unresolved_blockers
+    - candidate_dispositions_when_required
+  agent_policy:
+    ask_user_questions: false
+    guessing_across_spec_boundary: forbidden
+    changing_tests_to_fit_implementation: forbidden
+    changing_reference_outputs_without_authority: forbidden
+    suppressing_failures: forbidden
+    claiming_unexecuted_work: forbidden
+    creating_successor_planning_package: forbidden
+    raw_data_mutation: forbidden
+    posthoc_statistic_or_template_selection: forbidden
+  review_gate:
+    fresh_context_required: true
+    read_only_first_pass: true
+    pass_condition:
+      P0: 0
+      P1: 0
+    stopping_rule: One fresh review and at most one targeted repair unless a new reproduced current-task P0/P1 appears.
+  transition:
+    pass_next_executable_action: Start PMI-WU-004 from the verified intake and recover the primary 301-row carrier.
+    fail_next_action: Emit one typed inventory BLOCKED state, preserve raw inputs, and stop without more governance.
+- schema: audit-compiled-work-unit/v1
+  id: PMI-WU-004
+  title: Recover the primary 301-row harmonic carrier and V2 portable replay
+  authority:
+    base_sha: 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+    planning_predecessor_sha: 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+    planning_branch: analysis/planck-mes-observable-irrep-execution-20260827
+    upstream_dependencies:
+    - PMI-WU-003
+    implementation_base_rule: accepted_final_sha_from_PMI-WU-003_terminal
+    implementation_branch_pattern: changeset/planck-mes-primary-irrep-v2-YYYYMMDD
+  objective:
+    statement: Modify the Planck operator/output boundary so the observed SMICA row and exact 300 paired CMB+noise rows preserve typed ell=2..5 harmonic carriers while the V1 scalar products remain unchanged.
+    observable_success: A V2 NPZ/metadata/replay stores observed (32,) and null (300,32) real carriers, typed block identities and scalar features; V2 reproduces V1 scalar bytes/ranks and carrier-derived features within registered tolerance.
+    non_goals:
+    - no new statistic
+    - no paper update
+    - no 999 execution
+    - no physical-state construction
+  risk:
+    class: critical
+    P0_failure_modes:
+    - PMI-FM-003
+    - PMI-FM-012
+    - PMI-FM-013
+    P1_failure_modes:
+    - PMI-FM-008
+    - PMI-FM-011
+  scope:
+    allowed_paths:
+    - htt/obsstat/planck_pr3_operator.py
+    - htt/obsstat/planck_irrep_carrier.py
+    - scripts/observed_runs/run_planck_pr3.py
+    - tests/integration/test_planck_irrep_carrier.py
+    - tests/integration/test_planck_primary_irrep_v2.py
+    - docs/generated/planck_mes_primary_irrep_v2/**
+    forbidden_paths:
+    - /mnt/sn850x2t/htt_base_e2e/workdir/raw/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/downloads/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/cobaya_packages/data/**
+    - machine_readable/pr_backlog.*
+    - machine_readable/pr_status.yaml
+    - htt/src/common/joint_anisotropy_state_v1.py
+    - docs/generated/planck_mes_morphology/planck_mes_morphology.npz
+    - docs/generated/pr315_planck_smica_feature_replay.npz
+    forbidden_changes:
+    - Do not edit frozen V1 scientific expected outputs or tolerances to make tests pass.
+    - Do not widen physical-state meanings to accept observed harmonic coefficients.
+    - Do not commit or mutate raw/downloaded payloads.
+    - Do not promote an exploratory or conditional output beyond its typed claim boundary.
+    - Do not add another planning, meta-audit, or reviewer package.
+  preconditions:
+  - id: PMI-PRE-301
+    command: python -c "import json; p=json.load(open('docs/generated/planck_mes_extended_data/intake_summary.json')); assert p['status']=='SUCCEEDED'"
+    expect: verified intake
+  - id: PMI-PRE-302
+    command: python -m pytest -q tests/integration/test_planck_pr3_operator.py tests/integration/test_planck_pr3_current_stack.py
+    expect: existing operator path passes
+  invariants:
+  - id: PMI-INV-V1-IMMUTABLE
+    severity_if_violated: P0
+    statement: Existing V1 scalar packages, exact ranks, schemas, and filenames are unchanged; V2 is additive.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_v1_packages_and_exact_results_are_unchanged
+      expect: PASS
+  - id: PMI-INV-CARRIER-CONVENTION
+    severity_if_violated: P0
+    statement: The 32 real coefficients use the registered ell/m/sign order, frame, mask, beam/pixel, source, and operator identities.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_irrep_carrier.py::test_carrier_round_trip_and_identity_binding
+      expect: PASS
+  - id: PMI-INV-CARRIER-FEATURE-PARITY
+    severity_if_violated: P0
+    statement: Scalar features recomputed from each serialized carrier match the stored scalar row under exact or registered tolerance.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_carrier_reproduces_every_scalar_feature_row
+      expect: PASS
+  - id: PMI-INV-NO-CARRIER-DROP
+    severity_if_violated: P1
+    statement: A successful primary map pass cannot serialize scalar features without the typed carrier.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_success_terminal_requires_carrier_and_scalar_projection
+      expect: PASS
+  failure_modes:
+  - id: PMI-FM-003
+    severity: P0
+    trigger: The real-harmonic ell/m order, sqrt(2) factors, imaginary sign, frame, parity, units, or block cardinality is inconsistent across extraction, serialization, replay, or rotation.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_irrep_carrier.py::test_carrier_round_trip_and_identity_binding
+  - id: PMI-FM-008
+    severity: P1
+    trigger: Carrier files omit row/order/frame/mask/beam/pixel/operator/source/layout identities, or identities bind declarations but not exact numeric content.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_irrep_carrier.py::test_carrier_identity_binds_exact_numeric_content
+  - id: PMI-FM-011
+    severity: P1
+    trigger: A large-data Planck map pass reports success while serializing only scalar features and discarding retained harmonic coefficients.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_success_terminal_requires_carrier_and_scalar_projection
+  - id: PMI-FM-012
+    severity: P0
+    trigger: The new carrier/robustness lane overwrites or replaces the frozen V1 scalar packages or is represented as a new primary without explicit authority.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_v1_packages_and_exact_results_are_unchanged
+  - id: PMI-FM-013
+    severity: P0
+    trigger: Scalar features recomputed from serialized harmonic carriers do not match the scalar features stored from the same map/operator execution.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_carrier_reproduces_every_scalar_feature_row
+  implementation:
+    ordered_steps:
+    - id: PMI-STEP-301
+      files:
+      - tests/integration/test_planck_irrep_carrier.py
+      - tests/integration/test_planck_primary_irrep_v2.py
+      action: Write and run RED tests for real-basis round trips, exact identities, V1 immutability, per-row carrier/feature parity, serialization determinism, and success-terminal completeness.
+      must_preserve:
+      - exact paired-300 row order
+    - id: PMI-STEP-302
+      files:
+      - htt/obsstat/planck_irrep_carrier.py
+      action: Implement the V2 carrier writer/replay around ObservableIrrepState with deterministic NPZ arrays, canonical JSON, per-row content hashes, block offsets, and scalar projection.
+      must_preserve:
+      - allow_pickle=False
+      - no raw-map locator in common/obsstat type layer
+    - id: PMI-STEP-303
+      files:
+      - htt/obsstat/planck_pr3_operator.py
+      - scripts/observed_runs/run_planck_pr3.py
+      - docs/generated/planck_mes_primary_irrep_v2/**
+      action: Thread JointCutSkyFit.retained_coefficients through the existing observed/null run and write a separate V2 package beside the unchanged V1 package; execute the real paired-300 recovery.
+      must_preserve:
+      - one operator invocation per map
+      - V1 output byte identity where exact authority applies
+      - raw immutability
+    interfaces:
+      produces:
+      - obsstat.planck_irrep_carrier.write_planck_irrep_carrier_v2
+      - obsstat.planck_irrep_carrier.replay_planck_irrep_carrier_v2
+      - docs/generated/planck_mes_primary_irrep_v2/carrier_v2.npz
+      - docs/generated/planck_mes_primary_irrep_v2/carrier_v2.json
+      - docs/generated/planck_mes_primary_irrep_v2/replay.json
+      - docs/generated/planck_mes_primary_irrep_v2/terminal.json
+      required_signatures:
+      - 'write_planck_irrep_carrier_v2(*, observed_state: ObservableIrrepState, null_states: Sequence[ObservableIrrepState], observed_features: Sequence[float], null_features: object, row_ids: Sequence[str], output_npz: Path, output_json: Path) -> dict[str, object]'
+      - 'replay_planck_irrep_carrier_v2(*, package_path: Path, metadata_path: Path) -> dict[str, object]'
+  verification:
+    targeted:
+    - python -m pytest -q tests/integration/test_planck_irrep_carrier.py tests/integration/test_planck_primary_irrep_v2.py
+    negative:
+    - python -m pytest -q tests/integration/test_planck_irrep_carrier.py tests/integration/test_planck_primary_irrep_v2.py -k 'identity or layout or scalar or missing or overwrite or mutation'
+    regression:
+    - python -m pytest -q tests/integration/test_planck_pr3_operator.py tests/integration/test_planck_pr3_current_stack.py tests/integration/test_planck_mes_morphology.py
+    integration:
+    - python scripts/observed_runs/run_planck_pr3.py --replay-irrep-v2 docs/generated/planck_mes_primary_irrep_v2
+    full_relevant_suite: []
+  completion_evidence:
+    required:
+    - final_git_head
+    - final_git_tree
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - executed_test_commands
+    - invariant_results
+    - objective_output_paths
+    - plot_audit_paths_when_required
+    - unresolved_blockers
+    - candidate_dispositions_when_required
+  agent_policy:
+    ask_user_questions: false
+    guessing_across_spec_boundary: forbidden
+    changing_tests_to_fit_implementation: forbidden
+    changing_reference_outputs_without_authority: forbidden
+    suppressing_failures: forbidden
+    claiming_unexecuted_work: forbidden
+    creating_successor_planning_package: forbidden
+    raw_data_mutation: forbidden
+    posthoc_statistic_or_template_selection: forbidden
+  review_gate:
+    fresh_context_required: true
+    read_only_first_pass: true
+    pass_condition:
+      P0: 0
+      P1: 0
+    stopping_rule: One fresh review and at most one targeted repair unless a new reproduced current-task P0/P1 appears.
+  transition:
+    pass_next_executable_action: Start PMI-WU-005 and use the accepted carrier implementation for the 999 lane.
+    fail_next_action: On carrier convention, V1 mutation, or scalar parity failure emit BLOCKED_BY_P0 and preserve all outputs; do not tune tolerances or rerun under a new operator.
+- schema: audit-compiled-work-unit/v1
+  id: PMI-WU-005
+  title: Execute the carrier-preserving SMICA 999 CMB-only robustness lane
+  authority:
+    base_sha: 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+    planning_predecessor_sha: 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+    planning_branch: analysis/planck-mes-observable-irrep-execution-20260827
+    upstream_dependencies:
+    - PMI-WU-004
+    implementation_base_rule: accepted_final_sha_from_PMI-WU-004_terminal
+    implementation_branch_pattern: changeset/planck-mes-smica-cmbonly-999-irrep-YYYYMMDD
+  objective:
+    statement: Execute the separate official 999 CMB-only SMICA lane with the same operator, typed harmonic carriers, legacy and preregistered reducer/tail outputs, and no primary replacement.
+    observable_success: A 1000-row V2 package/result/replay/terminal preserves exact official IDs, scalar/carrier parity, immutable primary authority, legacy and ECDF reducer outputs, registered-tail sensitivity, and inspected rank/00818 diagnostics.
+    non_goals:
+    - no unconditional p-value
+    - no primary replacement
+    - no Commander execution
+    - no injection study yet
+  risk:
+    class: critical
+    P0_failure_modes:
+    - PMI-FM-012
+    - PMI-FM-013
+    - PMI-FM-014
+    P1_failure_modes:
+    - PMI-FM-008
+    - PMI-FM-011
+    - PMI-FM-024
+  scope:
+    allowed_paths:
+    - scripts/observed_runs/run_planck_mes_smica_cmbonly_999.py
+    - tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py
+    - docs/generated/planck_mes_smica_cmbonly_999_irrep/**
+    forbidden_paths:
+    - /mnt/sn850x2t/htt_base_e2e/workdir/raw/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/downloads/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/cobaya_packages/data/**
+    - machine_readable/pr_backlog.*
+    - machine_readable/pr_status.yaml
+    - htt/src/common/joint_anisotropy_state_v1.py
+    - docs/generated/planck_mes_morphology/planck_mes_morphology.npz
+    - docs/generated/pr315_planck_smica_feature_replay.npz
+    forbidden_changes:
+    - Do not edit frozen V1 scientific expected outputs or tolerances to make tests pass.
+    - Do not widen physical-state meanings to accept observed harmonic coefficients.
+    - Do not commit or mutate raw/downloaded payloads.
+    - Do not promote an exploratory or conditional output beyond its typed claim boundary.
+    - Do not add another planning, meta-audit, or reviewer package.
+  preconditions:
+  - id: PMI-PRE-401
+    command: python -c "import json; p=json.load(open('docs/generated/planck_mes_primary_irrep_v2/terminal.json')); assert p['state']=='SUCCEEDED'"
+    expect: primary carrier accepted
+  - id: PMI-PRE-402
+    command: python -c "import json; p=json.load(open('docs/generated/planck_mes_extended_data/intake_summary.json')); assert p['status']=='SUCCEEDED'"
+    expect: exact inventory accepted
+  invariants:
+  - id: PMI-INV-SMICA-999-ORDER
+    severity_if_violated: P0
+    statement: IDs are 00000..00999 excluding only 00970, in ascending order, and include semantically admitted 00818.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py::test_exact_official_999_inventory_and_order
+      expect: PASS
+  - id: PMI-INV-999-CARRIER
+    severity_if_violated: P1
+    statement: Every successful 1000-row output contains scalar rows and 32-component typed carriers with common operator identity.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py::test_success_requires_scalar_and_carrier_for_every_row
+      expect: PASS
+  - id: PMI-INV-PRIMARY-SEPARATE
+    severity_if_violated: P0
+    statement: The 999 lane cannot overwrite or supersede the paired-300 primary and has a distinct schema/null identity.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py::test_primary_301_row_authority_is_immutable_and_separate
+      expect: PASS
+  - id: PMI-INV-PLOT-INSPECTION
+    severity_if_violated: P1
+    statement: Family-rank, row-score, and 00818-influence figures are hash-bound to explicit inspection findings.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py::test_plot_audit_binds_all_required_figures
+      expect: PASS
+  failure_modes:
+  - id: PMI-FM-008
+    severity: P1
+    trigger: Carrier files omit row/order/frame/mask/beam/pixel/operator/source/layout identities, or identities bind declarations but not exact numeric content.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_irrep_carrier.py::test_carrier_identity_binds_exact_numeric_content
+  - id: PMI-FM-011
+    severity: P1
+    trigger: A large-data Planck map pass reports success while serializing only scalar features and discarding retained harmonic coefficients.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_success_terminal_requires_carrier_and_scalar_projection
+  - id: PMI-FM-012
+    severity: P0
+    trigger: The new carrier/robustness lane overwrites or replaces the frozen V1 scalar packages or is represented as a new primary without explicit authority.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_v1_packages_and_exact_results_are_unchanged
+  - id: PMI-FM-013
+    severity: P0
+    trigger: Scalar features recomputed from serialized harmonic carriers do not match the scalar features stored from the same map/operator execution.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py::test_carrier_reproduces_every_scalar_feature_row
+  - id: PMI-FM-014
+    severity: P0
+    trigger: The 999 inventory fills missing 00970, drops 00818, duplicates or reorders rows, or reports a denominator inconsistent with the ordered IDs.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py::test_exact_official_999_inventory_and_order
+  - id: PMI-FM-024
+    severity: P1
+    trigger: Required rank distributions, injection power curves, or operator-response diagnostics are generated but not inspected, or their plot audit is absent.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_plot_audit_binds_all_required_figures_and_findings
+  implementation:
+    ordered_steps:
+    - id: PMI-STEP-401
+      files:
+      - tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py
+      action: Write and run RED tests for exact official inventory, primary separation, scalar/carrier parity, reducer/tail specs, deterministic replay, 00818 influence, claims, and plot inspection.
+      must_preserve:
+      - paired-300 primary hashes and ranks
+    - id: PMI-STEP-402
+      files:
+      - scripts/observed_runs/run_planck_mes_smica_cmbonly_999.py
+      - docs/generated/planck_mes_smica_cmbonly_999_irrep/**
+      action: Execute the 999 maps once through the accepted joint cut-sky operator, serialize both scalar and carrier V2 products, run legacy/ECDF and registered-tail families, replay, plot, and inspect.
+      must_preserve:
+      - 00818 included in main robustness result
+      - no data-dependent tuning
+      - raw immutability
+    interfaces:
+      produces:
+      - docs/generated/planck_mes_smica_cmbonly_999_irrep/carrier_v2.npz
+      - docs/generated/planck_mes_smica_cmbonly_999_irrep/carrier_v2.json
+      - docs/generated/planck_mes_smica_cmbonly_999_irrep/result.json
+      - docs/generated/planck_mes_smica_cmbonly_999_irrep/replay.json
+      - docs/generated/planck_mes_smica_cmbonly_999_irrep/plot_audit.json
+      - docs/generated/planck_mes_smica_cmbonly_999_irrep/terminal.json
+      required_signatures:
+      - 'run_smica_cmbonly_999_irrep(*, intake: Path, observed_map: Path, mask: Path, output_dir: Path, candidate_commit: str, candidate_tree: str) -> dict[str, object]'
+  verification:
+    targeted:
+    - python -m pytest -q tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py
+    negative:
+    - python -m pytest -q tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py -k 'missing or duplicate or primary or carrier or claim or 00818 or plot'
+    regression:
+    - python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py tests/integration/test_planck_mes_morphology.py tests/paper/test_planck_mes_first_paper.py
+    integration:
+    - python scripts/observed_runs/run_planck_mes_smica_cmbonly_999.py --replay-irrep-v2 docs/generated/planck_mes_smica_cmbonly_999_irrep
+    full_relevant_suite: []
+  completion_evidence:
+    required:
+    - final_git_head
+    - final_git_tree
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - executed_test_commands
+    - invariant_results
+    - objective_output_paths
+    - plot_audit_paths_when_required
+    - unresolved_blockers
+    - candidate_dispositions_when_required
+  agent_policy:
+    ask_user_questions: false
+    guessing_across_spec_boundary: forbidden
+    changing_tests_to_fit_implementation: forbidden
+    changing_reference_outputs_without_authority: forbidden
+    suppressing_failures: forbidden
+    claiming_unexecuted_work: forbidden
+    creating_successor_planning_package: forbidden
+    raw_data_mutation: forbidden
+    posthoc_statistic_or_template_selection: forbidden
+  review_gate:
+    fresh_context_required: true
+    read_only_first_pass: true
+    pass_condition:
+      P0: 0
+      P1: 0
+    stopping_rule: One fresh review and at most one targeted repair unless a new reproduced current-task P0/P1 appears.
+  transition:
+    pass_next_executable_action: Start PMI-WU-006 using map-free carriers; do not reread all null maps for the injection study.
+    fail_next_action: On inventory/operator/primary-lock failure emit a typed BLOCKED state; preserve admitted files and do not tune to numerical agreement.
+- schema: audit-compiled-work-unit/v1
+  id: PMI-WU-006
+  title: Implement observable morphology/template scores and execute operator-aware injections
+  authority:
+    base_sha: 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+    planning_predecessor_sha: 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+    planning_branch: analysis/planck-mes-observable-irrep-execution-20260827
+    upstream_dependencies:
+    - PMI-WU-005
+    implementation_base_rule: accepted_final_sha_from_PMI-WU-005_terminal
+    implementation_branch_pattern: changeset/planck-mes-irrep-injections-YYYYMMDD
+  objective:
+    statement: Build observable-only orbit projections and a leave-one-out covariance-whitened harmonic template score, then execute preregistered operator-aware analytic shear injections and a conditional native Bianchi VII_h lane.
+    observable_success: Replayed outputs provide observable morphology, exact rotation tests, complete-pool template ranks, analytic injection power with Wilson intervals/A50/A90 brackets/orientation spread, scalar-versus-harmonic power comparison, and explicit candidate dispositions; no physical inference is emitted.
+    non_goals:
+    - no physical JointAnisotropyState construction
+    - no Bianchi-family evidence claim
+    - no posterior or parameter constraint
+    - no requirement that the conditional native template exist
+  risk:
+    class: critical
+    P0_failure_modes:
+    - PMI-FM-004
+    - PMI-FM-009
+    - PMI-FM-016
+    - PMI-FM-017
+    - PMI-FM-018
+    P1_failure_modes:
+    - PMI-FM-019
+    - PMI-FM-024
+  scope:
+    allowed_paths:
+    - htt/obsstat/lowell_irrep_morphology.py
+    - htt/obsstat/harmonic_template_score.py
+    - scripts/observed_runs/run_planck_mes_irrep_injections.py
+    - tests/obsstat/test_lowell_irrep_morphology.py
+    - tests/obsstat/test_harmonic_template_score.py
+    - tests/integration/test_planck_mes_irrep_injections.py
+    - docs/research_program/post_pr275/planck_irrep_template_registry.yaml
+    - docs/generated/planck_mes_irrep_injections/**
+    forbidden_paths:
+    - /mnt/sn850x2t/htt_base_e2e/workdir/raw/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/downloads/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/cobaya_packages/data/**
+    - machine_readable/pr_backlog.*
+    - machine_readable/pr_status.yaml
+    - htt/src/common/joint_anisotropy_state_v1.py
+    - docs/generated/planck_mes_morphology/planck_mes_morphology.npz
+    - docs/generated/pr315_planck_smica_feature_replay.npz
+    forbidden_changes:
+    - Do not edit frozen V1 scientific expected outputs or tolerances to make tests pass.
+    - Do not widen physical-state meanings to accept observed harmonic coefficients.
+    - Do not commit or mutate raw/downloaded payloads.
+    - Do not promote an exploratory or conditional output beyond its typed claim boundary.
+    - Do not add another planning, meta-audit, or reviewer package.
+  preconditions:
+  - id: PMI-PRE-501
+    command: python -c "import json; assert json.load(open('docs/generated/planck_mes_primary_irrep_v2/replay.json'))['status']=='MATCH'"
+    expect: primary carrier replay accepted
+  - id: PMI-PRE-502
+    command: python -c "import json; assert json.load(open('docs/generated/planck_mes_smica_cmbonly_999_irrep/replay.json'))['status']=='MATCH'"
+    expect: robustness carrier replay accepted
+  - id: PMI-PRE-503
+    command: python -c "import json; p=json.load(open('docs/generated/planck_mes_irrep_injections/candidate_dispositions.json')); assert p['ANALYTIC_AXISYMMETRIC_STF_L2_L3_V1']=='PROMOTED'"
+    expect: mandatory candidate executed
+  invariants:
+  - id: PMI-INV-OBSERVABLE-ONLY
+    severity_if_violated: P0
+    statement: Observable morphology and template scores consume ObservableIrrepState and cannot emit physical-state or Bianchi-family labels.
+    mechanical_check:
+      command: python -m pytest -q tests/obsstat/test_lowell_irrep_morphology.py::test_observable_report_forbids_physical_and_family_claims
+      expect: PASS
+  - id: PMI-INV-AXIS-SIGN
+    severity_if_violated: P0
+    statement: Unoriented multipole-axis sign flips leave allowed morphology unchanged and cannot produce handedness claims.
+    mechanical_check:
+      command: python -m pytest -q tests/obsstat/test_lowell_irrep_morphology.py::test_axis_sign_flips_leave_allowed_invariants_unchanged_and_forbid_signed_claims
+      expect: PASS
+  - id: PMI-INV-LOO-TEMPLATE-SCORE
+    severity_if_violated: P0
+    statement: Every row uses leave-one-out mean/covariance, full-rank fail-closed whitening, and identical 384-rotation maximization.
+    mechanical_check:
+      command: python -m pytest -q tests/obsstat/test_harmonic_template_score.py::test_leave_one_out_whitening_and_orientation_max_are_permutation_equivariant
+      expect: PASS
+  - id: PMI-INV-OPERATOR-AWARE-INJECTION
+    severity_if_violated: P0
+    statement: Each rotated template is passed through the exact source transfer and joint cut-sky operator before carrier addition.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_every_template_orientation_has_content_bound_operator_response
+      expect: PASS
+  - id: PMI-INV-CANDIDATE-COVERAGE
+    severity_if_violated: P1
+    statement: Analytic and native template candidates have explicit terminal dispositions.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_candidate_disposition_ledger_is_complete
+      expect: PASS
+  - id: PMI-INV-PLOT-INSPECTION
+    severity_if_violated: P1
+    statement: Every required power, response, and residual figure is hash-bound to a human/agent inspection record.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_plot_audit_binds_all_required_figures_and_findings
+      expect: PASS
+  failure_modes:
+  - id: PMI-FM-004
+    severity: P0
+    trigger: Coordinate-dependent canonical multipole-axis signs are used as O(3)-invariant handedness or physical vector orientation.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/obsstat/test_lowell_irrep_morphology.py::test_axis_sign_flips_leave_allowed_invariants_unchanged_and_forbid_signed_claims
+  - id: PMI-FM-009
+    severity: P0
+    trigger: Reducers, tails, family membership, templates, orientation grids, amplitude grids, or rejection rules are selected or tuned after inspecting observed or injection outcomes.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/contracts/test_planck_mes_irrep_preregistration.py
+  - id: PMI-FM-016
+    severity: P0
+    trigger: Templates are added after scalar feature extraction, or directly to post-operator carriers without applying the registered orientation-dependent mask/beam/operator response, while called end-to-end.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_every_template_orientation_has_content_bound_operator_response
+  - id: PMI-FM-018
+    severity: P0
+    trigger: The observation contributes to its own mean/covariance/template whitening, covariance is singular or silently regularized, or orientation maximization is not applied identically to all rows.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/obsstat/test_harmonic_template_score.py::test_leave_one_out_whitening_and_orientation_max_are_permutation_equivariant
+  - id: PMI-FM-017
+    severity: P0
+    trigger: A Bianchi VII_h template is used without exact template bytes, solver commit/tree, conventions, transfer provenance, and response/operator identity.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_native_bianchi_template_requires_exact_authority_or_is_deferred
+  - id: PMI-FM-019
+    severity: P1
+    trigger: The analytic observable-STF benchmark template, native Bianchi template, or another registered candidate silently disappears from execution or is mislabeled as refuted.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_candidate_disposition_ledger_is_complete
+  - id: PMI-FM-024
+    severity: P1
+    trigger: Required rank distributions, injection power curves, or operator-response diagnostics are generated but not inspected, or their plot audit is absent.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_plot_audit_binds_all_required_figures_and_findings
+  implementation:
+    ordered_steps:
+    - id: PMI-STEP-501
+      files:
+      - docs/research_program/post_pr275/planck_irrep_template_registry.yaml
+      - tests/obsstat/test_lowell_irrep_morphology.py
+      - tests/obsstat/test_harmonic_template_score.py
+      - tests/integration/test_planck_mes_irrep_injections.py
+      action: Freeze analytic template bytes/formula, orientation grids, dimensionless full-sky-RMS amplitude grid, score, covariance rule, rejection rule, candidate vocabulary, and expected output schemas; write and run RED tests.
+      must_preserve:
+      - no observed-outcome-dependent specification
+      - native template conditionality
+    - id: PMI-STEP-502
+      files:
+      - htt/obsstat/lowell_irrep_morphology.py
+      action: Implement observable-only amplitude/shape and axis-sign-invariant projections from ObservableIrrepState; expose no physical-state constructors or family labels.
+      must_preserve:
+      - existing multipole-vector tolerance/degeneracy abstentions
+      - unoriented-axis semantics
+    - id: PMI-STEP-503
+      files:
+      - htt/obsstat/harmonic_template_score.py
+      action: Implement real-basis rotation matrices, orthogonality/composition checks, leave-one-out full covariance whitening, orientation-max score, and exact finite-null calibration.
+      must_preserve:
+      - no silent shrinkage or pseudoinverse
+      - same rotation bank for all rows
+    - id: PMI-STEP-504
+      files:
+      - scripts/observed_runs/run_planck_mes_irrep_injections.py
+      - docs/generated/planck_mes_irrep_injections/**
+      action: Precompute the operator-effective analytic template bank for all 384 rotations, inject the exact dimensionless full-sky-RMS amplitude grid into the accepted carriers over 96 evaluation orientations, execute the score/power study, and run the native lane only if authority admission passes.
+      must_preserve:
+      - no per-injection map reread
+      - paired-300 primary null identity
+      - candidate dispositions
+    - id: PMI-STEP-505
+      files:
+      - docs/generated/planck_mes_irrep_injections/**
+      action: Generate null-score, operator-response, power, orientation-spread, scalar-versus-harmonic, and residual figures; inspect adversarially and write plot_audit.json before terminal success.
+      must_preserve:
+      - no visual overclaim
+      - A50/A90 bracket when monotonicity is not resolved
+    interfaces:
+      produces:
+      - obsstat.lowell_irrep_morphology.observable_morphology_report
+      - obsstat.harmonic_template_score.template_finite_null_score
+      - docs/generated/planck_mes_irrep_injections/result.json
+      - docs/generated/planck_mes_irrep_injections/candidate_dispositions.json
+      - docs/generated/planck_mes_irrep_injections/terminal.json
+      required_signatures:
+      - 'observable_morphology_report(state: ObservableIrrepState) -> ObservableMorphologyReport'
+      - 'template_finite_null_score(*, states: Sequence[ObservableIrrepState], template_bank: TemplateRotationBank, observation_index: int=0) -> TemplateFiniteNullResult'
+      - 'run_irrep_injections(*, primary_carrier: Path, robustness_carrier: Path, template_registry: Path, output_dir: Path) -> dict[str, object]'
+  verification:
+    targeted:
+    - python -m pytest -q tests/obsstat/test_lowell_irrep_morphology.py tests/obsstat/test_harmonic_template_score.py tests/integration/test_planck_mes_irrep_injections.py
+    negative:
+    - python -m pytest -q tests/obsstat/test_lowell_irrep_morphology.py tests/obsstat/test_harmonic_template_score.py tests/integration/test_planck_mes_irrep_injections.py -k 'sign or physical or singular or covariance or orientation or posthoc or authority or candidate or plot'
+    regression:
+    - python -m pytest -q tests/integration/test_planck_primary_irrep_v2.py tests/integration/test_planck_mes_smica_cmbonly_999_irrep.py tests/integration/test_planck_mes_coordinate_mechanism_audit.py
+    integration:
+    - python scripts/observed_runs/run_planck_mes_irrep_injections.py --replay docs/generated/planck_mes_irrep_injections
+    full_relevant_suite: []
+  completion_evidence:
+    required:
+    - final_git_head
+    - final_git_tree
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - executed_test_commands
+    - invariant_results
+    - objective_output_paths
+    - plot_audit_paths_when_required
+    - unresolved_blockers
+    - candidate_dispositions_when_required
+  agent_policy:
+    ask_user_questions: false
+    guessing_across_spec_boundary: forbidden
+    changing_tests_to_fit_implementation: forbidden
+    changing_reference_outputs_without_authority: forbidden
+    suppressing_failures: forbidden
+    claiming_unexecuted_work: forbidden
+    creating_successor_planning_package: forbidden
+    raw_data_mutation: forbidden
+    posthoc_statistic_or_template_selection: forbidden
+  review_gate:
+    fresh_context_required: true
+    read_only_first_pass: true
+    pass_condition:
+      P0: 0
+      P1: 0
+    stopping_rule: One fresh review and at most one targeted repair unless a new reproduced current-task P0/P1 appears.
+  transition:
+    pass_next_executable_action: Start PMI-WU-007 with only successful replayed projections; a deferred native template is an allowed nonblocking disposition.
+    fail_next_action: On score equivariance, operator-response, or preregistration failure emit BLOCKED_BY_P0; on missing native authority mark only that candidate DEFERRED and continue the analytic lane.
+- schema: audit-compiled-work-unit/v1
+  id: PMI-WU-007
+  title: Execute Commander descriptive carrier comparison and reframe the methods paper
+  authority:
+    base_sha: 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+    planning_predecessor_sha: 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+    planning_branch: analysis/planck-mes-observable-irrep-execution-20260827
+    upstream_dependencies:
+    - PMI-WU-006
+    implementation_base_rule: accepted_final_sha_from_PMI-WU-006_terminal
+    implementation_branch_pattern: changeset/planck-mes-commander-paper-reframe-YYYYMMDD
+  objective:
+    statement: Process Commander through the same observable-irrep operator without finite calibration, then rebuild the paper around coordinate sensitivity, carrier preservation, and validated injection power with clean provenance.
+    observable_success: Commander result/replay/terminal emits typed carriers and feature deltas with finite_rank_emitted=false; the rebuilt manuscript states analytic identities, method non-invariance, null fidelity, eps1 sensitivity, prior constraints, reproducibility specs, and only successful injection/robustness findings.
+    non_goals:
+    - no Commander p-value
+    - no physical shear/vorticity measurement
+    - no Bianchi-family claim
+    - no broad journal-style rewrite beyond the methods reframe
+  risk:
+    class: critical
+    P0_failure_modes:
+    - PMI-FM-001
+    - PMI-FM-015
+    P1_failure_modes:
+    - PMI-FM-021
+    - PMI-FM-022
+    - PMI-FM-024
+  scope:
+    allowed_paths:
+    - scripts/observed_runs/run_planck_mes_commander_observation.py
+    - tests/integration/test_planck_mes_commander_irrep.py
+    - docs/generated/planck_mes_commander_observation_irrep/**
+    - scripts/paper/build_planck_mes_first_paper.py
+    - tests/paper/test_planck_mes_irrep_methods_paper.py
+    - papers/planck_mes_first_observation/main.tex
+    - papers/planck_mes_first_observation/references.bib
+    - docs/generated/planck_mes_first_paper/**
+    forbidden_paths:
+    - /mnt/sn850x2t/htt_base_e2e/workdir/raw/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/downloads/**
+    - /mnt/sn850x2t/htt_base_e2e/workdir/cobaya_packages/data/**
+    - machine_readable/pr_backlog.*
+    - machine_readable/pr_status.yaml
+    - htt/src/common/joint_anisotropy_state_v1.py
+    - docs/generated/planck_mes_morphology/planck_mes_morphology.npz
+    - docs/generated/pr315_planck_smica_feature_replay.npz
+    forbidden_changes:
+    - Do not edit frozen V1 scientific expected outputs or tolerances to make tests pass.
+    - Do not widen physical-state meanings to accept observed harmonic coefficients.
+    - Do not commit or mutate raw/downloaded payloads.
+    - Do not promote an exploratory or conditional output beyond its typed claim boundary.
+    - Do not add another planning, meta-audit, or reviewer package.
+  preconditions:
+  - id: PMI-PRE-601
+    command: python -c "import json; assert json.load(open('docs/generated/planck_mes_irrep_injections/terminal.json'))['state']=='SUCCEEDED'"
+    expect: mandatory analytic injection lane succeeded
+  - id: PMI-PRE-602
+    command: python -c "import json; assert json.load(open('docs/generated/planck_mes_coordinate_mechanism/replay.json'))['status']=='MATCH'"
+    expect: mechanism result replay accepted
+  invariants:
+  - id: PMI-INV-COMMANDER-NO-RANK
+    severity_if_violated: P0
+    statement: Commander remains observation-only with finite_rank_emitted=false and partial simulations never enter a null pool.
+    mechanical_check:
+      command: python -m pytest -q tests/integration/test_planck_mes_commander_irrep.py::test_commander_cannot_emit_finite_rank_or_open_partial_inputs
+      expect: PASS
+  - id: PMI-INV-PAPER-EVIDENCE
+    severity_if_violated: P1
+    statement: The manuscript consumes only successful terminal+replay projections and states each result at its exact claim level.
+    mechanical_check:
+      command: python -m pytest -q tests/paper/test_planck_mes_irrep_methods_paper.py::test_paper_requires_successful_replayed_evidence_and_claim_boundaries
+      expect: PASS
+  - id: PMI-INV-PAPER-F1-F4
+    severity_if_violated: P1
+    statement: The manuscript includes the analytic identities/information equivalence, reducer non-invariance, existing-constraint comparison, eps1 sensitivity, null fidelity, and full physical operator specs.
+    mechanical_check:
+      command: python -m pytest -q tests/paper/test_planck_mes_irrep_methods_paper.py::test_referee_load_bearing_revisions_are_present
+      expect: PASS
+  - id: PMI-INV-PDF-INSPECTION
+    severity_if_violated: P1
+    statement: The rebuilt PDF and all revised figures are inspected for semantic consistency, clipping, and legibility.
+    mechanical_check:
+      command: python -m pytest -q tests/paper/test_planck_mes_irrep_methods_paper.py::test_pdf_and_figure_audit_is_bound_to_source_and_artifacts
+      expect: PASS
+  failure_modes:
+  - id: PMI-FM-001
+    severity: P0
+    trigger: Planck ObservableIrrepState or harmonic coefficients are inserted into JointAnisotropyState fields or labeled as physical shear, vorticity, acceleration, tilt, curvature, or Bianchi family.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/common/test_observable_irrep_state.py::test_observable_state_cannot_construct_or_impersonate_physical_state
+  - id: PMI-FM-015
+    severity: P0
+    trigger: Three Commander simulations or partial files are used to emit a finite rank/p-value, or Commander is compared under a mismatched operator while called same-operator.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_commander_irrep.py::test_commander_cannot_emit_finite_rank_or_open_partial_inputs
+  - id: PMI-FM-021
+    severity: P1
+    trigger: The manuscript, abstract, claim ledger, or release metadata consumes planned, failed, unreplayed, or deferred outputs as successful scientific evidence.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/paper/test_planck_mes_irrep_methods_paper.py::test_paper_requires_successful_replayed_evidence_and_claim_boundaries
+  - id: PMI-FM-022
+    severity: P1
+    trigger: Any SHA mismatch is promoted directly to scientific-integrity failure without classifying immutable source, deterministic evidence, scientific numerical output, or packaging metadata.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/contracts/test_planck_mes_identity_classification.py
+  - id: PMI-FM-024
+    severity: P1
+    trigger: Required rank distributions, injection power curves, or operator-response diagnostics are generated but not inspected, or their plot audit is absent.
+    required_detection:
+      test_or_gate: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py::test_plot_audit_binds_all_required_figures_and_findings
+  implementation:
+    ordered_steps:
+    - id: PMI-STEP-601
+      files:
+      - tests/integration/test_planck_mes_commander_irrep.py
+      - scripts/observed_runs/run_planck_mes_commander_observation.py
+      - docs/generated/planck_mes_commander_observation_irrep/**
+      action: Write RED tests, execute Commander observation plus three complete sanity rows through the same operator, serialize carriers/features/deltas, refuse partial files before FITS open, and emit no finite rank.
+      must_preserve:
+      - SMICA primary authority
+      - EXPLORATORY_NONAUTHORITATIVE
+    - id: PMI-STEP-602
+      files:
+      - tests/paper/test_planck_mes_irrep_methods_paper.py
+      - scripts/paper/build_planck_mes_first_paper.py
+      - papers/planck_mes_first_observation/main.tex
+      - papers/planck_mes_first_observation/references.bib
+      - docs/generated/planck_mes_first_paper/**
+      action: Write RED paper tests and reframe the paper as a methods result; include F1/F2 identities and factorial/ECDF results, F4 comparison, eps1 sensitivity, registered tails, null fidelity/leakage/reproducibility specs, Neff/tie/MC diagnostics, octupole direction, injection power, and bounded robustness/Commander appendices.
+      must_preserve:
+      - historical result identified as baseline
+      - no automatic abstract strengthening
+      - only successful replayed outputs
+    - id: PMI-STEP-603
+      files:
+      - papers/planck_mes_first_observation/main.tex
+      - docs/generated/planck_mes_first_paper/**
+      action: Build the PDF, inspect all pages and figures, bind clean commit/tree/generator/input identities, and write the final audit receipt.
+      must_preserve:
+      - no internal governance jargon in manuscript
+      - no excessive numeric precision in prose
+    interfaces:
+      produces:
+      - docs/generated/planck_mes_commander_observation_irrep/result.json
+      - docs/generated/planck_mes_commander_observation_irrep/replay.json
+      - docs/generated/planck_mes_commander_observation_irrep/terminal.json
+      - papers/planck_mes_first_observation/main.pdf
+      - docs/generated/planck_mes_first_paper/submission_provenance.json
+      required_signatures:
+      - 'run_commander_observation_irrep(*, intake: Path, workdir: Path, output_dir: Path, candidate_commit: str, candidate_tree: str) -> dict[str, object]'
+      - 'build_planck_mes_irrep_methods_paper(*, mechanism_result: Path, primary_carrier: Path, robustness_result: Path, injection_result: Path, commander_result: Path | None, output_dir: Path) -> dict[str, object]'
+  verification:
+    targeted:
+    - python -m pytest -q tests/integration/test_planck_mes_commander_irrep.py tests/paper/test_planck_mes_irrep_methods_paper.py
+    negative:
+    - python -m pytest -q tests/integration/test_planck_mes_commander_irrep.py tests/paper/test_planck_mes_irrep_methods_paper.py -k 'partial or rank or physical or unexecuted or replay or claim or pdf or figure'
+    regression:
+    - python -m pytest -q tests/paper/test_planck_mes_first_paper.py tests/integration/test_planck_mes_morphology.py tests/integration/test_planck_mes_coordinate_mechanism_audit.py tests/integration/test_planck_mes_irrep_injections.py
+    integration:
+    - latexmk -pdf -interaction=nonstopmode -halt-on-error papers/planck_mes_first_observation/main.tex
+    full_relevant_suite: []
+  completion_evidence:
+    required:
+    - final_git_head
+    - final_git_tree
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - executed_test_commands
+    - invariant_results
+    - objective_output_paths
+    - plot_audit_paths_when_required
+    - unresolved_blockers
+    - candidate_dispositions_when_required
+  agent_policy:
+    ask_user_questions: false
+    guessing_across_spec_boundary: forbidden
+    changing_tests_to_fit_implementation: forbidden
+    changing_reference_outputs_without_authority: forbidden
+    suppressing_failures: forbidden
+    claiming_unexecuted_work: forbidden
+    creating_successor_planning_package: forbidden
+    raw_data_mutation: forbidden
+    posthoc_statistic_or_template_selection: forbidden
+  review_gate:
+    fresh_context_required: true
+    read_only_first_pass: true
+    pass_condition:
+      P0: 0
+      P1: 0
+    stopping_rule: One fresh review and at most one targeted repair unless a new reproduced current-task P0/P1 appears.
+  transition:
+    pass_next_executable_action: Transition to external scientific review or submission preparation; do not start another internal audit loop.
+    fail_next_action: If Commander attempts calibration or the paper consumes unexecuted/overclaimed evidence, emit BLOCKED_BY_P0/P1 and apply one bounded repair only.
+global_transition_policy:
+  execution_permission_separate_from_claim_admission: true
+  first_objective_output_required_by: PMI-WU-002
+  large_data_execution_must_preserve_harmonic_carrier: true
+  process_starvation_trigger: two substantial process-only cycles
+  process_starvation_action: freeze optional governance and execute the shortest accepted work unit; do not create a remediation contract
+  trusted_verification_boundary:
+  - Python runtime and standard library
+  - NumPy finite-array arithmetic and npz with allow_pickle=False
+  - Git object identity and repository content APIs
+  - existing canonical Planck joint-cutsky operator tests
+  - the package validator and its focused contract test
+  review_stopping_rule: one read-only fresh-context review and at most one targeted repair per work unit; a further loop requires a newly reproduced current-task P0/P1
+  full_repository_suite_default: false
+  candidate_terminal_states:
+  - PROMOTED
+  - REFUTED
+  - UNRESOLVED
+  - DEFERRED
+  - NOT_ATTEMPTED
+  claim_gate: authoritative scientific promotion remains disabled until the specific work-unit terminal and portable replay pass; exploratory execution is not blocked by absent publication-grade evidence

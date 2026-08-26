@@ -1,0 +1,34 @@
+schema: htt.planck_mes_observable_irrep.final_differential_audit.v1
+package_id: PLANCK_MES_OBSERVABLE_IRREP_EXECUTION_20260827
+inputs:
+- canonical base SHA/tree
+- planning predecessor SHA/tree
+- final implementation SHA/tree
+- compiled execution plan
+- base..final diff
+- final evidence bundle
+- fresh-context findings and repair delta
+- unresolved blockers and candidate dispositions
+questions:
+- Did the implementation violate any compiled invariant or forbidden coercion?
+- Did the contract miss a P0/P1 failure class visible in the delta?
+- Was any byte-identity difference misclassified as scientific failure or vice versa?
+- Did any work unit claim an objective output that was not executed and replayed?
+- Did scope expand into physical inference, post-hoc selection, raw mutation, or process-only work?
+- Did the fresh reviewer produce a false PASS or false BLOCKED?
+must_not_reconsider:
+- the whole historical project from zero
+- settled source-of-truth precedence
+- unchanged frozen scalar outputs whose exact locks pass
+- optional assurance work not required by the current risk surface
+- deferred native Bianchi template availability as a reason to block the analytic injection lane
+byte_identity_policy:
+  immutable_source_or_input: hard-block mismatch
+  deterministic_evidence_under_exact_identity_contract: hard-block mismatch
+  scientific_numeric_output: judge by exact rank or registered numeric invariant/tolerance
+  packaging_or_build_metadata: non-scientific unless byte identity is explicitly required
+pass_condition:
+  P0: 0
+  P1: 0
+pass_transition: accept the completed work-unit sequence at its actual claim level and proceed to external scientific review or the next separately authorized research lane
+failure_transition: repair exactly the new current-task P0/P1 once or emit a typed BLOCKED state; do not generate a successor planning package

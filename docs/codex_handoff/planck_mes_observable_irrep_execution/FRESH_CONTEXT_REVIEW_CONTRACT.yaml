@@ -1,0 +1,44 @@
+schema: htt.planck_mes_observable_irrep.fresh_context_review.v1
+package_id: PLANCK_MES_OBSERVABLE_IRREP_EXECUTION_20260827
+mode: READ_ONLY_FIRST_PASS
+required_inputs:
+- authoritative canonical base SHA/tree
+- accepted predecessor/final SHA for the current work unit
+- current work-unit contract only
+- base..final diff and diff stat
+- executed verification log
+- generated objective artifacts and plot-audit receipt when required
+- candidate disposition ledger when required
+- unresolved blockers
+forbidden_inputs_as_authority:
+- implementer chain of reasoning
+- self-reported success without logs
+- transcript-only artifact claims
+- unexecuted planned commands
+review_scope:
+- contract violations in the current delta
+- new P0/P1 failure classes visible in the current delta
+- invalid or misclassified evidence
+- scope expansion beyond the current work unit
+- false PASS or false BLOCKED
+must_not_reopen:
+- the exact historical scalar rank values when their immutable regression passes
+- whether scalar ceilings can manufacture direction
+- whether the 999 CMB-only lane replaces the paired-300 primary
+- whether Commander has enough nulls for calibration
+- generic orbit completeness, which remains UNPROVEN and outside this package
+finding_schema:
+  severity: P0|P1|P2|P3
+  current_task_blocking: boolean
+  file: repository path
+  line_or_symbol: exact location
+  violated_invariant: PMI-INV-ID or precise statement
+  reproducer: command or minimal objective evidence
+  explanation: why the current delta is defective
+  minimal_repair: bounded correction or explicit BLOCKED disposition
+pass_condition:
+  P0: 0
+  P1: 0
+pass_transition: accept the current work-unit terminal and start its declared next executable action
+repair_policy: diagnosis first; then the implementer may apply one targeted repair and rerun only the failed and directly affected checks
+stopping_rule: No further review after PASS or one repaired PASS unless a newly reproduced current-task P0/P1 exists.

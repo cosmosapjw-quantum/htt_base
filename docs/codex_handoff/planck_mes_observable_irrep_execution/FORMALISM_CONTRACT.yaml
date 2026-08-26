@@ -1,0 +1,272 @@
+schema: htt.planck_mes_observable_irrep.formalism_contract.v1
+package_id: PLANCK_MES_OBSERVABLE_IRREP_EXECUTION_20260827
+conventions:
+  metric_signature_for_physical_state: (-,+,+,+)
+  spatial_orientation: epsilon_123=+1
+  harmonics: orthonormal Condon-Shortley
+  observable_frame: GALACTIC
+  healpix_ordering: RING
+  temperature_map_units: microK_CMB
+  epsilon_and_mes_units: dimensionless
+  complete_primary_pool: 301
+  primary_null_count: 300
+layer_model:
+- layer: PHYSICAL_ANISOTROPY_STATE
+  canonical_type: common.joint_anisotropy_state.JointAnisotropyState
+  contents:
+  - sigma_STF5
+  - omega_axial3
+  - acceleration_polar3_or_missing
+  - beta_RO_beta_RM_beta_MO
+  - geometry_tensors_or_missing
+  allowed_producers:
+  - physical solver/state adapters with explicit semantics
+  forbidden_producers:
+  - Planck alms or scalar features without a physical response operator
+- layer: OBSERVABLE_IRREP_STATE
+  canonical_type: common.observable_irrep_state.ObservableIrrepState
+  contents:
+  - field identity and frame
+  - spin/parity
+  - ell-indexed real irreducible blocks
+  - mask/beam/pixel/operator/source identities
+  - typed missing blocks
+  allowed_producers:
+  - retained harmonic coefficients
+  - direction-indexed moment estimators
+  forbidden_interpretations:
+  - physical shear
+  - physical vorticity
+  - global tilt
+  - local boost
+  - Bianchi family
+- layer: PREMISE_ANCHOR_SET
+  canonical_type: common.statistical_foundations.MESAnchorSpec
+  contents:
+  - one-way channel-matched scalar ceilings
+  allowed_action: normalize an already existing channel-matched object
+  forbidden_action: create a direction, tensor, numerator, physical state, or source attribution
+- layer: PHYSICAL_RESPONSE_OPERATOR
+  canonical_type: content-bound future response object
+  status: MISSING_UNLESS_EXPLICITLY_ADMITTED
+  required_for:
+  - ObservableIrrepState to physical-state interpretation
+  - native Bianchi parameter claim
+- layer: STATISTIC_PROJECTION
+  canonical_type: obsstat.finite_null_family.FiniteNullFamilySpec
+  contents:
+  - coordinate projection
+  - tail policy
+  - reducer
+  - row reducer
+  - complete-pool rank rule
+  claim_boundary: finite-null conditional diagnostic unless a stronger null is separately admitted
+forbidden_coercions:
+- from: MESAnchorSpec_or_scalar_feature
+  to: ObservableIrrepState_or_direction
+  disposition: BLOCKED_SCALAR_TO_IRREP_FABRICATION
+- from: ObservableIrrepState
+  to: JointAnisotropyState
+  disposition: BLOCKED_PHYSICAL_RESPONSE_REQUIRED
+- from: canonical_multipole_axis_sign
+  to: handedness_or_physical_vector
+  disposition: BLOCKED_AXIS_SIGN_GAUGE
+- from: Commander_three_complete_simulations
+  to: finite_null_calibration
+  disposition: BLOCKED_INSUFFICIENT_COMPLETE_NULLS
+observable_irrep_contract:
+  field_kind: real spin-0 temperature scalar
+  ell_domain:
+  - 2
+  - 3
+  - 4
+  - 5
+  blocks:
+  - ell: 2
+    dimension: 5
+    inversion_parity: even
+  - ell: 3
+    dimension: 7
+    inversion_parity: odd
+  - ell: 4
+    dimension: 9
+    inversion_parity: even
+  - ell: 5
+    dimension: 11
+    inversion_parity: odd
+  real_component_layout:
+    order:
+    - (ell,0,real)
+    - 'for m=1..ell: (ell,m,real), (ell,m,imag)'
+    values:
+    - 'm=0: Re(a_ell0)'
+    - 'm>0 real: sqrt(2)*Re(a_ellm)'
+    - 'm>0 imag: -sqrt(2)*Im(a_ellm)'
+    total_dimension_ell2_to_ell5: 32
+  required_identities:
+  - row_id
+  - source_identity
+  - operator_identity
+  - mask_identity
+  - beam_pixel_identity
+  - frame
+  - component_layout_identity
+  - content_identity
+  typed_absence: MissingComponent, never a numerical zero surrogate
+  serialization: float64 arrays with allow_pickle=False plus canonical JSON metadata
+mes_identities:
+  epsilon_l: epsilon_l = sqrt((2*l+1)*C_l/(4*pi))/T0
+  B_sigma: B_sigma=(5/3)*epsilon1+3*epsilon2+(3/7)*epsilon3
+  B_omega: B_omega=(10/3)*epsilon1+(2/15)*epsilon2
+  Sigma_max_squared: Sigma_max^2=(3/2)*B_sigma^2
+  W_max_squared: W_max^2=(3/2)*B_omega^2
+  eps1_zero_identities:
+  - W_max^2=C2/(30*pi*T0^2)
+  - Sigma_max^2=(27/98)*(7*epsilon2+epsilon3)^2
+  information_equivalence:
+    domain: C2>=0,C3>=0,epsilon1=0
+    statement: sigma(Sigma_max^2,W_max^2,M)=sigma(C2,C3,M)
+    inverse:
+    - epsilon2=sqrt((75/2)*W_max^2)
+    - epsilon3=sqrt((98/27)*Sigma_max^2)-7*epsilon2
+    - C_l=4*pi*T0^2*epsilon_l^2/(2*l+1)
+  interpretation: same-row nonlinear coordinate transform with independent_information_gain=false
+finite_null_contract:
+  complete_pool: observation plus all registered null rows
+  legacy_reducer:
+    id: LEGACY_ABS_LOO_MEDIAN
+    score: D_ij=abs(X_ij-median(X_-i,j))
+    local_rank: count(D_kj>=D_ij)/N
+    row_reducer: minimum local rank
+    family_rank: count(r_k<=r_obs)/N
+    tie_policy: conservative
+  invariant_reducer:
+    id: LOO_ECDF_MIDRANK
+    u: (count(X_kj<X_ij)+0.5*count(X_kj=X_ij))/(N-1), k!=i
+    two_sided: 2*abs(u-1/2)
+    upper: u
+    lower: 1-u
+    invariance: exact under strictly increasing coordinatewise transformations, including ties
+  legacy_family_order:
+  - GENERIC_12
+  - RAW_REDUCED_10
+  - EPS_REDUCED_10
+  - MES_10
+  - ANCHORS_ONLY_2
+  - MORPHOLOGY_ONLY_8
+  factorial_family_order:
+  - EPS_REDUCED_10
+  - SQUARE_ONLY_10
+  - CARRIER_ONLY_10
+  - MES_10
+  factorial_definitions:
+    EPS_REDUCED_10: (epsilon2,epsilon3,M8)
+    SQUARE_ONLY_10: (epsilon2^2,epsilon3^2,M8)
+    CARRIER_ONLY_10: (B_sigma,B_omega,M8)
+    MES_10: (Sigma_max^2,W_max^2,M8)
+  registered_tail_lane_for_future_runs:
+    parity_even_over_odd_l2_l5: two-sided
+    power_tensor_gap_l2: upper
+    power_tensor_gap_l3: upper
+    multipole_l2_absdot: two-sided
+    multipole_l3_absdot_0: two-sided
+    multipole_l3_absdot_1: two-sided
+    multipole_l3_absdot_2: two-sided
+    multipole_plane_alignment_max_l2_l3: upper
+    mes_sigma_anchor: upper
+    mes_omega_anchor: upper
+  existing_301_tail_lane: retain all-two-sided as immutable historical primary; report registered-tail results as referee-driven sensitivity only
+  effective_coordinate_count: N_eff=(tr R)^2/tr(R^2), where R is the null Spearman rank-correlation matrix
+  legacy_exact_family_ranks:
+    GENERIC_12: 133/301
+    RAW_REDUCED_10: 110/301
+    EPS_REDUCED_10: 109/301
+    MES_10: 98/301
+    ANCHORS_ONLY_2: 78/301
+    MORPHOLOGY_ONLY_8: 88/301
+  legacy_observation_minimum:
+    feature_id: multipole_l3_absdot_0
+    rank: 16/301
+  legacy_mes_ceiling_local_ranks:
+  - 74/301
+  - 74/301
+carrier_products:
+  primary_v2:
+    observation_shape:
+    - 32
+    null_shape:
+    - 300
+    - 32
+    scalar_projection_required: true
+    V1_outputs_immutable: true
+  robustness_999_v2:
+    complete_shape:
+    - 1000
+    - 32
+    observation_index: 0
+    official_null_ids: 00000..00999 excluding 00970
+    primary_replacement: false
+  per_row_checks:
+  - finite float64
+  - exact component layout
+  - round-trip to packed alm
+  - recomputed scalar features match stored scalar row
+  - common operator identity
+  - per-row content identity
+  - row-order identity
+template_and_injection_contract:
+  score: leave-one-out covariance-whitened harmonic matched score, maximized over a frozen orientation grid and calibrated over the complete null pool
+  orientation_score_grid:
+    id: HEALPIX_NSIDE2_ROLL8_V1
+    sky_directions: 48
+    roll_angles: 8
+    rotation_count: 384
+    roll_values: 2*pi*k/8 for k=0..7
+  power_evaluation_orientation_grid:
+    id: HEALPIX_NSIDE2_ROLL2_V1
+    sky_directions: 48
+    roll_angles: 2
+    rotation_count: 96
+  operator_response: rotate a content-bound sky template, synthesize with registered source transfer, apply the exact joint cut-sky operator once per orientation, then add the effective carrier response to each null carrier
+  mandatory_template: ANALYTIC_AXISYMMETRIC_STF_L2_L3_V1
+  conditional_template: NATIVE_BIANCHI_VIIH_CONTENT_BOUND_V1
+  conditional_disposition_if_missing: DEFERRED_MISSING_TEMPLATE_AUTHORITY, without blocking the analytic injection lane
+  rejection_rule_primary_301: finite rank numerator <=15 over 301
+  power_outputs:
+  - power curve
+  - Wilson intervals
+  - A50 bracket
+  - A90 bracket
+  - orientation spread
+  claim_boundary: method sensitivity, not parameter constraint or Bianchi-family evidence
+  mandatory_template_definition:
+    semantic_role: observable-space sensitivity benchmark only; it is not a physical shear realization and is not inserted into JointAnisotropyState
+    axis:
+    - 0.0
+    - 0.0
+    - 1.0
+    cartesian_seeds:
+      ell2: Q_ab = STF(z_a z_b)
+      ell3: O_abc = STF(z_a z_b z_c)
+    sky_field: q(n) = N2 Q_ab n^a n^b + N3 O_abc n^a n^b n^c
+    normalization: choose positive N2 and N3 so the registered real-harmonic ell=2 and ell=3 blocks each have squared Euclidean norm 1/2; ell=4,5 are exactly zero; the combined 32-component carrier has Euclidean norm one
+    construction_crosscheck: direct Cartesian-STF spherical projection and direct real-harmonic coefficient construction must agree to absolute 1e-12 before template admission
+    amplitude_parameter: a = full-sky RMS of the injected template divided by the frozen null-only median full-sky RMS over ell=2,3; the null-only scale is computed once from the accepted paired-300 carrier before any observed or injection outcome is inspected
+  amplitude_grid:
+  - 0.0
+  - 0.5
+  - 1.0
+  - 1.5
+  - 2.0
+  - 2.5
+  - 3.0
+  - 4.0
+  - 5.0
+  - 6.0
+  amplitude_grid_units: dimensionless full-sky-RMS ratio a
+claim_boundaries:
+- ObservableIrrepState is an observed/simulated representation, not a physical kinematic state.
+- MES coordinates are premise-dependent one-way ceilings and deterministic row functions.
+- Finite ranks are conditional on the frozen pool and scientific null fidelity.
+- Injection power is sensitivity of the registered method, not a cosmological constraint.
+- Native Bianchi template results require explicit solver/transfer authority and cannot be inferred from the analytic template.

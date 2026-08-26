@@ -1,0 +1,117 @@
+schema: htt.planck_mes_observable_irrep.migration_map.v1
+package_id: PLANCK_MES_OBSERVABLE_IRREP_EXECUTION_20260827
+policy:
+  one_formalism_per_layer: true
+  no_parallel_untyped_successor: true
+  legacy_outputs: immutable compatibility baselines
+  migration_completion_gate: all listed production/analysis consumers either use the typed formalism or are explicitly frozen legacy-only
+surfaces:
+- path: htt/src/common/joint_anisotropy_state.py
+  current_role: physical anisotropy state
+  target_role: unchanged physical anisotropy state
+  action: NO_SOURCE_MUTATION; add cross-layer negative tests elsewhere
+  work_unit: PMI-WU-001
+- path: htt/src/common/observable_irrep_state.py
+  current_role: absent
+  target_role: canonical observed/simulated low-ell irrep state
+  action: CREATE typed blocks, state, identities, serialization, absence semantics
+  work_unit: PMI-WU-001
+- path: htt/obsstat/observable_irrep_adapter.py
+  current_role: absent
+  target_role: all array/map/directional adapters into ObservableIrrepState
+  action: CREATE and forbid direct physical-state construction
+  work_unit: PMI-WU-001
+- path: htt/src/common/mes_directional_state.py
+  current_role: ell<=2 directional moment and same-channel anchor normalization
+  target_role: frozen legacy source consumed through an adapter
+  action: NO SEMANTIC WIDENING; add adapter parity tests
+  work_unit: PMI-WU-001
+- path: htt/src/common/orbit_catalogue_v3.py
+  current_role: physical JointAnisotropyState orbit diagnostics
+  target_role: unchanged physical orbit diagnostics
+  action: NO OBSERVABLE INPUTS; observed morphology uses a separate module
+  work_unit: PMI-WU-001
+- path: htt/obsstat/finite_null_family.py
+  current_role: absent
+  target_role: single finite-null family/reducer engine
+  action: CREATE legacy and ECDF reducers with typed tail/family specs
+  work_unit: PMI-WU-002
+- path: htt/obsstat/planck_post275_lane.py
+  current_role: legacy observation-inclusive rank engine
+  target_role: compatibility delegation to finite_null_family LEGACY_ABS_LOO_MEDIAN
+  action: MODIFY without serialized or numeric behavior drift
+  work_unit: PMI-WU-002
+- path: scripts/observed_runs/run_planck_mes_morphology.py
+  current_role: scalar-only historical primary
+  target_role: immutable legacy baseline plus map-free mechanism-audit input
+  action: DO NOT MAKE THE METHODOLOGY SPINE; no output rewrite
+  work_unit: PMI-WU-002
+- path: scripts/observed_runs/run_planck_mes_coordinate_mechanism_audit.py
+  current_role: absent
+  target_role: first objective map-free coordinate sensitivity execution
+  action: CREATE and execute before large-data intake
+  work_unit: PMI-WU-002
+- path: scripts/observed_runs/inspect_planck_mes_extended_data.py
+  current_role: planned in predecessor, not implemented
+  target_role: read-only verified intake reused without redesign
+  action: IMPLEMENT predecessor semantics
+  work_unit: PMI-WU-003
+- path: htt/obsstat/planck_pr3_operator.py
+  current_role: computes retained_alm/retained_coefficients then scalar features
+  target_role: returns the same carrier through the output boundary
+  action: MODIFY additive API only; preserve scalar path
+  work_unit: PMI-WU-004
+- path: scripts/observed_runs/run_planck_pr3.py
+  current_role: V1 package serializes scalar features, discards carrier
+  target_role: writes V1 unchanged plus V2 carrier package
+  action: MODIFY carrier-preserving output only
+  work_unit: PMI-WU-004
+- path: htt/obsstat/planck_irrep_carrier.py
+  current_role: absent
+  target_role: V2 carrier writer/replayer and scalar projection parity
+  action: CREATE
+  work_unit: PMI-WU-004
+- path: scripts/observed_runs/run_planck_mes_smica_cmbonly_999.py
+  current_role: planned scalar-only predecessor lane
+  target_role: carrier-preserving 1000-row robustness lane
+  action: IMPLEMENT only after primary carrier recovery
+  work_unit: PMI-WU-005
+- path: htt/obsstat/lowell_irrep_morphology.py
+  current_role: absent
+  target_role: observable-only amplitude/shape/orbit projections
+  action: CREATE separate from physical orbit_catalogue_v3
+  work_unit: PMI-WU-006
+- path: htt/obsstat/harmonic_template_score.py
+  current_role: absent
+  target_role: leave-one-out covariance-whitened orientation-max finite-null score
+  action: CREATE
+  work_unit: PMI-WU-006
+- path: scripts/observed_runs/run_planck_mes_irrep_injections.py
+  current_role: absent
+  target_role: operator-aware analytic and conditional native-template power execution
+  action: CREATE and execute
+  work_unit: PMI-WU-006
+- path: scripts/observed_runs/run_planck_mes_commander_observation.py
+  current_role: planned descriptive predecessor lane
+  target_role: same-operator observable-irrep descriptive lane, finite_rank=false
+  action: IMPLEMENT after score/power execution
+  work_unit: PMI-WU-007
+- path: scripts/paper/build_planck_mes_first_paper.py
+  current_role: scalar MES-bridge framing
+  target_role: methods-first coordinate sensitivity plus carrier/injection evidence
+  action: MODIFY only from successful replay projections
+  work_unit: PMI-WU-007
+- path: papers/planck_mes_first_observation/main.tex
+  current_role: MES-anchored physical-bridge emphasis
+  target_role: coordinate-sensitivity methods paper with MES case study
+  action: REFRAME; retain historical result as a baseline, not headline physics
+  work_unit: PMI-WU-007
+required_global_scans:
+- id: NO_SCALAR_FABRICATION
+  command: python -m pytest -q tests/obsstat/test_observable_irrep_adapter.py::test_scalar_only_inputs_fail_closed
+- id: NO_PHYSICAL_OBSERVABLE_COERCION
+  command: python -m pytest -q tests/common/test_observable_irrep_state.py::test_observable_state_cannot_construct_or_impersonate_physical_state
+- id: NO_UNTYPED_NEW_PLANCK_PATH
+  command: python scripts/validate_planck_mes_irrep_execution_plan.py --implementation-diff-from 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+- id: NO_LEGACY_RESULT_REWRITE
+  command: python -m pytest -q tests/integration/test_planck_mes_coordinate_mechanism_audit.py::test_legacy_exact_rank_locks_are_unchanged

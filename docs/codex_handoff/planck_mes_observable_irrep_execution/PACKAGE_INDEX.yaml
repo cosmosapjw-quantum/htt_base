@@ -1,0 +1,36 @@
+schema: htt.planck_mes_observable_irrep.package_index.v1
+package_id: PLANCK_MES_OBSERVABLE_IRREP_EXECUTION_20260827
+mode: AUDIT_COMPILED_EXECUTION_PACKAGE_NOT_SCIENCE_RESULT
+files:
+- PACKAGE_INDEX.yaml
+- AUTHORITY_AND_SCOPE.yaml
+- FORMALISM_CONTRACT.yaml
+- MIGRATION_MAP.yaml
+- P0_P1_THREAT_CATALOG.json
+- INVARIANT_TEST_MATRIX.yaml
+- AUDIT_COMPILED_EXEC_PLAN.yaml
+- FRESH_CONTEXT_REVIEW_CONTRACT.yaml
+- FINAL_DIFFERENTIAL_AUDIT_CONTRACT.yaml
+- PROCESS_COST_ASSESSMENT.yaml
+- IMPLEMENTATION_PLAN.md
+- CODEX_HANDOFF.md
+validation_files:
+- scripts/validate_planck_mes_irrep_execution_plan.py
+- tests/contracts/test_planck_mes_irrep_execution_plan.py
+base_authority:
+  repository: cosmosapjw-quantum/htt_base
+  branch: changeset/pr324-mes-methodology-stack-20260826
+  sha: 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+  tree: 47bdbb72aae62ca4280a96897f80028b1b910c20
+planning_predecessor:
+  branch: analysis/planck-mes-extended-data-execution-20260826
+  sha: 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+  tree: 274d74507542cc99bb4ea355705791fa03d15697
+  disposition: SUPERSEDED_BEFORE_SCIENTIFIC_RUNTIME_BY_CARRIER_PRESERVING_PLAN
+planning_branch: analysis/planck-mes-observable-irrep-execution-20260827
+first_enabling_transition: SCALAR_ONLY_ANALYSIS_SURFACE_TO_TYPED_OBSERVABLE_IRREP_SURFACE
+first_objective_transition: UNMEASURED_COORDINATE_MECHANISM_TO_EXECUTED_MAP_FREE_MECHANISM_AUDIT
+first_large_data_transition: SCALAR_ONLY_MAP_PASS_TO_CARRIER_PRESERVING_MAP_PASS
+canonical_dag_changed: false
+science_code_changed_by_this_package: false
+raw_data_committed: false
