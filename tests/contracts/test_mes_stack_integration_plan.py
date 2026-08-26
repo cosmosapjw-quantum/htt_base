@@ -7,6 +7,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 PKG = ROOT / "docs/codex_handoff/mes_stack_integration"
+PLAN_HEAD = "8b6028abcde18c87591789f6ba53e81157fa4eba"
 
 def test_mes_stack_integration_validator_passes() -> None:
     result = subprocess.run(
@@ -19,6 +20,7 @@ def test_mes_stack_integration_validator_passes() -> None:
         "4733a4c6dbc638372dee7f99ac38f39dba56d933",
         "5a3825f903546891fd90e3d708481707d59babf4",
     ]
+    assert payload["planning_snapshot"] == PLAN_HEAD
     assert payload["work_units"] == [f"MSI-WU-{i:03d}" for i in range(9)]
     assert payload["canonical_DAG_changed"] is False
     assert payload["science_code_changed"] is False
