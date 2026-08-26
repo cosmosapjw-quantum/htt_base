@@ -1,5 +1,6 @@
 generated_on: '2026-08-26'
 completed:
+- PR-324
 - PR-323
 - PR-322
 - PR-318
@@ -240,7 +241,6 @@ pending:
 - PR-319
 - PR-320
 - PR-321
-- PR-325
 - PR-326
 - PR-327
 - PR-328
@@ -275,7 +275,7 @@ dormant_external:
 - PR-244
 - PR-245
 - PR-246
-in_progress: PR-324
+in_progress: PR-325
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -963,6 +963,20 @@ execution_lane:
   PR-329: defensible
   PR-330: defensible
 execution_resolutions:
+  PR-324:
+    resolution: COMPLETED_SUCCESS
+    receipt_verdict: COMPLETED_SUCCESS_JOINT_CUTSKY_EXACT_300_REPLAY
+    receipt: docs/PR_DELTAS/pr-315.md
+    success_dependency_satisfied: true
+    resolved_on: '2026-08-26'
+    scientific_status_effect: joint_cutsky_smica_robustness_result_without_mes_or_source_promotion
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: diagnostic_only_observed_robustness
+    transfer_source: Planck_PR3_delivered_products_not_native_Bianchi_transfer
+    observed_data_executed: true
+    generic_control_preserved: true
+    public_use: false
+    public_result_emitted: false
   PR-323:
     resolution: COMPLETED_SUCCESS
     receipt_verdict: COMPLETED_SUCCESS_WITH_TYPED_LOCAL_FORMAL_BLOCKERS
