@@ -1,0 +1,197 @@
+{
+  "failure_modes": [
+    {
+      "consequence": "Data semantics and methodology authority diverge.",
+      "detection": {
+        "executable": "git merge-base --is-ancestor PR412_HEAD HEAD && git merge-base --is-ancestor PR411_HEAD HEAD",
+        "type": "ancestry_assertion"
+      },
+      "id": "MSI-P0-001",
+      "name": "SIBLING_STACK_IMPLEMENTATION",
+      "prevention": "Implementation starts from the accepted integration PR terminal.",
+      "severity": "P0",
+      "trigger": "MES implementation starts from PR-411 or PR-404 without repaired PR-321 ancestry."
+    },
+    {
+      "consequence": "Verified later repairs silently regress.",
+      "detection": {
+        "executable": "scripts/validate_mes_stack_integration_plan.py --json",
+        "type": "allowlist_test"
+      },
+      "id": "MSI-P0-002",
+      "name": "BULK_MERGE_STALE_SCIENCE_BRANCH",
+      "prevention": "Exact source import or bounded reimplementation; no bulk merge for source-only PRs.",
+      "severity": "P0",
+      "trigger": "A diverged PR is merged wholesale and overwrites current code/status semantics."
+    },
+    {
+      "consequence": "The project answers the wrong scientific question.",
+      "detection": {
+        "executable": "PR411 FM-P0-001 and MSI result-schema tests",
+        "type": "claim_contract"
+      },
+      "id": "MSI-P0-003",
+      "name": "GENERIC_LOWELL_REPLACES_MES",
+      "prevention": "PR-314 remains benchmark control; primary result requires active MES state.",
+      "severity": "P0",
+      "trigger": "PR-314 rank is presented as the recovered MES methodology result."
+    },
+    {
+      "consequence": "Executed observed evidence is lost or rewritten post hoc.",
+      "detection": {
+        "executable": "SOURCE_IMPORT_MANIFEST.yaml plus git hash-object",
+        "type": "blob_identity"
+      },
+      "id": "MSI-P0-004",
+      "name": "PR314_EVIDENCE_OVERWRITTEN",
+      "prevention": "Immutable exact import; successor result has a new path and identifier.",
+      "severity": "P0",
+      "trigger": "Imported result/replay/spec/report bytes change or are relabelled."
+    },
+    {
+      "consequence": "Violates O(3) covariance.",
+      "detection": {
+        "executable": "PR411 scalar-only refusal tests and PR321 MES boundary tests",
+        "type": "negative_test"
+      },
+      "id": "MSI-P0-005",
+      "name": "SCALAR_ONLY_DIRECTION_FABRICATION",
+      "prevention": "Require direction-indexed fields or typed physical response.",
+      "severity": "P0",
+      "trigger": "Scalar MES values or HSC C_ell are used to manufacture an axis/vector/STF tensor."
+    },
+    {
+      "consequence": "Nonauthoritative coefficients enter results.",
+      "detection": {
+        "executable": "test_no_legacy_mes_imports",
+        "type": "static_test"
+      },
+      "id": "MSI-P0-006",
+      "name": "LEGACY_MES_REACTIVATION",
+      "prevention": "Only active typed MES authority is permitted.",
+      "severity": "P0",
+      "trigger": "Observed code imports htt/bass/observational/planck_mes_bounds.py."
+    },
+    {
+      "consequence": "Structurally rank-deficient inference is promoted.",
+      "detection": {
+        "executable": "one-shell/proportional-profile abstention tests",
+        "type": "negative_test"
+      },
+      "id": "MSI-P0-007",
+      "name": "SINGLE_SHELL_LOCAL_GLOBAL_IDENTIFICATION",
+      "prevention": "Require full nuisance-projected physical response rank.",
+      "severity": "P0",
+      "trigger": "Planck-only or proportional depth responses are reported as local/global identified."
+    },
+    {
+      "consequence": "Finite calibration loses exchangeability.",
+      "detection": {
+        "executable": "row permutation, observation swap and operator-identity tests",
+        "type": "metamorphic_test"
+      },
+      "id": "MSI-P0-008",
+      "name": "OBSERVATION_NULL_ASYMMETRY",
+      "prevention": "One pure row operator for all 301 rows.",
+      "severity": "P0",
+      "trigger": "Observation and nulls use different cut-sky, anchor or moment code."
+    },
+    {
+      "consequence": "Continuation authority is corrupted.",
+      "detection": {
+        "executable": "strict DAG validator plus exact-prefix comparator",
+        "type": "invariant"
+      },
+      "id": "MSI-P1-001",
+      "name": "DAG_PREFIX_DRIFT",
+      "prevention": "This planning PR changes no DAG; implementation appends after live reread.",
+      "severity": "P1",
+      "trigger": "Integration or implementation rewrites an existing node, edge or resolution."
+    },
+    {
+      "consequence": "The accepted research contract loses byte-level identity.",
+      "detection": {
+        "executable": "SOURCE_IMPORT_MANIFEST.yaml plus git hash-object",
+        "type": "blob_identity"
+      },
+      "id": "MSI-P1-002",
+      "name": "PR411_PACKAGE_DRIFT",
+      "prevention": "Exact import; current-stack changes live in this overlay.",
+      "severity": "P1",
+      "trigger": "The imported methodology package is edited during integration rather than overlaid."
+    },
+    {
+      "consequence": "Known Planck P0/P1 returns.",
+      "detection": {
+        "executable": "exact PR404 plan imports plus PR315 test matrix",
+        "type": "blob_identity_and_focused_tests"
+      },
+      "id": "MSI-P1-003",
+      "name": "PR315_PLAN_DRIFT",
+      "prevention": "Treat imported PR315 plan as controlling source contract.",
+      "severity": "P1",
+      "trigger": "The cut-sky implementation omits or rewrites exact PR-315 obligations."
+    },
+    {
+      "consequence": "Unique code, data or proof evidence can be lost.",
+      "detection": {
+        "executable": "PR_DISPOSITION_LEDGER.yaml validation",
+        "type": "ledger_validation"
+      },
+      "id": "MSI-P1-004",
+      "name": "OPEN_PR_SILENT_DISAPPEARANCE",
+      "prevention": "Every relevant PR has one explicit disposition; closure remains human-authorized.",
+      "severity": "P1",
+      "trigger": "An open or unmerged PR is closed without a typed disposition and evidence check."
+    },
+    {
+      "consequence": "The local/global programme runs on an ineligible product.",
+      "detection": {
+        "executable": "BLOCKED_NO_ELIGIBLE_DIRECTIONAL_LOWZ_LANE",
+        "type": "blocked_gate"
+      },
+      "id": "MSI-P1-005",
+      "name": "LOWZ_LANE_GUESSED",
+      "prevention": "Use a deterministic capability gate; PR-321 HSC SACC is explicitly excluded.",
+      "severity": "P1",
+      "trigger": "A low-z lane is selected because it is available, despite lacking direction, depth, covariance, nulls or physical response."
+    },
+    {
+      "consequence": "Planned work is reported as complete.",
+      "detection": {
+        "executable": "work-unit terminal receipt validator",
+        "type": "receipt_gate"
+      },
+      "id": "MSI-P1-006",
+      "name": "STATUS_PROJECTED_BEFORE_RECEIPT",
+      "prevention": "Research receipt precedes code/status projection.",
+      "severity": "P1",
+      "trigger": "Truth, replay, publication or observed-result status changes before required research/execution receipts."
+    },
+    {
+      "consequence": "Process inflation replaces scientific progress.",
+      "detection": {
+        "executable": "CODEX_HANDOFF forbids another planning successor",
+        "type": "scope_assertion"
+      },
+      "id": "MSI-P1-007",
+      "name": "ANOTHER_PLANNING_LOOP",
+      "prevention": "New findings are absorbed as minimal tests/invariants in existing units.",
+      "severity": "P1",
+      "trigger": "Implementation creates a successor planning package instead of executing the accepted units."
+    },
+    {
+      "consequence": "A green generic CI does not validate integration semantics.",
+      "detection": {
+        "executable": "Repository-integrity MES recovery and stack integration cell",
+        "type": "CI_step"
+      },
+      "id": "MSI-P1-008",
+      "name": "INTEGRATION_CONTRACT_NOT_IN_CI",
+      "prevention": "Extend one existing workflow step; create no new workflow.",
+      "severity": "P1",
+      "trigger": "The exact-source, ancestry and disposition contract is not executed on the pull-request merge ref."
+    }
+  ],
+  "schema": "htt.mes_stack_integration.threat_catalog.v1"
+}

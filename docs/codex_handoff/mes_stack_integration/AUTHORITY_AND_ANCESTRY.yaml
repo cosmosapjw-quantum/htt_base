@@ -1,0 +1,31 @@
+schema: htt.mes_stack_integration.authority_and_ancestry.v1
+branch: analysis/mes-methodology-stack-integration-20260826
+integration_base_merge_sha: 1ace5692bb6778ee8d5b99c112fc84dc2ec8cb72
+merge_parents_ordered:
+- 4733a4c6dbc638372dee7f99ac38f39dba56d933
+- 5a3825f903546891fd90e3d708481707d59babf4
+first_parent:
+  github_pr: 412
+  role: REPAIRED_DATA_AND_CODE_STACK
+  sha: 4733a4c6dbc638372dee7f99ac38f39dba56d933
+  tree: 33672a84a6f94983a32e575edfb9c8ecb3f70613
+second_parent:
+  github_pr: 411
+  role: EXACT_MES_RECOVERY_PACKAGE
+  sha: 5a3825f903546891fd90e3d708481707d59babf4
+  tree: f51852334634405830f9a9cfa399b334f1efcff2
+source_imports:
+- github_pr: 403
+  head: 883a7cf41116e6740b1bac9b76a5e9c6b3fd188e
+  role: IMMUTABLE_EXECUTED_EVIDENCE_ONLY
+- github_pr: 404
+  head: 14bbb5bb264caa62fd47eb7cd7863f0a3367b1ea
+  role: EXACT_PR315_PLAN_ONLY
+DAG:
+  changed_in_this_package: false
+  implementation_rule: LIVE_REREAD_THEN_APPEND_ONLY
+status:
+  changed_in_this_package: false
+science_code:
+  changed_in_this_package: false
+observed_execution: false

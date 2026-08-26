@@ -1,0 +1,28 @@
+schema: htt.mes_stack_integration.fresh_review.v1
+mode: fresh_context_read_only
+inputs:
+- PR412 first-parent SHA
+- PR411 second-parent SHA
+- integration merge SHA
+- final SHA/tree
+- base..final diff
+- SOURCE_IMPORT_MANIFEST.yaml
+- PR_DISPOSITION_LEDGER.yaml
+- AUDIT_COMPILED_EXEC_PLAN.yaml
+- verification logs
+- unresolved blockers
+not_authoritative:
+- implementer reasoning
+- old PR body claims
+first_pass:
+  may_modify_code: false
+  output:
+  - severity
+  - file
+  - line_or_symbol
+  - violated_invariant
+  - reproducer
+  - explanation
+pass_condition:
+  P0: 0
+  P1: 0
