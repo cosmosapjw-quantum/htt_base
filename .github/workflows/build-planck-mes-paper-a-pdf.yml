@@ -1,0 +1,67 @@
+name: Build exact-commit Planck MES Paper A PDF
+
+on:
+  push:
+    branches:
+      - artifact/planck-mes-paper-a-pdf-3cdeaba
+
+permissions:
+  contents: read
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout canonical source commit
+        uses: actions/checkout@v4
+        with:
+          ref: 3cdeaba39e164c911a26c5daa37f0e15b29614d3
+          fetch-depth: 1
+
+      - name: Verify exact source identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "3cdeaba39e164c911a26c5daa37f0e15b29614d3"
+          test "$(git rev-parse HEAD^{tree})" = "47bdbb72aae62ca4280a96897f80028b1b910c20"
+          {
+            echo "source_commit=3cdeaba39e164c911a26c5daa37f0e15b29614d3"
+            echo "source_tree=47bdbb72aae62ca4280a96897f80028b1b910c20"
+            echo "build_scope=latex_packaging_only_no_science_rerun"
+          } > papers/planck_mes_first_observation/BUILD_PROVENANCE.txt
+
+      - name: Install TeX and PDF inspection tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            latexmk texlive-latex-base texlive-latex-extra texlive-fonts-recommended \
+            texlive-bibtex-extra poppler-utils
+
+      - name: Build manuscript PDF
+        working-directory: papers/planck_mes_first_observation
+        shell: bash
+        run: |
+          set -euo pipefail
+          latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex 2>&1 | tee latexmk.log
+          test -s main.pdf
+          pdfinfo main.pdf | tee main.pdfinfo.txt
+          sha256sum main.pdf | tee main.pdf.sha256
+          pages="$(pdfinfo main.pdf | awk '/^Pages:/ {print $2}')"
+          test -n "$pages"
+          printf 'page_count=%s\n' "$pages" >> BUILD_PROVENANCE.txt
+
+      - name: Upload review artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: planck-mes-first-observation-3cdeaba
+          path: |
+            papers/planck_mes_first_observation/main.pdf
+            papers/planck_mes_first_observation/main.pdf.sha256
+            papers/planck_mes_first_observation/main.pdfinfo.txt
+            papers/planck_mes_first_observation/BUILD_PROVENANCE.txt
+            papers/planck_mes_first_observation/latexmk.log
+          if-no-files-found: error
+          retention-days: 30
