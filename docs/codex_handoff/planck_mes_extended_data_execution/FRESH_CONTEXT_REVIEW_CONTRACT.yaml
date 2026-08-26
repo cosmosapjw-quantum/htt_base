@@ -1,0 +1,27 @@
+schema: htt.planck_mes_extended_data.fresh_context_review.v1
+mode: READ_ONLY_FIRST_PASS
+required_inputs:
+- authoritative base SHA and tree
+- final implementation SHA and tree
+- base..final diff
+- docs/codex_handoff/planck_mes_extended_data_execution/AUDIT_COMPILED_EXEC_PLAN.yaml
+- executed focused test logs
+- objective-output terminal/result/replay projections
+- unresolved blockers
+forbidden_inputs:
+- implementer chain-of-thought as authority
+- transcript-only success claims
+finding_schema:
+  severity: P0|P1|P2|P3
+  current_task_blocking: boolean
+  file: repository path
+  line_or_symbol: location
+  violated_invariant: PED-INV-*
+  reproducer: command or minimal evidence
+  explanation: why the defect matters
+pass_condition:
+  P0: 0
+  P1: 0
+repair_policy: If P0/P1 exists, return diagnosis only; implementer applies one targeted repair and re-runs affected checks.
+stopping_rule: No further review without a newly reproduced defect materially affecting the current deliverable.
+pass_transition: Advance to the next ordered work unit, or after PED-WU-004 to external scientific review/submission preparation.
