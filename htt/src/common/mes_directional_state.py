@@ -42,6 +42,12 @@ class DirectionalFieldParity(_StringEnum):
     PSEUDOSCALAR_ODD = "PSEUDOSCALAR_ODD"
 
 
+class DirectionConvention(_StringEnum):
+    """Registered component/transformation convention for this bridge."""
+
+    RIGHT_HANDED_ACTIVE_O3 = "RIGHT_HANDED_ACTIVE_O3"
+
+
 class VectorO3Representation(_StringEnum):
     POLAR = "POLAR_VECTOR"
     AXIAL = "AXIAL_VECTOR"
@@ -66,9 +72,12 @@ class PhysicalStressReadiness(_StringEnum):
 _SHA256_RE = re.compile(r"sha256:[0-9a-f]{64}\Z")
 _ZERO_SHAPE_TOL = 1.0e-15
 _REALIZABILITY_TOL = 1.0e-10
+_BANDLIMIT_COMPONENT_TOL = 1.0e-10
+MAX_DIRECTIONAL_DESIGN_CONDITION = 1.0e8
 _IDENTITY_ROLE = "REPRODUCIBILITY_IDENTITY_NOT_AUTHORITY"
 _DIRECTIONAL_ROLE = "DIRECTION_INDEXED_SCALAR_MOMENT_ESTIMATE"
 _OBSERVER_ROLE = "OBSERVER_SPACE_MES_INDEX_NOT_PHYSICAL_STRESS"
+_DIRECTIONAL_SEMANTICS_STATUS = "DECLARED_UNVERIFIED_BANDLIMIT_AND_PARITY"
 _SCALAR_REFUSAL = (
     "BLOCKED_SCALAR_TO_TENSOR_FABRICATION: BLOCKED_DIRECTIONAL_SUPPORT"
 )
@@ -149,6 +158,82 @@ def _representations(
     raise DirectionalBridgeError("field_parity must be a DirectionalFieldParity")
 
 
+def _validate_declared_bandlimit(
+    *,
+    monopole: float,
+    dipole: Sequence[float],
+    stf2: Sequence[Sequence[float]],
+    field_bandlimit: int,
+) -> None:
+    """Reject component-level contradictions without claiming leakage proof."""
+
+    vector_norm = float(np.linalg.norm(np.asarray(dipole, dtype=float)))
+    tensor_norm = float(np.linalg.norm(np.asarray(stf2, dtype=float)))
+    scale = max(1.0, abs(monopole), vector_norm, tensor_norm)
+    tolerance = _BANDLIMIT_COMPONENT_TOL * scale
+    if field_bandlimit == 0 and (vector_norm > tolerance or tensor_norm > tolerance):
+        raise DirectionalBridgeError(
+            "BLOCKED_DIRECTIONAL_LEAKAGE: declared ell=0 contradicts recovered moments"
+        )
+    if field_bandlimit == 1 and tensor_norm > tolerance:
+        raise DirectionalBridgeError(
+            "BLOCKED_DIRECTIONAL_LEAKAGE: declared ell<=1 contradicts recovered STF2"
+        )
+
+
+def _directional_estimator_identity(
+    *,
+    kind: DirectionalEstimatorKind,
+    support_identity: str,
+    weight_identity: str,
+    mask_identity: str,
+    field_identity: str,
+    transfer_identity: str,
+    covariance_identity: str,
+    direction_frame: str,
+    direction_convention: DirectionConvention,
+    parity: DirectionalFieldParity,
+    field_quantity: str,
+    field_units: str,
+    field_bandlimit: int,
+    support_size: int,
+    design_rank: int,
+    design_condition: float,
+    max_design_condition: float,
+    residual: float,
+) -> str:
+    normalization = (
+        "V=3/(4pi) integral(q n); T=15/(8pi) integral(q STF(nn))"
+        if kind is DirectionalEstimatorKind.FULL_SKY_QUADRATURE
+        else "weighted joint fit: monopole + polar/axial dipole + five STF2 coordinates"
+    )
+    return _canonical_identity(
+        {
+            "kind": kind.value,
+            "support_identity": support_identity,
+            "weight_identity": weight_identity,
+            "mask_identity": mask_identity,
+            "field_identity": field_identity,
+            "transfer_identity": transfer_identity,
+            "covariance_identity": covariance_identity,
+            "direction_frame": direction_frame,
+            "direction_convention": direction_convention.value,
+            "parity": parity.value,
+            "directional_semantics_status": _DIRECTIONAL_SEMANTICS_STATUS,
+            "field_quantity": field_quantity,
+            "field_units": field_units,
+            "field_bandlimit": field_bandlimit,
+            "support_size": support_size,
+            "design_rank": design_rank,
+            "design_condition_float_hex": design_condition.hex(),
+            "max_design_condition_float_hex": max_design_condition.hex(),
+            "weighted_residual_float_hex": residual.hex(),
+            "normalization": normalization,
+        },
+        role="mes_directional_estimator",
+    )
+
+
 @dataclass(frozen=True)
 class DirectionalMomentEstimate:
     """Bound vector/STF moments of one genuinely direction-indexed field."""
@@ -161,7 +246,7 @@ class DirectionalMomentEstimate:
     tensor_representation: TensorO3Representation
     estimator_kind: DirectionalEstimatorKind
     direction_frame: str
-    direction_convention: str
+    direction_convention: DirectionConvention
     field_quantity: str
     field_units: str
     field_bandlimit: int
@@ -174,10 +259,13 @@ class DirectionalMomentEstimate:
     estimator_identity: str
     support_size: int
     design_rank: int
+    design_condition_number: float
+    max_design_condition_number: float
     weighted_residual_norm: float
     identity_role: str = _IDENTITY_ROLE
     methodology_role: str = _DIRECTIONAL_ROLE
     realizability_status: str = "SIGNED_FIELD_NOT_A_PROBABILITY_MEASURE"
+    directional_semantics_status: str = _DIRECTIONAL_SEMANTICS_STATUS
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "monopole", _finite_real(self.monopole, "monopole"))
@@ -197,8 +285,12 @@ class DirectionalMomentEstimate:
             raise DirectionalBridgeError(
                 "estimator_kind must be a DirectionalEstimatorKind"
             )
-        for name in ("direction_frame", "direction_convention", "field_quantity"):
+        for name in ("direction_frame", "field_quantity"):
             _required_text(getattr(self, name), name)
+        if self.direction_convention is not DirectionConvention.RIGHT_HANDED_ACTIVE_O3:
+            raise DirectionalBridgeError(
+                "direction_convention must be RIGHT_HANDED_ACTIVE_O3"
+            )
         if self.field_units != "dimensionless":
             raise DirectionalBridgeError(
                 "field_units must be dimensionless for an MES anchor coordinate"
@@ -211,6 +303,12 @@ class DirectionalMomentEstimate:
             raise DirectionalBridgeError(
                 "BLOCKED_DIRECTIONAL_LEAKAGE: field_bandlimit must be in [0, 2]"
             )
+        _validate_declared_bandlimit(
+            monopole=self.monopole,
+            dipole=self.dipole,
+            stf2=self.stf2,
+            field_bandlimit=self.field_bandlimit,
+        )
         for name in (
             "support_identity",
             "weight_identity",
@@ -229,6 +327,22 @@ class DirectionalMomentEstimate:
             raise DirectionalBridgeError("design_rank must be an integer in [1, 9]")
         if not 1 <= self.design_rank <= 9:
             raise DirectionalBridgeError("design_rank must be an integer in [1, 9]")
+        design_condition = _finite_real(
+            self.design_condition_number, "design_condition_number"
+        )
+        maximum_condition = _finite_real(
+            self.max_design_condition_number, "max_design_condition_number"
+        )
+        if (
+            design_condition < 1.0
+            or maximum_condition != MAX_DIRECTIONAL_DESIGN_CONDITION
+            or design_condition > maximum_condition
+        ):
+            raise DirectionalBridgeError(
+                "BLOCKED_DIRECTIONAL_SUPPORT: directional design is ill-conditioned"
+            )
+        object.__setattr__(self, "design_condition_number", design_condition)
+        object.__setattr__(self, "max_design_condition_number", maximum_condition)
         residual = _finite_real(
             self.weighted_residual_norm, "weighted_residual_norm"
         )
@@ -241,6 +355,34 @@ class DirectionalMomentEstimate:
             raise DirectionalBridgeError(
                 "directional field cannot claim a probability-measure certificate"
             )
+        if self.directional_semantics_status != _DIRECTIONAL_SEMANTICS_STATUS:
+            raise DirectionalBridgeError(
+                "directional bandlimit/parity semantics cannot be self-promoted"
+            )
+        expected_identity = _directional_estimator_identity(
+            kind=self.estimator_kind,
+            support_identity=self.support_identity,
+            weight_identity=self.weight_identity,
+            mask_identity=self.mask_identity,
+            field_identity=self.field_identity,
+            transfer_identity=self.transfer_identity,
+            covariance_identity=self.covariance_identity,
+            direction_frame=self.direction_frame,
+            direction_convention=self.direction_convention,
+            parity=self.field_parity,
+            field_quantity=self.field_quantity,
+            field_units=self.field_units,
+            field_bandlimit=self.field_bandlimit,
+            support_size=self.support_size,
+            design_rank=self.design_rank,
+            design_condition=design_condition,
+            max_design_condition=maximum_condition,
+            residual=residual,
+        )
+        if self.estimator_identity != expected_identity:
+            raise DirectionalBridgeError(
+                "estimator_identity does not bind estimator content"
+            )
 
 
 def make_directional_moment_estimate(
@@ -251,7 +393,7 @@ def make_directional_moment_estimate(
     field_parity: DirectionalFieldParity,
     estimator_kind: DirectionalEstimatorKind,
     direction_frame: str,
-    direction_convention: str,
+    direction_convention: DirectionConvention,
     field_quantity: str,
     field_units: str,
     field_bandlimit: int,
@@ -261,14 +403,39 @@ def make_directional_moment_estimate(
     transfer_identity: str,
     field_identity: str,
     covariance_identity: str,
-    estimator_identity: str,
     support_size: int,
     design_rank: int,
+    design_condition_number: float,
+    max_design_condition_number: float,
     weighted_residual_norm: float,
 ) -> DirectionalMomentEstimate:
     """Build a validated estimate; this function accepts no scalar-only path."""
 
+    if direction_convention is not DirectionConvention.RIGHT_HANDED_ACTIVE_O3:
+        raise DirectionalBridgeError(
+            "direction_convention must be RIGHT_HANDED_ACTIVE_O3"
+        )
     vector_representation, tensor_representation = _representations(field_parity)
+    estimator_identity = _directional_estimator_identity(
+        kind=estimator_kind,
+        support_identity=support_identity,
+        weight_identity=weight_identity,
+        mask_identity=mask_identity,
+        field_identity=field_identity,
+        transfer_identity=transfer_identity,
+        covariance_identity=covariance_identity,
+        direction_frame=direction_frame,
+        direction_convention=direction_convention,
+        parity=field_parity,
+        field_quantity=field_quantity,
+        field_units=field_units,
+        field_bandlimit=field_bandlimit,
+        support_size=support_size,
+        design_rank=design_rank,
+        design_condition=float(design_condition_number),
+        max_design_condition=float(max_design_condition_number),
+        residual=float(weighted_residual_norm),
+    )
     return DirectionalMomentEstimate(
         monopole=monopole,
         dipole=_vector3(dipole, "dipole"),
@@ -291,6 +458,8 @@ def make_directional_moment_estimate(
         estimator_identity=estimator_identity,
         support_size=support_size,
         design_rank=design_rank,
+        design_condition_number=design_condition_number,
+        max_design_condition_number=max_design_condition_number,
         weighted_residual_norm=weighted_residual_norm,
     )
 
@@ -414,9 +583,14 @@ class MesDirectionalState:
     field_identity: str
     covariance_identity: str
     transfer_identity: str
+    direction_frame: str
+    direction_convention: DirectionConvention
     field_quantity: str
     field_units: str
     field_bandlimit: int
+    design_condition_number: float
+    max_design_condition_number: float
+    directional_semantics_status: str
     anchor_id: str
     anchor_value: float
     anchor_channel_key: tuple[str, ...]
@@ -452,6 +626,11 @@ class MesDirectionalState:
         transfer_identity = _content_identity(
             self.transfer_identity, "transfer_identity"
         )
+        direction_frame = _required_text(self.direction_frame, "direction_frame")
+        if self.direction_convention is not DirectionConvention.RIGHT_HANDED_ACTIVE_O3:
+            raise DirectionalBridgeError(
+                "direction_convention must be RIGHT_HANDED_ACTIVE_O3"
+            )
         field_quantity = _required_text(self.field_quantity, "field_quantity")
         if self.field_units != "dimensionless":
             raise DirectionalBridgeError(
@@ -464,6 +643,24 @@ class MesDirectionalState:
         ):
             raise DirectionalBridgeError(
                 "BLOCKED_DIRECTIONAL_LEAKAGE: field_bandlimit must be in [0, 2]"
+            )
+        design_condition = _finite_real(
+            self.design_condition_number, "design_condition_number"
+        )
+        maximum_condition = _finite_real(
+            self.max_design_condition_number, "max_design_condition_number"
+        )
+        if (
+            design_condition < 1.0
+            or maximum_condition != MAX_DIRECTIONAL_DESIGN_CONDITION
+            or design_condition > maximum_condition
+        ):
+            raise DirectionalBridgeError(
+                "BLOCKED_DIRECTIONAL_SUPPORT: directional design is ill-conditioned"
+            )
+        if self.directional_semantics_status != _DIRECTIONAL_SEMANTICS_STATUS:
+            raise DirectionalBridgeError(
+                "directional bandlimit/parity semantics cannot be self-promoted"
             )
         anchor_id = _required_text(self.anchor_id, "anchor_id")
         anchor_value = _finite_real(self.anchor_value, "anchor_value")
@@ -587,9 +784,14 @@ class MesDirectionalState:
             field_identity=field_identity,
             covariance_identity=covariance_identity,
             transfer_identity=transfer_identity,
+            direction_frame=direction_frame,
+            direction_convention=self.direction_convention,
             field_quantity=field_quantity,
             field_units=self.field_units,
             field_bandlimit=self.field_bandlimit,
+            design_condition_number=design_condition,
+            max_design_condition_number=maximum_condition,
+            directional_semantics_status=self.directional_semantics_status,
             anchor_id=anchor_id,
             anchor_value=anchor_value,
             anchor_channel_key=channel_key,
@@ -605,7 +807,10 @@ class MesDirectionalState:
         object.__setattr__(self, "field_identity", field_identity)
         object.__setattr__(self, "covariance_identity", covariance_identity)
         object.__setattr__(self, "transfer_identity", transfer_identity)
+        object.__setattr__(self, "direction_frame", direction_frame)
         object.__setattr__(self, "field_quantity", field_quantity)
+        object.__setattr__(self, "design_condition_number", design_condition)
+        object.__setattr__(self, "max_design_condition_number", maximum_condition)
         object.__setattr__(self, "anchor_id", anchor_id)
         object.__setattr__(self, "anchor_value", anchor_value)
         object.__setattr__(self, "anchor_channel_key", channel_key)
@@ -635,9 +840,14 @@ class MesDirectionalState:
             "field_identity": self.field_identity,
             "covariance_identity": self.covariance_identity,
             "transfer_identity": self.transfer_identity,
+            "direction_frame": self.direction_frame,
+            "direction_convention": self.direction_convention.value,
             "field_quantity": self.field_quantity,
             "field_units": self.field_units,
             "field_bandlimit": self.field_bandlimit,
+            "design_condition_number": self.design_condition_number,
+            "max_design_condition_number": self.max_design_condition_number,
+            "directional_semantics_status": self.directional_semantics_status,
             "anchor_id": self.anchor_id,
             "anchor_value": self.anchor_value,
             "anchor_channel_key": list(self.anchor_channel_key),
@@ -691,9 +901,14 @@ def _directional_state_identity(
     field_identity: str,
     covariance_identity: str,
     transfer_identity: str,
+    direction_frame: str,
+    direction_convention: DirectionConvention,
     field_quantity: str,
     field_units: str,
     field_bandlimit: int,
+    design_condition_number: float,
+    max_design_condition_number: float,
+    directional_semantics_status: str,
     anchor_id: str,
     anchor_value: float,
     anchor_channel_key: tuple[str, ...],
@@ -708,9 +923,16 @@ def _directional_state_identity(
             "field_identity": field_identity,
             "covariance_identity": covariance_identity,
             "transfer_identity": transfer_identity,
+            "direction_frame": direction_frame,
+            "direction_convention": direction_convention.value,
             "field_quantity": field_quantity,
             "field_units": field_units,
             "field_bandlimit": field_bandlimit,
+            "design_condition_number_float_hex": design_condition_number.hex(),
+            "max_design_condition_number_float_hex": (
+                max_design_condition_number.hex()
+            ),
+            "directional_semantics_status": directional_semantics_status,
             "anchor_id": anchor_id,
             "anchor_value_float_hex": anchor_value.hex(),
             "anchor_channel_key": anchor_channel_key,
@@ -754,9 +976,18 @@ def build_mes_directional_state(
         field_identity=directional_moments.field_identity,
         covariance_identity=directional_moments.covariance_identity,
         transfer_identity=directional_moments.transfer_identity,
+        direction_frame=directional_moments.direction_frame,
+        direction_convention=directional_moments.direction_convention,
         field_quantity=directional_moments.field_quantity,
         field_units=directional_moments.field_units,
         field_bandlimit=directional_moments.field_bandlimit,
+        design_condition_number=directional_moments.design_condition_number,
+        max_design_condition_number=(
+            directional_moments.max_design_condition_number
+        ),
+        directional_semantics_status=(
+            directional_moments.directional_semantics_status
+        ),
         anchor_id=anchor.anchor_id,
         anchor_value=anchor.value,
         anchor_channel_key=anchor.channel_key,
@@ -771,9 +1002,18 @@ def build_mes_directional_state(
         field_identity=directional_moments.field_identity,
         covariance_identity=directional_moments.covariance_identity,
         transfer_identity=directional_moments.transfer_identity,
+        direction_frame=directional_moments.direction_frame,
+        direction_convention=directional_moments.direction_convention,
         field_quantity=directional_moments.field_quantity,
         field_units=directional_moments.field_units,
         field_bandlimit=directional_moments.field_bandlimit,
+        design_condition_number=directional_moments.design_condition_number,
+        max_design_condition_number=(
+            directional_moments.max_design_condition_number
+        ),
+        directional_semantics_status=(
+            directional_moments.directional_semantics_status
+        ),
         anchor_id=anchor.anchor_id,
         anchor_value=anchor.value,
         anchor_channel_key=anchor.channel_key,
@@ -823,8 +1063,10 @@ __all__ = [
     "DirectionalBridgeError",
     "DirectionalEstimatorKind",
     "DirectionalFieldParity",
+    "DirectionConvention",
     "DirectionalMomentEstimate",
     "MesDirectionalState",
+    "MAX_DIRECTIONAL_DESIGN_CONDITION",
     "PhysicalStressReadiness",
     "SphericalSecondMomentCertificate",
     "TensorO3Representation",

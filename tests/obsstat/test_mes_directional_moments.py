@@ -59,7 +59,7 @@ def _kwargs(common, directions, weights, values, *, parity=None):
         "field_units": "dimensionless",
         "field_bandlimit": 2,
         "direction_frame": "registered observer Cartesian frame",
-        "direction_convention": "RIGHT_HANDED_ACTIVE_O3",
+        "direction_convention": common.DirectionConvention.RIGHT_HANDED_ACTIVE_O3,
         "mask_identity": "sha256:" + "1" * 64,
         "transfer_identity": "sha256:" + "2" * 64,
         "field_identity": "sha256:" + "3" * 64,
@@ -82,6 +82,10 @@ def test_registered_full_sky_coefficients_recover_analytic_dipole_and_stf() -> N
     assert result.monopole == pytest.approx(0.7, abs=2e-15)
     assert result.vector_representation is common.VectorO3Representation.POLAR
     assert result.tensor_representation is common.TensorO3Representation.EVEN_STF2
+    assert result.directional_semantics_status == (
+        "DECLARED_UNVERIFIED_BANDLIMIT_AND_PARITY"
+    )
+    assert result.design_condition_number <= result.max_design_condition_number
 
     changed = weights.copy()
     changed[0] *= 1.01
@@ -107,6 +111,7 @@ def test_masked_or_discrete_joint_fit_recovers_one_bound_design() -> None:
         common.DirectionalEstimatorKind.WEIGHTED_JOINT_HARMONIC_FIT
     )
     assert result.design_rank == 9
+    assert result.design_condition_number <= result.max_design_condition_number
     assert result.weighted_residual_norm < 1e-12
     assert result.dipole == pytest.approx(vector, abs=2e-14)
     assert np.asarray(result.stf2) == pytest.approx(stf, abs=2e-14)
@@ -208,4 +213,75 @@ def test_directional_estimators_refuse_uncontrolled_higher_l_leakage() -> None:
         obsstat.estimate_joint_fit_directional_moments(
             **kwargs,
             support_mask=np.ones(len(values), dtype=bool),
+        )
+
+
+def test_declared_bandlimit_contradictions_fail_and_alias_risk_stays_unverified() -> None:
+    common, obsstat = _modules()
+    directions, weights = _lebedev_14()
+    values, _, _ = _field(directions)
+
+    for bandlimit in (0, 1):
+        kwargs = _kwargs(common, directions, weights, values)
+        kwargs["field_bandlimit"] = bandlimit
+        with pytest.raises(common.DirectionalBridgeError, match="DIRECTIONAL_LEAKAGE"):
+            obsstat.estimate_full_sky_directional_moments(**kwargs)
+
+    z = directions[:, 2]
+    ell4_values = (35.0 * z**4 - 30.0 * z**2 + 3.0) / 8.0
+    aliased = obsstat.estimate_full_sky_directional_moments(
+        **_kwargs(common, directions, weights, ell4_values)
+    )
+    assert np.linalg.norm(aliased.stf2) > 0.5
+    assert aliased.directional_semantics_status == (
+        "DECLARED_UNVERIFIED_BANDLIMIT_AND_PARITY"
+    )
+
+
+def test_frame_convention_and_declared_parity_are_identity_bound() -> None:
+    common, obsstat = _modules()
+    directions, weights = _lebedev_14()
+    values, _, _ = _field(directions)
+    baseline = obsstat.estimate_full_sky_directional_moments(
+        **_kwargs(common, directions, weights, values)
+    )
+
+    changed_kwargs = _kwargs(common, directions, weights, values)
+    changed_kwargs["direction_frame"] = "different registered Cartesian frame"
+    changed = obsstat.estimate_full_sky_directional_moments(**changed_kwargs)
+    assert changed.estimator_identity != baseline.estimator_identity
+
+    odd = obsstat.estimate_full_sky_directional_moments(
+        **_kwargs(
+            common,
+            directions,
+            weights,
+            values,
+            parity=common.DirectionalFieldParity.PSEUDOSCALAR_ODD,
+        )
+    )
+    assert odd.estimator_identity != baseline.estimator_identity
+    assert odd.directional_semantics_status == (
+        "DECLARED_UNVERIFIED_BANDLIMIT_AND_PARITY"
+    )
+
+    bad_kwargs = _kwargs(common, directions, weights, values)
+    bad_kwargs["direction_convention"] = "LEFT_HANDED_PASSIVE"
+    with pytest.raises(common.DirectionalBridgeError, match="direction_convention"):
+        obsstat.estimate_full_sky_directional_moments(**bad_kwargs)
+
+
+def test_near_singular_rank_nine_joint_design_is_refused() -> None:
+    common, obsstat = _modules()
+    rng = np.random.default_rng(326)
+    xy = rng.normal(scale=1.0e-3, size=(20, 2))
+    directions = np.column_stack((xy, np.ones(20)))
+    directions /= np.linalg.norm(directions, axis=1)[:, None]
+    values = np.full(20, 0.7) + rng.normal(scale=1.0e-10, size=20)
+    weights = np.ones(20)
+
+    with pytest.raises(common.DirectionalBridgeError, match="ill-conditioned"):
+        obsstat.estimate_joint_fit_directional_moments(
+            **_kwargs(common, directions, weights, values),
+            support_mask=np.ones(20, dtype=bool),
         )

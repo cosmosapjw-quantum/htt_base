@@ -18,6 +18,8 @@ from typing import Sequence
 import numpy as np
 
 from common.mes_directional_state import (
+    MAX_DIRECTIONAL_DESIGN_CONDITION,
+    DirectionConvention,
     DirectionalBridgeError,
     DirectionalEstimatorKind,
     DirectionalFieldParity,
@@ -158,48 +160,21 @@ def _fit_design(directions: np.ndarray) -> np.ndarray:
     )
 
 
-def _estimate_identity(
-    *,
-    kind: DirectionalEstimatorKind,
-    support_identity: str,
-    weight_identity: str,
-    mask_identity: str,
-    field_identity: str,
-    transfer_identity: str,
-    covariance_identity: str,
-    parity: DirectionalFieldParity,
-    field_quantity: str,
-    field_units: str,
-    field_bandlimit: int,
-    support_size: int,
-    design_rank: int,
-    residual: float,
-) -> str:
-    normalization = (
-        "V=3/(4pi) integral(q n); T=15/(8pi) integral(q STF(nn))"
-        if kind is DirectionalEstimatorKind.FULL_SKY_QUADRATURE
-        else "weighted joint fit: monopole + polar/axial dipole + five STF2 coordinates"
-    )
-    return _canonical_identity(
-        {
-            "kind": kind.value,
-            "support_identity": support_identity,
-            "weight_identity": weight_identity,
-            "mask_identity": mask_identity,
-            "field_identity": field_identity,
-            "transfer_identity": transfer_identity,
-            "covariance_identity": covariance_identity,
-            "parity": parity.value,
-            "field_quantity": field_quantity,
-            "field_units": field_units,
-            "field_bandlimit": field_bandlimit,
-            "support_size": support_size,
-            "design_rank": design_rank,
-            "weighted_residual_float_hex": residual.hex(),
-            "normalization": normalization,
-        },
-        role="mes_directional_estimator",
-    )
+def _scale_aware_design_condition(weighted_design: np.ndarray) -> float:
+    """Condition the column-normalized design so units/scales cannot hide rank."""
+
+    column_norms = np.linalg.norm(weighted_design, axis=0)
+    if not np.all(np.isfinite(column_norms)) or np.any(column_norms == 0.0):
+        return math.inf
+    normalized = weighted_design / column_norms
+    singular_values = np.linalg.svd(normalized, compute_uv=False)
+    if (
+        singular_values.shape != (9,)
+        or not np.all(np.isfinite(singular_values))
+        or singular_values[-1] <= 0.0
+    ):
+        return math.inf
+    return float(singular_values[0] / singular_values[-1])
 
 
 def _make_estimate(
@@ -216,15 +191,20 @@ def _make_estimate(
     field_bandlimit: int,
     estimator_kind: DirectionalEstimatorKind,
     direction_frame: str,
-    direction_convention: str,
+    direction_convention: DirectionConvention,
     mask_identity: str,
     transfer_identity: str,
     field_identity: str,
     covariance_identity: str,
     support_size: int,
     design_rank: int,
+    design_condition: float,
     residual: float,
 ) -> DirectionalMomentEstimate:
+    if direction_convention is not DirectionConvention.RIGHT_HANDED_ACTIVE_O3:
+        raise DirectionalBridgeError(
+            "direction_convention must be RIGHT_HANDED_ACTIVE_O3"
+        )
     support_identity = _numeric_identity(directions, role="direction_indexed_support")
     weight_identity = _numeric_identity(weights, role="directional_estimator_weights")
     field_content_identity = _numeric_identity(
@@ -233,22 +213,6 @@ def _make_estimate(
     bound_field_identity = _canonical_identity(
         {"declared_field_identity": field_identity, "content": field_content_identity},
         role="bound_direction_indexed_field",
-    )
-    estimator_identity = _estimate_identity(
-        kind=estimator_kind,
-        support_identity=support_identity,
-        weight_identity=weight_identity,
-        mask_identity=mask_identity,
-        field_identity=bound_field_identity,
-        transfer_identity=transfer_identity,
-        covariance_identity=covariance_identity,
-        parity=field_parity,
-        field_quantity=field_quantity,
-        field_units=field_units,
-        field_bandlimit=field_bandlimit,
-        support_size=support_size,
-        design_rank=design_rank,
-        residual=residual,
     )
     return make_directional_moment_estimate(
         monopole=monopole,
@@ -267,9 +231,10 @@ def _make_estimate(
         transfer_identity=transfer_identity,
         field_identity=bound_field_identity,
         covariance_identity=covariance_identity,
-        estimator_identity=estimator_identity,
         support_size=support_size,
         design_rank=design_rank,
+        design_condition_number=design_condition,
+        max_design_condition_number=MAX_DIRECTIONAL_DESIGN_CONDITION,
         weighted_residual_norm=residual,
     )
 
@@ -284,7 +249,7 @@ def estimate_full_sky_directional_moments(
     field_units: str,
     field_bandlimit: int,
     direction_frame: str,
-    direction_convention: str,
+    direction_convention: DirectionConvention,
     mask_identity: str,
     transfer_identity: str,
     field_identity: str,
@@ -308,6 +273,12 @@ def estimate_full_sky_directional_moments(
     )
     stf2 = 15.0 / (8.0 * math.pi) * _stf_projection(raw_second)
     design = _fit_design(direction_array)
+    weighted_design = np.sqrt(weight_array)[:, None] * design
+    design_condition = _scale_aware_design_condition(weighted_design)
+    if design_condition > MAX_DIRECTIONAL_DESIGN_CONDITION:
+        raise DirectionalBridgeError(
+            "BLOCKED_DIRECTIONAL_SUPPORT: full-sky design is ill-conditioned"
+        )
     reconstructed = design @ np.asarray(
         (
             monopole,
@@ -342,6 +313,7 @@ def estimate_full_sky_directional_moments(
         covariance_identity=covariance_identity,
         support_size=len(direction_array),
         design_rank=int(np.linalg.matrix_rank(design)),
+        design_condition=design_condition,
         residual=residual,
     )
 
@@ -357,7 +329,7 @@ def estimate_joint_fit_directional_moments(
     field_units: str,
     field_bandlimit: int,
     direction_frame: str,
-    direction_convention: str,
+    direction_convention: DirectionConvention,
     mask_identity: str,
     transfer_identity: str,
     field_identity: str,
@@ -382,6 +354,11 @@ def estimate_joint_fit_directional_moments(
     if len(selected_values) < 9 or rank != 9:
         raise DirectionalBridgeError(
             "BLOCKED_DIRECTIONAL_SUPPORT: weighted joint design rank is below 9"
+        )
+    design_condition = _scale_aware_design_condition(weighted_design)
+    if design_condition > MAX_DIRECTIONAL_DESIGN_CONDITION:
+        raise DirectionalBridgeError(
+            "BLOCKED_DIRECTIONAL_SUPPORT: weighted joint design is ill-conditioned"
         )
     coefficients, _, fitted_rank, _ = np.linalg.lstsq(
         weighted_design, weighted_values, rcond=None
@@ -425,6 +402,7 @@ def estimate_joint_fit_directional_moments(
         covariance_identity=covariance_identity,
         support_size=len(selected_values),
         design_rank=rank,
+        design_condition=design_condition,
         residual=residual,
     )
 

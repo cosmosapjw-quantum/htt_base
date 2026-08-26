@@ -49,7 +49,7 @@ def _estimate(
         field_parity=module.DirectionalFieldParity.SCALAR_EVEN,
         estimator_kind=module.DirectionalEstimatorKind.FULL_SKY_QUADRATURE,
         direction_frame="registered observer Cartesian frame",
-        direction_convention="RIGHT_HANDED_ACTIVE_O3",
+        direction_convention=module.DirectionConvention.RIGHT_HANDED_ACTIVE_O3,
         field_quantity="dimensionless directional morphology fixture",
         field_units="dimensionless",
         field_bandlimit=2,
@@ -59,9 +59,10 @@ def _estimate(
         transfer_identity="sha256:" + "4" * 64,
         field_identity=field_identity,
         covariance_identity="sha256:" + "6" * 64,
-        estimator_identity="sha256:" + "7" * 64,
         support_size=14,
         design_rank=9,
+        design_condition_number=2.0,
+        max_design_condition_number=module.MAX_DIRECTIONAL_DESIGN_CONDITION,
         weighted_residual_norm=0.0,
     )
 
@@ -106,6 +107,21 @@ def test_active_anchor_rescales_amplitude_but_not_vector_or_stf_shape() -> None:
     assert first.observer_space_only is True
     assert first.physical_response_bound is False
     assert first.independent_information_gain is False
+    assert first.direction_frame == "registered observer Cartesian frame"
+    assert first.direction_convention is (
+        module.DirectionConvention.RIGHT_HANDED_ACTIVE_O3
+    )
+    assert first.directional_semantics_status == (
+        "DECLARED_UNVERIFIED_BANDLIMIT_AND_PARITY"
+    )
+    assert first.design_condition_number == pytest.approx(2.0)
+    assert first.max_design_condition_number == (
+        module.MAX_DIRECTIONAL_DESIGN_CONDITION
+    )
+    assert first.as_payload()["direction_frame"] == first.direction_frame
+    assert first.as_payload()["direction_convention"] == (
+        module.DirectionConvention.RIGHT_HANDED_ACTIVE_O3.value
+    )
     assert first.vector_representation is module.VectorO3Representation.POLAR
     assert first.tensor_representation is module.TensorO3Representation.EVEN_STF2
     assert first.dipole_shape == pytest.approx(second.dipole_shape, abs=1e-15)
@@ -160,6 +176,8 @@ def test_moment_type_rejects_non_stf_and_wrong_content_identities() -> None:
         ({"family_identification_status": "IDENTIFIED"}, "claim boundary"),
         ({"anchor_conditioning": "FORGED"}, "AnchorConditioning"),
         ({"mes_dipole": (9.0, 8.0, 7.0)}, "anchor scaling"),
+        ({"direction_frame": "different observer frame"}, "state_identity"),
+        ({"design_condition_number": 3.0}, "state_identity"),
         ({"state_identity": "sha256:" + "9" * 64}, "state_identity"),
     ),
 )
@@ -207,3 +225,11 @@ def test_directional_field_cannot_self_award_parity_or_realizability_status() ->
         replace(estimate, field_units="microK_CMB")
     with pytest.raises(module.DirectionalBridgeError, match="DIRECTIONAL_LEAKAGE"):
         replace(estimate, field_bandlimit=3)
+    with pytest.raises(module.DirectionalBridgeError, match="direction_convention"):
+        replace(estimate, direction_convention="LEFT_HANDED_PASSIVE")
+    with pytest.raises(module.DirectionalBridgeError, match="semantics"):
+        replace(estimate, directional_semantics_status="VERIFIED")
+    with pytest.raises(module.DirectionalBridgeError, match="estimator_identity"):
+        replace(estimate, direction_frame="different observer frame")
+    with pytest.raises(module.DirectionalBridgeError, match="estimator_identity"):
+        replace(estimate, design_condition_number=3.0)
