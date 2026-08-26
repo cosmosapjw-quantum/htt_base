@@ -217,3 +217,72 @@ fail-closed to the project build tree, refuses symlinks, and does not clean the
 frontend-owned temporary staging used by editable wheels. Scanner exemptions,
 package-data exclusions for `.py` modules, and historical-manifest rewrites are
 not accepted repairs.
+
+## PR-327 pre-submission decision for external re-audit (2026-08-26)
+
+### Verdict
+
+PASS for external re-audit handoff only.
+
+### Minimal publishable claim
+
+No public scientific claim is authorized by this handoff. The minimal
+externally reviewable statement is that one preregistered scalar MES morphology
+operator, applied exchangeably to one SMICA observation and exactly 300 paired
+null rows, yields a conditional finite rank `98/301`; the generic 12-feature
+control remains separately `133/301`.
+
+### Strengths
+
+Exact row identities, operator identity, anchors, diagnostic covariance,
+finite ranks, mutation refusal, and map-free replay are portable. A blind
+review and independent numerical oracle found P0=0/P1=0 on the reviewed
+candidate.
+
+### Fatal blockers
+
+None for pushing a review branch. Directional support, a physical local/global
+response, native transfer, and a morphology atlas are absent and remain fatal
+to any stronger scientific claim.
+
+### Major concerns
+
+The result is conditional on one SMICA observation and 300 paired FFP10 nulls;
+it is not an unconditional p-value. Planck alone is one shell and cannot
+separate local boost from global tilt. `LOCAL-XACT-001` remains
+`BLOCKED_FRAME_TRANSFORM_DERIVATION`.
+
+### Minor concerns
+
+The standardized diagnostic covariance condition number is
+`1417.0996104456196`; that covariance is not used by the rank scan or a
+likelihood. The full local harness run is ignored, so a tracked compact receipt
+exports its hashes and explicitly requires external rerun.
+
+### Novelty and scope
+
+The bounded contribution is the recovered methodology's first exact portable
+MES-anchored Planck finite-null result, not source attribution, geometry, or
+family identification.
+
+### Required validation
+
+The external auditor must rerun the 89-test focused matrix, claim scan, DAG and
+mirror checks, and portable artifact replay from the pushed exact branch tip.
+
+### Downclaims required
+
+Retain `diagnostic_only` / C2, `BLOCKED_DIRECTIONAL_SUPPORT`,
+`SINGLE_SHELL_LOCAL_GLOBAL_NONIDENTIFIED`, `BLOCKED_PRE_NATIVE_ATLAS`, and
+`public_use=false`.
+
+### Stronger claims allowed
+
+None from PR-327. Any stronger local/global, native, geometry, family,
+posterior, evidence, or publication statement requires its own downstream
+inputs and gates.
+
+### Merge/release decision
+
+Push the review branch for external re-audit. Do not create, close, or merge a
+PR automatically, and do not release a scientific result.

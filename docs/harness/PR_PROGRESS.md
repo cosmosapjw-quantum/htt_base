@@ -212,3 +212,23 @@ execution, capability promotion, or scientific release.
   `BLOCKED_NO_ELIGIBLE_DIRECTIONAL_LOWZ_LANE` if no six-criterion lane passes.
 - Next: execute PR-327, then PR-328, PR-329, and PR-330 in canonical order. No
   planning successor or DAG-edge change is authorized.
+
+## External re-audit handoff — completed through PR-327 (2026-08-26)
+
+- Completed: 206/273 = 75.46%; dependency-weighted 80.57%; critical path
+  75/81 = 92.59%. No checkpoint is due before 210 completed cards.
+- PR-327 candidate `57c74157...`, tree `9ab94444...`, exports the exact
+  observed-plus-300-null MES morphology package and primary finite rank
+  `98/301`; the frozen generic control remains separately `133/301`.
+- One fresh blind-results review passed with P0=0/P1=0. Strict result SHA-256:
+  `5ad5047b...`; its independent oracle reproduced all ranks and covariance
+  diagnostics.
+- Final focused verification: 89 directly affected tests and 62 status/claim
+  contract tests passed; DAG, mirrors, claim scan, portable receipt assertions,
+  and diff check passed.
+- Claim-tier drift: none. Direction remains blocked, Planck-only local/global
+  remains nonidentified, family identification remains pre-native blocked,
+  and public use remains false.
+- Per user instruction, PR-328 through PR-330 remain pending. There is no
+  foreground card until the external re-audit is accepted; no new plan, PR
+  close, merge, or scientific promotion occurred.

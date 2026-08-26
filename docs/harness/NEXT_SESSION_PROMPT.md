@@ -1,52 +1,58 @@
-# Next Session Prompt
+# Next Session Prompt — external re-audit handoff
 
-Resume the recovered MES methodology implementation in the isolated worktree
-`/home/cosmosapjw/worktrees/htt-mes-integration-20260826` on branch
-`changeset/pr324-mes-methodology-stack-20260826`.
+Audit the existing candidate first; do not recreate it and do not start a new
+planning successor.
 
-## Current position
+## Exact checkout
 
-- Accepted start: `8b6028abcde18c87591789f6ba53e81157fa4eba`.
-- PR-326 repaired content head: `e938756120bb084e28a678bb0fcd733a4a6158e5`.
-- Canonical state after the pending closeout commit: 205/273 complete,
-  PR-327 in progress, PR-151 background-only.
-- PR-322..PR-326 are complete. Execute PR-327, then PR-328, PR-329, and
-  PR-330; do not create another planning successor.
+- Repository: `cosmosapjw-quantum/htt_base`.
+- Branch: `changeset/pr324-mes-methodology-stack-20260826`.
+- Accepted integration start: `8b6028abcde18c87591789f6ba53e81157fa4eba`.
+- Reviewed PR-327 candidate:
+  `57c74157344c19b217b61c445f4d25c5f646cd18`.
+- Reviewed tree: `9ab944440a57c66bb9cb5a56d331c757bbb483ec`.
+- The branch tip also contains the status/handoff closeout for external review;
+  resolve that exact tip with `git rev-parse HEAD HEAD^{tree}` after checkout.
 
-## Execute PR-327
+## Audit boundary
 
-1. Preserve the exact PR-315 observation plus 300 paired SMICA null rows and
-   the PR-314 five-file control evidence.
-2. Extend `scripts/observed_runs/run_planck_mes_morphology.py` without breaking
-   the PR-325 row-anchor entrypoint.
-3. Apply one preregistered row operator to every row: sigma anchor, omega
-   anchor, and the eight dimensionless morphology invariants. Do not use raw
-   `cl_l2/cl_l3` as duplicate amplitudes and do not fabricate directions.
-4. Use the existing observation-inclusive row-equivariant max scan. Emit one
-   portable 301-row package, pooled diagnostic covariance, exact finite rank,
-   replay receipt, and mutation/equivariance checks.
-5. Preserve generic control `133/301`; label the MES result separately. Keep
-   `directional_moment_state=BLOCKED_DIRECTIONAL_SUPPORT` and
-   Planck-only local/global status nonidentified.
-6. Run targeted tests, negative/metamorphic tests, directly affected
-   integration, and focused CI only. Obtain at most one fresh review and repair
-   only reproduced material defects.
+- PR-322 through PR-327 are complete. PR-328 through PR-330 are pending and
+  must not be inferred as executed.
+- Primary PR-327 MES result: `98/301` (`14/43`).
+- Frozen generic PR-314 benchmark control: `133/301` (`19/43`), not MES.
+- Preserve the five exact PR-314 Git blobs and the SMICA-only exact-300 fast
+  path. Commander and 999 CMB-only rows are not prerequisites.
+- Directional state must remain `BLOCKED_DIRECTIONAL_SUPPORT`; Planck-only
+  local/global state must remain `SINGLE_SHELL_LOCAL_GLOBAL_NONIDENTIFIED`.
+- No legacy `planck_mes_bounds.py`, scalar-to-direction construction,
+  source-only branch merge, PR close/merge, security expansion, native result,
+  or family-identification claim is allowed.
 
-## PR-327 non-negotiable tests
+## Minimum replay
 
-- exact 301-row source/operator/covariance identities;
-- row permutation and observation-index swap equivariance;
-- observation-only/missing-anchor refusal;
-- directional support stays blocked;
-- PR-314 five Git blobs and `133/301` result remain unchanged;
-- package mutation and replay mismatch fail closed;
-- no import of legacy `planck_mes_bounds.py`.
+```bash
+PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
+  tests/integration/test_planck_mes_morphology.py \
+  tests/obsstat/test_mes_row_anchor.py \
+  tests/integration/test_planck_pr3_current_stack.py \
+  tests/integration/test_planck_pr3_operator.py \
+  tests/contracts/test_authorized_observational_program.py
+python scripts/check_claim_language.py --strict-missing docs/PR_DELTAS/pr-327.md
+python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+git diff --check
+```
 
-## Hard stops
+The strict independent review result is
+`.agent-harness/runs/pr327-final-review-20260826/results/PR327-FINAL-REVIEW.json`
+(SHA-256
+`5ad5047b97fad48293aa9fcfece8ac63b8b3b0a32f784c90ee11b7f807c1e190`).
+It reports `P0=0`, `P1=0` for the reviewed scientific candidate.
+The tracked cross-clone summary is
+`docs/generated/planck_mes_morphology/external_reaudit_handoff.json`; external
+reviewers must rerun the commands rather than treating that summary as an
+acceptance vote.
 
-- Any scalar-to-vector/axis/STF fabrication.
-- Commander or 999 CMB-only rows made prerequisites for Paper A.
-- Any Planck-only local/global identification or pre-native family claim.
-- Any source-only/superseded bulk merge, automatic PR close, security scope,
-  full unrelated suite, or expectation/reference-output change without
-  authority.
+Do not resume PR-328 until the human accepts the external re-audit. If resumed,
+use the existing PR-328 card and preserve the current
+`BLOCKED_FRAME_TRANSFORM_DERIVATION` receipt rather than guessing a physical
+response.

@@ -3092,3 +3092,18 @@ HTT inference, or MIO certificate was produced.
 
 No full repository suite was run because no distinct failure class required it.
 No reference output or scientific expectation was changed to obtain a pass.
+
+## PR-327 exact Planck MES and external re-audit handoff (2026-08-26)
+
+| Command or evidence | Result | Notes |
+| --- | --- | --- |
+| initial targeted implementation | PASS AFTER EXPECTED ARTIFACT GENERATION | The first run passed 7/8; only the intentionally not-yet-generated committed package was absent. After generating the portable package, 8/8 passed. No failing expectation was changed. |
+| sealed blind-results review | PASS | Candidate `57c74157...`, tree `9ab94444...`; P0=0/P1=0. Strict result SHA-256 `5ad5047b...`; independent oracle reproduced `98/301`, ten local numerators, covariance rank 10/10, and condition `1417.0996104456196`. |
+| final directly affected matrix | PASS | `89 passed`; PR-327, row-anchor, current Planck, operator, and authorized-observational contracts. |
+| final status/claim contracts | PASS | `62 passed`; MES DAG, status snapshot/counts, claim language, and PR-delta contracts. |
+| strict DAG and mirrors | PASS | 273 cards valid; canonical and machine-readable status files are identical; 206 complete and no foreground card. |
+| claim and portable receipt audit | PASS | No forbidden language; the tracked external re-audit receipt matches package/result/projection/operator identities and preserves `98/301` versus `133/301` separation and all typed blockers. |
+| six-view pre-submission audit | PASS FOR EXTERNAL RE-AUDIT ONLY | Relativity/frame, statistics, numerical stability, software/reproducibility, claim hygiene, and pre-native family gates support branch push only; merge and scientific/public release remain unauthorized. |
+
+No full repository suite was run because no distinct failure class required it.
+PR-328 through PR-330 were not executed. No source PR was closed or merged.
