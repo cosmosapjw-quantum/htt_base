@@ -224,6 +224,50 @@ def _artifact_metadata(*, observed: bool) -> dict[str, object]:
     return metadata
 
 
+def _pr315_claim_metadata(
+    *, artifact_mode: str, generating_procedure: str, generating_command: str
+) -> dict[str, object]:
+    """Return the explicit downstream claim-lane metadata for PR-315."""
+
+    return {
+        "owner": "OBSSTAT",
+        "scope": "Planck PR3 SMICA ell=2..5 joint cut-sky robustness diagnostic",
+        "artifact_mode": artifact_mode,
+        "claim_tier": "diagnostic_only",
+        "transfer_source": (
+            "Planck PR3 delivered SMICA beam/pixel products; no native Bianchi transfer"
+        ),
+        "sky_support_status": (
+            "GALACTIC_SMICA_CUTSKY_COMMON_TEMPERATURE_MASK_NSIDE16"
+        ),
+        "null_mock_status": (
+            "EXACT_300_ORDERED_FFP10_SMICA_CMB_PLUS_NOISE_PAIRS"
+        ),
+        "covariance_status": (
+            "EMPIRICAL_FULL_RANK_12X12_FROM_EXACT_PRIMARY_NULL"
+        ),
+        "generating_procedure": generating_procedure,
+        "generating_command": generating_command,
+        "allowed_use": [
+            "operator-order robustness comparison",
+            "matched finite-null diagnostic calibration",
+            "map-free feature-level replay",
+        ],
+        "caveats": [
+            "single SMICA shell only; Commander robustness not evaluated",
+            "finite ranks are conditional on the exact 300 paired null rows",
+            "Planck alone cannot identify local boost versus global tilt",
+            "this generic feature control is not an MES result",
+            "native-solver and Bianchi-family identification remain blocked",
+        ],
+        "registered_claim_provenance": {
+            "claim_id": "C-PR135-FINITE-NULL-RANK",
+            "status": "CONDITIONAL_MECHANICS_ONLY",
+            "claim_promotion": False,
+        },
+    }
+
+
 def _now() -> int:
     return time.perf_counter_ns()
 
@@ -1341,6 +1385,16 @@ def write_pr315_feature_package(
     )
     metadata = {
         "format": "PLANCK_PR3_SMICA_JOINT_CUTSKY_FEATURE_PACKAGE_V1",
+        **_pr315_claim_metadata(
+            artifact_mode="claim_bearing_frozen_feature_replay",
+            generating_procedure=(
+                "scripts.observed_runs.run_planck_pr3.write_pr315_feature_package"
+            ),
+            generating_command=(
+                "python scripts/observed_runs/run_planck_pr3.py "
+                "--export-pr315-portable [content-bound arguments]"
+            ),
+        ),
         "package_filename": package_path.name,
         "package_byte_size": package_path.stat().st_size,
         "package_sha256": _sha256_file(package_path),
@@ -1350,7 +1404,6 @@ def write_pr315_feature_package(
         "null_ordered_row_ids_sha256": SMICA_EXISTING_INVENTORY_ID,
         "branch_tail_registry": registry,
         "scientific_projection_sha256": projection_sha256,
-        "claim_tier": "diagnostic_only",
         "global_claim_boundary": GLOBAL_CLAIM_BOUNDARY,
         "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
     }
@@ -1362,7 +1415,10 @@ def write_pr315_feature_package(
 
 
 def replay_pr315_feature_package(
-    *, package_path: Path, metadata_path: Path
+    *,
+    package_path: Path,
+    metadata_path: Path,
+    require_claim_metadata: bool = True,
 ) -> dict[str, object]:
     """Recompute the PR-315 scientific projection without reopening maps."""
 
@@ -1375,6 +1431,21 @@ def replay_pr315_feature_package(
         or metadata.get("package_sha256") != _sha256_file(package_path)
     ):
         raise PlanckWorkerError("PR-315 feature package hash or identity drifted")
+    expected_claim_metadata = _pr315_claim_metadata(
+        artifact_mode="claim_bearing_frozen_feature_replay",
+        generating_procedure=(
+            "scripts.observed_runs.run_planck_pr3.write_pr315_feature_package"
+        ),
+        generating_command=(
+            "python scripts/observed_runs/run_planck_pr3.py "
+            "--export-pr315-portable [content-bound arguments]"
+        ),
+    )
+    if require_claim_metadata and any(
+        metadata.get(key) != value
+        for key, value in expected_claim_metadata.items()
+    ):
+        raise PlanckWorkerError("PR-315 feature claim metadata drifted")
     registry = metadata.get("branch_tail_registry")
     if not isinstance(registry, Mapping):
         raise PlanckWorkerError("PR-315 branch/tail registry is missing")
@@ -1882,6 +1953,16 @@ def compare_pr314_pr315_results(
         )
     return {
         "format": "PLANCK_PR314_PR315_SCIENTIFIC_COMPARISON_V1",
+        **_pr315_claim_metadata(
+            artifact_mode="claim_bearing_frozen_operator_comparison",
+            generating_procedure=(
+                "scripts.observed_runs.run_planck_pr3.compare_pr314_pr315_results"
+            ),
+            generating_command=(
+                "python scripts/observed_runs/run_planck_pr3.py "
+                "--run-pr315-joint-cutsky [content-bound arguments]"
+            ),
+        ),
         "branch_tail_registry": pr315_branch_tail_registry(),
         "benchmark_result_sha256": PR314_FROZEN_RESULT_SHA256,
         "benchmark_family_rank": _rank_over_exact_pool(
@@ -1897,7 +1978,6 @@ def compare_pr314_pr315_results(
         ),
         "generic_control_preserved": True,
         "MES_result": False,
-        "claim_tier": "diagnostic_only",
         "global_claim_boundary": GLOBAL_CLAIM_BOUNDARY,
         "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
     }
@@ -2078,6 +2158,17 @@ def run_pr315_joint_cutsky_attended(
         _write_json(output_dir / "pr314_pr315_comparison.json", comparison)
         result = {
             "format": "PLANCK_PR3_SMICA_JOINT_CUTSKY_RESULT_V1",
+            **_pr315_claim_metadata(
+                artifact_mode="claim_bearing_frozen_exact_300_result",
+                generating_procedure=(
+                    "scripts.observed_runs.run_planck_pr3."
+                    "run_pr315_joint_cutsky_attended"
+                ),
+                generating_command=(
+                    "python scripts/observed_runs/run_planck_pr3.py "
+                    "--run-pr315-joint-cutsky [content-bound arguments]"
+                ),
+            ),
             **diagnostic,
             "pipeline_scope": "SMICA_ONLY_PR315_JOINT_CUTSKY",
             "estimator_id": PR315_JOINT_CUTSKY_ESTIMATOR_ID,
@@ -2118,7 +2209,6 @@ def run_pr315_joint_cutsky_attended(
             "peak_rss_kib": int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss),
             "observed_statistic_seen": True,
             "observed_science_executed": True,
-            "claim_tier": "diagnostic_only",
             "forbidden_claims": [
                 "MES result",
                 "Commander robustness",
@@ -2184,7 +2274,9 @@ def export_pr315_portable_evidence(
     source_package = source_output_dir / "pr315_joint_cutsky_features.npz"
     source_metadata = source_output_dir / "pr315_joint_cutsky_features.json"
     source_replay = replay_pr315_feature_package(
-        package_path=source_package, metadata_path=source_metadata
+        package_path=source_package,
+        metadata_path=source_metadata,
+        require_claim_metadata=False,
     )
     try:
         with np.load(source_package, allow_pickle=False) as bundle:
@@ -2222,7 +2314,33 @@ def export_pr315_portable_evidence(
         != source_replay["scientific_projection_sha256"]
     ):
         raise PlanckWorkerError("portable PR-315 export changed scientific content")
+    comparison = dict(comparison)
+    comparison.update(
+        _pr315_claim_metadata(
+            artifact_mode="claim_bearing_frozen_operator_comparison",
+            generating_procedure=(
+                "scripts.observed_runs.run_planck_pr3.compare_pr314_pr315_results"
+            ),
+            generating_command=(
+                "python scripts/observed_runs/run_planck_pr3.py "
+                "--run-pr315-joint-cutsky [content-bound arguments]"
+            ),
+        )
+    )
     portable_result = dict(source_result)
+    portable_result.update(
+        _pr315_claim_metadata(
+            artifact_mode="claim_bearing_frozen_exact_300_result",
+            generating_procedure=(
+                "scripts.observed_runs.run_planck_pr3."
+                "run_pr315_joint_cutsky_attended"
+            ),
+            generating_command=(
+                "python scripts/observed_runs/run_planck_pr3.py "
+                "--run-pr315-joint-cutsky [content-bound arguments]"
+            ),
+        )
+    )
     portable_result["feature_package"] = package_receipt
     portable_result["portable_replay_scientific_projection_sha256"] = (
         target_replay["scientific_projection_sha256"]

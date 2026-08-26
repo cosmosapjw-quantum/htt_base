@@ -106,6 +106,9 @@ jobs:
             tests/integration/test_planck_pr3_admission_preparation.py \
             tests/integration/test_planck_pr3_current_stack.py \
             tests/integration/test_planck_pr3_operator.py
+          python scripts/check_claim_language.py --strict-missing \
+            docs/PR_DELTAS/pr-315.md \
+            docs/research_program/post_pr275/pr315_planck_smica_rerun_report.md
       - name: Run PR-311 DESI successor-formalism contracts
         run: |
           env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \

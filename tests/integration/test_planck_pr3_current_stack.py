@@ -99,6 +99,26 @@ def test_portable_feature_package_recomputes_exact_result(tmp_path: Path) -> Non
     assert replay["local_feature_p"] == result["local_feature_p"]
     assert replay["scientific_projection_sha256"].startswith("sha256:")
 
+    metadata_payload = json.loads(metadata.read_text(encoding="ascii"))
+    metadata_payload.pop("owner")
+    metadata.write_text(
+        json.dumps(metadata_payload, sort_keys=True, separators=(",", ":")) + "\n",
+        encoding="ascii",
+    )
+    with pytest.raises(worker.PlanckWorkerError, match="claim metadata"):
+        worker.replay_pr315_feature_package(
+            package_path=package,
+            metadata_path=metadata,
+        )
+    worker.write_pr315_feature_package(
+        package_path=package,
+        metadata_path=metadata,
+        observed_features=observed,
+        null_features=nulls,
+        row_ids=worker.SMICA_EXISTING_ROW_IDS,
+        operator_identity=worker.joint_cutsky_operator_identity(_context()),
+    )
+
     with np.load(package, allow_pickle=False) as bundle:
         rows = {key: np.asarray(bundle[key]).copy() for key in bundle.files}
     rows["null_features"][9, 4] += 0.25
@@ -167,8 +187,31 @@ def test_committed_pr315_feature_replay_is_map_free_and_exact() -> None:
         package_path=package, metadata_path=metadata
     )
     result = json.loads(result_path.read_text(encoding="ascii"))
+    feature_metadata = json.loads(metadata.read_text(encoding="ascii"))
+    required_claim_fields = {
+        "owner",
+        "scope",
+        "claim_tier",
+        "transfer_source",
+        "sky_support_status",
+        "null_mock_status",
+        "covariance_status",
+        "generating_procedure",
+        "generating_command",
+        "allowed_use",
+        "caveats",
+        "registered_claim_provenance",
+    }
 
     assert replay["raw_maps_reopened"] is False
+    assert required_claim_fields <= result.keys()
+    assert required_claim_fields <= feature_metadata.keys()
+    assert required_claim_fields <= result["old_new_comparison"].keys()
+    assert result["registered_claim_provenance"] == {
+        "claim_id": "C-PR135-FINITE-NULL-RANK",
+        "status": "CONDITIONAL_MECHANICS_ONLY",
+        "claim_promotion": False,
+    }
     assert replay["scientific_projection_sha256"] == (
         result["portable_replay_scientific_projection_sha256"]
     )
