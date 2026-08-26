@@ -31,6 +31,18 @@ jobs:
             echo "build_scope=latex_packaging_only_no_science_rerun"
           } > papers/planck_mes_first_observation/BUILD_PROVENANCE.txt
 
+      - name: Export exact source snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: planck-mes-paper-source-3cdeaba
+          path: |
+            scripts/paper/build_planck_mes_first_paper.py
+            tests/paper/test_planck_mes_first_paper.py
+            papers/planck_mes_first_observation/main.tex
+            papers/planck_mes_first_observation/references.bib
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Install TeX and PDF inspection tools
         shell: bash
         run: |
