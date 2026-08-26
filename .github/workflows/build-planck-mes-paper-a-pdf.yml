@@ -38,8 +38,14 @@ jobs:
           path: |
             scripts/paper/build_planck_mes_first_paper.py
             tests/paper/test_planck_mes_first_paper.py
+            scripts/validate_mes_stack_integration_plan.py
+            tests/contracts/test_mes_stack_integration_plan.py
             papers/planck_mes_first_observation/main.tex
             papers/planck_mes_first_observation/references.bib
+            docs/generated/planck_mes_first_paper/figure_local_rank_profile.pdf
+            docs/generated/planck_mes_first_paper/figure_family_rank_comparison.pdf
+            docs/generated/planck_mes_first_paper/figure_global_null_scores.pdf
+            docs/generated/planck_mes_first_paper/figure_anchor_dependence.pdf
           if-no-files-found: error
           retention-days: 30
 
