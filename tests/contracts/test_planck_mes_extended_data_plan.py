@@ -52,6 +52,18 @@ def test_current_package_passes() -> None:
     assert payload["route_count"] == 13
 
 
+def test_repository_workflow_runs_focused_package_contract() -> None:
+    workflow = (
+        ROOT / ".github/workflows/repository-integrity.yml"
+    ).read_text(encoding="utf-8")
+    assert "Run Planck MES extended-data planning contracts" in workflow
+    assert "python scripts/validate_planck_mes_extended_data_plan.py" in workflow
+    assert (
+        "python -m pytest -q tests/contracts/"
+        "test_planck_mes_extended_data_plan.py"
+    ) in workflow
+
+
 def test_missing_smica_cmbonly_route_fails(package_copy: Path) -> None:
     path = package_copy / "DATA_ROUTE_MATRIX.yaml"
     payload = _load_yaml(path)
