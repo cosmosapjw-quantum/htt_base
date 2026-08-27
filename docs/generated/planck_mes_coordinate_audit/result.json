@@ -1,0 +1,239 @@
+{
+  "allowed_use": [
+    "coordinate sensitivity",
+    "finite-pool reducer comparison"
+  ],
+  "artifact_mode": "executed_observed_diagnostic",
+  "claim_tier": "methods_diagnostic",
+  "content_id": "sha256:616e686bbc37c70024e02d46e4b88507389d577a3aa867fb3c4ed9a615712f0f",
+  "contrasts": {
+    "LEGACY_ABSOLUTE_MEDIAN_V1": {
+      "interaction": -1,
+      "mix_linear": -11,
+      "mix_squared": -12,
+      "square_with_mix": 0,
+      "square_without_mix": 1
+    },
+    "LOO_ECDF_MIDRANK_V1": {
+      "interaction": 0,
+      "mix_linear": -5,
+      "mix_squared": -5,
+      "square_with_mix": 0,
+      "square_without_mix": 0
+    }
+  },
+  "covariance_status": "not used by rank scans",
+  "epsilon1_grid": {
+    "maximum": 1e-05,
+    "minimum": 0.0,
+    "points": 101
+  },
+  "factorial_cells": {
+    "LEGACY_ABSOLUTE_MEDIAN_V1": {
+      "CARRIER_ONLY": {
+        "global_rank": "14/43",
+        "global_rank_numerator": 98,
+        "local_rank_numerators": [
+          46,
+          40,
+          95,
+          182,
+          35,
+          177,
+          16,
+          155,
+          174,
+          135
+        ],
+        "rank_denominator": 301
+      },
+      "EPS_LINEAR": {
+        "global_rank": "109/301",
+        "global_rank_numerator": 109,
+        "local_rank_numerators": [
+          40,
+          283,
+          95,
+          182,
+          35,
+          177,
+          16,
+          155,
+          174,
+          135
+        ],
+        "rank_denominator": 301
+      },
+      "MES_SQUARED": {
+        "global_rank": "14/43",
+        "global_rank_numerator": 98,
+        "local_rank_numerators": [
+          74,
+          74,
+          95,
+          182,
+          35,
+          177,
+          16,
+          155,
+          174,
+          135
+        ],
+        "rank_denominator": 301
+      },
+      "SQUARE_ONLY": {
+        "global_rank": "110/301",
+        "global_rank_numerator": 110,
+        "local_rank_numerators": [
+          74,
+          283,
+          95,
+          182,
+          35,
+          177,
+          16,
+          155,
+          174,
+          135
+        ],
+        "rank_denominator": 301
+      }
+    },
+    "LOO_ECDF_MIDRANK_V1": {
+      "CARRIER_ONLY": {
+        "global_rank": "148/301",
+        "global_rank_numerator": 148,
+        "local_rank_numerators": [
+          25,
+          24,
+          30,
+          158,
+          26,
+          158,
+          32,
+          164,
+          166,
+          106
+        ],
+        "rank_denominator": 301
+      },
+      "EPS_LINEAR": {
+        "global_rank": "153/301",
+        "global_rank_numerator": 153,
+        "local_rank_numerators": [
+          24,
+          282,
+          30,
+          158,
+          26,
+          158,
+          32,
+          164,
+          166,
+          106
+        ],
+        "rank_denominator": 301
+      },
+      "MES_SQUARED": {
+        "global_rank": "148/301",
+        "global_rank_numerator": 148,
+        "local_rank_numerators": [
+          25,
+          24,
+          30,
+          158,
+          26,
+          158,
+          32,
+          164,
+          166,
+          106
+        ],
+        "rank_denominator": 301
+      },
+      "SQUARE_ONLY": {
+        "global_rank": "153/301",
+        "global_rank_numerator": 153,
+        "local_rank_numerators": [
+          24,
+          282,
+          30,
+          158,
+          26,
+          158,
+          32,
+          164,
+          166,
+          106
+        ],
+        "rank_denominator": 301
+      }
+    }
+  },
+  "forbidden_use": [
+    "physical shear or vorticity",
+    "local/global identification",
+    "Bianchi family identification",
+    "independent information gain"
+  ],
+  "format": "PLANCK_MES_COORDINATE_MECHANISM_AUDIT_V1",
+  "frozen_baseline": {
+    "MES_SQUARED_legacy_rank": "98/301",
+    "committed_rank": {
+      "denominator": 301,
+      "exceedances_including_observation": 98,
+      "fraction": "98/301",
+      "reduced_fraction": "14/43"
+    }
+  },
+  "frozen_result_sha256": "569c1c3edaa621695fb8a385cb1c8dee3b8bff4f4c1844b8596a7f1ddf1f0b2c",
+  "independent_information_gain": false,
+  "null_status": "exact ordered 300-row FFP10 CMB+noise conditional pool",
+  "owner": "OBSSTAT",
+  "raw_maps_reopened": false,
+  "row_count": 301,
+  "scope": "map-free exact 301-row scalar coordinate/reducer mechanism audit",
+  "selection_policy": "cells reducers tails and epsilon grid frozen before observed-row scoring",
+  "source_feature_order": [
+    "cl_l2",
+    "cl_l3",
+    "cl_l4",
+    "cl_l5",
+    "parity_even_over_odd_l2_l5",
+    "power_tensor_gap_l2",
+    "power_tensor_gap_l3",
+    "multipole_l2_absdot",
+    "multipole_l3_absdot_0",
+    "multipole_l3_absdot_1",
+    "multipole_l3_absdot_2",
+    "multipole_plane_alignment_max_l2_l3"
+  ],
+  "source_npz_sha256": "b262425eb4f3a879513c02644bcbdd3ab313e487d101f6a29cb85284c30f845b",
+  "tail_registries": {
+    "LEGACY_ALL_TWO_SIDED_V1": [
+      "two-sided",
+      "two-sided",
+      "two-sided",
+      "two-sided",
+      "two-sided",
+      "two-sided",
+      "two-sided",
+      "two-sided",
+      "two-sided",
+      "two-sided"
+    ],
+    "REGISTERED_PHYSICS_ORIENTED_SCALAR_V1": [
+      "upper",
+      "upper",
+      "two-sided",
+      "upper",
+      "upper",
+      "two-sided",
+      "two-sided",
+      "two-sided",
+      "two-sided",
+      "upper"
+    ]
+  },
+  "transfer_source": "none; committed Planck feature pool"
+}
