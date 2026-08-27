@@ -6,6 +6,7 @@ import hashlib
 import importlib
 import json
 from pathlib import Path
+import subprocess
 import sys
 
 import pytest
@@ -311,3 +312,32 @@ def test_wu001_terminal_records_enabling_output_and_exact_transition() -> None:
         "RAW_REDUCED_10": 110,
     }
     assert terminal["rank_denominator"] == 301
+
+
+def test_wu002_terminal_binds_objective_implementation_and_outputs() -> None:
+    terminal_path = (
+        ROOT
+        / "docs"
+        / "generated"
+        / "planck_mes_irrep_formalism"
+        / "wu002_terminal.json"
+    )
+    terminal = json.loads(terminal_path.read_text(encoding="utf-8"))
+    assert terminal["work_unit"] == "PMG-WU-002"
+    assert terminal["state"] == "SUCCEEDED"
+    assert terminal["base_git_head"] == "b91aec71bf5664ae1ca668fd13942401c1adff71"
+    assert terminal["claim_promotion"] is False
+    assert terminal["science_execution_performed"] is False
+    assert terminal["raw_data_read_or_mutated"] is False
+    assert terminal["next_executable_action"] == "PMG-WU-003"
+    bound_tree = subprocess.run(
+        ["git", "rev-parse", f"{terminal['final_git_head']}^{{tree}}"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    assert bound_tree == terminal["final_git_tree"]
+    for relative_path, expected in terminal["objective_output_sha256"].items():
+        observed = hashlib.sha256((ROOT / relative_path).read_bytes()).hexdigest()
+        assert observed == expected
