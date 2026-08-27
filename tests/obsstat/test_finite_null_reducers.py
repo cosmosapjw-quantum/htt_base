@@ -42,3 +42,29 @@ def test_reducers_refuse_bad_tail_and_never_return_zero() -> None:
         scan = reducer(rows, ("two-sided",) * 3)
         assert scan.global_p >= Fraction(1, 4)
         assert all(value >= Fraction(1, 4) for value in scan.local_p)
+
+
+def _exact_two_sided_oracle(values: np.ndarray) -> tuple[Fraction, ...]:
+    n_rows = values.size
+    denominator = n_rows - 1
+    scores = []
+    for row, value in enumerate(values):
+        others = np.delete(values, row)
+        twice_midrank = 2 * int(np.count_nonzero(others < value)) + int(
+            np.count_nonzero(others == value)
+        )
+        scores.append(abs(twice_midrank - denominator))
+    return tuple(
+        Fraction(sum(candidate >= score for candidate in scores), n_rows)
+        for score in scores
+    )
+
+
+@pytest.mark.parametrize(
+    "values",
+    (np.arange(301.0), np.repeat(np.arange(43.0), 7)),
+)
+def test_ecdf_two_sided_matches_exact_integer_oracle(values: np.ndarray) -> None:
+    scan = loo_ecdf_midrank_scan(values[:, None], ("two-sided",))
+    expected = _exact_two_sided_oracle(values)
+    assert tuple(row[0] for row in scan.local_p_all_rows) == expected

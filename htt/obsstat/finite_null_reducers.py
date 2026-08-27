@@ -66,18 +66,21 @@ def loo_ecdf_midrank_scan(
     registry = tuple(str(tail).lower() for tail in tails)
     if len(registry) != n_columns or any(tail not in TAILS for tail in registry):
         raise PlanckLaneContractError("one registered tail is required per coordinate")
-    scores = np.empty_like(matrix)
+    # All rows share the same LOO denominator.  Retain the transformed
+    # midrank numerator as an integer so mathematically tied two-sided
+    # scores cannot be split by binary floating-point rounding.
+    scores = np.empty(matrix.shape, dtype=np.int64)
     denominator = n_rows - 1
     for row in range(n_rows):
         others = np.delete(matrix, row, axis=0)
         less = np.count_nonzero(others < matrix[row], axis=0)
         equal = np.count_nonzero(others == matrix[row], axis=0)
-        u = (less + 0.5 * equal) / denominator
+        twice_midrank = 2 * less + equal
         for column, tail in enumerate(registry):
             scores[row, column] = {
-                "two-sided": 2.0 * abs(float(u[column]) - 0.5),
-                "upper": float(u[column]),
-                "lower": 1.0 - float(u[column]),
+                "two-sided": abs(int(twice_midrank[column]) - denominator),
+                "upper": int(twice_midrank[column]),
+                "lower": 2 * denominator - int(twice_midrank[column]),
             }[tail]
     local_rows: list[tuple[Fraction, ...]] = []
     minima: list[Fraction] = []

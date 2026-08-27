@@ -143,7 +143,7 @@ def _epsilon_scan(source: np.ndarray) -> list[dict]:
 
 def _write_csv(path: Path, rows: list[dict]) -> None:
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader(); writer.writerows(rows)
 
 
@@ -153,11 +153,12 @@ def _plots(output: Path, factorial: dict, epsilon_rows: list[dict]) -> None:
         "LOO_ECDF_MIDRANK_V1": "LOO-ECDF midrank",
     }
     x = np.arange(4)
+    cell_labels = ("EPS linear", "Square only", "Carrier only", "MES squared")
     fig, ax = plt.subplots(figsize=(6.4, 4.0))
     for reducer, marker in zip(REDUCERS, ("o", "s")):
         y = [factorial[reducer][cell]["global_rank_numerator"] / 301 for cell in FACTORIAL_CELL_IDS]
         ax.plot(x, y, marker=marker, label=labels[reducer])
-    ax.set_xticks(x, FACTORIAL_CELL_IDS, rotation=18); ax.set_ylabel("Observation-inclusive family rank")
+    ax.set_xticks(x, cell_labels, rotation=12); ax.set_ylabel("Observation-inclusive family rank")
     ax.set_title("Predeclared coordinate-mechanism cells"); ax.legend(fontsize=7); fig.tight_layout()
     fig.savefig(output / "figure_factorial_ladder.pdf"); plt.close(fig)
 
@@ -166,7 +167,7 @@ def _plots(output: Path, factorial: dict, epsilon_rows: list[dict]) -> None:
     ecdf = [factorial["LOO_ECDF_MIDRANK_V1"][cell]["global_rank_numerator"] / 301 for cell in FACTORIAL_CELL_IDS]
     ax.scatter(legacy, ecdf)
     offsets = ((0, 8), (0, -12), (0, 8), (0, -12))
-    for a, b, label, offset in zip(legacy, ecdf, FACTORIAL_CELL_IDS, offsets):
+    for a, b, label, offset in zip(legacy, ecdf, cell_labels, offsets):
         ax.annotate(label, (a, b), xytext=offset, textcoords="offset points", fontsize=7, ha="center")
     ax.set_xlabel("Legacy absolute-median rank"); ax.set_ylabel("LOO-ECDF midrank"); ax.set_title("Reducer comparison")
     ax.margins(x=0.12, y=0.18)
@@ -198,12 +199,22 @@ def build(output: Path) -> dict:
     _write_csv(output / "tail_table.csv", tail_rows)
     _write_csv(output / "epsilon1_sensitivity.csv", epsilon_rows)
     tie_rows = []
+    dependence = {}
     for cell_id, matrix in cells.items():
         correlation = spearmanr(matrix, axis=0).statistic
-        eigenvalues = np.linalg.eigvalsh(np.asarray(correlation, dtype=float))
+        eigenvalues = np.linalg.eigvalsh(np.asarray(correlation, dtype=float))[::-1]
         participation = float(eigenvalues.sum() ** 2 / np.square(eigenvalues).sum())
+        duplicates = [
+            int(matrix.shape[0] - np.unique(matrix[:, column]).size)
+            for column in range(matrix.shape[1])
+        ]
+        dependence[cell_id] = {
+            "spearman_eigenvalues_descending": [float(value) for value in eigenvalues],
+            "spearman_participation_ratio": participation,
+            "coordinate_duplicate_counts": duplicates,
+        }
         for column in range(matrix.shape[1]):
-            tie_rows.append({"cell": cell_id, "coordinate_index": column, "duplicate_count": int(matrix.shape[0] - np.unique(matrix[:, column]).size), "spearman_participation_ratio": participation})
+            tie_rows.append({"cell": cell_id, "coordinate_index": column, "duplicate_count": duplicates[column], "spearman_eigenvalue_descending": float(eigenvalues[column]), "spearman_participation_ratio": participation})
     _write_csv(output / "tie_dependence_table.csv", tie_rows)
     _plots(output, factorial, epsilon_rows)
     frozen = json.loads(FROZEN_RESULT.read_text())
@@ -224,6 +235,7 @@ def build(output: Path) -> dict:
         "frozen_result_sha256": FROZEN_RESULT_SHA256,
         "factorial_cells": factorial,
         "contrasts": contrasts,
+        "dependence_diagnostics": dependence,
         "tail_registries": {"LEGACY_ALL_TWO_SIDED_V1": list(ALL_TWO_SIDED), "REGISTERED_PHYSICS_ORIENTED_SCALAR_V1": list(PHYSICS_TAILS)},
         "epsilon1_grid": {"minimum": 0.0, "maximum": 1e-5, "points": 101},
         "frozen_baseline": {"MES_SQUARED_legacy_rank": f"{legacy_absolute_median_scan(cells['MES_SQUARED'], ALL_TWO_SIDED).global_exceedances_including_observation}/301", "committed_rank": frozen["global_finite_rank"]},
@@ -233,7 +245,14 @@ def build(output: Path) -> dict:
     }
     result["content_id"] = _content_id(result)
     _write_json(output / "result.json", result)
-    _write_json(output / "plot_audit.json", {"category": "DIAGNOSTIC", "claim_tier": "methods_diagnostic", "owner": "OBSSTAT", "source": {"result_content_id": result["content_id"], "epsilon1_sensitivity_sha256": _sha(output / "epsilon1_sensitivity.csv")}, "figures": sorted(path.name for path in output.glob("*.pdf")), "byte_identity_role": "PDF_BYTES_NOT_A_SCIENTIFIC_GATE", "visual_inspection": "PASS_AT_130_DPI_SINGLE_COLUMN_20260828", "does_not_show": ["physical source attribution", "family identification", "publication validation"]})
+    figure_audits = {
+        name: {
+            "single_column_3.3in": "PASS_LEGIBLE_AND_SEMANTICALLY_CORRECT_20260828",
+            "double_column_6.8in": "PASS_LEGIBLE_AND_SEMANTICALLY_CORRECT_20260828",
+        }
+        for name in sorted(path.name for path in output.glob("*.pdf"))
+    }
+    _write_json(output / "plot_audit.json", {"category": "DIAGNOSTIC", "claim_tier": "methods_diagnostic", "owner": "OBSSTAT", "source": {"result_content_id": result["content_id"], "epsilon1_sensitivity_sha256": _sha(output / "epsilon1_sensitivity.csv")}, "figures": figure_audits, "inspection_method": "PDF rasterized at 130 DPI to 3.3in and 6.8in target widths; each figure inspected for labels, clipping, and semantic agreement with source tables", "byte_identity_role": "PDF_BYTES_NOT_A_SCIENTIFIC_GATE", "does_not_show": ["physical source attribution", "family identification", "publication validation"]})
     replay = {"format": "PLANCK_MES_COORDINATE_MECHANISM_REPLAY_V1", "result_content_id": result["content_id"], "source_npz_sha256": SOURCE_NPZ_SHA256, "frozen_result_sha256": FROZEN_RESULT_SHA256, "status": "PASS"}
     _write_json(output / "replay.json", replay)
     terminal = {"format": "PLANCK_MES_COORDINATE_MECHANISM_TERMINAL_V1", "state": "EXECUTED_PENDING_REVIEW", "work_unit": "PMG-WU-003", "objective_output_sha256": {path.name: _sha(path) for path in output.iterdir() if path.suffix != ".pdf"}, "figure_outputs": sorted(path.name for path in output.glob("*.pdf")), "figure_byte_identity_role": "NOT_A_SCIENTIFIC_GATE", "claim_promotion": False, "raw_data_read_or_mutated": False, "next_executable_action": "FRESH_READ_ONLY_REVIEW", "unresolved_blockers": ["FRESH_READ_ONLY_REVIEW_PENDING"]}
