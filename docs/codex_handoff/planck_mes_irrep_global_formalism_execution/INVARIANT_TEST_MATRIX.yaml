@@ -1,0 +1,390 @@
+schema: htt.planck_mes_irrep_global_formalism.invariant_test_matrix.v1
+package_id: PLANCK_MES_IRREP_GLOBAL_FORMALISM_EXECUTION_20260827
+rows:
+- requirement: Observable and physical state conflation
+  invariant: PMG-INV-TYPE-SEPARATION
+  invariant_statement: Observer/data irreps and physical anisotropy states remain disjoint exact types.
+  failure_mode: PMG-FM-001
+  severity: P0
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/contracts/test_observable_irrep_state.py tests/architecture/test_import_boundaries.py
+    -k 'physical or observable or response'
+  work_units:
+  - PMG-WU-001
+  - PMG-WU-002
+  primary_work_unit: PMG-WU-001
+  pass_transition: Start PMG-WU-002 on the accepted final SHA.
+- requirement: Scalar-to-vector or scalar-to-STF fabrication
+  invariant: PMG-INV-NO-SCALAR-FABRICATION
+  invariant_statement: Scalar-only inputs cannot construct a nonzero vector or STF block.
+  failure_mode: PMG-FM-002
+  severity: P0
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/contracts/test_observable_irrep_state.py -k scalar_refusal
+  work_units:
+  - PMG-WU-001
+  - PMG-WU-002
+  primary_work_unit: PMG-WU-001
+  pass_transition: Start PMG-WU-002 on the accepted final SHA.
+- requirement: Frozen scalar baseline mutation
+  invariant: PMG-INV-LEGACY-IMMUTABLE
+  invariant_statement: Frozen scalar baseline outputs and exact ranks remain unchanged.
+  failure_mode: PMG-FM-003
+  severity: P0
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_morphology.py tests/paper/test_planck_mes_first_paper.py
+  work_units:
+  - PMG-WU-001
+  - PMG-WU-003
+  - PMG-WU-005
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-001
+  pass_transition: Start PMG-WU-002 on the accepted final SHA.
+- requirement: Carrier order, basis, frame, or unit drift
+  invariant: PMG-INV-CARRIER-IDENTITY
+  invariant_statement: Carrier row order, 32-column layout, frame, basis, units, and transfer identities are exact.
+  failure_mode: PMG-FM-004
+  severity: P0
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/obsstat/test_planck_irrep_carrier.py -k 'layout or roundtrip or
+    units or frame or order'
+  work_units:
+  - PMG-WU-005
+  - PMG-WU-007
+  primary_work_unit: PMG-WU-005
+  pass_transition: Start PMG-WU-006 from a replay-MATCH paired-300 carrier.
+- requirement: Observation/null operator mismatch
+  invariant: PMG-INV-SAME-OPERATOR
+  invariant_statement: Observation, null, and injection rows use the same registered operator and projection.
+  failure_mode: PMG-FM-005
+  severity: P0
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_irrep_carrier_execution.py -k operator_identity
+  work_units:
+  - PMG-WU-005
+  - PMG-WU-006
+  - PMG-WU-007
+  - PMG-WU-008
+  primary_work_unit: PMG-WU-005
+  pass_transition: Start PMG-WU-006 from a replay-MATCH paired-300 carrier.
+- requirement: Raw data mutation or unsafe path traversal
+  invariant: PMG-INV-RAW-IMMUTABLE
+  invariant_statement: Raw/download/package-data inputs are unchanged and never staged.
+  failure_mode: PMG-FM-006
+  severity: P0
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_irrep_inventory.py -k 'immutable or
+    symlink or staged'
+  work_units:
+  - PMG-WU-004
+  - PMG-WU-005
+  - PMG-WU-007
+  primary_work_unit: PMG-WU-004
+  pass_transition: Start PMG-WU-005 from the accepted read-only intake terminal.
+- requirement: Invalid null-model substitution or Commander pseudo-calibration
+  invariant: PMG-INV-NULL-ROLES
+  invariant_statement: Paired-300 remains primary, 999 remains separate robustness, and Commander emits no finite
+    rank.
+  failure_mode: PMG-FM-007
+  severity: P0
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_irrep_extended_data.py -k 'primary_separate
+    or commander_no_rank'
+  work_units:
+  - PMG-WU-007
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-007
+  pass_transition: Start PMG-WU-008 with primary/robustness/Commander roles still separate.
+- requirement: Physical-template label without certified response provenance
+  invariant: PMG-INV-PHYSICAL-TEMPLATE-RECEIPT
+  invariant_statement: Physical-template labels require exact solver/frame/transfer provenance.
+  failure_mode: PMG-FM-008
+  severity: P0
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_irrep_injections.py -k physical_receipt
+  work_units:
+  - PMG-WU-008
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-008
+  pass_transition: Start PMG-WU-009; defer missing physical-template lanes without treating them as refuted.
+- requirement: MES coordinate information inflation
+  invariant: PMG-INV-MES-IDENTITY
+  invariant_statement: MES coordinates are an invertible reparameterization of C2/C3 on the registered branch and
+    add no information.
+  failure_mode: PMG-FM-009
+  severity: P0
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/obsstat/test_mes_coordinate_mechanism.py -k 'identity or inverse
+    or sigma_algebra or w_rank'
+  work_units:
+  - PMG-WU-003
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-003
+  pass_transition: Start PMG-WU-004 using the executed mechanism-audit terminal.
+- requirement: Post-hoc statistic, reducer, tail, or template selection
+  invariant: PMG-INV-PREREGISTERED-STATISTIC
+  invariant_statement: Tails, reducers, families, template grids, and orientation grids are frozen before result
+    inspection.
+  failure_mode: PMG-FM-010
+  severity: P0
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/obsstat/test_finite_null_reducers.py tests/integration/test_planck_mes_irrep_injections.py
+    -k registry
+  work_units:
+  - PMG-WU-003
+  - PMG-WU-006
+  - PMG-WU-008
+  primary_work_unit: PMG-WU-003
+  pass_transition: Start PMG-WU-004 using the executed mechanism-audit terminal.
+- requirement: Physical orbit catalogue applied to observable irreps
+  invariant: PMG-INV-ORBIT-NAMESPACE
+  invariant_statement: Physical and observable orbit catalogues have separate exact input types and claim vocabularies.
+  failure_mode: PMG-FM-011
+  severity: P0
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/contracts/test_global_formalism_boundaries.py -k orbit_catalogue_refusal
+  work_units:
+  - PMG-WU-002
+  - PMG-WU-006
+  primary_work_unit: PMG-WU-002
+  pass_transition: Immediately start PMG-WU-003; do not create another package or review layer.
+- requirement: Next expensive map pass discards harmonic carrier
+  invariant: PMG-INV-CARRIER-MANDATORY
+  invariant_statement: Every successful new Planck map pass emits a replayable carrier package.
+  failure_mode: PMG-FM-012
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_irrep_carrier_execution.py tests/integration/test_planck_mes_irrep_extended_data.py
+    -k carrier_required
+  work_units:
+  - PMG-WU-005
+  - PMG-WU-007
+  primary_work_unit: PMG-WU-005
+  pass_transition: Start PMG-WU-006 from a replay-MATCH paired-300 carrier.
+- requirement: Incomplete formalism migration or bypass
+  invariant: PMG-INV-MIGRATION-COVERAGE
+  invariant_statement: Every relevant code surface is migrated, adapted, frozen with a guard, or explicitly deferred.
+  failure_mode: PMG-FM-013
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/contracts/test_global_formalism_boundaries.py tests/architecture/test_import_boundaries.py
+  work_units:
+  - PMG-WU-001
+  - PMG-WU-002
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-001
+  pass_transition: Start PMG-WU-002 on the accepted final SHA.
+- requirement: ECDF reducer violates monotone invariance or tie semantics
+  invariant: PMG-INV-ECDF-INVARIANCE
+  invariant_statement: LOO ECDF midrank reducer is row-permutation and monotone-transform invariant with explicit
+    tie semantics.
+  failure_mode: PMG-FM-014
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/obsstat/test_finite_null_reducers.py -k 'monotone or tie or permutation
+    or loo'
+  work_units:
+  - PMG-WU-003
+  primary_work_unit: PMG-WU-003
+  pass_transition: Start PMG-WU-004 using the executed mechanism-audit terminal.
+- requirement: False additive decomposition of square and mixing effects
+  invariant: PMG-INV-FACTORIAL-INTERACTION
+  invariant_statement: All four coordinate-mechanism cells and their interaction are reported.
+  failure_mode: PMG-FM-015
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/obsstat/test_mes_coordinate_mechanism.py -k factorial_interaction
+  work_units:
+  - PMG-WU-003
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-003
+  pass_transition: Start PMG-WU-004 using the executed mechanism-audit terminal.
+- requirement: Epsilon1 premise sensitivity hidden
+  invariant: PMG-INV-EPS1-SENSITIVITY
+  invariant_statement: The registered epsilon1 scan is complete and row-symmetric.
+  failure_mode: PMG-FM-016
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/obsstat/test_mes_coordinate_mechanism.py -k epsilon1
+  work_units:
+  - PMG-WU-003
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-003
+  pass_transition: Start PMG-WU-004 using the executed mechanism-audit terminal.
+- requirement: Undefined ell=2/3 morphology receives a fabricated fallback
+  invariant: PMG-INV-TYPED-DEGENERACY
+  invariant_statement: Undefined morphology remains typed absent; no fallback axis or plane is created.
+  failure_mode: PMG-FM-017
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/obsstat/test_observable_irrep_orbit.py -k 'zero or repeated or
+    coincident or noncyclic or absent'
+  work_units:
+  - PMG-WU-006
+  primary_work_unit: PMG-WU-006
+  pass_transition: Start PMG-WU-007 regardless of whether the irrep result is anomalous.
+- requirement: Observable orbit completeness or family identification overclaim
+  invariant: PMG-INV-UNPROVEN-COMPLETENESS
+  invariant_statement: Observable orbit completeness and family identification remain explicitly unproven/forbidden.
+  failure_mode: PMG-FM-018
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: python scripts/check_claim_language.py --strict-missing htt/obsstat/observable_irrep_orbit.py
+    docs/generated/planck_mes_irrep_analysis/result.json
+  work_units:
+  - PMG-WU-006
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-006
+  pass_transition: Start PMG-WU-007 regardless of whether the irrep result is anomalous.
+- requirement: Null fidelity, foreground asymmetry, or omitted-mode leakage remains unquantified
+  invariant: PMG-INV-NULL-FIDELITY
+  invariant_statement: Null asymmetry and ell>5 leakage receive explicit quantitative diagnostics before paper PASS.
+  failure_mode: PMG-FM-019
+  severity: P1
+  current_task_blocking: false
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_irrep_analysis.py -k 'null_fidelity
+    or leakage'
+  work_units:
+  - PMG-WU-005
+  - PMG-WU-006
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-005
+  pass_transition: Start PMG-WU-006 from a replay-MATCH paired-300 carrier.
+- requirement: Reproducibility metadata is incomplete
+  invariant: PMG-INV-REPRO-METADATA
+  invariant_statement: Every result carries complete physical/operator/provenance metadata and map-free replay.
+  failure_mode: PMG-FM-020
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/obsstat/test_planck_irrep_carrier.py tests/integration/test_planck_mes_irrep_analysis.py
+    -k metadata
+  work_units:
+  - PMG-WU-005
+  - PMG-WU-006
+  - PMG-WU-007
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-005
+  pass_transition: Start PMG-WU-006 from a replay-MATCH paired-300 carrier.
+- requirement: Dependence, tie mass, and Monte Carlo resolution diagnostics omitted
+  invariant: PMG-INV-DEPENDENCE-DIAGNOSTICS
+  invariant_statement: Tie mass, effective coordinate diagnostics, and finite-pool resolution are reported descriptively.
+  failure_mode: PMG-FM-021
+  severity: P1
+  current_task_blocking: false
+  mechanical_detector: python -m pytest -q tests/integration/test_planck_mes_coordinate_audit.py -k 'tie or effective
+    or resolution'
+  work_units:
+  - PMG-WU-003
+  - PMG-WU-006
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-003
+  pass_transition: Start PMG-WU-004 using the executed mechanism-audit terminal.
+- requirement: Superseded predecessor order remains executable
+  invariant: PMG-INV-ACTIVE-PACKAGE
+  invariant_statement: Only PMG-WU-001..009 are executable under the active pointer.
+  failure_mode: PMG-FM-022
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: python scripts/validate_planck_mes_irrep_global_formalism_plan.py
+  work_units:
+  - PMG-WU-001
+  primary_work_unit: PMG-WU-001
+  pass_transition: Start PMG-WU-002 on the accepted final SHA.
+- requirement: Process starvation or permanent planning loop
+  invariant: PMG-INV-EXECUTION-TRANSITION
+  invariant_statement: No successor planning cycle precedes the real PMG-WU-003 objective execution.
+  failure_mode: PMG-FM-023
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: python scripts/validate_planck_mes_irrep_global_formalism_plan.py
+  work_units:
+  - PMG-WU-001
+  - PMG-WU-002
+  - PMG-WU-003
+  primary_work_unit: PMG-WU-001
+  pass_transition: Start PMG-WU-002 on the accepted final SHA.
+- requirement: Incomplete or unexecuted work is reported as PASS
+  invariant: PMG-INV-EVIDENCE-BEFORE-PASS
+  invariant_statement: PASS requires executed objective output and replay, not plans or scaffolds.
+  failure_mode: PMG-FM-024
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: python -m pytest -q tests/contracts/test_planck_mes_work_unit_terminals.py
+  work_units: &id001
+  - PMG-WU-001
+  - PMG-WU-002
+  - PMG-WU-003
+  - PMG-WU-004
+  - PMG-WU-005
+  - PMG-WU-006
+  - PMG-WU-007
+  - PMG-WU-008
+  - PMG-WU-009
+  primary_work_unit: PMG-WU-001
+  pass_transition: Start PMG-WU-002 on the accepted final SHA.
+- requirement: Authority branch or predecessor moved
+  invariant: PMG-INV-AUTHORITY-IDENTITY
+  invariant_statement: Canonical base and planning predecessor are exact and ancestral before mutation.
+  failure_mode: PMG-FM-025
+  severity: P1
+  current_task_blocking: true
+  mechanical_detector: git fetch origin --prune && test "$(git rev-parse origin/changeset/pr324-mes-methodology-stack-20260826)"
+    = 3cdeaba39e164c911a26c5daa37f0e15b29614d3 && git merge-base --is-ancestor 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+    HEAD
+  work_units: *id001
+  primary_work_unit: PMG-WU-001
+  pass_transition: Start PMG-WU-002 on the accepted final SHA.
+coverage:
+  failure_mode_ids:
+  - PMG-FM-001
+  - PMG-FM-002
+  - PMG-FM-003
+  - PMG-FM-004
+  - PMG-FM-005
+  - PMG-FM-006
+  - PMG-FM-007
+  - PMG-FM-008
+  - PMG-FM-009
+  - PMG-FM-010
+  - PMG-FM-011
+  - PMG-FM-012
+  - PMG-FM-013
+  - PMG-FM-014
+  - PMG-FM-015
+  - PMG-FM-016
+  - PMG-FM-017
+  - PMG-FM-018
+  - PMG-FM-019
+  - PMG-FM-020
+  - PMG-FM-021
+  - PMG-FM-022
+  - PMG-FM-023
+  - PMG-FM-024
+  - PMG-FM-025
+  invariant_ids:
+  - PMG-INV-TYPE-SEPARATION
+  - PMG-INV-NO-SCALAR-FABRICATION
+  - PMG-INV-LEGACY-IMMUTABLE
+  - PMG-INV-CARRIER-IDENTITY
+  - PMG-INV-SAME-OPERATOR
+  - PMG-INV-RAW-IMMUTABLE
+  - PMG-INV-NULL-ROLES
+  - PMG-INV-PHYSICAL-TEMPLATE-RECEIPT
+  - PMG-INV-MES-IDENTITY
+  - PMG-INV-PREREGISTERED-STATISTIC
+  - PMG-INV-ORBIT-NAMESPACE
+  - PMG-INV-CARRIER-MANDATORY
+  - PMG-INV-MIGRATION-COVERAGE
+  - PMG-INV-ECDF-INVARIANCE
+  - PMG-INV-FACTORIAL-INTERACTION
+  - PMG-INV-EPS1-SENSITIVITY
+  - PMG-INV-TYPED-DEGENERACY
+  - PMG-INV-UNPROVEN-COMPLETENESS
+  - PMG-INV-NULL-FIDELITY
+  - PMG-INV-REPRO-METADATA
+  - PMG-INV-DEPENDENCE-DIAGNOSTICS
+  - PMG-INV-ACTIVE-PACKAGE
+  - PMG-INV-EXECUTION-TRANSITION
+  - PMG-INV-EVIDENCE-BEFORE-PASS
+  - PMG-INV-AUTHORITY-IDENTITY
+  one_primary_detector_per_failure_mode: true

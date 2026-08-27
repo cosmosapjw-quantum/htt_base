@@ -1,0 +1,25 @@
+schema: htt.planck_mes.active_execution_package.v1
+project: PLANCK_MES_FIRST_OBSERVATION
+active_package: docs/codex_handoff/planck_mes_irrep_global_formalism_execution
+package_id: PLANCK_MES_IRREP_GLOBAL_FORMALISM_EXECUTION_20260827
+planning_branch: analysis/planck-mes-extended-data-execution-20260826
+planning_predecessor_sha: 2669a55ef230d1ca9e79c09d3344f7b15c50ac0e
+supersedes_for_execution_order: docs/codex_handoff/planck_mes_extended_data_execution
+active_work_units:
+- PMG-WU-001
+- PMG-WU-002
+- PMG-WU-003
+- PMG-WU-004
+- PMG-WU-005
+- PMG-WU-006
+- PMG-WU-007
+- PMG-WU-008
+- PMG-WU-009
+forbidden_superseded_work_units:
+- PED-WU-001
+- PED-WU-002
+- PED-WU-003
+- PED-WU-004
+first_work_unit: PMG-WU-001
+first_objective_execution: PMG-WU-003
+process_starvation_rule: No successor planning package before PMG-WU-003 executes.

@@ -11,6 +11,7 @@ PKG = ROOT / "docs/codex_handoff/mes_stack_integration"
 PR412 = "4733a4c6dbc638372dee7f99ac38f39dba56d933"
 PR411 = "5a3825f903546891fd90e3d708481707d59babf4"
 MERGE = "1ace5692bb6778ee8d5b99c112fc84dc2ec8cb72"
+PLAN_HEAD = "8b6028abcde18c87591789f6ba53e81157fa4eba"
 EXPECTED_WUS = [f"MSI-WU-{i:03d}" for i in range(9)]
 
 def fail(message: str) -> None:
@@ -35,6 +36,9 @@ def main() -> int:
     if subprocess.run(["git", "merge-base", "--is-ancestor", PR411, "HEAD"],
                       cwd=ROOT).returncode != 0:
         fail("PR411 is not an ancestor")
+    if subprocess.run(["git", "merge-base", "--is-ancestor", PLAN_HEAD, "HEAD"],
+                      cwd=ROOT).returncode != 0:
+        fail("frozen planning snapshot is not an ancestor")
     parents = run("git", "show", "-s", "--format=%P", MERGE).split()
     if parents != [PR412, PR411]:
         fail(f"integration merge parents drifted: {parents}")
@@ -66,7 +70,9 @@ def main() -> int:
     if {row["github_pr"] for row in dispositions} != required_prs:
         fail("PR disposition coverage drifted")
 
-    changed = set(run("git", "diff", "--name-only", PR412, "HEAD").splitlines())
+    # Seal the planning snapshot itself. Later implementation/science descendants
+    # may legitimately modify paths that were forbidden only in the planning PR.
+    changed = set(run("git", "diff", "--name-only", PR412, PLAN_HEAD).splitlines())
     forbidden_prefixes = (
         "htt/", "machine_readable/", "docs/codex_handoff/pr_backlog",
         "docs/codex_handoff/pr_status", "docs/generated/status_",
@@ -90,6 +96,7 @@ def main() -> int:
         "schema": "htt.mes_stack_integration.plan_validation.v1",
         "status": "PASS",
         "merge_parents": parents,
+        "planning_snapshot": PLAN_HEAD,
         "work_units": EXPECTED_WUS,
         "source_imports": len(manifest["imports"]),
         "failure_modes": len(ids),

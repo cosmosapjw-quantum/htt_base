@@ -1,0 +1,30 @@
+schema: htt.planck_mes_pmg_wu002_transition.package_index.v1
+package_id: PLANCK_MES_PMG_WU002_EXECUTION_TRANSITION_20260827
+mode: EXECUTION_TRANSITION_PACKAGE_NOT_WU002_IMPLEMENTATION
+files:
+- PACKAGE_INDEX.yaml
+- AUTHORITY_AND_SCOPE.yaml
+- PR419_ACCEPTANCE_BINDING.yaml
+- VALIDATOR_TRANSITION_CONTRACT.yaml
+- PMG_WU002_EXECUTION_CONTRACT.yaml
+- P0_P1_THREAT_CATALOG.json
+- INVARIANT_TEST_MATRIX.yaml
+- GUIDE_BINDING.yaml
+- CODEX_HANDOFF.md
+- CODEX_HANDOFF_PROMPT.md
+validation_files:
+- scripts/validate_planck_mes_pmg_wu002_transition.py
+- tests/contracts/test_planck_mes_pmg_wu002_transition.py
+repository: cosmosapjw-quantum/htt_base
+host_branch: changeset/planck-mes-observable-irrep-state-20260827
+wu001_implementation_source:
+  commit: 47ef087b158e0dbf8ac4b7b5205f39c1a050d9c0
+  tree: 8abbe9040cb72357387ec3c29f0e1e74921af0ea
+  pull_request: 419
+  terminal: docs/generated/planck_mes_irrep_formalism/wu001_terminal.json
+active_work_unit: PMG-WU-002
+next_objective_transition: GLOBAL_FORMALISM_BOUNDARIES_IMPLEMENTED
+science_code_changed_by_this_package: false
+science_execution_performed_by_this_package: false
+raw_data_read_or_mutated: false
+successor_planning_package: false

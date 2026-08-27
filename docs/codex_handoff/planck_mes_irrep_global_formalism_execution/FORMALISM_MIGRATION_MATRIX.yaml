@@ -1,0 +1,321 @@
+schema: htt.planck_mes_irrep_global_formalism.migration_matrix.v1
+contract_id: PLANCK_MES_GLOBAL_FORMALISM_MIGRATION_V1
+migration_policy:
+  strategy: ADDITIVE_TYPED_SUCCESSOR_WITH_FROZEN_COMPATIBILITY_SURFACES
+  whole_repository_rewrite: false
+  legacy_result_mutation: false
+  unrelated_lane_migration: false
+  completion_definition: Every listed relevant surface either consumes the canonical type, provides an explicit
+    adapter, or remains frozen with a tested boundary.
+rows:
+- path: htt/src/common/observable_irrep_state.py
+  current_state: ABSENT
+  target_role: Canonical observer/data-space irrep state and block types.
+  action: CREATE
+  work_unit: PMG-WU-001
+  must_preserve:
+  - frame
+  - basis
+  - units
+  - ell
+  - spin
+  - parity
+  - operator/source identities
+  - typed absence
+  forbidden:
+  - physical source labels
+  - Bianchi family identification
+  - implicit response inversion
+- path: htt/src/common/mes_premise_normalization.py
+  current_state: MES semantics distributed between statistical_foundations, mes_row_anchor, and mes_directional_state
+  target_role: Canonical premise normalizer and exact coordinate-identity report.
+  action: CREATE_WITH_ADAPTERS_NOT_REWRITE_AUTHORITY
+  work_unit: PMG-WU-002
+  must_preserve:
+  - registered_geodesic_mes_anchors as coefficient authority
+  - channel keys
+  - one-way semantics
+  forbidden:
+  - duplicate coefficient registry
+  - new non-geodesic bound
+  - independent-information claim
+- path: htt/src/common/response_bound_observable_state.py
+  current_state: Physical response readiness represented only as refusal enums on MesDirectionalState
+  target_role: Explicit response-bound bridge without conflating observable and physical states.
+  action: CREATE
+  work_unit: PMG-WU-002
+  must_preserve:
+  - response identity
+  - channel match
+  - rank/identified-set status
+  forbidden:
+  - construction without response
+  - point identification from rank-deficient response
+- path: htt/src/common/joint_anisotropy_state.py
+  current_state: Canonical physical pre-solver state
+  target_role: Remain physical-only and expose an explicit refusal for ObservableIrrepState inputs.
+  action: MINIMAL_GUARD_AND_DOCUMENTED_BOUNDARY_ONLY
+  work_unit: PMG-WU-002
+  must_preserve:
+  - existing payload schema
+  - missing-component semantics
+  - physical representation
+  forbidden:
+  - schema widening
+  - automatic observed-data adapter
+  - legacy state mutation
+- path: htt/src/common/orbit_catalogue_v3.py
+  current_state: Physical JointAnisotropyState orbit diagnostics; completeness UNPROVEN
+  target_role: Remain physical-only; reject observable irrep states by exact type.
+  action: MINIMAL_GUARD_TEST_ONLY_UNLESS_CODE_CHANGE_REQUIRED
+  work_unit: PMG-WU-002
+  must_preserve:
+  - UNPROVEN completeness statuses
+  - parity typing
+  - physical state API
+  forbidden:
+  - reusing physical vocabulary for CMB Q/O blocks
+  - claim promotion
+- path: htt/src/common/mes_directional_state.py
+  current_state: Observer-space ell<=2 moment state normalized by MES anchor
+  target_role: Compatibility adapter to ObservableIrrepState for its genuine dipole/STF2 content.
+  action: ADD_EXPLICIT_ADAPTER_AND_DEPRECATION_BOUNDARY
+  work_unit: PMG-WU-002
+  must_preserve:
+  - existing public payload and tests
+  - observer_space_only
+  - physical_response_bound=False
+  forbidden:
+  - silent payload change
+  - ell=3 claim
+  - physical-stress promotion
+- path: htt/obsstat/mes_directional_moments.py
+  current_state: ell<=2 directional scalar estimator
+  target_role: Produce or adapt to ObservableIrrepState without becoming the Planck ell=3 implementation.
+  action: ADAPTER_ONLY
+  work_unit: PMG-WU-002
+  must_preserve:
+  - quadrature/joint-fit equations
+  - condition gate
+  - declared semantics status
+  forbidden:
+  - generic-rank rewrite
+  - sample aliasing self-certification
+- path: htt/obsstat/finite_null_reducers.py
+  current_state: ABSENT; legacy reducer embedded in planck_post275_lane.py
+  target_role: Typed reducer/tail registry with legacy and leave-one-out ECDF midrank implementations.
+  action: CREATE
+  work_unit: PMG-WU-003
+  must_preserve:
+  - observation inclusion
+  - row permutation equivariance
+  - conservative family ties
+  forbidden:
+  - observed-data-selected tail
+  - random tie-breaking
+  - zero p-values
+- path: htt/obsstat/mes_coordinate_mechanism.py
+  current_state: ABSENT; transformations implicit in mes_row_anchor and manuscript
+  target_role: Exact identities, inverse map, factorial cells, interaction, and epsilon1 sensitivity.
+  action: CREATE
+  work_unit: PMG-WU-003
+  must_preserve:
+  - T0 and C_l units
+  - registered MES coefficients
+  - rowwise same-premise application
+  forbidden:
+  - new physics authority
+  - claiming additive decomposition absent zero interaction
+- path: htt/obsstat/planck_post275_lane.py
+  current_state: Legacy observation-inclusive absolute-median max scan
+  target_role: Keep frozen behavior; delegate new reducer API through a compatibility wrapper only if byte-level
+    outputs remain exact.
+  action: PRESERVE_LEGACY_FUNCTION_ADD_NEW_ENTRYPOINT_SEPARATELY
+  work_unit: PMG-WU-003
+  must_preserve:
+  - all exact legacy ranks
+  - payload schema for existing callers
+  forbidden:
+  - changing observation_inclusive_max_scan semantics
+  - tail registry drift
+- path: scripts/observed_runs/run_planck_mes_morphology.py
+  current_state: Frozen 301-row scalar MES analysis
+  target_role: Legacy scalar baseline producer/replay only.
+  action: DO_NOT_MUTATE_SCIENTIFIC_OUTPUT; ADD_EXTERNAL_COMPANION_RUNNER
+  work_unit: PMG-WU-003
+  must_preserve:
+  - six family ranks
+  - operator identity
+  - result hashes and schemas
+  forbidden:
+  - relabeling as irrep analysis
+  - overwriting committed outputs
+- path: scripts/observed_runs/run_planck_mes_coordinate_audit.py
+  current_state: ABSENT
+  target_role: Map-free mechanism audit on the exact 301-row package.
+  action: CREATE_AND_EXECUTE
+  work_unit: PMG-WU-003
+  must_preserve:
+  - source row order
+  - legacy baseline as a control
+  forbidden:
+  - raw-map reads
+  - post-hoc tuning
+- path: htt/obsstat/planck_pr3_operator.py
+  current_state: Already produces retained_alm and retained_coefficients but downstream package discards them
+  target_role: Canonical source of the 32-dimensional retained harmonic carrier.
+  action: PRESERVE_OPERATOR; ADD_SERIALIZATION_HELPER_ONLY_IF_NEEDED
+  work_unit: PMG-WU-005
+  must_preserve:
+  - 36-to-32 fit
+  - operator identity
+  - beam/pixel order
+  - Majorana conventions
+  forbidden:
+  - operator redesign
+  - new regularization
+  - source transfer amplification
+- path: htt/obsstat/planck_irrep_carrier.py
+  current_state: ABSENT
+  target_role: Strict carrier package, metadata, replay, and row/order identity.
+  action: CREATE
+  work_unit: PMG-WU-005
+  must_preserve:
+  - exact 32-column layout
+  - no pickle
+  - same observation/null operator
+  forbidden:
+  - scalar-only serialization
+  - lossy compression
+  - row reordering
+- path: scripts/observed_runs/run_planck_pr3.py
+  current_state: Observed worker exports scalar features only
+  target_role: Export the retained carrier in parallel with the unchanged scalar package during each scientific
+    read.
+  action: ADD_PARALLEL_OUTPUT_WITHOUT_CHANGING_EXISTING_PACKAGE
+  work_unit: PMG-WU-005
+  must_preserve:
+  - existing scalar outputs
+  - input hashing
+  - raw immutability
+  - thread controls
+  forbidden:
+  - overwriting v1 package
+  - second operator path
+  - silent missing carrier
+- path: htt/obsstat/observable_irrep_orbit.py
+  current_state: ABSENT
+  target_role: Observable Q_ab/O_abc orbit and mixed-morphology diagnostics.
+  action: CREATE
+  work_unit: PMG-WU-006
+  must_preserve:
+  - O(3) parity
+  - STF traces
+  - typed degeneracies
+  - UNPROVEN completeness
+  forbidden:
+  - physical orbit catalogue import as state authority
+  - fallback axes
+  - family identification
+- path: scripts/observed_runs/run_planck_mes_irrep_analysis.py
+  current_state: ABSENT
+  target_role: 301-row carrier-to-irrep-to-finite-null analysis.
+  action: CREATE_AND_EXECUTE
+  work_unit: PMG-WU-006
+  must_preserve:
+  - paired-300 primary role
+  - legacy baseline separation
+  - registered reducer/tails
+  forbidden:
+  - physical shear labels
+  - Commander inputs
+  - likelihood
+- path: scripts/observed_runs/run_planck_mes_smica_cmbonly_999.py
+  current_state: Planned but not implemented in predecessor package
+  target_role: CMB-only robustness plus carrier export in one pass.
+  action: CREATE_AND_EXECUTE
+  work_unit: PMG-WU-007
+  must_preserve:
+  - 999 exact inventory
+  - separate schema
+  - 00818 inclusion after admission
+  forbidden:
+  - primary replacement
+  - unconditional p-value wording
+- path: scripts/observed_runs/run_planck_mes_commander_observation.py
+  current_state: Planned but not implemented in predecessor package
+  target_role: Descriptive Commander coordinate/carrier comparison only.
+  action: CREATE_AND_EXECUTE
+  work_unit: PMG-WU-007
+  must_preserve:
+  - finite_rank_emitted=false
+  - partial-file refusal
+  - same projection schema
+  forbidden:
+  - three-row pseudo-null
+  - joint calibration
+- path: scripts/observed_runs/run_planck_mes_irrep_injections.py
+  current_state: ABSENT
+  target_role: Predeclared harmonic and conditionally physical-template power study.
+  action: CREATE_AND_EXECUTE_AVAILABLE_LANES
+  work_unit: PMG-WU-008
+  must_preserve:
+  - same operator/reducer
+  - amplitude/orientation grids
+  - template provenance
+  forbidden:
+  - feature-level injection
+  - physical label without receipt
+  - amplitude tuning
+- path: scripts/paper/build_planck_mes_first_paper.py
+  current_state: Builds scalar MES Paper A
+  target_role: Methods-first revision consuming only accepted mechanism/irrep/injection terminals.
+  action: MODIFY_ONLY_IN_PMG-WU-009
+  work_unit: PMG-WU-009
+  must_preserve:
+  - legacy result provenance
+  - conditional null language
+  - no physical identification
+  forbidden:
+  - automatic abstract strengthening
+  - unexecuted-result prose
+- path: tests/architecture/test_import_boundaries.py
+  current_state: Existing architecture checks
+  target_role: Enforce observable/physical/response layer import and constructor boundaries.
+  action: EXTEND
+  work_unit: PMG-WU-002
+  must_preserve:
+  - existing import boundaries
+  forbidden:
+  - broad unrelated architecture cleanup
+required_path_set:
+- htt/src/common/observable_irrep_state.py
+- htt/src/common/mes_premise_normalization.py
+- htt/src/common/response_bound_observable_state.py
+- htt/src/common/joint_anisotropy_state.py
+- htt/src/common/orbit_catalogue_v3.py
+- htt/src/common/mes_directional_state.py
+- htt/obsstat/mes_directional_moments.py
+- htt/obsstat/finite_null_reducers.py
+- htt/obsstat/mes_coordinate_mechanism.py
+- htt/obsstat/planck_post275_lane.py
+- scripts/observed_runs/run_planck_mes_morphology.py
+- scripts/observed_runs/run_planck_mes_coordinate_audit.py
+- htt/obsstat/planck_pr3_operator.py
+- htt/obsstat/planck_irrep_carrier.py
+- scripts/observed_runs/run_planck_pr3.py
+- htt/obsstat/observable_irrep_orbit.py
+- scripts/observed_runs/run_planck_mes_irrep_analysis.py
+- scripts/observed_runs/run_planck_mes_smica_cmbonly_999.py
+- scripts/observed_runs/run_planck_mes_commander_observation.py
+- scripts/observed_runs/run_planck_mes_irrep_injections.py
+- scripts/paper/build_planck_mes_first_paper.py
+- tests/architecture/test_import_boundaries.py
+cross_cutting_checks:
+- No function accepts both ObservableIrrepState and JointAnisotropyState through an untyped object parameter.
+- No module imports Planck-specific code into common physical-state modules.
+- No scalar-only input can construct a nonzero observer or physical vector/STF block.
+- Existing scalar packages and exact ranks remain reproducible byte-for-byte or scientifically identical under their
+  frozen contract.
+- All new result schemas carry candidate commit/tree, source/operator identities, row order, units, frame, basis,
+  and claim ceiling.
