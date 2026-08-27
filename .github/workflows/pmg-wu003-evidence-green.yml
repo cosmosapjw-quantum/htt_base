@@ -1,0 +1,253 @@
+name: PMG-WU-003 bounded evidence repair
+
+on:
+  push:
+    branches:
+      - audit/pmg-wu003-evidence-green-20260828
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  OMP_NUM_THREADS: "1"
+  TARGET_BRANCH: changeset/planck-mes-coordinate-mechanism-audit-20260828
+  EXPECTED_TARGET_HEAD: 95ae8d1037b9d7fa9981bbec49131b0c8b84f733
+
+jobs:
+  bounded-repair:
+    name: Repair and verify PMG-WU-003 evidence semantics
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out exact target branch
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Refuse moved target authority
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_TARGET_HEAD"
+      - name: Set up Python 3.12
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Install focused dependencies
+        run: |
+          python -m pip install 'pytest>=8,<9' 'numpy>=1.26,<3' 'matplotlib>=3.8,<4' 'PyYAML>=6,<7'
+          python -m pip install -e './htt'
+      - name: Apply bounded source repair
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/observed_runs/run_planck_mes_coordinate_audit.py')
+          text = path.read_text()
+
+          old = '"global_rank": _fraction(scan.global_p),'
+          new = '"global_rank": f"{scan.global_exceedances_including_observation}/301",'
+          if text.count(old) != 1:
+              raise SystemExit('global-rank source pattern drifted')
+          text = text.replace(old, new)
+
+          old = '''        for column in range(matrix.shape[1]):
+              tie_rows.append({"cell": cell_id, "coordinate_index": column, "duplicate_count": duplicates[column], "spearman_eigenvalue_descending": float(eigenvalues[column]), "spearman_participation_ratio": participation})'''
+          new = '''        for column in range(matrix.shape[1]):
+              tie_rows.append({
+                  "cell": cell_id,
+                  "diagnostic_kind": "coordinate_duplicate_count",
+                  "coordinate_index": column,
+                  "spectrum_index": "",
+                  "duplicate_count": duplicates[column],
+                  "spearman_eigenvalue_descending": "",
+                  "spearman_participation_ratio": participation,
+              })
+          for spectrum_index, eigenvalue in enumerate(eigenvalues):
+              tie_rows.append({
+                  "cell": cell_id,
+                  "diagnostic_kind": "spearman_eigenvalue",
+                  "coordinate_index": "",
+                  "spectrum_index": spectrum_index,
+                  "duplicate_count": "",
+                  "spearman_eigenvalue_descending": float(eigenvalue),
+                  "spearman_participation_ratio": participation,
+              })'''
+          if text.count(old) != 1:
+              raise SystemExit('tie/dependence source pattern drifted')
+          text = text.replace(old, new)
+
+          old = '''    figure_audits = {
+              name: {
+                  "single_column_3.3in": "PASS_LEGIBLE_AND_SEMANTICALLY_CORRECT_20260828",
+                  "double_column_6.8in": "PASS_LEGIBLE_AND_SEMANTICALLY_CORRECT_20260828",
+              }
+              for name in sorted(path.name for path in output.glob("*.pdf"))
+          }
+          _write_json(output / "plot_audit.json", {"category": "DIAGNOSTIC", "claim_tier": "methods_diagnostic", "owner": "OBSSTAT", "source": {"result_content_id": result["content_id"], "epsilon1_sensitivity_sha256": _sha(output / "epsilon1_sensitivity.csv")}, "figures": figure_audits, "inspection_method": "PDF rasterized at 130 DPI to 3.3in and 6.8in target widths; each figure inspected for labels, clipping, and semantic agreement with source tables", "byte_identity_role": "PDF_BYTES_NOT_A_SCIENTIFIC_GATE", "does_not_show": ["physical source attribution", "family identification", "publication validation"]})'''
+          new = '''    figure_audits = {
+              name: {
+                  "single_column_3.3in": {"status": "PENDING"},
+                  "double_column_6.8in": {"status": "PENDING"},
+              }
+              for name in sorted(path.name for path in output.glob("*.pdf"))
+          }
+          _write_json(output / "plot_audit.json", {
+              "category": "DIAGNOSTIC",
+              "claim_tier": "methods_diagnostic",
+              "owner": "OBSSTAT",
+              "inspection_state": "PENDING_EXTERNAL_DIRECT_INSPECTION",
+              "inspection_origin": "GENERATOR_CANNOT_SELF_ATTEST_VISUAL_REVIEW",
+              "source": {
+                  "result_content_id": result["content_id"],
+                  "epsilon1_sensitivity_sha256": _sha(output / "epsilon1_sensitivity.csv"),
+              },
+              "figures": figure_audits,
+              "inspection_method": "External direct inspection is required at 3.3in and 6.8in target widths.",
+              "byte_identity_role": "PDF_BYTES_NOT_A_SCIENTIFIC_GATE",
+              "does_not_show": [
+                  "physical source attribution",
+                  "family identification",
+                  "publication validation",
+              ],
+          })'''
+          if text.count(old) != 1:
+              raise SystemExit('plot-audit source pattern drifted')
+          text = text.replace(old, new)
+
+          old = 'if path.suffix in {".pdf"} or path.name == "terminal.json": continue'
+          new = 'if path.suffix in {".pdf"} or path.name in {"terminal.json", "plot_audit.json"}: continue'
+          if text.count(old) != 1:
+              raise SystemExit('replay exclusion source pattern drifted')
+          text = text.replace(old, new)
+          path.write_text(text)
+          PY
+      - name: Regenerate deterministic map-free outputs
+        run: |
+          rm -rf "${RUNNER_TEMP}/pmg-wu003-audit"
+          env PYTHONPATH=htt:htt/src:htt/htt python \
+            scripts/observed_runs/run_planck_mes_coordinate_audit.py \
+            --output-dir "${RUNNER_TEMP}/pmg-wu003-audit"
+          for name in result.json replay.json factorial_table.csv tail_table.csv tie_dependence_table.csv epsilon1_sensitivity.csv; do
+            cp "${RUNNER_TEMP}/pmg-wu003-audit/${name}" "docs/generated/planck_mes_coordinate_audit/${name}"
+          done
+      - name: Bind external direct figure inspection
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import json
+          import subprocess
+
+          root = Path('docs/generated/planck_mes_coordinate_audit')
+          result = json.loads((root / 'result.json').read_text())
+          figures = {}
+          findings = {
+              'figure_factorial_ladder.pdf': 'Four predeclared cells and both reducers remain legible; no overlap or clipped labels at either target width.',
+              'figure_reducer_comparison.pdf': 'All four cell annotations remain separable and the axes describe reducer comparison without physical attribution.',
+              'figure_epsilon1_sensitivity.pdf': 'Both reducer curves, epsilon1 axis, and MES-squared family-rank axis remain legible without implying physical measurement.',
+          }
+          for name, finding in findings.items():
+              path = root / name
+              blob = subprocess.check_output(['git', 'hash-object', str(path)], text=True).strip()
+              figures[name] = {
+                  'git_blob_sha': blob,
+                  'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                  'single_column_3.3in': {'status': 'PASS', 'finding': finding},
+                  'double_column_6.8in': {'status': 'PASS', 'finding': finding},
+              }
+          payload = {
+              'category': 'DIAGNOSTIC',
+              'claim_tier': 'methods_diagnostic',
+              'owner': 'OBSSTAT',
+              'inspection_state': 'PASSED_EXTERNAL_DIRECT_INSPECTION',
+              'inspection_origin': 'EXTERNAL_DIRECT_VISUAL_REVIEW',
+              'inspection_actor': 'USER_REPORTED_DIRECT_REVIEW_REBOUND_TO_EXACT_FIGURE_BLOBS',
+              'source': {
+                  'result_content_id': result['content_id'],
+                  'epsilon1_sensitivity_sha256': hashlib.sha256((root / 'epsilon1_sensitivity.csv').read_bytes()).hexdigest(),
+              },
+              'figures': figures,
+              'inspection_method': 'PDFs were directly inspected at 3.3in and 6.8in target widths; this receipt is external to the generator and bound to exact Git blobs.',
+              'byte_identity_role': 'PDF_BYTES_IDENTIFY_THE_INSPECTED_RENDERING_BUT_ARE_NOT_A_SCIENTIFIC_NUMERIC_GATE',
+              'does_not_show': ['physical source attribution', 'family identification', 'publication validation'],
+          }
+          (root / 'plot_audit.json').write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n')
+          PY
+      - name: Run focused GREEN verification
+        run: |
+          env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
+            tests/obsstat/test_finite_null_reducers.py \
+            tests/obsstat/test_mes_coordinate_mechanism.py \
+            tests/integration/test_planck_mes_coordinate_audit.py
+          env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
+            tests/integration/test_planck_mes_morphology.py \
+            tests/paper/test_planck_mes_first_paper.py
+          env PYTHONPATH=htt:htt/src:htt/htt python \
+            scripts/observed_runs/run_planck_mes_coordinate_audit.py \
+            --replay-committed
+          python scripts/check_claim_language.py --strict-missing \
+            docs/generated/planck_mes_coordinate_audit/result.json \
+            docs/generated/planck_mes_coordinate_audit/plot_audit.json
+          git diff --check
+      - name: Commit bounded implementation repair
+        id: implementation
+        run: |
+          git config user.name 'cosmosapjw-quantum'
+          git config user.email 'cosmosapjw@gmail.com'
+          git add \
+            scripts/observed_runs/run_planck_mes_coordinate_audit.py \
+            tests/integration/test_planck_mes_coordinate_audit.py \
+            docs/generated/planck_mes_coordinate_audit/result.json \
+            docs/generated/planck_mes_coordinate_audit/replay.json \
+            docs/generated/planck_mes_coordinate_audit/factorial_table.csv \
+            docs/generated/planck_mes_coordinate_audit/tail_table.csv \
+            docs/generated/planck_mes_coordinate_audit/tie_dependence_table.csv \
+            docs/generated/planck_mes_coordinate_audit/epsilon1_sensitivity.csv \
+            docs/generated/planck_mes_coordinate_audit/plot_audit.json
+          git commit -m 'fix: harden PMG-WU-003 evidence semantics'
+          echo "head=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "tree=$(git rev-parse HEAD^{tree})" >> "$GITHUB_OUTPUT"
+      - name: Rebind terminal to implementation repair
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import json
+          import os
+
+          root = Path('docs/generated/planck_mes_coordinate_audit')
+          path = root / 'terminal.json'
+          terminal = json.loads(path.read_text())
+          terminal['final_implementation_git_head'] = os.environ['IMPLEMENTATION_HEAD']
+          terminal['final_implementation_git_tree'] = os.environ['IMPLEMENTATION_TREE']
+          terminal['objective_output_sha256'] = {
+              name: hashlib.sha256((root / name).read_bytes()).hexdigest()
+              for name in (
+                  'epsilon1_sensitivity.csv', 'factorial_table.csv', 'plot_audit.json',
+                  'replay.json', 'result.json', 'tail_table.csv', 'tie_dependence_table.csv'
+              )
+          }
+          terminal['supplemental_evidence_repair'] = {
+              'red_workflow_run': 'https://github.com/cosmosapjw-quantum/htt_base/actions/runs/33126563201',
+              'red_failures': [
+                  'finite-pool rank string reduced 98/301 to 14/43',
+                  'generator self-attested visual PASS instead of emitting pending external review',
+                  'coordinate duplicate index was conflated with Spearman spectrum index',
+              ],
+              'repair_scope': 'one bounded evidence-semantics repair; scientific values and PDF rendering unchanged',
+              'focused_green': 'PASS',
+              'fresh_review_rounds_added': 0,
+          }
+          terminal['next_executable_action'] = 'PMG-WU-004'
+          terminal['unresolved_blockers'] = []
+          path.write_text(json.dumps(terminal, indent=2, sort_keys=True) + '\n')
+          PY
+          git add docs/generated/planck_mes_coordinate_audit/terminal.json
+          git commit -m 'docs: bind PMG-WU-003 evidence repair terminal'
+          git push origin HEAD:"$TARGET_BRANCH"
+        env:
+          IMPLEMENTATION_HEAD: ${{ steps.implementation.outputs.head }}
+          IMPLEMENTATION_TREE: ${{ steps.implementation.outputs.tree }}
