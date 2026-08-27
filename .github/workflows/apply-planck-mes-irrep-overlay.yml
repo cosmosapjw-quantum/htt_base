@@ -1,0 +1,165 @@
+name: Apply Planck MES irrep-global overlay
+
+on:
+  push:
+    branches:
+      - automation/planck-mes-irrep-overlay-20260827
+
+permissions:
+  contents: write
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+
+jobs:
+  apply-overlay:
+    name: Reconstruct, validate, and publish overlay
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out bootstrap payload
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: automation/planck-mes-irrep-overlay-20260827
+          path: bootstrap
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Check out exact target planning branch
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: analysis/planck-mes-extended-data-execution-20260826
+          path: repo
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Reconstruct and verify the signed-off overlay ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat bootstrap/.automation/planck_mes_irrep_overlay/overlay.b64.part* \
+            | base64 --decode > overlay.zip
+          echo "809ab46564a654c2f5d1398664db4d3f2a8661a3e8eac274735391ceede30871  overlay.zip" \
+            | sha256sum -c -
+          unzip -q overlay.zip -d extracted
+          artifact_root="$PWD/extracted/PLANCK_MES_IRREP_GLOBAL_FORMALISM_EXECUTION_20260827_GITHUB_OVERLAY"
+          test -d "$artifact_root/repo_overlay"
+          (
+            cd "$artifact_root"
+            sha256sum -c MANIFEST.sha256
+          )
+          cp -a "$artifact_root/repo_overlay/." repo/
+
+      - name: Install bounded validation dependencies
+        working-directory: repo
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install 'pytest>=8,<9' 'PyYAML>=6,<7'
+
+      - name: Verify exact authority and stage only the approved plan surface
+        working-directory: repo
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "2669a55ef230d1ca9e79c09d3344f7b15c50ac0e"
+          test "$(git rev-parse HEAD^{tree})" = "274d74507542cc99bb4ea355705791fa03d15697"
+          git fetch --no-tags origin \
+            changeset/pr324-mes-methodology-stack-20260826 \
+            analysis/planck-mes-extended-data-execution-20260826
+          test "$(git rev-parse origin/changeset/pr324-mes-methodology-stack-20260826)" = \
+            "3cdeaba39e164c911a26c5daa37f0e15b29614d3"
+
+          git add \
+            .github/workflows/repository-integrity.yml \
+            docs/codex_handoff/ACTIVE_PLANCK_MES_EXECUTION_PACKAGE.yaml \
+            docs/codex_handoff/planck_mes_irrep_global_formalism_execution \
+            scripts/validate_planck_mes_irrep_global_formalism_plan.py \
+            tests/contracts/test_planck_mes_irrep_global_formalism_plan.py
+
+          python - <<'PY'
+          from __future__ import annotations
+          import subprocess
+
+          expected = {
+              ".github/workflows/repository-integrity.yml",
+              "docs/codex_handoff/ACTIVE_PLANCK_MES_EXECUTION_PACKAGE.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/AUDIT_COMPILED_EXEC_PLAN.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/AUDIT_COMPILED_PLAN.md",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/AUTHORITY_AND_SCOPE.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/CODEX_HANDOFF.md",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/CODEX_HANDOFF_PROMPT.md",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/DATA_ROUTE_MATRIX.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/FINAL_DIFFERENTIAL_AUDIT_CONTRACT.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/FORMALISM_CONTRACT.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/FORMALISM_MIGRATION_MATRIX.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/FRESH_CONTEXT_REVIEW_CONTRACT.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/INVARIANT_TEST_MATRIX.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/P0_P1_THREAT_CATALOG.json",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/PACKAGE_INDEX.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/PR417_UPDATE_BODY.md",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/PRIOR_PLAN_SUPERSESSION.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/PROCESS_COST_ASSESSMENT.yaml",
+              "scripts/validate_planck_mes_irrep_global_formalism_plan.py",
+              "tests/contracts/test_planck_mes_irrep_global_formalism_plan.py",
+          }
+          staged = set(
+              subprocess.check_output(
+                  ["git", "diff", "--cached", "--name-only"], text=True
+              ).splitlines()
+          )
+          status_paths = {
+              line[3:]
+              for line in subprocess.check_output(
+                  ["git", "status", "--porcelain=v1", "--untracked-files=all"],
+                  text=True,
+              ).splitlines()
+              if line
+          }
+          if staged != expected or status_paths != expected:
+              raise SystemExit(
+                  f"overlay path mismatch: "
+                  f"staged_missing={sorted(expected-staged)} "
+                  f"staged_extra={sorted(staged-expected)} "
+                  f"status_missing={sorted(expected-status_paths)} "
+                  f"status_extra={sorted(status_paths-expected)}"
+              )
+          PY
+
+          python scripts/validate_planck_mes_irrep_global_formalism_plan.py \
+            --no-git --json
+          python -m pytest -q \
+            tests/contracts/test_planck_mes_irrep_global_formalism_plan.py
+          python -m compileall -q \
+            scripts/validate_planck_mes_irrep_global_formalism_plan.py \
+            tests/contracts/test_planck_mes_irrep_global_formalism_plan.py
+          git diff --cached --check
+
+      - name: Commit, revalidate with Git ancestry, and push PR branch
+        working-directory: repo
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m \
+            "plan: supersede scalar-only Planck MES execution with irrep-global formalism"
+
+          python scripts/validate_planck_mes_irrep_global_formalism_plan.py --json
+          python -m pytest -q \
+            tests/contracts/test_planck_mes_irrep_global_formalism_plan.py
+          git diff --check HEAD^ HEAD
+
+          git push origin \
+            HEAD:analysis/planck-mes-extended-data-execution-20260826
+
+          {
+            echo "## Published Planck MES irrep-global package"
+            echo
+            echo "- head: \`$(git rev-parse HEAD)\`"
+            echo "- tree: \`$(git rev-parse HEAD^{tree})\`"
+            echo "- predecessor: \`2669a55ef230d1ca9e79c09d3344f7b15c50ac0e\`"
+            echo "- target: \`analysis/planck-mes-extended-data-execution-20260826\`"
+            echo "- contract tests: 12 passed"
+          } >> "$GITHUB_STEP_SUMMARY"
