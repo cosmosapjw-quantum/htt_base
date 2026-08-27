@@ -29,6 +29,7 @@ def _copy_minimal_root(tmp_path: Path) -> Path:
     for rel in (
         validator.ACTIVE_POINTER_REL,
         validator.WORKFLOW_REL,
+        validator.ARCHITECTURE_COMPAT_REL,
         Path("scripts/validate_planck_mes_irrep_global_formalism_plan.py"),
         Path("tests/contracts/test_planck_mes_irrep_global_formalism_plan.py"),
     ):
@@ -47,6 +48,12 @@ def test_active_package_validates_without_git() -> None:
     assert result["P0"] == 11
     assert result["P1"] == 14
     assert result["migration_paths"] == len(validator.REQUIRED_MIGRATION_PATHS)
+
+
+def test_architecture_compatibility_contract_is_required_and_allowed() -> None:
+    assert str(validator.ARCHITECTURE_COMPAT_REL) in validator.PLAN_ONLY_ALLOWED
+    assert (ROOT / validator.ARCHITECTURE_COMPAT_REL).is_file()
+    assert (ROOT / "scripts/architecture/test_import_boundaries.py").is_file()
 
 
 def test_active_pointer_mutation_is_rejected(tmp_path: Path) -> None:
@@ -151,6 +158,7 @@ def test_workflow_must_consume_the_package(tmp_path: Path) -> None:
     path.write_text(text, encoding="utf-8")
     with pytest.raises(validator.PlanValidationError, match="workflow"):
         validator.validate_package(root, check_git=False)
+
 
 def test_tail_registry_mutation_is_rejected(tmp_path: Path) -> None:
     root = _copy_minimal_root(tmp_path)
