@@ -1,0 +1,35 @@
+schema: htt.planck_mes_pmg_wu002_transition.validator_contract.v1
+validator: scripts/validate_planck_mes_pmg_wu002_transition.py
+purpose:
+- validate this package's file and schema integrity
+- validate the WU-001 terminal's minimum transition fields when run in a checkout
+- classify a proposed PMG-WU-002 changed-path list
+- reject process-only, mixed-work-unit, raw-data, and undeclared-path diffs
+trusted_boundary:
+- Python 3 standard library
+- PyYAML
+- Git object identity when --check-git is requested
+- the exact WU-001 source commit and terminal path
+candidate_diff_contract:
+  command: git diff --name-only ${PMG_WU002_BASE_SHA:?set accepted base sha}..HEAD | python scripts/validate_planck_mes_pmg_wu002_transition.py --changed-paths -
+  allowed_paths:
+  - htt/src/common/mes_premise_normalization.py
+  - htt/src/common/response_bound_observable_state.py
+  - htt/src/common/joint_anisotropy_state.py
+  - htt/src/common/mes_directional_state.py
+  - htt/obsstat/mes_directional_moments.py
+  - htt/src/common/orbit_catalogue_v3.py
+  - tests/contracts/test_global_formalism_boundaries.py
+  - tests/contracts/test_mes_premise_normalization.py
+  - tests/contracts/test_response_bound_observable_state.py
+  - tests/architecture/test_import_boundaries.py
+  - docs/generated/planck_mes_irrep_formalism/wu002_terminal.json
+  - docs/generated/planck_mes_irrep_formalism/migration_status.json
+  required_objective_paths:
+  - docs/generated/planck_mes_irrep_formalism/wu002_terminal.json
+  - docs/generated/planck_mes_irrep_formalism/migration_status.json
+  required_implementation_categories:
+  - at least one production module
+  - at least one focused test
+  - both objective artifacts
+non_goal: This validator does not replace the active global plan validator or certify scientific correctness. It validates only the PMG-WU-002 transition and scope.
