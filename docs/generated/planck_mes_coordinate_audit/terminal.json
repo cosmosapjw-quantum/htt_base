@@ -1,13 +1,28 @@
 {
+  "base_git_head": "435b1e370a242a8aad4647713f15b7dcf8aae185",
   "claim_promotion": false,
-  "figure_byte_identity_role": "NOT_A_SCIENTIFIC_GATE",
-  "figure_outputs": [
-    "figure_epsilon1_sensitivity.pdf",
-    "figure_factorial_ladder.pdf",
-    "figure_reducer_comparison.pdf"
+  "executed_commands": [
+    "python -m pytest -q -p no:cacheprovider tests/obsstat/test_finite_null_reducers.py tests/obsstat/test_mes_coordinate_mechanism.py tests/integration/test_planck_mes_coordinate_audit.py",
+    "python -m pytest -q -p no:cacheprovider tests/integration/test_planck_mes_morphology.py tests/paper/test_planck_mes_first_paper.py",
+    "python scripts/observed_runs/run_planck_mes_coordinate_audit.py --replay-committed",
+    "python scripts/check_claim_language.py --strict-missing docs/generated/planck_mes_coordinate_audit/result.json",
+    "pdftoppm at 130 DPI to 3.3in and 6.8in widths plus direct visual inspection"
   ],
+  "figure_byte_identity_role": "NOT_A_SCIENTIFIC_GATE",
+  "figure_outputs": ["figure_epsilon1_sensitivity.pdf", "figure_factorial_ladder.pdf", "figure_reducer_comparison.pdf"],
+  "final_implementation_git_head": "e58df3265ce599f6fcfb6269e38b29c218955997",
+  "final_implementation_git_tree": "1772d1ad45e495c2bbdd05e8d2f268c5b03364bd",
   "format": "PLANCK_MES_COORDINATE_MECHANISM_TERMINAL_V1",
-  "next_executable_action": "FRESH_READ_ONLY_REVIEW",
+  "fresh_review": {
+    "initial_verdict": "BLOCKED_BY_P1",
+    "P0": 0,
+    "P1": 3,
+    "receipt_path": ".agent-harness/runs/pmg-wu003-fresh-review-20260828/results/PMG-WU-003-FRESH-REVIEW.json",
+    "receipt_sha256": "9096af9020254b0b911405531ed1d7859cb7ab9f5eaa85a8d909bdfed386d5d1",
+    "repair_rounds_used": 1,
+    "repair_status": "ALL_THREE_FINDINGS_CLOSED_BY_TARGETED_HOST_VERIFICATION"
+  },
+  "next_executable_action": "PMG-WU-004",
   "objective_output_sha256": {
     "epsilon1_sensitivity.csv": "8a17d89e5582d862aa7d1926825e57eb51c0b760ab45d06cfbe7af63fcd670f6",
     "factorial_table.csv": "3670954711c7eb2d1d172dcb61d8ff784b8c98cd0270734570c0826ca9574db7",
@@ -18,9 +33,16 @@
     "tie_dependence_table.csv": "5fb3308424a506d6bb27d9233877bece7a493332930f93b0ecef020c284d227a"
   },
   "raw_data_read_or_mutated": false,
-  "state": "EXECUTED_PENDING_REVIEW",
-  "unresolved_blockers": [
-    "FRESH_READ_ONLY_REVIEW_PENDING"
-  ],
+  "science_execution_performed": true,
+  "state": "SUCCEEDED",
+  "test_results": {
+    "objective_and_negative": "10 passed",
+    "Planck_and_paper_regression": "17 passed",
+    "replay": "PASS",
+    "claim_language": "PASS",
+    "exact_ECDF_oracle": "PASS",
+    "two_width_figure_inspection": "PASS"
+  },
+  "unresolved_blockers": [],
   "work_unit": "PMG-WU-003"
 }
