@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import importlib
 import json
 from pathlib import Path
@@ -17,6 +18,10 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 
+def _sha(label: str) -> str:
+    return "sha256:" + hashlib.sha256(label.encode("utf-8")).hexdigest()
+
+
 def _observable_api():
     try:
         return importlib.import_module("common.observable_irrep_state")
@@ -30,23 +35,30 @@ def _observable_api():
 
 def _observable_state():
     api = _observable_api()
-    block = api.ObservableIrrepBlock(
-        ell=2,
-        spin=0,
-        representation="CARTESIAN_STF2_5",
-        parity="EVEN",
+    carrier = api.ObservableIrrepCarrier(
+        components=tuple(float(index) for index in range(1, 33)),
+        frame="GALACTIC",
+        basis="ORTHONORMAL_CONDON_SHORTLEY_REAL_L2_L5_V1",
+        units="microK_CMB",
+        source_identity=_sha("observer-row-source"),
+        operator_identity=_sha("observer-operator"),
+        row_identity="SMICA_OBSERVED",
+    )
+    harmonic = api.build_real_harmonic_irrep_block(carrier=carrier, ell=2)
+    block = api.build_cartesian_stf_irrep_block(
+        parent=harmonic,
         components=(1.0, -2.0, 3.0, -4.0, 5.0),
-        support_kind="REGISTERED_STF_PROJECTION",
-        support_identity="sha256:test-observer-stf2-projection",
+        basis="CARTESIAN_STF2_5_ORTHONORMAL_V1",
+        projection_identity=_sha("observer-stf2-projection"),
     )
     return api, api.ObservableIrrepState(
         blocks=(block,),
-        frame="GALACTIC",
-        basis="STF5_CARTESIAN_ORTHONORMAL",
-        units="microK_CMB",
-        source_identity="sha256:observer-row",
-        operator_identity="sha256:observer-operator",
-        row_identity="SMICA_OBSERVED",
+        frame=block.support.frame,
+        basis=block.support.basis,
+        units=block.support.units,
+        source_identity=block.support.source_identity,
+        operator_identity=block.support.operator_identity,
+        row_identity=block.support.row_identity,
     )
 
 
@@ -79,15 +91,14 @@ def test_scalar_refusal_at_observable_global_boundary() -> None:
     """Catch a scalar MES ceiling being treated as directional support."""
 
     api = _observable_api()
-    with pytest.raises(api.ObservableIrrepStateError, match="components"):
-        api.ObservableIrrepBlock(
-            ell=3,
-            spin=0,
-            representation="CARTESIAN_STF3_7",
-            parity="ODD",
-            components=0.2458,
-            support_kind="REGISTERED_STF_PROJECTION",
-            support_identity="sha256:direct-scalar-must-still-fail",
+    with pytest.raises(api.ObservableIrrepStateError, match="carrier"):
+        api.build_real_harmonic_irrep_block(carrier=0.2458, ell=3)
+    with pytest.raises(api.ObservableIrrepStateError, match="parent"):
+        api.build_cartesian_stf_irrep_block(
+            parent=0.2458,
+            components=(0.2458, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+            basis="CARTESIAN_STF3_7_ORTHONORMAL_V1",
+            projection_identity=_sha("scalar-must-not-project"),
         )
 
 
@@ -121,10 +132,7 @@ def test_migration_coverage_inventory_matches_declared_paths() -> None:
     matrix = yaml.safe_load(matrix_path.read_text(encoding="utf-8"))
     status = json.loads(status_path.read_text(encoding="utf-8"))
 
-    expected = {
-        row["path"]: row["work_unit"]
-        for row in matrix["rows"]
-    }
+    expected = {row["path"]: row["work_unit"] for row in matrix["rows"]}
     observed = {row["path"]: row for row in status["rows"]}
     assert observed.keys() == expected.keys()
     assert len(observed) == 22
@@ -140,7 +148,10 @@ def test_migration_coverage_inventory_matches_declared_paths() -> None:
             "PENDING_ORDERED_WORK_UNIT",
         }
     assert observed["htt/src/common/observable_irrep_state.py"]["status"] == "MIGRATED"
-    assert observed["scripts/observed_runs/run_planck_mes_morphology.py"]["status"] == "FROZEN_WITH_GUARD"
+    assert (
+        observed["scripts/observed_runs/run_planck_mes_morphology.py"]["status"]
+        == "FROZEN_WITH_GUARD"
+    )
     assert observed["tests/architecture/test_import_boundaries.py"]["status"] == "ADAPTED"
 
 
