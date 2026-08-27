@@ -46,6 +46,13 @@ class ObservableIrrepAvailability(StrEnum):
     ABSENT = "ABSENT"
 
 
+class ObservableIrrepSupportKind(StrEnum):
+    """Registered non-scalar support used to construct one irrep block."""
+
+    REAL_HARMONIC_CARRIER = "REAL_HARMONIC_CARRIER"
+    REGISTERED_STF_PROJECTION = "REGISTERED_STF_PROJECTION"
+
+
 OBSERVABLE_IRREP_SEMANTIC_LAYER = "OBSERVER_DATA_SPACE"
 OBSERVABLE_IRREP_CLAIM_CEILING = "diagnostic_only_observer_space"
 OBSERVABLE_IRREP_ALLOWED_USE = (
@@ -101,6 +108,30 @@ _REPRESENTATION_CONTRACT: Mapping[
         0,
         ObservableIrrepParity.ODD,
         11,
+    ),
+}
+
+_REPRESENTATION_SUPPORT: Mapping[
+    ObservableIrrepRepresentation,
+    ObservableIrrepSupportKind,
+] = {
+    ObservableIrrepRepresentation.REAL_SPHERICAL_HARMONIC_5: (
+        ObservableIrrepSupportKind.REAL_HARMONIC_CARRIER
+    ),
+    ObservableIrrepRepresentation.CARTESIAN_STF2_5: (
+        ObservableIrrepSupportKind.REGISTERED_STF_PROJECTION
+    ),
+    ObservableIrrepRepresentation.REAL_SPHERICAL_HARMONIC_7: (
+        ObservableIrrepSupportKind.REAL_HARMONIC_CARRIER
+    ),
+    ObservableIrrepRepresentation.CARTESIAN_STF3_7: (
+        ObservableIrrepSupportKind.REGISTERED_STF_PROJECTION
+    ),
+    ObservableIrrepRepresentation.REAL_SPHERICAL_HARMONIC_9: (
+        ObservableIrrepSupportKind.REAL_HARMONIC_CARRIER
+    ),
+    ObservableIrrepRepresentation.REAL_SPHERICAL_HARMONIC_11: (
+        ObservableIrrepSupportKind.REAL_HARMONIC_CARRIER
     ),
 }
 
@@ -235,6 +266,8 @@ class ObservableIrrepBlock:
     representation: ObservableIrrepRepresentation | str
     parity: ObservableIrrepParity | str
     components: IrrepComponents
+    support_kind: ObservableIrrepSupportKind | str | None = None
+    support_identity: str | None = None
     _identity_seal: str = field(init=False, repr=False, compare=False)
 
     schema: ClassVar[str] = "HTT_OBSERVABLE_IRREP_BLOCK_V1"
@@ -248,6 +281,11 @@ class ObservableIrrepBlock:
             "representation",
         )
         parity = _enum(self.parity, ObservableIrrepParity, "parity")
+        support_kind = _enum(
+            self.support_kind,
+            ObservableIrrepSupportKind,
+            "support_kind",
+        )
         expected_ell, expected_spin, expected_parity, dimension = (
             _REPRESENTATION_CONTRACT[representation]  # type: ignore[index]
         )
@@ -263,6 +301,11 @@ class ObservableIrrepBlock:
             raise ObservableIrrepStateError(
                 "parity does not match the registered representation"
             )
+        expected_support_kind = _REPRESENTATION_SUPPORT[representation]  # type: ignore[index]
+        if support_kind is not expected_support_kind:
+            raise ObservableIrrepStateError(
+                "support_kind does not match the registered representation"
+            )
         if type(self.components) is ObservableIrrepAbsence:
             components: IrrepComponents = self.components
         else:
@@ -272,6 +315,12 @@ class ObservableIrrepBlock:
         object.__setattr__(self, "representation", representation)
         object.__setattr__(self, "parity", parity)
         object.__setattr__(self, "components", components)
+        object.__setattr__(self, "support_kind", support_kind)
+        object.__setattr__(
+            self,
+            "support_identity",
+            _text(self.support_identity, "support_identity"),
+        )
         object.__setattr__(
             self,
             "_identity_seal",
@@ -300,6 +349,8 @@ class ObservableIrrepBlock:
             "representation": self.representation.value,
             "schema": self.schema,
             "spin": self.spin,
+            "support_identity": self.support_identity,
+            "support_kind": self.support_kind.value,
         }
 
     def _assert_identity_sealed(self) -> None:
@@ -328,6 +379,8 @@ class ObservableIrrepBlock:
                 "representation",
                 "schema",
                 "spin",
+                "support_identity",
+                "support_kind",
             },
             name="block payload",
         )
@@ -358,6 +411,8 @@ class ObservableIrrepBlock:
             representation=payload["representation"],  # type: ignore[arg-type]
             parity=payload["parity"],  # type: ignore[arg-type]
             components=components,  # type: ignore[arg-type]
+            support_kind=payload["support_kind"],  # type: ignore[arg-type]
+            support_identity=payload["support_identity"],  # type: ignore[arg-type]
         )
         if payload["content_id"] != block.content_id:
             raise ObservableIrrepStateError(
@@ -527,6 +582,7 @@ __all__ = [
     "ObservableIrrepBlock",
     "ObservableIrrepParity",
     "ObservableIrrepRepresentation",
+    "ObservableIrrepSupportKind",
     "ObservableIrrepState",
     "ObservableIrrepStateError",
     "observable_irrep_state_from_payload",

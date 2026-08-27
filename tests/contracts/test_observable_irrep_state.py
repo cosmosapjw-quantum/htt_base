@@ -35,6 +35,8 @@ def _available_block(api, *, ell: int = 2):
             representation="REAL_SPHERICAL_HARMONIC_5",
             parity="EVEN",
             components=(1.0, -2.0, 3.0, -4.0, 5.0),
+            support_kind="REAL_HARMONIC_CARRIER",
+            support_identity="sha256:test-real-harmonic-carrier-l2",
         )
     return api.ObservableIrrepBlock(
         ell=3,
@@ -42,6 +44,8 @@ def _available_block(api, *, ell: int = 2):
         representation="REAL_SPHERICAL_HARMONIC_7",
         parity="ODD",
         components=(1.0, -2.0, 3.0, -4.0, 5.0, -6.0, 7.0),
+        support_kind="REAL_HARMONIC_CARRIER",
+        support_identity="sha256:test-real-harmonic-carrier-l3",
     )
 
 
@@ -104,6 +108,8 @@ def test_representation_refuses_wrong_ell_spin_parity_or_dimension(
         "representation": "REAL_SPHERICAL_HARMONIC_5",
         "parity": "EVEN",
         "components": (1.0, -2.0, 3.0, -4.0, 5.0),
+        "support_kind": "REAL_HARMONIC_CARRIER",
+        "support_identity": "sha256:test-real-harmonic-carrier-l2",
     }
     kwargs.update(overrides)
     with pytest.raises(api.ObservableIrrepStateError, match=message):
@@ -124,6 +130,8 @@ def test_typed_absence_roundtrips_without_a_numeric_fallback() -> None:
         representation="CARTESIAN_STF3_7",
         parity="ODD",
         components=absence,
+        support_kind="REGISTERED_STF_PROJECTION",
+        support_identity="sha256:test-stf3-degenerate-projection",
     )
     state = _state(api, block)
 
@@ -149,6 +157,8 @@ def test_scalar_refusal_and_physical_claim_refusal_are_fail_closed() -> None:
             representation="CARTESIAN_STF2_5",
             parity="EVEN",
             components=74 / 301,
+            support_kind="REGISTERED_STF_PROJECTION",
+            support_identity="sha256:direct-scalar-must-still-fail",
         )
     with pytest.raises(api.ObservableIrrepStateError, match="blocks"):
         api.ObservableIrrepState(
@@ -167,6 +177,8 @@ def test_scalar_refusal_and_physical_claim_refusal_are_fail_closed() -> None:
             representation="PHYSICAL_SHEAR_STF2",
             parity="EVEN",
             components=(1.0, 2.0, 3.0, 4.0, 5.0),
+            support_kind="REGISTERED_STF_PROJECTION",
+            support_identity="sha256:forbidden-physical-label",
         )
 
     payload = _state(api).to_payload()
@@ -178,6 +190,31 @@ def test_scalar_refusal_and_physical_claim_refusal_are_fail_closed() -> None:
     payload["physical_source"] = "vorticity"
     with pytest.raises(api.ObservableIrrepStateError, match="keys"):
         api.observable_irrep_state_from_payload(payload)
+
+
+def test_dimension_correct_scalar_padding_cannot_claim_irrep_support() -> None:
+    """Catch a scalar padded to five numbers and relabelled as an STF block."""
+
+    api = _api()
+    scalar_anchor = 74 / 301
+    with pytest.raises(api.ObservableIrrepStateError, match="support_kind"):
+        api.ObservableIrrepBlock(
+            ell=2,
+            spin=0,
+            representation="CARTESIAN_STF2_5",
+            parity="EVEN",
+            components=(scalar_anchor, 0.0, 0.0, 0.0, 0.0),
+        )
+    with pytest.raises(api.ObservableIrrepStateError, match="support"):
+        api.ObservableIrrepBlock(
+            ell=2,
+            spin=0,
+            representation="CARTESIAN_STF2_5",
+            parity="EVEN",
+            components=(scalar_anchor, 0.0, 0.0, 0.0, 0.0),
+            support_kind="SCALAR_ONLY",
+            support_identity="sha256:mes-scalar-padding",
+        )
 
 
 def test_block_and_state_are_frozen_and_detect_identity_drift() -> None:

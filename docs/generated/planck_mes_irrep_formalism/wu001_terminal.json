@@ -4,7 +4,7 @@
   "executed_test_commands": [
     {
       "command": "python -m pytest -q tests/contracts/test_observable_irrep_state.py",
-      "result": "8 passed",
+      "result": "9 passed",
       "status": "PASS"
     },
     {
@@ -26,6 +26,18 @@
       "command": "PYTHONPATH=htt:htt/src python -m pytest -q tests/architecture/test_import_boundaries.py",
       "result": "5 passed",
       "status": "PASS"
+    },
+    {
+      "command": "python scripts/validate_planck_mes_irrep_global_formalism_plan.py",
+      "execution_phase": "precondition_at_base_80781295",
+      "result": "PASS",
+      "status": "PASS_PRECONDITION_ONLY"
+    },
+    {
+      "command": "python scripts/validate_planck_mes_irrep_global_formalism_plan.py",
+      "execution_phase": "post_candidate_diagnostic",
+      "result": "exit 1: planning-only git allowlist refuses implementation paths",
+      "status": "EXPECTED_PLANNING_SCOPE_REFUSAL"
     }
   ],
   "frozen_scalar_rank_numerators": {
@@ -38,7 +50,7 @@
   },
   "implementation_branch": "changeset/planck-mes-observable-irrep-state-20260827",
   "invariant_results": {
-    "PMG-INV-ACTIVE-PACKAGE": "PASS",
+    "PMG-INV-ACTIVE-PACKAGE": "PASS_AT_PRECONDITION_BASE_ONLY",
     "PMG-INV-LEGACY-IMMUTABLE": "PASS",
     "PMG-INV-MIGRATION-COVERAGE": "PASS",
     "PMG-INV-NO-SCALAR-FABRICATION": "PASS",
@@ -51,6 +63,11 @@
   "minimum_coordinate": "multipole_l3_absdot_0",
   "minimum_coordinate_rank_numerator": 16,
   "next_executable_action": "PMG-WU-002",
+  "post_candidate_plan_validator": {
+    "command": "python scripts/validate_planck_mes_irrep_global_formalism_plan.py",
+    "exit_code": 1,
+    "status": "EXPECTED_PLANNING_SCOPE_REFUSAL"
+  },
   "objective_output_paths": [
     "htt/src/common/observable_irrep_state.py",
     "tests/contracts/test_observable_irrep_state.py",
@@ -67,8 +84,8 @@
   "science_execution_performed": false,
   "state": "SUCCEEDED",
   "tdd": {
-    "green": "8 targeted ObservableIrrepState contract tests passed",
-    "red": "public API absence produced the expected focused assertion failure"
+    "green": "9 targeted ObservableIrrepState contract tests and the terminal-evidence regression passed",
+    "red": "public API absence, dimension-correct scalar padding, and the unscoped active-package PASS each produced focused failures before implementation"
   },
   "unresolved_blockers": [],
   "work_unit": "PMG-WU-001"

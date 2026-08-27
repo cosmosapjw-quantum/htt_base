@@ -36,6 +36,8 @@ def _observable_state():
         representation="CARTESIAN_STF2_5",
         parity="EVEN",
         components=(1.0, -2.0, 3.0, -4.0, 5.0),
+        support_kind="REGISTERED_STF_PROJECTION",
+        support_identity="sha256:test-observer-stf2-projection",
     )
     return api, api.ObservableIrrepState(
         blocks=(block,),
@@ -84,6 +86,8 @@ def test_scalar_refusal_at_observable_global_boundary() -> None:
             representation="CARTESIAN_STF3_7",
             parity="ODD",
             components=0.2458,
+            support_kind="REGISTERED_STF_PROJECTION",
+            support_identity="sha256:direct-scalar-must-still-fail",
         )
 
 
@@ -162,6 +166,14 @@ def test_wu001_terminal_records_enabling_output_and_exact_transition() -> None:
     assert terminal["raw_data_read_or_mutated"] is False
     assert terminal["replay_status"] == "MATCH_FROZEN_BASELINE"
     assert terminal["next_executable_action"] == "PMG-WU-002"
+    assert terminal["invariant_results"]["PMG-INV-ACTIVE-PACKAGE"] == (
+        "PASS_AT_PRECONDITION_BASE_ONLY"
+    )
+    assert terminal["post_candidate_plan_validator"] == {
+        "command": "python scripts/validate_planck_mes_irrep_global_formalism_plan.py",
+        "exit_code": 1,
+        "status": "EXPECTED_PLANNING_SCOPE_REFUSAL",
+    }
     assert terminal["frozen_scalar_rank_numerators"] == {
         "ANCHORS_ONLY_2": 78,
         "EPS_REDUCED_10": 109,
