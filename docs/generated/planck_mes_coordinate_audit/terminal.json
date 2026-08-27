@@ -37,12 +37,19 @@
     "tie_dependence_table.csv": "9c9eb809854ba25d3f91b5fb6db40890cf81cbb151850321eb3c19c0167c24b2"
   },
   "raw_data_read_or_mutated": false,
+  "remote_readback": {
+    "repository_final_head_role": "THIS_READBACK_COMMIT_EXCLUDED_TO_AVOID_SELF_REFERENCE",
+    "status": "MATCH",
+    "verified_parent_head": "bc69fb0c2738dec3874b646def54a5f45443f980",
+    "verified_parent_tree": "39568d7b5fd371531cb35bca2c9131bb497141ef"
+  },
   "replay_status": "MATCH",
   "science_execution_performed": true,
   "state": "SUCCEEDED",
   "supplemental_evidence_repair": {
     "focused_green": "PASS",
     "fresh_review_rounds_added": 0,
+    "green_workflow_run": "https://github.com/cosmosapjw-quantum/htt_base/actions/runs/33127605382",
     "nonblocking_portability_finding": "Legacy pooled-covariance diagnostic JSON is NumPy-version-sensitive; NumPy 2.5 reproduces a diagnostic-only replay mismatch outside the changed paths. Frozen finite rank and package identity remain exact.",
     "red_failures": [
       "finite-pool rank string reduced 98/301 to 14/43",
@@ -50,7 +57,8 @@
       "coordinate duplicate index was conflated with Spearman spectrum index"
     ],
     "red_workflow_run": "https://github.com/cosmosapjw-quantum/htt_base/actions/runs/33126563201",
-    "repair_scope": "one bounded evidence-semantics repair; scientific values and PDF rendering unchanged"
+    "repair_scope": "one bounded evidence-semantics repair; scientific values and PDF rendering unchanged",
+    "risk_scoped_green": "11 changed-surface tests, 9 paper tests, frozen 98/301 and package identity assertions, committed replay, strict claim-language check, and git diff check passed"
   },
   "test_results": {
     "Planck_and_paper_regression": "17 passed",
