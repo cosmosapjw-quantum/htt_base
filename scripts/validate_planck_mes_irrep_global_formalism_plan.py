@@ -21,6 +21,7 @@ PACKAGE_ID = "PLANCK_MES_IRREP_GLOBAL_FORMALISM_EXECUTION_20260827"
 PACKAGE_REL = Path("docs/codex_handoff/planck_mes_irrep_global_formalism_execution")
 ACTIVE_POINTER_REL = Path("docs/codex_handoff/ACTIVE_PLANCK_MES_EXECUTION_PACKAGE.yaml")
 WORKFLOW_REL = Path(".github/workflows/repository-integrity.yml")
+ARCHITECTURE_COMPAT_REL = Path("tests/architecture/test_import_boundaries.py")
 EXPECTED_WUS = [f"PMG-WU-{index:03d}" for index in range(1, 10)]
 FORBIDDEN_OLD_WUS = [f"PED-WU-{index:03d}" for index in range(1, 5)]
 
@@ -49,6 +50,7 @@ VALIDATION_FILES = {
 PLAN_ONLY_ALLOWED = {
     *(str(PACKAGE_REL / name) for name in PACKAGE_FILES),
     str(ACTIVE_POINTER_REL),
+    str(ARCHITECTURE_COMPAT_REL),
     *VALIDATION_FILES,
     str(WORKFLOW_REL),
 }
@@ -551,6 +553,8 @@ def validate_package(root: Path, *, check_git: bool = True) -> dict[str, object]
     for rel in VALIDATION_FILES:
         if not (root / rel).is_file():
             fail(f"validation file missing: {rel}")
+    if not (root / ARCHITECTURE_COMPAT_REL).is_file():
+        fail(f"architecture compatibility contract missing: {ARCHITECTURE_COMPAT_REL}")
 
     if check_git:
         if run_git(root, "rev-parse", f"origin/{BASE_BRANCH}") != BASE_SHA:
