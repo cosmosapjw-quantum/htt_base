@@ -95,7 +95,7 @@ def _scan_cells(cells: dict[str, np.ndarray]) -> tuple[dict, list[dict]]:
         for cell_id in FACTORIAL_CELL_IDS:
             scan = reducer(cells[cell_id], ALL_TWO_SIDED)
             record = {
-                "global_rank": _fraction(scan.global_p),
+                "global_rank": f"{scan.global_exceedances_including_observation}/301",
                 "global_rank_numerator": scan.global_exceedances_including_observation,
                 "local_rank_numerators": [_pool_numerator(value) for value in scan.local_p],
                 "rank_denominator": 301,
@@ -214,7 +214,25 @@ def build(output: Path) -> dict:
             "coordinate_duplicate_counts": duplicates,
         }
         for column in range(matrix.shape[1]):
-            tie_rows.append({"cell": cell_id, "coordinate_index": column, "duplicate_count": duplicates[column], "spearman_eigenvalue_descending": float(eigenvalues[column]), "spearman_participation_ratio": participation})
+            tie_rows.append({
+                "cell": cell_id,
+                "diagnostic_kind": "coordinate_duplicate_count",
+                "coordinate_index": column,
+                "spectrum_index": "",
+                "duplicate_count": duplicates[column],
+                "spearman_eigenvalue_descending": "",
+                "spearman_participation_ratio": participation,
+            })
+        for spectrum_index, eigenvalue in enumerate(eigenvalues):
+            tie_rows.append({
+                "cell": cell_id,
+                "diagnostic_kind": "spearman_eigenvalue",
+                "coordinate_index": "",
+                "spectrum_index": spectrum_index,
+                "duplicate_count": "",
+                "spearman_eigenvalue_descending": float(eigenvalue),
+                "spearman_participation_ratio": participation,
+            })
     _write_csv(output / "tie_dependence_table.csv", tie_rows)
     _plots(output, factorial, epsilon_rows)
     frozen = json.loads(FROZEN_RESULT.read_text())
@@ -247,12 +265,30 @@ def build(output: Path) -> dict:
     _write_json(output / "result.json", result)
     figure_audits = {
         name: {
-            "single_column_3.3in": "PASS_LEGIBLE_AND_SEMANTICALLY_CORRECT_20260828",
-            "double_column_6.8in": "PASS_LEGIBLE_AND_SEMANTICALLY_CORRECT_20260828",
+            "single_column_3.3in": {"status": "PENDING"},
+            "double_column_6.8in": {"status": "PENDING"},
         }
         for name in sorted(path.name for path in output.glob("*.pdf"))
     }
-    _write_json(output / "plot_audit.json", {"category": "DIAGNOSTIC", "claim_tier": "methods_diagnostic", "owner": "OBSSTAT", "source": {"result_content_id": result["content_id"], "epsilon1_sensitivity_sha256": _sha(output / "epsilon1_sensitivity.csv")}, "figures": figure_audits, "inspection_method": "PDF rasterized at 130 DPI to 3.3in and 6.8in target widths; each figure inspected for labels, clipping, and semantic agreement with source tables", "byte_identity_role": "PDF_BYTES_NOT_A_SCIENTIFIC_GATE", "does_not_show": ["physical source attribution", "family identification", "publication validation"]})
+    _write_json(output / "plot_audit.json", {
+        "category": "DIAGNOSTIC",
+        "claim_tier": "methods_diagnostic",
+        "owner": "OBSSTAT",
+        "inspection_state": "PENDING_EXTERNAL_DIRECT_INSPECTION",
+        "inspection_origin": "GENERATOR_CANNOT_SELF_ATTEST_VISUAL_REVIEW",
+        "source": {
+            "result_content_id": result["content_id"],
+            "epsilon1_sensitivity_sha256": _sha(output / "epsilon1_sensitivity.csv"),
+        },
+        "figures": figure_audits,
+        "inspection_method": "External direct inspection is required at 3.3in and 6.8in target widths.",
+        "byte_identity_role": "PDF_BYTES_NOT_A_SCIENTIFIC_GATE",
+        "does_not_show": [
+            "physical source attribution",
+            "family identification",
+            "publication validation",
+        ],
+    })
     replay = {"format": "PLANCK_MES_COORDINATE_MECHANISM_REPLAY_V1", "result_content_id": result["content_id"], "source_npz_sha256": SOURCE_NPZ_SHA256, "frozen_result_sha256": FROZEN_RESULT_SHA256, "status": "PASS"}
     _write_json(output / "replay.json", replay)
     terminal = {"format": "PLANCK_MES_COORDINATE_MECHANISM_TERMINAL_V1", "state": "EXECUTED_PENDING_REVIEW", "work_unit": "PMG-WU-003", "objective_output_sha256": {path.name: _sha(path) for path in output.iterdir() if path.suffix != ".pdf"}, "figure_outputs": sorted(path.name for path in output.glob("*.pdf")), "figure_byte_identity_role": "NOT_A_SCIENTIFIC_GATE", "claim_promotion": False, "raw_data_read_or_mutated": False, "next_executable_action": "FRESH_READ_ONLY_REVIEW", "unresolved_blockers": ["FRESH_READ_ONLY_REVIEW_PENDING"]}
@@ -266,7 +302,7 @@ def replay_committed() -> None:
         candidate = Path(tmp) / "audit"; build(candidate)
         for path in candidate.iterdir():
             committed = DEFAULT_OUTPUT / path.name
-            if path.suffix in {".pdf"} or path.name == "terminal.json": continue
+            if path.suffix in {".pdf"} or path.name in {"terminal.json", "plot_audit.json"}: continue
             if path.read_bytes() != committed.read_bytes(): raise RuntimeError(f"committed replay drifted: {path.name}")
 
 
