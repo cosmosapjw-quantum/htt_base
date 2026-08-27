@@ -202,6 +202,28 @@ def build_orbit_type_acceptance(
     )
 
 
+def require_exact_joint_anisotropy_state(value: object) -> JointAnisotropyState:
+    """Replay and return only the exact physical joint-state type.
+
+    Observer/data-space states and duck-typed payloads are refused.  This guard
+    does not provide an observable-to-physical adapter.
+    """
+
+    if type(value) is not JointAnisotropyState:
+        raise TypeError("value must be an exact JointAnisotropyState")
+    try:
+        replayed = JointAnisotropyState.from_payload(value.to_payload())
+    except (AttributeError, JointAnisotropyStateError) as exc:
+        raise JointAnisotropyStateError(
+            "joint anisotropy state failed canonical physical replay"
+        ) from exc
+    if replayed.content_id != value.content_id:
+        raise JointAnisotropyStateError(
+            "joint anisotropy state content identity drifted"
+        )
+    return replayed
+
+
 __all__ = [
     *_v1.__all__,
     "ORBIT_TYPE_GENERIC_COMPLETENESS_STATUS",

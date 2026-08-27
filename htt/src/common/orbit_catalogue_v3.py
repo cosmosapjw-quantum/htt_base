@@ -31,6 +31,7 @@ from common.joint_anisotropy_state import (
     JointAnisotropyStateError,
     MissingComponent,
     apply_o3_action,
+    require_exact_joint_anisotropy_state,
 )
 from common.orbit_catalogue_v2 import (
     OrbitCatalogueV2Report,
@@ -1187,16 +1188,12 @@ class LegacyV2AdapterReport:
 
 
 def _checked_state(state: JointAnisotropyState) -> JointAnisotropyState:
-    if type(state) is not JointAnisotropyState:
-        raise TypeError("state must be an exact JointAnisotropyState")
     try:
-        checked = JointAnisotropyState.from_payload(state.to_payload())
+        checked = require_exact_joint_anisotropy_state(state)
     except JointAnisotropyStateError as exc:
         raise OrbitCatalogueV3Error(
             "joint state failed canonical replay"
         ) from exc
-    if checked.content_id != state.content_id:
-        raise OrbitCatalogueV3Error("joint state content identity drifted")
     if checked.basis != STF5_CARTESIAN_BASIS:
         raise OrbitCatalogueV3Error(
             "orbit catalogue v3 requires the registered STF5 Cartesian basis"

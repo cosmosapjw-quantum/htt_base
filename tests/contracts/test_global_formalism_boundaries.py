@@ -6,6 +6,7 @@ import hashlib
 import importlib
 import json
 from pathlib import Path
+import subprocess
 import sys
 
 import pytest
@@ -16,6 +17,9 @@ ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "htt" / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
+HTT_ROOT = ROOT / "htt"
+if str(HTT_ROOT) not in sys.path:
+    sys.path.insert(0, str(HTT_ROOT))
 
 
 def _sha(label: str) -> str:
@@ -62,6 +66,56 @@ def _observable_state():
     )
 
 
+def _directional_fixture():
+    from common.mes_directional_state import (
+        DirectionConvention,
+        DirectionalEstimatorKind,
+        DirectionalFieldParity,
+        MAX_DIRECTIONAL_DESIGN_CONDITION,
+        build_mes_directional_state,
+        make_directional_moment_estimate,
+    )
+    from common.statistical_foundations import (
+        AnchorConditioning,
+        registered_geodesic_mes_anchors,
+    )
+
+    estimate = make_directional_moment_estimate(
+        monopole=0.25,
+        dipole=(1.0, -2.0, 2.0),
+        stf2=((2.0, 1.0, 0.0), (1.0, -1.0, 0.5), (0.0, 0.5, -1.0)),
+        field_parity=DirectionalFieldParity.SCALAR_EVEN,
+        estimator_kind=DirectionalEstimatorKind.FULL_SKY_QUADRATURE,
+        direction_frame="GALACTIC",
+        direction_convention=DirectionConvention.RIGHT_HANDED_ACTIVE_O3,
+        field_quantity="dimensionless directional morphology fixture",
+        field_units="dimensionless",
+        field_bandlimit=2,
+        support_identity=_sha("directional-support"),
+        weight_identity=_sha("directional-weights"),
+        mask_identity=_sha("directional-mask"),
+        transfer_identity=_sha("directional-transfer"),
+        field_identity=_sha("directional-field"),
+        covariance_identity=_sha("directional-covariance"),
+        support_size=14,
+        design_rank=9,
+        design_condition_number=2.0,
+        max_design_condition_number=MAX_DIRECTIONAL_DESIGN_CONDITION,
+        weighted_residual_norm=0.0,
+    )
+    anchor = registered_geodesic_mes_anchors(
+        eps1=0.0,
+        eps2=2.0e-6,
+        eps3=5.0e-6,
+        attribution="explicit SAG residual eps1=0 contract fixture",
+        conditioning=AnchorConditioning.REALIZATION_CONDITIONAL,
+    )["sigma"]
+    return estimate, anchor, build_mes_directional_state(
+        directional_moments=estimate,
+        anchor=anchor,
+    )
+
+
 def test_physical_state_refusal_preserves_exact_type_separation() -> None:
     """Catch inheritance or payload coercion into the physical state layer."""
 
@@ -75,6 +129,10 @@ def test_physical_state_refusal_preserves_exact_type_separation() -> None:
     assert JointAnisotropyState not in type(observable).__mro__
     with pytest.raises(JointAnisotropyStateError, match="schema|keys"):
         JointAnisotropyState.from_payload(observable.to_payload())
+    from common.joint_anisotropy_state import require_exact_joint_anisotropy_state
+
+    with pytest.raises(TypeError, match="exact JointAnisotropyState"):
+        require_exact_joint_anisotropy_state(observable)
 
 
 def test_physical_orbit_catalogue_refusal_requires_exact_joint_state() -> None:
@@ -112,6 +170,57 @@ def test_physical_claim_refusal_survives_payload_replay() -> None:
         api.observable_irrep_state_from_payload(payload)
 
 
+def test_directional_stf2_adapter_preserves_legacy_vector_and_refuses_ell3_promotion() -> None:
+    """Catch an adapter that fabricates ell=3 or rewrites the legacy payload."""
+
+    observable_api = _observable_api()
+    estimate, _, directional_state = _directional_fixture()
+    carrier = observable_api.ObservableIrrepCarrier(
+        components=tuple(float(index) for index in range(1, 33)),
+        frame=estimate.direction_frame,
+        basis="ORTHONORMAL_CONDON_SHORTLEY_REAL_L2_L5_V1",
+        units=estimate.field_units,
+        source_identity=estimate.field_identity,
+        operator_identity=estimate.estimator_identity,
+        row_identity="DIRECTIONAL_ADAPTER_ROW",
+    )
+    parent_l2 = observable_api.build_real_harmonic_irrep_block(
+        carrier=carrier,
+        ell=2,
+    )
+    parent_l3 = observable_api.build_real_harmonic_irrep_block(
+        carrier=carrier,
+        ell=3,
+    )
+    from obsstat.mes_directional_moments import (
+        adapt_directional_moments_to_observable_irrep_state,
+    )
+
+    adapted = adapt_directional_moments_to_observable_irrep_state(
+        directional_moments=estimate,
+        parent_harmonic=parent_l2,
+        projection_identity=_sha("directional-stf2-projection"),
+    )
+    assert [block.ell for block in adapted.blocks] == [2]
+    assert adapted.blocks[0].components == pytest.approx((2.0, -1.0, 1.0, 0.0, 0.5))
+    legacy_before = directional_state.as_payload()
+    from common.mes_directional_state import bind_mes_directional_stf2_observable
+
+    rebound = bind_mes_directional_stf2_observable(
+        state=directional_state,
+        observable_state=adapted,
+    )
+    assert rebound.content_id == adapted.content_id
+    assert directional_state.as_payload() == legacy_before
+    assert directional_state.mes_dipole != (0.0, 0.0, 0.0)
+    with pytest.raises(Exception, match="ell=2|ell 2|STF2"):
+        adapt_directional_moments_to_observable_irrep_state(
+            directional_moments=estimate,
+            parent_harmonic=parent_l3,
+            projection_identity=_sha("forbidden-ell3-projection"),
+        )
+
+
 def test_migration_coverage_inventory_matches_declared_paths() -> None:
     """Catch a migration surface being silently omitted or falsely completed."""
 
@@ -137,7 +246,7 @@ def test_migration_coverage_inventory_matches_declared_paths() -> None:
     assert observed.keys() == expected.keys()
     assert len(observed) == 22
     assert status["schema"] == "htt.planck_mes_irrep_formalism.migration_status.v1"
-    assert status["current_work_unit"] == "PMG-WU-001"
+    assert status["current_work_unit"] == "PMG-WU-002"
     assert status["claim_promotion"] is False
     for path, owner in expected.items():
         assert observed[path]["owner_work_unit"] == owner
@@ -145,6 +254,7 @@ def test_migration_coverage_inventory_matches_declared_paths() -> None:
             "MIGRATED",
             "ADAPTED",
             "FROZEN_WITH_GUARD",
+            "EXPLICITLY_DEFERRED",
             "PENDING_ORDERED_WORK_UNIT",
         }
     assert observed["htt/src/common/observable_irrep_state.py"]["status"] == "MIGRATED"
@@ -153,6 +263,14 @@ def test_migration_coverage_inventory_matches_declared_paths() -> None:
         == "FROZEN_WITH_GUARD"
     )
     assert observed["tests/architecture/test_import_boundaries.py"]["status"] == "ADAPTED"
+    for path, row in observed.items():
+        if row["owner_work_unit"] == "PMG-WU-002":
+            assert row["status"] in {
+                "MIGRATED",
+                "ADAPTED",
+                "FROZEN_WITH_GUARD",
+                "EXPLICITLY_DEFERRED",
+            }, path
 
 
 def test_wu001_terminal_records_enabling_output_and_exact_transition() -> None:
@@ -194,3 +312,32 @@ def test_wu001_terminal_records_enabling_output_and_exact_transition() -> None:
         "RAW_REDUCED_10": 110,
     }
     assert terminal["rank_denominator"] == 301
+
+
+def test_wu002_terminal_binds_objective_implementation_and_outputs() -> None:
+    terminal_path = (
+        ROOT
+        / "docs"
+        / "generated"
+        / "planck_mes_irrep_formalism"
+        / "wu002_terminal.json"
+    )
+    terminal = json.loads(terminal_path.read_text(encoding="utf-8"))
+    assert terminal["work_unit"] == "PMG-WU-002"
+    assert terminal["state"] == "SUCCEEDED"
+    assert terminal["base_git_head"] == "b91aec71bf5664ae1ca668fd13942401c1adff71"
+    assert terminal["claim_promotion"] is False
+    assert terminal["science_execution_performed"] is False
+    assert terminal["raw_data_read_or_mutated"] is False
+    assert terminal["next_executable_action"] == "PMG-WU-003"
+    bound_tree = subprocess.run(
+        ["git", "rev-parse", f"{terminal['final_git_head']}^{{tree}}"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    assert bound_tree == terminal["final_git_tree"]
+    for relative_path, expected in terminal["objective_output_sha256"].items():
+        observed = hashlib.sha256((ROOT / relative_path).read_bytes()).hexdigest()
+        assert observed == expected

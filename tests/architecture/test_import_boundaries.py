@@ -12,6 +12,7 @@ scanner remains owned by ``scripts/architecture``.
 
 from __future__ import annotations
 
+import ast
 import importlib.util
 from pathlib import Path
 import sys
@@ -56,3 +57,29 @@ if _EXPORTED == 0:
         "canonical architecture test exported no pytest tests: "
         f"{_CANONICAL_PATH}"
     )
+
+
+def _imports(relative_path: str) -> set[str]:
+    tree = ast.parse(
+        (_CANONICAL_PATH.parents[2] / relative_path).read_text(encoding="utf-8")
+    )
+    modules: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            modules.update(alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            modules.add(node.module)
+    return modules
+
+
+def test_pmg_wu002_formalism_dependencies_remain_observer_side() -> None:
+    premise_imports = _imports("htt/src/common/mes_premise_normalization.py")
+    response_imports = _imports(
+        "htt/src/common/response_bound_observable_state.py"
+    )
+    forbidden_roots = {"bass_py", "htt", "mio", "obsstat", "tsc_legacy"}
+    for module in premise_imports | response_imports:
+        assert module.split(".", 1)[0] not in forbidden_roots
+
+    orbit_imports = _imports("htt/src/common/orbit_catalogue_v3.py")
+    assert "common.observable_irrep_state" not in orbit_imports

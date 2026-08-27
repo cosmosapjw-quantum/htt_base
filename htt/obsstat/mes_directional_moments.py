@@ -28,6 +28,12 @@ from common.mes_directional_state import (
     certify_spherical_second_moment,
     make_directional_moment_estimate,
 )
+from common.observable_irrep_state import (
+    ObservableIrrepBlock,
+    ObservableIrrepRepresentation,
+    ObservableIrrepState,
+    build_cartesian_stf_irrep_block,
+)
 
 
 _FOUR_PI = 4.0 * math.pi
@@ -453,7 +459,65 @@ def certify_antipodal_measure_moments(
     )
 
 
+def adapt_directional_moments_to_observable_irrep_state(
+    *,
+    directional_moments: DirectionalMomentEstimate,
+    parent_harmonic: ObservableIrrepBlock,
+    projection_identity: str,
+) -> ObservableIrrepState:
+    """Adapt the measured STF2 only; retain the dipole in its legacy carrier.
+
+    No registered retained-carrier representation exists here for ell=1, and
+    the existing directional estimator is explicitly limited to ell<=2.
+    Consequently this boundary refuses ell=3 instead of promoting content.
+    """
+
+    if type(directional_moments) is not DirectionalMomentEstimate:
+        raise DirectionalBridgeError(
+            "directional_moments must be an exact DirectionalMomentEstimate"
+        )
+    if type(parent_harmonic) is not ObservableIrrepBlock:
+        raise DirectionalBridgeError(
+            "parent_harmonic must be an exact ell=2 harmonic block"
+        )
+    if (
+        parent_harmonic.ell != 2
+        or parent_harmonic.representation
+        is not ObservableIrrepRepresentation.REAL_SPHERICAL_HARMONIC_5
+    ):
+        raise DirectionalBridgeError(
+            "directional adapter requires an ell=2 parent for STF2 only"
+        )
+    support = parent_harmonic.support
+    if (
+        support.frame != directional_moments.direction_frame
+        or support.units != directional_moments.field_units
+        or support.source_identity != directional_moments.field_identity
+        or support.operator_identity != directional_moments.estimator_identity
+    ):
+        raise DirectionalBridgeError(
+            "directional and harmonic frame/units/source/operator metadata mismatch"
+        )
+    raw = directional_moments.stf2
+    block = build_cartesian_stf_irrep_block(
+        parent=parent_harmonic,
+        components=(raw[0][0], raw[1][1], raw[0][1], raw[0][2], raw[1][2]),
+        basis="CARTESIAN_STF2_MATRIX_COMPONENTS_XX_YY_XY_XZ_YZ_V1",
+        projection_identity=projection_identity,
+    )
+    return ObservableIrrepState(
+        blocks=(block,),
+        frame=block.support.frame,
+        basis=block.support.basis,
+        units=block.support.units,
+        source_identity=block.support.source_identity,
+        operator_identity=block.support.operator_identity,
+        row_identity=block.support.row_identity,
+    )
+
+
 __all__ = [
+    "adapt_directional_moments_to_observable_irrep_state",
     "certify_antipodal_measure_moments",
     "estimate_full_sky_directional_moments",
     "estimate_joint_fit_directional_moments",

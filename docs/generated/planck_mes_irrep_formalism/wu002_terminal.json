@@ -1,0 +1,95 @@
+{
+  "base_git_head": "b91aec71bf5664ae1ca668fd13942401c1adff71",
+  "claim_promotion": false,
+  "executed_test_commands": [
+    {
+      "command": "python -m pytest -q tests/contracts/test_mes_premise_normalization.py",
+      "result": "3 passed",
+      "status": "PASS"
+    },
+    {
+      "command": "python -m pytest -q tests/contracts/test_response_bound_observable_state.py",
+      "result": "8 passed",
+      "status": "PASS"
+    },
+    {
+      "command": "python -m pytest -q tests/contracts/test_global_formalism_boundaries.py",
+      "result": "8 passed",
+      "status": "PASS"
+    },
+    {
+      "command": "python -m pytest -q tests/contracts/test_global_formalism_boundaries.py tests/contracts/test_mes_premise_normalization.py tests/contracts/test_response_bound_observable_state.py -k 'scalar or mismatch or rank or orbit or physical or legacy'",
+      "result": "14 passed, 5 deselected",
+      "status": "PASS"
+    },
+    {
+      "command": "python -m pytest -q tests/contracts/test_observable_irrep_state.py",
+      "result": "10 passed",
+      "status": "PASS"
+    },
+    {
+      "command": "PYTHONPATH=htt:htt/src python -m pytest -q tests/integration/test_planck_mes_morphology.py tests/paper/test_planck_mes_first_paper.py",
+      "result": "17 passed",
+      "status": "PASS"
+    },
+    {
+      "command": "PYTHONPATH=htt:htt/src python -m pytest -q tests/contracts/test_orbit_catalogue_v3.py -k 'claim or group_action or parity'",
+      "result": "2 passed, 15 deselected",
+      "status": "PASS"
+    },
+    {
+      "command": "PYTHONPATH=htt:htt/src python -m pytest -q tests/architecture/test_import_boundaries.py",
+      "result": "6 passed",
+      "status": "PASS"
+    }
+  ],
+  "final_git_head": "8b4930990e8bdbe1e687c77693033313b3ed4323",
+  "final_git_object_role": "OBJECTIVE_IMPLEMENTATION_COMMIT_BOUND_BY_SUBSEQUENT_TERMINAL_COMMIT",
+  "final_git_tree": "c6a8b7988b5accb73648d345079f5fb75cdeba30",
+  "fresh_review": {
+    "accepted_finding_family": "response identity did not bind identification-bearing metadata",
+    "disposition": "ONE_BOUNDED_REPAIR_APPLIED",
+    "rejected_finding": "b91aec71 is the explicitly authorized implementation-only base, not hidden candidate drift"
+  },
+  "implementation_branch": "changeset/planck-mes-global-formalism-adapters-20260827",
+  "invariant_results": {
+    "PMG2-INV-LEGACY-PAYLOAD": "PASS_SHA256_6616170FF39729875EA94CE6D0DED99814C0CA2A51710E6AF18E3CBD4B9FE45A",
+    "PMG2-INV-MIGRATION-COVERAGE": "PASS",
+    "PMG2-INV-PHYSICAL-ORBIT-REFUSAL": "PASS",
+    "PMG2-INV-PREMISE-NO-INFORMATION": "PASS",
+    "PMG2-INV-RESPONSE-IDENTIFICATION": "PASS"
+  },
+  "next_executable_action": "PMG-WU-003",
+  "objective_output_sha256": {
+    "docs/generated/planck_mes_irrep_formalism/migration_status.json": "5519fdb989dd44d2a822ceb3c23ca45336e252e967f6c94fcc83e1d80a82d559",
+    "htt/src/common/mes_premise_normalization.py": "1a718f79761b2bd7fb8408521a0abb0c3f4536cb98c4b43e6f2f1a5fe957061e",
+    "htt/src/common/response_bound_observable_state.py": "da17ded83d505c20ec39825c2078aee8ab566f51b5a12cb8886eda10068e8e00"
+  },
+  "objective_output_paths": [
+    "htt/src/common/mes_premise_normalization.py",
+    "htt/src/common/response_bound_observable_state.py",
+    "htt/src/common/joint_anisotropy_state.py",
+    "htt/src/common/mes_directional_state.py",
+    "htt/obsstat/mes_directional_moments.py",
+    "htt/src/common/orbit_catalogue_v3.py",
+    "tests/contracts/test_global_formalism_boundaries.py",
+    "tests/contracts/test_mes_premise_normalization.py",
+    "tests/contracts/test_response_bound_observable_state.py",
+    "tests/architecture/test_import_boundaries.py",
+    "docs/generated/planck_mes_irrep_formalism/migration_status.json",
+    "docs/generated/planck_mes_irrep_formalism/wu002_terminal.json"
+  ],
+  "output_class": "ENABLING_OUTPUT",
+  "raw_data_read_or_mutated": false,
+  "replay_status": "MATCH_FROZEN_BASELINE",
+  "schema": "htt.planck_mes_irrep_formalism.work_unit_terminal.v1",
+  "science_execution_performed": false,
+  "state": "SUCCEEDED",
+  "tdd": {
+    "green": "typed premise, response, adapter, exact-type refusal, migration, regression, and architecture checks passed",
+    "red": "missing premise and response modules, missing exact-type adapters, and pending WU-002 migration rows each failed before implementation"
+  },
+  "terminal_self_binding": "EXCLUDED_TO_AVOID_GIT_OBJECT_SELF_REFERENCE",
+  "unresolved_blockers": [],
+  "work_unit": "PMG-WU-002"
+}
