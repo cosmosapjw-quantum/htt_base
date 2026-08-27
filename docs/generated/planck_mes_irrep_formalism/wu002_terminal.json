@@ -9,17 +9,17 @@
     },
     {
       "command": "python -m pytest -q tests/contracts/test_response_bound_observable_state.py",
-      "result": "7 passed",
+      "result": "8 passed",
       "status": "PASS"
     },
     {
       "command": "python -m pytest -q tests/contracts/test_global_formalism_boundaries.py",
-      "result": "7 passed",
+      "result": "8 passed",
       "status": "PASS"
     },
     {
       "command": "python -m pytest -q tests/contracts/test_global_formalism_boundaries.py tests/contracts/test_mes_premise_normalization.py tests/contracts/test_response_bound_observable_state.py -k 'scalar or mismatch or rank or orbit or physical or legacy'",
-      "result": "13 passed, 4 deselected",
+      "result": "14 passed, 5 deselected",
       "status": "PASS"
     },
     {
@@ -43,9 +43,14 @@
       "status": "PASS"
     }
   ],
-  "final_git_head": "214cc933bebbfaef884ba2ecfedd3a699e558a60",
+  "final_git_head": "8b4930990e8bdbe1e687c77693033313b3ed4323",
   "final_git_object_role": "OBJECTIVE_IMPLEMENTATION_COMMIT_BOUND_BY_SUBSEQUENT_TERMINAL_COMMIT",
-  "final_git_tree": "ab25bfb58b8f35b1c9f962184aaef311ee807bc3",
+  "final_git_tree": "c6a8b7988b5accb73648d345079f5fb75cdeba30",
+  "fresh_review": {
+    "accepted_finding_family": "response identity did not bind identification-bearing metadata",
+    "disposition": "ONE_BOUNDED_REPAIR_APPLIED",
+    "rejected_finding": "b91aec71 is the explicitly authorized implementation-only base, not hidden candidate drift"
+  },
   "implementation_branch": "changeset/planck-mes-global-formalism-adapters-20260827",
   "invariant_results": {
     "PMG2-INV-LEGACY-PAYLOAD": "PASS_SHA256_6616170FF39729875EA94CE6D0DED99814C0CA2A51710E6AF18E3CBD4B9FE45A",
@@ -58,7 +63,7 @@
   "objective_output_sha256": {
     "docs/generated/planck_mes_irrep_formalism/migration_status.json": "5519fdb989dd44d2a822ceb3c23ca45336e252e967f6c94fcc83e1d80a82d559",
     "htt/src/common/mes_premise_normalization.py": "1a718f79761b2bd7fb8408521a0abb0c3f4536cb98c4b43e6f2f1a5fe957061e",
-    "htt/src/common/response_bound_observable_state.py": "180b5c484d4fd14895d7d68ccf1ea5d4f6799c4ad6e3777a7fe7f93400b60e69"
+    "htt/src/common/response_bound_observable_state.py": "da17ded83d505c20ec39825c2078aee8ab566f51b5a12cb8886eda10068e8e00"
   },
   "objective_output_paths": [
     "htt/src/common/mes_premise_normalization.py",
