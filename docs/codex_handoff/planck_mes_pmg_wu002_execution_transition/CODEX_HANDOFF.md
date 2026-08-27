@@ -4,7 +4,11 @@
 
 ```yaml
 repository: cosmosapjw-quantum/htt_base
-package_host_branch: changeset/planck-mes-observable-irrep-state-20260827
+package_compilation_host: changeset/planck-mes-observable-irrep-state-20260827
+accepted_via: PR #419 merged
+accepted_merge_commit: c1068f12e63b473c145ca895a2335aceba2c04ec
+accepted_merge_tree: 19305cc126ff3eab905765d39093b9488896c01a
+implementation_branch: changeset/planck-mes-global-formalism-adapters-20260827
 wu001_implementation_source: 47ef087b158e0dbf8ac4b7b5205f39c1a050d9c0
 wu001_implementation_tree: 8abbe9040cb72357387ec3c29f0e1e74921af0ea
 pull_request: 419
@@ -13,16 +17,26 @@ planning_base: analysis/planck-mes-extended-data-execution-20260826@80781295cb16
 selected_work_unit: PMG-WU-002
 ```
 
-The nonexistent ref `analysis/planck-mes-pmg-wu002-transition-20260827` is forbidden.  
-This package lives on the real PR #419 head branch.
+The nonexistent ref `analysis/planck-mes-pmg-wu002-transition-20260827` is
+forbidden. The transition package was compiled on the PR #419 head branch and
+is now present in the accepted merge ancestry and the implementation branch.
 
 ## Execution permission
 
-PR #419 is still an open draft at package compilation. Therefore:
+PR #419 was an open draft when the package was compiled, so
+`PR419_ACCEPTANCE_BINDING.yaml` intentionally preserves that historical
+`OPEN_DRAFT/PENDING` snapshot. Current inspectable Git authority supersedes
+that compilation-time state:
 
-- preferred: merge/accept PR #419, then create a fresh PMG-WU-002 branch from the accepted descendant containing this package;
-- stacked exception: execute from the exact package-host head only after an explicit user decision;
-- do not implement PMG-WU-002 on the PR #419 branch itself merely because this package is stored there.
+- PR #419 is merged at `c1068f12e63b473c145ca895a2335aceba2c04ec`;
+- the accepted tree is `19305cc126ff3eab905765d39093b9488896c01a`;
+- `changeset/planck-mes-global-formalism-adapters-20260827` is descended from
+  that merge and is the authorized PMG-WU-002 implementation branch;
+- no additional stacked-execution decision is required.
+
+A moved remote ref, missing package after an exact fetch, failed package
+validator, or dirty worktree remains blocking. The former PR-acceptance choice
+is resolved and must not produce `BLOCKED_BY_UNRESOLVED_SPEC` again.
 
 ## Read before editing
 
@@ -47,32 +61,34 @@ scripts/validate_planck_mes_pmg_wu002_transition.py
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 git fetch origin --prune
+git switch changeset/planck-mes-global-formalism-adapters-20260827
+git pull --ff-only origin changeset/planck-mes-global-formalism-adapters-20260827
 
-test "$(git rev-parse 47ef087b158e0dbf8ac4b7b5205f39c1a050d9c0^{tree})" = "8abbe9040cb72357387ec3c29f0e1e74921af0ea"
-git merge-base --is-ancestor "47ef087b158e0dbf8ac4b7b5205f39c1a050d9c0" HEAD
+test "$(git rev-parse 47ef087b158e0dbf8ac4b7b5205f39c1a050d9c0^{tree})" = \
+  "8abbe9040cb72357387ec3c29f0e1e74921af0ea"
+git merge-base --is-ancestor \
+  47ef087b158e0dbf8ac4b7b5205f39c1a050d9c0 HEAD
+git merge-base --is-ancestor \
+  c1068f12e63b473c145ca895a2335aceba2c04ec HEAD
+
+for path in \
+  docs/codex_handoff/planck_mes_pmg_wu002_execution_transition/CODEX_HANDOFF.md \
+  scripts/validate_planck_mes_pmg_wu002_transition.py \
+  tests/contracts/test_planck_mes_pmg_wu002_transition.py; do
+  test -f "$path"
+done
 
 python scripts/validate_planck_mes_pmg_wu002_transition.py --check-git
 python -m pytest -q tests/contracts/test_planck_mes_pmg_wu002_transition.py
 python -m pytest -q tests/contracts/test_observable_irrep_state.py
+
+export PMG_WU002_BASE_SHA="$(git rev-parse HEAD)"
+test -z "$(git status --porcelain)"
 ```
 
-If PR #419 has not been accepted and the user did not explicitly authorize stacked execution, stop:
-
-```text
-BLOCKED_BY_UNRESOLVED_SPEC:
-  question: whether to merge PR #419 first or execute PMG-WU-002 as a stacked branch
-```
-
-Do not guess.
-
-## Required implementation branch
-
-After authority is resolved:
-
-```bash
-git switch --detach <accepted-base-sha>
-git switch -c changeset/planck-mes-global-formalism-adapters-$(date +%Y%m%d)
-```
+The base variable is deliberately captured from the exact fetched branch head
+immediately before edits. This prevents transition-seal documentation commits
+from contaminating the later PMG-WU-002 changed-path check.
 
 ## Objective
 
@@ -100,12 +116,16 @@ orbit_catalogue_v3
 
 ## Test-first order
 
-1. Add RED tests for premise information fabrication, response mismatch, rank-deficient point identification, physical-orbit refusal, legacy payload mutation, and migration coverage.
-2. Implement `mes_premise_normalization.py` and `response_bound_observable_state.py`.
+1. Add RED tests for premise information fabrication, response mismatch,
+   rank-deficient point identification, physical-orbit refusal, legacy payload
+   mutation, and migration coverage.
+2. Implement `mes_premise_normalization.py` and
+   `response_bound_observable_state.py`.
 3. Add the smallest adapters/refusals in the four declared legacy surfaces.
 4. Update `migration_status.json`.
-5. Emit `wu002_terminal.json` with final commit/tree, test commands, hashes, replay, and next action PMG-WU-003.
-6. Run the transition diff validator.
+5. Emit `wu002_terminal.json` with final commit/tree, test commands, hashes,
+   replay, and next action PMG-WU-003.
+6. Run the transition diff validator against `$PMG_WU002_BASE_SHA`.
 7. Run one read-only fresh review; apply at most one targeted repair.
 
 ## Forbidden
@@ -127,4 +147,5 @@ PMG-WU-002 SUCCEEDED
 → execute the map-free coordinate/reducer mechanism audit
 ```
 
-A scaffold, tests-only patch, documentation-only patch, or unexecuted terminal is not PASS.
+A scaffold, tests-only patch, documentation-only patch, or unexecuted terminal
+is not PASS.
