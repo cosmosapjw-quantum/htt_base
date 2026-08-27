@@ -136,6 +136,58 @@ jobs:
             tests/contracts/test_planck_mes_irrep_global_formalism_plan.py
           git diff --cached --check
 
+          # GitHub Actions' installation token has contents:write but not the
+          # separate workflows permission. Keep the exact workflow bytes in the
+          # worktree for validation, but publish that one file afterward via the
+          # authenticated GitHub connector. The first commit therefore carries
+          # only the remaining 19 approved paths.
+          git reset -- .github/workflows/repository-integrity.yml
+          python - <<'PY'
+          from __future__ import annotations
+          import subprocess
+
+          excluded = {".github/workflows/repository-integrity.yml"}
+          expected = {
+              "docs/codex_handoff/ACTIVE_PLANCK_MES_EXECUTION_PACKAGE.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/AUDIT_COMPILED_EXEC_PLAN.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/AUDIT_COMPILED_PLAN.md",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/AUTHORITY_AND_SCOPE.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/CODEX_HANDOFF.md",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/CODEX_HANDOFF_PROMPT.md",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/DATA_ROUTE_MATRIX.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/FINAL_DIFFERENTIAL_AUDIT_CONTRACT.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/FORMALISM_CONTRACT.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/FORMALISM_MIGRATION_MATRIX.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/FRESH_CONTEXT_REVIEW_CONTRACT.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/INVARIANT_TEST_MATRIX.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/P0_P1_THREAT_CATALOG.json",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/PACKAGE_INDEX.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/PR417_UPDATE_BODY.md",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/PRIOR_PLAN_SUPERSESSION.yaml",
+              "docs/codex_handoff/planck_mes_irrep_global_formalism_execution/PROCESS_COST_ASSESSMENT.yaml",
+              "scripts/validate_planck_mes_irrep_global_formalism_plan.py",
+              "tests/contracts/test_planck_mes_irrep_global_formalism_plan.py",
+          }
+          staged = set(
+              subprocess.check_output(
+                  ["git", "diff", "--cached", "--name-only"], text=True
+              ).splitlines()
+          )
+          modified = set(
+              subprocess.check_output(
+                  ["git", "diff", "--name-only"], text=True
+              ).splitlines()
+          )
+          if staged != expected or modified != excluded:
+              raise SystemExit(
+                  f"split-publication path mismatch: "
+                  f"staged_missing={sorted(expected-staged)} "
+                  f"staged_extra={sorted(staged-expected)} "
+                  f"modified_missing={sorted(excluded-modified)} "
+                  f"modified_extra={sorted(modified-excluded)}"
+              )
+          PY
+
       - name: Commit, revalidate with Git ancestry, and push PR branch
         working-directory: repo
         shell: bash
@@ -162,4 +214,5 @@ jobs:
             echo "- predecessor: \`2669a55ef230d1ca9e79c09d3344f7b15c50ac0e\`"
             echo "- target: \`analysis/planck-mes-extended-data-execution-20260826\`"
             echo "- contract tests: 12 passed"
+            echo "- repository-integrity workflow update: connector follow-up required"
           } >> "$GITHUB_STEP_SUMMARY"
