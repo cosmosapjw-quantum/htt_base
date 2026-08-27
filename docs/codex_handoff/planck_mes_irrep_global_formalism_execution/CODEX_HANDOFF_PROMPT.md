@@ -2,65 +2,46 @@
 
 Repository: `cosmosapjw-quantum/htt_base`
 
-Use the repository package at:
+The canonical global-formalism package remains at:
 
 `docs/codex_handoff/planck_mes_irrep_global_formalism_execution`
 
-The active planning branch is `analysis/planck-mes-extended-data-execution-20260826`. Its frozen predecessor is
-`2669a55ef230d1ca9e79c09d3344f7b15c50ac0e` and canonical scientific base is
-`changeset/pr324-mes-methodology-stack-20260826@3cdeaba39e164c911a26c5daa37f0e15b29614d3`.
+PMG-WU-001 has been implemented on PR #419. Do **not** rerun PMG-WU-001.
 
-Your task is to implement and execute **exactly one** active work unit at a
-time, beginning with `PMG-WU-001`. Do not execute the superseded
-`PED-WU-001..004` order.
-
-Before changing code:
-
-1. run `python scripts/validate_planck_mes_irrep_global_formalism_plan.py`;
-2. read the active pointer, `AUTHORITY_AND_SCOPE.yaml`,
-   `PRIOR_PLAN_SUPERSESSION.yaml`, `FORMALISM_CONTRACT.yaml`,
-   `FORMALISM_MIGRATION_MATRIX.yaml`, `P0_P1_THREAT_CATALOG.json`,
-   `INVARIANT_TEST_MATRIX.yaml`, and the selected work unit;
-3. verify exact Git ancestry;
-4. inspect only the source/tests named by that work unit.
-
-Non-negotiable semantics:
-
-- `ObservableIrrepState` is observer/data space and is not physical shear,
-  vorticity, acceleration, geometry, global tilt, local boost, or a Bianchi
-  family.
-- `JointAnisotropyState` remains physical/pre-solver.
-- `MesPremiseNormalizer` is a one-way normalizer and cannot create direction,
-  STF shape, response, or independent information.
-- `ResponseBoundObservableState` requires a certified matching response.
-- Preserve all frozen scalar outputs and exact ranks.
-- Every new Planck map read must serialize the complete 32-dimensional
-  retained harmonic carrier.
-- Observation/null/injection rows use the same registered operator,
-  projection, reducer, tail, and degeneracy policy within a pool.
-- The 999 CMB-only pool never replaces the paired-300 primary.
-- Commander never emits a finite rank.
-- Physical-template labels require exact solver/frame/transfer provenance.
-- Do not tune statistics or templates from observed outcomes.
-- Do not guess across a semantic boundary. Emit a typed blocked state.
-- Fail closed on claims, not exploratory progress.
-- One fresh read-only review and at most one targeted repair per work unit.
-- No successor planning package.
-
-Required sequence:
-
-```text
-PMG-WU-001 -> PMG-WU-002 -> PMG-WU-003 -> PMG-WU-004 ->
-PMG-WU-005 -> PMG-WU-006 -> PMG-WU-007 -> PMG-WU-008 ->
-PMG-WU-009
+```yaml
+wu001_branch: changeset/planck-mes-observable-irrep-state-20260827
+wu001_implementation_commit: 47ef087b158e0dbf8ac4b7b5205f39c1a050d9c0
+wu001_implementation_tree: 8abbe9040cb72357387ec3c29f0e1e74921af0ea
+pull_request: 419
+next_work_unit: PMG-WU-002
 ```
 
-`PMG-WU-003` must produce a real map-free analysis result. If two substantial
-cycles have produced only plans, contracts, or reviews, classify
-`PROCESS_STARVATION`, freeze optional governance, and execute the shortest
-admissible objective step.
+Use the PMG-WU-002 transition package at:
 
-For the selected work unit, use TDD, run the exact risk-scoped commands, create
-the required objective artifacts, inspect plots when required, commit/push the
-coherent delta, and provide the evidence fields listed in the contract.
-Never report PASS for unexecuted work.
+`docs/codex_handoff/planck_mes_pmg_wu002_execution_transition`
+
+Start with:
+
+`docs/codex_handoff/planck_mes_pmg_wu002_execution_transition/CODEX_HANDOFF_PROMPT.md`
+
+Do not use `analysis/planck-mes-pmg-wu002-transition-20260827`; that ref does not exist.
+
+PR #419 is an open draft. PMG-WU-002 implementation must begin on a fresh branch only after either:
+
+1. PR #419 is accepted/merged and an exact accepted base SHA is recorded; or
+2. the user explicitly authorizes stacked execution from the exact package-host head.
+
+Do not guess between those modes.
+
+Non-negotiable semantics remain:
+
+- `ObservableIrrepState` is observer/data space, not physical shear, vorticity, acceleration, geometry, tilt, boost, or Bianchi family.
+- `JointAnisotropyState` remains physical/pre-solver.
+- `MesPremiseNormalizer` is one-way and cannot create direction, STF shape, response, or independent information.
+- `ResponseBoundObservableState` requires a certified matching response and identified-set semantics under rank deficiency.
+- Preserve all frozen scalar outputs and exact ranks.
+- No Planck map read or scientific result in PMG-WU-002.
+- One fresh read-only review and at most one targeted repair.
+- No successor planning package.
+
+On PMG-WU-002 PASS, start PMG-WU-003 immediately and execute the map-free coordinate/reducer audit. Never report PASS for documentation-only, tests-only, scaffolded, or unexecuted work.
