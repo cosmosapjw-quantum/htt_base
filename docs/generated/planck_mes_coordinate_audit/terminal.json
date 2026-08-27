@@ -9,14 +9,18 @@
     "pdftoppm at 130 DPI to 3.3in and 6.8in widths plus direct visual inspection"
   ],
   "figure_byte_identity_role": "NOT_A_SCIENTIFIC_GATE",
-  "figure_outputs": ["figure_epsilon1_sensitivity.pdf", "figure_factorial_ladder.pdf", "figure_reducer_comparison.pdf"],
-  "final_implementation_git_head": "e58df3265ce599f6fcfb6269e38b29c218955997",
-  "final_implementation_git_tree": "1772d1ad45e495c2bbdd05e8d2f268c5b03364bd",
+  "figure_outputs": [
+    "figure_epsilon1_sensitivity.pdf",
+    "figure_factorial_ladder.pdf",
+    "figure_reducer_comparison.pdf"
+  ],
+  "final_implementation_git_head": "2bfd6490774b664080f27a18dc14c6affdf34c50",
+  "final_implementation_git_tree": "fac0af7ec944b6ac5d90bef1ba023a5e83fb3c2b",
   "format": "PLANCK_MES_COORDINATE_MECHANISM_TERMINAL_V1",
   "fresh_review": {
-    "initial_verdict": "BLOCKED_BY_P1",
     "P0": 0,
     "P1": 3,
+    "initial_verdict": "BLOCKED_BY_P1",
     "receipt_path": ".agent-harness/runs/pmg-wu003-fresh-review-20260828/results/PMG-WU-003-FRESH-REVIEW.json",
     "receipt_sha256": "9096af9020254b0b911405531ed1d7859cb7ab9f5eaa85a8d909bdfed386d5d1",
     "repair_rounds_used": 1,
@@ -25,23 +29,35 @@
   "next_executable_action": "PMG-WU-004",
   "objective_output_sha256": {
     "epsilon1_sensitivity.csv": "8a17d89e5582d862aa7d1926825e57eb51c0b760ab45d06cfbe7af63fcd670f6",
-    "factorial_table.csv": "3670954711c7eb2d1d172dcb61d8ff784b8c98cd0270734570c0826ca9574db7",
-    "plot_audit.json": "3f5b227bf8a662b9eb8127bda4aa2aea30d6b78781c2626e939e8e806185f836",
-    "replay.json": "f3e82fae74d6619b76b1c4bcee1f59ee3135915600c8bfa4e9a13b91c7071f40",
-    "result.json": "17f0aac4c6d2334d80a6dc892942a0bc7e84e0ee708042f6ec04f9324e36392f",
+    "factorial_table.csv": "71d34dc9df263743a64d6fe90b89c236764bbc8b90e3343a4b87a9d18969051f",
+    "plot_audit.json": "0710b9cfe340ff0686b299a7922342027d261dafb4aedd25183649fedf79941a",
+    "replay.json": "6b752d5ba7cfb63967fa9a1b7b9b17dfe1acd674c4b94474b03aede099fb3f36",
+    "result.json": "fe5e56b06edc1ecedbca3735c822d23bab309a88201e185dd1d43ad68bbbd70e",
     "tail_table.csv": "35cf2ca9fa989c203d11bcde3aba5bf50693ef22f6d70986aca9eb26ffc892d2",
-    "tie_dependence_table.csv": "5fb3308424a506d6bb27d9233877bece7a493332930f93b0ecef020c284d227a"
+    "tie_dependence_table.csv": "9c9eb809854ba25d3f91b5fb6db40890cf81cbb151850321eb3c19c0167c24b2"
   },
   "raw_data_read_or_mutated": false,
   "replay_status": "MATCH",
   "science_execution_performed": true,
   "state": "SUCCEEDED",
+  "supplemental_evidence_repair": {
+    "focused_green": "PASS",
+    "fresh_review_rounds_added": 0,
+    "nonblocking_portability_finding": "Legacy pooled-covariance diagnostic JSON is NumPy-version-sensitive; NumPy 2.5 reproduces a diagnostic-only replay mismatch outside the changed paths. Frozen finite rank and package identity remain exact.",
+    "red_failures": [
+      "finite-pool rank string reduced 98/301 to 14/43",
+      "generator self-attested visual PASS instead of emitting pending external review",
+      "coordinate duplicate index was conflated with Spearman spectrum index"
+    ],
+    "red_workflow_run": "https://github.com/cosmosapjw-quantum/htt_base/actions/runs/33126563201",
+    "repair_scope": "one bounded evidence-semantics repair; scientific values and PDF rendering unchanged"
+  },
   "test_results": {
-    "objective_and_negative": "10 passed",
     "Planck_and_paper_regression": "17 passed",
-    "replay": "PASS",
     "claim_language": "PASS",
     "exact_ECDF_oracle": "PASS",
+    "objective_and_negative": "10 passed",
+    "replay": "PASS",
     "two_width_figure_inspection": "PASS"
   },
   "unresolved_blockers": [],
