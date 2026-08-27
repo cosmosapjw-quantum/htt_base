@@ -68,10 +68,12 @@ jobs:
         run: |
           python scripts/validate_planck_mes_extended_data_plan.py
           python -m pytest -q tests/contracts/test_planck_mes_extended_data_plan.py
-      - name: Run Planck MES irrep/global-formalism planning contracts
+      - name: Run Planck MES irrep/global-formalism and PMG transition contracts
         run: |
-          python scripts/validate_planck_mes_irrep_global_formalism_plan.py
+          python scripts/validate_planck_mes_irrep_global_formalism_plan.py --no-git
           python -m pytest -q tests/contracts/test_planck_mes_irrep_global_formalism_plan.py
+          python scripts/validate_planck_mes_pmg_wu002_transition.py --check-git
+          python -m pytest -q tests/contracts/test_planck_mes_pmg_wu002_transition.py
       - name: Run clean-clone observational quarantine contracts
         run: |
           python -m pytest -q \
