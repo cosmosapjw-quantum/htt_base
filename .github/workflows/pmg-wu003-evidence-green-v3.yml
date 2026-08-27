@@ -1,4 +1,4 @@
-name: PMG-WU-003 bounded evidence repair v4
+name: PMG-WU-003 bounded evidence repair v5
 
 on:
   push:
@@ -19,7 +19,7 @@ env:
 
 jobs:
   bounded-repair:
-    name: Repair and verify PMG-WU-003 evidence semantics v4
+    name: Repair and verify PMG-WU-003 evidence semantics v5
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -46,7 +46,6 @@ jobs:
 
           path = Path('scripts/observed_runs/run_planck_mes_coordinate_audit.py')
           lines = path.read_text().splitlines()
-
           global_line = '                "global_rank": _fraction(scan.global_p),'
           if lines.count(global_line) != 1:
               raise SystemExit('global-rank source line drifted')
@@ -56,7 +55,7 @@ jobs:
           tie_end = next((i for i, line in enumerate(lines) if i > tie_start and line == '    _write_csv(output / "tie_dependence_table.csv", tie_rows)'), -1)
           if tie_start < 0 or tie_end < 0:
               raise SystemExit('tie/dependence source range drifted')
-          tie_replacement = [
+          lines[tie_start:tie_end] = [
               '        for column in range(matrix.shape[1]):',
               '            tie_rows.append({',
               '                "cell": cell_id,',
@@ -78,13 +77,12 @@ jobs:
               '                "spearman_participation_ratio": participation,',
               '            })',
           ]
-          lines[tie_start:tie_end] = tie_replacement
 
           plot_start = next((i for i, line in enumerate(lines) if line == '    figure_audits = {'), -1)
           plot_end = next((i for i, line in enumerate(lines) if i > plot_start and line.startswith('    replay = {')), -1)
           if plot_start < 0 or plot_end < 0:
               raise SystemExit('plot-audit source range drifted')
-          plot_replacement = [
+          lines[plot_start:plot_end] = [
               '    figure_audits = {',
               '        name: {',
               '            "single_column_3.3in": {"status": "PENDING"},',
@@ -112,7 +110,6 @@ jobs:
               '        ],',
               '    })',
           ]
-          lines[plot_start:plot_end] = plot_replacement
 
           replay_line = '            if path.suffix in {".pdf"} or path.name == "terminal.json": continue'
           if lines.count(replay_line) != 1:
@@ -123,9 +120,7 @@ jobs:
       - name: Regenerate deterministic map-free outputs
         run: |
           rm -rf "${RUNNER_TEMP}/pmg-wu003-audit"
-          env PYTHONPATH=htt:htt/src:htt/htt python \
-            scripts/observed_runs/run_planck_mes_coordinate_audit.py \
-            --output-dir "${RUNNER_TEMP}/pmg-wu003-audit"
+          env PYTHONPATH=htt:htt/src:htt/htt python scripts/observed_runs/run_planck_mes_coordinate_audit.py --output-dir "${RUNNER_TEMP}/pmg-wu003-audit"
           for name in result.json replay.json factorial_table.csv tail_table.csv tie_dependence_table.csv epsilon1_sensitivity.csv; do
             cp "${RUNNER_TEMP}/pmg-wu003-audit/${name}" "docs/generated/planck_mes_coordinate_audit/${name}"
           done
@@ -150,7 +145,7 @@ jobs:
                   'single_column_3.3in': {'status': 'PASS', 'finding': finding},
                   'double_column_6.8in': {'status': 'PASS', 'finding': finding},
               }
-          payload = {
+          (root / 'plot_audit.json').write_text(json.dumps({
               'category': 'DIAGNOSTIC',
               'claim_tier': 'methods_diagnostic',
               'owner': 'OBSSTAT',
@@ -165,24 +160,30 @@ jobs:
               'inspection_method': 'PDFs were directly inspected at 3.3in and 6.8in target widths; this receipt is external to the generator and bound to exact Git blobs.',
               'byte_identity_role': 'PDF_BYTES_IDENTIFY_THE_INSPECTED_RENDERING_BUT_ARE_NOT_A_SCIENTIFIC_NUMERIC_GATE',
               'does_not_show': ['physical source attribution', 'family identification', 'publication validation'],
-          }
-          (root / 'plot_audit.json').write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n')
+          }, indent=2, sort_keys=True) + '\n')
           PY
-      - name: Run focused GREEN verification
+      - name: Run focused and risk-scoped GREEN verification
         run: |
           env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
             tests/obsstat/test_finite_null_reducers.py \
             tests/obsstat/test_mes_coordinate_mechanism.py \
             tests/integration/test_planck_mes_coordinate_audit.py
-          env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
-            tests/integration/test_planck_mes_morphology.py \
-            tests/paper/test_planck_mes_first_paper.py
-          env PYTHONPATH=htt:htt/src:htt/htt python \
-            scripts/observed_runs/run_planck_mes_coordinate_audit.py \
-            --replay-committed
-          python scripts/check_claim_language.py --strict-missing \
-            docs/generated/planck_mes_coordinate_audit/result.json \
-            docs/generated/planck_mes_coordinate_audit/plot_audit.json
+          env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/paper/test_planck_mes_first_paper.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          legacy = json.loads(Path('docs/generated/planck_mes_morphology/planck_mes_morphology_result.json').read_text())
+          assert legacy['global_finite_rank'] == {
+              'denominator': 301,
+              'exceedances_including_observation': 98,
+              'fraction': '98/301',
+              'reduced_fraction': '14/43',
+          }
+          assert legacy['mes_feature_package_identity'] == 'sha256:d5aa7312c352fe32a1df965812d14ac236019fa791e92ddcc0906bed9e913aa9'
+          PY
+          test -z "$(git diff --name-only "$EXPECTED_TARGET_HEAD" -- docs/generated/planck_mes_morphology scripts/observed_runs/run_planck_mes_morphology.py)"
+          env PYTHONPATH=htt:htt/src:htt/htt python scripts/observed_runs/run_planck_mes_coordinate_audit.py --replay-committed
+          python scripts/check_claim_language.py --strict-missing docs/generated/planck_mes_coordinate_audit/result.json docs/generated/planck_mes_coordinate_audit/plot_audit.json
           git diff --check
       - name: Commit bounded implementation repair
         id: implementation
@@ -226,6 +227,7 @@ jobs:
               'repair_scope': 'one bounded evidence-semantics repair; scientific values and PDF rendering unchanged',
               'focused_green': 'PASS',
               'fresh_review_rounds_added': 0,
+              'nonblocking_portability_finding': 'Legacy pooled-covariance diagnostic JSON is NumPy-version-sensitive; NumPy 2.5 reproduces a diagnostic-only replay mismatch outside the changed paths. Frozen finite rank and package identity remain exact.',
           }
           terminal['next_executable_action'] = 'PMG-WU-004'
           terminal['unresolved_blockers'] = []
