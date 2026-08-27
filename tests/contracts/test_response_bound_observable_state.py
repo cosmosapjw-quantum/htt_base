@@ -47,7 +47,6 @@ def _bind(api, observable, **updates):
     kwargs = {
         "observable_state": observable,
         "observable_channel_key": ("temperature", "ell2", "real_harmonic"),
-        "response_identity": _sha("certified-forward-response"),
         "response_channel_key": ("temperature", "ell2", "real_harmonic"),
         "response_frame": observable.frame,
         "response_basis": observable.basis,
@@ -56,6 +55,17 @@ def _bind(api, observable, **updates):
         "physical_parameter_dimension": 3,
     }
     kwargs.update(updates)
+    if "response_identity" not in kwargs:
+        kwargs["response_identity"] = api.response_metadata_identity(
+            observable_state=kwargs["observable_state"],
+            observable_channel_key=kwargs["observable_channel_key"],
+            response_channel_key=kwargs["response_channel_key"],
+            response_frame=kwargs["response_frame"],
+            response_basis=kwargs["response_basis"],
+            response_units=kwargs["response_units"],
+            response_rank=kwargs["response_rank"],
+            physical_parameter_dimension=kwargs["physical_parameter_dimension"],
+        )
     return api.bind_response_to_observable_state(**kwargs)
 
 
@@ -96,6 +106,30 @@ def test_response_rank_and_payload_point_flag_are_fail_closed() -> None:
     payload = bound.to_payload()
     payload["point_identification_supported"] = True
     with pytest.raises(api.ResponseBindingError, match="point-identification flag"):
+        api.ResponseBoundObservableState.from_payload(payload)
+
+
+def test_response_identity_binds_observable_channel_and_rank_metadata() -> None:
+    api = importlib.import_module("common.response_bound_observable_state")
+    observable = _observable_state()
+    bound = _bind(api, observable)
+    with pytest.raises(api.ResponseBindingError, match="identity does not bind"):
+        _bind(
+            api,
+            observable,
+            response_identity=bound.response_identity,
+            response_rank=3,
+            physical_parameter_dimension=3,
+        )
+    payload = bound.to_payload()
+    payload["response_rank"] = 3
+    payload["physical_parameter_dimension"] = 3
+    payload["identification_status"] = "POINT_IDENTIFIED"
+    payload["identified_set_semantics"] = (
+        "FULL_COLUMN_RANK_POINT_IDENTIFICATION_CONDITIONAL_ON_BOUND_RESPONSE"
+    )
+    payload["point_identification_supported"] = True
+    with pytest.raises(api.ResponseBindingError, match="identity does not bind"):
         api.ResponseBoundObservableState.from_payload(payload)
 
 

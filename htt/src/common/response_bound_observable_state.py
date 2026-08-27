@@ -84,6 +84,65 @@ def _observable_dimension(state: ObservableIrrepState) -> int:
     )
 
 
+def response_metadata_identity(
+    *,
+    observable_state: ObservableIrrepState,
+    observable_channel_key: Sequence[str],
+    response_channel_key: Sequence[str],
+    response_frame: str,
+    response_basis: str,
+    response_units: str,
+    response_rank: int,
+    physical_parameter_dimension: int,
+) -> str:
+    """Bind all identification-bearing response metadata to one exact state."""
+
+    if type(observable_state) is not ObservableIrrepState:
+        raise TypeError("observable_state must be an exact ObservableIrrepState")
+    replayed = observable_irrep_state_from_payload(observable_state.to_payload())
+    observable_channel = _channel_key(
+        observable_channel_key, "observable_channel_key"
+    )
+    response_channel = _channel_key(response_channel_key, "response_channel_key")
+    if response_channel != observable_channel:
+        raise ResponseBindingError("response channel does not match observable channel")
+    frame = _text(response_frame, "response_frame")
+    basis = _text(response_basis, "response_basis")
+    units = _text(response_units, "response_units")
+    for name, observed, expected in (
+        ("frame", frame, replayed.frame),
+        ("basis", basis, replayed.basis),
+        ("units", units, replayed.units),
+    ):
+        if observed != expected:
+            raise ResponseBindingError(
+                f"response {name} does not match observable {name}"
+            )
+    rank = _integer(response_rank, "response_rank", minimum=0)
+    physical_dimension = _integer(
+        physical_parameter_dimension,
+        "physical_parameter_dimension",
+        minimum=1,
+    )
+    observable_dimension = _observable_dimension(replayed)
+    if rank > min(physical_dimension, observable_dimension):
+        raise ResponseBindingError("response rank exceeds a declared space dimension")
+    return _content_id(
+        {
+            "observable_channel_key": list(observable_channel),
+            "observable_content_id": replayed.content_id,
+            "observable_dimension": observable_dimension,
+            "physical_parameter_dimension": physical_dimension,
+            "response_basis": basis,
+            "response_channel_key": list(response_channel),
+            "response_frame": frame,
+            "response_rank": rank,
+            "response_units": units,
+            "schema": "HTT_RESPONSE_METADATA_IDENTITY_V1",
+        }
+    )
+
+
 @dataclass(frozen=True)
 class ResponseBoundObservableState:
     """Factory-built binding of one exact observable state to response metadata."""
@@ -166,6 +225,20 @@ class ResponseBoundObservableState:
             raise ResponseBindingError("observable dimension does not match irrep blocks")
         if response_rank > min(physical_dimension, observable_dimension):
             raise ResponseBindingError("response rank exceeds a declared space dimension")
+        expected_response_identity = response_metadata_identity(
+            observable_state=replayed,
+            observable_channel_key=observable_channel,
+            response_channel_key=response_channel,
+            response_frame=self.response_frame,
+            response_basis=self.response_basis,
+            response_units=self.response_units,
+            response_rank=response_rank,
+            physical_parameter_dimension=physical_dimension,
+        )
+        if response_identity != expected_response_identity:
+            raise ResponseBindingError(
+                "response identity does not bind the declared observable and rank metadata"
+            )
         expected_status = (
             ResponseIdentificationStatus.POINT_IDENTIFIED
             if response_rank == physical_dimension
@@ -313,6 +386,20 @@ def bind_response_to_observable_state(
         "physical_parameter_dimension",
         minimum=1,
     )
+    expected_response_identity = response_metadata_identity(
+        observable_state=observable_state,
+        observable_channel_key=observable_channel_key,
+        response_channel_key=response_channel_key,
+        response_frame=response_frame,
+        response_basis=response_basis,
+        response_units=response_units,
+        response_rank=rank,
+        physical_parameter_dimension=dimension,
+    )
+    if _sha256_identity(response_identity, "response_identity") != expected_response_identity:
+        raise ResponseBindingError(
+            "response identity does not bind the declared observable and rank metadata"
+        )
     status = (
         ResponseIdentificationStatus.POINT_IDENTIFIED
         if rank == dimension
@@ -352,4 +439,5 @@ __all__ = [
     "ResponseBoundObservableState",
     "ResponseIdentificationStatus",
     "bind_response_to_observable_state",
+    "response_metadata_identity",
 ]
