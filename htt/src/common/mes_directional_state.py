@@ -19,6 +19,15 @@ from typing import Sequence
 
 import numpy as np
 
+from common.mes_premise_normalization import (
+    MesPremiseNormalizationError,
+    normalize_mes_premise,
+)
+from common.observable_irrep_state import (
+    ObservableIrrepRepresentation,
+    ObservableIrrepState,
+    observable_irrep_state_from_payload,
+)
 from common.statistical_foundations import (
     AnchorConditioning,
     AnchorStatus,
@@ -967,8 +976,38 @@ def build_mes_directional_state(
 
     raw_vector = np.asarray(directional_moments.dipole, dtype=float)
     raw_tensor = np.asarray(directional_moments.stf2, dtype=float)
-    mes_vector = raw_vector / anchor.value
-    mes_tensor = raw_tensor / anchor.value
+    try:
+        vector_normalization = normalize_mes_premise(
+            numerator=tuple(float(value) for value in raw_vector),
+            numerator_channel_key=anchor.channel_key,
+            numerator_identity=_canonical_identity(
+                {
+                    "coordinate": "directional_dipole",
+                    "estimator_identity": directional_moments.estimator_identity,
+                },
+                role="mes_directional_numerator",
+            ),
+            anchor=anchor,
+        )
+        tensor_normalization = normalize_mes_premise(
+            numerator=tuple(float(value) for value in raw_tensor.reshape(-1)),
+            numerator_channel_key=anchor.channel_key,
+            numerator_identity=_canonical_identity(
+                {
+                    "coordinate": "directional_stf2",
+                    "estimator_identity": directional_moments.estimator_identity,
+                },
+                role="mes_directional_numerator",
+            ),
+            anchor=anchor,
+        )
+    except MesPremiseNormalizationError as exc:
+        raise DirectionalBridgeError("MES premise normalization failed") from exc
+    mes_vector = np.asarray(vector_normalization.normalized_values, dtype=float)
+    mes_tensor = np.asarray(
+        tensor_normalization.normalized_values,
+        dtype=float,
+    ).reshape((3, 3))
     vector_amplitude, vector_shape = _shape(mes_vector)
     tensor_amplitude, tensor_shape = _shape(mes_tensor)
     state_identity = _directional_state_identity(
@@ -1033,6 +1072,57 @@ def build_mes_directional_state(
     )
 
 
+def bind_mes_directional_stf2_observable(
+    *,
+    state: MesDirectionalState,
+    observable_state: ObservableIrrepState,
+) -> ObservableIrrepState:
+    """Validate an ell=2 STF adapter without promoting the legacy ell=1 vector.
+
+    The source ``MesDirectionalState`` remains unchanged and retains its dipole
+    in the legacy observer-only payload.  The canonical retained-carrier type
+    has no ell=1 block, so this boundary deliberately adapts STF2 only and
+    refuses any implicit ell=3 extension.
+    """
+
+    if type(state) is not MesDirectionalState:
+        raise TypeError("state must be an exact MesDirectionalState")
+    if type(observable_state) is not ObservableIrrepState:
+        raise TypeError("observable_state must be an exact ObservableIrrepState")
+    replayed = observable_irrep_state_from_payload(observable_state.to_payload())
+    if len(replayed.blocks) != 1:
+        raise DirectionalBridgeError("directional adapter requires one STF2 block")
+    block = replayed.blocks[0]
+    if (
+        block.ell != 2
+        or block.representation
+        is not ObservableIrrepRepresentation.CARTESIAN_STF2_5
+    ):
+        raise DirectionalBridgeError("directional adapter requires an ell=2 STF2 block")
+    if (
+        replayed.frame != state.direction_frame
+        or replayed.units != state.field_units
+        or replayed.source_identity != state.field_identity
+        or replayed.operator_identity != state.estimator_identity
+    ):
+        raise DirectionalBridgeError(
+            "directional and observable frame/units/source/operator metadata mismatch"
+        )
+    raw = state.raw_stf2
+    expected_components = (
+        raw[0][0],
+        raw[1][1],
+        raw[0][1],
+        raw[0][2],
+        raw[1][2],
+    )
+    if block.components != expected_components:
+        raise DirectionalBridgeError(
+            "observable STF2 components do not match legacy directional content"
+        )
+    return replayed
+
+
 def assess_physical_stress_readiness(
     state: MesDirectionalState,
     *,
@@ -1072,6 +1162,7 @@ __all__ = [
     "TensorO3Representation",
     "VectorO3Representation",
     "assess_physical_stress_readiness",
+    "bind_mes_directional_stf2_observable",
     "build_mes_directional_state",
     "certify_spherical_second_moment",
     "make_directional_moment_estimate",
