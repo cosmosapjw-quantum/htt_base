@@ -1,0 +1,154 @@
+name: PMG-WU-005 bounded evidence repair runner
+
+on:
+  push:
+    branches:
+      - audit/pmg-wu005-evidence-repair-runner-20260828
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  TARGET_BRANCH: changeset/planck-mes-paired300-evidence-repair-v2-20260828
+  EXPECTED_TARGET_HEAD: 46df1cb36261e47627af5223f26a837eaa1e08f2
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  OMP_NUM_THREADS: "1"
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out exact repair branch
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Refuse moved repair authority
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_TARGET_HEAD"
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Install focused dependencies
+        run: |
+          python -m pip install 'pytest>=8,<9' 'numpy>=1.26,<3' 'PyYAML>=6,<7' 'healpy>=1.18,<2'
+          python -m pip install -e './htt'
+      - name: Preserve RED evidence
+        run: |
+          set +e
+          python -m pytest -q \
+            tests/obsstat/test_planck_paired300_evidence.py \
+            tests/integration/test_planck_paired300_replay_cli.py \
+            > "$RUNNER_TEMP/red.log" 2>&1
+          status=$?
+          cat "$RUNNER_TEMP/red.log"
+          test "$status" -ne 0
+          grep -Eq 'finalize-reviewed|FAILED|ERROR' "$RUNNER_TEMP/red.log"
+      - name: Disable self-attested legacy finalizer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/observed_runs/export_planck_paired300_irrep_carrier.py')
+          text = path.read_text()
+          start = text.index('def finalize_reviewed_package(')
+          main = text.index('def main(', start)
+          replacement = '''def finalize_reviewed_package(*args, **kwargs):
+              """Fail closed: reviewed finalization moved to the external-receipt CLI."""
+
+              raise CarrierExportError(
+                  "self-attested finalization is disabled; use "
+                  "replay_planck_paired300_irrep_carrier.py with an external fresh-review receipt"
+              )
+
+
+          '''
+          text = text[:start] + replacement + text[main:]
+          main = text.index('def main(')
+          safe_main = '''def main(argv: Sequence[str] | None = None) -> int:
+              parser = argparse.ArgumentParser(description=__doc__)
+              mode = parser.add_mutually_exclusive_group(required=True)
+              mode.add_argument("--execute-real-host", action="store_true")
+              mode.add_argument("--replay-committed", action="store_true")
+              parser.add_argument("--workdir", type=Path)
+              args = parser.parse_args(argv)
+              repo_root = Path(__file__).resolve().parents[2]
+              started = time.monotonic()
+              try:
+                  if args.execute_real_host:
+                      if args.workdir is None:
+                          parser.error("--execute-real-host requires --workdir")
+                      result = execute_real_host(repo_root=repo_root, workdir=args.workdir)
+                  else:
+                      if args.workdir is not None:
+                          parser.error("--replay-committed does not accept --workdir")
+                      from obsstat.planck_paired300_evidence import (
+                          FINAL_TERMINAL_FORMAT,
+                          verify_portable_artifact_manifest,
+                      )
+                      output_dir = repo_root / "docs/generated/planck_pr3_paired300_irrep_carrier"
+                      terminal = _load_json(output_dir / "terminal.json", label="reviewed terminal")
+                      if terminal.get("format") != FINAL_TERMINAL_FORMAT:
+                          raise CarrierExportError(
+                              "committed replay requires the externally reviewed terminal"
+                          )
+                      review_path = output_dir / "fresh_review.json"
+                      if terminal.get("fresh_review_receipt_sha256") != _file_sha256(review_path):
+                          raise CarrierExportError("fresh-review receipt identity drifted")
+                      frozen = repo_root / "docs/generated/pr315_planck_smica_feature_replay.npz"
+                      verify_portable_artifact_manifest(
+                          manifest_path=output_dir / "artifact_manifest.json",
+                          output_root=output_dir,
+                          frozen_scalar_package_path=frozen,
+                      )
+                      result = _compute_map_free_replay(repo_root=repo_root)
+              except Exception as exc:
+                  print(json.dumps({
+                      "state": "BLOCKED_PMG_WU005",
+                      "error_type": type(exc).__name__,
+                      "error": str(exc),
+                  }, sort_keys=True), file=sys.stderr, flush=True)
+                  return 3
+              print(json.dumps({**result, "wall_seconds": time.monotonic() - started}, sort_keys=True, allow_nan=False), flush=True)
+              return 0
+
+
+          if __name__ == "__main__":
+              raise SystemExit(main())
+          '''
+          path.write_text(text[:main] + safe_main)
+          PY
+      - name: Run GREEN focused and regression checks
+        run: |
+          python -m pytest -q \
+            tests/obsstat/test_planck_paired300_evidence.py \
+            tests/integration/test_planck_paired300_replay_cli.py \
+            tests/obsstat/test_planck_irrep_carrier.py \
+            tests/integration/test_planck_irrep_carrier_execution.py
+          python -m py_compile \
+            htt/obsstat/planck_paired300_evidence.py \
+            htt/obsstat/planck_paired300_recovery.py \
+            scripts/observed_runs/replay_planck_paired300_irrep_carrier.py \
+            scripts/observed_runs/export_planck_paired300_irrep_carrier.py
+          python scripts/observed_runs/replay_planck_paired300_irrep_carrier.py --help >/dev/null
+          python scripts/observed_runs/export_planck_paired300_irrep_carrier.py --help | tee "$RUNNER_TEMP/export-help.txt"
+          ! grep -q -- '--finalize-reviewed' "$RUNNER_TEMP/export-help.txt"
+          git diff --check
+      - name: Commit and push bounded repair
+        run: |
+          git config user.name 'cosmosapjw-quantum'
+          git config user.email 'cosmosapjw@gmail.com'
+          git add \
+            htt/obsstat/planck_paired300_evidence.py \
+            htt/obsstat/planck_paired300_recovery.py \
+            scripts/observed_runs/replay_planck_paired300_irrep_carrier.py \
+            scripts/observed_runs/export_planck_paired300_irrep_carrier.py \
+            tests/obsstat/test_planck_paired300_evidence.py \
+            tests/integration/test_planck_paired300_replay_cli.py
+          git commit -m 'fix: close PMG-WU-005 evidence binding gaps'
+          git push origin HEAD:"$TARGET_BRANCH"
