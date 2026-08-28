@@ -126,6 +126,22 @@ def test_both_registered_reducers_and_separate_orientation_family(built: Path) -
     ] == "ABSOLUTE_GALACTIC_DESCRIPTIVE_COMPANION"
 
 
+def test_feature_registry_matches_the_implemented_mixed_shape_coordinates(
+    built: Path,
+) -> None:
+    registry = json.loads((built / "feature_registry.json").read_text())
+    definitions = {
+        row["feature_id"]: row["definition"] for row in registry["coordinates"]
+    }
+    assert definitions["R_v0_normalized"] == "v_a v^a"
+    assert definitions["R_v1_normalized"] == "v_a Qhat^a_b v^b"
+    assert definitions["R_v2_normalized"] == "v_a (Qhat^2)^a_b v^b"
+    assert definitions["R_QS_normalized"] == "Qhat_ab S^ab"
+    assert definitions["K_v_normalized"] == "det(v,Qhat v,Qhat^2 v)"
+    assert all("vhat" not in definition for definition in definitions.values())
+    assert all("Shat" not in definition for definition in definitions.values())
+
+
 def test_row_permutation_and_observation_swap_equivariance() -> None:
     api = _api()
     rng = np.random.default_rng(6006)
