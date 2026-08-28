@@ -13,9 +13,11 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import subprocess
 
 REPO = Path(__file__).resolve().parents[3]
 PR186_CARD = REPO / "docs/generated/pr186_result_card.json"
+CLEANUP_BASE = "0864b00948143d9b19d4983e50fcd2d905f4a5d3"
 
 # Frozen PR-186 anchors this rescue cross-references (must stay byte-identical).
 FROZEN_W2_MAX = 3.3789222980376e-13
@@ -75,7 +77,17 @@ def force_psd_would_lose_sign(value: float) -> bool:
 
 # --- cross-reference guard on the frozen PR-186 evidence ---------------------
 def crossref_pr186() -> dict:
-    card = json.loads(PR186_CARD.read_text(encoding="utf-8"))
+    if PR186_CARD.is_file():
+        raw = PR186_CARD.read_bytes()
+    else:
+        relative = PR186_CARD.relative_to(REPO).as_posix()
+        raw = subprocess.run(
+            ["git", "show", f"{CLEANUP_BASE}:{relative}"],
+            cwd=REPO,
+            check=True,
+            capture_output=True,
+        ).stdout
+    card = json.loads(raw)
     cas = card.get("result", {}).get("cas_status", {})
     w2 = card.get("result", {})
 

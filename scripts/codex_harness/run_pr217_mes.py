@@ -1,6 +1,6 @@
 """PR-217 runner: MES attribution surface (frozen-safe, cross-refs PR-186)."""
 from __future__ import annotations
-import argparse, hashlib, json, sys
+import argparse, hashlib, json, subprocess, sys
 from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 for e in (str(REPO/"htt"), str(REPO/"htt"/"src")):
@@ -11,7 +11,14 @@ from common.revival_mes_attribution import (  # noqa: E402
 SPEC = REPO/"docs/research_program/revival/pr217_spec.yaml"
 CARD = REPO/"docs/generated/pr217_result_card.json"
 PR186 = REPO/"docs/generated/pr186_result_card.json"
+CLEANUP_BASE = "0864b00948143d9b19d4983e50fcd2d905f4a5d3"
 def _sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def _pr186_bytes():
+    if PR186.is_file(): return PR186.read_bytes()
+    return subprocess.run(
+        ["git", "show", f"{CLEANUP_BASE}:{PR186.relative_to(REPO).as_posix()}"],
+        cwd=REPO, check=True, capture_output=True,
+    ).stdout
 def _find(o,key):
     if isinstance(o,dict):
         for k,v in o.items():
@@ -25,7 +32,7 @@ def _find(o,key):
     return None
 def build_payload():
     surf = attribution_surface()
-    pr186 = json.loads(PR186.read_text())
+    pr186 = json.loads(_pr186_bytes())
     pr186_frozen = _find(pr186,"frozen_mes_vorticity_ceiling_W2_max")
     frozen_consistent = pr186_frozen == FROZEN_W2_MAX == surf["frozen_anchor"]
     geodesic_live = coefficient_is_live_ceiling(GEODESIC_SAG)

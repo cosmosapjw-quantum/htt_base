@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 
 import numpy as np
 import pytest
@@ -56,6 +57,19 @@ from htt.statistics.open_set_response_classes import (
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+CLEANUP_BASE = "0864b00948143d9b19d4983e50fcd2d905f4a5d3"
+
+
+def _live_or_historical_bytes(path: str) -> bytes:
+    live = REPO_ROOT / path
+    if live.is_file():
+        return live.read_bytes()
+    return subprocess.run(
+        ["git", "show", f"{CLEANUP_BASE}:{path}"],
+        cwd=REPO_ROOT,
+        check=True,
+        capture_output=True,
+    ).stdout
 
 
 def _id(value: str) -> str:
@@ -1835,7 +1849,7 @@ def test_pr219_and_statistical_foundation_authority_bytes_are_unchanged() -> Non
         ),
     }
     observed = {
-        path: hashlib.sha256((REPO_ROOT / path).read_bytes()).hexdigest()
+        path: hashlib.sha256(_live_or_historical_bytes(path)).hexdigest()
         for path in expected
     }
     assert observed == expected

@@ -51,8 +51,10 @@ root_refresh:
     current_root_sha256: bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311
     changed_input: docs/codex_handoff/pr_backlog.yaml
     rationale: PR-122 expanded only its registered implementation and artifact paths in the canonical DAG backlog.
-legacy_output_roots:
-  - legacy/cf4_p0
+# The retired report/figure payloads no longer have a live-tree reproduction
+# root.  Their fixed hash ledger and historical Git tree remain the recovery
+# authorities; active scientific use stays blocked.
+legacy_output_roots: []
 scan:
   roots:
     - .
@@ -73,19 +75,6 @@ scan:
   immutable_historical_paths:
     - CHANGELOG.md
     - CLAUDE.md
-    - docs/manuscript/appendices.tex
-    - docs/manuscript/ch01_introduction.tex
-    - docs/manuscript/ch02_dipole_anomaly.tex
-    - docs/manuscript/ch03_framework.tex
-    - docs/manuscript/ch04_bianchi_bounds.tex
-    - docs/manuscript/ch05_teff_corrections.tex
-    - docs/manuscript/ch06_pipeline.tex
-    - docs/manuscript/ch07_results.tex
-    - docs/manuscript/ch08_robustness.tex
-    - docs/manuscript/ch09_discussion.tex
-    - docs/manuscript/ch10_future.tex
-    - docs/manuscript/ch11_error_hierarchy.tex
-    - docs/manuscript/references.bib
     - docs/V5_RUNTIME_SPECTRAL_AUDIT.json
     - docs/codex_handoff/pr_backlog.json
     - docs/codex_handoff/pr_backlog.yaml
@@ -94,25 +83,13 @@ scan:
     - docs/research_program/long_horizon_rescue/pr120_spec.yaml
     - machine_readable/pr_backlog.json
     - machine_readable/pr_backlog.yaml
-    - scripts/audits/jcap_prd_20260714.py
   immutable_historical_prefixes:
-    - legacy/
-    - docs/code_capability_audit/
     - docs/dossier/
-    - docs/manuscript/generated/
     - docs/PR_DELTAS/
-    - docs/audits/
     - docs/research_program/advocate_rescue_divergence_20260714/
     - docs/ver2_upgrade/
-    - figures/conditioned_legacy/
-    - figures/quarantined_legacy/
-    - figures/quarantined_meta/
     - research_gates/pr04/
-  generated_contract_paths:
-    - docs/generated/cf4_p0_quarantine_inventory.json
-    - docs/generated/cf4_p0_quarantine_inventory.md
-    - docs/generated/cf4_p0_quarantine_block.json
-    - docs/generated/cf4_p0_quarantine_block.md
+  generated_contract_paths: []
   mutation_corpus_paths:
     - tests/pr_cards/test_pr_120_cf4_p0_downstream_consumer_quarantine.py
     - tests/obsstat/test_cf4_velocity_correlation_ml.py
@@ -120,7 +97,6 @@ scan:
     - htt/src/common/cf4_p0_quarantine.py
     - htt/src/common/package_binary_binding.py
     - docs/research_program/long_horizon_rescue/cf4_p0_legacy_package_hashes.json
-    - scripts/codex_harness/quarantine_cf4_p0_consumers.py
   ignored_directory_names:
     - .git
     - .mypy_cache
@@ -219,42 +195,10 @@ inventory:
   # New/changed active binaries may use this lane only after an explicit
   # reviewer pins both the sidecar and artifact digests. HEAD-identical binaries
   # need no entry. Root fills final entries after figure regeneration.
-  reviewed_active_binary_sidecars:
-    codex_shared_context_harness_v1.zip:
-      sidecar_path: codex_shared_context_harness_v1.zip.manifest.json
-      sidecar_sha256: sha256:7671e787f23ba9018859133c0f41488ffd89456f0a5696fff705f810eb24e54b
-      artifact_sha256: sha256:1f020bf290476491b07869ed40eb4d05fb99b6f38efe420453a02faf243ff94f
-      review_scope: PR-120-reviewed-active-binary
-    # RETIRED PIN (2026-07-21): figures/current/fig_current_dag_progress.png
-    # became HEAD-identical to its reviewed bytes
-    # (sha256:8f9fa2879bd773d8e87dea887a036fee6adb5a39ea195808c90f6e79b004042b)
-    # at the 2103a734 commit, and per this lane's own rule HEAD-identical
-    # binaries need no entry; the retained pin made every subsequent
-    # inventory build fail closed ("pin is unused"). The entry is removed
-    # rather than special-cased in code so the strict unused-pin detector
-    # keeps its mutation-corpus semantics. Binding authority for the file
-    # is git-head exact bytes; the sidecar remains on disk as history.
-  # These four self-containing release archives embed the canonical inventory,
-  # so their own digest cannot enter it without an impossible hash fixed point.
-  # They remain exact-path enumerated and are accepted only with their pinned
-  # builder plus the mandatory deterministic --check closeout command.
-  deterministic_release_outputs:
-    docs/generated/external_audit_package.zip:
-      builder_path: scripts/build_external_audit_package.py
-      manifest_path: docs/generated/external_audit_package_manifest.json
-      check_command: scripts/codex_harness/run_pr122_source_only.sh scripts/build_external_audit_package.py --check
-    docs/generated/research_only_external_audit_package.zip:
-      builder_path: scripts/build_research_only_audit_package.py
-      manifest_path: docs/generated/research_only_external_audit_package_manifest.json
-      check_command: venv/bin/python scripts/build_research_only_audit_package.py --check
-    docs/generated/statistical_formalism_audit_package.zip:
-      builder_path: scripts/build_statistical_formalism_audit_package.py
-      manifest_path: docs/generated/statistical_formalism_audit_package_manifest.json
-      check_command: venv/bin/python scripts/build_statistical_formalism_audit_package.py --check
-    htt_base_research_evaluation_package.zip:
-      builder_path: scripts/build_research_evaluation_package.py
-      manifest_path: htt_base_research_evaluation_package_manifest.json
-      check_command: venv/bin/python scripts/build_research_evaluation_package.py --check
+  reviewed_active_binary_sidecars: {}
+  # The former self-containing audit archives were retired with their builders.
+  # No current release output may inherit their historical exception.
+  deterministic_release_outputs: {}
   pinned_paths:
     - path: scripts/cf4_p0_quarantine_producer.py
       role: shared_active_producer_gate
@@ -276,10 +220,6 @@ inventory:
       role: active_result_card_wrapper
       mode: active_block_consumer
       required_markers: [cf4_p0_quarantine_producer]
-    - path: scripts/make_obsdata_r195_r198_figures.py
-      role: active_figure_block_wrapper
-      mode: active_block_consumer
-      required_markers: [quarantine_block_payload, require_legacy_reproduction]
     - path: scripts/cf4_p0_quarantine_derived.py
       role: shared_derived_consumer_gate
       mode: active_block_consumer
@@ -308,62 +248,6 @@ inventory:
       role: active_derived_card_wrapper
       mode: active_block_consumer
       required_markers: [cf4_p0_quarantine_derived]
-    - path: scripts/make_data_proxy_coordinates_figure.py
-      role: active_derived_figure_wrapper
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine_derived]
-    - path: docs/manuscript/main.tex
-      role: manuscript_guard
-      mode: active_block_consumer
-      required_markers: [HTTCF4PZeroLegacyReproduction]
-    - path: scripts/check_publication_claim_freeze.py
-      role: publication_freeze
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine]
-    - path: scripts/build_external_audit_package.py
-      role: package_builder
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine]
-    - path: scripts/build_research_only_audit_package.py
-      role: package_builder
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine]
-    - path: scripts/build_research_evaluation_package.py
-      role: package_builder
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine]
-    - path: scripts/build_statistical_formalism_audit_package.py
-      role: package_builder
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine]
-    - path: scripts/pdf_claim_lint.py
-      role: compiled_claim_surface_gate
-      mode: active_block_consumer
-      required_markers: [validate_active_text, BLOCKED_NO_CURRENT_PDF]
-    - path: scripts/build_external_audit_report_v6.py
-      role: historical_report_gateway
-      mode: active_block_consumer
-      required_markers: [legacy/cf4_p0, active rebuild withheld]
-    - path: scripts/build_external_audit_report_v7.py
-      role: historical_report_gateway
-      mode: active_block_consumer
-      required_markers: [legacy/cf4_p0, active rebuild withheld]
-    - path: scripts/build_external_audit_report_v8.py
-      role: report_consumer
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine_block.json]
-    - path: scripts/build_external_audit_report_v9.py
-      role: report_consumer
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine_block.json]
-    - path: scripts/build_v6_no_download_research_cards.py
-      role: result_card_consumer
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine_block.json]
-    - path: scripts/build_v6_compact_data_analysis.py
-      role: result_pack_consumer
-      mode: active_block_consumer
-      required_markers: [v6_no_download_research_cards]
     - path: scripts/cf4_p0_conditioned_diagnostics.py
       role: conditioned_method_gate
       mode: active_block_consumer
@@ -380,10 +264,6 @@ inventory:
       role: conditioned_method_wrapper
       mode: active_block_consumer
       required_markers: [cf4_p0_conditioned_diagnostics]
-    - path: scripts/make_blocker_discharge_figures.py
-      role: active_figure_absence_gate
-      mode: active_block_consumer
-      required_markers: [legacy/cf4_p0, active figure absent]
     - path: scripts/make_cf4_affine_flow.py
       role: reconstruction_conditioned_diagnostic
       mode: active_block_consumer
@@ -394,10 +274,6 @@ inventory:
       required_markers: [cf4_p0_quarantine_block.json]
     - path: scripts/jwst_cf4_crossmatch.py
       role: catalogue_linkage_consumer
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine_block.json]
-    - path: scripts/make_report_data_analysis_figures.py
-      role: report_figure_consumer
       mode: active_block_consumer
       required_markers: [cf4_p0_quarantine_block.json]
     - path: scripts/make_egs2_egs3_theorem_figures.py
@@ -424,10 +300,6 @@ inventory:
       role: forward_mock_method_consumer
       mode: active_block_consumer
       required_markers: [CF4]
-    - path: scripts/build_open_items_ledger.py
-      role: claim_status_consumer
-      mode: active_block_consumer
-      required_markers: [C1-K5-MV-F1]
     - path: docs/research_program/BLOCKERS.md
       role: claim_status_consumer
       mode: active_block_consumer
@@ -448,14 +320,6 @@ inventory:
       role: legacy_result_table_gateway
       mode: active_block_consumer
       required_markers: [require_legacy_reproduction, legacy/cf4_p0/scripts/build_egs_results_table_v8.py]
-    - path: docs/generated/egs_results_table_v9.json
-      role: active_result_table
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine_block.json]
-    - path: docs/generated/egs_results_table_v9.md
-      role: active_result_table
-      mode: active_block_consumer
-      required_markers: [cf4_p0_quarantine_block.json]
     - path: htt/src/common/cf4_p0_quarantine.py
       role: shared_validator
       mode: validator_support
@@ -468,10 +332,6 @@ inventory:
       role: fixed_pr119_legacy_package_hash_authority
       mode: validator_support
       required_markers: [e6da3670043596efdcd93f9ba5e631e1462146c7, root_digest_contract]
-    - path: scripts/codex_harness/quarantine_cf4_p0_consumers.py
-      role: validator_cli
-      mode: validator_support
-      required_markers: [validate_repository]
     - path: tests/pr_cards/test_pr_120_cf4_p0_downstream_consumer_quarantine.py
       role: mutation_and_contract_tests
       mode: mutation_corpus_only
@@ -481,15 +341,14 @@ inventory:
       mode: mutation_corpus_only
       required_markers: [QUARANTINED_OPEN_FINDINGS, shape_correction_pk_corr]
   lineage_edges:
-    - edge_id: canonical_block_to_every_active_consumer
-      from_path: docs/generated/cf4_p0_quarantine_block.json
+    - edge_id: live_policy_to_every_active_consumer
+      from_path: docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml
       to_paths:
         - scripts/cf4_p0_quarantine_producer.py
         - scripts/cf4_mv_bulkflow.py
         - scripts/cf4_mock_calibrated_significance.py
         - scripts/cf4_velocity_correlation_ml.py
         - scripts/cf4_bulkflow_lcdm_variance.py
-        - scripts/make_obsdata_r195_r198_figures.py
         - scripts/cf4_p0_quarantine_derived.py
         - scripts/k5_cf4_identified_interval_card.py
         - scripts/k5_cf4_identified_interval_card_v8.py
@@ -497,54 +356,26 @@ inventory:
         - scripts/k5_cf4_release_coverage.py
         - scripts/pr08_006_joint_artifact.py
         - scripts/bass_extended_joint_forecast.py
-        - scripts/make_data_proxy_coordinates_figure.py
-        - docs/manuscript/main.tex
-        - scripts/check_publication_claim_freeze.py
-        - scripts/build_external_audit_package.py
-        - scripts/build_research_only_audit_package.py
-        - scripts/build_research_evaluation_package.py
-        - scripts/build_statistical_formalism_audit_package.py
-        - scripts/pdf_claim_lint.py
-        - scripts/build_external_audit_report_v6.py
-        - scripts/build_external_audit_report_v7.py
-        - scripts/build_external_audit_report_v8.py
-        - scripts/build_external_audit_report_v9.py
-        - scripts/build_v6_no_download_research_cards.py
-        - scripts/build_v6_compact_data_analysis.py
         - scripts/cf4_p0_conditioned_diagnostics.py
         - scripts/cf4_reconstruction_dependence.py
         - scripts/cf4_velocity_correlation.py
         - scripts/make_cf4_bulkflow_likelihood.py
-        - scripts/make_blocker_discharge_figures.py
         - scripts/make_cf4_affine_flow.py
         - scripts/make_cf4_bulkflow_apex_depth.py
         - scripts/jwst_cf4_crossmatch.py
-        - scripts/make_report_data_analysis_figures.py
         - scripts/make_egs2_egs3_theorem_figures.py
         - htt/obsstat/egs3_teff_unification.py
         - htt/htt/htt/core/cf4_observational_input.py
         - htt/obsstat/egs3_teff_statistical.py
         - htt/obsstat/egs3_teff_statistical_v9.py
         - htt/obsstat/pv_forward_mocks.py
-        - scripts/build_open_items_ledger.py
         - docs/research_program/BLOCKERS.md
         - docs/research_program/egs3/CLAIM_LEDGER.yaml
         - scripts/build_egs_results_table_v9.py
         - scripts/build_egs_results_table.py
         - scripts/build_egs_results_table_v8.py
-        - docs/generated/egs_results_table_v9.json
-        - docs/generated/egs_results_table_v9.md
       finding_ids: [C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
-      disposition: exhaustive_active_consumer_fail_closed_coverage
-    - edge_id: binary_binding_validator_to_release_builders
-      from_path: htt/src/common/package_binary_binding.py
-      to_paths:
-        - scripts/build_external_audit_package.py
-        - scripts/build_research_only_audit_package.py
-        - scripts/build_research_evaluation_package.py
-        - scripts/build_statistical_formalism_audit_package.py
-      finding_ids: [C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
-      disposition: independent_binary_byte_binding_release_dependency
+      disposition: active_consumer_fail_closed_coverage_after_surface_retirement
     - edge_id: fixed_legacy_hash_ledger_to_validator_support
       from_path: docs/research_program/long_horizon_rescue/cf4_p0_legacy_package_hashes.json
       to_paths:
@@ -552,52 +383,6 @@ inventory:
         - htt/src/common/package_binary_binding.py
       finding_ids: [C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
       disposition: fixed_pr119_legacy_byte_authority
-    - edge_id: mv_p0_producer_to_active_gate
-      from_path: legacy/cf4_p0/scripts/cf4_mv_bulkflow.py
-      to_paths:
-        - scripts/cf4_mv_bulkflow.py
-        - scripts/cf4_mock_calibrated_significance.py
-        - scripts/cf4_bulkflow_lcdm_variance.py
-      finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
-      disposition: legacy_value_to_block_record_only
-    - edge_id: ml_p0_producer_to_active_gate
-      from_path: legacy/cf4_p0/scripts/cf4_velocity_correlation_ml.py
-      to_paths:
-        - scripts/cf4_velocity_correlation_ml.py
-        - scripts/cf4_velocity_correlation.py
-      finding_ids: [C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
-      disposition: legacy_value_to_block_or_method_record_only
-    - edge_id: canonical_block_to_derived_cards
-      from_path: docs/generated/cf4_p0_quarantine_block.json
-      to_paths:
-        - scripts/cf4_p0_quarantine_derived.py
-        - scripts/cf4_p0_conditioned_diagnostics.py
-        - scripts/build_egs_results_table_v9.py
-        - scripts/build_v6_no_download_research_cards.py
-      finding_ids: [C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
-      disposition: block_record_only
-    - edge_id: canonical_block_to_figure_and_teff_consumers
-      from_path: docs/generated/cf4_p0_quarantine_block.json
-      to_paths:
-        - scripts/make_report_data_analysis_figures.py
-        - scripts/make_egs2_egs3_theorem_figures.py
-        - htt/obsstat/egs3_teff_unification.py
-        - scripts/make_cf4_affine_flow.py
-        - scripts/make_cf4_bulkflow_apex_depth.py
-      finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
-      disposition: symbolic_or_reconstruction_conditioned_only
-    - edge_id: canonical_block_to_release_consumers
-      from_path: docs/generated/cf4_p0_quarantine_block.json
-      to_paths:
-        - scripts/check_publication_claim_freeze.py
-        - scripts/pdf_claim_lint.py
-        - scripts/build_external_audit_package.py
-        - scripts/build_research_only_audit_package.py
-        - scripts/build_research_evaluation_package.py
-        - scripts/build_statistical_formalism_audit_package.py
-        - docs/manuscript/main.tex
-      finding_ids: [C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
-      disposition: fail_closed_release_gate
 caveats:
   - Quarantine is propagation control, not scientific remediation or validation.
   - All three findings remain OPEN; zero stale active consumers does not close them.

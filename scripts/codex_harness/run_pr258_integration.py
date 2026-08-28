@@ -14,6 +14,7 @@ import tempfile
 
 
 REPO = Path(__file__).resolve().parents[2]
+CLEANUP_BASE = "0864b00948143d9b19d4983e50fcd2d905f4a5d3"
 SOURCE_PATHS = (
     REPO,
     REPO / "htt/src",
@@ -160,8 +161,19 @@ assert callable(facade.source_separation_gate_from_pr256)
 
 
 def _historical_bytes() -> None:
+    def source_bytes(path: str) -> bytes:
+        live = REPO / path
+        if live.is_file():
+            return live.read_bytes()
+        return subprocess.run(
+            ["git", "show", f"{CLEANUP_BASE}:{path}"],
+            cwd=REPO,
+            capture_output=True,
+            check=True,
+        ).stdout
+
     observed = {
-        path: hashlib.sha256((REPO / path).read_bytes()).hexdigest()
+        path: hashlib.sha256(source_bytes(path)).hexdigest()
         for path in HISTORICAL_HASHES
     }
     if observed != HISTORICAL_HASHES:
@@ -328,7 +340,7 @@ def _claim_checks() -> int:
             "-B",
             str(REPO / "scripts/check_claim_language.py"),
             "--dry-run",
-            str(REPO / "docs/manuscript"),
+            str(REPO / "papers/planck_mes_first_observation"),
             "--format",
             "json",
         ],

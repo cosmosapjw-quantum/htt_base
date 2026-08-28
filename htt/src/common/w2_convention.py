@@ -32,22 +32,10 @@ _ALLOWLIST_SUBSTRINGS = (
     "test_pr_186_",                  # its tests
     "pr186_result_card.json",        # its card (quotes the before/after display)
     "docs/research_program/strengthening/",  # strengthening specs (document patterns)
-    "docs/audits/",                  # audit/CRAG evidence files
     "htt_post_v10_strengthening_plan_20260721/",  # the external audit package
     "legacy/",                       # frozen historical
     "docs/PR_DELTAS/",               # immutable deltas
     "CHANGELOG.md",                  # immutable historical record
-    # Byte-frozen v5..v9 builders and report packages (archive namespace).
-    "build_external_audit_report_v5.py",
-    "build_external_audit_report_v6.py",
-    "build_external_audit_report_v7.py",
-    "build_external_audit_report_v8.py",
-    "build_external_audit_report_v9.py",
-    "external_audit_research_report_20260707_v5",
-    "external_audit_research_report_20260708_v6",
-    "external_audit_research_report_20260710_v7",
-    "external_audit_research_report_20260710_v8",
-    "external_audit_research_report_20260711_v9",
     "docs/V5_",                      # v5-era historical derivation notes
     "docs/ver2_upgrade/",            # historical
 )

@@ -12,6 +12,7 @@ from common.artifact_manifest import validate_manifest_payload
 ROOT = Path(__file__).resolve().parents[2]
 VENDOR = ROOT / "harness_templates/vendor/physmath-gpt56/3.1.0"
 RECEIPT = ROOT / "docs/audits/harness_intake_20260714/receipt.json"
+CLEANUP_BASE = "0864b00948143d9b19d4983e50fcd2d905f4a5d3"
 GENERIC_SKILLS = {
     "adversarial-review",
     "claim-source-audit",
@@ -33,6 +34,19 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _historical_receipt() -> dict:
+    """Load the retired intake receipt from its immutable Git authority."""
+    relative = RECEIPT.relative_to(ROOT).as_posix()
+    completed = subprocess.run(
+        ["git", "show", f"{CLEANUP_BASE}:{relative}"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=True,
+    )
+    return json.loads(completed.stdout)
+
+
 def _tree_hash(root: Path) -> tuple[int, int, str]:
     digest = hashlib.sha256()
     files = sorted(path for path in root.rglob("*") if path.is_file())
@@ -43,7 +57,7 @@ def _tree_hash(root: Path) -> tuple[int, int, str]:
 
 
 def test_receipt_matches_immutable_vendor_trees() -> None:
-    receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
+    receipt = _historical_receipt()
     assert receipt["schema_version"] == "htt.physmath_harness_receipt.v1"
     for archive in receipt["archives"]:
         name = "coding" if "coding" in archive["name"] else "research"
@@ -103,7 +117,7 @@ def test_vendor_has_only_expected_executables_and_safe_paths() -> None:
 
 
 def test_root_controls_and_adapter_preserve_repo_authority() -> None:
-    receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
+    receipt = _historical_receipt()
     for rel, expected in receipt["root_control_hashes"].items():
         assert len(expected) == 64
         int(expected, 16)
@@ -139,7 +153,7 @@ def test_root_controls_and_adapter_preserve_repo_authority() -> None:
 
 
 def test_receipt_is_explicitly_non_scientific() -> None:
-    metadata = json.loads(RECEIPT.read_text(encoding="utf-8"))["artifact_metadata"]
+    metadata = _historical_receipt()["artifact_metadata"]
     assert validate_manifest_payload(
         metadata,
         manifest_path=RECEIPT,

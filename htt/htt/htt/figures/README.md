@@ -1,31 +1,17 @@
 # HTT Figure Scripts
 
-Legacy standalone figure scripts for the Bianchi defect framework
-manuscript.
+Standalone legacy figure mechanics retained with the scientific source tree.
 
 ## Status note
 
-These files are no longer the primary manuscript-grade generation path. The
-six historical aggregate drivers (`make_manuscript_figures.py`,
-`make_preliminary_figures.py`, `make_paper_figures.py`,
-`make_additional_figures.py`, `make_more_figures.py`, and
-`make_parallel_track_figures.py`) are intentionally retired because each mixed
-independent figures with quarantined CF4/channel-c consumers. Their exact
-sources and value-bearing outputs are frozen under `legacy/cf4_p0` and cannot
-be used as active reproduction authorities.
+The former aggregate manuscript drivers and the repository-level `figures/`
+tree were retired with the pre-current publication surface.  The modules in
+this directory remain source-level mechanics only; they are not current
+publication artifacts or reproduction authority.
 
-Current figures are produced only by purpose-specific, manifest-backed
-generators such as `make_current_manuscript_figures.py`,
-`make_report_data_analysis_figures.py`,
-`make_observed_data_manuscript_figures.py`, and
-`make_egs2_egs3_theorem_figures.py`. Each current generator owns an explicit
-output set and claim lane.
-
-Mock / placeholder status is tracked in
-[`figures/README.md`](../../../../figures/README.md) and
-[`figures/paper/INDEX.md`](../../../../figures/paper/INDEX.md), not in
-this legacy table. Some of the standalone scripts below remain
-fixture-backed or superseded by the newer `fig_chXX...` paper figures.
+The active Planck/MES paper figures and their machine-readable inputs live
+under `docs/generated/planck_mes_first_paper/` and
+`docs/generated/planck_mes_coordinate_audit/`.
 
 ## Usage
 
@@ -71,5 +57,6 @@ python workspace/scripts/generate_all_figures.py
 
 ## Notes
 - Scripts use `sys.path` hacks for standalone execution (P2 cosmetic, to be cleaned in production)
-- Output: 300 DPI PNG with Wong (2011) colorblind-friendly palette
+- Historical output convention: 300 DPI PNG with Wong (2011)
+  colorblind-friendly palette
 - Font sizes: 18pt titles, 16pt axis labels, 14pt tick marks

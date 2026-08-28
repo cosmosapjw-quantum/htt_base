@@ -488,28 +488,6 @@ def test_sector_stress_rejects_duck_typed_numerators_anchors_and_channels() -> N
             )
 
 
-def test_chapter7_scenario_table_has_detachable_claim_metadata() -> None:
-    chapter = (
-        REPO_ROOT / "docs/manuscript/ch07_results.tex"
-    ).read_text(encoding="utf-8")
-    label_index = chapter.index(r"\label{tab:scenario-dual}")
-    caption_start = chapter.rfind(r"\caption{", 0, label_index)
-    caption = chapter[caption_start:label_index]
-    for required in (
-        "Owner: HTT",
-        "Claim tier:",
-        "diagnostic-only",
-        r"BC1\_LEGACY\_PROJECTION",
-        r"BC2\_NO\_REPRESENTATION\_PROMOTION",
-        "historical external/proxy",
-        "current mask/random, covariance, null, PPC",
-        "Allowed use:",
-        "Forbidden use:",
-        "Bianchi family identification",
-    ):
-        assert required in caption
-
-
 def test_result_card_claim_policy_and_morphology_status_are_not_caller_controlled() -> None:
     from mio.reports import StatisticalFoundationResultCard
 
@@ -844,53 +822,6 @@ def test_pr151_remains_background_only_and_dag_mirrors_are_exact() -> None:
     ).read_bytes() == (
         REPO_ROOT / "machine_readable/pr_backlog.yaml"
     ).read_bytes()
-
-
-def test_manuscript_keeps_curvature_condition_and_shear_anchor_scope() -> None:
-    chapter3 = (REPO_ROOT / "docs/manuscript/ch03_framework.tex").read_text(
-        encoding="utf-8"
-    )
-    chapter7 = (REPO_ROOT / "docs/manuscript/ch07_results.tex").read_text(
-        encoding="utf-8"
-    )
-
-    assert "Irrotationality alone does not fix the sign" in chapter3
-    assert "$\\Wstd = 0$ and $\\Okaniso\\geq0$" in chapter3
-    assert "is the MES \\emph{linear} algebraic bound" not in chapter7
-    assert "linear geodesic MES \\emph{shear-channel} bound" in chapter7
-    assert "does not make $\\xmax$ a joint" in chapter7
-
-
-def test_detachable_evidence_captions_carry_complete_claim_lanes() -> None:
-    chapter7 = (REPO_ROOT / "docs/manuscript/ch07_results.tex").read_text(
-        encoding="utf-8"
-    )
-    labels = (
-        "tab:fb7_lnB_11types",
-        "tab:class-collapsed",
-        "tab:evidence-grand",
-        "tab:decomposition-results",
-    )
-    required = (
-        "Owner: HTT.",
-        "Claim tier: diagnostic-only.",
-        "Artifact mode: conditioned",
-        r"BC1\_LEGACY\_PROJECTION",
-        r"BC2\_NO\_REPRESENTATION\_PROMOTION",
-        "Transfer source: historical external/proxy",
-        "Null/covariance status: historical fixture only",
-        "Allowed use: historical reproduction and method comparison.",
-        "Forbidden use: current",
-        "native-solver or morphology ranking",
-        "Bianchi family identification.",
-    )
-    for label in labels:
-        before_label = chapter7.split(f"\\label{{{label}}}", 1)[0]
-        caption = " ".join(
-            before_label.rsplit("\\caption{", 1)[1].split()
-        )
-        for phrase in required:
-            assert phrase in caption, (label, phrase)
 
 
 def test_foundation_dependency_overlay_has_an_exact_typed_projection() -> None:

@@ -115,16 +115,6 @@ v7-seals: egs3-seals v7-sympy-seals egs3-sage egs3-lean v7-wolfram
 v9-seals:
 	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_v9_seals.py
 
-## Single-command v9 reproduction: gates -> seals (all engines) -> experiments
-## -> tables/cards/figures -> report (tex+pdf+zip with sources/ + seals/ +
-## environment.lock; MANIFEST input_hashes resolve in-package).
-reproduce-v9: egs3-gates egs3-seals v7-sympy-seals v8-seals egs3-sage egs3-lean v9-seals
-	$(PYPATH) $(PY) $(REPO)/scripts/build_egs_results_table_v9.py
-	$(PYPATH) $(PY) $(REPO)/scripts/k5_cf4_identified_interval_card_v9.py
-	$(PYPATH) $(PY) $(REPO)/scripts/make_egs2_egs3_theorem_figures.py
-	$(PYPATH) $(PY) $(REPO)/scripts/make_data_proxy_coordinates_figure.py
-	$(PYPATH) $(PY) $(REPO)/scripts/build_external_audit_report_v9.py
-
 ## PAPER-A: identifiability / congruence-kinematics gates + PAPER-A symbolic cores.
 paper-a-gates:
 	cd $(GATEDIR) && $(THREADS) $(PYPATH) $(PY) -m unittest -v \
