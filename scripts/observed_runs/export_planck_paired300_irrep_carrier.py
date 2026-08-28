@@ -42,6 +42,14 @@ _PORTABLE_OUTPUTS = frozenset(
         "terminal.json",
     }
 )
+_REVIEW_EVIDENCE_OUTPUTS = frozenset(
+    {
+        "artifact_manifest.json",
+        "fresh_review.json",
+        "terminal.pending.json",
+    }
+)
+_REVIEWED_TERMINAL_FORMAT = "PLANCK_PR3_PAIRED300_REVIEWED_TERMINAL_V1"
 _TERMINAL_REQUIRED = {
     "work_unit": "PMG-WU-005",
     "state": "SUCCEEDED",
@@ -54,6 +62,28 @@ _TERMINAL_REQUIRED = {
     "next_executable_action": "PMG-WU-006",
     "fresh_review": "PASS",
 }
+_PENDING_TERMINAL_REQUIRED = {
+    "format": "PLANCK_PR3_PAIRED300_PENDING_TERMINAL_V1",
+    "work_unit": "PMG-WU-005",
+    "state": "EXECUTED_PENDING_FRESH_REVIEW",
+    "real_host_execution": True,
+    "replay_status": "MATCH",
+    "scalar_closure": "MATCH",
+    "raw_data_mutation": False,
+    "claim_promotion": False,
+    "unresolved_blockers": ["FRESH_READ_ONLY_REVIEW_PENDING"],
+    "next_executable_action": "FRESH_READ_ONLY_REVIEW",
+}
+_PENDING_TERMINAL_FIELDS = frozenset(
+    {
+        *_PENDING_TERMINAL_REQUIRED,
+        "base_git_head",
+        "implementation_git_head",
+        "implementation_git_tree",
+        "artifact_manifest_content_id",
+        "objective_output_sha256",
+    }
+)
 
 
 class CarrierExportError(RuntimeError):
@@ -317,20 +347,29 @@ def load_private_row_checkpoint(
 
 
 def validate_portable_completion(output_dir: Path) -> dict[str, object]:
-    """Accept only the seven exact portable outputs and terminal boundaries."""
+    """Accept the exact science package plus its reviewed evidence surface."""
 
     output_dir = Path(output_dir)
     if output_dir.is_symlink() or not output_dir.is_dir():
         raise CarrierExportError("portable output directory is missing or unsafe")
     present = {path.name for path in output_dir.iterdir()}
-    if present != _PORTABLE_OUTPUTS or any(
-        path.is_symlink() or not path.is_file() for path in output_dir.iterdir()
-    ):
-        raise CarrierExportError("portable package must contain exactly seven files")
+    if any(path.is_symlink() or not path.is_file() for path in output_dir.iterdir()):
+        raise CarrierExportError("portable package contains an unsafe entry")
     try:
         terminal = json.loads((output_dir / "terminal.json").read_text(encoding="ascii"))
     except (OSError, UnicodeError, json.JSONDecodeError) as exc:
         raise CarrierExportError("portable terminal is malformed") from exc
+    reviewed = (
+        isinstance(terminal, dict)
+        and terminal.get("format") == _REVIEWED_TERMINAL_FORMAT
+    )
+    if reviewed:
+        if present != _PORTABLE_OUTPUTS | _REVIEW_EVIDENCE_OUTPUTS:
+            raise CarrierExportError(
+                "reviewed portable package must contain its exact evidence files"
+            )
+    elif present != _PORTABLE_OUTPUTS:
+        raise CarrierExportError("portable package must contain exactly seven files")
     if not isinstance(terminal, dict) or terminal.get("fresh_review") != "PASS":
         raise CarrierExportError("portable terminal fresh review is not accepted")
     if not isinstance(terminal, dict) or any(
@@ -338,12 +377,63 @@ def validate_portable_completion(output_dir: Path) -> dict[str, object]:
     ):
         raise CarrierExportError("portable terminal boundary is not PMG-WU-005 PASS")
     expected_names = _PORTABLE_OUTPUTS - {"terminal.json"}
-    artifact_hashes = terminal.get("objective_artifact_sha256")
+    if reviewed:
+        expected_names = expected_names | {"artifact_manifest.json"}
+        artifact_hashes = terminal.get("objective_output_sha256")
+    else:
+        artifact_hashes = terminal.get("objective_artifact_sha256")
     if not isinstance(artifact_hashes, dict) or set(artifact_hashes) != expected_names:
         raise CarrierExportError("portable objective artifact identity set drifted")
     for name in sorted(expected_names):
         if artifact_hashes.get(name) != _file_sha256(output_dir / name):
             raise CarrierExportError(f"portable artifact identity drifted: {name}")
+    if reviewed:
+        review = _load_json(output_dir / "fresh_review.json", label="fresh review")
+        pending = _load_json(
+            output_dir / "terminal.pending.json",
+            label="pending terminal",
+        )
+        if (
+            set(pending) != _PENDING_TERMINAL_FIELDS
+            or any(
+                pending.get(key) != value
+                for key, value in _PENDING_TERMINAL_REQUIRED.items()
+            )
+            or pending.get("base_git_head") != terminal.get("base_git_head")
+        ):
+            raise CarrierExportError("reviewed pending terminal boundary drifted")
+        if terminal.get("fresh_review_receipt_sha256") != _file_sha256(
+            output_dir / "fresh_review.json"
+        ):
+            raise CarrierExportError("fresh-review receipt identity drifted")
+        if (
+            review.get("format") != "PLANCK_PR3_PAIRED300_FRESH_REVIEW_V1"
+            or review.get("state") != "PASS"
+            or review.get("P0") != 0
+            or review.get("P1") != 0
+            or pending.get("format")
+            != "PLANCK_PR3_PAIRED300_PENDING_TERMINAL_V1"
+            or pending.get("state") != "EXECUTED_PENDING_FRESH_REVIEW"
+        ):
+            raise CarrierExportError("reviewed portable evidence is not accepted")
+        for source in (review, pending):
+            if (
+                source.get("implementation_git_head", source.get("candidate_git_head"))
+                != terminal.get("implementation_git_head")
+                or source.get(
+                    "implementation_git_tree", source.get("candidate_git_tree")
+                )
+                != terminal.get("implementation_git_tree")
+                or source.get("artifact_manifest_content_id")
+                != terminal.get("artifact_manifest_content_id")
+            ):
+                raise CarrierExportError("reviewed candidate evidence identity drifted")
+        if (
+            pending.get("objective_output_sha256") != artifact_hashes
+            or review.get("repair_rounds_used")
+            != terminal.get("review_repair_count")
+        ):
+            raise CarrierExportError("reviewed portable evidence content drifted")
     return terminal
 
 
