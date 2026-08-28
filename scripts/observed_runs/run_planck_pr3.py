@@ -51,6 +51,16 @@ from common.data_identity import (  # noqa: E402
     replay_lane_admission_decision,
 )
 from obsstat.boost_biposh_residual import ExactBoostOperator  # noqa: E402
+from obsstat.covariance_replay import validate_sample_covariance_replay  # noqa: E402
+from obsstat.planck_irrep_carrier import (  # noqa: E402
+    OBSERVATION_ROW_ID,
+    replay_planck_irrep_carrier,
+    scalar_feature_closure_report,
+    write_planck_irrep_carrier,
+)
+from obsstat.planck_paired300_carrier_execution import (  # noqa: E402
+    carrier_vector_from_alm,
+)
 from obsstat.planck_post275_lane import validate_full_joint_covariance  # noqa: E402
 from obsstat.planck_pr3_operator import (  # noqa: E402
     COMPONENT_FEATURE_IDS,
@@ -1496,9 +1506,10 @@ def replay_pr315_feature_package(
         null_features=nulls,
         row_ids=row_ids,
     )
-    recomputed_covariance = np.cov(nulls, rowvar=False, ddof=1)
-    if not np.array_equal(covariance, recomputed_covariance):
-        raise PlanckWorkerError("PR-315 portable covariance differs from replay")
+    covariance_replay = validate_sample_covariance_replay(
+        stored_covariance=covariance,
+        rows=nulls,
+    )
     projection_sha256 = _canonical_hash(
         _pr315_feature_scientific_projection(diagnostic)
     )
@@ -1510,6 +1521,7 @@ def replay_pr315_feature_package(
         "feature_package_sha256": metadata["package_sha256"],
         "feature_metadata_sha256": _sha256_file(metadata_path),
         "operator_identity_sha256": metadata["operator_identity_sha256"],
+        "covariance_replay": covariance_replay,
         "raw_maps_reopened": False,
     }
 
@@ -2119,16 +2131,19 @@ def run_pr315_joint_cutsky_attended(
         operator_identity_sha256 = require_observation_null_operator_identity(
             observation_operator, null_operator
         )
-        null_features = _process_ffp10_component(
-            components["null"],
-            array_name="smica_maps",
-            row_ids=row_ids,
-            component="SMICA",
-            context=context,
+        null_features, null_carrier = (
+            _process_ffp10_component_with_carrier(
+                components["null"],
+                array_name="smica_maps",
+                row_ids=row_ids,
+                component="SMICA",
+                context=context,
+            )
         )
-        observed_features, _, _ = _process_map(
+        observed_features, _, observed_alm = _process_map(
             observed_map, component="SMICA", context=context
         )
+        observed_carrier = carrier_vector_from_alm(observed_alm)
         diagnostic = analyze_smica_feature_rows(
             observed_features=observed_features,
             null_features=null_features,
@@ -2148,6 +2163,59 @@ def run_pr315_joint_cutsky_attended(
         portable_replay = replay_pr315_feature_package(
             package_path=output_dir / "pr315_joint_cutsky_features.npz",
             metadata_path=output_dir / "pr315_joint_cutsky_features.json",
+        )
+        observed_projected = _component_features_from_real_carrier(
+            observed_carrier
+        )
+        null_projected = np.asarray(
+            [
+                _component_features_from_real_carrier(row)
+                for row in null_carrier
+            ],
+            dtype=np.float64,
+        )
+        scalar_closure = scalar_feature_closure_report(
+            observed_expected=observed_features,
+            observed_projected=observed_projected,
+            null_expected=null_features,
+            null_projected=null_projected,
+        )
+        _write_json(output_dir / "scalar_closure.json", scalar_closure)
+        carrier_package = output_dir / "paired300_irrep_carrier.npz"
+        carrier_metadata = output_dir / "paired300_irrep_carrier.json"
+        transfer_identity = {
+            "source_beam_sha256": _array_digest(
+                np.asarray(context["source_beams"]["SMICA"])
+            ),
+            "source_pixel_window_sha256": _array_digest(
+                np.asarray(context["source_pixels"]["SMICA"])
+            ),
+            "target_beam_sha256": _array_digest(
+                np.asarray(context["target_beam"])
+            ),
+            "target_pixel_window_sha256": _array_digest(
+                np.asarray(context["target_pixel"])
+            ),
+        }
+        carrier_receipt = write_planck_irrep_carrier(
+            package_path=carrier_package,
+            metadata_path=carrier_metadata,
+            observed_real_alm=observed_carrier,
+            null_real_alm=null_carrier,
+            row_ids=(OBSERVATION_ROW_ID, *row_ids),
+            null_ordered_row_ids_sha256=SMICA_EXISTING_INVENTORY_ID,
+            operator_identity=observation_operator,
+            transfer_identity=transfer_identity,
+            source_manifest_sha256=str(
+                acceptance["raw_input_manifest_sha256"]
+            ),
+            scalar_feature_package_sha256=str(
+                package_receipt["package_sha256"]
+            ),
+        )
+        carrier_replay = replay_planck_irrep_carrier(
+            package_path=carrier_package,
+            metadata_path=carrier_metadata,
         )
         benchmark = _strict_json(
             benchmark_result_path, label="frozen PR-314 result"
@@ -2189,6 +2257,9 @@ def run_pr315_joint_cutsky_attended(
             "operator_identity": observation_operator,
             "operator_identity_sha256": operator_identity_sha256,
             "feature_package": package_receipt,
+            "irrep_carrier": carrier_receipt,
+            "irrep_carrier_replay": carrier_replay,
+            "scalar_closure": scalar_closure,
             "portable_replay_scientific_projection_sha256": portable_replay[
                 "scientific_projection_sha256"
             ],
@@ -2226,6 +2297,11 @@ def run_pr315_joint_cutsky_attended(
                 "state": "SUCCEEDED",
                 "result_sha256": _sha256_file(output_dir / "result.json"),
                 "feature_package_sha256": package_receipt["package_sha256"],
+                "irrep_carrier_package_sha256": carrier_receipt[
+                    "package_sha256"
+                ],
+                "irrep_carrier_replay": "MATCH",
+                "scalar_closure": scalar_closure["state"],
                 "portable_replay": "MATCH",
                 "observed_science_executed": True,
             },
@@ -2445,6 +2521,65 @@ def _process_ffp10_component(
     return np.asarray(features, dtype=float)
 
 
+
+
+def _component_features_from_real_carrier(
+    carrier: np.ndarray,
+) -> np.ndarray:
+    """Project one frozen 32-real carrier back to the twelve features."""
+
+    vector = np.asarray(carrier, dtype=np.float64)
+    if vector.shape != (JOINT_CUTSKY_RETAINED_DIMENSION,):
+        raise PlanckWorkerError("real carrier dimension drifted")
+    alm = real_vector_to_alm(vector, lmin=LMIN, lmax=LMAX)
+    vectors2 = extract_multipole_vectors(alm, ell=2, lmax=LMAX)
+    vectors3 = extract_multipole_vectors(alm, ell=3, lmax=LMAX)
+    return component_features_from_vectors(
+        alm, vectors2=vectors2, vectors3=vectors3, lmax=LMAX
+    )
+
+
+def _process_ffp10_component_with_carrier(
+    path: Path,
+    *,
+    array_name: str,
+    row_ids: tuple[str, ...],
+    component: str,
+    context: Mapping[str, object],
+    chunk_rows: int = 32,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Process each compact null row once and preserve the same-fit carrier."""
+
+    try:
+        with np.load(path, allow_pickle=False, mmap_mode="r") as bundle:
+            maps = np.asarray(bundle[array_name])
+            if maps.ndim != 2 or maps.shape[0] != len(row_ids):
+                raise PlanckWorkerError("FFP10 same-sky map pairing is incomplete")
+            features: list[np.ndarray] = []
+            carriers: list[np.ndarray] = []
+            for start in range(0, len(row_ids), chunk_rows):
+                chunk = maps[start : start + chunk_rows]
+                if not np.all(np.isfinite(chunk)):
+                    raise PlanckWorkerError("FFP10 map stack contains nonfinite values")
+                for pixel_map in chunk:
+                    value, _, alm = _process_map(
+                        np.asarray(pixel_map, dtype=float),
+                        component=component,
+                        context=context,
+                    )
+                    features.append(value)
+                    carriers.append(carrier_vector_from_alm(alm))
+    except (KeyError, OSError, ValueError) as exc:
+        raise PlanckWorkerError("FFP10 bundle is not a safe numeric NPZ") from exc
+    feature_matrix = np.asarray(features, dtype=np.float64)
+    carrier_matrix = np.asarray(carriers, dtype=np.float64)
+    if feature_matrix.shape != (len(row_ids), 12):
+        raise PlanckWorkerError("FFP10 feature matrix shape drifted")
+    if carrier_matrix.shape != (
+        len(row_ids), JOINT_CUTSKY_RETAINED_DIMENSION
+    ):
+        raise PlanckWorkerError("FFP10 carrier matrix shape drifted")
+    return feature_matrix, carrier_matrix
 def _mark_observed_data_open_attempt() -> None:
     output_text = os.environ.get("HTT_ATTENDED_OUTPUT_DIR", "")
     output = Path(output_text)

@@ -1,0 +1,23 @@
+schema: htt.planck_mes.pmg_wu005.remote_implementation_status.v1
+state: PARTIAL_REMOTE_IMPLEMENTATION
+work_unit_pass_claim: false
+implemented:
+- path: htt/obsstat/planck_irrep_carrier.py
+  role: strict 301x32 no-pickle writer, replay, metadata and scalar closure
+- path: tests/obsstat/test_planck_irrep_carrier.py
+  role: roundtrip and negative/mutation contract tests
+tdd:
+  red_commit: 5989c7f1ff0e948cb4c927fc5358ada1b0a9f1a3
+  red_run: https://github.com/cosmosapjw-quantum/htt_base/actions/runs/33144905940
+  red_observation: focused test failed because obsstat.planck_irrep_carrier did not exist
+  green_commit: 34c618e349555d7bdebcd13b76a3576c895e3044
+  green_run: https://github.com/cosmosapjw-quantum/htt_base/actions/runs/33145112074
+  green_result: 8 passed; py_compile PASS; git diff --check PASS
+not_implemented_remotely:
+- raw FITS execution adapter
+- 301-row carrier production
+- fixed ell>5 leakage probes
+- committed output replay
+- content-bound final terminal
+- fresh-context review
+claim_ceiling: OBSERVER_SPACE_CARRIER_ENABLING_ONLY

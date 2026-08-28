@@ -1,0 +1,63 @@
+schema: htt.planck_mes.pmg_wu005.local_gates.v1
+work_unit: PMG-WU-005
+failure_modes:
+- id: PMG5-FM-001
+  severity: P0
+  trigger: carrier is fabricated from scalar features or a second/different estimator
+  detector: same-run fit identity and carrier-to-feature closure
+  blocked_state: BLOCKED_CARRIER_FABRICATION
+- id: PMG5-FM-002
+  severity: P0
+  trigger: row count/order/identity differs from observed plus exact 300 pairs
+  detector: writer and replay row hash
+  blocked_state: BLOCKED_INVALID_ROW_IDENTITY
+- id: PMG5-FM-003
+  severity: P0
+  trigger: observation and nulls use different operator/mask/transfer
+  detector: operator/transfer identities and same-context assertion
+  blocked_state: BLOCKED_OPERATOR_IDENTITY
+- id: PMG5-FM-004
+  severity: P0
+  trigger: carrier-derived scalar features differ or frozen ranks drift
+  detector: scalar closure plus legacy regression
+  blocked_state: BLOCKED_SCIENTIFIC_DIFFERENCE
+- id: PMG5-FM-005
+  severity: P0
+  trigger: raw input, source root, or private manifest is mutated or staged
+  detector: pre/post stat+digest and git staged-path scan
+  blocked_state: BLOCKED_RAW_DATA_MUTATION
+- id: PMG5-FM-006
+  severity: P0
+  trigger: a failed or degenerate row is dropped/replaced
+  detector: completed-row ledger must contain all exact row IDs
+  blocked_state: BLOCKED_ROW_OMISSION
+- id: PMG5-FM-007
+  severity: P1
+  trigger: carrier, metadata, or replay permits pickle/object arrays or schema drift
+  detector: focused no-pickle mutation tests
+  blocked_state: BLOCKED_UNSAFE_CARRIER
+- id: PMG5-FM-008
+  severity: P1
+  trigger: ell>5 leakage is omitted or chosen after observing results
+  detector: fixed probe registry and deterministic receipt
+  blocked_state: BLOCKED_MISSING_LEAKAGE_RECEIPT
+- id: PMG5-FM-009
+  severity: P1
+  trigger: full 301-row execution is called PASS from serializer tests alone
+  detector: terminal requires real_host_execution=true and output hashes
+  blocked_state: PARTIAL_NOT_EXECUTED
+- id: PMG5-FM-010
+  severity: P1
+  trigger: carrier is labeled as physical shear/vorticity/tilt/family evidence
+  detector: strict claim-language scan
+  blocked_state: BLOCKED_CLAIM_PROMOTION
+- id: PMG5-FM-011
+  severity: P1
+  trigger: covariance byte difference is automatically treated as scientific failure
+  detector: object-role classification and numerical covariance criteria
+  blocked_state: BLOCKED_IDENTITY_MISCLASSIFICATION
+review_policy:
+  fresh_context_reviews: 1
+  maximum_targeted_repairs: 1
+  successor_planning_package: forbidden
+  full_suite_by_default: false
