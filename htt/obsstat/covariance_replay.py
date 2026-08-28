@@ -10,7 +10,6 @@ symmetry and positive-semidefinite requirements.
 from __future__ import annotations
 
 import math
-from typing import Mapping
 
 import numpy as np
 
@@ -77,8 +76,15 @@ def validate_sample_covariance_replay(
     if not math.isfinite(forward_error_multiplier) or forward_error_multiplier <= 0:
         raise CovarianceReplayError("forward-error multiplier must be positive")
 
-    reference, absolute_product_scale = fsum_sample_covariance(matrix)
     epsilon = np.finfo(np.float64).eps
+    eigenvalues = np.linalg.eigvalsh(stored)
+    spectral_scale = max(1.0, float(np.max(np.abs(eigenvalues))))
+    psd_tolerance = 64.0 * epsilon * spectral_scale
+    minimum_eigenvalue = float(eigenvalues.min())
+    if minimum_eigenvalue < -psd_tolerance:
+        raise CovarianceReplayError("stored covariance is not positive semidefinite")
+
+    reference, absolute_product_scale = fsum_sample_covariance(matrix)
     reduction_length = matrix.shape[0]
     gamma_n = (reduction_length * epsilon) / (
         1.0 - reduction_length * epsilon
@@ -94,13 +100,6 @@ def validate_sample_covariance_replay(
         raise CovarianceReplayError(
             "stored covariance exceeds the deterministic forward-error bound"
         )
-
-    eigenvalues = np.linalg.eigvalsh(stored)
-    spectral_scale = max(1.0, float(np.max(np.abs(eigenvalues))))
-    psd_tolerance = 64.0 * epsilon * spectral_scale
-    minimum_eigenvalue = float(eigenvalues.min())
-    if minimum_eigenvalue < -psd_tolerance:
-        raise CovarianceReplayError("stored covariance is not positive semidefinite")
 
     rank_tolerance = max(stored.shape) * epsilon * max(
         1.0,
