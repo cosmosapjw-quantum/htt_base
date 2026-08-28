@@ -51,6 +51,7 @@ from common.data_identity import (  # noqa: E402
     replay_lane_admission_decision,
 )
 from obsstat.boost_biposh_residual import ExactBoostOperator  # noqa: E402
+from obsstat.covariance_replay import validate_sample_covariance_replay  # noqa: E402
 from obsstat.planck_post275_lane import validate_full_joint_covariance  # noqa: E402
 from obsstat.planck_pr3_operator import (  # noqa: E402
     COMPONENT_FEATURE_IDS,
@@ -1496,9 +1497,10 @@ def replay_pr315_feature_package(
         null_features=nulls,
         row_ids=row_ids,
     )
-    recomputed_covariance = np.cov(nulls, rowvar=False, ddof=1)
-    if not np.array_equal(covariance, recomputed_covariance):
-        raise PlanckWorkerError("PR-315 portable covariance differs from replay")
+    covariance_replay = validate_sample_covariance_replay(
+        stored_covariance=covariance,
+        rows=nulls,
+    )
     projection_sha256 = _canonical_hash(
         _pr315_feature_scientific_projection(diagnostic)
     )
@@ -1510,6 +1512,7 @@ def replay_pr315_feature_package(
         "feature_package_sha256": metadata["package_sha256"],
         "feature_metadata_sha256": _sha256_file(metadata_path),
         "operator_identity_sha256": metadata["operator_identity_sha256"],
+        "covariance_replay": covariance_replay,
         "raw_maps_reopened": False,
     }
 
