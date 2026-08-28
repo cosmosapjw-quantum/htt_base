@@ -1,0 +1,96 @@
+name: Integrate portable PR315 covariance replay
+
+on:
+  push:
+    branches:
+      - audit/pr315-covariance-replay-integrate-20260828
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  OMP_NUM_THREADS: "1"
+  TARGET_BRANCH: changeset/planck-mes-paired300-irrep-carrier-20260828
+  EXPECTED_TARGET_HEAD: f953310b0a6b0f3b0c77ae6e3ce8003a611b1ead
+
+jobs:
+  integrate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out exact target branch
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Refuse moved target authority
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_TARGET_HEAD"
+      - name: Set up Python 3.12
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Install focused dependencies
+        run: |
+          python -m pip install 'pytest>=8,<9' 'numpy>=1.26,<3' 'healpy==1.19.0'
+          python -m pip install -e './htt'
+      - name: Replace exact-bit covariance replay gate
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/observed_runs/run_planck_pr3.py')
+          text = path.read_text()
+          import_anchor = 'from obsstat.boost_biposh_residual import ExactBoostOperator  # noqa: E402\n'
+          import_line = 'from obsstat.covariance_replay import validate_sample_covariance_replay  # noqa: E402\n'
+          if import_line not in text:
+              if text.count(import_anchor) != 1:
+                  raise SystemExit('covariance import anchor drifted')
+              text = text.replace(import_anchor, import_anchor + import_line)
+          old = '''    recomputed_covariance = np.cov(nulls, rowvar=False, ddof=1)
+    if not np.array_equal(covariance, recomputed_covariance):
+        raise PlanckWorkerError("PR-315 portable covariance differs from replay")'''
+          new = '''    covariance_replay = validate_sample_covariance_replay(
+        stored_covariance=covariance,
+        rows=nulls,
+    )'''
+          if text.count(old) != 1:
+              raise SystemExit('covariance replay block drifted')
+          text = text.replace(old, new)
+          old_return = '''        "operator_identity_sha256": metadata["operator_identity_sha256"],
+        "raw_maps_reopened": False,'''
+          new_return = '''        "operator_identity_sha256": metadata["operator_identity_sha256"],
+        "covariance_replay": covariance_replay,
+        "raw_maps_reopened": False,'''
+          if text.count(old_return) != 1:
+              raise SystemExit('covariance replay return anchor drifted')
+          text = text.replace(old_return, new_return)
+          path.write_text(text)
+          PY
+      - name: Run risk-scoped GREEN verification
+        run: |
+          python -m pytest -q \
+            tests/obsstat/test_covariance_replay.py \
+            tests/integration/test_planck_pr3_current_stack.py \
+            tests/obsstat/test_planck_irrep_carrier.py \
+            tests/integration/test_planck_irrep_carrier_execution.py
+          python -m py_compile \
+            htt/obsstat/covariance_replay.py \
+            htt/obsstat/planck_irrep_carrier.py \
+            htt/obsstat/planck_paired300_carrier_execution.py \
+            scripts/observed_runs/run_planck_pr3.py
+          git diff --check
+      - name: Commit and push bounded repair
+        run: |
+          git config user.name 'cosmosapjw-quantum'
+          git config user.email 'cosmosapjw@gmail.com'
+          git add \
+            scripts/observed_runs/run_planck_pr3.py \
+            htt/obsstat/covariance_replay.py \
+            tests/obsstat/test_covariance_replay.py
+          git commit -m 'fix: make PR315 covariance replay numerically portable'
+          git push origin HEAD:"$TARGET_BRANCH"
