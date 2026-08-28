@@ -1,0 +1,65 @@
+name: PMG-WU-005 worker threading GREEN receipt v2
+
+on:
+  push:
+    branches:
+      - audit/pmg-wu005-worker-threading-green-v2-20260828
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  OMP_NUM_THREADS: "1"
+  TARGET_BRANCH: changeset/planck-mes-paired300-irrep-carrier-20260828
+  EXPECTED_TARGET_HEAD: 97f6397fadeea41d144420da08adba4495b42b83
+
+jobs:
+  integrate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out exact target branch
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Refuse moved target authority
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_TARGET_HEAD"
+      - name: Set up Python 3.12
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Install focused dependencies
+        run: |
+          python -m pip install 'pytest>=8,<9' 'numpy>=1.26,<3' 'healpy==1.19.0'
+          python -m pip install -e './htt'
+      - name: Apply function-scoped carrier patch
+        run: |
+          git show origin/audit/pmg-wu005-worker-threading-green-v2-20260828:tools/pmg_wu005_patch_worker.py > "${RUNNER_TEMP}/pmg_wu005_patch_worker.py"
+          python "${RUNNER_TEMP}/pmg_wu005_patch_worker.py"
+      - name: Run risk-scoped GREEN verification
+        run: |
+          python -m pytest -q \
+            tests/obsstat/test_planck_irrep_carrier.py \
+            tests/obsstat/test_covariance_replay.py \
+            tests/integration/test_planck_irrep_carrier_execution.py \
+            tests/integration/test_planck_pr3_current_stack.py
+          python -m py_compile \
+            htt/obsstat/planck_irrep_carrier.py \
+            htt/obsstat/planck_paired300_carrier_execution.py \
+            htt/obsstat/covariance_replay.py \
+            scripts/observed_runs/run_planck_pr3.py \
+            tests/integration/test_planck_irrep_carrier_execution.py
+          git diff --check
+      - name: Commit and push attended carrier threading
+        run: |
+          git config user.name 'cosmosapjw-quantum'
+          git config user.email 'cosmosapjw@gmail.com'
+          git add scripts/observed_runs/run_planck_pr3.py tests/integration/test_planck_irrep_carrier_execution.py
+          git commit -m 'feat: preserve carrier in the PR315 attended path'
+          git push origin HEAD:"$TARGET_BRANCH"
