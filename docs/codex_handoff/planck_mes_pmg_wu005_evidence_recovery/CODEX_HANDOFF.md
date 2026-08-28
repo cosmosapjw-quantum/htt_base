@@ -130,14 +130,20 @@ The preserved checkpoints are explicitly classified as non-authoritative for fut
 
 Start from a fresh context and inspect only:
 
-- `dded770..REPAIR_HEAD` diff;
+- `948309925ef7f4cbc3f2e5b645bea9bee5ef879b..REPAIR_HEAD` diff;
 - `RECOVERY_CONTRACT.yaml` and threat matrix;
 - focused test logs;
 - private processed-ledger report and checkpoint disposition;
 - portable artifact manifest and pending terminal;
 - map-free carrier/scalar/rank replay evidence.
 
-Copy `FRESH_REVIEW_RECEIPT_TEMPLATE.json` outside the repository, fill the exact candidate head/tree and artifact-manifest content ID, and record findings. Do not expose chain-of-thought. PASS requires `state=PASS`, `P0=0`, `P1=0`, `independent_read_only_first_pass=true`, and `repair_rounds_used=1`. No second repair is authorized by this handoff.
+Copy `FRESH_REVIEW_RECEIPT_TEMPLATE.json` outside the repository, fill the exact
+candidate head/tree and artifact-manifest content ID, and record findings. Do
+not expose chain-of-thought. PASS requires `state=PASS`, `P0=0`, `P1=0`, and
+`independent_read_only_first_pass=true`. Use `repair_rounds_used=0` on a clean
+first pass. If that review finds one current-task P0/P1, at most one bounded
+repair is authorized and the final reviewed receipt uses
+`repair_rounds_used=1`.
 
 ## Finalize and install
 
