@@ -626,7 +626,7 @@ def test_execution_provenance_uses_selected_manifest_for_observed_inputs() -> No
     assert result["provenance_validity"] == "MATCH"
 
 
-def test_documented_replay_cli_runs_without_pythonpath() -> None:
+def test_legacy_replay_cli_imports_cleanly_but_blocks_unreviewed_terminal() -> None:
     root = Path(__file__).resolve().parents[2]
     environment = dict(os.environ)
     environment.pop("PYTHONPATH", None)
@@ -642,7 +642,9 @@ def test_documented_replay_cli_runs_without_pythonpath() -> None:
         capture_output=True,
         check=False,
     )
-    assert completed.returncode == 0, completed.stderr
+    assert completed.returncode == 3
+    assert "externally reviewed terminal" in completed.stderr
+    assert "ModuleNotFoundError" not in completed.stderr
 
 
 def test_committed_metadata_declares_nonclaiming_provenance() -> None:

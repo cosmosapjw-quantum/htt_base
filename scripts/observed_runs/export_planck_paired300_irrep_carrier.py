@@ -1398,171 +1398,13 @@ def execute_real_host(
     }
 
 
-def finalize_reviewed_package(
-    *,
-    repo_root: Path,
-    workdir: Path,
-) -> dict[str, object]:
-    """Close the reviewed package without reopening any scientific map."""
+def finalize_reviewed_package(*args, **kwargs):
+    """Fail closed: reviewed finalization moved to the external-receipt CLI."""
 
-    repo_root = Path(repo_root).resolve()
-    workdir = Path(workdir)
-    output_dir = repo_root / "docs/generated/planck_pr3_paired300_irrep_carrier"
-    private_dir = workdir / "analysis/planck_mes_irrep/paired300_carrier"
-    private_intake_path = workdir / "analysis/planck_mes_irrep/intake_manifest.json"
-    private_execution_path = private_dir / "execution_manifest.json"
-    selected_manifest_path = (
-        repo_root
-        / "docs/generated/planck_mes_irrep_inventory/selected_input_manifest.json"
+    raise CarrierExportError(
+        "self-attested finalization is disabled; use "
+        "replay_planck_paired300_irrep_carrier.py with an external fresh-review receipt"
     )
-    if (
-        not workdir.is_absolute()
-        or workdir.is_symlink()
-        or not output_dir.is_dir()
-        or private_dir.is_symlink()
-    ):
-        raise CarrierExportError("review finalization paths are missing or unsafe")
-
-    prior_terminal = _load_json(output_dir / "terminal.json", label="prior terminal")
-    if prior_terminal.get("state") not in {"PENDING_REVIEW", "SUCCEEDED"}:
-        raise CarrierExportError("prior terminal cannot enter review finalization")
-    intake_manifest = _load_json(
-        private_intake_path,
-        label="accepted private intake manifest",
-    )
-    execution_manifest = _load_json(
-        private_execution_path,
-        label="private execution manifest",
-    )
-    selected_manifest = _load_json(
-        selected_manifest_path,
-        label="selected input manifest",
-    )
-    provenance = validate_execution_input_provenance(
-        intake_manifest=intake_manifest,
-        execution_manifest=execution_manifest,
-        selected_manifest=selected_manifest,
-    )
-    selected = execution_manifest["selected_input_identities"]
-    for entry in selected:
-        _require_post_stat_match(Path(str(entry["path"])), entry)
-
-    input_receipt_path = output_dir / "input_identity_receipt.json"
-    input_receipt = _load_json(input_receipt_path, label="input identity receipt")
-    source_manifest_sha256 = _file_sha256(private_intake_path)
-    private_execution_sha256 = _file_sha256(private_execution_path)
-    identity_set_sha256 = _canonical_hash(
-        selected,
-        role="paired300_selected_input_identities",
-    )
-    if (
-        input_receipt.get("source_manifest_sha256") != source_manifest_sha256
-        or input_receipt.get("private_execution_manifest_sha256")
-        != private_execution_sha256
-        or input_receipt.get("selected_input_identity_set_sha256")
-        != identity_set_sha256
-        or execution_manifest.get("raw_data_mutation") is not False
-        or len(selected) != 602
-    ):
-        raise CarrierExportError("completed execution provenance receipt drifted")
-
-    legacy_sidecars = 0
-    for checkpoint in private_dir.glob("*.npz"):
-        sidecar = _load_json(
-            _checkpoint_metadata_path(checkpoint),
-            label="private checkpoint metadata",
-        )
-        if (
-            sidecar.get("features_content_id") is None
-            or sidecar.get("carrier_content_id") is None
-        ):
-            legacy_sidecars += 1
-    reused_count = execution_manifest.get("checkpoint_reused_count")
-    if type(reused_count) is not int or reused_count < 0:
-        raise CarrierExportError("checkpoint reuse count is malformed")
-    if legacy_sidecars and reused_count != 0:
-        raise CarrierExportError(
-            "legacy unbound checkpoints contributed to the completed execution"
-        )
-    upgraded_count = upgrade_private_checkpoint_content_identities(private_dir)
-
-    frozen_package = repo_root / "docs/generated/pr315_planck_smica_feature_replay.npz"
-    frozen_observed, frozen_nulls, frozen_row_ids = _load_frozen_feature_rows(
-        frozen_package
-    )
-    scalar_content_id = _scalar_feature_content_id(
-        frozen_observed,
-        frozen_nulls,
-        frozen_row_ids,
-    )
-    metadata = _augment_carrier_metadata(
-        metadata_path=output_dir / "metadata.json",
-        repo_root=repo_root,
-        scalar_feature_content_id=scalar_content_id,
-    )
-    if metadata.get("source_manifest_sha256") != source_manifest_sha256:
-        raise CarrierExportError("carrier source provenance drifted")
-
-    input_receipt.update(
-        {
-            "accepted_intake_provenance": provenance,
-            "checkpoint_content_identity": "DECODED_NUMERICAL_CONTENT_BOUND",
-            "checkpoint_content_identity_upgrade_count": upgraded_count,
-            "checkpoint_reused_count": reused_count,
-            "result_validity": "PASS_UNCHANGED",
-            "provenance_validity": "MATCH_AFTER_REBIND",
-            "packaging_validity": "BYTE_IDENTITY_NOT_A_SCIENCE_GATE",
-        }
-    )
-    _atomic_json(input_receipt_path, input_receipt)
-
-    replay_result = _compute_map_free_replay(repo_root=repo_root)
-    _atomic_json(
-        output_dir / "replay.json",
-        _replay_receipt_from_result(replay_result),
-    )
-    artifact_hashes = {
-        name: _file_sha256(output_dir / name)
-        for name in sorted(_PORTABLE_OUTPUTS - {"terminal.json"})
-    }
-    terminal = {
-        **_TERMINAL_REQUIRED,
-        "row_count": 301,
-        "operator_identity_sha256": prior_terminal.get(
-            "operator_identity_sha256"
-        ),
-        "objective_artifact_sha256": artifact_hashes,
-        "P0_remaining": 0,
-        "P1_remaining": 0,
-        "result_validity": "PASS_UNCHANGED",
-        "provenance_validity": "MATCH_AFTER_REBIND",
-        "packaging_validity": "BYTE_IDENTITY_NOT_A_SCIENCE_GATE",
-        "identity_policy": "TYPED_IDENTITY_V1",
-        "review_repair_count": 1,
-        "raw_maps_reopened_during_finalization": False,
-    }
-    _require_sha256(
-        terminal["operator_identity_sha256"],
-        label="terminal operator identity",
-    )
-    _atomic_json(output_dir / "terminal.json", terminal)
-    validate_portable_completion(output_dir)
-    verified = replay_committed(repo_root=repo_root)
-    return {
-        "state": "SUCCEEDED",
-        "work_unit": "PMG-WU-005",
-        "row_count": 301,
-        "real_host_execution": True,
-        "raw_maps_reopened": False,
-        "raw_data_mutation": False,
-        "checkpoint_content_identity_upgrade_count": upgraded_count,
-        "scalar_feature_identity_disposition": verified[
-            "scalar_feature_identity_disposition"
-        ],
-        "result_validity": "PASS_UNCHANGED",
-        "provenance_validity": "MATCH_AFTER_REBIND",
-        "next_executable_action": "PMG-WU-006",
-    }
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -1570,48 +1412,46 @@ def main(argv: Sequence[str] | None = None) -> int:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--execute-real-host", action="store_true")
     mode.add_argument("--replay-committed", action="store_true")
-    mode.add_argument("--finalize-reviewed", action="store_true")
     parser.add_argument("--workdir", type=Path)
     args = parser.parse_args(argv)
     repo_root = Path(__file__).resolve().parents[2]
     started = time.monotonic()
     try:
-        if args.execute_real_host or args.finalize_reviewed:
+        if args.execute_real_host:
             if args.workdir is None:
-                parser.error("selected real-host mode requires --workdir")
-            if args.execute_real_host:
-                result = execute_real_host(repo_root=repo_root, workdir=args.workdir)
-            else:
-                result = finalize_reviewed_package(
-                    repo_root=repo_root,
-                    workdir=args.workdir,
-                )
+                parser.error("--execute-real-host requires --workdir")
+            result = execute_real_host(repo_root=repo_root, workdir=args.workdir)
         else:
             if args.workdir is not None:
                 parser.error("--replay-committed does not accept --workdir")
-            result = replay_committed(repo_root=repo_root)
+            from obsstat.planck_paired300_evidence import (
+                FINAL_TERMINAL_FORMAT,
+                verify_portable_artifact_manifest,
+            )
+            output_dir = repo_root / "docs/generated/planck_pr3_paired300_irrep_carrier"
+            terminal = _load_json(output_dir / "terminal.json", label="reviewed terminal")
+            if terminal.get("format") != FINAL_TERMINAL_FORMAT:
+                raise CarrierExportError(
+                    "committed replay requires the externally reviewed terminal"
+                )
+            review_path = output_dir / "fresh_review.json"
+            if terminal.get("fresh_review_receipt_sha256") != _file_sha256(review_path):
+                raise CarrierExportError("fresh-review receipt identity drifted")
+            frozen = repo_root / "docs/generated/pr315_planck_smica_feature_replay.npz"
+            verify_portable_artifact_manifest(
+                manifest_path=output_dir / "artifact_manifest.json",
+                output_root=output_dir,
+                frozen_scalar_package_path=frozen,
+            )
+            result = _compute_map_free_replay(repo_root=repo_root)
     except Exception as exc:
-        print(
-            json.dumps(
-                {
-                    "state": "BLOCKED_PMG_WU005",
-                    "error_type": type(exc).__name__,
-                    "error": str(exc),
-                },
-                sort_keys=True,
-            ),
-            file=sys.stderr,
-            flush=True,
-        )
+        print(json.dumps({
+            "state": "BLOCKED_PMG_WU005",
+            "error_type": type(exc).__name__,
+            "error": str(exc),
+        }, sort_keys=True), file=sys.stderr, flush=True)
         return 3
-    print(
-        json.dumps(
-            {**result, "wall_seconds": time.monotonic() - started},
-            sort_keys=True,
-            allow_nan=False,
-        ),
-        flush=True,
-    )
+    print(json.dumps({**result, "wall_seconds": time.monotonic() - started}, sort_keys=True, allow_nan=False), flush=True)
     return 0
 
 
