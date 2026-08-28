@@ -26,6 +26,7 @@ FRESH_REVIEW_FORMAT = "PLANCK_PR3_PAIRED300_FRESH_REVIEW_V1"
 FINAL_TERMINAL_FORMAT = "PLANCK_PR3_PAIRED300_REVIEWED_TERMINAL_V1"
 PROCESSED_LEDGER_FORMAT = "PLANCK_PR3_PAIRED300_PROCESSED_INPUT_LEDGER_V1"
 _SHA256 = re.compile(r"^sha256:[0-9a-f]{64}$")
+_GIT_OID = re.compile(r"^[0-9a-f]{40}$")
 _CMB_NAME = re.compile(r"dx12_v3_smica_cmb_mc_(\d{5})_raw\.fits$")
 _NOISE_NAME = re.compile(r"dx12_v3_smica_noise_mc_(\d{5})_raw\.fits$")
 EXPECTED_CMB_IDS = {f"{index:05d}" for index in range(1000)} - {"00970"}
@@ -62,6 +63,12 @@ def _sha256(path: Path) -> str:
 def _strict_sha(value: object, *, label: str) -> str:
     if not isinstance(value, str) or _SHA256.fullmatch(value) is None:
         raise EvidenceBindingError(f"{label} must be one sha256 identity")
+    return value
+
+
+def _strict_git_oid(value: object, *, label: str) -> str:
+    if not isinstance(value, str) or _GIT_OID.fullmatch(value) is None:
+        raise EvidenceBindingError(f"{label} git identity is malformed")
     return value
 
 
@@ -574,15 +581,21 @@ def write_pending_terminal(
     work_unit: str,
     base_git_head: str,
     implementation_git_head: str,
+    implementation_git_tree: str,
     artifact_manifest_content_id: str,
     objective_output_sha256: Mapping[str, str],
 ) -> dict[str, object]:
     if work_unit != "PMG-WU-005":
         raise EvidenceBindingError("pending terminal work unit drifted")
-    if not re.fullmatch(r"[0-9a-f]{40}", base_git_head) or not re.fullmatch(
-        r"[0-9a-f]{40}", implementation_git_head
-    ):
-        raise EvidenceBindingError("pending terminal git identity is malformed")
+    base_git_head = _strict_git_oid(base_git_head, label="pending terminal base")
+    implementation_git_head = _strict_git_oid(
+        implementation_git_head,
+        label="pending terminal implementation head",
+    )
+    implementation_git_tree = _strict_git_oid(
+        implementation_git_tree,
+        label="pending terminal implementation tree",
+    )
     manifest_id = _strict_sha(
         artifact_manifest_content_id,
         label="artifact manifest content",
@@ -597,6 +610,7 @@ def write_pending_terminal(
         "state": PENDING_TERMINAL_STATE,
         "base_git_head": base_git_head,
         "implementation_git_head": implementation_git_head,
+        "implementation_git_tree": implementation_git_tree,
         "artifact_manifest_content_id": manifest_id,
         "objective_output_sha256": outputs,
         "real_host_execution": True,
@@ -636,12 +650,36 @@ def finalize_terminal_after_fresh_review(
         != pending.get("artifact_manifest_content_id")
     ):
         raise EvidenceBindingError("fresh review does not establish zero P0/P1")
+    try:
+        pending_head = _strict_git_oid(
+            pending.get("implementation_git_head"),
+            label="pending implementation head",
+        )
+        pending_tree = _strict_git_oid(
+            pending.get("implementation_git_tree"),
+            label="pending implementation tree",
+        )
+        review_head = _strict_git_oid(
+            review.get("candidate_git_head"),
+            label="fresh review candidate head",
+        )
+        review_tree = _strict_git_oid(
+            review.get("candidate_git_tree"),
+            label="fresh review candidate tree",
+        )
+    except EvidenceBindingError as exc:
+        raise EvidenceBindingError(
+            "fresh review candidate git identity differs"
+        ) from exc
+    if review_head != pending_head or review_tree != pending_tree:
+        raise EvidenceBindingError("fresh review candidate git identity differs")
     final = {
         "format": FINAL_TERMINAL_FORMAT,
         "work_unit": "PMG-WU-005",
         "state": "SUCCEEDED",
         "base_git_head": pending["base_git_head"],
-        "implementation_git_head": pending["implementation_git_head"],
+        "implementation_git_head": pending_head,
+        "implementation_git_tree": pending_tree,
         "artifact_manifest_content_id": pending["artifact_manifest_content_id"],
         "objective_output_sha256": pending["objective_output_sha256"],
         "fresh_review_receipt_sha256": _sha256(Path(review_receipt_path)),

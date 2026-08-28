@@ -160,6 +160,7 @@ def prepare_recovery_evidence(
     private_evidence_dir: Path,
     base_git_head: str,
     implementation_git_head: str,
+    implementation_git_tree: str,
 ) -> dict[str, object]:
     """Prepare reviewable evidence without opening a raw map or checkpoint row."""
 
@@ -248,6 +249,7 @@ def prepare_recovery_evidence(
         work_unit="PMG-WU-005",
         base_git_head=base_git_head,
         implementation_git_head=implementation_git_head,
+        implementation_git_tree=implementation_git_tree,
         artifact_manifest_content_id=str(manifest["content_id"]),
         objective_output_sha256=objective_hashes,
     )

@@ -42,6 +42,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--private-terminal-archive-dir", type=Path)
     parser.add_argument("--base-git-head")
     parser.add_argument("--implementation-git-head")
+    parser.add_argument("--implementation-git-tree")
     return parser
 
 
@@ -59,6 +60,7 @@ def main(argv: list[str] | None = None) -> int:
                 "private evidence directory": args.private_evidence_dir,
                 "base git head": args.base_git_head,
                 "implementation git head": args.implementation_git_head,
+                "implementation git tree": args.implementation_git_tree,
             }
             missing = [label for label, value in required.items() if value is None]
             if missing:
@@ -74,6 +76,7 @@ def main(argv: list[str] | None = None) -> int:
                 private_evidence_dir=args.private_evidence_dir,
                 base_git_head=args.base_git_head,
                 implementation_git_head=args.implementation_git_head,
+                implementation_git_tree=args.implementation_git_tree,
             )
         elif args.finalize:
             if args.fresh_review_receipt is None:

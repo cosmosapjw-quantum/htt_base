@@ -306,6 +306,7 @@ def test_terminal_cannot_succeed_before_matching_zero_finding_review(tmp_path: P
         work_unit="PMG-WU-005",
         base_git_head="a" * 40,
         implementation_git_head="b" * 40,
+        implementation_git_tree="c" * 40,
         artifact_manifest_content_id=content_id,
         objective_output_sha256={"carrier.npz": "sha256:" + "8" * 64},
     )
@@ -339,6 +340,8 @@ def test_terminal_cannot_succeed_before_matching_zero_finding_review(tmp_path: P
             "P0": 0,
             "P1": 0,
             "artifact_manifest_content_id": content_id,
+            "candidate_git_head": "b" * 40,
+            "candidate_git_tree": "c" * 40,
             "independent_read_only_first_pass": True,
             "repair_rounds_used": 1,
         },
@@ -350,3 +353,95 @@ def test_terminal_cannot_succeed_before_matching_zero_finding_review(tmp_path: P
     )
     assert final["state"] == "SUCCEEDED"
     assert final["P0_remaining"] == 0 and final["P1_remaining"] == 0
+    assert final["implementation_git_head"] == "b" * 40
+    assert final["implementation_git_tree"] == "c" * 40
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("candidate_git_head", None),
+        ("candidate_git_tree", None),
+        ("candidate_git_head", "d" + "b" * 39),
+        ("candidate_git_tree", "d" + "c" * 39),
+    ],
+    ids=["head-missing", "tree-missing", "head-differs", "tree-differs"],
+)
+def test_terminal_rejects_unbound_fresh_review_candidate_identity(
+    tmp_path: Path,
+    field: str,
+    value: str | None,
+) -> None:
+    content_id = "sha256:" + "7" * 64
+    pending_path = tmp_path / "terminal.pending.json"
+    final_path = tmp_path / "terminal.json"
+    _write_json(
+        pending_path,
+        {
+            "format": "PLANCK_PR3_PAIRED300_PENDING_TERMINAL_V1",
+            "work_unit": "PMG-WU-005",
+            "state": PENDING_TERMINAL_STATE,
+            "base_git_head": "a" * 40,
+            "implementation_git_head": "b" * 40,
+            "implementation_git_tree": "c" * 40,
+            "artifact_manifest_content_id": content_id,
+            "objective_output_sha256": {
+                "carrier.npz": "sha256:" + "8" * 64,
+            },
+        },
+    )
+    review = {
+        "format": "PLANCK_PR3_PAIRED300_FRESH_REVIEW_V1",
+        "state": "PASS",
+        "P0": 0,
+        "P1": 0,
+        "artifact_manifest_content_id": content_id,
+        "candidate_git_head": "b" * 40,
+        "candidate_git_tree": "c" * 40,
+        "independent_read_only_first_pass": True,
+        "repair_rounds_used": 0,
+    }
+    if value is None:
+        review.pop(field)
+    else:
+        review[field] = value
+    review_path = tmp_path / "review.json"
+    _write_json(review_path, review)
+    with pytest.raises(
+        EvidenceBindingError,
+        match="fresh review candidate git identity differs",
+    ):
+        finalize_terminal_after_fresh_review(
+            pending_terminal_path=pending_path,
+            review_receipt_path=review_path,
+            final_terminal_path=final_path,
+        )
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("base_git_head", "A" * 40),
+        ("implementation_git_head", "b" * 39),
+        ("implementation_git_tree", "g" * 40),
+    ],
+)
+def test_pending_terminal_rejects_malformed_git_identity(
+    tmp_path: Path,
+    field: str,
+    value: str,
+) -> None:
+    identities = {
+        "base_git_head": "a" * 40,
+        "implementation_git_head": "b" * 40,
+        "implementation_git_tree": "c" * 40,
+    }
+    identities[field] = value
+    with pytest.raises(EvidenceBindingError, match="git identity is malformed"):
+        write_pending_terminal(
+            path=tmp_path / "terminal.pending.json",
+            work_unit="PMG-WU-005",
+            **identities,
+            artifact_manifest_content_id="sha256:" + "7" * 64,
+            objective_output_sha256={"carrier.npz": "sha256:" + "8" * 64},
+        )

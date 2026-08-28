@@ -91,10 +91,12 @@ test "$(find "$PRIVATE_CARRIER" -maxdepth 1 -name '*.npz' | wc -l)" = 301
 
 ## Prepare map-free evidence
 
-Use the current repair HEAD as `--implementation-git-head`:
+Use the stable code/tests/docs repair commit as the exact implementation
+head and tree:
 
 ```bash
 REPAIR_HEAD=$(git rev-parse HEAD)
+REPAIR_TREE=$(git rev-parse HEAD^{tree})
 
 python scripts/observed_runs/replay_planck_paired300_irrep_carrier.py \
   --prepare \
@@ -107,7 +109,8 @@ python scripts/observed_runs/replay_planck_paired300_irrep_carrier.py \
   --checkpoint-dir "$PRIVATE_CARRIER" \
   --private-evidence-dir "$PRIVATE_REPAIR" \
   --base-git-head dded7702f319191e2dd1a88a7a25c64353ea3fb8 \
-  --implementation-git-head "$REPAIR_HEAD"
+  --implementation-git-head "$REPAIR_HEAD" \
+  --implementation-git-tree "$REPAIR_TREE"
 ```
 
 This command must not open a raw map. It creates:
