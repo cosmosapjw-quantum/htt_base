@@ -417,6 +417,99 @@ def _portable_terminal(output_dir: Path) -> dict[str, object]:
     }
 
 
+def _write_reviewed_portable_package(output_dir: Path) -> dict[str, object]:
+    for name in (
+        "carrier.npz",
+        "metadata.json",
+        "scalar_closure.json",
+        "input_identity_receipt.json",
+        "leakage_receipt.json",
+        "replay.json",
+    ):
+        (output_dir / name).write_bytes(name.encode("ascii"))
+    content_id = "sha256:" + "7" * 64
+    (output_dir / "artifact_manifest.json").write_text(
+        json.dumps({"content_id": content_id}),
+        encoding="ascii",
+    )
+    objective_hashes = {
+        name: "sha256:" + hashlib.sha256((output_dir / name).read_bytes()).hexdigest()
+        for name in (
+            "artifact_manifest.json",
+            "carrier.npz",
+            "metadata.json",
+            "scalar_closure.json",
+            "input_identity_receipt.json",
+            "leakage_receipt.json",
+            "replay.json",
+        )
+    }
+    pending = {
+        "format": "PLANCK_PR3_PAIRED300_PENDING_TERMINAL_V1",
+        "work_unit": "PMG-WU-005",
+        "state": "EXECUTED_PENDING_FRESH_REVIEW",
+        "base_git_head": "a" * 40,
+        "implementation_git_head": "b" * 40,
+        "implementation_git_tree": "c" * 40,
+        "artifact_manifest_content_id": content_id,
+        "objective_output_sha256": objective_hashes,
+        "real_host_execution": True,
+        "replay_status": "MATCH",
+        "scalar_closure": "MATCH",
+        "raw_data_mutation": False,
+        "claim_promotion": False,
+        "unresolved_blockers": ["FRESH_READ_ONLY_REVIEW_PENDING"],
+        "next_executable_action": "FRESH_READ_ONLY_REVIEW",
+    }
+    (output_dir / "terminal.pending.json").write_text(
+        json.dumps(pending),
+        encoding="ascii",
+    )
+    review = {
+        "format": "PLANCK_PR3_PAIRED300_FRESH_REVIEW_V1",
+        "state": "PASS",
+        "P0": 0,
+        "P1": 0,
+        "artifact_manifest_content_id": content_id,
+        "candidate_git_head": "b" * 40,
+        "candidate_git_tree": "c" * 40,
+        "independent_read_only_first_pass": True,
+        "repair_rounds_used": 1,
+    }
+    (output_dir / "fresh_review.json").write_text(
+        json.dumps(review),
+        encoding="ascii",
+    )
+    terminal = {
+        "format": "PLANCK_PR3_PAIRED300_REVIEWED_TERMINAL_V1",
+        "work_unit": "PMG-WU-005",
+        "state": "SUCCEEDED",
+        "base_git_head": "a" * 40,
+        "implementation_git_head": "b" * 40,
+        "implementation_git_tree": "c" * 40,
+        "artifact_manifest_content_id": content_id,
+        "objective_output_sha256": objective_hashes,
+        "fresh_review_receipt_sha256": "sha256:"
+        + hashlib.sha256((output_dir / "fresh_review.json").read_bytes()).hexdigest(),
+        "fresh_review": "PASS",
+        "P0_remaining": 0,
+        "P1_remaining": 0,
+        "review_repair_count": 1,
+        "real_host_execution": True,
+        "replay_status": "MATCH",
+        "scalar_closure": "MATCH",
+        "raw_data_mutation": False,
+        "claim_promotion": False,
+        "unresolved_blockers": [],
+        "next_executable_action": "PMG-WU-006",
+    }
+    (output_dir / "terminal.json").write_text(
+        json.dumps(terminal),
+        encoding="ascii",
+    )
+    return terminal
+
+
 def test_portable_completion_requires_exact_outputs_and_terminal_boundaries(
     tmp_path: Path,
 ) -> None:
@@ -494,6 +587,30 @@ def test_portable_completion_rejects_artifact_mutation_and_unreviewed_pass(
     (tmp_path / "terminal.json").write_text(json.dumps(terminal), encoding="ascii")
     (tmp_path / "input_identity_receipt.json").write_bytes(b"{}\n")
     with pytest.raises(CarrierExportError, match="artifact identity"):
+        validate_portable_completion(tmp_path)
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("claim_promotion", True),
+        ("raw_data_mutation", True),
+        ("unresolved_blockers", []),
+        ("next_executable_action", "PMG-WU-006"),
+        ("arbitrary_extra", "tampered"),
+    ],
+)
+def test_reviewed_portable_completion_rejects_pending_terminal_tampering(
+    tmp_path: Path,
+    field: str,
+    value: object,
+) -> None:
+    _write_reviewed_portable_package(tmp_path)
+    pending_path = tmp_path / "terminal.pending.json"
+    pending = json.loads(pending_path.read_text(encoding="ascii"))
+    pending[field] = value
+    pending_path.write_text(json.dumps(pending), encoding="ascii")
+    with pytest.raises(CarrierExportError, match="pending terminal boundary"):
         validate_portable_completion(tmp_path)
 
 
@@ -626,8 +743,14 @@ def test_execution_provenance_uses_selected_manifest_for_observed_inputs() -> No
     assert result["provenance_validity"] == "MATCH"
 
 
-def test_documented_replay_cli_runs_without_pythonpath() -> None:
+def test_replay_cli_tracks_reviewed_terminal_state() -> None:
     root = Path(__file__).resolve().parents[2]
+    terminal = json.loads(
+        (
+            root
+            / "docs/generated/planck_pr3_paired300_irrep_carrier/terminal.json"
+        ).read_text()
+    )
     environment = dict(os.environ)
     environment.pop("PYTHONPATH", None)
     completed = subprocess.run(
@@ -642,7 +765,15 @@ def test_documented_replay_cli_runs_without_pythonpath() -> None:
         capture_output=True,
         check=False,
     )
-    assert completed.returncode == 0, completed.stderr
+    if terminal.get("format") == "PLANCK_PR3_PAIRED300_REVIEWED_TERMINAL_V1":
+        assert completed.returncode == 0, completed.stderr
+        payload = json.loads(completed.stdout)
+        assert payload["state"] == "MATCH"
+        assert payload["raw_maps_reopened"] is False
+    else:
+        assert completed.returncode == 3
+        assert "externally reviewed terminal" in completed.stderr
+    assert "ModuleNotFoundError" not in completed.stderr
 
 
 def test_committed_metadata_declares_nonclaiming_provenance() -> None:
