@@ -1,0 +1,72 @@
+{
+  "claim_promotion": false,
+  "commander_cmb_mc": {
+    "complete_ids": [
+      "00000",
+      "00001",
+      "00002"
+    ],
+    "finite_null_eligible": false,
+    "quarantined_partial_ids": [
+      "00003",
+      "00004",
+      "00005",
+      "00006"
+    ]
+  },
+  "format": "PLANCK_MES_IRREP_INTAKE_SUMMARY_V1",
+  "hsc_kids": {
+    "admitted_hsc_sacc_count": 0,
+    "payload_count": 5,
+    "state": "UNAVAILABLE_KIDS_ONLY"
+  },
+  "planck_npipe_pr4": {
+    "payload_count": 0,
+    "state": "BLOCKED_MISSING_DATA"
+  },
+  "raw_data_mutation": false,
+  "raw_root": "/mnt/sn850x2t/htt_base_e2e/workdir/raw",
+  "row_00818": {
+    "columns": [
+      "INTENSITY",
+      "Q-POLARISATION",
+      "U-POLARISATION"
+    ],
+    "decision_basis": "FITS_STRUCTURE_HEADERS_PAYLOAD_FINITE_SAMPLE_AND_STREAMING_DIGEST",
+    "expected_padded_end_byte": 603987840,
+    "finite_sample_count": 9216,
+    "index_scheme": "IMPLICIT",
+    "nside": 2048,
+    "ordering": "RING",
+    "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/planck_ffp10/smica/cmb_mc/dx12_v3_smica_cmb_mc_00818_raw.fits",
+    "payload_end_byte": 603985536,
+    "sha256": "sha256:d37b4c13115dfdefd932e2f7e5b43edfe5249c6f97f2bbaf66583baa875859d1",
+    "stat_identity": {
+      "device": 66305,
+      "inode": 2360147,
+      "mtime_ns": 1783718841804917255,
+      "size": 603986622
+    },
+    "state": "ADMITTED_SEMANTICALLY",
+    "terminal_padding_shortfall_bytes": 1218,
+    "warnings": [
+      "File may have been truncated: actual file length (603986622) is smaller than the expected size (603987840)",
+      "File may have been truncated: actual file length (603986622) is smaller than the expected size (603987840)",
+      "File may have been truncated: actual file length (603986622) is smaller than the expected size (603987840)"
+    ]
+  },
+  "science_rank_generated": false,
+  "smica_cmb_mc": {
+    "count": 999,
+    "missing_ids": [
+      "00970"
+    ],
+    "state": "EXACT"
+  },
+  "smica_noise_mc": {
+    "count": 300,
+    "missing_ids": [],
+    "state": "EXACT"
+  },
+  "work_unit": "PMG-WU-004"
+}
