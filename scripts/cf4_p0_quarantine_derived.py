@@ -110,28 +110,6 @@ SINGLE_CARD_SPECS = {
 }
 
 
-@dataclass(frozen=True)
-class FigureBlockSpec:
-    artifact_id: str
-    stem: str
-    active_script: str
-    active_root: str
-    legacy_script: str
-    legacy_root: str
-    legacy_input: str
-
-
-DATA_PROXY_SPEC = FigureBlockSpec(
-    artifact_id="fig_data_observed_sector_proxy_coordinates",
-    stem="fig_data_observed_sector_proxy_coordinates",
-    active_script="scripts/make_data_proxy_coordinates_figure.py",
-    active_root="figures/data_analysis_current",
-    legacy_script="legacy/cf4_p0/scripts/make_data_proxy_coordinates_figure.py",
-    legacy_root="legacy/cf4_p0/figures/data_analysis_current",
-    legacy_input="legacy/cf4_p0/cards/pr08_006_joint_artifact.json",
-)
-
-
 def _load_module(
     path: Path, name: str, *, module_file: Path | None = None
 ) -> ModuleType:
@@ -387,126 +365,11 @@ def single_card_main(spec: SingleCardSpec, argv: list[str] | None = None) -> int
     return 0
 
 
-def _figure_block_payload(spec: FigureBlockSpec, *, kind: str) -> dict:
-    payload = quarantine_block_payload(REPO)
-    payload["artifact"] = {
-        "artifact_id": spec.artifact_id,
-        "artifact_kind": kind,
-        "active_png": f"{spec.active_root}/{spec.stem}.png",
-        "active_png_status": "ABSENT_BY_QUARANTINE",
-        "producer": spec.active_script,
-        "legacy_reproduction_only_root": spec.legacy_root,
-        "legacy_public_use": False,
-    }
-    return payload
-
-
-def figure_block_main(spec: FigureBlockSpec, argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Emit PR-120 blocked sidecars and no active numerical PNG."
-    )
-    parser.add_argument("--check", action="store_true")
-    parser.add_argument("--legacy-reproduction", action="store_true")
-    args = parser.parse_args(argv)
-    active_root = REPO / spec.active_root
-    legacy_root = REPO / spec.legacy_root
-    paths = {
-        "png": active_root / f"{spec.stem}.png",
-        "source": active_root / f"{spec.stem}.source.json",
-        "manifest": active_root / f"{spec.stem}.manifest.json",
-    }
-    legacy_paths = {
-        key: legacy_root / path.name for key, path in paths.items()
-    }
-    if args.legacy_reproduction:
-        pinned = (
-            spec.legacy_script,
-            spec.legacy_input,
-            *(path.relative_to(REPO).as_posix() for path in legacy_paths.values()),
-        )
-        _verify_pinned_legacy(pinned)
-        try:
-            frozen = {
-                key: path.read_bytes() for key, path in legacy_paths.items()
-            }
-            with tempfile.TemporaryDirectory(prefix="htt-cf4-figure-") as temporary:
-                temporary_root = Path(temporary)
-                for key, path in legacy_paths.items():
-                    shutil.copy2(path, temporary_root / path.name)
-                module = _load_module(
-                    REPO / spec.legacy_script,
-                    f"cf4_p0_legacy_{spec.artifact_id}",
-                    module_file=REPO / spec.active_script,
-                )
-                module.REPO_ROOT = REPO
-                module.FIGURE_DIR = temporary_root
-                module.JOINT = REPO / spec.legacy_input
-                result = int(module.main(["--check"] if args.check else []))
-                if result == 0:
-                    changed = [
-                        key
-                        for key, path in legacy_paths.items()
-                        if (temporary_root / path.name).read_bytes() != frozen[key]
-                    ]
-                    if changed:
-                        raise RuntimeError(
-                            "legacy figure reproduction differs from frozen evidence "
-                            f"for {', '.join(changed)}; canonical legacy bytes were not modified"
-                        )
-        finally:
-            _verify_pinned_legacy(pinned)
-        return result
-
-    expected = {
-        paths["source"]: json.dumps(
-            _figure_block_payload(spec, kind="figure_source_block_record"),
-            indent=2,
-            sort_keys=True,
-        )
-        + "\n",
-        paths["manifest"]: json.dumps(
-            _figure_block_payload(spec, kind="figure_manifest_block_record"),
-            indent=2,
-            sort_keys=True,
-        )
-        + "\n",
-    }
-    if args.check:
-        stale = []
-        for path, rendered in expected.items():
-            relative = path.relative_to(REPO).as_posix()
-            try:
-                current = read_regular_text(REPO, relative)
-            except CF4P0PolicyError:
-                current = None
-            if current != rendered:
-                stale.append(relative)
-        if paths["png"].exists():
-            stale.append(f"{paths['png'].relative_to(REPO).as_posix()} (must be absent)")
-        if stale:
-            print("stale CF4 figure block record(s): " + ", ".join(stale), file=sys.stderr)
-            return 1
-        print(f"CF4 figure quarantine current: {spec.artifact_id}")
-        return 0
-    if paths["png"].exists() or paths["png"].is_symlink():
-        raise CF4P0PolicyError(
-            "active numerical PNG must be quarantined explicitly before writing "
-            f"block sidecars: {paths['png'].relative_to(REPO).as_posix()}"
-        )
-    for path, rendered in expected.items():
-        atomic_write_text(REPO, path.relative_to(REPO).as_posix(), rendered)
-    print(f"wrote blocked sidecars for {spec.artifact_id}; active PNG absent")
-    return 0
-
-
 __all__ = [
-    "DATA_PROXY_SPEC",
     "DerivedSpec",
-    "FigureBlockSpec",
     "IDENTIFIED_INTERVAL_SPECS",
     "SINGLE_CARD_SPECS",
     "SingleCardSpec",
     "derived_main",
-    "figure_block_main",
     "single_card_main",
 ]

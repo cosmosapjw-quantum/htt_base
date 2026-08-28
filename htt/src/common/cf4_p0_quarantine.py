@@ -185,41 +185,7 @@ _PROMOTION_STRING_RE = re.compile(
     r"Bianchi.{0,40}(?:family\s+identified|geometry\s+detected)|"
     r"family[_ -]?identification.{0,40}(?:evidence|supported|validated|true))"
 )
-_EXPECTED_DETERMINISTIC_RELEASE_OUTPUTS: Mapping[str, Mapping[str, str]] = {
-    "docs/generated/external_audit_package.zip": {
-        "builder_path": "scripts/build_external_audit_package.py",
-        "manifest_path": "docs/generated/external_audit_package_manifest.json",
-        "check_command": (
-            "scripts/codex_harness/run_pr122_source_only.sh "
-            "scripts/build_external_audit_package.py --check"
-        ),
-    },
-    "docs/generated/research_only_external_audit_package.zip": {
-        "builder_path": "scripts/build_research_only_audit_package.py",
-        "manifest_path": (
-            "docs/generated/research_only_external_audit_package_manifest.json"
-        ),
-        "check_command": (
-            "venv/bin/python scripts/build_research_only_audit_package.py --check"
-        ),
-    },
-    "docs/generated/statistical_formalism_audit_package.zip": {
-        "builder_path": "scripts/build_statistical_formalism_audit_package.py",
-        "manifest_path": (
-            "docs/generated/statistical_formalism_audit_package_manifest.json"
-        ),
-        "check_command": (
-            "venv/bin/python scripts/build_statistical_formalism_audit_package.py --check"
-        ),
-    },
-    "htt_base_research_evaluation_package.zip": {
-        "builder_path": "scripts/build_research_evaluation_package.py",
-        "manifest_path": "htt_base_research_evaluation_package_manifest.json",
-        "check_command": (
-            "venv/bin/python scripts/build_research_evaluation_package.py --check"
-        ),
-    },
-}
+_EXPECTED_DETERMINISTIC_RELEASE_OUTPUTS: Mapping[str, Mapping[str, str]] = {}
 
 _EXPECTED_CF4_P0_ACTIVE_ABSENT_PATHS: tuple[str, ...] = (
     "figures/parallel_track/fig_02_tilted_flrw_dictionary.png",
@@ -828,8 +794,8 @@ def load_policy(
     deterministic_outputs = inventory.get("deterministic_release_outputs")
     if deterministic_outputs != _EXPECTED_DETERMINISTIC_RELEASE_OUTPUTS:
         raise CF4P0PolicyError(
-            "inventory.deterministic_release_outputs must be the exact four "
-            "self-containing release archives and their canonical closeout gates"
+            "inventory.deterministic_release_outputs must remain empty after "
+            "retirement of the legacy audit archives"
         )
     if set(reviewed_sidecars).intersection(deterministic_outputs):
         raise CF4P0PolicyError(
@@ -1335,10 +1301,7 @@ def build_inventory_payload(
         "sky_support_status": "not_applicable_to_propagation_quarantine",
         "null_mock_status": "not_applicable_quarantine_is_not_validation",
         "caveats": list(policy["caveats"]),
-        "generating_command": (
-            "PYTHONPATH=htt/src venv/bin/python -B "
-            "scripts/codex_harness/quarantine_cf4_p0_consumers.py --write"
-        ),
+        "generating_command": "in_memory_from_live_policy_no_tracked_report_output",
         "git_commit_or_worktree_state": (
             f"baseline_commit:{policy['baseline_commit']}; "
             "PR-120 worktree hashes are bound per inventory entry"
@@ -1394,10 +1357,7 @@ def _build_block_payload(
             f"{policy['root_state']['canonical_path']}:sha256:{root_hash}",
         ],
         "caveats": list(policy["caveats"]),
-        "generating_command": (
-            "PYTHONPATH=htt/src venv/bin/python -B "
-            "scripts/codex_harness/quarantine_cf4_p0_consumers.py --write"
-        ),
+        "generating_command": "in_memory_from_live_policy_no_tracked_report_output",
         "git_commit_or_worktree_state": (
             f"baseline_commit:{policy['baseline_commit']}; "
             "PR-120 worktree hashes are bound by the canonical inventory"
@@ -1523,10 +1483,20 @@ def canonical_artifact_bytes(
     *,
     policy_path: Path | str | None = None,
 ) -> Mapping[str, bytes]:
-    """Return all four deterministic generated artifact byte streams."""
+    """Return only generated streams still admitted by the live policy.
 
-    inventory, block = build_canonical_payloads(repo_root, policy_path=policy_path)
-    return {
+    The retirement policy has no tracked generated-contract paths.  Keeping
+    this function policy-driven prevents an old ``--write`` path from silently
+    recreating the removed report surface.
+    """
+
+    root = Path(repo_root or repository_root()).resolve()
+    policy, _ = load_policy(root, policy_path=policy_path)
+    admitted = set(policy["scan"].get("generated_contract_paths", ()))
+    if not admitted:
+        return {}
+    inventory, block = build_canonical_payloads(root, policy_path=policy_path)
+    candidates = {
         INVENTORY_RELATIVE_PATH.as_posix(): _canonical_json_bytes(inventory),
         "docs/generated/cf4_p0_quarantine_inventory.md": render_inventory_markdown(
             inventory
@@ -1536,6 +1506,7 @@ def canonical_artifact_bytes(
             block
         ).encode("utf-8"),
     }
+    return {path: content for path, content in candidates.items() if path in admitted}
 
 
 def _load_json_mapping(
@@ -1555,6 +1526,10 @@ def _load_json_mapping(
 def _validate_inventory(
     root: Path, policy: Mapping[str, Any], policy_hash: str
 ) -> tuple[Mapping[str, Any], str]:
+    if not policy["scan"].get("generated_contract_paths"):
+        inventory = build_inventory_payload(root)
+        raw = _canonical_json_bytes(inventory)
+        return inventory, _sha256_bytes(raw)
     path = root / INVENTORY_RELATIVE_PATH
     inventory, raw = _load_json_mapping(root, path, "CF4 P0 inventory")
     if inventory.get("schema") != INVENTORY_SCHEMA:
@@ -1578,6 +1553,17 @@ def load_block_record(
     root = Path(repo_root or repository_root()).resolve()
     policy, policy_hash = load_policy(root)
     _, root_hash = _validate_open_roots(root, policy)
+    if not policy["scan"].get("generated_contract_paths"):
+        inventory = build_inventory_payload(root)
+        inventory_hash = _sha256_bytes(_canonical_json_bytes(inventory))
+        payload = _build_block_payload(
+            policy,
+            policy_hash=policy_hash,
+            inventory_hash=inventory_hash,
+            root_hash=root_hash,
+        )
+        raw = _canonical_json_bytes(payload)
+        return CF4P0BlockRecord(payload=payload, sha256=_sha256_bytes(raw))
     inventory, inventory_hash = _validate_inventory(root, policy, policy_hash)
     path = root / BLOCK_RELATIVE_PATH
     payload, raw = _load_json_mapping(root, path, "CF4 P0 block record")

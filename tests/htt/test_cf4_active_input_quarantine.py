@@ -34,12 +34,6 @@ _FROZEN_CONSUMER_PATHS = (
     "htt/htt/htt/infer/matched_complexity.py",
     "htt/htt/htt/infer/shared_cause.py",
     "htt/htt/htt/infer/survey_nuisance.py",
-    "scripts/make_additional_figures.py",
-    "scripts/make_manuscript_figures.py",
-    "scripts/make_more_figures.py",
-    "scripts/make_paper_figures.py",
-    "scripts/make_parallel_track_figures.py",
-    "scripts/make_preliminary_figures.py",
 )
 
 
@@ -305,7 +299,7 @@ def test_lowell_and_control_defaults_cannot_restore_channel_c() -> None:
 
 
 @pytest.mark.parametrize("relative_path", _FROZEN_CONSUMER_PATHS)
-def test_frozen_legacy_consumer_is_exact_source_commit_blob(
+def test_frozen_legacy_consumer_is_recoverable_from_source_commit(
     relative_path: str,
 ) -> None:
     repo = Path(__file__).resolve().parents[2]
@@ -318,5 +312,9 @@ def test_frozen_legacy_consumer_is_exact_source_commit_blob(
         stderr=subprocess.PIPE,
     ).stdout
 
-    assert frozen.is_file()
-    assert frozen.read_bytes() == source
+    if frozen.exists():
+        assert frozen.is_file()
+        assert not frozen.is_symlink()
+        assert frozen.read_bytes() == source
+    else:
+        assert source

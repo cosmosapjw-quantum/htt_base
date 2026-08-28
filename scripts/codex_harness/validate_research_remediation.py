@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import subprocess
 import sys
 from collections import Counter
 from pathlib import Path
@@ -14,6 +15,7 @@ import yaml
 
 
 REPO = Path(__file__).resolve().parents[2]
+CLEANUP_BASE = "0864b00948143d9b19d4983e50fcd2d905f4a5d3"
 SPEC = REPO / "docs/research_program/long_horizon_rescue/pr119_spec.yaml"
 BACKLOG = REPO / "docs/codex_handoff/pr_backlog.yaml"
 STATUS = REPO / "docs/codex_handoff/pr_status.yaml"
@@ -138,8 +140,22 @@ EXACT_FINDING_CROSSWALK = {
 }
 
 
+def _read_bytes(path: Path) -> bytes:
+    """Read live inputs, falling back to retired immutable audit authority."""
+    if path.is_file():
+        return path.read_bytes()
+    relative = path.relative_to(REPO).as_posix()
+    completed = subprocess.run(
+        ["git", "show", f"{CLEANUP_BASE}:{relative}"],
+        cwd=REPO,
+        capture_output=True,
+        check=True,
+    )
+    return completed.stdout
+
+
 def _sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    return hashlib.sha256(_read_bytes(path)).hexdigest()
 
 
 def _canonical_sha256(value: Any) -> str:
@@ -155,7 +171,7 @@ def _load_yaml(path: Path) -> dict[str, Any]:
 
 
 def _load_json(path: Path) -> dict[str, Any]:
-    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload = json.loads(_read_bytes(path).decode("utf-8"))
     if not isinstance(payload, dict):
         raise ValueError(f"{path.relative_to(REPO)} must contain an object")
     return payload

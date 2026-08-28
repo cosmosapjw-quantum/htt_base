@@ -6,8 +6,6 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 PUBLIC_SURFACES = [
-    ROOT / "scripts/make_manuscript_figures.py",
-    ROOT / "docs/manuscript/appendices.tex",
     ROOT / "htt/workspace/contracts/htt_to_mio.py",
     ROOT / "htt/htt/htt/core/departure_posteriors.py",
 ]
@@ -26,13 +24,10 @@ def test_public_qfpi_surfaces_do_not_call_q_occupancy():
     for pattern in blocked:
         assert not re.search(pattern, combined, flags=re.IGNORECASE), pattern
 
-    assert "policy-normalized diagnostic score" in combined
     assert "policy-normalized HTT posterior score" in combined
 
 
 def test_public_qfpi_surfaces_namespace_htt_and_mio_pi():
-    appendices = (ROOT / "docs/manuscript/appendices.tex").read_text(encoding="utf-8")
-    figures = (ROOT / "scripts/make_manuscript_figures.py").read_text(encoding="utf-8")
     departure_posteriors = (
         ROOT / "htt/htt/htt/core/departure_posteriors.py"
     ).read_text(encoding="utf-8")
@@ -40,12 +35,6 @@ def test_public_qfpi_surfaces_namespace_htt_and_mio_pi():
         encoding="utf-8"
     )
 
-    assert r"\Pi_{\rm MIO}" in appendices
-    assert r"\Pi_{\rm HTT}" in appendices
-    # PR-120 replaced the mixed CF4 manuscript-figure producer with a
-    # fail-closed wrapper.  It must not retain any active Pi result language.
-    assert "require_cf4_observational_input" in figures
-    assert r"\Pi_{\rm HTT}" not in figures
     assert "HTT posterior exceedance cross-check" in htt_to_mio
     assert "legacy HTT posterior diagnostic export" in departure_posteriors
     assert "not MIO Pi" in departure_posteriors

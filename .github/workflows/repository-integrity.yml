@@ -74,10 +74,12 @@ jobs:
           python -m pytest -q tests/contracts/test_planck_mes_irrep_global_formalism_plan.py
           python scripts/validate_planck_mes_pmg_wu002_transition.py --check-git
           python -m pytest -q tests/contracts/test_planck_mes_pmg_wu002_transition.py
-      - name: Run clean-clone observational quarantine contracts
+      - name: Run retired-publication and observational quarantine contracts
         run: |
-          python -m pytest -q \
-            tests/contracts/test_obsdata_figures.py \
+          env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
+            tests/contracts/test_legacy_publication_surfaces_removed.py \
+            tests/contracts/test_frozen_package_freeze.py \
+            tests/pr_cards/test_pr_120_cf4_p0_downstream_consumer_quarantine.py \
             tests/obsstat/test_pr151_invalidation_boundary.py \
             tests/contracts/test_pr303_pr289_integration.py
       - name: Run every PR-304 publication-policy command

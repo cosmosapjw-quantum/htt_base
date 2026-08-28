@@ -18,9 +18,9 @@ re-enter the report/table/blockers:
     "BLOCKED_MISSING_FIELD_REALIZATIONS ... discharged", "CR ensemble is the
     posterior")
 
-This complements `scripts/pdf_claim_lint.py` (which gates the manuscript PDF):
-this one gates the *source* of the research report surfaces. Diagnostic-only;
-no detection / family / native-solver claim is permitted in these files.
+The retired manuscript, result table, and compiled-PDF gates are no longer
+active surfaces.  This linter now protects the surviving blocker register.
+Diagnostic-only; no detection / family / native-solver claim is permitted.
 
 Exit code 0 = clean, 1 = hits (printed as JSON).
 """
@@ -35,8 +35,6 @@ import sys
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 SURFACES = (
-    "docs/final_report/main.tex",
-    "docs/generated/egs_results_table.md",
     "docs/research_program/BLOCKERS.md",
 )
 

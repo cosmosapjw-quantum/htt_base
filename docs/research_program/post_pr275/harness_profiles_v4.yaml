@@ -20,7 +20,7 @@ changed_surface_routes:
   path_regex: (formal/.*|docs/generated/.*/axis_.*|tests/contracts/test_pillar_t_cas\.py)
   profiles: [formal:wolfram-xact, formal:sympy, formal:sage-singular, formal:lean]
 - route_id: publication_surface
-  path_regex: (manuscript/.*|docs/.*\.(tex|bib|pdf)|tests/contracts/test_(claim_language_lint|pdf_claim_lint|publication_claim_freeze|current_manuscript_figures)\.py)
+  path_regex: (papers/planck_mes_first_observation/.*|tests/paper/test_planck_mes_first_paper\.py|tests/contracts/test_claim_language_lint\.py)
   profiles: [publication]
 - route_id: safe_default
   path_regex: .*
@@ -50,11 +50,12 @@ profiles:
   allowed_use: focused contract verification only
 - profile_id: current-active
   kind: pytest
-  lane: post_pr275_active_contracts
+  lane: current_planck_mes_contracts
   selectors:
   - tests/contracts/test_claim_capability_engine.py
-  - tests/contracts/test_tier_a_lane_adjudication.py
-  - tests/contracts/test_pr_retrace_ledger.py
+  - tests/integration/test_planck_pr3_current_stack.py
+  - tests/integration/test_planck_mes_coordinate_audit.py
+  - tests/integration/test_planck_mes_irrep_inventory.py
   pytest_args: [-q]
   modules: []
   tools: []
@@ -116,7 +117,6 @@ profiles:
   kind: pytest
   lane: cf4_preflight
   selectors:
-  - tests/contracts/test_pr144_cf4_manifest.py
   - tests/htt/test_cf4_active_input_quarantine.py::test_typed_provider_exposes_no_numerical_or_replacement_payload
   - tests/htt/test_cf4_active_input_quarantine.py::test_evidence_defaults_exclude_c_and_explicit_c_fails_closed
   - tests/htt/test_cf4_active_input_quarantine.py::test_workspace_default_has_status_only_and_no_cf4_dipole_row
@@ -162,9 +162,6 @@ profiles:
   - tests/contracts/test_pr152_act_raw_qe.py::test_production_input_manifest_requires_exactly_400
   - tests/contracts/test_pr152_act_raw_qe.py::test_guards_reject_forbidden_moves
   - tests/contracts/test_pr152_act_raw_qe.py::test_caption_lint_blocks_a_detection_phrase
-  - tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_strict_support_and_raw_authority_root_are_frozen
-  - tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_resolution_guard_and_terminal_truth_table_are_closed
-  - tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_deep_replay_failure_completeness_and_nested_digest_are_fail_closed
   pytest_args: [-q]
   modules: []
   tools: []
@@ -190,11 +187,10 @@ profiles:
   allowed_use: recovery inventory and preflight only
 - profile_id: data:jwst
   kind: pytest
-  lane: jwst_preflight
+  lane: current_jwst_sn_preflight
   selectors:
-  - tests/contracts/test_pr153_jwst_anchor.py
-  - tests/contracts/test_pr153_jwst_distance_consistency.py
-  - tests/contracts/test_pr154_jwst_host_hierarchy_runner.py
+  - tests/integration/test_jwst_sn_current_stack.py
+  - tests/contracts/test_authorized_observational_program.py
   pytest_args: [-q]
   modules: []
   tools: []
@@ -253,13 +249,10 @@ profiles:
   allowed_use: tool availability only; not a CAS verdict
 - profile_id: publication
   kind: pytest
-  lane: publication_contracts
+  lane: current_planck_mes_publication_contracts
   selectors:
   - tests/contracts/test_claim_language_lint.py
-  - tests/contracts/test_pdf_claim_lint.py
-  - tests/contracts/test_generated_status_counts.py
-  - tests/contracts/test_publication_claim_freeze.py
-  - tests/contracts/test_current_manuscript_figures.py
+  - tests/paper/test_planck_mes_first_paper.py
   pytest_args: [-q]
   modules: []
   tools: []

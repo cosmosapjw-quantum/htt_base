@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import copy
 import hashlib
-import importlib.util
 import json
 import os
 from pathlib import Path
@@ -22,9 +21,8 @@ from common.evidence_graph import (
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PYTHON = REPO_ROOT / "venv/bin/python"
-BUILDER = REPO_ROOT / "scripts/codex_harness/build_claim_evidence_graph.py"
 PIN_SOURCE = REPO_ROOT / "htt/src/common/release_evidence_pin.py"
-SOURCE_ONLY_LAUNCHER = REPO_ROOT / "scripts/codex_harness/run_pr122_source_only.sh"
+CLEANUP_BASE = "0864b00948143d9b19d4983e50fcd2d905f4a5d3"
 
 
 def _hermetic_pytest_prefix(output: Path) -> list[str]:
@@ -93,14 +91,6 @@ def _reseal_environment_and_receipt(payload: dict[str, object]) -> None:
     ).hexdigest()
     payload.pop("content_sha256", None)
     payload["content_sha256"] = hashlib.sha256(_canonical_bytes(payload)).hexdigest()
-
-
-def _load_builder():
-    spec = importlib.util.spec_from_file_location("pr122_replay_builder", BUILDER)
-    assert spec is not None and spec.loader is not None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 def test_plugin_binds_actual_selector_collection_and_execution(tmp_path: Path) -> None:
@@ -262,9 +252,17 @@ def test_hermetic_environment_contract_rehashes_live_inputs_and_pr121_lock(
     assert result.returncode == 0, result.stdout + result.stderr
     payload = json.loads(output.read_text(encoding="utf-8"))
     parent = json.loads(
-        (REPO_ROOT / "docs/generated/pr121_hermetic_replay_receipt.json").read_text(
-            encoding="utf-8"
-        )
+        subprocess.run(
+            [
+                "git",
+                "show",
+                f"{CLEANUP_BASE}:docs/generated/pr121_hermetic_replay_receipt.json",
+            ],
+            cwd=REPO_ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout
     )
     environment_ref = verify_pytest_environment_inputs(
         REPO_ROOT,
@@ -403,26 +401,6 @@ def test_arbitrary_pytest_import_origin_exemption_is_rejected(tmp_path: Path) ->
         TestExecution.from_pytest_evidence(payload)
 
 
-def test_ordinary_import_origin_omission_fails_exact_replay() -> None:
-    builder = _load_builder()
-    original = json.loads(
-        (REPO_ROOT / "docs/generated/pr122_test_execution.json").read_text(
-            encoding="utf-8"
-        )
-    )
-    tampered = copy.deepcopy(original)
-    origins = tampered["environment_contract"]["import_origins"]
-    removed = [row for row in origins if row["module"].startswith("numpy")]
-    assert removed
-    tampered["environment_contract"]["import_origins"] = [
-        row for row in origins if not row["module"].startswith("numpy")
-    ]
-    _reseal_environment_and_receipt(tampered)
-
-    with pytest.raises(EvidenceGraphError, match="exact hermetic replay"):
-        builder._assert_exact_pytest_replay(tampered, original)
-
-
 def test_noncanonical_pytest_pin_exemption_source_cannot_be_hidden(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -545,59 +523,3 @@ def test_checked_hash_workspace_pyc_is_bypassed_by_isolated_prefix(
     )
     assert isolated.stdout.strip() == "BENIGN_SOURCE"
     assert not list(isolated_cache.rglob("*"))
-
-
-def test_source_only_launcher_rejects_direct_cli_and_ignores_executable_pth(
-    tmp_path: Path,
-) -> None:
-    direct = subprocess.run(
-        [str(PYTHON), str(BUILDER), "--help"],
-        cwd=REPO_ROOT,
-        text=True,
-        capture_output=True,
-        check=False,
-    )
-    assert direct.returncode != 0
-    assert "run_pr122_source_only.sh" in direct.stderr
-    imported_builder = _load_builder()
-    with pytest.raises(SystemExit, match="run_pr122_source_only.sh"):
-        imported_builder.main(["--dry-run"])
-
-    version = f"python{sys.version_info.major}.{sys.version_info.minor}"
-    site_packages = PYTHON.parent.parent / "lib" / version / "site-packages"
-    sentinel = tmp_path / "executable-pth-ran.txt"
-    pth = site_packages / f"pr122_hostile_{os.getpid()}.pth"
-    pth.write_text(
-        "import os,pathlib; "
-        "p=os.environ.get('PR122_PTH_ATTACK_SENTINEL'); "
-        "p and pathlib.Path(p).write_text('executed', encoding='utf-8')\n",
-        encoding="utf-8",
-    )
-    targets = (
-        "scripts/codex_harness/build_claim_evidence_graph.py",
-        "scripts/check_publication_claim_freeze.py",
-        "scripts/build_external_audit_package.py",
-    )
-    try:
-        for target in targets:
-            result = subprocess.run(
-                [str(SOURCE_ONLY_LAUNCHER), target, "--help"],
-                cwd=REPO_ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-                env={
-                    **os.environ,
-                    "PATH": str(tmp_path),
-                    "TMPDIR": str(tmp_path),
-                    "PYTHONPATH": str(tmp_path / "attacker"),
-                    "PYTEST_ADDOPTS": "--maxfail=1",
-                    "PYTEST_PLUGINS": "attacker_plugin",
-                    "PR122_PTH_ATTACK_SENTINEL": str(sentinel),
-                },
-            )
-            assert result.returncode == 0, result.stdout + result.stderr
-            assert "usage:" in result.stdout
-            assert not sentinel.exists()
-    finally:
-        pth.unlink(missing_ok=True)
