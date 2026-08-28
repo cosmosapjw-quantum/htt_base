@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib
 from pathlib import Path
 
 import numpy as np
@@ -41,7 +42,10 @@ def test_one_pass_execution_preserves_exact_order_and_calls_each_row_once() -> N
     rows = _rows()
     result = process_paired300_rows_one_pass(
         observed_map=np.asarray([-1.0]),
-        null_rows=((row_id, np.asarray([index], dtype=np.float64)) for index, row_id in enumerate(rows)),
+        null_rows=(
+            (row_id, np.asarray([index], dtype=np.float64))
+            for index, row_id in enumerate(rows)
+        ),
         context={"operator": "frozen"},
         process_map=_process_factory(calls),
         carrier_from_alm=_carrier_from_alm,
@@ -69,7 +73,10 @@ def test_one_pass_execution_rejects_missing_reordered_or_duplicate_rows(rows) ->
     with pytest.raises(Paired300ExecutionError, match="exact registered order"):
         process_paired300_rows_one_pass(
             observed_map=np.asarray([-1.0]),
-            null_rows=((row_id, np.asarray([index])) for index, row_id in enumerate(identifiers)),
+            null_rows=(
+                (row_id, np.asarray([index]))
+                for index, row_id in enumerate(identifiers)
+            ),
             context={"operator": "frozen"},
             process_map=_process_factory([]),
             carrier_from_alm=_carrier_from_alm,
@@ -88,11 +95,66 @@ def test_one_pass_execution_rejects_bad_feature_or_carrier_shape() -> None:
     with pytest.raises(Paired300ExecutionError, match="feature shape"):
         process_paired300_rows_one_pass(
             observed_map=np.asarray([-1.0]),
-            null_rows=((row_id, np.asarray([index])) for index, row_id in enumerate(rows)),
+            null_rows=(
+                (row_id, np.asarray([index]))
+                for index, row_id in enumerate(rows)
+            ),
             context={"operator": "frozen"},
             process_map=bad_process,
             carrier_from_alm=_carrier_from_alm,
         )
+
+
+def test_worker_compact_null_path_preserves_carrier_in_the_same_fit(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    worker = importlib.import_module("scripts.observed_runs.run_planck_pr3")
+    rows = worker.SMICA_EXISTING_ROW_IDS
+    path = tmp_path / "nulls.npz"
+    maps = np.arange(EXPECTED_NULL_ROWS, dtype=np.float64).reshape(-1, 1)
+    np.savez(path, row_ids=np.asarray(rows, dtype="U27"), smica_maps=maps)
+    calls: list[int] = []
+
+    def fake_process(pixel_map, *, component, context):
+        assert component == "SMICA"
+        assert context == {"operator": "frozen"}
+        value = int(np.asarray(pixel_map)[0])
+        calls.append(value)
+        features = np.arange(12, dtype=np.float64) + value
+        vector = np.arange(EXPECTED_DIMENSION, dtype=np.float64) + 1000.0 * value
+        alm = worker.real_vector_to_alm(vector, lmin=2, lmax=5)
+        return features, {"fit": 1.0}, alm
+
+    monkeypatch.setattr(worker, "_process_map", fake_process)
+    features, carrier = worker._process_ffp10_component_with_carrier(
+        path,
+        array_name="smica_maps",
+        row_ids=rows,
+        component="SMICA",
+        context={"operator": "frozen"},
+        chunk_rows=37,
+    )
+    assert calls == list(range(EXPECTED_NULL_ROWS))
+    assert features.shape == (300, 12)
+    assert carrier.shape == (300, 32)
+    assert np.array_equal(features[:, 0], np.arange(300))
+    assert np.array_equal(carrier[:, 0], 1000.0 * np.arange(300))
+
+
+def test_carrier_feature_projection_roundtrip_is_exact() -> None:
+    worker = importlib.import_module("scripts.observed_runs.run_planck_pr3")
+    vector = np.linspace(-0.5, 0.5, EXPECTED_DIMENSION, dtype=np.float64)
+    projected = worker._component_features_from_real_carrier(vector)
+    alm = worker.real_vector_to_alm(vector, lmin=2, lmax=5)
+    vectors2 = worker.extract_multipole_vectors(alm, ell=2, lmax=5)
+    vectors3 = worker.extract_multipole_vectors(alm, ell=3, lmax=5)
+    expected = worker.component_features_from_vectors(
+        alm,
+        vectors2=vectors2,
+        vectors3=vectors3,
+        lmax=5,
+    )
+    assert np.array_equal(projected, expected)
 
 
 def test_regular_file_identity_detects_content_and_stat_mutation(tmp_path: Path) -> None:
