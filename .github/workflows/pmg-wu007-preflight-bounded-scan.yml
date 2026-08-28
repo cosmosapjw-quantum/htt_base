@@ -1,0 +1,145 @@
+name: PMG-WU-007 preflight bounded scalar-root scan
+
+on:
+  push:
+    branches:
+      - audit/pmg-wu007-preflight-bounded-scan-20260829
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pmg-wu007-preflight-bounded-scan
+  cancel-in-progress: false
+
+env:
+  TARGET_BRANCH: changeset/planck-mes-wu007-data-preflight-20260829
+  EXPECTED_TARGET_HEAD: eecd713a43c74cc1b8d8ffaa2022db263f2800e9
+  PYTHONDONTWRITEBYTECODE: "1"
+
+jobs:
+  patch-and-verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out exact target branch
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Refuse moved authority
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_TARGET_HEAD"
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+
+      - name: Install focused test dependency
+        run: python -m pip install 'pytest>=8,<9'
+
+      - name: Replace unbounded recursive scalar search
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("scripts/validate_planck_mes_wu007_data_preflight.py")
+          text = path.read_text(encoding="utf-8")
+          old = '''def _find_unique_named_file(
+              name: str,
+              *,
+              roots: Sequence[Path],
+              excluded_root: Path,
+          ) -> Path | None:
+              direct: list[Path] = []
+              recursive: list[Path] = []
+              excluded = excluded_root.resolve(strict=False)
+              for root in roots:
+                  root = Path(root).resolve(strict=False)
+                  candidate = root / name
+                  if candidate.is_file() and not candidate.is_symlink():
+                      direct.append(candidate)
+              found = _deduplicate_paths(direct)
+              if not found:
+                  for root in roots:
+                      root = Path(root).resolve(strict=False)
+                      if not root.is_dir() or root.is_symlink():
+                          continue
+                      for candidate in root.rglob(name):
+                          try:
+                              resolved = candidate.resolve(strict=True)
+                          except FileNotFoundError:
+                              continue
+                          if resolved == excluded or resolved.is_relative_to(excluded):
+                              continue
+                          if candidate.is_file() and not candidate.is_symlink():
+                              recursive.append(candidate)
+                  found = _deduplicate_paths(recursive)
+              if not found:
+                  return None
+              if len(found) > 1:
+                  hashes = {_sha256(path) for path in found}
+                  if len(hashes) != 1:
+                      raise PreflightError(
+                          f"ambiguous nonidentical scalar sources for {name}: "
+                          + ",".join(str(path) for path in found)
+                      )
+              return found[0]
+          '''
+          new = '''def _find_unique_named_file(
+              name: str,
+              *,
+              roots: Sequence[Path],
+              excluded_root: Path,
+          ) -> Path | None:
+              """Resolve an exact scalar filename from bounded explicit roots.
+
+              Deliberately do not recurse through ``workdir``: the local store is about
+              1.4 TB, and a metadata-only preflight must not become an unbounded scan.
+              Callers may pass additional exact directories with ``--scalar-root``.
+              """
+
+              excluded = excluded_root.resolve(strict=False)
+              direct: list[Path] = []
+              for root in roots:
+                  root = Path(root).resolve(strict=False)
+                  candidate = root / name
+                  if not candidate.is_file() or candidate.is_symlink():
+                      continue
+                  resolved = candidate.resolve(strict=True)
+                  if resolved == excluded or resolved.is_relative_to(excluded):
+                      continue
+                  direct.append(resolved)
+              found = _deduplicate_paths(direct)
+              if not found:
+                  return None
+              if len(found) > 1:
+                  hashes = {_sha256(path) for path in found}
+                  if len(hashes) != 1:
+                      raise PreflightError(
+                          f"ambiguous nonidentical scalar sources for {name}: "
+                          + ",".join(str(path) for path in found)
+                      )
+              return found[0]
+          '''
+          if text.count(old) != 1:
+              raise SystemExit("expected recursive scalar-search block not found exactly once")
+          path.write_text(text.replace(old, new), encoding="utf-8")
+          PY
+
+      - name: Run focused verification
+        run: |
+          python -m pytest -q tests/contracts/test_planck_mes_wu007_data_preflight.py
+          python -m py_compile scripts/validate_planck_mes_wu007_data_preflight.py
+          python scripts/validate_planck_mes_wu007_data_preflight.py --help >/dev/null
+          git diff --check
+
+      - name: Commit and push bounded hardening
+        run: |
+          test -n "$(git status --porcelain=v1)"
+          git config user.name "cosmosapjw-quantum"
+          git config user.email "58155957+cosmosapjw-quantum@users.noreply.github.com"
+          git add scripts/validate_planck_mes_wu007_data_preflight.py
+          git commit -m "fix: bound WU-007 scalar-source discovery"
+          git push origin HEAD:"$TARGET_BRANCH"
