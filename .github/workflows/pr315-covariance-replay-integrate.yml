@@ -1,4 +1,4 @@
-name: Integrate portable PR315 covariance replay
+name: Integrate portable PR315 covariance replay v2
 
 on:
   push:
@@ -44,32 +44,43 @@ jobs:
           from pathlib import Path
 
           path = Path('scripts/observed_runs/run_planck_pr3.py')
-          text = path.read_text()
-          import_anchor = 'from obsstat.boost_biposh_residual import ExactBoostOperator  # noqa: E402\n'
-          import_line = 'from obsstat.covariance_replay import validate_sample_covariance_replay  # noqa: E402\n'
-          if import_line not in text:
-              if text.count(import_anchor) != 1:
+          lines = path.read_text().splitlines()
+          import_anchor = 'from obsstat.boost_biposh_residual import ExactBoostOperator  # noqa: E402'
+          import_line = 'from obsstat.covariance_replay import validate_sample_covariance_replay  # noqa: E402'
+          if import_line not in lines:
+              if lines.count(import_anchor) != 1:
                   raise SystemExit('covariance import anchor drifted')
-              text = text.replace(import_anchor, import_anchor + import_line)
-          old = '''    recomputed_covariance = np.cov(nulls, rowvar=False, ddof=1)
-    if not np.array_equal(covariance, recomputed_covariance):
-        raise PlanckWorkerError("PR-315 portable covariance differs from replay")'''
-          new = '''    covariance_replay = validate_sample_covariance_replay(
-        stored_covariance=covariance,
-        rows=nulls,
-    )'''
-          if text.count(old) != 1:
+              index = lines.index(import_anchor)
+              lines.insert(index + 1, import_line)
+
+          old = [
+              '    recomputed_covariance = np.cov(nulls, rowvar=False, ddof=1)',
+              '    if not np.array_equal(covariance, recomputed_covariance):',
+              '        raise PlanckWorkerError("PR-315 portable covariance differs from replay")',
+          ]
+          starts = [
+              index for index in range(len(lines) - len(old) + 1)
+              if lines[index:index + len(old)] == old
+          ]
+          if len(starts) != 1:
               raise SystemExit('covariance replay block drifted')
-          text = text.replace(old, new)
-          old_return = '''        "operator_identity_sha256": metadata["operator_identity_sha256"],
-        "raw_maps_reopened": False,'''
-          new_return = '''        "operator_identity_sha256": metadata["operator_identity_sha256"],
-        "covariance_replay": covariance_replay,
-        "raw_maps_reopened": False,'''
-          if text.count(old_return) != 1:
+          start = starts[0]
+          lines[start:start + len(old)] = [
+              '    covariance_replay = validate_sample_covariance_replay(',
+              '        stored_covariance=covariance,',
+              '        rows=nulls,',
+              '    )',
+          ]
+
+          return_anchor = '        "operator_identity_sha256": metadata["operator_identity_sha256"],'
+          return_line = '        "covariance_replay": covariance_replay,'
+          candidates = [index for index, line in enumerate(lines) if line == return_anchor]
+          if len(candidates) != 1:
               raise SystemExit('covariance replay return anchor drifted')
-          text = text.replace(old_return, new_return)
-          path.write_text(text)
+          return_index = candidates[0]
+          if return_line not in lines:
+              lines.insert(return_index + 1, return_line)
+          path.write_text('\n'.join(lines) + '\n')
           PY
       - name: Run risk-scoped GREEN verification
         run: |
