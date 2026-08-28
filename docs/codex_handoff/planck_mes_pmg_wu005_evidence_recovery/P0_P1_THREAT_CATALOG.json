@@ -1,0 +1,77 @@
+{
+  "schema": "htt.planck_mes.pmg_wu005_evidence_recovery.threat_catalog.v1",
+  "failure_modes": [
+    {
+      "id": "PMG5R-FM-001",
+      "severity": "P0",
+      "trigger": "Recovery reopens raw maps, invokes the estimator, mutates raw inputs, or stages private evidence.",
+      "consequence": "The preserved scientific execution is changed or canonical inputs are corrupted.",
+      "detection": "raw_maps_reopened=false; staged-path scan; pre/post raw identity unchanged",
+      "blocked_state": "BLOCKED_RAW_REEXECUTION_OR_MUTATION"
+    },
+    {
+      "id": "PMG5R-FM-002",
+      "severity": "P1",
+      "trigger": "Processed files merely belong to WU-004 inventory but do not match the exact observed/mask/300 CMB/300 noise role and row graph.",
+      "consequence": "Accepted provenance can be satisfied by a wrong but admitted file.",
+      "detection": "test_processed_input_ledger_must_match_exact_accepted_paths_and_stats",
+      "blocked_state": "BLOCKED_INTAKE_ROLE_ROW_MISMATCH"
+    },
+    {
+      "id": "PMG5R-FM-003",
+      "severity": "P1",
+      "trigger": "Checkpoint payload bytes or decoded arrays change without sidecar failure, or post-hoc-bound checkpoints are reused as authority.",
+      "consequence": "A tampered or retrospectively blessed checkpoint can enter the result.",
+      "detection": "bound-checkpoint tamper test plus checkpoint_reused_count=0 disposition",
+      "blocked_state": "BLOCKED_CHECKPOINT_EVIDENCE"
+    },
+    {
+      "id": "PMG5R-FM-004",
+      "severity": "P1",
+      "trigger": "Committed replay accepts numerical equivalence when the frozen scalar NPZ or a declared portable artifact byte identity differs.",
+      "consequence": "The replay no longer verifies the exact frozen evidence object.",
+      "detection": "test_portable_manifest_enforces_frozen_npz_and_every_declared_artifact",
+      "blocked_state": "BLOCKED_PORTABLE_OR_FROZEN_IDENTITY"
+    },
+    {
+      "id": "PMG5R-FM-005",
+      "severity": "P1",
+      "trigger": "Terminal claims SUCCEEDED/P0=0/P1=0 before an external fresh review receipt is content-bound.",
+      "consequence": "The implementer self-issues acceptance despite reproduced findings.",
+      "detection": "test_terminal_cannot_succeed_before_matching_zero_finding_review",
+      "blocked_state": "BLOCKED_SELF_ATTESTED_TERMINAL"
+    },
+    {
+      "id": "PMG5R-FM-006",
+      "severity": "P0",
+      "trigger": "PMG-WU-006 starts before the reviewed PMG-WU-005 terminal is committed and remotely readable.",
+      "consequence": "Downstream analysis consumes unaccepted carrier evidence.",
+      "detection": "next-step precondition requires reviewed terminal format and remote readback MATCH",
+      "blocked_state": "BLOCKED_PREMATURE_PMG_WU006"
+    },
+    {
+      "id": "PMG5R-FM-007",
+      "severity": "P1",
+      "trigger": "The documented replay command fails in a clean checkout or the legacy self-attested finalizer remains reachable.",
+      "consequence": "Recovery is not reproducible or unsafe completion remains available.",
+      "detection": "test_planck_paired300_replay_cli.py",
+      "blocked_state": "BLOCKED_REPLAY_ENTRYPOINT"
+    },
+    {
+      "id": "PMG5R-FM-008",
+      "severity": "P1",
+      "trigger": "The repair checkout restores, overwrites, or mixes the user's local legacy docs/plots cleanup.",
+      "consequence": "An unrelated accepted cleanup is lost or contaminates the evidence PR.",
+      "detection": "separate worktree plus base-to-head allowlist and cleanup patch/status receipt",
+      "blocked_state": "BLOCKED_LEGACY_CLEANUP_CONTAMINATION"
+    },
+    {
+      "id": "PMG5R-FM-009",
+      "severity": "P1",
+      "trigger": "Another plan, full-suite campaign, plot regeneration, or map rerun replaces the shortest map-free recovery path.",
+      "consequence": "The project returns to process starvation or alters unrelated evidence.",
+      "detection": "changed-path allowlist and execution receipt requiring prepare/finalize/replay commands",
+      "blocked_state": "PROCESS_STARVATION"
+    }
+  ]
+}

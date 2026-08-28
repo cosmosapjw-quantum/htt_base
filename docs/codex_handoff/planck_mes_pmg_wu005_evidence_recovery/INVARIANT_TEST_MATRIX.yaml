@@ -1,0 +1,47 @@
+schema: htt.planck_mes.pmg_wu005_evidence_recovery.invariant_matrix.v1
+rows:
+- requirement: no scientific re-execution during evidence recovery
+  invariant: INV-001_NO_RAW_REOPEN
+  failure_mode: PMG5R-FM-001
+  detector: recovery result raw_maps_reopened=false and raw/private staging scan
+  transition: PASS -> continue external review; FAIL -> BLOCKED_RAW_REEXECUTION_OR_MUTATION
+- requirement: exact accepted input graph
+  invariant: INV-002_EXACT_WU004_ROLE_ROW_GRAPH
+  failure_mode: PMG5R-FM-002
+  detector: tests/obsstat/test_planck_paired300_evidence.py::test_processed_input_ledger_must_match_exact_accepted_paths_and_stats
+  transition: PASS -> write private processed ledger; FAIL -> BLOCKED_INTAKE_ROLE_ROW_MISMATCH
+- requirement: checkpoint tamper evidence
+  invariant: INV-003_CHECKPOINT_CONTENT_BOUND
+  failure_mode: PMG5R-FM-003
+  detector: tests/obsstat/test_planck_paired300_evidence.py::test_bound_checkpoint_sidecar_detects_numeric_payload_tamper
+  transition: PASS -> new checkpoints reusable; preserved post-hoc checkpoints remain nonauthoritative
+- requirement: frozen NPZ and portable artifacts exact
+  invariant: INV-004_HARD_ARTIFACT_IDENTITY
+  failure_mode: PMG5R-FM-004
+  detector: tests/obsstat/test_planck_paired300_evidence.py::test_portable_manifest_enforces_frozen_npz_and_every_declared_artifact
+  transition: PASS -> create pending terminal; FAIL -> BLOCKED_PORTABLE_OR_FROZEN_IDENTITY
+- requirement: external review before terminal PASS
+  invariant: INV-005_EXTERNAL_REVIEW_BOUND
+  failure_mode: PMG5R-FM-005
+  detector: tests/obsstat/test_planck_paired300_evidence.py::test_terminal_cannot_succeed_before_matching_zero_finding_review
+  transition: PASS -> install reviewed terminal; FAIL -> BLOCKED_SELF_ATTESTED_TERMINAL
+- requirement: downstream transition remains closed
+  invariant: INV-006_NO_PMG_WU006_PRE_ACCEPTANCE
+  failure_mode: PMG5R-FM-006
+  detector: reviewed terminal format, P0=P1=0, committed remote readback
+  transition: PASS -> PMG-WU-006 opens; FAIL -> remain PMG-WU-005
+- requirement: reproducible clean-checkout entrypoint
+  invariant: INV-007_CLEAN_REPLAY_CLI
+  failure_mode: PMG5R-FM-007
+  detector: tests/integration/test_planck_paired300_replay_cli.py
+  transition: PASS -> map-free replay; FAIL -> BLOCKED_REPLAY_ENTRYPOINT
+- requirement: preserve unrelated local cleanup
+  invariant: INV-008_LEGACY_CLEANUP_FIREWALL
+  failure_mode: PMG5R-FM-008
+  detector: separate worktree and diff allowlist receipt
+  transition: PASS -> commit repair only; FAIL -> BLOCKED_LEGACY_CLEANUP_CONTAMINATION
+- requirement: shortest safe recovery path
+  invariant: INV-009_NO_PROCESS_STARVATION
+  failure_mode: PMG5R-FM-009
+  detector: no new successor package, no map rerun, no full suite, actual prepare/finalize/replay outputs
+  transition: PASS -> remote acceptance; FAIL -> PROCESS_STARVATION
