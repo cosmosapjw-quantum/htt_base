@@ -1,0 +1,144 @@
+{
+  "claim_ceiling": "OBSERVER_SPACE_METHODS_DIAGNOSTIC",
+  "completeness_status": "GENERIC_GLOBAL_COMPLETENESS_UNPROVEN",
+  "content_id": "sha256:99a83179a6cd4b3e78cdb25821698f0eb5e954ff1eaec5abadf46e50f663c043",
+  "coordinates": [
+    {
+      "definition": "Q_ab Q^ab",
+      "feature_id": "q2",
+      "parity": "EVEN",
+      "tail": "two-sided",
+      "units": "microK_CMB^2"
+    },
+    {
+      "definition": "Q_a^b Q_b^c Q_c^a",
+      "feature_id": "q3",
+      "parity": "EVEN",
+      "tail": "two-sided",
+      "units": "microK_CMB^3"
+    },
+    {
+      "definition": "sqrt(6) q3 / q2^(3/2)",
+      "feature_id": "J_Q",
+      "parity": "EVEN",
+      "tail": "two-sided",
+      "units": "dimensionless"
+    },
+    {
+      "definition": "O_abc O^abc",
+      "feature_id": "o2",
+      "parity": "EVEN",
+      "tail": "two-sided",
+      "units": "microK_CMB^2"
+    },
+    {
+      "definition": "v_a v^a",
+      "feature_id": "R_v0_normalized",
+      "parity": "EVEN",
+      "tail": "upper",
+      "units": "dimensionless"
+    },
+    {
+      "definition": "v_a Qhat^a_b v^b",
+      "feature_id": "R_v1_normalized",
+      "parity": "EVEN",
+      "tail": "two-sided",
+      "units": "dimensionless"
+    },
+    {
+      "definition": "v_a (Qhat^2)^a_b v^b",
+      "feature_id": "R_v2_normalized",
+      "parity": "EVEN",
+      "tail": "upper",
+      "units": "dimensionless"
+    },
+    {
+      "definition": "Qhat_ab S^ab",
+      "feature_id": "R_QS_normalized",
+      "parity": "EVEN",
+      "tail": "two-sided",
+      "units": "dimensionless"
+    },
+    {
+      "definition": "det(v,Qhat v,Qhat^2 v)",
+      "feature_id": "K_v_normalized",
+      "parity": "PSEUDOSCALAR",
+      "tail": "two-sided",
+      "units": "dimensionless"
+    },
+    {
+      "definition": "|Qhat z_G|^2",
+      "feature_id": "Q_galactic_pole_power",
+      "parity": "EVEN",
+      "tail": "upper",
+      "units": "dimensionless"
+    },
+    {
+      "definition": "|Ohat_ab c z_G^b z_G^c|^2",
+      "feature_id": "O_galactic_pole_power",
+      "parity": "EVEN",
+      "tail": "upper",
+      "units": "dimensionless"
+    }
+  ],
+  "families": {
+    "OBSERVABLE_IRREP_ORBIT_GALACTIC_V1": {
+      "feature_ids": [
+        "q2",
+        "o2",
+        "J_Q",
+        "R_v0_normalized",
+        "R_v1_normalized",
+        "R_v2_normalized",
+        "R_QS_normalized",
+        "K_v_normalized",
+        "Q_galactic_pole_power",
+        "O_galactic_pole_power"
+      ],
+      "frame_role": "ABSOLUTE_GALACTIC_DESCRIPTIVE_COMPANION",
+      "tails": [
+        "two-sided",
+        "two-sided",
+        "two-sided",
+        "upper",
+        "two-sided",
+        "upper",
+        "two-sided",
+        "two-sided",
+        "upper",
+        "upper"
+      ]
+    },
+    "OBSERVABLE_IRREP_ORBIT_V1": {
+      "feature_ids": [
+        "q2",
+        "o2",
+        "J_Q",
+        "R_v0_normalized",
+        "R_v1_normalized",
+        "R_v2_normalized",
+        "R_QS_normalized",
+        "K_v_normalized"
+      ],
+      "frame_role": "FRAME_FREE_PRIMARY",
+      "tails": [
+        "two-sided",
+        "two-sided",
+        "two-sided",
+        "upper",
+        "two-sided",
+        "upper",
+        "two-sided",
+        "two-sided"
+      ]
+    }
+  },
+  "format": "PLANCK_MES_OBSERVABLE_IRREP_FEATURE_REGISTRY_V1",
+  "projection_identity": "sha256:a7d83578408331db9f9c7bec30d3806b2ba749c2c50cce11333f86f9159f4dc2",
+  "reducers": [
+    "LEGACY_ABSOLUTE_MEDIAN_V1",
+    "LOO_ECDF_MIDRANK_V1"
+  ],
+  "row_disposition_policy": "typed absence is never zero-filled or dropped; a primary-family absence blocks calibration",
+  "selection_policy": "registry frozen before observed-row scoring; no result-selected subset"
+}
