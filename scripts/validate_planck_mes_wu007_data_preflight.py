@@ -228,30 +228,25 @@ def _find_unique_named_file(
     roots: Sequence[Path],
     excluded_root: Path,
 ) -> Path | None:
-    direct: list[Path] = []
-    recursive: list[Path] = []
+    """Resolve an exact scalar filename from bounded explicit roots.
+
+    Deliberately do not recurse through ``workdir``: the local store is about
+    1.4 TB, and a metadata-only preflight must not become an unbounded scan.
+    Callers may pass additional exact directories with ``--scalar-root``.
+    """
+
     excluded = excluded_root.resolve(strict=False)
+    direct: list[Path] = []
     for root in roots:
         root = Path(root).resolve(strict=False)
         candidate = root / name
-        if candidate.is_file() and not candidate.is_symlink():
-            direct.append(candidate)
+        if not candidate.is_file() or candidate.is_symlink():
+            continue
+        resolved = candidate.resolve(strict=True)
+        if resolved == excluded or resolved.is_relative_to(excluded):
+            continue
+        direct.append(resolved)
     found = _deduplicate_paths(direct)
-    if not found:
-        for root in roots:
-            root = Path(root).resolve(strict=False)
-            if not root.is_dir() or root.is_symlink():
-                continue
-            for candidate in root.rglob(name):
-                try:
-                    resolved = candidate.resolve(strict=True)
-                except FileNotFoundError:
-                    continue
-                if resolved == excluded or resolved.is_relative_to(excluded):
-                    continue
-                if candidate.is_file() and not candidate.is_symlink():
-                    recursive.append(candidate)
-        found = _deduplicate_paths(recursive)
     if not found:
         return None
     if len(found) > 1:
