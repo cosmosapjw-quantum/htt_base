@@ -1,0 +1,43 @@
+schema: htt.planck_mes.pmg_wu004_local_gates.v1
+work_unit: PMG-WU-004
+failure_modes:
+- id: PMG4-FM-001
+  severity: P0
+  trigger: raw/download/private source mutation, symlink escape, or raw staging
+  detector: tests/integration/test_planck_mes_irrep_inventory.py -k 'immutable or symlink or staged'
+  blocked_state: BLOCKED_RAW_DATA_MUTATION_OR_ESCAPE
+- id: PMG4-FM-002
+  severity: P1
+  trigger: SMICA CMB/noise or Commander inventory differs from the registered exact sets
+  detector: tests/integration/test_planck_mes_irrep_inventory.py -k inventory
+  blocked_state: BLOCKED_INVALID_FFP10_INVENTORY
+- id: PMG4-FM-003
+  severity: P1
+  trigger: row 00818 accepted or rejected from byte size alone
+  detector: tests/integration/test_planck_mes_irrep_inventory.py -k 00818
+  blocked_state: BLOCKED_00818_SEMANTIC_ADJUDICATION
+- id: PMG4-FM-004
+  severity: P1
+  trigger: partial Commander files reach FITS open or are labeled complete
+  detector: tests/integration/test_planck_mes_irrep_inventory.py -k partial
+  blocked_state: BLOCKED_PARTIAL_COMMANDER_ADMISSION
+- id: PMG4-FM-005
+  severity: P1
+  trigger: portable/private metadata omit paths, release/product identities, sidecars, checksums, or route eligibility
+  detector: tests/integration/test_planck_mes_irrep_inventory.py -k metadata
+  blocked_state: BLOCKED_INCOMPLETE_INTAKE_METADATA
+- id: PMG4-FM-006
+  severity: P1
+  trigger: scaffold, tests-only patch, or user-reported snapshot is called PASS without real-host outputs
+  detector: terminal schema requires real_host_execution=true and all required outputs
+  blocked_state: PARTIAL_NOT_EXECUTED
+- id: PMG4-FM-007
+  severity: P1
+  trigger: accepted WU-003 authority unavailable or branch not descended from it
+  detector: git merge-base --is-ancestor 03f002d97deb31648f47a9a5bdc0e7706354909e HEAD
+  blocked_state: BLOCKED_BY_MOVED_AUTHORITY
+review_policy:
+  fresh_context_reviews: 1
+  maximum_targeted_repairs: 1
+  new_successor_package: forbidden
+  full_suite_by_default: false
