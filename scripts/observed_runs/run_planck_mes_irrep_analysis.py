@@ -860,6 +860,14 @@ def replay_directory(output: Path) -> dict[str, object]:
         result_without_id, role="planck_mes_observable_irrep_analysis"
     ):
         raise RuntimeError("deterministic result content identity differs")
+    try:
+        plot_audit = json.loads(
+            (output / "plot_audit.json").read_text(encoding="ascii")
+        )
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise RuntimeError("plot audit evidence is malformed") from exc
+    if plot_audit.get("result_content_id") != content_id:
+        raise RuntimeError("plot audit result content identity differs")
     with tempfile.TemporaryDirectory(prefix="pmg-wu006-replay-") as temporary:
         expected_dir = Path(temporary) / "analysis"
         build(expected_dir)

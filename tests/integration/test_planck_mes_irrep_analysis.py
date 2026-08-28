@@ -223,6 +223,16 @@ def test_replay_mutation_and_input_byte_drift_fail_closed(
     with pytest.raises(RuntimeError, match="result|content|deterministic"):
         api.replay_directory(candidate)
 
+    candidate = tmp_path / "plot_audit_mutation"
+    shutil.copytree(built, candidate)
+    plot_audit = json.loads((candidate / "plot_audit.json").read_text())
+    plot_audit["result_content_id"] = "sha256:stale"
+    (candidate / "plot_audit.json").write_text(
+        json.dumps(plot_audit, sort_keys=True) + "\n"
+    )
+    with pytest.raises(RuntimeError, match="plot audit.*content identity"):
+        api.replay_directory(candidate)
+
     carrier = tmp_path / "carrier"
     shutil.copytree(
         ROOT / "docs/generated/planck_pr3_paired300_irrep_carrier", carrier

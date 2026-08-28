@@ -1,14 +1,31 @@
 {
   "claim_promotion": false,
   "format": "PLANCK_MES_OBSERVABLE_IRREP_TERMINAL_V1",
-  "fresh_review": "PENDING",
-  "next_executable_action": "FRESH_READ_ONLY_REVIEW",
+  "fresh_review": "PASS",
+  "identity_policy": "TYPED_IDENTITY_V1",
+  "next_executable_action": "PMG-WU-007",
+  "objective_artifacts": {
+    "deterministic_evidence_sha256": {
+      "coordinate_table.csv": "sha256:c535cd3e7ed7da5cdc2621380abbefc006b8554ff7068346bbab3ef933778820",
+      "degeneracy_ledger.csv": "sha256:7155b399db09b9f91be512389bb53d5a19d02a8f907c88b575b95521e0db4701",
+      "dependence_spectrum.csv": "sha256:dec5270280e4c1cc81e589341cacfffda83cabd1d6a68f88742bc580e9fa551e",
+      "family_table.csv": "sha256:2ff0dc365ad345e8105a348bb2adc45fe9af5bcdd226d7f1fc2424e579494468",
+      "feature_registry.json": "sha256:1b1f00e2d979502c0a4b3a53a345f3a6c5bd71dcafd5c6f14d917bda311bbe5a",
+      "replay.json": "sha256:37a0d58b604cb318bd11804f6c1db0302e6cc4dd5ef558db8432689a9a2af15e",
+      "result.json": "sha256:750372673f1f3e425498cea3651cc8cbfb109acfdc6b00a25c720c1a1a66a6ee"
+    },
+    "figure_byte_identity_role": "NOT_A_SCIENTIFIC_GATE",
+    "irrep_features_content_id": "sha256:eb1dd086516d79ad352ff266c0fa63d76285bf0c98db9c6ec6d1f15bd61f1321",
+    "null_distributions_content_id": "sha256:53435b3378cfa47f6458cbe157a0eba98cf94bed9eb75be2ddd1c7c7b8d14df6"
+  },
+  "packaging_validity": "BYTE_IDENTICAL",
+  "provenance_validity": "MATCH",
   "raw_data_read_or_mutated": false,
   "replay_status": "MATCH",
+  "result_validity": "PASS",
+  "review_repair_count": 1,
   "science_execution_performed": true,
-  "state": "EXECUTED_PENDING_REVIEW",
-  "unresolved_blockers": [
-    "FRESH_READ_ONLY_REVIEW_PENDING"
-  ],
+  "state": "SUCCEEDED",
+  "unresolved_blockers": [],
   "work_unit": "PMG-WU-006"
 }
