@@ -1,0 +1,67 @@
+name: PR315 covariance portability diagnostic
+
+on:
+  push:
+    branches:
+      - audit/pr315-covariance-portability-20260828
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  OMP_NUM_THREADS: "1"
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Install NumPy 2.5
+        run: python -m pip install 'numpy==2.5.2'
+      - name: Measure stored/recomputed covariance difference
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import numpy as np
+
+          package = Path('docs/generated/pr315_planck_smica_feature_replay.npz')
+          with np.load(package, allow_pickle=False) as bundle:
+              nulls = np.asarray(bundle['null_features'], dtype=np.float64)
+              stored = np.asarray(bundle['covariance'], dtype=np.float64)
+          replay = np.cov(nulls, rowvar=False, ddof=1)
+          delta = replay - stored
+          abs_delta = np.abs(delta)
+          scale = np.maximum(np.abs(stored), np.abs(replay))
+          nonzero_scale = np.where(scale > 0.0, scale, 1.0)
+          eps = np.finfo(np.float64).eps
+          n = nulls.shape[0]
+          gamma_n = (n * eps) / (1.0 - n * eps)
+          payload = {
+              'numpy': np.__version__,
+              'shape': list(stored.shape),
+              'exact_equal': bool(np.array_equal(stored, replay)),
+              'max_abs_delta': float(abs_delta.max()),
+              'max_relative_delta': float((abs_delta / nonzero_scale).max()),
+              'gamma_n': float(gamma_n),
+              'max_delta_over_gamma_scale': float((abs_delta / (gamma_n * nonzero_scale)).max()),
+              'allclose_8gamma': bool(np.allclose(stored, replay, rtol=8.0*gamma_n, atol=8.0*gamma_n*max(1.0,float(scale.max())))),
+              'stored_symmetric_exact': bool(np.array_equal(stored, stored.T)),
+              'replay_symmetric_exact': bool(np.array_equal(replay, replay.T)),
+              'stored_min_eigenvalue': float(np.linalg.eigvalsh(stored).min()),
+              'replay_min_eigenvalue': float(np.linalg.eigvalsh(replay).min()),
+          }
+          print(json.dumps(payload, indent=2, sort_keys=True))
+          assert not payload['exact_equal']
+          assert payload['allclose_8gamma']
+          PY
