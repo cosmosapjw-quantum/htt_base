@@ -1,0 +1,39 @@
+name: PMG-WU-005 carrier GREEN receipt
+
+on:
+  push:
+    branches:
+      - audit/pmg-wu005-carrier-green-20260828
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  OMP_NUM_THREADS: "1"
+
+jobs:
+  focused-green:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out GREEN candidate
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.12
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - name: Install focused dependencies
+        run: |
+          python -m pip install 'pytest>=8,<9' 'numpy>=1.26,<3' 'scipy>=1.11,<2' 'sympy>=1.12,<2'
+          python -m pip install -e './htt'
+      - name: Run focused carrier contracts
+        run: |
+          python -m pytest -q tests/obsstat/test_planck_irrep_carrier.py
+          python -m py_compile htt/obsstat/planck_irrep_carrier.py tests/obsstat/test_planck_irrep_carrier.py
+          git diff --check
