@@ -11,6 +11,7 @@ worktree check, local virtual environments, and private command logs.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import os
@@ -801,6 +802,17 @@ def _resolve_tool(name: str) -> str:
     return str(Path(path).absolute())
 
 
+def _resolve_python(version: str) -> str:
+    path = shutil.which(f"python{version}")
+    if path is None:
+        raise LocalValidationError(
+            f"required local workflow tool is missing: python{version}"
+        )
+    # uv/portable Python launchers are symlinks whose resolved interpreter
+    # carries the correct stdlib prefix into ``python -m venv``.
+    return str(Path(path).resolve())
+
+
 def _version(argv: Sequence[str]) -> str:
     result = subprocess.run(argv, text=True, capture_output=True, timeout=60, check=False)
     if result.returncode:
@@ -820,11 +832,52 @@ def _write_receipt(path: Path, payload: Mapping[str, object]) -> None:
     os.replace(temporary, path)
 
 
-def execute_local_validation(repo_root: Path, evidence_dir: Path) -> tuple[Path, dict[str, object]]:
+def prepare_resume_payload(payload: dict[str, object]) -> int:
+    """Preserve one failed attempt and carry preceding PASS jobs forward."""
+    jobs = payload.get("jobs")
+    failure = payload.get("failure")
+    attempts = payload.get("failed_attempts", [])
+    if (
+        payload.get("state") != "FAIL"
+        or not isinstance(jobs, list)
+        or not jobs
+        or not isinstance(failure, str)
+        or not isinstance(attempts, list)
+        or attempts
+    ):
+        raise LocalValidationError("local validation is not eligible for one resume")
+    failed = [index for index, job in enumerate(jobs) if isinstance(job, Mapping) and job.get("state") == "FAIL"]
+    if failed != [len(jobs) - 1]:
+        raise LocalValidationError("local validation failure position is not resumable")
+    index = failed[0]
+    for position, job in enumerate(jobs):
+        if not isinstance(job, Mapping) or job.get("job_id") != COMMAND_REGISTRY[position]["job_id"]:
+            raise LocalValidationError("local validation resume job identity differs")
+        if position < index and job.get("state") != "PASS":
+            raise LocalValidationError("local validation resume has an unpassed prefix")
+    failed_job = copy.deepcopy(jobs[index])
+    payload["failed_attempts"] = [
+        {"failure": failure, "job": failed_job}
+    ]
+    payload["jobs"] = jobs[:index]
+    payload.pop("failure", None)
+    payload.pop("content_id", None)
+    payload["state"] = "RUNNING"
+    payload["post_status"] = "PENDING"
+    return index
+
+
+def execute_local_validation(
+    repo_root: Path, evidence_dir: Path, *, resume: bool = False
+) -> tuple[Path, dict[str, object]]:
     """Execute every fixed local-equivalent job and write one private receipt."""
     repo = Path(repo_root).resolve()
     evidence_raw = Path(evidence_dir)
-    if not evidence_raw.is_absolute() or evidence_raw.exists() or evidence_raw.is_symlink():
+    if not evidence_raw.is_absolute() or evidence_raw.is_symlink():
+        raise LocalValidationError("use an absolute non-symlink local evidence directory")
+    if resume and (not evidence_raw.is_dir() or evidence_raw.is_symlink()):
+        raise LocalValidationError("resume requires the existing private evidence directory")
+    if not resume and evidence_raw.exists():
         raise LocalValidationError("use a new absolute local evidence directory")
     evidence = evidence_raw.resolve()
     if evidence.is_relative_to(repo):
@@ -840,7 +893,7 @@ def execute_local_validation(repo_root: Path, evidence_dir: Path) -> tuple[Path,
     if workflow_sources != EXPECTED_WORKFLOW_SHA256:
         raise LocalValidationError("RB2 workflow source bytes differ")
     tools = {
-        version: _resolve_tool(f"python{version}")
+        version: _resolve_python(version)
         for version in ("3.10", "3.11", "3.12", "3.13")
     }
     rustup, rustc, cargo = (_resolve_tool(name) for name in ("rustup", "rustc", "cargo"))
@@ -850,33 +903,76 @@ def execute_local_validation(repo_root: Path, evidence_dir: Path) -> tuple[Path,
         "cargo+1.94.1": _version([cargo, "+1.94.1", "--version"]),
     }
     _validate_tool_versions(tool_versions)
-    evidence.mkdir(parents=True, exist_ok=False)
     logs = evidence / "logs"
     runtime = evidence / "runtime"
     runner_temp = evidence / "runner-temp"
-    logs.mkdir()
-    runtime.mkdir()
-    runner_temp.mkdir()
     receipt = evidence / RECEIPT_NAME
-    payload: dict[str, object] = {
-        "format": FORMAT,
-        "authority": AUTHORITY,
-        "github_actions_used": False,
-        "head": RB2_HEAD,
-        "tree": RB2_TREE,
-        "repo_root": str(repo),
-        "clean_detached_checkout": True,
-        "pre_status": "",
-        "post_status": "PENDING",
-        "workflow_sources": workflow_sources,
-        "command_registry_id": command_registry_id(),
-        "tool_versions": tool_versions,
-        "jobs": [],
-        "state": "RUNNING",
-    }
+    if resume:
+        if any(path.is_symlink() or not path.is_dir() for path in (logs, runtime, runner_temp)):
+            raise LocalValidationError("local validation resume directories are missing or unsafe")
+        try:
+            payload = json.loads(receipt.read_text(encoding="ascii"))
+        except (OSError, UnicodeError, ValueError) as exc:
+            raise LocalValidationError("failed local receipt is unreadable") from exc
+        if not isinstance(payload, dict) or payload.get("content_id") != receipt_content_id(payload):
+            raise LocalValidationError("failed local receipt content identity differs")
+        required = {
+            "format": FORMAT,
+            "authority": AUTHORITY,
+            "github_actions_used": False,
+            "head": RB2_HEAD,
+            "tree": RB2_TREE,
+            "repo_root": str(repo),
+            "clean_detached_checkout": True,
+            "pre_status": "",
+            "post_status": "",
+            "workflow_sources": workflow_sources,
+            "command_registry_id": command_registry_id(),
+            "tool_versions": tool_versions,
+            "state": "FAIL",
+        }
+        if any(payload.get(key) != value for key, value in required.items()):
+            raise LocalValidationError("failed local receipt is not the exact resumable attempt")
+        start_index = prepare_resume_payload(payload)
+        failed_job_id = str(COMMAND_REGISTRY[start_index]["job_id"])
+        failed_runtime = runtime / failed_job_id
+        if failed_runtime.exists():
+            if failed_runtime.is_symlink() or not failed_runtime.resolve().is_relative_to(runtime.resolve()):
+                raise LocalValidationError("failed runtime path is unsafe")
+            shutil.rmtree(failed_runtime)
+        failed_temp = runner_temp / failed_job_id
+        if failed_temp.exists():
+            rejected_temp = runner_temp / f"rejected-attempt-1-{failed_job_id}"
+            if rejected_temp.exists() or failed_temp.is_symlink():
+                raise LocalValidationError("failed runner-temp path is unsafe")
+            failed_temp.rename(rejected_temp)
+        log_prefix = "resume-1-"
+    else:
+        evidence.mkdir(parents=True, exist_ok=False)
+        logs.mkdir()
+        runtime.mkdir()
+        runner_temp.mkdir()
+        payload = {
+            "format": FORMAT,
+            "authority": AUTHORITY,
+            "github_actions_used": False,
+            "head": RB2_HEAD,
+            "tree": RB2_TREE,
+            "repo_root": str(repo),
+            "clean_detached_checkout": True,
+            "pre_status": "",
+            "post_status": "PENDING",
+            "workflow_sources": workflow_sources,
+            "command_registry_id": command_registry_id(),
+            "tool_versions": tool_versions,
+            "jobs": [],
+            "state": "RUNNING",
+        }
+        start_index = 0
+        log_prefix = ""
     _write_receipt(receipt, payload)
     failure: str | None = None
-    for job in COMMAND_REGISTRY:
+    for job in COMMAND_REGISTRY[start_index:]:
         job_id = str(job["job_id"])
         version = str(job["python_version"])
         venv = runtime / job_id
@@ -909,8 +1005,8 @@ def execute_local_validation(repo_root: Path, evidence_dir: Path) -> tuple[Path,
             rendered_env = {
                 key: render_value(value, bindings) for key, value in env_template.items()
             }
-            stdout = logs / f"{job_id}-{index:02d}-{step_id.replace('.', '_')}.stdout"
-            stderr = logs / f"{job_id}-{index:02d}-{step_id.replace('.', '_')}.stderr"
+            stdout = logs / f"{log_prefix}{job_id}-{index:02d}-{step_id.replace('.', '_')}.stdout"
+            stderr = logs / f"{log_prefix}{job_id}-{index:02d}-{step_id.replace('.', '_')}.stderr"
             print(f"LOCAL_GATE_STEP_START {job_id} {step_id}", flush=True)
             started = time.monotonic()
             try:
@@ -982,10 +1078,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo-root", type=Path, required=True)
     parser.add_argument("--evidence-dir", type=Path, required=True)
+    parser.add_argument("--resume", action="store_true")
     arguments = parser.parse_args(argv)
     try:
         receipt, payload = execute_local_validation(
-            arguments.repo_root, arguments.evidence_dir
+            arguments.repo_root, arguments.evidence_dir, resume=arguments.resume
         )
     except (LocalValidationError, OSError, ValueError) as exc:
         print(

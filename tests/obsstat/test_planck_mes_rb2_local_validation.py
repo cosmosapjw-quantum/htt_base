@@ -261,3 +261,47 @@ def test_tool_resolution_preserves_rustup_proxy_entrypoint(tmp_path, monkeypatch
     proxy.symlink_to(target)
     monkeypatch.setattr(module.shutil, "which", lambda name: str(proxy))
     assert module._resolve_tool("rustc") == str(proxy.absolute())
+
+
+def test_python_resolution_follows_portable_interpreter_symlink(tmp_path, monkeypatch):
+    module = api()
+    target = tmp_path / "cpython" / "bin" / "python3.13"
+    target.parent.mkdir(parents=True)
+    target.write_text("portable interpreter")
+    proxy = tmp_path / "bin" / "python3.13"
+    proxy.parent.mkdir()
+    proxy.symlink_to(target)
+    monkeypatch.setattr(module.shutil, "which", lambda name: str(proxy))
+    assert module._resolve_python("3.13") == str(target.resolve())
+
+
+def test_resume_preserves_failed_attempt_and_carries_completed_jobs():
+    module = api()
+    completed = {
+        "job_id": module.COMMAND_REGISTRY[0]["job_id"],
+        "state": "PASS",
+        "steps": [{"step_id": "completed"}],
+    }
+    failed = {
+        "job_id": module.COMMAND_REGISTRY[1]["job_id"],
+        "state": "FAIL",
+        "steps": [{"step_id": "failed", "returncode": 1}],
+    }
+    payload = {
+        "state": "FAIL",
+        "failure": "python-package-smoke:failed:exit=1",
+        "post_status": "",
+        "jobs": [completed, failed],
+    }
+    start_index = module.prepare_resume_payload(payload)
+    assert start_index == 1
+    assert payload["jobs"] == [completed]
+    assert payload["failed_attempts"] == [
+        {
+            "failure": "python-package-smoke:failed:exit=1",
+            "job": failed,
+        }
+    ]
+    assert payload["state"] == "RUNNING"
+    assert payload["post_status"] == "PENDING"
+    assert "failure" not in payload

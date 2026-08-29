@@ -80,6 +80,17 @@ digests. Missing, altered, failed, non-detached, or dirty evidence never opens
 the transition. Checkout/setup/upload transport is not represented as a
 scientific job. Keep the receipt and logs private and outside Git.
 
+If one local step fails, inspect its private log and apply only the reproduced
+minimal repair. One content-bound resume is allowed:
+
+```bash
+python scripts/observed_runs/run_planck_mes_rb2_local_validation.py \
+  --repo-root "$RB2_WT" --evidence-dir "$LOCAL_EVIDENCE" --resume
+```
+
+The resume preserves the failed job record and all preceding PASS jobs; a
+second resume is rejected.
+
 ## 2. Focused verification, after local validation
 
 ```bash
