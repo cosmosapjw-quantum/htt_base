@@ -64,16 +64,31 @@ def test_replay_builds_numerical_reference_without_rendering_figures(tmp_path):
     assert seen == [{'render_figures':False}]
 
 
-def test_cli_cannot_reach_build_when_live_upstream_ci_is_closed(monkeypatch):
+def test_cli_cannot_reach_build_when_explicit_local_validation_is_closed(monkeypatch):
     reached = []
-    def reject(*args, **kwargs): raise RuntimeError('CI_PENDING')
-    main = control('main', require_live_ci=reject, RB2_HEAD='0'*40,
+    def reject(*args, **kwargs): raise RuntimeError('LOCAL_VALIDATION_MISSING')
+    main = control('main', require_local_validation=reject, RB2_HEAD='0'*40,
+                   RB2_TREE='1'*40,
                    build=lambda *a,**k:reached.append(True), CIError=RuntimeError,
                    AdmissionError=RuntimeError)
-    monkeypatch.setattr(sys, 'argv', ['run_planck_mes_irrep_analysis.py'])
+    monkeypatch.setattr(sys, 'argv', [
+        'run_planck_mes_irrep_analysis.py',
+        '--local-validation-receipt', '/private/missing.json',
+    ])
     with pytest.raises(SystemExit) as exc: main()
     assert exc.value.code == 3
     assert reached == []
+
+
+def test_cli_requires_explicit_local_validation_receipt(monkeypatch):
+    main = control('main', require_local_validation=lambda *a, **k: None,
+                   RB2_HEAD='0'*40, RB2_TREE='1'*40,
+                   build=lambda *a,**k:None, CIError=RuntimeError,
+                   AdmissionError=RuntimeError)
+    monkeypatch.setattr(sys, 'argv', ['run_planck_mes_irrep_analysis.py'])
+    with pytest.raises(SystemExit) as exc:
+        main()
+    assert exc.value.code == 2
 
 
 def test_preserved_result_rebind_changes_only_four_evidence_jsons(tmp_path):

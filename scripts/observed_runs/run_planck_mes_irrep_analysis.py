@@ -55,8 +55,10 @@ from obsstat.planck_lowell_irrep_projection import (  # noqa: E402
 )
 
 
-from scripts.observed_runs.check_planck_mes_rb2_ci import (  # noqa: E402
-    RB2_HEAD, require_live_ci,
+from scripts.observed_runs.run_planck_mes_rb2_local_validation import (  # noqa: E402
+    RB2_HEAD,
+    RB2_TREE,
+    require_local_validation,
 )
 from scripts.observed_runs.planck_mes_wu006_admission import (  # noqa: E402
     AdmissionError, artifact_hashes, candidate_identity, file_sha256,
@@ -1026,11 +1028,18 @@ def main() -> None:
     mode.add_argument("--rebind-preserved", action="store_true")
     parser.add_argument("--private-archive-dir", type=Path)
     parser.add_argument("--fresh-review-receipt", type=Path)
+    parser.add_argument("--local-validation-receipt", type=Path, required=True)
     arguments = parser.parse_args()
     try:
-        # The explicit owner lock remains in force: no scientific action before
-        # all eight required jobs have really passed on exact RB2 HEAD.
-        require_live_ci(RB2_HEAD)
+        # User-authorized workaround: require all eight tracked workflow jobs to
+        # have executed locally on the clean exact RB2 head/tree.  This is
+        # explicitly local evidence and is never described as GitHub CI.
+        require_local_validation(
+            arguments.local_validation_receipt,
+            expected_head=RB2_HEAD,
+            expected_tree=RB2_TREE,
+            repo_root=ROOT,
+        )
         candidate_identity(ROOT, output_dir=arguments.output_dir)
         if arguments.replay_committed:
             report = replay_directory(arguments.output_dir)

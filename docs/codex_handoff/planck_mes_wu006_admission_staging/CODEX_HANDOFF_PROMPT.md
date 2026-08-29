@@ -1,4 +1,4 @@
-# Codex — PMG-WU-006 admission staging, after exact RB2 CI
+# Codex — PMG-WU-006 admission staging, after exact-head local validation
 
 Repository: `cosmosapjw-quantum/htt_base`
 Existing delivery branch: `changeset/planck-mes-wu006-admission-staging-20260829`
@@ -19,18 +19,24 @@ RB2_PR: 430
 provisional_WU006_head: 67a8e08cc24836130c89bab5c1be26ef71d19ca8
 provisional_WU006_PR: 431
 raw_maps_or_downloads_required: false
-WU006_execution_before_RB2_CI: forbidden
+WU006_execution_before_exact_head_validation: forbidden
 WU007_execution_in_this_unit: forbidden
 ```
 
+The latest explicit user authority disables GitHub Actions for the remainder of
+this thread and authorizes one different retry method. Therefore the historical
+GitHub-only gate below is superseded operationally by the fixed local
+workflow-equivalent execution in Section 1. This local result must be reported
+as `EXACT_HEAD_LOCAL_EXECUTION_NOT_GITHUB_CI`; it is never a remote-CI PASS.
+
 The code is already implemented. Do not recreate the pipeline, invent another
 plan, change a frozen tolerance/rank, or repeat completed WU004/WU005 work.
-The new boundary tests ran here; full repository and actual numerical replay
-are explicitly pending the CI gate. Source modules copied from PR431 retain
+The new boundary tests ran here; workflow-equivalent validation and actual
+numerical replay are explicitly pending the local gate. Source modules copied from PR431 retain
 exact Git blob identity. Ten scientific/plot function ASTs in the runner are
 unchanged. No observed result was regenerated in this delivery.
 
-## 1. Separate worktree and live CI
+## 1. Separate worktrees and exact-head local validation
 
 Leave the existing cleanup and recovery worktrees untouched. Create a separate
 worktree from the existing remote delivery branch, with no reset/clean/restore
@@ -48,24 +54,33 @@ git merge-base --is-ancestor "$RB2" HEAD
 test "$(git rev-parse "$RB2^{tree}")" = 680795842feafa8028b8e2b9fe8e1086c5f12280
 ```
 
-Billing/payment/spending changes belong to the owner. Do not change them, alter
-branch protection, disable checks, or create fake successful status records.
-After the owner resolves the billing issue, rerun the existing workflows once:
+Do not call, inspect, rerun, or poll GitHub Actions in this thread. Do not alter
+billing, branch protection, or check records. Materialize a second clean,
+detached worktree at the exact accepted RB2 head and execute the frozen local
+equivalents of all eight workflow jobs:
 
 ```bash
-gh run rerun 33213165196 --repo cosmosapjw-quantum/htt_base
-gh run rerun 33213165167 --repo cosmosapjw-quantum/htt_base
-gh run rerun 33213165204 --repo cosmosapjw-quantum/htt_base
-python scripts/observed_runs/check_planck_mes_rb2_ci.py --head "$RB2"
+RB2_WT=/home/cosmosapjw/worktrees/htt-wu006-rb2-local-gate-20260829
+git worktree add --detach "$RB2_WT" "$RB2"
+test "$(git -C "$RB2_WT" rev-parse HEAD^{tree})" = \
+  680795842feafa8028b8e2b9fe8e1086c5f12280
+test -z "$(git -C "$RB2_WT" status --porcelain=v1 --untracked-files=all)"
+test -z "$(git -C "$RB2_WT" branch --show-current)"
+LOCAL_EVIDENCE=/mnt/sn850x2t/htt_base_e2e/workdir/analysis/planck_mes_irrep/\
+wu006_exact_head_local_validation_$(date -u +%Y%m%dT%H%M%SZ)
+python scripts/observed_runs/run_planck_mes_rb2_local_validation.py \
+  --repo-root "$RB2_WT" --evidence-dir "$LOCAL_EVIDENCE"
+LOCAL_RECEIPT="$LOCAL_EVIDENCE/local_exact_head_validation.json"
 ```
 
-Proceed only for exit 0, `state=PASS`, `transition_open=true`. The checker uses
-live read-only GitHub records, all pages, latest run/attempt, exact SHA and the
-8 required job names. Missing, skipped, stale or unstarted jobs never count as
-PASS. If billing is still blocked, STOP with the measured state. Do not poll
-indefinitely or turn nonexecution into a candidate failure.
+Proceed only for exit 0 and `state=PASS`. The private receipt binds exact RB2
+head/tree, the three workflow source digests, the fixed argv registry, Python
+3.10--3.13 and Rust 1.94.1 identities, every command exit, and stdout/stderr
+digests. Missing, altered, failed, non-detached, or dirty evidence never opens
+the transition. Checkout/setup/upload transport is not represented as a
+scientific job. Keep the receipt and logs private and outside Git.
 
-## 2. Focused verification, after CI
+## 2. Focused verification, after local validation
 
 ```bash
 python -m pytest -q \
@@ -110,9 +125,11 @@ Path(sys.argv[2]).write_text(json.dumps(record,sort_keys=True)+'\n')
 PYCODE
 python scripts/observed_runs/run_planck_mes_irrep_analysis.py \
   --rebind-preserved --output-dir "$OUTPUT" \
-  --private-archive-dir "$PRIVATE/rejected_provisional_evidence"
+  --private-archive-dir "$PRIVATE/rejected_provisional_evidence" \
+  --local-validation-receipt "$LOCAL_RECEIPT"
 python scripts/observed_runs/run_planck_mes_irrep_analysis.py \
-  --replay-committed --output-dir "$OUTPUT"
+  --replay-committed --output-dir "$OUTPUT" \
+  --local-validation-receipt "$LOCAL_RECEIPT"
 python - "$OUTPUT" "$PRIVATE/scientific_before.json" <<'PYCODE'
 import hashlib,json,sys,csv
 from pathlib import Path
@@ -168,9 +185,11 @@ Do not restart an upstream audit or create review-of-review machinery.
 ```bash
 REVIEW="$PRIVATE/fresh_review.json"  # produced by the independent reviewer
 python scripts/observed_runs/run_planck_mes_irrep_analysis.py \
-  --finalize-reviewed --output-dir "$OUTPUT" --fresh-review-receipt "$REVIEW"
+  --finalize-reviewed --output-dir "$OUTPUT" --fresh-review-receipt "$REVIEW" \
+  --local-validation-receipt "$LOCAL_RECEIPT"
 python scripts/observed_runs/run_planck_mes_irrep_analysis.py \
-  --replay-committed --output-dir "$OUTPUT"
+  --replay-committed --output-dir "$OUTPUT" \
+  --local-validation-receipt "$LOCAL_RECEIPT"
 git diff --check
 git status --porcelain=v1
 ```
@@ -191,15 +210,19 @@ git add -- "$OUTPUT"
 git diff --cached --name-only
 git commit -m "PMG-WU-006: bind reviewed result to accepted RB2 predecessor"
 git push origin HEAD:changeset/planck-mes-wu006-admission-staging-20260829
-python scripts/observed_runs/check_planck_mes_rb2_ci.py --head "$(git rev-parse HEAD)"
+test "$(git ls-remote origin \
+  refs/heads/changeset/planck-mes-wu006-admission-staging-20260829 | cut -f1)" = \
+  "$(git rev-parse HEAD)"
 ```
 
-If exact-new-head CI is not yet complete, report `PENDING_CI`, not failure or
-accepted transition. Update the existing delivery draft PR and PR430/426 with
-actual evidence. Preserve PR431 as provisional historical evidence; do not
-force-push, merge, approve, or delete it. WU007 is outside this work unit.
+Report the remote readback separately from the exact-head local validation;
+neither one is GitHub Actions evidence. Update the existing delivery draft PR
+and PR430/426 with the actual local-evidence role. Preserve PR431 as provisional
+historical evidence; do not force-push, merge, approve, or delete it. WU007 is
+outside this work unit.
 
-Return the final head/tree, local versus remote CI states, replay and unchanged
+Return the final head/tree, exact-head local-validation state, remote Git
+readback, replay and unchanged
 scientific-file results, fresh-review SHA, remaining blockers and the next
 existing executable contract. Do not report WU006 complete from the staging
 code or synthetic test results alone.

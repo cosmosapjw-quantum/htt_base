@@ -1,8 +1,11 @@
 # Governing guide binding
 
-Latest explicit owner instructions override historical proposals. This is the
-requested code-only preparation; WU006/007 scientific execution remains closed
-until exact RB2-head GitHub CI succeeds.
+Latest explicit owner instructions override historical proposals. GitHub
+Actions is disabled for the remainder of this thread, and one alternative
+retry is explicitly authorized. WU006 execution remains closed until the fixed
+eight-job workflow-equivalent command registry passes in a clean detached exact
+RB2 worktree. That receipt is local execution evidence, not GitHub CI and not
+scientific claim authority. WU007 remains outside this unit.
 
 The supplied **Universal Audit-Compiled Execution Plan / Weak-Agent-Safe
 Implementation Compiler** governs source-of-truth precedence, executable
@@ -22,5 +25,6 @@ Error Pass** apply to the local inspection of existing WU006 PDFs. No figure was
 rendered, inspected, or declared visually passed in the staging delivery.
 
 Repository AGENTS.md and the existing recovery package remain relevant. The
-owner's current explicit request authorizes this bounded branch/push/draft PR;
-it does not authorize a scientific merge, approval, billing change, or CI bypass.
+owner's current explicit request authorizes this bounded local retry,
+branch/push, and draft PR; it does not authorize a scientific merge, approval,
+billing change, or representation of the local result as GitHub CI.
