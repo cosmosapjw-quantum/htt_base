@@ -251,3 +251,13 @@ def test_checkout_verification_rejects_nonmatching_or_dirty_repository(
             repo_root=ROOT,
             verify_checkout=True,
         )
+
+
+def test_tool_resolution_preserves_rustup_proxy_entrypoint(tmp_path, monkeypatch):
+    module = api()
+    target = tmp_path / "rustup"
+    target.write_text("proxy target")
+    proxy = tmp_path / "rustc"
+    proxy.symlink_to(target)
+    monkeypatch.setattr(module.shutil, "which", lambda name: str(proxy))
+    assert module._resolve_tool("rustc") == str(proxy.absolute())

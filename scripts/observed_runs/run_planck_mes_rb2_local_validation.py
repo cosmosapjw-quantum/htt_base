@@ -795,7 +795,10 @@ def _resolve_tool(name: str) -> str:
     path = shutil.which(name)
     if path is None:
         raise LocalValidationError(f"required local workflow tool is missing: {name}")
-    return str(Path(path).resolve())
+    # rustc/cargo are rustup proxy symlinks; resolving them changes argv[0] to
+    # ``rustup`` and therefore queries the manager rather than the requested
+    # toolchain executable.  Preserve the absolute proxy entrypoint.
+    return str(Path(path).absolute())
 
 
 def _version(argv: Sequence[str]) -> str:
