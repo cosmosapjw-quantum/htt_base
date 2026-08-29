@@ -1,0 +1,110 @@
+{
+  "A50_A90": "GRID_BRACKETS_ONLY_NO_INTERPOLATION_OR_EXTRAPOLATION",
+  "allowed_claim": "CONDITIONAL_METHOD_POWER_FOR_REGISTERED_200_REFERENCE_FUNCTIONAL",
+  "amplitudes": [
+    0.0,
+    0.25,
+    0.5,
+    1.0,
+    2.0,
+    4.0,
+    8.0
+  ],
+  "arm_dependence": "OVERLAPPING_CMB_SIMULATION_IDENTITIES_NOT_INDEPENDENT_REPLICATIONS",
+  "arms": {
+    "cmbonly999": {
+      "arm": "cmbonly999",
+      "calibration_count": 200,
+      "candidate_git_head": "2bb578c0426b646152e5154d732beb83ce6b5c55",
+      "candidate_git_tree": "4b993139e780deab484f07168527a25bc22dcf9e",
+      "checkpoint_new_cells": 31,
+      "checkpoint_reused_cells": 0,
+      "evaluation_sky_count": 799,
+      "format": "PLANCK_MES_IRREP_POWER_ARM_EXECUTION_V1",
+      "input_content_id": "sha256:85bf2b04f86934dea0a6871e03225be906adfa85aa8365f3dbb1ca35a4f176a1",
+      "observation_used_for_power": false,
+      "positive_injected_carriers": 767040,
+      "raw_maps_reopened": false,
+      "registry_sha256": "sha256:f4374966e1710be6490e57f35ae8d725806f5488fc3595db0d3afb1ce67b5e4d",
+      "scale_rms_microK_CMB": 34.042216508215446,
+      "shared_calibration_source_identity": "sha256:e3dd41030370b6d64c7598159cb9ce59cfd81f4682f4ea8a8fe6c39ceadb5115",
+      "state": "SUCCEEDED",
+      "trial_content_id": "sha256:605d7c1f0f5d0070c99243b506f92b2e402ba0390d014e5c298bdecce2a01df0",
+      "trial_package": "cmbonly999_trials.npz",
+      "trial_package_sha256": "sha256:116de3205e6bb8bed149096f1a74393c93c703e820bb7b77e007b8b260df0cff",
+      "typed_absence_count": 0,
+      "typed_absences": [],
+      "zero_amplitude_computed_once": true,
+      "zero_amplitude_sky_count": 799
+    },
+    "paired300": {
+      "arm": "paired300",
+      "calibration_count": 200,
+      "candidate_git_head": "2bb578c0426b646152e5154d732beb83ce6b5c55",
+      "candidate_git_tree": "4b993139e780deab484f07168527a25bc22dcf9e",
+      "checkpoint_new_cells": 31,
+      "checkpoint_reused_cells": 0,
+      "evaluation_sky_count": 100,
+      "format": "PLANCK_MES_IRREP_POWER_ARM_EXECUTION_V1",
+      "input_content_id": "sha256:7b56750df89a0cb7fae7d25f9034ac52317fac4c14e5f83cf831368c0de38779",
+      "observation_used_for_power": false,
+      "positive_injected_carriers": 96000,
+      "raw_maps_reopened": false,
+      "registry_sha256": "sha256:f4374966e1710be6490e57f35ae8d725806f5488fc3595db0d3afb1ce67b5e4d",
+      "scale_rms_microK_CMB": 34.042216508215446,
+      "shared_calibration_source_identity": "sha256:e3dd41030370b6d64c7598159cb9ce59cfd81f4682f4ea8a8fe6c39ceadb5115",
+      "state": "SUCCEEDED",
+      "trial_content_id": "sha256:e6f7a37b644a462dfe3d90172e0fee1b2e2a442a3e4d01e9967f300cad24dc35",
+      "trial_package": "paired300_trials.npz",
+      "trial_package_sha256": "sha256:d8c8246bdf3fa6e16efaf38aeeb31d688e3b25d14fec2c593c716a3cd7a6c33b",
+      "typed_absence_count": 0,
+      "typed_absences": [],
+      "zero_amplitude_computed_once": true,
+      "zero_amplitude_sky_count": 100
+    }
+  },
+  "candidate_git_head": "2bb578c0426b646152e5154d732beb83ce6b5c55",
+  "candidate_git_tree": "4b993139e780deab484f07168527a25bc22dcf9e",
+  "claim_promotion": false,
+  "combiners": [
+    "MIN_LOCAL_P_V1",
+    "EXACT_INTEGER_FISHER_PRODUCT_FINITE_POOL_V1"
+  ],
+  "content_id": "sha256:cc3d4003c0e24829173c38e4002fe63dda83b13de620425b93806f6d86d59f43",
+  "families": [
+    "FROZEN_MES_10",
+    "FROZEN_FRAME_FREE_IRREP_8"
+  ],
+  "finite_rank_denominator": 201,
+  "forbidden_claims": [
+    "power calibration of the original full301 or full1000 observation procedures",
+    "physical shear or vorticity sensitivity",
+    "Bianchi-family sensitivity",
+    "independent replication across the two arms"
+  ],
+  "format": "PLANCK_MES_IRREP_INJECTION_POWER_V1",
+  "input_source_identity": "sha256:e3dd41030370b6d64c7598159cb9ce59cfd81f4682f4ea8a8fe6c39ceadb5115",
+  "largest_rejecting_rank_numerator": 10,
+  "observation_used_for_power": false,
+  "physical_template_status": "DEFERRED_NOT_ATTEMPTED_WITHOUT_AUTHORIZED_RESPONSE",
+  "raw_data_mutation": false,
+  "raw_maps_reopened": false,
+  "reducers": [
+    "LEGACY_ABSOLUTE_MEDIAN_V1",
+    "LOO_ECDF_MIDRANK_V1"
+  ],
+  "registry_sha256": "sha256:f4374966e1710be6490e57f35ae8d725806f5488fc3595db0d3afb1ce67b5e4d",
+  "scope_limitation": "Power of the registered functional at 200-reference calibration, not the original full301/full1000 test size.",
+  "state": "EXECUTED_PENDING_REVIEW",
+  "summary_row_count": 496,
+  "template_ids": [
+    "Q_AXIAL",
+    "O_PLANAR",
+    "MIX_AXIAL",
+    "MIX_PLANAR",
+    "MIX_GENERIC"
+  ],
+  "threshold_row_count": 160,
+  "typed_absence_count": 0,
+  "work_unit": "PMG-WU-008"
+}
