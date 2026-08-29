@@ -17,6 +17,15 @@ import stat
 import sys
 from typing import Any, Mapping, Sequence
 
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.observed_runs.inspect_planck_mes_irrep_data import (  # noqa: E402
+    IntakeBlocked,
+    adjudicate_00818,
+)
+
 FORMAT = "PLANCK_MES_SMICA999_PREFLIGHT_V1"
 CMB_PATTERN = re.compile(r"^dx12_v3_smica_cmb_mc_(\d{5})_raw\.fits$")
 NOISE_PATTERN = re.compile(r"^dx12_v3_smica_noise_mc_(\d{5})_raw\.fits$")
@@ -25,8 +34,6 @@ EXPECTED_NOISE_IDS = tuple(f"{i:05d}" for i in range(300))
 OBSERVED_NAME = "COM_CMB_IQU-smica_2048_R3.00_full.fits"
 MASK_NAME = "COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits"
 SPECIAL_ID = "00818"
-BLOCK = 2880
-CARD = 80
 
 
 class PreflightError(RuntimeError):
@@ -47,14 +54,6 @@ class StatIdentity:
 def _json_dump(path: Path, payload: Mapping[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-
-
-def _sha256(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        while chunk := handle.read(chunk_size):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 def _content_id(payload: Mapping[str, Any]) -> str:
@@ -93,118 +92,6 @@ def _stat_identity(path: Path, root: Path) -> StatIdentity:
         size=int(st.st_size),
         mtime_ns=int(st.st_mtime_ns),
     )
-
-
-def _parse_card_value(raw: str) -> Any:
-    value = raw.split("/", 1)[0].strip()
-    if not value:
-        return None
-    if value.startswith("'"):
-        end = value.find("'", 1)
-        return value[1:end if end >= 0 else None].rstrip()
-    if value in {"T", "F"}:
-        return value == "T"
-    normalized = value.replace("D", "E")
-    try:
-        if any(token in normalized for token in ".Ee"):
-            return float(normalized)
-        return int(normalized)
-    except ValueError:
-        return value
-
-
-def _read_header(handle) -> tuple[dict[str, Any], int]:
-    cards: list[str] = []
-    consumed = 0
-    found_end = False
-    while not found_end:
-        block = handle.read(BLOCK)
-        if len(block) != BLOCK:
-            raise PreflightError("truncated FITS header")
-        consumed += BLOCK
-        try:
-            text = block.decode("ascii")
-        except UnicodeDecodeError as exc:
-            raise PreflightError("non-ASCII FITS header") from exc
-        for offset in range(0, BLOCK, CARD):
-            card = text[offset : offset + CARD]
-            cards.append(card)
-            if card.startswith("END"):
-                found_end = True
-                break
-        if consumed > 1024 * BLOCK:
-            raise PreflightError("unbounded FITS header")
-    values: dict[str, Any] = {}
-    for card in cards:
-        keyword = card[:8].strip()
-        if not keyword or keyword in {"COMMENT", "HISTORY", "END"}:
-            continue
-        if len(card) >= 10 and card[8] == "=":
-            values[keyword] = _parse_card_value(card[10:])
-    return values, consumed
-
-
-def inspect_fits_structure(path: Path, root: Path, max_hdus: int = 32) -> dict[str, Any]:
-    """Inspect FITS HDU structure without interpreting the scientific map payload."""
-    resolved = _require_contained_file(path, root)
-    size = resolved.stat().st_size
-    hdus: list[dict[str, Any]] = []
-    with resolved.open("rb") as handle:
-        for index in range(max_hdus):
-            if handle.tell() == size:
-                break
-            if handle.tell() > size:
-                raise PreflightError("FITS cursor exceeded file size")
-            header, header_bytes = _read_header(handle)
-            if index == 0 and header.get("SIMPLE") is not True:
-                raise PreflightError("FITS primary header lacks SIMPLE=T")
-            bitpix = int(header.get("BITPIX", 0))
-            naxis = int(header.get("NAXIS", 0))
-            if naxis < 0 or naxis > 999:
-                raise PreflightError(f"invalid NAXIS={naxis}")
-            dimensions = [int(header.get(f"NAXIS{i}", 0)) for i in range(1, naxis + 1)]
-            if any(value < 0 for value in dimensions):
-                raise PreflightError("negative FITS axis length")
-            pcount = int(header.get("PCOUNT", 0))
-            gcount = int(header.get("GCOUNT", 1))
-            elements = 0 if naxis == 0 else 1
-            for value in dimensions:
-                elements *= value
-            data_bytes = (abs(bitpix) // 8) * elements + pcount
-            data_bytes *= max(gcount, 1)
-            padded = ((data_bytes + BLOCK - 1) // BLOCK) * BLOCK
-            hdu = {
-                "index": index,
-                "xtension": header.get("XTENSION", "PRIMARY"),
-                "bitpix": bitpix,
-                "naxis": naxis,
-                "dimensions": dimensions,
-                "pcount": pcount,
-                "gcount": gcount,
-                "header_bytes": header_bytes,
-                "data_bytes": data_bytes,
-            }
-            hdus.append(hdu)
-            next_pos = handle.tell() + padded
-            if next_pos > size:
-                raise PreflightError("FITS data extent exceeds file size")
-            handle.seek(next_pos)
-    if not hdus:
-        raise PreflightError("FITS file has no HDU")
-    total_extent = sum(
-        item["header_bytes"] + ((item["data_bytes"] + BLOCK - 1) // BLOCK) * BLOCK
-        for item in hdus
-    )
-    if total_extent > size:
-        raise PreflightError("invalid FITS total extent")
-    if not any(item["naxis"] > 0 or str(item["xtension"]).strip() for item in hdus):
-        raise PreflightError("FITS file has no data-bearing or extension HDU")
-    return {
-        "format": "FITS_STRUCTURE_RECEIPT_V1",
-        "file_size": size,
-        "hdu_count": len(hdus),
-        "hdus": hdus,
-    }
 
 
 def _enumerate_ids(directory: Path, pattern: re.Pattern[str]) -> tuple[dict[str, Path], list[str]]:
@@ -255,21 +142,27 @@ def build_preflight(*, workdir: Path, output_dir: Path, private_output: Path, ex
     workdir = workdir.resolve(strict=True)
     raw_root = (workdir / "raw").resolve(strict=True)
     ffp10 = (raw_root / "planck_ffp10").resolve(strict=True)
+    cmb_dir = (ffp10 / "smica/cmb_mc").resolve(strict=True)
+    noise_dir = (ffp10 / "smica/noise_mc").resolve(strict=True)
     planck_data = (raw_root / "planck_data").resolve(strict=True)
-    if not _is_relative_to(ffp10, raw_root) or not _is_relative_to(planck_data, raw_root):
+    if any(
+        not _is_relative_to(path, raw_root)
+        for path in (ffp10, cmb_dir, noise_dir, planck_data)
+    ):
         raise PreflightError("declared Planck roots escape raw root")
-    if not ffp10.is_dir() or not planck_data.is_dir():
+    if not all(path.is_dir() for path in (ffp10, cmb_dir, noise_dir, planck_data)):
         raise PreflightError("required Planck raw directories are absent")
     _require_output_location(output_dir / "preflight_summary.json", workdir=workdir, raw_root=raw_root, label="portable output")
     _require_output_location(private_output, workdir=workdir, raw_root=raw_root, label="private output")
 
-    cmb, cmb_duplicates = _enumerate_ids(ffp10, CMB_PATTERN)
-    noise, noise_duplicates = _enumerate_ids(ffp10, NOISE_PATTERN)
+    cmb, cmb_duplicates = _enumerate_ids(cmb_dir, CMB_PATTERN)
+    noise, noise_duplicates = _enumerate_ids(noise_dir, NOISE_PATTERN)
     if cmb_duplicates or noise_duplicates:
         raise PreflightError(f"duplicate IDs: cmb={cmb_duplicates[:8]} noise={noise_duplicates[:8]}")
     _compare_exact_ids(cmb, EXPECTED_CMB_IDS, "SMICA CMB")
     _compare_exact_ids(noise, EXPECTED_NOISE_IDS, "SMICA noise availability")
-    _require_no_partial_files(ffp10)
+    _require_no_partial_files(cmb_dir)
+    _require_no_partial_files(noise_dir)
     if "00970" in cmb:
         raise PreflightError("known-missing CMB row 00970 must not be synthesized or admitted")
     if SPECIAL_ID not in cmb:
@@ -281,8 +174,12 @@ def build_preflight(*, workdir: Path, output_dir: Path, private_output: Path, ex
     before = [_stat_identity(path, raw_root) for path in selected_paths]
 
     special_path = cmb[SPECIAL_ID]
-    special_structure = inspect_fits_structure(special_path, raw_root)
-    special_digest = _sha256(_require_contained_file(special_path, raw_root))
+    _require_contained_file(special_path, raw_root)
+    try:
+        special_structure = adjudicate_00818(special_path)
+    except IntakeBlocked as exc:
+        raise PreflightError(str(exc)) from exc
+    special_digest = str(special_structure["sha256"])
 
     after = [_stat_identity(path, raw_root) for path in selected_paths]
     if before != after:

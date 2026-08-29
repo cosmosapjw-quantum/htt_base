@@ -5,7 +5,9 @@ import json
 from pathlib import Path
 import sys
 
+import numpy as np
 import pytest
+from astropy.io import fits
 
 ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "scripts/observed_runs/preflight_planck_mes_smica999.py"
@@ -15,55 +17,46 @@ module = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = module
 SPEC.loader.exec_module(module)
 
-
-def card(keyword: str, value: str | None = None) -> bytes:
-    text = keyword if value is None else f"{keyword:<8}= {value}"
-    return text.ljust(80).encode("ascii")
-
-
-def header(cards: list[bytes]) -> bytes:
-    payload = b"".join(cards + [card("END")])
-    return payload.ljust(((len(payload) + 2879) // 2880) * 2880, b" ")
-
-
 def write_minimal_fits(path: Path, *, valid: bool = True) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     if not valid:
         path.write_bytes(b"not a FITS file")
         return
-    primary = header([
-        card("SIMPLE", "T"), card("BITPIX", "8"), card("NAXIS", "0"), card("EXTEND", "T"),
-    ])
-    table = header([
-        card("XTENSION", "'BINTABLE'"), card("BITPIX", "8"), card("NAXIS", "2"),
-        card("NAXIS1", "4"), card("NAXIS2", "2"), card("PCOUNT", "0"),
-        card("GCOUNT", "1"), card("TFIELDS", "0"),
-    ])
-    data = b"\x00\x00\x00\x01\x00\x00\x00\x02".ljust(2880, b"\0")
-    path.write_bytes(primary + table + data)
+    columns = [
+        fits.Column(name=name, format="E", array=np.array([1.0, 2.0], dtype=np.float32))
+        for name in ("INTENSITY", "Q-POLARISATION", "U-POLARISATION")
+    ]
+    table = fits.BinTableHDU.from_columns(columns)
+    table.header["NSIDE"] = 2048
+    table.header["ORDERING"] = "RING"
+    table.header["INDXSCHM"] = "IMPLICIT"
+    fits.HDUList([fits.PrimaryHDU(), table]).writeto(path)
 
 
 @pytest.fixture
 def small_inventory(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     workdir = tmp_path / "workdir"
     ffp10 = workdir / "raw/planck_ffp10"
+    cmb_dir = ffp10 / "smica/cmb_mc"
+    noise_dir = ffp10 / "smica/noise_mc"
     planck_data = workdir / "raw/planck_data"
     analysis = workdir / "analysis/planck_mes_irrep/smica999"
     output = tmp_path / "repo-output"
     analysis.mkdir(parents=True)
-    ffp10.mkdir(parents=True)
+    cmb_dir.mkdir(parents=True)
+    noise_dir.mkdir(parents=True)
     planck_data.mkdir(parents=True)
     monkeypatch.setattr(module, "EXPECTED_CMB_IDS", ("00000", "00818", "00999"))
     monkeypatch.setattr(module, "EXPECTED_NOISE_IDS", ("00000", "00001"))
     for row_id in module.EXPECTED_CMB_IDS:
-        write_minimal_fits(ffp10 / f"dx12_v3_smica_cmb_mc_{row_id}_raw.fits")
+        write_minimal_fits(cmb_dir / f"dx12_v3_smica_cmb_mc_{row_id}_raw.fits")
     for row_id in module.EXPECTED_NOISE_IDS:
-        write_minimal_fits(ffp10 / f"dx12_v3_smica_noise_mc_{row_id}_raw.fits")
+        write_minimal_fits(noise_dir / f"dx12_v3_smica_noise_mc_{row_id}_raw.fits")
     write_minimal_fits(planck_data / module.OBSERVED_NAME)
     write_minimal_fits(planck_data / module.MASK_NAME)
     return {
         "workdir": workdir,
-        "ffp10": ffp10,
+        "ffp10": cmb_dir,
         "output": output,
         "private": analysis / "preflight_manifest.json",
     }
@@ -76,6 +69,41 @@ def test_full_contract_constants_are_exact() -> None:
     assert "00970" not in module.EXPECTED_CMB_IDS
     assert "00818" in module.EXPECTED_CMB_IDS
     assert len(module.EXPECTED_NOISE_IDS) == 300
+
+
+def test_canonical_nested_smica_layout_is_admitted(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    workdir = tmp_path / "workdir"
+    ffp10 = workdir / "raw/planck_ffp10"
+    cmb_dir = ffp10 / "smica/cmb_mc"
+    noise_dir = ffp10 / "smica/noise_mc"
+    planck_data = workdir / "raw/planck_data"
+    private = workdir / "analysis/planck_mes_irrep/smica999/preflight_manifest.json"
+    output = tmp_path / "repo-output"
+    cmb_dir.mkdir(parents=True)
+    noise_dir.mkdir(parents=True)
+    planck_data.mkdir(parents=True)
+    private.parent.mkdir(parents=True)
+    monkeypatch.setattr(module, "EXPECTED_CMB_IDS", ("00000", "00818", "00999"))
+    monkeypatch.setattr(module, "EXPECTED_NOISE_IDS", ("00000", "00001"))
+    for row_id in module.EXPECTED_CMB_IDS:
+        write_minimal_fits(cmb_dir / f"dx12_v3_smica_cmb_mc_{row_id}_raw.fits")
+    for row_id in module.EXPECTED_NOISE_IDS:
+        write_minimal_fits(noise_dir / f"dx12_v3_smica_noise_mc_{row_id}_raw.fits")
+    write_minimal_fits(planck_data / module.OBSERVED_NAME)
+    write_minimal_fits(planck_data / module.MASK_NAME)
+
+    result = module.build_preflight(
+        workdir=workdir,
+        output_dir=output,
+        private_output=private,
+        execute=False,
+    )
+
+    assert result["summary"]["cmb_complete_count"] == 3
+    assert result["summary"]["noise_available_count"] == 2
+    assert result["selected_input_manifest"]["noise_files_selected"] == 0
 
 
 def test_exact_inventory_preflight_executes_without_scientific_rank(small_inventory) -> None:
@@ -146,6 +174,24 @@ def test_00818_requires_semantic_fits_structure(small_inventory) -> None:
             workdir=small_inventory["workdir"], output_dir=small_inventory["output"],
             private_output=small_inventory["private"], execute=False,
         )
+
+
+def test_00818_accepts_missing_terminal_padding_when_payload_is_complete(
+    small_inventory,
+) -> None:
+    path = small_inventory["ffp10"] / "dx12_v3_smica_cmb_mc_00818_raw.fits"
+    path.write_bytes(path.read_bytes()[:-17])
+
+    result = module.build_preflight(
+        workdir=small_inventory["workdir"],
+        output_dir=small_inventory["output"],
+        private_output=small_inventory["private"],
+        execute=False,
+    )
+
+    semantic = result["route_receipt"]["row_00818"]["fits"]
+    assert semantic["state"] == "ADMITTED_SEMANTICALLY"
+    assert semantic["terminal_padding_shortfall_bytes"] == 17
 
 
 def test_symlink_escape_and_raw_output_are_rejected(small_inventory, tmp_path: Path) -> None:

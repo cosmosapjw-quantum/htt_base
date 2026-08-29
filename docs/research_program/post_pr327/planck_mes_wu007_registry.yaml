@@ -1,0 +1,56 @@
+format: PLANCK_MES_SMICA_CMBONLY_999_FROZEN_REGISTRY_V1
+work_unit: PMG-WU-007
+source_work_unit: PMG-WU-006
+source_reducer_registry_sha256: sha256:fe5e56b06edc1ecedbca3735c822d23bab309a88201e185dd1d43ad68bbbd70e
+selection_policy: features families tails reducers and row-disposition policy frozen before observed-row scoring
+reducers:
+  - LEGACY_ABSOLUTE_MEDIAN_V1
+  - LOO_ECDF_MIDRANK_V1
+families:
+  OBSERVABLE_IRREP_ORBIT_V1:
+    feature_ids:
+      - q2
+      - o2
+      - J_Q
+      - R_v0_normalized
+      - R_v1_normalized
+      - R_v2_normalized
+      - R_QS_normalized
+      - K_v_normalized
+    frame_role: FRAME_FREE_PRIMARY
+    tails:
+      - two-sided
+      - two-sided
+      - two-sided
+      - upper
+      - two-sided
+      - upper
+      - two-sided
+      - two-sided
+  OBSERVABLE_IRREP_ORBIT_GALACTIC_V1:
+    feature_ids:
+      - q2
+      - o2
+      - J_Q
+      - R_v0_normalized
+      - R_v1_normalized
+      - R_v2_normalized
+      - R_QS_normalized
+      - K_v_normalized
+      - Q_galactic_pole_power
+      - O_galactic_pole_power
+    frame_role: ABSOLUTE_GALACTIC_DESCRIPTIVE_COMPANION
+    tails:
+      - two-sided
+      - two-sided
+      - two-sided
+      - upper
+      - two-sided
+      - upper
+      - two-sided
+      - two-sided
+      - upper
+      - upper
+claim_role: SEPARATE_CMBONLY_NULL_ENSEMBLE_SENSITIVITY_DIAGNOSTIC
+primary_replacement: false
+rank_based_promotion_forbidden: true
