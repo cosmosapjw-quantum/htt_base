@@ -8,25 +8,32 @@ software environments, and bounded science-readiness checks available to
 repository or a third-party operator on the same host can locate and open the
 held products without relying on the `htt_base/workdir` symlink layer.
 
-The evidence precedence used here is:
+The evidence precedence used here is scoped by lane:
 
-1. `EXTERNAL-FUSION-RESOLUTION-20260829` receipts, resolution ledger, and
+1. `SCIENCE-CONSUMER-20260829T155108Z-88d569` for the executed admitted-data
+   scalar consumer and its diagnostic figure;
+2. `COMMANDER-FFP10-DOWNLOAD-20260829T144340Z-64adad` for exact Commander
+   product binding, transfer, local integrity, storage, and unchanged science
+   admission;
+3. `EXTERNAL-FUSION-RESOLUTION-20260829` receipts, resolution ledger, and
    readiness matrix v2;
-2. `EXTERNAL-FUSION-FOLLOWUP-20260829` science-readiness matrix;
-3. `EXTERNAL-FUSION-INSTALL-20260829` installation and holdings ledger.
+4. `EXTERNAL-FUSION-FOLLOWUP-20260829` science-readiness matrix;
+5. `EXTERNAL-FUSION-INSTALL-20260829` installation and holdings ledger.
 
-The newer resolution evidence supersedes the older installation document when
-their statuses differ. In particular, `sbibm==1.1.0` now has a working isolated
-core benchmark lane, but its installed distribution still has unmet declared
-dependencies. CONCEPT remains unavailable.
+The newer scoped evidence supersedes the older installation document only for
+the lane it actually executed. In particular, `sbibm==1.1.0` has a working
+isolated core benchmark lane but its installed distribution still has unmet
+declared dependencies; CONCEPT remains unavailable; and Commander `00002`
+through `00006` now have verified official PLA object bindings and complete
+locally verified candidate downloads without science admission.
 
 ```yaml
 document_role: OPERATIONAL_HANDOFF_ONLY
-updated_at: 2026-08-29T23:19:17+09:00
+updated_at: 2026-08-30T01:15:48+09:00
 canonical_repository: /home/cosmosapjw/Dropbox/bianchi/htt_base
-canonical_repository_base_commit: c9b2af5a3a3e442a988895c0fd970f1ecdf23b8f
-documentation_worktree: /home/cosmosapjw/worktrees/htt-xfi-status-doc-20260829
-documentation_worktree_base_commit: c505b69cdc5b3fdcb06cb26d2654b37696cfaa96
+documentation_checkout: /home/cosmosapjw/Dropbox/bianchi/htt_base
+documentation_update_base_commit: f5ae09d03ef01740977d41ad61df5a2964c75b85
+retired_documentation_worktree: /home/cosmosapjw/worktrees/htt-xfi-status-doc-20260829
 physical_external_workdir: /mnt/sn850x2t/htt_base_e2e/workdir
 main_htt_base_venv: /mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829
 main_venv_status: PRESERVED_PIP_CHECK_PASS
@@ -34,7 +41,9 @@ sbibm_functional_result: SBIBM_ISOLATED_CORE_PASS
 sbibm_distribution_result: PACKAGE_DEPENDENCIES_INCOMPLETE
 concept_result: CONCEPT_CONTAINER_BLOCKED_RUNTIME_OR_STORAGE
 native_bianchi_result: WAIT_FOR_USER_NATIVE_SOLVER
-commander_result: WAIT_FOR_OFFICIAL_PRODUCT_BINDING
+commander_result: OFFICIAL_PLA_OBJECTS_DOWNLOADED_CANDIDATE_ONLY
+latest_science_consumer_result: SCIENCE_CONSUMER_NUMERICAL_PASS
+latest_science_consumer_claim_tier: C2_CONDITIONAL_DIAGNOSTIC
 dataset_readiness_counts:
   ready_for_bounded_current_consumer: 5
   partially_resolved: 9
@@ -79,9 +88,10 @@ Path interpretation:
   repository, from this documentation worktree, or from third-party scripts.
 - `$HTT_REPO/workdir/...` is the canonical `htt_base` convenience link layer.
   Its children resolve to `$HTT_XFI_WORKDIR/...` and are ignored by Git.
-- This documentation worktree intentionally has no `workdir/` link layer. Do
-  not infer a missing payload from the absence of
-  `/home/cosmosapjw/worktrees/htt-xfi-status-doc-20260829/workdir`.
+- The prior documentation-only worktree
+  `/home/cosmosapjw/worktrees/htt-xfi-status-doc-20260829` has been retired and
+  is not the current report authority. The current report lives in the
+  canonical checkout, whose `workdir/` link layer remains valid.
 - Large payloads must not be copied into another checkout merely to satisfy a
   relative-path convention. Pass the physical absolute path or create a
   project-specific symlink only after checking that project’s policy.
@@ -108,6 +118,11 @@ rescan.
 | Commander quarantined partials | 1,365,789,644 | 1.366 | excluded from science use |
 | Code, archives, outputs, logs, manifests, and auxiliary material | 126,951,097,057 | 126.95 | retained |
 | **Total fixed snapshot** | **1,185,632,921,952** | **1,185.63** | byte-conserving total |
+
+The five completed Commander candidate downloads described below occurred
+after this fixed snapshot. They are deliberately not folded back into its
+category totals; their later allocation is recorded separately from the
+immutable inventory measurement.
 
 The exhaustive inventory JSON cited below is the per-file authority. The main
 roots from that same fixed snapshot are indexed here so that simulation and
@@ -143,12 +158,20 @@ bytes. Its total retained task artifacts were 487,424 bytes and its measured
 peak increase was 495,616 bytes. No large science payload, OCI image, or
 container layer was pulled during that resolution.
 
+The subsequent bounded Commander acquisition wrote five new candidate FITS
+objects sequentially to the external NVMe. Their total logical size is
+3,019,939,200 bytes, end allocation is 3,019,964,416 bytes, and peak attributable
+allocation was 3,020,152,832 bytes. External free space moved from
+478,761,304,064 to 475,741,343,744 bytes during that run; main-NVMe payload
+allocation was zero. These bytes are complete local candidates, not admitted
+null-pool members.
+
 ### Live capacity recheck for this document
 
 | Filesystem | Free bytes | Use |
 |---|---:|---:|
-| Main NVMe `/` | 123,366,637,568 | 87% |
-| External 2 TB NVMe `/mnt/sn850x2t` | 478,762,237,952 | 76% |
+| Main NVMe `/` | 145,843,662,848 | 85% |
+| External 2 TB NVMe `/mnt/sn850x2t` | 475,741,278,208 | 76% |
 
 This document update performed no acquisition, installation, relocation,
 cache deletion, process termination, or daemon change. It also did not inspect
@@ -187,6 +210,10 @@ immediate value. The whole CMB-S4 PanEx release is not an admitted download.
 - Planck PR3 Commander/SMICA/NILC/SEVEM inputs and masks are present; the PR4
   directory holds nine selected frequency maps, but the current PR4 numeric
   admission gate remains closed.
+- Commander `00002`--`00006` are additionally present as five complete
+  official-PLA-bound candidate files, each 603,987,840 bytes. Their original
+  partial files remain preserved; publisher checksum verification is absent
+  and the frozen science-admission gate remains unchanged.
 - KiDS candidate archives match their local receipts. WebSky retains seven
   selected science components plus the newly downloaded official metadata.
 - At resolution closeout no large transfer was running. This documentation
@@ -201,8 +228,8 @@ matrix v2 is authoritative.
 
 | Family | Canonical local payload | Representation and bounded consumer | Current result and ceiling |
 |---|---|---|---|
-| Planck PR3 | `raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits`; common intensity mask in the same directory | HEALPix NSIDE 2048, NESTED, Galactic I/Q/U in K_CMB; `htt.obsstat.k1_convention_contract.load_downgrade_mask_alm` completed an NSIDE 8 read | `READY`; representative low-resolution use only, without a new null/covariance/scientific result |
-| Planck FFP10 | `raw/planck_ffp10/commander/cmb_mc/dx12_v3_commander_cmb_mc_00000_raw.fits` | HEALPix NSIDE 2048, RING, I/Q/U K_CMB; `scripts.k1_global_maxscan._load_sim_map` completed a finite NSIDE 8 read and microkelvin conversion | `READY`; one complete realization only; partial IDs 00002–00006 are excluded |
+| Planck PR3 | `raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits`; common intensity mask in the same directory; saved scalar checkpoint under `analysis/planck_mes_irrep/paired300_carrier` | HEALPix NSIDE 2048, NESTED, Galactic I/Q/U in K_CMB; low-resolution read smoke plus a saved-feature scalar consumer paired with 300 admitted FFP10 SMICA CMB+noise rows | `READY`; the added result is C2 conditional/diagnostic-only and does not establish physical shear/vorticity, likelihood validity, or a geometry/family claim |
+| Planck FFP10 | readiness smoke: `raw/planck_ffp10/commander/cmb_mc/dx12_v3_commander_cmb_mc_00000_raw.fits`; admitted scalar consumer: paired SMICA CMB+noise rows recorded under `analysis/planck_mes_irrep/paired300_carrier` | Smoke payload is HEALPix NSIDE 2048, RING, I/Q/U K_CMB; the executed scalar consumer loaded only saved `features` for one Planck PR3 observation plus 300 exact paired FFP10 SMICA CMB+noise rows | `READY` for the bounded existing consumers; Commander candidate IDs 00002–00006 and their preserved partials remain excluded from science admission |
 | DESI observations | `compact_products/desi/BGS_ANY_NGC_clustering_extended.npz` | 4,081,227 BGS_ANY NGC rows; sky vectors, redshift, and weights; current consumer `htt/obsstat/egs3_external_lanes.py` | `READY`; footprint/selection and estimator inference are outside this read smoke |
 | DESI mocks | `raw/desi_dr1_mocks/EZmock/bright/v1/mock605/BGS_ffa_NGC_clustering.dat.fits` | FITS LSS table, 219,290 rows; RA/DEC, Z/TRUEZ, number density, weights, and tile metadata | `READY`; one realization and one cap, not ensemble validation |
 | CF4/local structure | `raw/cf4/CF4pp_mean_std_grids.npz` | 128 cubed density/velocity mean and standard-deviation grids in a 1000 Mpc supergalactic Cartesian box; velocities in km/s; consumers `scripts/k6_cf4_curl_posterior.py` and `scripts/make_cf4_affine_flow.py` | `READY`; reconstruction-conditioned access only, without curl, bulk-flow, or cosmological inference |
@@ -216,6 +243,86 @@ matrix v2 is authoritative.
 | KiDS-Legacy DR5 cosmic shear | `raw/hsc_kids/kids_dr5_candidate/KiDS_Legacy_cosmic_shear_data_release.tar.gz` | Streamed `KiDS_Legacy_bandpowers.fits`: concatenated E/B vector length 336, exact-symmetric 336x336 covariance, and six n(z) columns | `PARTIALLY_RESOLVED`; response/selection calibration, scale cuts, IA/redshift priors, persistent adapter, and likelihood execution remain absent |
 | COSMOS-Web v1.1 | `raw/cosmos_web_dr1/COSMOSWeb_mastercatalog_v1.1.fits`, `cosmos_web_psfs_v5.0.tar.gz`, `segmentation_maps.tar.gz`, and `cosmos_web_starmask_jwst.tar.gz` | 784,016-row catalog; bounded F444W S/N and morphology selection plus one streamed auxiliary member from each archive | `PARTIALLY_RESOLVED`; e1/e2 are morphology, not calibrated shear; tile/WCS association, corrected-photometry science checks, photo-z validation, and persistent adapter remain absent |
 | WebSky selected fields | `raw/websky_selected/kap.fits`; same directory also holds `isw.fits`, `ksz.fits`, `ksz_patchy.fits`, `cib_nu0143.fits`, `cib_nu0353.fits`, `lensed_alm.fits`, `README.txt`, `UPDATES.txt`, and `cosmology.py` | Dimensionless HEALPix RING kappa map; `healpy` read, NSIDE 64 downgrade, and lmax 16 `anafast` completed | `PARTIALLY_RESOLVED`; tiny transform is not spectrum validation; units remain component-specific and no persistent component-aware adapter exists |
+
+### Executed admitted-data consumer: PR3/FFP10 scalar MES dependence
+
+Run `SCIENCE-CONSUMER-20260829T155108Z-88d569` consumed the already admitted
+saved scalar features for one Planck PR3 SMICA observation and 300 exact paired
+FFP10 SMICA CMB+noise rows. Its question was whether the two registered
+one-way scalar MES ceiling coordinates are strongly dependent on the same
+rows, and where the observation lies under the unchanged finite-pool reducer.
+
+```text
+feature checkpoint root:
+  $HTT_XFI_WORKDIR/analysis/planck_mes_irrep/paired300_carrier
+execution manifest SHA-256:
+  6e2acaa4b695ad422cca5099c4d91e9a7dfc741f6e41b461d10da4ec52c36831
+301-file NPZ-set SHA-256:
+  7df706993246102fca54547deecec8de026b7d4aa9c82c5d4b73faa5e72d7723
+301-file row-metadata-set SHA-256:
+  87a1d75f3801753e9d6694fd8d0d267d708e1d97211d9f0d28533f63ef4cb822
+operator identity:
+  sha256:53c250dd1b3fe614ad2b5fd1d9a1003bf65253e9d432a6b67913c047d43f5014
+```
+
+Despite the checkpoint directory name, the consumer loaded only the
+12-element `features` arrays and used indices 0 and 1 (`C2`, `C3`). It did not
+load or numerically use the withdrawn `carrier` arrays. Commander candidates
+were not inputs. The frozen settings were Galactic, HEALPix Nside 16, RING,
+the Planck PR3 common temperature mask, `T0=2.72548e6 microkelvin`, residual
+cosmological `epsilon_1=0`, the registered scalar MES formulae, and the
+all-row leave-one-out absolute-median rank with conservative `>=` ties.
+
+The exact executed command was:
+
+```bash
+cd "$HTT_REPO"
+"$HTT_MAIN_VENV/bin/python" \
+  .agent-harness/runs/SCIENCE-CONSUMER-20260829T155108Z-88d569.pending/artifacts/RUN_CONSUMER.py \
+  --config .agent-harness/runs/SCIENCE-CONSUMER-20260829T155108Z-88d569.pending/artifacts/INPUT_AND_RUN_CONFIG.json
+```
+
+The first attempt exited before producing outputs because a run-local success
+check treated the intentionally false field `carrier_numerically_accessed`
+as a required true boolean. The single bounded repair renamed the positive
+check to `carrier_excluded=true`; no input, formula, reducer, pool, tolerance,
+expected value, or claim setting changed. The second attempt exited 0 and an
+independent host recomputation passed.
+
+| Quantity | Executed result |
+|---|---:|
+| observed `C2` | `210.46184716646644 microkelvin^2` |
+| observed `C3` | `482.02081141805786 microkelvin^2` |
+| `Sigma2_max` | `2.4000870221758445e-10` |
+| `W2_max` | `3.0061887930898035e-13` |
+| local finite-pool ranks | `74/301` for each coordinate |
+| complete-pool Pearson / Spearman | `0.9948739661` / `0.9937383116` |
+| standardized two-coordinate condition number | `389.1651913` |
+| first principal-component variance fraction | `0.9974369830` |
+
+The numerical result is
+`$HTT_REPO/.agent-harness/runs/SCIENCE-CONSUMER-20260829T155108Z-88d569.pending/artifacts/NUMERICAL_RESULT.json`.
+The readable two-panel diagnostic is `DIAGNOSTIC_FIGURE.png` in the same
+directory, SHA-256
+`d700a29ffb7193b5f4f886f76d11355913931ed105020f9339dfee24de8dffa5`;
+its provenance is `FIGURE_PROVENANCE.json`. Because the historical command
+refuses to overwrite existing outputs, third-party consumers should inspect
+these results directly rather than rerunning into the same run directory:
+
+```bash
+jq '.status, .results, .interpretation' \
+  "$HTT_REPO/.agent-harness/runs/SCIENCE-CONSUMER-20260829T155108Z-88d569.pending/artifacts/NUMERICAL_RESULT.json"
+```
+
+| Claim ID | Owner | Status | Evidence | Transfer source | Tier | Caveat |
+|---|---|---|---|---|---|---|
+| `XFI-PR3-FFP10-SCALAR-MES-DEPENDENCE-20260829` | `obsstat` | `CONDITIONAL` | numerical artifact plus independent recomputation and diagnostic figure | `none` | C2 | `DIAGNOSTIC_ONLY`; fixed admitted 301-row pool and registered premises only; not physical shear/vorticity, unconditional significance, local/global attribution, geometry, or family identification |
+
+The result supports strong same-row dependence and exact finite-pool position
+under the unchanged reducer. It does not create two independent evidence
+channels, a likelihood, posterior, Bayes factor, detection, physical
+shear/vorticity state, Bianchi geometry, or family identification. No claim
+ledger status was promoted by recording this already-scoped result.
 
 ### Publisher and release locators
 
@@ -236,7 +343,7 @@ above explicitly records new bytes.
 | KiDS-Legacy DR5 | [KiDS DR5 legacy weak-lensing release](https://kids.strw.leidenuniv.nl/DR5/legacy_wl.php) |
 | COSMOS-Web v1.1 | [COSMOS2025/COSMOS-Web distribution portal](https://cosmos2025.iap.fr/) |
 | WebSky | [NASA LAMBDA mock-simulation index](https://lambda.gsfc.nasa.gov/simulation/mocks_data.html) |
-| Commander partials | [Planck Legacy Archive](https://pla.esac.esa.int/) general route only; exact objects/releases remain unbound |
+| Commander `00002`--`00006` | Exact basenames resolve through the official [Planck Legacy Archive](https://pla.esac.esa.int/) `product-action?SIMULATED_MAP.FILE_ID=<basename>` route and returned matching FITS objects; the HTTP responses did not state a release identity or expose publisher checksums |
 
 The three newly acquired WebSky metadata objects were downloaded directly to
 the external NVMe and atomically renamed on that filesystem:
@@ -546,20 +653,44 @@ a separate bounded ingestion using
 `$HTT_XFI_BUNDLE/schemas/solver_delivery_receipt.schema.json`. This blocker
 does not stop Track-I data or runtime use.
 
-### FFP10 Commander partial files
+### FFP10 Commander `00002`--`00006` completed candidates
 
-Status: `WAIT_FOR_OFFICIAL_PRODUCT_BINDING`.
+Status: `OFFICIAL_PLA_OBJECTS_DOWNLOADED_CANDIDATE_ONLY`.
 
-Directory:
+The five exact basenames were queried directly through the official PLA
+product endpoint. For each object, bounded HEAD plus GET/Range inspection and
+the full transfer returned FITS content with a matching
+`Content-Disposition` basename. A failed HEAD was never treated by itself as
+product absence, and no HTML response was accepted as FITS. The server did not
+state a release identity, ETag, Last-Modified validator, content length, or
+publisher checksum. Those absences remain distinct from the verified official
+object connection and from the locally computed SHA-256 values.
+
+Candidate root:
 
 ```text
-/mnt/sn850x2t/htt_base_e2e/workdir/raw/planck_ffp10/commander/cmb_mc
+$HTT_XFI_WORKDIR/raw/planck_ffp10/commander/candidates/
+  COMMANDER-FFP10-DOWNLOAD-20260829T144340Z-64adad
 ```
 
-Complete local files `00000` and `00001` are each 603,987,840 bytes. The held
-quarantined files are:
+| Basename | Bytes | Local full SHA-256 | Product / transfer / FITS integrity | Publisher checksum | Science admission |
+|---|---:|---|---|---|---|
+| `dx12_v3_commander_cmb_mc_00002_raw.fits` | 603,987,840 | `f60ca3eb2bb358dc7decc1eed40478dc03b81c6b65ab188323d05b94e2c6371f` | `VERIFIED_OFFICIAL_PLA_OBJECT / PASS / PASS` | `NOT_PUBLISHED_OR_NOT_EXPOSED` | `NOT_ADMITTED_CANDIDATE_ONLY_FROZEN_GATE_UNCHANGED` |
+| `dx12_v3_commander_cmb_mc_00003_raw.fits` | 603,987,840 | `ae7e5c38b23ba0b7e6f1aeba194ac95907d71b78d7723544fc0ad2ef678f7628` | `VERIFIED_OFFICIAL_PLA_OBJECT / PASS / PASS` | `NOT_PUBLISHED_OR_NOT_EXPOSED` | `NOT_ADMITTED_CANDIDATE_ONLY_FROZEN_GATE_UNCHANGED` |
+| `dx12_v3_commander_cmb_mc_00004_raw.fits` | 603,987,840 | `db158f6087f1c2c2892849e25ee5fff5612b2dc5c28647bed5fbb64f90eb5fd9` | `VERIFIED_OFFICIAL_PLA_OBJECT / PASS / PASS` | `NOT_PUBLISHED_OR_NOT_EXPOSED` | `NOT_ADMITTED_CANDIDATE_ONLY_FROZEN_GATE_UNCHANGED` |
+| `dx12_v3_commander_cmb_mc_00005_raw.fits` | 603,987,840 | `020dada034c0f2da0fa18d27f7a53628a705463c7dc37f62ea7578f69822dbf5` | `VERIFIED_OFFICIAL_PLA_OBJECT / PASS / PASS` | `NOT_PUBLISHED_OR_NOT_EXPOSED` | `NOT_ADMITTED_CANDIDATE_ONLY_FROZEN_GATE_UNCHANGED` |
+| `dx12_v3_commander_cmb_mc_00006_raw.fits` | 603,987,840 | `749fbb82fc69bc05d729a9e78e743ae110c4901d1b4b8a86a96f8f9408d50354` | `VERIFIED_OFFICIAL_PLA_OBJECT / PASS / PASS` | `NOT_PUBLISHED_OR_NOT_EXPOSED` | `NOT_ADMITTED_CANDIDATE_ONLY_FROZEN_GATE_UNCHANGED` |
 
-| Local basename | Current bytes |
+Every transfer started from byte zero because the server exposed no validator
+that could prove an existing partial represented the same remote object. Full
+local SHA-256 and Astropy FITS structure/data-access checks passed before
+same-filesystem atomic rename. These locally computed hashes are not called
+publisher checksums. The exact release remains `UNSTATED_BY_RESPONSE`.
+
+The five pre-existing `.partial` files under
+`$HTT_XFI_WORKDIR/raw/planck_ffp10/commander/cmb_mc` remain untouched:
+
+| Preserved partial basename | Bytes |
 |---|---:|
 | `dx12_v3_commander_cmb_mc_00002_raw.fits.partial` | 600,042,444 |
 | `dx12_v3_commander_cmb_mc_00003_raw.fits.partial` | 262,115,328 |
@@ -567,18 +698,11 @@ quarantined files are:
 | `dx12_v3_commander_cmb_mc_00005_raw.fits.partial` | 112,553,984 |
 | `dx12_v3_commander_cmb_mc_00006_raw.fits.partial` | 76,951,552 |
 
-Local FITS geometry suggests a 603,987,840-byte complete object with HEALPix
-NSIDE 2048, RING ordering, I/Q/U in K_CMB. It does not encode a release,
-publisher URL, publisher checksum, or coordinate system. The five stored
-SHA-256 values are only first-65,536-byte local prefix fingerprints; they are
-neither full-file hashes nor publisher checksums.
-
-No exact basename listing, authoritative release binding, or publisher
-checksum was located through the checked official routes. NERSC NPIPE is not
-an allowed substitution. The size-derived shortfall is 1,654,149,556 bytes,
-but that is not an acquisition ETA or publisher-authorized resume length.
-Do not resume, rename to complete, admit, or alter the fixed gate until an
-official object binding is available.
+Independent preservation verification rechecked all four predecessor receipt
+hashes, all five partial sizes/inodes/devices/mtimes/first-64-KiB hashes, and
+all five candidate sizes. No candidate was added to the current null pool and
+the fixed science-admission gate was not modified. This optional candidate
+lane does not block analysis using already admitted data.
 
 ## Receipts and machine-readable evidence
 
@@ -597,6 +721,17 @@ another machine does not transfer the data, environments, or receipts.
 | `sbibm` receipt | `$HTT_XFI_WORKDIR/external_tools/logs/external-fusion-resolution-20260829/sbibm/RECEIPT.json` | `09f39a94e4aee17dcf90ae15a0c608beefad38419cf59e2cf34aa463d2fa4105` |
 | CONCEPT receipt | `$HTT_XFI_WORKDIR/external_tools/logs/external-fusion-resolution-20260829/concept/RECEIPT.json` | `8fbd5775ca3b15c2047d1ec00657833fc45f53c8032437e29ff7cf7556e83ed7` |
 | Commander receipt | `$HTT_XFI_WORKDIR/external_tools/logs/external-fusion-resolution-20260829/commander/RECEIPT.json` | `c5f6202a95124afcd9b0e58497ad7f9f0f65afff17ccbc69e7c18d12b63a2777` |
+| Commander exact product binding | `$HTT_REPO/.agent-harness/runs/COMMANDER-FFP10-DOWNLOAD-20260829T144340Z-64adad.pending/artifacts/COMMANDER_PRODUCT_BINDING.json` | `309d1d3e419f276b6311cc69103d6e2346810944edd79502f82e80e8aa198852` |
+| Commander download receipt | `$HTT_REPO/.agent-harness/runs/COMMANDER-FFP10-DOWNLOAD-20260829T144340Z-64adad.pending/artifacts/COMMANDER_DOWNLOAD_RECEIPT.json` | `5b3da1e0501784fafb90202892592048351b0cc33eb9b8724f8a630f00b2216e` |
+| Commander storage receipt | `$HTT_REPO/.agent-harness/runs/COMMANDER-FFP10-DOWNLOAD-20260829T144340Z-64adad.pending/artifacts/COMMANDER_STORAGE_RECEIPT.json` | `36a11df0da9088c94b528fccfd7b84e92a3409f7d4bfc8ff302f597937ca9a6f` |
+| Commander bounded closeout | `$HTT_REPO/.agent-harness/runs/COMMANDER-FFP10-DOWNLOAD-20260829T144340Z-64adad.pending/artifacts/COMMANDER_CLOSEOUT.md` | `cca95feaa49a5ef398da0e12237da13d85b24dcac1e428adfaa3d9d35fb81e12` |
+| Scalar-consumer selection | `$HTT_REPO/.agent-harness/runs/SCIENCE-CONSUMER-20260829T155108Z-88d569.pending/artifacts/ANALYSIS_SELECTION.json` | `454419556ae888c172e98b01d0acc6bbddc539c24f66bb380533123b02950e0e` |
+| Scalar-consumer frozen config | `$HTT_REPO/.agent-harness/runs/SCIENCE-CONSUMER-20260829T155108Z-88d569.pending/artifacts/INPUT_AND_RUN_CONFIG.json` | `69682a10a2d0800c026d73c0246bc5cfde7d1ce18b7e59076cfb95baecab19a3` |
+| Scalar-consumer numerical result | `$HTT_REPO/.agent-harness/runs/SCIENCE-CONSUMER-20260829T155108Z-88d569.pending/artifacts/NUMERICAL_RESULT.json` | `560f81358b42d539b998383d00541689ca9dc56bf73b06f2733e21452fead215` |
+| Scalar-consumer generating script | `$HTT_REPO/.agent-harness/runs/SCIENCE-CONSUMER-20260829T155108Z-88d569.pending/artifacts/RUN_CONSUMER.py` | `b1e1b8d5c02422923df671b0e941a0ab5eb75dd2802c05f67a55aca27d2bef2b` |
+| Scalar-consumer diagnostic figure | `$HTT_REPO/.agent-harness/runs/SCIENCE-CONSUMER-20260829T155108Z-88d569.pending/artifacts/DIAGNOSTIC_FIGURE.png` | `d700a29ffb7193b5f4f886f76d11355913931ed105020f9339dfee24de8dffa5` |
+| Scalar-consumer figure provenance | `$HTT_REPO/.agent-harness/runs/SCIENCE-CONSUMER-20260829T155108Z-88d569.pending/artifacts/FIGURE_PROVENANCE.json` | `1b84be4c6dbb7e1f7fea2e70c3f6392b88a91516d71781af0fd3fe5a067011d9` |
+| Scalar-consumer closeout | `$HTT_REPO/.agent-harness/runs/SCIENCE-CONSUMER-20260829T155108Z-88d569.pending/artifacts/SCIENCE_CONSUMER_CLOSEOUT.md` | `e3b4635207a466a4129587957a081546146b1b7ce622fa0e9336f7da2d0638e1` |
 
 The resolution artifacts are under a `.pending` run directory because a
 different parallel active-run pointer already existed. “Pending” here is a
@@ -604,15 +739,19 @@ run-registration/storage fact, not a scientific PASS or FAIL classification.
 
 ## Claim boundary and safe next use
 
-All installation, import, CUDA, header, schema, SACC, and tiny-operation results
-in this document remain C0 operational evidence. They do not establish native
-BASS transfer validity, Bianchi geometry or family identification, model
-evidence, likelihood validity, cosmological inference, or publication
-readiness. Transfer-dependent outputs remain transfer-conditional. MIO
-certificates remain diagnostic-only, and HTT retains ownership of
-model-dependent inference.
+Installation, import, CUDA, header, schema, SACC, transfer, and tiny-operation
+results in this document remain C0 operational evidence. The executed
+PR3/FFP10 scalar consumer is the sole added C2 result and remains explicitly
+`CONDITIONAL / DIAGNOSTIC_ONLY` under its fixed pool, mask, scalar formulae,
+and rank operator. It does not establish native BASS transfer validity,
+Bianchi geometry or family identification, physical shear/vorticity,
+unconditional significance, model evidence, likelihood validity, cosmological
+inference, or publication readiness. Transfer-dependent outputs remain
+transfer-conditional. MIO certificates remain diagnostic-only, and HTT retains
+ownership of model-dependent inference.
 
-The preferred next operation is bounded scientific use of one of the five
-already-ready families or a specifically justified partially resolved lane,
-using the exact path and consumer above. It is not another general installation
-or bulk acquisition campaign.
+Further scientific use should continue with one already-ready family or a
+specifically justified partially resolved lane using its exact admitted path
+and consumer. The completed Commander candidates do not create a reason for
+another general installation, bulk acquisition campaign, or silent null-pool
+expansion.
