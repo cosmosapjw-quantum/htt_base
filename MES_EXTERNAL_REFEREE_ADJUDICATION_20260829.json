@@ -1,0 +1,314 @@
+{
+  "schema_version": 2,
+  "run_id": "EXTERNAL-FUSION-FOLLOWUP-20260829",
+  "assignment_id": "MES-EXTERNAL-REFEREE-ADJUDICATION-001",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "result_path": ".agent-harness/runs/EXTERNAL-FUSION-FOLLOWUP-20260829/results/MES-EXTERNAL-REFEREE-ADJUDICATION-001.json",
+  "assignment_sha256": "65b4bdea89cabdd47b9a33cca475bc99dd22deca167080b644423f461d768c11",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/EXTERNAL-FUSION-FOLLOWUP-20260829/assignments/MES-EXTERNAL-REFEREE-ADJUDICATION-001.json",
+    ".agents/skills/htt-physmath-audit/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md",
+    ".agents/skills/htt-family-identification-gate/SKILL.md",
+    "MES_BOUND_CURRENT_RESEARCH_REPORT.tex",
+    "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/runs/EXTERNAL-FUSION-FOLLOWUP-20260829/results/MES-EXTERNAL-REFEREE-ADJUDICATION-001.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-08-29T22:30:00+09:00",
+  "completed_at": "2026-08-29T23:08:47+09:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.1.1",
+    "git": "2.43.0"
+  },
+  "commands": [
+    "python -m pytest -q tests/obsstat/test_observable_irrep_orbit.py tests/integration/test_planck_mes_irrep_analysis.py tests/integration/test_planck_mes_irrep_injection_power.py",
+    "direct Python normalization check on the accepted carrier using the exact exporter and STF bridge formulas",
+    "direct Python physical stored-basis rotation check using S D S^-1 and orientation_bank()[0]"
+  ],
+  "artifacts": [],
+  "findings": [
+    {
+      "finding_id": "MES-P0-CARRIER-STF-CONVENTION",
+      "claim_id": "C-PR135-FINITE-NULL-RANK",
+      "verdict": "fail",
+      "severity": "critical",
+      "statement": "The accepted carrier stores each positive-m pair as sqrt(2) Re(a_lm) and -sqrt(2) Im(a_lm), while the WU-006 STF bridge and WU-008 intervention path consume the same bytes as unscaled Re/Im coefficients. The frozen q2 and o2 values are therefore not the squared STF norms of the accepted physical carrier, and the eight reported frame-free coordinates are not invariant under the physical SO(3) action on that carrier. WU-006/WU-007 ranks and WU-008 method-power results cannot retain their stated frame-free-irrep interpretation until the representation boundary is corrected and every affected analysis is rerun.",
+      "assumptions_used": [
+        "The accepted carrier exporter and its inverse define the authoritative stored-basis convention for the frozen WU-006 and WU-008 arrays.",
+        "A claimed frame-free feature family must be invariant under the physical SO(3) representation acting on the accepted stored carrier, not merely under tensor rotations applied after an inconsistent bridge.",
+        "The standard complex-harmonic-to-STF formulas used by the bridge require unscaled Re/Im coefficients unless an explicit basis conversion is performed first."
+      ],
+      "evidence_refs": [
+        "worktree:htt/obsstat/planck_pr3_operator.py:242-296 stores m>0 entries as sqrt(2) Re(a_lm) and -sqrt(2) Im(a_lm), and its inverse divides by sqrt(2) and restores the sign.",
+        "worktree:htt/obsstat/planck_lowell_irrep_projection.py:160-219 declares unscaled (a_l0, Re a_l1, Im a_l1, ...) input and applies standard complex-harmonic STF formulas without converting the accepted carrier basis.",
+        "worktree:htt/obsstat/planck_irrep_injections.py:1-57 explicitly declares non-sqrt(2)-rescaled input and uses metric diag(1,2,2,...).",
+        "worktree:scripts/observed_runs/run_planck_mes_irrep_injection_power.py:336-420 loads accepted paired and CMB-only carrier arrays unchanged before rotation, injection, and feature extraction.",
+        "worktree:scripts/observed_runs/planck_irrep_power_adapter.py:36-50 passes accepted carrier rows unchanged to the STF bridge.",
+        "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:729-808 and 1159-1194 describe unscaled storage, squared STF norms, a frame-free family, and the incompatible injection metric.",
+        "Accepted observed carrier numerical check: scalar C2=210.46184716646644 and C3=482.02081141805786 imply q2=(15/(8*pi))*5*C2=628.0508120398902 and o2=(35/(8*pi))*7*C3=4698.8546821339505, while the frozen WU-006 artifact reports 1187.7466992941445 and 9340.678305804555.",
+        "Physical stored-basis rotation counterexample: S D S^-1 preserves stored harmonic energies to roundoff but changes q2 from 1187.7466992941445 to 1237.1052927259059, o2 from 9340.678305804555 to 9395.931479209783, JQ from -0.0740351356 to -0.3228033503, and every mixed coordinate.",
+        "worktree:tests/obsstat/test_observable_irrep_orbit.py:92-119 rotates tensors only after construction and maps them through the same bridge, so it does not test the physical representation acting on accepted carrier bytes.",
+        "Targeted test command passed 34 tests in 6.68 seconds, demonstrating that the current suite does not cover this representation boundary."
+      ],
+      "evidence_fingerprint": "mes-wu006-wu008:accepted-carrier-sqrt2-sign-vs-unscaled-stf-bridge:physical-rotation-counterexample-v1",
+      "counterevidence_refs": [
+        "The current orbit, integration, and injection-power tests all pass, but they do not exercise accepted-carrier SO(3) equivariance.",
+        "Typed absence is implemented distinctly from a valid zero radial norm; this sound contract does not remedy the carrier/STF mismatch."
+      ],
+      "reproduction": [
+        "Load the observed accepted l=2 and l=3 carrier rows and verify their stored Euclidean sums equal (2l+1) C_l.",
+        "Compute the correct accepted-basis norms q2=(15/(8*pi))*sum(b2^2) and o2=(35/(8*pi))*sum(b3^2), then compare them with the frozen WU-006 q2/o2 fields.",
+        "Construct S=diag(1,sqrt(2),-sqrt(2),...) and apply the physical stored-basis action S D S^-1 for the first registered WU-008 rotation.",
+        "Verify stored harmonic energy is preserved, then pass the rotated bytes unchanged through the current bridge and compare all eight alleged frame-free coordinates.",
+        "Run python -m pytest -q tests/obsstat/test_observable_irrep_orbit.py tests/integration/test_planck_mes_irrep_analysis.py tests/integration/test_planck_mes_irrep_injection_power.py to confirm the existing false-negative test coverage."
+      ],
+      "confidence": 0.999,
+      "unresolved": [
+        "The corrected WU-006/WU-007 finite-pool ranks, component/foreground scores, and Galactic-companion comparison require a new complete replay.",
+        "The corrected WU-008 conditional method-power curves require regenerated templates, rotations, amplitude normalization, feature extraction, and calibration under one authoritative basis convention."
+      ],
+      "report_only_remedy": [
+        "Remove the claimbox P0=0/P1=0 admission and label affected numerical results INVALIDATED_BY_CARRIER_STF_CONVENTION_MISMATCH.",
+        "State the accepted stored convention b_lm=(a_l0,sqrt(2)Re a_lm,-sqrt(2)Im a_lm) and the conversion required before the STF formulas.",
+        "Retain the independent scalar MES ceiling algebra, generic finite-pool rank semantics, typed-absence contract, likelihood/prior disclaimers, and family-identification block as unaffected claim-limited material."
+      ],
+      "new_experiment_required": true,
+      "required_tests": [
+        "End-to-end complex alm to accepted carrier to STF normalization test asserting q2=(15/(8*pi))*||b2||^2 and o2=(35/(8*pi))*||b3||^2.",
+        "Carrier-level physical SO(3) equivariance test for the STF tensors and invariance of every retained frame-free feature.",
+        "WU-008 basis-consistency test tying carrier metadata, rotation metric, templates, amplitude scaling, and feature extractor to one convention."
+      ]
+    },
+    {
+      "finding_id": "MES-P1-EIGHT-OF-NINE-ORBIT-DIMENSIONS",
+      "claim_id": "C-PR133-SOURCE-RESPONSE-TYPES",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The registered primary family has eight continuous coordinates, but a generic STF2 plus STF3 carrier has dimension 5+7=12 and a generic SO(3) orbit has dimension 3, leaving a nine-dimensional quotient. Eight smooth real features have Jacobian rank at most eight and therefore cannot locally separate generic orbits. The report must call the family a generically incomplete eight-feature subset, not merely say that global completeness is unproven.",
+      "assumptions_used": [
+        "The joint generic stabilizer of an STF2 and STF3 pair is discrete, so a generic SO(3) orbit has dimension three.",
+        "The registered scored family contains exactly eight continuous real coordinates.",
+        "Displayed q3 audit information is algebraically determined by q2 and JQ and does not add an independent ninth coordinate."
+      ],
+      "evidence_refs": [
+        "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:741-821 and 1529-1530 define a 5-component STF2 plus 7-component STF3 carrier, score eight coordinates, and label completeness only as unproven.",
+        "worktree:htt/obsstat/observable_irrep_orbit.py:30-51 and 117-131 freezes exactly eight primary coordinates and records generic/global completeness as unproven.",
+        "Generic quotient dimension count: dim(V2 plus V3)-dim(SO(3))=5+7-3=9.",
+        "Local differential count: an eight-component smooth invariant map has Jacobian rank at most eight and cannot be locally injective on a generic nine-dimensional quotient.",
+        "The pseudoscalar sign is discrete and cannot supply the missing continuous quotient dimension."
+      ],
+      "evidence_fingerprint": "mes-irrep-orbit:generic-quotient-dimension-12-minus-3-equals-9:registered-feature-count-8:v1",
+      "counterevidence_refs": [
+        "The report avoids an explicit global-completeness claim and already uses an unproven label.",
+        "Calling the object a feature family is defensible only if no orbit-coordinate or generic separation implication remains."
+      ],
+      "reproduction": [
+        "Count five independent components for STF2 and seven for STF3.",
+        "Subtract the three-dimensional generic SO(3) orbit under the discrete-stabilizer assumption.",
+        "Count the eight registered primary scalar features and note that q3 is dependent audit information.",
+        "Apply the rank theorem to conclude the eight-feature map cannot be a generic local coordinate system on the nine-dimensional quotient."
+      ],
+      "confidence": 0.995,
+      "unresolved": [
+        "A complete invariant family would require at least one additional independent continuous invariant and a generic Jacobian rank-nine audit.",
+        "Global orbit separation would additionally require branch, parity, and degenerate-stratum treatment; a ninth scalar alone is not sufficient."
+      ],
+      "report_only_remedy": [
+        "Replace GENERIC_GLOBAL_COMPLETENESS_UNPROVEN with GENERICALLY_INCOMPLETE_EIGHT_FEATURE_SUBSET and include the 12-3=9 dimension count.",
+        "Use selected invariant feature family rather than orbit-coordinate catalogue or complete orbit representation.",
+        "State that q3 is derived from q2 and JQ and is not a ninth scored degree of freedom."
+      ],
+      "new_experiment_required": false,
+      "required_test_if_completeness_is_later_claimed": "Register a new family with at least one additional independent invariant, then perform a generic Jacobian rank-nine audit plus branch/parity and degenerate-stratum tests before recalibration."
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR135-FINITE-NULL-RANK",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "MES-P0-CARRIER-STF-CONVENTION"
+      ],
+      "summary": "Finite-pool rank semantics and non-likelihood language are sound in isolation, but the numerical WU-006/WU-007 ranks and WU-008 power values fail their stated frame-free-irrep interpretation because the accepted carrier and STF/injection conventions disagree."
+    },
+    {
+      "claim_id": "C-PR133-SOURCE-RESPONSE-TYPES",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "MES-P1-EIGHT-OF-NINE-ORBIT-DIMENSIONS"
+      ],
+      "summary": "The report correctly blocks source, geometry, and Bianchi-family identification, but its eight-feature carrier summary is provably generically incomplete on the nine-dimensional orbit quotient and must be described accordingly."
+    }
+  ],
+  "errors": [],
+  "issue_dispositions": {
+    "typed_absence_vs_zero_fill": "No independent defect. q2/o2=0 are valid radial values; undefined normalized shapes are ABSENT with null values, and WU-008 converts missing decisions to bounded NaN semantics.",
+    "cmb_only_null_direction": "Language is conservative and does not identify a direction or source; numerical frame-free ranks are nevertheless invalidated by the carrier mismatch.",
+    "foreground_bank_sensitivity_ceiling": "The stated 13-template single-template necessary-condition ceiling is appropriately narrow, but its numerical Q/O STF interpretation requires corrected replay.",
+    "wu008_power_objection": "Not closed. Even absent the convention defect, WU-008 measures conditional power for five algebraic alternatives under a 200-reference functional, not power of the original 301/1000 observation tests or physical shear, vorticity, or Bianchi responses.",
+    "scalar_dependence_galactic_reporting": "Scalar results, participation-ratio dependence diagnostics, and Galactic companion ranks are present. Hidden Galactic-basis dependence of the nominal frame-free base remains because of the critical convention defect."
+  },
+  "cross_checks": {
+    "units": "MES ceilings are dimensionless squared invariants. q2/o2 units are nominally microkelvin squared, but normalization to the accepted carrier is wrong.",
+    "signs": "The decisive sign mismatch is accepted -sqrt(2) Im(a_lm) storage versus the bridge's unconverted Im(a_lm) input. MES one-way nonnegative ceiling signs are otherwise consistent.",
+    "priors": "No Bayesian or population prior enters the finite-rank analysis; five-template means are explicitly descriptive.",
+    "likelihood_semantics": "Finite-pool fractions are correctly not called likelihoods, posteriors, Bayes factors, or unconditional p-values. Only the CMB-only WU-008 arm is a matched conditional null arm; the paired arm is distribution-shift performance.",
+    "Q_F_G_status": "The report says it does not produce the separate (x,Q,Pi,F,G) diagnostic and distinguishes STF Q_ab. No MIO/HTT ownership breach was found.",
+    "local_global_rank": "The tensor-product Fisher rank deficiency is used only as a no-identification boundary; no local/global attribution is admitted.",
+    "family_identification_gate": "The report blocks physical source, geometry, and Bianchi-family identification pending physical response or native atlas plus null, mask, covariance, and equivalence gates. This ceiling is sound."
+  },
+  "file_targets": {
+    "report_only": [
+      "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:60-144",
+      "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:420-425",
+      "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:725-821",
+      "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:823-1401",
+      "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1403-1664",
+      "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1701-1742"
+    ],
+    "future_code_and_tests_not_authorized_here": [
+      "htt/obsstat/planck_lowell_irrep_projection.py",
+      "htt/obsstat/planck_irrep_injections.py",
+      "scripts/observed_runs/planck_irrep_power_adapter.py",
+      "scripts/observed_runs/run_planck_mes_irrep_injection_power.py",
+      "tests/obsstat/test_observable_irrep_orbit.py",
+      "tests/integration/test_planck_mes_irrep_analysis.py",
+      "tests/integration/test_planck_mes_irrep_injection_power.py"
+    ]
+  },
+  "final_report_review": {
+    "reviewed_at": "2026-08-29T23:18:10+09:00",
+    "status": "pass",
+    "verdict_counts": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0
+    },
+    "scope": "Final-report-only verification of the revised TeX and compiled PDF against the original adjudication; no new discovery wave, production repair, rerun, or claim promotion.",
+    "source_identity": {
+      "tex_path": "MES_BOUND_CURRENT_RESEARCH_REPORT.tex",
+      "tex_sha256": "1484d54af8c6ac12acc0c01b08481940baf9eab3fd12886a2c68f5ca15f5e2e9",
+      "pdf_path": "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf",
+      "pdf_sha256": "ff8a61ea2d7a10516869be0f4f3ead46e0e05c0830a47bb107e693a950cf52f2",
+      "pdf_pages": 24,
+      "pdf_creation_time": "2026-08-29T23:14:49+09:00"
+    },
+    "checks": [
+      {
+        "check": "carrier_stf_mismatch_and_radial_identities",
+        "status": "pass",
+        "line_evidence": [
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:78-94",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:208-251",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:258-283"
+        ],
+        "pdf_evidence": [
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:1",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:4"
+        ],
+        "verification": "The report correctly states c_lmc=sqrt(2) Re(a_lm), c_lms=-sqrt(2) Im(a_lm), the omitted inverse adapter, q2=(75/(8*pi)) C2, and o2=(245/(8*pi)) C3. Independent arithmetic gives q2=628.0508120398902 and o2=4698.8546821339505 from the recorded same-pass C2 and C3."
+      },
+      {
+        "check": "complete_withdrawal_of_affected_results",
+        "status": "pass",
+        "line_evidence": [
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:105-115",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:285-315",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1678-1701",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1823-1849",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1932-1946"
+        ],
+        "pdf_evidence": [
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:1",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:5",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:16",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:19"
+        ],
+        "verification": "Every affected frame-free/Galactic Q/O rank, component or external-holdout comparison, foreground-bank score, CMB-only STF rank, and WU-008 power statement is marked withdrawn or rejected pending a corrected complete rerun."
+      },
+      {
+        "check": "scalar_mes_ceiling_preserved",
+        "status": "pass",
+        "line_evidence": [
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:60-76",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:105-114",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:287-302",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:473-516",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:810-889",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1924-1946"
+        ],
+        "pdf_evidence": [
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:1",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:13"
+        ],
+        "verification": "The pre-STF scalar MES and scalar-morphology results remain unchanged and admitted only as one-way, premise-conditioned finite-pool diagnostics; the report does not convert them into measured shear/vorticity, likelihood, posterior, local/global attribution, or family identification."
+      },
+      {
+        "check": "orbit_dimension_and_typed_zero",
+        "status": "pass",
+        "line_evidence": [
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:323-349",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:387-391",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1065-1089",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1862-1866"
+        ],
+        "pdf_evidence": [
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:5",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:16"
+        ],
+        "verification": "The report correctly gives generic quotient dimension 5+7-3=9 and rejects generic separation by eight smooth coordinates. It also correctly distinguishes undefined normalized tensors at q2=0 or o2=0 from a defined determinant value zero when normalized tensors exist but the Krylov matrix has rank below three, with a separate noncyclic-stratum flag required."
+      },
+      {
+        "check": "no_active_misleading_table_figure_or_pass_promotion",
+        "status": "pass",
+        "line_evidence": [
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1091-1094",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1676-1687",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1703-1745",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:1811-1868",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.tex:2041-2048"
+        ],
+        "pdf_evidence": [
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:16",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:17",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:19",
+          "MES_BOUND_CURRENT_RESEARCH_REPORT.pdf:23"
+        ],
+        "verification": "One balanced iffalse block excludes all twelve affected figure inclusions and the detailed paired, component, foreground, CMB-only, and power tables from the compiled PDF. PDF text contains none of their standalone captions. Active status, inventory, and claim-audit tables mark every affected lane withdrawn or rejected. Prior PASS receipts and P0/P1 counts are explicitly historical process evidence, not current scientific admission."
+      }
+    ],
+    "pdf_render_review": {
+      "pages_visually_inspected_at_full_page_resolution": [
+        1,
+        4,
+        5,
+        13,
+        16,
+        19,
+        23
+      ],
+      "all_pages_contact_sheet_inspected": true,
+      "layout_findings": [],
+      "active_affected_figure_count": 0,
+      "inactive_affected_figure_count": 12,
+      "build_rerun": false,
+      "build_note": "No LaTeX rebuild was run because this assignment is read-only. The inspected PDF has the same 2026-08-29 23:14:49 creation/modification second as the revised TeX and contains the revised equations, withdrawals, inventory, and claim table."
+    },
+    "remaining_findings": [],
+    "original_adjudication_findings_preserved": true,
+    "production_files_edited": false
+  },
+  "production_files_edited": false
+}

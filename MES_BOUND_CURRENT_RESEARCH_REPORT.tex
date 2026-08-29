@@ -1,0 +1,2134 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=23mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,longtable,tabularx,array}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{float}
+\usepackage{placeins}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=NavyBlue,
+  citecolor=ForestGreen,
+  urlcolor=BrickRed,
+  pdftitle={The Current MES-Bound Framework and Planck Low-Multipole Results},
+  pdfsubject={Self-contained theory and conditional finite-pool data-analysis report}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em}
+\setlength{\emergencystretch}{4em}
+\renewcommand{\arraystretch}{1.13}
+\captionsetup{font=small,labelfont=bf}
+\newcommand{\rankfrac}[2]{#1/#2}
+\newcommand{\stf}{\operatorname{STF}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\assets}{MES\_BOUND\_CURRENT\_RESEARCH\_REPORT\_ASSETS}
+\newcommand{\microK}{\mu\mathrm{K}_{\mathrm{CMB}}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\definecolor{claimblue}{RGB}{25,68,112}
+\definecolor{warningbrown}{RGB}{125,60,20}
+\newenvironment{claimbox}
+  {\begin{center}\begin{minipage}{0.95\linewidth}\raggedright\color{claimblue}}
+  {\end{minipage}\end{center}}
+\newenvironment{warningbox}
+  {\begin{center}\begin{minipage}{0.95\linewidth}\raggedright\color{warningbrown}}
+  {\end{minipage}\end{center}}
+
+\title{\textbf{The Current MES-Bound Framework and Planck Low-Multipole Results}\\[0.35em]
+\large A self-contained account of the theory, finite-pool statistics,\\
+scalar mechanism audit, and the external-referee correction\\
+of the observer-space irreducible-tensor lane\\[0.25em]
+\normalsize Critical third revision}
+\author{HTT / MES research report}
+\date{Evidence cutoff and revision date: 29 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report gives a self-contained statement of the current
+Maartens--Ellis--Stoeger (MES) bound framework and all presently admitted
+Planck low-multipole results obtained after the statistical-method upgrade.
+The theory is a one-way, premise-conditioned ceiling on squared
+Hubble-normalized shear and vorticity invariants.  On the registered geodesic,
+residual-dipole-free branch, the two ceiling coordinates are deterministic
+functions of the measured quadrupole and octupole powers.  Their nonnegative
+transformation is invertible and creates neither a sky direction nor independent
+information.  In the exact observation-plus-300 paired CMB-plus-noise pool,
+$\Sigma^2_{\max}=2.40\times10^{-10}$ and
+$W^2_{\max}=3.01\times10^{-13}$ have local ranks $74/301$ each.  The frozen
+ten-coordinate scalar MES-plus-morphology family has rank $98/301$ under the
+legacy leave-one-out absolute-median reducer and $148/301$ under the
+all-two-sided leave-one-out ECDF-midrank reducer.  These are conditional
+finite-pool diagnostics, not physical measurements or unconditional
+$p$-values.
+
+The external referee reports exposed a consequential representation defect in
+the later observer-space lane.  The stored harmonic carrier uses the
+orthonormal real convention
+$c_{\ell m,c}=\sqrt2\,\Re a_{\ell m}$ and
+$c_{\ell m,s}=-\sqrt2\,\Im a_{\ell m}$ for $m>0$, whereas the STF projection
+and carrier-injection metric interpreted the same entries as unscaled real and
+imaginary parts.  This is not a harmless overall normalization: it treats
+$m=0$ and $m>0$ differently and therefore changes rotations and tensor shape.
+For example, the same-pass powers require
+$q_2=(75/8\pi)C_2=628.05\,\microK^2$ and
+$o_2=(245/8\pi)C_3=4698.85\,\microK^2$, not the previously reported
+$1187.75$ and $9340.68\,\microK^2$.  Consequently the previously quoted
+observer-space $27/301$ result, its 999-row CMB-only comparison, component and
+foreground replacements, and the carrier-domain power curves are withdrawn
+from the admitted scientific result set pending correction and complete
+rerun.  Their exact execution and byte/content provenance remain historical
+evidence; those properties do not restore semantic validity.
+
+The review also correctly establishes that an eight-coordinate catalogue
+cannot separate the generic nine-dimensional orbit space of a joint
+$\ell=2,3$ pair.  It further identifies an overbroad absence rule for a defined
+zero determinant on noncyclic Krylov strata.  These findings are recorded as
+method defects, not repaired by prose.  No current result identifies a
+physical shear or vorticity, a local/global origin, a foreground source, or a
+Bianchi family.
+\end{abstract}
+
+\begin{warningbox}
+\textbf{Current admission status after external review.}
+The scalar MES and scalar-morphology finite-pool results remain admitted at
+their existing conditional diagnostic ceiling.  Every result that consumes
+the faulty harmonic-to-STF or injection-basis interpretation is
+\emph{not currently admitted}: this includes the frame-free and Galactic STF
+ranks, component-product STF comparisons, foreground-bank projection scores,
+CMB-only STF ranks, and all WU-008 power statements.  This status change is a
+scientific-semantic correction, not a provenance failure and not a change to a
+reference value chosen after inspection.
+\end{warningbox}
+
+\begingroup
+\setlength{\parskip}{0pt}
+\tableofcontents
+\endgroup
+\clearpage
+
+\section{Questions, scope, and logical layers}
+
+The analysis addresses three nested questions.
+
+\begin{enumerate}[leftmargin=*,itemsep=0.3em]
+  \item \textbf{MES premise layer.}  Given registered almost-FRW and observer
+  premises, what upper-ceiling coordinates follow from the measured low-order
+  temperature multipole amplitudes?
+  \item \textbf{Observer-space layer.}  What radial, shape, mixed, and
+  parity-sensitive information is present in the measured $\ell=2$ and
+  $\ell=3$ harmonic blocks themselves?
+  \item \textbf{Finite-pool layer.}  How do the observed coordinates rank
+  relative to predeclared, finite Planck simulation ensembles when the complete
+  scoring operator is applied symmetrically to every row?
+\end{enumerate}
+
+The arrows between these layers are deliberately one-way:
+\begin{align*}
+\text{measured sky}&\longrightarrow
+\begin{cases}
+  \text{scalar powers}\longrightarrow\text{MES ceilings},\\
+  \text{harmonic blocks}\longrightarrow\text{observer-space STF tensors},
+\end{cases}\\[-0.2em]
+&\hspace{7em}\longrightarrow\text{finite-pool diagnostics}.
+\end{align*}
+There is no arrow in this report from a scalar ceiling or an observer-space
+tensor to a physical spacetime state.  Such an inverse would require a separately
+specified forward response, compatible frame and units, sufficient response
+rank, and additional observational support.
+
+Table~\ref{tab:result-map} separates the present theoretical and data-analysis
+results from work that has not been performed.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Current result map after the external-referee correction.}
+\label{tab:result-map}
+\begin{tabularx}{\linewidth}{@{}p{0.25\linewidth}p{0.19\linewidth}Y@{}}
+\toprule
+Object & Status & Exact scope or ceiling\\
+\midrule
+MES ceiling coordinates & Registered conditional formula & Geodesic,
+linear almost-FRW, registered frame; residual cosmological $\epsilon_1=0$ for
+the principal branch; full derivative-hierarchy derivation is not reproduced
+here\\
+Scalar-to-vector/STF lemma & Valid structural lemma & Rotational scalars alone
+under an $O(3)$-equivariant construction cannot produce a nonzero vector or
+STF tensor\\
+Finite-rank validity & Conditional theorem & Joint exchangeability under the
+declared null plus row-permutation equivariance; conservative ties\\
+Local/global identifiability & Structural result & Full nuisance-projected
+directional and depth-response rank is required\\
+Scalar Planck analysis & Executed & One SMICA row plus exact paired 300-row
+CMB-plus-noise pool\\
+Observer-space STF primary & Withdrawn pending rerun & The stored orthonormal
+real carrier was consumed with the wrong $m>0$ normalization; the
+eight-coordinate family is also demonstrably non-separating\\
+CMB-only STF lane & Withdrawn pending rerun & Inherits the same projection
+defect and, independently, is not exchangeable with the noisy observation\\
+PR3 component and external holdout STF lanes & Withdrawn pending rerun & All
+consume the faulty projection; product replacement also lacks matched
+product-specific null ensembles\\
+Foreground projection test & Withdrawn pending redesign & Inherits the faulty
+projection and has no demonstrated power for subdominant residuals\\
+Carrier-injection power study & Withdrawn pending rerun & The intervention
+metric and rotations used the unscaled complex-component convention on a
+$\sqrt2$-scaled real carrier\\
+Physical response inversion & Not performed & No shear, vorticity, local/global,
+or family inference\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{External-referee adjudication and semantic correction}
+\label{sec:external-correction}
+
+The two referee reports were not adopted as an all-or-nothing verdict.  Each
+objection was checked against the declared mathematics, the stored numerical
+objects, and the exact representation contracts.  This section records the
+findings that alter the current result set, the findings that sharpen only the
+claim ceiling, and the proposed remedies that would require a new experiment.
+
+\subsection{The harmonic-basis normalization mismatch}
+
+The portable carrier stores a real orthonormal harmonic vector.  For each
+$m>0$ its entries are
+\begin{equation}
+c_{\ell m,c}=\sqrt2\,\Re a_{\ell m},
+\qquad
+c_{\ell m,s}=-\sqrt2\,\Im a_{\ell m},
+\qquad c_{\ell0}=a_{\ell0}.
+\label{eq:real-carrier-convention}
+\end{equation}
+Hence
+\begin{equation}
+\|c_\ell\|^2
+=a_{\ell0}^2+2\sum_{m=1}^{\ell}|a_{\ell m}|^2
+=(2\ell+1)C_\ell.
+\label{eq:real-carrier-power}
+\end{equation}
+The printed STF formulae in Appendix~\ref{app:bridge}, however, take the
+unscaled tuple
+$(a_{\ell0},\Re a_{\ell1},\Im a_{\ell1},\ldots)$ as their input.  The required
+adapter is therefore
+\begin{equation}
+\Re a_{\ell m}=c_{\ell m,c}/\sqrt2,
+\qquad
+\Im a_{\ell m}=-c_{\ell m,s}/\sqrt2.
+\label{eq:required-real-adapter}
+\end{equation}
+The executed projection omitted Eq.~\eqref{eq:required-real-adapter}.  The
+$m=0$ entry was unchanged while every $m>0$ entry was interpreted too large by
+$\sqrt2$ (with the sine-sign convention also lost).  This is therefore not a
+single radial rescaling that would cancel after normalization.  It changes the
+representative under rotation, its eigenstructure, and every mixed $Q/O$
+coordinate.
+
+The radial invariants provide an exact internal check.  Under the stated STF
+normalization,
+\begin{align}
+q_2&=Q_{ab}Q^{ab}
+=\frac{15}{8\pi}\left(a_{20}^2+2\sum_{m=1}^{2}|a_{2m}|^2\right)
+=\frac{75}{8\pi}C_2,
+\label{eq:q2-cl-identity}\\
+o_2&=O_{abc}O^{abc}
+=\frac{35}{8\pi}\left(a_{30}^2+2\sum_{m=1}^{3}|a_{3m}|^2\right)
+=\frac{245}{8\pi}C_3.
+\label{eq:o2-cl-identity}
+\end{align}
+The same-pass scalar carrier gives
+$C_2=210.461847\,\microK^2$ and
+$C_3=482.020811\,\microK^2$.  Table~\ref{tab:normalization-audit} shows the
+decisive mismatch.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Representation-normalization audit.  Values in the last column are
+historical outputs of the faulty projection, not alternative estimators.}
+\label{tab:normalization-audit}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Invariant & Same-pass $C_\ell$ & Required by
+Eqs.~\eqref{eq:q2-cl-identity}--\eqref{eq:o2-cl-identity}
+& Previously reported\\
+\midrule
+$q_2\;(\microK^2)$ & $210.462$ & $628.051$ & $1187.747$\\
+$o_2\;(\microK^2)$ & $482.021$ & $4698.855$ & $9340.678$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The carrier-injection implementation made the reciprocal semantic error: it
+declared an unscaled complex-component metric
+$\operatorname{diag}(1,2,2,\ldots)$ while consuming the already orthonormal
+vector of Eq.~\eqref{eq:real-carrier-convention}.  Its nominal unit energies,
+rotation matrices, and amplitudes therefore do not have the intended carrier
+meaning.  Exact row counts, deterministic replay, and matching hashes verify
+what that code executed; they cannot establish that the wrong representation
+implements the intended scientific operator.
+
+\subsection{Downstream validity disposition}
+
+The scalar feature extraction reconstructs the complex harmonics with the
+inverse of Eq.~\eqref{eq:real-carrier-convention} before evaluating $C_\ell$
+and the scalar morphology coordinates.  Those scalar results do not consume
+the faulty STF projection and remain within their previous conditional claim
+ceiling.  Every $Q/O$-derived result does consume it and is withdrawn.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Effect of the normalization defect on the reported analysis lanes.}
+\begin{tabularx}{\linewidth}{@{}p{0.30\linewidth}p{0.22\linewidth}Y@{}}
+\toprule
+Lane & Current status & Reason\\
+\midrule
+Scalar $C_\ell$, MES anchors, and scalar morphology & Retained, conditional &
+Uses the correctly decoded complex harmonics and does not consume $Q/O$\\
+Paired-300 frame-free and Galactic STF ranks & Withdrawn & Radial, shape,
+mixed, and parity coordinates change under the correct adapter\\
+999-row CMB-only STF lane & Withdrawn & Same projection defect; additionally
+the noisy observation is not exchangeable with a noise-free null pool\\
+Component products and external CMB holdouts & Withdrawn & Same projection
+defect; the replacement products also lack matched product-specific nulls\\
+Foreground-template projection bank & Withdrawn & Same projection defect and
+no demonstrated sensitivity to subdominant residual amplitudes\\
+Carrier-domain injection power & Withdrawn & Template energy, rotations, and
+irrep extraction use the wrong carrier convention\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+No corrected rank is estimated in this report.  A valid replacement requires
+one convention adapter, rotation-covariance and radial-identity regressions,
+and a complete rerun of every affected row under the already frozen scientific
+questions.  Reusing the old ranks or altering tolerances would be a false
+repair.
+
+\subsection{The catalogue is demonstrably non-separating}
+
+The first referee is correct that ``global completeness unproven'' was too
+weak.  A real $\ell=2$ STF tensor has five degrees of freedom and a real
+$\ell=3$ STF tensor has seven.  At a generic pair $(Q,O)$ with trivial
+$SO(3)$ stabilizer, quotienting the 12-dimensional product by three rotations
+leaves a nine-dimensional orbit space:
+\begin{equation}
+\dim\bigl[(\mathrm{STF}_2\oplus\mathrm{STF}_3)/SO(3)\bigr]_{\rm generic}
+=5+7-3=9.
+\label{eq:orbit-dimension}
+\end{equation}
+Eight smooth coordinates cannot separate a generic nine-dimensional
+manifold.  The old frame-free family is therefore a partial diagnostic
+catalogue, not a complete orbit registry.  The shortfall is scientifically
+important: $Q$ contributes its amplitude and one shape invariant, while the
+old catalogue gives $O$ only its amplitude as a pure-octupole invariant;
+octupole shape otherwise enters through mixed contractions.
+
+Multipole vectors provide a standard competing representation of a fixed
+multipole and make the missing pure-$\ell=3$ shape information explicit
+\cite{CopiHutererStarkman2004,Weeks2004,SchwarzEtAl2016}.  The three sorted
+octupole-vector dot products are already present in the scalar analysis, but
+simply appending them does not by itself prove that a proposed joint catalogue
+separates the quotient: discrete sign, permutation, parity, and joint-orientation
+identifications must be handled, and functional independence must be checked.
+That is a future redesign, not a post-hoc patch to the withdrawn family.
+
+\subsection{Critical disposition of the remaining referee findings}
+
+\begin{longtable}{@{}p{0.25\linewidth}p{0.19\linewidth}p{0.49\linewidth}@{}}
+\caption{Disposition of the principal external-review findings.}
+\label{tab:referee-disposition}\\
+\toprule
+Finding & Disposition & Consequence in this revision\\
+\midrule
+\endfirsthead
+\toprule
+Finding & Disposition & Consequence in this revision\\
+\midrule
+\endhead
+No power calibration & Partly sustained, now blocked & The later algebraic
+injection study did add a coherence-sensitive integer-product combiner, but it
+neither used physical templates nor survived the carrier-convention audit.
+No current power claim remains.\\
+Family rank adds ``no information'' beyond one local rank & Overstated & The
+row-equivariant family rank is a genuine finite-pool multiplicity calibration,
+not an independent physical observable.  An independence approximation based
+on an effective dimension does not algebraically force the exact $27/301$.
+The old rank is nevertheless withdrawn for the projection defect.\\
+Galactic lower-side behavior & Sustained as an interpretive warning & In the
+withdrawn output the upper-tail ranks $252/301$ and $289/301$ correspond, in
+the absence of ties, to descriptive lower-side counts $50/301$ and $13/301$.
+The lower direction was not predeclared and FFP10 contains no residual
+foreground; no Galactic inference is admitted.\\
+Foreground bank rules out residuals & Sustained & A squared cosine has
+quadratic response to a small contaminant, and the simultaneous $Q/O$ minimum
+further reduces power.  The old $144/301$ cannot rule out subdominant or mixed
+foreground residuals even apart from the projection defect.\\
+CMB-only ranks are anti-conservative & Sustained in premise, not as a universal
+sign theorem & Observation noise is absent from the null and exchangeability
+fails.  Extra noise need not move every normalized shape coordinate in a fixed
+direction, so the sign of every rank shift is not mathematically forced.  The
+lane is withdrawn rather than interpreted.\\
+Replace every typed absence by zero & Partly sustained & Zero amplitude makes
+$\widehat Q$ or $\widehat O$ genuinely undefined and remains a typed absence.
+When both normalized tensors exist but the Krylov matrix has rank below three,
+$\det[v,\widehat Qv,\widehat Q^2v]$ is defined and equals zero; a future schema
+should store zero plus a stratum flag instead of aborting.\\
+Absolute-median and ECDF/factorial contrasts & Sustained & Strictly increasing
+positive reparameterizations preserve ECDF ranks.  Squaring contrasts and the
+flat ECDF $\epsilon_1$ curve are algebraic consequences, not empirical
+discoveries.  The remaining five-count mixing contrast is descriptive and is
+not assigned significance.\\
+Naive binomial error bars are mandatory & Not adopted as stated & The reported
+fractions are exact ranks on fixed finite pools with resolution $1/N$.
+A binomial standard error would add an IID super-population model not used by
+the rank test.  Generalization uncertainty and paired rank differences require
+a separately specified resampling or simulation design; none is fabricated
+here.  Display precision is nevertheless reduced to what interpretation
+supports.\\
+MES coefficients and comparison literature are underdocumented & Sustained &
+The carriers are retained as registered premise-conditioned formulae, not
+promoted as a newly derived theorem.  Their derivative-hierarchy premises and
+the difference from model-dependent Bianchi constraints are stated below.\\
+Program-level selection is hidden & Sustained & Table~\ref{tab:analysis-inventory}
+lists every analysis family, reducer, pool, product, and intervention reported
+here, including withdrawn lanes and explicitly unexecuted alternatives.
+Content hashes establish identity, not external preregistration chronology.\\
+\bottomrule
+\end{longtable}
+
+\section{Cosmological and MES-bound framework}
+
+\subsection{Kinematics and normalized target invariants}
+
+Let $u^a$ be the registered fundamental-observer four-velocity,
+$u^au_a=-1$, and
+\[
+h_{ab}=g_{ab}+u_au_b
+\]
+the spatial projector.  With metric signature $(-,+,+,+)$ and
+$\epsilon_{123}=+1$, the covariant velocity gradient is decomposed as
+\[
+\nabla_bu_a=-u_bA_a+\frac{1}{3}\Theta h_{ab}
+ +\sigma_{ab}+\omega_{ab},
+\]
+where $A_a=u^b\nabla_bu_a$ is the acceleration, $\Theta=\nabla_au^a$ is the
+expansion, $\sigma_{ab}=\sigma_{\langle ab\rangle}$ is the spatial shear, and
+$\omega_{ab}=\omega_{[ab]}$ is the spatial vorticity.  Define $H=\Theta/3$.
+The current MES coordinates target the squared dimensionless invariants
+\begin{equation}
+\Sigma^2\equiv\frac{\sigma_{ab}\sigma^{ab}}{6H^2},
+\qquad
+W^2\equiv\frac{\omega_{ab}\omega^{ab}}{6H^2}.
+\label{eq:physical-invariants}
+\end{equation}
+These are nonnegative scalar magnitudes.  They are not vectors, principal
+axes, eigenframes, or signed tensors.
+
+The MES programme uses the near-isotropy of the cosmic microwave background
+to place premise-dependent constraints on departures from an almost-FRW
+state~\cite{MaartensEllisStoeger1995,StoegerAraujoGebbie1997}.  The present
+version uses the geodesic branch $A_a=0$, the linear almost-EGS regime, and a
+registered fundamental-observer frame.  Coefficients involving time or spatial
+derivatives of radiation multipoles inherit the corresponding derivative-
+hierarchy premises; they are not universal identities of arbitrary spacetimes.
+
+\subsection{Temperature multipole amplitudes}
+
+For a temperature anisotropy field with angular power $C_\ell$, define
+\begin{equation}
+\epsilon_\ell
+=\frac{1}{T_0}
+\sqrt{\frac{(2\ell+1)C_\ell}{4\pi}},
+\label{eq:epsilon}
+\end{equation}
+where $T_0$ is expressed in the same temperature unit as $\sqrt{C_\ell}$.
+The reported numerical analysis fixes
+$T_0=2.72548\,\mathrm{K}=2.72548\times10^6\,\microK$.  Thus every
+$\epsilon_\ell$ is dimensionless and nonnegative.  The observed
+dipole is dominated by observer motion.  In the principal branch used below,
+that kinematic contribution is assigned to the observer-motion channel and the
+residual cosmological dipole is set to
+\[
+\epsilon_1=0.
+\]
+This is an explicit premise, not a conclusion extracted from the quadrupole or
+octupole.
+
+\subsection{Latest MES carriers and one-way ceilings}
+
+The registered geodesic carriers, before imposing $\epsilon_1=0$, are
+\begin{align}
+B_\sigma&=\frac{5}{3}\epsilon_1+3\epsilon_2+\frac{3}{7}\epsilon_3,
+\label{eq:bsigma-general}\\
+B_\omega&=\frac{10}{3}\epsilon_1+\frac{2}{15}\epsilon_2.
+\label{eq:bomega-general}
+\end{align}
+On the principal branch they reduce to
+\[
+B_\sigma=3\epsilon_2+\frac{3}{7}\epsilon_3,
+\qquad
+B_\omega=\frac{2}{15}\epsilon_2.
+\]
+The squared normalized ceiling coordinates are
+\begin{align}
+\Sigma^2&\leq\Sigma^2_{\max}
+=\frac{3}{2}B_\sigma^2
+=\frac{27}{98}(7\epsilon_2+\epsilon_3)^2,
+\label{eq:sigma-ceiling}\\
+W^2&\leq W^2_{\max}
+=\frac{3}{2}B_\omega^2
+=\frac{C_2}{30\pi T_0^2}.
+\label{eq:omega-ceiling}
+\end{align}
+The square symbols are essential: the reported variables are ceilings on the
+squared invariants in Eq.~\eqref{eq:physical-invariants}, not unsquared shear
+or vorticity amplitudes.
+
+Equations~\eqref{eq:bsigma-general}--\eqref{eq:bomega-general} are the
+recovered, registered carriers used by the scalar analysis.  This report does
+not reproduce the full covariant radiation-multipole derivation that fixes
+every derivative term and then justifies each omission.  They must therefore
+be read as conditional formulae under the stated geodesic, linear almost-EGS,
+derivative-hierarchy, frame, and dipole premises, rather than as universal
+identities of a measured sky.  The algebra from those carriers to
+Eqs.~\eqref{eq:sigma-ceiling}--\eqref{eq:omega-ceiling} is exact; the physical
+scope of the carriers remains premise-dependent.
+
+These inequalities are one-way.  A sky realization produces ceiling
+coordinates after the premises have been declared.  The converse---that a
+ceiling determines a unique physical source, geometry, direction, or
+spacetime---does not follow.
+
+The scientific role also differs from model-dependent Bianchi inference.
+Full forward-model analyses of Planck temperature and polarization constrain
+particular anisotropic-expansion modes much more tightly---for example a
+vector-mode limit $(\sigma_V/H)_0<4.7\times10^{-11}$ and a weaker regular
+tensor-mode limit of order $10^{-6}$ were reported by
+Saadeh et al.~\cite{SaadehEtAl2016}.  Those mode amplitudes, priors, transfer
+functions, and normalizations are not identical to
+Eq.~\eqref{eq:physical-invariants}, so the numbers must not be divided as if
+they were the same parameter.  The purpose of the MES ceiling here is its
+transparent one-way premise structure, not competitive numerical strength or
+a replacement for a physical likelihood.
+
+\subsection{Invertibility and absence of information gain}
+
+On the registered nonnegative domain the principal-branch transformation can
+be inverted:
+\begin{align}
+\epsilon_2&=\sqrt{\frac{75}{2}W^2_{\max}},\\
+\epsilon_3&=\sqrt{\frac{98}{27}\Sigma^2_{\max}}-7\epsilon_2,\\
+C_\ell&=\frac{4\pi T_0^2}{2\ell+1}\epsilon_\ell^2.
+\end{align}
+Consequently, for any accompanying morphology vector $M$,
+\begin{equation}
+\sigma(\Sigma^2_{\max},W^2_{\max},M)
+=\sigma(C_2,C_3,M)
+\label{eq:information-identity}
+\end{equation}
+on this domain.  The MES coordinates can expose a useful physical
+normalization and can change the geometry of a chosen rank reducer, but they do
+not add statistically independent information to the same-row $C_2,C_3$
+inputs.
+
+\subsection{Why a scalar ceiling cannot create direction or STF shape}
+
+Suppose $s$ denotes any collection of rotation-invariant scalars and
+$F(s)\in\mathbb R^3$ is $O(3)$-equivariant.  Since $Rs=s$ for every rotation
+$R$,
+\[
+F(s)=F(Rs)=R F(s)\qquad\text{for all }R\in O(3).
+\]
+The only vector fixed by every rotation is zero.  The same argument in the
+irreducible rank-two STF representation shows that an equivariant map from
+scalars alone to an STF tensor must also vanish.  Therefore
+\[
+\text{scalar MES ceiling}\not\Rightarrow
+\text{direction, nonzero vector, or nonzero STF tensor}.
+\]
+
+Direction-indexed data do permit legal moment maps.  For a full-sky scalar
+field $q(\widehat n,z)$,
+\begin{align}
+V_a(z)&=\frac{3}{4\pi}\int q(\widehat n,z)n_a\,d\Omega,
+\label{eq:vector-moment}\\
+T_{ab}(z)&=\frac{15}{8\pi}\int q(\widehat n,z)
+n_{\langle a}n_{b\rangle}\,d\Omega.
+\label{eq:stf-moment}
+\end{align}
+If $q=v_an^a+S_{ab}n^an^b$ plus harmonics orthogonal to $\ell=1,2$, with
+$S_{ab}$ STF, these normalizations recover $V_a=v_a$ and $T_{ab}=S_{ab}$.
+For a masked or discretized sky, the corresponding estimator and quadrature
+must be bound explicitly.  A single global scalar does not meet this premise.
+
+\subsection{Response-bound states and local/global identifiability}
+
+The current framework distinguishes three semantic objects:
+\begin{description}[leftmargin=3.2cm,style=nextline]
+  \item[Observable irrep state] Measured or simulated harmonic/STF content
+  with a declared frame, basis, units, operator, and typed degenerate strata.
+  \item[MES normalizer] A positive, same-channel, one-way ceiling that may
+  rescale an already existing compatible amplitude.  It creates no direction,
+  shape, response, or information.
+  \item[Response-bound state] An observable state tied to an independently
+  specified forward response with compatible channel, frame, basis, units,
+  epoch, and normalization.  Its response rank determines point or set
+  identification.
+\end{description}
+
+A rank-deficient response yields an identified set, not a point estimate.  A
+simple local/global directional model illustrates the requirement:
+\begin{equation}
+V_i=f_L(z_i)\,\boldsymbol\beta_L
+   +f_G(z_i)\,\boldsymbol\beta_G+\varepsilon_i.
+\label{eq:local-global}
+\end{equation}
+Let $S$ be the directional metric and $K$ the $2\times2$ covariance-weighted
+depth Gram matrix for $f_L,f_G$ after nuisance projection.  The six-parameter
+Fisher matrix is $K\otimes S$, so
+\begin{equation}
+\det F=\det(K)^3\det(S)^2.
+\label{eq:fisher-factor}
+\end{equation}
+One shell makes $K$ rank one; proportional depth profiles do the same.  Planck
+temperature morphology alone therefore cannot distinguish local boost from
+global tilt.  No such physical inversion is reported below.
+
+\section{Data objects, common operator, and finite-pool statistics}
+
+\subsection{Observation and two distinct null ensembles}
+
+The observation is the Planck PR3 SMICA temperature map.  SMICA is a
+component-separated Planck product~\cite{Planck2018IV}; the large-angle
+statistical context and its sensitivity to masks and foreground treatment are
+described by the Planck isotropy analysis~\cite{Planck2018VII}.
+
+Two null ensembles have different scientific roles.
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Paired primary.}  Exactly 300 ordered FFP10 SMICA
+  CMB-plus-noise realizations, numbered 00000--00299, combined with the single
+  observation to give $N=301$ rows.  This is the primary finite pool.
+  \item \textbf{Withdrawn CMB-only STF lane.}  Exactly 999 official FFP10 SMICA
+  CMB-only realizations, numbered 00000--00999 with only 00970 absent and 00818
+  included, combined with the same observation to give $N=1000$ rows.  No
+  noise realization enters this lane.  It does not replace the paired primary;
+  after review it is not an admitted calibrated test because the noisy
+  observation and noise-free rows are not jointly exchangeable, independently
+  of the STF representation defect.
+\end{enumerate}
+
+The common temperature operator performs one joint masked real-harmonic fit
+over $\ell=0,\ldots,5$ and retains the 32 real coefficients at
+$\ell=2,\ldots,5$.  The registered frame is Galactic, the map ordering is
+HEALPix RING, the processing grid is $N_{\rm side}=16$, and the unit is
+$\microK$.  The mask is the Planck PR3 common temperature mask, with frozen
+content identity
+\nolinkurl{sha256:34390a5c2d9c1462af87d51a9a3e88971781b23054d923563723531b7f30ea94}.
+The portable artifact does not expose an independently checkable
+$f_{\rm sky}$ scalar, so no value is invented here.  Source beam and pixel
+window are mapped to the declared common target before retained-feature
+evaluation.  The observed carrier was obtained in
+the same pass as its scalar features; it was neither reconstructed from those
+scalars nor estimated a second time.  Its scalar closure matches the frozen
+same-pass values, and the operator condition number is $6.2075$, far below the
+predeclared ceiling $10^8$; a condition number at or above that ceiling would
+have aborted the fit.
+
+No separate kinematic-quadrupole or aberration correction was introduced in
+this frozen operator.  Observation and simulations therefore passed through
+the same estimator code, but that symmetry does not imply that every physical
+observer-motion contribution is represented identically by the simulation
+products.  This is an operator premise, not a validated kinematic correction.
+
+Exact row identity and deterministic replay establish what was compared; they
+do not establish that either simulation pool is a complete physical model of
+the observation.
+
+\subsection{Reducer A: leave-one-out absolute median}
+
+Let $X_{ij}$ be coordinate $j$ for row $i$.  For a two-sided coordinate,
+\begin{equation}
+d_{ij}=\left|X_{ij}-\operatorname{median}(X_{-i,j})\right|.
+\label{eq:absmedian}
+\end{equation}
+For an upper tail use $d_{ij}=X_{ij}$ and for a lower tail use
+$d_{ij}=-X_{ij}$.  The observation-inclusive local rank is
+\begin{equation}
+p_{ij}=\frac1N\sum_{k=0}^{N-1}{\bf1}(d_{kj}\ge d_{ij}).
+\label{eq:local-rank}
+\end{equation}
+Because every row has its own leave-one-out centre, the complete map from all
+rows to all scores, not only the observation-row formula, is the statistical
+object.  This reducer is invariant under positive affine rescaling but not
+under arbitrary monotone reparameterization.
+
+\subsection{Reducer B: leave-one-out ECDF midrank}
+
+For every row and coordinate define
+\begin{equation}
+u_{ij}=\frac{
+\#\{k\ne i:X_{kj}<X_{ij}\}
++\tfrac12\#\{k\ne i:X_{kj}=X_{ij}\}}
+{N-1}.
+\label{eq:ecdf-midrank}
+\end{equation}
+The oriented score is $2|u_{ij}-1/2|$ for a two-sided coordinate, $u_{ij}$
+for an upper tail, and $1-u_{ij}$ for a lower tail.  Exact integer midrank
+numerators preserve mathematical ties.  This reducer is invariant under
+strictly increasing coordinate transformations that preserve tie structure.
+
+\subsection{Family scan, ties, and the finite-rank premise}
+
+For a predeclared family $\mathcal F$, every row receives
+\begin{equation}
+r_i=\min_{j\in\mathcal F}p_{ij},
+\qquad S_i=-\log r_i.
+\end{equation}
+The reported family rank is
+\begin{equation}
+p_{\mathcal F}
+=\frac1N\sum_{k=0}^{N-1}{\bf1}(r_k\le r_0)
+=\frac1N\sum_{k=0}^{N-1}{\bf1}(S_k\ge S_0).
+\label{eq:family-rank}
+\end{equation}
+Ties and the observation itself are included, so a zero rank is impossible;
+the resolution floors are $1/301$ and $1/1000$~\cite{PhipsonSmyth2010}.
+
+If $(Z_0,\ldots,Z_{N-1})$ are jointly exchangeable under the stated null and
+the complete row-scoring map is permutation-equivariant, then the
+observation-inclusive family rank is super-uniform, with ties treated
+conservatively.  Row-swap and row-permutation checks establish the second
+condition.  The first condition is a scientific null-model premise.  If FFP10
+does not faithfully represent the observation under the intended null, the
+fractions remain exact ranks relative to the frozen pool but do not acquire
+unconditional Type-I-error calibration.
+
+The proof is short.  Exchangeability of the input rows and equivariance of the
+complete map imply exchangeability of $(S_0,\ldots,S_{N-1})$.  Conditional on
+their unordered multiset, the observation label is uniformly distributed over
+the $N$ positions.  Counting all scores at least as large as $S_0$, including
+ties, can only increase the ordinary randomized rank; hence the reported rank
+is super-uniform.
+
+Feature families, coordinate transformations, tails, reducers, missing-row
+rules, and the $\epsilon_1$ grid were fixed before observation-row scoring.
+No covariance matrix, Gaussian likelihood, posterior, Bayes factor, or
+observation-selected feature subset enters Eq.~\eqref{eq:family-rank}.
+
+\section{Scalar MES and morphology results}
+
+\subsection{The eight non-anchor morphology coordinates}
+
+The scalar analysis combines two low-order amplitude or MES coordinates with
+eight morphology coordinates.  Define the even-to-odd power ratio
+\begin{equation}
+\mathcal P=\frac{C_2+C_4}{C_3+C_5}.
+\end{equation}
+For each $\ell$, form the real symmetric angular-momentum power tensor
+\begin{equation}
+\widetilde A^{(\ell)}_{ij}
+=\frac{1}{2\ell(\ell+1)}
+\sum_{m,m'}a^*_{\ell m}
+\{J_i,J_j\}_{mm'}a_{\ell m'},
+\qquad
+A^{(\ell)}=\frac{\widetilde A^{(\ell)}}{\tr\widetilde A^{(\ell)}}.
+\label{eq:power-tensor}
+\end{equation}
+If $\lambda_{\ell,1}\le\lambda_{\ell,2}\le\lambda_{\ell,3}$ are its
+trace-one eigenvalues, the registered gaps are
+\[
+G_\ell=\lambda_{\ell,3}-\lambda_{\ell,2},
+\qquad \ell=2,3.
+\]
+
+Multipole vectors are the headless axes in the harmonic-polynomial
+factorization
+\begin{equation}
+T_\ell(\widehat n)=A_\ell
+\left[\prod_{r=1}^{\ell}
+(\boldsymbol v_{\ell,r}\!\cdot\!\widehat n)
+-\text{traces}\right],
+\label{eq:multipole-vector}
+\end{equation}
+defined up to permutation and individual sign changes
+\cite{CopiHutererStarkman2004,Weeks2004}.  Sign-invariant coordinates are
+\begin{align*}
+d_2&=|\boldsymbol v_{2,1}\cdot\boldsymbol v_{2,2}|,\\
+(d_{3,0},d_{3,1},d_{3,2})
+&=\operatorname{sort}\bigl(
+|\boldsymbol v_{3,1}\cdot\boldsymbol v_{3,2}|,
+|\boldsymbol v_{3,1}\cdot\boldsymbol v_{3,3}|,
+|\boldsymbol v_{3,2}\cdot\boldsymbol v_{3,3}|\bigr).
+\end{align*}
+Let $\widehat{\boldsymbol n}_2$ be the normalized quadrupole plane normal and
+$\widehat{\boldsymbol n}_{3,ij}$ the three normalized octupole pair normals.
+The plane-alignment coordinate is
+\begin{equation}
+A_{23}=\max_{i<j}
+\left|\widehat{\boldsymbol n}_2\cdot
+\widehat{\boldsymbol n}_{3,ij}\right|.
+\end{equation}
+The eight-coordinate morphology block is therefore
+$M=(\mathcal P,G_2,G_3,d_2,d_{3,0},d_{3,1},d_{3,2},A_{23})$.
+
+\subsection{Six paired family decompositions}
+
+Six families were compared on the identical 301 rows with the original
+all-two-sided, leave-one-out absolute-median operator:
+\begin{center}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Family & First coordinates & Remaining coordinates\\
+\midrule
+Generic 12 & $C_2,C_3,C_4,C_5$ & $M$\\
+Raw reduced 10 & $C_2,C_3$ & $M$\\
+Linear-$\epsilon$ 10 & $\epsilon_2,\epsilon_3$ & $M$\\
+MES-squared 10 & $\Sigma^2_{\max},W^2_{\max}$ & $M$\\
+Anchors only 2 & $\Sigma^2_{\max},W^2_{\max}$ & none\\
+Morphology only 8 & none & $M$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Exact scalar family ranks in the paired 300-row primary pool.  The
+families are a paired operator decomposition, not six independent tests.}
+\label{tab:scalar-family-ranks}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Family & Global rank & Observation-row minimum\\
+\midrule
+Generic 12 & $133/301$ & $d_{3,0}:16/301$\\
+Raw reduced 10 & $110/301$ & $d_{3,0}:16/301$\\
+Linear-$\epsilon$ 10 & $109/301$ & $d_{3,0}:16/301$\\
+MES-squared 10 & $98/301$ & $d_{3,0}:16/301$\\
+Anchors only 2 & $78/301$ & both anchors: $74/301$\\
+Morphology only 8 & $88/301$ & $d_{3,0}:16/301$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\small
+\begin{longtable}{@{}p{0.25\linewidth}rrrr@{}}
+\caption{Complete observed MES-squared family coordinates and paired-null
+summaries.  Quantiles are the linear 5th, 50th, and 95th percentiles of the
+300 frozen null rows; they are descriptive and do not alter the rank
+operator.}\label{tab:scalar-coordinate-summary}\\
+\toprule
+Coordinate & Observed & Local rank & Null median & Null 5--95\%\\
+\midrule
+\endfirsthead
+\toprule
+Coordinate & Observed & Local rank & Null median & Null 5--95\%\\
+\midrule
+\endhead
+$\Sigma^2_{\max}$ & $2.40\!\times\!10^{-10}$ & $74/301$ &
+$7.86\!\times\!10^{-10}$ & $(2.50\!\times\!10^{-10},2.06\!\times\!10^{-9})$\\
+$W^2_{\max}$ & $3.01\!\times\!10^{-13}$ & $74/301$ &
+$1.23\!\times\!10^{-12}$ & $(3.23\!\times\!10^{-13},3.48\!\times\!10^{-12})$\\
+$\mathcal P$ & $0.553$ & $95/301$ & $1.698$ & $(0.585,5.959)$\\
+$G_2$ & $0.450$ & $182/301$ & $0.389$ & $(0.144,0.491)$\\
+$G_3$ & $0.560$ & $35/301$ & $0.329$ & $(0.086,0.553)$\\
+$d_2$ & $0.133$ & $177/301$ & $0.269$ & $(0.027,0.727)$\\
+$d_{3,0}$ & $0.399$ & $16/301$ & $0.115$ & $(0.012,0.396)$\\
+$d_{3,1}$ & $0.434$ & $155/301$ & $0.313$ & $(0.094,0.583)$\\
+$d_{3,2}$ & $0.437$ & $174/301$ & $0.553$ & $(0.222,0.879)$\\
+$A_{23}$ & $0.940$ & $135/301$ & $0.810$ & $(0.391,0.980)$\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+The quadrupole has only one independent shape degree of freedom after its
+amplitude and rotation are removed.  Consequently $G_2$, $d_2$, and the STF
+shape invariant $J_Q$ used in the withdrawn tensor lane are alternative,
+partly many-to-one parameterizations of the same generic quadrupole shape,
+not independent evidence channels.  Their simultaneous appearance in
+different sensitivity families is a coordinate-choice audit and must not be
+counted as multiplicity-free information.
+
+The observed squared ceilings are
+\begin{equation}
+\Sigma^2_{\max}=2.4000870222\times10^{-10},
+\qquad
+W^2_{\max}=3.0061887931\times10^{-13}.
+\end{equation}
+They follow from
+\[
+C_2=210.4618472\,\microK^2,\qquad
+C_3=482.0208114\,\microK^2,
+\]
+which give $\epsilon_2=3.3575598243\times10^{-6}$ and
+$\epsilon_3=6.0122078079\times10^{-6}$ through
+Eq.~\eqref{eq:epsilon}.
+Both have local rank $74/301$.  Their Pearson correlation over the complete
+pool is $0.994874$, their Spearman correlation is $0.993738$, and the
+two-coordinate correlation block has condition number $389.2$.  These facts
+quantify strong same-row dependence; they are not evidence for two independent
+measurements.
+
+Thus the statement supported by the data is narrow: the observation-row
+minimum is morphology-driven rather than anchor-driven.  The complete family
+rank nevertheless depends on the coordinate family because adding or replacing
+coordinates changes the row-score distribution for every null row.
+
+\subsection{Factorial coordinate-mechanism audit}
+
+To separate nonlinear squaring from carrier mixing, four ten-coordinate cells
+were fixed on the same 301 rows:
+\begin{align*}
+\text{linear }\epsilon &: (\epsilon_2,\epsilon_3,M),\\
+\text{square only} &: (\epsilon_2^2,\epsilon_3^2,M),\\
+\text{carrier only} &: (B_\sigma,B_\omega,M),\\
+\text{MES squared} &: (\tfrac32B_\sigma^2,\tfrac32B_\omega^2,M).
+\end{align*}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Factorial family ranks under the two registered reducers and the
+all-two-sided tail registry.}
+\label{tab:factorial}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Cell & Absolute-median rank & ECDF-midrank rank\\
+\midrule
+Linear $\epsilon$ & $109/301$ & $153/301$\\
+Square only & $110/301$ & $153/301$\\
+Carrier only & $98/301$ & $148/301$\\
+MES squared & $98/301$ & $148/301$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the ECDF reducer, the equality of the linear and squared cells is not an
+empirical discovery: $x\mapsto x^2$ and
+$B\mapsto\tfrac32B^2$ are strictly increasing on the registered nonnegative
+domain and therefore preserve ECDF ranks and ties.  Only the carrier-mixing
+contrast remains non-tautological, changing $153/301$ to $148/301$.  No
+bootstrap or super-population uncertainty was predeclared for that paired
+five-count difference, so it is retained only as a descriptive
+coordinate-mechanism sensitivity.  Under the absolute-median reducer the
+nonlinear change of metric can itself alter ranks; its $98/301$ value is partly
+a property of that coordinate mechanism and reducer.
+
+\subsection{Tail-registry sensitivity}
+
+The factorial comparison above retains the all-two-sided tail convention so
+that coordinate-mechanism effects are isolated.  A separate, predeclared
+physics-oriented registry uses upper tails for the two MES ceilings, the two
+power-tensor gaps, and the plane-alignment maximum, while retaining two-sided
+tails for parity and all four multipole-vector dot products.  Applied to the
+MES-squared cell, the results are
+\begin{center}
+\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Tail registry & Absolute median & ECDF midrank\\
+\midrule
+All two-sided & $98/301$ & $148/301$\\
+Physics-oriented & $98/301$ & $93/301$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The unchanged absolute-median rank and changed ECDF rank are another paired
+operator-sensitivity result.  Neither row is an independently selected test,
+and the $93/301$ value does not supersede the all-two-sided factorial result.
+
+\subsection{Residual-dipole premise sensitivity}
+
+Equations~\eqref{eq:bsigma-general}--\eqref{eq:bomega-general} were evaluated
+rowwise on a predeclared 101-point grid
+$0\le\epsilon_1\le10^{-5}$.  The observed ceilings change substantially over
+that interval: at the upper endpoint, $\Sigma^2_{\max}$ is $5.37$ times and
+$W^2_{\max}$ is $5694$ times their $\epsilon_1=0$ values.  Nevertheless the
+complete MES-squared family ranks remain $98/301$ and $148/301$ throughout the
+grid for the two reducers.
+
+For ECDF this constancy is forced by the same monotone-transformation theorem:
+adding the same nonnegative dipole term to every row and then squaring remains
+strictly increasing over this grid.  It is not evidence that vorticity is
+insensitive to a residual cosmological dipole.  The absolute ceiling changes
+by orders of magnitude and the grid is only a bounded premise stress test; it
+is not a data-derived interval for intrinsic $\epsilon_1$.
+
+\section{Withdrawn observer-space irreducible-tensor lane}
+
+\begin{warningbox}
+Every numerical rank in this section and in the following component,
+CMB-only, and power sections is retained only to document the superseded
+execution.  None belongs to the current admitted scientific result set because
+of the normalization mismatch in Section~\ref{sec:external-correction}.
+\end{warningbox}
+
+\subsection{Harmonic convention and reversible STF bridge}
+
+For a real temperature map the retained convention is
+\begin{equation}
+T_\ell(\widehat n)=a_{\ell0}Y_{\ell0}(\widehat n)
++2\sum_{m=1}^{\ell}\Re\!\left[a_{\ell m}Y_{\ell m}(\widehat n)\right],
+\label{eq:real-harmonics}
+\end{equation}
+with orthonormal Condon--Shortley harmonics.  The real storage block is
+the orthonormal vector in Eq.~\eqref{eq:real-carrier-convention}, not the
+unscaled tuple
+$(a_{\ell0},\Re a_{\ell1},\Im a_{\ell1},\ldots)$.  The executed bridge failed
+to apply Eq.~\eqref{eq:required-real-adapter} before the STF formulae.
+
+The $\ell=2$ block is mapped linearly to a real symmetric trace-free tensor
+$Q_{ab}$, and the $\ell=3$ block to a real fully symmetric trace-free tensor
+$O_{abc}$~\cite{Thorne1980}.  Five and seven independent Cartesian components
+respectively match the dimensions $2\ell+1$.  The intended normalization is
+given in Appendix~\ref{app:bridge}.  Every executed row passed
+\[
+a_{\ell m}\longrightarrow(Q,O)\longrightarrow a_{\ell m}
+\]
+with maximum absolute residual
+$1.4210854715\times10^{-14}$ against the predeclared
+$\mathrm{atol}=\mathrm{rtol}=5\times10^{-13}$.  That round trip validated a
+map and its own inverse under the same wrong input convention.  It did not
+validate the carrier-to-formula adapter or rotation covariance and is therefore
+not evidence for semantic correctness.
+
+\subsection{Radial, shape, mixed, and parity coordinates}
+
+The radial and quadrupole-shape invariants are
+\begin{align}
+q_2&=Q_{ab}Q^{ab},&
+q_3&=Q_a{}^bQ_b{}^cQ_c{}^a,\\
+o_2&=O_{abc}O^{abc},&
+J_Q&=\sqrt6\,\frac{q_3}{q_2^{3/2}}.
+\end{align}
+Here $q_2,o_2$ have units $\microK^2$, $q_3$ has units $\microK^3$, and
+$J_Q$ is dimensionless.  For a real symmetric trace-free $3\times3$ tensor,
+\[
+Q^3-\frac{q_2}{2}Q-\frac{q_3}{3}I=0,
+\qquad \frac{q_2^3}{2}-3q_3^2\ge0,
+\]
+so $J_Q\in[-1,1]$ when $q_2>0$.
+
+When $q_2,o_2>0$, define
+\[
+\widehat Q=Q/\sqrt{q_2},\qquad
+\widehat O=O/\sqrt{o_2},\qquad
+v_a=\widehat O_{abc}\widehat Q^{bc},
+\]
+and
+\[
+S_{ab}=\stf(\widehat O_{acd}\widehat O_b{}^{cd}).
+\]
+The registered dimensionless mixed coordinates are
+\begin{align}
+\widehat R_{v0}&=v_av^a,&
+\widehat R_{v1}&=v_a\widehat Q^a{}_bv^b,\\
+\widehat R_{v2}&=v_a(\widehat Q^2)^a{}_bv^b,&
+\widehat R_{QS}&=\widehat Q_{ab}S^{ab},\\
+\widehat K_v&=\det[v,\widehat Qv,\widehat Q^2v].
+\end{align}
+The first four are reflection-even; $\widehat K_v$ is a pseudoscalar that
+changes sign under reflection.  It is therefore an $SO(3)$ invariant with
+explicit parity covariance, not an ordinary $O(3)$ scalar.
+
+The frame-free family is
+\begin{equation}
+\mathcal F_{\rm ff}=
+\{q_2,o_2,J_Q,\widehat R_{v0},\widehat R_{v1},
+\widehat R_{v2},\widehat R_{QS},\widehat K_v\}.
+\label{eq:framefree-family}
+\end{equation}
+For a separate absolute-frame sensitivity check, let
+$z_G=(0,0,1)$ be the Galactic pole and define
+\[
+P_Q^G=|\widehat Qz_G|^2,
+\qquad P_O^G=|\widehat O_{abc}z_G^bz_G^c|^2.
+\]
+The ten-coordinate companion is
+$\mathcal F_G=\mathcal F_{\rm ff}\cup\{P_Q^G,P_O^G\}$.
+It is descriptive and is not a physical source-direction estimator.
+
+\subsection{Degenerate strata and typed absence}
+
+At $q_2=0$ the quadrupole shape is undefined; at $o_2=0$ the octupole shape
+and normalized mixed coordinates are undefined.  Those are genuine typed
+absences: no fallback axis or silent zero can repair a missing normalized
+tensor.  A repeated quadrupole spectrum likewise makes a distinguished
+eigenaxis unavailable when a coordinate explicitly requires that axis.
+
+The determinant
+\[
+\widehat K_v=\det[v,\widehat Qv,\widehat Q^2v]
+\]
+has a different status.  Once $\widehat Q$ and $\widehat O$ exist, it is a
+polynomial scalar and remains defined when its Krylov matrix has rank below
+three; on that stratum its value is exactly zero.  Treating every such case as
+absence is therefore overbroad.  A corrected schema must store the value zero
+together with an explicit noncyclic-stratum flag.  The old executions happened
+to contain no row that triggered this branch, but that empirical fact does not
+make the type rule sound.
+
+Completeness is not merely unproven: Eq.~\eqref{eq:orbit-dimension} proves that
+the eight-coordinate family cannot generically separate the nine-dimensional
+joint orbit space.
+
+% The following block preserves the exact superseded numbers in source history
+% for auditability, but excludes them from the active report because their
+% carrier-to-STF semantics are invalid.
+\iffalse
+
+\section{Paired 300-row observer-space result}
+
+\subsection{Observed coordinates and local ranks}
+
+\begin{longtable}{@{}p{0.22\linewidth}r r r@{}}
+\caption{Observed frame-free coordinates and local ranks in the paired
+primary.  The ranks use denominator 301.  $q_3$ is algebraic audit information
+and is not scored separately.}\label{tab:paired-coordinates}\\
+\toprule
+Coordinate & Observed value & Abs.-median & ECDF-midrank\\
+\midrule
+\endfirsthead
+\toprule
+Coordinate & Observed value & Abs.-median & ECDF-midrank\\
+\midrule
+\endhead
+$q_2$ & $1187.746699$ & $86/301$ & $34/301$\\
+$q_3$ & $-1237.223041$ & --- & ---\\
+$J_Q$ & $-0.0740351$ & $248/301$ & $248/301$\\
+$o_2$ & $9340.678306$ & $241/301$ & $242/301$\\
+$\widehat R_{v0}$ & $0.4727877$ & $4/301$ & $4/301$\\
+$\widehat R_{v1}$ & $-0.0715848$ & $114/301$ & $118/301$\\
+$\widehat R_{v2}$ & $0.2371130$ & $4/301$ & $4/301$\\
+$\widehat R_{QS}$ & $9.9376\times10^{-4}$ & $282/301$ & $284/301$\\
+$\widehat K_v$ & $-0.0053223$ & $80/301$ & $80/301$\\
+\bottomrule
+\end{longtable}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\linewidth]{\assets/paired300_observed_coordinate_ranks.pdf}
+\caption{Direct frozen paired-pool output.  The smallest observation-row
+local ranks are $4/301$ for the unsigned mixed concentrations
+$\widehat R_{v0}$ and $\widehat R_{v2}$.  The different $q_2$ ranks illustrate
+reducer sensitivity.  Local minima are not family-level detections.}
+\label{fig:paired-local}
+\end{figure}
+
+\subsection{Family ranks and dependence}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Observer-space family ranks in the paired primary.}
+\label{tab:paired-families}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Family & Absolute median & ECDF midrank\\
+\midrule
+Frame-free primary, 8D & $27/301$ & $27/301$\\
+Galactic companion, 10D & $34/301$ & $33/301$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.90\linewidth]{\assets/paired300_family_reducer_comparison.pdf}
+\caption{Direct frozen paired-pool family comparison.  Adding two
+Galactic-pole coordinates changes the full row-score distribution.  The
+difference is an absolute-frame sensitivity, not evidence for a Galactic
+physical source.}
+\label{fig:paired-family}
+\end{figure}
+
+The observation-row minimum is $4/301$, giving
+$S_0=-\log(4/301)=4.3208159$, but 27 complete rows are at least as extreme
+after every row is allowed to select its own minimum coordinate.  The family
+rank is therefore $27/301$, not $4/301$.
+
+The Spearman-correlation participation ratios are $6.5815$ for the eight
+frame-free coordinates and $8.4260$ for the ten-coordinate companion.  They
+summarize dependence spread and are not numbers of independent experiments or
+physical degrees of freedom.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\linewidth]{\assets/paired300_null_score_distributions.pdf}
+\caption{The 300 paired-null maximum-score distributions with the observed
+score marked vertically.  Histograms are visualizations of the same exact
+discrete comparison in Table~\ref{tab:paired-families}; they are not fitted
+densities or additional significance calculations.}
+\label{fig:paired-null}
+\end{figure}
+
+\section{Frozen component replication and foreground-projection test}
+
+\subsection{Execution contract and interpretation boundary}
+
+This extension changes exactly one object at a time: the observed temperature
+map supplying row zero.  It preserves the WU-006 joint-cut-sky mask and
+operator, harmonic basis, $\ell=2,\ldots,5$ transfer, the exact ordered 300
+paired CMB-plus-noise carrier rows, both reducers, all tails, both family
+memberships, and the observation-inclusive row-scoring rule.  Thus every
+admitted product is analyzed as
+\[
+  (Z_0^{(p)},Z_1,\ldots,Z_{300}),
+\]
+where only $Z_0^{(p)}$ depends on product $p$.  No null map was reopened and
+the accepted SMICA carrier was reproduced numerically before replacement.
+Delivered PR3 component-product beams were recorded but not applied, because
+applying a product-specific transfer after inspecting the products would have
+changed the frozen operator.
+
+This design isolates sensitivity to the observation product, but it does not
+make the Planck FFP10 pool exchangeable with WMAP, CosmoGlobe, or BeyondPlanck.
+Consequently the Planck component ranks are conditional replications against
+the original frozen pool, while the external-product ranks are descriptive
+holdout scores against that pool, not calibrated cross-instrument $p$-values.
+
+\subsection{PR3 component products and external CMB holdouts}
+
+Table~\ref{tab:cross-product-stability} reports the radial invariants $q_2$
+and $o_2$, the two coordinates carrying the smallest SMICA local ranks,
+$\widehat R_{v0}$ and $\widehat R_{v2}$, and the frame-free and Galactic
+family ranks.  Each rank pair is absolute-median/ECDF-midrank.  The full
+$Q_{ab}$ and $O_{abc}$ component vectors are retained in the generated
+cross-product table; $q_2$ and $o_2$ summarize their squared norms in the
+registered orthonormal real-harmonic basis.
+
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Cross-product stability under exact observation-row replacement.
+All ranks have denominator 301.  ``FF'' is the eight-coordinate frame-free
+family and ``G'' is the ten-coordinate Galactic companion.}
+\label{tab:cross-product-stability}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+Product & $q_2$ & $o_2$ & $\widehat R_{v0}$ & $\widehat R_{v2}$ &
+$\cos^2_Q$ & $\cos^2_O$ & FF L/E & G L/E\\
+\midrule
+SMICA & 1187.747 & 9340.678 & 0.472788 & 0.237113 & 1.000000 & 1.000000 & 27/27 & 34/33\\
+Commander & 1040.589 & 8815.922 & 0.442541 & 0.225185 & 0.988573 & 0.996828 & 46/41 & 58/53\\
+NILC & 1208.299 & 9502.155 & 0.479976 & 0.237819 & 0.993741 & 0.999799 & 27/27 & 34/33\\
+SEVEM & 756.295 & 9069.171 & 0.413061 & 0.167852 & 0.821135 & 0.913665 & 81/40 & 102/50\\
+WMAP9 ILC & 1425.999 & 10272.120 & 0.471676 & 0.248155 & 0.969095 & 0.994801 & 15/15 & 19/18\\
+CosmoGlobe CMB & 12037.663 & 20587.512 & 0.355955 & 0.185962 & 0.468890 & 0.573292 & 69/89 & 89/112\\
+BeyondPlanck CMB & 5543.807 & 14158.920 & 0.364681 & 0.199840 & 0.594981 & 0.714986 & 64/62 & 83/78\\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+Here $\cos^2_Q$ and $\cos^2_O$ are squared Frobenius cosines with the SMICA
+STF tensors.  They compare shape while discarding overall amplitude and sign.
+Commander and NILC closely track both SMICA tensor shapes; SEVEM is less close,
+especially in $Q$.  The family result is stable for NILC, moderately shifted
+for Commander, and reducer-sensitive for SEVEM.  None of those descriptive
+differences is a test of the difference between products.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.90\linewidth]{\assets/component_family_ranks.pdf}
+\caption{Frozen family ranks for the four PR3 component-separated products.
+The same 300 null rows score every replacement observation.  Bar differences
+are sensitivity diagnostics, not independent significances.}
+\label{fig:component-family-ranks}
+\end{figure}
+
+Table~\ref{tab:cross-product-coordinate-ranks} gives every frame-free local
+rank.  A cell $a/b$ means absolute-median numerator $a$ and ECDF-midrank
+numerator $b$, always over 301 rows.  This exposes coordinate-level changes
+that a single family fraction would hide.
+
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{All eight coordinate-rank numerators under component replacement
+and external CMB holdout.  Column labels follow Eq.~\eqref{eq:framefree-family}.}
+\label{tab:cross-product-coordinate-ranks}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+Product & $q_2$ & $o_2$ & $J_Q$ & $\widehat R_{v0}$ &
+$\widehat R_{v1}$ & $\widehat R_{v2}$ & $\widehat R_{QS}$ & $\widehat K_v$\\
+\midrule
+SMICA & 86/34 & 241/242 & 248/248 & 4/4 & 114/118 & 4/4 & 282/284 & 80/80\\
+Commander & 73/14 & 267/274 & 194/194 & 10/10 & 76/78 & 7/7 & 290/286 & 63/64\\
+NILC & 87/36 & 234/236 & 275/274 & 4/4 & 206/194 & 4/4 & 227/224 & 66/66\\
+SEVEM & 65/6 & 253/254 & 162/162 & 14/14 & 24/30 & 27/27 & 94/96 & 42/40\\
+WMAP9 ILC & 101/54 & 200/202 & 131/134 & 4/4 & 33/36 & 2/2 & 217/216 & 72/76\\
+CosmoGlobe CMB & 23/46 & 18/36 & 219/222 & 33/33 & 12/16 & 17/17 & 217/216 & 193/184\\
+BeyondPlanck CMB & 227/234 & 64/102 & 140/140 & 28/28 & 12/16 & 11/11 & 132/124 & 62/64\\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\linewidth]{\assets/component_coordinate_rank_heatmap.pdf}
+\caption{LOO-ECDF coordinate-rank fractions for the four PR3 products.  The
+two small SMICA mixed-coordinate ranks persist in NILC and remain low, though
+not identical, in Commander and SEVEM.}
+\label{fig:component-coordinate-ranks}
+\end{figure}
+
+The WMAP9 ILC holdout is especially close in tensor shape and has frame-free
+ranks $15/301$ under both reducers.  This is useful transport evidence but not
+an independent calibration, because the null rows remain Planck FFP10.  The
+CosmoGlobe and BeyondPlanck CMB products differ more strongly in amplitudes and
+shape and have less extreme family ranks.  The variation demonstrates why the
+SMICA result cannot be promoted without product and null-fidelity qualifiers.
+
+\subsection{Fixed-bank foreground falsification}
+
+To test a simple projection explanation without fitting after seeing SMICA,
+the foreground template bank was fixed in advance.  For every SMICA or paired
+null row $i$ and template $t$, define
+\[
+ A_{it}^{Q}=\frac{\langle Q_i,Q_t\rangle_F^2}
+ {\lVert Q_i\rVert_F^2\lVert Q_t\rVert_F^2},\qquad
+ A_{it}^{O}=\frac{\langle O_i,O_t\rangle_F^2}
+ {\lVert O_i\rVert_F^2\lVert O_t\rVert_F^2},
+\]
+and the simultaneous single-template score
+\[
+ S_i^{\rm fg}=\max_{t\in\mathcal T}\min(A_{it}^{Q},A_{it}^{O}).
+\]
+The upper-tail rank counts every row whose own maximum over the same fixed bank
+is at least the observed maximum.  Thus the look-elsewhere choice of template
+is included inside the row-symmetric score.
+
+The admitted bank contains Planck PR4 30, 44, 353, 545, and 857 GHz maps plus
+synchrotron, dust, AME, and free--free component maps from each of CosmoGlobe
+and BeyondPlanck: 13 templates in total.  The best SMICA template is the
+CosmoGlobe free--free map, but its simultaneous score is only 0.072797.  The
+fixed-bank rank is
+\[
+   \rankfrac{144}{301}.
+\]
+The predeclared exceptional-alignment gate was numerator $\leq15$.  Therefore
+the necessary morphology expected from a simple single-template projection is
+not exceptional in this bank.  This result actively disfavors that narrow
+explanation; it does not exclude mixtures, nonlinear leakage, transfer
+mismatch, an omitted foreground morphology, or other systematics, and it does
+not validate a physical source.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\linewidth]{\assets/foreground_projection_diagnostics.pdf}
+\caption{Squared STF cosines between SMICA and each admitted foreground
+template.  A single-template projection would require simultaneous $Q$ and
+$O$ alignment; the bank statistic uses the smaller coordinate and calibrates
+the maximum over templates against every paired-null row.}
+\label{fig:foreground-projection}
+\end{figure}
+
+The remaining requested lanes were not silently coerced into the bank.
+WMAP9 K/Ka/Q temperature maps were opened read-only but refused because their
+FITS unit string is \texttt{mK,thermodynamic}, whereas the predeclared registry
+expected \texttt{mK, thermodynamic}; this is a representation-level admission
+mismatch, not evidence of scientific disagreement, and no WMAP low-frequency
+value was scored.  QUIJOTE 11/13/17/19 GHz products contain partial-sky
+\texttt{UNSEEN} support incompatible with the frozen Planck mask; filling or
+changing the mask was forbidden.  The available CLASS 40 GHz and reobserved
+products provide $V,Q,U$ rather than a compatible temperature-$I$ channel, so
+they cannot generate the temperature $Q_{ab},O_{abc}$ objects without
+fabrication.  No compatible component split was locally available.  Each is
+a typed lane limitation, not a failure of the successful products.
+
+\section{Separate 999-row CMB-only robustness result}
+
+The same observed carrier, feature registry, tails, and reducers were compared
+with the distinct CMB-only ensemble.  The observation map was not re-estimated;
+999 CMB-only null maps were processed, with no noise maps read.  The paired
+300-row result remains the primary result.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Observer-space family ranks in the 999-row CMB-only robustness pool.}
+\label{tab:cmbonly-families}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Family & Absolute median & ECDF midrank\\
+\midrule
+Frame-free primary, 8D & $61/1000$ & $55/1000$\\
+Galactic companion, 10D & $78/1000$ & $73/1000$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The frame-free local-rank numerators, in the coordinate order of
+Eq.~\eqref{eq:framefree-family}, are
+\begin{align*}
+&(245,859,911,9,370,21,992,294)
+&&\text{(absolute median)},\\
+&(90,870,916,9,356,21,992,300)
+&&\text{(ECDF midrank)}.
+\end{align*}
+The minimum is $9/1000$ at $\widehat R_{v0}$, followed by $21/1000$ at
+$\widehat R_{v2}$.  Complete-family calibration raises these to the ranks in
+Table~\ref{tab:cmbonly-families}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\linewidth]{\assets/cmbonly999_observed_coordinate_ranks.pdf}
+\caption{Direct frozen CMB-only robustness output.  The observation is fixed;
+only the finite comparison ensemble differs from the paired primary.}
+\label{fig:cmbonly-local}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.90\linewidth]{\assets/cmbonly999_family_reducer_comparison.pdf}
+\caption{CMB-only family ranks.  Lower fractions than in the paired primary
+show null-ensemble sensitivity.  They do not validate foreground cleaning,
+constitute an independent test, or promote a detection claim.}
+\label{fig:cmbonly-family}
+\end{figure}
+
+For the frame-free family, the CMB-only minus paired rank-fraction differences
+are $-0.02870$ and $-0.03470$ under the two reducers.  For the Galactic
+companion they are $-0.03496$ and $-0.03663$.  These comparisons reuse the
+same observation and feature families, so they are descriptive paired
+sensitivities, not independent replications.  The CMB-only pool omits
+instrument noise by construction and cannot establish foreground or
+component-separation fidelity.
+
+The CMB-only participation ratios are $6.6625$ for the frame-free family and
+$8.5474$ for the Galactic companion.  The STF round-trip residual remains
+$1.4210854715\times10^{-14}$ under the same frozen criterion.
+
+\section{Registered carrier-domain method-power experiment}
+\label{sec:power}
+
+\subsection{Question and fixed intervention}
+
+The preceding sections ask how the observed sky ranks in frozen finite pools.
+The present experiment asks a different question: if a predeclared algebraic
+pattern is added to otherwise held-out simulation carriers, how often does a
+specified 200-reference scoring functional reject at level $10/201$?  The
+observation is never used.  This is a method-power experiment, not a new
+observation test and not an estimate of physical-source sensitivity.
+
+Write each real harmonic block in the registered layout
+\[
+  \boldsymbol a_\ell=(a_{\ell0},\Re a_{\ell1},\Im a_{\ell1},\ldots,
+  \Re a_{\ell\ell},\Im a_{\ell\ell})
+\]
+with metric $G_\ell=\operatorname{diag}(1,2,2,\ldots,2)$.  The full carrier
+has 32 components for $\ell=2,\ldots,5$.  Five integer-seeded templates are
+registered: \texttt{Q\_AXIAL}, \texttt{O\_PLANAR}, \texttt{MIX\_AXIAL},
+\texttt{MIX\_PLANAR}, and \texttt{MIX\_GENERIC}.  Each is normalized so that
+\[
+  \boldsymbol t_2^{\mathsf T}G_2\boldsymbol t_2+
+  \boldsymbol t_3^{\mathsf T}G_3\boldsymbol t_3=1,
+  \qquad \boldsymbol t_4=\boldsymbol t_5=0,
+\]
+with equal energy in the two active blocks when both are nonzero.  They are
+analytic carrier perturbations.  They are expressly not shear, vorticity, or
+Bianchi solutions.
+
+Thirty-two deterministic proper rotations are obtained from hash-fixed open
+unit-cube points and unit quaternions.  If $D_\ell(R)$ is the metric-preserving
+real-harmonic representation, the intervention is
+\begin{equation}
+ \boldsymbol a'_{2,3}=\boldsymbol a_{2,3}
+   +A\,s\sqrt{4\pi}\,D(R)\boldsymbol t_{2,3},
+ \qquad
+ \boldsymbol a'_{4,5}=\boldsymbol a_{4,5},
+ \label{eq:carrier-injection}
+\end{equation}
+at $A\in\{0,0.25,0.5,1,2,4,8\}$.  The shared scale is fixed from CMB-only
+reference rows 00000--00199:
+\[
+ s=\operatorname{median}_i
+ \left[\frac{\boldsymbol a_{2,i}^{\mathsf T}G_2\boldsymbol a_{2,i}+
+ \boldsymbol a_{3,i}^{\mathsf T}G_3\boldsymbol a_{3,i}}{4\pi}\right]^{1/2}
+ =34.0422165082\,\microK.
+\]
+Zero amplitude is computed once per arm; repeating it over templates or
+orientations is forbidden because that would manufacture trials.
+
+\subsection{Reference, evaluation arms, and exact finite scores}
+
+The reference set is the same 200 CMB-only carriers in both arms.  The paired
+arm evaluates IDs 00200--00299, giving 100 independent simulation skies.  The
+CMB-only arm evaluates IDs 00200--00999 except 00970, giving 799 skies.  Thus
+calibration and evaluation IDs are disjoint, but the two evaluation arms share
+100 underlying CMB simulation identities and cannot be treated as independent
+replications.  The paired carriers additionally contain noise.  No observed
+row, noise map, or raw map is opened by this experiment.
+
+The matched-null exchangeability premise behind the CMB-only finite-rank
+interpretation does \emph{not} hold for the paired arm: paired queries are
+CMB-plus-noise carriers whereas all 200 references are CMB-only.  Accordingly,
+the paired-arm $10/201$ rejection fractions describe performance of the frozen
+decision rule under this registered distribution shift.  They are not exact
+matched-null $p$ calibrations.  The CMB-only arm is the matched conditional
+finite-pool evaluation.
+
+For each injected query and each coordinate, the query is joined to the 200
+reference rows.  Both frozen reducers act on this 201-row pool.  If $k_j$ is
+the resulting integer local-rank numerator for coordinate $j$, two family
+combiners are applied:
+\[
+  M=\min_j k_j,
+  \qquad
+  P=\prod_j k_j.
+\]
+The family numerator is the number of complete-pool rows having its own $M$ or
+$P$ no larger than the query value.  The product is compared as an exact
+integer; no $\chi^2$ approximation or coordinate-independence assumption is
+introduced.  A trial rejects precisely when this family numerator is at most
+10.  This fixes the nominal threshold $10/201<0.05$ before the injected
+results are read.
+
+Power first averages the 32 paired orientations within each simulation sky,
+then averages over skies.  The reported standard error is the standard error
+of these sky-level orientation averages, conditional on the fixed 200-row
+reference set.  Orientations are not pseudoreplicated as independent skies.
+The five templates are separate alternatives, not random draws from a
+population; any template average in a figure is only a visual compression.
+
+The complete execution contains 96,000 positive-amplitude injected carriers
+in the paired arm and 767,040 in the CMB-only arm.  Both arms completed with
+zero typed absences.  All local and family ranks remain exact integers.  The
+unaltered $\ell=4,5$ blocks and proper-rotation metric were checked directly.
+
+\subsection{Null-injection behavior}
+
+Table~\ref{tab:power-baseline} gives the rejection fractions at $A=0$.
+Because the evaluation skies are finite and the 201-row family statistic is
+discrete, these empirical fractions need not equal 0.05.  The ECDF/minimum
+MES-10 combination rejects no held-out row in either arm.  This is a real
+conservatism of that registered finite functional, not a missing result.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Zero-injection rejection fractions.  ``Min'' is the minimum-local-
+$p$ combiner and ``Prod'' the exact integer-product combiner.}
+\label{tab:power-baseline}
+\begin{tabular}{@{}llllrr@{}}
+\toprule
+Family & Reducer & Combiner & Threshold & Paired & CMB-only\\
+\midrule
+MES-10 & Abs.-median & Min  & $10/201$ & 0.0500 & 0.0300\\
+MES-10 & Abs.-median & Prod & $10/201$ & 0.0200 & 0.0501\\
+MES-10 & ECDF        & Min  & $10/201$ & 0.0000 & 0.0000\\
+MES-10 & ECDF        & Prod & $10/201$ & 0.0300 & 0.0350\\
+Irrep-8 & Abs.-median & Min  & $10/201$ & 0.0300 & 0.0501\\
+Irrep-8 & Abs.-median & Prod & $10/201$ & 0.0500 & 0.0713\\
+Irrep-8 & ECDF        & Min  & $10/201$ & 0.0000 & 0.0175\\
+Irrep-8 & ECDF        & Prod & $10/201$ & 0.0800 & 0.0839\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Power curves, crossings, and functional specificity}
+
+Table~\ref{tab:power-average} compresses the five distinct alternatives by an
+equal template average at three amplitudes.  It is not a prior-weighted or
+population-averaged power.  The close paired/CMB-only values are a useful
+stability check: across every registered cell, their median absolute power
+difference is 0.00271, their mean difference is 0.00485, and the maximum is
+0.0301 at the zero-injection MES-10 absolute-median/product cell.  Shared CMB
+identities prevent interpreting this agreement as independent confirmation.
+
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Descriptive template-mean power.  Each entry is paired/CMB-only.}
+\label{tab:power-average}
+\begin{tabular}{@{}llllrrr@{}}
+\toprule
+Family & Reducer & Combiner & Meaning & $A=2$ & $A=4$ & $A=8$\\
+\midrule
+MES-10 & Abs.-median & Min & five-template mean & .615/.619 & .827/.830 & .963/.964\\
+MES-10 & Abs.-median & Prod & five-template mean & .519/.519 & .722/.720 & .805/.809\\
+MES-10 & ECDF & Min & five-template mean & .000/.000 & .000/.000 & .000/.000\\
+MES-10 & ECDF & Prod & five-template mean & .436/.434 & .709/.705 & .828/.828\\
+Irrep-8 & Abs.-median & Min & five-template mean & .971/.972 & 1.000/1.000 & 1.000/1.000\\
+Irrep-8 & Abs.-median & Prod & five-template mean & .607/.607 & .656/.655 & .673/.675\\
+Irrep-8 & ECDF & Min & five-template mean & .110/.110 & .256/.253 & .288/.289\\
+Irrep-8 & ECDF & Prod & five-template mean & .558/.556 & .594/.592 & .579/.577\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\linewidth]{\assets/injection_power_curves.pdf}
+\caption{Registered method power versus amplitude.  Positive-amplitude points
+are equal-template visual summaries; every template remains separately stored
+and scored.  Grey lines mark 0.5 and 0.9.  The two arms overlap in CMB
+identities and are not independent curves.  Allowed use is conditional method-
+power comparison for the registered 200-reference functional only.}
+\label{fig:injection-power}
+\end{figure}
+
+Template resolution is essential.  For the ECDF/min-local-$p$ irrep family,
+\texttt{MIX\_AXIAL} is the only alternative to cross both 50\% and 90\% on the
+grid, with both crossings bracketed by $A\in[2,4]$.  Its paired/CMB-only powers
+are $0.4350/0.4356$ at $A=2$ and $0.9950/0.9817$ at $A=4$.  At $A=8$ the
+same functional reaches only $0.4106/0.4111$ for \texttt{MIX\_PLANAR}, about
+$0.022/0.023$ for \texttt{Q\_AXIAL}, $0.010/0.011$ for
+\texttt{O\_PLANAR}, and zero for \texttt{MIX\_GENERIC}.  By contrast, the
+absolute-median/min-local-$p$ irrep functional reaches power one for every
+template at $A=8$.  The method therefore has no single template-independent
+``sensitivity.''
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\linewidth]{\assets/injection_template_power_heatmap.pdf}
+\caption{Template-resolved ECDF/min-local-$p$ power.  The zero MES-10 panels
+are the observed finite-pool saturation of this exact family combiner, not
+zero carrier response.  The mixed-axial irrep alternative is qualitatively
+different from the other registered algebraic alternatives.  This is a C2
+conditional diagnostic, not a physical-template or observation-test result.}
+\label{fig:injection-heatmap}
+\end{figure}
+
+The exact product combiner resolves information hidden by minimum-rank ties.
+At $A=8$, ECDF/product MES-10 power is approximately one for
+\texttt{Q\_AXIAL}, \texttt{MIX\_AXIAL}, and \texttt{MIX\_PLANAR}, 0.950 for
+\texttt{O\_PLANAR}, but only 0.196/0.199 for \texttt{MIX\_GENERIC}.  For the
+irrep family at the same amplitude it is one for the two structured mixed
+templates, about 0.357 for \texttt{Q\_AXIAL}, 0.267/0.274 for
+\texttt{O\_PLANAR}, and 0.270/0.253 for \texttt{MIX\_GENERIC}.  Thus the
+product and minimum combiners answer different, predeclared questions about
+distributed versus single-coordinate extremeness.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{\assets/injection_scalar_irrep_difference.pdf}
+\caption{Template-mean irrep-8 minus MES-10 power.  Positive and negative
+differences coexist and change with amplitude, reducer, and combiner.  The
+figure compares observer-space statistical functionals, not physical models.}
+\label{fig:injection-difference}
+\end{figure}
+
+No monotonic curve was imposed: 61 of the 80 template--family--reducer--
+combiner curves are nondecreasing on the positive grid and 19 are not.  Across
+all registered functionals and templates, 48 of 80 cases have at least one
+50\% grid crossing and 42 of 80 have at least one 90\% crossing.  Crossings
+are reported only as adjacent amplitude brackets; there is no interpolation
+or extrapolation and downward recrossings are retained.
+
+The maximum absolute first-16 versus full-32 orientation power difference is
+0.035625.  This is a bounded quadrature-sensitivity diagnostic, not a proof of
+continuum Haar convergence.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\linewidth]{\assets/injection_orientation_sensitivity.pdf}
+\caption{First-16 minus full-32 orientation-averaged power for every positive
+cell.  Orientations are paired within a sky and do not enlarge the independent
+sky denominator.}
+\label{fig:injection-orientation}
+\end{figure}
+
+\subsection{Referee audit and bounded second revision}
+
+The single independent WU-008 referee audit verified the exact execution
+head and tree, all 13 manifested artifact hashes, and the embedded report-asset
+copies.  An independent reconstruction from the committed rank arrays found
+zero mismatches among 496 power summaries and reproduced the threshold,
+monotonicity, arm-difference, and orientation-sensitivity counts.  Physics,
+finite-pool arithmetic, numerical execution, claim ownership, and the absence
+of physical-response promotion were otherwise consistent.
+
+The audit nevertheless rejected the first report revision for two P1 defects:
+the claim-bearing result pack did not yet carry the repository's complete
+machine-readable use boundary, and the four-across heatmap title collided with
+its panel titles at both required display widths.  The one bounded repair adds
+a single result-pack metadata block owned by \texttt{OBSSTAT}, with scope,
+C2 conditional claim tier, allowed and forbidden uses, no-transfer status,
+inherited sky/mask status, covariance role, arm-specific null status, caveats,
+generating procedure, and exact input/candidate identities.  The same block is
+bound into both the result and manifest and is checked on replay.  The heatmap
+is now $2\times2$ with constrained layout; its data are unchanged.  The two P2
+clarifications are incorporated here: the paired-arm null mismatch is stated
+beside the decision rule, and \texttt{replay\_status=MATCH} means committed-
+artifact integrity and summary-content replay, not reinjection of all 863,040
+carriers.  No rank, tail, reducer, threshold, template, tolerance, or scientific
+expectation changed in the repair.
+
+\fi
+
+\section{Withdrawn executions: historical scope without scientific admission}
+
+The faulty bridge was consumed by four completed execution groups: the paired
+300-row STF analysis, the 999-row CMB-only comparison, component/holdout and
+foreground replacements, and the observation-free carrier-injection study.
+Their row graphs, logs, and content identities remain useful for determining
+exactly what ran, but their numerical ranks and power curves are not scientific
+results under the intended representation.  They are therefore omitted from
+the active tables and figures of this revision rather than being visually
+watermarked as if they were alternative estimates.
+
+The historical outputs included a paired family rank $27/301$, CMB-only ranks
+$61/1000$ and $55/1000$, component-product ranks, a foreground-bank rank
+$144/301$, and 863,040 positive carrier injections.  These numbers are stated
+only to identify the withdrawn objects.  None may be reused, combined, or
+interpreted until the carrier adapter, rotation covariance, radial identities,
+and full affected row sets have been rerun.  In particular, exact replay of the
+old bytes demonstrates execution provenance, not semantic equivalence to the
+intended operator.
+
+The CMB-only lane also has an independent scientific defect: a noisy observed
+map is not jointly exchangeable with a noise-free null ensemble.  The component
+and cross-instrument replacements lack matched product-specific nulls, while
+the foreground score has no established sensitivity to small or mixed
+residuals.  Correcting the basis convention alone would therefore not promote
+those lanes automatically.
+
+\section{Analysis-program inventory and chronology}
+\label{sec:analysis-inventory}
+
+Table~\ref{tab:analysis-inventory} makes the selection surface explicit.  A
+row marked ``retained'' is in the present result set; ``withdrawn'' means it
+was executed but fails the current semantic or null premise; ``not executed''
+is neither a null result nor evidence of absence.
+
+\begin{longtable}{@{}p{0.25\linewidth}p{0.30\linewidth}p{0.15\linewidth}p{0.22\linewidth}@{}}
+\caption{Program-level inventory after external-referee adjudication.}
+\label{tab:analysis-inventory}\\
+\toprule
+Analysis lane & Fixed choices and extent & Status & Chronology or boundary\\
+\midrule
+\endfirsthead
+\toprule
+Analysis lane & Fixed choices and extent & Status & Chronology or boundary\\
+\midrule
+\endhead
+Scalar six-family decomposition & One observation plus 300 paired nulls;
+six declared coordinate families; absolute-median reducer & Retained,
+conditional & Precedes the STF extension; rank table frozen\\
+Scalar reducer and tail audit & $4\times2$ coordinate-mechanism/reducer cells;
+two tail registries & Retained, descriptive & ECDF squaring identities are
+theorems; the five-count mixing shift is not assigned significance\\
+Residual-dipole stress & 101 fixed $\epsilon_1$ values & Retained as premise
+stress & Flat ECDF ranks follow monotonicity, not empirical robustness\\
+Paired STF and Galactic families & Eight and ten coordinates; two reducers;
+301 rows & Withdrawn & Wrong carrier-to-STF adapter\\
+SMICA CMB-only STF & 999 nulls plus observation; two reducers & Withdrawn &
+Same adapter defect and failed exchangeability premise\\
+Component and CMB holdouts & Four Planck products and three external CMB
+products & Withdrawn & Same adapter defect; unmatched nulls\\
+Foreground bank & Thirteen fixed templates and one max--min score & Withdrawn
+& Same adapter defect; weak small-residual response\\
+Carrier intervention & Five algebraic templates, seven amplitudes, 32
+orientations, two arms, two reducers and two combiners & Withdrawn & Injection
+metric used the wrong carrier convention; no physical template\\
+Other multipole pairs, ecliptic/dipole companions, physical Bianchi templates,
+and matched product nulls & No admitted execution & Not executed & Future
+questions requiring a new frozen experiment, not retroactive repairs\\
+\bottomrule
+\end{longtable}
+
+The Git chronology establishes only execution order.  The scalar/statistical
+framework was frozen before the observer-space extensions; WU-006 recorded its
+operator/result sequence on 29 August 2026, and the WU-008 intervention
+registry preceded its result commits later that day.  These repository times
+are not evidence of external preregistration and are not used to rescue a
+semantically invalid operator.
+
+\section{Synthesis and scientific interpretation}
+
+\subsection{What changed with the latest framework}
+
+The current methodology replaces four potential shortcuts with explicit
+separations.
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Ceiling versus state.}  $\Sigma^2_{\max}$ and $W^2_{\max}$
+  are squared, premise-conditioned upper coordinates.  They are neither the
+  physical tensors nor estimates of their directions.
+  \item \textbf{Scalar versus shape.}  Directional morphology must come from
+  the measured harmonic blocks through an explicitly verified representation
+  adapter, never from scalar reconstruction.  The withdrawn STF lane is a
+  concrete example of why an algebraic round trip alone is insufficient.
+  \item \textbf{Exact rank versus null fidelity.}  A finite rank can be
+  arithmetically exact relative to a frozen pool while its unconditional
+  scientific calibration remains limited by exchangeability and simulation
+  fidelity.
+  \item \textbf{Execution identity versus semantic validity.}  Exact row
+  order, hashes, replay, and a self-consistent inverse prove what was executed.
+  They do not prove that stored coordinates were interpreted in the scientific
+  convention required by the intended operator.
+\end{enumerate}
+
+The scalar audit shows that the MES ceilings themselves are not locally
+unusual in the paired pool: both are $74/301$.  The smallest scalar local rank
+is the octupole morphology coordinate $d_{3,0}$ at $16/301$.  After scanning
+the full ten-coordinate scalar family, the observation-inclusive rank is
+$98/301$ for the absolute-median reducer.  The observation-row minimum is
+therefore morphology-driven, while the family rank remains dependent on the
+complete coordinate family and null-row score distribution.
+
+No admitted observer-space rank remains.  The old mixed-coordinate minima,
+component comparisons, foreground score, CMB-only ranks, and injection-power
+curves all depend on the faulty basis interpretation.  The correct scientific
+transition is withdrawal followed by a fully corrected rerun, not a verbal
+qualification of the old numbers.  The eight-coordinate catalogue would still
+remain a partial diagnostic after that rerun unless it were replaced by a
+demonstrably separating joint-orbit construction.
+
+\subsection{What the results do not identify}
+
+Correctly constructed quantities $Q_{ab}$ and $O_{abc}$ would be observer-space
+representations of CMB harmonics.  They would not be the spacetime shear
+tensor, vorticity tensor, anisotropic spatial curvature, or a Bianchi template.
+No currently admitted $Q/O$ data result exists, and no admitted forward
+response connects a future corrected orbit coordinate to those physical states.
+No depth-indexed directional channel supplies the rank required by
+Eq.~\eqref{eq:fisher-factor}.  Therefore no result here identifies a local
+boost, global tilt, physical source, or geometry family.
+
+The present analysis also does not produce the separate diagnostic vocabulary
+$(x,Q,\Pi,F,G)$, a likelihood, posterior, evidence ratio, posterior predictive
+check, or cross-validation score.  Similar symbols in the STF section---for
+example $Q_{ab}$ and $J_Q$---must not be confused with that separate reporting
+layer.
+
+\subsection{Claim audit}
+
+\begin{longtable}{@{}p{0.48\linewidth}p{0.16\linewidth}p{0.29\linewidth}@{}}
+\caption{Admissible and inadmissible conclusions.}\label{tab:claims}\\
+\toprule
+Statement & Status & Boundary\\
+\midrule
+\endfirsthead
+\toprule
+Statement & Status & Boundary\\
+\midrule
+\endhead
+The registered MES ceilings obey Eqs.~\eqref{eq:sigma-ceiling} and
+\eqref{eq:omega-ceiling} & Supported & Explicit premises and nonnegative branch\\
+The MES transform adds independent information to $C_2,C_3$ & Rejected &
+Invertibility, Eq.~\eqref{eq:information-identity}\\
+The scalar MES-squared family has legacy rank $98/301$ & Supported & Paired
+finite pool; absolute-median reducer\\
+The all-two-sided ECDF companion rank is $148/301$ & Supported & Same rows;
+reducer sensitivity, not a new sky\\
+The physics-oriented ECDF tail companion is $93/301$ & Supported & Same rows
+and cell; predeclared tail sensitivity\\
+The paired frame-free STF family has rank $27/301$ under both reducers &
+Withdrawn & Faulty orthonormal-real to complex-component adapter\\
+The CMB-only frame-free ranks are $61/1000$ and $55/1000$ & Withdrawn & Same
+adapter defect; noisy observation and noise-free null are not exchangeable\\
+The PR3 component and external-holdout STF ranks measure cross-product
+stability & Withdrawn & Faulty projection and unmatched product-specific nulls\\
+The fixed 13-template foreground-bank rank $144/301$ disfavors foreground
+projection & Withdrawn & Faulty projection and no demonstrated sensitivity to
+subdominant or mixed residuals\\
+The carrier-injection power curves characterize the registered alternatives &
+Withdrawn & Energy metric, rotations, and irrep extraction consume the wrong
+carrier convention\\
+The intervention calibrates power of the original 301/1000 observation tests
+& Rejected & Different reference size, role graph, and no observed row\\
+Algebraic carrier injections measure sensitivity to physical shear,
+vorticity, or a Bianchi solution & Rejected & No authorized physical response
+or physical template\\
+All foreground explanations are ruled out & Rejected & Incomplete bank; no
+mixtures, nonlinear leakage, or causal source identification\\
+The lower CMB-only fractions independently confirm an anomaly & Rejected &
+Same observation and family; different null pool\\
+The observed tensors measure physical shear or vorticity & Rejected &
+Observer-space harmonic tensors only\\
+Planck alone identifies local boost versus global tilt & Rejected & No
+independent depth response; rank deficient\\
+A Bianchi family or physical source is identified & Rejected & No admitted
+physical response or native morphology atlas\\
+The finite ranks are unconditional $p$-values or posteriors & Rejected & Null
+exchangeability and fidelity remain conditional\\
+The registered eight orbit coordinates are globally complete & Rejected & A
+generic joint $\ell=2,3$ orbit has dimension nine, Eq.~\eqref{eq:orbit-dimension}\\
+Every noncyclic Krylov stratum requires typed absence & Rejected & Once
+$\widehat Q$ and $\widehat O$ exist, the registered determinant is defined and
+equals zero; record the stratum separately\\
+\bottomrule
+\end{longtable}
+
+\clearpage
+\section{Limitations and next evidence requirements}
+
+\begin{warningbox}
+\textbf{Central limitation.}
+The strongest present data result is the conditional scalar MES-plus-morphology
+finite-pool diagnostic.  The observer-space lane is withdrawn.  Increasing
+exactness of row identity or numerical replay cannot substitute for a correct
+representation adapter, a faithful null, or a missing physical response.
+\end{warningbox}
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Representation validity.}  The orthonormal real carrier must
+  be converted by Eq.~\eqref{eq:required-real-adapter} before the STF formulae
+  are evaluated.  Rotation-covariance tests and the exact radial identities
+  in Eqs.~\eqref{eq:q2-cl-identity}--\eqref{eq:o2-cl-identity} are mandatory
+  acceptance tests for any rerun.
+  \item \textbf{Catalogue sufficiency.}  Eight smooth invariants cannot
+  separate the generic nine-dimensional joint orbit.  Any replacement must
+  handle continuous rank and discrete sign, permutation, and parity
+  identifications rather than merely appending a convenient coordinate.
+  \item \textbf{Null fidelity.}  The retained scalar paired pool is CMB plus
+  admitted noise and remains conditional on FFP10 fidelity.  The old CMB-only,
+  product-replacement, and holdout pools are not admitted calibrations.
+  \item \textbf{Foreground and power scope.}  No foreground falsification or
+  method-power result is currently admitted.  A replacement requires a
+  corrected operator and a design with demonstrated sensitivity to the
+  alternatives actually named; physical claims require physical templates.
+  \item \textbf{Finite resolution and dependence.}  Ranks lie on finite grids,
+  and coordinates are dependent.  Participation ratios are diagnostics, not
+  multiplicity-free physical dimensions.
+  \item \textbf{Premise dependence.}  The principal MES numbers use the
+  geodesic, linear almost-EGS, registered-frame, residual-$\epsilon_1=0$
+  branch.  Other branches require their own recovered coefficients and
+  assumptions.
+  \item \textbf{No physical response.}  A future claim about shear,
+  vorticity, local/global origin, or geometry requires a content-defined
+  forward model, compatible conventions, rank analysis, and independent
+  observational channels.
+  \item \textbf{No family identification.}  A scalar rank, a sky axis, and an
+  observer-space STF orbit are each insufficient.  Family identification
+  additionally requires a validated physical morphology atlas and null,
+  mask, covariance, and equivalence-class gates.
+\end{enumerate}
+
+The shortest scientifically meaningful next step is a code-level convention
+repair followed by a complete rerun of every affected row under unchanged
+scientific choices.  Only after those semantic gates pass do matched nulls,
+foreground sensitivity, a separating orbit catalogue, and eventually a
+physical response become interpretable extensions.  None is silently credited
+as completed here.
+
+\section{Conclusion}
+
+The current MES-bound framework is an explicit, typed chain rather than a
+scalar-to-physics shortcut.  Low-order temperature powers yield one-way,
+premise-conditioned squared ceilings.  Those ceilings cannot create direction
+or independent information.  Directional morphology would have to be carried
+by correctly decoded harmonic blocks; no such observer-space result is
+admitted in this revision.  A physical interpretation remains a still more
+separate inverse problem whose response and rank are unavailable.
+
+On the paired 300-row primary, the scalar MES-squared family has legacy rank
+$98/301$ and all-two-sided ECDF rank $148/301$; the physics-oriented ECDF tail
+companion is $93/301$, and the two MES anchors are individually $74/301$.
+The external review changed the scientific result set materially.  The exact
+identities $q_2=(75/8\pi)C_2$ and $o_2=(245/8\pi)C_3$ contradict the previously
+reported radial values and expose a carrier/STF convention mismatch.  All
+downstream $Q/O$ ranks, cross-product comparisons, foreground scores, and
+injection-power statements are withdrawn pending full corrected rerun.  The
+eight-coordinate family is independently rejected as a generic separating
+catalogue because the quotient has dimension nine.
+
+The admitted results therefore establish only premise-conditioned MES ceilings
+and scalar finite-pool coordinate/reducer sensitivity.  They do not establish
+a detection, foreground validation, an observer-space tensor anomaly, method
+power, a physical kinematic state, a local/global origin, or a Bianchi family.
+
+\appendix
+\section{Explicit harmonic--STF normalization}
+\label{app:bridge}
+
+For the quadrupole define
+\[
+A=\sqrt{\frac{5}{16\pi}}a_{20},\qquad
+C=\sqrt{\frac{15}{32\pi}},\qquad
+D=\sqrt{\frac{15}{8\pi}}.
+\]
+The symbols $\Re a_{\ell m}$ and $\Im a_{\ell m}$ below are the unscaled
+complex-harmonic components.  If the input is the orthonormal real carrier,
+Eq.~\eqref{eq:required-real-adapter} must be applied first.
+The registered tensor is
+\[
+Q=\begin{pmatrix}
+-A+2C\Re a_{22} & -2C\Im a_{22} & -D\Re a_{21}\\
+-2C\Im a_{22} & -A-2C\Re a_{22} & D\Im a_{21}\\
+-D\Re a_{21} & D\Im a_{21} & 2A
+\end{pmatrix}.
+\]
+It is real, symmetric, and trace-free.
+
+For the octupole let
+\[
+E=\sqrt{\frac{7}{16\pi}},\quad
+F=\sqrt{\frac{21}{64\pi}},\quad
+G=\sqrt{\frac{105}{32\pi}},\quad
+H=\sqrt{\frac{35}{64\pi}}.
+\]
+Seven independent symmetric components are
+\begin{align*}
+O_{xxx}&=2F\Re a_{31}-2H\Re a_{33},&
+O_{xxy}&=-\tfrac23F\Im a_{31}+2H\Im a_{33},\\
+O_{xxz}&=-Ea_{30}+\tfrac23G\Re a_{32},&
+O_{xyy}&=\tfrac23F\Re a_{31}+2H\Re a_{33},\\
+O_{xyz}&=-\tfrac23G\Im a_{32},&
+O_{yyy}&=-2F\Im a_{31}-2H\Im a_{33},\\
+O_{yyz}&=-Ea_{30}-\tfrac23G\Re a_{32}.&&
+\end{align*}
+Full symmetry supplies all permutations and trace-freedom fixes
+\[
+O_{xzz}=-O_{xxx}-O_{xyy},\qquad
+O_{yzz}=-O_{xxy}-O_{yyy},\qquad
+O_{zzz}=-O_{xxz}-O_{yyz}.
+\]
+
+\section{Compact glossary}
+
+\begin{longtable}{@{}p{0.25\linewidth}p{0.69\linewidth}@{}}
+\toprule
+Term & Meaning\\
+\midrule
+\endfirsthead
+\toprule
+Term & Meaning\\
+\midrule
+\endhead
+MES ceiling & One-way premise-conditioned upper coordinate for a squared
+Hubble-normalized invariant\\
+Observer-space & Constructed from measured or simulated sky harmonics; not a
+physical spacetime source state\\
+STF tensor & Symmetric trace-free Cartesian representative of a fixed angular
+multipole\\
+Local rank & Observation-inclusive tail rank for one row and one coordinate\\
+Family rank & Rank of each row's most extreme coordinate after the same scan is
+applied to every row\\
+Conditional null & The specific admitted simulation pool; not an unconditional
+model of all uncertainty\\
+Frame-free family & The withdrawn eight-coordinate joint $\ell=2,3$ catalogue;
+proper-rotation invariant but demonstrably not generically separating\\
+Galactic companion & The withdrawn frame-free family plus two powers relative
+to the Galactic pole; no current directional inference\\
+Method power & Rejection frequency for a correctly represented specified
+alternative and scoring functional; no such result is presently admitted\\
+Typed absence & Explicitly unavailable normalized object, distinct from a
+defined zero on a noncyclic determinant stratum\\
+Identified set & The range of physical states compatible with a rank-deficient
+response, rather than an unsupported point estimate\\
+\bottomrule
+\end{longtable}
+
+\section{Evidence and identity statement}
+
+The retained scalar result uses one observation and 300 exact ordered paired
+CMB-plus-noise rows.  Its reported ranks, local coordinate table, family
+membership, tails, and reducers are unchanged by this report revision.  No map
+was reopened and no numerical expectation or tolerance was changed.  The new
+normalization audit is an algebraic consistency check between those same-pass
+$C_2,C_3$ values and the printed STF normalization.
+
+The withdrawn analyses still have exact execution records, row identities,
+artifact hashes, and successful map-free replay.  Those facts retain their
+proper provenance role: they show which bytes and operations produced the old
+objects.  The external review established that the objects instantiate the
+wrong carrier interpretation.  Their prior PASS receipts and P0/P1 counts are
+therefore historical process evidence, not current scientific admission.
+Result validity is withdrawn while source/execution provenance remains intact.
+No archive or hash is deleted or relabelled as a corrected result.
+
+The decisive evidence is semantic rather than cryptographic.  The carrier
+contract, the STF formula domain, Eqs.~\eqref{eq:q2-cl-identity}--
+\eqref{eq:o2-cl-identity}, and a true stored-basis rotation disagree with the
+old projection.  A self-inverse map under one internally inconsistent
+convention cannot override those independent invariants.  This is precisely
+the typed-identity distinction: byte identity passed, while scientific
+equivalence to the intended operator failed.
+
+Identity is typed.  Immutable scientific inputs and deterministic numerical
+tables require their declared exact content identities.  Numerical arrays are
+accepted by their predeclared structural, residual, and numerical criteria.
+PDF serialization is packaging: a changed PDF byte stream is not by itself a
+changed rank or scientific result.  Result validity, provenance validity, and
+packaging identity are therefore assessed separately.  No tolerance, tail,
+feature family, or expected result was changed in preparing this report.
+
+\begin{thebibliography}{99}
+
+\bibitem{MaartensEllisStoeger1995}
+R.~Maartens, G.~F.~R. Ellis, and W.~R. Stoeger.
+\newblock Limits on anisotropy and inhomogeneity from the cosmic background
+radiation.
+\newblock \emph{Physical Review D}, 51:1525--1535, 1995.
+\newblock doi:10.1103/PhysRevD.51.1525; arXiv:astro-ph/9501016.
+
+\bibitem{StoegerAraujoGebbie1997}
+W.~R. Stoeger, M.~E. Araujo, and T.~Gebbie.
+\newblock The limits on cosmological anisotropies and inhomogeneities from
+COBE data.
+\newblock \emph{The Astrophysical Journal}, 476:435, 1997.
+\newblock arXiv:astro-ph/9904346.
+
+\bibitem{Planck2018IV}
+Planck Collaboration.
+\newblock Planck 2018 results. IV. Diffuse component separation.
+\newblock \emph{Astronomy \& Astrophysics}, 641:A4, 2020.
+\newblock doi:10.1051/0004-6361/201833881; arXiv:1807.06208.
+
+\bibitem{Planck2018VII}
+Planck Collaboration.
+\newblock Planck 2018 results. VII. Isotropy and statistics of the CMB.
+\newblock \emph{Astronomy \& Astrophysics}, 641:A7, 2020.
+\newblock doi:10.1051/0004-6361/201935201; arXiv:1906.02552.
+
+\bibitem{PhipsonSmyth2010}
+B.~Phipson and G.~K. Smyth.
+\newblock Permutation p-values should never be zero: calculating exact
+p-values when permutations are randomly drawn.
+\newblock \emph{Statistical Applications in Genetics and Molecular Biology},
+9(1):Article 39, 2010.
+\newblock doi:10.2202/1544-6115.1585; arXiv:1603.05766.
+
+\bibitem{CopiHutererStarkman2004}
+C.~J. Copi, D.~Huterer, and G.~D. Starkman.
+\newblock Multipole vectors---a new representation of the CMB sky and
+evidence for statistical anisotropy or non-Gaussianity at $2\le\ell\le8$.
+\newblock \emph{Physical Review D}, 70:043515, 2004.
+\newblock doi:10.1103/PhysRevD.70.043515; arXiv:astro-ph/0310511.
+
+\bibitem{Weeks2004}
+J.~R. Weeks.
+\newblock Maxwell's multipole vectors and the CMB.
+\newblock arXiv:astro-ph/0412231, 2004.
+
+\bibitem{SchwarzEtAl2016}
+D.~J. Schwarz, C.~J. Copi, D.~Huterer, and G.~D. Starkman.
+\newblock CMB anomalies after Planck.
+\newblock \emph{Classical and Quantum Gravity}, 33:184001, 2016.
+\newblock doi:10.1088/0264-9381/33/18/184001; arXiv:1510.07929.
+
+\bibitem{SaadehEtAl2016}
+D.~Saadeh, S.~M. Feeney, A.~Pontzen, H.~V.~Peiris, and J.~D.~McEwen.
+\newblock How isotropic is the Universe?
+\newblock \emph{Physical Review Letters}, 117:131302, 2016.
+\newblock doi:10.1103/PhysRevLett.117.131302; arXiv:1605.07178.
+
+\bibitem{Thorne1980}
+K.~S. Thorne.
+\newblock Multipole expansions of gravitational radiation.
+\newblock \emph{Reviews of Modern Physics}, 52:299--339, 1980.
+\newblock doi:10.1103/RevModPhys.52.299.
+
+\end{thebibliography}
+
+\end{document}
