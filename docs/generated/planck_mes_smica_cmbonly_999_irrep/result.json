@@ -1,0 +1,275 @@
+{
+  "allowed_claim": "The same observation and frozen feature families were compared against a separate official 999-row CMB-only FFP10 pool under the same operator; rank differences are null-ensemble sensitivity only.",
+  "artifact_mode": "SEPARATE_CONDITIONAL_NULL_SENSITIVITY_DIAGNOSTIC",
+  "bianchi_family_status": "NOT_IDENTIFIED",
+  "checkpoint_reused_count": 0,
+  "claim_promotion": false,
+  "content_id": "sha256:6e10e2720de90ac6e7a1368efc4fc10c94780989e640e5d0d45e4ded0fec0e35",
+  "dependence_diagnostics": {
+    "OBSERVABLE_IRREP_ORBIT_GALACTIC_V1": {
+      "coordinate_duplicate_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "spearman_eigenvalues_descending": [
+        1.907702645411421,
+        1.240983018761745,
+        1.1233548441009626,
+        1.0594311940751748,
+        0.9921567453891484,
+        0.9648950435321855,
+        0.8903890385457995,
+        0.856928604109612,
+        0.8201057459139928,
+        0.14405312015995733
+      ],
+      "spearman_participation_ratio": 8.547351713846233
+    },
+    "OBSERVABLE_IRREP_ORBIT_V1": {
+      "coordinate_duplicate_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "spearman_eigenvalues_descending": [
+        1.8845177065258383,
+        1.229592489064458,
+        1.0589731423669513,
+        0.9717385530753898,
+        0.9515262146389443,
+        0.9220463662985608,
+        0.8369686845831708,
+        0.1446368434466876
+      ],
+      "spearman_participation_ratio": 6.662493834788825
+    }
+  },
+  "families": {
+    "OBSERVABLE_IRREP_ORBIT_GALACTIC_V1": {
+      "feature_ids": [
+        "q2",
+        "o2",
+        "J_Q",
+        "R_v0_normalized",
+        "R_v1_normalized",
+        "R_v2_normalized",
+        "R_QS_normalized",
+        "K_v_normalized",
+        "Q_galactic_pole_power",
+        "O_galactic_pole_power"
+      ],
+      "frame_role": "ABSOLUTE_GALACTIC_DESCRIPTIVE_COMPANION",
+      "tails": [
+        "two-sided",
+        "two-sided",
+        "two-sided",
+        "upper",
+        "two-sided",
+        "upper",
+        "two-sided",
+        "two-sided",
+        "upper",
+        "upper"
+      ]
+    },
+    "OBSERVABLE_IRREP_ORBIT_V1": {
+      "feature_ids": [
+        "q2",
+        "o2",
+        "J_Q",
+        "R_v0_normalized",
+        "R_v1_normalized",
+        "R_v2_normalized",
+        "R_QS_normalized",
+        "K_v_normalized"
+      ],
+      "frame_role": "FRAME_FREE_PRIMARY",
+      "tails": [
+        "two-sided",
+        "two-sided",
+        "two-sided",
+        "upper",
+        "two-sided",
+        "upper",
+        "two-sided",
+        "two-sided"
+      ]
+    }
+  },
+  "family_results": {
+    "OBSERVABLE_IRREP_ORBIT_GALACTIC_V1": {
+      "LEGACY_ABSOLUTE_MEDIAN_V1": {
+        "global_rank": "78/1000",
+        "global_rank_numerator": 78,
+        "local_rank_numerators": [
+          245,
+          859,
+          911,
+          9,
+          370,
+          21,
+          992,
+          294,
+          840,
+          965
+        ],
+        "observation_max_score": 4.710530701645918,
+        "rank_denominator": 1000
+      },
+      "LOO_ECDF_MIDRANK_V1": {
+        "global_rank": "73/1000",
+        "global_rank_numerator": 73,
+        "local_rank_numerators": [
+          90,
+          870,
+          916,
+          9,
+          356,
+          21,
+          992,
+          300,
+          840,
+          965
+        ],
+        "observation_max_score": 4.710530701645918,
+        "rank_denominator": 1000
+      }
+    },
+    "OBSERVABLE_IRREP_ORBIT_V1": {
+      "LEGACY_ABSOLUTE_MEDIAN_V1": {
+        "global_rank": "61/1000",
+        "global_rank_numerator": 61,
+        "local_rank_numerators": [
+          245,
+          859,
+          911,
+          9,
+          370,
+          21,
+          992,
+          294
+        ],
+        "observation_max_score": 4.710530701645918,
+        "rank_denominator": 1000
+      },
+      "LOO_ECDF_MIDRANK_V1": {
+        "global_rank": "55/1000",
+        "global_rank_numerator": 55,
+        "local_rank_numerators": [
+          90,
+          870,
+          916,
+          9,
+          356,
+          21,
+          992,
+          300
+        ],
+        "observation_max_score": 4.710530701645918,
+        "rank_denominator": 1000
+      }
+    }
+  },
+  "forbidden_use": [
+    "foreground or component-separation validation",
+    "local boost versus global tilt identification",
+    "physical shear or vorticity inference",
+    "Bianchi family identification",
+    "unconditional p-value or detection claim"
+  ],
+  "format": "PLANCK_MES_SMICA_CMBONLY_999_IRREP_V1",
+  "harmonic_stf_roundtrip": {
+    "atol": 5e-13,
+    "max_absolute_residual": 1.4210854715202004e-14,
+    "rtol": 5e-13,
+    "status": "PASS"
+  },
+  "included_special_ids": [
+    "00818"
+  ],
+  "known_missing_ids": [
+    "00970"
+  ],
+  "noise_read_count": 0,
+  "null_row_count": 999,
+  "null_status": "EXACT_ORDERED_FFP10_SMICA_CMB_ONLY_999_CONDITIONAL",
+  "numerical_outputs": {
+    "null_distributions_content_id": "sha256:6a0ccc5c3909d2cfddd0bd1c81c86eb90237249f48e79b776744cb005ab89fbb",
+    "observable_irreps_content_id": "sha256:db24ae2632950d1e64aa34c853c70c8c8571aa7f5c2c87b5327d652cea0e0908"
+  },
+  "observation_map_reopened": false,
+  "observation_row_count": 1,
+  "operator_receipt_content_id": "sha256:d6a1c48ac2d8355461a28e2ba932216df2964d7319f8a182b4797337a3337a8f",
+  "owner": "OBSSTAT",
+  "paired300_sensitivity_comparison": {
+    "OBSERVABLE_IRREP_ORBIT_GALACTIC_V1": {
+      "LEGACY_ABSOLUTE_MEDIAN_V1": {
+        "cmbonly999_fraction": 0.078,
+        "cmbonly999_rank": "78/1000",
+        "descriptive_fraction_difference_cmbonly_minus_paired": -0.03495681063122924,
+        "interpretation": "DESCRIPTIVE_NULL_ENSEMBLE_SENSITIVITY_NOT_AN_INDEPENDENT_TEST",
+        "paired300_fraction": 0.11295681063122924,
+        "paired300_rank": "34/301"
+      },
+      "LOO_ECDF_MIDRANK_V1": {
+        "cmbonly999_fraction": 0.073,
+        "cmbonly999_rank": "73/1000",
+        "descriptive_fraction_difference_cmbonly_minus_paired": -0.03663455149501661,
+        "interpretation": "DESCRIPTIVE_NULL_ENSEMBLE_SENSITIVITY_NOT_AN_INDEPENDENT_TEST",
+        "paired300_fraction": 0.10963455149501661,
+        "paired300_rank": "33/301"
+      }
+    },
+    "OBSERVABLE_IRREP_ORBIT_V1": {
+      "LEGACY_ABSOLUTE_MEDIAN_V1": {
+        "cmbonly999_fraction": 0.061,
+        "cmbonly999_rank": "61/1000",
+        "descriptive_fraction_difference_cmbonly_minus_paired": -0.02870099667774087,
+        "interpretation": "DESCRIPTIVE_NULL_ENSEMBLE_SENSITIVITY_NOT_AN_INDEPENDENT_TEST",
+        "paired300_fraction": 0.08970099667774087,
+        "paired300_rank": "27/301"
+      },
+      "LOO_ECDF_MIDRANK_V1": {
+        "cmbonly999_fraction": 0.055,
+        "cmbonly999_rank": "55/1000",
+        "descriptive_fraction_difference_cmbonly_minus_paired": -0.03470099667774087,
+        "interpretation": "DESCRIPTIVE_NULL_ENSEMBLE_SENSITIVITY_NOT_AN_INDEPENDENT_TEST",
+        "paired300_fraction": 0.08970099667774087,
+        "paired300_rank": "27/301"
+      }
+    }
+  },
+  "physical_source_status": "NOT_IDENTIFIED",
+  "preflight_binding": {
+    "route_content_id": "sha256:47336dc10ad0ab3d16c22db862c848d5b14cf779dcda2950a58c235fa5316ae8",
+    "row_00818_sha256": "sha256:d37b4c13115dfdefd932e2f7e5b43edfe5249c6f97f2bbaf66583baa875859d1",
+    "selected_input_manifest_content_id": "sha256:f0fc300dff834a4bc378d18bd249428585b139bf8336b1c825ddfcb53c067d4c",
+    "summary_content_id": "sha256:387e7506c7161fb3f579fdd8ecd5b58c5504dab92c6220482dd4d895c5f46797"
+  },
+  "primary_replacement": false,
+  "rank_based_promotion_forbidden": true,
+  "raw_data_mutation": false,
+  "raw_maps_reopened_by_replay": false,
+  "reducers": [
+    "LEGACY_ABSOLUTE_MEDIAN_V1",
+    "LOO_ECDF_MIDRANK_V1"
+  ],
+  "row_count": 1000,
+  "scope": "same-observation frozen-irrep calibration against the separate official 999-row SMICA CMB-only FFP10 pool",
+  "selection_policy": "features families tails reducers and row-disposition policy frozen before observed-row scoring",
+  "state": "EXECUTED_PENDING_REVIEW",
+  "work_unit": "PMG-WU-007"
+}

@@ -1,0 +1,45 @@
+schema: htt.planck_mes.pmg_wu007.authority_binding.v1
+source_of_truth_precedence:
+- latest explicit user decision
+- accepted PMG-WU-006 terminal at the exact predecessor commit
+- accepted PMG-WU-005 reviewed carrier and artifact manifest
+- this PMG-WU-007 execution binding and preflight
+- earlier WU-007 preflight experiments as reusable design input only
+- transcript-only claims
+accepted_predecessor:
+  branch: changeset/planck-mes-wu006-admission-staging-20260829
+  sha: 242eb4b9904a0c5d8514f3b50c7341d4837d71f5
+  tree: 86c580bbdd9d465992b2db6532d1086e1ec1ce9a
+  pull_request: 434
+  terminal: docs/generated/planck_mes_irrep_analysis/terminal.json
+  required:
+    format: PLANCK_MES_IRREP_ANALYSIS_TERMINAL_V2
+    work_unit: PMG-WU-006
+    state: SUCCEEDED
+    replay_status: MATCH
+    raw_maps_reopened: false
+    raw_data_mutation: false
+    claim_promotion: false
+    unresolved_blockers: []
+    next_executable_action: PMG-WU-007
+implementation_binding_branch: changeset/planck-mes-wu007-smica999-preflight-20260829
+local_runtime_root: /mnt/sn850x2t/htt_base_e2e/workdir
+local_raw_root: /mnt/sn850x2t/htt_base_e2e/workdir/raw
+host_private_root: /mnt/sn850x2t/htt_base_e2e/workdir/analysis/planck_mes_irrep/smica999
+remote_ci_policy: LOCAL_ALTERNATIVE_ONLY_NO_ACTIONS_QUERY_RERUN_OR_STATUS_CHECK
+branch_movement_policy:
+  hard_block:
+  - the exact PMG-WU-006 predecessor commit is unavailable or its tree differs
+  - the implementation branch is not descended from the exact predecessor
+  - the PMG-WU-006 terminal no longer satisfies the bound fields
+  not_automatically_blocking:
+  - PR base movement while the exact predecessor remains reachable
+  - packaging-only PDF byte changes outside scientific identity contracts
+user_locks:
+- Do not query, rerun, or inspect GitHub Actions in this thread.
+- Do not download additional data; the required remote acquisition backlog is zero.
+- Keep the paired-300 primary and CMB-only-999 robustness null models separate.
+- Do not replace, overwrite, or promote the paired-300 primary with the CMB-only result.
+- Do not promote claims based on the observed rank or its extremeness.
+- Do not infer physical shear, vorticity, local/global attribution, or Bianchi family.
+- Do not start PMG-WU-008 until PMG-WU-007 has a reviewed terminal.
