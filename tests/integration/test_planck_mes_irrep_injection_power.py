@@ -54,6 +54,22 @@ def test_committed_map_free_inputs_bind_exact_rows_and_shared_calibration() -> N
     assert inputs.raw_maps_reopened is False
 
 
+def test_adapter_builds_both_frozen_families_from_the_shared_calibration() -> None:
+    api = _api()
+    from scripts.observed_runs.planck_irrep_power_adapter import make_extractor
+
+    inputs = api.load_accepted_inputs(REGISTRY)
+    extractor, references = make_extractor(
+        dict(inputs.metadata), inputs.calibration_carriers, inputs.source_identity
+    )
+    assert set(references) == set(api.FAMILIES)
+    assert references[api.FAMILIES[0]].shape == (200, 10)
+    assert references[api.FAMILIES[1]].shape == (200, 8)
+    values, absence = extractor(inputs.arms["paired300"].carriers[0])
+    assert absence == {}
+    assert set(values) == set(api.FAMILIES)
+
+
 def test_cell_plan_computes_zero_once_and_positive_trial_counts_exactly() -> None:
     api = _api()
     plan = api.cell_plan()

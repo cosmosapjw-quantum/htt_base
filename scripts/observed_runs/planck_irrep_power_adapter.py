@@ -16,7 +16,13 @@ def make_extractor(metadata: dict, reference_carriers: np.ndarray, source_identi
     from obsstat.mes_row_anchor import build_mes_row_anchor_state, ResidualDipoleAttribution
     from common.observable_irrep_state import ObservableIrrepCarrier
     from obsstat.planck_lowell_irrep_projection import project_planck_carrier_to_observable_irreps
-    from obsstat.observable_irrep_orbit import observable_irrep_orbit_report,orbit_family_vector,FRAME_FREE_TAILS,FRAME_FREE_FEATURE_IDS
+    from obsstat.observable_irrep_orbit import (
+        FRAME_FREE_FAMILY_ID,
+        FRAME_FREE_FEATURE_IDS,
+        FRAME_FREE_TAILS,
+        observable_irrep_orbit_report,
+        orbit_family_vector,
+    )
     if tuple(FRAME_FREE_TAILS)!=TAILS[FAMILIES[1]] or len(FRAME_FREE_FEATURE_IDS)!=8:
         raise ValueError('accepted irrep registry drifted')
     if metadata['coordinate_frame']!='GALACTIC' or metadata['map_unit']!='microK_CMB':
