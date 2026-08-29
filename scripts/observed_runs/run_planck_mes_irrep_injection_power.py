@@ -71,6 +71,18 @@ FIGURES = (
     "figure_scalar_irrep_power_difference.pdf",
     "figure_orientation_prefix_sensitivity.pdf",
 )
+OBJECTIVE_ARTIFACTS = (
+    "paired300_trials.npz",
+    "paired300_execution.json",
+    "cmbonly999_trials.npz",
+    "cmbonly999_execution.json",
+    "power_table.csv",
+    "threshold_crossings.csv",
+    "scalar_irrep_comparison.csv",
+    "orientation_sensitivity.csv",
+    *FIGURES,
+    "result.json",
+)
 POSITIVE_AMPLITUDES = AMPLITUDES[1:]
 REDUCERS = (LEGACY, ECDF)
 LARGEST_REJECTING_NUMERATOR = 10
@@ -178,6 +190,108 @@ def _require_identity(value: str, *, git: bool, label: str) -> None:
     pattern = GIT_RE if git else SHA_RE
     if not isinstance(value, str) or pattern.fullmatch(value) is None:
         raise Wu008Error(f"malformed {label} identity")
+
+
+def build_claim_metadata(
+    *,
+    registry: Mapping[str, object],
+    input_source_identity: str,
+    candidate_git_head: str,
+    candidate_git_tree: str,
+    evidence_repair_git_head: str,
+    evidence_repair_git_tree: str,
+) -> dict[str, object]:
+    """Build the consumed claim boundary for the complete WU-008 result pack."""
+
+    _require_identity(input_source_identity, git=False, label="input source")
+    _require_identity(candidate_git_head, git=True, label="candidate head")
+    _require_identity(candidate_git_tree, git=True, label="candidate tree")
+    _require_identity(evidence_repair_git_head, git=True, label="evidence repair head")
+    _require_identity(evidence_repair_git_tree, git=True, label="evidence repair tree")
+    scope = registry.get("scope_limitation")
+    if not isinstance(scope, str) or not scope:
+        raise Wu008Error("claim metadata registry scope differs")
+    command = "python scripts/observed_runs/run_planck_mes_irrep_injection_power.py"
+    return {
+        "owner": "OBSSTAT",
+        "scope": scope,
+        "claim_tier": "C2_CONDITIONAL_DIAGNOSTIC_ONLY",
+        "artifact_mode": "CLAIM_BEARING_FROZEN_CONDITIONAL_METHOD_POWER",
+        "allowed_use": [
+            "conditional method-power reporting for the registered 200-reference functional",
+            "template, family, reducer, and combiner sensitivity comparison",
+            "map-free committed-artifact integrity replay",
+        ],
+        "forbidden_use": [
+            "power calibration of the original full301 or full1000 observation procedures",
+            "unconditional p-value, detection, or independent-replication claim",
+            "physical shear, vorticity, local/global, geometry, or Bianchi-family inference",
+            "replacement of the paired-300 primary result",
+        ],
+        "transfer_source": "NONE_POST_ESTIMATOR_CARRIER_DOMAIN",
+        "sky_support_status": "INHERITED_FROM_ACCEPTED_WU005_AND_WU007_CARRIERS_NO_NEW_MAP_ACCESS",
+        "mask_status": "INHERITED_FROZEN_JOINT_CUTSKY_OPERATOR_NO_NEW_MASK_OPERATION",
+        "covariance_status": "DIAGNOSTIC_REFERENCE_COVARIANCE_NOT_USED_IN_FINITE_RANK_SCORING",
+        "null_status_by_arm": {
+            "cmbonly999": "MATCHED_CMB_ONLY_QUERY_AND_CMB_ONLY_REFERENCE_CONDITIONAL_FINITE_POOL",
+            "paired300": "CMB_PLUS_NOISE_QUERY_AGAINST_CMB_ONLY_REFERENCE_NOT_EXCHANGEABLE_DESCRIPTIVE_DECISION_RULE",
+        },
+        "caveats": [
+            "the two evaluation arms share 100 CMB identities and are not independent replications",
+            "the 32 orientations are a fixed descriptive bank, not certified Haar convergence",
+            "physical response templates are deferred and no observation enters the power study",
+            "finite ranks are conditional on the fixed 200-row reference pool",
+        ],
+        "generating_procedure": (
+            "execute each registered map-free arm from accepted carriers, summarize exact "
+            "integer ranks, then assemble plots and content-bound evidence"
+        ),
+        "generating_commands": [
+            f"{command} --execute --arm paired300 --checkpoint-root <private-checkpoint-root>",
+            f"{command} --execute --arm cmbonly999 --checkpoint-root <private-checkpoint-root>",
+            (
+                f"{command} --assemble --output docs/generated/planck_mes_irrep_injection_power "
+                "--candidate-git-head <execution-head> --candidate-git-tree <execution-tree> "
+                "--evidence-repair-git-head <repair-head> --evidence-repair-git-tree <repair-tree>"
+            ),
+        ],
+        "registry_sha256": "sha256:" + EXPECTED_REGISTRY_SHA256,
+        "input_source_identity": input_source_identity,
+        "candidate_git_head": candidate_git_head,
+        "candidate_git_tree": candidate_git_tree,
+        "candidate_git_state": "CODE_AND_REGISTRY_COMMITTED_BEFORE_EXECUTION",
+        "evidence_repair_git_head": evidence_repair_git_head,
+        "evidence_repair_git_tree": evidence_repair_git_tree,
+        "evidence_repair_git_state": "BOUNDED_REFEREE_REPAIR_COMMITTED_BEFORE_EVIDENCE_REASSEMBLY",
+        "applies_to_artifacts": list(OBJECTIVE_ARTIFACTS),
+        "registered_claim_provenance": {
+            "finite_rank_claim_id": "C-PR135-FINITE-NULL-RANK",
+            "source_response_claim_id": "C-PR133-SOURCE-RESPONSE-TYPES",
+            "claim_promotion": False,
+        },
+    }
+
+
+def validate_claim_metadata(
+    metadata: Mapping[str, object], *, registry: Mapping[str, object]
+) -> None:
+    """Reject incomplete or semantically altered WU-008 claim metadata."""
+
+    if not isinstance(metadata, Mapping):
+        raise Wu008Error("claim metadata is absent")
+    try:
+        expected = build_claim_metadata(
+            registry=registry,
+            input_source_identity=str(metadata["input_source_identity"]),
+            candidate_git_head=str(metadata["candidate_git_head"]),
+            candidate_git_tree=str(metadata["candidate_git_tree"]),
+            evidence_repair_git_head=str(metadata["evidence_repair_git_head"]),
+            evidence_repair_git_tree=str(metadata["evidence_repair_git_tree"]),
+        )
+    except (KeyError, TypeError, Wu008Error) as exc:
+        raise Wu008Error("claim metadata is incomplete") from exc
+    if dict(metadata) != expected:
+        raise Wu008Error("claim metadata semantic content differs")
 
 
 def load_registry(path: Path = REGISTRY_PATH) -> dict[str, object]:
@@ -618,6 +732,57 @@ def _comparison_rows(summaries: Sequence[Mapping[str, object]]) -> list[dict[str
     return result
 
 
+def build_template_power_heatmap(summaries: Sequence[Mapping[str, object]]):
+    """Return the readable 2x2 template-resolved ECDF/min-power figure."""
+
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    lookup = {
+        (
+            row["arm"], row["template_id"], float(row["amplitude"]),
+            row["family"], row["reducer"], row["combiner"],
+        ): row
+        for row in summaries
+    }
+    templates = tuple(template.template_id for template in template_bank())
+    fig, axes = plt.subplots(
+        2, 2, figsize=(9.0, 7.0), sharex=True, sharey=True,
+        layout="constrained",
+    )
+    image = None
+    for axis, (arm, family) in zip(
+        axes.ravel(),
+        ((arm, family) for arm in ("paired300", "cmbonly999") for family in FAMILIES),
+        strict=True,
+    ):
+        matrix = np.asarray(
+            [
+                [
+                    lookup[(arm, template, float(amplitude), family, ECDF, COMBINERS[0])]["power"]
+                    for amplitude in POSITIVE_AMPLITUDES
+                ]
+                for template in templates
+            ],
+            dtype=float,
+        )
+        image = axis.imshow(matrix, aspect="auto", vmin=0, vmax=1, cmap="viridis")
+        axis.set_xticks(
+            range(len(POSITIVE_AMPLITUDES)),
+            [str(amplitude) for amplitude in POSITIVE_AMPLITUDES],
+            rotation=45,
+        )
+        axis.set_yticks(range(len(templates)), templates, fontsize=7)
+        axis.set_title(f"{arm}: {family.replace('FROZEN_', '')}", fontsize=9)
+        axis.set_xlabel("Registered amplitude A")
+    if image is None:
+        raise Wu008Error("template heatmap has no registered cells")
+    fig.colorbar(image, ax=axes.ravel().tolist(), label="Power", shrink=0.82)
+    fig.suptitle("Template-resolved ECDF/min-local-p power", fontsize=12)
+    return fig
+
+
 def _build_figures(output: Path, summaries: Sequence[Mapping[str, object]], comparisons: Sequence[Mapping[str, object]]) -> None:
     import matplotlib
     matplotlib.use("Agg")
@@ -651,15 +816,7 @@ def _build_figures(output: Path, summaries: Sequence[Mapping[str, object]], comp
     fig.suptitle("Method power at 200-reference calibration (template average)")
     fig.tight_layout();fig.savefig(output/FIGURES[0],bbox_inches="tight");plt.close(fig)
 
-    fig, axes = plt.subplots(1, 4, figsize=(12.5, 3.7), sharey=True)
-    for axis,(arm,family) in zip(axes, ((a,f) for a in ("paired300","cmbonly999") for f in FAMILIES), strict=True):
-        matrix=np.asarray([[lookup[(arm,t,float(a),family,ECDF,COMBINERS[0])]["power"] for a in POSITIVE_AMPLITUDES] for t in templates],dtype=float)
-        image=axis.imshow(matrix,aspect="auto",vmin=0,vmax=1,cmap="viridis")
-        axis.set_xticks(range(len(POSITIVE_AMPLITUDES)),[str(a) for a in POSITIVE_AMPLITUDES],rotation=45)
-        axis.set_yticks(range(len(templates)),templates,fontsize=6)
-        axis.set_title(f"{arm}\n{family.replace('FROZEN_','')}",fontsize=8);axis.set_xlabel("A")
-    fig.colorbar(image,ax=axes.ravel().tolist(),label="Power",shrink=.8)
-    fig.suptitle("Template-resolved ECDF/min-local-p power")
+    fig = build_template_power_heatmap(summaries)
     fig.savefig(output/FIGURES[1],bbox_inches="tight");plt.close(fig)
 
     fig, axes = plt.subplots(1,2,figsize=(9.5,3.8),sharey=True)
@@ -688,9 +845,12 @@ def _build_figures(output: Path, summaries: Sequence[Mapping[str, object]], comp
 
 def assemble_outputs(
     *, output: Path, candidate_git_head: str, candidate_git_tree: str,
+    evidence_repair_git_head: str, evidence_repair_git_tree: str,
 ) -> dict[str, object]:
     _require_identity(candidate_git_head, git=True, label="candidate head")
     _require_identity(candidate_git_tree, git=True, label="candidate tree")
+    _require_identity(evidence_repair_git_head, git=True, label="evidence repair head")
+    _require_identity(evidence_repair_git_tree, git=True, label="evidence repair tree")
     output = Path(output);output.mkdir(parents=True, exist_ok=True)
     registry=load_registry();inputs=load_accepted_inputs()
     arms={arm:_load_arm(output,arm)[0] for arm in ("paired300","cmbonly999")}
@@ -710,9 +870,20 @@ def assemble_outputs(
     } for row in summaries if row["template_id"]!="ZERO_BASELINE"]
     _write_csv(output/"orientation_sensitivity.csv",orientation)
     _build_figures(output,summaries,comparisons)
+    claim_metadata = build_claim_metadata(
+        registry=registry,
+        input_source_identity=inputs.source_identity,
+        candidate_git_head=candidate_git_head,
+        candidate_git_tree=candidate_git_tree,
+        evidence_repair_git_head=evidence_repair_git_head,
+        evidence_repair_git_tree=evidence_repair_git_tree,
+    )
+    validate_claim_metadata(claim_metadata, registry=registry)
     result={
         "format":FORMAT,"work_unit":"PMG-WU-008","state":"EXECUTED_PENDING_REVIEW",
         "candidate_git_head":candidate_git_head,"candidate_git_tree":candidate_git_tree,
+        "evidence_repair_git_head":evidence_repair_git_head,
+        "evidence_repair_git_tree":evidence_repair_git_tree,
         "registry_sha256":"sha256:"+EXPECTED_REGISTRY_SHA256,
         "input_source_identity":inputs.source_identity,
         "arms":arms,"families":list(FAMILIES),"reducers":list(REDUCERS),"combiners":list(COMBINERS),
@@ -722,6 +893,8 @@ def assemble_outputs(
         "typed_absence_count":sum(int(value["typed_absence_count"]) for value in arms.values()),
         "raw_maps_reopened":False,"observation_used_for_power":False,"raw_data_mutation":False,
         "claim_promotion":False,"physical_template_status":"DEFERRED_NOT_ATTEMPTED_WITHOUT_AUTHORIZED_RESPONSE",
+        "claim_metadata":claim_metadata,
+        "replay_semantics":"COMMITTED_ARTIFACT_INTEGRITY_AND_SUMMARY_CONTENT_NOT_FULL_NUMERICAL_REGENERATION",
         "scope_limitation":registry["scope_limitation"],
         "arm_dependence":"OVERLAPPING_CMB_SIMULATION_IDENTITIES_NOT_INDEPENDENT_REPLICATIONS",
         "A50_A90":"GRID_BRACKETS_ONLY_NO_INTERPOLATION_OR_EXTRAPOLATION",
@@ -730,23 +903,23 @@ def assemble_outputs(
     }
     result["content_id"]=_canonical_id({k:v for k,v in result.items() if k!="content_id"},role="wu008_result")
     _atomic_json(output/"result.json",result)
-    objective=(
-        "paired300_trials.npz","paired300_execution.json","cmbonly999_trials.npz","cmbonly999_execution.json",
-        "power_table.csv","threshold_crossings.csv","scalar_irrep_comparison.csv","orientation_sensitivity.csv",
-        *FIGURES,"result.json",
-    )
-    artifact_hashes={name:"sha256:"+_sha256(output/name) for name in objective}
+    artifact_hashes={name:"sha256:"+_sha256(output/name) for name in OBJECTIVE_ARTIFACTS}
     manifest={
         "format":"PLANCK_MES_IRREP_POWER_ARTIFACT_MANIFEST_V1",
         "candidate_git_head":candidate_git_head,"candidate_git_tree":candidate_git_tree,
+        "evidence_repair_git_head":evidence_repair_git_head,
+        "evidence_repair_git_tree":evidence_repair_git_tree,
         "registry_sha256":"sha256:"+EXPECTED_REGISTRY_SHA256,
         "input_source_identity":inputs.source_identity,"artifacts":artifact_hashes,
+        "claim_metadata":claim_metadata,
     }
     manifest["content_id"]=_canonical_id({k:v for k,v in manifest.items() if k!="content_id"},role="wu008_artifact_manifest")
     _atomic_json(output/"artifact_manifest.json",manifest)
     pending={
         "format":TERMINAL_FORMAT,"work_unit":"PMG-WU-008","state":"EXECUTED_PENDING_REVIEW",
         "candidate_git_head":candidate_git_head,"candidate_git_tree":candidate_git_tree,
+        "evidence_repair_git_head":evidence_repair_git_head,
+        "evidence_repair_git_tree":evidence_repair_git_tree,
         "artifact_manifest_content_id":manifest["content_id"],"real_host_execution":True,
         "replay_status":"MATCH","raw_maps_reopened":False,"raw_data_mutation":False,
         "observation_used_for_power":False,"claim_promotion":False,
@@ -761,6 +934,7 @@ def assemble_outputs(
 
 def replay_directory(output: Path=OUTPUT_DIR, *, require_terminal: bool=True) -> dict[str, object]:
     output=Path(output)
+    registry=load_registry()
     manifest=json.loads((output/"artifact_manifest.json").read_text(encoding="utf-8"))
     content=_canonical_id({k:v for k,v in manifest.items() if k!="content_id"},role="wu008_artifact_manifest")
     if content!=manifest.get("content_id"):
@@ -774,12 +948,16 @@ def replay_directory(output: Path=OUTPUT_DIR, *, require_terminal: bool=True) ->
     expected_result=_canonical_id({k:v for k,v in result.items() if k!="content_id"},role="wu008_result")
     if result.get("content_id")!=expected_result or result.get("raw_maps_reopened") is not False:
         raise Wu008Error("result semantic content differs")
+    validate_claim_metadata(manifest.get("claim_metadata", {}), registry=registry)
+    if result.get("claim_metadata") != manifest.get("claim_metadata"):
+        raise Wu008Error("result and manifest claim metadata differ")
     if require_terminal:
         terminal=json.loads((output/"terminal.json").read_text(encoding="utf-8"))
         if terminal.get("state")!="SUCCEEDED" or terminal.get("artifact_manifest_content_id")!=manifest["content_id"]:
             raise Wu008Error("reviewed terminal is absent or differs")
     return {
         "format":"PLANCK_MES_IRREP_POWER_MAP_FREE_REPLAY_V1","status":"MATCH",
+        "replay_semantics":"COMMITTED_ARTIFACT_INTEGRITY_AND_SUMMARY_CONTENT_NOT_FULL_NUMERICAL_REGENERATION",
         "artifact_manifest_content_id":manifest["content_id"],"result_content_id":result["content_id"],
         "raw_maps_reopened":False,"observation_used_for_power":False,
     }
@@ -817,6 +995,8 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--checkpoint-root",type=Path)
     parser.add_argument("--candidate-git-head")
     parser.add_argument("--candidate-git-tree")
+    parser.add_argument("--evidence-repair-git-head")
+    parser.add_argument("--evidence-repair-git-tree")
     parser.add_argument("--workers",type=int,default=1)
     return parser
 
@@ -829,7 +1009,13 @@ def main(argv: Sequence[str]|None=None) -> int:
         if args.arm is None or args.checkpoint_root is None:raise Wu008Error("--execute requires --arm and --checkpoint-root")
         result=execute_arm(arm=args.arm,output=args.output,checkpoint_root=args.checkpoint_root,candidate_git_head=args.candidate_git_head,candidate_git_tree=args.candidate_git_tree,workers=args.workers)
     elif args.assemble:
-        result=assemble_outputs(output=args.output,candidate_git_head=args.candidate_git_head,candidate_git_tree=args.candidate_git_tree)
+        result=assemble_outputs(
+            output=args.output,
+            candidate_git_head=args.candidate_git_head,
+            candidate_git_tree=args.candidate_git_tree,
+            evidence_repair_git_head=args.evidence_repair_git_head,
+            evidence_repair_git_tree=args.evidence_repair_git_tree,
+        )
     elif args.finalize_review is not None:
         pending=json.loads((args.output/"terminal.pending.json").read_text(encoding="utf-8"))
         review=json.loads(args.finalize_review.read_text(encoding="utf-8"))

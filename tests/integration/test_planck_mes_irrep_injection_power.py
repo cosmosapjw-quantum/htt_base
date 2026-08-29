@@ -114,6 +114,8 @@ def test_runner_help_and_source_have_no_raw_map_network_or_github_action_path() 
     assert "--arm" in result.stdout
     assert "--execute" in result.stdout
     assert "--replay-committed" in result.stdout
+    assert "--evidence-repair-git-head" in result.stdout
+    assert "--evidence-repair-git-tree" in result.stdout
     source = SCRIPT.read_text(encoding="utf-8").lower()
     forbidden = ("healpy.read_map", "astropy.io.fits", "requests.", "urllib", "github actions")
     assert not any(token in source for token in forbidden)
@@ -162,3 +164,75 @@ def test_registry_attachment_copy_is_exact() -> None:
     assert payload["scope_limitation"].startswith(
         "Power of the registered functional at 200-reference calibration"
     )
+
+
+def test_claim_metadata_is_complete_and_fail_closed() -> None:
+    api = _api()
+    registry = api.load_registry(REGISTRY)
+    metadata = api.build_claim_metadata(
+        registry=registry,
+        input_source_identity="sha256:" + "d" * 64,
+        candidate_git_head="a" * 40,
+        candidate_git_tree="b" * 40,
+        evidence_repair_git_head="e" * 40,
+        evidence_repair_git_tree="f" * 40,
+    )
+    required = {
+        "owner",
+        "scope",
+        "claim_tier",
+        "artifact_mode",
+        "allowed_use",
+        "forbidden_use",
+        "transfer_source",
+        "sky_support_status",
+        "mask_status",
+        "covariance_status",
+        "null_status_by_arm",
+        "caveats",
+        "generating_procedure",
+        "generating_commands",
+        "registry_sha256",
+        "input_source_identity",
+        "candidate_git_head",
+        "candidate_git_tree",
+        "evidence_repair_git_head",
+        "evidence_repair_git_tree",
+    }
+    assert required <= set(metadata)
+    assert metadata["owner"] == "OBSSTAT"
+    assert metadata["claim_tier"] == "C2_CONDITIONAL_DIAGNOSTIC_ONLY"
+    assert metadata["scope"] == registry["scope_limitation"]
+    assert metadata["transfer_source"] == "NONE_POST_ESTIMATOR_CARRIER_DOMAIN"
+    assert metadata["evidence_repair_git_head"] == "e" * 40
+    assert metadata["null_status_by_arm"]["cmbonly999"].startswith("MATCHED_CMB_ONLY")
+    assert "NOT_EXCHANGEABLE" in metadata["null_status_by_arm"]["paired300"]
+    api.validate_claim_metadata(metadata, registry=registry)
+
+    for missing in required:
+        broken = dict(metadata)
+        broken.pop(missing)
+        with pytest.raises(api.Wu008Error, match="claim metadata"):
+            api.validate_claim_metadata(broken, registry=registry)
+
+
+def test_template_heatmap_layout_keeps_suptitle_clear_of_panel_titles() -> None:
+    api = _api()
+    summaries, _ = api.build_summaries(
+        ROOT / "docs/generated/planck_mes_irrep_injection_power"
+    )
+    figure = api.build_template_power_heatmap(summaries)
+    try:
+        figure.canvas.draw()
+        renderer = figure.canvas.get_renderer()
+        assert figure._suptitle is not None
+        suptitle_box = figure._suptitle.get_window_extent(renderer)
+        data_axes = [axis for axis in figure.axes if axis.get_title()]
+        assert len(data_axes) == 4
+        assert len({round(axis.get_position().y0, 3) for axis in data_axes}) == 2
+        for axis in data_axes:
+            assert not suptitle_box.overlaps(axis.title.get_window_extent(renderer))
+    finally:
+        import matplotlib.pyplot as plt
+
+        plt.close(figure)
