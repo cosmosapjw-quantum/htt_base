@@ -1,0 +1,100 @@
+schema: htt.planck_mes.pmg_wu007.invariant_test_matrix.v1
+rows:
+- requirement: The CMB-only lane overwrites or is promoted above the paired-300 primary.
+  invariant: PMG7-INV-PRIMARY-SEPARATION
+  failure_mode: PMG7-FM-001
+  severity: P0
+  mechanical_detector: test_primary_and_robustness_outputs_are_distinct_and_primary_is_immutable
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: Noise maps enter a row labeled CMB-only, or the 999 lane is mixed with paired CMB+noise rows.
+  invariant: PMG7-INV-NULL-IDENTITY
+  failure_mode: PMG7-FM-002
+  severity: P0
+  mechanical_detector: test_cmbonly_route_rejects_noise_products_and_mixed_rows
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: The operator, mask, beam/pixel transfer, real-harmonic layout, frame, or units differ from the accepted carrier without an explicit blocked state.
+  invariant: PMG7-INV-SAME-OPERATOR
+  failure_mode: PMG7-FM-003
+  severity: P0
+  mechanical_detector: test_exact_operator_and_carrier_conventions_match_accepted_primary
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: Raw/downloaded inputs or private manifests are mutated or staged.
+  invariant: PMG7-INV-RAW-IMMUTABILITY
+  failure_mode: PMG7-FM-004
+  severity: P0
+  mechanical_detector: test_raw_inputs_are_immutable_and_forbidden_paths_are_not_staged
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: A missing/duplicate/reordered row, synthetic 00970 row, or omitted 00818 row is accepted.
+  invariant: PMG7-INV-NULL-IDENTITY
+  failure_mode: PMG7-FM-005
+  severity: P0
+  mechanical_detector: test_exact_999_inventory_order_excludes_only_00970_and_includes_00818
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: Row 00818 is adjudicated by file size alone or without a semantic FITS receipt.
+  invariant: PMG7-INV-00818-SEMANTIC
+  failure_mode: PMG7-FM-006
+  severity: P1
+  mechanical_detector: test_00818_requires_fits_structure_and_streaming_digest
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: The observation is reopened/re-estimated instead of reusing the accepted one-pass observation row, or a second estimator reconstructs carriers.
+  invariant: PMG7-INV-SAME-OPERATOR
+  failure_mode: PMG7-FM-007
+  severity: P1
+  mechanical_detector: test_observation_row_is_reused_and_null_carriers_come_from_same_pass_retained_coefficients
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: Scalar or irrep features are reconstructed from each other rather than projected from the same row carrier.
+  invariant: PMG7-INV-SAME-ROW-PROJECTION
+  failure_mode: PMG7-FM-008
+  severity: P0
+  mechanical_detector: test_same_row_scalar_and_irrep_outputs_project_from_the_same_carrier
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: A WU-007 terminal reports success without 1000 rows, map-free replay, external figure audit, or zero unresolved P0/P1.
+  invariant: PMG7-INV-REVIEWED-COMPLETION
+  failure_mode: PMG7-FM-009
+  severity: P1
+  mechanical_detector: test_success_terminal_requires_real_999_execution_and_reviewed_evidence
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: Observed rank extremeness automatically promotes anomaly, foreground, physical, local/global, or Bianchi claims.
+  invariant: PMG7-INV-CLAIM-ENVELOPE
+  failure_mode: PMG7-FM-010
+  severity: P1
+  mechanical_detector: test_claim_envelope_forbids_rank_based_promotion
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: GitHub Actions status/query/rerun is made a required gate in this thread.
+  invariant: PMG7-INV-LOCAL-VERIFICATION
+  failure_mode: PMG7-FM-011
+  severity: P1
+  mechanical_detector: test_package_and_handoff_contain_no_actions_commands_or_required_actions_gate
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: A full 910-GiB hash sweep, additional download, Commander/NPIPE intake, or unrelated obs_bundle packaging is inserted into WU-007.
+  invariant: PMG7-INV-BOUNDED-IO
+  failure_mode: PMG7-FM-012
+  severity: P1
+  mechanical_detector: test_preflight_hashes_only_row_00818_and_declares_no_download
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: The implementation silently changes feature families, tails, reducers, or selection policy after seeing WU-006 results.
+  invariant: PMG7-INV-FROZEN-REGISTRY
+  failure_mode: PMG7-FM-013
+  severity: P1
+  mechanical_detector: test_wu007_registry_is_exactly_the_accepted_wu006_registry
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
+- requirement: PMG-WU-008 begins or the result is called power-calibrated before WU-007 reviewed completion.
+  invariant: PMG7-INV-DAG-TRANSITION
+  failure_mode: PMG7-FM-014
+  severity: P1
+  mechanical_detector: test_terminal_pass_transition_is_exactly_pmg_wu008_and_only_after_review
+  work_unit: PMG-WU-007
+  pass_transition: Continue PMG-WU-007; after all required gates pass, start PMG-WU-008.
