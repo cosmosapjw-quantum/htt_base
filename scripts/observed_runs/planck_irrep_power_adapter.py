@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib
 import numpy as np
 
-FAMILIES=('MES_10','OBSERVABLE_IRREP_ORBIT_V1')
+FAMILIES=('FROZEN_MES_10','FROZEN_FRAME_FREE_IRREP_8')
 TAILS={FAMILIES[0]:('two-sided',)*10,
        FAMILIES[1]:('two-sided','two-sided','two-sided','upper','two-sided','upper','two-sided','two-sided')}
 
@@ -40,7 +40,9 @@ def make_extractor(metadata: dict, reference_carriers: np.ndarray, source_identi
         report=observable_irrep_orbit_report(state)
         unavailable=[name for name in FRAME_FREE_FEATURE_IDS if report.coordinate(name).status!='AVAILABLE']
         if unavailable:absence[FAMILIES[1]]='TYPED_ABSENCE:'+','.join(unavailable)
-        else:values[FAMILIES[1]]=np.asarray(orbit_family_vector(report,FAMILIES[1]),dtype=float)
+        else:values[FAMILIES[1]]=np.asarray(
+            orbit_family_vector(report, FRAME_FREE_FAMILY_ID), dtype=float
+        )
         try:
             scalar=np.asarray(worker._component_features_from_real_carrier(row),dtype=float)
         except worker.PlanckWorkerError as error:
