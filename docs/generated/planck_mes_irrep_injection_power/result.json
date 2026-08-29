@@ -65,12 +65,79 @@
   },
   "candidate_git_head": "2bb578c0426b646152e5154d732beb83ce6b5c55",
   "candidate_git_tree": "4b993139e780deab484f07168527a25bc22dcf9e",
+  "claim_metadata": {
+    "allowed_use": [
+      "conditional method-power reporting for the registered 200-reference functional",
+      "template, family, reducer, and combiner sensitivity comparison",
+      "map-free committed-artifact integrity replay"
+    ],
+    "applies_to_artifacts": [
+      "paired300_trials.npz",
+      "paired300_execution.json",
+      "cmbonly999_trials.npz",
+      "cmbonly999_execution.json",
+      "power_table.csv",
+      "threshold_crossings.csv",
+      "scalar_irrep_comparison.csv",
+      "orientation_sensitivity.csv",
+      "figure_power_curves.pdf",
+      "figure_template_power_heatmap.pdf",
+      "figure_scalar_irrep_power_difference.pdf",
+      "figure_orientation_prefix_sensitivity.pdf",
+      "result.json"
+    ],
+    "artifact_mode": "CLAIM_BEARING_FROZEN_CONDITIONAL_METHOD_POWER",
+    "candidate_git_head": "2bb578c0426b646152e5154d732beb83ce6b5c55",
+    "candidate_git_state": "CODE_AND_REGISTRY_COMMITTED_BEFORE_EXECUTION",
+    "candidate_git_tree": "4b993139e780deab484f07168527a25bc22dcf9e",
+    "caveats": [
+      "the two evaluation arms share 100 CMB identities and are not independent replications",
+      "the 32 orientations are a fixed descriptive bank, not certified Haar convergence",
+      "physical response templates are deferred and no observation enters the power study",
+      "finite ranks are conditional on the fixed 200-row reference pool"
+    ],
+    "claim_tier": "C2_CONDITIONAL_DIAGNOSTIC_ONLY",
+    "covariance_status": "DIAGNOSTIC_REFERENCE_COVARIANCE_NOT_USED_IN_FINITE_RANK_SCORING",
+    "evidence_repair_git_head": "6bb37f383ec96a302aed2911888b68a2e0184c29",
+    "evidence_repair_git_state": "BOUNDED_REFEREE_REPAIR_COMMITTED_BEFORE_EVIDENCE_REASSEMBLY",
+    "evidence_repair_git_tree": "c4bdf074c3e435e829e6b2a364ed9449f49fbeab",
+    "forbidden_use": [
+      "power calibration of the original full301 or full1000 observation procedures",
+      "unconditional p-value, detection, or independent-replication claim",
+      "physical shear, vorticity, local/global, geometry, or Bianchi-family inference",
+      "replacement of the paired-300 primary result"
+    ],
+    "generating_commands": [
+      "python scripts/observed_runs/run_planck_mes_irrep_injection_power.py --execute --arm paired300 --checkpoint-root <private-checkpoint-root>",
+      "python scripts/observed_runs/run_planck_mes_irrep_injection_power.py --execute --arm cmbonly999 --checkpoint-root <private-checkpoint-root>",
+      "python scripts/observed_runs/run_planck_mes_irrep_injection_power.py --assemble --output docs/generated/planck_mes_irrep_injection_power --candidate-git-head <execution-head> --candidate-git-tree <execution-tree> --evidence-repair-git-head <repair-head> --evidence-repair-git-tree <repair-tree>"
+    ],
+    "generating_procedure": "execute each registered map-free arm from accepted carriers, summarize exact integer ranks, then assemble plots and content-bound evidence",
+    "input_source_identity": "sha256:e3dd41030370b6d64c7598159cb9ce59cfd81f4682f4ea8a8fe6c39ceadb5115",
+    "mask_status": "INHERITED_FROZEN_JOINT_CUTSKY_OPERATOR_NO_NEW_MASK_OPERATION",
+    "null_status_by_arm": {
+      "cmbonly999": "MATCHED_CMB_ONLY_QUERY_AND_CMB_ONLY_REFERENCE_CONDITIONAL_FINITE_POOL",
+      "paired300": "CMB_PLUS_NOISE_QUERY_AGAINST_CMB_ONLY_REFERENCE_NOT_EXCHANGEABLE_DESCRIPTIVE_DECISION_RULE"
+    },
+    "owner": "OBSSTAT",
+    "registered_claim_provenance": {
+      "claim_promotion": false,
+      "finite_rank_claim_id": "C-PR135-FINITE-NULL-RANK",
+      "source_response_claim_id": "C-PR133-SOURCE-RESPONSE-TYPES"
+    },
+    "registry_sha256": "sha256:f4374966e1710be6490e57f35ae8d725806f5488fc3595db0d3afb1ce67b5e4d",
+    "scope": "Power of the registered functional at 200-reference calibration, not the original full301/full1000 test size.",
+    "sky_support_status": "INHERITED_FROM_ACCEPTED_WU005_AND_WU007_CARRIERS_NO_NEW_MAP_ACCESS",
+    "transfer_source": "NONE_POST_ESTIMATOR_CARRIER_DOMAIN"
+  },
   "claim_promotion": false,
   "combiners": [
     "MIN_LOCAL_P_V1",
     "EXACT_INTEGER_FISHER_PRODUCT_FINITE_POOL_V1"
   ],
-  "content_id": "sha256:cc3d4003c0e24829173c38e4002fe63dda83b13de620425b93806f6d86d59f43",
+  "content_id": "sha256:b2a9798f717e9dd63ac3801d7e28a29aecf8603fab4eb5c1ff2e7967b9cf5084",
+  "evidence_repair_git_head": "6bb37f383ec96a302aed2911888b68a2e0184c29",
+  "evidence_repair_git_tree": "c4bdf074c3e435e829e6b2a364ed9449f49fbeab",
   "families": [
     "FROZEN_MES_10",
     "FROZEN_FRAME_FREE_IRREP_8"
@@ -94,6 +161,7 @@
     "LOO_ECDF_MIDRANK_V1"
   ],
   "registry_sha256": "sha256:f4374966e1710be6490e57f35ae8d725806f5488fc3595db0d3afb1ce67b5e4d",
+  "replay_semantics": "COMMITTED_ARTIFACT_INTEGRITY_AND_SUMMARY_CONTENT_NOT_FULL_NUMERICAL_REGENERATION",
   "scope_limitation": "Power of the registered functional at 200-reference calibration, not the original full301/full1000 test size.",
   "state": "EXECUTED_PENDING_REVIEW",
   "summary_row_count": 496,
