@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -236,3 +237,29 @@ def test_template_heatmap_layout_keeps_suptitle_clear_of_panel_titles() -> None:
         import matplotlib.pyplot as plt
 
         plt.close(figure)
+
+
+def test_reviewed_result_pack_metadata_replay_and_report_assets_match() -> None:
+    api = _api()
+    output = ROOT / "docs/generated/planck_mes_irrep_injection_power"
+    registry = api.load_registry(REGISTRY)
+    manifest = json.loads((output / "artifact_manifest.json").read_text(encoding="utf-8"))
+    result = json.loads((output / "result.json").read_text(encoding="utf-8"))
+    assert result["claim_metadata"] == manifest["claim_metadata"]
+    api.validate_claim_metadata(manifest["claim_metadata"], registry=registry)
+    replay = api.replay_directory(output, require_terminal=True)
+    assert replay["status"] == "MATCH"
+    assert replay["raw_maps_reopened"] is False
+    assert replay["replay_semantics"].startswith("COMMITTED_ARTIFACT_INTEGRITY")
+
+    assets = ROOT / "MES_BOUND_CURRENT_RESEARCH_REPORT_ASSETS"
+    report_names = {
+        "figure_power_curves.pdf": "injection_power_curves.pdf",
+        "figure_template_power_heatmap.pdf": "injection_template_power_heatmap.pdf",
+        "figure_scalar_irrep_power_difference.pdf": "injection_scalar_irrep_difference.pdf",
+        "figure_orientation_prefix_sensitivity.pdf": "injection_orientation_sensitivity.pdf",
+    }
+    for generated_name, report_name in report_names.items():
+        generated = hashlib.sha256((output / generated_name).read_bytes()).hexdigest()
+        embedded = hashlib.sha256((assets / report_name).read_bytes()).hexdigest()
+        assert embedded == generated
