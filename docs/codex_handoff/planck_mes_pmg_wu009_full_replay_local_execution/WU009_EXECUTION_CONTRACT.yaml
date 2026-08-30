@@ -1,0 +1,104 @@
+schema: htt.planck_mes_pmg_wu009.execution_contract.v1
+package_id: PLANCK_MES_PMG_WU009_FULL_REPLAY_LOCAL_EXECUTION_20260830
+runtime_required:
+  - REPO_ROOT
+  - OUTPUT_ROOT
+  - PLANCK_RAW_ROOT
+  - THEOREM_DOSSIER
+  - THEOREM_DOSSIER_SHA256
+  - XACT_PARENT
+authority_required:
+  accepted_design_commit: bda8e489bff7c26fb5fb03fba59360028d01a2fe
+  accepted_design_tree: aa734e7933efc6f763d49aaf9f0d9c1bdad6b3b1
+  scientific_base_commit: 5e81ed1635b8fe6fc944829a9fab7ab8d5b8c654
+toolchain_identities_required:
+  python: ABSOLUTE_EXECUTABLE_MATCHING_SHA256_AND_DERIVED_DOUBLE_DASH_VERSION
+  wolfram: ABSOLUTE_EXECUTABLE_MATCHING_SHA256_AND_DERIVED_DASH_VERSION
+  xact:
+    parent: ABSOLUTE_EXISTING_PARENT_MATCHING_XACT_PARENT
+    version: xAct 1.3.0
+    source_archive_sha256: 7a6c5f600868a3922668b020a15c0692f76574ff2a559808c62d460cef1b07be
+github_actions_allowed: false
+raw_recursive_scans_allowed: false
+raw_writes_allowed: false
+output_contract:
+  absolute: true
+  must_resolve_under: OUTPUT_ROOT
+  outside_every_raw_root: true
+input_contract:
+  read_only: true
+  exact_identity_required: true
+  inventory_source: USER_SUPPLIED_EXPLICIT_MANIFEST_ONLY
+  validated_inspection_commands: MUST_BE_EMPTY
+  explicit_manifest_sha256: REQUIRED_AND_CONTENT_VERIFIED
+  repository_root: EXISTING_GIT_WORKTREE
+  repository_authority:
+    mode: CONTENT_BOUND_TRACKED_AUTHORITY_FILES_AT_HEAD_AND_WORKTREE
+    files:
+      docs/superpowers/specs/2026-08-30-planck-mes-wu009-full-replay-theorem-reconciliation-design.md: 0fd0fd545279337903fa941e2add03c7dd99eef109f286e1e8eed3d3800372a2
+      docs/superpowers/plans/2026-08-30-planck-mes-wu009-full-replay-theorem-reconciliation.md: 0a9e1c74dfe843ef4fac3c944ad8a8d05a6fb3daa61a5a8fcfc40bf0d5f90523
+      docs/codex_handoff/planck_mes_pmg_wu009_full_replay_local_execution/AUTHORITY_BINDING.yaml: 0779cbe9d593131f645962afcb3ba5882c75275e13c8ef669e18d4a9f8bb048a
+      docs/research_program/post_pr327/planck_mes_wu009_theorem_adjudication.json: aeabb89ca8fae2f343d72e2933ada8f106a6f35864abc59ac6d7973e5f70ce62
+      docs/generated/planck_pr3_paired300_irrep_carrier/terminal.json: bf82c1e2be03c9fe1c3ca8a4ef148a84be4d7b999cb31af5c617882fe1e0decb
+      docs/generated/planck_mes_smica_cmbonly_999_irrep/terminal.json: a0adb549fd43be4f79386605d1cb40c9cda62627e260efcffa50540a536279fe
+      docs/generated/planck_mes_irrep_injection_power/terminal.json: 0126d55c050d01bd7a371ab9a8093fdb378e4c92f4f74c0656b90c1879a2b3d6
+polarization_evidence_required:
+  eb_operator:
+    - identity_receipt
+    - response_receipt
+    - leakage_receipt
+    - transfer_receipt
+  matched_joint_null:
+    - identity_receipt
+    - covariance_receipt
+    - pipeline_receipt
+  receipt_schema: ABSOLUTE_EXISTING_PATH_PLUS_MATCHING_SHA256_AND_PARSED_CONTENT
+  receipt_content_contract:
+    schema: htt.planck_mes_pmg_wu009.evidence_receipt.v1
+    exact_top_level_fields:
+      - schema
+      - package_id
+      - evidence_kind
+      - state
+      - metrics
+      - artifacts
+    artifact_schema: htt.planck_mes_pmg_wu009.evidence_artifact.v1
+    evidence_states: PASS
+    lane_manifest_state: SEALED
+    kind_specific_metrics_required: true
+    role_specific_artifacts_required: true
+    source_bytes_sha256_required: true
+    role_substitution_allowed: false
+    hash_only_receipts_allowed: false
+claim_contract:
+  exact_registered_fields_only: true
+  claim_promotion: false
+  physical_cause_identified: false
+  bianchi_family_identified: false
+  foreground_exclusion: false
+  same_sky_role: SAME_SKY_ROBUSTNESS_ONLY
+  cross_field_joint_and_conditional_roles: EXPLORATORY_ONLY
+  shared_data_evalue_multiplication: false
+instantiated_validation_phases:
+  PREFLIGHT:
+    purpose: VALIDATE_IDENTITIES_RECIPE_AND_ADMISSIONS_BEFORE_OBSERVED_VALUES
+    terminals: MUST_BE_EMPTY
+  FINAL_SEAL:
+    purpose: VALIDATE_COMPLETE_EXECUTION_OR_TYPED_ABSTENTION_RECORD
+    terminals: EVERY_D9_LANE_EXACTLY_ONCE_WITH_EXECUTED_PHASE_EXACT_PREREQUISITES_AND_BOUND_MANIFEST
+preflight_order:
+  - verify_authority_and_predecessor_hashes
+  - bind_runtime_and_toolchain_identities
+  - verify_dossier_locator_and_sha256
+  - verify_output_root_outside_raw_roots
+  - admit_explicit_inventory_without_recursive_scan
+  - seal_D9_recipe_before_observed_values
+  - execute_only_admitted_lanes
+  - seal_terminal_for_every_declared_lane
+claim_ceiling: SUCCEEDED_WITH_TYPED_LIMITATIONS_NO_CLAIM_PROMOTION
+valid_map_free_state: SUCCEEDED_NO_CLAIM_PROMOTION
+valid_no_result_headline: NO_ADMISSIBLE_NEW_RESULT
+resume_policy: CONTENT_BOUND_CHECKPOINTS_ONLY
+unknown_terminals: FAIL_CLOSED
+output_dependency_policy: OUTPUT_BEARING_LANES_MAY_CONSUME_ONLY_OUTPUT_BEARING_PREREQUISITES
+global_claim_firewall: ALL_CONFIG_RECEIPT_AND_EXPLICIT_MANIFEST_TEXT

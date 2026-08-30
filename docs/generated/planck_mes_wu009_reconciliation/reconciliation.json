@@ -1,0 +1,85 @@
+{
+  "artifact_mode": "DETERMINISTIC_SUCCESSOR_RECEIPT",
+  "claim_tier": "MAP_FREE_RECONCILIATION_NO_CLAIM_PROMOTION",
+  "covariance_status": "NO_NEW_COVARIANCE_INFERENCE",
+  "forbidden_uses": [
+    "new observed rank or detection claim",
+    "family or physical-cause identification",
+    "same-sky independent replication claim",
+    "formal P01-P27 replay claim"
+  ],
+  "format": "PLANCK_MES_WU009_MAP_FREE_RECONCILIATION_V1",
+  "generating_command": "python scripts/observed_runs/run_planck_mes_wu009_reconciliation.py --check",
+  "historical_results": {
+    "WU006": {
+      "family": "OBSERVABLE_IRREP_ORBIT_V1",
+      "family_rank": "27/301",
+      "interpretation": "HISTORICAL_FAMILY_AND_LOCAL_RANKS_DISTINCT",
+      "local_ranks": {
+        "R_v0": "4/301",
+        "R_v2": "4/301"
+      }
+    },
+    "WU007": {
+      "interpretation": "NULL_POOL_SENSITIVITY_NOT_INDEPENDENT_REPLICATION",
+      "null_sensitivity_ranks": [
+        "61/1000",
+        "55/1000"
+      ],
+      "reducers": [
+        "LEGACY_ABSOLUTE_MEDIAN_V1",
+        "LOO_ECDF_MIDRANK_V1"
+      ]
+    },
+    "WU008": {
+      "arms_independent": false,
+      "embedded_result_state": "EXECUTED_PENDING_REVIEW",
+      "original_full301_full1000_calibrated": false,
+      "predecessor_rewritten": false,
+      "reconciliation": "STALE_EMBEDDED_PRE_TERMINAL_SUPERSEDED_BY_REVIEWED_TERMINAL",
+      "reviewed_terminal_state": "SUCCEEDED",
+      "scope": "OBSERVATION_BLIND_REGISTERED_200_REFERENCE_METHOD_POWER"
+    }
+  },
+  "lane_dispositions": {
+    "blocked": [
+      "committed_carrier_gate_c",
+      "formal_p01_p27"
+    ],
+    "local_only": [
+      "raw_replay",
+      "cas_replay",
+      "iqu_eb_replay"
+    ],
+    "tested": [
+      "predecessor_identity",
+      "task1_ledger",
+      "bounded_pure_contracts",
+      "historical_state_reconciliation"
+    ],
+    "untested": [
+      "corrected_observed_full_adaptation_rank"
+    ]
+  },
+  "lanes": {
+    "cas_replay": "LOCAL_ONLY_NOT_EXECUTED",
+    "committed_carrier_gate_c": "NOT_IDENTIFIED_FROM_COMMITTED_CARRIER",
+    "formal_p01_p27": "BLOCKED_BY_MISSING_THEOREM_DOSSIER",
+    "iqu_eb_replay": "LOCAL_ONLY_NOT_EXECUTED",
+    "predecessor_identity": "TESTED_PASS",
+    "raw_replay": "LOCAL_ONLY_NOT_EXECUTED",
+    "task1_contracts": "TESTED_PASS"
+  },
+  "null_status": "HISTORICAL_POOL_SPECIFIC_VALUES_ONLY_NO_NEW_CALIBRATION",
+  "observed_result": {
+    "computed": false,
+    "rank": null,
+    "score": null,
+    "state": "NO_ADMISSIBLE_NEW_RESULT",
+    "statistic": null
+  },
+  "overall_state": "SUCCEEDED_NO_CLAIM_PROMOTION",
+  "owner": "obsstat",
+  "scope": "Committed-carrier theorem reconciliation with no new observed result",
+  "transfer_source": "COMMITTED_PREDECESSOR_TEXT_ARTIFACTS_ONLY"
+}

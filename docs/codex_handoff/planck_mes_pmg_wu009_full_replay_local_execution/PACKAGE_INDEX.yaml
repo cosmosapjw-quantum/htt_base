@@ -1,0 +1,50 @@
+schema: htt.planck_mes_pmg_wu009.package_index.v1
+package_id: PLANCK_MES_PMG_WU009_FULL_REPLAY_LOCAL_EXECUTION_20260830
+purpose: PREFLIGHT_AND_EXECUTION_BINDING_ONLY_NOT_A_SCIENTIFIC_RESULT
+files:
+  PACKAGE_INDEX.yaml:
+    role: package manifest; its own hash is excluded
+    sha256: SELF_EXCLUDED
+  AUTHORITY_BINDING.yaml:
+    role: immutable source and dossier authority
+    sha256: 0779cbe9d593131f645962afcb3ba5882c75275e13c8ef669e18d4a9f8bb048a
+  DATA_AVAILABILITY_BINDING.yaml:
+    role: explicit inventory and no-scan policy
+    sha256: 69e852295b02705952df3f09c65b8d154470aa5e60b6deec9bc91c9cd7954ce6
+  WU009_EXECUTION_CONTRACT.yaml:
+    role: runtime, immutability, and terminal contract
+    sha256: 589b23b9dcd016b2386b41021a5ca64609408f3fed34379e6941e7d8a59f3752
+  D9_RECIPE_TEMPLATE.yaml:
+    role: pre-observation D.9 recipe template
+    sha256: 22f186f9bf4cdab1067693bf9470ba19ecdd6d55fc3f2c0e308a8cb187f0f3b2
+  D9_LANE_TERMINALS.yaml:
+    role: preregistered lane and terminal registry
+    sha256: 34f3766f55f7f548fb37082ea6066d9dca46ba9de8742d433f275ace08784006
+  CODEX_HANDOFF.md:
+    role: read-first local execution instructions
+    sha256: 8872b169ae7e9d700c3c9305956268580c9c3c4072587093d4016b0c86d151f8
+  CODEX_HANDOFF_PROMPT.md:
+    role: exact local continuation prompt
+    sha256: 7bfa2cfa7e13a0d86ecc5e19f391741ebb992ffec3ca09b95db4d63c6357722a
+validation_command: python scripts/validate_planck_mes_pmg_wu009_full_replay.py --mode package
+manifest_self_hash_excluded: true
+paper_a_delivery_integration:
+  state: BLOCKED_UNTIL_GATE_E_FROZEN_SUCCESSOR
+  claim_promotion: false
+  files:
+    scripts/paper/planck_mes_wu009_claim_boundary.py:
+      role: pure fail-closed WU-009 claim-boundary validator
+      sha256: 211f1592200ed29c95875c9dc1234b3bc29d1a9ebc6117c93bdcf1964dfbfa93
+    scripts/paper/build_planck_mes_first_paper.py:
+      role: legacy builder with bounded validation-only WU-009 wrapper
+      sha256: a11b9a872c905ce37b135d715c82f3b79c25af6283f1a4cbc9d0d61c6956a139
+    tests/paper/test_planck_mes_wu009_claim_boundary.py:
+      role: standard-library claim-boundary regression tests
+      sha256: 57c2dea09e742cdc150b0802aa0a1141a5766335aaeb67ecbab1cfcc349279bf
+    docs/research_program/post_pr327/planck_mes_wu009_implementation_status.json:
+      role: local-only and paper-regeneration status
+      sha256: 2969026bb3988ff0cec7191b1d9aae238ebbc7ebf882a54e47b942c84fddf66c
+  sealed_authority:
+    docs/research_program/post_pr327/planck_mes_wu009_theorem_adjudication.json: aeabb89ca8fae2f343d72e2933ada8f106a6f35864abc59ac6d7973e5f70ce62
+    docs/generated/planck_mes_wu009_reconciliation/reconciliation.json: e38464baacb2b16b2c007c74ef338231a8f25a4c326baa53d54d0817a4d6ff00
+    docs/generated/planck_mes_wu009_reconciliation/terminal.json: 10e13dfb6efb8c0e46914ec61125904ff757e9ab9db463a50c120c6fdc208e9e

@@ -1,0 +1,27 @@
+schema: htt.planck_mes_pmg_wu009.authority_binding.v1
+package_id: PLANCK_MES_PMG_WU009_FULL_REPLAY_LOCAL_EXECUTION_20260830
+accepted_design:
+  branch: changeset/planck-mes-wu009-full-replay-theorem-reconciliation-20260830
+  commit: bda8e489bff7c26fb5fb03fba59360028d01a2fe
+  tree: aa734e7933efc6f763d49aaf9f0d9c1bdad6b3b1
+scientific_base:
+  commit: 5e81ed1635b8fe6fc944829a9fab7ab8d5b8c654
+  tree: be66c70662802930723f49f6d0cb2f678367d0c0
+theorem_summary:
+  path: docs/research_program/post_pr327/planck_mes_wu009_theorem_adjudication.json
+  sha256: aeabb89ca8fae2f343d72e2933ada8f106a6f35864abc59ac6d7973e5f70ce62
+  authority_source: USER_SUPPLIED_SUMMARY
+  provenance: FORMAL_DOSSIER_PENDING
+formal_dossier:
+  locator_runtime_key: THEOREM_DOSSIER
+  sha256_runtime_key: THEOREM_DOSSIER_SHA256
+  status: REQUIRED_NOT_MATERIALIZED_HERE
+  mismatch_terminal: BLOCKED_BY_DOSSIER_IDENTITY_MISMATCH
+predecessors:
+  - path: docs/generated/planck_pr3_paired300_irrep_carrier/terminal.json
+    sha256: bf82c1e2be03c9fe1c3ca8a4ef148a84be4d7b999cb31af5c617882fe1e0decb
+  - path: docs/generated/planck_mes_smica_cmbonly_999_irrep/terminal.json
+    sha256: a0adb549fd43be4f79386605d1cb40c9cda62627e260efcffa50540a536279fe
+  - path: docs/generated/planck_mes_irrep_injection_power/terminal.json
+    sha256: 0126d55c050d01bd7a371ab9a8093fdb378e4c92f4f74c0656b90c1879a2b3d6
+mutation_policy: PREDECESSORS_READ_ONLY_NEVER_REWRITTEN
