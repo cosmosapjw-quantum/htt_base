@@ -18,7 +18,85 @@ import hashlib
 from itertools import combinations
 import json
 from pathlib import Path
+import sys
 from typing import Mapping, Sequence
+
+
+if __package__:
+    from .planck_mes_wu009_claim_boundary import (
+        Wu009ClaimBoundaryError,
+        load_wu009_claim_boundary,
+    )
+else:  # Direct script execution puts this file's directory on sys.path.
+    from planck_mes_wu009_claim_boundary import (  # type: ignore[no-redef]
+        Wu009ClaimBoundaryError,
+        load_wu009_claim_boundary,
+    )
+
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+WU009_LEDGER_PATH = (
+    REPO_ROOT
+    / "docs/research_program/post_pr327/planck_mes_wu009_theorem_adjudication.json"
+)
+WU009_RECONCILIATION_PATH = (
+    REPO_ROOT
+    / "docs/generated/planck_mes_wu009_reconciliation/reconciliation.json"
+)
+WU009_TERMINAL_PATH = (
+    REPO_ROOT / "docs/generated/planck_mes_wu009_reconciliation/terminal.json"
+)
+
+
+def validate_planck_mes_wu009_claim_boundary(
+    *,
+    ledger_path: Path = WU009_LEDGER_PATH,
+    reconciliation_path: Path = WU009_RECONCILIATION_PATH,
+    terminal_path: Path = WU009_TERMINAL_PATH,
+) -> dict[str, object]:
+    """Load the optional WU-009 correction authority without paper I/O."""
+
+    return load_wu009_claim_boundary(
+        ledger_path,
+        reconciliation_path,
+        terminal_path,
+    )
+
+
+def _wu009_cli_receipt(boundary: Mapping[str, object]) -> dict[str, object]:
+    regeneration = boundary["paper_regeneration"]
+    identities = boundary["source_identities"]
+    return {
+        "status": "PASS_WU009_CLAIM_BOUNDARY",
+        "format": boundary["format"],
+        "source_sha256": {
+            label: record["sha256"] for label, record in sorted(identities.items())
+        },
+        "reconciliation_state": boundary["reconciliation_state"],
+        "formal_proof_provenance": boundary["ledger"]["formal_proof_provenance"],
+        "paper_regeneration_state": regeneration["state"],
+        "claim_promotion": boundary["claim_promotion"],
+        "new_observed_rank": boundary["new_observed_rank"],
+        "raw_data_accessed": boundary["raw_data_accessed"],
+        "raw_data_mutation": boundary["raw_data_mutation"],
+    }
+
+
+if __name__ == "__main__" and "--validate-wu009-claim-boundary" in sys.argv[1:]:
+    if sys.argv[1:] != ["--validate-wu009-claim-boundary"]:
+        print(
+            "--validate-wu009-claim-boundary is a validation-only mode and accepts no build arguments",
+            file=sys.stderr,
+        )
+        raise SystemExit(2)
+    try:
+        _wu009_boundary = validate_planck_mes_wu009_claim_boundary()
+    except Wu009ClaimBoundaryError as exc:
+        print(f"WU009_CLAIM_BOUNDARY_ERROR:{exc}", file=sys.stderr)
+        raise SystemExit(1) from exc
+    print(json.dumps(_wu009_cli_receipt(_wu009_boundary), sort_keys=True))
+    raise SystemExit(0)
+
 
 import matplotlib
 
@@ -33,8 +111,6 @@ from obsstat.mes_row_anchor import (
 )
 from obsstat.planck_post275_lane import observation_inclusive_max_scan
 
-
-REPO_ROOT = Path(__file__).resolve().parents[2]
 OBSERVED_ROW_ID = "PLANCK-PR3-SMICA-OBSERVED"
 
 ALLOWED_INPUT_PATHS = (

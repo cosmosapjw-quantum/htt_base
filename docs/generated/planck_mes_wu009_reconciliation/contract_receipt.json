@@ -1,0 +1,287 @@
+{
+  "authority_source": "USER_SUPPLIED_SUMMARY",
+  "bounded_contract_count": 17,
+  "checks": {
+    "boost_response_condition": {
+      "diagnostic": {
+        "code": "BOOST_RESPONSE_CONDITION_BOUND_VERIFIED",
+        "message": "bounded spectral check for the declared Q-to-O response",
+        "metrics": {
+          "bound": 1.6666666666666667,
+          "condition_number": 1.6666666666666665,
+          "q2": 42.0,
+          "response_eigenvalues": [
+            72.0,
+            61.2,
+            43.2
+          ],
+          "saturated": true
+        },
+        "state": "PASS"
+      },
+      "expected_state": "PASS",
+      "matched_expectation": true
+    },
+    "bounded_body_cone_confusion": {
+      "diagnostic": {
+        "code": "BOUNDED_BODY_IS_NOT_A_CONE",
+        "message": "the Gaussian cone projection formula cannot be copied to a bounded MES body",
+        "metrics": {
+          "interval_counterexample": "C=[0,1], z=2",
+          "interval_counterexample_lr": 3.0,
+          "interval_counterexample_projection_sq": 1.0
+        },
+        "state": "REJECT"
+      },
+      "expected_state": "REJECT",
+      "matched_expectation": true
+    },
+    "broken_row_equivariance": {
+      "diagnostic": {
+        "code": "BLOCKED_BY_NON_EQUIVARIANT_ADAPTATION",
+        "message": "the complete pipeline privileges a row under permutation",
+        "metrics": {
+          "actual": [
+            3.0,
+            3.0,
+            3.0
+          ],
+          "expected": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "failing_permutation": [
+            1,
+            0,
+            2
+          ]
+        },
+        "state": "REJECT"
+      },
+      "expected_state": "REJECT",
+      "matched_expectation": true
+    },
+    "conditional_e_composition": {
+      "diagnostic": {
+        "code": "CONDITIONAL_E_COMPOSITION_VERIFIED",
+        "message": "products require conditionally valid e-increments, not marginal means alone",
+        "metrics": {
+          "conditional_means": {
+            "step=1;history=()": 1.0,
+            "step=2;history=(0.5,)": 1.0,
+            "step=2;history=(1.5,)": 1.0
+          },
+          "first_violation": null,
+          "product_expectation": 1.0
+        },
+        "state": "PASS"
+      },
+      "expected_state": "PASS",
+      "matched_expectation": true
+    },
+    "decreasing_tail_swap": {
+      "diagnostic": {
+        "code": "DECREASING_TAIL_SWAP_VERIFIED",
+        "message": "a decreasing transform sends the LOO midrank to 1-u",
+        "metrics": {
+          "midrank_sums": [
+            "1/1",
+            "1/1",
+            "1/1",
+            "1/1"
+          ],
+          "tail_swap_verified": true
+        },
+        "state": "PASS"
+      },
+      "expected_state": "PASS",
+      "matched_expectation": true
+    },
+    "finite_rank_ties": {
+      "diagnostic": {
+        "code": "FINITE_RANK_SUPERUNIFORM",
+        "message": "weak finite ranks are superuniform over the exchangeable query label",
+        "metrics": {
+          "pvalues": [
+            "1/1",
+            "1/1",
+            "1/3"
+          ],
+          "violations": []
+        },
+        "state": "PASS"
+      },
+      "expected_state": "PASS",
+      "matched_expectation": true
+    },
+    "generic_stratum": {
+      "diagnostic": {
+        "code": "GENERIC_STRATUM_CERTIFIED",
+        "message": "det(K) has a resolved nonzero margin",
+        "metrics": {
+          "normalized_determinant": 1.0,
+          "relative_margin": 1.0
+        },
+        "state": "PASS"
+      },
+      "expected_state": "PASS",
+      "matched_expectation": true
+    },
+    "generic_stratum_abstention": {
+      "diagnostic": {
+        "code": "BLOCKED_BY_DEGENERATE_STRATUM",
+        "message": "row normalization is zero or nonfinite; no generic reconstruction",
+        "metrics": {
+          "relative_margin": 0.0,
+          "row_norms": [
+            1.4142135623730951,
+            1.0,
+            0.0
+          ]
+        },
+        "state": "ABSTAIN"
+      },
+      "expected_state": "ABSTAIN",
+      "matched_expectation": true
+    },
+    "inverse_square_refusal": {
+      "diagnostic": {
+        "code": "INVERSE_SQUARE_LIKELIHOOD_REFUSED",
+        "message": "under untruncated Gaussian direct-T noise E[Y^-2] diverges; fit direct T",
+        "metrics": {
+          "noise_model": "UNTRUNCATED_GAUSSIAN_DIRECT_T",
+          "objective": "UNWEIGHTED_INVERSE_SQUARE"
+        },
+        "state": "REJECT"
+      },
+      "expected_state": "REJECT",
+      "matched_expectation": true
+    },
+    "ledger": {
+      "diagnostic": {
+        "code": "LEDGER_VALID",
+        "message": "ledger matches the accepted summary authority and pending-proof boundary",
+        "metrics": {
+          "issue_count": 0,
+          "issues": [],
+          "row_count": 78
+        },
+        "state": "PASS"
+      },
+      "expected_state": "PASS",
+      "matched_expectation": true
+    },
+    "marginal_e_product_refusal": {
+      "diagnostic": {
+        "code": "MARGINAL_ONLY_E_VALUE_MULTIPLICATION",
+        "message": "products require conditionally valid e-increments, not marginal means alone",
+        "metrics": {
+          "conditional_means": {
+            "step=1;history=()": 1.0,
+            "step=2;history=(0.0,)": 0.0,
+            "step=2;history=(2.0,)": 2.0
+          },
+          "first_violation": [
+            2,
+            [
+              2.0
+            ],
+            2.0
+          ],
+          "product_expectation": 2.0
+        },
+        "state": "REJECT"
+      },
+      "expected_state": "REJECT",
+      "matched_expectation": true
+    },
+    "mirror_chirality_loss": {
+      "diagnostic": {
+        "code": "MIRROR_CHIRALITY_LOSS_DETECTED",
+        "message": "O(3)-only features lose mirror chirality",
+        "metrics": {
+          "o3_collision": true,
+          "opposite_nonzero_chirality": true
+        },
+        "state": "PASS"
+      },
+      "expected_state": "PASS",
+      "matched_expectation": true
+    },
+    "missing_absolute_temperature": {
+      "diagnostic": {
+        "code": "NOT_ADMISSIBLE_MISSING_ABSOLUTE_T_MONOPOLE_DIPOLE",
+        "message": "the representation inverse needs absolute T plus monopole and dipole",
+        "metrics": {
+          "has_absolute_temperature": false,
+          "includes_dipole": false,
+          "includes_monopole": false
+        },
+        "state": "ABSTAIN"
+      },
+      "expected_state": "ABSTAIN",
+      "matched_expectation": true
+    },
+    "positive_quadratic_domain": {
+      "diagnostic": {
+        "code": "STRICT_POSITIVE_QUADRATIC_DOMAIN_CERTIFIED",
+        "message": "representation domain accepted; this does not identify a physical cause",
+        "metrics": {
+          "certified_minimum": 0.25
+        },
+        "state": "PASS"
+      },
+      "expected_state": "PASS",
+      "matched_expectation": true
+    },
+    "row_equivariance": {
+      "diagnostic": {
+        "code": "ROW_EQUIVARIANCE_VERIFIED",
+        "message": "the bounded complete pipeline commutes with every row permutation",
+        "metrics": {
+          "permutations_checked": 6
+        },
+        "state": "PASS"
+      },
+      "expected_state": "PASS",
+      "matched_expectation": true
+    },
+    "selection_symmetry": {
+      "diagnostic": {
+        "code": "SELECTION_SYMMETRY_VERIFIED",
+        "message": "data-dependent selection may be valid when query-label symmetry is exact",
+        "metrics": {
+          "selected_label_counts": [
+            2,
+            2,
+            2
+          ]
+        },
+        "state": "PASS"
+      },
+      "expected_state": "PASS",
+      "matched_expectation": true
+    },
+    "stf_cubic_saturation": {
+      "diagnostic": {
+        "code": "STF_CUBIC_BOUND_VERIFIED",
+        "message": "bounded numerical identity check; not a formal-dossier replay",
+        "metrics": {
+          "absolute_cubic": 6.0,
+          "bound": 6.000000000000001,
+          "quadratic": 6.0,
+          "saturated": true,
+          "slack": 8.881784197001252e-16
+        },
+        "state": "PASS"
+      },
+      "expected_state": "PASS",
+      "matched_expectation": true
+    }
+  },
+  "formal_dossier_replayed": false,
+  "formal_proof_provenance": "FORMAL_DOSSIER_PENDING",
+  "format": "PLANCK_MES_WU009_BOUNDED_CONTRACT_SELF_CHECK_V1",
+  "status": "SUCCEEDED_NO_CLAIM_PROMOTION"
+}

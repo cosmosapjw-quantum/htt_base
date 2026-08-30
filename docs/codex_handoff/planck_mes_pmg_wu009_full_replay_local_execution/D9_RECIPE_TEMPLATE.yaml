@@ -1,0 +1,82 @@
+schema: htt.planck_mes_pmg_wu009.d9_recipe.v1
+package_id: PLANCK_MES_PMG_WU009_FULL_REPLAY_LOCAL_EXECUTION_20260830
+state: TEMPLATE_MUST_BE_FILLED_AND_SEALED_BEFORE_OBSERVED_VALUES
+source_inventory:
+  explicit_manifest: REQUIRED_USER_SUPPLIED_ABSOLUTE_PATH
+  product_and_split_identities: REQUIRED
+  content_hashes: REQUIRED
+  source_and_license_identities: REQUIRED_WHERE_APPLICABLE
+products:
+  units: REQUIRED
+  masks_and_fills: REQUIRED
+  beams: REQUIRED
+  pixel_windows: REQUIRED
+  coordinate_frame: REQUIRED
+  transfer_functions_l2_l3: REQUIRED
+  calibration_bandpass_color: REQUIRED
+  monopole_dipole_kinematic_quadrupole: REQUIRED
+carrier_naming:
+  raw_q: Q_stokes
+  irrep_q: Q_irrep[X]
+  irrep_o: O_irrep[X]
+  fields: [T, E, B]
+representation_contract:
+  harmonic_normalization: REQUIRED
+  stored_real_layout_and_reality: REQUIRED
+  harmonic_to_STF_intertwiner: REQUIRED
+  B_metadata: PSEUDO_STF_DETERMINANT_TWISTED
+  spacetime_aliases: FORBIDDEN
+polarization_contract:
+  q_u_spin: 2
+  tangent_basis_handedness: REQUIRED
+  sky_normal: REQUIRED
+  coordinate_orientation: REQUIRED
+  IAU_or_COSMO_U: REQUIRED
+  spin_harmonic_phase_and_reality: REQUIRED
+  exact_EB_synthesis_equation: REQUIRED
+  library_mapping: REQUIRED
+  spacetime_levi_civita_orientation: REQUIRED
+  metric_signature_does_not_fix_polarization_conventions: true
+  cut_sky_eb_operator:
+    coefficient_level: REQUIRED
+    target_mode_count: 24
+    target_blocks: [E_l2, E_l3, B_l2, B_l3]
+    full_rank_after_nuisance_marginalization: REQUIRED
+    response_and_covariance: REQUIRED
+    condition_number_and_ceiling: REQUIRED
+    leakage_budget: REQUIRED_NULL_ONLY_FROZEN
+    pure_E_injection: REQUIRED
+    pure_B_injection: REQUIRED
+    out_of_band_alias_test: REQUIRED
+    mask_fill_beam_pixel_filter_transfer: REQUIRED
+    missing_mode_policy: ABSTAIN_NEVER_ZERO_OR_PRIOR_FILL
+  matched_joint_null:
+    joint_sky_and_TE_covariance: REQUIRED
+    explicit_B_hypothesis: REQUIRED
+    polarization_noise_and_systematics: REQUIRED
+    component_separation_mask_leakage_beam_transfer: REQUIRED
+    rerun_complete_pipeline_per_row: REQUIRED
+temperature_inverse_gate:
+  absolute_temperature: REQUIRED
+  monopole: REQUIRED
+  dipole: REQUIRED
+  missing_terminal: NOT_ADMISSIBLE_MISSING_ABSOLUTE_T_MONOPOLE_DIPOLE
+frozen_statistics:
+  WU006_LEGACY_FROZEN: OBSERVABLE_IRREP_ORBIT_V1
+  tails_reducers_family_typed_absence: REQUIRED
+  row_equivariant_outer_replay: REQUIRED
+  cross_field_candidate_generator: REQUIRED_INDEPENDENT_OR_ROWWISE
+  null_eligibility_and_ordering: REQUIRED
+  conditioning_rule_and_support: REQUIRED
+  stopping_rule: REQUIRED_FINITE_SAMPLE_VALID
+  product_stability_metric: REQUIRED
+  missing_product_rule: PRODUCT_NOT_PRESENT_NO_SUBSTITUTION
+claims:
+  same_sky: SAME_SKY_ROBUSTNESS_ONLY
+  cross_field_joint_conditional: EXPLORATORY_ONLY
+  bianchi_family_identification: FORBIDDEN
+  foreground_exclusion: FORBIDDEN
+output:
+  root: OUTPUT_ROOT
+  code_environment_identities: REQUIRED
+  report_endpoint_registry: REQUIRED

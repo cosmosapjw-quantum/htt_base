@@ -1,0 +1,153 @@
+{
+  "approved_design": {
+    "commit": "bda8e489bff7c26fb5fb03fba59360028d01a2fe",
+    "path": "docs/superpowers/specs/2026-08-30-planck-mes-wu009-full-replay-theorem-reconciliation-design.md",
+    "tree": "aa734e7933efc6f763d49aaf9f0d9c1bdad6b3b1"
+  },
+  "claim_promotion": false,
+  "independent_review": {
+    "task2_initial_candidate": {
+      "result": "FAIL_P0_0_P1_6_P2_0",
+      "reviewed_diff_sha256": "4681d5b792c62e5daaeb5d95afd43ce5e47c05c57c29bbc33c67fe90348b298b"
+    },
+    "remediation": {
+      "state": "SIX_TASK2_BYPASSES_REGRESSION_TESTED_AND_REPAIRED",
+      "closure_authority": "EXTERNAL_FINAL_FULL_DIFF_REVIEW_REQUIRED_BEFORE_PUBLICATION"
+    },
+    "final_candidate_2faa5ec": {
+      "result": "FAIL_P0_0_P1_4_P2_0",
+      "reviewed_diff_sha256": "841ffa6c67bcb576905a62ca1f40c6ab254ed510851f3939b1b97520c3d31259",
+      "result_sha256": "2baa70ac583de13e6f173e002e523c0fee2d94a9f3bc27328b1eae8f8df0fce6"
+    },
+    "post_final_review_remediation": {
+      "state": "FOUR_FINAL_REVIEW_BYPASSES_REGRESSION_TESTED_AND_REPAIRED",
+      "repairs": [
+        "PARSED_ROLE_SPECIFIC_EVIDENCE_RECEIPTS_AND_ARTIFACTS",
+        "OUTPUT_BEARING_DEPENDENCY_ENFORCEMENT",
+        "TRACKED_REPOSITORY_AND_DERIVED_TOOLCHAIN_AUTHORITY",
+        "GLOBAL_CONFIG_RECEIPT_ARTIFACT_AND_MANIFEST_CLAIM_FIREWALL"
+      ],
+      "closure_authority": "NEW_CANDIDATE_SEAL_AND_READ_ONLY_VERDICT_REQUIRED_BEFORE_PUBLICATION"
+    }
+  },
+  "completed_map_free_gates": {
+    "A": {
+      "receipt": "docs/research_program/post_pr327/planck_mes_wu009_theorem_adjudication.json",
+      "state": "COMPLETED_SUMMARY_AUTHORITY_FORMAL_DOSSIER_PENDING"
+    },
+    "B": {
+      "receipt": "scripts/observed_runs/planck_mes_wu009_contracts.py",
+      "state": "COMPLETED_BOUNDED_CONTRACTS_NO_FORMAL_REPLAY"
+    },
+    "C": {
+      "committed_carrier_lane": "NOT_IDENTIFIED_FROM_COMMITTED_CARRIER",
+      "receipt": "docs/generated/planck_mes_wu009_reconciliation/reconciliation.json",
+      "state": "COMPLETED_WITH_TYPED_LIMITATIONS_NO_CLAIM_PROMOTION"
+    }
+  },
+  "empirical_inverse_state": "NOT_ADMISSIBLE_UNTIL_ABSOLUTE_T_MONOPOLE_DIPOLE_VERIFIED",
+  "format": "PLANCK_MES_WU009_IMPLEMENTATION_STATUS_V1",
+  "gate_d": {
+    "expected_terminal_classes": [
+      "BLOCKED_BY_MISSING_THEOREM_DOSSIER",
+      "NOT_ADMISSIBLE_MISSING_ABSOLUTE_T_MONOPOLE_DIPOLE",
+      "SUCCEEDED_NO_CLAIM_PROMOTION",
+      "SUCCEEDED_WITH_TYPED_LIMITATIONS_NO_CLAIM_PROMOTION"
+    ],
+    "state": "LOCAL_EXECUTION_REQUIRED"
+  },
+  "gate_d9": {
+    "expected_aggregate_terminal": "SUCCEEDED_WITH_TYPED_LIMITATIONS_NO_CLAIM_PROMOTION",
+    "state": "LOCAL_EXECUTION_REQUIRED"
+  },
+  "github_actions_used": false,
+  "local_execution_commands": [
+    {
+      "command": "python scripts/validate_planck_mes_pmg_wu009_full_replay.py --mode package",
+      "expected_terminal": "VALID:package"
+    },
+    {
+      "command": "python scripts/validate_planck_mes_pmg_wu009_full_replay.py --mode instantiated --config /absolute/path/to/wu009-instantiated.yaml",
+      "expected_terminal": "VALID:instantiated_OR_DECLARED_TYPED_STOP"
+    },
+    {
+      "command": "python scripts/paper/build_planck_mes_first_paper.py --validate-wu009-claim-boundary",
+      "expected_terminal": "PASS_WU009_CLAIM_BOUNDARY"
+    }
+  ],
+  "merge_performed": false,
+  "paper_a_regeneration": {
+    "claim_boundary": "scripts/paper/planck_mes_wu009_claim_boundary.py",
+    "state": "BLOCKED_UNTIL_GATE_E_FROZEN_SUCCESSOR"
+  },
+  "paper_outputs_regenerated": false,
+  "protected_paths_unchanged": [
+    "docs/generated/planck_pr3_paired300_irrep_carrier/",
+    "docs/generated/planck_mes_irrep_analysis/",
+    "docs/generated/planck_mes_smica_cmbonly_999_irrep/",
+    "docs/generated/planck_mes_irrep_injection_power/",
+    "docs/generated/planck_mes_first_paper/",
+    "papers/planck_mes_first_observation/main.tex"
+  ],
+  "raw_data_accessed": false,
+  "raw_data_mutation": false,
+  "scientific_base": {
+    "branch": "changeset/planck-mes-wu008-injection-power-20260829",
+    "commit": "5e81ed1635b8fe6fc944829a9fab7ab8d5b8c654",
+    "tree": "be66c70662802930723f49f6d0cb2f678367d0c0"
+  },
+  "test_evidence": {
+    "executed_here": [
+      {
+        "command": "python -m unittest tests.paper.test_planck_mes_wu009_claim_boundary -v",
+        "result": "PASS_6_TESTS"
+      },
+      {
+        "command": "python -m unittest tests.contracts.test_planck_mes_wu009_theorem_reconciliation -v",
+        "result": "PASS_19_TESTS"
+      },
+      {
+        "command": "python -m unittest tests.integration.test_planck_mes_wu009_reconciliation -v",
+        "result": "PASS_5_TESTS"
+      },
+      {
+        "command": "python -m unittest tests.contracts.test_planck_mes_pmg_wu009_full_replay -v",
+        "result": "PASS_24_TESTS"
+      },
+      {
+        "command": "python scripts/observed_runs/planck_mes_wu009_contracts.py --ledger docs/research_program/post_pr327/planck_mes_wu009_theorem_adjudication.json --self-check",
+        "result": "SUCCEEDED_NO_CLAIM_PROMOTION"
+      },
+      {
+        "command": "python scripts/observed_runs/run_planck_mes_wu009_reconciliation.py --check",
+        "result": "SUCCEEDED_NO_CLAIM_PROMOTION"
+      },
+      {
+        "command": "python scripts/validate_planck_mes_pmg_wu009_full_replay.py --mode package",
+        "result": "VALID:package"
+      },
+      {
+        "command": "python scripts/paper/build_planck_mes_first_paper.py --validate-wu009-claim-boundary",
+        "result": "PASS_WU009_CLAIM_BOUNDARY"
+      },
+      {
+        "command": "python -m py_compile scripts/observed_runs/planck_mes_wu009_contracts.py tests/contracts/test_planck_mes_wu009_theorem_reconciliation.py scripts/observed_runs/run_planck_mes_wu009_reconciliation.py scripts/validate_planck_mes_pmg_wu009_full_replay.py scripts/paper/planck_mes_wu009_claim_boundary.py scripts/paper/build_planck_mes_first_paper.py tests/paper/test_planck_mes_wu009_claim_boundary.py",
+        "result": "PASS"
+      }
+    ],
+    "host_required_unexecuted": [
+      {
+        "command": "python -m pytest -q tests/contracts/test_planck_mes_wu009_theorem_reconciliation.py tests/integration/test_planck_mes_wu009_reconciliation.py tests/contracts/test_planck_mes_pmg_wu009_full_replay.py tests/paper/test_planck_mes_wu009_claim_boundary.py tests/paper/test_planck_mes_first_paper.py",
+        "reason": "PYTEST_NOT_INSTALLED_ON_SPARSE_HOST_AND_FULL_LEGACY_OBSSTAT_INPUTS_UNAVAILABLE",
+        "result": "NOT_A_PASS"
+      },
+      {
+        "command": "local Gate-D raw Planck/FFP10, I/Q/U-to-E/B, and Wolfram/xAct replay from the instantiated handoff",
+        "reason": "LOCAL_RAW_CAS_INPUTS_NOT_PRESENT_ON_THIS_HOST",
+        "result": "LOCAL_EXECUTION_REQUIRED"
+      }
+    ]
+  },
+  "theorem_dossier_state": "FORMAL_DOSSIER_PENDING",
+  "work_unit": "PMG-WU-009"
+}
