@@ -4,34 +4,60 @@ import numpy as np
 import pytest
 
 from obsstat.boost_response import (
+    boost_least_squares_inverse,
     boost_response_metric,
     contract_octupole_with_quadrupole,
+    first_order_quadrupole_boost,
     quadrupole_boost_octupole,
+    quadrupole_temperature,
 )
 from obsstat.lorentz_sky_pullback import (
     aberrate_sky_direction,
     deaberrate_sky_direction,
+    doppler_factor_boosted,
+    doppler_factor_unboosted,
+    solid_angle_jacobian,
+    thermodynamic_temperature_pullback,
 )
 
 pytestmark = pytest.mark.fast
 
 
-def test_wu010_aberration_round_trip() -> None:
-    directions = np.array(
-        [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+def _q() -> np.ndarray:
+    return np.array(
+        [[0.8, -0.3, 0.2], [-0.3, -0.5, 0.4], [0.2, 0.4, -0.3]],
         dtype=float,
     )
+
+
+def _unit_rows(seed: int = 9182, count: int = 256) -> np.ndarray:
+    rng = np.random.default_rng(seed)
+    rows = rng.normal(size=(count, 3))
+    return rows / np.linalg.norm(rows, axis=1, keepdims=True)
+
+
+def test_wu010_aberration_round_trip_and_doppler_pair() -> None:
+    directions = _unit_rows(count=64)
     beta = np.array([0.012, -0.021, 0.015])
     boosted = aberrate_sky_direction(directions, beta)
     restored = deaberrate_sky_direction(boosted, beta)
     np.testing.assert_allclose(restored, directions, atol=3e-14, rtol=0.0)
-
-
-def test_wu010_quadrupole_response_contraction_identity() -> None:
-    q = np.array(
-        [[0.8, -0.3, 0.2], [-0.3, -0.5, 0.4], [0.2, 0.4, -0.3]],
-        dtype=float,
+    np.testing.assert_allclose(
+        doppler_factor_boosted(boosted, beta),
+        doppler_factor_unboosted(directions, beta),
+        atol=3e-14,
+        rtol=0.0,
     )
+    np.testing.assert_allclose(
+        solid_angle_jacobian(directions, beta),
+        doppler_factor_unboosted(directions, beta) ** -2,
+        atol=0.0,
+        rtol=0.0,
+    )
+
+
+def test_wu010_quadrupole_response_contraction_and_inverse() -> None:
+    q = _q()
     beta = np.array([0.02, -0.01, 0.03])
     octupole = quadrupole_boost_octupole(q, beta)
     np.testing.assert_allclose(
@@ -40,3 +66,56 @@ def test_wu010_quadrupole_response_contraction_identity() -> None:
         atol=3e-15,
         rtol=0.0,
     )
+    np.testing.assert_allclose(
+        boost_least_squares_inverse(q, octupole),
+        beta,
+        atol=3e-15,
+        rtol=0.0,
+    )
+
+
+def test_wu010_sharp_condition_bound_saturates() -> None:
+    q = np.diag([-5.0, 4.0, 1.0])
+    np.testing.assert_allclose(
+        np.linalg.cond(boost_response_metric(q), 2),
+        5.0 / 3.0,
+        atol=3e-15,
+        rtol=0.0,
+    )
+
+
+def test_wu010_finite_pullback_matches_linear_generator() -> None:
+    q = _q()
+    directions = _unit_rows(count=512)
+    beta_hat = np.array([0.4, -0.2, 0.3])
+    beta_hat /= np.linalg.norm(beta_hat)
+    errors = []
+    for epsilon in (2.0e-4, 1.0e-4):
+        beta = epsilon * beta_hat
+        source_directions = deaberrate_sky_direction(directions, beta)
+        exact = thermodynamic_temperature_pullback(
+            directions,
+            beta,
+            quadrupole_temperature(q, source_directions),
+        )
+        linear = quadrupole_temperature(q, directions) + first_order_quadrupole_boost(
+            q, beta, directions
+        )
+        errors.append(float(np.max(np.abs(exact - linear))))
+    assert errors[1] < 0.27 * errors[0]
+
+
+def test_wu010_line_of_sight_sign_mutation_is_killed() -> None:
+    q = _q()
+    directions = _unit_rows(count=256)
+    beta = 1.0e-5 * np.array([0.4, -0.2, 0.3])
+    source_directions = deaberrate_sky_direction(directions, beta)
+    exact = thermodynamic_temperature_pullback(
+        directions,
+        beta,
+        quadrupole_temperature(q, source_directions),
+    )
+    baseline = quadrupole_temperature(q, directions)
+    correct = baseline + first_order_quadrupole_boost(q, beta, directions)
+    wrong = baseline + first_order_quadrupole_boost(q, -beta, directions)
+    assert np.linalg.norm(exact - correct) < 1.0e-4 * np.linalg.norm(exact - wrong)
