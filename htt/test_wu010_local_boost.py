@@ -41,6 +41,29 @@ def _unit_rows(seed: int = 9182, count: int = 256) -> np.ndarray:
     return rows / np.linalg.norm(rows, axis=1, keepdims=True)
 
 
+def _exact_boosted_quadrupole(
+    q: np.ndarray,
+    beta: np.ndarray,
+    boosted_direction: np.ndarray,
+) -> np.ndarray:
+    """Use a positive absolute sky and subtract the boosted monopole."""
+
+    monopole = 3.0
+    source_directions = deaberrate_sky_direction(boosted_direction, beta)
+    source_quadrupole = quadrupole_temperature(q, source_directions)
+    total = thermodynamic_temperature_pullback(
+        boosted_direction,
+        beta,
+        monopole + source_quadrupole,
+    )
+    boosted_monopole = thermodynamic_temperature_pullback(
+        boosted_direction,
+        beta,
+        monopole,
+    )
+    return total - boosted_monopole
+
+
 def test_wu010_aberration_round_trip_and_doppler_pair() -> None:
     directions = _unit_rows(count=64)
     beta = np.array([0.012, -0.021, 0.015])
@@ -144,12 +167,7 @@ def test_wu010_finite_pullback_matches_linear_generator() -> None:
     errors = []
     for epsilon in (2.0e-4, 1.0e-4):
         beta = epsilon * beta_hat
-        source_directions = deaberrate_sky_direction(directions, beta)
-        exact = thermodynamic_temperature_pullback(
-            directions,
-            beta,
-            quadrupole_temperature(q, source_directions),
-        )
+        exact = _exact_boosted_quadrupole(q, beta, directions)
         linear = quadrupole_temperature(q, directions) + first_order_quadrupole_boost(
             q, beta, directions
         )
@@ -161,12 +179,7 @@ def test_wu010_line_of_sight_sign_mutation_is_killed() -> None:
     q = _q()
     directions = _unit_rows(count=256)
     beta = 1.0e-5 * np.array([0.4, -0.2, 0.3])
-    source_directions = deaberrate_sky_direction(directions, beta)
-    exact = thermodynamic_temperature_pullback(
-        directions,
-        beta,
-        quadrupole_temperature(q, source_directions),
-    )
+    exact = _exact_boosted_quadrupole(q, beta, directions)
     baseline = quadrupole_temperature(q, directions)
     correct = baseline + first_order_quadrupole_boost(q, beta, directions)
     wrong = baseline + first_order_quadrupole_boost(q, -beta, directions)
