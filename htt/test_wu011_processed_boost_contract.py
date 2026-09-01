@@ -1,9 +1,9 @@
 """RED-first contracts for PMG-WU-011 processed local-boost response.
 
-This commit deliberately contains no production implementation.  The tests
-must fail because ``obsstat.processed_boost_response`` does not exist yet.
-The failure records the TDD boundary before any processed-response code is
-introduced.
+The first commit deliberately contained no production implementation and was
+observed RED because ``obsstat.processed_boost_response`` did not exist.  The
+contracts below now define the minimum authority, terminal, and basis-adapter
+surface required for the first GREEN step.
 """
 
 from __future__ import annotations
@@ -27,6 +27,24 @@ EXPECTED_PROCESSING_ORDER = (
     "POSTFIT_TARGET_SOURCE_COMMONIZATION",
     "RETAIN_L2_L5",
 )
+EXPECTED_TERMINALS = {
+    "PASS_SYNTHETIC_PROCESSED_RESPONSE",
+    "BLOCKED_BY_MOVED_AUTHORITY",
+    "BLOCKED_BY_BASIS_MISMATCH",
+    "BLOCKED_BY_MISSING_ABSOLUTE_T",
+    "BLOCKED_BY_OPERATOR_IDENTITY_MISMATCH",
+    "BLOCKED_BY_REPLAY_MISMATCH",
+    "BLOCKED_BY_LINEARIZATION_FAILURE",
+    "BLOCKED_BY_SIGN_MUTATION_SURVIVAL",
+    "BLOCKED_BY_RANK_DEFICIENCY",
+    "BLOCKED_BY_CONDITION_CEILING",
+    "BLOCKED_BY_TRANSFER_UNRESOLVED",
+    "BLOCKED_BY_NUISANCE_DEFINITION",
+    "BLOCKED_BY_ALIAS_UNCONTROLLED",
+    "BLOCKED_BY_HISTORICAL_PARITY_FAILURE",
+    "BLOCKED_BY_NULL_EXCHANGEABILITY_FAILURE",
+    "NO_ADMISSIBLE_NEW_RESULT",
+}
 
 
 def _api():
@@ -49,15 +67,22 @@ def test_wu011_authority_and_processing_order_are_frozen() -> None:
     assert api.RETAINED_LMIN == 2
 
 
-def test_wu011_scientific_and_joint_real_bases_roundtrip_exactly() -> None:
-    """The scientific stored-real and internal sqrt(2) bases cannot drift."""
+def test_wu011_terminal_registry_is_explicit_and_complete() -> None:
+    """Every planned fail-closed state is typed before output code exists."""
+
+    api = _api()
+    assert {item.value for item in api.ProcessedBoostTerminal} == EXPECTED_TERMINALS
+
+
+def test_wu011_scientific_and_joint_real_bases_roundtrip_at_roundoff() -> None:
+    """The irrational sqrt(2) adapter is invertible to declared roundoff."""
 
     api = _api()
     rng = np.random.default_rng(20260902)
     scientific = rng.normal(size=49)
     internal = api.scientific_to_joint_real(scientific, lmin=0, lmax=6)
     replayed = api.joint_to_scientific_real(internal, lmin=0, lmax=6)
-    np.testing.assert_array_equal(replayed, scientific)
+    np.testing.assert_allclose(replayed, scientific, rtol=0.0, atol=5.0e-16)
 
 
 def test_wu011_basis_adapter_refuses_wrong_or_nonfinite_shape() -> None:
@@ -67,3 +92,11 @@ def test_wu011_basis_adapter_refuses_wrong_or_nonfinite_shape() -> None:
     for invalid in (np.zeros(48), np.zeros(50), np.full(49, np.nan), 1.0):
         with pytest.raises((TypeError, ValueError), match="stored-real|finite|shape"):
             api.scientific_to_joint_real(invalid, lmin=0, lmax=6)
+        with pytest.raises((TypeError, ValueError), match="joint-real|finite|shape"):
+            api.joint_to_scientific_real(invalid, lmin=0, lmax=6)
+
+
+def test_wu011_basis_adapter_refuses_invalid_band() -> None:
+    api = _api()
+    with pytest.raises(ValueError, match="band"):
+        api.scientific_to_joint_real(np.zeros(1), lmin=2, lmax=1)
