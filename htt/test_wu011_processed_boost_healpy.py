@@ -1,8 +1,8 @@
-"""HEALPix-enabled contracts for WU-011 source-transfer ordering.
+"""HEALPix-enabled contracts for WU-011 processed boost response.
 
-These tests are intentionally separated from the default fast tier.  The
-matching workflow installs the pinned optional dependency and verifies the
-finite source-transfer implementation in a real HEALPix environment.
+The pinned optional-dependency workflow exercises source-transfer ordering and
+the actual weighted joint ``ell=0..5`` estimator.  New behavior is introduced
+through RED tests before production code.
 """
 
 from __future__ import annotations
@@ -19,8 +19,14 @@ hp = pytest.importorskip(
     ),
 )
 
+from obsstat.planck_pr3_operator import (  # noqa: E402
+    build_joint_cutsky_operator,
+    fit_joint_cutsky_alm,
+)
 from obsstat.processed_boost_response import (  # noqa: E402
     PositiveAbsoluteSkySpec,
+    ProcessedBoostOperator,
+    evaluate_processed_boost,
     healpix_sky_directions,
     source_convolved_finite_map,
 )
@@ -45,6 +51,38 @@ def _transfer(processing_lmax: int) -> tuple[np.ndarray, np.ndarray]:
     source_beam = np.exp(-0.5 * ell * (ell + 1.0) * 0.075**2)
     source_pixel_window = np.exp(-0.5 * ell * (ell + 1.0) * 0.025**2)
     return source_beam, source_pixel_window
+
+
+def _mask(nside: int) -> np.ndarray:
+    z = healpix_sky_directions(nside)[:, 2]
+    # A deterministic apodized north-heavy cut with exact weights in [0,1].
+    return np.clip((z + 0.45) / 0.9, 0.0, 1.0)
+
+
+def _processed_operator() -> tuple[np.ndarray, object, ProcessedBoostOperator]:
+    nside = 16
+    processing_lmax = 12
+    mask = _mask(nside)
+    joint = build_joint_cutsky_operator(
+        mask,
+        lmin=0,
+        lmax=5,
+        retained_lmin=2,
+    )
+    source_beam, source_pixel = _transfer(processing_lmax)
+    ell = np.arange(processing_lmax + 1, dtype=float)
+    target_beam = np.exp(-0.5 * ell * (ell + 1.0) * 0.11**2)
+    target_pixel = np.exp(-0.5 * ell * (ell + 1.0) * 0.04**2)
+    operator = ProcessedBoostOperator.from_components(
+        mask=mask,
+        joint_operator=joint,
+        processing_lmax=processing_lmax,
+        source_beam=source_beam,
+        source_pixel_window=source_pixel,
+        target_beam=target_beam,
+        target_pixel_window=target_pixel,
+    )
+    return mask, joint, operator
 
 
 def test_wu011_healpix_direction_registry_is_unit_and_deterministic() -> None:
@@ -105,6 +143,60 @@ def test_wu011_source_transfer_does_not_commute_with_the_finite_boost() -> None:
     assert difference > 1.0e-7 * float(np.linalg.norm(anisotropy))
     assert correct.content_id != wrong.content_id
     assert wrong.mutation == "TRANSFER_BEFORE_BOOST"
+
+
+def test_wu011_processed_operator_refuses_a_mask_identity_mismatch() -> None:
+    mask, joint, operator = _processed_operator()
+    assert operator.joint_operator_id == joint.operator_sha256
+    changed = mask.copy()
+    changed[0] *= 0.5
+    with pytest.raises(ValueError, match="mask|operator identity"):
+        ProcessedBoostOperator.from_components(
+            mask=changed,
+            joint_operator=joint,
+            processing_lmax=operator.processing_lmax,
+            source_beam=operator.source_beam,
+            source_pixel_window=operator.source_pixel_window,
+            target_beam=operator.target_beam,
+            target_pixel_window=operator.target_pixel_window,
+        )
+
+
+def test_wu011_zero_boost_processed_evaluation_matches_direct_joint_fit() -> None:
+    spec = _source_sky()
+    mask, joint, operator = _processed_operator()
+    evaluated = evaluate_processed_boost(
+        spec,
+        operator,
+        np.zeros(3),
+        mode="FINITE",
+    )
+    source_map = source_convolved_finite_map(
+        spec,
+        np.zeros(3),
+        nside=operator.nside,
+        processing_lmax=operator.processing_lmax,
+        source_beam=operator.source_beam,
+        source_pixel_window=operator.source_pixel_window,
+    )
+    direct = fit_joint_cutsky_alm(
+        source_map.pixel_map,
+        mask=mask,
+        operator=joint,
+        source_beam=operator.source_beam,
+        source_pixel_window=operator.source_pixel_window,
+        target_beam=operator.target_beam,
+        target_pixel_window=operator.target_pixel_window,
+    )
+    np.testing.assert_allclose(
+        evaluated.retained_coefficients,
+        direct.retained_coefficients,
+        rtol=0.0,
+        atol=2.0e-13,
+    )
+    assert evaluated.retained_coefficients.shape == (32,)
+    assert evaluated.operator_id == operator.content_id
+    assert evaluated.source_map_id == source_map.content_id
 
 
 def test_wu011_source_transfer_refuses_unbound_or_invalid_inputs() -> None:
