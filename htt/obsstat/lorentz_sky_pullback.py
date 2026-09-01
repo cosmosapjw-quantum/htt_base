@@ -18,6 +18,7 @@ model, an empirical velocity estimator, or a Bianchi-family classifier.
 from __future__ import annotations
 
 import math
+from collections.abc import Callable
 
 import numpy as np
 
@@ -145,12 +146,14 @@ def thermodynamic_temperature_pullback(
     beta: object,
     source_temperature: object,
 ) -> np.ndarray:
-    """Apply the exact Doppler-weight-one blackbody temperature pullback.
+    """Apply the exact Doppler-weight-one absolute-temperature pullback.
 
     ``source_temperature`` must already be evaluated at the corresponding
-    inverse-aberrated directions ``n(n_tilde)``.  The function only applies
-    the exact local-observer Doppler factor; it never interpolates a map or
-    changes thermodynamic units.
+    inverse-aberrated directions ``n(n_tilde)``.  It must be strictly
+    positive because this API represents absolute blackbody thermodynamic
+    temperature, not a signed anisotropy or frequency-dependent intensity.
+    The function only applies the exact local-observer Doppler factor; it
+    never interpolates a map or changes thermodynamic units.
     """
 
     directions = _unit_directions(
@@ -169,7 +172,37 @@ def thermodynamic_temperature_pullback(
         raise LorentzSkyPullbackError(
             "source temperature cannot be broadcast to the sky directions"
         ) from exc
+    if np.any(values <= 0.0):
+        raise LorentzSkyPullbackError(
+            "absolute thermodynamic temperature must be strictly positive"
+        )
     return doppler_factor_boosted(directions, beta) * values
+
+
+def pullback_thermodynamic_temperature_field(
+    boosted_direction: object,
+    beta: object,
+    source_field: Callable[[np.ndarray], object],
+) -> np.ndarray:
+    """Evaluate and boost an absolute temperature field at the correct sky points.
+
+    The callback receives the inverse-aberrated unboosted directions.  This
+    high-level API prevents callers from accidentally evaluating the source
+    field at ``n_tilde`` and applying only a Doppler multiplier.
+    """
+
+    directions = _unit_directions(
+        boosted_direction, label="boosted sky direction"
+    )
+    if not callable(source_field):
+        raise LorentzSkyPullbackError("source field must be callable")
+    source_directions = deaberrate_sky_direction(directions, beta)
+    source_temperature = source_field(source_directions)
+    return thermodynamic_temperature_pullback(
+        directions,
+        beta,
+        source_temperature,
+    )
 
 
 __all__ = [
@@ -179,6 +212,7 @@ __all__ = [
     "doppler_factor_boosted",
     "doppler_factor_unboosted",
     "lorentz_factor",
+    "pullback_thermodynamic_temperature_field",
     "solid_angle_jacobian",
     "thermodynamic_temperature_pullback",
 ]
