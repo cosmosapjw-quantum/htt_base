@@ -12,11 +12,12 @@ by the injected coefficient.  This preserves the physical absolute-
 thermodynamic-temperature domain without treating the signed generator as an
 absolute temperature field.
 
-The physical monopole produces only a first-order dipole.  Because the
-repository authority solves ``ell=0,1`` simultaneously with the retained band,
-that column is profiled out of the retained carrier.  Rank and condition
-numbers are therefore computed with an explicit relative singular threshold;
-the expected stacked identifiable rank is 48, not 49.
+In the continuum operator the physical monopole produces only a first-order
+dipole, which is profiled by the simultaneous ``ell=0,1`` nuisance solve.  The
+HEALPix ``map2alm`` replay used by the implemented linear path can nevertheless
+leave a small retained numerical column.  Raw full-matrix rank and the
+physically relevant non-monopole rank are therefore reported separately.  The
+raw numerical column is never promoted to monopole identifiability.
 
 No observed data, empirical velocity estimate, boost subtraction, global
 matter-frame tilt, polarization response, foreground exclusion, or Bianchi-
@@ -197,7 +198,11 @@ class ProcessedBoostJacobian:
     combined_singular_values: tuple[float, ...] = field(init=False)
     combined_rank: int = field(init=False)
     combined_condition_number: float = field(init=False)
+    nonmonopole_singular_values: tuple[float, ...] = field(init=False)
+    nonmonopole_rank: int = field(init=False)
+    nonmonopole_condition_number: float = field(init=False)
     monopole_retained_norm: float = field(init=False)
+    monopole_relative_to_nonmonopole_max: float = field(init=False)
     content_id: str = field(init=False)
 
     def __post_init__(self) -> None:
@@ -248,12 +253,26 @@ class ProcessedBoostJacobian:
             combined,
             relative_threshold=threshold,
         )
+        nonmonopole = tensor[:, :, 1:].reshape(
+            _BETA_DIMENSION * _OUTPUT_DIMENSION, _SOURCE_DIMENSION - 1
+        )
+        nonmonopole_singular, nonmonopole_rank, nonmonopole_condition = (
+            _singular_diagnostics(
+                nonmonopole,
+                relative_threshold=threshold,
+            )
+        )
         alias = _sealed(
             tensor[:, :, _ELL6_START:_ELL6_STOP],
             shape=(_BETA_DIMENSION, _OUTPUT_DIMENSION, 2 * SOURCE_LMAX + 1),
             label="ell=6 alias block",
         )
         monopole_norm = float(np.linalg.norm(tensor[:, :, 0]))
+        nonmonopole_column_norms = np.linalg.norm(tensor[:, :, 1:], axis=(0, 1))
+        nonmonopole_max = float(np.max(nonmonopole_column_norms))
+        if not math.isfinite(nonmonopole_max) or nonmonopole_max <= 0.0:
+            raise ProcessedBoostError("non-monopole Jacobian block has zero response")
+        monopole_relative = monopole_norm / nonmonopole_max
         content_id = _canonical_hash(
             {
                 "schema": _JACOBIAN_SCHEMA,
@@ -268,7 +287,9 @@ class ProcessedBoostJacobian:
                 "basis_amplitude_hex": amplitude.hex(),
                 "units": units,
                 "rank_relative_threshold_hex": threshold.hex(),
-                "combined_rank": combined_rank,
+                "raw_combined_rank": combined_rank,
+                "nonmonopole_rank": nonmonopole_rank,
+                "monopole_relative_to_nonmonopole_max_hex": monopole_relative.hex(),
             },
             tensor,
             alias,
@@ -288,7 +309,15 @@ class ProcessedBoostJacobian:
         object.__setattr__(self, "combined_singular_values", combined_singular)
         object.__setattr__(self, "combined_rank", combined_rank)
         object.__setattr__(self, "combined_condition_number", combined_condition)
+        object.__setattr__(self, "nonmonopole_singular_values", nonmonopole_singular)
+        object.__setattr__(self, "nonmonopole_rank", nonmonopole_rank)
+        object.__setattr__(self, "nonmonopole_condition_number", nonmonopole_condition)
         object.__setattr__(self, "monopole_retained_norm", monopole_norm)
+        object.__setattr__(
+            self,
+            "monopole_relative_to_nonmonopole_max",
+            float(monopole_relative),
+        )
         object.__setattr__(self, "content_id", content_id)
 
 
