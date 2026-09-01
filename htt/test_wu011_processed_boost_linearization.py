@@ -6,6 +6,14 @@ its pixel-space error must remain O(beta), while the retained ell=2..5
 response must be unchanged to numerical tolerance because the simultaneous
 joint solve profiles ell=0,1 as nuisance modes.  Conflating those statements
 would incorrectly demand nuisance leakage from an exact weighted solve.
+
+The forward finite-minus-linear fit uses an explicitly amplified small-boost
+sequence.  At the physical CMB speed the current finite path changes from the
+exact zero-beta coefficient replay to a HEALPix map2alm replay, producing a
+beta-independent numerical floor near a few parts in 10^6 for this synthetic
+absolute-temperature sky.  The amplified sequence keeps the quadratic term
+above that disclosed floor; physical-beta validation remains a later
+same-numerical-path receipt rather than being silently inferred here.
 """
 
 from __future__ import annotations
@@ -111,15 +119,16 @@ def test_wu011_intrinsic_generator_matches_central_finite_pullback() -> None:
     assert relative < 2.0e-8
 
 
-def test_wu011_processed_finite_minus_linear_is_quadratic() -> None:
+def test_wu011_processed_finite_minus_linear_is_quadratic_above_replay_floor() -> None:
     api = _api()
+    amplitudes = (3.2e-2, 1.6e-2, 8.0e-3, 4.0e-3)
     diagnostic = api.finite_to_linear_diagnostic(
         _source_sky(),
         _operator(),
         beta_direction=_beta_direction(),
-        amplitudes=(8.0e-4, 4.0e-4, 2.0e-4, 1.0e-4),
+        amplitudes=amplitudes,
     )
-    assert diagnostic.amplitudes == (8.0e-4, 4.0e-4, 2.0e-4, 1.0e-4)
+    assert diagnostic.amplitudes == amplitudes
     assert 1.8 <= diagnostic.residual_slope <= 2.2
     assert diagnostic.scaled_plateau_relative_spread <= 0.35
     assert all(
