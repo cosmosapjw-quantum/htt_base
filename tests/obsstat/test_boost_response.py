@@ -36,6 +36,36 @@ def _unit_rows(seed: int = 9182, count: int = 256) -> np.ndarray:
     return rows / np.linalg.norm(rows, axis=1, keepdims=True)
 
 
+def _exact_boosted_quadrupole(
+    q: np.ndarray,
+    beta: np.ndarray,
+    boosted_direction: np.ndarray,
+) -> np.ndarray:
+    """Boost a positive absolute sky and subtract its boosted monopole.
+
+    The production pullback is an absolute thermodynamic-temperature API.
+    A bare STF quadrupole is signed and is therefore not a valid direct input.
+    Adding a sufficiently large positive monopole and subtracting the same
+    boosted monopole isolates the exact quadrupole response without weakening
+    the physical domain contract.
+    """
+
+    monopole = 3.0
+    source_direction = deaberrate_sky_direction(boosted_direction, beta)
+    source_quadrupole = quadrupole_temperature(q, source_direction)
+    total = thermodynamic_temperature_pullback(
+        boosted_direction,
+        beta,
+        monopole + source_quadrupole,
+    )
+    boosted_monopole = thermodynamic_temperature_pullback(
+        boosted_direction,
+        beta,
+        monopole,
+    )
+    return total - boosted_monopole
+
+
 def test_octupole_response_is_fully_symmetric_and_trace_free() -> None:
     q = _q()
     beta = np.array([0.02, -0.01, 0.03])
@@ -104,10 +134,7 @@ def test_first_order_response_matches_finite_pullback_quadratically() -> None:
     errors = []
     for epsilon in (2.0e-4, 1.0e-4):
         beta = epsilon * beta_hat
-        source_direction = deaberrate_sky_direction(direction, beta)
-        exact = thermodynamic_temperature_pullback(
-            direction, beta, quadrupole_temperature(q, source_direction)
-        )
+        exact = _exact_boosted_quadrupole(q, beta, direction)
         baseline = quadrupole_temperature(q, direction)
         linear = baseline + first_order_quadrupole_boost(q, beta, direction)
         errors.append(float(np.max(np.abs(exact - linear))))
@@ -118,10 +145,7 @@ def test_direction_sign_mutation_is_detected() -> None:
     q = _q()
     direction = _unit_rows(count=256)
     beta = 1.0e-5 * np.array([0.4, -0.2, 0.3])
-    source_direction = deaberrate_sky_direction(direction, beta)
-    exact = thermodynamic_temperature_pullback(
-        direction, beta, quadrupole_temperature(q, source_direction)
-    )
+    exact = _exact_boosted_quadrupole(q, beta, direction)
     baseline = quadrupole_temperature(q, direction)
     correct = baseline + first_order_quadrupole_boost(q, beta, direction)
     wrong = baseline + first_order_quadrupole_boost(q, -beta, direction)
@@ -131,8 +155,15 @@ def test_direction_sign_mutation_is_detected() -> None:
 def test_stf3_component_metric_matches_full_frobenius_norm() -> None:
     o = quadrupole_boost_octupole(_q(), np.array([0.3, -0.2, 0.1]))
     components = np.array(
-        [o[0, 0, 0], o[0, 0, 1], o[0, 0, 2], o[0, 1, 1],
-         o[0, 1, 2], o[1, 1, 1], o[1, 1, 2]]
+        [
+            o[0, 0, 0],
+            o[0, 0, 1],
+            o[0, 0, 2],
+            o[0, 1, 1],
+            o[0, 1, 2],
+            o[1, 1, 1],
+            o[1, 1, 2],
+        ]
     )
     expected = np.einsum("abc,abc->", o, o)
     np.testing.assert_allclose(
