@@ -12,10 +12,7 @@ from obsstat.boost_response import (
     quadrupole_boost_octupole,
     quadrupole_temperature,
 )
-from obsstat.lorentz_sky_pullback import (
-    deaberrate_sky_direction,
-    thermodynamic_temperature_pullback,
-)
+from obsstat.lorentz_sky_pullback import pullback_thermodynamic_temperature_field
 from obsstat.planck_lowell_irrep_projection import stf3_to_real_harmonic
 
 pytestmark = pytest.mark.fast
@@ -88,14 +85,18 @@ def test_wu010_exact_pullback_preserves_full_sky_l2_for_doppler_weight_one() -> 
     directions, weights, _, _ = _sphere_rule()
     beta_hat = np.array([0.4, -0.2, 0.3], dtype=float)
     beta = 0.31 * beta_hat / np.linalg.norm(beta_hat)
+    monopole = 3.0
 
-    source_directions = deaberrate_sky_direction(directions, beta)
-    exact = thermodynamic_temperature_pullback(
+    def absolute_temperature(source_direction: np.ndarray) -> np.ndarray:
+        return monopole + quadrupole_temperature(q, source_direction)
+
+    exact = pullback_thermodynamic_temperature_field(
         directions,
         beta,
-        quadrupole_temperature(q, source_directions),
+        absolute_temperature,
     )
-    source = quadrupole_temperature(q, directions)
+    source = absolute_temperature(directions)
+    assert np.all(source > 0.0)
 
     np.testing.assert_allclose(
         np.sum(weights * exact * exact),
