@@ -10,6 +10,11 @@ With the Frobenius products on STF2 and STF3,
 ``(B_Q beta):Q = M_Q beta``,  ``M_Q = q2 I + (6/5) Q^2``,
 ``B_Q* B_Q = 3 M_Q``.
 
+The stored-real harmonic oracle uses the repository's orthonormal
+Condon--Shortley layout
+``(a_l0, Re a_l1, Im a_l1, ..., Re a_ll, Im a_ll)``.  It is an
+independent coefficient-level regression surface for the Cartesian STF route.
+
 The resulting inverse and projector are algebraic observer-space tools.  They
 do not turn an arbitrary octupole into a measured peculiar velocity, global
 matter-frame tilt, or Bianchi-family attribution; those claims require an
@@ -17,6 +22,8 @@ explicit nuisance and empirical response model.
 """
 
 from __future__ import annotations
+
+import math
 
 import numpy as np
 
@@ -57,6 +64,20 @@ def _vector3(value: object, *, label: str) -> np.ndarray:
     if vector.shape != (3,) or not np.all(np.isfinite(vector)):
         raise BoostResponseError(f"{label} must be a finite real three-vector")
     return vector
+
+
+def _real_harmonic_l2(value: object) -> np.ndarray:
+    try:
+        block = np.asarray(value, dtype=np.float64)
+    except (TypeError, ValueError) as exc:
+        raise BoostResponseError(
+            "quadrupole harmonics must be a finite stored-real l=2 block"
+        ) from exc
+    if block.shape != (5,) or not np.all(np.isfinite(block)):
+        raise BoostResponseError(
+            "quadrupole harmonics must be a finite stored-real l=2 block"
+        )
+    return block
 
 
 def _quadrupole(value: object) -> np.ndarray:
@@ -224,6 +245,100 @@ def boost_response_matrix(quadrupole: object) -> np.ndarray:
     return np.column_stack(columns)
 
 
+def quadrupole_boost_harmonic_matrices(
+    quadrupole_harmonics: object,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Return direct stored-real ``l=2 -> (l=1,l=3)`` response matrices.
+
+    The input layout is ``(a20, Re a21, Im a21, Re a22, Im a22)``.
+    The returned matrices have output layouts
+    ``(a10, Re a11, Im a11)`` and
+    ``(a30, Re a31, Im a31, Re a32, Im a32, Re a33, Im a33)``.
+    No STF conversion routine is called, so this is an independent oracle for
+    the tensor implementation under the same frozen harmonic convention.
+    """
+
+    a20, a21r, a21i, a22r, a22i = _real_harmonic_l2(
+        quadrupole_harmonics
+    )
+    b1 = np.asarray(
+        [
+            [
+                2.0 * math.sqrt(2.0 / 5.0) * a21r,
+                -2.0 * math.sqrt(2.0 / 5.0) * a21i,
+                -4.0 * a20 / math.sqrt(15.0),
+            ],
+            [
+                -math.sqrt(2.0 / 15.0) * a20
+                + 2.0 * a22r / math.sqrt(5.0),
+                -2.0 * a22i / math.sqrt(5.0),
+                -2.0 * a21r / math.sqrt(5.0),
+            ],
+            [
+                2.0 * a22i / math.sqrt(5.0),
+                math.sqrt(2.0 / 15.0) * a20
+                + 2.0 * a22r / math.sqrt(5.0),
+                -2.0 * a21i / math.sqrt(5.0),
+            ],
+        ],
+        dtype=np.float64,
+    )
+    b3 = np.asarray(
+        [
+            [
+                3.0 * math.sqrt(6.0 / 35.0) * a21r,
+                -3.0 * math.sqrt(6.0 / 35.0) * a21i,
+                9.0 * a20 / math.sqrt(35.0),
+            ],
+            [
+                -3.0 * math.sqrt(3.0 / 35.0) * a20
+                + 3.0 * a22r / math.sqrt(70.0),
+                -3.0 * a22i / math.sqrt(70.0),
+                6.0 * math.sqrt(2.0 / 35.0) * a21r,
+            ],
+            [
+                3.0 * a22i / math.sqrt(70.0),
+                3.0 * math.sqrt(3.0 / 35.0) * a20
+                + 3.0 * a22r / math.sqrt(70.0),
+                6.0 * math.sqrt(2.0 / 35.0) * a21i,
+            ],
+            [
+                -3.0 * a21r / math.sqrt(7.0),
+                -3.0 * a21i / math.sqrt(7.0),
+                3.0 * a22r / math.sqrt(7.0),
+            ],
+            [
+                -3.0 * a21i / math.sqrt(7.0),
+                3.0 * a21r / math.sqrt(7.0),
+                3.0 * a22i / math.sqrt(7.0),
+            ],
+            [
+                -3.0 * math.sqrt(3.0 / 14.0) * a22r,
+                -3.0 * math.sqrt(3.0 / 14.0) * a22i,
+                0.0,
+            ],
+            [
+                -3.0 * math.sqrt(3.0 / 14.0) * a22i,
+                3.0 * math.sqrt(3.0 / 14.0) * a22r,
+                0.0,
+            ],
+        ],
+        dtype=np.float64,
+    )
+    return b1, b3
+
+
+def quadrupole_boost_real_harmonics(
+    quadrupole_harmonics: object,
+    beta: object,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Apply the direct harmonic oracle to a Cartesian boost velocity."""
+
+    velocity = _vector3(beta, label="beta")
+    b1, b3 = quadrupole_boost_harmonic_matrices(quadrupole_harmonics)
+    return b1 @ velocity, b3 @ velocity
+
+
 def stf3_component_metric() -> np.ndarray:
     """Return the Frobenius Gram matrix in the registered seven-component layout."""
 
@@ -276,7 +391,9 @@ __all__ = [
     "first_order_quadrupole_boost",
     "project_onto_boost_image",
     "quadrupole_boost_dipole",
+    "quadrupole_boost_harmonic_matrices",
     "quadrupole_boost_octupole",
+    "quadrupole_boost_real_harmonics",
     "quadrupole_temperature",
     "stf3_component_metric",
 ]
