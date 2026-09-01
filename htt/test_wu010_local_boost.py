@@ -4,12 +4,17 @@ import numpy as np
 import pytest
 
 from obsstat.boost_response import (
+    BoostResponseError,
     boost_least_squares_inverse,
+    boost_orthogonal_residual,
     boost_response_metric,
     contract_octupole_with_quadrupole,
     first_order_quadrupole_boost,
+    project_onto_boost_image,
+    quadrupole_boost_dipole,
     quadrupole_boost_octupole,
     quadrupole_temperature,
+    stf3_component_metric,
 )
 from obsstat.lorentz_sky_pullback import (
     aberrate_sky_direction,
@@ -61,6 +66,12 @@ def test_wu010_quadrupole_response_contraction_and_inverse() -> None:
     beta = np.array([0.02, -0.01, 0.03])
     octupole = quadrupole_boost_octupole(q, beta)
     np.testing.assert_allclose(
+        np.einsum("iik->k", octupole),
+        0.0,
+        atol=3e-15,
+        rtol=0.0,
+    )
+    np.testing.assert_allclose(
         contract_octupole_with_quadrupole(octupole, q),
         boost_response_metric(q) @ beta,
         atol=3e-15,
@@ -69,6 +80,47 @@ def test_wu010_quadrupole_response_contraction_and_inverse() -> None:
     np.testing.assert_allclose(
         boost_least_squares_inverse(q, octupole),
         beta,
+        atol=3e-15,
+        rtol=0.0,
+    )
+
+
+def test_wu010_projector_and_four_dimensional_residual_contract() -> None:
+    q = _q()
+    signal = quadrupole_boost_octupole(q, np.array([0.04, -0.025, 0.017]))
+    nuisance_q = np.array(
+        [[0.0, 0.2, 0.0], [0.2, 0.0, 0.0], [0.0, 0.0, 0.0]],
+        dtype=float,
+    )
+    nuisance = quadrupole_boost_octupole(nuisance_q, np.array([0.0, 0.0, 0.4]))
+    observed = signal + nuisance
+    projected = project_onto_boost_image(q, observed)
+    residual = boost_orthogonal_residual(q, observed)
+    np.testing.assert_allclose(projected + residual, observed, atol=3e-14, rtol=0.0)
+    np.testing.assert_allclose(
+        contract_octupole_with_quadrupole(residual, q),
+        0.0,
+        atol=3e-14,
+        rtol=0.0,
+    )
+
+
+def test_wu010_stf3_component_metric_matches_frobenius_norm() -> None:
+    octupole = quadrupole_boost_octupole(_q(), np.array([0.3, -0.2, 0.1]))
+    components = np.array(
+        [
+            octupole[0, 0, 0],
+            octupole[0, 0, 1],
+            octupole[0, 0, 2],
+            octupole[0, 1, 1],
+            octupole[0, 1, 2],
+            octupole[1, 1, 1],
+            octupole[1, 1, 2],
+        ]
+    )
+    np.testing.assert_allclose(
+        components @ stf3_component_metric() @ components,
+        np.einsum("abc,abc->", octupole, octupole),
         atol=3e-15,
         rtol=0.0,
     )
@@ -119,3 +171,10 @@ def test_wu010_line_of_sight_sign_mutation_is_killed() -> None:
     correct = baseline + first_order_quadrupole_boost(q, beta, directions)
     wrong = baseline + first_order_quadrupole_boost(q, -beta, directions)
     assert np.linalg.norm(exact - correct) < 1.0e-4 * np.linalg.norm(exact - wrong)
+
+
+def test_wu010_rejects_non_stf_or_zero_inverse_domains() -> None:
+    with pytest.raises(BoostResponseError):
+        quadrupole_boost_dipole(np.eye(3), np.zeros(3))
+    with pytest.raises(BoostResponseError):
+        boost_least_squares_inverse(np.zeros((3, 3)), np.zeros((3, 3, 3)))
