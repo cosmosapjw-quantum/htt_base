@@ -1,8 +1,9 @@
 """HEALPix-enabled contracts for WU-011 processed boost response.
 
 The pinned optional-dependency workflow exercises source-transfer ordering and
-the actual weighted joint ``ell=0..5`` estimator.  New behavior is introduced
-through RED tests before production code.
+the actual weighted joint ``ell=0..5`` estimator.  The processed operator is
+kept in a companion module so source-sky/finite-map and joint-fit ownership
+remain independently testable.
 """
 
 from __future__ import annotations
@@ -23,11 +24,14 @@ from obsstat.planck_pr3_operator import (  # noqa: E402
     build_joint_cutsky_operator,
     fit_joint_cutsky_alm,
 )
-from obsstat.processed_boost_response import (  # noqa: E402
-    PositiveAbsoluteSkySpec,
+from obsstat.processed_boost_operator import (  # noqa: E402
     ProcessedBoostOperator,
     evaluate_processed_boost,
+)
+from obsstat.processed_boost_response import (  # noqa: E402
+    PositiveAbsoluteSkySpec,
     healpix_sky_directions,
+    joint_to_scientific_real,
     source_convolved_finite_map,
 )
 
@@ -188,9 +192,14 @@ def test_wu011_zero_boost_processed_evaluation_matches_direct_joint_fit() -> Non
         target_beam=operator.target_beam,
         target_pixel_window=operator.target_pixel_window,
     )
+    direct_scientific = joint_to_scientific_real(
+        direct.retained_coefficients,
+        lmin=2,
+        lmax=5,
+    )
     np.testing.assert_allclose(
         evaluated.retained_coefficients,
-        direct.retained_coefficients,
+        direct_scientific,
         rtol=0.0,
         atol=2.0e-13,
     )
