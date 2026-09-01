@@ -7,12 +7,15 @@ on:
       - 'htt/obsstat/processed_boost_operator.py'
       - 'htt/obsstat/processed_boost_linearization.py'
       - 'htt/obsstat/processed_boost_jacobian.py'
+      - 'htt/obsstat/processed_boost_parity.py'
       - 'htt/obsstat/lorentz_sky_pullback.py'
       - 'htt/obsstat/planck_pr3_operator.py'
+      - 'htt/obsstat/boost_biposh_residual.py'
       - 'htt/test_wu011_processed_boost_contract.py'
       - 'htt/test_wu011_processed_boost_healpy.py'
       - 'htt/test_wu011_processed_boost_linearization.py'
       - 'htt/test_wu011_processed_boost_jacobian.py'
+      - 'htt/test_wu011_processed_boost_parity.py'
       - '.github/workflows/wu011-processed-boost.yml'
   workflow_dispatch:
 
@@ -55,4 +58,5 @@ jobs:
           pytest -q -m requires_healpy \
             test_wu011_processed_boost_healpy.py \
             test_wu011_processed_boost_linearization.py \
-            test_wu011_processed_boost_jacobian.py
+            test_wu011_processed_boost_jacobian.py \
+            test_wu011_processed_boost_parity.py
