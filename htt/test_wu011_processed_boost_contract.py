@@ -1,12 +1,13 @@
-"""RED-first contracts for PMG-WU-011 processed local-boost response.
+"""Test-first contracts for PMG-WU-011 processed local-boost response.
 
-The first commit deliberately contained no production implementation and was
-observed RED because ``obsstat.processed_boost_response`` did not exist.  The
-contracts below now define the minimum authority, terminal, and basis-adapter
-surface required for the first GREEN step.
+The authority/basis slice was observed RED at commit ``902e6959`` and GREEN
+at ``69933d07``.  The positive-sky tests below define the next RED boundary
+without requiring the optional ``healpy`` dependency.
 """
 
 from __future__ import annotations
+
+import math
 
 import numpy as np
 import pytest
@@ -55,6 +56,12 @@ def _api():
     return api
 
 
+def _unit_rows(seed: int = 20260902, count: int = 64) -> np.ndarray:
+    rng = np.random.default_rng(seed)
+    rows = rng.normal(size=(count, 3))
+    return rows / np.linalg.norm(rows, axis=1, keepdims=True)
+
+
 def test_wu011_authority_and_processing_order_are_frozen() -> None:
     """The implementation must bind the reviewed predecessor and real call order."""
 
@@ -100,3 +107,72 @@ def test_wu011_basis_adapter_refuses_invalid_band() -> None:
     api = _api()
     with pytest.raises(ValueError, match="band"):
         api.scientific_to_joint_real(np.zeros(1), lmin=2, lmax=1)
+
+
+def test_wu011_positive_sky_uses_an_analytic_full_sphere_certificate() -> None:
+    """The declared lower bound must follow the harmonic addition theorem."""
+
+    api = _api()
+    coefficients = np.zeros(48)
+    coefficients[0] = 0.2  # ell=1, m=0
+    spec = api.PositiveAbsoluteSkySpec(
+        monopole_temperature=2.7255,
+        scientific_coefficients=coefficients,
+        source_lmax=6,
+        units="K_CMB",
+    )
+    expected_bound = math.sqrt(3.0 / (4.0 * math.pi)) * 0.2
+    assert spec.anisotropy_supremum_bound == pytest.approx(expected_bound)
+    assert spec.certified_temperature_margin == pytest.approx(2.7255 - expected_bound)
+    assert spec.certified_temperature_margin > 0.0
+
+
+def test_wu011_positive_sky_is_positive_on_independent_directions() -> None:
+    api = _api()
+    rng = np.random.default_rng(811)
+    coefficients = 0.01 * rng.normal(size=48)
+    spec = api.PositiveAbsoluteSkySpec(
+        monopole_temperature=2.7255,
+        scientific_coefficients=coefficients,
+        source_lmax=6,
+        units="K_CMB",
+    )
+    values = spec.evaluate(_unit_rows())
+    assert values.shape == (64,)
+    assert float(np.min(values)) >= spec.certified_temperature_margin - 2.0e-14
+    assert np.all(values > 0.0)
+
+
+def test_wu011_positive_sky_refuses_an_uncertified_or_malformed_domain() -> None:
+    api = _api()
+    unsafe = np.zeros(48)
+    unsafe[0] = 10.0
+    with pytest.raises(api.ProcessedBoostError, match="strictly positive"):
+        api.PositiveAbsoluteSkySpec(
+            monopole_temperature=1.0,
+            scientific_coefficients=unsafe,
+            source_lmax=6,
+            units="K_CMB",
+        )
+    for invalid in (
+        dict(monopole_temperature=0.0, scientific_coefficients=np.zeros(48)),
+        dict(monopole_temperature=np.nan, scientific_coefficients=np.zeros(48)),
+        dict(monopole_temperature=2.7, scientific_coefficients=np.zeros(47)),
+        dict(monopole_temperature=2.7, scientific_coefficients=np.full(48, np.nan)),
+    ):
+        with pytest.raises((TypeError, ValueError), match="positive|finite|shape"):
+            api.PositiveAbsoluteSkySpec(
+                source_lmax=6,
+                units="K_CMB",
+                **invalid,
+            )
+
+
+def test_wu011_positive_sky_content_is_immutable_and_identity_bound() -> None:
+    api = _api()
+    coefficients = np.zeros(48)
+    first = api.PositiveAbsoluteSkySpec(2.7255, coefficients, 6, "K_CMB")
+    second = api.PositiveAbsoluteSkySpec(2.7255, coefficients.copy(), 6, "K_CMB")
+    assert first.content_id == second.content_id
+    with pytest.raises(ValueError):
+        first.scientific_coefficients[0] = 1.0
