@@ -1,13 +1,11 @@
-"""HEALPix-enabled RED contracts for WU-011 source-transfer ordering.
+"""HEALPix-enabled contracts for WU-011 source-transfer ordering.
 
 These tests are intentionally separated from the default fast tier.  The
-matching workflow installs the pinned optional dependency and must observe a
-failure until the source-map production API is implemented.
+matching workflow installs the pinned optional dependency and verifies the
+finite source-transfer implementation in a real HEALPix environment.
 """
 
 from __future__ import annotations
-
-import math
 
 import numpy as np
 import pytest
@@ -113,7 +111,8 @@ def test_wu011_source_transfer_refuses_unbound_or_invalid_inputs() -> None:
     spec = _source_sky()
     ones = np.ones(13)
     invalid_cases = (
-        dict(nside=15, processing_lmax=12, source_beam=ones, source_pixel_window=ones),
+        # RING ordering permits non-power-of-two nside values; zero is invalid.
+        dict(nside=0, processing_lmax=12, source_beam=ones, source_pixel_window=ones),
         dict(nside=16, processing_lmax=5, source_beam=np.ones(6), source_pixel_window=np.ones(6)),
         dict(nside=16, processing_lmax=12, source_beam=np.ones(12), source_pixel_window=ones),
         dict(nside=16, processing_lmax=12, source_beam=np.full(13, np.nan), source_pixel_window=ones),
