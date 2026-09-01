@@ -1,24 +1,26 @@
-"""Authority and basis contracts for the WU-011 processed boost response.
+"""Authority, basis, and positive-sky contracts for WU-011.
 
-This first GREEN slice deliberately contains no sky synthesis, processed
-coefficient response, data access, or velocity estimator.  It freezes the
-reviewed WU-010 predecessor, the actual repository processing order, typed
-fail-closed terminals, and the conversion between two real-harmonic layouts:
+This bounded implementation slice freezes the reviewed WU-010 predecessor,
+the actual repository processing order, typed fail-closed terminals, the
+conversion between scientific and joint-fit real-harmonic layouts, and a
+strictly positive absolute thermodynamic-temperature source sky.
 
-* scientific stored-real: ``(a_l0, Re a_l1, Im a_l1, ...)``;
-* joint-fit real basis: ``(a_l0, sqrt(2) Re a_l1, -sqrt(2) Im a_l1, ...)``.
-
-The irrational basis conversion is numerically invertible to floating-point
-roundoff, not byte-identical.  No silent truncation, padding, projection, or
-nonfinite input is accepted.
+The source sky uses a global analytic positivity certificate obtained from
+the spherical-harmonic addition theorem and Cauchy--Schwarz.  It performs no
+silent clipping, monopole offset, data access, processed response, or velocity
+inference.
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 from enum import Enum
+import hashlib
+import json
 import math
 
 import numpy as np
+from scipy.special import sph_harm_y
 
 from .planck_pr3_operator import JOINT_CUTSKY_ESTIMATOR_ID
 
@@ -36,6 +38,8 @@ PROCESSING_ORDER = (
     "POSTFIT_TARGET_SOURCE_COMMONIZATION",
     "RETAIN_L2_L5",
 )
+_POSITIVE_SKY_SCHEMA = "HTT_WU011_POSITIVE_ABSOLUTE_SKY_V1"
+_DIRECTION_ATOL = 5.0e-13
 
 
 class ProcessedBoostError(ValueError):
@@ -100,6 +104,27 @@ def _finite_real_vector(
     return vector
 
 
+def _unit_directions(values: object) -> np.ndarray:
+    try:
+        directions = np.asarray(values, dtype=np.float64)
+    except (TypeError, ValueError) as exc:
+        raise ProcessedBoostError(
+            "sky directions must be finite unit three-vectors"
+        ) from exc
+    if (
+        directions.ndim < 1
+        or directions.shape[-1] != 3
+        or not np.all(np.isfinite(directions))
+    ):
+        raise ProcessedBoostError("sky directions must be finite unit three-vectors")
+    norms = np.linalg.norm(directions, axis=-1)
+    if not np.allclose(norms, 1.0, rtol=0.0, atol=_DIRECTION_ATOL):
+        raise ProcessedBoostError(
+            "sky directions must be unit normalized; no silent projection is allowed"
+        )
+    return directions
+
+
 def scientific_to_joint_real(
     values: object,
     *,
@@ -158,10 +183,159 @@ def joint_to_scientific_real(
     return output
 
 
+def _scientific_block_norm(block: np.ndarray, ell: int) -> float:
+    if block.shape != (2 * ell + 1,):
+        raise ProcessedBoostError("scientific harmonic block registry drifted")
+    norm2 = float(block[0] * block[0])
+    if ell:
+        pairs = block[1:].reshape(ell, 2)
+        norm2 += 2.0 * float(np.einsum("ij,ij->", pairs, pairs))
+    return math.sqrt(max(0.0, norm2))
+
+
+def _anisotropy_supremum_bound(coefficients: np.ndarray, lmax: int) -> float:
+    """Return a global full-sphere bound from addition theorem + Cauchy--Schwarz."""
+
+    cursor = 0
+    bound = 0.0
+    for ell in range(1, lmax + 1):
+        width = 2 * ell + 1
+        block = coefficients[cursor : cursor + width]
+        bound += math.sqrt((2.0 * ell + 1.0) / (4.0 * math.pi)) * (
+            _scientific_block_norm(block, ell)
+        )
+        cursor += width
+    if cursor != coefficients.size:
+        raise ProcessedBoostError("positive-sky harmonic registry drifted")
+    return float(bound)
+
+
+@dataclass(frozen=True)
+class PositiveAbsoluteSkySpec:
+    """A globally certified positive thermodynamic-temperature source sky.
+
+    ``monopole_temperature`` is the physical constant temperature ``T0``, not
+    an ``a_00`` coefficient.  ``scientific_coefficients`` stores only
+    ``ell=1..source_lmax`` in the repository scientific real convention.
+
+    For each multipole, the addition theorem and Cauchy--Schwarz give
+
+    ``|T_ell(n)| <= sqrt((2 ell+1)/(4 pi)) ||a_ell||_R``.
+
+    The constructor requires the sum of these bounds to be strictly smaller
+    than ``T0``; hence positivity holds on the entire sphere, not merely on a
+    selected pixel grid.
+    """
+
+    monopole_temperature: float
+    scientific_coefficients: np.ndarray
+    source_lmax: int
+    units: str
+    anisotropy_supremum_bound: float = field(init=False)
+    certified_temperature_margin: float = field(init=False)
+    content_id: str = field(init=False)
+
+    def __post_init__(self) -> None:
+        if isinstance(self.monopole_temperature, bool):
+            raise ProcessedBoostError(
+                "monopole temperature must be a finite strictly positive real"
+            )
+        try:
+            monopole = float(self.monopole_temperature)
+        except (TypeError, ValueError) as exc:
+            raise ProcessedBoostError(
+                "monopole temperature must be a finite strictly positive real"
+            ) from exc
+        if not math.isfinite(monopole) or monopole <= 0.0:
+            raise ProcessedBoostError(
+                "monopole temperature must be finite and strictly positive"
+            )
+        if type(self.source_lmax) is not int or self.source_lmax != SOURCE_LMAX:
+            raise ProcessedBoostError(
+                f"source_lmax must equal the frozen WU-011 value {SOURCE_LMAX}"
+            )
+        if not isinstance(self.units, str) or not self.units.strip():
+            raise ProcessedBoostError("temperature units must be a nonempty string")
+
+        dimension = sum(2 * ell + 1 for ell in range(1, self.source_lmax + 1))
+        coefficients = _finite_real_vector(
+            self.scientific_coefficients,
+            dimension=dimension,
+            label="scientific stored-real anisotropy",
+        )
+        bound = _anisotropy_supremum_bound(coefficients, self.source_lmax)
+        margin = monopole - bound
+        if not math.isfinite(margin) or margin <= 0.0:
+            raise ProcessedBoostError(
+                "absolute thermodynamic-temperature sky is not certified strictly positive"
+            )
+
+        sealed = np.frombuffer(coefficients.astype("<f8").tobytes(), dtype="<f8")
+        identity = {
+            "schema": _POSITIVE_SKY_SCHEMA,
+            "monopole_temperature_hex": monopole.hex(),
+            "source_lmax": self.source_lmax,
+            "units": self.units,
+            "coefficient_dtype": sealed.dtype.str,
+            "coefficient_shape": list(sealed.shape),
+        }
+        digest = hashlib.sha256()
+        digest.update(
+            json.dumps(
+                identity,
+                sort_keys=True,
+                separators=(",", ":"),
+                ensure_ascii=True,
+                allow_nan=False,
+            ).encode("ascii")
+        )
+        digest.update(b"\0")
+        digest.update(memoryview(sealed).cast("B"))
+
+        object.__setattr__(self, "monopole_temperature", monopole)
+        object.__setattr__(self, "scientific_coefficients", sealed)
+        object.__setattr__(self, "units", self.units.strip())
+        object.__setattr__(self, "anisotropy_supremum_bound", bound)
+        object.__setattr__(self, "certified_temperature_margin", margin)
+        object.__setattr__(self, "content_id", "sha256:" + digest.hexdigest())
+
+    def evaluate(self, direction: object) -> np.ndarray:
+        """Evaluate the certified absolute sky on one or more unit directions."""
+
+        directions = _unit_directions(direction)
+        theta = np.arccos(np.clip(directions[..., 2], -1.0, 1.0))
+        phi = np.mod(np.arctan2(directions[..., 1], directions[..., 0]), 2.0 * math.pi)
+        values = np.full(theta.shape, self.monopole_temperature, dtype=np.float64)
+        cursor = 0
+        for ell in range(1, self.source_lmax + 1):
+            values += (
+                self.scientific_coefficients[cursor]
+                * sph_harm_y(ell, 0, theta, phi).real
+            )
+            cursor += 1
+            for m in range(1, ell + 1):
+                coefficient = complex(
+                    self.scientific_coefficients[cursor],
+                    self.scientific_coefficients[cursor + 1],
+                )
+                values += 2.0 * np.real(
+                    coefficient * sph_harm_y(ell, m, theta, phi)
+                )
+                cursor += 2
+        if cursor != self.scientific_coefficients.size:
+            raise ProcessedBoostError("positive-sky evaluation registry drifted")
+        if not np.all(np.isfinite(values)) or np.any(values <= 0.0):
+            raise ProcessedBoostError(
+                "certified positive sky produced nonpositive or nonfinite values"
+            )
+        return values
+
+
 __all__ = [
     "FIT_LMAX",
     "JOINT_ESTIMATOR_ID",
     "PROCESSING_ORDER",
+    "PositiveAbsoluteSkySpec",
     "ProcessedBoostError",
     "ProcessedBoostTerminal",
     "RETAINED_LMIN",
