@@ -143,3 +143,38 @@ def test_image_geometry_is_invariant_under_source_reparameterization() -> None:
     assert base.surviving_rank == transformed.surviving_rank
     assert base.augmented_rank_increment == transformed.augmented_rank_increment
     assert base.containment_witness == transformed.containment_witness
+
+
+def test_matched_control_bridge_preserves_provenance_and_rank_identity() -> None:
+    try:
+        from obsstat import processed_boost_matched_control as matched
+    except ImportError as exc:
+        pytest.fail(
+            f"WU-011 Task-7C matched-control bridge missing: {exc}",
+            pytrace=False,
+        )
+
+    low = _low_identity()
+    high = 0.2 * np.eye(4)
+    control = 1.0e-6 * np.eye(4)
+    result = matched.analyse_matched_control_matrices(
+        low,
+        high,
+        control,
+        source_case_id="CUTSKY_TEST",
+        control_case_id="FULLSKY_MATCHED_TEST",
+        direction_id="D111",
+        source_cutoff=9,
+        source_operator_id="sha256:" + "1" * 64,
+        control_operator_id="sha256:" + "2" * 64,
+    )
+
+    assert result.source_case_id == "CUTSKY_TEST"
+    assert result.control_case_id == "FULLSKY_MATCHED_TEST"
+    assert result.direction_id == "D111"
+    assert result.source_cutoff == 9
+    assert result.source_operator_id == "sha256:" + "1" * 64
+    assert result.control_operator_id == "sha256:" + "2" * 64
+    assert result.geometry.rank_identity_holds
+    assert result.geometry.containment_witness is True
+    assert result.content_id.startswith("sha256:")
