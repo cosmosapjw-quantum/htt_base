@@ -6,8 +6,14 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from obsstat.processed_boost_matched_control import (
+    build_matched_fullsky_control,
+    verify_matched_control_receipt,
+    write_matched_control_receipt,
+)
 from obsstat.processed_boost_nuisance_span import (
     build_task7c_atlas,
+    task7c_case_specs,
     verify_task7c_artifacts,
     write_task7c_artifacts,
 )
@@ -35,11 +41,39 @@ def main() -> int:
         raise RuntimeError("Task-7C content identity changed during verification")
     if verified["manifest_sha256"] != bundle.manifest_sha256:
         raise RuntimeError("Task-7C manifest identity changed during verification")
+
+    primary_spec = task7c_case_specs(args.profile)[0]
+    primary_case = atlas.cases[0]
+    if primary_case.case_id != primary_spec.case_id:
+        raise RuntimeError("Task-7C primary case differs from the matched-control source")
+    matched_control = build_matched_fullsky_control(primary_spec)
+    matched_target = args.output / "matched_control"
+    matched_bundle = write_matched_control_receipt(
+        primary_case,
+        matched_control,
+        matched_target,
+        source_revision=args.source_revision,
+    )
+    matched_verified = verify_matched_control_receipt(matched_target)
+    if matched_verified["source_revision"] != args.source_revision:
+        raise RuntimeError("Task-7C matched-control source revision differs")
+    if (
+        matched_verified["receipt_content_id"]
+        != matched_bundle["receipt_content_id"]
+    ):
+        raise RuntimeError("Task-7C matched-control content identity differs")
+    if matched_verified["manifest_sha256"] != matched_bundle["manifest_sha256"]:
+        raise RuntimeError("Task-7C matched-control manifest identity differs")
+
     print("TASK7C_TERMINAL", atlas.terminal.value)
     print("TASK7C_CONTENT_ID", atlas.content_id)
     print("TASK7C_MANIFEST_SHA256", bundle.manifest_sha256)
     print("TASK7C_SOURCE_BLOCK_BUILD_COUNT", atlas.source_block_build_count)
     print("TASK7C_PROFILE", atlas.profile)
+    print("TASK7C_MATCHED_CONTROL_STATUS", matched_verified["status"])
+    print("TASK7C_MATCHED_CONTROL_CONTENT_ID", matched_verified["receipt_content_id"])
+    print("TASK7C_MATCHED_CONTROL_MANIFEST_SHA256", matched_verified["manifest_sha256"])
+    print("TASK7C_MATCHED_CONTROL_ANALYSIS_COUNT", matched_verified["analysis_count"])
     return 0
 
 
