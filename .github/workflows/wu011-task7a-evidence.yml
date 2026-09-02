@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 env:
   OPENBLAS_NUM_THREADS: '1'
@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          persist-credentials: false
+          persist-credentials: true
           ref: ${{ env.SOURCE_REVISION }}
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
@@ -73,3 +73,53 @@ jobs:
           path: artifacts/wu011-task7a
           if-no-files-found: error
           retention-days: 14
+      - name: Build multipage figure-audit PDF
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import os
+          from PIL import Image
+
+          root = Path('artifacts/wu011-task7a')
+          names = (
+              'metric_spectrum_exact_vs_numerical.png',
+              'fullsky_resolution_convergence.png',
+              'finite_to_linear_scaling.png',
+              'processed_channel_norms.png',
+              'normalized_gate_margins.png',
+          )
+          pages = []
+          for name in names:
+              with Image.open(root / name) as image:
+                  page = image.convert('RGB')
+                  page.thumbnail((1400, 1000))
+                  pages.append(page.copy())
+          target = Path(os.environ['RUNNER_TEMP']) / 'wu011-task7a-figure-audit.pdf'
+          pages[0].save(
+              target,
+              save_all=True,
+              append_images=pages[1:],
+              resolution=150.0,
+          )
+          print('TASK7A_FIGURE_AUDIT_PDF', target, target.stat().st_size)
+          PY
+      - name: Publish create-only exact-head artifact branch
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          ARTIFACT_BRANCH: artifact/wu011-task7a-${{ env.SOURCE_REVISION }}
+        run: |
+          if git ls-remote --exit-code origin "refs/heads/${ARTIFACT_BRANCH}" >/dev/null 2>&1; then
+            echo "ARTIFACT_BRANCH_ALREADY_EXISTS ${ARTIFACT_BRANCH}"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c task7a-artifact-export "$SOURCE_REVISION"
+          destination="docs/generated/wu011_task7a/${SOURCE_REVISION}"
+          mkdir -p "$destination"
+          cp -a artifacts/wu011-task7a/. "$destination/"
+          cp "$RUNNER_TEMP/wu011-task7a-figure-audit.pdf" "$destination/"
+          git add "$destination"
+          git commit -m "artifact: publish WU-011 Task-7A exact-head evidence"
+          git push origin "HEAD:refs/heads/${ARTIFACT_BRANCH}"
+          echo "ARTIFACT_BRANCH_CREATED ${ARTIFACT_BRANCH}"
