@@ -1,0 +1,82 @@
+name: WU011 Task7C external verifiers
+
+on:
+  push:
+    branches:
+      - research/wu011-task7c-external-verifiers-20260903
+    paths:
+      - '.github/workflows/wu011-task7c-external-verifiers.yml'
+      - 'scripts/research/run_wu011_task7c_external_verifiers.py'
+      - 'htt/test_wu011_task7c_external_verifiers.py'
+      - 'docs/research_program/post_pr327/planck_mes_wu011_task7c_external_verifier_contract.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: External formula/proof packages / Python 3.12
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: 1
+      OMP_NUM_THREADS: 1
+      MKL_NUM_THREADS: 1
+      NUMEXPR_NUM_THREADS: 1
+      PYTHONHASHSEED: 0
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Download pinned external verifier packages
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install 'setuptools>=75' wheel 'cffi==2.0.0' 'pycparser==2.23'
+          mkdir -p artifacts/wu011-task7c-external/package-downloads
+          python -m pip download --no-deps \
+            --dest artifacts/wu011-task7c-external/package-downloads \
+            'pywigxjpf==1.13.3' \
+            'python-flint==0.9.0' \
+            'ducc0==0.41.0' \
+            'mpmath==1.4.1' \
+            'sympy==1.14.0' \
+            'scipy==1.18.1' \
+            'numpy==2.5.2'
+          sha256sum artifacts/wu011-task7c-external/package-downloads/* \
+            | sort > artifacts/wu011-task7c-external/package_download_sha256.txt
+          test "$(sha256sum artifacts/wu011-task7c-external/package-downloads/pywigxjpf-1.13.3.tar.gz | cut -d' ' -f1)" \
+            = '30122c9ab2775aa8a0531d01956892627f1c6e82ba65c3abf6b8fc4fb75c3aef'
+      - name: Install from the downloaded package set
+        run: |
+          python -m pip install --no-index --find-links artifacts/wu011-task7c-external/package-downloads \
+            --no-build-isolation \
+            'pywigxjpf==1.13.3' \
+            'python-flint==0.9.0' \
+            'ducc0==0.41.0' \
+            'mpmath==1.4.1' \
+            'sympy==1.14.0' \
+            'scipy==1.18.1' \
+            'numpy==2.5.2'
+      - name: Run RED/GREEN external verifier contracts
+        run: pytest -q htt/test_wu011_task7c_external_verifiers.py
+      - name: Generate deterministic verifier artifacts
+        run: |
+          python scripts/research/run_wu011_task7c_external_verifiers.py \
+            --output artifacts/wu011-task7c-external/results
+          cp artifacts/wu011-task7c-external/package_download_sha256.txt \
+            artifacts/wu011-task7c-external/results/package_download_sha256.txt
+          sha256sum artifacts/wu011-task7c-external/results/* \
+            | sort > artifacts/wu011-task7c-external/results/SHA256SUMS.outer
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: wu011-task7c-external-verifiers-${{ github.sha }}
+          path: artifacts/wu011-task7c-external
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 6
