@@ -1,0 +1,42 @@
+name: WU011 Task7C matrix error envelope
+
+on:
+  pull_request:
+    paths:
+      - "htt/obsstat/processed_boost_error_envelope.py"
+      - "htt/test_wu011_task7c_error_envelope.py"
+      - ".github/workflows/wu011-task7c-error-envelope.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wu011-task7c-error-envelope-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  matrix-error-envelope:
+    name: Task7C matrix-valued error envelope / Python 3.12
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install repository
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e './htt[dev]'
+      - name: Run Task-7C A4 matrix-envelope contracts
+        run: pytest -q htt/test_wu011_task7c_error_envelope.py
