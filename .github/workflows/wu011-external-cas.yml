@@ -1,0 +1,134 @@
+name: WU011 external CAS verification
+
+on:
+  push:
+    branches:
+      - audit/wu011-octave-jas-julia-20260903
+    paths:
+      - "tools/external_cas/**"
+      - ".github/workflows/wu011-external-cas.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wu011-external-cas-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  octave:
+    name: GNU Octave direct continuum quadrature
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - name: Checkout exact audit head
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - name: Install GNU Octave
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends octave
+          octave --version
+      - name: Run independent Octave continuum verifier
+        run: |
+          rm -rf external_cas_results
+          mkdir -p external_cas_results
+          octave --quiet --no-gui --eval \
+            "addpath('tools/external_cas'); wu011_octave_verify('external_cas_results')"
+          cat external_cas_results/octave_status.txt
+          cat external_cas_results/octave_continuum_l12.csv
+          sha256sum external_cas_results/* > external_cas_results/SHA256SUMS
+          sha256sum -c external_cas_results/SHA256SUMS
+      - name: Upload Octave receipt
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: wu011-octave-results
+          path: external_cas_results/
+          if-no-files-found: error
+          retention-days: 30
+
+  julia:
+    name: Julia direct continuum quadrature
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      JULIA_NUM_THREADS: "1"
+    steps:
+      - name: Checkout exact audit head
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - name: Download and verify Julia 1.12.7
+        run: |
+          cd /tmp
+          curl --fail --location --retry 3 --output julia.tar.gz \
+            https://julialang-s3.julialang.org/bin/linux/x64/1.12/julia-1.12.7-linux-x86_64.tar.gz
+          curl --fail --location --retry 3 --output julia.sha256 \
+            https://julialang-s3.julialang.org/bin/checksums/julia-1.12.7.sha256
+          grep 'julia-1.12.7-linux-x86_64.tar.gz$' julia.sha256 \
+            | sed 's#julia-1.12.7-linux-x86_64.tar.gz#julia.tar.gz#' \
+            | sha256sum -c -
+          tar -xzf julia.tar.gz
+          /tmp/julia-1.12.7/bin/julia --version
+      - name: Run independent Julia continuum verifier
+        run: |
+          rm -rf external_cas_results
+          mkdir -p external_cas_results
+          /tmp/julia-1.12.7/bin/julia --startup-file=no \
+            tools/external_cas/wu011_julia_verify.jl external_cas_results
+          cat external_cas_results/julia_status.txt
+          cat external_cas_results/julia_continuum_l12.csv
+          sha256sum external_cas_results/* > external_cas_results/SHA256SUMS
+          sha256sum -c external_cas_results/SHA256SUMS
+      - name: Upload Julia receipt
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: wu011-julia-results
+          path: external_cas_results/
+          if-no-files-found: error
+          retention-days: 30
+
+  jas:
+    name: Java Algebra System exact rational rank
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact audit head
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - name: Install Java and fetch pinned JAS dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends openjdk-17-jdk-headless
+          java -version
+          javac -version
+          mkdir -p /tmp/wu011-jas-lib
+          curl --fail --location --retry 3 --output /tmp/wu011-jas-lib/jas-2.7.200.jar \
+            https://repo.maven.apache.org/maven2/de/uni-mannheim/rz/krum/jas/2.7.200/jas-2.7.200.jar
+          curl --fail --location --retry 3 --output /tmp/wu011-jas-lib/log4j-api-2.17.1.jar \
+            https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-api/2.17.1/log4j-api-2.17.1.jar
+          curl --fail --location --retry 3 --output /tmp/wu011-jas-lib/log4j-core-2.17.1.jar \
+            https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-core/2.17.1/log4j-core-2.17.1.jar
+          sha256sum /tmp/wu011-jas-lib/*
+      - name: Compile and run exact JAS verifier
+        run: |
+          rm -rf external_cas_results /tmp/wu011-jas-classes
+          mkdir -p external_cas_results /tmp/wu011-jas-classes
+          javac -cp '/tmp/wu011-jas-lib/*' -d /tmp/wu011-jas-classes \
+            tools/external_cas/WU011JASExact.java
+          java -cp '/tmp/wu011-jas-classes:/tmp/wu011-jas-lib/*' \
+            WU011JASExact external_cas_results
+          cat external_cas_results/jas_status.txt
+          cat external_cas_results/jas_exact_z_block_ranks.csv
+          sha256sum external_cas_results/* > external_cas_results/SHA256SUMS
+          sha256sum -c external_cas_results/SHA256SUMS
+      - name: Upload JAS receipt
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: wu011-jas-results
+          path: external_cas_results/
+          if-no-files-found: error
+          retention-days: 30
