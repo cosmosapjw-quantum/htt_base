@@ -23,7 +23,7 @@ concurrency:
 jobs:
   octave:
     name: GNU Octave direct continuum quadrature
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
       OPENBLAS_NUM_THREADS: "1"
@@ -57,7 +57,7 @@ jobs:
 
   julia:
     name: Julia direct continuum quadrature
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
       OPENBLAS_NUM_THREADS: "1"
@@ -98,7 +98,7 @@ jobs:
 
   jas:
     name: Java Algebra System exact rational rank
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - name: Checkout exact audit head
