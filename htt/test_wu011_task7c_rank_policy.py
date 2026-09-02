@@ -178,3 +178,65 @@ def test_matched_control_bridge_preserves_provenance_and_rank_identity() -> None
     assert result.geometry.rank_identity_holds
     assert result.geometry.containment_witness is True
     assert result.content_id.startswith("sha256:")
+
+
+def _adjudication_rows(*, ambiguous: bool, containment: bool) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for factor in (2.0, 5.0, 10.0):
+        for direction in ("X", "Z"):
+            is_ambiguous = ambiguous and factor == 5.0 and direction == "X"
+            rows.append(
+                {
+                    "direction_id": direction,
+                    "source_cutoff": 9,
+                    "control_safety_factor": factor,
+                    "rank_status": "AMBIGUOUS" if is_ambiguous else "RESOLVED",
+                    "high_rank": 3,
+                    "surviving_rank": "" if is_ambiguous else (0 if containment else 1),
+                    "augmented_rank_increment": "" if is_ambiguous else (0 if containment else 1),
+                    "rank_identity_holds": "" if is_ambiguous else True,
+                    "containment_witness": "" if is_ambiguous else containment,
+                }
+            )
+    return rows
+
+
+def test_matched_control_adjudication_fails_closed_on_ambiguity() -> None:
+    try:
+        from obsstat import processed_boost_matched_control_adjudication as audit
+    except ImportError as exc:
+        pytest.fail(
+            f"WU-011 Task-7C matched-control adjudicator missing: {exc}",
+            pytrace=False,
+        )
+
+    result = audit.adjudicate_rank_records(
+        _adjudication_rows(ambiguous=True, containment=True),
+        nominal_control_factor=5.0,
+    )
+    assert result.terminal is audit.MatchedControlAdjudicationTerminal.RANK_UNRESOLVED
+    assert result.nominal_ambiguous_count == 1
+    assert result.sensitivity_stable is False
+    assert result.scientific_terminal_authorized is False
+
+
+def test_matched_control_adjudication_separates_survivor_and_candidate() -> None:
+    from obsstat import processed_boost_matched_control_adjudication as audit
+
+    survivor = audit.adjudicate_rank_records(
+        _adjudication_rows(ambiguous=False, containment=False),
+        nominal_control_factor=5.0,
+    )
+    assert survivor.terminal is audit.MatchedControlAdjudicationTerminal.SURVIVOR_PRESENT
+    assert survivor.sensitivity_stable is True
+    assert survivor.nominal_survivor_count == 2
+    assert survivor.scientific_terminal_authorized is False
+
+    candidate = audit.adjudicate_rank_records(
+        _adjudication_rows(ambiguous=False, containment=True),
+        nominal_control_factor=5.0,
+    )
+    assert candidate.terminal is audit.MatchedControlAdjudicationTerminal.CONTAINMENT_CANDIDATE
+    assert candidate.sensitivity_stable is True
+    assert candidate.nominal_containment_count == 2
+    assert candidate.scientific_terminal_authorized is False
