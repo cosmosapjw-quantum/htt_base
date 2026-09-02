@@ -83,6 +83,30 @@ def _source_sky() -> PositiveAbsoluteSkySpec:
     return PositiveAbsoluteSkySpec(2.7255, coefficients, 6, "K_CMB")
 
 
+def _source_basis_pair(
+    source_index: int,
+    *,
+    reference_monopole: float,
+    source_step: float,
+) -> tuple[PositiveAbsoluteSkySpec, PositiveAbsoluteSkySpec]:
+    if not 0 <= source_index < 49:
+        raise AssertionError("source index outside the frozen 49-coordinate registry")
+    plus_coefficients = np.zeros(48, dtype=float)
+    minus_coefficients = np.zeros(48, dtype=float)
+    plus_monopole = reference_monopole
+    minus_monopole = reference_monopole
+    if source_index == 0:
+        plus_monopole += source_step
+        minus_monopole -= source_step
+    else:
+        plus_coefficients[source_index - 1] = source_step
+        minus_coefficients[source_index - 1] = -source_step
+    return (
+        PositiveAbsoluteSkySpec(plus_monopole, plus_coefficients, 6, "K_CMB"),
+        PositiveAbsoluteSkySpec(minus_monopole, minus_coefficients, 6, "K_CMB"),
+    )
+
+
 @pytest.fixture(scope="module")
 def jacobian():
     return _api().build_processed_boost_jacobian(_operator())
@@ -237,6 +261,58 @@ def test_wu011_replay_jacobian_matches_a_centered_finite_boost_derivative(
     scale = max(np.linalg.norm(centered), np.finfo(float).tiny)
     relative = np.linalg.norm(centered - predicted) / scale
     assert relative <= 5.0e-4
+
+
+def test_wu011_all_147_registered_columns_match_centered_mixed_differences(
+    jacobian,
+) -> None:
+    api = _api()
+    operator = _operator()
+    reference_monopole = jacobian.reference_monopole_temperature
+    source_step = jacobian.basis_amplitude
+    beta_step = 2.0e-3
+    finite_tensor = np.empty_like(jacobian.raw_replay_tensor)
+
+    for source_index in range(49):
+        source_plus, source_minus = _source_basis_pair(
+            source_index,
+            reference_monopole=reference_monopole,
+            source_step=source_step,
+        )
+        for axis, direction in enumerate(np.eye(3, dtype=float)):
+            beta = beta_step * direction
+            plus_plus = evaluate_processed_boost(
+                source_plus, operator, beta, mode="FINITE"
+            ).retained_coefficients
+            minus_plus = evaluate_processed_boost(
+                source_plus, operator, -beta, mode="FINITE"
+            ).retained_coefficients
+            plus_minus = evaluate_processed_boost(
+                source_minus, operator, beta, mode="FINITE"
+            ).retained_coefficients
+            minus_minus = evaluate_processed_boost(
+                source_minus, operator, -beta, mode="FINITE"
+            ).retained_coefficients
+            finite_tensor[axis, :, source_index] = (
+                plus_plus - minus_plus - plus_minus + minus_minus
+            ) / (4.0 * beta_step * source_step)
+
+    output_metric = np.tile(jacobian.output_metric_diagonal, 3)
+    finite_whitened = api.metric_whitened_matrix(
+        finite_tensor.reshape(96, 49),
+        source_metric_diagonal=jacobian.source_metric_diagonal,
+        output_metric_diagonal=output_metric,
+    )
+    expected_whitened = api.metric_whitened_matrix(
+        jacobian.raw_replay_tensor.reshape(96, 49),
+        source_metric_diagonal=jacobian.source_metric_diagonal,
+        output_metric_diagonal=output_metric,
+    )
+    residual = finite_whitened - expected_whitened
+    relative_frobenius = np.linalg.norm(residual) / np.linalg.norm(expected_whitened)
+    relative_maximum = np.max(np.abs(residual)) / np.max(np.abs(expected_whitened))
+    assert relative_frobenius <= 8.0e-4
+    assert relative_maximum <= 3.0e-3
 
 
 def test_wu011_jacobian_arrays_are_content_bound_and_immutable(jacobian) -> None:
