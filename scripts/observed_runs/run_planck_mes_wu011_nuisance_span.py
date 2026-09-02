@@ -11,6 +11,10 @@ from obsstat.processed_boost_matched_control import (
     verify_matched_control_receipt,
     write_matched_control_receipt,
 )
+from obsstat.processed_boost_matched_control_artifacts import (
+    verify_matched_control_adjudication_artifacts,
+    write_matched_control_adjudication_artifacts,
+)
 from obsstat.processed_boost_nuisance_span import (
     build_task7c_atlas,
     task7c_case_specs,
@@ -65,6 +69,26 @@ def main() -> int:
     if matched_verified["manifest_sha256"] != matched_bundle["manifest_sha256"]:
         raise RuntimeError("Task-7C matched-control manifest identity differs")
 
+    adjudication_target = matched_target / "adjudication"
+    adjudication_bundle = write_matched_control_adjudication_artifacts(
+        rank_sensitivity_csv=matched_target / "rank_sensitivity.csv",
+        matrices_npz=args.output / "matrices.npz",
+        target=adjudication_target,
+        nominal_control_factor=5.0,
+    )
+    adjudication_verified = verify_matched_control_adjudication_artifacts(
+        adjudication_target
+    )
+    if adjudication_verified["terminal"] != adjudication_bundle["terminal"]:
+        raise RuntimeError("Task-7C matched-control adjudication terminal differs")
+    if adjudication_verified["content_id"] != adjudication_bundle["content_id"]:
+        raise RuntimeError("Task-7C matched-control adjudication identity differs")
+    if (
+        adjudication_verified["manifest_sha256"]
+        != adjudication_bundle["manifest_sha256"]
+    ):
+        raise RuntimeError("Task-7C matched-control adjudication manifest differs")
+
     print("TASK7C_TERMINAL", atlas.terminal.value)
     print("TASK7C_CONTENT_ID", atlas.content_id)
     print("TASK7C_MANIFEST_SHA256", bundle.manifest_sha256)
@@ -74,6 +98,30 @@ def main() -> int:
     print("TASK7C_MATCHED_CONTROL_CONTENT_ID", matched_verified["receipt_content_id"])
     print("TASK7C_MATCHED_CONTROL_MANIFEST_SHA256", matched_verified["manifest_sha256"])
     print("TASK7C_MATCHED_CONTROL_ANALYSIS_COUNT", matched_verified["analysis_count"])
+    print(
+        "TASK7C_MATCHED_CONTROL_ADJUDICATION_TERMINAL",
+        adjudication_verified["terminal"],
+    )
+    print(
+        "TASK7C_MATCHED_CONTROL_ADJUDICATION_CONTENT_ID",
+        adjudication_verified["content_id"],
+    )
+    print(
+        "TASK7C_MATCHED_CONTROL_ADJUDICATION_MANIFEST_SHA256",
+        adjudication_verified["manifest_sha256"],
+    )
+    print(
+        "TASK7C_MATCHED_CONTROL_NOMINAL_AMBIGUOUS_COUNT",
+        adjudication_verified["nominal_ambiguous_count"],
+    )
+    print(
+        "TASK7C_MATCHED_CONTROL_NOMINAL_RESOLVED_COUNT",
+        adjudication_verified["nominal_resolved_count"],
+    )
+    print(
+        "TASK7C_MATCHED_CONTROL_BEST_SATURATION_MARGIN",
+        adjudication_verified["best_saturation_margin"],
+    )
     return 0
 
 
