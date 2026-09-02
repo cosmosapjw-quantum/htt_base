@@ -61,6 +61,7 @@ RANK_RELATIVE_THRESHOLD = 1.0e-10
 SOURCE_LAST_FROBENIUS_FRACTION_CEILING = 0.10
 SOURCE_LAST_OPERATOR_FRACTION_CEILING = 0.10
 SURVIVING_FRACTION_DRIFT_CEILING = 0.02
+SURVIVOR_SECTOR_FLOOR_RELATIVE = 1.0e-12
 _RANK_SHELL_ULPS = 1024.0
 _REVISION_RE = re.compile(r"^[0-9a-f]{40}$")
 _GEOMETRY_SCHEMA = "HTT_WU011_TASK7C_DIRECTIONAL_NUISANCE_GEOMETRY_V1"
@@ -190,8 +191,7 @@ def contract_directional_tensor(tensor: object, direction: object) -> np.ndarray
         raise ProcessedBoostError(
             "directional response tensor must have finite shape (3,m,n)"
         )
-    vector = _finite_unit_direction(direction)
-    contracted = np.einsum("i,ioj->oj", vector, array)
+    contracted = np.einsum("i,ioj->oj", _finite_unit_direction(direction), array)
     return _sealed_array(
         contracted,
         shape=array.shape[1:],
@@ -293,8 +293,6 @@ def _image_basis(
 
 @dataclass(frozen=True)
 class DirectionalNuisanceGeometry:
-    """Model-free image geometry for one direction and one source cutoff."""
-
     direction_id: str
     source_cutoff: int
     low_rank: int
@@ -357,13 +355,13 @@ def analyse_whitened_nuisance_geometry(
     fraction = min(1.0, max(0.0, float(fraction)))
 
     if low_image.rank == 0 or high_image.rank == 0:
-        minimum_angle = 90.0
-        maximum_angle = 90.0
+        minimum_angle = maximum_angle = 90.0
     else:
-        overlap = low_image.basis.T @ high_image.basis
-        cosines = np.linalg.svd(overlap, compute_uv=False)
-        cosines = np.clip(cosines, 0.0, 1.0)
-        angles = np.degrees(np.arccos(cosines))
+        cosines = np.linalg.svd(
+            low_image.basis.T @ high_image.basis,
+            compute_uv=False,
+        )
+        angles = np.degrees(np.arccos(np.clip(cosines, 0.0, 1.0)))
         minimum_angle = float(np.min(angles))
         maximum_angle = float(np.max(angles))
 
@@ -449,55 +447,40 @@ def task7c_case_specs(profile: str) -> tuple[Task7COperatorSpec, ...]:
     if profile == "SMOKE":
         return (
             Task7COperatorSpec(
-                case_id="WIDE_N8_IDENTITY",
-                nside=8,
-                processing_lmax=10,
-                mask_kind="APODIZED_Z_WIDE",
-                transfer_kind="IDENTITY",
-                source_cutoffs=(8, 9),
+                "WIDE_N8_IDENTITY", 8, 10, "APODIZED_Z_WIDE", "IDENTITY", (8, 9)
             ),
             Task7COperatorSpec(
-                case_id="FULL_N8_IDENTITY",
-                nside=8,
-                processing_lmax=9,
-                mask_kind="FULL",
-                transfer_kind="IDENTITY",
-                source_cutoffs=(8,),
+                "FULL_N8_IDENTITY", 8, 9, "FULL", "IDENTITY", (8,)
             ),
         )
     if profile == "CI_CORE":
         return (
             Task7COperatorSpec(
-                case_id="WIDE_N16_IDENTITY",
-                nside=16,
-                processing_lmax=17,
-                mask_kind="APODIZED_Z_WIDE",
-                transfer_kind="IDENTITY",
-                source_cutoffs=CORE_SOURCE_CUTOFFS,
+                "WIDE_N16_IDENTITY",
+                16,
+                17,
+                "APODIZED_Z_WIDE",
+                "IDENTITY",
+                CORE_SOURCE_CUTOFFS,
             ),
             Task7COperatorSpec(
-                case_id="WIDE_N32_IDENTITY",
-                nside=32,
-                processing_lmax=13,
-                mask_kind="APODIZED_Z_WIDE",
-                transfer_kind="IDENTITY",
-                source_cutoffs=(12,),
+                "WIDE_N32_IDENTITY",
+                32,
+                13,
+                "APODIZED_Z_WIDE",
+                "IDENTITY",
+                (12,),
             ),
             Task7COperatorSpec(
-                case_id="FULL_N16_IDENTITY",
-                nside=16,
-                processing_lmax=13,
-                mask_kind="FULL",
-                transfer_kind="IDENTITY",
-                source_cutoffs=(12,),
+                "FULL_N16_IDENTITY", 16, 13, "FULL", "IDENTITY", (12,)
             ),
             Task7COperatorSpec(
-                case_id="REFERENCE_N16_GAUSSIAN",
-                nside=16,
-                processing_lmax=13,
-                mask_kind="APODIZED_Z_REFERENCE",
-                transfer_kind="REFERENCE_GAUSSIAN",
-                source_cutoffs=(12,),
+                "REFERENCE_N16_GAUSSIAN",
+                16,
+                13,
+                "APODIZED_Z_REFERENCE",
+                "REFERENCE_GAUSSIAN",
+                (12,),
             ),
         )
     raise ProcessedBoostError("Task-7C profile is outside the registry")
@@ -529,15 +512,16 @@ def _build_operator(spec: Task7COperatorSpec) -> ProcessedBoostOperator:
 def task7c_smoke_operator(*, processing_lmax: int = 10) -> ProcessedBoostOperator:
     if type(processing_lmax) is not int or not 8 <= processing_lmax <= 23:
         raise ProcessedBoostError("Task-7C smoke processing lmax is invalid")
-    spec = Task7COperatorSpec(
-        case_id="WIDE_N8_IDENTITY",
-        nside=8,
-        processing_lmax=processing_lmax,
-        mask_kind="APODIZED_Z_WIDE",
-        transfer_kind="IDENTITY",
-        source_cutoffs=(processing_lmax - 1,),
+    return _build_operator(
+        Task7COperatorSpec(
+            "WIDE_N8_IDENTITY",
+            8,
+            processing_lmax,
+            "APODIZED_Z_WIDE",
+            "IDENTITY",
+            (processing_lmax - 1,),
+        )
     )
-    return _build_operator(spec)
 
 
 @dataclass(frozen=True)
@@ -554,20 +538,32 @@ class Task7CSourceBlock:
 
     def __post_init__(self) -> None:
         width = 2 * self.source_ell + 1
-        tensor = _sealed_array(
-            self.tensor,
-            shape=(3, 32, width),
-            label="Task-7C extended source tensor",
+        object.__setattr__(
+            self,
+            "tensor",
+            _sealed_array(
+                self.tensor,
+                shape=(3, 32, width),
+                label="Task-7C extended source tensor",
+            ),
         )
-        whitened = _sealed_array(
-            self.metric_whitened_matrix,
-            shape=(96, width),
-            label="Task-7C extended source whitened matrix",
+        object.__setattr__(
+            self,
+            "metric_whitened_matrix",
+            _sealed_array(
+                self.metric_whitened_matrix,
+                shape=(96, width),
+                label="Task-7C extended source whitened matrix",
+            ),
         )
-        metric = _sealed_array(
-            self.source_metric_diagonal,
-            shape=(width,),
-            label="Task-7C extended source metric",
+        object.__setattr__(
+            self,
+            "source_metric_diagonal",
+            _sealed_array(
+                self.source_metric_diagonal,
+                shape=(width,),
+                label="Task-7C extended source metric",
+            ),
         )
         if not self.operator_id.startswith("sha256:") or not self.content_id.startswith(
             "sha256:"
@@ -580,9 +576,6 @@ class Task7CSourceBlock:
             or self.metric_operator_norm < 0.0
         ):
             raise ProcessedBoostError("Task-7C source-block norms are invalid")
-        object.__setattr__(self, "tensor", tensor)
-        object.__setattr__(self, "metric_whitened_matrix", whitened)
-        object.__setattr__(self, "source_metric_diagonal", metric)
 
 
 def _build_source_block(
@@ -643,11 +636,7 @@ def _build_source_block(
         source_metric_diagonal=source_metric,
         output_metric_diagonal=np.tile(_output_metric(), 3),
     )
-    singular = tuple(
-        float(value) for value in np.linalg.svd(whitened, compute_uv=False)
-    )
-    frobenius = float(np.linalg.norm(whitened))
-    operator_norm = _operator_norm(whitened)
+    singular = tuple(float(value) for value in np.linalg.svd(whitened, compute_uv=False))
     content_id = _content_id(
         _SOURCE_BLOCK_SCHEMA,
         {
@@ -664,8 +653,8 @@ def _build_source_block(
         tensor=tensor,
         metric_whitened_matrix=whitened,
         source_metric_diagonal=source_metric,
-        metric_frobenius_norm=frobenius,
-        metric_operator_norm=operator_norm,
+        metric_frobenius_norm=float(np.linalg.norm(whitened)),
+        metric_operator_norm=_operator_norm(whitened),
         singular_values=singular,
         operator_id=operator.content_id,
         content_id=content_id,
@@ -729,22 +718,28 @@ class Task7CDirectionalResult:
 
     def __post_init__(self) -> None:
         high_width = (self.source_cutoff + 1) ** 2 - 49
-        low = _sealed_array(
-            self.low_matrix,
-            shape=(32, 48),
-            label="Task-7C directional low response",
+        object.__setattr__(
+            self,
+            "low_matrix",
+            _sealed_array(
+                self.low_matrix,
+                shape=(32, 48),
+                label="Task-7C directional low response",
+            ),
         )
-        high = _sealed_array(
-            self.high_matrix,
-            shape=(32, high_width),
-            label="Task-7C directional high response",
+        object.__setattr__(
+            self,
+            "high_matrix",
+            _sealed_array(
+                self.high_matrix,
+                shape=(32, high_width),
+                label="Task-7C directional high response",
+            ),
         )
         if len(self.surviving_sector_fractions) != 6:
             raise ProcessedBoostError("Task-7C survivor sector registry is incomplete")
         if not self.content_id.startswith("sha256:"):
             raise ProcessedBoostError("Task-7C directional result lacks content identity")
-        object.__setattr__(self, "low_matrix", low)
-        object.__setattr__(self, "high_matrix", high)
 
 
 @dataclass(frozen=True)
@@ -768,10 +763,16 @@ class Task7CCaseResult:
         raise ProcessedBoostError("Task-7C directional result is absent")
 
 
-def _surviving_sector_fractions(surviving: np.ndarray) -> tuple[float, ...]:
-    total_square = float(np.linalg.norm(surviving) ** 2)
-    if total_square <= np.finfo(float).tiny:
+def _surviving_sector_fractions(
+    surviving: np.ndarray,
+    *,
+    low_norm: float,
+) -> tuple[float, ...]:
+    survivor_norm = float(np.linalg.norm(surviving))
+    scale = max(float(low_norm), np.finfo(float).tiny)
+    if survivor_norm <= SURVIVOR_SECTOR_FLOOR_RELATIVE * scale:
         return (0.0,) * 6
+    total_square = survivor_norm * survivor_norm
     values: list[float] = []
     cursor = 0
     for ell in range(1, 7):
@@ -794,42 +795,37 @@ def build_task7c_case(
     operator = _build_operator(spec)
     jacobian = build_processed_boost_jacobian(operator)
     low_tensor = np.asarray(jacobian.tensor[:, :, 1:], dtype=np.float64)
-    low_source_metric = np.asarray(
-        jacobian.source_metric_diagonal[1:], dtype=np.float64
-    )
+    low_source_metric = np.asarray(jacobian.source_metric_diagonal[1:], dtype=np.float64)
     output_metric = np.asarray(jacobian.output_metric_diagonal, dtype=np.float64)
-    maximum_cutoff = max(spec.source_cutoffs)
     blocks = tuple(
         active_cache.get(operator, source_ell=ell)
-        for ell in range(7, maximum_cutoff + 1)
+        for ell in range(7, max(spec.source_cutoffs) + 1)
     )
     results: list[Task7CDirectionalResult] = []
     for cutoff in spec.source_cutoffs:
         active_blocks = tuple(block for block in blocks if block.source_ell <= cutoff)
         for direction_id in DIRECTION_IDS:
             direction = _DIRECTION_REGISTRY[direction_id]
-            low_raw = contract_directional_tensor(low_tensor, direction)
             low = metric_whiten_directional_matrix(
-                low_raw,
+                contract_directional_tensor(low_tensor, direction),
                 source_metric_diagonal=low_source_metric,
                 output_metric_diagonal=output_metric,
             )
             directional_blocks: list[np.ndarray] = []
             block_norms: list[Task7CBlockNorm] = []
             for block in active_blocks:
-                raw = contract_directional_tensor(block.tensor, direction)
                 whitened = metric_whiten_directional_matrix(
-                    raw,
+                    contract_directional_tensor(block.tensor, direction),
                     source_metric_diagonal=block.source_metric_diagonal,
                     output_metric_diagonal=output_metric,
                 )
                 directional_blocks.append(whitened)
                 block_norms.append(
                     Task7CBlockNorm(
-                        source_ell=block.source_ell,
-                        metric_frobenius_norm=float(np.linalg.norm(whitened)),
-                        metric_operator_norm=_operator_norm(whitened),
-                        block_id=block.content_id,
+                        block.source_ell,
+                        float(np.linalg.norm(whitened)),
+                        _operator_norm(whitened),
+                        block.content_id,
                     )
                 )
             high = np.concatenate(directional_blocks, axis=1)
@@ -839,27 +835,22 @@ def build_task7c_case(
                 direction_id=direction_id,
                 source_cutoff=cutoff,
             )
+            low_norm = float(np.linalg.norm(low))
             high_frobenius = float(np.linalg.norm(high))
             high_operator = _operator_norm(high)
-            last_frobenius = block_norms[-1].metric_frobenius_norm
-            last_operator = block_norms[-1].metric_operator_norm
+            last = block_norms[-1]
             last_frobenius_fraction = (
-                0.0
-                if high_frobenius <= np.finfo(float).tiny
-                else last_frobenius / high_frobenius
+                0.0 if high_frobenius <= np.finfo(float).tiny else last.metric_frobenius_norm / high_frobenius
             )
             last_operator_fraction = (
-                0.0
-                if high_operator <= np.finfo(float).tiny
-                else last_operator / high_operator
+                0.0 if high_operator <= np.finfo(float).tiny else last.metric_operator_norm / high_operator
             )
             survivor_fractions = _surviving_sector_fractions(
-                geometry.surviving_low_matrix
+                geometry.surviving_low_matrix,
+                low_norm=low_norm,
             )
-            low_norm = float(np.linalg.norm(low))
             numerical_floor = bool(
-                high_frobenius
-                <= 1.0e-8 * max(low_norm, np.finfo(float).tiny)
+                high_frobenius <= 1.0e-8 * max(low_norm, np.finfo(float).tiny)
             )
             result_id = _content_id(
                 _DIRECTIONAL_RESULT_SCHEMA,
@@ -871,15 +862,9 @@ def build_task7c_case(
                     "jacobian_id": jacobian.content_id,
                     "geometry_id": geometry.content_id,
                     "block_ids": [item.block_id for item in block_norms],
-                    "last_block_frobenius_fraction_hex": (
-                        float(last_frobenius_fraction).hex()
-                    ),
-                    "last_block_operator_fraction_hex": (
-                        float(last_operator_fraction).hex()
-                    ),
-                    "surviving_sector_fraction_hex": [
-                        float(value).hex() for value in survivor_fractions
-                    ],
+                    "last_block_frobenius_fraction_hex": float(last_frobenius_fraction).hex(),
+                    "last_block_operator_fraction_hex": float(last_operator_fraction).hex(),
+                    "surviving_sector_fraction_hex": [float(value).hex() for value in survivor_fractions],
                     "numerical_floor_control": numerical_floor,
                 },
                 low,
@@ -888,20 +873,18 @@ def build_task7c_case(
             )
             results.append(
                 Task7CDirectionalResult(
-                    case_id=spec.case_id,
-                    direction_id=direction_id,
-                    source_cutoff=cutoff,
-                    low_matrix=low,
-                    high_matrix=high,
-                    geometry=geometry,
-                    block_norms=tuple(block_norms),
-                    last_block_frobenius_fraction=float(
-                        last_frobenius_fraction
-                    ),
-                    last_block_operator_fraction=float(last_operator_fraction),
-                    surviving_sector_fractions=survivor_fractions,
-                    numerical_floor_control=numerical_floor,
-                    content_id=result_id,
+                    spec.case_id,
+                    direction_id,
+                    cutoff,
+                    low,
+                    high,
+                    geometry,
+                    tuple(block_norms),
+                    float(last_frobenius_fraction),
+                    float(last_operator_fraction),
+                    survivor_fractions,
+                    numerical_floor,
+                    result_id,
                 )
             )
     case_id = _content_id(
@@ -920,17 +903,17 @@ def build_task7c_case(
         },
     )
     return Task7CCaseResult(
-        case_id=spec.case_id,
-        nside=spec.nside,
-        processing_lmax=spec.processing_lmax,
-        mask_kind=spec.mask_kind,
-        transfer_kind=spec.transfer_kind,
-        source_cutoffs=spec.source_cutoffs,
-        operator_id=operator.content_id,
-        jacobian_id=jacobian.content_id,
-        directional_results=tuple(results),
-        source_block_ids=tuple(block.content_id for block in blocks),
-        content_id=case_id,
+        spec.case_id,
+        spec.nside,
+        spec.processing_lmax,
+        spec.mask_kind,
+        spec.transfer_kind,
+        spec.source_cutoffs,
+        operator.content_id,
+        jacobian.content_id,
+        tuple(results),
+        tuple(block.content_id for block in blocks),
+        case_id,
     )
 
 
@@ -966,24 +949,22 @@ def classify_task7c_convergence(
             record.upper_last_frobenius_fraction,
             record.upper_last_operator_fraction,
         )
+        ranks = (
+            record.lower_high_rank,
+            record.upper_high_rank,
+            record.lower_surviving_rank,
+            record.upper_surviving_rank,
+        )
         if (
             record.lower_cutoff >= record.upper_cutoff
-            or any(rank < 0 for rank in (
-                record.lower_high_rank,
-                record.upper_high_rank,
-                record.lower_surviving_rank,
-                record.upper_surviving_rank,
-            ))
+            or any(rank < 0 for rank in ranks)
             or not all(math.isfinite(value) and value >= 0.0 for value in values)
         ):
             raise ProcessedBoostError("Task-7C convergence record is invalid")
     converged = all(
         record.lower_high_rank == record.upper_high_rank
         and record.lower_surviving_rank == record.upper_surviving_rank
-        and abs(
-            record.upper_surviving_fraction
-            - record.lower_surviving_fraction
-        )
+        and abs(record.upper_surviving_fraction - record.lower_surviving_fraction)
         <= SURVIVING_FRACTION_DRIFT_CEILING
         and record.upper_last_frobenius_fraction
         <= SOURCE_LAST_FROBENIUS_FRACTION_CEILING
@@ -1013,25 +994,17 @@ def _convergence_records(
         upper = case.result(direction_id, upper_cutoff)
         records.append(
             Task7CConvergenceRecord(
-                direction_id=direction_id,
-                lower_cutoff=lower_cutoff,
-                upper_cutoff=upper_cutoff,
-                lower_high_rank=lower.geometry.high_rank,
-                upper_high_rank=upper.geometry.high_rank,
-                lower_surviving_rank=lower.geometry.surviving_rank,
-                upper_surviving_rank=upper.geometry.surviving_rank,
-                lower_surviving_fraction=(
-                    lower.geometry.surviving_frobenius_fraction
-                ),
-                upper_surviving_fraction=(
-                    upper.geometry.surviving_frobenius_fraction
-                ),
-                upper_last_frobenius_fraction=(
-                    upper.last_block_frobenius_fraction
-                ),
-                upper_last_operator_fraction=(
-                    upper.last_block_operator_fraction
-                ),
+                direction_id,
+                lower_cutoff,
+                upper_cutoff,
+                lower.geometry.high_rank,
+                upper.geometry.high_rank,
+                lower.geometry.surviving_rank,
+                upper.geometry.surviving_rank,
+                lower.geometry.surviving_frobenius_fraction,
+                upper.geometry.surviving_frobenius_fraction,
+                upper.last_block_frobenius_fraction,
+                upper.last_block_operator_fraction,
             )
         )
     return tuple(records)
@@ -1067,9 +1040,10 @@ class Task7CAtlas:
 def build_task7c_atlas(*, source_revision: str, profile: str) -> Task7CAtlas:
     if _REVISION_RE.fullmatch(source_revision) is None:
         raise ProcessedBoostError("Task-7C source revision must be a full Git SHA")
-    specs = task7c_case_specs(profile)
     cache = ExtendedSourceBlockCache()
-    cases = tuple(build_task7c_case(spec, cache=cache) for spec in specs)
+    cases = tuple(
+        build_task7c_case(spec, cache=cache) for spec in task7c_case_specs(profile)
+    )
     primary = cases[0]
     if len(primary.source_cutoffs) < 2:
         raise ProcessedBoostError("Task-7C primary case lacks convergence cutoffs")
@@ -1097,18 +1071,10 @@ def build_task7c_atlas(*, source_revision: str, profile: str) -> Task7CAtlas:
                     "upper_high_rank": record.upper_high_rank,
                     "lower_surviving_rank": record.lower_surviving_rank,
                     "upper_surviving_rank": record.upper_surviving_rank,
-                    "lower_surviving_fraction_hex": (
-                        record.lower_surviving_fraction.hex()
-                    ),
-                    "upper_surviving_fraction_hex": (
-                        record.upper_surviving_fraction.hex()
-                    ),
-                    "upper_last_frobenius_fraction_hex": (
-                        record.upper_last_frobenius_fraction.hex()
-                    ),
-                    "upper_last_operator_fraction_hex": (
-                        record.upper_last_operator_fraction.hex()
-                    ),
+                    "lower_surviving_fraction_hex": record.lower_surviving_fraction.hex(),
+                    "upper_surviving_fraction_hex": record.upper_surviving_fraction.hex(),
+                    "upper_last_frobenius_fraction_hex": record.upper_last_frobenius_fraction.hex(),
+                    "upper_last_operator_fraction_hex": record.upper_last_operator_fraction.hex(),
                 }
                 for record in convergence
             ],
@@ -1116,14 +1082,21 @@ def build_task7c_atlas(*, source_revision: str, profile: str) -> Task7CAtlas:
         },
     )
     return Task7CAtlas(
-        source_revision=source_revision,
-        profile=profile,
-        cases=cases,
-        terminal=terminal,
-        convergence_records=convergence,
-        source_block_build_count=cache.build_count,
-        content_id=atlas_id,
+        source_revision,
+        profile,
+        cases,
+        terminal,
+        convergence,
+        cache.build_count,
+        atlas_id,
     )
+
+
+from .processed_boost_nuisance_artifacts import (  # noqa: E402
+    Task7CArtifactBundle,
+    verify_task7c_artifacts,
+    write_task7c_artifacts,
+)
 
 
 __all__ = [
@@ -1138,6 +1111,8 @@ __all__ = [
     "SOURCE_LAST_FROBENIUS_FRACTION_CEILING",
     "SOURCE_LAST_OPERATOR_FRACTION_CEILING",
     "SURVIVING_FRACTION_DRIFT_CEILING",
+    "SURVIVOR_SECTOR_FLOOR_RELATIVE",
+    "Task7CArtifactBundle",
     "Task7CAtlas",
     "Task7CBlockNorm",
     "Task7CCaseResult",
@@ -1155,4 +1130,6 @@ __all__ = [
     "metric_whiten_directional_matrix",
     "task7c_case_specs",
     "task7c_smoke_operator",
+    "verify_task7c_artifacts",
+    "write_task7c_artifacts",
 ]
