@@ -46,6 +46,110 @@ def test_additive_family_multiplier_bounds_a_sum_of_family_errors():
     assert normalized <= 1 + 2e-12
 
 
+def test_weighted_family_radii_bound_the_declared_additive_error_class():
+    rng = np.random.default_rng(20260903)
+    first = rng.normal(size=(3, 4, 6))
+    second = rng.normal(size=(2, 4, 6))
+    radii = {"fullsky": 2.0, "resolution": 0.5}
+    envelope = api.build_output_error_envelope(
+        {"fullsky": first, "resolution": second},
+        family_radii=radii,
+        reference_operator_norm=8.0,
+    )
+
+    assert dict(envelope.family_radii) == radii
+    assert envelope.total_family_radius == pytest.approx(2.5)
+    assert envelope.perturbation_class == "additive_family_l2_balls"
+
+    for _ in range(128):
+        b1 = rng.normal(size=3)
+        b1 *= radii["fullsky"] / np.linalg.norm(b1)
+        b2 = rng.normal(size=2)
+        b2 *= radii["resolution"] / np.linalg.norm(b2)
+        combined = (
+            np.einsum("i,imn->mn", b1, first)
+            + np.einsum("i,imn->mn", b2, second)
+        )
+        normalized = np.linalg.svd(
+            envelope.inverse_square_root @ combined,
+            compute_uv=False,
+        )[0]
+        assert normalized <= 1 + 5e-12
+
+
+def test_family_radius_registry_fails_closed():
+    family = np.zeros((2, 3, 4))
+    with pytest.raises(api.MatrixErrorEnvelopeError):
+        api.build_output_error_envelope(
+            {"a": family},
+            family_radii={},
+            reference_operator_norm=1.0,
+        )
+    with pytest.raises(api.MatrixErrorEnvelopeError):
+        api.build_output_error_envelope(
+            {"a": family},
+            family_radii={"a": 1.0, "extra": 1.0},
+            reference_operator_norm=1.0,
+        )
+    with pytest.raises(api.MatrixErrorEnvelopeError):
+        api.build_output_error_envelope(
+            {"a": family},
+            family_radii={"a": 0.0},
+            reference_operator_norm=1.0,
+        )
+
+
+def test_holdout_validation_detects_containment_and_escape():
+    family = np.zeros((1, 2, 2))
+    family[0] = 0.1 * np.eye(2)
+    envelope = api.build_output_error_envelope(
+        {"training": family},
+        reference_operator_norm=1.0,
+    )
+
+    contained = api.validate_error_envelope_holdouts(
+        {
+            "resolution_holdout": np.stack(
+                [0.05 * np.eye(2), 0.08 * np.eye(2)]
+            )
+        },
+        envelope,
+    )
+    assert (
+        contained.status
+        is api.HoldoutValidationStatus.ALL_HOLDOUTS_CONTAINED
+    )
+    assert contained.all_contained
+    assert contained.maximum_normalized_norm < 1.0
+
+    escaped = api.validate_error_envelope_holdouts(
+        {"resolution_holdout": np.stack([2.0 * np.eye(2)])},
+        envelope,
+    )
+    assert escaped.status is api.HoldoutValidationStatus.HOLDOUT_ESCAPE
+    assert escaped.all_contained is False
+    assert escaped.maximum_normalized_norm > 1.0
+
+
+def test_holdout_validation_shape_and_tolerance_fail_closed():
+    family = np.zeros((1, 2, 2))
+    envelope = api.build_output_error_envelope(
+        {"training": family},
+        reference_operator_norm=1.0,
+    )
+    with pytest.raises(api.MatrixErrorEnvelopeError):
+        api.validate_error_envelope_holdouts(
+            {"bad": np.zeros((1, 3, 2))},
+            envelope,
+        )
+    with pytest.raises(api.MatrixErrorEnvelopeError):
+        api.validate_error_envelope_holdouts(
+            {"bad": np.zeros((1, 2, 2))},
+            envelope,
+            escape_tolerance=-1.0,
+        )
+
+
 def test_registered_control_alone_cannot_certify_signal_rank():
     control = np.zeros((3, 2, 2))
     control[0] = np.eye(2)
