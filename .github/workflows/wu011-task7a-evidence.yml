@@ -13,7 +13,6 @@ on:
       - 'htt/obsstat/planck_pr3_operator.py'
       - 'htt/obsstat/boost_biposh_residual.py'
       - 'htt/test_wu011_processed_boost_evidence.py'
-      - 'scripts/observed_runs/characterize_planck_mes_wu011_fullsky_resolution.py'
       - 'scripts/observed_runs/run_planck_mes_wu011_processed_boost_response.py'
       - '.github/workflows/wu011-task7a-evidence.yml'
   workflow_dispatch:
@@ -59,8 +58,6 @@ jobs:
           print('SCIPY_IDENTITY', scipy.__version__)
           print('MATPLOTLIB_IDENTITY', matplotlib.__version__)
           PY
-      - name: Characterize full-sky resolution and processing cutoff
-        run: python scripts/observed_runs/characterize_planck_mes_wu011_fullsky_resolution.py
       - name: Run Task-7A RED/GREEN contracts
         working-directory: htt
         run: pytest -q -m requires_healpy test_wu011_processed_boost_evidence.py

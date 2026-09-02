@@ -17,6 +17,13 @@ pytest.importorskip(
 pytestmark = pytest.mark.requires_healpy
 
 _SOURCE_REVISION = "0" * 40
+_CASE_IDS = (
+    "FULL_N8_L7_IDENTITY",
+    "FULL_N16_L7_IDENTITY",
+    "FULL_N32_L7_IDENTITY",
+    "FULL_N32_L12_IDENTITY",
+    "CUT_N16_L12_REFERENCE",
+)
 
 
 def _api():
@@ -40,11 +47,7 @@ def test_wu011_task7a_exact_reference_and_case_registry(report) -> None:
     assert report.terminal is api.Task7ATerminal.PASS_TASK7A_CORE_EVIDENCE
     assert report.source_revision == _SOURCE_REVISION
     assert report.profile == "CI_CORE"
-    assert tuple(case.case_id for case in report.cases) == (
-        "FULL_N8_L7_IDENTITY",
-        "FULL_N8_L12_IDENTITY",
-        "CUT_N8_L12_REFERENCE",
-    )
+    assert tuple(case.case_id for case in report.cases) == _CASE_IDS
 
     expected = api.full_sky_expected_singular_values()
     assert expected.shape == (49,)
@@ -55,24 +58,57 @@ def test_wu011_task7a_exact_reference_and_case_registry(report) -> None:
     )
 
 
-def test_wu011_task7a_fullsky_oracle_cutoff_and_alias_gates(report) -> None:
+def test_wu011_task7a_fullsky_resolution_cutoff_and_alias_gates(report) -> None:
     cases = {case.case_id: case for case in report.cases}
-    low = cases["FULL_N8_L7_IDENTITY"]
-    high = cases["FULL_N8_L12_IDENTITY"]
-    cut = cases["CUT_N8_L12_REFERENCE"]
+    n8 = cases["FULL_N8_L7_IDENTITY"]
+    n16 = cases["FULL_N16_L7_IDENTITY"]
+    n32 = cases["FULL_N32_L7_IDENTITY"]
+    n32_high = cases["FULL_N32_L12_IDENTITY"]
+    cut = cases["CUT_N16_L12_REFERENCE"]
+    full = (n8, n16, n32, n32_high)
 
-    for case in (low, high):
+    for case in full:
         assert case.fullsky_spectrum_max_relative_error is not None
-        assert case.fullsky_spectrum_max_relative_error <= 2.0e-5
         assert case.fullsky_trace_relative_error is not None
-        assert case.fullsky_trace_relative_error <= 2.0e-5
         assert case.fullsky_null_relative <= 2.0e-8
-        assert case.ell6_alias_to_neighbor <= 2.0e-6
         assert case.jacobian.metric_whitened_rank == 48
         assert math.isinf(case.jacobian.metric_whitened_condition_number)
 
-    assert report.fullsky_cutoff_relative_drift <= 2.0e-5
-    assert cut.ell6_alias_norm > max(low.ell6_alias_norm, high.ell6_alias_norm) * 10.0
+    spectrum_errors = np.array(
+        [
+            n8.fullsky_spectrum_max_relative_error,
+            n16.fullsky_spectrum_max_relative_error,
+            n32.fullsky_spectrum_max_relative_error,
+        ]
+    )
+    assert np.all(spectrum_errors[:-1] > spectrum_errors[1:])
+    assert np.all(spectrum_errors[:-1] / spectrum_errors[1:] >= 3.5)
+    assert spectrum_errors[-1] <= 6.0e-4
+    assert n32.fullsky_trace_relative_error <= 1.0e-7
+    assert n32_high.fullsky_spectrum_max_relative_error <= 6.0e-4
+    assert n32_high.fullsky_trace_relative_error <= 1.0e-7
+
+    exact_condition = math.sqrt(63.0 / 8.0)
+    relative_condition_error = abs(
+        n32.jacobian.metric_whitened_nonzero_condition_number - exact_condition
+    ) / exact_condition
+    assert relative_condition_error <= 1.0e-6
+
+    alias_ratios = np.array(
+        [n8.ell6_alias_to_neighbor, n16.ell6_alias_to_neighbor, n32.ell6_alias_to_neighbor]
+    )
+    assert np.all(alias_ratios[:-1] > alias_ratios[1:])
+    assert np.all(alias_ratios[:-1] / alias_ratios[1:] >= 3.5)
+    assert alias_ratios[-1] <= 4.0e-4
+
+    assert len(report.fullsky_resolution_relative_drifts) == 2
+    first_drift, second_drift = report.fullsky_resolution_relative_drifts
+    assert first_drift > second_drift
+    assert first_drift / second_drift >= 3.5
+    assert second_drift <= 8.0e-4
+    assert report.fullsky_cutoff_relative_drift <= 1.0e-8
+
+    assert cut.ell6_alias_norm > n16.ell6_alias_norm * 10.0
     assert cut.ell6_alias_norm > 1.0e-10
     assert cut.monopole_relative_to_nonmonopole_max <= 5.0e-4
 
@@ -110,19 +146,23 @@ def test_wu011_task7a_artifacts_are_deterministic_and_verifiable(
         "summary.json",
         "cases.csv",
         "fullsky_singular_spectrum.csv",
+        "fullsky_resolution_convergence.csv",
         "finite_to_linear_scaling.csv",
         "gate_ratios.csv",
         "metric_spectrum_exact_vs_numerical.png",
+        "fullsky_resolution_convergence.png",
         "finite_to_linear_scaling.png",
         "processed_channel_norms.png",
         "normalized_gate_margins.png",
         "FULL_N8_L7_IDENTITY_scientific_jacobian.npy",
-        "FULL_N8_L12_IDENTITY_scientific_jacobian.npy",
-        "CUT_N8_L12_REFERENCE_scientific_jacobian.npy",
-        "CUT_N8_L12_REFERENCE_raw_replay_jacobian.npy",
-        "CUT_N8_L12_REFERENCE_ell6_neighbor.npy",
-        "CUT_N8_L12_REFERENCE_ell6_alias.npy",
-        "CUT_N8_L12_REFERENCE_ell6_decomposition.npy",
+        "FULL_N16_L7_IDENTITY_scientific_jacobian.npy",
+        "FULL_N32_L7_IDENTITY_scientific_jacobian.npy",
+        "FULL_N32_L12_IDENTITY_scientific_jacobian.npy",
+        "CUT_N16_L12_REFERENCE_scientific_jacobian.npy",
+        "CUT_N16_L12_REFERENCE_raw_replay_jacobian.npy",
+        "CUT_N16_L12_REFERENCE_ell6_neighbor.npy",
+        "CUT_N16_L12_REFERENCE_ell6_alias.npy",
+        "CUT_N16_L12_REFERENCE_ell6_decomposition.npy",
         "SHA256SUMS",
     }
     assert required.issubset(set(first.file_sha256) | {"SHA256SUMS"})

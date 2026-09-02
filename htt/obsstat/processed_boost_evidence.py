@@ -1,10 +1,11 @@
 """Deterministic Task-7A evidence for the WU-011 processed boost response.
 
-This module packages the already reviewed finite, linear, Jacobian, nuisance,
-and historical-parity paths into one content-bound synthetic evidence object.
-It adds no observed-data path and performs no empirical velocity fit.  The
-full-sky identity-transfer cases are normalization oracles; the apodized-mask
-case is a bounded processed-response characterization.
+This module packages the reviewed finite, linear, Jacobian, nuisance, and
+historical-parity paths into one content-bound synthetic evidence object.  It
+adds no observed-data path and performs no empirical velocity fit.  Full-sky
+identity-transfer cases are compared with the exact irrep spectrum through an
+explicit HEALPix resolution ladder rather than being mislabelled as machine-
+exact at development resolution.
 """
 
 from __future__ import annotations
@@ -53,23 +54,27 @@ from .processed_boost_response import (
 )
 
 
-_EVIDENCE_SCHEMA = "HTT_WU011_TASK7A_EVIDENCE_V1"
-_TERMINAL_SCHEMA = "HTT_WU011_TASK7A_TERMINAL_V1"
-_SUMMARY_SCHEMA = "HTT_WU011_TASK7A_SUMMARY_V1"
-_ARTIFACT_SCHEMA = "HTT_WU011_TASK7A_ARTIFACT_SET_V1"
+_EVIDENCE_SCHEMA = "HTT_WU011_TASK7A_EVIDENCE_V2"
+_TERMINAL_SCHEMA = "HTT_WU011_TASK7A_TERMINAL_V2"
+_ARTIFACT_SCHEMA = "HTT_WU011_TASK7A_ARTIFACT_SET_V2"
 _REVISION_RE = re.compile(r"^[0-9a-f]{40}$")
 _CASE_IDS = (
     "FULL_N8_L7_IDENTITY",
-    "FULL_N8_L12_IDENTITY",
-    "CUT_N8_L12_REFERENCE",
+    "FULL_N16_L7_IDENTITY",
+    "FULL_N32_L7_IDENTITY",
+    "FULL_N32_L12_IDENTITY",
+    "CUT_N16_L12_REFERENCE",
 )
-_FULLSKY_SPECTRUM_CEILING = 2.0e-5
-_FULLSKY_TRACE_CEILING = 2.0e-5
+_MIN_RESOLUTION_IMPROVEMENT = 3.5
+_HIGHRES_SPECTRUM_CEILING = 6.0e-4
+_HIGHRES_TRACE_CEILING = 1.0e-7
+_HIGHRES_CONDITION_RELATIVE_CEILING = 1.0e-6
+_HIGHRES_ALIAS_RATIO_CEILING = 4.0e-4
+_RESOLUTION_DRIFT_CEILING = 8.0e-4
+_CUTOFF_DRIFT_CEILING = 1.0e-8
 _FULLSKY_NULL_CEILING = 2.0e-8
-_FULLSKY_ALIAS_RATIO_CEILING = 2.0e-6
-_FULLSKY_CUTOFF_DRIFT_CEILING = 2.0e-5
 _MONOPOLE_REPLAY_RELATIVE_CEILING = 5.0e-4
-_MIN_CUT_TO_FULL_ALIAS_RATIO = 10.0
+_MIN_CUT_TO_MATCHED_FULL_ALIAS_RATIO = 10.0
 _MIN_CUT_ALIAS_NORM = 1.0e-10
 _MIN_TRANSFER_ORDER_RELATIVE_DIFFERENCE = 1.0e-8
 _FWL_RESIDUAL_CEILING = 3.0e-12
@@ -82,6 +87,7 @@ class Task7ATerminal(str, Enum):
 
     PASS_TASK7A_CORE_EVIDENCE = "PASS_TASK7A_CORE_EVIDENCE"
     BLOCKED_BY_FULLSKY_ORACLE_MISMATCH = "BLOCKED_BY_FULLSKY_ORACLE_MISMATCH"
+    BLOCKED_BY_RESOLUTION_NONCONVERGENCE = "BLOCKED_BY_RESOLUTION_NONCONVERGENCE"
     BLOCKED_BY_CUTOFF_NONCONVERGENCE = "BLOCKED_BY_CUTOFF_NONCONVERGENCE"
     BLOCKED_BY_LINEARIZATION_FAILURE = "BLOCKED_BY_LINEARIZATION_FAILURE"
     BLOCKED_BY_MUTATION_SURVIVAL = "BLOCKED_BY_MUTATION_SURVIVAL"
@@ -115,6 +121,16 @@ def _file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _stored_real_metric(lmin: int, lmax: int) -> np.ndarray:
+    values: list[float] = []
+    for ell in range(lmin, lmax + 1):
+        values.append(1.0)
+        values.extend([2.0] * (2 * ell))
+    result = np.asarray(values, dtype=np.float64)
+    result.setflags(write=False)
+    return result
+
+
 def _scientific_norm(values: object, metric_diagonal: object) -> float:
     vector = np.asarray(values, dtype=np.float64)
     metric = np.asarray(metric_diagonal, dtype=np.float64)
@@ -140,13 +156,33 @@ def _block_metric_norm(
     source_width = 2 * source_ell + 1
     if array.shape != (3, 32, source_width):
         raise ProcessedBoostError("processed response block has the wrong shape")
-    source_metric = np.asarray([1.0] + [2.0] * (2 * source_ell), dtype=np.float64)
+    source_metric = _stored_real_metric(source_ell, source_ell)
     whitened = metric_whitened_matrix(
         array.reshape(96, source_width),
         source_metric_diagonal=source_metric,
         output_metric_diagonal=np.tile(output_metric, 3),
     )
     return float(np.linalg.norm(whitened))
+
+
+def _monopole_metric_norm(
+    leakage: object,
+    *,
+    output_metric_diagonal: object,
+) -> float:
+    array = np.asarray(leakage, dtype=np.float64)
+    metric = np.tile(np.asarray(output_metric_diagonal, dtype=np.float64), 3)
+    if array.shape != (3, 32):
+        raise ProcessedBoostError("monopole replay leakage has the wrong shape")
+    vector = array.reshape(96)
+    return math.sqrt(
+        max(0.0, float(np.dot(metric, vector * vector)) / (4.0 * math.pi))
+    )
+
+
+def _relative_matrix_drift(left: np.ndarray, right: np.ndarray) -> float:
+    denominator = max(float(np.linalg.norm(right)), np.finfo(float).tiny)
+    return float(np.linalg.norm(left - right) / denominator)
 
 
 def full_sky_expected_singular_values() -> np.ndarray:
@@ -237,6 +273,7 @@ class Task7ACase:
     ell6_alias_norm: float
     ell6_decomposition_norm: float
     ell6_alias_to_neighbor: float
+    monopole_replay_metric_norm: float
     monopole_relative_to_nonmonopole_max: float
 
     def scalar_record(self) -> dict[str, object]:
@@ -266,6 +303,7 @@ class Task7ACase:
             "ell6_alias_norm": self.ell6_alias_norm,
             "ell6_decomposition_norm": self.ell6_decomposition_norm,
             "ell6_alias_to_neighbor": self.ell6_alias_to_neighbor,
+            "monopole_replay_metric_norm": self.monopole_replay_metric_norm,
             "monopole_relative_to_nonmonopole_max": (
                 self.monopole_relative_to_nonmonopole_max
             ),
@@ -334,6 +372,10 @@ def _build_case(
         ell6_alias_norm=alias_norm,
         ell6_decomposition_norm=decomposition_norm,
         ell6_alias_to_neighbor=alias_norm / max(neighbor_norm, np.finfo(float).tiny),
+        monopole_replay_metric_norm=_monopole_metric_norm(
+            jacobian.monopole_replay_leakage,
+            output_metric_diagonal=jacobian.output_metric_diagonal,
+        ),
         monopole_relative_to_nonmonopole_max=(
             jacobian.monopole_relative_to_nonmonopole_max
         ),
@@ -395,88 +437,9 @@ def _transfer_order_difference(
     )
     correct_increment = correct - correct_zero
     mutated_increment = mutated - mutated_zero
-    numerator = _scientific_norm(
-        correct_increment - mutated_increment,
-        np.asarray([1.0 if mode.m == 0 else 2.0 for mode in operator.joint_operator.basis_order if mode[0] >= RETAINED_LMIN], dtype=np.float64)
-        if False
-        else np.asarray(
-            [
-                1.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                1.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                1.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                1.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-            ],
-            dtype=np.float64,
-        ),
-    )
-    denominator = _scientific_norm(
-        correct_increment,
-        np.asarray(
-            [
-                1.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                1.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                1.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                1.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-                2.0,
-            ],
-            dtype=np.float64,
-        ),
-    )
+    metric = _stored_real_metric(RETAINED_LMIN, FIT_LMAX)
+    numerator = _scientific_norm(correct_increment - mutated_increment, metric)
+    denominator = _scientific_norm(correct_increment, metric)
     return numerator / max(denominator, np.finfo(float).tiny)
 
 
@@ -485,6 +448,7 @@ class Task7AEvidence:
     source_revision: str
     profile: str
     cases: tuple[Task7ACase, ...]
+    fullsky_resolution_relative_drifts: tuple[float, float]
     fullsky_cutoff_relative_drift: float
     finite_to_linear: FiniteToLinearDiagnostic
     mutations: MutationOrderDiagnostic
@@ -501,17 +465,44 @@ class Task7AEvidence:
             raise ProcessedBoostError("Task-7A profile is outside the frozen registry")
         if tuple(case.case_id for case in self.cases) != _CASE_IDS:
             raise ProcessedBoostError("Task-7A case registry drifted")
-        payload = self.scalar_record(include_content_id=False)
-        object.__setattr__(self, "content_id", _content_id(payload))
+        if len(self.fullsky_resolution_relative_drifts) != 2:
+            raise ProcessedBoostError("Task-7A resolution-drift registry drifted")
+        object.__setattr__(
+            self,
+            "content_id",
+            _content_id(self.scalar_record(include_content_id=False)),
+        )
 
     def scalar_record(self, *, include_content_id: bool = True) -> dict[str, object]:
+        n8, n16, n32, _n32_high, _cut = self.cases
+        spectrum_errors = [
+            float(n8.fullsky_spectrum_max_relative_error or 0.0),
+            float(n16.fullsky_spectrum_max_relative_error or 0.0),
+            float(n32.fullsky_spectrum_max_relative_error or 0.0),
+        ]
+        alias_ratios = [
+            n8.ell6_alias_to_neighbor,
+            n16.ell6_alias_to_neighbor,
+            n32.ell6_alias_to_neighbor,
+        ]
         record: dict[str, object] = {
             "schema": _EVIDENCE_SCHEMA,
             "source_revision": self.source_revision,
             "profile": self.profile,
             "terminal": self.terminal.value,
             "cases": [case.scalar_record() for case in self.cases],
+            "fullsky_resolution_relative_drifts": list(
+                self.fullsky_resolution_relative_drifts
+            ),
             "fullsky_cutoff_relative_drift": self.fullsky_cutoff_relative_drift,
+            "fullsky_spectrum_convergence_orders": [
+                math.log(spectrum_errors[0] / spectrum_errors[1], 2.0),
+                math.log(spectrum_errors[1] / spectrum_errors[2], 2.0),
+            ],
+            "fullsky_alias_convergence_orders": [
+                math.log(alias_ratios[0] / alias_ratios[1], 2.0),
+                math.log(alias_ratios[1] / alias_ratios[2], 2.0),
+            ],
             "finite_to_linear": {
                 "amplitudes": list(self.finite_to_linear.amplitudes),
                 "residual_norms": list(self.finite_to_linear.residual_norms),
@@ -565,6 +556,7 @@ class Task7AEvidence:
             ),
             "claim_boundary": {
                 "synthetic_processed_local_observer_scalar_response": True,
+                "fullsky_numerical_oracle": "RESOLUTION_CONVERGENT_NOT_MACHINE_EXACT",
                 "raw_planck_absolute_temperature_admitted": False,
                 "observed_rank": False,
                 "empirical_beta": False,
@@ -585,6 +577,7 @@ class Task7AEvidence:
 def _terminal_for(
     cases: tuple[Task7ACase, ...],
     *,
+    resolution_drifts: tuple[float, float],
     cutoff_drift: float,
     finite: FiniteToLinearDiagnostic,
     mutations: MutationOrderDiagnostic,
@@ -592,19 +585,59 @@ def _terminal_for(
     historical: HistoricalFixedAxisParity,
     transfer_order_relative_difference: float,
 ) -> Task7ATerminal:
-    full_cases = cases[:2]
+    n8, n16, n32, n32_high, cut = cases
+    full = (n8, n16, n32, n32_high)
     if any(
         case.fullsky_spectrum_max_relative_error is None
-        or case.fullsky_spectrum_max_relative_error > _FULLSKY_SPECTRUM_CEILING
         or case.fullsky_trace_relative_error is None
-        or case.fullsky_trace_relative_error > _FULLSKY_TRACE_CEILING
         or case.fullsky_null_relative > _FULLSKY_NULL_CEILING
         or case.jacobian.metric_whitened_rank != 48
         or not math.isinf(case.jacobian.metric_whitened_condition_number)
-        for case in full_cases
+        for case in full
     ):
         return Task7ATerminal.BLOCKED_BY_FULLSKY_ORACLE_MISMATCH
-    if cutoff_drift > _FULLSKY_CUTOFF_DRIFT_CEILING:
+
+    spectrum_errors = np.asarray(
+        [
+            n8.fullsky_spectrum_max_relative_error,
+            n16.fullsky_spectrum_max_relative_error,
+            n32.fullsky_spectrum_max_relative_error,
+        ],
+        dtype=np.float64,
+    )
+    alias_ratios = np.asarray(
+        [n8.ell6_alias_to_neighbor, n16.ell6_alias_to_neighbor, n32.ell6_alias_to_neighbor],
+        dtype=np.float64,
+    )
+    exact_condition = math.sqrt(63.0 / 8.0)
+    condition_error = abs(
+        n32.jacobian.metric_whitened_nonzero_condition_number - exact_condition
+    ) / exact_condition
+    if not (
+        np.all(spectrum_errors[:-1] > spectrum_errors[1:])
+        and np.all(
+            spectrum_errors[:-1] / spectrum_errors[1:]
+            >= _MIN_RESOLUTION_IMPROVEMENT
+        )
+        and spectrum_errors[-1] <= _HIGHRES_SPECTRUM_CEILING
+        and float(n32.fullsky_trace_relative_error) <= _HIGHRES_TRACE_CEILING
+        and float(n32_high.fullsky_spectrum_max_relative_error)
+        <= _HIGHRES_SPECTRUM_CEILING
+        and float(n32_high.fullsky_trace_relative_error) <= _HIGHRES_TRACE_CEILING
+        and condition_error <= _HIGHRES_CONDITION_RELATIVE_CEILING
+        and np.all(alias_ratios[:-1] > alias_ratios[1:])
+        and np.all(
+            alias_ratios[:-1] / alias_ratios[1:]
+            >= _MIN_RESOLUTION_IMPROVEMENT
+        )
+        and alias_ratios[-1] <= _HIGHRES_ALIAS_RATIO_CEILING
+        and resolution_drifts[0] > resolution_drifts[1]
+        and resolution_drifts[0] / resolution_drifts[1]
+        >= _MIN_RESOLUTION_IMPROVEMENT
+        and resolution_drifts[1] <= _RESOLUTION_DRIFT_CEILING
+    ):
+        return Task7ATerminal.BLOCKED_BY_RESOLUTION_NONCONVERGENCE
+    if cutoff_drift > _CUTOFF_DRIFT_CEILING:
         return Task7ATerminal.BLOCKED_BY_CUTOFF_NONCONVERGENCE
     if not (
         1.8 <= finite.residual_slope <= 2.2
@@ -624,15 +657,10 @@ def _terminal_for(
         return Task7ATerminal.BLOCKED_BY_FWL_PARITY_FAILURE
     if historical.relative_increment_residual > _HISTORICAL_PARITY_CEILING:
         return Task7ATerminal.BLOCKED_BY_HISTORICAL_PARITY_FAILURE
-    full_alias = max(case.ell6_alias_norm for case in full_cases)
-    cut = cases[2]
     if (
-        any(
-            case.ell6_alias_to_neighbor > _FULLSKY_ALIAS_RATIO_CEILING
-            for case in full_cases
-        )
-        or cut.ell6_alias_norm
-        <= _MIN_CUT_TO_FULL_ALIAS_RATIO * max(full_alias, np.finfo(float).tiny)
+        cut.ell6_alias_norm
+        <= _MIN_CUT_TO_MATCHED_FULL_ALIAS_RATIO
+        * max(n16.ell6_alias_norm, np.finfo(float).tiny)
         or cut.ell6_alias_norm <= _MIN_CUT_ALIAS_NORM
         or cut.monopole_relative_to_nonmonopole_max
         > _MONOPOLE_REPLAY_RELATIVE_CEILING
@@ -653,57 +681,69 @@ def build_task7a_evidence(
     if profile != "CI_CORE":
         raise ProcessedBoostError("Task-7A profile is outside the frozen registry")
 
-    full_l7, _ = _build_case(
+    n8, _ = _build_case(
         "FULL_N8_L7_IDENTITY",
         nside=8,
         processing_lmax=7,
         mask_kind="FULL",
         transfer_kind="IDENTITY",
     )
-    full_l12, _ = _build_case(
-        "FULL_N8_L12_IDENTITY",
-        nside=8,
+    n16, _ = _build_case(
+        "FULL_N16_L7_IDENTITY",
+        nside=16,
+        processing_lmax=7,
+        mask_kind="FULL",
+        transfer_kind="IDENTITY",
+    )
+    n32, _ = _build_case(
+        "FULL_N32_L7_IDENTITY",
+        nside=32,
+        processing_lmax=7,
+        mask_kind="FULL",
+        transfer_kind="IDENTITY",
+    )
+    n32_high, _ = _build_case(
+        "FULL_N32_L12_IDENTITY",
+        nside=32,
         processing_lmax=12,
         mask_kind="FULL",
         transfer_kind="IDENTITY",
     )
-    cut, _ = _build_case(
-        "CUT_N8_L12_REFERENCE",
-        nside=8,
-        processing_lmax=12,
-        mask_kind="APODIZED_Z",
-        transfer_kind="REFERENCE_GAUSSIAN",
-    )
-    cases = (full_l7, full_l12, cut)
-    cutoff_drift = float(
-        np.linalg.norm(
-            full_l7.jacobian.metric_whitened_stacked_matrix
-            - full_l12.jacobian.metric_whitened_stacked_matrix
-        )
-        / max(
-            np.linalg.norm(full_l12.jacobian.metric_whitened_stacked_matrix),
-            np.finfo(float).tiny,
-        )
-    )
-
-    source = _reference_source_sky()
-    diagnostic_operator = _build_operator(
+    cut, cut_operator = _build_case(
+        "CUT_N16_L12_REFERENCE",
         nside=16,
         processing_lmax=12,
         mask_kind="APODIZED_Z",
         transfer_kind="REFERENCE_GAUSSIAN",
     )
+    cases = (n8, n16, n32, n32_high, cut)
+    resolution_drifts = (
+        _relative_matrix_drift(
+            n8.jacobian.metric_whitened_stacked_matrix,
+            n16.jacobian.metric_whitened_stacked_matrix,
+        ),
+        _relative_matrix_drift(
+            n16.jacobian.metric_whitened_stacked_matrix,
+            n32.jacobian.metric_whitened_stacked_matrix,
+        ),
+    )
+    cutoff_drift = _relative_matrix_drift(
+        n32.jacobian.metric_whitened_stacked_matrix,
+        n32_high.jacobian.metric_whitened_stacked_matrix,
+    )
+
+    source = _reference_source_sky()
     direction = np.asarray([0.4, -0.2, 0.3], dtype=np.float64)
     direction /= np.linalg.norm(direction)
     finite = finite_to_linear_diagnostic(
         source,
-        diagnostic_operator,
+        cut_operator,
         beta_direction=direction,
         amplitudes=(3.2e-2, 1.6e-2, 8.0e-3, 4.0e-3),
     )
     mutations = mutation_order_diagnostic(
         source,
-        diagnostic_operator,
+        cut_operator,
         beta_direction=direction,
         amplitudes=(8.0e-4, 4.0e-4, 2.0e-4, 1.0e-4),
     )
@@ -711,24 +751,22 @@ def build_task7a_evidence(
     parity_map = source_convolved_finite_map(
         source,
         parity_beta,
-        nside=diagnostic_operator.nside,
-        processing_lmax=diagnostic_operator.processing_lmax,
-        source_beam=diagnostic_operator.source_beam,
-        source_pixel_window=diagnostic_operator.source_pixel_window,
+        nside=cut_operator.nside,
+        processing_lmax=cut_operator.processing_lmax,
+        source_beam=cut_operator.source_beam,
+        source_pixel_window=cut_operator.source_pixel_window,
     )
-    fwl = weighted_fwl_retained_solution(
-        parity_map.pixel_map,
-        diagnostic_operator,
-    )
+    fwl = weighted_fwl_retained_solution(parity_map.pixel_map, cut_operator)
     historical = historical_fixed_axis_parity(
         source,
         nside=16,
         lmax=12,
         beta=0.02,
     )
-    transfer_difference = _transfer_order_difference(source, diagnostic_operator)
+    transfer_difference = _transfer_order_difference(source, cut_operator)
     terminal = _terminal_for(
         cases,
+        resolution_drifts=resolution_drifts,
         cutoff_drift=cutoff_drift,
         finite=finite,
         mutations=mutations,
@@ -740,6 +778,7 @@ def build_task7a_evidence(
         source_revision=source_revision,
         profile=profile,
         cases=cases,
+        fullsky_resolution_relative_drifts=resolution_drifts,
         fullsky_cutoff_relative_drift=cutoff_drift,
         finite_to_linear=finite,
         mutations=mutations,
@@ -784,158 +823,80 @@ def _write_csv(path: Path, rows: list[dict[str, object]]) -> None:
         writer.writerows(rows)
 
 
-def _write_plots(report: Task7AEvidence, output_dir: Path) -> None:
-    import matplotlib
-
-    matplotlib.use("Agg", force=True)
-    import matplotlib.pyplot as plt
-
-    metadata = {"Software": "htt_base WU011 Task7A"}
-    expected = full_sky_expected_singular_values()[:-1]
-    full_l7 = np.asarray(
-        report.cases[0].jacobian.metric_whitened_singular_values[:-1],
-        dtype=np.float64,
-    )
-    full_l12 = np.asarray(
-        report.cases[1].jacobian.metric_whitened_singular_values[:-1],
-        dtype=np.float64,
-    )
-    x = np.arange(1, expected.size + 1)
-    plt.figure(figsize=(7.2, 4.8))
-    plt.plot(x, expected, label="Exact irrep spectrum")
-    plt.plot(x, full_l7, marker="o", markersize=2.5, label="HEALPix nside=8, lmax=7")
-    plt.plot(x, full_l12, marker="x", markersize=3.0, label="HEALPix nside=8, lmax=12")
-    plt.xlabel("Descending nonzero singular-value index")
-    plt.ylabel("Metric-whitened singular value")
-    plt.title("WU-011 full-sky exact versus processed spectrum")
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(
-        output_dir / "metric_spectrum_exact_vs_numerical.png",
-        dpi=180,
-        metadata=metadata,
-    )
-    plt.close()
-
-    amplitudes = np.asarray(report.finite_to_linear.amplitudes, dtype=np.float64)
-    residuals = np.asarray(report.finite_to_linear.residual_norms, dtype=np.float64)
-    quadratic = residuals[0] * (amplitudes / amplitudes[0]) ** 2
-    plt.figure(figsize=(6.8, 4.8))
-    plt.loglog(amplitudes, residuals, marker="o", label="Finite - zero - linear")
-    plt.loglog(amplitudes, quadratic, label="O(beta^2) reference")
-    plt.xlabel("Boost amplitude |beta|")
-    plt.ylabel("Retained scientific residual norm")
-    plt.title("WU-011 finite-to-linear convergence")
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(
-        output_dir / "finite_to_linear_scaling.png",
-        dpi=180,
-        metadata=metadata,
-    )
-    plt.close()
-
-    labels = [case.case_id for case in report.cases]
-    axis = np.arange(len(labels))
-    floor = np.finfo(float).tiny
-    plt.figure(figsize=(7.5, 4.8))
-    plt.plot(
-        axis,
-        [max(case.ell6_neighbor_norm, floor) for case in report.cases],
-        marker="o",
-        label="Physical ell=6 to ell=5",
-    )
-    plt.plot(
-        axis,
-        [max(case.ell6_alias_norm, floor) for case in report.cases],
-        marker="o",
-        label="Raised ell=7 processed alias",
-    )
-    plt.plot(
-        axis,
-        [max(case.ell6_decomposition_norm, floor) for case in report.cases],
-        marker="o",
-        label="Numerical decomposition residual",
-    )
-    plt.plot(
-        axis,
-        [
-            max(case.jacobian.monopole_replay_leakage_norm, floor)
-            for case in report.cases
-        ],
-        marker="o",
-        label="Monopole replay leakage",
-    )
-    plt.yscale("log")
-    plt.xticks(axis, labels, rotation=15, ha="right")
-    plt.ylabel("Metric or Euclidean diagnostic norm")
-    plt.title("WU-011 processed response channels")
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(
-        output_dir / "processed_channel_norms.png",
-        dpi=180,
-        metadata=metadata,
-    )
-    plt.close()
-
-    gate_rows = _gate_rows(report)
-    gate_labels = [str(row["gate"]) for row in gate_rows]
-    margins = [max(float(row["normalized_margin"]), floor) for row in gate_rows]
-    plt.figure(figsize=(8.0, 4.8))
-    plt.bar(np.arange(len(gate_labels)), margins)
-    plt.axhline(1.0, linestyle="--")
-    plt.yscale("log")
-    plt.xticks(np.arange(len(gate_labels)), gate_labels, rotation=35, ha="right")
-    plt.ylabel("Normalized failure margin (<=1 passes)")
-    plt.title("WU-011 Task-7A gate margins")
-    plt.tight_layout()
-    plt.savefig(
-        output_dir / "normalized_gate_margins.png",
-        dpi=180,
-        metadata=metadata,
-    )
-    plt.close()
-
-
 def _gate_rows(report: Task7AEvidence) -> list[dict[str, object]]:
-    full_l7, full_l12, cut = report.cases
-    max_full_alias = max(full_l7.ell6_alias_norm, full_l12.ell6_alias_norm)
+    n8, n16, n32, n32_high, cut = report.cases
+    spectrum_improvement = min(
+        float(n8.fullsky_spectrum_max_relative_error)
+        / float(n16.fullsky_spectrum_max_relative_error),
+        float(n16.fullsky_spectrum_max_relative_error)
+        / float(n32.fullsky_spectrum_max_relative_error),
+    )
+    alias_improvement = min(
+        n8.ell6_alias_to_neighbor / n16.ell6_alias_to_neighbor,
+        n16.ell6_alias_to_neighbor / n32.ell6_alias_to_neighbor,
+    )
+    drift_improvement = (
+        report.fullsky_resolution_relative_drifts[0]
+        / report.fullsky_resolution_relative_drifts[1]
+    )
+    exact_condition = math.sqrt(63.0 / 8.0)
+    condition_error = abs(
+        n32.jacobian.metric_whitened_nonzero_condition_number - exact_condition
+    ) / exact_condition
     return [
         {
-            "gate": "fullsky_spectrum",
+            "gate": "highres_spectrum",
             "normalized_margin": max(
-                float(full_l7.fullsky_spectrum_max_relative_error or 0.0),
-                float(full_l12.fullsky_spectrum_max_relative_error or 0.0),
+                float(n32.fullsky_spectrum_max_relative_error),
+                float(n32_high.fullsky_spectrum_max_relative_error),
             )
-            / _FULLSKY_SPECTRUM_CEILING,
+            / _HIGHRES_SPECTRUM_CEILING,
         },
         {
-            "gate": "fullsky_trace",
+            "gate": "highres_trace",
             "normalized_margin": max(
-                float(full_l7.fullsky_trace_relative_error or 0.0),
-                float(full_l12.fullsky_trace_relative_error or 0.0),
+                float(n32.fullsky_trace_relative_error),
+                float(n32_high.fullsky_trace_relative_error),
             )
-            / _FULLSKY_TRACE_CEILING,
+            / _HIGHRES_TRACE_CEILING,
         },
         {
-            "gate": "cutoff_drift",
+            "gate": "condition_oracle",
+            "normalized_margin": condition_error
+            / _HIGHRES_CONDITION_RELATIVE_CEILING,
+        },
+        {
+            "gate": "spectrum_convergence",
+            "normalized_margin": _MIN_RESOLUTION_IMPROVEMENT
+            / spectrum_improvement,
+        },
+        {
+            "gate": "alias_convergence",
+            "normalized_margin": _MIN_RESOLUTION_IMPROVEMENT / alias_improvement,
+        },
+        {
+            "gate": "matrix_convergence",
+            "normalized_margin": max(
+                report.fullsky_resolution_relative_drifts[1]
+                / _RESOLUTION_DRIFT_CEILING,
+                _MIN_RESOLUTION_IMPROVEMENT / drift_improvement,
+            ),
+        },
+        {
+            "gate": "processing_cutoff",
             "normalized_margin": report.fullsky_cutoff_relative_drift
-            / _FULLSKY_CUTOFF_DRIFT_CEILING,
+            / _CUTOFF_DRIFT_CEILING,
         },
         {
-            "gate": "fullsky_alias",
-            "normalized_margin": max(
-                full_l7.ell6_alias_to_neighbor,
-                full_l12.ell6_alias_to_neighbor,
-            )
-            / _FULLSKY_ALIAS_RATIO_CEILING,
+            "gate": "highres_alias",
+            "normalized_margin": n32.ell6_alias_to_neighbor
+            / _HIGHRES_ALIAS_RATIO_CEILING,
         },
         {
             "gate": "cut_alias_detection",
             "normalized_margin": (
-                _MIN_CUT_TO_FULL_ALIAS_RATIO
-                * max(max_full_alias, np.finfo(float).tiny)
+                _MIN_CUT_TO_MATCHED_FULL_ALIAS_RATIO
+                * n16.ell6_alias_norm
                 / max(cut.ell6_alias_norm, np.finfo(float).tiny)
             ),
         },
@@ -975,6 +936,151 @@ def _gate_rows(report: Task7AEvidence) -> list[dict[str, object]]:
     ]
 
 
+def _write_plots(report: Task7AEvidence, output_dir: Path) -> None:
+    import matplotlib
+
+    matplotlib.use("Agg", force=True)
+    import matplotlib.pyplot as plt
+
+    metadata = {"Software": "htt_base WU011 Task7A"}
+    expected = full_sky_expected_singular_values()[:-1]
+    x = np.arange(1, expected.size + 1)
+    plt.figure(figsize=(7.2, 4.8))
+    plt.plot(x, expected, label="Exact irrep spectrum")
+    for case, marker in zip(report.cases[:4], ("o", "s", "^", "x")):
+        numerical = np.asarray(
+            case.jacobian.metric_whitened_singular_values[:-1],
+            dtype=np.float64,
+        )
+        plt.plot(
+            x,
+            numerical,
+            marker=marker,
+            markersize=2.3,
+            label=case.case_id,
+        )
+    plt.xlabel("Descending nonzero singular-value index")
+    plt.ylabel("Metric-whitened singular value")
+    plt.title("WU-011 exact and HEALPix full-sky spectra")
+    plt.legend(fontsize=7)
+    plt.tight_layout()
+    plt.savefig(
+        output_dir / "metric_spectrum_exact_vs_numerical.png",
+        dpi=180,
+        metadata=metadata,
+    )
+    plt.close()
+
+    nsides = np.asarray([8.0, 16.0, 32.0])
+    resolution_cases = report.cases[:3]
+    spectrum_errors = np.asarray(
+        [case.fullsky_spectrum_max_relative_error for case in resolution_cases],
+        dtype=np.float64,
+    )
+    trace_errors = np.asarray(
+        [case.fullsky_trace_relative_error for case in resolution_cases],
+        dtype=np.float64,
+    )
+    alias_ratios = np.asarray(
+        [case.ell6_alias_to_neighbor for case in resolution_cases],
+        dtype=np.float64,
+    )
+    plt.figure(figsize=(6.8, 4.8))
+    plt.loglog(nsides, spectrum_errors, marker="o", label="Max spectrum error")
+    plt.loglog(nsides, trace_errors, marker="s", label="Trace error")
+    plt.loglog(nsides, alias_ratios, marker="^", label="ell=7 alias / ell=5 neighbour")
+    plt.xlabel("HEALPix nside")
+    plt.ylabel("Relative full-sky error")
+    plt.title("WU-011 full-sky resolution convergence")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(
+        output_dir / "fullsky_resolution_convergence.png",
+        dpi=180,
+        metadata=metadata,
+    )
+    plt.close()
+
+    amplitudes = np.asarray(report.finite_to_linear.amplitudes, dtype=np.float64)
+    residuals = np.asarray(report.finite_to_linear.residual_norms, dtype=np.float64)
+    quadratic = residuals[0] * (amplitudes / amplitudes[0]) ** 2
+    plt.figure(figsize=(6.8, 4.8))
+    plt.loglog(amplitudes, residuals, marker="o", label="Finite - zero - linear")
+    plt.loglog(amplitudes, quadratic, label="O(beta^2) reference")
+    plt.xlabel("Boost amplitude |beta|")
+    plt.ylabel("Retained scientific residual norm")
+    plt.title("WU-011 finite-to-linear convergence")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(
+        output_dir / "finite_to_linear_scaling.png",
+        dpi=180,
+        metadata=metadata,
+    )
+    plt.close()
+
+    labels = [case.case_id for case in report.cases]
+    axis = np.arange(len(labels))
+    floor = np.finfo(float).tiny
+    plt.figure(figsize=(8.0, 4.8))
+    plt.plot(
+        axis,
+        [max(case.ell6_neighbor_norm, floor) for case in report.cases],
+        marker="o",
+        label="Physical ell=6 to ell=5",
+    )
+    plt.plot(
+        axis,
+        [max(case.ell6_alias_norm, floor) for case in report.cases],
+        marker="s",
+        label="Raised ell=7 processed alias",
+    )
+    plt.plot(
+        axis,
+        [max(case.ell6_decomposition_norm, floor) for case in report.cases],
+        marker="^",
+        label="Numerical decomposition residual",
+    )
+    plt.plot(
+        axis,
+        [max(case.monopole_replay_metric_norm, floor) for case in report.cases],
+        marker="x",
+        label="Metric-whitened monopole replay",
+    )
+    plt.yscale("log")
+    plt.xticks(axis, labels, rotation=18, ha="right")
+    plt.ylabel("Metric-whitened response norm")
+    plt.title("WU-011 processed response channels")
+    plt.legend(fontsize=8)
+    plt.tight_layout()
+    plt.savefig(
+        output_dir / "processed_channel_norms.png",
+        dpi=180,
+        metadata=metadata,
+    )
+    plt.close()
+
+    gate_rows = _gate_rows(report)
+    gate_labels = [str(row["gate"]) for row in gate_rows]
+    margins = [
+        max(float(row["normalized_margin"]), floor) for row in gate_rows
+    ]
+    plt.figure(figsize=(9.0, 4.8))
+    plt.bar(np.arange(len(gate_labels)), margins)
+    plt.axhline(1.0, linestyle="--")
+    plt.yscale("log")
+    plt.xticks(np.arange(len(gate_labels)), gate_labels, rotation=38, ha="right")
+    plt.ylabel("Normalized failure margin (<=1 passes)")
+    plt.title("WU-011 Task-7A gate margins")
+    plt.tight_layout()
+    plt.savefig(
+        output_dir / "normalized_gate_margins.png",
+        dpi=180,
+        metadata=metadata,
+    )
+    plt.close()
+
+
 def write_task7a_artifacts(
     report: Task7AEvidence,
     output_dir: Path,
@@ -1011,13 +1117,37 @@ def write_task7a_artifacts(
                 "full_n8_l7": float(
                     report.cases[0].jacobian.metric_whitened_singular_values[index]
                 ),
-                "full_n8_l12": float(
+                "full_n16_l7": float(
                     report.cases[1].jacobian.metric_whitened_singular_values[index]
+                ),
+                "full_n32_l7": float(
+                    report.cases[2].jacobian.metric_whitened_singular_values[index]
+                ),
+                "full_n32_l12": float(
+                    report.cases[3].jacobian.metric_whitened_singular_values[index]
                 ),
                 "structural_null": index == expected.size - 1,
             }
         )
     _write_csv(output / "fullsky_singular_spectrum.csv", spectrum_rows)
+    _write_csv(
+        output / "fullsky_resolution_convergence.csv",
+        [
+            {
+                "nside": case.nside,
+                "processing_lmax": case.processing_lmax,
+                "max_spectrum_relative_error": (
+                    case.fullsky_spectrum_max_relative_error
+                ),
+                "trace_relative_error": case.fullsky_trace_relative_error,
+                "ell6_alias_to_neighbor": case.ell6_alias_to_neighbor,
+                "monopole_replay_relative": (
+                    case.monopole_relative_to_nonmonopole_max
+                ),
+            }
+            for case in report.cases[:4]
+        ],
+    )
     _write_csv(
         output / "finite_to_linear_scaling.csv",
         [
@@ -1041,24 +1171,24 @@ def write_task7a_artifacts(
             np.asarray(case.jacobian.tensor, dtype="<f8"),
             allow_pickle=False,
         )
-    cut = report.cases[2]
+    cut = report.cases[4]
     np.save(
-        output / "CUT_N8_L12_REFERENCE_raw_replay_jacobian.npy",
+        output / "CUT_N16_L12_REFERENCE_raw_replay_jacobian.npy",
         np.asarray(cut.jacobian.raw_replay_tensor, dtype="<f8"),
         allow_pickle=False,
     )
     np.save(
-        output / "CUT_N8_L12_REFERENCE_ell6_neighbor.npy",
+        output / "CUT_N16_L12_REFERENCE_ell6_neighbor.npy",
         np.asarray(cut.jacobian.ell6_expected_neighbor_l5_block, dtype="<f8"),
         allow_pickle=False,
     )
     np.save(
-        output / "CUT_N8_L12_REFERENCE_ell6_alias.npy",
+        output / "CUT_N16_L12_REFERENCE_ell6_alias.npy",
         np.asarray(cut.jacobian.ell6_cutsky_alias_residual, dtype="<f8"),
         allow_pickle=False,
     )
     np.save(
-        output / "CUT_N8_L12_REFERENCE_ell6_decomposition.npy",
+        output / "CUT_N16_L12_REFERENCE_ell6_decomposition.npy",
         np.asarray(cut.jacobian.ell6_decomposition_residual, dtype="<f8"),
         allow_pickle=False,
     )
@@ -1068,11 +1198,10 @@ def write_task7a_artifacts(
     hashes = {path.name: _file_sha256(path) for path in files}
     manifest = "".join(f"{digest}  {name}\n" for name, digest in sorted(hashes.items()))
     (output / "SHA256SUMS").write_text(manifest, encoding="ascii")
-    manifest_sha = _file_sha256(output / "SHA256SUMS")
     return Task7AArtifactBundle(
         output_dir=output,
         file_sha256=hashes,
-        manifest_sha256=manifest_sha,
+        manifest_sha256=_file_sha256(output / "SHA256SUMS"),
     )
 
 
@@ -1100,9 +1229,11 @@ def verify_task7a_artifacts(output_dir: Path) -> dict[str, object]:
         "summary.json",
         "cases.csv",
         "fullsky_singular_spectrum.csv",
+        "fullsky_resolution_convergence.csv",
         "finite_to_linear_scaling.csv",
         "gate_ratios.csv",
         "metric_spectrum_exact_vs_numerical.png",
+        "fullsky_resolution_convergence.png",
         "finite_to_linear_scaling.png",
         "processed_channel_norms.png",
         "normalized_gate_margins.png",
