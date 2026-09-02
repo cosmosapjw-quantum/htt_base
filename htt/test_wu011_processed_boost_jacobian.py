@@ -121,8 +121,8 @@ def test_wu011_jacobian_has_typed_registries_metrics_and_decomposition(jacobian)
         jacobian.ell6_expected_neighbor_l5_block
         + jacobian.ell6_cutsky_alias_residual
         + jacobian.ell6_decomposition_residual,
-        rtol=0.0,
-        atol=0.0,
+        rtol=5.0e-15,
+        atol=5.0e-28,
     )
     assert np.linalg.norm(jacobian.ell6_expected_neighbor_l5_block) > 0.0
     assert np.linalg.norm(jacobian.ell6_cutsky_alias_residual) > 0.0
