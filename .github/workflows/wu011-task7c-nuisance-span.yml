@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'htt/obsstat/processed_boost_nuisance_span.py'
+      - 'htt/obsstat/processed_boost_nuisance_artifacts.py'
       - 'htt/obsstat/processed_boost_identifiability.py'
       - 'htt/obsstat/processed_boost_jacobian.py'
       - 'htt/obsstat/processed_boost_operator.py'
@@ -60,3 +61,34 @@ jobs:
       - name: Run Task-7C RED/GREEN contracts
         working-directory: htt
         run: pytest -q -m requires_healpy test_wu011_processed_boost_nuisance_span.py
+      - name: Generate and verify deterministic Task-7C atlas
+        run: |
+          python scripts/observed_runs/run_planck_mes_wu011_nuisance_span.py \
+            --source-revision "$SOURCE_REVISION" \
+            --profile CI_CORE \
+            --output artifacts/wu011-task7c
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: wu011-task7c-${{ env.SOURCE_REVISION }}
+          path: artifacts/wu011-task7c
+          if-no-files-found: error
+          retention-days: 14
+      - name: Publish create-only exact-head artifact branch
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          ARTIFACT_BRANCH: artifact/wu011-task7c-${{ env.SOURCE_REVISION }}
+        run: |
+          if git ls-remote --exit-code origin "refs/heads/${ARTIFACT_BRANCH}" >/dev/null 2>&1; then
+            echo "ARTIFACT_BRANCH_ALREADY_EXISTS ${ARTIFACT_BRANCH}"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c task7c-artifact-export "$SOURCE_REVISION"
+          destination="docs/generated/wu011_task7c/${SOURCE_REVISION}"
+          mkdir -p "$destination"
+          cp -a artifacts/wu011-task7c/. "$destination/"
+          git add "$destination"
+          git commit -m "artifact: publish WU-011 Task-7C exact-head atlas"
+          git push origin "HEAD:refs/heads/${ARTIFACT_BRANCH}"
+          echo "ARTIFACT_BRANCH_CREATED ${ARTIFACT_BRANCH}"
