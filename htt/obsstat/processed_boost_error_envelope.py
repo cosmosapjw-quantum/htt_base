@@ -6,14 +6,19 @@ output-direction structure instead of collapsing them to one scalar operator
 norm.  It does not define a physical high-multipole prior, fit an observer
 velocity, or authorize a scientific containment terminal.
 
-For one control family ``E_i`` and any unit coefficient vector ``b``,
+For one control family ``E_i`` and a coefficient vector ``b`` with
+``||b||_2 <= r``,
 
-    E(b) E(b)^T <= sum_i E_i E_i^T
+    E(b) E(b)^T <= r^2 sum_i E_i E_i^T
 
-in Loewner order.  For an additive sum of ``q`` independently registered
-families, Cauchy--Schwarz gives the conservative envelope
+in Loewner order.  For additive families with radii ``r_f``, weighted
+Cauchy--Schwarz gives the conservative envelope
 
-    C_E = q * sum_{family,i} E_{family,i} E_{family,i}^T + lambda^2 I.
+    C_E = (sum_f r_f) sum_f r_f sum_i E_{f,i} E_{f,i}^T + lambda^2 I.
+
+The earlier equal-radius contract is recovered when every ``r_f = 1``.  The
+radii describe a declared deterministic additive perturbation class; they are
+not probabilities and no stochastic independence is assumed.
 
 If an unknown numerical perturbation obeys ``Delta Delta^T <= C_E``, then
 ``||C_E^{-1/2} Delta||_2 <= 1``.  Weyl's singular-value inequality therefore
@@ -23,6 +28,9 @@ implies
         >= sigma_j(C_E^{-1/2} K_observed) - 1.
 
 Only singular values separated safely above one certify numerical rank.
+Held-out controls can test whether a preregistered envelope escapes on a finite
+validation registry.  Such a test validates only that registry; it is not a
+universal proof that every unobserved numerical error lies in the envelope.
 """
 
 from __future__ import annotations
@@ -34,6 +42,9 @@ from types import MappingProxyType
 from typing import Mapping
 
 import numpy as np
+
+
+_PERTURBATION_CLASS = "additive_family_l2_balls"
 
 
 class MatrixErrorEnvelopeError(ValueError):
@@ -49,6 +60,13 @@ class RankCertificateStatus(str, Enum):
     UNRESOLVED = "UNRESOLVED"
 
 
+class HoldoutValidationStatus(str, Enum):
+    """Finite-registry validation status for a preregistered envelope."""
+
+    ALL_HOLDOUTS_CONTAINED = "ALL_HOLDOUTS_CONTAINED"
+    HOLDOUT_ESCAPE = "HOLDOUT_ESCAPE"
+
+
 @dataclass(frozen=True)
 class MatrixValuedErrorEnvelope:
     """Positive-definite output-space envelope for numerical perturbations."""
@@ -61,6 +79,9 @@ class MatrixValuedErrorEnvelope:
     source_dimension: int
     family_count: int
     family_shapes: Mapping[str, tuple[int, int, int]]
+    family_radii: Mapping[str, float]
+    total_family_radius: float
+    perturbation_class: str
     maximum_registered_normalized_norm: float
 
     def __post_init__(self) -> None:
@@ -85,6 +106,24 @@ class MatrixValuedErrorEnvelope:
             or np.any(self.eigenvalues <= 0.0)
         ):
             raise MatrixErrorEnvelopeError("error-envelope arrays are not finite positive")
+        if set(self.family_shapes) != set(self.family_radii):
+            raise MatrixErrorEnvelopeError("error-envelope family registries differ")
+        if len(self.family_shapes) != self.family_count:
+            raise MatrixErrorEnvelopeError("error-envelope family count is inconsistent")
+        if any(
+            not math.isfinite(radius) or radius <= 0.0
+            for radius in self.family_radii.values()
+        ):
+            raise MatrixErrorEnvelopeError("error-envelope family radius is invalid")
+        expected_total = math.fsum(self.family_radii.values())
+        if (
+            not math.isfinite(self.total_family_radius)
+            or self.total_family_radius <= 0.0
+            or self.total_family_radius != expected_total
+        ):
+            raise MatrixErrorEnvelopeError("error-envelope total family radius differs")
+        if self.perturbation_class != _PERTURBATION_CLASS:
+            raise MatrixErrorEnvelopeError("error-envelope perturbation class differs")
         if not math.isfinite(self.maximum_registered_normalized_norm):
             raise MatrixErrorEnvelopeError("registered control normalization is invalid")
 
@@ -114,6 +153,51 @@ class ErrorWhitenedRankCertificate:
             or not np.all(np.isfinite(self.singular_value_lower_bounds))
         ):
             raise MatrixErrorEnvelopeError("rank-certificate spectrum is invalid")
+
+
+@dataclass(frozen=True)
+class ErrorEnvelopeHoldoutValidation:
+    """Finite held-out registry check for one matrix-valued envelope."""
+
+    status: HoldoutValidationStatus
+    normalized_operator_norms: Mapping[str, tuple[float, ...]]
+    holdout_shapes: Mapping[str, tuple[int, int, int]]
+    maximum_normalized_norm: float
+    escape_tolerance: float
+    all_contained: bool
+    holdout_count: int
+
+    def __post_init__(self) -> None:
+        if set(self.normalized_operator_norms) != set(self.holdout_shapes):
+            raise MatrixErrorEnvelopeError("holdout validation registries differ")
+        if not self.normalized_operator_norms or self.holdout_count <= 0:
+            raise MatrixErrorEnvelopeError("holdout validation registry is empty")
+        flattened = tuple(
+            value
+            for values in self.normalized_operator_norms.values()
+            for value in values
+        )
+        if len(flattened) != self.holdout_count:
+            raise MatrixErrorEnvelopeError("holdout validation count differs")
+        if any(not math.isfinite(value) or value < 0.0 for value in flattened):
+            raise MatrixErrorEnvelopeError("holdout validation norm is invalid")
+        if (
+            not math.isfinite(self.maximum_normalized_norm)
+            or self.maximum_normalized_norm < 0.0
+            or not math.isfinite(self.escape_tolerance)
+            or self.escape_tolerance < 0.0
+        ):
+            raise MatrixErrorEnvelopeError("holdout validation scale is invalid")
+        expected = self.maximum_normalized_norm <= 1.0 + self.escape_tolerance
+        if self.all_contained != expected:
+            raise MatrixErrorEnvelopeError("holdout validation boolean differs")
+        expected_status = (
+            HoldoutValidationStatus.ALL_HOLDOUTS_CONTAINED
+            if expected
+            else HoldoutValidationStatus.HOLDOUT_ESCAPE
+        )
+        if self.status is not expected_status:
+            raise MatrixErrorEnvelopeError("holdout validation status differs")
 
 
 def _sealed(values: object) -> np.ndarray:
@@ -147,10 +231,34 @@ def _finite_matrix(value: object, *, label: str) -> np.ndarray:
     return matrix
 
 
+def _family_radius_registry(
+    names: tuple[str, ...],
+    family_radii: Mapping[str, object] | None,
+) -> Mapping[str, float]:
+    if family_radii is None:
+        return MappingProxyType({name: 1.0 for name in names})
+    if not isinstance(family_radii, Mapping) or set(family_radii) != set(names):
+        raise MatrixErrorEnvelopeError("family-radius registry differs from controls")
+    parsed: dict[str, float] = {}
+    for name in names:
+        raw = family_radii[name]
+        if isinstance(raw, (bool, np.bool_)):
+            raise MatrixErrorEnvelopeError("family radius is invalid")
+        try:
+            radius = float(raw)
+        except (TypeError, ValueError) as exc:
+            raise MatrixErrorEnvelopeError("family radius is invalid") from exc
+        if not math.isfinite(radius) or radius <= 0.0:
+            raise MatrixErrorEnvelopeError("family radius is invalid")
+        parsed[name] = radius
+    return MappingProxyType(parsed)
+
+
 def build_output_error_envelope(
     control_families: Mapping[str, object],
     *,
     reference_operator_norm: float,
+    family_radii: Mapping[str, object] | None = None,
     regularization_relative: float = 1.0e-12,
     machine_safety_factor: float = 64.0,
 ) -> MatrixValuedErrorEnvelope:
@@ -162,9 +270,18 @@ def build_output_error_envelope(
     numerical perturbation mechanism.  All matrices must use the same output
     and source coordinates.
 
-    The multiplier equal to the number of additive families follows from
-    ``||sum_f y_f||^2 <= q sum_f ||y_f||^2``.  It is conservative and explicit;
-    correlations may be modelled more sharply only by a successor contract.
+    ``family_radii[f]`` is the L2 radius of the deterministic coefficient ball
+    multiplying family ``f``.  For a common coefficient vector per matrix the
+    bound follows directly from Cauchy--Schwarz.  It also covers independent
+    source-column coefficient vectors with the same per-column radius because
+    ``Delta Delta^T`` is the sum of the column outer products.
+
+    For additive families, weighted Cauchy--Schwarz gives
+
+    ``C_E = R sum_f r_f sum_i E_fi E_fi^T + lambda^2 I``,
+
+    where ``R = sum_f r_f``.  Correlated or nonlinear interactions outside
+    this declared additive class require a successor contract.
     """
 
     if not isinstance(control_families, Mapping) or not control_families:
@@ -195,13 +312,19 @@ def build_output_error_envelope(
         shape_registry[raw_name] = tuple(int(item) for item in family.shape)
 
     assert common_shape is not None
+    names = tuple(name for name, _family in parsed)
+    radii = _family_radius_registry(names, family_radii)
+    total_radius = math.fsum(radii.values())
     output_dimension, source_dimension = common_shape
-    covariance_sum = np.zeros((output_dimension, output_dimension), dtype=np.float64)
-    for _name, family in parsed:
+    weighted_covariance_sum = np.zeros(
+        (output_dimension, output_dimension),
+        dtype=np.float64,
+    )
+    for name, family in parsed:
+        radius = radii[name]
         for matrix in family:
-            covariance_sum += matrix @ matrix.T
+            weighted_covariance_sum += radius * (matrix @ matrix.T)
 
-    family_count = len(parsed)
     regularization_scale = max(
         regularization_relative * reference_operator_norm,
         machine_safety_factor
@@ -210,7 +333,7 @@ def build_output_error_envelope(
         * reference_operator_norm,
     )
     covariance = (
-        family_count * covariance_sum
+        total_radius * weighted_covariance_sum
         + regularization_scale**2 * np.eye(output_dimension, dtype=np.float64)
     )
     covariance = 0.5 * (covariance + covariance.T)
@@ -225,9 +348,13 @@ def build_output_error_envelope(
     inverse_square_root = 0.5 * (inverse_square_root + inverse_square_root.T)
 
     maximum_normalized = 0.0
-    for _name, family in parsed:
+    for name, family in parsed:
+        radius = radii[name]
         for matrix in family:
-            singular = np.linalg.svd(inverse_square_root @ matrix, compute_uv=False)
+            singular = np.linalg.svd(
+                inverse_square_root @ (radius * matrix),
+                compute_uv=False,
+            )
             if singular.size:
                 maximum_normalized = max(maximum_normalized, float(singular[0]))
     if maximum_normalized > 1.0 + 2.0e-10:
@@ -240,9 +367,77 @@ def build_output_error_envelope(
         regularization_scale=float(regularization_scale),
         output_dimension=output_dimension,
         source_dimension=source_dimension,
-        family_count=family_count,
+        family_count=len(parsed),
         family_shapes=MappingProxyType(shape_registry),
+        family_radii=radii,
+        total_family_radius=float(total_radius),
+        perturbation_class=_PERTURBATION_CLASS,
         maximum_registered_normalized_norm=maximum_normalized,
+    )
+
+
+def validate_error_envelope_holdouts(
+    holdout_families: Mapping[str, object],
+    envelope: MatrixValuedErrorEnvelope,
+    *,
+    escape_tolerance: float = 2.0e-10,
+) -> ErrorEnvelopeHoldoutValidation:
+    """Check a finite held-out registry against a preregistered envelope.
+
+    Each held-out matrix is treated as one realized numerical perturbation and
+    must satisfy ``||C_E^{-1/2} Delta_holdout||_2 <= 1 + tolerance``.  The
+    function deliberately does not rebuild or inflate the envelope after an
+    escape.  A production caller must keep calibration and validation
+    identities disjoint and record any escape as a blocker.
+    """
+
+    if type(envelope) is not MatrixValuedErrorEnvelope:
+        raise MatrixErrorEnvelopeError("holdout validation requires an exact envelope")
+    if not isinstance(holdout_families, Mapping) or not holdout_families:
+        raise MatrixErrorEnvelopeError("holdout validation registry is empty")
+    if not math.isfinite(escape_tolerance) or escape_tolerance < 0.0:
+        raise MatrixErrorEnvelopeError("holdout escape tolerance is invalid")
+
+    norm_registry: dict[str, tuple[float, ...]] = {}
+    shape_registry: dict[str, tuple[int, int, int]] = {}
+    maximum = 0.0
+    count = 0
+    for raw_name, raw_family in holdout_families.items():
+        if not isinstance(raw_name, str) or not raw_name:
+            raise MatrixErrorEnvelopeError("holdout family name is absent")
+        family = _finite_family(raw_family, label=f"holdout family {raw_name}")
+        if family.shape[1:] != (
+            envelope.output_dimension,
+            envelope.source_dimension,
+        ):
+            raise MatrixErrorEnvelopeError("holdout family shape differs from envelope")
+        norms: list[float] = []
+        for matrix in family:
+            singular = np.linalg.svd(
+                envelope.inverse_square_root @ matrix,
+                compute_uv=False,
+            )
+            value = float(singular[0]) if singular.size else 0.0
+            norms.append(value)
+            maximum = max(maximum, value)
+            count += 1
+        norm_registry[raw_name] = tuple(norms)
+        shape_registry[raw_name] = tuple(int(item) for item in family.shape)
+
+    all_contained = maximum <= 1.0 + escape_tolerance
+    status = (
+        HoldoutValidationStatus.ALL_HOLDOUTS_CONTAINED
+        if all_contained
+        else HoldoutValidationStatus.HOLDOUT_ESCAPE
+    )
+    return ErrorEnvelopeHoldoutValidation(
+        status=status,
+        normalized_operator_norms=MappingProxyType(norm_registry),
+        holdout_shapes=MappingProxyType(shape_registry),
+        maximum_normalized_norm=float(maximum),
+        escape_tolerance=float(escape_tolerance),
+        all_contained=bool(all_contained),
+        holdout_count=count,
     )
 
 
@@ -258,6 +453,11 @@ def certify_error_whitened_row_rank(
     singular value of ``C_E^{-1/2} K_true`` is at least the corresponding
     observed singular value minus one.  A singular value must exceed
     ``1 + ambiguity_half_width`` to count toward the guaranteed rank.
+
+    This function proves a conditional matrix statement.  A production
+    scientific terminal additionally needs a separately justified perturbation
+    class or a preregistered held-out validation contract demonstrating that
+    the adopted envelope is appropriate for the numerical pipeline.
     """
 
     if type(envelope) is not MatrixValuedErrorEnvelope:
@@ -313,10 +513,13 @@ def certify_error_whitened_row_rank(
 
 
 __all__ = [
+    "ErrorEnvelopeHoldoutValidation",
     "ErrorWhitenedRankCertificate",
+    "HoldoutValidationStatus",
     "MatrixErrorEnvelopeError",
     "MatrixValuedErrorEnvelope",
     "RankCertificateStatus",
     "build_output_error_envelope",
     "certify_error_whitened_row_rank",
+    "validate_error_envelope_holdouts",
 ]
