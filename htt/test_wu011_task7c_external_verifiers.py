@@ -5,22 +5,29 @@ from __future__ import annotations
 import importlib.util
 import json
 from pathlib import Path
+import sys
 
 import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULE = ROOT / "scripts" / "research" / "run_wu011_task7c_external_verifiers.py"
+_API = None
 
 
 def _api():
+    global _API
+    if _API is not None:
+        return _API
     if not MODULE.is_file():
         pytest.fail(f"external verifier module is absent: {MODULE}", pytrace=False)
     spec = importlib.util.spec_from_file_location("wu011_external_verifiers", MODULE)
     if spec is None or spec.loader is None:
         pytest.fail("external verifier module cannot be loaded", pytrace=False)
     module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
+    _API = module
     return module
 
 
