@@ -1,19 +1,20 @@
 """RED/GREEN contracts for the WU-011 processed coefficient Jacobian.
 
-The public tensor is ordered as ``(beta_axis, retained_output, source_mode)``.
-Its source registry is the physical monopole temperature followed by the
-scientific stored-real ``ell=1..6`` coefficients.  The retained registry is the
-scientific stored-real ``ell=2..5`` carrier.
+The public scientific tensor is ordered as
+``(beta_axis, retained_output, source_mode)``.  Its source registry is the
+physical monopole temperature followed by the scientific stored-real
+``ell=1..6`` coefficients.  The retained registry is the scientific stored-real
+``ell=2..5`` carrier.
 
-In the exact continuum response, the physical monopole maps only to the fitted
-dipole and is profiled from the retained block.  The implemented HEALPix
-linearization can leave a disclosed numerical monopole column.  The tests
-therefore distinguish raw numerical rank from the rank of the 48 physically
-non-monopole source coordinates instead of promoting replay leakage to a new
-identifiable mode.
+The exact scientific monopole column is structurally zero after the
+simultaneous ``ell=0,1`` nuisance solve.  HEALPix replay leakage is retained in
+a separately typed numerical tensor and must not be promoted to monopole
+identifiability or contracted by the default scientific predictor.
 """
 
 from __future__ import annotations
+
+import math
 
 import numpy as np
 import pytest
@@ -87,46 +88,142 @@ def jacobian():
     return _api().build_processed_boost_jacobian(_operator())
 
 
-def test_wu011_jacobian_has_registered_dimensions_and_alias_slice(jacobian) -> None:
+def test_wu011_jacobian_has_typed_registries_metrics_and_decomposition(jacobian) -> None:
     api = _api()
     assert jacobian.tensor.shape == (3, 32, 49)
+    assert jacobian.raw_replay_tensor.shape == (3, 32, 49)
     assert len(jacobian.source_registry) == 49
     assert len(jacobian.output_registry) == 32
-    assert jacobian.ell6_alias_block.shape == (3, 32, 13)
-    assert jacobian.source_registry[0] == api.ScientificMode(0, 0, "REAL")
+
+    t0 = jacobian.source_registry[0]
+    assert t0 == api.ScientificMode(0, 0, "REAL")
+    assert t0.coordinate_role == "PHYSICAL_MONOPOLE_TEMPERATURE"
+    assert t0.field_basis == "CONSTANT_ONE"
+    assert t0.harmonic_adapter == "a00=sqrt(4*pi)*T0"
+
     assert jacobian.source_registry[36] == api.ScientificMode(6, 0, "REAL")
     assert jacobian.source_registry[-1] == api.ScientificMode(6, 6, "IMAG")
     assert jacobian.output_registry[0] == api.ScientificMode(2, 0, "REAL")
     assert jacobian.output_registry[-1] == api.ScientificMode(5, 5, "IMAG")
 
+    assert jacobian.source_metric_diagonal.shape == (49,)
+    assert jacobian.output_metric_diagonal.shape == (32,)
+    assert jacobian.source_metric_diagonal[0] == pytest.approx(4.0 * math.pi)
+    assert set(np.unique(jacobian.source_metric_diagonal[1:])) == {1.0, 2.0}
+    assert set(np.unique(jacobian.output_metric_diagonal)) == {1.0, 2.0}
 
-def test_wu011_jacobian_resolves_all_nonmonopole_source_coordinates(jacobian) -> None:
+    assert jacobian.ell6_source_response_block.shape == (3, 32, 13)
+    assert jacobian.ell6_expected_neighbor_l5_block.shape == (3, 32, 13)
+    assert jacobian.ell6_cutsky_alias_residual.shape == (3, 32, 13)
+    assert jacobian.ell6_decomposition_residual.shape == (3, 32, 13)
+    np.testing.assert_allclose(
+        jacobian.ell6_source_response_block,
+        jacobian.ell6_expected_neighbor_l5_block
+        + jacobian.ell6_cutsky_alias_residual
+        + jacobian.ell6_decomposition_residual,
+        rtol=0.0,
+        atol=0.0,
+    )
+    assert np.linalg.norm(jacobian.ell6_expected_neighbor_l5_block) > 0.0
+    assert np.linalg.norm(jacobian.ell6_cutsky_alias_residual) > 0.0
+
+
+def test_wu011_jacobian_separates_scientific_null_from_replay_leakage(jacobian) -> None:
+    assert np.count_nonzero(jacobian.tensor[:, :, 0]) == 0
+    np.testing.assert_array_equal(
+        jacobian.raw_replay_tensor[:, :, 0],
+        jacobian.monopole_replay_leakage,
+    )
+    assert jacobian.combined_rank == 48
+    assert math.isinf(jacobian.combined_condition_number)
     assert jacobian.nonmonopole_rank == 48
-    assert len(jacobian.nonmonopole_singular_values) == 48
-    assert np.all(np.isfinite(jacobian.nonmonopole_singular_values))
     assert np.isfinite(jacobian.nonmonopole_condition_number)
-    assert jacobian.nonmonopole_condition_number >= 1.0
-    # The raw matrix can acquire one extra numerical direction from the
-    # map2alm replay of the analytically nuisance-only monopole response.
-    assert jacobian.combined_rank in {48, 49}
-    assert len(jacobian.combined_singular_values) == 49
-    assert jacobian.monopole_retained_norm <= 5.0e-4
+    assert jacobian.raw_combined_rank in {48, 49}
+    assert len(jacobian.raw_combined_singular_values) == 49
+    assert jacobian.monopole_replay_leakage_norm <= 5.0e-4
     assert jacobian.monopole_relative_to_nonmonopole_max <= 5.0e-4
-    assert np.linalg.norm(jacobian.ell6_alias_block) > 0.0
 
 
-def test_wu011_jacobian_reconstructs_the_direct_linear_response(jacobian) -> None:
+def test_wu011_metric_whitened_diagnostics_are_invariantly_defined(jacobian) -> None:
+    api = _api()
+    stacked = jacobian.tensor.reshape(96, 49)
+    expected = api.metric_whitened_matrix(
+        stacked,
+        source_metric_diagonal=jacobian.source_metric_diagonal,
+        output_metric_diagonal=np.tile(jacobian.output_metric_diagonal, 3),
+    )
+    np.testing.assert_allclose(
+        expected,
+        jacobian.metric_whitened_stacked_matrix,
+        rtol=0.0,
+        atol=0.0,
+    )
+    assert jacobian.metric_whitened_rank == 48
+    assert math.isinf(jacobian.metric_whitened_condition_number)
+    assert np.isfinite(jacobian.metric_whitened_nonzero_condition_number)
+    assert jacobian.metric_whitened_nonzero_condition_number >= 1.0
+
+    source_scale = np.ones(49)
+    source_scale[7] = 0.1
+    transformed = stacked / source_scale[None, :]
+    transformed_metric = jacobian.source_metric_diagonal / (source_scale * source_scale)
+    transformed_whitened = api.metric_whitened_matrix(
+        transformed,
+        source_metric_diagonal=transformed_metric,
+        output_metric_diagonal=np.tile(jacobian.output_metric_diagonal, 3),
+    )
+    np.testing.assert_allclose(
+        np.linalg.svd(transformed_whitened, compute_uv=False),
+        np.linalg.svd(expected, compute_uv=False),
+        rtol=2.0e-13,
+        atol=2.0e-13,
+    )
+
+
+def test_wu011_fullsky_reference_spectrum_is_sealed() -> None:
+    api = _api()
+    reference = api.full_sky_metric_reference()
+    np.testing.assert_allclose(
+        reference.sigma_squared_by_source_ell,
+        np.array([8.0 / 3.0, 27.0 / 5.0, 13.0, 21.0, 125.0 / 11.0, 216.0 / 13.0]),
+        rtol=0.0,
+        atol=0.0,
+    )
+    assert reference.multiplicities == (3, 5, 7, 9, 11, 13)
+    assert reference.anisotropy_rank == 48
+    assert reference.structural_monopole_nullity == 1
+    assert reference.nonzero_condition_number == pytest.approx(math.sqrt(63.0 / 8.0))
+
+
+def test_wu011_scientific_and_replay_predictors_are_separate(jacobian) -> None:
     api = _api()
     source = _source_sky()
     beta = np.array([1.7e-3, -9.0e-4, 1.2e-3], dtype=float)
-    predicted = api.predict_processed_linear_response(jacobian, source, beta)
+    scientific = api.predict_processed_linear_response(jacobian, source, beta)
+    replay = api.predict_processed_replay_linear_response(jacobian, source, beta)
     direct = evaluate_processed_linear_response(source, _operator(), beta)
-    scale = max(np.linalg.norm(direct.retained_coefficients), np.finfo(float).tiny)
-    relative = np.linalg.norm(predicted - direct.retained_coefficients) / scale
-    assert relative <= 2.0e-8
+
+    replay_scale = max(np.linalg.norm(direct.retained_coefficients), np.finfo(float).tiny)
+    replay_relative = np.linalg.norm(replay - direct.retained_coefficients) / replay_scale
+    assert replay_relative <= 2.0e-8
+
+    leakage = source.monopole_temperature * np.einsum(
+        "i,io->o",
+        beta,
+        jacobian.monopole_replay_leakage,
+        optimize=True,
+    )
+    np.testing.assert_allclose(
+        replay - scientific,
+        leakage,
+        rtol=2.0e-11,
+        atol=2.0e-13,
+    )
 
 
-def test_wu011_jacobian_matches_a_centered_finite_boost_derivative(jacobian) -> None:
+def test_wu011_replay_jacobian_matches_a_centered_finite_boost_derivative(
+    jacobian,
+) -> None:
     api = _api()
     source = _source_sky()
     operator = _operator()
@@ -136,15 +233,26 @@ def test_wu011_jacobian_matches_a_centered_finite_boost_derivative(jacobian) -> 
     plus = evaluate_processed_boost(source, operator, epsilon * direction, mode="FINITE")
     minus = evaluate_processed_boost(source, operator, -epsilon * direction, mode="FINITE")
     centered = (plus.retained_coefficients - minus.retained_coefficients) / (2.0 * epsilon)
-    predicted = api.predict_processed_linear_response(jacobian, source, direction)
+    predicted = api.predict_processed_replay_linear_response(jacobian, source, direction)
     scale = max(np.linalg.norm(centered), np.finfo(float).tiny)
     relative = np.linalg.norm(centered - predicted) / scale
     assert relative <= 5.0e-4
 
 
 def test_wu011_jacobian_arrays_are_content_bound_and_immutable(jacobian) -> None:
+    arrays = (
+        jacobian.tensor,
+        jacobian.raw_replay_tensor,
+        jacobian.monopole_replay_leakage,
+        jacobian.source_metric_diagonal,
+        jacobian.output_metric_diagonal,
+        jacobian.metric_whitened_stacked_matrix,
+        jacobian.ell6_source_response_block,
+        jacobian.ell6_expected_neighbor_l5_block,
+        jacobian.ell6_cutsky_alias_residual,
+        jacobian.ell6_decomposition_residual,
+    )
     assert jacobian.content_id.startswith("sha256:")
-    assert not jacobian.tensor.flags.writeable
-    assert not jacobian.ell6_alias_block.flags.writeable
+    assert all(not array.flags.writeable for array in arrays)
     with pytest.raises(ValueError):
         jacobian.tensor[0, 0, 0] = 1.0
