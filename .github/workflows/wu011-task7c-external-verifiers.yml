@@ -9,6 +9,12 @@ on:
       - 'scripts/research/run_wu011_task7c_external_verifiers.py'
       - 'htt/test_wu011_task7c_external_verifiers.py'
       - 'docs/research_program/post_pr327/planck_mes_wu011_task7c_external_verifier_contract.md'
+  pull_request:
+    paths:
+      - '.github/workflows/wu011-task7c-external-verifiers.yml'
+      - 'scripts/research/run_wu011_task7c_external_verifiers.py'
+      - 'htt/test_wu011_task7c_external_verifiers.py'
+      - 'docs/research_program/post_pr327/planck_mes_wu011_task7c_external_verifier_contract.md'
   workflow_dispatch:
 
 permissions:
