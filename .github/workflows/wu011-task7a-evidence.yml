@@ -1,4 +1,4 @@
-name: WU011 processed boost
+name: WU011 Task7A evidence
 
 on:
   pull_request:
@@ -12,14 +12,8 @@ on:
       - 'htt/obsstat/lorentz_sky_pullback.py'
       - 'htt/obsstat/planck_pr3_operator.py'
       - 'htt/obsstat/boost_biposh_residual.py'
-      - 'htt/test_wu011_processed_boost_contract.py'
-      - 'htt/test_wu011_processed_boost_healpy.py'
-      - 'htt/test_wu011_processed_boost_linearization.py'
-      - 'htt/test_wu011_processed_boost_jacobian.py'
-      - 'htt/test_wu011_processed_boost_parity.py'
       - 'htt/test_wu011_processed_boost_evidence.py'
       - 'scripts/observed_runs/run_planck_mes_wu011_processed_boost_response.py'
-      - '.github/workflows/wu011-processed-boost.yml'
       - '.github/workflows/wu011-task7a-evidence.yml'
   workflow_dispatch:
 
@@ -31,20 +25,22 @@ env:
   OMP_NUM_THREADS: '1'
   MKL_NUM_THREADS: '1'
   NUMEXPR_NUM_THREADS: '1'
+  SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
 
 jobs:
-  healpy-processed-response:
-    name: Python 3.12 / healpy 1.20.0
+  deterministic-evidence:
+    name: Task7A deterministic evidence / Python 3.12
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
+          ref: ${{ env.SOURCE_REVISION }}
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
           cache: pip
-      - name: Install repository and pinned HEALPix dependency
+      - name: Install repository and pinned evidence dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e './htt[dev]'
@@ -53,15 +49,27 @@ jobs:
         run: |
           python - <<'PY'
           import healpy
+          import matplotlib
+          import numpy
+          import scipy
           assert healpy.__version__ == '1.20.0', healpy.__version__
           print('HEALPY_IDENTITY_OK', healpy.__version__)
+          print('NUMPY_IDENTITY', numpy.__version__)
+          print('SCIPY_IDENTITY', scipy.__version__)
+          print('MATPLOTLIB_IDENTITY', matplotlib.__version__)
           PY
-      - name: Run WU-011 HEALPix RED/GREEN contracts
+      - name: Run Task-7A RED/GREEN contracts
         working-directory: htt
+        run: pytest -q -m requires_healpy test_wu011_processed_boost_evidence.py
+      - name: Generate and verify deterministic evidence package
         run: |
-          pytest -q -m requires_healpy \
-            test_wu011_processed_boost_healpy.py \
-            test_wu011_processed_boost_linearization.py \
-            test_wu011_processed_boost_jacobian.py \
-            test_wu011_processed_boost_parity.py \
-            test_wu011_processed_boost_evidence.py
+          python scripts/observed_runs/run_planck_mes_wu011_processed_boost_response.py \
+            --source-revision "$SOURCE_REVISION" \
+            --profile CI_CORE \
+            --output artifacts/wu011-task7a
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: wu011-task7a-${{ env.SOURCE_REVISION }}
+          path: artifacts/wu011-task7a
+          if-no-files-found: error
+          retention-days: 14
