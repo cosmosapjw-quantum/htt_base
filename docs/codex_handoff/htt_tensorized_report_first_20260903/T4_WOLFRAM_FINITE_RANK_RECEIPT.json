@@ -1,5 +1,5 @@
 {
-  "schema": "htt.report_a.t4_wolfram_finite_rank_receipt.v1",
+  "schema": "htt.report_a.t4_wolfram_finite_rank_receipt.v2",
   "date": "2026-09-03",
   "repository": "cosmosapjw-quantum/htt_base",
   "report_pr": 449,
@@ -13,7 +13,11 @@
   "literature": [
     {
       "title": "Randomization Inference: Theory and Applications",
-      "authors": ["David M. Ritzwoller", "Joseph P. Romano", "Azeem M. Shaikh"],
+      "authors": [
+        "David M. Ritzwoller",
+        "Joseph P. Romano",
+        "Azeem M. Shaikh"
+      ],
       "arxiv": "2406.09521",
       "role": "GROUP_INVARIANCE_AND_FINITE_SAMPLE_EXACTNESS_BOUNDARY"
     },
@@ -47,10 +51,21 @@
   "selection_counterexample": {
     "rows": [[-2, -2], [-2, -1], [-2, 0], [-1, -2]],
     "row_permutations": 24,
-    "invalid_rule": "choose coordinate with largest absolute value in distinguished row zero",
+    "invalid_rule": "choose coordinate with largest absolute value in distinguished row zero; exact ties choose coordinate 2",
     "invalid_p_counts": {
       "1/2": 12,
       "3/4": 12
+    },
+    "tie_break_sensitivity": {
+      "coordinate_2": {
+        "1/2": 12,
+        "3/4": 12
+      },
+      "coordinate_1": {
+        "1/2": 6,
+        "3/4": 18
+      },
+      "maximum_size_violation_both_rules": "1/4"
     },
     "invalid_maximum_size_violation": "1/4",
     "valid_symmetric_rule": "choose coordinate with largest pooled sum of squares",
