@@ -1,4 +1,4 @@
-schema: htt.theory_report_first.master_dag.v3
+schema: htt.theory_report_first.master_dag.v4
 date: 2026-09-03
 repository: cosmosapjw-quantum/htt_base
 goal: >-
@@ -11,14 +11,14 @@ goal: >-
 report_pr:
   number: 449
   branch: docs/htt-tensorized-mes-response-synthesis-20260903
-  predecessor_head: f83878a8a2eb74f462076c25c622bbf38e64f8c4
+  theory_pack_source_head: dac92cc23ce869397758fef2f652df04a961bcdb
   merge_authorized: false
 
 authority_federation:
   default_framework: {ref: research/pr04-multicomponent, head: 50ea6d76ace70dec57b8794ab0d1cf9b8fab42cb}
   vector_tensor_foundation: {pr: 367, head: 6bafca66285ef071081453313bb7d2d6b261599c}
   candidate_matrix: {pr: 405, head: 463f0999949bf8534c60ad7973b7342705c2e3d6}
-  survivor_contract: {pr: 408, head: 40dce3ab9328c1f3acb99adba11046056c639737}
+  survivor_contract: {pr: 408, head: 40dce3ab9328c1f3acb99adba11046056c639737, merge_commit: 2dce66ca019609e6d07625bc6382bc347fbf5a8c}
   tensorized_qo: {pr: 440, head: 687234128d7c12d04e68aad0f303c21d2d470393}
   theorem_summary: {pr: 441, head: 04680e99d56b9974fe1120854370af1fb94fb1d6, provenance: SUMMARY_ONLY_FORMAL_DOSSIER_PENDING}
   wu010: {pr: 442, head: 29427a1f7f2c5d46e43ffe03053c4ac13e969228}
@@ -56,22 +56,24 @@ nodes:
 
   A2:
     title: Registered survivor-surface triage
-    state: DONE_CONTENT_AND_INDEPENDENT_WOLFRAM_VALIDATION
+    state: DONE_AFTER_P0_SOURCE_SURFACE_REPAIR
     depends_on: [A1]
     outputs:
       - REGISTERED_SURVIVOR_SURFACE.csv
       - WOLFRAM_A2_VALIDATION_RECEIPT.json
       - A2_REGISTERED_SURVIVOR_TRIAGE_CLOSEOUT.md
     receipt:
-      eligible_rows: 36
+      registered_rows: 37
       exact_or_conditional: 24
       synthetic: 8
-      scoped_children: 4
+      scoped_candidates: 5
       included: 16
       excluded: 13
-      deferred: 7
+      deferred: 8
+      deferred_unresolved_scoped_candidate: PR284_NEW:FINITE-REGISTERED-PATH
       duplicate_groups_closed: true
       representation_firewall_closed: true
+      included_report_map_unchanged_by_repair: true
     boundary: truth_novelty_and_publication_not_promoted
 
   A3:
@@ -87,7 +89,7 @@ nodes:
 
   A5:
     title: Contradiction and notation closure
-    state: DONE_CONTRACT_AND_WOLFRAM_COVERAGE
+    state: DONE_AFTER_A2_P0_REPAIR_AND_WOLFRAM_RECOVERAGE
     depends_on: [A2, A3, A4]
     outputs:
       - NOTATION_AND_CONVENTION_REGISTRY.yaml
@@ -95,6 +97,7 @@ nodes:
       - CONTRADICTION_LEDGER.yaml
       - A5_CONTRADICTION_NOTATION_CLOSEOUT.md
     receipt:
+      registered_A2_rows: 37
       included_rows_mapped: 16
       direct_report_contradictions: 0
       unqualified_symbol_collisions: 0
@@ -280,6 +283,7 @@ claim_firewall:
 current_primary_next_node: T2
 current_parallel_next_node: T6
 current_terminal: >-
-  A2_SURVIVOR_TRIAGE_CLOSED__A5_NOTATION_CONTRADICTION_CLOSED__
+  A2_SURVIVOR_TRIAGE_CLOSED_AFTER_P0_REPAIR__
+  A5_NOTATION_CONTRADICTION_RECLOSED__
   T1_T3_T4_T5_THEORY_PACKS_COMPLETE_AT_TYPED_SCOPE__
   T2_PRIMARY_AND_T6_PARALLEL_READY__DATA_DEFERRED__NO_MERGE_OR_CLAIM_PROMOTION
