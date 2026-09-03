@@ -1,0 +1,93 @@
+name: WU011 Task7B identifiability
+
+on:
+  pull_request:
+    paths:
+      - 'htt/obsstat/processed_boost_response.py'
+      - 'htt/obsstat/processed_boost_operator.py'
+      - 'htt/obsstat/processed_boost_linearization.py'
+      - 'htt/obsstat/processed_boost_jacobian.py'
+      - 'htt/obsstat/processed_boost_identifiability.py'
+      - 'htt/obsstat/planck_pr3_operator.py'
+      - 'htt/test_wu011_processed_boost_identifiability.py'
+      - 'scripts/observed_runs/run_planck_mes_wu011_identifiability_atlas.py'
+      - 'docs/superpowers/specs/2026-09-02-planck-mes-wu011-task7b-identifiability-sensitivity-design.md'
+      - 'docs/superpowers/plans/2026-09-02-planck-mes-wu011-task7b-identifiability-sensitivity.md'
+      - '.github/workflows/wu011-task7b-identifiability.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  OPENBLAS_NUM_THREADS: '1'
+  OMP_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  NUMEXPR_NUM_THREADS: '1'
+  SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+
+jobs:
+  identifiability-contracts:
+    name: Task7B atlas / Python 3.12
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: true
+          ref: ${{ env.SOURCE_REVISION }}
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install repository and pinned atlas dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e './htt[dev]'
+          python -m pip install 'healpy==1.20.0'
+      - name: Verify dependency identity
+        run: |
+          python - <<'PY'
+          import healpy
+          import matplotlib
+          import numpy
+          import scipy
+          assert healpy.__version__ == '1.20.0', healpy.__version__
+          print('HEALPY_IDENTITY_OK', healpy.__version__)
+          print('NUMPY_IDENTITY', numpy.__version__)
+          print('SCIPY_IDENTITY', scipy.__version__)
+          print('MATPLOTLIB_IDENTITY', matplotlib.__version__)
+          PY
+      - name: Run Task-7B RED/GREEN contracts
+        working-directory: htt
+        run: pytest -q -m requires_healpy test_wu011_processed_boost_identifiability.py
+      - name: Generate and verify deterministic Task-7B atlas
+        run: |
+          python scripts/observed_runs/run_planck_mes_wu011_identifiability_atlas.py \
+            --source-revision "$SOURCE_REVISION" \
+            --profile CI_CORE \
+            --output artifacts/wu011-task7b
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: wu011-task7b-${{ env.SOURCE_REVISION }}
+          path: artifacts/wu011-task7b
+          if-no-files-found: error
+          retention-days: 14
+      - name: Publish create-only exact-head artifact branch
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          ARTIFACT_BRANCH: artifact/wu011-task7b-${{ env.SOURCE_REVISION }}
+        run: |
+          if git ls-remote --exit-code origin "refs/heads/${ARTIFACT_BRANCH}" >/dev/null 2>&1; then
+            echo "ARTIFACT_BRANCH_ALREADY_EXISTS ${ARTIFACT_BRANCH}"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c task7b-artifact-export "$SOURCE_REVISION"
+          destination="docs/generated/wu011_task7b/${SOURCE_REVISION}"
+          mkdir -p "$destination"
+          cp -a artifacts/wu011-task7b/. "$destination/"
+          git add "$destination"
+          git commit -m "artifact: publish WU-011 Task-7B exact-head atlas"
+          git push origin "HEAD:refs/heads/${ARTIFACT_BRANCH}"
+          echo "ARTIFACT_BRANCH_CREATED ${ARTIFACT_BRANCH}"
