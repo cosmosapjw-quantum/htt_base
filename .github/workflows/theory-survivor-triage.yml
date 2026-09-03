@@ -5,6 +5,7 @@ on:
     paths:
       - scripts/extract_theory_survivor_surface.py
       - tests/contracts/test_theory_survivor_triage.py
+      - tests/contracts/test_theory_survivor_seed_schema.py
       - docs/research_program/theory_promotion/closeout/REGISTERED_SURVIVOR_SEED.json
       - docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json
       - .github/workflows/theory-survivor-triage.yml
@@ -12,6 +13,7 @@ on:
     paths:
       - scripts/extract_theory_survivor_surface.py
       - tests/contracts/test_theory_survivor_triage.py
+      - tests/contracts/test_theory_survivor_seed_schema.py
       - docs/research_program/theory_promotion/closeout/REGISTERED_SURVIVOR_SEED.json
       - docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json
       - .github/workflows/theory-survivor-triage.yml
@@ -39,7 +41,9 @@ jobs:
       - name: Compile and run WU-001 contracts
         run: |
           python -m py_compile scripts/extract_theory_survivor_surface.py
-          python -m pytest -q tests/contracts/test_theory_survivor_triage.py
+          python -m pytest -q \
+            tests/contracts/test_theory_survivor_triage.py \
+            tests/contracts/test_theory_survivor_seed_schema.py
 
       - name: Replay exact PR-405 Git object twice
         run: |
