@@ -20,9 +20,10 @@ compensated-scaling-invariant envelope
 The family partition is part of the declared uncertainty structure.  Within a
 fixed family registry the envelope is invariant under the equivalent
 reparameterization ``E_{f,i} -> c_f E_{f,i}``, ``r_f -> r_f / c_f`` for every
-positive scalar ``c_f``.  The radii describe deterministic additive
-coefficient balls; they are not probabilities and no stochastic independence
-is assumed.
+positive scalar ``c_f``.  Exactly zero families must be omitted: admitting one
+would change ``F`` without changing the declared perturbation set.  The radii
+describe deterministic additive coefficient balls; they are not probabilities
+and no stochastic independence is assumed.
 
 If an unknown numerical perturbation obeys ``Delta Delta^T <= C_E``, then
 ``||C_E^{-1/2} Delta||_2 <= 1``.  Weyl's singular-value inequality therefore
@@ -276,7 +277,8 @@ def build_output_error_envelope(
     represent Cartesian full-sky replay controls, resolution differences,
     map-to-alm iteration differences, or another separately registered
     numerical perturbation mechanism.  All matrices must use the same output
-    and source coordinates.
+    and source coordinates.  An exactly zero family is semantically empty and
+    must be omitted rather than changing the family-count multiplier.
 
     ``family_radii[f]`` is the L2 radius of the deterministic coefficient ball
     multiplying family ``f``.  For a common coefficient vector per matrix the
@@ -314,6 +316,10 @@ def build_output_error_envelope(
         if not isinstance(raw_name, str) or not raw_name:
             raise MatrixErrorEnvelopeError("control-family name is absent")
         family = _finite_family(raw_family, label=f"control family {raw_name}")
+        if not np.any(family):
+            raise MatrixErrorEnvelopeError(
+                f"control family {raw_name} is identically zero; omit it"
+            )
         matrix_shape = (family.shape[1], family.shape[2])
         if common_shape is None:
             common_shape = matrix_shape
