@@ -1,0 +1,61 @@
+schema: htt.report_a.r4a0.canonical_frame_and_tex_repair_receipt.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+inspected_head: ae1ae2bd86bed019afc45d34f416b3ec33daa6f6
+observational_gate: DATA_DEFERRED_BY_OWNER
+findings:
+  - id: R4A0-ORBIT-01
+    severity: P1
+    path: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+    finding: >-
+      The conditions B^T B=G and det B=chi do not uniquely select a canonical
+      frame because left multiplication by any R in SO(3) preserves both.
+    repair: >-
+      Use the unique positive-diagonal upper Cholesky factor B_+ and the fixed
+      orientation correction S_chi=diag(1,1,sgn chi), B=S_chi B_+.
+  - id: R4A0-TEX-01
+    severity: P2
+    path: docs/research_reports/theory_packs/T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md
+    finding: three truncated Cayley-Hamilton fraction tokens beginning with rac{
+    repair: restore the three exact frac{s_3}{3} terms
+artifacts:
+  patch_path: docs/codex_handoff/htt_tensorized_report_first_20260903/R4A0_CANONICAL_FRAME_AND_T2_TEX_REPAIR.patch
+  patch_blob_sha: 9bfbbd3fb27dd251c8e584bf338cd852af3702c9
+  red_contract_path: tests/contracts/test_report_a_r4a0_source.py
+  red_contract_blob_sha: 9e89bd74dce87a17b9f5d97940b7b2ad68061efd
+mathematics:
+  theorem_truth_changed: false
+  deterministic_section_added: true
+  so3_o3_orientation_boundary_preserved: true
+  proof: >-
+    det G=chi^2 and positive-diagonal Cholesky imply det B_+=abs(chi);
+    S_chi is orthogonal with determinant sgn(chi), hence B^T B=G and det B=chi.
+scispace:
+  adjacent_canonical_orbit_literature_found: true
+  direct_match_for_repo_specific_qo_krylov_section: false
+  novelty_status: UNRESOLVED
+wolfram:
+  fresh_context: BLOCKED_BY_UPSTREAM_502
+  fresh_exact_replay: BLOCKED_BY_UPSTREAM_502
+  counted_as_pass: false
+execution:
+  native_local_runtime: UNAVAILABLE_CLIENT_ERROR
+  supported_runtime_test: NOT_EXECUTED
+  expected_current_red:
+    - canonical section assertions fail before patch application
+    - malformed T2 fraction assertions fail before patch application
+claim_firewall:
+  corrected_tensorized_planck_rank: null
+  observational_execution: false
+  finite_healpix_no_go_promoted: false
+  native_bass_claim: false
+  publication_authorized: false
+  merge_authorized: false
+next_node: R4A0F_APPLY_BOUND_PATCH_AND_RUN_SUPPORTED_CONTRACT
+terminal: >-
+  R4A0_REPAIR_PATCH_AND_RED_CONTRACT_BOUND__
+  IMPLEMENTATION_NOT_YET_FLATTENED__
+  SUPPORTED_RUNTIME_NOT_EXECUTED__
+  OBSERVATIONAL_DATA_DEFERRED__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY

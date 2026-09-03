@@ -6,24 +6,34 @@ on:
       - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V3.yaml
       - docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
       - docs/codex_handoff/htt_tensorized_report_first_20260903/R3F_FLATTENING_RECEIPT.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/R4A0_CANONICAL_FRAME_AND_T2_TEX_REPAIR.patch
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/R4A0_CANONICAL_FRAME_AND_T2_TEX_REPAIR_RECEIPT.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/THEORY_ONLY_DAG_STATUS_OVERLAY_V16.yaml
       - docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
       - docs/research_reports/HTT_REPORT_A_REFERENCES.bib
       - docs/research_reports/appendices/HTT_REPORT_A_AUTHORITY_AND_EXECUTION_PROVENANCE.md
+      - docs/research_reports/theory_packs/T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md
       - tests/contracts/test_report_a_t9_v3.py
       - tests/contracts/test_report_a_citation_matrix_v2.py
       - tests/contracts/test_report_a_r3_flattened.py
+      - tests/contracts/test_report_a_r4a0_source.py
       - .github/workflows/report-a-ledger.yml
   push:
     paths:
       - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V3.yaml
       - docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
       - docs/codex_handoff/htt_tensorized_report_first_20260903/R3F_FLATTENING_RECEIPT.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/R4A0_CANONICAL_FRAME_AND_T2_TEX_REPAIR.patch
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/R4A0_CANONICAL_FRAME_AND_T2_TEX_REPAIR_RECEIPT.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/THEORY_ONLY_DAG_STATUS_OVERLAY_V16.yaml
       - docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
       - docs/research_reports/HTT_REPORT_A_REFERENCES.bib
       - docs/research_reports/appendices/HTT_REPORT_A_AUTHORITY_AND_EXECUTION_PROVENANCE.md
+      - docs/research_reports/theory_packs/T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md
       - tests/contracts/test_report_a_t9_v3.py
       - tests/contracts/test_report_a_citation_matrix_v2.py
       - tests/contracts/test_report_a_r3_flattened.py
+      - tests/contracts/test_report_a_r4a0_source.py
       - .github/workflows/report-a-ledger.yml
   workflow_dispatch:
 
@@ -46,4 +56,5 @@ jobs:
           python -m pytest -q \
             tests/contracts/test_report_a_t9_v3.py \
             tests/contracts/test_report_a_citation_matrix_v2.py \
-            tests/contracts/test_report_a_r3_flattened.py
+            tests/contracts/test_report_a_r3_flattened.py \
+            tests/contracts/test_report_a_r4a0_source.py

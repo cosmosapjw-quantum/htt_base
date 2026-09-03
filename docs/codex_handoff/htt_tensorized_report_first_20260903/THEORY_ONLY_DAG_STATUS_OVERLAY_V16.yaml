@@ -1,0 +1,69 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v16
+revision_date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_gate: DATA_DEFERRED_BY_OWNER
+nodes:
+  R3F:
+    title: Flattened 30-claim manuscript
+    state: SOURCE_COMPLETE
+    head: ae1ae2bd86bed019afc45d34f416b3ec33daa6f6
+  R3A:
+    title: Scientific and statistical source referee
+    state: CORE_PASS_WITH_PUBLICATION_SOURCE_CORRECTIONS_OPEN
+  R4A0:
+    title: Canonical-frame definition and T2 TeX repair
+    state: PATCH_AND_RED_CONTRACT_BOUND
+    findings:
+      - R4A0-ORBIT-01
+      - R4A0-TEX-01
+    requirements:
+      - apply the committed repository-relative patch
+      - run the focused R4A0 source contract
+      - preserve the 30-claim and 17-key authorities
+      - preserve all observational and finite-operator firewalls
+  R4A1:
+    title: Supported-runtime contracts and canonical ID hash
+    state: WAITING_ON_R4A0
+    requirements:
+      - Python 3.12
+      - validate T9 v3 and citation matrix v2
+      - validate flattened manuscript and R4A0 source
+      - bind canonical sorted-ID SHA-256
+  R4B:
+    title: Typeset PDF and visual bibliography audit
+    state: WAITING_ON_R4A1
+  R4C:
+    title: Final freeze and owner release decision
+    state: WAITING_ON_R4B
+  P1:
+    title: WU011 finite-operator numerical-error closeout
+    state: AFTER_R4C
+  P2:
+    title: Ideal inverse and intrinsic-octupole nuisance theory
+    state: AFTER_R4C
+  P3:
+    title: Depth and local-global identifiability theory
+    state: AFTER_R4C
+  D0:
+    title: Observational data authorization
+    state: DEFERRED_BY_OWNER
+claim_firewall:
+  corrected_tensorized_planck_rank: null
+  scalar_only_mes_current_result: false
+  finite_healpix_no_go_promoted: false
+  empirical_beta_fit: false
+  boost_subtraction: false
+  local_global_equivalence: false
+  physical_shear_vorticity_estimate: false
+  foreground_cause: false
+  bianchi_family_attribution: false
+  native_bass_solver_claim: false
+  publication_authorized: false
+  merge_authorized: false
+current_next_node: R4A0F_APPLY_BOUND_PATCH_AND_RUN_SUPPORTED_CONTRACT
+terminal: >-
+  R4A0_PATCH_AND_RED_CONTRACT_BOUND__
+  R4A1_R4B_R4C_WAITING__
+  OBSERVATIONAL_DATA_DEFERRED__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY
