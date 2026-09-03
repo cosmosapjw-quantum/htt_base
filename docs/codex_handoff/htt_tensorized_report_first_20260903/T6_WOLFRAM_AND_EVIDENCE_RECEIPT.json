@@ -1,0 +1,110 @@
+{
+  "schema": "htt.report_a.t6_processed_response_receipt.v1",
+  "date": "2026-09-03",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "report_pr": 449,
+  "authorities": {
+    "wu010": {
+      "pr": 442,
+      "head": "29427a1f7f2c5d46e43ffe03053c4ac13e969228",
+      "execution": "EXECUTED_SUCCESS"
+    },
+    "wu011_current_source": {
+      "pr": 444,
+      "head": "de73549c16ac6ceb63f924c86611e0a5ceb4711d",
+      "execution": "PRESTART_NO_EXECUTION"
+    },
+    "wu011_last_byte_exact": {
+      "head": "f635d873cf5e77f7cb0d2756469acde60b8609e5",
+      "terminal": "PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED",
+      "artifact_id": 9851300447,
+      "artifact_digest": "sha256:c9d6235f69fd27381279b0d007fd8dd1b75365f70bd5ce4e535f63ade4bb56a6"
+    },
+    "task7b": {
+      "head": "13d40cb4d600e9e5687f27f506aa978c77cbcfb7",
+      "terminal": "PASS_TASK7B_ATLAS_NO_CANDIDATE",
+      "artifact_id": 9832711817
+    }
+  },
+  "conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "outward_sky_direction": "n=-e",
+    "active_observer_boost": "+beta_obs",
+    "beta_definition": "beta_obs=v_obs/c",
+    "doppler_weight": 1
+  },
+  "coordinate_adapter": {
+    "orthonormal_carrier": "c_l=(a_l0,sqrt(2)Re(a_lm),-sqrt(2)Im(a_lm))",
+    "wu011_raw_coordinate": "r_l=(a_l0,Re(a_lm),Im(a_lm))",
+    "raw_metric": "G_l=diag(1,2,2,...,2)",
+    "adapter": "c_l=D_l r_l and D_l^T D_l=G_l",
+    "code_name_warning": "PR444 source calls r_l scientific stored-real; Report A reserves stored-real carrier for c_l"
+  },
+  "fresh_wolfram_checks": {
+    "dimensions": {
+      "low_anisotropy": 48,
+      "source_with_physical_T0": 49,
+      "retained": 32,
+      "three_axis_stacked": 96
+    },
+    "full_sky_sigma_squared": ["8/3","27/5","13","21","125/11","216/13"],
+    "multiplicities": [3,5,7,9,11,13],
+    "anisotropy_rank": 48,
+    "structural_T0_nullity": 1,
+    "nonzero_condition_squared": "63/8",
+    "nonzero_condition": "sqrt(63/8)",
+    "high_source_dimension_formula_residual": "0",
+    "high_source_dimensions": {
+      "7": 15,
+      "8": 32,
+      "9": 51,
+      "12": 120,
+      "16": 240,
+      "20": 392
+    },
+    "direct_first_order_full_sky_pairs_from_source_ell_7_to_20_into_retained_ell_2_to_5": [],
+    "exact_rank_identity_witness": {
+      "projected_rank": 2,
+      "augmented_rank_increment": 2,
+      "residual": 0
+    }
+  },
+  "theorems": {
+    "structural_monopole_null": "PASS",
+    "metric_whitened_full_sky_reference": "PASS",
+    "response_quotient_identity": "PASS",
+    "nested_high_source_images": "PASS",
+    "finite_cutoff_containment_short_circuit": "PASS",
+    "dimension_count_is_not_rank_proof": "PASS",
+    "continuum_finite_operator_firewall": "PASS"
+  },
+  "frozen_numerical_results": {
+    "task7b": {
+      "terminal": "PASS_TASK7B_ATLAS_NO_CANDIDATE",
+      "wide_response_condition": 32.21,
+      "wide_ell6_alias_to_neighbour": 2.516,
+      "wide_ell7_9_tail_to_neighbour": 5.279,
+      "wide_tail_projection_fraction": 0.961207
+    },
+    "task7c": {
+      "terminal": "PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED",
+      "nominal_coordinates": 18,
+      "ambiguous": 17,
+      "resolved": 1,
+      "containment_candidates": 0,
+      "resolved_survivor_coordinates": 1,
+      "best_saturation_margin": 0.2040651815504855
+    }
+  },
+  "claim_boundary": {
+    "finite_healpix_containment": "UNRESOLVED",
+    "current_A4_exact_head_runtime": "UNOBSERVED_PRESTART",
+    "observational_data": false,
+    "empirical_beta": false,
+    "boost_subtraction": false,
+    "global_tilt_identification": false,
+    "physical_source_attribution": false,
+    "merge_authorized": false
+  },
+  "terminal": "PASS_WU011_PROCESSED_RESPONSE_QUOTIENT_SYNTHESIS_WITH_FINITE_OPERATOR_UNRESOLVED"
+}
