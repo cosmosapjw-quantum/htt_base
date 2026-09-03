@@ -11,14 +11,18 @@ For one control family ``E_i`` and a coefficient vector ``b`` with
 
     E(b) E(b)^T <= r^2 sum_i E_i E_i^T
 
-in Loewner order.  For additive families with radii ``r_f``, weighted
-Cauchy--Schwarz gives the conservative envelope
+in Loewner order.  For ``F`` additive families with radii ``r_f``, an
+unweighted family-level Cauchy--Schwarz inequality gives the conservative,
+compensated-scaling-invariant envelope
 
-    C_E = (sum_f r_f) sum_f r_f sum_i E_{f,i} E_{f,i}^T + lambda^2 I.
+    C_E = F sum_f r_f^2 sum_i E_{f,i} E_{f,i}^T + lambda^2 I.
 
-The earlier equal-radius contract is recovered when every ``r_f = 1``.  The
-radii describe a declared deterministic additive perturbation class; they are
-not probabilities and no stochastic independence is assumed.
+The family partition is part of the declared uncertainty structure.  Within a
+fixed family registry the envelope is invariant under the equivalent
+reparameterization ``E_{f,i} -> c_f E_{f,i}``, ``r_f -> r_f / c_f`` for every
+positive scalar ``c_f``.  The radii describe deterministic additive
+coefficient balls; they are not probabilities and no stochastic independence
+is assumed.
 
 If an unknown numerical perturbation obeys ``Delta Delta^T <= C_E``, then
 ``||C_E^{-1/2} Delta||_2 <= 1``.  Weyl's singular-value inequality therefore
@@ -45,6 +49,7 @@ import numpy as np
 
 
 _PERTURBATION_CLASS = "additive_family_l2_balls"
+_ENVELOPE_WEIGHT_POLICY = "uniform_family_cauchy_invariant_v1"
 
 
 class MatrixErrorEnvelopeError(ValueError):
@@ -83,6 +88,7 @@ class MatrixValuedErrorEnvelope:
     total_family_radius: float
     perturbation_class: str
     maximum_registered_normalized_norm: float
+    weight_policy: str = _ENVELOPE_WEIGHT_POLICY
 
     def __post_init__(self) -> None:
         if self.output_dimension <= 0 or self.source_dimension <= 0:
@@ -124,6 +130,8 @@ class MatrixValuedErrorEnvelope:
             raise MatrixErrorEnvelopeError("error-envelope total family radius differs")
         if self.perturbation_class != _PERTURBATION_CLASS:
             raise MatrixErrorEnvelopeError("error-envelope perturbation class differs")
+        if self.weight_policy != _ENVELOPE_WEIGHT_POLICY:
+            raise MatrixErrorEnvelopeError("error-envelope weight policy differs")
         if not math.isfinite(self.maximum_registered_normalized_norm):
             raise MatrixErrorEnvelopeError("registered control normalization is invalid")
 
@@ -272,16 +280,19 @@ def build_output_error_envelope(
 
     ``family_radii[f]`` is the L2 radius of the deterministic coefficient ball
     multiplying family ``f``.  For a common coefficient vector per matrix the
-    bound follows directly from Cauchy--Schwarz.  It also covers independent
-    source-column coefficient vectors with the same per-column radius because
-    ``Delta Delta^T`` is the sum of the column outer products.
+    single-family bound follows directly from Cauchy--Schwarz.  It also covers
+    independent source-column coefficient vectors with the same per-column
+    radius because ``Delta Delta^T`` is the sum of the column outer products.
 
-    For additive families, weighted Cauchy--Schwarz gives
+    For ``F`` additive families, a second Cauchy--Schwarz step gives
 
-    ``C_E = R sum_f r_f sum_i E_fi E_fi^T + lambda^2 I``,
+    ``C_E = F sum_f r_f^2 sum_i E_fi E_fi^T + lambda^2 I``.
 
-    where ``R = sum_f r_f``.  Correlated or nonlinear interactions outside
-    this declared additive class require a successor contract.
+    This policy is invariant under the equivalent uniform rescaling of each
+    family basis with the inverse rescaling of its radius.  The family
+    partition itself remains part of the declared uncertainty contract.
+    Correlated or nonlinear interactions outside this additive class require a
+    successor contract.
     """
 
     if not isinstance(control_families, Mapping) or not control_families:
@@ -316,15 +327,16 @@ def build_output_error_envelope(
     radii = _family_radius_registry(names, family_radii)
     total_radius = math.fsum(radii.values())
     output_dimension, source_dimension = common_shape
-    weighted_covariance_sum = np.zeros(
+    invariant_covariance_sum = np.zeros(
         (output_dimension, output_dimension),
         dtype=np.float64,
     )
     for name, family in parsed:
-        radius = radii[name]
+        radius_squared = radii[name] ** 2
         for matrix in family:
-            weighted_covariance_sum += radius * (matrix @ matrix.T)
+            invariant_covariance_sum += radius_squared * (matrix @ matrix.T)
 
+    family_count = len(parsed)
     regularization_scale = max(
         regularization_relative * reference_operator_norm,
         machine_safety_factor
@@ -333,7 +345,7 @@ def build_output_error_envelope(
         * reference_operator_norm,
     )
     covariance = (
-        total_radius * weighted_covariance_sum
+        family_count * invariant_covariance_sum
         + regularization_scale**2 * np.eye(output_dimension, dtype=np.float64)
     )
     covariance = 0.5 * (covariance + covariance.T)
@@ -367,12 +379,13 @@ def build_output_error_envelope(
         regularization_scale=float(regularization_scale),
         output_dimension=output_dimension,
         source_dimension=source_dimension,
-        family_count=len(parsed),
+        family_count=family_count,
         family_shapes=MappingProxyType(shape_registry),
         family_radii=radii,
         total_family_radius=float(total_radius),
         perturbation_class=_PERTURBATION_CLASS,
         maximum_registered_normalized_norm=maximum_normalized,
+        weight_policy=_ENVELOPE_WEIGHT_POLICY,
     )
 
 
