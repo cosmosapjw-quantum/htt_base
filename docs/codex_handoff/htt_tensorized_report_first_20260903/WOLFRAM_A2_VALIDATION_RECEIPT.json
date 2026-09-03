@@ -1,5 +1,5 @@
 {
-  "schema": "htt.report_a.a2_wolfram_validation_receipt.v1",
+  "schema": "htt.report_a.a2_wolfram_validation_receipt.v2",
   "date": "2026-09-03",
   "repository": "cosmosapjw-quantum/htt_base",
   "report_pr": 449,
@@ -8,17 +8,19 @@
       "pr": 405,
       "commit": "463f0999949bf8534c60ad7973b7342705c2e3d6",
       "path": "docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json",
-      "blob_sha": "56af1713ef8c4718598e10012819d5ab62c6e37a"
+      "blob_sha": "56af1713ef8c4718598e10012819d5ab62c6e37a",
+      "declared_supplemental_scoped_candidates": 5
     },
     "adversarial_triage_contract": {
       "pr": 408,
       "commit": "40dce3ab9328c1f3acb99adba11046056c639737",
+      "merge_commit": "2dce66ca019609e6d07625bc6382bc347fbf5a8c",
       "path": "docs/codex_handoff/pr408_final/WU-001.yaml"
     }
   },
   "validated_surface": {
     "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/REGISTERED_SURVIVOR_SURFACE.csv",
-    "git_blob_sha": "3e0c99a7d19116396a6661fe547d86d49b880d62"
+    "git_blob_sha": "d64cfbd2265b85264798cc753d38a6f300a5877f"
   },
   "execution": {
     "engine": "Wolfram Language evaluator",
@@ -27,18 +29,20 @@
     "native_solver_used": false
   },
   "surface_checks": {
-    "parsed_rows": 36,
+    "parsed_rows": 37,
     "unique_ids": true,
     "source_class_counts": {
       "EXACT_OR_CONDITIONAL": 24,
       "SYNTHETIC": 8,
-      "SCOPED_CHILD": 4
+      "SCOPED_CHILD": 5
     },
     "report_disposition_counts": {
       "INCLUDED": 16,
       "EXCLUDED": 13,
-      "DEFERRED": 7
+      "DEFERRED": 8
     },
+    "missing_declared_scoped_candidates": 0,
+    "deferred_pr284_candidate_present": true,
     "duplicate_groups_closed": true,
     "scoped_parents_present": true,
     "representation_firewall_closed": true,
@@ -57,13 +61,27 @@
     "polar_krylov_reflection_residual": "0",
     "axial_krylov_reflection_residual": "0"
   },
-  "validation_repair_record": {
-    "first_check_result": "FAIL_DUPLICATE_GROUP_CHECK_IMPLEMENTATION",
-    "cause": "CSV boolean cells were imported as Boolean True/False while the first check compared them with string literals",
-    "data_changed": false,
-    "repair": "compare Boolean values directly",
-    "final_check_result": "PASS_ALL_A2_SURFACE_CHECKS"
-  },
+  "validation_repair_record": [
+    {
+      "stage": "initial_expression_repair",
+      "first_check_result": "FAIL_DUPLICATE_GROUP_CHECK_IMPLEMENTATION",
+      "cause": "CSV boolean cells were imported as Boolean True/False while the first check compared them with string literals",
+      "data_changed": false,
+      "repair": "compare Boolean values directly",
+      "result": "PASS_ON_THEN_CURRENT_36_ROW_SURFACE"
+    },
+    {
+      "stage": "source_surface_completeness_repair",
+      "first_check_result": "FAIL_MISSING_DECLARED_SCOPED_CANDIDATE",
+      "cause": "the report CSV retained four promoted scoped children but omitted PR284_NEW:FINITE-REGISTERED-PATH, the fifth declared supplemental scoped candidate in PR #405",
+      "data_changed": true,
+      "repair": "add the unresolved PR284 candidate with report disposition DEFERRED; leave the 16 included rows unchanged",
+      "corrected_row_count": 37,
+      "corrected_sorted_id_audit_sha256": "249af10f1643ff699dc8f6ba0e5424505a11d226a8498b87056152e46d949737",
+      "hash_scope": "Wolfram canonicalized sorted IDs; not a Git content identity",
+      "result": "PASS_ALL_A2_SOURCE_SURFACE_CHECKS"
+    }
+  ],
   "claim_boundary": {
     "truth_or_novelty_promoted_by_a2": false,
     "current_corrected_planck_rank": null,
