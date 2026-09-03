@@ -79,6 +79,126 @@ def _condition_limit(value: float) -> float:
     return float(value)
 
 
+def _symmetric_component(
+    tensor: np.ndarray,
+    indices: tuple[int, int, int],
+    value: float,
+) -> None:
+    for perm in set(permutations(indices)):
+        tensor[perm] = value
+
+
+def _orthonormal_stf3_basis() -> np.ndarray:
+    """Return a fixed Frobenius-orthonormal Cartesian STF3 basis."""
+    basis: list[np.ndarray] = []
+
+    first = np.zeros((3, 3, 3))
+    first[0, 0, 0] = 0.5
+    _symmetric_component(first, (0, 1, 1), -0.5)
+    basis.append(first)
+
+    second = np.zeros((3, 3, 3))
+    _symmetric_component(second, (0, 0, 1), 0.5)
+    second[1, 1, 1] = -0.5
+    basis.append(second)
+
+    third = np.zeros((3, 3, 3))
+    _symmetric_component(third, (0, 0, 2), 1.0 / math.sqrt(6.0))
+    _symmetric_component(third, (1, 1, 2), -1.0 / math.sqrt(6.0))
+    basis.append(third)
+
+    fourth = np.zeros((3, 3, 3))
+    _symmetric_component(fourth, (0, 1, 2), 1.0 / math.sqrt(6.0))
+    basis.append(fourth)
+
+    scale = math.sqrt(3.0 / 20.0)
+    fifth = np.zeros((3, 3, 3))
+    fifth[0, 0, 0] = -scale
+    _symmetric_component(fifth, (0, 1, 1), -scale / 3.0)
+    _symmetric_component(fifth, (0, 2, 2), 4.0 * scale / 3.0)
+    basis.append(fifth)
+
+    sixth = np.zeros((3, 3, 3))
+    sixth[1, 1, 1] = -scale
+    _symmetric_component(sixth, (0, 0, 1), -scale / 3.0)
+    _symmetric_component(sixth, (1, 2, 2), 4.0 * scale / 3.0)
+    basis.append(sixth)
+
+    seventh = np.zeros((3, 3, 3))
+    seventh[2, 2, 2] = 2.0 / math.sqrt(10.0)
+    _symmetric_component(seventh, (0, 0, 2), -1.0 / math.sqrt(10.0))
+    _symmetric_component(seventh, (1, 1, 2), -1.0 / math.sqrt(10.0))
+    basis.append(seventh)
+
+    return np.stack(basis)
+
+
+_STF3_BASIS = _orthonormal_stf3_basis()
+
+
+def _reconstruct_stf3_from_trilinears(
+    *,
+    krylov_basis: np.ndarray,
+    trilinears: np.ndarray,
+    condition_limit: float,
+) -> np.ndarray:
+    """Recover an STF3 tensor without a cubic explicit inverse.
+
+    The original decoder applied the inverse Krylov basis in all three tensor
+    slots, which can amplify packet roundoff roughly cubically in its condition
+    number. Here the unknown tensor is expanded in a fixed orthonormal STF3
+    basis and recovered from the ten trilinear coordinates by a row-scaled
+    full-rank least-squares solve. Callers still enforce the physical packet
+    syzygies and a complete forward replay, so an inconsistent packet is not
+    projected silently into the image.
+    """
+    rows = []
+    for i, j, k in TRIPLES:
+        rows.append(
+            np.einsum(
+                "pabc,a,b,c->p",
+                _STF3_BASIS,
+                krylov_basis[:, i],
+                krylov_basis[:, j],
+                krylov_basis[:, k],
+            )
+        )
+    design = np.asarray(rows, dtype=np.float64)
+    rhs = np.asarray(trilinears, dtype=np.float64)
+    row_norms = np.linalg.norm(design, axis=1)
+    if np.any(~np.isfinite(row_norms)) or np.any(row_norms == 0.0):
+        raise OrbitChartUnavailable(
+            "STF3 packet reconstruction system is singular"
+        )
+    scaled_design = design / row_norms[:, None]
+    scaled_rhs = rhs / row_norms
+    coefficients, _, rank, singular = np.linalg.lstsq(
+        scaled_design,
+        scaled_rhs,
+        rcond=None,
+    )
+    if (
+        rank != len(_STF3_BASIS)
+        or singular[0] == 0.0
+        or singular[-1] <= singular[0] / condition_limit
+    ):
+        raise OrbitChartUnavailable(
+            "STF3 packet reconstruction system is outside the fixed "
+            "conditioning domain"
+        )
+    reconstructed = np.einsum(
+        "p,pabc->abc",
+        coefficients,
+        _STF3_BASIS,
+    )
+    predicted = design @ coefficients
+    if not np.allclose(predicted, rhs, rtol=1e-7, atol=1e-10):
+        raise OrbitInputError(
+            "trilinear coordinates are inconsistent with one STF3 tensor"
+        )
+    return reconstructed
+
+
 def krylov16(
     q: object,
     o: object,
@@ -160,11 +280,13 @@ def reconstruct_krylov16(
         raise OrbitInputError("STF characteristic discriminant is negative")
     m3 = s2 * m1 / 2 + s3 * m0 / 3
     m4 = s2 * m2 / 2 + s3 * m1 / 3
-    gram = np.array([
-        [m0, m1, m2],
-        [m1, m2, m3],
-        [m2, m3, m4],
-    ])
+    gram = np.array(
+        [
+            [m0, m1, m2],
+            [m1, m2, m3],
+            [m2, m3, m4],
+        ]
+    )
     eig = np.linalg.eigvalsh(gram)
     if eig[-1] <= 0 or eig[0] <= eig[-1] / limit**2:
         raise OrbitChartUnavailable(
@@ -181,31 +303,27 @@ def reconstruct_krylov16(
     if kap < 0:
         basis[2] *= -1
     inverse = np.linalg.inv(basis)
-    companion = np.array([
-        [0.0, 0.0, s3 / 3],
-        [1.0, 0.0, s2 / 2],
-        [0.0, 1.0, 0.0],
-    ])
+    companion = np.array(
+        [
+            [0.0, 0.0, s3 / 3],
+            [1.0, 0.0, s2 / 2],
+            [0.0, 1.0, 0.0],
+        ]
+    )
     q = basis @ companion @ inverse
-    tc = np.zeros((3, 3, 3))
-    for triple, value in zip(TRIPLES, values[6:]):
-        for perm in set(permutations(triple)):
-            tc[perm] = value
-    o = np.einsum("ia,jb,kc,ijk->abc", inverse, inverse, inverse, tc)
-    # Do not repair an inconsistent signature by silently projecting it.
+    o = _reconstruct_stf3_from_trilinears(
+        krylov_basis=basis,
+        trilinears=values[6:],
+        condition_limit=limit,
+    )
     if np.max(np.abs(q - q.T)) > 1e-7 or abs(float(np.trace(q))) > 1e-7:
         raise OrbitInputError("reconstructed Q fails symmetry/trace closure")
     if np.max(np.abs(np.einsum("iik->k", o))) > 1e-7:
         raise OrbitInputError("reconstructed O fails trace closure")
-    if not np.isclose(np.sum(q*q), 1.0, rtol=1e-7, atol=1e-10):
+    if not np.isclose(np.sum(q * q), 1.0, rtol=1e-7, atol=1e-10):
         raise OrbitInputError("reconstructed Q normalization mismatch")
-    if not np.isclose(np.sum(o*o), 1.0, rtol=1e-7, atol=1e-10):
+    if not np.isclose(np.sum(o * o), 1.0, rtol=1e-7, atol=1e-10):
         raise OrbitInputError("reconstructed O normalization mismatch")
-
-    # The decoded trilinear coordinates must lie in the image of the Krylov
-    # construction.  Existing moment checks fix B=[v,Qv,Q^2v], but without
-    # this syzygy a forged STF3 tensor can preserve those moments while using
-    # a different actual contraction v=O:Q.
     reconstructed_v = np.einsum("ijk,jk->i", o, q)
     expected_v = basis[:, 0]
     v_scale = max(
@@ -219,6 +337,16 @@ def reconstruct_krylov16(
         raise OrbitInputError(
             "reconstructed O:Q vector disagrees with Krylov moment frame"
         )
+    replay = krylov16(q, o, condition_limit=limit)
+    if not np.allclose(
+        replay["values"],
+        values,
+        rtol=1e-7,
+        atol=1e-10,
+    ):
+        raise OrbitInputError(
+            "reconstructed Q/O pair does not replay the supplied packet"
+        )
     return q * qn, o * on
 
 
@@ -226,12 +354,14 @@ def ordinary_power_bispectrum(q: object, o: object) -> np.ndarray:
     """Four ordinary quadratic/cubic invariants; deliberately not separating."""
     q = _real_array(q, (3, 3), "Q")
     o = _real_array(o, (3, 3, 3), "O")
-    return np.array([
-        np.sum(q*q),
-        np.sum(o*o),
-        np.trace(q@q@q),
-        np.einsum("ij,ikl,jkl", q, o, o),
-    ])
+    return np.array(
+        [
+            np.sum(q * q),
+            np.sum(o * o),
+            np.trace(q @ q @ q),
+            np.einsum("ij,ikl,jkl", q, o, o),
+        ]
+    )
 
 
 def pstf_mes_ceilings(
