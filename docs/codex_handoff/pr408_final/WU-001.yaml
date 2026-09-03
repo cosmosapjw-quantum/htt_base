@@ -1,0 +1,135 @@
+schema: audit-compiled-work-unit/v1
+id: WU-001
+title: Registered survivor-surface triage
+
+authority:
+  base_sha: RESOLVE_FROM_APPROVED_PR408_TERMINAL_RECEIPT
+  branch: ALLOCATE_FROM_LIVE_DAG
+  upstream_dependencies: []
+  required_ancestor: bdad91a204c424030cd6d0e562232b6965a42900
+
+objective:
+  statement: Derive the closeout surface from declared source registries and adjudication rows without assigning truth, novelty, or publication roles.
+  observable_success: Every eligible exact or conditional row, synthetic row, and declared scoped child has INCLUDED, EXCLUDED, or DEFERRED plus a source identity.
+  non_goals:
+    - universal candidate-universe closure
+    - truth or novelty decisions
+    - new theorem derivation
+
+risk:
+  class: critical
+  P0_failure_modes: [FM-P0-001, FM-P0-002, FM-P0-003]
+  P1_failure_modes: []
+
+scope:
+  allowed_paths:
+    - scripts/extract_theory_survivor_surface.py
+    - tests/contracts/test_theory_survivor_triage.py
+    - docs/research_program/theory_promotion/closeout/**
+    - generated DAG mirrors
+  forbidden_paths:
+    - frozen historical receipt contents
+    - data/canonical/**
+    - legacy/**
+  forbidden_changes:
+    - Do not change exact mathematics to fit tests
+    - Do not project truth or publication roles in this unit
+    - Do not modify existing DAG nodes or edges
+
+preconditions:
+  - id: PRE-001
+    command: resolve approved PR408 terminal and verify HEAD descends from it and from bdad91a204c424030cd6d0e562232b6965a42900
+    expect: exact commit and ancestry PASS
+  - id: PRE-002
+    command: git status --porcelain=v1 --untracked-files=all
+    expect: empty
+  - id: PRE-003
+    command: python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+    expect: exit=0 before any append
+
+invariants:
+  - id: INV-001
+    severity_if_violated: P0
+    statement: No eligible registered result disappears silently.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_theory_survivor_triage.py
+      expect: all pass
+  - id: INV-002
+    severity_if_violated: P0
+    statement: Broad parent and scoped child retain distinct statement identities.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_theory_survivor_triage.py -k broad_parent
+      expect: pass
+  - id: INV-003
+    severity_if_violated: P0
+    statement: Provisional role labels cannot determine final research decisions.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_theory_survivor_triage.py -k evidence_mutation
+      expect: pass
+
+failure_modes:
+  - id: FM-P0-001
+    severity: P0
+    trigger: an eligible row is omitted
+    required_detection:
+      test: test_registered_survivor_triage_detects_injected_eligible_candidate
+  - id: FM-P0-002
+    severity: P0
+    trigger: a research outcome is unchanged under source or replay mutation
+    required_detection:
+      test: test_research_decision_changes_when_source_or_replay_evidence_is_mutated
+  - id: FM-P0-003
+    severity: P0
+    trigger: a narrow child rewrites its broad parent
+    required_detection:
+      test: test_broad_parent_and_narrow_child_have_distinct_statement_identities
+
+implementation:
+  ordered_steps:
+    - id: STEP-001
+      files: [tests/contracts/test_theory_survivor_triage.py]
+      action: Add RED mutation, omission, and parent-child tests.
+      must_preserve: []
+    - id: STEP-002
+      files: [scripts/extract_theory_survivor_surface.py]
+      action: Implement deterministic source triage with no truth field.
+      must_preserve: [historical artifacts]
+    - id: STEP-003
+      files: [docs/research_program/theory_promotion/closeout/REGISTERED_SURVIVOR_SURFACE.json]
+      action: Generate the canonical source-bound surface.
+      must_preserve: [no universal candidate-universe wording]
+
+verification:
+  targeted:
+    - pytest -q tests/contracts/test_theory_survivor_triage.py
+  negative:
+    - inject a ninth eligible survivor
+    - remove one disposition
+    - merge one broad parent and child
+  regression:
+    - python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+    - git diff --check
+  integration: []
+  full_relevant_suite: []
+
+completion_evidence:
+  required:
+    - registered_surface_sha256
+    - disposition_counts
+    - mutation_RED_GREEN_logs
+    - final_git_head
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - unresolved_blockers
+
+agent_policy:
+  ask_user_questions: false
+  guessing_across_spec_boundary: forbidden
+  changing_tests_to_fit_implementation: forbidden
+  suppressing_failures: forbidden
+  claiming_unexecuted_work: forbidden
+
+review_gate:
+  fresh_context_required: true
+  pass_condition: {P0: 0, P1: 0}

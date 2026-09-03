@@ -1,0 +1,105 @@
+schema: htt.theory_survivor_closeout_validation_matrix.v1
+requirements:
+- id: SCI-001
+  requirement: status projection follows closed source and evidence audit
+  check: test_status_projection_refuses_without_closed_evidence_manifest
+  level: scientific
+  expected: PASS
+- id: SCI-002
+  requirement: truth does not imply historical campaign promotion
+  check: test_truth_does_not_imply_historical_campaign_promotion
+  level: scientific
+  expected: PASS
+- id: SCI-002A
+  requirement: campaign disposition requires an exact campaign decision receipt
+  check: test_campaign_disposition_requires_exact_campaign_receipt
+  level: scientific
+  expected: PASS
+- id: SCI-003
+  requirement: survivor release does not require campaign exhaustion
+  check: test_survivor_release_is_independent_of_not_attempted_count
+  level: scientific
+  expected: PASS
+- id: SCI-004
+  requirement: registered surface never becomes universal candidate universe
+  check: test_registered_surface_closure_never_emits_universal_candidate_claim
+  level: scientific
+  expected: PASS
+- id: SCI-005
+  requirement: PR284 broad theorem and finite fixture child remain distinct
+  check: test_pr284_broad_and_finite_child_are_distinct_candidates
+  level: scientific
+  expected: PASS
+- id: NUM-001
+  requirement: PR284 exact projection
+  check: test_pr284_fraction_projection_is_exact
+  level: numerical
+  expected:
+    probability: 1/2
+    bound: 25/36
+    slack: 7/36
+- id: NUM-002
+  requirement: VT-T8 witness and local domain
+  check: test_vt_t8_jacobian_and_domain
+  level: numerical
+  expected:
+    dimension: 14
+    determinant: 50331648
+- id: NUM-003
+  requirement: VT-T13 chain rule
+  check: test_vt_t13_chain_rule_symbolic
+  level: numerical
+  expected: exact
+- id: SRC-001
+  requirement: every survivor has exact statement and content-bound source
+  check: test_every_survivor_has_resolvable_statement_and_evidence
+  level: reproducibility
+  expected: PASS
+- id: NOV-001
+  requirement: publication candidate has statement-level novelty state
+  check: test_publication_ready_requires_novelty_adjudication
+  level: scientific
+  expected: PASS
+- id: DAG-001
+  requirement: PR407 exact terminal is preserved as transitive audited evidence
+  check: test_implementation_preserves_exact_pr407_audited_input_terminal
+  level: operational
+  expected: PASS
+- id: DAG-001A
+  requirement: approved PR408 terminal disposition, commit, and tree control implementation ancestry
+  check: test_implementation_requires_exact_pr408_terminal_ancestry
+  level: operational
+  expected: PASS
+- id: DAG-002
+  requirement: existing node and edge sequence is exact prefix
+  check: test_dag_before_snapshot_is_exact_prefix_after_append
+  level: operational
+  expected: PASS
+- id: CMD-001
+  requirement: every plan command parses and executes in dry-run mode
+  check: test_machine_plan_commands_are_syntactically_executable
+  level: software
+  expected: PASS
+- id: CI-001
+  requirement: load-bearing closeout tests execute in existing CI
+  check: Repository integrity theory-survivor-closeout step
+  level: software
+  expected: PASS
+- id: REV-001
+  requirement: fresh reviewer sees no P0/P1
+  check: fresh_context_review_receipt
+  level: review
+  expected:
+    P0: 0
+    P1: 0
+- id: RES-001
+  requirement: coding handoff remains blocked until research closeout is complete
+  check: test_coding_handoff_refuses_open_research_closeout
+  level: scientific
+  expected: PASS
+status_values:
+- PASS
+- CONCERN
+- FAIL
+- NOT_RUN
+- NOT_APPLICABLE

@@ -1,0 +1,420 @@
+schema: htt.audit_compiled_survivor_closeout.v1
+
+identity:
+  package_id: PR407_PHYSMATH_SURVIVOR_CLOSEOUT
+  canonical_pr_id: null
+  canonical_pr_id_policy: ALLOCATE_APPEND_ONLY_FROM_LIVE_DAG
+  audited_pr: 407
+  audited_head: bdad91a204c424030cd6d0e562232b6965a42900
+  audited_tree: c3cd19442e525aaf1b1e683c1920568513e18da5
+  risk_class: high
+  owner: COMMON
+  objective_class: EXISTING_RESULT_CLOSEOUT_NOT_NEW_THEORY
+  observed_data_used: false
+  native_solver_used: false
+
+controlling_inputs:
+  controlling_planning_pr: 408
+  research_loop: docs/codex_handoff/theory_promotion_closeout/RESEARCH_LOOP_CLOSEOUT.yaml
+  scientific_contract: docs/codex_handoff/theory_promotion_closeout/SCIENTIFIC_CONTRACT.md
+  validation_matrix: docs/codex_handoff/theory_promotion_closeout/VALIDATION_MATRIX.yaml
+  coding_loop_task_contract: docs/codex_handoff/theory_promotion_closeout/CODING_LOOP_TASK_CONTRACT.yaml
+  threat_catalog: docs/codex_handoff/theory_promotion_closeout/P0_P1_THREAT_CATALOG.json
+  fresh_review_contract: docs/codex_handoff/theory_promotion_closeout/FRESH_REVIEW_CONTRACT.yaml
+
+objective:
+  statement: >-
+    Close already-established observation-independent survivor results with
+    exact source/evidence/replay/novelty boundaries, while preserving broad
+    unresolved parents and leaving unrelated new-theory proposals open.
+  observable_success: >-
+    A current survivor overlay and evidence package can be independently
+    replayed and reviewed with P0=0 and P1=0 while the wider proof campaign may
+    remain OPEN and retain NOT_ATTEMPTED proposals.
+
+global_constraints:
+  - Do not modify any canonical DAG file in this planning PR.
+  - PR-407 is transitive audited evidence, not the controlling implementation predecessor.
+  - Future implementation requires exact terminal identities for PR-407 and PR-408.
+  - Resolve the PR-408 terminal commit and tree at implementation start; do not hard-code this planning PR's moving head into its own content.
+  - The implementation branch must descend from the resolved PR-408 terminal commit.
+  - Re-read the live DAG before allocating canonical IDs.
+  - Preserve every preexisting node and edge as an exact prefix.
+  - Evidence and claim-source audit precede all truth/status decisions.
+  - Historical campaign disposition is immutable historical evidence.
+  - Truth does not automatically imply campaign promotion.
+  - Campaign completion and survivor release are independent.
+  - Do not develop new theory on the core closeout path.
+  - Do not rewrite frozen PR-275/285/286/405/406/407 artifacts.
+  - Do not add security, signing, nonce, authorization, or generic ledger frameworks.
+  - No observed-data, native-transfer, geometry-detection, or Bianchi-family claim.
+  - Every production edit starts with a failing regression test.
+  - One work unit contains one independently rejectable scientific invariant family.
+
+dag_integration:
+  mode: append_only_after_controlling_PR408_terminal
+  audited_input:
+    github_pr: 407
+    head: bdad91a204c424030cd6d0e562232b6965a42900
+    tree: c3cd19442e525aaf1b1e683c1920568513e18da5
+    role: TRANSITIVE_AUDITED_EVIDENCE
+    exact_terminal_receipt: required
+  controlling_predecessor:
+    github_pr: 408
+    branch: analysis/pr407-physmath-survivor-closeout-audit-20260825
+    exact_terminal_receipt: required
+    required_disposition: APPROVED_FOR_IMPLEMENTATION
+    resolve_commit_and_tree_at_implementation_start: true
+    implementation_branch_must_descend_from_resolved_commit: true
+  live_reread:
+    - docs/codex_handoff/pr_backlog.yaml
+    - docs/codex_handoff/pr_status.yaml
+    - machine_readable/pr_backlog.yaml
+    - machine_readable/pr_status.yaml
+    - open concurrent stacked pull requests
+  before_snapshot:
+    required_fields:
+      - ordered_node_ids
+      - ordered_edges
+      - execution_resolutions
+      - sha256_each
+  allocation:
+    existing_generator_only: true
+    hard_coded_canonical_ids_forbidden: true
+  after_invariant:
+    old_ordered_node_ids_exact_prefix: true
+    every_old_edge_unchanged: true
+    every_old_resolution_unchanged: true
+  stops:
+    - BLOCKED_PREDECESSOR_TERMINAL_RECEIPT
+    - BLOCKED_CONTROLLING_PR408_TERMINAL_RECEIPT
+    - BLOCKED_DAG_PREFIX_DRIFT
+    - BLOCKED_DAG_ID_NOT_ALLOCATED
+
+research_phase:
+  required_before_coding: true
+  phases:
+    - RESEARCH_CONTRACT_FROZEN
+    - EVIDENCE_LEDGER_CLOSED_FOR_SURVIVORS
+    - CLAIM_SOURCE_AUDIT_COMPLETE
+    - HYPOTHESIS_DECISION_H3
+    - INDEPENDENT_ADVERSARIAL_GATE_COMPLETE
+    - PHYSICS_MATH_VALIDATION_COMPLETE
+    - VERIFICATION_DESIGN_COMPLETE
+    - SURVIVOR_SET_FROZEN
+  stop_if:
+    - survivor statement is ambiguous
+    - exact source cannot be resolved
+    - novelty status is required but unassessed for a publication claim
+    - requested closeout requires a new theorem
+
+coding_phase:
+  task_layer_order:
+    - diagnose
+    - design
+    - implement
+    - validate
+    - review
+    - document
+  requirements:
+    - read scientific contract and validation matrix before edit
+    - reproduce exact baseline
+    - localize source/evidence/status consumers
+    - compare at most three bounded solutions
+    - choose smallest sufficient change
+    - separate software/scientific/numerical/reproducibility validation
+    - fresh-context diff review
+    - promote only with complete evidence bundle
+
+status_model:
+  campaign_disposition:
+    enum: [PROMOTED, REFUTED, UNRESOLVED, DEFERRED, NOT_ATTEMPTED]
+    source: exact_campaign_receipt
+    automatic_derivation_from_truth: forbidden
+  historical_campaign_disposition:
+    role: optional_comparison_only
+    source: frozen_historical_receipt
+    mutation: forbidden
+  truth_status:
+    enum: [ESTABLISHED, REFUTED, OPEN, NOT_ASSESSED]
+  evidence_modality:
+    enum:
+      - HAND_DERIVATION
+      - EXACT_FINITE_ENUMERATION
+      - EXACT_SYMBOLIC_IDENTITY
+      - FORMAL_KERNEL_PROOF
+      - FORMAL_ARITHMETIC_REPLAY
+      - EXACT_COUNTEREXAMPLE
+      - PREREGISTERED_SYNTHETIC_EXPERIMENT
+      - INCOMPLETE
+      - UNAVAILABLE
+  replay_status:
+    enum: [CURRENT_PASS, HISTORICAL_PASS_CURRENT_INCOMPLETE, CURRENT_BLOCKED, CURRENT_FAIL, NOT_RUN]
+  novelty_status:
+    enum: [NOVEL, APPLICATION_SPECIFIC, KNOWN_OR_STANDARD, UNASSESSED]
+  publication_role:
+    enum:
+      - PRIMARY_PROPOSITION
+      - SUPPORTING_LEMMA
+      - NEGATIVE_APPLICATION
+      - SYNTHETIC_VALIDATION
+      - INTERNAL_REGRESSION
+      - EXCLUDED
+  survivor_release_status:
+    enum: [ELIGIBLE, BLOCKED, NOT_APPLICABLE]
+  campaign_completion_status:
+    enum: [OPEN, COMPLETE]
+  invariants:
+    - truth does not create or mutate campaign disposition
+    - campaign OPEN does not block an eligible survivor
+    - NOT_ATTEMPTED is never REFUTED
+    - engine availability changes replay only
+    - synthetic validation is never a theorem
+    - registered surface closure is never universal candidate closure
+
+survivor_manifest:
+  required_candidates:
+    - PR284_REGISTERED_FINITE_FIXTURE
+    - PR190_NORMAL_VORTICITY_OBSTRUCTION
+    - VT_T5_DISCRIMINANT_CORE
+    - VT_T6_CAYLEY_HAMILTON_CORE
+    - VT_T7_KRYLOV_CORE
+    - VT_T8_LOCAL_CHART
+    - VT_T13_CHAIN_RULE_CORE
+    - VT_S14_SYNTHETIC_CELL
+  broad_parent_links_required: true
+  current_expected_roles:
+    PR284_REGISTERED_FINITE_FIXTURE: INTERNAL_REGRESSION
+    PR190_NORMAL_VORTICITY_OBSTRUCTION: NEGATIVE_APPLICATION
+    VT_T5_DISCRIMINANT_CORE: SUPPORTING_LEMMA
+    VT_T6_CAYLEY_HAMILTON_CORE: SUPPORTING_LEMMA
+    VT_T7_KRYLOV_CORE: SUPPORTING_LEMMA
+    VT_T8_LOCAL_CHART: PRIMARY_PROPOSITION
+    VT_T13_CHAIN_RULE_CORE: SUPPORTING_LEMMA
+    VT_S14_SYNTHETIC_CELL: SYNTHETIC_VALIDATION
+
+core_work_unit_count: 5
+core_work_units:
+  - id: CLOSEOUT-A-RESEARCH-EVIDENCE-FREEZE
+    title: Freeze survivor statements and content-bound evidence before status
+    depends_on: [EXACT_PR407_AUDITED_INPUT_TERMINAL, EXACT_PR408_CONTROLLING_TERMINAL]
+    allowed_paths:
+      - docs/research_program/theory_promotion/**
+      - docs/codex_handoff/theory_promotion_closeout/**
+      - scripts/extract_theory_survivors.py
+      - tests/contracts/test_theory_survivor_closeout.py
+      - generated DAG/status mirrors
+    red_tests:
+      - test_status_projection_refuses_without_closed_evidence_manifest
+      - test_every_survivor_has_resolvable_statement_and_evidence
+      - test_pr284_broad_and_finite_child_are_distinct_candidates
+    implementation:
+      - emit exact survivor statement manifest
+      - bind source path, git blob, fragment/symbol, assumptions, exclusions, and evidence modality
+      - preserve broad parent statuses
+      - call the surface REGISTERED_SURVIVOR_SURFACE
+    completion_evidence:
+      - research_contract_hash
+      - evidence_manifest_hash
+      - claim_source_audit
+      - survivor_manifest_hash
+      - RED_and_GREEN_logs
+    stop: BLOCKED_SURVIVOR_EVIDENCE_NOT_CLOSED
+
+  - id: CLOSEOUT-B-STATUS-AND-RELEASE-PROJECTION
+    title: Project status after evidence and separate campaign completion from survivor release
+    depends_on: [CLOSEOUT-A-RESEARCH-EVIDENCE-FREEZE]
+    red_tests:
+      - test_truth_does_not_imply_historical_campaign_promotion
+      - test_campaign_disposition_requires_exact_campaign_receipt
+      - test_survivor_release_is_independent_of_not_attempted_count
+      - test_registered_surface_closure_never_emits_universal_candidate_claim
+    implementation:
+      - preserve historical campaign disposition
+      - assign any current campaign disposition only from an exact campaign decision receipt
+      - derive truth, replay, novelty, publication role, and survivor release from closed evidence
+      - keep campaign completion OPEN while NOT_ATTEMPTED proposals remain
+      - forbid universal candidate-universe wording
+    completion_evidence:
+      - old_new_projection_table
+      - campaign_disposition_receipts
+      - campaign_completion_status
+      - survivor_release_statuses
+      - mutation_log
+    stop: BLOCKED_STATUS_OR_RELEASE_PROJECTION
+
+  - id: CLOSEOUT-C-EXACT-RESULT-REPLAY
+    title: Replay only existing exact results at their registered scopes
+    depends_on: [CLOSEOUT-B-STATUS-AND-RELEASE-PROJECTION]
+    red_tests:
+      - test_pr284_fraction_projection_is_exact
+      - test_vt_t8_jacobian_and_domain
+      - test_vt_t13_chain_rule_symbolic
+      - test_pr190_scope_excludes_tilted_frames
+    implementation:
+      - replay PR284 exact fractions from one canonical fixture
+      - label Lean as FORMAL_ARITHMETIC_REPLAY unless existing typed probability semantics already exist
+      - replay VT-T5/T6/T7/T8/T13 exact identities
+      - replay PR190 scoped obstruction
+      - do not add any new theorem
+    completion_evidence:
+      - exact_projection_receipts
+      - PR284_fixture_hash
+      - VT_T8_witness_and_factor_hash
+      - VT_T13_formula_hash
+      - PR190_scope_receipt
+    stop: BLOCKED_EXISTING_RESULT_REPLAY
+
+  - id: CLOSEOUT-D-NOVELTY-AND-SURVIVOR-OVERLAY
+    title: Build publication-facing survivor overlay with novelty and role boundaries
+    depends_on: [CLOSEOUT-C-EXACT-RESULT-REPLAY]
+    red_tests:
+      - test_publication_ready_requires_novelty_adjudication
+      - test_supporting_lemmas_are_not_counted_as_unique_theorems
+      - test_synthetic_validation_is_not_theorem_or_observation
+    implementation:
+      - separate primary proposition, supporting lemma, negative application, synthetic validation, and internal regression
+      - keep VT-T8 blocked until statement-level novelty comparison and independent mathematical review
+      - keep PR190 framed as a scoped application unless novelty is established
+      - do not publish a unique theorem count
+      - preserve wider campaign as OPEN
+    completion_evidence:
+      - survivor_overlay_hash
+      - novelty_table
+      - publication_unit_table
+      - forbidden_claim_scan
+    stop: BLOCKED_SURVIVOR_OVERLAY_NOT_READY
+
+  - id: CLOSEOUT-E-FOCUSED-CI-AND-FRESH-REVIEW
+    title: Execute focused validation and independent read-only review
+    depends_on: [CLOSEOUT-D-NOVELTY-AND-SURVIVOR-OVERLAY]
+    implementation:
+      - add one existing Repository-integrity step for survivor package tests
+      - preserve all existing CI steps
+      - run software, scientific, numerical, and reproducibility cells separately
+      - seal candidate and launch a fresh-context reviewer
+    completion_evidence:
+      - clean_CI_run_ids
+      - validation_matrix
+      - exact test logs
+      - fresh_review_receipt
+      - P0_remaining
+      - P1_remaining
+    pass_condition:
+      P0: 0
+      P1: 0
+    stop: BLOCKED_CLOSEOUT_REVIEW
+
+deferred_not_core_dependencies:
+  - id: PR197_FINITE_RANK_DEBT
+    disposition: DEFERRED
+    reason: not required to close current survivor set
+  - id: PR210_FRAME_BRIDGE_DEBT
+    disposition: DEFERRED
+    reason: requires a new derived transformation
+  - id: PR216_CONSTRAINT_ATTAINMENT_DEBT
+    disposition: DEFERRED
+    reason: requires new branch-complete physics derivation
+  - id: PR222_CF4_BINDING_DEBT
+    disposition: DEFERRED
+    reason: separate physical-data binding task
+  - id: PR223_MOMENT_CONE_DEBT
+    disposition: DEFERRED
+    reason: requires a new theorem and constructive proof
+
+preconditions:
+  - id: PRE-001
+    command: git merge-base --is-ancestor 463f0999949bf8534c60ad7973b7342705c2e3d6 HEAD
+    expect: exit=0
+  - id: PRE-002
+    command: git merge-base --is-ancestor 179ae4216082ca9b6c685f5bdba6bb269a0e273a HEAD
+    expect: exit=0
+  - id: PRE-003
+    command: git merge-base --is-ancestor bdad91a204c424030cd6d0e562232b6965a42900 HEAD
+    expect: exit=0
+  - id: PRE-004
+    observable: resolve PR 408 terminal receipt to exact commit and tree, then prove the implementation branch descends from that commit
+    expect: resolved identity present and ancestry exit=0
+  - id: PRE-005
+    command: git status --porcelain=v1 --untracked-files=all
+    expect: empty
+  - id: PRE-006
+    command: python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+    expect: exit=0
+  - id: PRE-007
+    command: python -m pytest -q tests/contracts/test_theory_survivor_closeout.py --collect-only
+    expect: exit=0 after the first RED-test commit
+  - id: PRE-008
+    command: git diff --check
+    expect: exit=0
+
+verification:
+  targeted:
+    - PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/contracts/test_theory_survivor_closeout.py
+  numerical:
+    - exact PR284 Fraction projection
+    - exact VT-T8 determinant and dimension
+    - exact VT-T13 chain rule
+    - exact PR190 target contradiction
+  regression:
+    - python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+    - python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+    - git diff --check
+  negative:
+    - try to project truth ESTABLISHED into PROMOTED without a campaign receipt
+    - keep a survivor blocked only because NOT_ATTEMPTED count is nonzero
+    - claim universal candidate closure from registered source closure
+    - count VT-S14 as a theorem
+    - call VT-T8 global orbit separation
+    - call PR284 a general reverse-martingale theorem
+    - run implementation without exact PR407 audited-input terminal
+    - run implementation without exact PR408 controlling terminal commit and tree
+  metamorphic:
+    - engine availability changes replay but not truth
+    - candidate ordering changes no statement identity
+    - equivalent source serialization changes no exact formula
+    - adding an unrelated NOT_ATTEMPTED candidate changes campaign state but not eligible survivor state
+
+completion_evidence:
+  required:
+    - exact_PR407_terminal_receipt
+    - exact_PR408_terminal_receipt
+    - exact_PR408_terminal_commit
+    - exact_PR408_terminal_tree
+    - allocated_DAG_node_ids
+    - before_DAG_snapshot_hashes
+    - after_DAG_snapshot_hashes
+    - proof_old_nodes_and_edges_are_exact_prefix
+    - base_sha
+    - final_sha
+    - final_tree
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - research_loop_closeout_hash
+    - scientific_contract_hash
+    - validation_matrix_hash
+    - evidence_manifest_hash
+    - survivor_overlay_hash
+    - exact_replay_receipts
+    - novelty_table
+    - RED_logs
+    - GREEN_logs
+    - clean_CI_run_ids
+    - fresh_context_review_receipt
+    - unresolved_blockers
+    - P0_remaining
+    - P1_remaining
+
+agent_policy:
+  ask_user_questions: false
+  guessing_across_spec_boundary: forbidden
+  unresolved_spec_action: BLOCKED_BY_UNRESOLVED_SPEC
+  changing_expected_science_to_fit_code: forbidden
+  suppressing_failures: forbidden
+  rewriting_historical_receipts: forbidden
+  inventing_DAG_ids: forbidden
+  security_or_antitamper_infrastructure: forbidden
+  new_theory_on_core_path: forbidden
+  same_agent_final_authority: false
+  partial_success_reported_complete: forbidden

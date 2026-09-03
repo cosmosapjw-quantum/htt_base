@@ -1,0 +1,238 @@
+schema: htt.pr408_final_package_index.v1
+
+identity:
+  audited_pr: 408
+  audited_head: cb815244c5482c89f795519eb8d9886077acc2bb
+  audited_tree: ba8a03012137984b748e61d70df69cfa576a7a91
+  implementation_base: RESOLVE_FROM_APPROVED_PR408_TERMINAL_RECEIPT
+  required_ancestor: bdad91a204c424030cd6d0e562232b6965a42900
+  guide_sha256: b9fa1498b4d8a1a34ff58d7be6f2622f68d6afb8e630900214ad6a6f94b87ada
+  risk_class: high
+
+A_authority_and_scope:
+  source_of_truth_precedence:
+    - latest explicit user decisions
+    - approved exact PR408 terminal commit
+    - current source, code, tests, and canonical DAG
+    - frozen exact proof or experiment receipts at declared bindings
+    - current replay receipts
+    - project documentation
+    - PR history and historical proposals
+    - transcript-only claims
+  user_locks:
+    - close existing results; no new theory on the critical path
+    - private single-researcher local profile; no security architecture
+    - preserve existing DAG nodes, order, edges, and resolutions
+    - no hard-coded canonical PR IDs
+    - no historical receipt rewrite
+  non_goals:
+    - campaign exhaustion
+    - unique theorem counting
+    - global orbit separation
+    - invariant-ring completeness
+    - full covariant dynamics
+    - PR197, PR210, PR216, PR222, or PR223 theory
+    - observed or native-solver inference
+  unresolved_spec_action: BLOCKED_BY_UNRESOLVED_SPEC
+
+B_threat_catalogue:
+  - id: FM-P0-001
+    severity: P0
+    trigger: an eligible registered result is omitted from survivor triage
+    detector: test_registered_survivor_triage_detects_injected_eligible_candidate
+    stop: BLOCKED_REGISTERED_SURVIVOR_SURFACE_NOT_CLOSED
+  - id: FM-P0-002
+    severity: P0
+    trigger: a research decision does not change after source or replay evidence mutation
+    detector: test_research_decision_changes_when_source_or_replay_evidence_is_mutated
+    stop: BLOCKED_RESEARCH_OUTCOME_PRECOMMITTED
+  - id: FM-P0-003
+    severity: P0
+    trigger: a broad parent is replaced by a narrower surviving child
+    detector: test_broad_parent_and_narrow_child_have_distinct_statement_identities
+    stop: BLOCKED_BROAD_NARROW_CANDIDATE_CONFLATION
+  - id: FM-P1-001
+    severity: P1
+    trigger: publication-ready is emitted without a statement-level prior-art matrix
+    detector: test_publication_ready_requires_completed_novelty_matrix
+    stop: BLOCKED_NOVELTY_UNASSESSED
+  - id: FM-P1-002
+    severity: P1
+    trigger: VT-T8 quotient wording has only a slice-Jacobian receipt
+    detector: test_vt_t8_quotient_claim_requires_transverse_slice_receipt_or_downgrades
+    stop: BLOCKED_VT_T8_QUOTIENT_SCOPE_UNPROVED
+  - id: FM-P1-003
+    severity: P1
+    trigger: generic green CI is quoted without closeout package tests
+    detector: Repository integrity step named theory survivor closeout
+    stop: BLOCKED_LOAD_BEARING_CI_MISSING
+  - id: FM-P1-004
+    severity: P1
+    trigger: evidence modality and replay status are conflated or outside closed enums
+    detector: test_evidence_and_replay_enums_are_orthogonal_and_closed
+    stop: BLOCKED_EVIDENCE_REPLAY_ONTOLOGY_DRIFT
+  - id: FM-P1-005
+    severity: P1
+    trigger: a work unit lacks a complete machine contract or mixes rejectable risks
+    detector: test_every_pr408_work_unit_matches_schema_and_one_risk_boundary
+    stop: BLOCKED_WORK_UNIT_CONTRACT_INCOMPLETE
+  - id: FM-P1-006
+    severity: P1
+    trigger: implementation requires a separate PR407 terminal in addition to approved PR408 ancestry
+    detector: test_approved_pr408_terminal_plus_pr407_ancestry_is_sufficient
+    stop: BLOCKED_REDUNDANT_PREDECESSOR_GATE
+  - id: FM-P1-007
+    severity: P1
+    trigger: fresh review passes without a final differential strong-model audit
+    detector: FINAL_DIFFERENTIAL_AUDIT_RECEIPT
+    stop: BLOCKED_FINAL_DIFFERENTIAL_AUDIT_MISSING
+
+C_invariant_test_matrix:
+  - requirement: registered survivor surface
+    invariant: every eligible source row has INCLUDED, EXCLUDED, or DEFERRED
+    failure_mode: FM-P0-001
+    detector: test_registered_survivor_triage_detects_injected_eligible_candidate
+    work_unit: WU-001
+  - requirement: falsifiable research loop
+    invariant: source or replay mutation may narrow, defer, or exclude
+    failure_mode: FM-P0-002
+    detector: test_research_decision_changes_when_source_or_replay_evidence_is_mutated
+    work_unit: WU-001
+  - requirement: parent-child separation
+    invariant: broad parent and narrow child have distinct statement identities
+    failure_mode: FM-P0-003
+    detector: test_broad_parent_and_narrow_child_have_distinct_statement_identities
+    work_unit: WU-001
+  - requirement: VT-T8 scope
+    invariant: quotient language requires a transverse-slice receipt
+    failure_mode: FM-P1-002
+    detector: test_vt_t8_quotient_claim_requires_transverse_slice_receipt_or_downgrades
+    work_unit: WU-002
+  - requirement: novelty
+    invariant: publication-ready requires a nearest-prior-art comparison
+    failure_mode: FM-P1-001
+    detector: test_publication_ready_requires_completed_novelty_matrix
+    work_unit: WU-002
+  - requirement: orthogonal evidence and replay
+    invariant: canonical closed enums contain no narrative aliases
+    failure_mode: FM-P1-004
+    detector: test_evidence_and_replay_enums_are_orthogonal_and_closed
+    work_unit: WU-006
+  - requirement: load-bearing CI
+    invariant: the existing workflow runs closeout validators
+    failure_mode: FM-P1-003
+    detector: exact workflow-step receipt
+    work_unit: WU-007
+  - requirement: independent review
+    invariant: fresh and final audit receipts both report P0=0 and P1=0
+    failure_mode: FM-P1-007
+    detector: review-receipt validator
+    work_unit: WU-007
+
+D_ordered_work_units:
+  - WU-001
+  - WU-002
+  - WU-003
+  - WU-004
+  - WU-005
+  - WU-006
+  - WU-007
+  rule: canonical IDs are allocated append-only by the live repository generator
+
+E_fresh_context_review:
+  first_pass_read_only: true
+  inputs:
+    - approved PR408 terminal
+    - base and final SHA, tree, and diff
+    - compiled work-unit contracts
+    - RED and GREEN logs
+    - research decision receipts
+    - survivor surface
+    - novelty matrices
+    - generated overlay
+    - clean CI logs
+    - unresolved blockers
+  forbidden_authority:
+    - implementer chain of thought
+    - implementer self-assessment
+  finding_schema:
+    - severity
+    - file
+    - line_or_symbol
+    - violated_invariant
+    - reproducer
+    - explanation
+    - missing_test_or_assertion
+  pass_condition:
+    P0: 0
+    P1: 0
+
+F_final_differential_audit:
+  inputs:
+    - base_sha..final_sha
+    - compiled contract
+    - final evidence bundle
+    - fresh-review findings
+    - unresolved blockers
+  questions:
+    - Did implementation violate the compiled contract?
+    - Did the contract miss a P0 or P1 visible in the delta?
+    - Was evidence invalid or misclassified?
+    - Did scope expand into new theory or campaign exhaustion?
+    - Did the weak reviewer issue a false PASS or false FAIL?
+  must_not:
+    - restart the entire historical campaign
+    - create another review layer
+    - promote P2 or P3 without scientific consequence
+  pass_condition:
+    P0: 0
+    P1: 0
+
+G_unresolved_specification_boundaries:
+  VT_T8:
+    - exact transverse eigenframe-slice argument
+    - statement-level novelty
+  PR190:
+    - application-specific novelty
+  survivor_surface:
+    - disposition of every other exact, conditional, and synthetic PASS row
+  current_replay:
+    - exact current receipts for selected historical results
+
+H_process_cost_assessment:
+  replace:
+    - separate PR407 terminal ceremony with PR408 terminal plus PR407 ancestry
+    - all older handoff precedence with this package
+  reuse:
+    - existing exact arithmetic
+    - historical receipts
+    - existing Repository-integrity workflow
+  reviews:
+    - one fresh-context review
+    - one final differential audit
+  do_not_run:
+    - unrelated full repository suite
+    - observed lanes
+    - all historical CAS campaigns
+    - Wolfram merely to satisfy an axis count
+    - new theory derivations
+  anti_meta_rule: no further planning successor; next approved change is implementation
+
+agent_policy:
+  ask_user_questions: false
+  guessing_across_spec_boundary: forbidden
+  changing_tests_or_expected_science_to_fit_code: forbidden
+  suppressing_failures: forbidden
+  claiming_unexecuted_work: forbidden
+  new_theory_on_closeout_path: forbidden
+
+common_completion_evidence:
+  - final_git_head
+  - final_tree
+  - git_status_porcelain
+  - git_diff_stat
+  - git_diff_check
+  - executed_test_commands
+  - invariant_results
+  - RED_GREEN_logs
+  - unresolved_blockers
