@@ -1,0 +1,81 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v15
+revision_date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_gate: DATA_DEFERRED_BY_OWNER
+nodes:
+  R3L:
+    title: Canonical 30-claim and bibliography authority repair
+    state: SOURCE_COMPLETE_RUNTIME_VALIDATION_PENDING
+  R3F:
+    title: Flatten bounded R3 manuscript
+    state: SOURCE_COMPLETE
+    head: 6ae924a98905c795de963ac57a371831fcb7074e
+    manuscript_blob: be5e8459b51741eaac87e659c63524902ae4d40b
+  R3A:
+    title: Fresh source referee and contract audit
+    state: SOURCE_REVIEW_PASS_EXECUTION_BLOCKED
+    scientific_p0: 0
+    scientific_p1: 0
+    statistical_p0: 0
+    statistical_p1: 0
+    exact_head_execution: PRESTART_NO_EXECUTION
+    wolfram_replay: BLOCKED_BY_UPSTREAM_502
+  R4A:
+    title: Supported-runtime contract and canonical hash
+    state: NEXT
+    requirements:
+      - Python 3.12
+      - parse T9 v3 and citation matrix v2
+      - run test_report_a_t9_v3.py
+      - run test_report_a_citation_matrix_v2.py
+      - run test_report_a_r3_flattened.py
+      - bind canonical sorted-ID SHA-256
+      - preserve all firewalls
+  R4B:
+    title: Typeset PDF and visual audit
+    state: WAITING_ON_R4A
+    requirements:
+      - formal BibTeX authority only
+      - equations and tables render without clipping
+      - bibliography and citations resolve
+      - PDF/source/bibliography hashes recorded
+  R4C:
+    title: Final freeze and owner decision
+    state: WAITING_ON_R4B
+    requirements:
+      - source-frozen referee readback
+      - unresolved evidence ledger
+      - explicit publication decision
+      - explicit merge decision
+  P1:
+    title: WU011 finite-operator numerical-error closeout
+    state: AFTER_R4C
+  P2:
+    title: Ideal inverse and intrinsic-octupole nuisance theory
+    state: AFTER_R4C
+  P3:
+    title: Depth and local-global identifiability theory
+    state: AFTER_R4C
+  D0:
+    title: Observational-data authorization
+    state: DEFERRED_BY_OWNER
+claim_firewall:
+  corrected_tensorized_planck_rank: null
+  scalar_only_mes_current_result: false
+  finite_healpix_no_go_promoted: false
+  empirical_beta_fit: false
+  boost_subtraction: false
+  local_global_equivalence: false
+  physical_shear_vorticity_estimate: false
+  foreground_cause: false
+  bianchi_family_attribution: false
+  native_bass_solver_claim: false
+  publication_authorized: false
+  merge_authorized: false
+current_next_node: R4A_SUPPORTED_RUNTIME_CONTRACT_AND_CANONICAL_HASH
+terminal: >-
+  R3A_SOURCE_REVIEW_PASS__R4A_NEXT__
+  EXECUTION_AND_TYPESETTING_PENDING__
+  OBSERVATIONAL_DATA_DEFERRED__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY
