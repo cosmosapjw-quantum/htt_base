@@ -1,0 +1,185 @@
+schema: htt.theory_report_first.master_dag.v1
+date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+goal: >-
+  Freeze an HTT-only theory/methods report integrating tensorized MES
+  representation, finite-null statistics, and response-limited identifiability,
+  while deferring all local observational execution.
+authorities:
+  tensorized:
+    pr: 440
+    head: 687234128d7c12d04e68aad0f303c21d2d470393
+  wu010:
+    pr: 442
+    head: 29427a1f7f2c5d46e43ffe03053c4ac13e969228
+  wu011:
+    pr: 444
+    inspected_head: de73549c16ac6ceb63f924c86611e0a5ceb4711d
+    scientific_terminal: PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED
+  external_verifiers:
+    prs: [446, 447]
+  current_report:
+    pr: 449
+    pre_plan_head: aebe7289328183f4c57481edb725af196fd435f5
+global_state:
+  scalar_only_mes: RETIRED
+  old_wu006_wu008_results: WITHDRAWN
+  corrected_planck_tensor_rank: NONE
+  observational_execution: DATA_DEFERRED_BY_OWNER
+  bass_solver_scope: EXCLUDED
+nodes:
+  T0:
+    title: Authority and supersession freeze
+    state: DONE_WITH_REVIEW_REQUIRED
+    outputs: [authority_table, supersession_table, lineage_graph]
+  T1:
+    title: Report scope terminology and claim ledger
+    state: ACTIVE_THEORY
+    depends_on: [T0]
+    outputs: [claim_ledger, notation_registry, report_section_map]
+  T2A:
+    title: Stored-real to STF representation theorem pack
+    state: ACTIVE_THEORY
+    depends_on: [T1]
+    outputs: [harmonic_stf_proofs, norm_receipts, parity_rotation_contract]
+  T2B:
+    title: Generic SO3 orbit chart and strata
+    state: ACTIVE_THEORY
+    depends_on: [T2A]
+    outputs: [krylov16_theorem, reconstruction_receipt, strata_ledger]
+  T2C:
+    title: MES conditional geometry and scalar-to-tensor no-go
+    state: ACTIVE_THEORY
+    depends_on: [T1]
+    outputs: [mes_premise_matrix, normalization_proof, equivariance_no_go]
+  T2D:
+    title: Finite-null and selection-validity theory
+    state: ACTIVE_THEORY
+    depends_on: [T1]
+    outputs: [finite_rank_theorem, selection_theorem, dependence_ledger]
+  T2E:
+    title: WU010 exact local-observer response synthesis
+    state: ACTIVE_THEORY
+    depends_on: [T1]
+    outputs: [lorentz_derivation, stf_response_proof, condition_bound_proof]
+  T2F:
+    title: WU011 processed-response quotient and no-go synthesis
+    state: ACTIVE_THEORY
+    depends_on: [T1, T2E]
+    outputs: [operator_factorization, quotient_rank_proof, nested_image_theorem]
+  T2G:
+    title: Continuum L12 proof strengthening
+    state: ACTIVE_THEORY
+    depends_on: [T2F]
+    outputs: [all_direction_verifier_matrix, z_exact_certificate, interval_status]
+  T2H:
+    title: Invariant matrix numerical-error theorem pack
+    state: ACTIVE_THEORY
+    depends_on: [T2F]
+    outputs: [loewner_proof, invariance_proofs, gsv_certificate_theorem, wedin_lane_spec]
+  T3:
+    title: Integrated theorem evidence claim ledger
+    state: WAITING
+    depends_on: [T2A, T2B, T2C, T2D, T2E, T2F, T2G, T2H]
+    outputs: [integrated_ledger, contradiction_scan]
+  T4:
+    title: Theory and Methods Report A draft
+    state: WAITING
+    depends_on: [T3]
+    outputs: [manuscript_source, pdf, figure_manifest, appendix_pack]
+  T5:
+    title: Independent CAS literature convention dimensional and code audit
+    state: WAITING
+    depends_on: [T4]
+    outputs: [physmath_review, statistics_review, code_review, provenance_review]
+  T6:
+    title: Blind referee audit and bounded revision
+    state: WAITING
+    depends_on: [T5]
+    outputs: [referee_report, revision_ledger, rebuilt_pdf]
+  T7:
+    title: Freeze Theory and Methods Report A
+    state: WAITING
+    depends_on: [T6]
+    outputs: [frozen_report, source_hashes, evidence_hashes, unresolved_ledger]
+  P1:
+    title: WU011 A4 finite-operator numerical-error closeout
+    state: READY_AFTER_REPORT
+    depends_on: [T7]
+  P2:
+    title: Ideal inverse intrinsic-octupole nuisance and noisy-estimation theory
+    state: READY_AFTER_REPORT
+    depends_on: [T7]
+  P3:
+    title: Depth local-global and remote-field identifiability theory
+    state: READY_AFTER_REPORT
+    depends_on: [T7]
+  P4:
+    title: Publication split decision
+    state: WAITING
+    depends_on: [P1, P2, P3]
+  D0:
+    title: Local observational-data authorization gate
+    state: DEFERRED_DATA
+    depends_on: [P4]
+  O1:
+    title: Corrected carrier repair and review
+    state: BLOCKED_BY_D0
+    depends_on: [D0]
+  O2:
+    title: Observation-blind statistic and nuisance registry
+    state: BLOCKED_BY_D0
+    depends_on: [O1]
+  O3:
+    title: Local corrected Planck FFP10 run
+    state: BLOCKED_BY_D0
+    depends_on: [O2]
+  O4:
+    title: Observation Report B
+    state: BLOCKED_BY_D0
+    depends_on: [O3]
+edges:
+  - [T0, T1]
+  - [T1, T2A]
+  - [T2A, T2B]
+  - [T1, T2C]
+  - [T1, T2D]
+  - [T1, T2E]
+  - [T1, T2F]
+  - [T2E, T2F]
+  - [T2F, T2G]
+  - [T2F, T2H]
+  - [T2A, T3]
+  - [T2B, T3]
+  - [T2C, T3]
+  - [T2D, T3]
+  - [T2E, T3]
+  - [T2F, T3]
+  - [T2G, T3]
+  - [T2H, T3]
+  - [T3, T4]
+  - [T4, T5]
+  - [T5, T6]
+  - [T6, T7]
+  - [T7, P1]
+  - [T7, P2]
+  - [T7, P3]
+  - [P1, P4]
+  - [P2, P4]
+  - [P3, P4]
+  - [P4, D0]
+  - [D0, O1]
+  - [O1, O2]
+  - [O2, O3]
+  - [O3, O4]
+claim_firewall:
+  - no current scalar-only MES observational rank
+  - no historical WU006-WU008 tensor result
+  - no empirical beta or boost subtraction
+  - no local boost equals global tilt inference
+  - no physical shear or vorticity from morphology alone
+  - no foreground causal attribution
+  - no Bianchi family attribution
+  - no finite HEALPix theorem before P1 closure
+  - no BASS solver content
+current_next_node: T1
