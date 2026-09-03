@@ -1,0 +1,155 @@
+schema: audit-compiled-work-unit/v1
+id: WU-007
+title: Focused clean CI and two-stage independent review
+
+authority:
+  base_sha: RESOLVE_FROM_WU006_TERMINAL_RECEIPT
+  branch: ALLOCATE_FROM_LIVE_DAG
+  upstream_dependencies: [WU-006]
+  required_ancestor: bdad91a204c424030cd6d0e562232b6965a42900
+
+objective:
+  statement: Run the smallest load-bearing clean verification set, one fresh-context read-only review, and one final strong-model differential audit.
+  observable_success: The existing Repository-integrity workflow contains one focused closeout step and both independent review receipts report P0=0 and P1=0.
+  non_goals:
+    - a new workflow
+    - an unrelated full repository suite
+    - review-of-review chains
+    - new scientific derivations
+
+risk:
+  class: medium
+  P0_failure_modes: []
+  P1_failure_modes: [FM-P1-003, FM-P1-005, FM-P1-006, FM-P1-007]
+
+scope:
+  allowed_paths:
+    - .github/workflows/repository-integrity.yml
+    - tests/contracts/test_theory_*
+    - docs/research_program/theory_promotion/closeout/**
+    - docs/codex_handoff/pr408_final/**
+  forbidden_paths:
+    - unrelated workflows
+    - observed-lane data or outputs
+  forbidden_changes:
+    - Do not add another workflow
+    - Do not require an unrelated full suite
+    - Do not create another reviewer layer
+    - Do not require a separate PR407 human terminal after approved PR408 ancestry
+
+preconditions:
+  - id: PRE-601
+    command: validate WU-001 through WU-006 terminal receipts
+    expect: all required included survivors closed or typed BLOCKED with exact evidence
+  - id: PRE-602
+    command: git status --porcelain=v1 --untracked-files=all
+    expect: empty
+
+invariants:
+  - id: INV-601
+    severity_if_violated: P1
+    statement: All load-bearing survivor-surface, research-decision, novelty, and overlay tests execute on the clean PR merge ref.
+    mechanical_check:
+      command: inspect exact Repository-integrity workflow run and focused step
+      expect: success
+  - id: INV-602
+    severity_if_violated: P1
+    statement: Every work-unit file validates against audit-compiled-work-unit/v1 and one coherent risk boundary.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_audit_compiled_work_units.py
+      expect: pass
+  - id: INV-603
+    severity_if_violated: P1
+    statement: An approved PR408 terminal plus PR407 ancestry is the only planning predecessor gate.
+    mechanical_check:
+      command: pytest -q tests/contracts/test_theory_closeout_ancestry.py
+      expect: pass
+  - id: INV-604
+    severity_if_violated: P1
+    statement: Fresh-context and final differential review receipts both exist and report P0=0 and P1=0.
+    mechanical_check:
+      command: python scripts/validate_theory_closeout_review_receipts.py
+      expect: pass
+
+failure_modes:
+  - id: FM-P1-003
+    severity: P1
+    trigger: generic CI is quoted without running the closeout package
+    required_detection:
+      assertion: focused Repository-integrity step is present and successful
+  - id: FM-P1-005
+    severity: P1
+    trigger: a machine work unit is incomplete or overbroad
+    required_detection:
+      test: test_every_pr408_work_unit_matches_schema_and_one_risk_boundary
+  - id: FM-P1-006
+    severity: P1
+    trigger: a redundant PR407 terminal ceremony blocks implementation
+    required_detection:
+      test: test_approved_pr408_terminal_plus_pr407_ancestry_is_sufficient
+  - id: FM-P1-007
+    severity: P1
+    trigger: final differential audit receipt is absent
+    required_detection:
+      assertion: FINAL_DIFFERENTIAL_AUDIT_RECEIPT exists and validates
+
+implementation:
+  ordered_steps:
+    - id: STEP-601
+      files: [.github/workflows/repository-integrity.yml]
+      action: Add one focused theory-survivor-closeout step and preserve all existing steps.
+      must_preserve: [all current workflow cells]
+    - id: STEP-602
+      files: [docs/research_program/theory_promotion/closeout/FRESH_REVIEW_RECEIPT.json]
+      action: Run a fresh-context first-pass read-only review using only base/final diff, compiled contract, evidence, logs, and blockers.
+      must_preserve: []
+    - id: STEP-603
+      files: [docs/research_program/theory_promotion/closeout/FINAL_DIFFERENTIAL_AUDIT_RECEIPT.json]
+      action: Run one final strong-model differential audit for contract compliance, missing P0/P1 classes, evidence validity, and scope.
+      must_preserve: []
+
+verification:
+  targeted:
+    - all closeout contract tests
+    - deterministic overlay replay
+    - work-unit schema validation
+  negative:
+    - remove the focused CI step
+    - omit one review receipt
+    - forge PASS with a missing research receipt
+    - require a redundant PR407 terminal gate
+  regression:
+    - all existing Repository-integrity cells
+    - DAG old-node, edge, and resolution exact-prefix comparator
+    - git diff --check
+  integration:
+    - clean pull-request merge-ref Repository integrity
+  full_relevant_suite: []
+
+completion_evidence:
+  required:
+    - clean_CI_run_id
+    - focused_step_log
+    - work_unit_schema_receipt
+    - DAG_prefix_receipt
+    - fresh_review_receipt
+    - final_differential_audit_receipt
+    - final_git_head
+    - git_status_porcelain
+    - git_diff_stat
+    - git_diff_check
+    - unresolved_blockers
+    - P0_remaining
+    - P1_remaining
+
+agent_policy:
+  ask_user_questions: false
+  guessing_across_spec_boundary: forbidden
+  changing_tests_to_fit_implementation: forbidden
+  suppressing_failures: forbidden
+  claiming_unexecuted_work: forbidden
+  another_planning_successor: forbidden
+
+review_gate:
+  fresh_context_required: true
+  pass_condition: {P0: 0, P1: 0}

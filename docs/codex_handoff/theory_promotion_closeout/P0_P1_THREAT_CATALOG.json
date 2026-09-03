@@ -1,0 +1,162 @@
+{
+  "findings": [
+    {
+      "id": "P0-407-001",
+      "required_detection": [
+        "test_status_projection_refuses_without_closed_evidence_manifest"
+      ],
+      "severity": "P0",
+      "stop": "BLOCKED_DECISION_BEFORE_EVIDENCE",
+      "title": "Decision before evidence closure",
+      "trigger": "truth/status rows are assigned before candidate, source, and evidence closure"
+    },
+    {
+      "id": "P0-407-002",
+      "required_detection": [
+        "test_truth_does_not_imply_historical_campaign_promotion",
+        "test_pr284_broad_and_finite_child_are_distinct_candidates",
+        "test_campaign_disposition_requires_exact_campaign_receipt"
+      ],
+      "severity": "P0",
+      "stop": "BLOCKED_TRUTH_CAMPAIGN_CONFLATION",
+      "title": "Truth-to-campaign automatic promotion",
+      "trigger": "ESTABLISHED truth rewrites or generates PROMOTED campaign disposition"
+    },
+    {
+      "id": "P0-407-003",
+      "required_detection": [
+        "test_registered_surface_closure_never_emits_universal_candidate_claim"
+      ],
+      "severity": "P0",
+      "stop": "BLOCKED_UNIVERSAL_CANDIDATE_OVERCLAIM",
+      "title": "Universal candidate-universe overclaim",
+      "trigger": "a registered source extractor is described as exhausting all reportable mathematical subclaims"
+    },
+    {
+      "id": "P0-408-001",
+      "required_detection": [
+        "test_implementation_requires_exact_pr408_terminal_ancestry"
+      ],
+      "severity": "P0",
+      "stop": "BLOCKED_CONTROLLING_PR408_TERMINAL_RECEIPT",
+      "title": "Corrective planning successor omitted from implementation ancestry",
+      "trigger": "implementation requires PR407 but does not require an approved PR408 disposition or resolve and descend from the terminal commit and tree of controlling PR408"
+    },
+    {
+      "id": "P1-407-001",
+      "required_detection": [
+        "test_survivor_release_is_independent_of_not_attempted_count"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_CAMPAIGN_RELEASE_CONFLATION",
+      "title": "Survivor release coupled to campaign exhaustion",
+      "trigger": "NOT_ATTEMPTED > 0 blocks release of independently established survivors"
+    },
+    {
+      "id": "P1-407-002",
+      "required_detection": [
+        "test_deferred_theory_debt_is_not_core_closeout_dependency"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_SCOPE_EXPANSION_INTO_NEW_THEORY",
+      "title": "New-theory debt on closeout critical path",
+      "trigger": "PR210/216/223 derivations are mandatory predecessors of existing-result release"
+    },
+    {
+      "id": "P1-407-003",
+      "required_detection": [
+        "test_implementation_requires_exact_pr407_terminal"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_STALE_PLAN_PREDECESSOR",
+      "title": "Controlling predecessor omitted",
+      "trigger": "implementation requires PR405 but not exact terminal PR407"
+    },
+    {
+      "id": "P1-407-004",
+      "required_detection": [
+        "test_all_plan_ancestry_checks_use_merge_base"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_BASE_IDENTITY_AMBIGUOUS",
+      "title": "Ambiguous ancestry preconditions",
+      "trigger": "one HEAD command is expected to prove multiple distinct historical identities"
+    },
+    {
+      "id": "P1-407-005",
+      "required_detection": [
+        "test_machine_plan_commands_are_syntactically_executable"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_MACHINE_PLAN_NOT_EXECUTABLE",
+      "title": "Non-executable plan command",
+      "trigger": "folded heredoc command is not valid shell"
+    },
+    {
+      "id": "P1-407-006",
+      "required_detection": [
+        "test_dag_before_snapshot_is_exact_prefix_after_append"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_DAG_PREFIX_NOT_PROVED",
+      "title": "DAG prefix assertion lacks comparator",
+      "trigger": "generic DAG validation is treated as proof that old ordered IDs and edges are unchanged"
+    },
+    {
+      "id": "P1-407-007",
+      "required_detection": [
+        "test_evidence_modality_is_typed"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_EVIDENCE_MODALITY_CONFLATED",
+      "title": "Evidence modality collapsed",
+      "trigger": "finite enumeration, formal proof, CAS identity, and engine replay share EXACT_PROOF"
+    },
+    {
+      "id": "P1-407-008",
+      "required_detection": [
+        "Repository integrity theory-closeout package step"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_LOAD_BEARING_CI_MISSING",
+      "title": "PR407 package absent from load-bearing CI",
+      "trigger": "generic green workflow does not parse or cross-check PR407 documents"
+    },
+    {
+      "id": "P1-407-009",
+      "required_detection": [
+        "test_publication_ready_requires_novelty_adjudication"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_NOVELTY_UNASSESSED",
+      "title": "Novelty and publication role absent",
+      "trigger": "truth/release projection can call a result publication-ready without statement-level literature comparison"
+    },
+    {
+      "id": "P1-407-010",
+      "required_detection": [
+        "test_physmath_harness_state_is_complete"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_RESEARCH_CODING_HANDOFF_INCOMPLETE",
+      "title": "Research-to-code contract implicit",
+      "trigger": "no durable research contract/evidence ledger/decision gate or coding scientific contract/validation matrix"
+    },
+    {
+      "id": "P1-408-001",
+      "required_detection": [
+        "test_coding_handoff_refuses_open_research_closeout"
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_RESEARCH_CLOSEOUT_INCOMPLETE",
+      "title": "Coding handoff marked ready before research closeout",
+      "trigger": "coding_handoff_ready is true while exact replay or publication-required novelty decisions remain open"
+    }
+  ],
+  "identity": {
+    "audited_head": "bdad91a204c424030cd6d0e562232b6965a42900",
+    "audited_pr": 407,
+    "audited_tree": "c3cd19442e525aaf1b1e683c1920568513e18da5"
+  },
+  "schema": "htt.pr407_closeout_p0_p1_catalog.v1"
+}

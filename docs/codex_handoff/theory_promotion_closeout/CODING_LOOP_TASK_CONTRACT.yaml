@@ -1,0 +1,137 @@
+schema: htt.physmath_coding_loop_task_contract.v1
+identity:
+  audited_pr: 407
+  audited_head: bdad91a204c424030cd6d0e562232b6965a42900
+  controlling_planning_pr: 408
+  coding_harness: physmath-coding-harness-gpt56(20260824-172831)
+  current_task_layer: design
+preconditions:
+  controlling_planning_pr:
+    github_pr: 408
+    branch: analysis/pr407-physmath-survivor-closeout-audit-20260825
+    exact_terminal_receipt: required
+    required_disposition: APPROVED_FOR_IMPLEMENTATION
+    resolve_commit_and_tree_at_implementation_start: true
+    implementation_branch_must_descend_from_resolved_commit: true
+  audited_input_pr:
+    github_pr: 407
+    head: bdad91a204c424030cd6d0e562232b6965a42900
+    tree: c3cd19442e525aaf1b1e683c1920568513e18da5
+    exact_terminal_receipt: required
+  research_handoff_ready_required: true
+task_contract:
+  user_visible_goal: produce a current survivor overlay for already-established theory
+    results without developing new theory
+  scope:
+  - survivor statement/evidence manifest
+  - campaign versus survivor-release separation
+  - exact replay of existing results
+  - novelty/publication-role gate
+  - focused CI and fresh review
+  non_goals:
+  - solve all NOT_ATTEMPTED proposals
+  - derive PR210 frame transformation
+  - derive PR216 branch-complete constraints
+  - prove PR223 moment-cone theorem
+  - modify observed-data lanes
+  - security or authorization infrastructure
+  preserve:
+  - all historical artifacts byte-for-byte
+  - broad parent failure/inconclusive status
+  - NOT_ATTEMPTED distinct from REFUTED
+  - existing DAG node order and edges
+  acceptance:
+  - evidence precedes status
+  - P0=0 and P1=0
+  - survivor release may close while campaign remains OPEN
+  - all exact formulas replay
+  - novelty remains blocking where unassessed
+  approval_boundary:
+  - new theorem
+  - new dependency
+  - historical status rewrite
+  - DAG edge rewrite
+  - scientific statement or domain change
+baseline:
+  required_ancestry:
+  - 463f0999949bf8534c60ad7973b7342705c2e3d6
+  - 179ae4216082ca9b6c685f5bdba6bb269a0e273a
+  - bdad91a204c424030cd6d0e562232b6965a42900
+  required_dynamic_ancestry:
+  - resolved_PR408_terminal_commit
+  required_reproductions:
+  - PR284 probability=1/2 bound=25/36 slack=7/36
+  - VT-T8 dimension=14 determinant=50331648
+  - VT-T13 exact chain rule
+  - PR190 W2=0 versus 1/25 and 3/100
+localization:
+  flow:
+  - source registry or exact statement
+  - historical proof/adjudication receipt
+  - current replay receipt
+  - survivor evidence manifest
+  - status projection
+  - publication-facing overlay
+  - focused CI consumer
+  forbidden_shortcut: infer truth from status prose or receipt label alone
+bounded_solutions:
+- id: A
+  description: execute PR407's full A-F plus E1-E5 sequence
+  decision: REJECT
+  reason: new-theory debt blocks existing survivor closeout
+- id: B
+  description: research-first survivor manifest, status projection, exact replay,
+    novelty gate, focused overlay
+  decision: SELECT
+  reason: smallest coherent closeout with no new theory
+- id: C
+  description: status-only documentation patch without tests or evidence binding
+  decision: REJECT
+  reason: cannot prevent recurrence of P0/P1
+implementation:
+  ordered_units:
+  - CLOSEOUT-A-RESEARCH-EVIDENCE-FREEZE
+  - CLOSEOUT-B-STATUS-AND-RELEASE-PROJECTION
+  - CLOSEOUT-C-EXACT-RESULT-REPLAY
+  - CLOSEOUT-D-NOVELTY-AND-SURVIVOR-OVERLAY
+  - CLOSEOUT-E-FOCUSED-CI-AND-FRESH-REVIEW
+  policy:
+  - RED test before production edit
+  - smallest coherent patch
+  - no unrelated cleanup
+  - no new abstraction without a current consumer
+  - one risk family per commit and review gate
+validation:
+  software:
+  - JSON/YAML parse
+  - imports and targeted tests
+  - executable command syntax
+  - DAG snapshot comparator
+  - git diff --check
+  scientific:
+  - exact statement and domain
+  - broad-parent/narrow-child separation
+  - truth/campaign/release orthogonality
+  - novelty and publication role
+  - forbidden claim scan
+  numerical:
+  - zero-tolerance rational fixture
+  - exact integer Jacobian witness
+  - symbolic chain rule
+  - exact target contradiction
+  reproducibility:
+  - content-bound source/evidence/replay manifest
+  - canonical deterministic projection
+  - clean merge-ref focused CI
+independent_review:
+  fresh_context: true
+  first_pass_read_only: true
+  pass_condition:
+    P0: 0
+    P1: 0
+completion_bar:
+- all work units Done, Blocked, or Cancelled
+- no unresolved spec guessed
+- unrun checks and reasons recorded
+- no unnecessary diff
+- complete evidence bundle

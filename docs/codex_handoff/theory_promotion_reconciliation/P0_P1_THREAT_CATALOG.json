@@ -1,0 +1,293 @@
+{
+  "dag_policy": {
+    "allocation": "re-read live DAG and allocate append-only with existing generator",
+    "canonical_pr_id": null,
+    "existing_topological_order_must_be_exact_prefix": true,
+    "historical_dependency_rewrite_forbidden": true,
+    "manual_reordering_forbidden": true,
+    "stop_on_drift": "BLOCKED_DAG_PREFIX_DRIFT"
+  },
+  "findings": [
+    {
+      "affected_paths": [
+        "docs/research_program/theory_promotion/THEORY_PROMOTION_AUDIT_V1.md",
+        "docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json"
+      ],
+      "id": "P0-TP-001",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_scoped_candidate_extractor_detects_injected_sixth_candidate"
+        },
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_complete_universe_wording_requires_extractor_closure"
+        }
+      ],
+      "severity": "P0",
+      "stop": "BLOCKED_CANDIDATE_UNIVERSE_NOT_CLOSED",
+      "title": "Circular candidate-universe completeness",
+      "trigger": "coverage_complete is asserted over an audit-selected broad-plus-scoped list without an exhaustive scoped-candidate generation rule"
+    },
+    {
+      "affected_paths": [
+        "docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json"
+      ],
+      "id": "P0-TP-002",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_scientific_attempt_requires_scientific_receipt"
+        },
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_missing_source_is_not_an_attempted_proof"
+        }
+      ],
+      "severity": "P0",
+      "stop": "BLOCKED_ATTEMPT_SEMANTICS_INVALID",
+      "title": "Scientific attempt semantics conflated with adjudication attempt",
+      "trigger": "scientific_attempted=true without a proof, formal execution, experiment, counterexample, or failed-proof artifact"
+    },
+    {
+      "affected_paths": [
+        "docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json",
+        "docs/research_program/theory_promotion/pr284_finite_path/CAS_ADJUDICATION.json"
+      ],
+      "id": "P0-TP-003",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_truth_status_is_invariant_under_engine_availability"
+        },
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_cas_conflict_requires_incompatible_scientific_outputs"
+        },
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_pr284_fixture_is_established_but_release_blocked"
+        }
+      ],
+      "severity": "P0",
+      "stop": "BLOCKED_SCIENCE_STATUS_ONTOLOGY_INVALID",
+      "title": "Truth, evidence, replay, and release status conflated",
+      "trigger": "engine availability or assurance policy changes mathematical truth status, or historical truth status implies current release"
+    },
+    {
+      "affected_paths": [
+        "docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json",
+        "docs/codex_handoff/pr316_theory_promotion_audit_compiled_exec_plan.yaml"
+      ],
+      "id": "P0-TP-004",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_campaign_disposition_mapping_is_total_and_noncollapsing"
+        },
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_not_attempted_is_never_refuted"
+        },
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_no_surviving_result_sentence_requires_coverage_proof"
+        }
+      ],
+      "severity": "P0",
+      "stop": "BLOCKED_CAMPAIGN_DISPOSITION_INCOMPLETE",
+      "title": "Owner-mandated five-state campaign disposition erased or collapsed",
+      "trigger": "a candidate lacks PROMOTED/REFUTED/UNRESOLVED/DEFERRED/NOT_ATTEMPTED, NOT_ATTEMPTED is mapped to REFUTED, or campaign closeout is claimed without source closure"
+    },
+    {
+      "id": "P1-TP-001",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_public_counts_are_partitioned_by_result_class"
+        },
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_unique_theorem_count_refuses_with_unadjudicated_semantic_links"
+        }
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_UNTYPED_SCIENTIFIC_COUNT",
+      "title": "Untyped promoted aggregate and incomplete semantic deduplication",
+      "trigger": "exact theorem, conditional result, negative theorem, and synthetic validation are counted in one publication-facing promoted total"
+    },
+    {
+      "id": "P1-TP-002",
+      "required_detection": [
+        {
+          "command": "PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q tests/contracts/test_theory_promotion_reconciliation.py tests/contracts/test_pr284_finite_path_cas.py"
+        },
+        {
+          "command": "python scripts/validate_theory_promotion_matrix.py --matrix docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V2.json"
+        }
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_LOAD_BEARING_CI_MISSING",
+      "title": "PR-405 load-bearing package absent from clean CI",
+      "trigger": "green workflow does not execute matrix validation, candidate extraction, CAS contract, or projection replay"
+    },
+    {
+      "id": "P1-TP-003",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_pr284_finite_path_cas.py::test_axis_backend_relevance_is_substantive_or_axis_is_renamed"
+        },
+        {
+          "test": "tests/contracts/test_pr284_finite_path_cas.py::test_axis_independence_metadata_discloses_shared_algorithm_and_authorship"
+        }
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_AXIS_RELEVANCE_UNPROVED",
+      "title": "CAS axis relevance and independence overstated",
+      "trigger": "a named backend is only imported/version-probed, or multiple axes execute the same hard-coded algorithm without disclosure"
+    },
+    {
+      "id": "P1-TP-004",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_pr284_finite_path_cas.py::test_general_theorem_scope_is_validated_not_literal_true"
+        }
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_CLAIM_SCOPE_NOT_MECHANICAL",
+      "title": "Scope obligation is a literal boolean",
+      "trigger": "general_theorem_not_promoted is emitted as a constant rather than checked against claim surfaces"
+    },
+    {
+      "id": "P1-TP-005",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_pr284_finite_path_cas.py::test_lean_foundational_axiom_allowlist_is_preregistered"
+        },
+        {
+          "test": "tests/contracts/test_pr284_finite_path_cas.py::test_lean_rejects_source_axiom_sorry_and_native_decide"
+        }
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_FORMAL_AXIOM_POLICY_INVALID",
+      "title": "Lean axiom policy incompatible with Mathlib rational proof",
+      "trigger": "standard foundational axioms are treated as scientific assumptions"
+    },
+    {
+      "id": "P1-TP-006",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_pr284_finite_path_cas.py::test_lean_axis_derives_expectations_from_weighted_partitions_or_is_downgraded"
+        }
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_FORMAL_SEMANTICS_INCOMPLETE",
+      "title": "Lean axis proves arithmetic but is labelled probability theorem",
+      "trigger": "hard-coded rational equalities are reported as a typed finite conditional-expectation theorem"
+    },
+    {
+      "id": "P1-TP-007",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_pr284_finite_path_cas.py::test_all_axes_consume_one_content_bound_fixture"
+        },
+        {
+          "test": "tests/contracts/test_pr284_finite_path_cas.py::test_fixture_mutation_changes_every_axis_projection"
+        }
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_CAS_FIXTURE_DRIFT",
+      "title": "Fixture duplicated across axes",
+      "trigger": "weights, target, partitions, lambda, or expected outputs drift independently between contract and axis sources"
+    },
+    {
+      "id": "P1-TP-008",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_every_established_candidate_has_resolvable_content_bound_evidence"
+        }
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_EVIDENCE_REFERENCE_UNBOUND",
+      "title": "Evidence references are not fully content-bound",
+      "trigger": "candidate evidence path, fragment, symbol, or statement cannot be resolved and hashed at the audited head"
+    },
+    {
+      "id": "P1-TP-009",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_theory_promotion_reconciliation.py::test_current_replay_summary_is_backed_by_exact_receipts"
+        }
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_CURRENT_REPLAY_RECEIPTS_MISSING",
+      "title": "Current replay failures are prose-only evidence",
+      "trigger": "48/8 or 357/4 summaries lack exact command, environment, failed-node identity, and retained logs"
+    },
+    {
+      "id": "P1-TP-010",
+      "required_detection": [
+        {
+          "test": "tests/contracts/test_exchangeable_rank_resolution.py::test_alpha_below_finite_resolution_refuses"
+        },
+        {
+          "test": "tests/contracts/test_frame_bridge.py::test_frame_bridge_requires_nonempty_domain_and_actual_transform"
+        },
+        {
+          "test": "tests/contracts/test_constraint_attainment.py::test_branch_complete_gauss_momentum_terms_required"
+        },
+        {
+          "test": "tests/contracts/test_cf4_bridge.py::test_cf4_matrix_requires_physical_component_bindings"
+        },
+        {
+          "test": "tests/contracts/test_moment_cone.py::test_physical_moment_cone_rejects_negative_weights"
+        }
+      ],
+      "severity": "P1",
+      "stop": "BLOCKED_RECURRING_SCIENCE_FAILURE_NOT_REGRESSED",
+      "title": "Historical scientific failures not converted to permanent gates",
+      "trigger": "PR197, PR210, PR216, PR222, or PR223 failure class remains prose-only"
+    }
+  ],
+  "identity": {
+    "audited_pr": 405,
+    "base_sha": "aaa87d6de692f5c47d5ea9eff963db6dd9ee5be7",
+    "canonical_pr_id": null,
+    "canonical_pr_id_policy": "ALLOCATE_APPEND_ONLY_FROM_LIVE_DAG",
+    "head_sha": "463f0999949bf8534c60ad7973b7342705c2e3d6",
+    "head_tree": "20eb3e3e117633bc83e743bea45ed024048441e1",
+    "package_work_unit": "THEORY_PROMOTION_RECONCILIATION_REPAIR"
+  },
+  "preserved_scientific_results": [
+    {
+      "campaign_disposition": "PROMOTED",
+      "evidence_status": "EXACT_PROOF",
+      "id": "PR284_REGISTERED_FINITE_FIXTURE",
+      "release_status": "BLOCKED",
+      "replay_status": "CURRENT_BLOCKED",
+      "scope": "one exact four-atom fixture only",
+      "truth_status": "ESTABLISHED"
+    },
+    {
+      "campaign_disposition": "PROMOTED",
+      "evidence_status": "EXACT_NEGATIVE_RESULT",
+      "id": "PR190_NORMAL_VORTICITY_OBSTRUCTION",
+      "release_status": "BLOCKED",
+      "replay_status": "HISTORICAL_PASS_CURRENT_INCOMPLETE",
+      "scope": "registered homogeneous Bianchi-I hypersurface-normal frame",
+      "truth_status": "ESTABLISHED"
+    },
+    {
+      "campaign_disposition": "PROMOTED",
+      "evidence_status": "PREMISE_CONDITIONAL_PROOF",
+      "id": "VT_T8_LOCAL_CHART",
+      "release_status": "BLOCKED",
+      "replay_status": "HISTORICAL_PASS_CURRENT_INCOMPLETE",
+      "scope": "registered rational witness/local chart only",
+      "truth_status": "ESTABLISHED"
+    },
+    {
+      "campaign_disposition": "PROMOTED",
+      "evidence_status": "PREMISE_CONDITIONAL_PROOF",
+      "id": "VT_T13_CHAIN_RULE_CORE",
+      "release_status": "BLOCKED",
+      "replay_status": "HISTORICAL_PASS_CURRENT_INCOMPLETE",
+      "scope": "differentiable STF sigma with I2>0",
+      "truth_status": "ESTABLISHED"
+    }
+  ],
+  "schema": "htt.theory_promotion_p0_p1_threat_catalog.v1.1",
+  "severity_policy": {
+    "P0": "Wrong or silently incomplete scientific state, candidate universe, theorem/refutation status, or release authority.",
+    "P1": "A load-bearing evidence, boundary, replay, formalization, or regression gap that can invalidate a major conclusion.",
+    "P2": "Important precision, naming, portability, or maintainability weakness without a current P0/P1 scientific conclusion."
+  }
+}
