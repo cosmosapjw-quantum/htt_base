@@ -1,5 +1,5 @@
 {
-  "schema": "htt.pr451.stable_stf_decoder_receipt.v1",
+  "schema": "htt.pr451.stable_stf_decoder_receipt.v2",
   "date": "2026-09-03",
   "repository": "cosmosapjw-quantum/htt_base",
   "pull_request": 451,
@@ -22,6 +22,14 @@
     ],
     "typed_numerical_refusal": "OrbitChartUnavailable"
   },
+  "exact_basis_validation": {
+    "engine": "SymPy exact arithmetic",
+    "gram": "IdentityMatrix[7]",
+    "trace_residuals": [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],
+    "symmetry_residual": 0,
+    "basis_rank": 7,
+    "fresh_wolfram": "BLOCKED_BY_UPSTREAM_502"
+  },
   "local_source_equivalent_validation": {
     "python": "3.13",
     "numpy": "2.3.5",
@@ -39,10 +47,14 @@
       "maximum_observed_k_condition": 47710.77454526557
     }
   },
+  "methodological_literature_boundary": {
+    "stable_vandermonde_context": "Brubeck, Nakatsukasa, and Trefethen, Vandermonde with Arnoldi, DOI 10.1137/19M130100X",
+    "role": "adjacent conditioning motivation only; not a proof of this tensor decoder"
+  },
   "exact_head_execution": "PRESTART_NO_EXECUTION",
   "implementation_verified": false,
   "observational_data_used": false,
   "scientific_claim_promotion": false,
   "merge_authorized": false,
-  "terminal": "STABLE_DECODER_SOURCE_IMPLEMENTED_LOCAL_STRESS_PASS_EXACT_HEAD_PRESTART_BLOCKED"
+  "terminal": "STABLE_DECODER_SOURCE_IMPLEMENTED_EXACT_BASIS_PASS_LOCAL_STRESS_PASS_EXACT_HEAD_PRESTART_BLOCKED"
 }
