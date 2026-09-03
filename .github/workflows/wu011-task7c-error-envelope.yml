@@ -5,6 +5,7 @@ on:
     paths:
       - "htt/obsstat/processed_boost_error_envelope.py"
       - "htt/test_wu011_task7c_error_envelope.py"
+      - "htt/test_wu011_task7c_error_envelope_registry.py"
       - ".github/workflows/wu011-task7c-error-envelope.yml"
   workflow_dispatch:
 
@@ -39,4 +40,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e './htt[dev]'
       - name: Run Task-7C A4 matrix-envelope contracts
-        run: pytest -q htt/test_wu011_task7c_error_envelope.py
+        run: |
+          pytest -q \
+            htt/test_wu011_task7c_error_envelope.py \
+            htt/test_wu011_task7c_error_envelope_registry.py
