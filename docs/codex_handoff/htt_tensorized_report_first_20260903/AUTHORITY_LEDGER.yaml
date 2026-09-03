@@ -1,0 +1,148 @@
+schema: htt.tensorized_report_first.authority_ledger.v1
+cutoff_date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+
+report_scope:
+  include:
+    - tensorized low-ell representation
+    - MES conditional functions with corrected PSTF normalization
+    - finite-null and response-aware statistics
+    - local-observer boost response
+    - processed cut-sky identifiability
+  exclude:
+    - native BASS solver construction
+    - Bianchi background evolution
+    - recombination/reionization solver results
+    - native family-level forward inference
+
+explicit_user_policy:
+  scalar_only_mes_current_methodology: RETIRED
+  historical_scalar_observational_results: NOT_CURRENT_SCIENCE
+  old_wu006_wu008_qo_tensor_foreground_injection_claims: WITHDRAWN
+  corrected_observation_run: MUST_BE_RERUN_LOCALLY
+  github_push_monitoring: AUTHORIZED
+  merge: NOT_AUTHORIZED_BY_THIS_LEDGER
+
+sources:
+  - id: VT_FOUNDATION_PR367
+    pr: 367
+    state: MERGED
+    head: 6bafca66285ef071081453313bb7d2d6b261599c
+    role: PRE_NATIVE_VECTOR_TENSOR_FRAMEWORK_FOUNDATION
+    current_authority: PARTIAL_FOUNDATION
+    notes:
+      - typed joint anisotropy/tensor/orbit/statistical framework
+      - no admitted observed-data pilot in that programme closeout
+      - broad source rows and VT obligations were not all adjudicated
+
+  - id: OLD_CURRENT_REPORT
+    ref: codex_emergency
+    path: MES_BOUND_CURRENT_RESEARCH_REPORT.tex
+    role: HISTORICAL_EXTERNAL_REFEREE_CORRECTION_REPORT
+    current_authority: SUPERSEDED
+    reason:
+      - withdraws faulty observer-space STF results but retains scalar MES results
+      - conflicts with current explicit retirement of scalar-only analysis
+      - superseded by PR440 semantic authority and current user policy
+
+  - id: TENSORIZED_SEMANTIC_AUTHORITY
+    pr: 440
+    branch: changeset/mes-tensor-research-integration-20260830
+    head: 687234128d7c12d04e68aad0f303c21d2d470393
+    base: e7dc5fd99c6574eee1e93b6a2ec05beb394de034
+    role: CURRENT_TENSORIZED_MES_SEMANTIC_AUTHORITY
+    science_admission: NOT_GRANTED_YET
+    load_bearing_files:
+      - docs/codex_handoff/mes_tensor_research_integration/RESEARCH_SYNTHESIS.md
+      - docs/codex_handoff/mes_tensor_research_integration/EXECUTION_CONTRACT.json
+      - docs/codex_handoff/mes_tensor_research_integration/CODEX_HANDOFF_PROMPT.md
+      - htt/src/common/mes_krylov_completion.py
+      - scripts/observed_runs/rebuild_mes_tensor_carriers.py
+      - tests/common/test_mes_krylov_completion.py
+      - tests/integration/test_mes_tensor_mapfree_repair.py
+    established_semantics:
+      - stored-real orthonormal carrier convention
+      - corrected STF Q/O norms
+      - original-PSTF MES normalization
+      - old WU006-WU008 semantic withdrawal
+      - conditioned SO3 Krylov16 generic orbit chart
+      - no replacement anomaly rank during representation repair
+
+  - id: WU010_RESPONSE
+    pr: 442
+    branch: changeset/planck-mes-wu010-local-boost-adapter-20260901
+    head: 29427a1f7f2c5d46e43ffe03053c4ac13e969228
+    role: FULL_SKY_LOCAL_OBSERVER_RESPONSE_AUTHORITY
+    evidence: PASS_FRESH_READ_ONLY_REVIEW_WITH_TYPED_LIMITATIONS
+    claim_boundary:
+      - local observer boost only
+      - no empirical beta
+      - no global tilt identification
+      - no Planck absolute-temperature product admitted
+
+  - id: WU011_PROCESSED_RESPONSE
+    pr: 444
+    branch: changeset/planck-mes-wu011-processed-local-boost-response-20260902
+    head: de73549c16ac6ceb63f924c86611e0a5ceb4711d
+    role: PROCESSED_CUTSKY_RESPONSE_ACTIVE_ENGINEERING
+    last_byte_exact_scientific_terminal:
+      head: f635d873cf5e77f7cb0d2756469acde60b8609e5
+      state: PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED
+    source_equivalent_a4_state:
+      invariant_envelope: PRESENT
+      zero_family_guard: PRESENT
+      local_behavioral_paths: 12_pass_0_fail_reported
+      github_exact_head_ci: PRESTART_BLOCKED
+    continuum_reference:
+      L12_all_six_row_rank: 32
+      sigma_min_XY: 0.010490334912761
+      sigma_min_Z: 0.006905664979696537
+      sigma_min_diagonal: 0.008510322776380
+      claim: CONTINUUM_SURJECTIVITY_STRONGLY_SUPPORTED_NOT_FINITE_HEALPIX_CERTIFICATE
+
+  - id: WU011_EXTERNAL_VERIFIERS
+    prs: [446, 447]
+    role: DIAGNOSTIC_INDEPENDENT_LINEAGES
+    production_authority: false
+    axes:
+      - SymPy
+      - WIGXJPF_or_planned_external_Wigner
+      - python-flint_Arb_or_planned_ball_axis
+      - mpmath_SciPy
+      - GNU_Octave
+      - JAS
+      - Julia
+    claim_boundary: DO_NOT_PROMOTE_FINITE_HEALPIX_OR_OBSERVED_RESULT
+
+lineage:
+  tensor_method_branch: 687234128d7c12d04e68aad0f303c21d2d470393
+  response_branch_reference: 04680e99d56b9974fe1120854370af1fb94fb1d6
+  comparison:
+    status: DIVERGED
+    merge_base: c0269bf5fc731081a0486a53036056d4ab786c12
+    interpretation: SEMANTIC_SYNTHESIS_REQUIRED_NO_LINEAR_ANCESTRY_CLAIM
+
+historical_observational_outputs:
+  stored_harmonic_carriers: INPUT_ELIGIBLE_IF_HASH_BOUND
+  old_scalar_mes_ranks: HISTORICAL_ONLY_NOT_CURRENT_RESULT
+  old_qo_tensor_ranks: WITHDRAWN
+  old_foreground_inference: WITHDRAWN
+  old_carrier_injection_power: WITHDRAWN
+  cmbonly999_old_rank: WITHDRAWN_AS_CURRENT_RESULT_AND_NULL_MISMATCHED
+
+current_observational_state:
+  corrected_representation_execution: PENDING_LOCAL_RUN
+  independent_representation_review: PENDING
+  new_tensor_statistic_registry: PENDING
+  corrected_primary_planck_rerun: NOT_RUN
+  current_corrected_tensorized_rank: NONE
+
+next_order:
+  - R0_REPORT_SYNTHESIS
+  - R1_LOCAL_MAP_FREE_TENSOR_REPRESENTATION_REPAIR
+  - R2_INDEPENDENT_REPRESENTATION_REVIEW
+  - R3_PREOBSERVATION_STATISTIC_REGISTRY
+  - R4_LOCAL_CORRECTED_OBSERVATIONAL_RERUN
+  - R5_REPORT_RESULTS_UPDATE_AND_FIGURE_AUDIT
+  - R6_RESUME_WU011_A4_FINITE_OPERATOR_CLOSEOUT
+  - R7_PUBLICATION_SPLIT_DECISION
