@@ -152,8 +152,9 @@ Consider four two-coordinate rows
 and let every one of the 24 row permutations be equally likely.
 
 An invalid algorithm chooses the coordinate with the larger absolute value in
-the distinguished first row and then ranks that row by absolute value in the
-chosen coordinate. Exact enumeration gives
+the distinguished first row, assigns an exact tie to coordinate 2 by a fixed
+deterministic rule, and then ranks that row by absolute value in the chosen
+coordinate. Exact enumeration gives
 
 \[
 p_0=\frac12\quad\text{for 12 permutations},
@@ -169,12 +170,24 @@ At `alpha=3/4`,
 
 an exact size violation of `1/4`.
 
+The numerical split depends on the declared tie-break. If exact ties are sent
+to coordinate 1 instead, the counts are
+
+\[
+p_0=\frac12\quad\text{for 6 permutations},
+\qquad
+p_0=\frac34\quad\text{for 18 permutations},
+\]
+
+but the maximum size violation remains `1/4`.
+
 If instead the coordinate is selected by the permutation-invariant pooled sum
 of squares, the same fixture gives `p_0=3/4` for 18 permutations and `p_0=1`
 for six; its maximum super-uniformity violation is zero.
 
-This counterexample isolates selection asymmetry rather than blaming adaptation
-in general.
+Thus the counterexample isolates label-asymmetric selection rather than
+blaming adaptation in general, and its exact count receipt is meaningful only
+with the tie rule recorded.
 
 ## 5. Tie and tail rules
 
@@ -259,8 +272,10 @@ label was allowed to occupy every row position. The maximum violation of
 was zero for every `n`, including all tie patterns.
 
 Tie-free score sets gave one occurrence of every grid value `1/n,...,1`.
-The asymmetric and symmetric selection fixtures in Section 4 reproduced size
-violations `1/4` and `0`, respectively.
+For the asymmetric fixture, tie-to-coordinate-2 and tie-to-coordinate-1 rules
+gave counts `(12,12)` and `(6,18)`, respectively, with exact maximum size
+violation `1/4` in both cases. The symmetric pooled rule gave counts `(18,6)`
+at p-values `(3/4,1)` and zero maximum violation.
 
 The machine-readable receipt is
 `T4_WOLFRAM_FINITE_RANK_RECEIPT.json`.
