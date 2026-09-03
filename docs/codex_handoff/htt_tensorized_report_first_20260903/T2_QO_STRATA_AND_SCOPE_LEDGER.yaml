@@ -1,0 +1,91 @@
+schema: htt.report_a.t2_qo_strata_scope.v1
+date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+representation: STF2_Q_PLUS_STF3_O
+action_group: SO3
+
+normalization:
+  Qbar: Q / frobenius_norm(Q)
+  Obar: O / frobenius_norm(O)
+  amplitudes:
+    - A_Q
+    - A_O
+
+krylov_object:
+  v: Obar_contract_Qbar
+  matrix: K_QO=[v,Qbar_v,Qbar_squared_v]
+  signed_volume: det(K_QO)
+  exact_factorization: >-
+    v1*v2*v3 times the eigenvalue Vandermonde, up to the displayed ordering sign
+
+strata:
+  - id: Q_ZERO
+    algebraic_condition: frobenius_norm(Q)=0
+    stabilizer_or_chart_effect: normalized Q shape undefined
+    action: RETAIN_TENSORS_CHART_UNAVAILABLE
+  - id: O_ZERO
+    algebraic_condition: frobenius_norm(O)=0
+    stabilizer_or_chart_effect: normalized O shape undefined
+    action: RETAIN_TENSORS_CHART_UNAVAILABLE
+  - id: CONTRACTION_NULL
+    algebraic_condition: Obar:Qbar=0
+    stabilizer_or_chart_effect: K_QO=0
+    action: RETAIN_TENSORS_CHART_UNAVAILABLE
+  - id: REPEATED_Q_SPECTRUM
+    algebraic_condition: discriminant(Qbar)=0
+    stabilizer_or_chart_effect: eigenvalue Vandermonde vanishes and isotropy increases
+    action: RETAIN_TENSORS_CHART_UNAVAILABLE
+  - id: SIMPLE_NONCYCLIC
+    algebraic_condition: Qbar has simple spectrum but at least one eigenframe component of v vanishes
+    stabilizer_or_chart_effect: det(K_QO)=0
+    action: RETAIN_TENSORS_CHART_UNAVAILABLE
+  - id: CYCLIC_ILL_CONDITIONED
+    algebraic_condition: det(K_QO)!=0 but condition_number exceeds the frozen numerical limit
+    stabilizer_or_chart_effect: algebraically free orbit but unstable numerical section
+    action: TYPED_NUMERICAL_REFUSAL_NO_AXIS_FABRICATION
+  - id: CYCLIC_CONDITIONED
+    algebraic_condition: det(K_QO)!=0 and condition_number within the frozen limit
+    stabilizer_or_chart_effect: trivial stabilizer and valid reconstruction
+    action: APPLY_T2_RECONSTRUCTION
+
+packet:
+  amplitudes: [A_Q,A_O]
+  shape_values:
+    - tr(Qbar^2)
+    - tr(Qbar^3)
+    - v.v
+    - v.Qbar.v
+    - v.Qbar^2.v
+    - det(K_QO)
+    - ten_symmetric_Obar_Ki_Kj_Kk_contractions
+  independent_coordinate_claim: NOT_MADE_OVERCOMPLETE_PACKET
+  packet_image_characterization: OPEN
+
+proved_scope:
+  - SO3 invariance of the packet
+  - O3 pseudoscalar parity of det(K_QO)
+  - exact cyclicity criterion
+  - Gram reconstruction from moments and Cayley-Hamilton
+  - canonical proper-oriented frame from Gram plus signed volume
+  - reconstruction of Qbar and Obar for packets in the valid image
+  - equality of packets iff equality of SO3 orbits on the nonzero cyclic domain
+  - ordinary four-statistic Q/O compression fails on the O to minus-O mirror pair
+
+not_claimed:
+  - all-strata orbit atlas
+  - global polynomial invariant-ring generation
+  - minimal algebraically independent invariant set
+  - intrinsic characterization of every arbitrary sixteen-vector in packet space
+  - equivalence with the PR367/PR408 STF2-plus-four-vectors VT-T8 chart
+  - observational sufficiency
+  - physical-source identification
+  - novelty
+
+finite_null_policy:
+  chart_failure_is_zero: false
+  chart_failure_allows_row_deletion: false
+  allowed_actions:
+    - use a frozen statistic defined on the full Q/O tensors
+    - issue a pool-level row-equivariant abstention
+
+terminal: PASS_TYPED_QO_CYCLIC_STRATA_AND_SCOPE_LEDGER
