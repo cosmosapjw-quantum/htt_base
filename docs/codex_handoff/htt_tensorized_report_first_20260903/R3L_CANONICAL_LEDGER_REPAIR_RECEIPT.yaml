@@ -1,0 +1,69 @@
+schema: htt.report_a.r3l.canonical_ledger_repair_receipt.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+base_head: 6076cb977d115b79e35b1132bda1f55c5a029bd9
+inputs:
+  claim_ledger_v2:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V2.yaml
+    git_blob_sha: 88f7ef00936fda235f334b54d87a277580a1c874
+  citation_matrix_v1:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V1.yaml
+    git_blob_sha: 7dd3d56315cbdb48bc5d210748d6474cc6b52ed8
+  bibliography_v1:
+    path: docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+    git_blob_sha: 161f037a0e756bb76f1dc7267758e236f7153f50
+  blind_review:
+    path: docs/research_reports/audits/REPORT_A_R3_BLIND_REFEREE_REVIEW_20260903.md
+  subgroup_counterexample:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/R3_SUBGROUP_COUNTEREXAMPLE_RECEIPT.json
+outputs:
+  claim_ledger:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V3.yaml
+    claim_count: 30
+  citation_matrix:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+    claim_count: 30
+  bibliography:
+    path: docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+    expected_keys: 17
+  tests:
+    - tests/contracts/test_report_a_t9_v3.py
+    - tests/contracts/test_report_a_citation_matrix_v2.py
+  workflow: .github/workflows/report-a-ledger.yml
+repairs:
+  - id: R3L-STAT-001
+    action: >-
+      Restrict RA-STAT-001 to joint exchangeability plus complete row-permutation
+      equivariance and a fixed tie/tail rule.
+  - id: R3L-STAT-004
+    action: >-
+      Add a separate finite transformation-group orbit theorem with the proper-
+      subgroup counterexample and identity-including exact/conditional-Monte-
+      Carlo assumptions.
+  - id: R3L-PROV-001
+    action: >-
+      Update PR450 provenance to ba84912, 14 local tests, and the seed-schema
+      repair; update PR451 provenance to 9f7d06, 28 local tests, and the
+      10,000-pair stress receipt.
+  - id: R3L-BIB-001
+    action: >-
+      Make the formal BibTeX file the sole rendered bibliography authority and
+      complete the MES, SAG, MASTER, and Cai-Zhang locators without changing
+      scientific claims.
+verification_boundary:
+  source_files_created_or_replaced: true
+  yaml_parse: NOT_EXECUTED_LOCAL_RUNTIME_UNAVAILABLE
+  focused_pytest: PRESTART_NO_EXECUTION_EXPECTED
+  canonical_sorted_id_sha256: PENDING_SUPPORTED_RUNTIME_REPLAY
+  fresh_wolfram_subgroup_replay: BLOCKED_BY_UPSTREAM_502
+  scispace_randomization_search: PASS_ADJACENT_PRIMARY_SUPPORT
+  observed_data_used: false
+  corrected_planck_rank: null
+  finite_healpix_no_go_promoted: false
+  merge_authorized: false
+next_node: R3F_FLATTEN_REVISED_MANUSCRIPT_AGAINST_V3_AND_BIBLIOGRAPHY_V2
+terminal: >-
+  R3L_CANONICAL_LEDGER_AND_BIBLIOGRAPHY_SOURCE_REPAIRED__
+  SUPPORTED_RUNTIME_VALIDATION_PENDING__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY

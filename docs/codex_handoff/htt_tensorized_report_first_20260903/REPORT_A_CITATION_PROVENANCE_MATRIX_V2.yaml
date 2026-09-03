@@ -1,0 +1,282 @@
+schema: htt.report_a.citation_provenance_matrix.v2
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+canonical_claim_ledger: T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V3.yaml
+formal_bibliography: docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+observational_data_used: false
+novelty_adjudicated: false
+merge_authorized: false
+
+supersedes:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V1.yaml
+  git_blob_sha: 7dd3d56315cbdb48bc5d210748d6474cc6b52ed8
+  reason: >-
+    V2 adds the atomic randomization-group orbit claim, binds the v3 30-claim
+    ledger, and synchronizes bibliographic metadata with the formal BibTeX
+    authority.
+
+source_registry:
+  MES_1995_LIMITS:
+    authors: [R. Maartens, G. F. R. Ellis, W. R. Stoeger]
+    title: Limits on anisotropy and inhomogeneity from the cosmic background radiation
+    journal: Physical Review D 51(4), 1525-1535
+    doi: 10.1103/PhysRevD.51.1525
+    arxiv: astro-ph/9501016
+    role: PRIMARY_COEFFICIENT_AND_PREMISE_SOURCE
+  MES_1995_IMPROVED:
+    authors: [R. Maartens, G. F. R. Ellis, W. R. Stoeger]
+    title: Improved limits on anisotropy and inhomogeneity from the cosmic background radiation
+    journal: Physical Review D 51(10), 5942-5945
+    doi: 10.1103/PhysRevD.51.5942
+    role: PRIMARY_IMPROVED_BOUND_SOURCE
+  SAG_1999_COBE:
+    authors: [W. R. Stoeger, M. E. Araujo, T. Gebbie]
+    title: The Limits on Cosmological Anisotropies and Inhomogeneities from COBE Data
+    journal: The Astrophysical Journal 476(2), 435-439 (1997)
+    arxiv: astro-ph/9904346
+    role: PRIMARY_PRINTED_BOUND_AND_PSTF_NORMALIZATION_SOURCE
+
+  RANDOMIZATION_2024:
+    authors: [D. M. Ritzwoller, J. P. Romano, A. M. Shaikh]
+    title: Randomization Inference: Theory and Applications
+    arxiv: 2406.09521
+    role: PRIMARY_GROUP_INVARIANCE_AND_FINITE_SAMPLE_SCOPE
+  PHIPSON_SMYTH_2010:
+    authors: [B. Phipson, G. K. Smyth]
+    title: Permutation P-values Should Never Be Zero
+    doi: 10.2202/1544-6115.1585
+    role: PRIMARY_IDENTITY_INCLUDED_DISCRETE_NULL_SOURCE
+  HEMERIK_GOEMAN_2018:
+    authors: [J. Hemerik, J. Goeman]
+    title: Exact testing with random permutations
+    doi: 10.1007/s11749-017-0571-1
+    role: PRIMARY_RANDOM_SUBSET_EXACTNESS_SOURCE
+
+  DAI_CHLUBA_2014:
+    authors: [L. Dai, J. Chluba]
+    title: New operator approach to the CMB aberration kernels in harmonic space
+    journal: Physical Review D 89, 123504
+    doi: 10.1103/PhysRevD.89.123504
+    arxiv: 1403.6117
+    role: PRIMARY_FULL_SKY_D1_BOOST_OPERATOR_SOURCE
+  YASINI_PIERPAOLI_2017:
+    authors: [S. Yasini, E. Pierpaoli]
+    title: Generalized Doppler and aberration kernel for frequency-dependent cosmological observables
+    journal: Physical Review D 96, 103502
+    doi: 10.1103/PhysRevD.96.103502
+    arxiv: 1709.08298
+    role: PRIMARY_DOPPLER_WEIGHT_AND_FREQUENCY_SCOPE_SOURCE
+  ROLDAN_NOTARI_QUARTIN_2016:
+    authors: [O. Roldan, A. Notari, M. Quartin]
+    title: Interpreting the CMB aberration and Doppler measurements: boost or intrinsic dipole?
+    journal: JCAP 2016(06)026
+    doi: 10.1088/1475-7516/2016/06/026
+    arxiv: 1603.02664
+    role: PRIMARY_LOCAL_BOOST_VERSUS_INTRINSIC_LARGE_SCALE_INTERPRETATION_BOUNDARY
+
+  MASTER_2002:
+    authors: [E. Hivon et al.]
+    title: MASTER of the CMB Anisotropy Power Spectrum
+    journal: The Astrophysical Journal 567(1), 2-17
+    doi: 10.1086/338126
+    arxiv: astro-ph/0105302
+    role: PRIMARY_PARTIAL_SKY_MODE_COUPLING_ARCHITECTURE
+  LEUNG_2022:
+    authors: [J. S. Y. Leung et al.]
+    title: A Simulation-Based Method for Correcting Mode Coupling in CMB Angular Power Spectra
+    journal: The Astrophysical Journal 928(2), 109
+    doi: 10.3847/1538-4357/ac562f
+    arxiv: 2111.01113
+    role: PRIMARY_MATRIX_VALUED_TRANSFER_AND_MODE_MIXING_ARCHITECTURE
+
+  CAI_ZHANG_2018:
+    authors: [T. T. Cai, A. Zhang]
+    title: Rate-optimal perturbation bounds for singular subspaces with applications to high-dimensional statistics
+    journal: The Annals of Statistics 46(1), 60-89
+    doi: 10.1214/17-AOS1541
+    arxiv: 1605.00353
+    role: PRIMARY_SINGULAR_SUBSPACE_PERTURBATION_SOURCE
+  LI_1999:
+    authors: [R.-C. Li]
+    title: Relative perturbation theory: II. Eigenspace and singular subspace variations
+    journal: SIAM Journal on Matrix Analysis and Applications 20(2), 471-492 (1998)
+    doi: 10.1137/S0895479896298506
+    role: PRIMARY_RELATIVE_SUBSPACE_BOUND_SOURCE
+  LYU_WANG_2020:
+    authors: [Z. Lyu, D. Wang]
+    arxiv: 2011.07669
+    role: SECONDARY_SHARP_SINGULAR_SUBSPACE_BOUND_SOURCE
+
+  OLIVE_KOLEV_AUFFRAY_2013:
+    authors: [M. Olive, B. Kolev, N. Auffray]
+    title: Espace de tenseurs et théorie classique des invariants
+    identifier: HAL-00827406
+    role: ADJACENT_O3_SO3_TENSOR_INVARIANT_METHODS
+  BORNSEN_VANDEVEN_2018:
+    authors: [J.-P. Börnsen, A. E. M. van de Ven]
+    title: Tangent Developable Orbit Space of an Octupole
+    arxiv: 1807.04817
+    role: ADJACENT_STF3_ORBIT_SPACE_SOURCE
+  LOPATIN_FERREIRA_2018:
+    arxiv: 1810.10397
+    role: ADJACENT_SEPARATING_INVARIANT_SOURCE
+
+claim_citations:
+  RA-SCOPE-001:
+    internal_authority: [explicit_user_policy, PR440, AUTHORITY_LEDGER]
+    external_sources: []
+    citation_role: POLICY_AND_PROVENANCE_ONLY
+  RA-REP-001:
+    internal_authority: [T1, PR440]
+    external_sources: [OLIVE_KOLEV_AUFFRAY_2013]
+    citation_role: DIRECT_DERIVATION_WITH_ADJACENT_REPRESENTATION_CONTEXT
+  RA-REP-002:
+    internal_authority: [T1, T6, PR444]
+    external_sources: []
+    citation_role: PROJECT_SPECIFIC_COORDINATE_ADAPTER
+  RA-REP-003:
+    internal_authority: [T1, T3, PR440]
+    external_sources: [SAG_1999_COBE]
+    citation_role: DIRECT_NORMALIZATION_DERIVATION_PLUS_PRIMARY_CONVENTION_SOURCE
+  RA-ORBIT-001:
+    internal_authority: [T2]
+    external_sources: [OLIVE_KOLEV_AUFFRAY_2013, BORNSEN_VANDEVEN_2018]
+    citation_role: STANDARD_QUOTIENT_DIMENSION_WITH_ADJACENT_ORBIT_CONTEXT
+  RA-ORBIT-002:
+    internal_authority: [T2, PR440, PR451]
+    external_sources: [OLIVE_KOLEV_AUFFRAY_2013, BORNSEN_VANDEVEN_2018, LOPATIN_FERREIRA_2018]
+    citation_role: REPO_SPECIFIC_DIRECT_PROOF_ADJACENT_LITERATURE_ONLY
+    direct_match_found: false
+    novelty_status: UNRESOLVED
+  RA-ORBIT-003:
+    internal_authority: [T2, PR440]
+    external_sources: [OLIVE_KOLEV_AUFFRAY_2013, BORNSEN_VANDEVEN_2018]
+    citation_role: DIRECT_COUNTEREXAMPLE_WITH_PARITY_CONTEXT
+  RA-ORBIT-004:
+    internal_authority: [T2, T4, PR440]
+    external_sources: [OLIVE_KOLEV_AUFFRAY_2013]
+    citation_role: PROJECT_TYPED_STRATA_POLICY
+
+  RA-MES-001:
+    internal_authority: [T1, T3, PR440]
+    external_sources: [SAG_1999_COBE]
+    citation_role: PRIMARY_NORMALIZATION_PLUS_DIRECT_ALGEBRA
+  RA-MES-002:
+    internal_authority: [T3]
+    external_sources: [MES_1995_LIMITS, MES_1995_IMPROVED, SAG_1999_COBE]
+    citation_role: PRIMARY_BOUND_AND_PREMISE_SOURCES
+  RA-MES-003:
+    internal_authority: [T3]
+    external_sources: [OLIVE_KOLEV_AUFFRAY_2013]
+    citation_role: DIRECT_EQUIVARIANCE_NO_GO
+
+  RA-STAT-001:
+    internal_authority: [T4, T4_WOLFRAM_RECEIPT_V2, finite_rank_exchangeability_direct_proof]
+    external_sources: [PHIPSON_SMYTH_2010, HEMERIK_GOEMAN_2018]
+    citation_role: EXCHANGEABLE_ROW_FINITE_RANK_WITH_PROJECT_EQUIVARIANT_PROOF
+  RA-STAT-002:
+    internal_authority: [T4, T4_WOLFRAM_RECEIPT_V2]
+    external_sources: [RANDOMIZATION_2024, HEMERIK_GOEMAN_2018]
+    citation_role: PROJECT_ADAPTIVE_SELECTION_COUNTEREXAMPLE_AND_SYMMETRY_SCOPE
+  RA-STAT-003:
+    internal_authority: [T4, PR440]
+    external_sources: [RANDOMIZATION_2024]
+    citation_role: NULL_FIDELITY_PREMISE
+  RA-STAT-004:
+    internal_authority: [T4, R3_SUBGROUP_COUNTEREXAMPLE_RECEIPT]
+    external_sources: [RANDOMIZATION_2024, PHIPSON_SMYTH_2010, HEMERIK_GOEMAN_2018]
+    citation_role: FINITE_GROUP_ORBIT_RANDOMIZATION_THEOREM_AND_SUBGROUP_BOUNDARY
+
+  RA-RESP-001:
+    internal_authority: [T5, PR442]
+    external_sources: [DAI_CHLUBA_2014, YASINI_PIERPAOLI_2017, ROLDAN_NOTARI_QUARTIN_2016]
+    citation_role: PRIMARY_EXACT_BOOST_AND_INTERPRETATION_BOUNDARY
+  RA-RESP-002:
+    internal_authority: [T5, PR442]
+    external_sources: [DAI_CHLUBA_2014]
+    citation_role: PRIMARY_SELECTION_RULE_CONTEXT_PLUS_DIRECT_STF_DERIVATION
+
+  RA-PROC-001:
+    internal_authority: [T6, PR444]
+    external_sources: [MASTER_2002, LEUNG_2022, YASINI_PIERPAOLI_2017]
+    citation_role: PARTIAL_SKY_AND_MATRIX_TRANSFER_ARCHITECTURE
+  RA-PROC-002:
+    internal_authority: [T6, Task5B_frozen_execution]
+    external_sources: [DAI_CHLUBA_2014]
+    citation_role: PROJECT_STRUCTURAL_NULL_WITH_FULL_SKY_SELECTION_CONTEXT
+  RA-PROC-003:
+    internal_authority: [T6]
+    external_sources: []
+    citation_role: DIRECT_FINITE_DIMENSIONAL_LINEAR_ALGEBRA
+  RA-PROC-004:
+    internal_authority: [Task7B_artifact, T6]
+    external_sources: [MASTER_2002, LEUNG_2022]
+    citation_role: REGISTERED_NUMERICAL_RESULT_WITH_ARCHITECTURE_CONTEXT
+  RA-PROC-005:
+    internal_authority: [Task7C_f635_artifact, T6]
+    external_sources: [CAI_ZHANG_2018, LI_1999]
+    citation_role: REGISTERED_UNRESOLVED_RESULT_AND_RANK_BOUNDARY
+
+  RA-CONT-001:
+    internal_authority: [T7, PR446_exact_z_artifact]
+    external_sources: [MASTER_2002, DAI_CHLUBA_2014]
+    citation_role: REPO_EXACT_CONTINUUM_RESULT_WITH_OPERATOR_CONTEXT
+  RA-CONT-002:
+    internal_authority: [T7, PR447_source_verifiers]
+    external_sources: [MASTER_2002, DAI_CHLUBA_2014]
+    citation_role: MULTI_ENGINE_NUMERICAL_RESULT
+  RA-CONT-003:
+    internal_authority: [T6, T7]
+    external_sources: [CAI_ZHANG_2018, LI_1999]
+    citation_role: DISCRETE_CONTINUUM_ERROR_FIREWALL
+
+  RA-ERR-001:
+    internal_authority: [T8, PR444_error_envelope_source]
+    external_sources: []
+    citation_role: DIRECT_CAUCHY_SCHWARZ_AND_LOEWNER_DERIVATION
+  RA-ERR-002:
+    internal_authority: [T8]
+    external_sources: []
+    citation_role: DIRECT_PARAMETERIZATION_INVARIANCE_DERIVATION
+  RA-ERR-003:
+    internal_authority: [T8]
+    external_sources: [CAI_ZHANG_2018, LI_1999]
+    citation_role: DIRECT_ROBUST_RANK_BOUND_WITH_PERTURBATION_CONTEXT
+  RA-ERR-004:
+    internal_authority: [T8]
+    external_sources: [CAI_ZHANG_2018, LI_1999, LYU_WANG_2020]
+    citation_role: PRIMARY_PARTIAL_SUBSPACE_GAP_BOUNDARY
+
+  RA-BOUNDARY-001:
+    internal_authority: [owner_data_deferral, D0_gate, PR449]
+    external_sources: []
+    citation_role: CURRENT_PROJECT_STATE
+
+coverage:
+  claim_rows: 30
+  claim_rows_with_internal_authority: 30
+  claim_rows_with_external_primary_or_adjacent_sources: 24
+  claim_rows_direct_derivation_only: 6
+  formal_bibliography_keys: 17
+  direct_literature_match_for_exact_qo_krylov16: false
+  novelty_decisions_made: 0
+  observational_sources_used_as_results: 0
+
+citation_rules:
+  - External sources support only the role declared in source_registry.
+  - Adjacent invariant literature is not a proof of the Q/O Krylov16 theorem.
+  - Internal numerical artifacts require their execution grade in the same sentence or caption.
+  - A source-only implementation is never cited as an executed validation.
+  - Continuum and finite-HEALPix claims receive separate citations and labels.
+  - Exchangeable-row and finite-group-orbit theorems are distinct claims with distinct assumptions.
+  - The formal BibTeX file is the sole rendered bibliography authority; manual reference lists are noncanonical history.
+  - No observational Planck or FFP10 value enters Report A.
+
+terminal: >-
+  PASS_REPORT_A_CITATION_PROVENANCE_MATRIX_V2_SOURCE__
+  THIRTY_CLAIMS_MAPPED__
+  FINITE_SAMPLE_THEOREM_LANES_SEPARATED__
+  FORMAL_BIBLIOGRAPHY_SINGLE_AUTHORITY__
+  NOVELTY_UNRESOLVED__
+  OBSERVATIONAL_DATA_DEFERRED

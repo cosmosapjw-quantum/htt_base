@@ -3,17 +3,19 @@ name: Report A claim and citation ledgers
 on:
   pull_request:
     paths:
-      - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V2.yaml
-      - docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V1.yaml
-      - tests/contracts/test_report_a_t9_v2.py
-      - tests/contracts/test_report_a_citation_matrix.py
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V3.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+      - docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+      - tests/contracts/test_report_a_t9_v3.py
+      - tests/contracts/test_report_a_citation_matrix_v2.py
       - .github/workflows/report-a-ledger.yml
   push:
     paths:
-      - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V2.yaml
-      - docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V1.yaml
-      - tests/contracts/test_report_a_t9_v2.py
-      - tests/contracts/test_report_a_citation_matrix.py
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V3.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+      - docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+      - tests/contracts/test_report_a_t9_v3.py
+      - tests/contracts/test_report_a_citation_matrix_v2.py
       - .github/workflows/report-a-ledger.yml
   workflow_dispatch:
 
@@ -34,5 +36,5 @@ jobs:
       - name: Parse and validate canonical report ledgers
         run: |
           python -m pytest -q \
-            tests/contracts/test_report_a_t9_v2.py \
-            tests/contracts/test_report_a_citation_matrix.py
+            tests/contracts/test_report_a_t9_v3.py \
+            tests/contracts/test_report_a_citation_matrix_v2.py
