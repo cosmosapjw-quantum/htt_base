@@ -14,39 +14,46 @@ The triage source is PR #405 at
 Git blob `56af1713ef8c4718598e10012819d5ab62c6e37a`.
 
 The controlling adversarial requirement is PR #408 WU-001 at
-`40dce3ab9328c1f3acb99adba11046056c639737`: every eligible exact or
+`40dce3ab9328c1f3acb99adba11046056c639737`, now approved by merge commit
+`2dce66ca019609e6d07625bc6382bc347fbf5a8c`: every eligible exact or
 conditional row, synthetic row, and declared scoped child must receive one
 report disposition without allowing provisional role labels to determine
 truth, novelty, or publication status.
 
 The machine-readable output is
-`REGISTERED_SURVIVOR_SURFACE.csv`.
+`REGISTERED_SURVIVOR_SURFACE.csv`, Git blob
+`d64cfbd2265b85264798cc753d38a6f300a5877f`.
 
 ## 2. Closed source surface
 
-The PR #405 eligible survivor surface is exactly:
+The PR #405 registered report-source surface is exactly:
 
 | Source class | Rows |
 |---|---:|
-| exact or premise-conditional | 24 |
-| preregistered synthetic | 8 |
-| independently reportable scoped child | 4 |
-| **total** | **36** |
+| exact or premise-conditional broad PASS | 24 |
+| preregistered synthetic broad PASS | 8 |
+| declared scoped candidate | 5 |
+| **total** | **37** |
 
-The report triage is:
+Four scoped candidates are promoted narrow results. The fifth,
+`PR284_NEW:FINITE-REGISTERED-PATH`, is an actually attempted but unresolved
+four-axis proof candidate and is retained as `DEFERRED`; it must not disappear
+merely because it is not one of the 36 promoted candidates.
+
+The Report-A triage is:
 
 | Report disposition | Rows |
 |---|---:|
 | `INCLUDED` | 16 |
 | `EXCLUDED` | 13 |
-| `DEFERRED` | 7 |
-| **total** | **36** |
+| `DEFERRED` | 8 |
+| **total** | **37** |
 
 `INCLUDED` means selected for direct replay and possible use in Report A. It
 does not mean that A2 independently re-proved novelty or granted publication
 authority. `EXCLUDED` means omitted from this report for duplication, scope, or
 representation reasons; it does not change the source truth status.
-`DEFERRED` preserves the result for a named successor.
+`DEFERRED` preserves the result or unresolved candidate for a named successor.
 
 ## 3. Included rows
 
@@ -112,7 +119,7 @@ The duplicate rows remain linked and are not counted as additional theorems.
   negative application. It is preserved outside the HTT-only Report A and is
   not extended to tilted frames or all Bianchi types.
 
-## 5. Deferred rows
+## 5. Deferred rows and candidate
 
 - `PILLAR_T:VT-T5` — physical shear-orbit strata; defer to physical-state
   geometry work.
@@ -126,23 +133,37 @@ The duplicate rows remain linked and are not counted as additional theorems.
   evolution law.
 - `NARROW:VT-S14-SYNTHETIC-POSITIVE-CELL` — depth-conditioned local/global
   synthetic cell; defer to P3.
+- `PR284_NEW:FINITE-REGISTERED-PATH` — the broad four-axis proof attempt remains
+  `CAS_CONFLICT / UNRESOLVED`; preserve it as a deferred source candidate.
+  PR #408 WU-004 may register the narrower exact four-atom arithmetic example
+  under a new statement identity, but must not rewrite this parent candidate.
 
-## 6. Independent Wolfram validation
+## 6. Independent Wolfram validation and P0 repair history
 
-The exact CSV content was parsed in a Wolfram Language evaluator. The final
-receipt reports:
+A first report-branch validation parsed 36 rows and four scoped children. A
+subsequent direct audit against the PR #405 source matrix found that PR #405
+explicitly declares five supplemental scoped candidates. The omitted fifth
+candidate was `PR284_NEW:FINITE-REGISTERED-PATH`.
+
+Because WU-001 requires every declared scoped child or candidate to receive a
+report disposition, the 36-row closeout was a P0 source-surface omission. The
+repair added only the missing deferred row; the 16 included rows and their
+Report-A section mapping did not change.
+
+The corrected Wolfram validation reports:
 
 ```yaml
-parsed_rows: 36
+parsed_rows: 37
 unique_ids: true
 source_class_counts:
   EXACT_OR_CONDITIONAL: 24
   SYNTHETIC: 8
-  SCOPED_CHILD: 4
+  SCOPED_CHILD: 5
 report_disposition_counts:
   INCLUDED: 16
   EXCLUDED: 13
-  DEFERRED: 7
+  DEFERRED: 8
+missing_declared_scoped_candidates: 0
 duplicate_groups_closed: true
 scoped_parents_present: true
 representation_firewall_closed: true
@@ -150,11 +171,9 @@ synthetic_rows_not_promoted_as_core_theorems: true
 all_checks_pass: true
 ```
 
-The first validation expression failed because it compared imported Boolean
-cells with string literals. Inspection showed that the CSV data were correct;
-the validation expression was repaired to compare Boolean values directly and
-then passed. The failure and repair are retained in
-`WOLFRAM_A2_VALIDATION_RECEIPT.json`.
+Fresh exact list validation found 37 unique IDs. The sorted-ID audit hash was
+`249af10f1643ff699dc8f6ba0e5424505a11d226a8498b87056152e46d949737`.
+This is a Wolfram audit hash of canonicalized IDs, not a Git content identity.
 
 The same independent calculation reproduced:
 
@@ -207,16 +226,21 @@ singular-value gap rather than rank thresholding alone.
 ## 8. A2 terminal and residual boundary
 
 ```yaml
-A2_state: DONE_CONTENT_AND_INDEPENDENT_WOLFRAM_VALIDATION
+A2_state: DONE_AFTER_P0_SOURCE_SURFACE_REPAIR
+A2_registered_rows: 37
+A2_included_rows: 16
+A2_excluded_rows: 13
+A2_deferred_rows: 8
 A2_publication_authority: false
 Python_checkout_validation: NOT_EXECUTED_RUNTIME_UNAVAILABLE
-GitHub_CI: NOT_USED_AS_A2_PASS_EVIDENCE
+GitHub_CI: PENDING_EXACT_HEAD_READBACK
 current_corrected_Planck_rank: null
 observational_execution: DATA_DEFERRED_BY_OWNER
 merge_authorized: false
-next_node: A5_CONTRADICTION_AND_NOTATION_CLOSURE
+next_node: A5_CONTRADICTION_AND_NOTATION_RECLOSE
 ```
 
-A2 closes the survivor-selection omission identified by PR #408. It does not
-close the current replay, novelty, theorem-proof, or manuscript gates of the
-16 included rows. Those obligations are carried into A5 and T1--T8.
+A2 closes the survivor-selection omission identified by PR #408 after the
+one-row P0 repair. It does not close current replay, novelty, theorem-proof, or
+manuscript gates for the 16 included rows. Those obligations remain in A5 and
+T1--T8.
