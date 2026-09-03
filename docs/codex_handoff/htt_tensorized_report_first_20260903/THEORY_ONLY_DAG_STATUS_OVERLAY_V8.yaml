@@ -1,0 +1,43 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v8
+date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_data_used: false
+corrected_tensorized_planck_rank: null
+merge_authorized: false
+
+nodes:
+  A2M:
+    state: SOURCE_IMPLEMENTED_EXACT_HEAD_PRESTART_BLOCKED
+    authority: PR450@8396f8a927c7ea7ccd3e5b96497e076774b98d7c
+  T2C:
+    state: SOURCE_IMPLEMENTED_EXACT_HEAD_PRESTART_BLOCKED
+    authority: PR451@1fdd499c86e7e4aad8edc71565114a6753ebf767
+  T4R:
+    state: DONE_EXACT_TIE_RULE_RECORDED
+  T9:
+    state: DONE_SELF_CONTAINED_V2_29_CLAIMS
+    authority_blob: 88f7ef00936fda235f334b54d87a277580a1c874
+  R1:
+    state: DONE_AS_FIRST_DRAFT
+    authority_blob: dbb6a732462bce243527410e7e52eedde617294a
+  R2A:
+    state: DONE_WITH_P1
+  R2B:
+    state: LOCALLY_GREEN_PUSH_IN_PROGRESS
+    red_commit: 8f944a6f4fac25f03cf3c9271fc9b4d974790d18
+    draft_path: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R2_20260903.md
+    local_contract: 5_PASSED
+  R2C:
+    state: NEXT
+    objective: independent draft audit plus exact-head execution receipt
+  R3:
+    state: WAITING_ON_R2C
+  R4:
+    state: WAITING_ON_R3
+  D0:
+    state: DATA_DEFERRED_BY_OWNER
+
+current_terminal: >-
+  R2B_R2_WORKING_DRAFT_LOCALLY_GREEN__PUSH_AND_EXACT_HEAD_READBACK_PENDING__
+  OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY
