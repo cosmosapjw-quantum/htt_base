@@ -1,0 +1,25 @@
+{
+  "schema": "htt.report_a.r3.subgroup_rank_counterexample.v1",
+  "states": [
+    [10, 0, -100, -100],
+    [0, 10, -100, -100]
+  ],
+  "weights": ["1/2", "1/2"],
+  "subgroup": "{identity, swap rows 0 and 1}",
+  "law_invariant": true,
+  "all_row_p_values": ["1/4", "1/2"],
+  "all_row_worst": {
+    "excess": "1/2",
+    "alpha": "1/2",
+    "rejection_probability": "1"
+  },
+  "group_orbit_p_values": ["1/2", "1"],
+  "group_orbit_worst": {
+    "excess": "0",
+    "alpha": "1",
+    "rejection_probability": "1"
+  },
+  "conclusion": "Subgroup invariance does not license ranking against rows outside the group orbit.",
+  "wolfram_status": "BLOCKED_BY_UPSTREAM_502_IN_THIS_PASS",
+  "exact_python_fraction_check": "PASS"
+}
