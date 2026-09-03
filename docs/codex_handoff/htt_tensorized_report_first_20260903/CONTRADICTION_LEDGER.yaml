@@ -1,4 +1,4 @@
-schema: htt.report_a.contradiction_ledger.v4
+schema: htt.report_a.contradiction_ledger.v5
 date: 2026-09-03
 repository: cosmosapjw-quantum/htt_base
 status: REPORT_CONTRADICTIONS_CLOSED_PROOF_OBLIGATIONS_REMAIN
@@ -22,8 +22,8 @@ resolved_items:
   - id: C-004
     topic: qo_orbit_completeness
     conflict: PR440 conditioned reconstruction source versus absence of an independent exact theorem or directly matching literature source
-    resolution: NO_LOGICAL_CONTRADICTION_BUT_PROOF_REMAINS_OPEN
-    report_action: T2 must independently prove or narrow the Q/O chart
+    resolution: T2_PROVES_SEPARATION_AND_RECONSTRUCTION_ON_THE_NONZERO_CYCLIC_DOMAIN_ONLY
+    report_action: retain novelty unresolved and forbid all-strata or invariant-ring completeness wording
   - id: C-005
     topic: theorem_survivor_selection
     conflict: PR405 contains thirty-six promoted candidates plus one unresolved supplemental scoped proof attempt, while PR408 requires every declared scoped candidate to receive a report disposition
@@ -131,16 +131,25 @@ resolved_items:
     conflict: first PR449 A2 closeout counted only four promoted scoped children and omitted the fifth unresolved PR284 scoped candidate
     resolution: ADD_PR284_AS_DEFERRED_AND_REGENERATE_A2_RECEIPT
     report_action: preserve 37 registered rows and 16 included report rows; do not relabel the CAS-conflicted parent as a proved worked example
+  - id: C-024
+    topic: harmonic_real_coordinate_convention
+    conflict: PR440/T1 uses the orthonormal carrier c=(a_l0,sqrt2 Re a_lm,-sqrt2 Im a_lm), while PR444 calls the raw complex-component coordinate r=(a_l0,Re a_lm,Im a_lm) scientific stored-real
+    resolution: EXPLICIT_DIAGONAL_ADAPTER_AND_DISTINCT_REPORT_SYMBOLS
+    evidence:
+      orthonormal_metric: identity
+      raw_metric: diag(1,2,2,...,2)
+      adapter: c=D r with D^T D=G
+    report_action: reserve stored-real carrier for c; call the WU011 public coordinate r and retain G or transform explicitly
 
 closed_theory_obligations:
   - {id: P-001, node: T1, terminal: PASS_STORED_REAL_STF_REPRESENTATION_THEORY, boundary: PR440 runtime admission remains separate}
+  - {id: P-002, node: T2, terminal: PASS_QO_SO3_ORBIT_RECONSTRUCTION_ON_NONZERO_CYCLIC_DOMAIN_WITH_NOVELTY_UNRESOLVED, boundary: no all-strata atlas or invariant-ring completeness}
   - {id: P-003, node: T3, terminal: PASS_CONDITIONAL_MES_GEOMETRY_AND_EQUIVARIANCE_FIREWALL, boundary: coefficients literature-supported and observational measurement absent}
   - {id: P-004, node: T4, terminal: PASS_FINITE_NULL_ROW_EQUIVARIANCE_THEORY, boundary: no particular Planck or FFP10 pool is certified exchangeable}
+  - {id: P-005, node: T6, terminal: PASS_WU011_PROCESSED_RESPONSE_QUOTIENT_SYNTHESIS_WITH_FINITE_OPERATOR_UNRESOLVED, boundary: current A4 runtime unobserved and finite containment unresolved}
   - {id: P-010, node: T5, terminal: PASS_WU010_EXACT_LOCAL_OBSERVER_RESPONSE_SYNTHESIS, boundary: full-sky local-observer thermodynamic-temperature scope only}
 
 open_proof_obligations:
-  - {id: P-002, node: T2, statement: independent PR440 Q/O Krylov reconstruction or a narrower terminal}
-  - {id: P-005, node: T6, statement: processed-response quotient synthesis with current-versus-frozen execution separation}
   - {id: P-006, node: T7, statement: portable all-direction interval or explicitly limited numerical wording}
   - {id: P-007, node: T8, statement: actual numerical-error family and radius completeness}
   - {id: P-008, node: T1_T8, statement: statement-level novelty comparison against directly relevant literature}
@@ -148,7 +157,7 @@ open_proof_obligations:
 
 current_terminal: >-
   A2_SURVIVOR_TRIAGE_CLOSED_AFTER_P0_REPAIR__
-  A5_CONTRADICTION_AND_NOTATION_CONTRACT_RECLOSED__
-  T1_T3_T4_T5_COMPLETE_AT_TYPED_SCOPE__
-  T2_PRIMARY_AND_T6_PARALLEL_ACTIVE__
+  A5_CONTRADICTION_NOTATION_AND_HARMONIC_ADAPTER_CLOSED__
+  T1_T2_T3_T4_T5_T6_COMPLETE_AT_TYPED_SCOPE__
+  T7_T8_ACTIVE__
   NO_OBSERVATIONAL_OR_PUBLICATION_PROMOTION
