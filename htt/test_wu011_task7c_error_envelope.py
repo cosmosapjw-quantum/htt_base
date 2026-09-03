@@ -193,6 +193,7 @@ def test_holdout_validation_detects_containment_and_escape():
 
 def test_holdout_validation_shape_and_tolerance_fail_closed():
     family = np.zeros((1, 2, 2))
+    family[0] = 0.1 * np.eye(2)
     envelope = api.build_output_error_envelope(
         {"training": family},
         reference_operator_norm=1.0,
