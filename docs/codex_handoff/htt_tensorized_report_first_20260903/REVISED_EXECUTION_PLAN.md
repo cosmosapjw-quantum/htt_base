@@ -1,4 +1,4 @@
-# HTT theory-report-first execution plan — A2/A5 and first theorem-pack closeout
+# HTT theory-report-first execution plan — corrected A2/A5 and first theorem-pack closeout
 
 Date: 2026-09-03  
 Repository: `cosmosapjw-quantum/htt_base`  
@@ -24,7 +24,7 @@ Report A uses a federation rather than one implicit latest branch:
 ```text
 PR #367  typed vector/tensor framework
 PR #405  157-candidate source matrix
-PR #408  survivor-surface P0 contract
+PR #408  merged survivor-surface P0 contract
 PR #440  corrected temperature Q/O semantics and source implementation
 PR #441  wording/proof-obligation summary; formal dossier pending
 PR #442  accepted full-sky local-observer response
@@ -59,15 +59,16 @@ lineages are cited separately.
 
 ### A2 — registered survivor-surface triage
 
-`DONE_CONTENT_AND_INDEPENDENT_WOLFRAM_VALIDATION`.
+`DONE_AFTER_P0_SOURCE_SURFACE_REPAIR`.
 
-PR #405 and PR #408 define the report-eligible surface:
+PR #405 and the now-merged PR #408 WU-001 contract define the registered report
+source surface:
 
 ```yaml
 exact_or_conditional: 24
 synthetic: 8
-scoped_children: 4
-total: 36
+scoped_candidates: 5
+total: 37
 ```
 
 Every row now has one report disposition:
@@ -75,16 +76,23 @@ Every row now has one report disposition:
 ```yaml
 INCLUDED: 16
 EXCLUDED: 13
-DEFERRED: 7
+DEFERRED: 8
 ```
 
-Two duplicate exact-core pairs each have one report owner. All scoped children
-retain their parent identity. `STF2+four vectors` and temperature
-`STF2+STF3` remain separated. A fresh Wolfram parse verified all counts and
-coverage.
+The first report-branch closeout counted only the four promoted scoped children
+and omitted the unresolved fifth candidate
+`PR284_NEW:FINITE-REGISTERED-PATH`. WU-001 requires every declared scoped
+candidate to receive a disposition, so that 36-row closeout was reopened as a
+P0 omission. The repair adds the missing PR-284 parent as `DEFERRED`; it does
+not alter any of the sixteen included Report-A rows.
 
-A2 does not promote truth or novelty. It closes the omission risk found by PR
-#408 and determines what must be directly replayed.
+Two duplicate exact-core pairs each have one report owner. All scoped
+candidates retain their parent identity. `STF2+four vectors` and temperature
+`STF2+STF3` remain separated. A regenerated Wolfram receipt verifies the
+37-row surface.
+
+A2 does not promote truth or novelty. It closes source-surface omission risk
+and determines what must be directly replayed.
 
 ### A3 — representation firewall
 
@@ -107,7 +115,7 @@ separate.
 
 ### A5 — contradiction and notation closure
 
-`DONE_CONTRACT_AND_WOLFRAM_COVERAGE`.
+`DONE_AFTER_A2_P0_REPAIR_AND_WOLFRAM_RECOVERAGE`.
 
 The frozen notation registry separates:
 
@@ -120,8 +128,9 @@ The frozen notation registry separates:
 - theorem, implementation, runtime, science-terminal, publication, and merge
   status.
 
-Every one of the sixteen included survivor rows is mapped exactly once to a
-theory pack and report section.
+Every one of the sixteen included survivor rows remains mapped exactly once to
+a theory pack and report section. The newly restored PR-284 row is deferred and
+therefore does not change that map.
 
 ## 4. Completed substantive theory packs
 
@@ -177,7 +186,9 @@ Completed:
   violates size by `1/4`;
 - exhaustive Wolfram tie checks for pool sizes 2 through 7.
 
-This theorem does not certify any particular Planck/FFP10 reference pool.
+This theorem does not certify any particular Planck/FFP10 reference pool. The
+unresolved PR-284 four-axis parent remains deferred; its narrower exact finite
+arithmetic example may be registered later under a distinct identity.
 
 ### T5 — exact full-sky local-observer response
 
@@ -210,21 +221,21 @@ For normalized `Q` and `O`, define
 
 ```text
 v = O:Q
-K = [v, Qv, Q^2 v]
+K_QO = [v, Qv, Q^2 v]
 ```
 
 Prove:
 
-1. `det K` has the eigenframe Vandermonde factorization;
-2. `det K != 0` is equivalent to simple Q spectrum and nonzero eigenframe
+1. `det K_QO` has the eigenframe Vandermonde factorization;
+2. `det K_QO != 0` is equivalent to simple Q spectrum and nonzero eigenframe
    components of `v`;
 3. trace-free Cayley--Hamilton determines `Q^3 v` and `Q^4 v` from lower
    moments;
-4. the five Krylov moments determine `K^T K`;
+4. the five Krylov moments determine `K_QO^T K_QO`;
 5. the signed Gram square root fixes one canonical proper orientation;
 6. the companion matrix reconstructs `Q`;
 7. ten trilinear contractions reconstruct `O`;
-8. equal packets imply one SO(3) orbit;
+8. equal packets imply one SO(3) orbit on the declared cyclic chart;
 9. the signed determinant distinguishes a mirror pair missed by even
    invariants;
 10. zero, repeated-spectrum, contraction-null, noncyclic, and ill-conditioned
@@ -239,6 +250,12 @@ Prove:
 - explicit comparison with the closest retrieved invariant-theory literature;
 - novelty remains `UNRESOLVED` unless a directly matching source is found.
 
+The latest SciSpace search found adjacent results for pure octupoles,
+vector-plus-quadrupole orbit spaces, several symmetric matrices, and other
+SO(3) representations, but no source in the retrieved set directly proves the
+specific real `STF2(Q)+STF3(O)` Krylov reconstruction. This is not a universal
+nonexistence result.
+
 ### T2 terminals
 
 ```text
@@ -247,8 +264,8 @@ PASS_RECONSTRUCTION_WITH_NOVELTY_UNRESOLVED
 UNRESOLVED_QO_RECONSTRUCTION
 ```
 
-The likely scientific terminal may combine the first two clauses: a proved
-generic chart with novelty still unresolved.
+The likely terminal may combine the first two clauses: a proved generic chart
+with novelty still unresolved.
 
 ## 6. Current parallel node: T6
 
@@ -257,8 +274,7 @@ T6 can proceed independently once T5 is frozen.
 Required outputs:
 
 - exact processing-chain factorization;
-- quotient identity
-  `rank([K J])-rank(K)`;
+- quotient identity `rank([K J])-rank(K)`;
 - nested-image theorem and short-circuit condition;
 - separate Task-7A/7B negative evidence, last byte-exact Task-7C result, and
   current source-only A4 mathematics;
@@ -340,10 +356,10 @@ No current theory node is authorized to reopen D0.
 |---|---:|
 | repository inventory | 100% for Report A scope |
 | authority/supersession | 98% |
-| survivor triage | 100% content and independent Wolfram validation |
+| survivor triage | 100% after one-row P0 repair and regenerated Wolfram receipt |
 | representation firewall | 100% |
 | execution receipt index | 95% |
-| notation/contradiction contract | 100% |
+| notation/contradiction contract | 100% after A2 reclosure |
 | T1 stored-real/STF theory | 100% theory; runtime admission separate |
 | T2 Q/O orbit reconstruction | 70% source understanding; direct proof active |
 | T3 conditional MES theory | 100% at retained geodesic scope |
@@ -353,16 +369,16 @@ No current theory node is authorized to reopen D0.
 | T7 continuum result | 90--95% graded evidence; all-direction interval 25--40% |
 | T8 error-envelope theorem | 85--90% mathematics; error-class completeness unresolved |
 | T9 integrated claim ledger | 65--70% |
-| Report A working prose | 65--72% |
+| Report A working prose | 68--75% |
 | audited report release candidate | 0% |
 | corrected observational result | 0%, intentionally deferred |
 
 ## 11. Current terminal
 
 ```text
-A2_REGISTERED_SURVIVOR_TRIAGE_CLOSED
+A2_REGISTERED_SURVIVOR_TRIAGE_CLOSED_AFTER_P0_REPAIR
 /
-A5_NOTATION_AND_CONTRADICTION_CONTRACT_CLOSED
+A5_NOTATION_AND_CONTRADICTION_CONTRACT_RECLOSED
 /
 T1_T3_T4_T5_COMPLETE_AT_TYPED_SCOPE
 /
