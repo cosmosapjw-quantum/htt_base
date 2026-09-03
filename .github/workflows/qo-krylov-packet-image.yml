@@ -1,0 +1,33 @@
+name: QO Krylov packet-image validation
+
+on:
+  pull_request:
+    paths:
+      - htt/src/common/mes_krylov_completion.py
+      - tests/common/test_mes_krylov_completion.py
+      - .github/workflows/qo-krylov-packet-image.yml
+  push:
+    paths:
+      - htt/src/common/mes_krylov_completion.py
+      - tests/common/test_mes_krylov_completion.py
+      - .github/workflows/qo-krylov-packet-image.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  packet-image:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install focused dependencies
+        run: python -m pip install --disable-pip-version-check numpy pytest
+      - name: Compile and run Q/O packet contracts
+        run: |
+          python -m py_compile htt/src/common/mes_krylov_completion.py
+          python -m pytest -q tests/common/test_mes_krylov_completion.py
