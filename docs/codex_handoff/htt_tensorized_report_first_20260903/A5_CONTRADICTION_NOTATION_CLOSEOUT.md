@@ -8,18 +8,24 @@ Observational execution: none
 
 ## Inputs and outputs
 
-A5 consumes the completed A2 surface and the authority, representation, and
+A5 consumes the corrected A2 surface and the authority, representation, and
 execution preflights. It freezes:
 
 ```text
 NOTATION_AND_CONVENTION_REGISTRY.yaml
 REPORT_SECTION_CLAIM_MAP.csv
-CONTRADICTION_LEDGER.yaml v3
+CONTRADICTION_LEDGER.yaml v4
 A5_CONTRADICTION_NOTATION_CLOSEOUT.md
 ```
 
-The A2 source surface contains 36 eligible rows and the closed report
-classification `16 INCLUDED / 13 EXCLUDED / 7 DEFERRED`.
+The first A2 closeout omitted one declared supplemental scoped candidate. The
+repaired source surface contains 37 registered rows and the closed report
+classification `16 INCLUDED / 13 EXCLUDED / 8 DEFERRED`.
+
+The added row is `PR284_NEW:FINITE-REGISTERED-PATH`, retained as `DEFERRED`
+because its four-axis aggregate remains `CAS_CONFLICT / UNRESOLVED`. It does
+not enter the sixteen-row Report-A claim map. A narrower exact four-atom worked
+example may be registered later under a distinct statement identity.
 
 ## Closed semantic collisions
 
@@ -55,7 +61,8 @@ The latter cannot prove the former.
 ## Included-row coverage
 
 Every A2-included row occurs exactly once in
-`REPORT_SECTION_CLAIM_MAP.csv`. A fresh Wolfram parse gave:
+`REPORT_SECTION_CLAIM_MAP.csv`. The P0 source-surface repair changed only the
+deferred registry, so this mapping remains:
 
 ```yaml
 rows: 16
@@ -88,21 +95,30 @@ complete selection and row-processing algorithm. Singular-subspace
 perturbation literature requires perturbation size together with a spectral
 gap, so T8 separates partial-subspace stability from numerical rank.
 
-## Terminal
+## Repair history and terminal
+
+The 36-row A2/A5 closeout was reopened after direct comparison with the PR #405
+coverage declaration `supplemental_scoped_candidates_expected: 5`. Adding the
+missing unresolved PR-284 candidate produces the corrected 37-row surface and
+leaves all substantive included-row theorem packs unchanged.
 
 ```yaml
-A5_state: DONE_CONTRACT_AND_WOLFRAM_COVERAGE
+A5_state: DONE_AFTER_A2_P0_REPAIR_AND_WOLFRAM_RECOVERAGE
+registered_A2_rows: 37
+A2_dispositions: {INCLUDED: 16, EXCLUDED: 13, DEFERRED: 8}
 report_level_direct_contradictions: 0
 unqualified_symbol_collisions: 0
 A2_included_rows_mapped: 16_of_16
-substantive_proofs_completed_by_A5: 0
-observational_data_opened: false
-merge_authorized: false
-ready_parallel_nodes:
+substantive_theory_packs_closed:
   - T1_STORED_REAL_STF_REPRESENTATION
   - T3_CONDITIONAL_MES_GEOMETRY
   - T4_FINITE_NULL_THEORY
   - T5_WU010_SYNTHESIS
-critical_path_primary: T1_TO_T2_TO_T9_TO_R1
-critical_path_response: T5_TO_T6_TO_T7_T8_TO_T9
+observational_data_opened: false
+merge_authorized: false
+ready_parallel_nodes:
+  - T2_QO_ORBIT_RECONSTRUCTION
+  - T6_WU011_PROCESSED_RESPONSE_SYNTHESIS
+critical_path_primary: T2_TO_T9_TO_R1
+critical_path_response: T6_TO_T7_T8_TO_T9
 ```
