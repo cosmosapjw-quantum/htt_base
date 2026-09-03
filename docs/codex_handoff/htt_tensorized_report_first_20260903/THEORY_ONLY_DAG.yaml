@@ -1,4 +1,4 @@
-schema: htt.theory_report_first.master_dag.v4
+schema: htt.theory_report_first.master_dag.v5
 date: 2026-09-03
 repository: cosmosapjw-quantum/htt_base
 goal: >-
@@ -41,6 +41,21 @@ representation_firewall:
   temperature_qo: {space: STF2_PLUS_STF3, ambient_dimension: 12, generic_so3_quotient_dimension: 9}
   vector_tensor_vt_t8: {space: STF2_PLUS_FOUR_VECTORS, ambient_dimension: 17, generic_so3_quotient_dimension: 14}
   rule: VT_T8_LOCAL_JACOBIAN_IS_NOT_A_QO_ORBIT_PROOF
+
+harmonic_coordinate_firewall:
+  orthonormal_carrier:
+    symbol: c_lA
+    layout: [a_l0, sqrt2_Re_a_lm, minus_sqrt2_Im_a_lm]
+    metric: IDENTITY
+    authority: PR440_T1
+  wu011_raw_coordinate:
+    symbol: r_lA
+    layout: [a_l0, Re_a_lm, Im_a_lm]
+    metric: diag_1_2_2
+    source_code_alias: SCIENTIFIC_STORED_REAL
+    authority: PR444_T6
+  adapter: c_l=D_l_r_l_with_DtD_equals_G_l
+  rule: EQUIVALENT_NOT_BYTE_IDENTICAL
 
 nodes:
   A0:
@@ -88,8 +103,8 @@ nodes:
     outputs: [EXECUTION_RECEIPT_INDEX.yaml]
 
   A5:
-    title: Contradiction and notation closure
-    state: DONE_AFTER_A2_P0_REPAIR_AND_WOLFRAM_RECOVERAGE
+    title: Contradiction notation and coordinate-adapter closure
+    state: DONE_AFTER_A2_P0_REPAIR_AND_HARMONIC_ADAPTER_REPAIR
     depends_on: [A2, A3, A4]
     outputs:
       - NOTATION_AND_CONVENTION_REGISTRY.yaml
@@ -101,6 +116,7 @@ nodes:
       included_rows_mapped: 16
       direct_report_contradictions: 0
       unqualified_symbol_collisions: 0
+      harmonic_coordinate_collision_closed: true
 
   T1:
     title: Stored-real to STF representation theorem
@@ -114,17 +130,21 @@ nodes:
     implementation: SOURCE_PRESENT_PR440_EXACT_HEAD_PRESTART_NO_EXECUTION
 
   T2:
-    title: Q/O generic orbit reconstruction and singular strata
-    state: ACTIVE_PRIMARY_NEXT
+    title: Q/O proper-rotation orbit reconstruction on the cyclic domain
+    state: DONE_THEORY_RUNTIME_UNVERIFIED
     depends_on: [T1]
     outputs:
       - T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md
       - T2_WOLFRAM_EXACT_RECEIPT.json
-      - mirror_and_strata_ledger
-    terminal_options:
-      - PASS_GENERIC_QO_SO3_CHART_WITH_TYPED_STRATA
-      - PASS_RECONSTRUCTION_WITH_NOVELTY_UNRESOLVED
-      - UNRESOLVED_QO_RECONSTRUCTION
+      - T2_QO_STRATA_AND_SCOPE_LEDGER.yaml
+    terminal: PASS_QO_SO3_ORBIT_RECONSTRUCTION_ON_NONZERO_CYCLIC_DOMAIN_WITH_NOVELTY_UNRESOLVED
+    evidence: DERIVED_AND_WOLFRAM_EXACTLY_CHECKED
+    boundaries:
+      - arbitrary_packet_image_characterization_not_claimed
+      - all_strata_atlas_not_claimed
+      - polynomial_invariant_ring_completeness_not_claimed
+      - novelty_unresolved
+      - PR440_exact_head_runtime_prestart_no_execution
 
   T3:
     title: Conditional MES geometry and scalar-to-tensor no-go
@@ -160,27 +180,36 @@ nodes:
 
   T6:
     title: WU-011 processed-response quotient synthesis
-    state: READY_PARALLEL_NEXT
+    state: DONE_THEORY_WITH_TIERED_EXECUTION_EVIDENCE
     depends_on: [A5, T5]
     outputs:
-      - processed_operator_factorization
-      - quotient_rank_and_nested_image_theorems
-      - Task7A_Task7B_Task7C_evidence_table
-      - finite_HEALPix_unresolved_boundary
+      - T6_WU011_PROCESSED_RESPONSE_QUOTIENT_THEOREM_PACK.md
+      - T6_WOLFRAM_AND_EVIDENCE_RECEIPT.json
+    terminal: PASS_WU011_PROCESSED_RESPONSE_QUOTIENT_SYNTHESIS_WITH_FINITE_OPERATOR_UNRESOLVED
+    evidence:
+      exact_linear_algebra: DERIVED_AND_WOLFRAM_CHECKED
+      task7b: IMPLEMENTATION_VERIFIED_NO_CANDIDATE
+      task7c: IMPLEMENTATION_VERIFIED_RANK_UNRESOLVED
+      current_a4: SOURCE_IMPLEMENTED_PRESTART_NO_EXECUTION
+    boundary: NO_FINITE_HEALPIX_CONTAINMENT_PROMOTION
 
   T7:
     title: Continuum wide-mask proof strengthening
-    state: READY_AFTER_T6
+    state: ACTIVE_PRIMARY_NEXT
     depends_on: [T6]
     outputs:
       - z_exact_minor_review
       - all_direction_verifier_matrix
       - interval_or_ball_status
       - continuum_discrete_firewall
+    terminal_options:
+      - PASS_ALL_SIX_CONTINUUM_SURJECTIVITY_CERTIFIED
+      - PASS_Z_EXACT_FIVE_DIRECTION_NUMERICAL
+      - BLOCKED_BY_INTERVAL_TOOLCHAIN
 
   T8:
-    title: Matrix-valued numerical-error theorem
-    state: READY_AFTER_T6
+    title: Matrix-valued numerical-error theorem and completeness boundary
+    state: ACTIVE_PARALLEL_NEXT
     depends_on: [T6]
     outputs:
       - Loewner_bound_and_invariance_proofs
@@ -272,6 +301,7 @@ claim_firewall:
   - no VT_T8_to_QO proof substitution
   - no PR441 summary label as proof
   - no source-only verifier as executed evidence
+  - no raw_r_coordinate conflated with orthonormal_c_carrier
   - no empirical beta or boost subtraction
   - no local observer boost equals global matter tilt
   - no physical shear or vorticity from morphology alone
@@ -280,10 +310,10 @@ claim_firewall:
   - no native BASS claim
   - no observational execution before D0
 
-current_primary_next_node: T2
-current_parallel_next_node: T6
+current_primary_next_node: T7
+current_parallel_next_node: T8
 current_terminal: >-
-  A2_SURVIVOR_TRIAGE_CLOSED_AFTER_P0_REPAIR__
-  A5_NOTATION_CONTRADICTION_RECLOSED__
-  T1_T3_T4_T5_THEORY_PACKS_COMPLETE_AT_TYPED_SCOPE__
-  T2_PRIMARY_AND_T6_PARALLEL_READY__DATA_DEFERRED__NO_MERGE_OR_CLAIM_PROMOTION
+  A2_A5_CLOSED_AFTER_P0_AND_COORDINATE_ADAPTER_REPAIRS__
+  T1_T2_T3_T4_T5_T6_THEORY_PACKS_COMPLETE_AT_TYPED_SCOPE__
+  T7_PRIMARY_AND_T8_PARALLEL_ACTIVE__
+  DATA_DEFERRED__NO_MERGE_OR_CLAIM_PROMOTION
