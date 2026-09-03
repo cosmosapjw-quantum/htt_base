@@ -1,0 +1,48 @@
+{
+  "schema": "htt.pr451.stable_stf_decoder_receipt.v1",
+  "date": "2026-09-03",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "pull_request": 451,
+  "test_first_chain": {
+    "forward_inverse_red_commit": "6fe6b7b13a129b496daf114a71363e6c40c3bd12",
+    "workflow_binding_commit": "b6a7077adf86a33b790e667c141266d9ed7c80cc",
+    "conditioned_stf3_implementation_commit": "84137a3b02e154c51546ea44795d25d853a70cf3"
+  },
+  "algorithm": {
+    "unknown_space": "fixed Frobenius-orthonormal Cartesian STF3 basis of dimension 7",
+    "equations": "ten Krylov-frame trilinear coordinates",
+    "solver": "row-scaled full-rank least-squares",
+    "acceptance": [
+      "design rank 7",
+      "condition within the frozen limit",
+      "trilinear residual within fixed tolerance",
+      "STF trace and unit norm",
+      "O:Q equals the first Krylov vector",
+      "complete forward packet replay"
+    ],
+    "typed_numerical_refusal": "OrbitChartUnavailable"
+  },
+  "local_source_equivalent_validation": {
+    "python": "3.13",
+    "numpy": "2.3.5",
+    "focused_tests": "28 passed",
+    "basis_gram_max_residual": 2.220446049250313e-16,
+    "basis_trace_max_residual": 0.0,
+    "basis_symmetry_max_residual": 0.0,
+    "stress": {
+      "seed": 20260903,
+      "generated_pairs": 10000,
+      "forward_accepted": 10000,
+      "decoder_typed_unavailable": 7,
+      "replay_failures": 0,
+      "maximum_absolute_packet_residual": 5.2119071003442485e-09,
+      "maximum_observed_k_condition": 47710.77454526557
+    }
+  },
+  "exact_head_execution": "PRESTART_NO_EXECUTION",
+  "implementation_verified": false,
+  "observational_data_used": false,
+  "scientific_claim_promotion": false,
+  "merge_authorized": false,
+  "terminal": "STABLE_DECODER_SOURCE_IMPLEMENTED_LOCAL_STRESS_PASS_EXACT_HEAD_PRESTART_BLOCKED"
+}
