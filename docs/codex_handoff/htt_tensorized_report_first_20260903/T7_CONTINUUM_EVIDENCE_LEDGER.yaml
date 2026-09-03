@@ -1,0 +1,101 @@
+schema: htt.report_a.t7_continuum_evidence.v1
+date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+
+contract:
+  metric_signature: "(-,+,+,+)"
+  outward_sky_direction: n=-e
+  boost: active_plus_beta_obs
+  beta_definition: beta_obs=v_obs/c
+  doppler_weight: 1
+  perturbative_order: first_order_at_beta_zero
+  mask: wide_axisymmetric_piecewise_linear
+  fit_band: [0,5]
+  retained_band: [2,5]
+  source_band: [7,L]
+  transfer: identity
+  operator_kind: continuum_weighted_harmonic_fit
+
+coordinate_contract:
+  rank_basis_invariance: invertible_row_and_column_scalings_preserve_rank
+  quoted_singular_values_basis: orthonormal_stored_real_carrier
+  wu011_raw_coordinate_adapter_required: true
+
+authorities:
+  exact_z_artifact:
+    pr: 446
+    head: 033e0d19d61448492489ed1469bc687b2ecb4552
+    path: docs/generated/wu011_task7c_external_verifiers/wolfram_exact_z_L12_pivot_minors.json
+    blob_sha: 95bc36092b10542690fdf06cda1f84608ef384f7
+    evidence_grade: AUTHOR_DERIVED_EXACT_RATIONAL_ARTIFACT
+    github_external_workflow_execution: PRESTART_NO_EXECUTION
+  external_verifier_source:
+    pr: 447
+    head: bf6cc2dd75336ec5584b86dccd8de5cb352ab8f3
+    evidence_grade: SOURCE_ONLY
+    github_workflow_execution: PRESTART_NO_EXECUTION
+  local_independent_axes:
+    - {engine: Wolfram, role: all_direction_high_precision_harmonic_construction, evidence_grade: LOCAL_NUMERICALLY_CHECKED}
+    - {engine: SymPy, role: exact_z_polynomial_blocks, evidence_grade: LOCAL_EXACT_CHECK}
+    - {engine: mpmath, role: high_precision_z_spectrum, evidence_grade: LOCAL_NUMERICALLY_CHECKED}
+    - {engine: SciPy, role: all_direction_piecewise_GLQ_Fourier_quadrature, evidence_grade: LOCAL_NUMERICALLY_CHECKED}
+    - {engine: JAS, role: exact_rational_z_blocks, evidence_grade: LOCAL_EXACT_CHECK}
+    - {engine: Julia, role: exact_rational_z_blocks, evidence_grade: LOCAL_EXACT_CHECK}
+    - {engine: GNU_Octave, role: independent_numeric_z_and_source_verifier, evidence_grade: LOCAL_NUMERICALLY_CHECKED}
+
+exact_z_L12:
+  complex_block_ranks: [4,4,4,3,2,1]
+  stored_real_rank: 32
+  exact_nonzero_pivot_minor_blocks: 6
+  full_row_rank: true
+
+rank_ladder:
+  L8: {Z: 20, X_Y: 24, DIAGONAL: 24}
+  L9: {Z: 27, X_Y: 29, DIAGONAL: 32}
+  L12: {Z: 32, X_Y: 32, DIAGONAL: 32}
+
+L12_metric_spectrum_summary:
+  X_Y:
+    smallest_singular_value: 0.010490334912761
+    condition_number: 2736.33
+    evidence_grade: DUAL_ALGORITHM_HIGH_PRECISION_NUMERICAL
+  Z:
+    smallest_singular_value: 0.006905664979696537
+    condition_number: 8448.34
+    evidence_grade: EXACT_RANK_PLUS_HIGH_PRECISION_NUMERICAL_SPECTRUM
+  DIAGONAL:
+    smallest_singular_value: 0.008510322776380
+    condition_number: 4822.15
+    evidence_grade: DUAL_ALGORITHM_HIGH_PRECISION_NUMERICAL
+
+proved_or_supported:
+  - z_direction_continuum_row_rank_32_at_L12_exact
+  - all_six_registered_directions_continuum_row_rank_32_at_L12_numerically_checked
+  - cumulative_continuum_images_nested_in_L
+  - no_larger_cutoff_needed_for_continuum_deterministic_row_rank_after_L12
+
+not_established:
+  - all_direction_interval_or_ball_certificate
+  - repository_executed_external_verifier_aggregate
+  - finite_healpix_row_rank_32
+  - numerical_error_class_completeness
+  - physical_high_ell_amplitude_or_covariance
+  - observational_or_physical_source_identification
+
+report_wording:
+  allowed: >-
+    The registered continuum wide-mask identity-transfer operator is exactly
+    full row rank in the z direction at L=12 and numerically full row rank in
+    the other five registered directions under two independent all-direction
+    constructions.
+  forbidden:
+    - all_six_directions_formally_interval_certified
+    - continuum_proves_finite_healpix_surjectivity
+    - high_ell_physical_prior_is_unrestricted
+    - observer_motion_or_global_tilt_identified
+
+terminal: >-
+  PASS_CONTINUUM_L12_SURJECTIVITY_EVIDENCE__
+  Z_EXACT_OTHER_FIVE_NUMERICAL__
+  FINITE_HEALPIX_UNRESOLVED
