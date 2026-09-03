@@ -77,6 +77,66 @@ def test_weighted_family_radii_bound_the_declared_additive_error_class():
         assert normalized <= 1 + 5e-12
 
 
+def test_compensated_family_scaling_preserves_envelope_and_certificate():
+    rng = np.random.default_rng(20260903)
+    fullsky = rng.normal(size=(3, 4, 6)) * 0.03
+    resolution = rng.normal(size=(2, 4, 6)) * 0.02
+    signal = rng.normal(size=(4, 6))
+    radii = {"fullsky": 2.0, "resolution": 0.5}
+    reference_norm = np.linalg.norm(signal, 2)
+
+    base_envelope = api.build_output_error_envelope(
+        {"fullsky": fullsky, "resolution": resolution},
+        family_radii=radii,
+        reference_operator_norm=reference_norm,
+    )
+    base_certificate = api.certify_error_whitened_row_rank(
+        signal,
+        base_envelope,
+    )
+
+    for scale in (1.0e-6, 1.0e-3, 1.0e3, 1.0e6):
+        transformed_envelope = api.build_output_error_envelope(
+            {
+                "fullsky": scale * fullsky,
+                "resolution": resolution,
+            },
+            family_radii={
+                "fullsky": radii["fullsky"] / scale,
+                "resolution": radii["resolution"],
+            },
+            reference_operator_norm=reference_norm,
+        )
+        transformed_certificate = api.certify_error_whitened_row_rank(
+            signal,
+            transformed_envelope,
+        )
+
+        np.testing.assert_allclose(
+            transformed_envelope.output_covariance,
+            base_envelope.output_covariance,
+            rtol=2.0e-12,
+            atol=2.0e-12,
+        )
+        np.testing.assert_allclose(
+            transformed_envelope.inverse_square_root,
+            base_envelope.inverse_square_root,
+            rtol=2.0e-11,
+            atol=2.0e-11,
+        )
+        np.testing.assert_allclose(
+            transformed_certificate.error_whitened_singular_values,
+            base_certificate.error_whitened_singular_values,
+            rtol=2.0e-11,
+            atol=2.0e-11,
+        )
+        assert transformed_certificate.status is base_certificate.status
+        assert (
+            transformed_certificate.guaranteed_rank_lower_bound
+            == base_certificate.guaranteed_rank_lower_bound
+        )
+
+
 def test_family_radius_registry_fails_closed():
     family = np.zeros((2, 3, 4))
     with pytest.raises(api.MatrixErrorEnvelopeError):
