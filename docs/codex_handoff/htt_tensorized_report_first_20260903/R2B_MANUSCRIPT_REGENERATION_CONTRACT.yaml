@@ -1,0 +1,137 @@
+schema: htt.report_a.r2b_manuscript_regeneration_contract.v1
+date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+input_draft:
+  path: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_20260903.md
+  git_blob: dbb6a732462bce243527410e7e52eedde617294a
+canonical_claim_ledger:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V2.yaml
+  git_blob: 88f7ef00936fda235f334b54d87a277580a1c874
+citation_matrix:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V1.yaml
+  git_blob: 7dd3d56315cbdb48bc5d210748d6474cc6b52ed8
+output_draft:
+  path: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R2_20260903.md
+  status: TO_GENERATE
+observational_data_used: false
+merge_authorized: false
+
+required_revisions:
+  - id: R2B-M01
+    section: document_status
+    action: >-
+      Mark the original manuscript as the R1 first draft and the regenerated
+      file as an R2 working draft. State that PR450 and PR451 exact-head jobs
+      were blocked before runner assignment.
+    acceptance:
+      - no publication-ready wording
+      - no current observational result
+  - id: R2B-M02
+    section: abstract
+    action: >-
+      Keep the mathematical Q/O cyclic-chart theorem but separate it from the
+      arbitrary packet decoder. State that the O:Q packet-image syzygy repair
+      exists in PR451 and awaits exact-head execution.
+    acceptance:
+      - no implementation-verified label for PR440 or PR451
+      - no global invariant-ring or all-strata claim
+  - id: R2B-M03
+    section: authority_and_supersession
+    action: >-
+      Replace the v1-plus-overlay ledger description with the self-contained
+      29-claim T9 v2. Preserve the neutral 37-row survivor source as
+      36 INCLUDED plus one DEFERRED source candidate.
+    acceptance:
+      - claim_count equals 29
+      - registered_source_count equals 37
+      - PR284_NEW remains DEFERRED
+      - unique theorem count remains null
+  - id: R2B-M04
+    section: finite_null_statistics
+    action: >-
+      Record the deterministic tie rule in the asymmetric selection fixture.
+      Include both exact tie conventions and the symmetric pooled control.
+    acceptance:
+      - tie-to-coordinate-2 counts are 12 and 12
+      - tie-to-coordinate-1 counts are 6 and 18
+      - maximum size violation is 1/4 for both asymmetric rules
+      - pooled symmetric rule has zero maximum violation
+  - id: R2B-M05
+    section: qo_orbit_reconstruction
+    action: >-
+      Add the forward-image condition O:Q=K e0 to the packet theorem and state
+      that arbitrary packet validation requires the PR451 code repair.
+    acceptance:
+      - mathematical theorem restricted to nonzero cyclic conditioned packets
+      - source implementation and execution grades separated
+  - id: R2B-M06
+    section: continuum_and_finite_operator
+    action: >-
+      Preserve the exact z-direction continuum rank and five-direction
+      numerical evidence while stating that finite-HEALPix rank remains the
+      frozen matched-control unresolved result.
+    acceptance:
+      - no continuum-to-discrete implication
+      - no all-direction interval-proof claim
+      - no finite-HEALPix no-go theorem
+  - id: R2B-M07
+    section: numerical_error
+    action: >-
+      State the invariant family-ball Loewner theorem as conditional on the
+      declared error class and preserve the separate perturbation-gap
+      requirement for partial subspaces.
+    acceptance:
+      - no complete-error-class claim
+      - no signal-dependent radius tuning
+  - id: R2B-M08
+    section: references
+    action: >-
+      Generate references from REPORT_A_CITATION_PROVENANCE_MATRIX_V1.yaml.
+      Keep adjacent invariant literature distinct from direct theorem sources.
+    acceptance:
+      - all 29 claim IDs have internal authority
+      - novelty decisions remain zero
+      - exact Q/O Krylov direct literature match remains false for this search
+  - id: R2B-M09
+    section: conclusion
+    action: >-
+      State that tensorization preserves observable information while physical
+      attribution remains response- and nuisance-limited. Keep the corrected
+      Planck rank absent and all observational work deferred.
+
+mechanical_checks:
+  - id: C01
+    rule: the regenerated manuscript contains no string 27 claims
+  - id: C02
+    rule: the regenerated manuscript mentions the 29-claim canonical ledger
+  - id: C03
+    rule: the regenerated manuscript contains PR450 and PR451 execution boundaries
+  - id: C04
+    rule: the regenerated manuscript contains no current scalar MES rank
+  - id: C05
+    rule: the regenerated manuscript contains no corrected Planck tensor rank value
+  - id: C06
+    rule: finite-HEALPix result is rank unresolved
+  - id: C07
+    rule: local observer boost is not called global matter-frame tilt
+  - id: C08
+    rule: BASS native solver does not enter the claim surface
+  - id: C09
+    rule: every external citation key exists in the citation matrix
+  - id: C10
+    rule: every publication-facing theorem maps to a T9 v2 claim ID
+
+review_gates:
+  phys_math:
+    require: [definitions, dimensions, signs, domains, limiting_cases, counterexample_boundaries]
+  statistics:
+    require: [exchangeability, complete_row_equivariance, ties, adaptation, dependence, null_fidelity]
+  code_execution:
+    require: [source_identity, implementation_status, exact_head_execution_status]
+  provenance:
+    require: [git_lineage, source_blob, citation_role, supersession, novelty_not_inferred]
+
+current_terminal: >-
+  R2B_CANONICAL_INPUTS_FROZEN__MANUSCRIPT_REGENERATION_NEXT__
+  EXACT_HEAD_VALIDATION_PRESTART_BLOCKED__DATA_DEFERRED
