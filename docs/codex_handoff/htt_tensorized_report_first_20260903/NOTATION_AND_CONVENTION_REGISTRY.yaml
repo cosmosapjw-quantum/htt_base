@@ -1,7 +1,7 @@
-schema: htt.report_a.notation_and_convention_registry.v1
+schema: htt.report_a.notation_and_convention_registry.v2
 date: 2026-09-03
 repository: cosmosapjw-quantum/htt_base
-status: FROZEN_FOR_T1_T8_THEORY_PACKS
+status: FROZEN_FOR_T1_T8_THEORY_PACKS_AFTER_HARMONIC_ADAPTER_REPAIR
 scope: >-
   HTT-only theory/methods report on the corrected low-ell temperature
   representation, conditional MES functionals, finite-null statistics,
@@ -14,7 +14,7 @@ authority:
   authority_federation:
     - PR367_TYPED_FRAMEWORK
     - PR405_CANDIDATE_MATRIX
-    - PR408_SURVIVOR_TRIAGE_CONTRACT
+    - PR408_MERGED_SURVIVOR_TRIAGE_CONTRACT
     - PR440_QO_TENSORIZATION
     - PR442_WU010_RESPONSE
     - PR444_WU011_PROCESSED_RESPONSE
@@ -48,12 +48,39 @@ sky_and_boost:
 harmonics:
   complex_basis: "Condon-Shortley spherical harmonics Y_lm"
   reality_condition: "a_l,-m=(-1)^m conjugate(a_lm)"
-  stored_real_layout:
+
+  orthonormal_stored_real_carrier:
+    symbol: c_lA
     m_zero: "c_l0=a_l0"
     cosine_slot: "c_lm,c=sqrt(2) Re(a_lm), m>0"
     sine_slot: "c_lm,s=-sqrt(2) Im(a_lm), m>0"
-  stored_real_metric: EUCLIDEAN
-  norm_identity: "||c_l||_2^2=sum_m |a_lm|^2=(2l+1) C_l"
+    metric: EUCLIDEAN
+    norm_identity: "||c_l||_2^2=sum_m |a_lm|^2=(2l+1) C_l"
+    authority: PR440_AND_T1
+
+  raw_complex_component_coordinate:
+    symbol: r_lA
+    m_zero: "r_l0=a_l0"
+    real_slot: "r_lm,R=Re(a_lm), m>0"
+    imaginary_slot: "r_lm,I=Im(a_lm), m>0"
+    metric: "G_l=diag(1,2,2,...,2)"
+    norm_identity: "r_l^T G_l r_l=sum_m |a_lm|^2"
+    code_alias: "PR444 calls this SCIENTIFIC_STORED_REAL; Report A does not use that ambiguous name"
+    authority: PR444_WU011
+
+  coordinate_adapter:
+    formula: "c_l=D_l r_l, D_l=diag(1,sqrt(2),-sqrt(2),...,sqrt(2),-sqrt(2)) in ordered Re/Im pairs"
+    metric_identity: "D_l^T D_l=G_l"
+    inverse: "r_l=D_l^(-1)c_l"
+    rule: >-
+      T1 tensorization uses c_lA. WU011 source maps may be stored as r_lA but
+      every invariant singular/rank comparison must either use G_l explicitly
+      or transform to c_lA. The two coordinates are equivalent but not
+      byte-identical and must never be conflated.
+
+  joint_fit_real_basis:
+    relation: "the PR444 joint sqrt(2) real basis is adapted to c_lA; the public raw source coordinate r_lA is converted explicitly"
+
   phase_rule: >-
     Any external harmonic library must be adapted explicitly to this
     Condon-Shortley, reality, coefficient-order, and sine-slot sign convention.
@@ -90,7 +117,7 @@ physical_state:
     radiation_to_observer: beta_RO
     radiation_to_matter: beta_RM
     matter_to_observer: beta_MO
-    first_order_relation: "beta_RO=beta_RM+beta_MO+O(beta^2)"
+    first_order_relation: "beta_RO=beta_RM+beta_MO+mathcal O(beta^2)"
   rule: >-
     A temperature-morphology coordinate, a local observer boost, a global
     matter-frame tilt, and a congruence kinematic tensor are distinct objects.
@@ -133,7 +160,7 @@ statistical_notation:
   acceptance_gauge: "p_A(x) or rho_A(x); never bare Q"
   survival_function: "Pi(t)=P[X>t] under a declared probability law"
   finite_pool_order_rank: rank_pool
-  p_value_rule: TO_BE_FROZEN_IN_T4_WITH_TIE_AND_TAIL_CONVENTIONS
+  p_value_rule: CONSERVATIVE_UPPER_TAIL_INCLUSIVE_UNLESS_EXPLICITLY_REPLACED
   exactness_premises:
     - joint_exchangeability_or_declared_group_randomization_hypothesis
     - row_permutation_equivariance_of_the_complete_selection_and_score_map
@@ -163,9 +190,9 @@ null_namespace:
 
 processed_response:
   low_source_response: J_b
-  high_source_response: "K_b(L) for source multipoles 7<=ell<=L"
-  quotient_identity: "rank_quot(J_b|K_b)=rank([K_b J_b])-rank(K_b)"
-  nested_images: "Im K_b(L) subseteq Im K_b(L+1)"
+  high_source_response: "K_b^hi(L) for source multipoles 7<=ell<=L"
+  quotient_identity: "rank_quot(J_b|K_b^hi)=rank([K_b^hi J_b])-rank(K_b^hi)"
+  nested_images: "Im K_b^hi(L) subseteq Im K_b^hi(L+1)"
   continuum_operator: K_cont
   finite_healpix_operator: K_pix
   rule: CONTINUUM_SURJECTIVITY_DOES_NOT_IMPLY_FINITE_HEALPIX_SURJECTIVITY
@@ -173,9 +200,9 @@ processed_response:
 numerical_uncertainty:
   family_elements: E_fi
   deterministic_family_radius: r_f
-  family_count: F
-  regularization_scale: lambda
-  loewner_envelope: "Gamma_E=F sum_f r_f^2 sum_i E_fi E_fi^T+lambda^2 I"
+  family_count: N_fam
+  regularization_scale: lambda_reg
+  loewner_envelope: "Gamma_E=N_fam sum_f r_f^2 sum_i E_fi E_fi^T+lambda_reg^2 I"
   whitened_operator: "K_tilde=Gamma_E^(-1/2) K"
   whitened_singular_values: g_j
   full_row_certificate: "min_j g_j>1, conditional on Delta Delta^T <= Gamma_E"
