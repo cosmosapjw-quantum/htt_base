@@ -1,169 +1,141 @@
-schema: htt.report_a.contradiction_ledger.v2
+schema: htt.report_a.contradiction_ledger.v3
 date: 2026-09-03
 repository: cosmosapjw-quantum/htt_base
-status: OPEN_ITEMS_REMAIN
+status: REPORT_CONTRADICTIONS_CLOSED_PROOF_OBLIGATIONS_REMAIN
 
-items:
+resolved_items:
   - id: C-001
     topic: scalar_mes_current_status
-    source_a: codex_emergency/MES_BOUND_CURRENT_RESEARCH_REPORT.tex
-    source_a_claim: scalar MES finite-pool results remain admitted
-    source_b: explicit_user_policy_and_PR440
-    source_b_claim: scalar-only MES is retired for the forthcoming analysis
-    resolution: source_b_supersedes_source_a
-    report_action: historical scalar values may appear only in a quarantined provenance appendix
-    state: RESOLVED
-
+    conflict: historical scalar finite-pool results versus explicit retirement for the forthcoming analysis
+    resolution: EXPLICIT_USER_POLICY_AND_PR440_SUPERSEDE_HISTORICAL_REPORT
+    report_action: historical values only in a quarantined provenance appendix
   - id: C-002
     topic: historical_qo_results
-    source_a: historical_WU006_WU008_artifacts
-    source_a_claim: tensor ranks, foreground and injection interpretations
-    source_b: PR440
-    source_b_claim: harmonic/STF and intervention basis defects withdraw those interpretations
-    resolution: source_b_supersedes_source_a
-    report_action: do not quote old values as current results
-    state: RESOLVED
-
+    conflict: old WU006-WU008 tensor foreground and injection interpretations versus corrected carrier and intervention semantics
+    resolution: PR440_WITHDRAWAL_CONTROLS
+    report_action: old derived values never appear as current results
   - id: C-003
-    topic: qo_orbit_dimension
-    source_a: PR440_WU009_QO_problem
-    source_a_claim: STF2_plus_STF3 generic SO3 quotient dimension is 9
-    source_b: PR367_PR408_VT_T8
-    source_b_claim: full-rank fourteen-coordinate local Jacobian on a registered vector/tensor slice
-    resolution: distinct_representation_families
-    report_action: add representation-family firewall; never use VT_T8 as QO proof
-    state: RESOLVED
-
+    topic: representation_family
+    conflict: Q/O quotient dimension 9 versus VT-T8 fourteen-coordinate local Jacobian
+    resolution: DISTINCT_REPRESENTATIONS
+    report_action: never use STF2+four-vectors evidence as a proof for STF2+STF3
   - id: C-004
-    topic: orbit_completeness
-    source_a: PR440_mes_krylov_completion
-    source_a_claim: conditioned generic QO reconstruction with sixteen contractions
-    source_b: PR367_orbit_catalogue_v3
-    source_b_claim: generic separation and global chart completeness UNPROVEN for its own larger state
-    resolution: no_direct_contradiction_but_no_cross_import
-    report_action: prove QO chart independently and label local/generic domain
-    state: OPEN_PROOF
-
+    topic: qo_orbit_completeness
+    conflict: PR440 conditioned reconstruction source versus absence of an independent exact theorem or directly matching literature source
+    resolution: NO_LOGICAL_CONTRADICTION_BUT_PROOF_REMAINS_OPEN
+    report_action: T2 must independently prove or narrow the Q/O chart
   - id: C-005
-    topic: theorem_promotion
-    source_a: PR405
-    source_a_claim: 36 scoped promotions among 157 candidates
-    source_b: PR408
-    source_b_claim: survivor list manually narrowed; mechanical triage not performed
-    resolution: PR408_P0_guard_controls_report_admission
-    report_action: run registered survivor triage before final claim ledger
-    state: OPEN_TRIAGE
-
+    topic: theorem_survivor_selection
+    conflict: PR405 thirty-six scoped promotions versus PR408 P0 finding that the report survivor list was manually narrowed
+    resolution: A2_REGISTERED_SURVIVOR_SURFACE_CLOSED
+    evidence:
+      source_rows: 36
+      exact_or_conditional: 24
+      synthetic: 8
+      scoped_children: 4
+      included: 16
+      excluded: 13
+      deferred: 7
+      duplicate_groups_closed: true
+      independent_wolfram_validation: PASS
+    report_action: only the sixteen included rows advance to direct replay and report mapping
   - id: C-006
     topic: theorem_provenance
-    source_a: PR441_WU009_ledger
-    source_a_claim: rows labelled PROVED_CORRECTED_STRENGTHENED
-    source_b: PR441_metadata
-    source_b_claim: USER_SUPPLIED_SUMMARY and FORMAL_DOSSIER_PENDING
-    resolution: labels_are_summary_verdicts_not_independent_proofs
-    report_action: use as obligations/wording; directly rederive report claims
-    state: RESOLVED_WITH_REDERIVATION_REQUIRED
-
+    conflict: PR441 row labels versus FORMAL_DOSSIER_PENDING metadata
+    resolution: SUMMARY_LABELS_ARE_NOT_INDEPENDENT_PROOFS
+    report_action: use PR441 as wording and obligation inventory only
   - id: C-007
     topic: PR440_execution
-    source_a: PR440_source_and_tests
-    source_a_claim: implementation and test surface exist
-    source_b: exact_head_workflow_jobs
-    source_b_claim: all jobs ended before runner assignment with zero steps
-    resolution: source_present_execution_unobserved
-    report_action: label SOURCE_IMPLEMENTED, not IMPLEMENTATION_VERIFIED
-    state: RESOLVED
-
+    conflict: code and tests exist but exact-head workflows performed zero steps
+    resolution: SOURCE_IMPLEMENTED_NOT_IMPLEMENTATION_VERIFIED
+    report_action: separate semantic correction from runtime admission
   - id: C-008
     topic: WU010_execution
-    source_a: PR442_audit
-    source_a_claim: scoped exact-head verification passed
-    source_b: workflow_readback
-    source_b_claim: PR04, PR07 and repository-integrity all succeeded
-    resolution: mutually_consistent
-    report_action: include as scoped implementation-verified authority
-    state: CLOSED
-
+    conflict: none after workflow readback
+    resolution: SCOPED_IMPLEMENTATION_VERIFIED_WITH_TYPED_LIMITS
+    report_action: retain full-sky local-observer result with its positive-temperature and d=1 domain
   - id: C-009
     topic: WU011_current_vs_frozen
-    source_a: PR444_current_source
-    source_a_claim: invariant error-envelope and registry guards present
-    source_b: current_head_workflows
-    source_b_claim: workflows ended before runner assignment
-    source_c: frozen_f635_artifact
-    source_c_claim: last byte-exact terminal is matched-control rank unresolved
-    resolution: separate_current_source_from_last_scientific_execution
-    report_action: cite frozen terminal for numerical conclusion; cite current source for derived mathematics only
-    state: RESOLVED
-
+    conflict: current A4 source contains later mathematics but current workflows did not execute; earlier f635 head has the last byte-exact scientific terminal
+    resolution: SEPARATE_CURRENT_SOURCE_FROM_LAST_EXECUTED_SCIENCE
+    report_action: cite current source for derivations and f635 for the matched-control rank-unresolved result
   - id: C-010
-    topic: continuum_all_direction_execution
-    source_a: thread_local_multi_engine_receipts
-    source_a_claim: all six directions rank 32 at continuum L12
-    source_b: PR446_PR447_workflows
-    source_b_claim: external verifier jobs executed zero steps
-    source_c: PR446_exact_z_artifact
-    source_c_claim: exact rational z-direction rank 32 artifact exists
-    resolution: tiered_evidence
-    report_action: z exact author artifact; five other directions numerically checked in thread-local lineages; no repo-executed all-direction verifier claim
-    state: RESOLVED_WITH_PORTABLE_SEAL_OPEN
-
+    topic: continuum_external_verifiers
+    conflict: exact z artifact and thread-local multi-engine results versus zero-step GitHub verifier jobs
+    resolution: TIERED_EVIDENCE
+    report_action: z exact author artifact; other directions numerical; no repository-executed aggregate claim
   - id: C-011
     topic: continuum_vs_finite_healpix
-    source_a: continuum_reference
-    source_a_claim: L12 all-direction row-rank 32
-    source_b: matched_control_finite_operator
-    source_b_claim: rank unresolved under current numerical controls
-    resolution: different_operators_and_error_models
-    report_action: retain both; forbid continuum-to-discrete promotion
-    state: RESOLVED
-
+    conflict: continuum L12 rank 32 versus unresolved finite-operator rank
+    resolution: DISTINCT_OPERATORS_AND_ERROR_CLASSES
+    report_action: forbid continuum-to-discrete promotion
   - id: C-012
     topic: error_envelope_bound_vs_completeness
-    source_a: A4_Loewner_derivation
-    source_a_claim: conservative bound for declared additive coefficient-ball class
-    source_b: A4_open_items
-    source_b_claim: family/radius registry not proven complete for actual numerical error
-    resolution: conditional_theorem
-    report_action: theorem statement must include declared-class premise; robust finite-operator terminal remains unresolved
-    state: RESOLVED_WITH_COMPLETENESS_OPEN
-
+    conflict: exact Loewner bound for the declared additive class versus incomplete proof that the class covers actual numerical error
+    resolution: CONDITIONAL_THEOREM
+    report_action: every robust-rank statement carries the error-class completeness premise
   - id: C-013
     topic: finite_null_exactness
-    source_a: repository_rank_contracts
-    source_a_claim: observation-inclusive finite ranks
-    source_b: null_mismatch_and_shared_rows
-    source_b_claim: noisy observation, noise-free CMB-only simulations, and shared realizations violate simple independence/exchangeability narratives
-    resolution: exactness_is_premise_conditional
-    report_action: state joint exchangeability and full row-equivariance explicitly; CMB-only lane descriptive
-    state: RESOLVED
-
+    conflict: observation-inclusive ranks versus null mismatch row asymmetry and shared realizations
+    resolution: EXACTNESS_IS_GROUP_INVARIANCE_AND_ROW_EQUIVARIANCE_CONDITIONAL
+    report_action: T4 freezes the full selection score tie tail and sampling-law contract
   - id: C-014
-    topic: report_execution_order
-    source_a: previous_REVISED_EXECUTION_PLAN
-    source_a_claim: execute local carrier repair and observational rerun before resuming WU011
-    source_b: later_explicit_user_policy
-    source_b_claim: defer all local data analysis and perform theory work here
-    resolution: source_b_supersedes_source_a
-    report_action: move all O-nodes behind DATA_DEFERRED gate; proceed with theory survivor triage and report
-    state: RESOLVED
-
+    topic: observational_execution_order
+    conflict: previous local-rerun-first plan versus later owner data deferral
+    resolution: DATA_DEFERRED_BY_OWNER_CONTROLS
+    report_action: all O-nodes stay behind D0
   - id: C-015
     topic: report_authority_freeze
-    source_a: previous_THEORY_ONLY_DAG
-    source_a_claim: T0 authority freeze DONE_WITH_REVIEW_REQUIRED
-    source_b: repo_wide_audit
-    source_b_claim: PR405/408 survivor surface not mechanically triaged and execution grades were conflated
-    resolution: reopen_and_split_preflight
-    report_action: A0-A5 precede final claim ledger
-    state: RESOLVED
+    conflict: old T0 completion label versus untriaged survivor and conflated execution grades
+    resolution: A0_TO_A5_PREFLIGHT_REPLACED_T0
+    report_action: authority survivor execution representation and notation ledgers precede theorem packs
+  - id: C-016
+    topic: symbol_Q
+    conflict: temperature quadrupole Q_ab versus historical acceptance-body diagnostic Q
+    resolution: TEMPERATURE_Q_AB_RESERVED_ACCEPTANCE_USES_P_A_OR_RHO_A
+    report_action: bare Q is forbidden for a gauge or test statistic
+  - id: C-017
+    topic: rank_vocabulary
+    conflict: algebraic rank tolerance-dependent numerical rank robust rank quotient rank and finite-pool order rank
+    resolution: TYPED_RANK_NAMESPACE
+    report_action: use rank_alg rank_num(tau) rank_rob(Gamma_E) rank_quot or rank_pool
+  - id: C-018
+    topic: beta_vocabulary
+    conflict: local observer boost radiation-matter tilt and matter-observer velocity
+    resolution: TYPED_BETA_NAMESPACE
+    report_action: use beta_obs beta_RM beta_MO and beta_RO as appropriate
+  - id: C-019
+    topic: null_vocabulary
+    conflict: structural null covariance null nuisance image statistical null and typed missingness
+    resolution: TYPED_NULL_NAMESPACE
+    report_action: never use bare null where two meanings are in scope
+  - id: C-020
+    topic: pass_and_promotion_vocabulary
+    conflict: theorem truth source implementation runtime success scientific terminal publication and merge status
+    resolution: TYPED_TERMINAL_NAMESPACE
+    report_action: PASS promoted verified admitted released and merged are never synonyms
+  - id: C-021
+    topic: O_symbol
+    conflict: temperature octupole O_abc versus asymptotic big-O notation
+    resolution: INDEXED_O_ABC_RESERVED_AND_ASYMPTOTIC_ORDER_WRITTEN_MATHCAL_O
+    report_action: prose and equations must preserve the distinction
+  - id: C-022
+    topic: synthetic_result_status
+    conflict: source rows with scientific_terminal_state PROMOTED versus their preregistered synthetic evidence modality
+    resolution: SYNTHETIC_SUCCESS_IS_NOT_A_THEOREM_OR_OBSERVATION
+    report_action: five included synthetic rows appear only in a validation appendix
 
-remaining_blockers:
-  - complete mechanical survivor triage against every eligible PR405/PR408 row
-  - independent proof/review of the PR440 QO Krylov chart
-  - primary-source literature matrix and novelty audit
-  - portable all-direction continuum verifier or explicit limited wording
-  - supported-runtime exact-head verification for PR440 and current WU011 source
-  - numerical-error family/radius provenance and completeness
+open_proof_obligations:
+  - {id: P-001, node: T1, statement: direct stored-real to STF isometry and inverse-map proof}
+  - {id: P-002, node: T2, statement: independent PR440 Q/O Krylov reconstruction or a narrower terminal}
+  - {id: P-003, node: T3, statement: MES premise matrix and one-way authority proof}
+  - {id: P-004, node: T4, statement: exact finite-null theorem with complete selection tie tail and missingness conditions}
+  - {id: P-005, node: T6, statement: processed-response quotient synthesis with current-versus-frozen execution separation}
+  - {id: P-006, node: T7, statement: portable all-direction interval or explicitly limited numerical wording}
+  - {id: P-007, node: T8, statement: actual numerical-error family and radius completeness}
+  - {id: P-008, node: T1_T8, statement: statement-level novelty comparison against directly relevant literature}
+  - {id: P-009, node: EXTERNAL_RUNTIME, statement: supported-runtime exact-head execution for PR440 and current PR444 source}
 
-current_terminal: CONTRADICTION_LEDGER_INITIAL_PASS_COMPLETE_WITH_OPEN_PROOF_AND_TRIAGE
+current_terminal: >-
+  A2_SURVIVOR_TRIAGE_CLOSED__A5_CONTRADICTION_AND_NOTATION_CONTRACT_CLOSED__
+  SUBSTANTIVE_THEORY_PROOFS_REMAIN__NO_OBSERVATIONAL_OR_PUBLICATION_PROMOTION

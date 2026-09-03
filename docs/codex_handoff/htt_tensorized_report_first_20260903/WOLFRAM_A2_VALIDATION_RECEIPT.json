@@ -1,0 +1,76 @@
+{
+  "schema": "htt.report_a.a2_wolfram_validation_receipt.v1",
+  "date": "2026-09-03",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "report_pr": 449,
+  "source_authorities": {
+    "candidate_matrix": {
+      "pr": 405,
+      "commit": "463f0999949bf8534c60ad7973b7342705c2e3d6",
+      "path": "docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json",
+      "blob_sha": "56af1713ef8c4718598e10012819d5ab62c6e37a"
+    },
+    "adversarial_triage_contract": {
+      "pr": 408,
+      "commit": "40dce3ab9328c1f3acb99adba11046056c639737",
+      "path": "docs/codex_handoff/pr408_final/WU-001.yaml"
+    }
+  },
+  "validated_surface": {
+    "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/REGISTERED_SURVIVOR_SURFACE.csv",
+    "git_blob_sha": "3e0c99a7d19116396a6661fe547d86d49b880d62"
+  },
+  "execution": {
+    "engine": "Wolfram Language evaluator",
+    "arithmetic": "exact symbolic where applicable",
+    "observational_data_opened": false,
+    "native_solver_used": false
+  },
+  "surface_checks": {
+    "parsed_rows": 36,
+    "unique_ids": true,
+    "source_class_counts": {
+      "EXACT_OR_CONDITIONAL": 24,
+      "SYNTHETIC": 8,
+      "SCOPED_CHILD": 4
+    },
+    "report_disposition_counts": {
+      "INCLUDED": 16,
+      "EXCLUDED": 13,
+      "DEFERRED": 7
+    },
+    "duplicate_groups_closed": true,
+    "scoped_parents_present": true,
+    "representation_firewall_closed": true,
+    "synthetic_rows_not_promoted_as_core_theorems": true,
+    "all_checks_pass": true
+  },
+  "algebraic_checks": {
+    "stf2_dimension": 5,
+    "stf3_dimension": 7,
+    "qo_ambient_dimension": 12,
+    "qo_generic_so3_quotient_dimension": 9,
+    "stf2_plus_four_vectors_ambient_dimension": 17,
+    "stf2_plus_four_vectors_generic_so3_quotient_dimension": 14,
+    "tracefree_3x3_cayley_hamilton_residual": "ZERO_MATRIX",
+    "krylov_gram_determinant_residual": "0",
+    "polar_krylov_reflection_residual": "0",
+    "axial_krylov_reflection_residual": "0"
+  },
+  "validation_repair_record": {
+    "first_check_result": "FAIL_DUPLICATE_GROUP_CHECK_IMPLEMENTATION",
+    "cause": "CSV boolean cells were imported as Boolean True/False while the first check compared them with string literals",
+    "data_changed": false,
+    "repair": "compare Boolean values directly",
+    "final_check_result": "PASS_ALL_A2_SURFACE_CHECKS"
+  },
+  "claim_boundary": {
+    "truth_or_novelty_promoted_by_a2": false,
+    "current_corrected_planck_rank": null,
+    "empirical_beta": false,
+    "global_tilt_identification": false,
+    "finite_healpix_no_go_promoted": false,
+    "bianchi_family_attribution": false,
+    "merge_authorized": false
+  }
+}

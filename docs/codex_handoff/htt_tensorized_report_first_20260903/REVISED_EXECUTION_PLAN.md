@@ -1,343 +1,374 @@
-# HTT theory-report-first execution plan — repository-wide audit revision
+# HTT theory-report-first execution plan — A2/A5 and first theorem-pack closeout
 
-## Purpose
+Date: 2026-09-03  
+Repository: `cosmosapjw-quantum/htt_base`  
+Control PR: `#449`  
+Mode: theory only; observational data and native BASS work excluded
 
-Produce an HTT-only theory/methods report from the actual repository authority surfaces before resuming observation-independent successor work. All local carrier processing, Planck/FFP10 execution, observed-rank evaluation, and statistic evaluation remain closed under `DATA_DEFERRED_BY_OWNER`.
+## 1. Current scientific objective
 
-This revision replaces the previous plan that made local map-free carrier repair the immediate next node. It also rejects a second premature assumption: the report claim surface is not yet frozen because PR #405/408 survivor rows have not been mechanically triaged and several execution grades were conflated.
+Produce a self-contained HTT theory/methods report whose central statement is:
 
-## Fixed exclusions
+> Correct tensorization preserves low-multipole morphology discarded by scalar
+> summaries, but processed response, nuisance overlap, and numerical uncertainty
+> limit physical attribution.
 
-The current programme excludes:
+The report will contain no corrected Planck rank, empirical observer velocity,
+boost subtraction, global-tilt inference, physical shear/vorticity estimate,
+foreground causal attribution, or Bianchi-family result.
 
-- scalar-only MES ranks as current science;
-- old WU-006–008 Q/O, foreground, tensor-rank, and injection conclusions;
-- all observation-bearing execution;
-- empirical `beta` fitting or boost subtraction;
-- local boost = global matter-frame tilt identification;
-- physical shear/vorticity or Bianchi-family attribution;
-- native BASS solver, background, recombination/reionization, and family-forward results;
-- finite-HEALPix all-direction containment before numerical-error closure.
+## 2. Authority and evidence policy
 
-## Repository topology
-
-There is no single “latest” source branch for Report A.
+Report A uses a federation rather than one implicit latest branch:
 
 ```text
-merged/default framework
-  research/pr04-multicomponent@50ea6d76...
-
-vector/tensor foundation
-  PR #367@6bafca66...
-
-candidate/survivor audits
-  PR #405@463f0999...
-  PR #408@40dce3ab...
-
-tensorized Q/O correction
-  PR #440@68723412...
-
-theorem wording inventory
-  PR #441@04680e99...
-
-observer-response lineage
-  PR #442@29427a1f...
-  PR #444@de73549c...
-  PR #446@033e0d19...
-  PR #447@bf6cc2dd...
-
-report control plane
-  PR #449
+PR #367  typed vector/tensor framework
+PR #405  157-candidate source matrix
+PR #408  survivor-surface P0 contract
+PR #440  corrected temperature Q/O semantics and source implementation
+PR #441  wording/proof-obligation summary; formal dossier pending
+PR #442  accepted full-sky local-observer response
+PR #444  current processed-response source plus earlier byte-exact terminal
+PR #446  exact z-direction author artifact and verifier contract
+PR #447  external verifier implementations
+PR #449  report control plane
 ```
 
-The report integrates these through an authority/evidence ledger. It must not fabricate linear Git ancestry.
+Every claim carries separate fields for mathematical truth, literature support,
+direct derivation, numerical checking, source implementation, accepted runtime,
+scientific terminal, and publication status.
 
-## Work completed by the repository-wide audit
+## 3. Completed preflight nodes
 
-### A0 — repository-surface inventory
+### A0 — repository surface
 
-**State:** `DONE_REPORT_SCOPE`
+`DONE_REPORT_SCOPE`.
 
-Created:
+The default branch, merged framework, report-authority PRs, load-bearing code,
+documents, tests, artifacts, and workflow receipts have been inventoried.
+BASS and observational pipelines were classified out of scope rather than
+silently imported.
+
+### A1 — authority and supersession
+
+`DONE_REPORT_SCOPE`.
+
+Scalar-only MES results are historical only; old WU-006--008 Q/O, tensor-rank,
+foreground, and injection interpretations remain withdrawn. Git-diverged
+lineages are cited separately.
+
+### A2 — registered survivor-surface triage
+
+`DONE_CONTENT_AND_INDEPENDENT_WOLFRAM_VALIDATION`.
+
+PR #405 and PR #408 define the report-eligible surface:
+
+```yaml
+exact_or_conditional: 24
+synthetic: 8
+scoped_children: 4
+total: 36
+```
+
+Every row now has one report disposition:
+
+```yaml
+INCLUDED: 16
+EXCLUDED: 13
+DEFERRED: 7
+```
+
+Two duplicate exact-core pairs each have one report owner. All scoped children
+retain their parent identity. `STF2+four vectors` and temperature
+`STF2+STF3` remain separated. A fresh Wolfram parse verified all counts and
+coverage.
+
+A2 does not promote truth or novelty. It closes the omission risk found by PR
+#408 and determines what must be directly replayed.
+
+### A3 — representation firewall
+
+`DONE_CONTRACT`.
 
 ```text
-docs/research_reports/HTT_REPO_WIDE_THEORY_SURFACE_AUDIT_20260903.md
-docs/codex_handoff/htt_tensorized_report_first_20260903/REPO_SURFACE_INVENTORY.yaml
+Temperature Q/O:       STF2 + STF3, ambient 12, generic quotient 9
+VT-T8 framework slice: STF2 + four vectors, ambient 17, generic quotient 14
 ```
 
-Coverage:
+No result from the second representation may serve as a proof of the first.
 
-- default branch and report-authority PR manifests;
-- common tensor/statistics modules;
-- PR #440 Q/O code and tests;
-- WU-010 and WU-011 response modules, tests, artifacts, and audits;
-- PR #367/405/408/441 proof and claim surfaces;
-- workflow and job-step metadata.
+### A4 — execution receipt index
 
-BASS and observational paths were classified out of report scope rather than semantically imported.
+`DONE_INITIAL`.
 
-### A1 — authority precedence and supersession
+Runtime success, runtime failure, mixed evidence, prestart/no-execution,
+source-only, artifact-only, local non-byte-exact, and summary-only states are
+separate.
 
-**State:** `DONE_PROVISIONAL`
+### A5 — contradiction and notation closure
 
-Updated:
+`DONE_CONTRACT_AND_WOLFRAM_COVERAGE`.
+
+The frozen notation registry separates:
+
+- `Q_ab` from an acceptance gauge;
+- `O_abc` from asymptotic `mathcal O`;
+- `beta_obs`, `beta_RM`, `beta_MO`, and `beta_RO`;
+- algebraic, numerical, robust, quotient, and finite-pool ranks;
+- structural nulls, covariance nulls, nuisance images, statistical nulls, and
+  typed missingness;
+- theorem, implementation, runtime, science-terminal, publication, and merge
+  status.
+
+Every one of the sixteen included survivor rows is mapped exactly once to a
+theory pack and report section.
+
+## 4. Completed substantive theory packs
+
+### T1 — stored-real harmonic/STF representation
+
+`PASS_STORED_REAL_STF_REPRESENTATION_THEORY`.
+
+Completed:
+
+- Parseval isometry for the actual stored-real basis;
+- exact Cartesian STF2 and STF3 basis tensors;
+- projection and inverse maps;
+- Gram constants and norm identities;
+- rotation/parity intertwining;
+- dimensional and zero-amplitude checks;
+- independent exact Wolfram receipt.
+
+The result is mathematically derived and Wolfram-checked. PR #440 source agrees,
+but its exact-head GitHub runtime remains `PRESTART_NO_EXECUTION`.
+
+### T3 — conditional MES geometry
+
+`PASS_CONDITIONAL_MES_GEOMETRY_AND_EQUIVARIANCE_FIREWALL`.
+
+Completed:
+
+- direct source binding to the MES papers and COBE application;
+- premise matrix, including geodesic congruence, all-observer Copernican
+  extension, and derivative-hierarchy assumptions;
+- PSTF conversion from `C_2,C_3`;
+- standard `Sigma^2,W^2` conversion;
+- one-way implication and explicit converse prohibition;
+- proof that scalars alone cannot equivariantly generate a nonzero vector or
+  STF tensor;
+- exact Wolfram checks.
+
+The MES coefficients are `LITERATURE_SUPPORTED`; the normalization and no-go
+are `DERIVED_AND_WOLFRAM_CHECKED`.
+
+### T4 — exact finite-null theory
+
+`PASS_FINITE_NULL_ROW_EQUIVARIANCE_THEORY`.
+
+Completed:
+
+- finite-sample super-uniform rank theorem under joint exchangeability and
+  complete row-permutation equivariance;
+- exact tie-free discrete uniformity;
+- conditions under which data-adaptive selection remains valid;
+- typed handling of chart failure and missingness;
+- null-fidelity and shared-realization boundaries;
+- exact four-row counterexample where observation-specific feature selection
+  violates size by `1/4`;
+- exhaustive Wolfram tie checks for pool sizes 2 through 7.
+
+This theorem does not certify any particular Planck/FFP10 reference pool.
+
+### T5 — exact full-sky local-observer response
+
+`PASS_WU010_EXACT_LOCAL_OBSERVER_RESPONSE_SYNTHESIS`.
+
+Completed:
+
+- exact thermodynamic-temperature Lorentz pullback and solid-angle Jacobian;
+- first-order Doppler-plus-aberration generator;
+- quadrupole-induced dipole/STF3 decomposition;
+- adjoint, normal matrix, algebraic inverse, and orthogonal projector;
+- four-dimensional response-orthogonal octupole residual;
+- sharp `kappa_2(M_Q)<=5/3` proof with equality spectrum `(-5,4,1)`;
+- exact Wolfram receipts;
+- readback of the accepted WU-010 exact-head workflows.
+
+The result remains full-sky, local-observer, strictly positive absolute
+thermodynamic temperature, and `d=1` only.
+
+## 5. Current primary node: T2
+
+### Goal
+
+Independently prove or narrow the PR #440 conditioned Q/O Krylov reconstruction
+without borrowing the fourteen-dimensional VT-T8 result.
+
+### Required derivation
+
+For normalized `Q` and `O`, define
 
 ```text
-AUTHORITY_LEDGER.yaml
-CONTRADICTION_LEDGER.yaml
+v = O:Q
+K = [v, Qv, Q^2 v]
 ```
 
-The ledger now distinguishes:
+Prove:
 
-- framework architecture;
-- candidate theorem inventory;
-- direct derivation;
-- source implementation;
-- exact-head implementation verification;
-- prestart/no-execution workflows;
-- historical input-only artifacts;
-- withdrawn and out-of-scope results.
+1. `det K` has the eigenframe Vandermonde factorization;
+2. `det K != 0` is equivalent to simple Q spectrum and nonzero eigenframe
+   components of `v`;
+3. trace-free Cayley--Hamilton determines `Q^3 v` and `Q^4 v` from lower
+   moments;
+4. the five Krylov moments determine `K^T K`;
+5. the signed Gram square root fixes one canonical proper orientation;
+6. the companion matrix reconstructs `Q`;
+7. ten trilinear contractions reconstruct `O`;
+8. equal packets imply one SO(3) orbit;
+9. the signed determinant distinguishes a mirror pair missed by even
+   invariants;
+10. zero, repeated-spectrum, contraction-null, noncyclic, and ill-conditioned
+    strata are typed rather than discarded.
 
-### A3 — representation-family firewall
+### T2 evidence plan
 
-**State:** `DONE_CONTRACT`
+- exact derivation;
+- exact rational/algebraic witness in Wolfram;
+- proper-rotation covariance check;
+- mirror counterexample;
+- explicit comparison with the closest retrieved invariant-theory literature;
+- novelty remains `UNRESOLVED` unless a directly matching source is found.
 
-The following representations are separate:
+### T2 terminals
 
 ```text
-STF2(Q) + STF3(O):       ambient 12, generic SO(3) quotient 9
-STF2 + four vectors:     ambient 17, generic SO(3) quotient 14
+PASS_GENERIC_QO_SO3_CHART_WITH_TYPED_STRATA
+PASS_RECONSTRUCTION_WITH_NOVELTY_UNRESOLVED
+UNRESOLVED_QO_RECONSTRUCTION
 ```
 
-The PR #367/408 fourteen-coordinate VT-T8 local Jacobian cannot prove the PR #440 Q/O Krylov chart.
+The likely scientific terminal may combine the first two clauses: a proved
+generic chart with novelty still unresolved.
 
-### A4 — execution-receipt index
+## 6. Current parallel node: T6
 
-**State:** `DONE_INITIAL`
-
-Created:
-
-```text
-EXECUTION_RECEIPT_INDEX.yaml
-```
-
-The index distinguishes `EXECUTED_SUCCESS`, `EXECUTED_FAILURE`, `MIXED_EXECUTED_EVIDENCE`, `PRESTART_NO_EXECUTION`, `SOURCE_ONLY`, `ARTIFACT_ONLY`, `LOCAL_NON_BYTE_EXACT`, and `SUMMARY_ONLY`.
-
-## Current next node
-
-# A2 — Registered survivor-surface triage
-
-**Goal:** mechanically determine which observation-independent claims may enter Report A.
-
-**Inputs:**
-
-- PR #367 source/evidence rows and 28 VT obligations;
-- PR #405 complete 157-candidate matrix;
-- PR #408 eligible broad/scoped rows and P0 audit;
-- PR #441 78-row theorem wording inventory;
-- WU-010 and WU-011 claims added after those audits;
-- current explicit scalar-retirement and data-deferral policy.
-
-**Output:**
-
-```text
-docs/codex_handoff/htt_tensorized_report_first_20260903/
-  PROVISIONAL_CLAIM_SURVIVOR_LEDGER.yaml
-```
-
-The current file is an initial report-centred ledger. A2 is complete only after every eligible PR #405/408 source row has one of:
-
-```text
-INCLUDE_CORE
-INCLUDE_LIMITED
-FRAMEWORK_ONLY
-DEFER_PROOF
-UNRESOLVED
-EXCLUDE_WITHDRAWN
-EXCLUDE_SCOPE
-```
-
-### A2 procedure
-
-1. Read all PR #405 matrix rows and extract every broad `PASS`/scoped child, exact negative obstruction, and preregistered synthetic positive cell.
-2. Read PR #408 WU-001 eligibility rules without inheriting its provisional eight-survivor selection.
-3. Normalize duplicate IDs and parent/child relations.
-4. Map each row to its actual mathematical representation:
-   - Q/O temperature pair;
-   - joint vector/tensor observatory;
-   - local-observer response;
-   - processed-response/numerical uncertainty;
-   - unrelated/out-of-scope.
-5. Assign evidence status independently of the old role label.
-6. Record exact source path/head and allowed wording.
-7. Record novelty status as `ASSESSED`, `UNASSESSED`, or `NOT_APPLICABLE`; novelty never determines theorem truth.
-8. Fail if any eligible row is missing or double-counted.
-
-### A2 acceptance
-
-```text
-candidate-universe coverage: complete
-eligible-row coverage: complete
-unknown dispositions: zero
-duplicate claim families without linkage: zero
-claims admitted solely from PR441 summary labels: zero
-PR367_VT_T8 to PR440_QO substitution: zero
-observational claims: zero
-```
-
-### A2 stop conditions
-
-Stop with a typed blocker if:
-
-- a row’s exact source is missing;
-- two sources make incompatible statements and no supersession exists;
-- an alleged Q/O theorem belongs to the fourteen-dimensional vector/tensor representation;
-- an execution status cannot be distinguished from source presence;
-- a claim depends on observational output while the data gate is closed.
-
-## A5 — contradiction and notation closure
-
-**Depends on:** A2, A3, A4.
+T6 can proceed independently once T5 is frozen.
 
 Required outputs:
 
+- exact processing-chain factorization;
+- quotient identity
+  `rank([K J])-rank(K)`;
+- nested-image theorem and short-circuit condition;
+- separate Task-7A/7B negative evidence, last byte-exact Task-7C result, and
+  current source-only A4 mathematics;
+- continuum/discrete distinction;
+- no finite-HEALPix promotion.
+
+T6 should then open T7 and T8 in parallel.
+
+## 7. Remaining theory nodes
+
+### T7 — continuum wide-mask response
+
+Current evidence:
+
+- z direction: exact rational block-minor author artifact, rank 32 at `L=12`;
+- other five registered directions: strong multi-engine high-precision
+  numerical evidence;
+- external GitHub verifier workflows: `PRESTART_NO_EXECUTION`;
+- portable all-direction interval proof: open.
+
+Allowed terminal:
+
 ```text
-final CONTRADICTION_LEDGER.yaml
-NOTATION_AND_CONVENTION_REGISTRY.yaml
-REPORT_SECTION_CLAIM_MAP.yaml
+PASS_Z_EXACT_FIVE_DIRECTION_NUMERICAL
 ```
 
-Minimum convention registry:
+if interval closure remains unavailable and the evidence grades remain explicit.
 
-- metric and Levi-Civita conventions where applicable;
-- outward sky direction and active/passive boost convention;
-- harmonic phase and stored-real layout;
-- STF normalization and Euclidean/Frobenius metrics;
-- O(3) versus SO(3), parity, chirality, and stabilizer vocabulary;
-- local observer velocity versus global matter-frame tilt;
-- exact, finite-sample, asymptotic, conditional, numerical, and implementation evidence labels.
+### T8 — matrix numerical-error theorem
 
-## Theory packs after A5
+Mathematical tasks:
 
-### T1 — stored-real/STF representation
-
-Derive the harmonic/STF isometry, inverse map, norm identities, rotation and parity adapters. The map-free data runner is not executed.
-
-### T2 — Q/O orbit chart and strata
-
-Prove or narrow the PR #440 Krylov16 reconstruction on the declared cyclic conditioned chart. Produce an explicit mirror/non-separation counterexample and classify singular strata. Do not borrow VT-T8.
-
-### T3 — MES conditional geometry
-
-Re-derive the PSTF epsilon normalization and one-way shear/vorticity ceiling functions. Create a premise table and prove the scalar-to-tensor equivariance no-go.
-
-### T4 — finite-null theory
-
-State exact finite-rank validity under joint exchangeability and row equivariance; handle ties, monotone tails, data-dependent symmetric selection, typed missingness, null mismatch, and shared-data dependence. Read and cite primary sources directly before freeze.
-
-### T5 — WU-010 synthesis
-
-Import the scoped closed result, reproduce its derivations, and condense its exact-head evidence. Do not reopen or dilute its domain conditions.
-
-### T6 — WU-011 processed-response quotient
-
-State the operator factorization, quotient-rank identity, nested nuisance images, Task-7A/7B negative results, matched-control unresolved terminal, and finite-HEALPix boundary.
-
-### T7 — continuum proof strengthening
-
-Review the exact z-axis pivot-minor artifact and the all-direction multi-engine numerical lineages. Seek a portable interval/ball seal, but permit the report terminal `Z exact + five-direction high-precision numerical` if the wording remains graded.
-
-### T8 — numerical-error theory
-
-Prove the Loewner envelope, scaling and orthogonal-mixing invariances, zero-family guard, generalized singular-value condition, and completeness premise. Keep partial-rank Wedin analysis in a separate lane.
-
-## Report assembly
+- Loewner envelope for additive deterministic coefficient balls;
+- compensated family scaling and family-internal orthogonal invariance;
+- zero-family pathology;
+- error-whitened full-row certificate;
+- actual error-family completeness conditions;
+- separate Wedin/spectral-gap theorem for partial subspaces.
 
 ### T9 — integrated claim ledger
 
-Merge T1–T8 only after all claims have unique authority and evidence fields. Run contradiction, notation, citation, and scope scans.
+T9 begins only after T2, T6, T7, and T8. It will bind exact statements,
+assumptions, evidence grades, source identities, allowed wording, forbidden
+extensions, novelty status, and remaining obligations.
 
-### R1 — Theory and Methods Report A
+## 8. Manuscript and audit order
 
-Write the manuscript around one scientific argument:
+```text
+T2 + T6
+  -> T7 and T8
+  -> T9 integrated claim ledger
+  -> R1 full manuscript and appendices
+  -> R2 PHYS-MATH / STATISTICS / CODE / PROVENANCE audit
+  -> R3 blind referee and bounded revision
+  -> R4 frozen Report A
+```
 
-> Tensorization preserves low-multipole morphology discarded by scalar summaries, while processed-response overlap and numerical uncertainty limit physical attribution.
+The report may preserve an unresolved finite-HEALPix result; it may not present
+that unresolved item as a continuum refutation or hide it.
 
-No observational result table is created. The current corrected Planck rank is explicitly `NONE`.
+## 9. Post-report and observational boundaries
 
-### R2 — four-axis audit
-
-1. PHYS–MATH;
-2. STATISTICS;
-3. PHYS–MATH–CODE;
-4. PROVENANCE/PUBLICATION.
-
-### R3 — blind referee audit and bounded revision
-
-Audit title, abstract, theorem wording, tables, captions, continuum/discrete separation, and absence of silently restored data claims.
-
-### R4 — report freeze
-
-Bind source, PDF, figures, claim ledger, verifier receipts, and unresolved items. Merge/publication remains a separate owner decision.
-
-## Observation-independent post-report successors
-
-After R4, run in parallel where independent:
-
-- `P1`: WU-011 finite-operator numerical-error closeout;
-- `P2`: ideal inverse, intrinsic-octupole nuisance, and noisy-estimation theory;
-- `P3`: depth, local/global, and remote-field identifiability theory.
-
-Then perform `P4` publication split decision.
-
-## Closed observational gate
+After R4, P1--P3 may proceed as observation-independent successors. The
+observational path remains:
 
 ```yaml
 D0: DATA_DEFERRED_BY_OWNER
 O1_corrected_carrier_repair: BLOCKED
-O2_observation_blind_statistic_registry: BLOCKED
-O3_corrected_Planck_FFP10_run: BLOCKED
+O2_statistic_and_nuisance_registry: BLOCKED
+O3_Planck_FFP10_execution: BLOCKED
 O4_observation_report: BLOCKED
 ```
 
-No theory task may silently open D0.
+No current theory node is authorized to reopen D0.
 
-## Current completion estimate
+## 10. Updated readiness
 
-| Workstream | Readiness after audit |
+| Workstream | Current readiness |
 |---|---:|
-| repository-surface inventory | 100% for Report A scope |
-| authority/supersession reconstruction | 95% |
-| execution-receipt classification | 95% initial |
-| representation-family firewall | 100% |
-| registered survivor triage | 35–45% |
-| contradiction/notation closure | 45–55% |
-| stored-real/STF theory | 85–90% |
-| Q/O orbit-chart proof | 65–75% |
-| conditional MES theory | 80–90% |
-| finite-null theory | 70–80% |
-| WU-010 synthesis | 95% |
-| WU-011 quotient/no-go synthesis | 85–90% |
-| continuum evidence | 90–95% numerical; z exact |
-| all-direction interval proof | 25–40% |
-| numerical-error theorem | 85–90% mathematics; runtime/provenance lower |
-| integrated claim ledger | 45–55% |
-| Report A working prose | 55–65% |
-| Report A audited release candidate | 0% |
-| observation result | 0%, intentionally deferred |
+| repository inventory | 100% for Report A scope |
+| authority/supersession | 98% |
+| survivor triage | 100% content and independent Wolfram validation |
+| representation firewall | 100% |
+| execution receipt index | 95% |
+| notation/contradiction contract | 100% |
+| T1 stored-real/STF theory | 100% theory; runtime admission separate |
+| T2 Q/O orbit reconstruction | 70% source understanding; direct proof active |
+| T3 conditional MES theory | 100% at retained geodesic scope |
+| T4 finite-null theory | 100% at explicit premise scope |
+| T5 WU-010 synthesis | 100% at accepted full-sky scope |
+| T6 WU-011 quotient synthesis | 88--92% source material; integrated pack pending |
+| T7 continuum result | 90--95% graded evidence; all-direction interval 25--40% |
+| T8 error-envelope theorem | 85--90% mathematics; error-class completeness unresolved |
+| T9 integrated claim ledger | 65--70% |
+| Report A working prose | 65--72% |
+| audited report release candidate | 0% |
+| corrected observational result | 0%, intentionally deferred |
 
-## Current terminal
+## 11. Current terminal
 
 ```text
-REPO_WIDE_REPORT_SURFACE_AUDIT_COMPLETE
+A2_REGISTERED_SURVIVOR_TRIAGE_CLOSED
 /
-AUTHORITY_FEDERATION_RECONSTRUCTED
+A5_NOTATION_AND_CONTRADICTION_CONTRACT_CLOSED
 /
-REPRESENTATION_FAMILY_FIREWALL_CLOSED
+T1_T3_T4_T5_COMPLETE_AT_TYPED_SCOPE
 /
-EXECUTION_RECEIPTS_RECLASSIFIED
+T2_PRIMARY_NEXT
 /
-REGISTERED_SURVIVOR_TRIAGE_ACTIVE
+T6_PARALLEL_NEXT
 /
 OBSERVATIONAL_DATA_DEFERRED
 /

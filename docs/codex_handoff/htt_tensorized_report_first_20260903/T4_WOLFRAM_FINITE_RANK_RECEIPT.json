@@ -1,0 +1,80 @@
+{
+  "schema": "htt.report_a.t4_wolfram_finite_rank_receipt.v1",
+  "date": "2026-09-03",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "report_pr": 449,
+  "theorem": {
+    "input": "jointly exchangeable rows Z_0,...,Z_(n-1)",
+    "analysis_contract": "A(pi Z)=pi A(Z)",
+    "upper_tail_p": "p_i=(1/n) sum_j 1{S_j>=S_i}",
+    "conclusion": "P(p_i<=alpha)<=alpha",
+    "tie_free_conclusion": "p_i is uniform on {1/n,...,1}"
+  },
+  "literature": [
+    {
+      "title": "Randomization Inference: Theory and Applications",
+      "authors": ["David M. Ritzwoller", "Joseph P. Romano", "Azeem M. Shaikh"],
+      "arxiv": "2406.09521",
+      "role": "GROUP_INVARIANCE_AND_FINITE_SAMPLE_EXACTNESS_BOUNDARY"
+    },
+    {
+      "title": "Permutation P-values Should Never Be Zero: Calculating Exact P-values When Permutations Are Randomly Drawn",
+      "authors": ["Belinda Phipson", "Gordon K. Smyth"],
+      "doi": "10.2202/1544-6115.1585",
+      "role": "IDENTITY_INCLUDED_DISCRETE_NULL_AND_NONZERO_P_VALUES"
+    },
+    {
+      "title": "Exact testing with random permutations",
+      "authors": ["Jesse Hemerik", "Jelle Goeman"],
+      "doi": "10.1007/s11749-017-0571-1",
+      "role": "CONDITIONAL_MONTE_CARLO_EXACTNESS_WITH_RANDOM_PERMUTATIONS"
+    }
+  ],
+  "wolfram_exhaustive_tie_checks": {
+    "score_alphabet": [0, 1, 2],
+    "pool_sizes": [2, 3, 4, 5, 6, 7],
+    "maximum_superuniformity_violation_by_n": {
+      "2": "0",
+      "3": "0",
+      "4": "0",
+      "5": "0",
+      "6": "0",
+      "7": "0"
+    },
+    "all_tie_checks_pass": true,
+    "tie_free_grid_uniformity_checked": true
+  },
+  "selection_counterexample": {
+    "rows": [[-2, -2], [-2, -1], [-2, 0], [-1, -2]],
+    "row_permutations": 24,
+    "invalid_rule": "choose coordinate with largest absolute value in distinguished row zero",
+    "invalid_p_counts": {
+      "1/2": 12,
+      "3/4": 12
+    },
+    "invalid_maximum_size_violation": "1/4",
+    "valid_symmetric_rule": "choose coordinate with largest pooled sum of squares",
+    "valid_p_counts": {
+      "3/4": 18,
+      "1": 6
+    },
+    "valid_maximum_size_violation": "0"
+  },
+  "typed_boundaries": {
+    "data_adaptive_selection_allowed": "ONLY_IF_COMPLETE_ANALYSIS_REMAINS_ROW_EQUIVARIANT",
+    "chart_failure": "FULL_TENSOR_FALLBACK_OR_TYPED_POOL_LEVEL_ABSTENTION",
+    "noisy_observation_vs_noise_free_null": "NOT_EXCHANGEABLE_WITHOUT_A_JOINT_MODEL",
+    "shared_realizations": "NOT_INDEPENDENT_REPLICATIONS",
+    "strict_increasing_transform": "RANK_PRESERVING",
+    "strict_decreasing_transform": "TAIL_REVERSING",
+    "two_sided_tail": "MUST_BE_A_FIXED_SCORE_BEFORE_RANKING"
+  },
+  "terminal": "PASS_FINITE_NULL_ROW_EQUIVARIANCE_THEORY",
+  "claim_boundary": {
+    "particular_Planck_FFP10_exchangeability_certified": false,
+    "future_tensor_statistic_selected": false,
+    "observational_p_value_generated": false,
+    "multiple_test_combination_authorized": false,
+    "merge_authorized": false
+  }
+}
