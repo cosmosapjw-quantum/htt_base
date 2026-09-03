@@ -1,4 +1,4 @@
-schema: htt.report_a.contradiction_ledger.v3
+schema: htt.report_a.contradiction_ledger.v4
 date: 2026-09-03
 repository: cosmosapjw-quantum/htt_base
 status: REPORT_CONTRADICTIONS_CLOSED_PROOF_OBLIGATIONS_REMAIN
@@ -26,19 +26,21 @@ resolved_items:
     report_action: T2 must independently prove or narrow the Q/O chart
   - id: C-005
     topic: theorem_survivor_selection
-    conflict: PR405 thirty-six scoped promotions versus PR408 P0 finding that the report survivor list was manually narrowed
-    resolution: A2_REGISTERED_SURVIVOR_SURFACE_CLOSED
+    conflict: PR405 contains thirty-six promoted candidates plus one unresolved supplemental scoped proof attempt, while PR408 requires every declared scoped candidate to receive a report disposition
+    resolution: A2_REGISTERED_SURVIVOR_SURFACE_CLOSED_AFTER_P0_REPAIR
     evidence:
-      source_rows: 36
+      source_rows: 37
       exact_or_conditional: 24
       synthetic: 8
-      scoped_children: 4
+      scoped_candidates: 5
       included: 16
       excluded: 13
-      deferred: 7
+      deferred: 8
+      deferred_unresolved_scoped_candidate: PR284_NEW:FINITE-REGISTERED-PATH
       duplicate_groups_closed: true
       independent_wolfram_validation: PASS
-    report_action: only the sixteen included rows advance to direct replay and report mapping
+      repair_history: the first 36-row closeout omitted the unresolved PR284 supplemental candidate; the repaired surface adds it as DEFERRED without changing the sixteen included rows
+    report_action: only the sixteen included rows advance to direct replay and report mapping; the PR284 parent remains deferred pending a separately identified narrow worked-example replay
   - id: C-006
     topic: theorem_provenance
     conflict: PR441 row labels versus FORMAL_DOSSIER_PENDING metadata
@@ -124,12 +126,20 @@ resolved_items:
     conflict: source rows with scientific_terminal_state PROMOTED versus their preregistered synthetic evidence modality
     resolution: SYNTHETIC_SUCCESS_IS_NOT_A_THEOREM_OR_OBSERVATION
     report_action: five included synthetic rows appear only in a validation appendix
+  - id: C-023
+    topic: a2_source_surface_completeness
+    conflict: first PR449 A2 closeout counted only four promoted scoped children and omitted the fifth unresolved PR284 scoped candidate
+    resolution: ADD_PR284_AS_DEFERRED_AND_REGENERATE_A2_RECEIPT
+    report_action: preserve 37 registered rows and 16 included report rows; do not relabel the CAS-conflicted parent as a proved worked example
+
+closed_theory_obligations:
+  - {id: P-001, node: T1, terminal: PASS_STORED_REAL_STF_REPRESENTATION_THEORY, boundary: PR440 runtime admission remains separate}
+  - {id: P-003, node: T3, terminal: PASS_CONDITIONAL_MES_GEOMETRY_AND_EQUIVARIANCE_FIREWALL, boundary: coefficients literature-supported and observational measurement absent}
+  - {id: P-004, node: T4, terminal: PASS_FINITE_NULL_ROW_EQUIVARIANCE_THEORY, boundary: no particular Planck or FFP10 pool is certified exchangeable}
+  - {id: P-010, node: T5, terminal: PASS_WU010_EXACT_LOCAL_OBSERVER_RESPONSE_SYNTHESIS, boundary: full-sky local-observer thermodynamic-temperature scope only}
 
 open_proof_obligations:
-  - {id: P-001, node: T1, statement: direct stored-real to STF isometry and inverse-map proof}
   - {id: P-002, node: T2, statement: independent PR440 Q/O Krylov reconstruction or a narrower terminal}
-  - {id: P-003, node: T3, statement: MES premise matrix and one-way authority proof}
-  - {id: P-004, node: T4, statement: exact finite-null theorem with complete selection tie tail and missingness conditions}
   - {id: P-005, node: T6, statement: processed-response quotient synthesis with current-versus-frozen execution separation}
   - {id: P-006, node: T7, statement: portable all-direction interval or explicitly limited numerical wording}
   - {id: P-007, node: T8, statement: actual numerical-error family and radius completeness}
@@ -137,5 +147,8 @@ open_proof_obligations:
   - {id: P-009, node: EXTERNAL_RUNTIME, statement: supported-runtime exact-head execution for PR440 and current PR444 source}
 
 current_terminal: >-
-  A2_SURVIVOR_TRIAGE_CLOSED__A5_CONTRADICTION_AND_NOTATION_CONTRACT_CLOSED__
-  SUBSTANTIVE_THEORY_PROOFS_REMAIN__NO_OBSERVATIONAL_OR_PUBLICATION_PROMOTION
+  A2_SURVIVOR_TRIAGE_CLOSED_AFTER_P0_REPAIR__
+  A5_CONTRADICTION_AND_NOTATION_CONTRACT_RECLOSED__
+  T1_T3_T4_T5_COMPLETE_AT_TYPED_SCOPE__
+  T2_PRIMARY_AND_T6_PARALLEL_ACTIVE__
+  NO_OBSERVATIONAL_OR_PUBLICATION_PROMOTION
