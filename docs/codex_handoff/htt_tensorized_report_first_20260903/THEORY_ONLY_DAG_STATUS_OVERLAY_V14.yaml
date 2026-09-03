@@ -1,0 +1,79 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v14
+revision_date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_gate: DATA_DEFERRED_BY_OWNER
+nodes:
+  A2M:
+    title: PR450 neutral survivor extraction
+    state: SOURCE_COMPLETE_EXACT_HEAD_PRESTART_BLOCKED
+    head: ba84912bea165896ec8f0c0e5793b47d1736f512
+  T2C:
+    title: PR451 image-safe stable Q/O decoder
+    state: SOURCE_COMPLETE_LOCAL_STRESS_PASS_EXACT_HEAD_PRESTART_BLOCKED
+    head: 9f7d06dec0fce1c3a8a53fa5372c84d9c679c037
+  R3L:
+    title: Canonical atomic claim and bibliography authority repair
+    state: SOURCE_COMPLETE_RUNTIME_VALIDATION_PENDING
+    outputs:
+      - T9 v3 with 30 atomic claims
+      - citation matrix v2 with 30 rows
+      - formal 17-key bibliography as sole rendered authority
+  R3F:
+    title: Flatten bounded R3 manuscript against canonical authority
+    state: SOURCE_MATERIALIZED_SUPPORTED_RUNTIME_PENDING
+    outputs:
+      - HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+      - R3F_FLATTENING_RECEIPT.yaml
+      - test_report_a_r3_flattened.py
+    scientific_changes: false
+    observational_data_used: false
+  R3A:
+    title: Fresh exact-head referee and contract audit
+    state: NEXT
+    depends_on: [R3F]
+    requirements:
+      - supported Python 3.12 ledger and manuscript contracts
+      - 30 of 30 claim coverage
+      - 17 registered citation keys and no unknown keys
+      - exchangeable-row and finite-group theorem lanes remain separate
+      - no duplicate bibliography authority
+      - fresh PHYS-MATH, STATISTICS, CODE-EXECUTION, and PROVENANCE review
+      - observational and finite-HEALPix firewalls remain closed
+  R4:
+    title: Freeze Report A
+    state: WAITING_ON_R3A
+    outputs:
+      - final manuscript source identity
+      - rendered PDF and visual audit
+      - bibliography, ledger, provenance, and evidence hashes
+      - unresolved-work ledger
+      - explicit owner publication and merge decision
+  P1:
+    title: WU011 finite-operator numerical-error closeout
+    state: AFTER_R4
+  P2:
+    title: Ideal inverse, intrinsic-octupole nuisance, and noisy estimation
+    state: AFTER_R4
+  P3:
+    title: Depth and local-global identifiability
+    state: AFTER_R4
+  D0:
+    title: Observational-data authorization
+    state: DEFERRED_BY_OWNER
+claim_firewall:
+  corrected_tensorized_planck_rank: null
+  scalar_only_mes_current_result: false
+  finite_healpix_no_go_promoted: false
+  empirical_beta_fit: false
+  boost_subtraction: false
+  local_global_equivalence: false
+  physical_shear_vorticity_estimate: false
+  foreground_cause: false
+  bianchi_family_attribution: false
+  native_bass_solver_claim: false
+  merge_authorized: false
+current_next_node: R3A_FRESH_EXACT_HEAD_REFEREE_AND_CONTRACT_AUDIT
+terminal: >-
+  R3F_SOURCE_MATERIALIZED__R3A_NEXT__
+  OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY

@@ -1,0 +1,54 @@
+schema: htt.report_a.r3f.flattening_receipt.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+base_head: 08abc206358eaf0ae2e91db90db8a445e3639d7e
+flattened_manuscript:
+  path: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+  git_blob_sha: be5e8459b51741eaac87e659c63524902ae4d40b
+  status: SOURCE_MATERIALIZED
+canonical_claim_authority:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V3.yaml
+  git_blob_sha: 718f536420be3527b06bf46c2a2575309f932f79
+  claim_count: 30
+citation_authority:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+  git_blob_sha: fe94f10994fffaa52b0c96da7ee86480062a72cc
+  claim_rows: 30
+bibliography_authority:
+  path: docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+  git_blob_sha: ba37321119725e52f1a2b0ac827050ee895e5466
+  registered_keys: 17
+  sole_rendered_authority: true
+provenance_authority:
+  path: docs/research_reports/appendices/HTT_REPORT_A_AUTHORITY_AND_EXECUTION_PROVENANCE.md
+  git_blob_sha: b2b7d0cb78f995badb118ec92659b41db9d13783
+contract_source:
+  path: tests/contracts/test_report_a_r3_flattened.py
+  git_blob_sha: a496a7390ea32cf2159e8cab4075f321e8cc2b1b
+source_level_checks_declared:
+  - all 30 canonical claim IDs occur in the flattened manuscript
+  - exchangeable-row and group-orbit theorem lanes are separate
+  - the exact adaptive-selection counts are permutations, not rows
+  - photon energy is E_gamma and is distinct from MES epsilon_l
+  - the scientific abstract contains no PR, CI, runner, or test-count detail
+  - the formal BibTeX file is the sole rendered bibliography authority
+  - all 17 registered citation keys occur and no unregistered key occurs
+  - continuum and finite-HEALPix evidence grades remain separate
+  - the observational and BASS firewalls remain closed
+execution_boundary:
+  supported_runtime_validation: PENDING
+  exact_head_ci: PENDING_RUNNER_ADMISSION
+  canonical_sorted_id_sha256: PENDING_SUPPORTED_RUNTIME_REPLAY
+  fresh_referee: REQUIRED
+observational_data_used: false
+corrected_planck_tensor_rank: null
+finite_healpix_containment: RANK_UNRESOLVED
+scientific_claim_promotion: false
+merge_authorized: false
+terminal: >-
+  R3F_FLATTENED_MANUSCRIPT_SOURCE_MATERIALIZED__
+  CANONICAL_30_CLAIM_AND_SINGLE_BIBLIOGRAPHY_AUTHORITY_BOUND__
+  SUPPORTED_RUNTIME_AND_FRESH_REFEREE_PENDING__
+  OBSERVATIONAL_DATA_DEFERRED__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY
