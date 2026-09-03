@@ -1,169 +1,367 @@
-schema: htt.theory_report_first.master_dag.v1
+schema: htt.theory_report_first.master_dag.v2
 date: 2026-09-03
 repository: cosmosapjw-quantum/htt_base
 goal: >-
-  Freeze an HTT-only theory/methods report integrating tensorized MES
-  representation, finite-null statistics, and response-limited identifiability,
-  while deferring all local observational execution.
-authorities:
-  tensorized:
+  Freeze an HTT-only theory/methods report that integrates the corrected
+  tensorized Q/O representation, conditional MES geometry, finite-null
+  statistics, and response-limited identifiability, while all observational
+  execution remains closed.
+
+authority_federation:
+  default_branch:
+    ref: research/pr04-multicomponent
+    head: 50ea6d76ace70dec57b8794ab0d1cf9b8fab42cb
+    role: MERGED_FRAMEWORK_BASE_NOT_CURRENT_REPORT_AUTHORITY
+  vector_tensor_foundation:
+    pr: 367
+    head: 6bafca66285ef071081453313bb7d2d6b261599c
+  theory_promotion_audit:
+    pr: 405
+    head: 463f0999949bf8534c60ad7973b7342705c2e3d6
+    gate: STOP_INVALID_FOR_CURRENT_PROMOTION
+  survivor_audit:
+    pr: 408
+    head: 40dce3ab9328c1f3acb99adba11046056c639737
+  tensorized_qo:
     pr: 440
     head: 687234128d7c12d04e68aad0f303c21d2d470393
+  theorem_reconciliation:
+    pr: 441
+    head: 04680e99d56b9974fe1120854370af1fb94fb1d6
+    provenance: USER_SUPPLIED_SUMMARY_FORMAL_DOSSIER_PENDING
   wu010:
     pr: 442
     head: 29427a1f7f2c5d46e43ffe03053c4ac13e969228
+    state: PASS_FRESH_READ_ONLY_REVIEW_WITH_TYPED_LIMITATIONS
   wu011:
     pr: 444
-    inspected_head: de73549c16ac6ceb63f924c86611e0a5ceb4711d
-    scientific_terminal: PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED
+    current_head: de73549c16ac6ceb63f924c86611e0a5ceb4711d
+    last_byte_exact_head: f635d873cf5e77f7cb0d2756469acde60b8609e5
+    last_scientific_terminal: PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED
   external_verifiers:
     prs: [446, 447]
-  current_report:
+  report:
     pr: 449
-    pre_plan_head: aebe7289328183f4c57481edb725af196fd435f5
+    pre_audit_head: 5546584385836bdb734b95675b292661ccb7fb1a
+
 global_state:
   scalar_only_mes: RETIRED
   old_wu006_wu008_results: WITHDRAWN
   corrected_planck_tensor_rank: NONE
   observational_execution: DATA_DEFERRED_BY_OWNER
+  raw_map_access: FORBIDDEN_IN_CURRENT_PHASE
+  carrier_processing: FORBIDDEN_IN_CURRENT_PHASE
   bass_solver_scope: EXCLUDED
+  merge: NOT_AUTHORIZED
+
+representation_firewall:
+  temperature_qo:
+    representation: STF2_PLUS_STF3
+    ambient_dimension: 12
+    generic_so3_quotient_dimension: 9
+    report_role: CENTRAL
+  joint_vector_tensor_slice:
+    representation: STF2_PLUS_FOUR_VECTORS
+    ambient_dimension: 17
+    generic_so3_quotient_dimension: 14
+    report_role: FRAMEWORK_AND_SEPARATE_LOCAL_GEOMETRY_RESULT
+  rule: NEVER_USE_ONE_REPRESENTATION_FAMILY_AS_PROOF_OF_THE_OTHER
+
 nodes:
-  T0:
-    title: Authority and supersession freeze
-    state: DONE_WITH_REVIEW_REQUIRED
-    outputs: [authority_table, supersession_table, lineage_graph]
+  A0:
+    title: Repository-surface inventory
+    state: DONE_REPORT_SCOPE
+    outputs:
+      - REPO_SURFACE_INVENTORY.yaml
+      - HTT_REPO_WIDE_THEORY_SURFACE_AUDIT_20260903.md
+    acceptance:
+      - default tree and all report-authority PR diffs inventoried
+      - report-load-bearing code docs tests artifacts and workflows deep-read
+      - BASS and observation pipelines classified out of report scope
+
+  A1:
+    title: Authority precedence and supersession
+    state: DONE_PROVISIONAL
+    depends_on: [A0]
+    outputs:
+      - AUTHORITY_LEDGER.yaml
+      - CONTRADICTION_LEDGER.yaml
+    acceptance:
+      - scalar and WU006-WU008 retirement explicit
+      - default branch not misidentified as current report authority
+      - Git-diverged lineages preserved
+
+  A2:
+    title: Registered survivor-surface triage
+    state: ACTIVE_THEORY
+    depends_on: [A1]
+    inputs:
+      - PR367 source and evidence rows
+      - PR405 157-candidate matrix
+      - PR408 eligible broad and scoped rows
+      - PR441 78-row theorem summary
+      - PR442 and PR444 response claims
+    outputs:
+      - PROVISIONAL_CLAIM_SURVIVOR_LEDGER.yaml
+      - final mechanical INCLUDED_EXCLUDED_DEFERRED table
+    acceptance:
+      - every eligible exact conditional synthetic and negative row has one disposition
+      - duplicate and overlapping rows linked rather than double-counted
+      - provisional roles do not determine truth or novelty
+      - no report claim lacks a source identity and evidence grade
+
+  A3:
+    title: Representation-family firewall
+    state: DONE_CONTRACT
+    depends_on: [A1]
+    outputs:
+      - QO_dimension_and_scope_receipt
+      - VT_T8_dimension_and_scope_receipt
+    acceptance:
+      - QO quotient dimension 9 and vector-tensor slice quotient dimension 14 remain separate
+      - PR367/408 local Jacobian never serves as QO Krylov proof
+
+  A4:
+    title: Execution-receipt index
+    state: DONE_INITIAL
+    depends_on: [A0]
+    outputs:
+      - EXECUTION_RECEIPT_INDEX.yaml
+    acceptance:
+      - EXECUTED_SUCCESS distinct from PRESTART_NO_EXECUTION
+      - source-only and artifact-only evidence distinct from runtime verification
+      - local non-byte-exact receipts distinct from exact-head CI
+
+  A5:
+    title: Contradiction and notation closure
+    state: WAITING_ON_A2
+    depends_on: [A2, A3, A4]
+    outputs:
+      - final contradiction ledger
+      - notation and convention registry
+      - report section to claim mapping
+    acceptance:
+      - no unresolved direct contradiction enters manuscript prose
+      - same symbol does not change representation frame unit or evidence status
+
   T1:
-    title: Report scope terminology and claim ledger
-    state: ACTIVE_THEORY
-    depends_on: [T0]
-    outputs: [claim_ledger, notation_registry, report_section_map]
-  T2A:
     title: Stored-real to STF representation theorem pack
-    state: ACTIVE_THEORY
+    state: READY_AFTER_A5
+    depends_on: [A5]
+    outputs:
+      - harmonic_stf_isometry_proof
+      - Q_and_O_norm_proofs
+      - rotation_parity_convention_receipts
+
+  T2:
+    title: Q/O generic orbit chart and singular strata
+    state: READY_AFTER_T1
     depends_on: [T1]
-    outputs: [harmonic_stf_proofs, norm_receipts, parity_rotation_contract]
-  T2B:
-    title: Generic SO3 orbit chart and strata
-    state: ACTIVE_THEORY
-    depends_on: [T2A]
-    outputs: [krylov16_theorem, reconstruction_receipt, strata_ledger]
-  T2C:
-    title: MES conditional geometry and scalar-to-tensor no-go
-    state: ACTIVE_THEORY
-    depends_on: [T1]
-    outputs: [mes_premise_matrix, normalization_proof, equivariance_no_go]
-  T2D:
-    title: Finite-null and selection-validity theory
-    state: ACTIVE_THEORY
-    depends_on: [T1]
-    outputs: [finite_rank_theorem, selection_theorem, dependence_ledger]
-  T2E:
-    title: WU010 exact local-observer response synthesis
-    state: ACTIVE_THEORY
-    depends_on: [T1]
-    outputs: [lorentz_derivation, stf_response_proof, condition_bound_proof]
-  T2F:
-    title: WU011 processed-response quotient and no-go synthesis
-    state: ACTIVE_THEORY
-    depends_on: [T1, T2E]
-    outputs: [operator_factorization, quotient_rank_proof, nested_image_theorem]
-  T2G:
-    title: Continuum L12 proof strengthening
-    state: ACTIVE_THEORY
-    depends_on: [T2F]
-    outputs: [all_direction_verifier_matrix, z_exact_certificate, interval_status]
-  T2H:
-    title: Invariant matrix numerical-error theorem pack
-    state: ACTIVE_THEORY
-    depends_on: [T2F]
-    outputs: [loewner_proof, invariance_proofs, gsv_certificate_theorem, wedin_lane_spec]
+    outputs:
+      - krylov16_reconstruction_theorem
+      - mirror_counterexample
+      - strata_and_chart_failure_ledger
+    terminal_options:
+      - PASS_GENERIC_QO_SO3_CHART_WITH_TYPED_STRATA
+      - UNRESOLVED_GLOBAL_QO_ORBIT_COVER
+
   T3:
+    title: Conditional MES geometry and scalar-to-tensor no-go
+    state: READY_AFTER_A5
+    depends_on: [A5, T1]
+    outputs:
+      - PSTF_normalization_proof
+      - premise_matrix
+      - one_way_ceiling_theorem
+      - scalar_equivariance_no_go
+
+  T4:
+    title: Finite-null and adaptive-selection theory
+    state: READY_AFTER_A5
+    depends_on: [A5]
+    outputs:
+      - finite_rank_theorem
+      - row_equivariance_theorem
+      - selection_and_missingness_theorem
+      - dependence_and_null_mismatch_ledger
+      - primary_literature_matrix
+
+  T5:
+    title: WU-010 theory synthesis
+    state: READY_IMPORT_CLOSED_RESULT
+    depends_on: [A5]
+    outputs:
+      - exact_pullback_derivation
+      - STF_response_and_inverse_proof
+      - sharp_5_over_3_condition_bound
+      - domain_and_claim_boundary
+
+  T6:
+    title: WU-011 processed-response quotient synthesis
+    state: READY_AFTER_T5
+    depends_on: [A5, T5]
+    outputs:
+      - processed_operator_factorization
+      - quotient_rank_identity
+      - nested_image_short_circuit
+      - Task7A_Task7B_Task7C_evidence_table
+      - finite_HEALPix_unresolved_boundary
+
+  T7:
+    title: Continuum wide-mask proof strengthening
+    state: READY_AFTER_T6
+    depends_on: [T6]
+    outputs:
+      - z_exact_minor_certificate_review
+      - all_direction_multi_engine_evidence_matrix
+      - interval_or_ball_status
+      - continuum_vs_discrete_firewall
+    terminal_options:
+      - PASS_ALL_SIX_CONTINUUM_SURJECTIVITY_CERTIFIED
+      - PASS_Z_EXACT_FIVE_DIRECTION_NUMERICAL
+      - BLOCKED_BY_PORTABLE_INTERVAL_TOOLCHAIN
+
+  T8:
+    title: Matrix-valued numerical-error theorem pack
+    state: READY_AFTER_T6
+    depends_on: [T6]
+    outputs:
+      - Loewner_bound_proof
+      - compensated_scaling_and_orthogonal_invariance
+      - zero_family_guard_proof
+      - generalized_singular_value_certificate
+      - error_class_completeness_conditions
+      - separate_Wedin_partial_subspace_lane
+
+  T9:
     title: Integrated theorem evidence claim ledger
     state: WAITING
-    depends_on: [T2A, T2B, T2C, T2D, T2E, T2F, T2G, T2H]
-    outputs: [integrated_ledger, contradiction_scan]
-  T4:
-    title: Theory and Methods Report A draft
+    depends_on: [T1, T2, T3, T4, T5, T6, T7, T8]
+    outputs:
+      - final_claim_ledger
+      - source_to_claim_matrix
+      - novelty_and_literature_matrix
+      - unresolved_questions
+
+  R1:
+    title: Full Theory and Methods Report A manuscript
     state: WAITING
-    depends_on: [T3]
-    outputs: [manuscript_source, pdf, figure_manifest, appendix_pack]
-  T5:
-    title: Independent CAS literature convention dimensional and code audit
+    depends_on: [T9]
+    outputs:
+      - manuscript_source
+      - theory_and_synthetic_figures
+      - bibliography
+      - appendix_pack
+      - PDF
+
+  R2:
+    title: Independent multi-axis audit
     state: WAITING
-    depends_on: [T4]
-    outputs: [physmath_review, statistics_review, code_review, provenance_review]
-  T6:
+    depends_on: [R1]
+    outputs:
+      - PHYS_MATH_review
+      - STATISTICS_review
+      - PHYS_MATH_CODE_review
+      - PROVENANCE_PUBLICATION_review
+
+  R3:
     title: Blind referee audit and bounded revision
     state: WAITING
-    depends_on: [T5]
-    outputs: [referee_report, revision_ledger, rebuilt_pdf]
-  T7:
+    depends_on: [R2]
+    outputs:
+      - blind_referee_report
+      - revision_ledger
+      - rebuilt_PDF
+
+  R4:
     title: Freeze Theory and Methods Report A
     state: WAITING
-    depends_on: [T6]
-    outputs: [frozen_report, source_hashes, evidence_hashes, unresolved_ledger]
+    depends_on: [R3]
+    outputs:
+      - frozen_source_and_PDF_hashes
+      - frozen_claim_ledger
+      - verifier_receipts
+      - unresolved_ledger
+    terminal: REPORT_A_THEORY_METHODS_FROZEN
+
   P1:
-    title: WU011 A4 finite-operator numerical-error closeout
+    title: WU-011 finite-operator numerical-error closeout
     state: READY_AFTER_REPORT
-    depends_on: [T7]
+    depends_on: [R4]
+
   P2:
     title: Ideal inverse intrinsic-octupole nuisance and noisy-estimation theory
     state: READY_AFTER_REPORT
-    depends_on: [T7]
+    depends_on: [R4]
+
   P3:
     title: Depth local-global and remote-field identifiability theory
     state: READY_AFTER_REPORT
-    depends_on: [T7]
+    depends_on: [R4]
+
   P4:
     title: Publication split decision
     state: WAITING
     depends_on: [P1, P2, P3]
+
   D0:
     title: Local observational-data authorization gate
-    state: DEFERRED_DATA
+    state: DATA_DEFERRED_BY_OWNER
     depends_on: [P4]
+
   O1:
-    title: Corrected carrier repair and review
+    title: Corrected map-free carrier repair and independent review
     state: BLOCKED_BY_D0
     depends_on: [D0]
+
   O2:
-    title: Observation-blind statistic and nuisance registry
+    title: Observation-blind statistic null nuisance and power registry
     state: BLOCKED_BY_D0
     depends_on: [O1]
+
   O3:
-    title: Local corrected Planck FFP10 run
+    title: Corrected local Planck and FFP10 execution
     state: BLOCKED_BY_D0
     depends_on: [O2]
+
   O4:
     title: Observation Report B
     state: BLOCKED_BY_D0
     depends_on: [O3]
+
 edges:
-  - [T0, T1]
-  - [T1, T2A]
-  - [T2A, T2B]
-  - [T1, T2C]
-  - [T1, T2D]
-  - [T1, T2E]
-  - [T1, T2F]
-  - [T2E, T2F]
-  - [T2F, T2G]
-  - [T2F, T2H]
-  - [T2A, T3]
-  - [T2B, T3]
-  - [T2C, T3]
-  - [T2D, T3]
-  - [T2E, T3]
-  - [T2F, T3]
-  - [T2G, T3]
-  - [T2H, T3]
-  - [T3, T4]
-  - [T4, T5]
+  - [A0, A1]
+  - [A1, A2]
+  - [A1, A3]
+  - [A0, A4]
+  - [A2, A5]
+  - [A3, A5]
+  - [A4, A5]
+  - [A5, T1]
+  - [T1, T2]
+  - [A5, T3]
+  - [T1, T3]
+  - [A5, T4]
+  - [A5, T5]
+  - [A5, T6]
   - [T5, T6]
   - [T6, T7]
-  - [T7, P1]
-  - [T7, P2]
-  - [T7, P3]
+  - [T6, T8]
+  - [T1, T9]
+  - [T2, T9]
+  - [T3, T9]
+  - [T4, T9]
+  - [T5, T9]
+  - [T6, T9]
+  - [T7, T9]
+  - [T8, T9]
+  - [T9, R1]
+  - [R1, R2]
+  - [R2, R3]
+  - [R3, R4]
+  - [R4, P1]
+  - [R4, P2]
+  - [R4, P3]
   - [P1, P4]
   - [P2, P4]
   - [P3, P4]
@@ -172,14 +370,24 @@ edges:
   - [O1, O2]
   - [O2, O3]
   - [O3, O4]
+
 claim_firewall:
   - no current scalar-only MES observational rank
-  - no historical WU006-WU008 tensor result
+  - no historical WU006-WU008 tensor foreground or injection result
+  - no PR367_VT_T8_to_QO_orbit_proof substitution
+  - no PR405 provisional promotion without A2 triage
+  - no PR441 summary label treated as independent proof
+  - no external-verifier source treated as executed CI
   - no empirical beta or boost subtraction
   - no local boost equals global tilt inference
   - no physical shear or vorticity from morphology alone
   - no foreground causal attribution
   - no Bianchi family attribution
-  - no finite HEALPix theorem before P1 closure
+  - no finite_HEALPix theorem before P1 closure
   - no BASS solver content
-current_next_node: T1
+  - no observational execution before D0 reauthorization
+
+current_next_node: A2
+current_terminal: >-
+  A0_A1_A3_A4_INITIAL_PASS_COMPLETE__A2_REGISTERED_SURVIVOR_TRIAGE_ACTIVE__
+  DATA_DEFERRED__NO_MERGE_OR_CLAIM_PROMOTION

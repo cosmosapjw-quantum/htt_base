@@ -1,0 +1,360 @@
+schema: htt.report_a.provisional_claim_survivor_ledger.v2
+date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+status: ACTIVE_TRIAGE_NOT_FINAL_PUBLICATION_AUTHORITY
+
+vocabulary:
+  disposition:
+    INCLUDE_CORE: central Report A result
+    INCLUDE_LIMITED: include only with explicit assumptions and ceiling
+    FRAMEWORK_ONLY: architectural or typed-contract background, not a theorem of the report target
+    INPUT_ONLY: historical object may be consumed as immutable input later
+    DEFER_PROOF: plausible/source-supported statement requiring direct proof or independent review
+    UNRESOLVED: current evidence does not decide the statement
+    EXCLUDE_WITHDRAWN: superseded or scientifically withdrawn
+    EXCLUDE_SCOPE: outside HTT-only report
+  evidence:
+    ESTABLISHED: standard external theorem with matched assumptions
+    DERIVED: reproduced directly in the current audit
+    LITERATURE_SUPPORTED: architecture or premise supported by primary literature
+    NUMERICALLY_CHECKED: computed under a declared numerical contract
+    IMPLEMENTATION_VERIFIED: exact implementation plus accepted execution receipt
+    SOURCE_IMPLEMENTED: code exists but accepted execution is absent
+    SUMMARY_ONLY: user/prose theorem summary, formal dossier absent
+    BLOCKED: required evidence unavailable
+
+claims:
+  - id: SUP-001
+    statement: Scalar-only MES ranks are not current scientific results for the forthcoming analysis.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [EXPLICIT_USER_POLICY, PR440_RESEARCH_SYNTHESIS]
+    report_section: scope_and_supersession
+    forbidden_extension: historical scalar ranks as present Planck conclusions
+
+  - id: SUP-002
+    statement: Historical WU-006--008 Q/O, tensor-rank, foreground, and carrier-injection interpretations remain withdrawn.
+    disposition: INCLUDE_CORE
+    evidence: SOURCE_IMPLEMENTED
+    authority: [PR440_RESEARCH_SYNTHESIS, PR440_EXECUTION_CONTRACT]
+    report_section: scope_and_supersession
+    forbidden_extension: byte replay restores semantic validity
+
+  - id: SUP-003
+    statement: Historical stored-real harmonic carriers may later be consumed only as exact hash-bound inputs.
+    disposition: INPUT_ONLY
+    evidence: SOURCE_IMPLEMENTED
+    authority: [PR440_CODEX_HANDOFF, PR440_MAPFREE_RUNNER]
+    report_section: deferred_observations
+    forbidden_extension: old derived Q/O arrays or ranks are corrected outputs
+
+  - id: REP-001
+    statement: The stored-real harmonic carrier uses c_l0=a_l0, c_lmc=sqrt(2) Re a_lm, c_lms=-sqrt(2) Im a_lm and the Euclidean carrier metric.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [PR440_SOURCE, WU009_A01_SUMMARY]
+    report_section: stored_real_stf_map
+    remaining_gate: independent formula receipt and final convention citation
+
+  - id: REP-002
+    statement: Q:Q = 15/(8 pi) ||c_2||^2 = 75/(8 pi) C_2.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [PR440_MAPFREE_RUNNER, DIRECT_HARMONIC_STF_DERIVATION]
+    report_section: stored_real_stf_map
+
+  - id: REP-003
+    statement: O:O = 35/(8 pi) ||c_3||^2 = 245/(8 pi) C_3.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [PR440_MAPFREE_RUNNER, DIRECT_HARMONIC_STF_DERIVATION]
+    report_section: stored_real_stf_map
+
+  - id: REP-004
+    statement: The generic SO(3) quotient of STF2(Q) direct-sum STF3(O) has dimension 5+7-3=9.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [DIMENSION_COUNT, WU009_A04_SUMMARY]
+    report_section: qo_orbit_geometry
+    assumptions: [generic_trivial_stabilizer]
+
+  - id: REP-005
+    statement: An eight-continuous-coordinate catalogue cannot generically separate the nine-dimensional Q/O quotient.
+    disposition: INCLUDE_LIMITED
+    evidence: DERIVED
+    authority: [DIMENSION_AND_TOPOLOGICAL_ARGUMENT, WU009_A04_SUMMARY]
+    report_section: qo_orbit_geometry
+    assumptions: [continuous_generic_separator, generic_quotient_dimension_9]
+    remaining_gate: state the exact regularity/topology assumptions
+
+  - id: REP-006
+    statement: The PR440 two-amplitude plus sixteen-contraction Krylov packet reconstructs a proper-oriented Q/O representative on its declared cyclic conditioned chart.
+    disposition: DEFER_PROOF
+    evidence: SOURCE_IMPLEMENTED
+    authority: [PR440_MES_KRYLOV_COMPLETION, PR440_SYNTHETIC_TESTS, WU009_A05_A09_SUMMARY]
+    report_section: qo_orbit_geometry
+    remaining_gate: direct theorem reconstruction independent of unavailable formal dossier
+    forbidden_extension: global invariant ring or all-strata completeness
+
+  - id: REP-007
+    statement: Ordinary power and the named low-order cubic bispectrum do not generically separate the full Q/O proper-rotation orbit.
+    disposition: DEFER_PROOF
+    evidence: SOURCE_IMPLEMENTED
+    authority: [PR440_MIRROR_TEST, WU009_A11_CORRECTION]
+    report_section: qo_orbit_geometry
+    remaining_gate: explicit counterexample and literature/novelty audit
+
+  - id: REP-008
+    statement: Zero, noncyclic, repeated-spectrum, or ill-conditioned Q/O rows must preserve the original tensors and row membership rather than receive fabricated axes.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [PR440_SOURCE, FINITE_NULL_ROW_EQUIVARIANCE]
+    report_section: strata_and_missingness
+
+  - id: REP-009
+    statement: PR367/PR408 VT-T8 establishes the PR440 Q/O orbit chart.
+    disposition: EXCLUDE_WITHDRAWN
+    evidence: DERIVED
+    authority: [REPRESENTATION_FAMILY_FIREWALL]
+    reason: VT_T8_uses_STF2_plus_four_vectors_with_generic_quotient_dimension_14_not_QO_dimension_9
+
+  - id: VT-001
+    statement: The merged vector/tensor foundation supplies typed separation of congruence kinematics, inter-frame velocities, geometry, tensor functionals, and conditional statistical lanes.
+    disposition: FRAMEWORK_ONLY
+    evidence: SOURCE_IMPLEMENTED
+    authority: [PR367_COMMON_MODULES]
+    report_section: framework_architecture
+    forbidden_extension: observed result, global orbit theorem, or Bianchi identification
+
+  - id: VT-002
+    statement: OrbitCatalogueV3 provides a global separating invariant basis.
+    disposition: EXCLUDE_WITHDRAWN
+    evidence: SOURCE_IMPLEMENTED
+    authority: [ORBIT_CATALOGUE_V3]
+    reason: module_explicitly_marks_generic_separation_degree_completeness_and_global_chart_completeness_UNPROVEN
+
+  - id: MES-001
+    statement: epsilon_2 = sqrt(75 C_2/(8 pi))/T0 and epsilon_3 = sqrt(245 C_3/(8 pi))/T0 for the original PSTF normalization.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [PR440_SOURCE, DIRECT_NORMALIZATION_DERIVATION]
+    report_section: mes_conditional_functionals
+
+  - id: MES-002
+    statement: U_sigma and U_omega are one-way premise-conditioned scalar functions, not independent tensor observations or measurements of physical shear/vorticity.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [PR440_RESEARCH_SYNTHESIS, STATISTICAL_FOUNDATIONS]
+    report_section: mes_conditional_functionals
+
+  - id: MES-003
+    statement: epsilon_1=0 is a declared attribution scenario rather than an observation that the intrinsic dipole vanishes.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [PR440_EXECUTION_CONTRACT, PR440_SOURCE]
+    report_section: mes_premises
+
+  - id: MES-004
+    statement: Rotational scalar ceilings alone cannot equivariantly create a nonzero vector or STF tensor without additional directional input.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [REPRESENTATION_THEORY_ARGUMENT, PR440_SYNTHESIS]
+    report_section: scalar_to_tensor_no_go
+
+  - id: STAT-001
+    statement: An observation-inclusive rank is finite-sample valid when the full row-scoring operation is permutation-equivariant and the joint observation/reference pool is exchangeable under the null.
+    disposition: INCLUDE_LIMITED
+    evidence: LITERATURE_SUPPORTED
+    authority: [PERMUTATION_EXACTNESS_LITERATURE, REPOSITORY_FINITE_NULL_CONTRACTS]
+    report_section: finite_null_statistics
+    remaining_gate: primary-source theorem statement matched to exact row construction
+
+  - id: STAT-002
+    statement: Data-dependent feature/statistic selection is admissible only when the entire selection-and-scoring operation preserves the required joint symmetry or is independently split/preregistered.
+    disposition: INCLUDE_LIMITED
+    evidence: DERIVED
+    authority: [FINITE_GROUP_INVARIANCE_ARGUMENT, PR367_STATISTICAL_CONTRACTS]
+    report_section: selection_validity
+    remaining_gate: formalize conditioning and tie cases
+
+  - id: STAT-003
+    statement: Observation-asymmetric deletion of chart-unavailable rows invalidates the simple joint-exchangeable finite-rank argument.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [ROW_EQUIVARIANCE_ARGUMENT, PR440_TYPED_CHART_FAILURE]
+    report_section: selection_validity
+
+  - id: STAT-004
+    statement: A noisy observed product versus noise-free CMB-only simulations is a calibrated exchangeable finite-null experiment.
+    disposition: EXCLUDE_WITHDRAWN
+    evidence: DERIVED
+    authority: [PR440_STATISTICAL_BOUNDARY]
+    reason: observation_and_null_laws_are_not_matched
+
+  - id: STAT-005
+    statement: Evidence products sharing the observed sky or simulation realizations cannot be multiplied under independence without an explicit dependence model.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [PR440_THEOREM_CORRECTIONS, BASIC_PROBABILITY]
+    report_section: dependence
+
+  - id: RESP-001
+    statement: WU010 implements the exact full-sky local-observer thermodynamic-temperature Lorentz pullback under metric (-,+,+,+), n=-e, active +beta, beta=v/c, and d=1.
+    disposition: INCLUDE_CORE
+    evidence: IMPLEMENTATION_VERIFIED
+    authority: [PR442_HEAD_29427A1F, WU010_AUDIT]
+    report_section: exact_local_observer_response
+
+  - id: RESP-002
+    statement: The first-order quadrupole response is (B_Q beta)_abc = 3 beta_<a Q_bc> and contains ell=1 and ell=3 only on the full sky.
+    disposition: INCLUDE_CORE
+    evidence: IMPLEMENTATION_VERIFIED
+    authority: [PR442_CODE_AND_AUDIT]
+    report_section: exact_local_observer_response
+
+  - id: RESP-003
+    statement: M_Q = q2 I + (6/5) Q^2 and kappa_2(M_Q) <= 5/3 sharply.
+    disposition: INCLUDE_CORE
+    evidence: IMPLEMENTATION_VERIFIED
+    authority: [PR442_CODE_AND_AUDIT]
+    report_section: exact_local_observer_response
+
+  - id: RESP-004
+    statement: A local observer boost is equivalent to a global matter-frame tilt.
+    disposition: EXCLUDE_WITHDRAWN
+    evidence: DERIVED
+    authority: [JOINT_STATE_FRAME_SEPARATION, WU010_CLAIM_BOUNDARY]
+    reason: different_physical_objects_and_forward_models
+
+  - id: PROC-001
+    statement: WU011 factorizes the finite local boost, source transfer, HEALPix synthesis, weighted joint ell=0..5 fit, post-fit commonization, and retained ell=2..5 output into content-bound components.
+    disposition: INCLUDE_LIMITED
+    evidence: SOURCE_IMPLEMENTED
+    authority: [PR444_PROCESSED_BOOST_MODULES]
+    report_section: processed_response
+    remaining_gate: exact-head execution for current source is prestart-blocked
+
+  - id: PROC-002
+    statement: rank(P_ImK_perp J) = rank([K J]) - rank(K).
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [FINITE_DIMENSIONAL_LINEAR_ALGEBRA, WU011_NO_GO_BRIDGE]
+    report_section: response_quotient
+
+  - id: PROC-003
+    statement: The cumulative high-source images Im K(L) are nested in L.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [COLUMN_NESTING, WU011_NO_GO_BRIDGE]
+    report_section: response_quotient
+
+  - id: PROC-004
+    statement: Small high-ell tail norm or finite-l convergence by itself proves finite-low-ell statistical sufficiency.
+    disposition: EXCLUDE_WITHDRAWN
+    evidence: DERIVED
+    authority: [PR130_NO_GO, WU011_NO_GO_BRIDGE]
+    reason: convergence_and_sufficiency_are_distinct
+
+  - id: PROC-005
+    statement: The registered Task7B cut-sky atlas contains no candidate satisfying all conditioning, alias, and extended-tail gates.
+    disposition: INCLUDE_LIMITED
+    evidence: IMPLEMENTATION_VERIFIED
+    authority: [WU011_TASK7B_FROZEN_ARTIFACT]
+    report_section: processed_response_negative_results
+
+  - id: PROC-006
+    statement: The last byte-exact Task7C matched-control finite-operator result is rank unresolved, not a containment no-go.
+    disposition: INCLUDE_CORE
+    evidence: IMPLEMENTATION_VERIFIED
+    authority: [WU011_F635_ARTIFACT]
+    report_section: finite_operator_boundary
+
+  - id: CONT-001
+    statement: For the registered wide-mask identity-transfer continuum problem, the z-direction high-source response through L=12 has stored-real row rank 32.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [PR446_EXACT_RATIONAL_PIVOT_MINORS, DIRECT_WOLFRAM_CHECK]
+    report_section: continuum_response
+    evidence_qualification: author_derived_exact_artifact_not_GitHub_executed_external_axis
+
+  - id: CONT-002
+    statement: For all six registered directions, the same continuum L=12 response has row rank 32 with the reported positive smallest singular values.
+    disposition: INCLUDE_LIMITED
+    evidence: NUMERICALLY_CHECKED
+    authority: [THREAD_LOCAL_WOLFRAM_SCIPY_MPMATH_OCTAVE_JAS_JULIA_RECEIPTS, PR446_PR447_SOURCE]
+    report_section: continuum_response
+    remaining_gate: repository-executed or portable interval/ball all-direction seal
+
+  - id: CONT-003
+    statement: Continuum row-rank 32 proves finite-HEALPix robust row-rank 32.
+    disposition: EXCLUDE_WITHDRAWN
+    evidence: DERIVED
+    authority: [CONTINUUM_DISCRETE_ERROR_SEPARATION]
+    reason: numerical_error_envelope_and_supported_runtime_bridge_incomplete
+
+  - id: ERR-001
+    statement: For frozen nonempty additive matrix-error families, Gamma_E = F sum_f r_f^2 sum_i E_fi E_fi^T + lambda^2 I is a conservative Loewner envelope for the declared coefficient-ball class.
+    disposition: INCLUDE_LIMITED
+    evidence: DERIVED
+    authority: [PR444_ERROR_ENVELOPE_SOURCE, DIRECT_CAUCHY_SCHWARZ_PROOF]
+    report_section: numerical_uncertainty
+    remaining_gate: exact-head supported-runtime verification and registry provenance
+
+  - id: ERR-002
+    statement: The envelope is invariant under E_fi -> c_f E_fi and r_f -> r_f/c_f within a fixed family partition.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [PR444_ERROR_ENVELOPE_SOURCE, DIRECT_WOLFRAM_CHECK]
+    report_section: numerical_uncertainty
+
+  - id: ERR-003
+    statement: An exactly zero family must be omitted or rejected because it leaves the perturbation set unchanged while changing F.
+    disposition: INCLUDE_CORE
+    evidence: DERIVED
+    authority: [PR444_ERROR_ENVELOPE_SOURCE, ZERO_FAMILY_COUNTEREXAMPLE]
+    report_section: numerical_uncertainty
+
+  - id: ERR-004
+    statement: g_min > 1 for Gamma_E^(-1/2) K is a sufficient robust full-row-rank condition for every perturbation in the declared envelope.
+    disposition: INCLUDE_LIMITED
+    evidence: DERIVED
+    authority: [WEYL_INEQUALITY, PR444_ERROR_ENVELOPE_SOURCE]
+    report_section: numerical_uncertainty
+    remaining_gate: prove actual numerical error belongs to the declared class
+
+  - id: ERR-005
+    statement: The current error-family registry and radii completely cover the finite-HEALPix numerical error.
+    disposition: UNRESOLVED
+    evidence: BLOCKED
+    authority: [WU011_A4_OPEN_ITEMS]
+    report_section: unresolved_questions
+
+  - id: ERR-006
+    statement: A thresholded partial-rank nuisance image is scientifically stable without a perturbation-to-gap bound.
+    disposition: EXCLUDE_WITHDRAWN
+    evidence: LITERATURE_SUPPORTED
+    authority: [WEDIN_SIN_THETA_LITERATURE, WU011_AUDIT]
+    reason: partial_subspace_requires_gap_and_error_control
+
+  - id: OBS-001
+    statement: A corrected tensorized Planck anomaly rank currently exists.
+    disposition: EXCLUDE_WITHDRAWN
+    evidence: DERIVED
+    authority: [EXPLICIT_USER_POLICY, PR440_BOUNDARY]
+    reason: corrected_observational_rerun_not_performed
+
+  - id: SCOPE-001
+    statement: Native BASS solver or Bianchi-background results are required inputs to Report A.
+    disposition: EXCLUDE_SCOPE
+    evidence: DERIVED
+    authority: [EXPLICIT_USER_POLICY, REPOSITORY_ROLE_MAP]
+    reason: report_is_HTT_only_theory_and_methods
+
+triage_requirements:
+  - mechanically compare this ledger with every eligible PR405 broad/scoped PASS and PR408 declared child
+  - add any omitted exact negative obstruction or synthetic validation as INCLUDE, EXCLUDE, or DEFER
+  - do not use provisional role labels to determine truth or novelty
+  - preserve duplicate or overlapping rows but link them to one claim family
+  - no row may enter the manuscript without unique source and evidence fields
+
+current_next_action: COMPLETE_REGISTERED_SURVIVOR_TRIAGE_AGAINST_PR405_AND_PR408

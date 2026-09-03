@@ -1,0 +1,242 @@
+schema: htt.report_a.repo_surface_inventory.v2
+date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+scope:
+  observational_execution: DATA_DEFERRED_BY_OWNER
+  native_bass_solver: EXCLUDED
+  semantic_deep_read: REPORT_LOAD_BEARING_SURFACES
+  other_repository_paths: METADATA_AND_SCOPE_CLASSIFICATION_ONLY
+
+repository_state:
+  default_branch:
+    name: research/pr04-multicomponent
+    head: 50ea6d76ace70dec57b8794ab0d1cf9b8fab42cb
+    tree: 42ef66d9746f4c9049fcfdf723ed10eb1301914e
+    date: 2026-08-20
+    report_role: MERGED_FRAMEWORK_BASE_NOT_CURRENT_AUTHORITY
+  current_authority_shape: MULTI_BRANCH_FEDERATION
+  single_latest_head_exists: false
+
+lineages:
+  - id: VT_FOUNDATION
+    pr: 367
+    state: MERGED
+    head: 6bafca66285ef071081453313bb7d2d6b261599c
+    changed_files: 195
+    categories:
+      - common_typed_state
+      - tensor_functionals
+      - orbit_catalogue
+      - conditional_statistics
+      - depth_and_response_diagnostics
+      - theorem_and_proof_registries
+      - synthetic_validation
+      - data_admission
+      - report_and_replication
+    load_bearing_code:
+      - htt/src/common/joint_anisotropy_state.py
+      - htt/src/common/joint_anisotropy_state_v1.py
+      - htt/src/common/tensor_functionals.py
+      - htt/src/common/orbit_catalogue_v3.py
+      - htt/src/common/tensor_departure_statistics.py
+      - htt/src/common/conditional_exceedance.py
+      - htt/src/common/depth_path.py
+      - htt/src/common/anisotropy_type_report.py
+      - htt/src/common/statistical_foundations.py
+    load_bearing_docs:
+      - docs/research_program/vector_tensor/report/VECTOR_TENSOR_PROGRAM_REPORT.md
+      - docs/research_program/vector_tensor/report/PROOF_ATLAS.md
+      - docs/research_program/vector_tensor/report/REPLICATION_PACKAGE.json
+      - docs/research_program/vector_tensor/proofs/
+    evidence_boundary:
+      source_rows: 123_NOT_ADJUDICATED
+      vt_obligations: 28_NOT_ADJUDICATED
+      observed_data: NO_ADMITTED_DATA_PILOT
+      full_repository_suite: NON_GREEN_PRESERVED
+    report_use: TYPED_FRAMEWORK_ARCHITECTURE_ONLY
+
+  - id: THEORY_PROMOTION_AUDIT
+    pr: 405
+    state: OPEN_DRAFT
+    head: 463f0999949bf8534c60ad7973b7342705c2e3d6
+    changed_files: 10
+    candidate_count: 157
+    proposed_counts:
+      PROMOTED: 36
+      REFUTED: 1
+      UNRESOLVED: 107
+      DEFERRED: 2
+      NOT_ATTEMPTED: 11
+    gate: STOP_INVALID_FOR_CURRENT_PROMOTION
+    report_use: CANDIDATE_DISCOVERY_AND_PROVISIONAL_SCOPE_ONLY
+
+  - id: SURVIVOR_ADVERSARIAL_AUDIT
+    pr: 408
+    state: OPEN_DRAFT
+    head: 40dce3ab9328c1f3acb99adba11046056c639737
+    changed_files: 22
+    p0_findings:
+      - MANUAL_SURVIVOR_SELECTION_NOT_MECHANICALLY_COMPLETE
+      - CONCLUSIONS_PRECOMMITTED_BEFORE_REPLAY_AND_NOVELTY_AUDIT
+    required_first_unit: REGISTERED_SURVIVOR_SURFACE_TRIAGE
+    report_use: LOAD_BEARING_PLAN_CORRECTION
+
+  - id: TENSORIZED_QO_CORRECTION
+    pr: 440
+    state: OPEN_DRAFT
+    head: 687234128d7c12d04e68aad0f303c21d2d470393
+    changed_files: 7
+    code:
+      - htt/src/common/mes_krylov_completion.py
+      - scripts/observed_runs/rebuild_mes_tensor_carriers.py
+    tests:
+      - tests/common/test_mes_krylov_completion.py
+      - tests/integration/test_mes_tensor_mapfree_repair.py
+    docs:
+      - docs/codex_handoff/mes_tensor_research_integration/RESEARCH_SYNTHESIS.md
+      - docs/codex_handoff/mes_tensor_research_integration/EXECUTION_CONTRACT.json
+      - docs/codex_handoff/mes_tensor_research_integration/CODEX_HANDOFF_PROMPT.md
+    report_use:
+      semantics: CURRENT_QO_TENSORIZATION_AUTHORITY
+      implementation: SOURCE_PRESENT_RUNTIME_REVIEW_PENDING
+      observation: NONE
+
+  - id: WU009_THEOREM_RECONCILIATION
+    pr: 441
+    state: OPEN_DRAFT
+    head: 04680e99d56b9974fe1120854370af1fb94fb1d6
+    changed_files: 26
+    theorem_rows: 78
+    authority_source: USER_SUPPLIED_SUMMARY
+    formal_proof_provenance: FORMAL_DOSSIER_PENDING
+    report_use: PROOF_OBLIGATION_AND_WORDING_INVENTORY_ONLY
+
+  - id: WU010_LOCAL_OBSERVER_RESPONSE
+    pr: 442
+    state: OPEN_DRAFT
+    head: 29427a1f7f2c5d46e43ffe03053c4ac13e969228
+    changed_files: 9
+    production_code:
+      - htt/obsstat/lorentz_sky_pullback.py
+      - htt/obsstat/boost_response.py
+    audit:
+      - docs/research_program/post_pr327/planck_mes_wu010_independent_local_boost_audit.md
+    report_use: SCOPED_IMPLEMENTATION_VERIFIED_THEORY_AUTHORITY
+
+  - id: WU011_PROCESSED_RESPONSE
+    pr: 444
+    state: OPEN_DRAFT
+    head: de73549c16ac6ceb63f924c86611e0a5ceb4711d
+    changed_files: 44
+    production_code:
+      - htt/obsstat/processed_boost_response.py
+      - htt/obsstat/processed_boost_operator.py
+      - htt/obsstat/processed_boost_linearization.py
+      - htt/obsstat/processed_boost_jacobian.py
+      - htt/obsstat/processed_boost_identifiability.py
+      - htt/obsstat/processed_boost_nuisance_span.py
+      - htt/obsstat/processed_boost_rank_policy.py
+      - htt/obsstat/processed_boost_matched_control.py
+      - htt/obsstat/processed_boost_error_envelope.py
+    tests:
+      - htt/test_wu011_processed_boost_contract.py
+      - htt/test_wu011_processed_boost_linearization.py
+      - htt/test_wu011_processed_boost_jacobian.py
+      - htt/test_wu011_processed_boost_identifiability.py
+      - htt/test_wu011_processed_boost_nuisance_span.py
+      - htt/test_wu011_task7c_rank_policy.py
+      - htt/test_wu011_task7c_matched_control.py
+      - htt/test_wu011_task7c_error_envelope.py
+      - htt/test_wu011_task7c_error_envelope_registry.py
+    last_byte_exact_scientific_terminal:
+      head: f635d873cf5e77f7cb0d2756469acde60b8609e5
+      state: PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED
+    current_head_role: ACTIVE_SOURCE_ENGINEERING_NOT_EXACT_HEAD_EXECUTED
+    report_use:
+      exact_linear_algebra: INCLUDE
+      frozen_negative_numerical_results: INCLUDE_WITH_SCOPE
+      continuum_evidence: INCLUDE_WITH_EVIDENCE_GRADES
+      finite_healpix_containment: UNRESOLVED
+
+  - id: EXTERNAL_VERIFIER_PR446
+    pr: 446
+    state: OPEN_DRAFT
+    head: 033e0d19d61448492489ed1469bc687b2ecb4552
+    changed_files: 5
+    surfaces:
+      - docs/research_program/post_pr327/planck_mes_wu011_task7c_external_verifier_contract.md
+      - docs/generated/wu011_task7c_external_verifiers/wolfram_exact_z_L12_pivot_minors.json
+    intended_axes:
+      - WIGXJPF
+      - DUCC
+      - SymPy
+      - python_flint_Arb
+      - mpmath_SciPy
+    report_use: AUTHOR_DERIVED_SOURCE_AND_ARTIFACT_NOT_GITHUB_EXECUTED
+
+  - id: EXTERNAL_VERIFIER_PR447
+    pr: 447
+    state: OPEN_DRAFT
+    head: bf6cc2dd75336ec5584b86dccd8de5cb352ab8f3
+    changed_files: 5
+    surfaces:
+      - tools/external_cas/README.md
+      - tools/external_cas/WU011JASExact.java
+      - tools/external_cas/wu011_octave_verify.m
+      - tools/external_cas/wu011_julia_verify.jl
+    intended_axes: [JAS, GNU_OCTAVE, JULIA]
+    report_use: VERIFIER_IMPLEMENTATIONS_NOT_GITHUB_EXECUTED
+
+  - id: REPORT_PR449
+    pr: 449
+    state: OPEN_DRAFT
+    pre_audit_head: 5546584385836bdb734b95675b292661ccb7fb1a
+    role: REPORT_AND_CONTROL_PLANE
+
+representation_families:
+  - id: TEMPERATURE_QO
+    representation: STF2_PLUS_STF3
+    ambient_dimension: 12
+    generic_so3_quotient_dimension: 9
+    authority: PR440_AND_WU009_CANDIDATE_LEDGER
+    report_central: true
+  - id: JOINT_VECTOR_TENSOR_OBSERVATORY
+    representation: STF2_PLUS_FOUR_VECTORS_ON_REGISTERED_VT_T8_SLICE
+    ambient_dimension: 17
+    generic_so3_quotient_dimension: 14
+    authority: PR367_PR405_PR408
+    report_central: false
+    report_role: FRAMEWORK_AND_SEPARATE_LOCAL_GEOMETRY_RESULT
+
+path_classification:
+  INCLUDE_DEEP:
+    - htt/src/common/joint_anisotropy_state*
+    - htt/src/common/tensor_functionals.py
+    - htt/src/common/orbit_catalogue_v3.py
+    - htt/src/common/conditional_exceedance.py
+    - htt/src/common/statistical_foundations.py
+    - htt/src/common/mes_krylov_completion.py
+    - htt/obsstat/lorentz_sky_pullback.py
+    - htt/obsstat/boost_response.py
+    - htt/obsstat/processed_boost_*.py
+    - docs/research_program/vector_tensor/
+    - docs/research_program/theory_promotion/
+    - docs/research_program/post_pr327/planck_mes_wu009*
+    - docs/research_program/post_pr327/planck_mes_wu010*
+    - docs/research_program/post_pr327/planck_mes_wu011*
+    - tests/contracts/*vector_tensor*
+    - tests/common/test_mes_krylov_completion.py
+    - tests/integration/test_mes_tensor_mapfree_repair.py
+    - htt/test_wu011*
+  INCLUDE_METADATA_ONLY:
+    - repository_workflows
+    - PR_deltas_and_status_mirrors
+    - generated_receipts_not_consumed_by_report
+  EXCLUDE_REPORT_PHYSICS:
+    - htt/bass/**
+    - native_solver_and_family_backends
+    - recombination_and_reionization
+    - observational_download_and_raw_map_pipelines
+    - legacy_TSC_Teff_except_supersession_provenance
+
+current_terminal: REPO_SURFACE_INVENTORY_COMPLETE_FOR_REPORT_SCOPE

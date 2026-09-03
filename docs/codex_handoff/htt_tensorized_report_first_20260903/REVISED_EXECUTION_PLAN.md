@@ -1,313 +1,345 @@
-# HTT tensorized report-first execution plan
+# HTT theory-report-first execution plan — repository-wide audit revision
 
 ## Purpose
 
-Reorder the active `htt_base` research programme so that the current tensorized methodology and the WU-010/WU-011 response results are first compiled into a stable research report, then the observation-bearing analysis is rerun locally under corrected tensor semantics, and only afterward the remaining WU-011 numerical-identifiability closeout resumes.
+Produce an HTT-only theory/methods report from the actual repository authority surfaces before resuming observation-independent successor work. All local carrier processing, Planck/FFP10 execution, observed-rank evaluation, and statistic evaluation remain closed under `DATA_DEFERRED_BY_OWNER`.
 
-This plan supersedes any continuation that treats scalar-only MES ranks or WU-006--008 tensor/injection outputs as current scientific results.
+This revision replaces the previous plan that made local map-free carrier repair the immediate next node. It also rejects a second premature assumption: the report claim surface is not yet frozen because PR #405/408 survivor rows have not been mechanically triaged and several execution grades were conflated.
 
-## Fixed authority
+## Fixed exclusions
 
-### Tensorized-method authority
+The current programme excludes:
 
-```yaml
-pr: 440
-branch: changeset/mes-tensor-research-integration-20260830
-head: 687234128d7c12d04e68aad0f303c21d2d470393
-base: codex_emergency@e7dc5fd99c6574eee1e93b6a2ec05beb394de034
-role: CURRENT_TENSORIZED_MES_SEMANTIC_AUTHORITY
-```
-
-### Historical carrier input authority
-
-```yaml
-source_commit: ccba350d7b725b227c64436e32af96abfe786449
-source_tree: e91b8a4f57777c71c2bf1fc0f8c21395753481ba
-paired_carrier_sha256: 0a296c21902b691eb2e2b68a9b39f626020aa8c2b14fb93a1b12116215886b93
-frozen_scalar_npz_sha256: b262425eb4f3a879513c02644bcbdd3ab313e487d101f6a29cb85284c30f845b
-role: IMMUTABLE_INPUT_ONLY
-```
-
-### Local-observer response authority
-
-```yaml
-wu010_pr: 442
-wu010_head: 29427a1f7f2c5d46e43ffe03053c4ac13e969228
-wu010_state: PASS_FRESH_READ_ONLY_REVIEW_WITH_TYPED_LIMITATIONS
-wu011_pr: 444
-wu011_current_head: de73549c16ac6ceb63f924c86611e0a5ceb4711d
-wu011_last_scientific_terminal: PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED
-role: SEPARATE_ADDITIVE_RESPONSE_LINEAGE
-```
-
-The tensorized-method and WU009--011 lineages are Git-diverged. Do not represent the report as a linear source ancestry. Integrate scientific results by explicit authority references only.
-
-## Global claim firewall
-
-Forbidden until their dedicated gates close:
-
-- scalar-only MES historical ranks as current results;
-- WU-006--008 old Q/O/tensor/foreground/injection interpretations;
-- statistic or tail chosen after viewing corrected observed rank;
-- calibrated CMB-only-999 significance against a noisy observation;
-- empirical beta fit or boost subtraction;
-- local boost = global tilt identification;
+- scalar-only MES ranks as current science;
+- old WU-006–008 Q/O, foreground, tensor-rank, and injection conclusions;
+- all observation-bearing execution;
+- empirical `beta` fitting or boost subtraction;
+- local boost = global matter-frame tilt identification;
 - physical shear/vorticity or Bianchi-family attribution;
-- finite-HEALPix all-direction high-ell containment theorem before A4 numerical-error closure;
-- BASS/native-solver substitution or solver claims.
+- native BASS solver, background, recombination/reionization, and family-forward results;
+- finite-HEALPix all-direction containment before numerical-error closure.
 
-## Phase R0 — report authority freeze
+## Repository topology
 
-### Output
-
-`docs/research_reports/HTT_TENSORIZED_MES_RESPONSE_SYNTHESIS_20260903.md`
-
-### Required content
-
-- scalar/WU006--008 supersession ledger;
-- correct stored-real harmonic/STF conventions;
-- original-PSTF MES normalization and conditional role;
-- tensor/Krylov representation and SO(3)/O(3) boundary;
-- finite-null validity and exchangeability boundary;
-- WU-010 exact full-sky local-observer response;
-- WU-011 processed response, continuum L12 result and A4 error-envelope status;
-- explicit statement that corrected observational rank has not yet been produced;
-- revised research DAG.
-
-### Terminal
+There is no single “latest” source branch for Report A.
 
 ```text
-REPORT_SYNTHESIS_FROZEN_PRE_RERUN
+merged/default framework
+  research/pr04-multicomponent@50ea6d76...
+
+vector/tensor foundation
+  PR #367@6bafca66...
+
+candidate/survivor audits
+  PR #405@463f0999...
+  PR #408@40dce3ab...
+
+tensorized Q/O correction
+  PR #440@68723412...
+
+theorem wording inventory
+  PR #441@04680e99...
+
+observer-response lineage
+  PR #442@29427a1f...
+  PR #444@de73549c...
+  PR #446@033e0d19...
+  PR #447@bf6cc2dd...
+
+report control plane
+  PR #449
 ```
 
-No observed-data numerical result is generated in R0.
+The report integrates these through an authority/evidence ledger. It must not fabricate linear Git ancestry.
 
-## Phase R1 — actual-checkout tensor representation repair
+## Work completed by the repository-wide audit
 
-### Goal
+### A0 — repository-surface inventory
 
-Generate corrected Q/O tensors and MES conditional functions from immutable stored-real carrier inputs without reopening FITS maps or generating anomaly ranks.
+**State:** `DONE_REPORT_SCOPE`
 
-### First verification
-
-Run on the actual isolated checkout:
-
-```bash
-PYTHONPATH=htt/src python -m pytest -q -p no:cacheprovider \
-  tests/common/test_mes_krylov_completion.py \
-  tests/integration/test_mes_tensor_mapfree_repair.py
-
-python -m py_compile \
-  htt/src/common/mes_krylov_completion.py \
-  scripts/observed_runs/rebuild_mes_tensor_carriers.py
-
-git diff --check
-```
-
-### Execution
-
-Use a new, nonexisting output directory:
-
-```bash
-python scripts/observed_runs/rebuild_mes_tensor_carriers.py \
-  --repo . \
-  --output-dir docs/generated/mes_tensor_representation_repair_run01 \
-  --t0-uk 2725500 \
-  --residual-epsilon1 0 \
-  --execute
-```
-
-`epsilon1=0` is a declared conditional attribution scenario, not an observed intrinsic-dipole measurement.
-
-### Mandatory invariants
-
-- source head/tree exactly match pinned historical authority;
-- paired artifact hashes match;
-- no unsafe pickle/dtype or row-order drift;
-- stored carrier uses Euclidean orthonormal-real metric;
-- independent spherical integration produces Q/O;
-- `Q:Q = 75/(8*pi) C2` rowwise;
-- `O:O = 245/(8*pi) C3` rowwise;
-- proper-rotation covariance checks;
-- Krylov chart unavailable rows preserve tensors and row membership;
-- 301 paired rows;
-- 1000 observation+CMB-only rows with only ID 00970 absent and 00818 present;
-- same observed carrier in both arms;
-- no rank, p-value or physical-source claim emitted.
-
-### Terminal
-
-Only:
+Created:
 
 ```text
-EXECUTED_PENDING_INDEPENDENT_REVIEW
+docs/research_reports/HTT_REPO_WIDE_THEORY_SURFACE_AUDIT_20260903.md
+docs/codex_handoff/htt_tensorized_report_first_20260903/REPO_SURFACE_INVENTORY.yaml
 ```
 
-Do not self-promote to scientific success.
+Coverage:
 
-## Phase R2 — independent representation review
+- default branch and report-authority PR manifests;
+- common tensor/statistics modules;
+- PR #440 Q/O code and tests;
+- WU-010 and WU-011 response modules, tests, artifacts, and audits;
+- PR #367/405/408/441 proof and claim surfaces;
+- workflow and job-step metadata.
 
-### Review binding
+BASS and observational paths were classified out of report scope rather than semantically imported.
 
-Review must bind:
+### A1 — authority precedence and supersession
 
-- candidate git head and tree;
-- source-object identities;
-- input manifest;
-- exact output manifest/hashes;
-- Q/O radial identities;
-- rotation/mirror tests;
-- unavailable-chart behavior;
-- absence of reused old Q/O/rank arrays.
+**State:** `DONE_PROVISIONAL`
 
-### Possible terminals
+Updated:
 
 ```text
-PASS_REPRESENTATION_REPAIR_REVIEWED
-FAIL_REPRESENTATION_REPAIR
-BLOCKED_BY_SOURCE_OR_RUNTIME_IDENTITY
+AUTHORITY_LEDGER.yaml
+CONTRADICTION_LEDGER.yaml
 ```
 
-If code changes after review, create a new candidate and repeat review. An evidence-only closeout may follow a clean review without source changes.
+The ledger now distinguishes:
 
-## Phase R3 — statistic registry before corrected observation evaluation
+- framework architecture;
+- candidate theorem inventory;
+- direct derivation;
+- source implementation;
+- exact-head implementation verification;
+- prestart/no-execution workflows;
+- historical input-only artifacts;
+- withdrawn and out-of-scope results.
 
-Do not immediately ask “what is the new Planck rank?” after R2. First freeze the experiment.
+### A3 — representation-family firewall
 
-### R3A historical-sensitivity registry
+**State:** `DONE_CONTRACT`
 
-Historical questions may be rerun only as a correction/sensitivity study. Preserve their definitions where scientifically meaningful, but do not call them the current primary statistic.
-
-Required labels:
+The following representations are separate:
 
 ```text
-HISTORICAL_SENSITIVITY_ONLY
-NOT_CURRENT_CONFIRMATORY_STATISTIC
+STF2(Q) + STF3(O):       ambient 12, generic SO(3) quotient 9
+STF2 + four vectors:     ambient 17, generic SO(3) quotient 14
 ```
 
-### R3B new tensor/orbit statistic registry
+The PR #367/408 fourteen-coordinate VT-T8 local Jacobian cannot prove the PR #440 Q/O Krylov chart.
 
-Freeze one bounded family before observed evaluation. Candidate inputs may include:
+### A4 — execution-receipt index
 
-- full Q/O amplitudes plus explicitly normalized shape coordinates;
-- conditioned Krylov16 orbit packet;
-- chirality-sensitive SO(3) coordinate where admissible;
-- response-orthogonal or nuisance-projected quantities only under a declared response model.
+**State:** `DONE_INITIAL`
 
-For every coordinate/statistic freeze:
-
-- units and normalization;
-- action group and chart domain;
-- missing/unavailable handling;
-- tail direction;
-- joint score/reducer;
-- calibration pool;
-- dependence handling;
-- nuisance model;
-- multiplicity/family rule;
-- power/kill tests;
-- observation-blind registration hash.
-
-### Prohibition
-
-Do not reuse the withdrawn WU-008 injection registry without the corrected basis/intervention definition.
-
-## Phase R4 — corrected local observational rerun
-
-### Primary lane
-
-Use the admitted local Planck/FFP10 observation-plus-CMB+noise paired surface for the primary finite-null result.
-
-Requirements:
-
-- exact data/source admission readback before execution;
-- no raw mutation;
-- same operator for observation and every null row;
-- corrected tensor representation;
-- frozen R3 statistic registry;
-- row-equivariant handling of chart failure/missingness;
-- observation-inclusive finite calibration;
-- complete portable output/replay receipt.
-
-### CMB-only lane
-
-Keep as descriptive sensitivity unless a faithful joint observation/noise null is supplied.
-
-Do not call the CMB-only lane an independent replication when rows share underlying CMB realizations or the observation has unmatched noise/systematics.
-
-### Output namespace
-
-Use a new output namespace. Never overwrite or silently relabel old WU006--008 result directories.
-
-### Scientific terminal
-
-The terminal must state exactly which null/statistic/representation was used and must permit `NO_ADMISSIBLE_NEW_RESULT`.
-
-## Phase R5 — report Results update
-
-Only after R4:
-
-1. replace the current “no corrected result yet” section with the admitted R4 outputs;
-2. keep superseded scalar/WU006--008 numbers out of headline tables;
-3. include historical comparisons only in a clearly quarantined correction/sensitivity subsection if useful;
-4. regenerate figures from current artifacts;
-5. run two-width hostile figure audit and residual pass;
-6. perform a fresh blind statistical/methodological review.
-
-No narrative may be written to imply that a more extreme tensor statistic was selected because it produced a smaller observed rank.
-
-## Phase R6 — resume WU-011 A4 engineering
-
-After the corrected observation pipeline is stable, resume the original processed-response closeout.
-
-### Immediate A4 tasks
-
-1. seal branch-specific validation fixtures so tests fail for the intended validator branch;
-2. run byte-exact source in a supported Python/NumPy environment;
-3. bind family partition, basis, radius, calibration and holdout registries by content hash;
-4. add resolution, map2alm-iteration and processing-lmax numerical controls;
-5. preserve continuum discrepancy as independent heldout evidence where appropriate;
-6. recompute six-direction error-whitened generalized singular values;
-7. adjudicate robust full-row rank only under a complete declared error class;
-8. if partial rank is used, open a separate Wedin/spectral-gap lane rather than promoting thresholded singular vectors.
-
-### Allowed terminals
+Created:
 
 ```text
-PASS_TASK7C_ROBUST_CONTINUUM_AND_DISCRETE_SURJECTIVITY_NO_GO
-PASS_TASK7C_NUMERICAL_ENVELOPE_UNRESOLVED
-BLOCKED_BY_ERROR_ENVELOPE_INCOMPLETE
-BLOCKED_BY_LINEAGE_OR_RUNTIME_DISAGREEMENT
+EXECUTION_RECEIPT_INDEX.yaml
 ```
 
-An unresolved discrete terminal does not erase the continuum L12 result.
+The index distinguishes `EXECUTED_SUCCESS`, `EXECUTED_FAILURE`, `MIXED_EXECUTED_EVIDENCE`, `PRESTART_NO_EXECUTION`, `SOURCE_ONLY`, `ARTIFACT_ONLY`, `LOCAL_NON_BYTE_EXACT`, and `SUMMARY_ONLY`.
 
-## Phase R7 — publication split decision
+## Current next node
 
-After R4/R5 and enough of R6 is stable, decide between:
+# A2 — Registered survivor-surface triage
 
-### One integrated report
+**Goal:** mechanically determine which observation-independent claims may enter Report A.
 
-Tensorized Planck finite-null morphology + response-limited identifiability in one long methods/results paper.
+**Inputs:**
 
-### Two-report split
+- PR #367 source/evidence rows and 28 VT obligations;
+- PR #405 complete 157-candidate matrix;
+- PR #408 eligible broad/scoped rows and P0 audit;
+- PR #441 78-row theorem wording inventory;
+- WU-010 and WU-011 claims added after those audits;
+- current explicit scalar-retirement and data-deferral policy.
 
-1. **Tensorized low-ell Planck inference** -- corrected representation, statistics, local rerun, robustness;
-2. **Local-observer response and low-ell identifiability** -- WU010/WU011 exact/processed response, continuum high-ell result, numerical-error theory.
+**Output:**
 
-Do not split merely to preserve PR/work-unit history.
+```text
+docs/codex_handoff/htt_tensorized_report_first_20260903/
+  PROVISIONAL_CLAIM_SURVIVOR_LEDGER.yaml
+```
 
-## Readiness after plan reorder
+The current file is an initial report-centred ledger. A2 is complete only after every eligible PR #405/408 source row has one of:
+
+```text
+INCLUDE_CORE
+INCLUDE_LIMITED
+FRAMEWORK_ONLY
+DEFER_PROOF
+UNRESOLVED
+EXCLUDE_WITHDRAWN
+EXCLUDE_SCOPE
+```
+
+### A2 procedure
+
+1. Read all PR #405 matrix rows and extract every broad `PASS`/scoped child, exact negative obstruction, and preregistered synthetic positive cell.
+2. Read PR #408 WU-001 eligibility rules without inheriting its provisional eight-survivor selection.
+3. Normalize duplicate IDs and parent/child relations.
+4. Map each row to its actual mathematical representation:
+   - Q/O temperature pair;
+   - joint vector/tensor observatory;
+   - local-observer response;
+   - processed-response/numerical uncertainty;
+   - unrelated/out-of-scope.
+5. Assign evidence status independently of the old role label.
+6. Record exact source path/head and allowed wording.
+7. Record novelty status as `ASSESSED`, `UNASSESSED`, or `NOT_APPLICABLE`; novelty never determines theorem truth.
+8. Fail if any eligible row is missing or double-counted.
+
+### A2 acceptance
+
+```text
+candidate-universe coverage: complete
+eligible-row coverage: complete
+unknown dispositions: zero
+duplicate claim families without linkage: zero
+claims admitted solely from PR441 summary labels: zero
+PR367_VT_T8 to PR440_QO substitution: zero
+observational claims: zero
+```
+
+### A2 stop conditions
+
+Stop with a typed blocker if:
+
+- a row’s exact source is missing;
+- two sources make incompatible statements and no supersession exists;
+- an alleged Q/O theorem belongs to the fourteen-dimensional vector/tensor representation;
+- an execution status cannot be distinguished from source presence;
+- a claim depends on observational output while the data gate is closed.
+
+## A5 — contradiction and notation closure
+
+**Depends on:** A2, A3, A4.
+
+Required outputs:
+
+```text
+final CONTRADICTION_LEDGER.yaml
+NOTATION_AND_CONVENTION_REGISTRY.yaml
+REPORT_SECTION_CLAIM_MAP.yaml
+```
+
+Minimum convention registry:
+
+- metric and Levi-Civita conventions where applicable;
+- outward sky direction and active/passive boost convention;
+- harmonic phase and stored-real layout;
+- STF normalization and Euclidean/Frobenius metrics;
+- O(3) versus SO(3), parity, chirality, and stabilizer vocabulary;
+- local observer velocity versus global matter-frame tilt;
+- exact, finite-sample, asymptotic, conditional, numerical, and implementation evidence labels.
+
+## Theory packs after A5
+
+### T1 — stored-real/STF representation
+
+Derive the harmonic/STF isometry, inverse map, norm identities, rotation and parity adapters. The map-free data runner is not executed.
+
+### T2 — Q/O orbit chart and strata
+
+Prove or narrow the PR #440 Krylov16 reconstruction on the declared cyclic conditioned chart. Produce an explicit mirror/non-separation counterexample and classify singular strata. Do not borrow VT-T8.
+
+### T3 — MES conditional geometry
+
+Re-derive the PSTF epsilon normalization and one-way shear/vorticity ceiling functions. Create a premise table and prove the scalar-to-tensor equivariance no-go.
+
+### T4 — finite-null theory
+
+State exact finite-rank validity under joint exchangeability and row equivariance; handle ties, monotone tails, data-dependent symmetric selection, typed missingness, null mismatch, and shared-data dependence. Read and cite primary sources directly before freeze.
+
+### T5 — WU-010 synthesis
+
+Import the scoped closed result, reproduce its derivations, and condense its exact-head evidence. Do not reopen or dilute its domain conditions.
+
+### T6 — WU-011 processed-response quotient
+
+State the operator factorization, quotient-rank identity, nested nuisance images, Task-7A/7B negative results, matched-control unresolved terminal, and finite-HEALPix boundary.
+
+### T7 — continuum proof strengthening
+
+Review the exact z-axis pivot-minor artifact and the all-direction multi-engine numerical lineages. Seek a portable interval/ball seal, but permit the report terminal `Z exact + five-direction high-precision numerical` if the wording remains graded.
+
+### T8 — numerical-error theory
+
+Prove the Loewner envelope, scaling and orthogonal-mixing invariances, zero-family guard, generalized singular-value condition, and completeness premise. Keep partial-rank Wedin analysis in a separate lane.
+
+## Report assembly
+
+### T9 — integrated claim ledger
+
+Merge T1–T8 only after all claims have unique authority and evidence fields. Run contradiction, notation, citation, and scope scans.
+
+### R1 — Theory and Methods Report A
+
+Write the manuscript around one scientific argument:
+
+> Tensorization preserves low-multipole morphology discarded by scalar summaries, while processed-response overlap and numerical uncertainty limit physical attribution.
+
+No observational result table is created. The current corrected Planck rank is explicitly `NONE`.
+
+### R2 — four-axis audit
+
+1. PHYS–MATH;
+2. STATISTICS;
+3. PHYS–MATH–CODE;
+4. PROVENANCE/PUBLICATION.
+
+### R3 — blind referee audit and bounded revision
+
+Audit title, abstract, theorem wording, tables, captions, continuum/discrete separation, and absence of silently restored data claims.
+
+### R4 — report freeze
+
+Bind source, PDF, figures, claim ledger, verifier receipts, and unresolved items. Merge/publication remains a separate owner decision.
+
+## Observation-independent post-report successors
+
+After R4, run in parallel where independent:
+
+- `P1`: WU-011 finite-operator numerical-error closeout;
+- `P2`: ideal inverse, intrinsic-octupole nuisance, and noisy-estimation theory;
+- `P3`: depth, local/global, and remote-field identifiability theory.
+
+Then perform `P4` publication split decision.
+
+## Closed observational gate
 
 ```yaml
-report_pre_rerun_theory_methods: ~95_percent
-corrected_tensor_representation_admitted: 0_percent_until_R1_R2
-corrected_observational_result: 0_percent_until_R4
-wu010_scoped_response: closed_with_typed_limits
-wu011_engineering: ~90_percent
-wu011_finite_operator_scientific_closeout: unresolved
+D0: DATA_DEFERRED_BY_OWNER
+O1_corrected_carrier_repair: BLOCKED
+O2_observation_blind_statistic_registry: BLOCKED
+O3_corrected_Planck_FFP10_run: BLOCKED
+O4_observation_report: BLOCKED
 ```
 
-## Correct next action
+No theory task may silently open D0.
 
-Execute **R1 only** in a local isolated checkout. Do not resume A4 engineering or create a new observed statistic before the corrected tensor representation has an independently reviewed artifact.
+## Current completion estimate
+
+| Workstream | Readiness after audit |
+|---|---:|
+| repository-surface inventory | 100% for Report A scope |
+| authority/supersession reconstruction | 95% |
+| execution-receipt classification | 95% initial |
+| representation-family firewall | 100% |
+| registered survivor triage | 35–45% |
+| contradiction/notation closure | 45–55% |
+| stored-real/STF theory | 85–90% |
+| Q/O orbit-chart proof | 65–75% |
+| conditional MES theory | 80–90% |
+| finite-null theory | 70–80% |
+| WU-010 synthesis | 95% |
+| WU-011 quotient/no-go synthesis | 85–90% |
+| continuum evidence | 90–95% numerical; z exact |
+| all-direction interval proof | 25–40% |
+| numerical-error theorem | 85–90% mathematics; runtime/provenance lower |
+| integrated claim ledger | 45–55% |
+| Report A working prose | 55–65% |
+| Report A audited release candidate | 0% |
+| observation result | 0%, intentionally deferred |
+
+## Current terminal
+
+```text
+REPO_WIDE_REPORT_SURFACE_AUDIT_COMPLETE
+/
+AUTHORITY_FEDERATION_RECONSTRUCTED
+/
+REPRESENTATION_FAMILY_FIREWALL_CLOSED
+/
+EXECUTION_RECEIPTS_RECLASSIFIED
+/
+REGISTERED_SURVIVOR_TRIAGE_ACTIVE
+/
+OBSERVATIONAL_DATA_DEFERRED
+/
+NO_MERGE_OR_CLAIM_PROMOTION
+```
