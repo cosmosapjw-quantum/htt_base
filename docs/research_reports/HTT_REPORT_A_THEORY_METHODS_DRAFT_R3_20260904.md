@@ -207,14 +207,14 @@ v_a=\bar O_{abc}\bar Q_{bc},
 \mathscr K_{QO}=[v,\bar Qv,\bar Q^2v].
 \]
 
-In an eigenframe of \(ar Q\),
+In an eigenframe of \(\bar Q\),
 
 \[
 \det\mathscr K_{QO}
 =v_1v_2v_3\prod_{i<j}(\lambda_j-\lambda_i)
 \]
 
-up to the fixed ordering convention. Hence the chart is cyclic precisely when \(ar Q\) has simple spectrum and \(v\) has a nonzero component along every eigenvector.
+up to the fixed ordering convention. Hence the chart is cyclic precisely when \(\bar Q\) has simple spectrum and \(v\) has a nonzero component along every eigenvector.
 
 Let
 
@@ -265,12 +265,31 @@ G=\mathscr K_{QO}^T\mathscr K_{QO}
 \det G=\chi^2.
 \]
 
-Choose \(B\) with
+The two equations \(B^TB=G\) and \(\det B=\chi\) alone do not select a
+canonical frame: if \(R\in SO(3)\), then \(RB\) satisfies the same two
+equations.  We therefore fix a deterministic proper-oriented section.  Let
+\(B_+\) be the unique upper-triangular Cholesky factor with positive diagonal,
+
+\[
+B_+^TB_+=G.
+\]
+
+On the cyclic domain \(\chi\ne0\) and \(\det G=\chi^2\), so
+\(\det B_+=|\chi|\).  Define
+
+\[
+S_\chi=\operatorname{diag}\!\left(1,1,\operatorname{sgn}\chi\right),
+\qquad
+B=S_\chi B_+.
+\]
+
+Because \(S_\chi^TS_\chi=I\) and
+\(\det S_\chi=\operatorname{sgn}\chi\), this unique convention gives
 
 \[
 B^TB=G,
 \qquad
-\det B=\chi,
+\det B=\chi.
 \]
 
 and define
