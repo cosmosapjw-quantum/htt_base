@@ -1,0 +1,119 @@
+schema: htt.report_a.r4a1nf.flattening_closeout.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+source_commit: 17773d97a36f09d9c24be39a8bf511e3bc52c449
+source_tree: 6b0408eb6d491ab9fc5f6577b6527b476ab51ff5
+parent_commit: 28fb530aa308101f81243b8691db11225a9a7068
+observational_data_used: false
+corrected_tensorized_planck_rank: null
+finite_healpix_containment: RANK_UNRESOLVED
+merge_authorized: false
+
+flattened_authority:
+  claim_ledger_v4: 58291e9cfac6ff85ceffbdb6bdefd50315240831
+  citation_matrix_v2_r4a1nf: 3fbaa2f97522cca6d0ad60e0c96655d293ca0d74
+  manuscript: 16f8fdd4db4dac384c5c64a8d3f86e0dbbf62e34
+  notation_registry_v3: 2245e291e0b03c65f1a789df8649a194c43fe8fd
+  convention_domain_appendix: c7a7616c33572499c3c581c26c7c65fa52ba3b6d
+  supported_runtime_contract_v3: 3c5ea8e7e21c5180b60313e47db2474cdf4d6744
+  formal_bibliography: ba37321119725e52f1a2b0ac827050ee895e5466
+  provenance_appendix: b2b7d0cb78f995badb118ec92659b41db9d13783
+
+contract_sources:
+  test_t9_v4: acfbde55a376e7e28ca7233102c09c90a9b26e51
+  test_citation_matrix_r4a1nf: 8ccf87f70854cfb64d6558f796e04611c8a60b73
+  test_flattened_manuscript: 75533edafe4ff390413e340fdce2d8800ba27142
+  test_supported_runtime_v3: f44f49f96481aca26437ce7be97e5e2fc2be4fc3
+  workflow: 09fbe5a83a4eef60913f2772306959e86c953348
+
+scientific_surface:
+  canonical_claim_ids: 30
+  claim_identifiers_changed: false
+  citation_keys: 17
+  citation_rows: 30
+  notation_authority: NOTATION_AND_CONVENTION_REGISTRY_v3
+  observer_photon_boost_domains_flattened: true
+  numerical_error_positivity_domain_flattened: true
+  finite_sample_theorem_lanes_separate: true
+  current_scalar_only_mes_rank: false
+  corrected_tensorized_planck_rank: null
+  finite_healpix_no_go_promoted: false
+  native_bass_claim: false
+
+canonical_claim_id:
+  algorithm: sha256_utf8_sorted_ids_newline_terminated
+  expected_sha256: e103c581ce353b5102af81834831ac292105f18699671e8eb75b171acd97f01e
+  ledger_field: null
+  status: SOURCE_BOUND_PENDING_SUPPORTED_RUNTIME_REPLAY
+
+multi_cas_verifier_sources:
+  plan: 29459852b63b46a5ba352bbada1a98efeb0f9843
+  sympy_mpmath: 7dd5ae6eb94ff2efcec21b013351871416932db6
+  gnu_octave: 85836a66c71eb3927af99f5ff38bb4bff473fb76
+  sagemath: 25ebdd5eac543478391bdcb4ab2a33b259e1b76d
+  singular: 53eae3e8c2dc6c05cf19c62a429ccc19e513b846
+  lean_mathlib: 0192a6bda7490fae4937b38e0456562dcb99f067
+  execution_status: SOURCE_ONLY_EXECUTION_ENVIRONMENTS_BLOCKED
+  accepted_execution_receipts: 0
+  scope: scalar observer_photon_boost_and_regularisation_closures_only
+
+independent_review:
+  academic_writing_toolkit:
+    paragraph_logic: PASS_NO_ISSUES
+    british_english: PASS_NO_ISSUES
+  scispace:
+    status: ADJACENT_METHODS_ONLY
+    exchangeable_rank_reference: arXiv_2005.06095
+    finite_group_reference: arXiv_2412.14391_and_2406.09521
+    project_specific_qo_proof_replaced: false
+  wolfram:
+    status: BLOCKED_BY_UPSTREAM_502
+    counted_as_pass: false
+
+exact_head_workflows:
+  report_authority:
+    run: 33836713529
+    initial_job: 100910630050
+    retry_job: 100910812670
+    initial_steps: []
+    retry_steps: []
+    initial_conclusion: failure
+    retry_conclusion: failure
+    classification: PRESTART_NO_EXECUTION
+  repository_integrity:
+    run: 33836713546
+    jobs:
+      repository_contracts: 100910630204
+      rust_compile: 100910630344
+      python_package_smoke: 100910630346
+    all_steps: null
+    classification: PRESTART_NO_EXECUTION
+
+verification_boundary:
+  exact_source_readback: PASS
+  exact_checkout_cpython_3_12: NOT_EXECUTED
+  local_sympy_mpmath: NOT_EXECUTED_BACKEND_CLIENT_ERROR
+  local_gnu_octave: NOT_EXECUTED_BACKEND_CLIENT_ERROR
+  local_sagemath_singular: NOT_EXECUTED_BACKEND_CLIENT_ERROR
+  local_lean_mathlib: NOT_EXECUTED_BACKEND_CLIENT_ERROR
+  github_actions: PRESTART_NO_EXECUTION
+  publication_authority: false
+
+next_node:
+  id: R4A1E_EXECUTE_SUPPORTED_RUNTIME_AND_MULTI_CAS_VERIFIERS
+  requirements:
+    - execute active report contracts from an exact checkout under CPython 3.12
+    - recompute the thirty-claim canonical SHA-256 from T9 v4
+    - preserve exact source blob identities and tool versions
+    - execute SymPy/mpmath and GNU Octave verifier sources
+    - execute SageMath/Singular and Lean/mathlib when those environments are available
+    - preserve every unavailable tool as a typed blocker rather than a pass
+    - do not change any scientific claim or open the observational gate
+
+terminal: >-
+  R4A1NF_T9_V4_CITATION_AND_MANUSCRIPT_AUTHORITY_FLATTENED__
+  MULTI_CAS_VERIFIER_SOURCES_BOUND__
+  EXACT_HEAD_INITIAL_AND_RETRY_PRESTART_NO_EXECUTION__
+  SUPPORTED_RUNTIME_AND_CAS_EXECUTION_PENDING__
+  OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY
