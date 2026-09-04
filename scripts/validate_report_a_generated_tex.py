@@ -33,6 +33,8 @@ def validate_generated_tex(text: str, claim_ids: list[str]) -> dict[str, object]
         "Scope, authority, and supersession",
         "References",
         "\\appendix",
+        "RANK_UNRESOLVED",
+        "DEFERRED_BY_OWNER",
     )
     for fragment in required_fragments:
         if fragment not in text:
@@ -45,10 +47,14 @@ def validate_generated_tex(text: str, claim_ids: list[str]) -> dict[str, object]
     if text.count("\\appendix") != 1:
         raise GeneratedTexValidationError("generated TeX must enter appendix mode exactly once")
 
+    # These identify the pre-Abstract repository/control-plane prologue or the
+    # quarantined legacy manuscript. The scientific boundary statements later
+    # in the report (NONE, DEFERRED_BY_OWNER, RANK_UNRESOLVED) are intentional.
     forbidden_fragments = (
-        "CURRENT_CORRECTED_TENSORIZED_PLANCK_RANK",
+        "R3 flattened draft",
+        "Repository: cosmosapjw-quantum/htt_base",
+        "Status: theory/methods release candidate",
         "CURRENT_OBSERVATIONAL_RESULT",
-        "FINITE_HEALPIX_CONTAINMENT",
         "docs/manuscript/main.tex",
         "Claim-Tiered FLRW Departure Diagnostics",
         "Bianchi-Conditioned Observables",
@@ -71,6 +77,7 @@ def validate_generated_tex(text: str, claim_ids: list[str]) -> dict[str, object]
         "appendix_count": 1,
         "citation_markers_unresolved": False,
         "control_plane_prologue_removed": True,
+        "scientific_boundary_statements_preserved": True,
         "legacy_manuscript_content_absent": True,
     }
 
@@ -87,7 +94,7 @@ def main() -> None:
     claim_ids = load_claim_ids(args.ledger)
     checks = validate_generated_tex(text, claim_ids)
     receipt = {
-        "schema": "htt.report_a.r4b0.generated_tex_validation.v1",
+        "schema": "htt.report_a.r4b0.generated_tex_validation.v2",
         "tex_path": args.tex.as_posix(),
         "tex_sha256": hashlib.sha256(data).hexdigest(),
         "tex_bytes": len(data),

@@ -25,6 +25,9 @@ def good_tex(claim_ids: list[str]) -> str:
             r"\section*{Abstract}",
             r"\section{Scope, authority, and supersession}",
             *claim_ids,
+            "CURRENT_CORRECTED_TENSORIZED_PLANCK_RANK = NONE",
+            "PLANCK_OR_FFP10_EXECUTION = DEFERRED_BY_OWNER",
+            "FINITE_HEALPIX_CONTAINMENT = RANK_UNRESOLVED",
             r"\appendix",
             r"\section{Canonical claim map}",
             r"\section*{References}",
@@ -39,12 +42,14 @@ def test_generated_tex_validator_accepts_a_clean_30_claim_artifact():
     assert result["claim_count"] == 30
     assert result["missing_claim_count"] == 0
     assert result["control_plane_prologue_removed"] is True
+    assert result["scientific_boundary_statements_preserved"] is True
 
 
 @pytest.mark.parametrize(
     "mutation, expected",
     [
         ("CURRENT_OBSERVATIONAL_RESULT = NONE", "forbidden fragment"),
+        ("R3 flattened draft", "forbidden fragment"),
         ("[@MES_1995_LIMITS]", "forbidden fragment"),
         (r"\section{1. Scope}", "manual numeric section prefix"),
         (r"\appendix", "appendix mode exactly once"),
