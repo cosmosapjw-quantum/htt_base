@@ -4,7 +4,7 @@
   "required_axes": ["sympy", "lean"],
   "identity": {
     "contract_id": "CAS-R4A1NF-DOMAIN-R2",
-    "contract_version": 1,
+    "contract_version": 2,
     "claim_ids": [
       "photon_null_decomposition",
       "observer_measured_photon_energy",
@@ -34,6 +34,29 @@
         "digest": "57a001918308c32ac80362cba8897ac412728b0d"
       }
     ],
+    "run_spec_hash": {
+      "path": "docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json",
+      "hash_algorithm": "git_blob_sha1",
+      "digest": "cbb341cd224be947b7951cd5446a7ba511df8255"
+    },
+    "adjudicator_hash": {
+      "path": ".agent-harness/scripts/cas_gate.py",
+      "hash_algorithm": "git_blob_sha1",
+      "digest": "a0d5ed80f8714a061b464f0cd179b3dc12fb6942"
+    },
+    "adjudicator_support_hashes": [
+      {
+        "path": ".agent-harness/scripts/_harness.py",
+        "hash_algorithm": "git_blob_sha1",
+        "digest": "718f8fd9150092326755ae9e5db1793ff32c065f"
+      }
+    ],
+    "binding_validator_hash": {
+      "path": "docs/research_reports/verifiers/r4a1nf/verify_source_bindings.py",
+      "hash_algorithm": "git_blob_sha1",
+      "digest": "5b20612efd6d1a9b080b3386c224939aeb6f1ce4"
+    },
+    "binding_receipt_path": "docs/research_reports/verifiers/r4a1nf/CAS_SOURCE_BINDINGS_R4A1NF_DOMAIN.json",
     "claim_ceiling": "SUPPORTING_DOMAIN_LEMMAS_ONLY",
     "adjudicator": ".agent-harness/scripts/cas_gate.py run-adjudicate"
   },
@@ -73,7 +96,8 @@
     "positivity_nonzero_conditions": [
       "c>0",
       "E_gamma>0",
-      "lambda_reg>0"
+      "lambda_reg>0",
+      "x!=0 for the Matrix.PosDef quadratic-form obligation"
     ],
     "branches": ["local_observer_thermodynamic_temperature_d1"],
     "exclusions": [
@@ -83,7 +107,7 @@
       "global matter-frame tilt",
       "BASS solver or Bianchi-family attribution"
     ],
-    "singular_loci": ["lambda_reg=0 is excluded"],
+    "singular_loci": ["lambda_reg=0 is excluded", "x=0 is excluded only in the strict PosDef test"],
     "order_of_limits": [],
     "boundary_or_initial_conditions": []
   },
@@ -109,6 +133,8 @@
     "relative_tolerance": "0",
     "forbidden_shortcuts": [
       "Do not infer matrix positive definiteness from one numerical sample.",
+      "Do not omit the nonzero-vector condition from the strict quadratic-form implication.",
+      "Do not run an axis against source, run-spec, or adjudicator bytes that differ from the registered hashes.",
       "Do not replace a blocked required axis with Octave, SageMath, Singular, or Wolfram.",
       "Do not promote any Q/O, finite-HEALPix, observational, or BASS claim."
     ]
@@ -116,8 +142,15 @@
   "axes": {
     "sympy": {
       "applicability": "required",
-      "obligation": "Independent exact symbolic identities and exact sum-of-squares decomposition for the regularized quadratic form.",
+      "obligation": "Independent exact symbolic identities, an exact Gram-type sum-of-squares witness, and the dimension-independent ordered quadratic-form implication for strict positive regularization.",
       "required_outputs": ["axis source", "runner transcript", "parent-observed axis result"],
+      "source_hashes": [
+        {
+          "path": "docs/research_reports/verifiers/r4a1nf/cas/axes/sympy/axis_program.py",
+          "hash_algorithm": "git_blob_sha1",
+          "digest": "bfb92f12687b6447f0b8eca234601f9e5c0402a7"
+        }
+      ],
       "pinned_toolchain": {
         "python": "3.12",
         "sympy": "1.14.0",
@@ -129,6 +162,43 @@
       "applicability": "required",
       "obligation": "Kernel-checked formalization of all four supporting-domain lemmas, including the general Matrix.PosDef regularization theorem.",
       "required_outputs": ["Lean source", "build transcript", "parent-observed axis result"],
+      "source_hashes": [
+        {
+          "path": "docs/research_reports/verifiers/r4a1nf/cas/axes/lean/axis_program",
+          "hash_algorithm": "git_blob_sha1",
+          "digest": "fe5e451e4cc5cc1f094b6f88194a473cb3ee5181"
+        },
+        {
+          "path": "formal_mathlib/Egs3V8Mathlib/ReportAConvention.lean",
+          "hash_algorithm": "git_blob_sha1",
+          "digest": "da950d0b29f7ab242ff1322e6ae7c794785cc95b"
+        },
+        {
+          "path": "formal_mathlib/Egs3V8Mathlib.lean",
+          "hash_algorithm": "git_blob_sha1",
+          "digest": "f0d0d3f8c777813fca70b656bb0eede827264e99"
+        },
+        {
+          "path": "formal_mathlib/lean-toolchain",
+          "hash_algorithm": "git_blob_sha1",
+          "digest": "18640c8b066b182147f324d3aefd8ee48ee45238"
+        },
+        {
+          "path": "formal/lean-toolchain",
+          "hash_algorithm": "git_blob_sha1",
+          "digest": "18640c8b066b182147f324d3aefd8ee48ee45238"
+        },
+        {
+          "path": "formal_mathlib/lakefile.toml",
+          "hash_algorithm": "git_blob_sha1",
+          "digest": "7c3c5333ab14e4cfb5bfe7f6501747efd99a9bb6"
+        },
+        {
+          "path": "formal_mathlib/lake-manifest.json",
+          "hash_algorithm": "git_blob_sha1",
+          "digest": "817423fba042a5073e6789686f654bd19e848612"
+        }
+      ],
       "pinned_toolchain": {
         "lean": "leanprover/lean4:v4.31.0",
         "mathlib_input_revision": "v4.31.0",
@@ -154,11 +224,13 @@
   },
   "exceptions_adjudication": {
     "preregistered_exceptions": [],
-    "aggregate_status_rule": "R2 PASS requires both SymPy and Lean under one contract hash; no majority vote or substitution.",
+    "aggregate_status_rule": "R2 PASS requires source-binding PASS and both SymPy and Lean under one contract hash; no majority vote or substitution.",
     "invalidation_triggers": [
       "contract hash change",
       "assumption or domain change",
       "source identity change",
+      "run-spec or adjudicator identity change",
+      "axis-source identity change",
       "unpinned toolchain"
     ]
   }
