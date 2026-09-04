@@ -1,0 +1,165 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R2",
+  "required_axes": ["sympy", "lean"],
+  "identity": {
+    "contract_id": "CAS-R4A1NF-DOMAIN-R2",
+    "contract_version": 1,
+    "claim_ids": [
+      "photon_null_decomposition",
+      "observer_measured_photon_energy",
+      "boosted_observer_unit_timelike",
+      "regularized_error_envelope_positive_definite"
+    ],
+    "statement_class": "scalar_algebra_and_ordered_matrix_theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml",
+        "hash_algorithm": "git_blob_sha1",
+        "digest": "2245e291e0b03c65f1a789df8649a194c43fe8fd"
+      },
+      {
+        "path": "docs/research_reports/appendices/HTT_REPORT_A_COVARIANT_AND_DOMAIN_CONVENTIONS.md",
+        "hash_algorithm": "git_blob_sha1",
+        "digest": "c7a7616c33572499c3c581c26c7c65fa52ba3b6d"
+      },
+      {
+        "path": "docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md",
+        "hash_algorithm": "git_blob_sha1",
+        "digest": "16f8fdd4db4dac384c5c64a8d3f86e0dbbf62e34"
+      },
+      {
+        "path": "docs/research_reports/theory_packs/T8_MATRIX_NUMERICAL_ERROR_ENVELOPE_THEOREM_PACK.md",
+        "hash_algorithm": "git_blob_sha1",
+        "digest": "57a001918308c32ac80362cba8897ac412728b0d"
+      }
+    ],
+    "claim_ceiling": "SUPPORTING_DOMAIN_LEMMAS_ONLY",
+    "adjudicator": ".agent-harness/scripts/cas_gate.py run-adjudicate"
+  },
+  "semantics": {
+    "exact_statement": "Under the declared (-,+,+,+) observer, photon, local-boost, and numerical-error domains, verify the photon null decomposition, the observer-measured photon energy identity, unit normalization of the boosted observer, and positive definiteness of a positive-semidefinite matrix after strictly positive identity regularization.",
+    "symbol_type_domain_map": {
+      "u": "unit timelike observer vector",
+      "e": "unit spatial photon direction orthogonal to u",
+      "p": "future-directed null photon momentum",
+      "E_gamma": "strictly positive observer-measured photon energy",
+      "c": "strictly positive speed of light",
+      "beta_obs": "spatial dimensionless observer velocity with squared norm below one",
+      "gamma": "positive Lorentz factor",
+      "P": "real positive-semidefinite square matrix",
+      "lambda_reg": "strictly positive real regularization scale"
+    },
+    "frame_signature_units_conventions": {
+      "metric_signature": "(-,+,+,+)",
+      "outward_sky_direction": "n=-e",
+      "local_boost_sign": "+beta_obs",
+      "thermodynamic_temperature_doppler_weight": 1,
+      "conventions_ref": "docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml"
+    },
+    "assumptions": [
+      "u.u=-1",
+      "u.e=0",
+      "e.e=1",
+      "c>0",
+      "E_gamma>0",
+      "p=(E_gamma/c)(u+e)",
+      "u.beta_obs=0",
+      "0<=beta_obs^2<1",
+      "gamma^2(1-beta_obs^2)=1",
+      "P is positive semidefinite",
+      "lambda_reg>0"
+    ],
+    "positivity_nonzero_conditions": [
+      "c>0",
+      "E_gamma>0",
+      "lambda_reg>0"
+    ],
+    "branches": ["local_observer_thermodynamic_temperature_d1"],
+    "exclusions": [
+      "Q/O orbit reconstruction theorem",
+      "finite-HEALPix rank or containment",
+      "observational data or corrected Planck rank",
+      "global matter-frame tilt",
+      "BASS solver or Bianchi-family attribution"
+    ],
+    "singular_loci": ["lambda_reg=0 is excluded"],
+    "order_of_limits": [],
+    "boundary_or_initial_conditions": []
+  },
+  "target": {
+    "canonical_form": "All four registered supporting-domain obligations evaluate to exact true statements over their declared domains.",
+    "equivalence_relation": "exact polynomial or ordered-matrix equality under the registered assumptions",
+    "invariants": [
+      "p.p=0",
+      "-c p.u=E_gamma",
+      "u_tilde.u_tilde=-1",
+      "P+lambda_reg^2 I is positive definite"
+    ],
+    "exact_test_obligations": [
+      "photon_null_decomposition",
+      "observer_measured_photon_energy",
+      "boosted_observer_unit_timelike",
+      "regularized_error_envelope_positive_definite"
+    ],
+    "numeric_test_vectors": [],
+    "approximation_order": "exact",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "0",
+    "relative_tolerance": "0",
+    "forbidden_shortcuts": [
+      "Do not infer matrix positive definiteness from one numerical sample.",
+      "Do not replace a blocked required axis with Octave, SageMath, Singular, or Wolfram.",
+      "Do not promote any Q/O, finite-HEALPix, observational, or BASS claim."
+    ]
+  },
+  "axes": {
+    "sympy": {
+      "applicability": "required",
+      "obligation": "Independent exact symbolic identities and exact sum-of-squares decomposition for the regularized quadratic form.",
+      "required_outputs": ["axis source", "runner transcript", "parent-observed axis result"],
+      "pinned_toolchain": {
+        "python": "3.12",
+        "sympy": "1.14.0",
+        "mpmath": "1.3.0"
+      },
+      "resource_limit": {"wall_seconds": 600}
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "Kernel-checked formalization of all four supporting-domain lemmas, including the general Matrix.PosDef regularization theorem.",
+      "required_outputs": ["Lean source", "build transcript", "parent-observed axis result"],
+      "pinned_toolchain": {
+        "lean": "leanprover/lean4:v4.31.0",
+        "mathlib_input_revision": "v4.31.0",
+        "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+        "package": "formal_mathlib"
+      },
+      "resource_limit": {"wall_seconds": 3600}
+    }
+  },
+  "independence": {
+    "mode": "independent_engine_lineages",
+    "permitted_inputs": [
+      "this contract",
+      "the four source identities registered above",
+      "the assigned axis source only"
+    ],
+    "forbidden_sibling_paths": [
+      ".agent-harness/runs/*/results/*",
+      "docs/research_reports/verifiers/r4a1nf/CAS_ADJUDICATION_R4A1NF_DOMAIN.json"
+    ],
+    "script_result_ownership": "per-axis; child results are not shared before parent adjudication",
+    "correlation_disclosure": "Both source programs were prepared in one research session; engine and proof-kernel lineages remain distinct."
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "R2 PASS requires both SymPy and Lean under one contract hash; no majority vote or substitution.",
+    "invalidation_triggers": [
+      "contract hash change",
+      "assumption or domain change",
+      "source identity change",
+      "unpinned toolchain"
+    ]
+  }
+}

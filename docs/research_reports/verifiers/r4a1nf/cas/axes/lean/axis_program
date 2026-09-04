@@ -1,0 +1,75 @@
+#!/bin/sh
+set -eu
+
+script_dir=${0%/*}
+if [ "$script_dir" = "$0" ]; then
+  script_dir=.
+fi
+script_dir=$(CDPATH= cd -- "$script_dir" && pwd)
+
+repo_root=$script_dir
+while [ ! -f "$repo_root/formal_mathlib/lakefile.toml" ]; do
+  parent=${repo_root%/*}
+  if [ "$parent" = "$repo_root" ]; then
+    printf '%s\n' "could not locate formal_mathlib/lakefile.toml" >&2
+    exit 2
+  fi
+  repo_root=$parent
+done
+
+mathlib_project="$repo_root/formal_mathlib"
+lean_source="$mathlib_project/Egs3V8Mathlib/ReportAConvention.lean"
+root_source="$mathlib_project/Egs3V8Mathlib.lean"
+
+if ! cmp -s "$repo_root/formal/lean-toolchain" \
+    "$mathlib_project/lean-toolchain"; then
+  printf '%s\n' "formal and formal_mathlib toolchains differ" >&2
+  exit 2
+fi
+
+if ! grep -Fq '"rev": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"' \
+    "$mathlib_project/lake-manifest.json"; then
+  printf '%s\n' "formal_mathlib manifest is not pinned to the registered mathlib commit" >&2
+  exit 2
+fi
+
+if grep -Eq '(^|[^A-Za-z_])(sorry|native_decide)([^A-Za-z_]|$)|^[[:space:]]*axiom[[:space:]]' \
+    "$lean_source"; then
+  printf '%s\n' "forbidden sorry, native_decide, or source axiom in Lean verifier" >&2
+  exit 1
+fi
+
+for theorem_name in \
+  photon_null_decomposition \
+  observer_measured_photon_energy \
+  boosted_observer_unit_timelike \
+  regularized_error_envelope_posDef
+do
+  if ! grep -Fq "$theorem_name" "$lean_source"; then
+    printf '%s\n' "Lean verifier lacks theorem $theorem_name" >&2
+    exit 1
+  fi
+done
+
+if ! grep -Fq 'import Egs3V8Mathlib.ReportAConvention' "$root_source"; then
+  printf '%s\n' "formal_mathlib root does not import ReportAConvention" >&2
+  exit 1
+fi
+
+if [ ! -d "$mathlib_project/.lake/packages/mathlib" ]; then
+  if ! cache_log=$(CDPATH= cd -- "$mathlib_project" && lake exe cache get 2>&1); then
+    printf '%s\n' "$cache_log" >&2
+    exit 2
+  fi
+  printf '%s\n' "$cache_log" >&2
+fi
+
+if ! build_log=$(CDPATH= cd -- "$mathlib_project" && \
+    lake env lean -DwarningAsError=true Egs3V8Mathlib/ReportAConvention.lean 2>&1)
+then
+  printf '%s\n' "$build_log" >&2
+  exit 1
+fi
+printf '%s\n' "$build_log" >&2
+
+printf '%s\n' '{"checks":{"photon_null_decomposition":true,"observer_measured_photon_energy":true,"boosted_observer_unit_timelike":true,"regularized_error_envelope_positive_definite":true},"domain_assumption_diff":[],"computed":{"lean_toolchain":"leanprover/lean4:v4.31.0","mathlib_commit":"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f","formal_module":"Egs3V8Mathlib.ReportAConvention"},"counterexample":null}'

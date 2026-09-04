@@ -1,60 +1,88 @@
-schema: htt.report_a.r4a1nf.multi_cas_verification_plan.v2
+schema: htt.report_a.r4a1nf.multi_cas_verification_plan.v3
 date: 2026-09-04
 repository: cosmosapjw-quantum/htt_base
 report_pr: 449
 scope: >-
-  Independent algebraic checks of observer/photon decomposition, local-boost
-  normalisation, and positive numerical regularisation. These scripts do not
-  validate observational inputs, finite-HEALPix rank, or the full Q/O orbit
-  implementation.
+  Independent verification of four supporting observer/photon/boost and
+  regularized-matrix domain lemmas. This node does not verify the Q/O orbit
+  theorem, finite-HEALPix rank, any observational result, or BASS physics.
 
-verifiers:
-  sympy_mpmath:
-    path: docs/research_reports/verifiers/r4a1nf/verify_conventions_sympy_mpmath.py
-    git_blob_sha1: 7dd5ae6eb94ff2efcec21b013351871416932db6
-    command: python verify_conventions_sympy_mpmath.py
-    intended_grade: SYMBOLIC_AND_HIGH_PRECISION_NUMERICAL_CHECK
+canonical_r2_contract:
+  contract_id: CAS-R4A1NF-DOMAIN-R2
+  path: docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json
+  run_spec: docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json
+  adjudication: docs/research_reports/verifiers/r4a1nf/CAS_ADJUDICATION_R4A1NF_DOMAIN.json
+  risk_tier: R2
+  required_axes: [sympy, lean]
+  aggregate_rule: BOTH_REQUIRED_AXES_PASS_UNDER_ONE_CONTRACT_HASH
+  claim_ceiling: SUPPORTING_DOMAIN_LEMMAS_ONLY
+  obligations:
+    - photon_null_decomposition
+    - observer_measured_photon_energy
+    - boosted_observer_unit_timelike
+    - regularized_error_envelope_positive_definite
+
+required_verifiers:
+  sympy:
+    path: docs/research_reports/verifiers/r4a1nf/cas/axes/sympy/axis_program.py
+    toolchain: CPython_3_12__SymPy_1_14_0__mpmath_1_3_0
+    evidence: EXACT_SYMBOLIC_WITH_HIGH_PRECISION_SUPPLEMENT
+  lean:
+    wrapper: docs/research_reports/verifiers/r4a1nf/cas/axes/lean/axis_program
+    module: formal_mathlib/Egs3V8Mathlib/ReportAConvention.lean
+    package: formal_mathlib
+    toolchain: leanprover_lean4_v4_31_0
+    mathlib_commit: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+    evidence: KERNEL_CHECKED_FORMAL_PROOF
+
+supplemental:
   gnu_octave:
     path: docs/research_reports/verifiers/r4a1nf/verify_conventions_octave.m
-    git_blob_sha1: 85836a66c71eb3927af99f5ff38bb4bff473fb76
-    command: octave --quiet verify_conventions_octave.m
-    intended_grade: INDEPENDENT_NUMERICAL_SMOKE_CHECK
+    role: INDEPENDENT_NUMERICAL_SMOKE_ONLY
+    substitutes_for_required_axis: false
   sagemath:
     path: docs/research_reports/verifiers/r4a1nf/verify_conventions.sage
-    git_blob_sha1: d99c8ea22351963078a50bb6d4630d9e5f0232ec
-    command: sage verify_conventions.sage
-    intended_grade: EXACT_RATIONAL_AND_QUOTIENT_RING_CHECK
-    positive_definiteness_method: EXACT_SYLVESTER_LEADING_PRINCIPAL_MINORS
-    compatibility_note: >-
-      The source does not call the numerical RDF/CDF is_positive_definite
-      backend on a QQ matrix.
+    role: EXACT_RATIONAL_FIXTURE_AND_QUOTIENT_RING
+    substitutes_for_required_axis: false
   singular:
     path: docs/research_reports/verifiers/r4a1nf/verify_conventions.sing
-    git_blob_sha1: 53eae3e8c2dc6c05cf19c62a429ccc19e513b846
-    command: Singular verify_conventions.sing
-    intended_grade: INDEPENDENT_IDEAL_REDUCTION_CHECK
-  lean_mathlib:
-    path: docs/research_reports/verifiers/r4a1nf/R4A1NFConvention.lean
-    git_blob_sha1: 0192a6bda7490fae4937b38e0456562dcb99f067
-    command: lake env lean R4A1NFConvention.lean
-    intended_grade: FORMAL_SCALAR_ALGEBRA_CHECK
+    role: EXACT_POLYNOMIAL_IDEAL_REDUCTION
+    substitutes_for_required_axis: false
+  wolfram_shadow:
+    role: OPTIONAL_R3_SHADOW_AXIS
+    current_status: BLOCKED_BY_UPSTREAM_502
+    substitutes_for_required_axis: false
+    rule: >-
+      Wolfram remains a typed blocker for any future four-axis R3 contract;
+      it is not required by this release-critical R2 supporting-lemma contract.
 
-execution_attempt:
-  wolfram:
-    status: BLOCKED_BY_UPSTREAM_502
-  local_runtime_probe:
-    status: BLOCKED_BY_EXECUTION_BACKEND_CLIENT_ERROR
-  github_actions:
-    status: PRESTART_NO_EXECUTION
-  scripts_source_status: CREATED_CONTENT_ADDRESSED_AND_STATICALLY_HARDENED
+workflow_routing:
+  workflow: .github/workflows/report-a-formal-verifiers.yml
+  authoritative_command: >-
+    python3 .agent-harness/scripts/cas_gate.py run-adjudicate
+    --contract docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json
+    --run-spec docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json
+    --out docs/research_reports/verifiers/r4a1nf/CAS_ADJUDICATION_R4A1NF_DOMAIN.json
+  stored_result_replay_is_execution_authority: false
+  parent_owned_process_observation_required: true
+  artifact_upload_required: true
+
+execution_state:
+  red_contract_commit: 6d22fc8c3cba72afe8a5aaa83237385c80cc1fcc
+  red_execution: PRESTART_NO_EXECUTION
+  implementation_execution: PENDING
   accepted_execution_receipts: 0
 
 claim_boundary:
-  - no script execution is labelled a pass until stdout, exit status, versions, and source identity are preserved
-  - scalar convention scripts do not prove the Q/O Krylov orbit theorem
-  - no finite-HEALPix or observational claim is tested
-  - no merge or publication authority is created
+  observational_data_used: false
+  corrected_tensorized_planck_rank: null
+  finite_healpix_containment: RANK_UNRESOLVED
+  qo_orbit_theorem_verified_by_this_contract: false
+  native_bass_claim: false
+  merge_authorized: false
+  publication_authority: false
 
 terminal: >-
-  MULTI_CAS_VERIFIER_SOURCES_BOUND_AND_STATICALLY_HARDENED__
-  EXECUTION_ENVIRONMENTS_ATTEMPTED_BUT_BLOCKED__NO_VERIFICATION_PASS_CLAIMED
+  R4A1V0_CANONICAL_R2_CONTRACT_AND_ROUTING_DEFINED__
+  REQUIRED_SYMPY_AND_LEAN_AXES_DISTINCT__SUPPLEMENTAL_AXES_NON_SUBSTITUTING__
+  EXECUTION_PENDING__NO_SCIENTIFIC_OR_PUBLICATION_PROMOTION
