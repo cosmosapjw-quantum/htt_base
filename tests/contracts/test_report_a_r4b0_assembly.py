@@ -93,9 +93,16 @@ def test_r4b0_metadata_and_header_are_publication_only():
     assert metadata["author"] == ["Jiwon Park"]
     assert metadata["lang"] == "en-GB"
     assert metadata["documentclass"] == "article"
+    assert metadata["linkcolor"] == "blue"
+    assert metadata["citecolor"] == "green"
+    raw_metadata = METADATA.read_text(encoding="utf-8")
+    assert "    \\hypersetup{" in raw_metadata
+    assert "    \\\\hypersetup{" not in raw_metadata
     header = HEADER.read_text(encoding="utf-8")
     for package in ("amsmath", "mathrsfs", "booktabs", "microtype"):
         assert package in header
+    assert "dvipsnames" not in header
+    assert "xcolor" not in header
     assert "Bianchi" not in header
     assert "MES" not in header
     assert "Planck" not in header
