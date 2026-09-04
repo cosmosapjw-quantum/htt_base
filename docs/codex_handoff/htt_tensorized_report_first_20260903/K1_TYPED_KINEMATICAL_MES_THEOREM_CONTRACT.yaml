@@ -1,0 +1,105 @@
+schema: htt.report_a.k1.typed_kinematical_mes_theorem_contract.v1
+date: 2026-09-04
+depends_on: K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK
+goal: >-
+  Derive and audit the typed physical-state, sector-anchor, functional,
+  response and identified-set theorem lane before modifying the canonical
+  claim ledger or manuscript spine.
+
+theorems:
+  - id: K1-T1-STATE-PARTITION
+    claim: >-
+      Congruence kinematics, frame-relative velocities and geometry are
+      distinct typed factors; observable Q/O tensors are not members of this
+      physical-state object by default.
+    proof: definitions plus exact source-contract audit
+  - id: K1-T2-ANCHOR-SEPARATION
+    claim: >-
+      A MES anchor is a conditional bound object, not a physical state,
+      observation, likelihood or posterior.
+    proof: typed channel-key and allowed/forbidden-use contracts
+  - id: K1-T3-RADIAL-ONLY
+    claim: >-
+      O(3)-invariant MES norm bodies constrain orbit radius but not direction,
+      handedness or tensor morphology.
+    proof: orthogonal-action norm invariance
+  - id: K1-T4-PRODUCT-GAUGE
+    claim: >-
+      The Minkowski gauge of a Cartesian product of available Euclidean sector
+      balls is the maximum of the sector-wise normalised norms.
+    proof: direct Minkowski-functional definition
+  - id: K1-T5-CHANNEL-MATCH
+    claim: >-
+      Sector stress is numeric only under exact numerator/anchor channel
+      matching; mismatched or unavailable channels return typed states.
+    proof: channel-key equality and typed failure cases
+  - id: K1-T6-NO-ANCHOR
+    claim: >-
+      Acceleration and anisotropic-curvature channels remain typed but receive
+      no active MES bound on the registered geodesic lane.
+    proof: active anchor inventory and NO_MES_ANCHOR contracts
+  - id: K1-T7-RESPONSE-IDENTIFIED-SET
+    claim: >-
+      Available anchors combined with an incomplete response define an
+      identified set rather than a point; missing or rank-deficient response
+      yields partial or non-identification or abstention.
+    proof: feasible-set definition plus response-rank cases
+  - id: K1-T8-BETA-BOUNDARY
+    claim: >-
+      WU-010 closes the local beta_RO response only; beta_RM, beta_MO and
+      congruence-kinematical responses remain distinct and unresolved at the
+      present Report-A scope.
+    proof: cross-lineage response-authority audit
+  - id: K1-T9-PHYSICAL-MORPHOLOGY
+    claim: >-
+      Physical tensor morphology may be represented by separately typed
+      O(3) functionals such as tr(sigma^3), beta_RM dot omega and
+      beta_RM^a sigma_ab beta_RM^b; these are not supplied by radial MES anchors.
+    proof: registered tensor-functional operator inventory
+  - id: K1-T10-SCALAR-INHERITANCE
+    claim: >-
+      Retaining scalar MES sector bounds inside the tensorised programme is not
+      a return to the retired scalar-only observational rank methodology.
+    proof: object and claim-role separation
+
+mandatory_source_bindings:
+  donor_pr367_head: 6bafca66285ef071081453313bb7d2d6b261599c
+  joint_state_blob: e2b9651b79e2e334d9d402afbe44566e0c4bad67
+  statistical_foundations_blob: f52d7716314d0574a1b7203b09787f70d7f3ec2d
+  tensor_functionals_blob: eeb938f3f4d3cda892e41ab45128ae1bfdcfcffe
+  anchor_geometry_blob: d9c2134961a6d1e786b72321d829db025bb758fa
+
+mandatory_derivations:
+  - exact state/anchor/response/identified-set definitions
+  - O(3)-invariant radial-only theorem
+  - product-block-ball gauge theorem
+  - channel-match and anti-cancellation proposition
+  - response-rank cases for point, partial and non-identification
+  - dimensional and parity audit for every physical sector
+
+mandatory_audits:
+  - PHYS_MATH conventions, dimensions, parity and normalisations
+  - STATISTICS identified-set and point-identification wording
+  - SOURCE_PROVENANCE exact Git lineage and blob identity
+  - CLAIM_FIREWALL no scalar-to-tensor, local/global or solver promotion
+  - LITERATURE distinguish MES/covariant support from repository-specific constructions
+
+wolfram_plan: >-
+  Attempt one fresh exact session; if unavailable, use SymPy plus direct proof,
+  preserve the blocker and do not label the result Wolfram-verified.
+
+acceptance:
+  - all ten theorem rows receive explicit evidence grades
+  - every sector normalisation is tied to a registered source name
+  - no unregistered MES anchor is introduced
+  - no response is inferred from an anchor
+  - no observable Q/O tensor is equated with physical sigma/omega
+  - all missing or unavailable sectors remain typed
+  - K2 claim candidates and revised section map are emitted
+  - observational and BASS firewalls remain closed
+
+possible_terminals:
+  - PASS_K1_TYPED_KINEMATICAL_MES_THEOREM_PACK
+  - PASS_K1_WITH_RESPONSE_SECTORS_UNRESOLVED
+  - BLOCKED_BY_NORMALISATION_AUTHORITY
+  - FAIL_SCALAR_TO_TENSOR_CONFLATION
