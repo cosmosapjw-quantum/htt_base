@@ -1,0 +1,97 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v21
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_gate: DATA_DEFERRED_BY_OWNER
+
+nodes:
+  R3L:
+    state: COMPLETE
+  R3F:
+    state: COMPLETE
+  R3A:
+    state: SCIENTIFIC_AND_STATISTICAL_CORE_PASS
+  R4A0F:
+    state: COMPLETE
+  R4A1N:
+    state: COMPLETE
+  R4A1NF:
+    state: COMPLETE_SOURCE_ONLY
+  R4A1V0:
+    title: Source-bound parent-owned R2 formal verifier
+    state: SOURCE_COMPLETE_EXECUTION_PRESTART_BLOCKED
+    outputs:
+      - exact source-binding verifier and receipt schema
+      - CAS contract v2 with semantic, run-spec, adjudicator, support, and axis hashes
+      - dimension-independent SymPy ordered quadratic-form witness
+      - Lean Matrix.PosDef theorem under pinned mathlib
+      - parent-owned Lean elaboration routing
+      - source-level contract tests
+    evidence:
+      remote_source_readback: PASS
+      local_red_green: NOT_OBSERVED_CLIENTERROR
+      github_initial_and_retry: PRESTART_NO_EXECUTION
+      accepted_axis_receipts: 0
+      wolfram: BLOCKED_BY_UPSTREAM_502
+  R4A1E:
+    title: Exact checkout execution under CPython 3.12 plus required SymPy and Lean axes
+    state: BLOCKED_BY_RUNTIME
+    depends_on: [R4A1V0]
+    acceptance:
+      - source-binding receipt ok=true
+      - exact contract and run-spec hashes match
+      - SymPy 1.14.0 axis PASS
+      - Lean 4.31.0 and mathlib fabf563 kernel check PASS
+      - parent adjudication aggregate_status PASS
+      - no required-axis substitution or exception
+  R4A1F:
+    title: Flatten executed canonical hash and formal-verifier receipts
+    state: WAITING_ON_R4A1E
+  R4B0:
+    title: LaTeX source assembly and static publication preflight
+    state: READY_IN_PARALLEL_WITH_R4A1E
+    depends_on: [R4A1V0]
+    claim_boundary: >-
+      Typesetting may proceed while execution is blocked, but no PDF or source
+      is frozen and no execution-dependent verification wording may be added.
+  R4B1:
+    title: PDF compile, bibliography resolution, and page-level visual audit
+    state: WAITING_ON_R4B0_AND_RUNTIME
+    depends_on: [R4B0]
+  R4C:
+    title: Frozen-source final referee and explicit owner release decision
+    state: WAITING
+    depends_on: [R4A1F, R4B1]
+  P1:
+    title: WU011 finite-operator numerical-error closeout
+    state: AFTER_R4C
+  P2:
+    title: Ideal inverse, intrinsic-octupole nuisance, and noisy-estimation theory
+    state: AFTER_R4C
+  P3:
+    title: Depth and local-global identifiability theory
+    state: AFTER_R4C
+  D0:
+    title: Observational-data authorization
+    state: DEFERRED_BY_OWNER
+
+current_parallel_frontier:
+  blocked_execution: R4A1E
+  productive_report_path: R4B0
+
+claim_firewall:
+  - no current scalar-only MES rank
+  - no corrected tensorized Planck result
+  - no empirical beta or boost subtraction
+  - no local observer boost equals global matter tilt
+  - no physical shear or vorticity measurement
+  - no foreground causal attribution
+  - no Bianchi-family attribution
+  - no finite-HEALPix containment theorem
+  - no native BASS solver claim
+  - no merge or publication authority
+
+terminal: >-
+  R4A1V0_SOURCE_COMPLETE_EXECUTION_BLOCKED__
+  R4B0_LATEX_SOURCE_ASSEMBLY_READY_IN_PARALLEL__
+  OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY
