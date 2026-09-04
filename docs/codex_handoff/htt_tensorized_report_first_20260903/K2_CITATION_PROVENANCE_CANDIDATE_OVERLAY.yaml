@@ -1,0 +1,202 @@
+schema: htt.report_a.k2.citation_provenance_candidate_overlay.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+status: K2_CITATION_CANDIDATE_NOT_CANONICAL
+observational_data_used: false
+novelty_adjudicated: false
+merge_authorized: false
+
+base_matrix:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+  git_blob_sha1: 3fbaa2f97522cca6d0ad60e0c96655d293ca0d74
+  claim_rows: 30
+  formal_bibliography_keys: 17
+
+candidate_claim_overlay:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/K2_40_CLAIM_CANDIDATE_OVERLAY.yaml
+  candidate_claim_count: 40
+
+candidate_bibliography_supplement:
+  path: docs/research_reports/report_a/K2_BIBLIOGRAPHY_SUPPLEMENT_CANDIDATE.bib
+  entry_count: 3
+  status: VALIDATED_CANDIDATE_NOT_RENDERED_AUTHORITY
+  academic_writing_toolkit_parse: PASS_NO_ISSUES
+  rule: >-
+    The existing 17-key formal bibliography remains the sole rendered
+    authority until K2 freezes the final claim surface and the supplement is
+    deliberately merged and revalidated.
+
+candidate_source_registry:
+  ELLIS_VAN_ELST_1999:
+    authors: [G. F. R. Ellis, H. van Elst]
+    title: Cosmological Models
+    booktitle: Theoretical and Observational Cosmology
+    pages: 1-116
+    year: 1999
+    doi: 10.1007/978-94-011-4455-1_1
+    arxiv: gr-qc/9812046
+    role: ADJACENT_COVARIANT_CONGRUENCE_AND_RADIATION_FORMALISM
+  MOLINARI_2020:
+    author: F. Molinari
+    title: Microeconometrics with Partial Identification
+    booktitle: Handbook of Econometrics 7A
+    pages: 355-486
+    year: 2020
+    doi: 10.1016/bs.hoe.2020.05.002
+    arxiv: 2004.11751
+    role: PRIMARY_PARTIAL_IDENTIFICATION_AND_SET_VALUED_ESTIMAND_CONTEXT
+  KAIDO_MOLINARI_STOYE_2022:
+    authors: [H. Kaido, F. Molinari, J. Stoye]
+    title: Constraint Qualifications in Partial Identification
+    journal: Econometric Theory 38(3), 596-619
+    year: 2022
+    doi: 10.1017/S0266466621000207
+    arxiv: 1908.09103
+    role: PRIMARY_IDENTIFIED_SET_GEOMETRY_AND_CONSTRAINT_QUALIFICATION_CONTEXT
+
+new_claim_citations:
+  RA-KIN-001:
+    internal_authority:
+      - K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK_V2
+      - K1R-T1-STATE-PARTITION
+      - PR367_joint_anisotropy_state
+    external_sources:
+      - ELLIS_VAN_ELST_1999
+    citation_role: PROJECT_TYPED_STATE_WITH_COVARIANT_FORMALISM_CONTEXT
+  RA-KIN-002:
+    internal_authority:
+      - K1R-T1-STATE-PARTITION
+      - K1R-T11-BETA-BOUNDARY
+      - PR367_VelocityFrameBundle
+    external_sources:
+      - ELLIS_VAN_ELST_1999
+      - ROLDAN_NOTARI_QUARTIN_2016
+    citation_role: PROJECT_FRAME_SEMANTICS_WITH_LOCAL_INTRINSIC_INTERPRETATION_BOUNDARY
+  RA-KIN-003:
+    internal_authority:
+      - K1R-T1-STATE-PARTITION
+      - K1R-T4-ACCELERATION-PREMISE-ANCHOR-SPLIT
+      - PR367_missing_component_contracts
+    external_sources: []
+    citation_role: PROJECT_TYPED_MISSINGNESS_POLICY
+  RA-GEO-001:
+    internal_authority:
+      - K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK_V2
+      - K1R-T2-GEOMETRY-DIMENSION-PARITY
+      - PR367_GeometryState
+    external_sources:
+      - ELLIS_VAN_ELST_1999
+      - OLIVE_KOLEV_AUFFRAY_2013
+    citation_role: PROJECT_GEOMETRY_TYPE_SEPARATION_WITH_COVARIANT_AND_REPRESENTATION_CONTEXT
+  RA-KFUNC-001:
+    internal_authority:
+      - K1R-T12-PHYSICAL-MORPHOLOGY-AND-SCALAR-INHERITANCE
+      - PR367_tensor_functionals
+    external_sources:
+      - OLIVE_KOLEV_AUFFRAY_2013
+    citation_role: PROJECT_FUNCTIONAL_CONTRACT_WITH_ADJACENT_INVARIANT_CONTEXT
+  RA-MESA-001:
+    internal_authority:
+      - K1R-T3-ANCHOR-SEPARATION
+      - K1R-T4-ACCELERATION-PREMISE-ANCHOR-SPLIT
+      - PR124_MES_theorem_authority
+      - PR252_typed_anchor_surface
+    external_sources:
+      - MES_1995_LIMITS
+      - MES_1995_IMPROVED
+      - SAG_1999_COBE
+    citation_role: PRIMARY_MES_BRANCH_AND_PROJECT_TYPED_ANCHOR_INVENTORY
+  RA-MESA-002:
+    internal_authority:
+      - K1R-T7-QUADRATIC-STRESS
+      - K1R-T8-CHANNEL-MATCH
+      - PR252_SectorStress_and_Fieller_contracts
+    external_sources:
+      - MOLINARI_2020
+      - KAIDO_MOLINARI_STOYE_2022
+    citation_role: PROJECT_DENOMINATOR_CONDITIONING_WITH_PARTIAL_IDENTIFICATION_CONTEXT
+  RA-MESA-003:
+    internal_authority:
+      - K1R-T6-PRODUCT-GAUGE
+      - K1R-T7-QUADRATIC-STRESS
+      - PR367_anchor_geometry
+      - PR189_joint_feasible_set
+    external_sources:
+      - KAIDO_MOLINARI_STOYE_2022
+    citation_role: DIRECT_CONVEX_GAUGE_PROOF_WITH_CONSTRAINT_GEOMETRY_CONTEXT
+  RA-ID-001:
+    internal_authority:
+      - K1R-T9-JOINT-IDENTIFIED-SET
+      - PR136_identified_set
+      - PR189_joint_feasible_set
+    external_sources:
+      - MOLINARI_2020
+      - KAIDO_MOLINARI_STOYE_2022
+    citation_role: PROJECT_JOINT_FEASIBLE_SET_WITH_PRIMARY_PARTIAL_IDENTIFICATION_CONTEXT
+  RA-ID-002:
+    internal_authority:
+      - K1R-T10-SINGLETON-FIBRE
+      - K1R-T11-BETA-BOUNDARY
+      - PR136_identified_set
+    external_sources:
+      - MOLINARI_2020
+    citation_role: DIRECT_AFFINE_FIBRE_THEOREM_WITH_SET_IDENTIFICATION_CONTEXT
+
+revised_claim_citation_updates:
+  RA-MES-002:
+    add_internal_authority:
+      - K1R-T3-ANCHOR-SEPARATION
+      - K1R-T5-RADIAL-ONLY
+      - K1R-T12-PHYSICAL-MORPHOLOGY-AND-SCALAR-INHERITANCE
+    external_sources_unchanged:
+      - MES_1995_LIMITS
+      - MES_1995_IMPROVED
+      - SAG_1999_COBE
+  RA-MES-003:
+    add_internal_authority:
+      - K1R-T5-RADIAL-ONLY
+      - K1R-T12-PHYSICAL-MORPHOLOGY-AND-SCALAR-INHERITANCE
+    external_sources_unchanged:
+      - OLIVE_KOLEV_AUFFRAY_2013
+  RA-RESP-001:
+    add_internal_authority:
+      - K1R-T11-BETA-BOUNDARY
+      - K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK_V2
+    external_sources_unchanged:
+      - DAI_CHLUBA_2014
+      - YASINI_PIERPAOLI_2017
+      - ROLDAN_NOTARI_QUARTIN_2016
+  RA-STAT-002:
+    add_internal_authority:
+      - K1R-T9-JOINT-IDENTIFIED-SET
+    external_sources_unchanged:
+      - RANDOMIZATION_2024
+      - HEMERIK_GOEMAN_2018
+
+coverage_candidate:
+  inherited_claim_rows: 30
+  added_claim_rows: 10
+  revised_inherited_rows: 4
+  total_candidate_claim_rows: 40
+  inherited_formal_bibliography_keys: 17
+  candidate_supplement_keys: 3
+  potential_final_bibliography_keys: 20
+  all_new_claims_have_internal_authority: true
+  new_claims_with_external_primary_or_adjacent_sources: 9
+  direct_literature_match_for_repository_specific_K1R_system: false
+  novelty_decisions_made: 0
+  observational_sources_used_as_results: 0
+
+citation_rules:
+  - Candidate external sources support only their declared contextual roles.
+  - The K1R state, anchor, gauge and fibre theorems remain repository-specific direct derivations or source contracts.
+  - Common-data set intersection does not establish statistical independence.
+  - A source-only donor implementation is not cited as executed on the Report-A branch.
+  - The candidate supplement is not a rendered bibliography authority before K2 freeze.
+  - No Planck or FFP10 value enters the candidate report.
+
+terminal: >-
+  PASS_K2_CITATION_CANDIDATE_OVERLAY_SOURCE__TEN_NEW_AND_FOUR_REVISED_ROWS_MAPPED__
+  THREE_BIBLIOGRAPHY_CANDIDATES_PARSE_CLEAN__FINAL_20_KEY_MERGE_PENDING__
+  NOVELTY_UNRESOLVED__NO_CLAIM_OR_PUBLICATION_PROMOTION

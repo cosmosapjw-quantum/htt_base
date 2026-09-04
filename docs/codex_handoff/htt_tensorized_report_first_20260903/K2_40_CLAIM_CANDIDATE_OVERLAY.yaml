@@ -1,0 +1,439 @@
+schema: htt.report_a.k2.integrated_40_claim_candidate_overlay.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+status: K2_CANDIDATE_OVERLAY_NOT_CANONICAL
+observational_data_used: false
+corrected_planck_tensor_rank: null
+merge_authorized: false
+
+base_claim_ledger:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+  git_blob_sha1: 58291e9cfac6ff85ceffbdb6bdefd50315240831
+  claim_count: 30
+  rule: >-
+    The thirty base claims remain byte-identified by the v4 ledger. This K2
+    object is an overlay candidate rather than a silent rewrite of that
+    authority.
+
+k1r_inputs:
+  authority_crosswalk:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK_V2.yaml
+    git_blob_sha1: 9ed7b47f23b5515ab42defcaa94431a758a57e74
+  theorem_pack:
+    path: docs/research_reports/theory_packs/K1R_TYPED_KINEMATICAL_MES_THEOREM_PACK.md
+    git_blob_sha1: d93ab24adbb089e9d568512ebf10591dc6880414
+  evidence_ledger:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/K1R_TYPED_KINEMATICAL_MES_EVIDENCE_LEDGER.yaml
+    git_blob_sha1: 6f692f170cbeed1ad87fae11435ac9d97dae236b
+  recompile_input:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/K2_KINEMATICAL_CLAIM_RECOMPILE_INPUT_V2.yaml
+    git_blob_sha1: 2be2abfe84a7af28c60871b3751408734e808ce8
+
+base_claim_ids:
+  - RA-SCOPE-001
+  - RA-REP-001
+  - RA-REP-002
+  - RA-REP-003
+  - RA-ORBIT-001
+  - RA-ORBIT-002
+  - RA-ORBIT-003
+  - RA-ORBIT-004
+  - RA-MES-001
+  - RA-MES-002
+  - RA-MES-003
+  - RA-STAT-001
+  - RA-STAT-002
+  - RA-STAT-003
+  - RA-STAT-004
+  - RA-RESP-001
+  - RA-RESP-002
+  - RA-PROC-001
+  - RA-PROC-002
+  - RA-PROC-003
+  - RA-PROC-004
+  - RA-PROC-005
+  - RA-CONT-001
+  - RA-CONT-002
+  - RA-CONT-003
+  - RA-ERR-001
+  - RA-ERR-002
+  - RA-ERR-003
+  - RA-ERR-004
+  - RA-BOUNDARY-001
+
+additions:
+  - id: RA-KIN-001
+    statement: >-
+      The physical anisotropy state is a typed product of congruence
+      kinematics, frame-relative velocities and geometry, distinct from the
+      observable Q/O temperature-tensor state.
+    truth_status: SOURCE_DEFINED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED_IN_DIVERGED_DONOR
+    report_role: CORE_THEOREM
+    authority:
+      - K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK_V2
+      - K1R-T1-STATE-PARTITION
+      - PR367_joint_anisotropy_state
+    assumptions:
+      - declared frame, congruence, epoch, scale, basis, units and perturbative branch
+    forbidden_extensions:
+      - observable_tensor_equals_physical_tensor
+      - untyped_legacy_projection_as_state
+      - donor_execution_inferred_on_report_branch
+
+  - id: RA-KIN-002
+    statement: >-
+      beta_RO, beta_RM and beta_MO have distinct frame semantics; the
+      registered first-order closure is diagnostic and does not identify
+      global matter-frame tilt.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: SOURCE_IMPLEMENTED_IN_DIVERGED_DONOR
+    report_role: CORE_THEOREM
+    authority:
+      - K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK_V2
+      - K1R-T1-STATE-PARTITION
+      - K1R-T11-BETA-BOUNDARY
+      - PR367_VelocityFrameBundle
+    assumptions:
+      - first-order velocity-frame closure convention
+    forbidden_extensions:
+      - beta_RO_equals_beta_MO_without_beta_RM_premise
+      - beta_RO_equals_global_tilt
+      - source_attribution_from_closure
+
+  - id: RA-KIN-003
+    statement: >-
+      Missing physical components and unavailable numerical anchors remain
+      typed and are never replaced by zero, an infinite bound or a guessed
+      radius.
+    truth_status: SOURCE_DEFINED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED_IN_DIVERGED_DONOR
+    report_role: EVIDENCE_BOUNDARY
+    authority:
+      - K1R-T1-STATE-PARTITION
+      - K1R-T4-ACCELERATION-PREMISE-ANCHOR-SPLIT
+      - PR367_missing_component_and_anchor_status_contracts
+    assumptions:
+      - exact typed-state and anchor-status contracts
+    forbidden_extensions:
+      - zero_imputation
+      - guessed_anchor
+      - missingness_as_physical_null
+
+  - id: RA-GEO-001
+    statement: >-
+      DeltaOmega_k is a signed scalar curvature-budget coordinate distinct
+      from optional anisotropic spatial-curvature, Weyl and stress STF tensors;
+      the quoted d-3 quotient counts apply only on locally free SO3 strata.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: SOURCE_IMPLEMENTED_IN_DIVERGED_DONOR
+    report_role: CORE_THEOREM
+    authority:
+      - K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK_V2
+      - K1R-T2-GEOMETRY-DIMENSION-PARITY
+      - PR367_GeometryState
+    assumptions:
+      - registered GeometryState convention
+      - beta_RO treated as first-order closure-derived in the core count
+      - optional geometry tensors excluded from the stated core count
+      - locally free SO3 action for quotient subtraction
+    forbidden_extensions:
+      - scalar_budget_as_anisotropic_curvature_tensor
+      - dimension_count_as_global_orbit_separation
+      - unchanged_count_on_nontrivial_stabiliser_strata
+
+  - id: RA-KFUNC-001
+    statement: >-
+      Physical tensor functionals retain codomain, O3 type, parity, frame,
+      congruence, source-state identity and optional anchor identity
+      independently of observational identification.
+    truth_status: SOURCE_DEFINED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED_IN_DIVERGED_DONOR
+    report_role: CORE_THEOREM
+    authority:
+      - K1R-T12-PHYSICAL-MORPHOLOGY-AND-SCALAR-INHERITANCE
+      - PR367_tensor_functionals
+    assumptions:
+      - registered TensorFunctionalSpec and TensorFunctionalResult contract
+    forbidden_extensions:
+      - functional_exists_implies_observational_identification
+      - scalarization_erases_tensor_source_authority
+      - diagnostic_functional_as_likelihood
+
+  - id: RA-MESA-001
+    statement: >-
+      The active geodesic MES authority provides numerical shear and
+      vorticity anchors, while acceleration is a structural geodesic premise
+      with no numerical MES denominator and optional geometry sectors remain
+      unanchored.
+    truth_status: SOURCE_DEFINED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: CORE_THEOREM
+    authority:
+      - K1R-T3-ANCHOR-SEPARATION
+      - K1R-T4-ACCELERATION-PREMISE-ANCHOR-SPLIT
+      - PR124_MES_theorem_authority
+      - PR252_typed_anchor_surface
+    assumptions:
+      - exact registered geodesic MES branch
+    forbidden_extensions:
+      - zero_radius_acceleration_anchor
+      - nongeodesic_acceleration_ceiling
+      - invented_geometry_anchor
+
+  - id: RA-MESA-002
+    statement: >-
+      A numerical sector stress requires exact channel matching and a fixed
+      ensemble-calibrated positive denominator; a realisation-conditional
+      anchor remains ratio-unidentified and requires joint random-anchor
+      inference.
+    truth_status: SOURCE_DEFINED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: CORE_THEOREM
+    authority:
+      - K1R-T7-QUADRATIC-STRESS
+      - K1R-T8-CHANNEL-MATCH
+      - PR252_SectorStress_and_Fieller_contracts
+    assumptions:
+      - exact channel identity
+      - fixed ensemble-calibrated denominator for direct division
+    forbidden_extensions:
+      - cross_channel_ratio
+      - random_denominator_treated_as_fixed
+      - stress_as_probability_or_evidence
+
+  - id: RA-MESA-003
+    statement: >-
+      For a factorised product anchor body the combined Minkowski gauge is the
+      maximum sector gauge and its square equals the maximum quadratic sector
+      saturation; this formula does not extend automatically to the coupled
+      response-constrained feasible set.
+    truth_status: DERIVED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED_IN_DIVERGED_DONOR
+    report_role: CORE_THEOREM
+    authority:
+      - K1R-T6-PRODUCT-GAUGE
+      - K1R-T7-QUADRATIC-STRESS
+      - PR367_anchor_geometry
+      - PR189_joint_feasible_set
+    assumptions:
+      - factorised Cartesian-product anchor body
+      - available absorbing sector blocks
+      - positive registered radii
+    forbidden_extensions:
+      - signed_cross_sector_cancellation
+      - product_gauge_as_coupled_feasible_set_gauge
+      - gauge_margin_equals_quadratic_exceedance
+
+  - id: RA-ID-001
+    statement: >-
+      When MES ceilings and response compatibility use the same data, the
+      physical identified set jointly conditions on both restrictions and the
+      two restrictions are not independent evidence without an additional
+      joint-law argument.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: SOURCE_SUPPORTED
+    report_role: CORE_THEOREM
+    authority:
+      - K1R-T9-JOINT-IDENTIFIED-SET
+      - PR136_identified_set
+      - PR189_joint_feasible_set
+      - partial_identification_literature
+    assumptions:
+      - predeclared analysis and nuisance policy eta
+      - declared response and compatibility region
+      - data-derived anchor construction included in the complete analysis map
+    forbidden_extensions:
+      - independent_evidence_multiplication_without_joint_law
+      - anchor_construction_omitted_from_finite_null_map
+      - empty_set_as_detection
+      - broad_set_as_central_estimate
+
+  - id: RA-ID-002
+    statement: >-
+      Under an exact linear response, point identification is equivalent to a
+      singleton admissible response-kernel fibre; absent or inadequate
+      response providers yield partial identification, non-identification or
+      abstention rather than inferred tensors.
+    truth_status: DERIVED_EXACT
+    implementation_status: SOURCE_SUPPORTED
+    report_role: CORE_THEOREM
+    authority:
+      - K1R-T10-SINGLETON-FIBRE
+      - K1R-T11-BETA-BOUNDARY
+      - PR136_identified_set
+    assumptions:
+      - exact linear response for the stated singleton criterion
+      - predeclared feasible domain
+    forbidden_extensions:
+      - full_column_rank_as_necessary
+      - solver_failure_as_nonidentification
+      - missing_response_as_point_estimate
+      - response_unavailable_as_physical_null
+
+revisions:
+  - id: RA-MES-002
+    replacement_statement: >-
+      The retained MES shear and vorticity ceilings are one-way,
+      premise-conditioned radial anchors on named physical sectors, not tensor
+      observations, state estimates, distances, occupancy measures or direct
+      measurements of shear or vorticity.
+    add_authority:
+      - K1R-T3-ANCHOR-SEPARATION
+      - K1R-T5-RADIAL-ONLY
+      - K1R-T12-PHYSICAL-MORPHOLOGY-AND-SCALAR-INHERITANCE
+    add_forbidden_extensions:
+      - anchor_as_tensor_state
+      - scalar_radius_as_morphology
+
+  - id: RA-MES-003
+    replacement_statement: >-
+      Rotational scalars and orbit-constant MES anchor bodies cannot
+      equivariantly generate a nonzero vector or STF tensor without additional
+      directional data, while separately typed physical morphology remains a
+      valid state property.
+    add_authority:
+      - K1R-T5-RADIAL-ONLY
+      - K1R-T12-PHYSICAL-MORPHOLOGY-AND-SCALAR-INHERITANCE
+    add_forbidden_extensions:
+      - radial_no_go_denies_physical_morphology
+
+  - id: RA-RESP-001
+    replacement_statement: >-
+      WU010 supplies the exact full-sky thermodynamic-temperature
+      radiation-observer Lorentz pullback for the scoped beta_RO lane on
+      strictly positive absolute skies with d=1; it does not close beta_RM,
+      beta_MO, global tilt or congruence-kinematical responses.
+    add_authority:
+      - K1R-T11-BETA-BOUNDARY
+      - K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK_V2
+    add_forbidden_extensions:
+      - beta_RO_equals_beta_MO_without_beta_RM_premise
+      - congruence_response_from_observer_boost
+
+  - id: RA-STAT-002
+    replacement_statement: >-
+      Data-adaptive finite-null validity requires row symmetry of the complete
+      analysis map, including data-derived MES ceiling construction, anchor
+      conditioning, chart handling, nuisance fitting, selection, missingness,
+      tie handling and final scoring, or a valid independent design.
+    add_authority:
+      - K1R-T9-JOINT-IDENTIFIED-SET
+    add_forbidden_extensions:
+      - data_derived_anchor_fixed_only_on_observation_row
+      - common_data_constraints_treated_as_independent_evidence
+
+uniqueness_and_implication_review:
+  - claim_id: RA-KIN-001
+    closest_existing_or_new_claim: RA-SCOPE-001
+    disposition: KEEP_DISTINCT
+    reason: scope retirement policy is not the positive typed-state factorisation theorem
+  - claim_id: RA-KIN-002
+    closest_existing_or_new_claim: RA-RESP-001
+    disposition: KEEP_DISTINCT
+    reason: frame-semantic closure is a state theorem; RA-RESP-001 is one concrete local response theorem
+  - claim_id: RA-KIN-003
+    closest_existing_or_new_claim: RA-ORBIT-004
+    disposition: KEEP_DISTINCT
+    reason: physical-state and anchor missingness is distinct from observable Q/O chart failure
+  - claim_id: RA-GEO-001
+    closest_existing_or_new_claim: RA-ORBIT-001
+    disposition: KEEP_DISTINCT
+    reason: physical geometry typing and its own conditional dimension count are not the Q/O quotient dimension claim
+  - claim_id: RA-KFUNC-001
+    closest_existing_or_new_claim: RA-MES-003
+    disposition: KEEP_DISTINCT
+    reason: positive typed-functional authority is not the scalar-to-tensor no-go
+  - claim_id: RA-MESA-001
+    closest_existing_or_new_claim: RA-MES-002
+    disposition: KEEP_DISTINCT
+    reason: named active-sector inventory and acceleration structural absence are more specific than general one-way radial semantics
+  - claim_id: RA-MESA-002
+    closest_existing_or_new_claim: RA-STAT-002
+    disposition: KEEP_DISTINCT
+    reason: denominator/channel admissibility is a sector-stress contract, not the finite-null symmetry theorem
+  - claim_id: RA-MESA-003
+    closest_existing_or_new_claim: RA-MES-003
+    disposition: KEEP_DISTINCT
+    reason: convex product geometry and coupled-set boundary are distinct from the equivariance obstruction
+  - claim_id: RA-ID-001
+    closest_existing_or_new_claim: RA-STAT-002
+    disposition: KEEP_DISTINCT
+    reason: identified-set construction and shared-data dependence precede but do not replace finite-null calibration
+  - claim_id: RA-ID-002
+    closest_existing_or_new_claim: RA-RESP-001
+    disposition: KEEP_DISTINCT
+    reason: the singleton-fibre theorem is general; RA-RESP-001 supplies only the beta_RO response lane
+
+candidate_claim_ids:
+  - RA-SCOPE-001
+  - RA-REP-001
+  - RA-REP-002
+  - RA-REP-003
+  - RA-ORBIT-001
+  - RA-ORBIT-002
+  - RA-ORBIT-003
+  - RA-ORBIT-004
+  - RA-KIN-001
+  - RA-KIN-002
+  - RA-KIN-003
+  - RA-GEO-001
+  - RA-KFUNC-001
+  - RA-MES-001
+  - RA-MES-002
+  - RA-MES-003
+  - RA-MESA-001
+  - RA-MESA-002
+  - RA-MESA-003
+  - RA-ID-001
+  - RA-ID-002
+  - RA-STAT-001
+  - RA-STAT-002
+  - RA-STAT-003
+  - RA-STAT-004
+  - RA-RESP-001
+  - RA-RESP-002
+  - RA-PROC-001
+  - RA-PROC-002
+  - RA-PROC-003
+  - RA-PROC-004
+  - RA-PROC-005
+  - RA-CONT-001
+  - RA-CONT-002
+  - RA-CONT-003
+  - RA-ERR-001
+  - RA-ERR-002
+  - RA-ERR-003
+  - RA-ERR-004
+  - RA-BOUNDARY-001
+
+coverage:
+  base_claims: 30
+  new_claims: 10
+  revised_base_claims: 4
+  candidate_claim_count: 40
+  candidate_ids_declared_unique: true
+  canonical_sorted_id_sha256: null
+  canonical_hash_status: PENDING_SUPPORTED_RUNTIME_REPLAY
+  canonical_promotion: false
+  observational_claim_count: 0
+  corrected_planck_rank_claim_count: 0
+  finite_healpix_no_go_claim_count: 0
+  native_bass_claim_count: 0
+
+flattening_policy:
+  current_canonical_ledger_remains: T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+  candidate_overlay_is_self_contained_delta: true
+  final_self_contained_v5_required: true
+  final_v5_gate:
+    - source-contract execution or independently reproduced parser validation
+    - claim uniqueness and implication review readback
+    - citation and organic-integration bijections
+    - manuscript section coverage
+    - independent scientific review
+
+terminal: >-
+  PASS_K2_40_CLAIM_CANDIDATE_OVERLAY_SOURCE__TEN_ADDITIONS_AND_FOUR_REVISIONS_CLASSIFIED__
+  UNIQUENESS_AND_IMPLICATION_REVIEW_SUPPORTS_FORTY_CANDIDATES__
+  FINAL_CANONICAL_COUNT_AND_SELF_CONTAINED_V5_PENDING__NO_CLAIM_PROMOTION
