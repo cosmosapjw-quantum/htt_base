@@ -149,6 +149,9 @@ def test_r4a1v0_formal_workflow_executes_source_binding_then_parent_cas_gate():
     assert "actions/upload-artifact" in text
     assert "sympy==1.14.0" in text
     assert "mpmath==1.3.0" in text
+    assert "auto-config: false" in text
+    assert "build: false" in text
+    assert "build: true" not in text
 
 
 def test_r4a1v0_plan_separates_required_and_supplemental_axes():
