@@ -1,0 +1,110 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v29
+revision_date: 2026-09-05
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_gate: DATA_DEFERRED_BY_OWNER
+
+nodes:
+  K0R:
+    title: Corrected typed kinematical MES authority crosswalk
+    state: SOURCE_COMPLETE
+  K1R:
+    title: Typed kinematical MES theorem and semantic repair
+    state: SOURCE_COMPLETE
+  K2C:
+    title: Forty-claim candidate architecture
+    state: SOURCE_COMPLETE_NOT_CANONICAL
+    outputs:
+      claims: 40
+      additions: 10
+      revisions: 4
+      citations: 40
+      section_rows: 40
+      integration_rows: 40
+      bibliography_candidate_keys: 20
+  K2F_TEST_FIRST:
+    title: K2F deterministic compiler RED contract
+    state: SOURCE_COMPLETE_EXECUTION_UNOBSERVED
+    commit: d9dd071018c36a21d9cc0fd52d9ba8a045ff186d
+  K2F_COMPILER:
+    title: Exact-source K2F authority compiler
+    state: SOURCE_COMPLETE_EXECUTION_UNOBSERVED
+    commit: 268232dedb47b40a54e2a1582753e8a00bb69808
+    properties:
+      exact_input_blobs: 8
+      output_files: 6
+      overwrite_policy: REFUSE
+      claim_promotion: false
+  K2FE:
+    title: Exact compiler execution and materialized K2F authority candidate
+    state: BLOCKED_BY_RUNTIME_ADMISSION
+    depends_on: [K2F_TEST_FIRST, K2F_COMPILER]
+    required_outputs:
+      - T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V5.yaml
+      - REPORT_A_CITATION_PROVENANCE_MATRIX_V3.yaml
+      - REPORT_SECTION_CLAIM_MAP_V3.csv
+      - REPORT_A_ORGANIC_INTEGRATION_MATRIX_V3.yaml
+      - HTT_REPORT_A_REFERENCES_V2.bib
+      - K2F_COMPILATION_RECEIPT.json
+  K2FR:
+    title: Independent review and candidate-authority freeze
+    state: WAITING_ON_K2FE
+  K3:
+    title: Coherent revised full research-report draft
+    state: WAITING_ON_K2FR
+  K4:
+    title: Independent physics mathematics statistics code and provenance audit
+    state: WAITING_ON_K3
+  K5:
+    title: LaTeX PDF citation and visual audit
+    state: WAITING_ON_K4
+  K6:
+    title: Formal receipts frozen-source referee and owner decision
+    state: WAITING_ON_K5_AND_RUNTIME
+  R4A1E:
+    title: Exact CPython 3.12 SymPy and Lean execution
+    state: BLOCKED_BY_RUNTIME_ADMISSION
+  D0:
+    title: Observational authorization
+    state: DEFERRED_BY_OWNER
+
+runtime:
+  attached_independent_probe: PARTIAL_RUNTIME_RECOVERY
+  local_available: [CPython_3_13_5, SymPy_1_14_0, mpmath_1_3_0]
+  local_missing: [CPython_3_12, exact_repo_checkout, Lean, Lake, Octave, SageMath, Singular]
+  github_hosted_runner: HOSTED_RUNNER_PRESTART_FAILURE
+  current_k2f_run:
+    run_id: 33911172461
+    initial_job_id: 101147676378
+    retry_job_id: 101147867554
+    initial_steps: null
+    retry_steps: null
+  wolfram: BLOCKED_BY_UPSTREAM_HTTP_502
+  accepted_new_scientific_receipts: 0
+
+claim_state:
+  current_canonical_ledger: T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+  current_canonical_claims: 30
+  compiled_candidate_target_claims: 40
+  claim_promotion: false
+  corrected_planck_tensor_rank: NONE
+  finite_healpix_containment: RANK_UNRESOLVED
+  physical_kinematical_point_estimate: NONE
+  native_bass_solver: EXCLUDED
+  merge_authorized: false
+
+critical_path:
+  - K2FE
+  - K2FR
+  - K3
+  - K4
+  - K5
+  - K6
+
+current_next_node: K2FE_EXACT_COMPILER_EXECUTION_AND_MATERIALIZATION
+
+terminal: >-
+  K2F_SOURCE_COMPILER_AND_CONTRACT_COMPLETE__MATERIALIZATION_RUNTIME_BLOCKED__
+  K3_WAITING_ON_SELF_CONTAINED_FORTY_CLAIM_AUTHORITY__
+  OBSERVATIONAL_DATA_DEFERRED__FINITE_HEALPIX_RANK_UNRESOLVED__
+  NO_CLAIM_PUBLICATION_OR_MERGE_PROMOTION
