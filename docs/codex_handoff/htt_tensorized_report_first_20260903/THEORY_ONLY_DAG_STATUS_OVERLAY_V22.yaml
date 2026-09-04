@@ -1,0 +1,102 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v22
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_gate: DATA_DEFERRED_BY_OWNER
+
+nodes:
+  R3L:
+    state: COMPLETE
+  R3F:
+    state: COMPLETE
+  R3A:
+    state: SCIENTIFIC_AND_STATISTICAL_CORE_PASS
+  R4A0F:
+    state: COMPLETE
+  R4A1N:
+    state: COMPLETE
+  R4A1NF:
+    state: COMPLETE_SOURCE_ONLY
+  R4A1V0:
+    state: SOURCE_COMPLETE_EXECUTION_PRESTART_BLOCKED
+    accepted_required_axis_receipts: 0
+  R4A1E:
+    title: Exact checkout execution under CPython 3.12 plus required SymPy and Lean axes
+    state: BLOCKED_BY_RUNTIME
+    depends_on: [R4A1V0]
+  R4A1F:
+    title: Flatten executed canonical hash and required-axis receipts
+    state: WAITING_ON_R4A1E
+  R4B0:
+    title: LaTeX source assembly and static publication preflight
+    state: SOURCE_COMPLETE_EXECUTION_PENDING
+    depends_on: [R4A1V0]
+    outputs:
+      - sole Markdown scientific-prose SSOT
+      - organic original-repo plus later-development integration matrix
+      - pinned Pandoc and Tectonic tool identities
+      - deterministic Pandoc defaults and structural Lua filter
+      - publication-only LaTeX header and metadata
+      - static source contract and pinned workflow
+    non_outputs:
+      - no generated TeX authority
+      - no PDF
+      - no visual audit
+      - no publication approval
+  R4B0E:
+    title: Execute static publication-assembly contract
+    state: WAITING_FOR_RUNNER
+    depends_on: [R4B0]
+  R4B1:
+    title: Generate TeX and PDF then perform bibliography and page-level visual audit
+    state: WAITING_ON_R4B0E_AND_RUNTIME
+    depends_on: [R4B0E]
+  R4C:
+    title: Frozen-source final referee and explicit owner release decision
+    state: WAITING_ON_R4A1F_AND_R4B1
+    depends_on: [R4A1F, R4B1]
+  P1:
+    title: WU011 finite-operator numerical-error closeout
+    state: AFTER_R4C
+  P2:
+    title: Ideal inverse intrinsic-octupole nuisance and noisy-estimation theory
+    state: AFTER_R4C
+  P3:
+    title: Depth and local-global identifiability theory
+    state: AFTER_R4C
+  D0:
+    title: Observational-data authorization
+    state: DEFERRED_BY_OWNER
+
+current_parallel_frontier:
+  formal_execution: R4A1E_BLOCKED
+  publication_source: R4B0_SOURCE_COMPLETE
+  next_executable_when_runner_returns:
+    - R4B0E
+    - R4A1E
+
+organic_integration:
+  matrix: docs/research_reports/report_a/REPORT_A_ORGANIC_INTEGRATION_MATRIX.yaml
+  thesis: >-
+    Tensorization preserves observable morphology, while attribution remains
+    controlled by finite-null validity, response quotients, nuisance classes,
+    and numerical error.
+  legacy_manuscript_reuse: FORBIDDEN
+  original_and_later_claim_lineages: PRESERVED_SEPARATELY_AND_COMPOSED_SEMANTICALLY
+
+claim_firewall:
+  - no current scalar-only MES rank
+  - no corrected tensorized Planck result
+  - no empirical beta or boost subtraction
+  - no local observer boost equals global matter tilt
+  - no physical shear or vorticity measurement
+  - no foreground causal attribution
+  - no Bianchi-family attribution
+  - no finite-HEALPix containment theorem
+  - no native BASS solver claim
+  - no merge or publication authority
+
+terminal: >-
+  R4B0_SOURCE_ASSEMBLY_COMPLETE__ORIGINAL_AND_LATER_HTT_CONTENT_ORGANICALLY_INTEGRATED__
+  FORMAL_AND_STATIC_EXECUTION_BLOCKED_BY_RUNNER__PDF_NOT_GENERATED__
+  OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY

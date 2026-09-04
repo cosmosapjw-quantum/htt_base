@@ -1,0 +1,99 @@
+schema: htt.report_a.r4b0.publication_assembly_closeout.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+source_head_before_r4b0: 7680077417e87faa3e21d619bc88700ac4d4a5e8
+observational_data_used: false
+corrected_planck_tensor_rank: null
+finite_healpix_containment: RANK_UNRESOLVED
+merge_authorized: false
+publication_authorized: false
+
+scientific_integration:
+  status: PASS_SOURCE_DESIGN
+  central_thesis: >-
+    Tensorization preserves observable low-multipole morphology, whereas
+    physical attribution remains limited by finite-null validity, the
+    processed response quotient, nuisance structure, and numerical error.
+  original_repository_layers:
+    - typed vector/tensor and survivor-triage foundations
+    - corrected Q/O tensor representation
+    - WU010 local-observer response
+    - WU011 processed operator and frozen finite artifacts
+    - repository CAS risk-tier and provenance infrastructure
+  later_theory_layers:
+    - cyclic-domain Q/O orbit reconstruction and deterministic section
+    - finite-null theorem separation and exact counterexamples
+    - continuum L12 row-rank evidence
+    - invariant matrix numerical-error envelope
+    - exact source-binding and parent-owned SymPy/Lean verifier contract
+  integration_matrix: docs/research_reports/report_a/REPORT_A_ORGANIC_INTEGRATION_MATRIX.yaml
+
+publication_assembly:
+  scientific_prose_ssot: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+  bibliography_ssot: docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+  assembly_spec: docs/research_reports/report_a/R4B0_PUBLICATION_ASSEMBLY_SPEC.yaml
+  pandoc_defaults: docs/research_reports/report_a/pandoc.yaml
+  metadata: docs/research_reports/report_a/metadata.yaml
+  header: docs/research_reports/report_a/header.tex
+  structure_filter: docs/research_reports/report_a/structure.lua
+  generated_output_policy: GENERATED_DO_NOT_EDIT
+  legacy_manuscript_input: FORBIDDEN
+  legacy_manuscript_path: docs/manuscript/main.tex
+
+source_contract:
+  test: tests/contracts/test_report_a_r4b0_assembly.py
+  workflow: .github/workflows/report-a-publication.yml
+  action_pinning: immutable_commit_sha
+  pdf_build_in_r4b0: false
+
+academic_writing_review:
+  abstract_and_integrated_argument:
+    paragraph_logic: >-
+      Three medium short-paragraph notices corresponded to pasted heading
+      labels; no substantive inference-order or contradiction finding was
+      returned.
+    british_english: PASS_NO_ISSUES
+  interpretation: >-
+    The scientific narrative already follows representation, conditional
+    physics, finite-sample validity, response, quotient geometry, numerical
+    boundary, and integrated interpretation rather than repository chronology.
+
+literature_boundary:
+  scispace: >-
+    Credible adjacent CMB morphology literature includes multipole-vector
+    probability and alignment methods, but no current search result directly
+    proves the repository-specific STF2(Q)+STF3(O) Krylov reconstruction.
+  direct_theorem_match: NOT_FOUND_IN_CURRENT_SEARCH
+  novelty: UNRESOLVED
+
+execution_boundary:
+  static_test_source: PRESENT
+  accepted_static_execution: false
+  github_actions: PRESTART_NO_EXECUTION_EXPECTED_UNTIL_RUNNER_GATE_CLEARS
+  formal_required_axis_receipts: 0
+  fresh_wolfram: BLOCKED_BY_UPSTREAM_502
+  pdf_compilation: NOT_STARTED
+  page_visual_audit: NOT_STARTED
+
+claim_firewall:
+  - no current scalar-only MES rank
+  - no corrected tensorized Planck or FFP10 result
+  - no empirical beta or boost subtraction
+  - no local observer boost equals global matter tilt
+  - no physical shear or vorticity estimate from morphology alone
+  - no foreground causal attribution
+  - no Bianchi-family attribution
+  - no finite-HEALPix containment theorem
+  - no native BASS solver claim
+  - no merge or publication authority
+
+next_nodes:
+  blocked_execution: R4A1E_EXACT_CPYTHON312_SYMPY_LEAN_EXECUTION
+  productive_publication: R4B0E_STATIC_ASSEMBLY_EXECUTION
+  after_both: R4B1_PDF_COMPILE_AND_VISUAL_AUDIT
+
+terminal: >-
+  R4B0_PUBLICATION_ASSEMBLY_AND_ORGANIC_INTEGRATION_SOURCE_COMPLETE__
+  STATIC_EXECUTION_PENDING__FORMAL_EXECUTION_PRESTART_BLOCKED__PDF_NOT_GENERATED__
+  OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY
