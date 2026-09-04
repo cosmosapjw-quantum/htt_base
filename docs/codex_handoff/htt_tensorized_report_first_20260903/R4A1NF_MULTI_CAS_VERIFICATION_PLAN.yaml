@@ -1,4 +1,4 @@
-schema: htt.report_a.r4a1nf.multi_cas_verification_plan.v1
+schema: htt.report_a.r4a1nf.multi_cas_verification_plan.v2
 date: 2026-09-04
 repository: cosmosapjw-quantum/htt_base
 report_pr: 449
@@ -21,9 +21,13 @@ verifiers:
     intended_grade: INDEPENDENT_NUMERICAL_SMOKE_CHECK
   sagemath:
     path: docs/research_reports/verifiers/r4a1nf/verify_conventions.sage
-    git_blob_sha1: 25ebdd5eac543478391bdcb4ab2a33b259e1b76d
+    git_blob_sha1: d99c8ea22351963078a50bb6d4630d9e5f0232ec
     command: sage verify_conventions.sage
     intended_grade: EXACT_RATIONAL_AND_QUOTIENT_RING_CHECK
+    positive_definiteness_method: EXACT_SYLVESTER_LEADING_PRINCIPAL_MINORS
+    compatibility_note: >-
+      The source does not call the numerical RDF/CDF is_positive_definite
+      backend on a QQ matrix.
   singular:
     path: docs/research_reports/verifiers/r4a1nf/verify_conventions.sing
     git_blob_sha1: 53eae3e8c2dc6c05cf19c62a429ccc19e513b846
@@ -42,7 +46,7 @@ execution_attempt:
     status: BLOCKED_BY_EXECUTION_BACKEND_CLIENT_ERROR
   github_actions:
     status: PRESTART_NO_EXECUTION
-  scripts_source_status: CREATED_AND_CONTENT_ADDRESSED
+  scripts_source_status: CREATED_CONTENT_ADDRESSED_AND_STATICALLY_HARDENED
   accepted_execution_receipts: 0
 
 claim_boundary:
@@ -52,5 +56,5 @@ claim_boundary:
   - no merge or publication authority is created
 
 terminal: >-
-  MULTI_CAS_VERIFIER_SOURCES_BOUND__EXECUTION_ENVIRONMENTS_ATTEMPTED_BUT_BLOCKED__
-  NO_VERIFICATION_PASS_CLAIMED
+  MULTI_CAS_VERIFIER_SOURCES_BOUND_AND_STATICALLY_HARDENED__
+  EXECUTION_ENVIRONMENTS_ATTEMPTED_BUT_BLOCKED__NO_VERIFICATION_PASS_CLAIMED
