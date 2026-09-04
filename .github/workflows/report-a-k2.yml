@@ -1,4 +1,4 @@
-name: Report A K2 claim architecture candidate contracts
+name: Report A K2 claim architecture and K2F compiler contracts
 
 on:
   pull_request:
@@ -9,7 +9,9 @@ on:
       - docs/research_reports/report_a/REPORT_A_ORGANIC_INTEGRATION_MATRIX_V2_CANDIDATE.yaml
       - docs/research_reports/report_a/K2_BIBLIOGRAPHY_SUPPLEMENT_CANDIDATE.bib
       - docs/research_reports/K2_REPORT_A_CLAIM_ARCHITECTURE.md
+      - scripts/compile_report_a_k2f_authority.py
       - tests/contracts/test_report_a_k2_kinematical_claim_recompile.py
+      - tests/contracts/test_report_a_k2f_compiler.py
       - .github/workflows/report-a-k2.yml
   push:
     paths:
@@ -19,7 +21,9 @@ on:
       - docs/research_reports/report_a/REPORT_A_ORGANIC_INTEGRATION_MATRIX_V2_CANDIDATE.yaml
       - docs/research_reports/report_a/K2_BIBLIOGRAPHY_SUPPLEMENT_CANDIDATE.bib
       - docs/research_reports/K2_REPORT_A_CLAIM_ARCHITECTURE.md
+      - scripts/compile_report_a_k2f_authority.py
       - tests/contracts/test_report_a_k2_kinematical_claim_recompile.py
+      - tests/contracts/test_report_a_k2f_compiler.py
       - .github/workflows/report-a-k2.yml
   workflow_dispatch:
 
@@ -27,7 +31,7 @@ permissions:
   contents: read
 
 jobs:
-  k2-candidate-contracts:
+  k2-authority-contracts:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -43,3 +47,5 @@ jobs:
         run: python -m pytest -q tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py
       - name: Validate K2 candidate claim citation and section bijections
         run: python -m pytest -q tests/contracts/test_report_a_k2_kinematical_claim_recompile.py
+      - name: Validate deterministic K2F authority compiler
+        run: python -m pytest -q tests/contracts/test_report_a_k2f_compiler.py
