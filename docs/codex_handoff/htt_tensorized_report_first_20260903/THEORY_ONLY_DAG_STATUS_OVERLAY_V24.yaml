@@ -1,0 +1,95 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v24
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_gate: DATA_DEFERRED_BY_OWNER
+
+nodes:
+  R3L: {state: COMPLETE}
+  R3F: {state: COMPLETE}
+  R3A: {state: SCIENTIFIC_AND_STATISTICAL_CORE_PASS}
+  R4A0F: {state: COMPLETE}
+  R4A1N: {state: COMPLETE}
+  R4A1NF: {state: COMPLETE_SOURCE_ONLY}
+  R4A1V0:
+    state: SOURCE_COMPLETE_EXECUTION_PRESTART_BLOCKED
+    accepted_required_axis_receipts: 0
+  R4A1E:
+    state: BLOCKED_BY_RUNTIME
+  R4A1F:
+    state: WAITING_ON_R4A1E
+  R4B0:
+    state: SOURCE_COMPLETE
+    scientific_integration: PASS_SOURCE_DESIGN
+    canonical_claim_coverage: 30_OF_30
+    legacy_manuscript_input: FORBIDDEN
+  R4B0E:
+    title: Pinned Pandoc assembly and generated-TeX validation
+    state: SOURCE_COMPLETE_EXECUTION_PRESTART_BLOCKED
+    source_commits:
+      - b1c6b412ac4677be19fe2a0da2e908aa62ec0ee4
+      - 252aafe07de22a28435cd0bd3161b6686abc8f2c
+    execution:
+      run: 33864245329
+      initial_job: 100995351365
+      retry_job: 100995547172
+      steps: null
+      classification: PRESTART_NO_EXECUTION
+    acceptance:
+      - R4B0 source contracts pass
+      - pinned Pandoc SHA-256 passes
+      - LaTeX artifact is generated from the Markdown SSOT
+      - all 30 claim identifiers remain
+      - citeproc leaves no unresolved citation marker
+      - observation-deferred and RANK_UNRESOLVED boundaries remain
+      - legacy control-plane and quarantined manuscript content are absent
+      - generated TeX validation receipt is uploaded
+  R4B1:
+    title: Tectonic PDF compile bibliography resolution and page-level visual audit
+    state: WAITING_ON_R4B0E_AND_R4A1E
+  R4C:
+    title: Frozen-source final referee and explicit owner release decision
+    state: WAITING_ON_R4A1F_AND_R4B1
+  P1:
+    state: AFTER_R4C
+    title: WU011 finite-operator numerical-error closeout
+  P2:
+    state: AFTER_R4C
+    title: Ideal inverse intrinsic-octupole nuisance and noisy-estimation theory
+  P3:
+    state: AFTER_R4C
+    title: Depth and local-global identifiability theory
+  D0:
+    state: DEFERRED_BY_OWNER
+
+current_parallel_frontier:
+  formal_execution: R4A1E_BLOCKED
+  publication_execution: R4B0E_BLOCKED
+  next_after_runtime_recovery: [R4A1E, R4B0E]
+  convergence_after_both: R4B1
+
+scientific_integration:
+  matrix: docs/research_reports/report_a/REPORT_A_ORGANIC_INTEGRATION_MATRIX.yaml
+  status: ORGANIC_SEVEN_LAYER_INTEGRATION_COMPLETE_SOURCE
+  rule: >-
+    Original repository foundations and later developments are composed by
+    scientific layer and exact evidence identity, not by rewriting diverged
+    branch history as one ancestry.
+
+claim_firewall:
+  - no current scalar-only MES rank
+  - no corrected tensorized Planck result
+  - no empirical beta or boost subtraction
+  - no local observer boost equals global matter tilt
+  - no physical shear or vorticity measurement
+  - no foreground causal attribution
+  - no Bianchi-family attribution
+  - no finite-HEALPix containment theorem
+  - no native BASS solver claim
+  - no merge or publication authority
+
+terminal: >-
+  R4B0_AND_R4B0E_SOURCE_COMPLETE__ORGANIC_INTEGRATION_30_OF_30__
+  PINNED_PANDOC_EXECUTION_INITIAL_AND_RETRY_PRESTART_BLOCKED__
+  NO_TEX_OR_PDF_GENERATED__OBSERVATIONAL_DATA_DEFERRED__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY
