@@ -35,8 +35,9 @@ def main() -> None:
     boost_identity = sp.expand(boosted_norm_residual + lorentz_relation) == 0
 
     # Exact quadratic-form decomposition for a generic 2 x 2 Gram-type PSD
-    # contribution P=A A^T.  For lambda_reg>0 and x!=0, the final term
-    # lambda_reg^2 ||x||^2 is strictly positive; the A-term is a sum of squares.
+    # contribution P=A A^T.  This is an explicit algebraic witness for the
+    # matrix form used by the numerical-error construction, not the full
+    # ordered-field proof by itself.
     a11, a12, a21, a22 = sp.symbols(
         "a11 a12 a21 a22", real=True
     )
@@ -52,10 +53,24 @@ def main() -> None:
         Atx.dot(Atx) + lambda_reg**2 * x.dot(x)
     )
     sos_residual = sp.expand(quadratic - sos_form)
-    regularized_posdef = (
-        sos_residual == 0
+
+    # General ordered quadratic-form step.  For an arbitrary real PSD matrix
+    # P and any nonzero x, set q_psd=x^T P x>=0 and
+    # x_norm_sq=x^T x>0.  With lambda_reg>0, the regularizer is strictly
+    # positive and q_psd + lambda_reg^2*x_norm_sq is therefore positive.  This
+    # is the dimension-independent implication formalized separately in Lean.
+    q_psd = sp.symbols("q_psd", nonnegative=True)
+    x_norm_sq = sp.symbols("x_norm_sq", positive=True)
+    strict_regularizer = lambda_reg**2 * x_norm_sq
+    general_quadratic_form = q_psd + strict_regularizer
+    general_ordered_posdef = (
+        q_psd.is_nonnegative is True
+        and x_norm_sq.is_positive is True
         and lambda_reg.is_positive is True
+        and strict_regularizer.is_positive is True
+        and general_quadratic_form.is_positive is True
     )
+    regularized_posdef = sos_residual == 0 and general_ordered_posdef
 
     # Independent high-precision numerical cancellation check for the boost
     # identity.  This is supplemental to, not a substitute for, exact algebra.
@@ -88,6 +103,13 @@ def main() -> None:
                     "regularized_quadratic_form_residual": str(
                         sos_residual
                     ),
+                    "general_ordered_quadratic_form": str(
+                        general_quadratic_form
+                    ),
+                    "strict_regularizer_is_positive": bool(
+                        strict_regularizer.is_positive is True
+                    ),
+                    "nonzero_vector_assumption": "x_norm_sq > 0",
                     "boost_high_precision_residual": mp.nstr(
                         numeric_boost_residual, 20
                     ),
