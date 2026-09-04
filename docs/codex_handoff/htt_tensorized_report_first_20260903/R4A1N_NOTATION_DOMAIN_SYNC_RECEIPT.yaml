@@ -1,0 +1,85 @@
+schema: htt.report_a.r4a1n.source_sync_receipt.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+base_head: 6d477a1c278445dca30447286a2eb983ed8204d1
+observational_data_used: false
+merge_authorized: false
+
+finding:
+  id: R4A1-AUTH-01
+  severity: P1
+  class: INCOMPLETE_AUTHORITY_CLOSURE
+  description: >-
+    The T9 v3 ledger and flattened manuscript separate jointly exchangeable-row
+    ranks from finite transformation-group orbit tests, but the frozen notation
+    registry v2 recombined them under one disjunctive premise and was absent
+    from the R4A1 exact-source set.
+
+source_changes:
+  notation_registry:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml
+    new_schema: htt.report_a.notation_and_convention_registry.v3
+    new_blob_sha1: 2245e291e0b03c65f1a789df8649a194c43fe8fd
+  convention_domain_appendix:
+    path: docs/research_reports/appendices/HTT_REPORT_A_COVARIANT_AND_DOMAIN_CONVENTIONS.md
+    blob_sha1: c7a7616c33572499c3c581c26c7c65fa52ba3b6d
+  t9_authority_overlay:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1N_T9_AUTHORITY_OVERLAY.yaml
+    blob_sha1: 34d6c5fcf42a45c9e7d0780aeef52e51847c01ce
+  manuscript_patch:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1N_MANUSCRIPT_DOMAIN_SYNC.patch
+    blob_sha1: 1ac1a65300927bb1fc5f7c64ebc40089234a3d28
+    state: BOUND_NOT_FLATTENED
+  supported_runtime_contract:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V2.yaml
+    blob_sha1: 98fc4cb1e65327d52fd876d2fc85b3d1f26c36b6
+
+mathematical_checks:
+  photon_null:
+    derivation: "p^2=(E_gamma/c)^2(u^2+2u.e+e^2)=0"
+    status: DERIVED_EXACT
+  measured_energy:
+    derivation: "-c p.u=E_gamma"
+    status: DERIVED_EXACT
+  boosted_observer_norm:
+    derivation: "u_tilde^2=gamma^2(-1+beta_obs^2)=-1"
+    status: DERIVED_EXACT
+  numerical_envelope:
+    domain: "every family nonempty, r_f>0, lambda_reg>0"
+    conclusion: "Gamma_E is positive definite and Gamma_E^(-1/2) exists"
+    status: DERIVED_EXACT
+
+independent_review:
+  academic_writing_toolkit:
+    paragraph_logic: PASS_NO_ISSUES
+    british_english: PASS_NO_ISSUES
+  scispace:
+    result: ADJACENT_1_PLUS_3_AND_RANDOMIZATION_METHODS_ONLY
+    direct_project_theorem_substitution: false
+  primary_arxiv_context:
+    - gr-qc/9812046
+    - 0705.4397
+    - 2406.09521
+  wolfram:
+    context_call: BLOCKED_BY_UPSTREAM_502
+    evaluator_call: BLOCKED_BY_UPSTREAM_502
+    counted_as_pass: false
+
+execution_boundary:
+  local_red_green: NOT_EXECUTED_IN_CURRENT_RUNTIME
+  github_exact_head: PRESTART_NO_EXECUTION
+  source_tests: BOUND
+  manuscript_flattening: PENDING
+
+claim_firewall:
+  corrected_tensorized_planck_rank: null
+  finite_healpix_containment: RANK_UNRESOLVED
+  native_bass_claim: false
+  publication_authority: false
+
+terminal: >-
+  R4A1N_NOTATION_AND_DOMAIN_AUTHORITY_SOURCE_COMPLETE__
+  MANUSCRIPT_PATCH_BOUND_NOT_FLATTENED__
+  SUPPORTED_RUNTIME_PRESTART_BLOCKED__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY

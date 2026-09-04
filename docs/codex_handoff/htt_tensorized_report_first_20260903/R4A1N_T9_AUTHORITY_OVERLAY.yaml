@@ -1,0 +1,57 @@
+schema: htt.report_a.r4a1n.t9_authority_overlay.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_data_used: false
+merge_authorized: false
+
+base_ledger:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V3.yaml
+  git_blob_sha1: 718f536420be3527b06bf46c2a2575309f932f79
+  claim_count: 30
+
+canonical_notation_registry:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml
+  git_blob_sha1: 2245e291e0b03c65f1a789df8649a194c43fe8fd
+  authority_label: NOTATION_AND_CONVENTION_REGISTRY_v3
+
+claim_authority_updates:
+  RA-REP-002:
+    remove_authority_label: NOTATION_AND_CONVENTION_REGISTRY_v2
+    add_authority_label: NOTATION_AND_CONVENTION_REGISTRY_v3
+    statement_changed: false
+    truth_status_changed: false
+    implementation_status_changed: false
+
+cross_claim_domain_binding:
+  RA-RESP-001:
+    registry_sections: [spacetime.observer, sky_and_boost.photon, sky_and_boost.local_observer_boost]
+    claim_changed: false
+  RA-STAT-001:
+    registry_section: statistical_notation.exchangeable_row_rank
+    claim_changed: false
+  RA-STAT-004:
+    registry_section: statistical_notation.randomization_group_orbit
+    claim_changed: false
+  RA-ERR-001:
+    registry_section: numerical_uncertainty.domain
+    claim_changed: false
+
+flattening_policy:
+  current_state: OVERLAY_BOUND_PENDING_SELF_CONTAINED_LEDGER_FLATTENING
+  next_self_contained_ledger: T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+  rule: >-
+    The overlay changes authority provenance and explicit domain binding only.
+    It does not change the 30 claim identifiers or any scientific conclusion.
+
+claim_firewall:
+  corrected_tensorized_planck_rank: null
+  finite_healpix_containment: RANK_UNRESOLVED
+  native_bass_claim: false
+  publication_authority: false
+
+terminal: >-
+  PASS_R4A1N_T9_AUTHORITY_OVERLAY_SOURCE__
+  CLAIM_SURFACE_UNCHANGED_30__
+  SELF_CONTAINED_V4_FLATTENING_PENDING__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY
