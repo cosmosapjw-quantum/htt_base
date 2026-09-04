@@ -1,0 +1,57 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v17
+revision_date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_gate: DATA_DEFERRED_BY_OWNER
+nodes:
+  R3L:
+    state: SOURCE_COMPLETE
+    authority: T9_V3_30_CLAIMS_AND_CITATION_MATRIX_V2
+  R3F:
+    state: SOURCE_COMPLETE
+    authority: FLATTENED_R3_MANUSCRIPT
+  R3A:
+    state: SCIENTIFIC_AND_STATISTICAL_CORE_PASS
+  R4A0:
+    state: PASS_SOURCE_FLATTENED
+    commit: d6e53643f489d75321c5a329d913130600a77932
+    results:
+      deterministic_canonical_section: PASS
+      t2_tex_source_defect: FALSE_POSITIVE_CLOSED
+      exact_sympy: PASS
+      local_red_green: PASS
+      exact_head_runtime: PRESTART_NO_EXECUTION
+  R4A1:
+    title: Supported-runtime report authority and canonical claim-ID hash
+    state: NEXT
+    requirements:
+      - run Python 3.12 focused report contracts
+      - parse T9 v3 and citation matrix v2 from the exact checkout
+      - run flattened manuscript and R4A0 source tests
+      - compute and bind the canonical sorted 30-ID SHA-256
+      - preserve all observational and finite-operator firewalls
+  R4B:
+    title: Typeset PDF and visual/bibliography audit
+    state: WAITING_ON_R4A1
+  R4C:
+    title: Final source/PDF/evidence freeze and explicit owner decision
+    state: WAITING_ON_R4B
+  P1:
+    title: WU011 finite-operator numerical-error closeout
+    state: AFTER_R4C
+  P2:
+    title: Ideal inverse, intrinsic-octupole nuisance, and noisy estimation
+    state: AFTER_R4C
+  P3:
+    title: Depth and local-global identifiability
+    state: AFTER_R4C
+  D0:
+    title: Corrected observational analysis authorization
+    state: DEFERRED_BY_OWNER
+current_next_node: R4A1_SUPPORTED_RUNTIME_CONTRACT_AND_CANONICAL_ID_HASH
+terminal: >-
+  R4A0F_CANONICAL_SECTION_FLATTENED__
+  T2_TEX_FALSE_POSITIVE_CLOSED__
+  R4A1_SUPPORTED_RUNTIME_NEXT__
+  OBSERVATIONAL_DATA_DEFERRED__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY
