@@ -1,0 +1,71 @@
+schema: htt.report_a.k2fr0_k3.parallel_dag.v1
+date: 2026-09-05
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+source_progress_record: K2FR0_SOURCE_AND_K3_DRAFT_PROGRESS_20260905.yaml
+canonical_claims: 30
+candidate_claims: 40
+observational_gate: DATA_DEFERRED_BY_OWNER
+
+nodes:
+  K2FR0:
+    title: Strict provenance-preserving compiler and regression source
+    state: SOURCE_PUSHED_EXECUTION_UNOBSERVED
+    scientific_claim_promotion: false
+  K2FE:
+    title: CPython 3.12 tests and strict six-file materialisation
+    depends_on: [K2FR0]
+    state: BLOCKED_BY_HOSTED_RUNNER_PRESTART_AND_LOCAL_RUNTIME
+    acceptance:
+      - observed syntax and regression results
+      - exact input-byte binding
+      - six output files and compilation receipt
+      - structural findings retained without fabricated assumptions
+  K2FR:
+    title: Independent review of materialised forty-claim candidate
+    depends_on: [K2FE]
+    state: WAITING
+    acceptance:
+      - all original authority memory preserved
+      - four forty-row bijections and twenty parsed bibliography keys
+      - candidate does not imply scientific or publication validation
+      - explicit disposition for structural scope findings
+  K3_CORE:
+    title: Draft physical-state, MES-anchor and joint-identification sections
+    state: DRAFT_PUSHED_NOT_CANONICAL
+    output: docs/research_reports/drafts/K3_TYPED_KINEMATICAL_MES_CORE_DRAFT_20260905.md
+    evidence: source-derived prose plus direct reasoning; no new scientific execution
+  K3_FULL:
+    title: Integrate the complete revised research-report draft
+    depends_on: [K3_CORE]
+    state: READY_FOR_CANDIDATE_DRAFTING
+    requirements:
+      - combine core sections with existing Q/O, finite-null, response and numerical sections
+      - rewrite abstract, introduction and conclusion around the restored kinematical lane
+      - preserve declared assumptions, source roles and all scope boundaries
+      - do not present candidate claim or bibliography status as canonical
+  K4:
+    title: Independent whole-manuscript scientific and provenance review
+    depends_on: [K2FR, K3_FULL]
+    state: WAITING
+  K5:
+    title: Typesetting, citations and page-level visual audit
+    depends_on: [K4]
+    state: WAITING
+  FORMAL_EXECUTION:
+    title: Required source-bound supporting-domain verifier execution
+    state: BLOCKED_BY_RUNTIME
+  K6:
+    title: Frozen-source review and explicit owner release decision
+    depends_on: [K4, K5, FORMAL_EXECUTION]
+    state: WAITING
+
+current_productive_next_node: K3_FULL
+current_execution_next_node: K2FE
+rules:
+  - Drafting may proceed from pinned candidate inputs while runtime is unavailable.
+  - Drafting is not canonicalisation or scientific claim promotion.
+  - Do not replace a prestart runner failure with a source-test verdict.
+  - Do not introduce another audit-only loop instead of producing the manuscript.
+  - Observational data, corrected Planck ranks and native BASS results remain excluded.
+  - Publication and merge require the explicit owner decision.
