@@ -1,0 +1,124 @@
+schema: htt.report_a.k1.typed_kinematical_mes_evidence_ledger.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+k0_closeout_head: 07a9b447331564dde297b118607cc94b8843bfb4
+donor_pr367_head: 6bafca66285ef071081453313bb7d2d6b261599c
+
+results:
+  - id: K1-T1-STATE-PARTITION
+    disposition: INCLUDE_CORE
+    truth_status: SOURCE_DEFINED_EXACT
+    evidence:
+      - joint_anisotropy_state.py blob e2b9651b79e2e334d9d402afbe44566e0c4bad67
+    assumptions: [declared frame, congruence, epoch, scale, basis and perturbative order]
+    forbidden: [untyped legacy beta reinterpretation, scalar_to_tensor_inference]
+  - id: K1-T2-ANCHOR-SEPARATION
+    disposition: INCLUDE_CORE
+    truth_status: SOURCE_DEFINED_EXACT
+    evidence:
+      - statistical_foundations.py blob f52d7716314d0574a1b7203b09787f70d7f3ec2d
+    forbidden: [anchor_as_state_estimate, anchor_as_likelihood, FLRW_converse]
+  - id: K1-T3-RADIAL-ONLY
+    disposition: INCLUDE_CORE
+    truth_status: DERIVED_EXACT
+    evidence: [orthogonal_action_norm_proof]
+    wolfram: BLOCKED_BY_UPSTREAM_HTTP_502
+    independent_execution: NOT_OBSERVED
+    forbidden: [direction_from_norm_bound, morphology_from_scalar_radius]
+  - id: K1-T4-PRODUCT-GAUGE
+    disposition: INCLUDE_CORE
+    truth_status: DERIVED_EXACT
+    evidence:
+      - direct Minkowski-functional proof
+      - anchor_geometry.py blob d9c2134961a6d1e786b72321d829db025bb758fa
+    assumptions: [all included blocks available, every radius positive, Cartesian product body]
+    forbidden: [signed_cross_sector_sum, guessed_radius_for_missing_anchor]
+  - id: K1-T5-CHANNEL-MATCH
+    disposition: INCLUDE_CORE
+    truth_status: SOURCE_DEFINED_EXACT
+    evidence:
+      - statistical_foundations.py blob f52d7716314d0574a1b7203b09787f70d7f3ec2d
+    statuses: [DEFINED, RATIO_UNIDENTIFIED, ANCHOR_UNAVAILABLE, CHANNEL_MISMATCH, NUMERATOR_UNIDENTIFIED]
+    forbidden: [cross_channel_ratio, realization_conditional_ratio_without_joint_analysis]
+  - id: K1-T6-NO-ANCHOR
+    disposition: INCLUDE_CORE
+    truth_status: SOURCE_DEFINED_EXACT
+    evidence:
+      - registered_geodesic_mes_anchors source
+    active_numeric_anchors: [MES_G_SIGMA, MES_G_OMEGA]
+    typed_no_anchor: [MES_G_ACCEL, NO_MES_BRANCH_for_anisotropic_curvature]
+    forbidden: [invent_acceleration_ceiling, invent_curvature_ceiling]
+  - id: K1-T7-RESPONSE-IDENTIFIED-SET
+    disposition: INCLUDE_CORE
+    truth_status: DERIVED_CONDITIONAL
+    evidence:
+      - statistical_foundations IdentifiedDepartureSet semantics
+      - identified_set.py blob 6a7de849a646abcc22fdea5f9a2396af0e9db472
+      - partial-identification literature
+    assumptions: [predeclared physical domain, declared response, declared observational compatibility set]
+    unresolved: [response_specific_sharpness, full_physical_response_rank]
+  - id: K1-T8-BETA-BOUNDARY
+    disposition: INCLUDE_CORE
+    truth_status: LITERATURE_AND_IMPLEMENTATION_SUPPORTED
+    evidence:
+      - VelocityFrameBundle source contract
+      - WU010 PR442 scoped execution authority
+    closed: [beta_RO local observer response]
+    unresolved: [beta_RM response, beta_MO response, global matter tilt]
+    forbidden: [beta_RO_equals_global_tilt]
+  - id: K1-T9-PHYSICAL-MORPHOLOGY
+    disposition: INCLUDE_CORE
+    truth_status: SOURCE_DEFINED_EXACT
+    evidence:
+      - tensor_functionals.py blob eeb938f3f4d3cda892e41ab45128ae1bfdcfcffe
+    operators:
+      - SIGMA_STF5
+      - OMEGA_AXIAL3
+      - ACCELERATION_POLAR3
+      - TR_SIGMA2
+      - TR_SIGMA3
+      - OMEGA2
+      - BETA_RM_DOT_OMEGA
+      - BETA_RM_SIGMA_BETA_RM
+    forbidden: [functional_exists_implies_observationally_identified]
+  - id: K1-T10-SCALAR-INHERITANCE
+    disposition: INCLUDE_CORE
+    truth_status: DERIVED_POLICY_EXACT
+    evidence:
+      - current scalar-only rank retirement policy
+      - K0 four-object separation
+    retained: scalar MES quantities as typed radial anchors
+    retired: scalar collection as primary observable representation or current rank
+
+coverage:
+  theorem_rows: 10
+  include_core: 10
+  observational_claims: 0
+  point_attribution_claims: 0
+  native_bass_claims: 0
+  finite_healpix_no_go_claims: 0
+  corrected_planck_results: 0
+
+review:
+  academic_paragraph_logic: PASS_NO_ISSUES
+  academic_british_english: PASS_NO_ISSUES
+  scispace_covariant_support: PRESENT
+  scispace_partial_identification_support: PRESENT
+  repository_specific_contract_requires_direct_derivation: true
+  wolfram: BLOCKED_BY_UPSTREAM_HTTP_502
+  local_python: BLOCKED_BY_CLIENT_ERROR
+  contract_execution: NOT_EXECUTED
+
+claim_projection:
+  current_canonical_claims: 30
+  provisional_K0_candidates: 10
+  K1_supported_candidates: 10
+  canonical_count_after_K1: 30
+  final_decision_node: K2_CLAIM_LEDGER_RECOMPILE
+  no_claim_promotion_in_K1: true
+
+terminal: >-
+  PASS_K1_TYPED_KINEMATICAL_MES_THEOREM_PACK_SOURCE__
+  TEN_CANDIDATES_SUPPORTED_FOR_K2__RESPONSE_SECTORS_EXCEPT_BETA_RO_UNRESOLVED__
+  EXECUTION_NOT_OBSERVED__NO_CLAIM_PROMOTION
