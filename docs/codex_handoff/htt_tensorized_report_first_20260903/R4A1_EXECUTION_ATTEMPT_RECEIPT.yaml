@@ -39,11 +39,15 @@ canonical_claim_id:
 exact_head_workflow:
   head: 29a1c88f13a66b16aeab8a768a039d31a68e5ce5
   run: 33828253240
-  job: 100885436770
-  runner_id: 0
+  initial_job: 100885436770
+  retry_job: 100887279874
+  initial_runner_id: 0
+  retry_runner_id: 0
   runner_name: ""
-  steps: []
-  conclusion: failure
+  initial_steps: []
+  retry_steps: []
+  initial_conclusion: failure
+  retry_conclusion: failure
   classification: PRESTART_NO_EXECUTION
   checkout_executed: false
   python_setup_executed: false
@@ -69,6 +73,6 @@ fresh_wolfram:
 current_terminal: >-
   R4A1_CONTRACT_AND_EXACT_SOURCE_VALIDATOR_BOUND__
   CANONICAL_HASH_SOURCE_BOUND_NOT_PROMOTED__
-  EXACT_HEAD_PRESTART_NO_EXECUTION__
+  INITIAL_AND_RETRY_PRESTART_NO_EXECUTION__
   SUPPORTED_RUNTIME_UNAVAILABLE__
   NO_PUBLICATION_OR_MERGE_AUTHORITY
