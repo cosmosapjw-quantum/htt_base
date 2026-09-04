@@ -60,12 +60,12 @@ jobs:
           python -m pip install --disable-pip-version-check
           sympy==1.14.0 mpmath==1.3.0
 
-      - name: Set up and build the pinned Lean/mathlib package
+      - name: Set up pinned Lean/mathlib toolchain without pre-running the verifier
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: formal_mathlib
           auto-config: false
-          build: true
+          build: false
           test: false
           lint: false
           use-mathlib-cache: true
