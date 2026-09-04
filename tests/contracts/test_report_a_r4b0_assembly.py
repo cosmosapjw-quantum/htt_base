@@ -24,6 +24,7 @@ LEDGER = (
     / "T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml"
 )
 WORKFLOW = ROOT / ".github" / "workflows" / "report-a-publication.yml"
+VALIDATOR = ROOT / "scripts" / "validate_report_a_generated_tex.py"
 
 
 def load_yaml(path: Path) -> dict:
@@ -40,7 +41,6 @@ def test_r4b0_preserves_one_scientific_prose_authority():
     )
     assert source["bibliography"] == "docs/research_reports/HTT_REPORT_A_REFERENCES.bib"
     assert spec["generated_outputs"]["edit_policy"] == "GENERATED_DO_NOT_EDIT"
-    assert spec["generated_outputs"]["status"] == "NOT_GENERATED_IN_R4B0"
     serialized = SPEC.read_text(encoding="utf-8") + README.read_text(encoding="utf-8")
     assert "docs/manuscript/main.tex" in serialized
     assert "not an input" in serialized or "not an authority or assembly input" in serialized
@@ -108,13 +108,12 @@ def test_r4b0_metadata_and_header_are_publication_only():
     assert "Planck" not in header
 
 
-def test_r4b0_toolchain_and_static_workflow_are_pinned():
+def test_r4b0_toolchain_and_execution_workflow_are_pinned():
     spec = load_yaml(SPEC)
     tools = spec["toolchain"]
     assert tools["pandoc"]["version"] == 3.11
-    assert tools["pandoc"]["sha256"] == (
-        "37edb3bbcf722f921a009941bf5874e2e0c09263226c9b4a2d980788cb062ab6"
-    )
+    pandoc_sha = "37edb3bbcf722f921a009941bf5874e2e0c09263226c9b4a2d980788cb062ab6"
+    assert tools["pandoc"]["sha256"] == pandoc_sha
     assert tools["tectonic"]["version"] == "0.17.0"
     assert tools["tectonic"]["sha256"] == (
         "1a715688baf591e650c8aeb160ae934e181685eecbb38b317de30b269ac5d606"
@@ -122,9 +121,14 @@ def test_r4b0_toolchain_and_static_workflow_are_pinned():
     workflow = WORKFLOW.read_text(encoding="utf-8")
     assert "11d5960a326750d5838078e36cf38b85af677262" in workflow
     assert "a26af69be951a213d495a4c3e4e4022e16d87065" in workflow
-    assert "test_report_a_r4b0_assembly.py" in workflow
+    assert "ea165f8d65b6e75b540449e92b4886f43607fa02" in workflow
+    assert "pandoc-3.11-linux-amd64.tar.gz" in workflow
+    assert pandoc_sha in workflow
+    assert "pandoc --defaults=pandoc.yaml --fail-if-warnings" in workflow
+    assert "validate_report_a_generated_tex.py" in workflow
+    assert "test_report_a_r4b0_generated_tex_validator.py" in workflow
     assert "tectonic" not in workflow.lower()
-    assert "pandoc --defaults" not in workflow
+    assert VALIDATOR.is_file()
 
 
 def test_r4b0_claim_firewalls_remain_closed():
