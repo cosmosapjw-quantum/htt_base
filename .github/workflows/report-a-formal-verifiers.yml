@@ -5,24 +5,30 @@ on:
     paths:
       - docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json
       - docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json
+      - docs/research_reports/verifiers/r4a1nf/verify_source_bindings.py
       - docs/research_reports/verifiers/r4a1nf/cas/**
       - formal_mathlib/Egs3V8Mathlib/ReportAConvention.lean
       - formal_mathlib/Egs3V8Mathlib.lean
       - formal_mathlib/lakefile.toml
       - formal_mathlib/lake-manifest.json
       - formal_mathlib/lean-toolchain
+      - formal/lean-toolchain
+      - .agent-harness/scripts/_harness.py
       - .agent-harness/scripts/cas_gate.py
       - .github/workflows/report-a-formal-verifiers.yml
   push:
     paths:
       - docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json
       - docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json
+      - docs/research_reports/verifiers/r4a1nf/verify_source_bindings.py
       - docs/research_reports/verifiers/r4a1nf/cas/**
       - formal_mathlib/Egs3V8Mathlib/ReportAConvention.lean
       - formal_mathlib/Egs3V8Mathlib.lean
       - formal_mathlib/lakefile.toml
       - formal_mathlib/lake-manifest.json
       - formal_mathlib/lean-toolchain
+      - formal/lean-toolchain
+      - .agent-harness/scripts/_harness.py
       - .agent-harness/scripts/cas_gate.py
       - .github/workflows/report-a-formal-verifiers.yml
   workflow_dispatch:
@@ -40,6 +46,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Verify exact source and verifier bindings
+        run: |
+          python3 docs/research_reports/verifiers/r4a1nf/verify_source_bindings.py \
+            --contract docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json \
+            --run-spec docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json \
+            --adjudicator .agent-harness/scripts/cas_gate.py \
+            --out docs/research_reports/verifiers/r4a1nf/CAS_SOURCE_BINDINGS_R4A1NF_DOMAIN.json
 
       - name: Install pinned SymPy axis dependencies
         run: >-
@@ -64,11 +78,13 @@ jobs:
             --run-spec docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json \
             --out docs/research_reports/verifiers/r4a1nf/CAS_ADJUDICATION_R4A1NF_DOMAIN.json
 
-      - name: Upload the parent-observed adjudication
+      - name: Upload source binding and parent-observed adjudication
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: report-a-r4a1v0-formal-adjudication
-          path: docs/research_reports/verifiers/r4a1nf/CAS_ADJUDICATION_R4A1NF_DOMAIN.json
+          path: |
+            docs/research_reports/verifiers/r4a1nf/CAS_SOURCE_BINDINGS_R4A1NF_DOMAIN.json
+            docs/research_reports/verifiers/r4a1nf/CAS_ADJUDICATION_R4A1NF_DOMAIN.json
           if-no-files-found: warn
           retention-days: 30
