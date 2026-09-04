@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "docs" / "research_reports" / "verifiers" / "r4a1nf"
 CONTRACT = BASE / "CAS_CONTRACT_R4A1NF_DOMAIN.json"
 RUN_SPEC = BASE / "CAS_RUN_SPEC_R4A1NF_DOMAIN.json"
+SOURCE_BINDER = BASE / "verify_source_bindings.py"
 SYMPY_AXIS = BASE / "cas" / "axes" / "sympy" / "axis_program.py"
 LEAN_AXIS = BASE / "cas" / "axes" / "lean" / "axis_program"
 LEAN_MODULE = ROOT / "formal_mathlib" / "Egs3V8Mathlib" / "ReportAConvention.lean"
@@ -86,9 +87,62 @@ def test_r4a1v0_axis_programs_match_the_runner_json_and_formal_scope():
     assert "R4A1NFConvention.lean" not in lean_axis_text
 
 
-def test_r4a1v0_formal_workflow_executes_the_parent_owned_cas_gate():
+def test_r4a1v0_sympy_axis_proves_the_general_ordered_quadratic_form_step():
+    text = SYMPY_AXIS.read_text(encoding="utf-8")
+    assert "q_psd" in text
+    assert "x_norm_sq" in text
+    assert "nonnegative=True" in text
+    assert "positive=True" in text
+    assert "strict_regularizer" in text
+    assert "q_psd.is_nonnegative is True" in text
+    assert "x_norm_sq.is_positive is True" in text
+    assert "general_ordered_posdef" in text
+    assert '"nonzero_vector_assumption"' in text
+
+
+def test_r4a1v0_contract_binds_inputs_run_spec_adjudicator_and_axis_sources():
+    contract = load_json(CONTRACT)
+    identity = contract["identity"]
+
+    assert SOURCE_BINDER.is_file()
+    assert identity["run_spec_hash"]["path"] == RUN_SPEC.relative_to(ROOT).as_posix()
+    assert identity["adjudicator_hash"]["path"] == ".agent-harness/scripts/cas_gate.py"
+    assert identity["binding_validator_hash"]["path"] == SOURCE_BINDER.relative_to(ROOT).as_posix()
+    for row in (
+        *identity["source_input_hashes"],
+        identity["run_spec_hash"],
+        identity["adjudicator_hash"],
+        identity["binding_validator_hash"],
+    ):
+        assert row["hash_algorithm"] in {"git_blob_sha1", "sha256"}
+        assert row["digest"]
+
+    assert set(contract["axes"]) == {"sympy", "lean"}
+    for axis in ("sympy", "lean"):
+        rows = contract["axes"][axis]["source_hashes"]
+        assert rows
+        for row in rows:
+            assert row["hash_algorithm"] in {"git_blob_sha1", "sha256"}
+            assert row["digest"]
+
+    binder_text = SOURCE_BINDER.read_text(encoding="utf-8")
+    assert "git_blob_sha1" in binder_text
+    assert "source_input_hashes" in binder_text
+    assert "run_spec_hash" in binder_text
+    assert "adjudicator_hash" in binder_text
+    assert "binding_validator_hash" in binder_text
+    assert "source_hashes" in binder_text
+    assert "is_symlink" in binder_text
+
+
+def test_r4a1v0_formal_workflow_executes_source_binding_then_parent_cas_gate():
     text = FORMAL_WORKFLOW.read_text(encoding="utf-8")
-    assert ".agent-harness/scripts/cas_gate.py run-adjudicate" in text
+    binding_call = "verify_source_bindings.py"
+    gate_call = ".agent-harness/scripts/cas_gate.py run-adjudicate"
+    assert binding_call in text
+    assert "CAS_SOURCE_BINDINGS_R4A1NF_DOMAIN.json" in text
+    assert gate_call in text
+    assert text.index(binding_call) < text.index(gate_call)
     assert "CAS_CONTRACT_R4A1NF_DOMAIN.json" in text
     assert "CAS_RUN_SPEC_R4A1NF_DOMAIN.json" in text
     assert "CAS_ADJUDICATION_R4A1NF_DOMAIN.json" in text
