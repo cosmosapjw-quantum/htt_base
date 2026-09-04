@@ -1,0 +1,109 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v23
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_gate: DATA_DEFERRED_BY_OWNER
+
+nodes:
+  R3L: {state: COMPLETE}
+  R3F: {state: COMPLETE}
+  R3A: {state: SCIENTIFIC_AND_STATISTICAL_CORE_PASS}
+  R4A0F: {state: COMPLETE}
+  R4A1N: {state: COMPLETE}
+  R4A1NF: {state: COMPLETE_SOURCE_ONLY}
+  R4A1V0:
+    state: SOURCE_COMPLETE_EXECUTION_PRESTART_BLOCKED
+    accepted_required_axis_receipts: 0
+  R4A1E:
+    state: BLOCKED_BY_RUNTIME
+    acceptance:
+      - exact CPython 3.12 checkout
+      - source binding ok=true
+      - SymPy 1.14.0 required axis PASS
+      - Lean 4.31.0 with pinned mathlib required axis PASS
+      - parent adjudication PASS without substitution
+  R4A1F:
+    state: WAITING_ON_R4A1E
+  R4B0:
+    state: SOURCE_COMPLETE_EXECUTION_PRESTART_BLOCKED
+    source_commits:
+      - 055d8d31d4a9a11d9bc27b9a2a99594ba127638f
+      - 58eb7c668780a262f6d481a087ad82037e6cb46e
+    execution:
+      run: 33863462486
+      initial_job: 100992907600
+      retry_job: 100993037702
+      steps: null
+      classification: PRESTART_NO_EXECUTION
+    outputs:
+      - source-bound publication assembly specification
+      - seven-layer organic integration matrix covering all 30 claims
+      - Pandoc 3.11 and Tectonic 0.17.0 pinned identities
+      - deterministic metadata defaults header and structure filter
+      - static contract and pinned workflow
+    non_outputs:
+      - no generated TeX
+      - no PDF
+      - no bibliography rendering receipt
+      - no page visual audit
+      - no publication authority
+  R4B0E:
+    state: BLOCKED_BY_RUNTIME
+  R4B1:
+    state: WAITING_ON_R4B0E_AND_R4A1E
+    title: Generate TeX and PDF then audit bibliography and every page
+  R4C:
+    state: WAITING_ON_R4A1F_AND_R4B1
+    title: Frozen-source final referee and explicit owner release decision
+  P1:
+    state: AFTER_R4C
+    title: WU011 finite-operator numerical-error closeout
+  P2:
+    state: AFTER_R4C
+    title: Ideal inverse intrinsic-octupole nuisance and noisy-estimation theory
+  P3:
+    state: AFTER_R4C
+    title: Depth and local-global identifiability theory
+  D0:
+    state: DEFERRED_BY_OWNER
+
+organic_integration:
+  matrix: docs/research_reports/report_a/REPORT_A_ORGANIC_INTEGRATION_MATRIX.yaml
+  original_repository_foundations:
+    - typed vector/tensor framework and survivor audit
+    - corrected Q/O semantics
+    - WU010 exact local-observer response
+    - WU011 finite processed-response artifacts
+    - CAS and provenance policy
+  later_development:
+    - cyclic Q/O reconstruction and deterministic section
+    - finite-null theorem split and exact counterexamples
+    - continuum L12 evidence
+    - invariant matrix numerical-error theorem
+    - source-bound SymPy/Lean supporting-lemma verification
+  integration_rule: >-
+    Compose by scientific layer and exact evidence identity. Preserve diverged
+    Git ancestry and execution grades; never rewrite the report as PR history.
+
+current_parallel_frontier:
+  formal_execution: R4A1E_BLOCKED
+  static_publication_execution: R4B0E_BLOCKED
+  next_after_runtime_recovery: [R4A1E, R4B0E]
+  convergence_after_both: R4B1
+
+claim_firewall:
+  - no current scalar-only MES rank
+  - no corrected tensorized Planck result
+  - no empirical beta or boost subtraction
+  - no local observer boost equals global matter tilt
+  - no physical shear or vorticity measurement
+  - no foreground causal attribution
+  - no Bianchi-family attribution
+  - no finite-HEALPix containment theorem
+  - no native BASS solver claim
+  - no merge or publication authority
+
+terminal: >-
+  R4B0_SOURCE_COMPLETE_AND_REMOTE_READBACK_PASS__
+  R4B0_INITIAL_AND_RETRY_PRESTART_BLOCKED__R4A1E_PRESTART_BLOCKED__
+  PDF_NOT_GENERATED__OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY
