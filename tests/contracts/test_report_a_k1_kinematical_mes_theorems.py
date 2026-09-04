@@ -34,7 +34,7 @@ def test_all_k1_theorems_are_supported_without_claim_promotion() -> None:
     }
     assert all(row["disposition"] == "INCLUDE_CORE" for row in rows)
     assert data["claim_projection"]["no_claim_promotion_in_K1"] is True
-    assert data["claim_projection"]["canonical_claims_after_K1"] == 30
+    assert data["claim_projection"]["canonical_count_after_K1"] == 30
 
 
 def test_anchor_inventory_and_response_boundary_are_explicit() -> None:
@@ -59,14 +59,18 @@ def test_k2_projection_normalises_ten_candidates_to_seven_additions() -> None:
     additions = data["proposed_new_claims"]
     revisions = data["proposed_existing_claim_revisions"]
     assert len({row["id"] for row in additions}) == 7
-    assert {row["id"] for row in revisions} == {"RA-MES-002", "RA-MES-003", "RA-RESP-001"}
+    assert {row["id"] for row in revisions} == {
+        "RA-MES-002",
+        "RA-MES-003",
+        "RA-RESP-001",
+    }
 
 
 def test_theorem_pack_preserves_scientific_firewalls() -> None:
     text = PACK.read_text(encoding="utf-8")
     required = (
-        "An anchor body is not a physical-state estimate",
-        "The MES body alone supplies no map",
+        "A MES anchor is a conditional bound object on one physical invariant",
+        "No arrow from an anchor body to a tensor state is generative",
         "NO_MES_ANCHOR",
         "point attribution remains withheld",
         "no finite-HEALPix no-go theorem",

@@ -1,0 +1,92 @@
+schema: htt.report_a.k1r.review_and_canonical_memory_receipt.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+input_head: 409ad49a341870f49694b9a57e0baa19ddf841c4
+
+academic_writing_review:
+  paragraph_logic:
+    status: PASS_NO_ISSUES
+    issue_count: 0
+    scope: >-
+      Four-object separation, geometry/dimension paragraphs, acceleration
+      premise-anchor split, jointly conditioned identified set, product-gauge
+      boundary and singleton-fibre criterion.
+  conservative_british_english:
+    status: PASS_NO_ISSUES
+    issue_count: 0
+
+literature_review:
+  scispace_status: ADJACENT_SUPPORT_PRESENT
+  partial_identification:
+    - title: Microeconometrics with Partial Identification
+      author: Francesca Molinari
+      year: 2020
+      doi: 10.1016/bs.hoe.2020.05.002
+      role: >-
+        Supports treating the set of parameter values consistent with data and
+        maintained assumptions as the estimand; does not prove the
+        repository-specific K1R construction.
+    - title: Constraint Qualifications in Partial Identification
+      authors: Hiroaki Kaido, Francesca Molinari and Jorg Stoye
+      year: 2021
+      doi: 10.1017/S0266466621000207
+      role: >-
+        Supports explicit geometric and constraint qualifications for
+        identified sets; does not license independent multiplication of two
+        restrictions derived from common data.
+  covariant_cosmology:
+    - title: Cosmological models
+      authors: George F. R. Ellis and Henk van Elst
+      identifier: arXiv:gr-qc/9812046
+      role: >-
+        Adjacent background for congruence kinematics and covariant radiation
+        variables; project-specific frame and anchor conventions remain direct
+        repository definitions.
+  original_mes:
+    - title: Limits on anisotropy and inhomogeneity from the cosmic background radiation
+      authors: Roy Maartens, George F. R. Ellis and William R. Stoeger
+      identifier: arXiv:astro-ph/9501016
+      role: >-
+        Primary physical background for premise-conditioned CMB bounds on
+        kinematical quantities.
+  boundary: >-
+    Literature supports the architecture but does not replace exact donor
+    source identities, direct set/gauge derivations, or runtime execution.
+
+computer_algebra:
+  wolfram:
+    status: BLOCKED_BY_UPSTREAM_HTTP_502
+    counted_as_pass: false
+  local_sympy:
+    status: BLOCKED_BY_CLIENT_ERROR
+    counted_as_pass: false
+  direct_derivation:
+    status: COMPLETE_FOR_K1R_SOURCE
+
+canonical_memory:
+  requested_connector_name: Canonical Memory Verifier
+  exact_connector_found: false
+  repository_native_substitute:
+    - exact PR head and tree identities
+    - exact donor Git blob identities
+    - K0 authority crosswalk v2
+    - K1R theorem and evidence ledger
+    - K2 claim-recompile input v2
+    - DAG overlay v27
+    - scope and supersession firewalls
+  policy: >-
+    Repository-native durable authorities are used as the canonical memory
+    surface. No unavailable external memory connector is treated as evidence.
+
+execution_boundary:
+  source_review: PASS
+  contract_execution: NOT_OBSERVED
+  claim_promotion: false
+  publication_authority: false
+  merge_authority: false
+
+terminal: >-
+  PASS_K1R_SOURCE_REVIEW__ADJACENT_LITERATURE_BOUND__
+  WOLFRAM_AND_LOCAL_CAS_BLOCKED_NOT_COUNTED__
+  REPOSITORY_NATIVE_CANONICAL_MEMORY_SURFACE_USED
