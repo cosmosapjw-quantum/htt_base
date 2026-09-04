@@ -1,29 +1,31 @@
-name: Report A K2 claim architecture and K2F compiler contracts
+name: Report A K2 strict compiler and authority candidate
 
 on:
   pull_request:
     paths:
-      - docs/codex_handoff/htt_tensorized_report_first_20260903/K2_40_CLAIM_CANDIDATE_OVERLAY.yaml
-      - docs/codex_handoff/htt_tensorized_report_first_20260903/K2_CITATION_PROVENANCE_CANDIDATE_OVERLAY.yaml
-      - docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_SECTION_CLAIM_MAP_V2_CANDIDATE.csv
-      - docs/research_reports/report_a/REPORT_A_ORGANIC_INTEGRATION_MATRIX_V2_CANDIDATE.yaml
-      - docs/research_reports/report_a/K2_BIBLIOGRAPHY_SUPPLEMENT_CANDIDATE.bib
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/**
+      - docs/research_reports/report_a/**
+      - docs/research_reports/HTT_REPORT_A_REFERENCES.bib
       - docs/research_reports/K2_REPORT_A_CLAIM_ARCHITECTURE.md
       - scripts/compile_report_a_k2f_authority.py
+      - scripts/compile_report_a_k2fr0_authority.py
+      - tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py
       - tests/contracts/test_report_a_k2_kinematical_claim_recompile.py
       - tests/contracts/test_report_a_k2f_compiler.py
+      - tests/contracts/test_report_a_k2fr0_hardening.py
       - .github/workflows/report-a-k2.yml
   push:
     paths:
-      - docs/codex_handoff/htt_tensorized_report_first_20260903/K2_40_CLAIM_CANDIDATE_OVERLAY.yaml
-      - docs/codex_handoff/htt_tensorized_report_first_20260903/K2_CITATION_PROVENANCE_CANDIDATE_OVERLAY.yaml
-      - docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_SECTION_CLAIM_MAP_V2_CANDIDATE.csv
-      - docs/research_reports/report_a/REPORT_A_ORGANIC_INTEGRATION_MATRIX_V2_CANDIDATE.yaml
-      - docs/research_reports/report_a/K2_BIBLIOGRAPHY_SUPPLEMENT_CANDIDATE.bib
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/**
+      - docs/research_reports/report_a/**
+      - docs/research_reports/HTT_REPORT_A_REFERENCES.bib
       - docs/research_reports/K2_REPORT_A_CLAIM_ARCHITECTURE.md
       - scripts/compile_report_a_k2f_authority.py
+      - scripts/compile_report_a_k2fr0_authority.py
+      - tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py
       - tests/contracts/test_report_a_k2_kinematical_claim_recompile.py
       - tests/contracts/test_report_a_k2f_compiler.py
+      - tests/contracts/test_report_a_k2fr0_hardening.py
       - .github/workflows/report-a-k2.yml
   workflow_dispatch:
 
@@ -42,10 +44,34 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install focused dependencies
-        run: python -m pip install --disable-pip-version-check pytest PyYAML
-      - name: Validate K1R source precondition
-        run: python -m pytest -q tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py
-      - name: Validate K2 candidate claim citation and section bijections
-        run: python -m pytest -q tests/contracts/test_report_a_k2_kinematical_claim_recompile.py
-      - name: Validate deterministic K2F authority compiler
-        run: python -m pytest -q tests/contracts/test_report_a_k2f_compiler.py
+        run: python -m pip install --disable-pip-version-check pytest==8.3.5 PyYAML==6.0.2 pybtex==0.26.1
+      - name: Check compiler and test syntax
+        run: |
+          python -m py_compile scripts/compile_report_a_k2f_authority.py scripts/compile_report_a_k2fr0_authority.py tests/contracts/test_report_a_k2fr0_hardening.py
+      - name: Run existing K1R and K2 regression contracts
+        run: |
+          python -m pytest -q \
+            tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py \
+            tests/contracts/test_report_a_k2_kinematical_claim_recompile.py \
+            tests/contracts/test_report_a_k2f_compiler.py
+      - name: Verify K2FR0 provenance, status, snapshot and atomic-publication contracts
+        run: python -m pytest -q tests/contracts/test_report_a_k2fr0_hardening.py --junitxml="${RUNNER_TEMP}/k2fr0-tests.xml"
+      - name: Materialise strict source-candidate bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/compile_report_a_k2fr0_authority.py \
+            --repository-root "$GITHUB_WORKSPACE" \
+            --output-root "$RUNNER_TEMP/k2fr0-authority-bundle" \
+            | tee "$RUNNER_TEMP/k2fr0-compilation.stdout.json"
+      - name: Preserve candidate bundle and observed test result
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: k2fr0-source-candidate-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/k2fr0-authority-bundle/
+            ${{ runner.temp }}/k2fr0-tests.xml
+            ${{ runner.temp }}/k2fr0-compilation.stdout.json
+          if-no-files-found: warn
+          retention-days: 14
