@@ -1,0 +1,83 @@
+schema: htt.report_a.r4a1n.closeout.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+source_commit: 6d3eddbdc3c18be5b648d42e6ce1b7021e6cfcb4
+source_tree: ea11961d3596efe1533f5b8a59fb9e36bb09e36a
+parent_commit: 6d477a1c278445dca30447286a2eb983ed8204d1
+observational_data_used: false
+merge_authorized: false
+
+source_authority:
+  notation_registry_v3: 2245e291e0b03c65f1a789df8649a194c43fe8fd
+  convention_domain_appendix: c7a7616c33572499c3c581c26c7c65fa52ba3b6d
+  t9_authority_overlay: 34d6c5fcf42a45c9e7d0780aeef52e51847c01ce
+  manuscript_domain_patch: 1ac1a65300927bb1fc5f7c64ebc40089234a3d28
+  supported_runtime_contract_v2: 98fc4cb1e65327d52fd876d2fc85b3d1f26c36b6
+  semantic_test: 6ba28d5e1d7c1dde4f30fe5ade35b48ce07d8009
+  strict_runtime_test: 08fb78c4134a4a30d4dd9de3ce9a93c1ed268b32
+  source_sync_receipt: a3be792c693d3c8ee97345719ec6e8eed0793b40
+  dag_overlay_v19: 78d17a289581341e9ad055deeac67ecd630e69de
+  workflow: ab00ab25dd4ad790bd8cd1395b6ed6e8657743d8
+
+scientific_surface:
+  canonical_claim_ids: 30
+  claim_identifiers_changed: false
+  citation_keys: 17
+  corrected_tensorized_planck_rank: null
+  finite_healpix_containment: RANK_UNRESOLVED
+  native_bass_claim: false
+
+independent_review:
+  direct_algebra:
+    photon_null_and_energy: PASS_DERIVED_EXACT
+    boosted_observer_normalization: PASS_DERIVED_EXACT
+    numerical_envelope_positive_definiteness: PASS_DERIVED_EXACT
+  academic_writing_toolkit:
+    paragraph_logic: PASS_NO_ISSUES
+    british_english: PASS_NO_ISSUES
+  scispace:
+    status: ADJACENT_METHODS_ONLY
+    project_specific_proof_replaced: false
+  wolfram:
+    context: BLOCKED_BY_UPSTREAM_502
+    evaluator: BLOCKED_BY_UPSTREAM_502
+    counted_as_pass: false
+
+exact_head_workflows:
+  report_authority:
+    run: 33833285126
+    initial_job: 100900574973
+    retry_job: 100900654207
+    initial_steps: []
+    retry_steps: []
+    classification: PRESTART_NO_EXECUTION
+  repository_integrity:
+    run: 33833285130
+    jobs:
+      repository_contracts: 100900575211
+      python_package_smoke: 100900575339
+      rust_compile: 100900575430
+    classification: PRESTART_NO_EXECUTION
+
+verification_boundary:
+  source_readback: PASS
+  exact_checkout_cpython_3_12: NOT_EXECUTED
+  local_red_green: NOT_EXECUTED_RUNTIME_UNAVAILABLE
+  manuscript_patch_flattened: false
+  self_contained_t9_v4_created: false
+
+next_node:
+  id: R4A1NF_FLATTEN_NOTATION_AND_DOMAIN_CONVENTIONS
+  requirements:
+    - apply the bounded manuscript domain patch
+    - create a self-contained T9 v4 ledger with the v3 notation authority
+    - update exact source identities after flattening
+    - preserve 30 claim identifiers and 17 bibliography keys
+    - preserve observational, finite-HEALPix, and BASS firewalls
+
+terminal: >-
+  R4A1N_NOTATION_AND_DOMAIN_AUTHORITY_SOURCE_COMPLETE__
+  EXACT_HEAD_INITIAL_AND_RETRY_PRESTART_NO_EXECUTION__
+  MANUSCRIPT_AND_T9_V4_FLATTENING_NEXT__
+  OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY
