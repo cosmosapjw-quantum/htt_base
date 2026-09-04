@@ -1,20 +1,20 @@
 schema: htt.report_a.citation_provenance_matrix.v2
+revision: R4A1NF_T9_V4_BINDING
 date: 2026-09-04
 repository: cosmosapjw-quantum/htt_base
 report_pr: 449
-canonical_claim_ledger: T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V3.yaml
+canonical_claim_ledger: T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
 formal_bibliography: docs/research_reports/HTT_REPORT_A_REFERENCES.bib
 observational_data_used: false
 novelty_adjudicated: false
 merge_authorized: false
 
-supersedes:
-  path: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V1.yaml
-  git_blob_sha: 7dd3d56315cbdb48bc5d210748d6474cc6b52ed8
+supersedes_revision:
+  git_blob_sha: fe94f10994fffaa52b0c96da7ee86480062a72cc
   reason: >-
-    V2 adds the atomic randomization-group orbit claim, binds the v3 30-claim
-    ledger, and synchronizes bibliographic metadata with the formal BibTeX
-    authority.
+    The R4A1NF revision binds the self-contained T9 v4 ledger and flattens the
+    notation-v3 authorities while preserving the thirty citation rows and
+    seventeen-source bibliography registry.
 
 source_registry:
   MES_1995_LIMITS:
@@ -132,7 +132,7 @@ claim_citations:
     external_sources: [OLIVE_KOLEV_AUFFRAY_2013]
     citation_role: DIRECT_DERIVATION_WITH_ADJACENT_REPRESENTATION_CONTEXT
   RA-REP-002:
-    internal_authority: [T1, T6, PR444]
+    internal_authority: [T1, T6, PR444, NOTATION_AND_CONVENTION_REGISTRY_v3]
     external_sources: []
     citation_role: PROJECT_SPECIFIC_COORDINATE_ADAPTER
   RA-REP-003:
@@ -189,7 +189,7 @@ claim_citations:
     citation_role: FINITE_GROUP_ORBIT_RANDOMIZATION_THEOREM_AND_SUBGROUP_BOUNDARY
 
   RA-RESP-001:
-    internal_authority: [T5, PR442]
+    internal_authority: [T5, PR442, NOTATION_AND_CONVENTION_REGISTRY_v3]
     external_sources: [DAI_CHLUBA_2014, YASINI_PIERPAOLI_2017, ROLDAN_NOTARI_QUARTIN_2016]
     citation_role: PRIMARY_EXACT_BOOST_AND_INTERPRETATION_BOUNDARY
   RA-RESP-002:
@@ -232,7 +232,7 @@ claim_citations:
     citation_role: DISCRETE_CONTINUUM_ERROR_FIREWALL
 
   RA-ERR-001:
-    internal_authority: [T8, PR444_error_envelope_source]
+    internal_authority: [T8, PR444_error_envelope_source, NOTATION_AND_CONVENTION_REGISTRY_v3]
     external_sources: []
     citation_role: DIRECT_CAUCHY_SCHWARZ_AND_LOEWNER_DERIVATION
   RA-ERR-002:
@@ -274,9 +274,9 @@ citation_rules:
   - No observational Planck or FFP10 value enters Report A.
 
 terminal: >-
-  PASS_REPORT_A_CITATION_PROVENANCE_MATRIX_V2_SOURCE__
-  THIRTY_CLAIMS_MAPPED__
-  FINITE_SAMPLE_THEOREM_LANES_SEPARATED__
+  PASS_REPORT_A_CITATION_PROVENANCE_MATRIX_V2_R4A1NF_SOURCE__
+  T9_V4_BOUND__THIRTY_CLAIMS_MAPPED__
+  NOTATION_V3_AUTHORITIES_FLATTENED__
   FORMAL_BIBLIOGRAPHY_SINGLE_AUTHORITY__
   NOVELTY_UNRESOLVED__
   OBSERVATIONAL_DATA_DEFERRED

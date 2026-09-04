@@ -1,0 +1,141 @@
+schema: htt.report_a.r4a1.supported_runtime_authority_contract.v3
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+source_head_at_contract_creation: 28fb530aa308101f81243b8691db11225a9a7068
+observational_data_used: false
+corrected_planck_tensor_rank: null
+finite_healpix_containment: RANK_UNRESOLVED
+merge_authorized: false
+
+supersedes:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V2.yaml
+  git_blob_sha1: 98fc4cb1e65327d52fd876d2fc85b3d1f26c36b6
+  reason: >-
+    V3 binds the flattened R4A1NF manuscript, self-contained T9 v4 ledger,
+    revised citation matrix v2, and canonical notation/domain authorities. The
+    older overlay and manuscript patch remain immutable repair history.
+
+runtime_contract:
+  implementation: CPython
+  major: 3
+  minor: 12
+  yaml_library: PyYAML
+  required_execution: exact_checked_out_git_blobs
+
+source_blobs:
+  claim_ledger:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+    git_blob_sha1: 58291e9cfac6ff85ceffbdb6bdefd50315240831
+  citation_matrix:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+    git_blob_sha1: 3fbaa2f97522cca6d0ad60e0c96655d293ca0d74
+  flattened_manuscript:
+    path: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+    git_blob_sha1: 16f8fdd4db4dac384c5c64a8d3f86e0dbbf62e34
+  formal_bibliography:
+    path: docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+    git_blob_sha1: ba37321119725e52f1a2b0ac827050ee895e5466
+  provenance_appendix:
+    path: docs/research_reports/appendices/HTT_REPORT_A_AUTHORITY_AND_EXECUTION_PROVENANCE.md
+    git_blob_sha1: b2b7d0cb78f995badb118ec92659b41db9d13783
+  notation_registry_v3:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml
+    git_blob_sha1: 2245e291e0b03c65f1a789df8649a194c43fe8fd
+  convention_domain_appendix:
+    path: docs/research_reports/appendices/HTT_REPORT_A_COVARIANT_AND_DOMAIN_CONVENTIONS.md
+    git_blob_sha1: c7a7616c33572499c3c581c26c7c65fa52ba3b6d
+
+canonical_claim_id_contract:
+  algorithm: sha256_utf8_sorted_ids_newline_terminated
+  pseudocode: sha256(("\\n".join(sorted(claim_ids)) + "\\n").encode("utf-8"))
+  claim_count: 30
+  expected_sha256: e103c581ce353b5102af81834831ac292105f18699671e8eb75b171acd97f01e
+  current_authority_grade: SOURCE_BOUND_PENDING_SUPPORTED_RUNTIME_REPLAY
+  ledger_field_before_replay: null
+  ledger_status_before_replay: PENDING_SUPPORTED_RUNTIME_REPLAY
+
+notation_and_domain_contract:
+  canonical_registry_schema: htt.report_a.notation_and_convention_registry.v3
+  observer:
+    normalization: "u^a u_a=-1"
+  photon:
+    null_condition: "p^a p_a=0"
+    measured_energy_definition: "E_gamma=-c p_a u^a>0"
+    decomposition: "p^a=(E_gamma/c)(u^a+e^a)"
+  local_observer_boost:
+    observer_spatiality: "u_a beta_obs^a=0"
+    domain: "0<=beta_obs^2<1"
+    boosted_normalization: "u_tilde^a u_tilde_a=-1"
+  exchangeable_row_assumptions:
+    - joint_exchangeability
+    - complete_row_permutation_equivariance
+    - fixed_tie_and_tail_rule
+  randomization_group_assumptions:
+    - null_law_invariant_under_declared_group
+    - reference_statistics_are_actual_group_orbit
+    - identity_included
+    - exact_or_valid_conditional_monte_carlo_rule
+  forbidden_legacy_premise: joint_exchangeability_or_declared_group_randomization_hypothesis
+  numerical_error_domain:
+    family_registry_nonempty: true
+    every_registered_family_nonempty: true
+    radius_condition: "r_f>0 for every registered family"
+    regularization_condition: "lambda_reg>0"
+    consequence: "Gamma_E is positive definite and Gamma_E^(-1/2) is defined"
+
+cross_surface_contract:
+  - claim ledger contains exactly 30 unique claim identifiers
+  - citation matrix contains exactly one row for every claim identifier
+  - citation matrix names the self-contained T9 v4 ledger
+  - formal bibliography keys equal the citation source registry keys
+  - manuscript citation keys equal the formal bibliography keys
+  - every canonical claim identifier appears in the flattened manuscript
+  - formal bibliography is the sole rendered bibliography authority
+  - source Git-blob identities match this contract
+  - notation registry separates exchangeable-row and group-orbit premises
+  - T9 RA-STAT-001 and RA-STAT-004 assumptions match the notation registry
+  - T9 RA-REP-002 directly names the v3 notation authority
+  - manuscript explicitly states observer, photon, boost, and numerical-error domains
+  - the convention/domain appendix preserves the observation and BASS firewalls
+
+manuscript_flattening:
+  state: FLATTENED_IN_R4A1NF_SOURCE
+  historical_patch_path: docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1N_MANUSCRIPT_DOMAIN_SYNC.patch
+  self_contained_ledger: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+  citation_matrix: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+
+claim_firewall:
+  - no current scalar-only MES rank
+  - no corrected tensorized Planck result
+  - no empirical observer velocity or boost subtraction
+  - no local-global velocity equivalence
+  - no physical shear or vorticity measurement
+  - no foreground causal attribution
+  - no Bianchi-family attribution
+  - no finite-HEALPix containment theorem
+  - no native BASS solver claim
+  - no merge or publication authority
+
+execution_state:
+  github_exact_head: PRESTART_NO_EXECUTION
+  local_exact_checkout_python_3_12: NOT_YET_EXECUTED
+  academic_writing_paragraph_logic: PASS_NO_ISSUES
+  academic_writing_british_english: PASS_NO_ISSUES
+  scispace_primary_search: ADJACENT_METHODS_ONLY
+  fresh_wolfram: BLOCKED_BY_UPSTREAM_502
+  alternative_cas_execution: PENDING_ENVIRONMENT_PROBE
+
+allowed_terminal_after_execution:
+  - PASS_R4A1NF_SUPPORTED_RUNTIME_AUTHORITY_VALIDATION
+  - FAIL_R4A1NF_SOURCE_IDENTITY
+  - FAIL_R4A1NF_CANONICAL_HASH
+  - FAIL_R4A1NF_NOTATION_SEMANTICS
+  - FAIL_R4A1NF_CROSS_SURFACE_CONTRACT
+  - BLOCKED_R4A1NF_RUNTIME_UNAVAILABLE
+
+current_terminal: >-
+  R4A1NF_CONTRACT_V3_SOURCE_BOUND__
+  T9_V4_CITATION_V2_AND_MANUSCRIPT_DOMAINS_FLATTENED__
+  CANONICAL_HASH_SUPPORTED_RUNTIME_PENDING__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY

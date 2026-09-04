@@ -1,0 +1,33 @@
+// Independent Singular ideal-reduction checks for Report A R4A1NF conventions.
+// Run with: Singular verify_conventions.sing
+
+ring r = 0,(gamma2,beta2),dp;
+ideal I = gamma2*(1-beta2)-1;
+ideal G = std(I);
+poly boostResidual = gamma2*(-1+beta2)+1;
+poly reducedBoost = reduce(boostResidual,G);
+
+if (reducedBoost != 0)
+{
+  ERROR("boost normalization identity failed");
+}
+
+// Photon-decomposition scalar factors after u.u=-1, u.e=0, e.e=1.
+number photonNormFactor = -1 + 2*0 + 1;
+number measuredEnergyFactor = -(-1 + 0) - 1;
+if (photonNormFactor != 0)
+{
+  ERROR("photon null identity failed");
+}
+if (measuredEnergyFactor != 0)
+{
+  ERROR("measured energy identity failed");
+}
+
+print("boost quotient residual:");
+print(reducedBoost);
+print("photon norm factor:");
+print(photonNormFactor);
+print("measured energy factor:");
+print(measuredEnergyFactor);
+quit;

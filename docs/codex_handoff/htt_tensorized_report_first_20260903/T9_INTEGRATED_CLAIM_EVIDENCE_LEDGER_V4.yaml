@@ -1,0 +1,467 @@
+schema: htt.report_a.integrated_claim_evidence_ledger.v4
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+status: REPORT_A_CANONICAL_CLAIM_LEDGER_R4A1NF_30
+observational_data_used: false
+corrected_planck_tensor_rank: null
+merge_authorized: false
+
+supersedes:
+  self_contained_v3:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V3.yaml
+    git_blob_sha: 718f536420be3527b06bf46c2a2575309f932f79
+    claim_count: 30
+  authority_overlay:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1N_T9_AUTHORITY_OVERLAY.yaml
+    git_blob_sha: 34d6c5fcf42a45c9e7d0780aeef52e51847c01ce
+  reason: >-
+    V4 flattens the R4A1N notation and domain authority into a self-contained
+    ledger. It replaces the historical notation-registry-v2 authority label by
+    the canonical v3 registry and binds observer, photon, boost, finite-sample,
+    and numerical-error domains without changing the thirty claim identifiers
+    or any scientific conclusion.
+  rule: >-
+    This v4 file is self-contained. Earlier ledgers and overlays remain
+    immutable repair history and are not required to interpret v4.
+
+canonical_notation_registry:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml
+  git_blob_sha1: 2245e291e0b03c65f1a789df8649a194c43fe8fd
+  schema: htt.report_a.notation_and_convention_registry.v3
+  authority_label: NOTATION_AND_CONVENTION_REGISTRY_v3
+
+registered_survivor_source:
+  registered_total: 37
+  included_total: 36
+  deferred_total: 1
+  deferred_candidate: PR284_NEW:FINITE-REGISTERED-PATH
+  curated_report_projection_claims: 30
+  mechanical_implementation_pr: 450
+  mechanical_implementation_head: ba84912bea165896ec8f0c0e5793b47d1736f512
+  source_equivalent_local_tests: 14 passed
+  seed_schema_repair: source_kkind_to_source_kind
+  exact_head_execution: PRESTART_NO_EXECUTION
+  release_authority: false
+
+active_repairs:
+  mechanical_survivor_surface:
+    pr: 450
+    head: ba84912bea165896ec8f0c0e5793b47d1736f512
+    source_equivalent_local_tests: 14 passed
+    seed_schema_repair: source_kkind_to_source_kind
+    exact_head_execution: PRESTART_NO_EXECUTION
+  qo_packet_image:
+    pr: 451
+    head: 9f7d06dec0fce1c3a8a53fa5372c84d9c679c037
+    source_equivalent_local_tests: 28 passed
+    local_stress:
+      seed: 20260903
+      forward_generated_pairs: 10000
+      typed_chart_refusals: 7
+      silent_replay_failures: 0
+      maximum_absolute_packet_residual: 5.2119071003442485e-09
+    exact_head_execution: PRESTART_NO_EXECUTION
+  finite_null_tie_receipt:
+    theorem_pack_commit: b8a95e445a2f796c7501f9ebf17c0324c49d0964
+    receipt_commit: 3f45bf5915bb4c9c0858d36eeb85f6cb099ef235
+    wolfram_status: PASS_EXACT_ENUMERATION
+  randomization_group_separation:
+    report_commit: 0d964061684f9417d863633db4afc6273330874d
+    receipt_path: docs/codex_handoff/htt_tensorized_report_first_20260903/R3_SUBGROUP_COUNTEREXAMPLE_RECEIPT.json
+    exact_fraction_check: PASS
+    wolfram_status: BLOCKED_BY_UPSTREAM_502
+  notation_domain_sync:
+    source_commit: 6d3eddbdc3c18be5b648d42e6ce1b7021e6cfcb4
+    closeout_commit: 28fb530aa308101f81243b8691db11225a9a7068
+    registry_schema: htt.report_a.notation_and_convention_registry.v3
+    manuscript_patch_blob: 1ac1a65300927bb1fc5f7c64ebc40089234a3d28
+    exact_head_execution: PRESTART_NO_EXECUTION
+
+vocabulary:
+  truth_status:
+    - ESTABLISHED
+    - DERIVED_EXACT
+    - DERIVED_CONDITIONAL
+    - NUMERICALLY_CHECKED
+    - UNRESOLVED
+    - POLICY_SUPERSEDED
+  implementation_status:
+    - NOT_APPLICABLE
+    - SOURCE_IMPLEMENTED
+    - SOURCE_IMPLEMENTED_REPAIR_PENDING_EXECUTION
+    - IMPLEMENTATION_VERIFIED
+    - PRESTART_NO_EXECUTION
+    - LOCAL_NON_BYTE_EXACT
+  report_role:
+    - CORE_THEOREM
+    - SUPPORTING_LEMMA
+    - NEGATIVE_RESULT
+    - SYNTHETIC_VALIDATION
+    - EVIDENCE_BOUNDARY
+    - SCOPE_AND_SUPERSESSION
+
+claims:
+  - id: RA-SCOPE-001
+    statement: >-
+      Scalar-only MES ranks and historical WU006-WU008 tensor, foreground,
+      and carrier-injection interpretations are not current Report-A results.
+    truth_status: POLICY_SUPERSEDED
+    implementation_status: NOT_APPLICABLE
+    report_role: SCOPE_AND_SUPERSESSION
+    authority: [explicit_user_policy, PR440_tensorized_semantic_authority, A1_authority_ledger]
+    forbidden_extensions: [historical_rank_as_current_result, byte_replay_restores_semantic_validity]
+
+  - id: RA-REP-001
+    statement: >-
+      The orthonormal real carrier is c_l=(a_l0,sqrt(2)Re a_lm,-sqrt(2)Im a_lm)
+      and satisfies ||c_l||^2=sum_m |a_lm|^2=(2l+1)C_l.
+    truth_status: DERIVED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: CORE_THEOREM
+    authority: [T1_STORED_REAL_STF_THEOREM_PACK, T1_WOLFRAM_EXACT_RECEIPT, PR440_source]
+    runtime_boundary: PR440 exact-head jobs executed zero steps
+
+  - id: RA-REP-002
+    statement: >-
+      The WU011 raw complex-component coordinate has metric
+      G_l=diag(1,2,2,...) and is related to c_l by c_l=D_l r_l with
+      D_l^T D_l=G_l.
+    truth_status: DERIVED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: SUPPORTING_LEMMA
+    authority: [NOTATION_AND_CONVENTION_REGISTRY_v3, PR444_processed_boost_response_and_jacobian]
+    domain_binding: harmonics.raw_complex_component_coordinate_and_adapter
+    forbidden_extensions: [conflate_the_two_real_coordinates, compare_raw_singular_values_without_metric_adapter]
+
+  - id: RA-REP-003
+    statement: >-
+      Q:Q=15||c_2||^2/(8pi)=75C_2/(8pi) and
+      O:O=35||c_3||^2/(8pi)=245C_3/(8pi).
+    truth_status: DERIVED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: CORE_THEOREM
+    authority: [T1_STORED_REAL_STF_THEOREM_PACK, T1_WOLFRAM_EXACT_RECEIPT, PR440_source]
+
+  - id: RA-ORBIT-001
+    statement: >-
+      On the trivial-stabilizer stratum, the generic SO3 quotient of
+      STF2(Q) direct-sum STF3(O) has dimension 5+7-3=9.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: NOT_APPLICABLE
+    report_role: SUPPORTING_LEMMA
+    authority: [T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK, exact_dimension_count]
+    assumptions: [locally_free_SO3_action]
+    forbidden_extensions: [apply_dimension_subtraction_on_singular_strata, substitute_VT_T8_four_vector_result]
+
+  - id: RA-ORBIT-002
+    statement: >-
+      On the nonzero cyclic domain det[v,Qv,Q^2v]!=0, two positive amplitudes
+      plus the validated Krylov packet separate proper-rotation orbits and
+      reconstruct one canonical SO3 representative.
+    truth_status: DERIVED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED_REPAIR_PENDING_EXECUTION
+    implementation_repair_pr: 451
+    report_role: CORE_THEOREM
+    authority: [T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK, T2_WOLFRAM_EXACT_RECEIPT, PR440_source, PR451_image_safe_stable_decoder]
+    assumptions: [Q_nonzero, O_nonzero, simple_Q_spectrum, every_eigenframe_component_of_v_nonzero, packet_lies_in_valid_forward_image]
+    runtime_boundary: PR451 exact-head job executed zero steps
+    novelty_status: UNRESOLVED_NO_DIRECT_MATCH_IN_CURRENT_SEARCH
+    forbidden_extensions: [all_strata_orbit_atlas, invariant_ring_completeness, arbitrary_packet_image_characterization]
+
+  - id: RA-ORBIT-003
+    statement: >-
+      The signed Krylov determinant is an SO3 scalar and O3 pseudoscalar and
+      separates the registered cyclic mirror pair sharing the named four
+      ordinary quadratic/cubic statistics.
+    truth_status: DERIVED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: NEGATIVE_RESULT
+    authority: [T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK, T2_WOLFRAM_EXACT_RECEIPT, PR440_mirror_test]
+    forbidden_extensions: [nonseparation_of_every_possible_bispectrum]
+
+  - id: RA-ORBIT-004
+    statement: >-
+      Zero, contraction-null, repeated-spectrum, noncyclic, and condition-limit
+      rows are typed chart failures; the original tensors and row membership
+      must be preserved.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: EVIDENCE_BOUNDARY
+    authority: [T2_QO_STRATA_AND_SCOPE_LEDGER, T4_row_equivariance_theorem, PR440_source]
+    forbidden_extensions: [impute_chart_failure_as_zero, delete_only_failed_reference_rows, manufacture_axes]
+
+  - id: RA-MES-001
+    statement: >-
+      In the original PSTF normalization,
+      epsilon_2=sqrt(75C_2/(8pi))/T0 and epsilon_3=sqrt(245C_3/(8pi))/T0.
+    truth_status: DERIVED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: CORE_THEOREM
+    authority: [T3_CONDITIONAL_MES_GEOMETRY_THEOREM_PACK, T3_WOLFRAM_AND_SOURCE_RECEIPT, PR440_source]
+
+  - id: RA-MES-002
+    statement: >-
+      The retained MES shear and vorticity ceilings are one-way,
+      premise-conditioned scalar functionals, not tensor observations or
+      measurements of physical shear or vorticity.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: CORE_THEOREM
+    authority: [T3_CONDITIONAL_MES_GEOMETRY_THEOREM_PACK, Maartens_Ellis_Stoeger_primary_sources]
+    assumptions: [declared_congruence_and_frame, geodesic_branch, all_observer_extension, derivative_hierarchy_reduction, residual_dipole_scenario]
+    forbidden_extensions: [converse_FLRW_certificate, saturation_or_occupancy, tensor_reconstruction_from_scalar_ceiling]
+
+  - id: RA-MES-003
+    statement: >-
+      Rotational scalars alone cannot equivariantly generate a nonzero vector
+      or STF tensor without additional directional data.
+    truth_status: DERIVED_EXACT
+    implementation_status: NOT_APPLICABLE
+    report_role: NEGATIVE_RESULT
+    authority: [T3_scalar_to_tensor_equivariance_proof]
+
+  - id: RA-STAT-001
+    statement: >-
+      An observation-inclusive upper-tail rank is super-uniform when the pooled
+      rows are jointly exchangeable and the complete analysis is equivariant
+      under every row permutation used by the rank construction.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: NOT_APPLICABLE
+    report_role: CORE_THEOREM
+    authority: [T4_FINITE_NULL_ROW_EQUIVARIANCE_THEOREM_PACK, T4_WOLFRAM_FINITE_RANK_RECEIPT_v2, finite_rank_exchangeability_direct_proof]
+    assumptions: [joint_exchangeability, complete_row_permutation_equivariance, fixed_tie_and_tail_rule]
+    domain_binding: statistical_notation.exchangeable_row_rank
+    forbidden_extensions: [replace_joint_exchangeability_by_proper_subgroup_invariance, certify_specific_Planck_FFP10_pool, treat_shared_rows_as_independent_replications]
+
+  - id: RA-STAT-002
+    statement: >-
+      Data-adaptive selection remains finite-null valid only when selection,
+      nuisance fitting, chart handling, missingness, ties, and scoring together
+      preserve row symmetry or use a valid independent design.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: NOT_APPLICABLE
+    report_role: CORE_THEOREM
+    authority: [T4_FINITE_NULL_ROW_EQUIVARIANCE_THEOREM_PACK, T4_WOLFRAM_FINITE_RANK_RECEIPT_v2]
+    exact_counterexample:
+      enumeration_unit: row_permutations
+      tie_to_coordinate_2: {p_1_over_2: 12, p_3_over_4: 12, max_size_violation: "1/4"}
+      tie_to_coordinate_1: {p_1_over_2: 6, p_3_over_4: 18, max_size_violation: "1/4"}
+      symmetric_pooled_rule: {p_3_over_4: 18, p_1: 6, max_size_violation: "0"}
+    forbidden_extensions: [observation_specific_feature_choice_with_reference_rows_fixed]
+
+  - id: RA-STAT-003
+    statement: >-
+      A noisy observation and noise-free CMB-only simulations are not an
+      exchangeable finite-null calibration without an explicit matched joint law.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: NOT_APPLICABLE
+    report_role: EVIDENCE_BOUNDARY
+    authority: [T4_null_fidelity_boundary, PR440_statistical_boundary]
+
+  - id: RA-STAT-004
+    statement: >-
+      Under a null-invariant finite transformation group, finite-sample
+      randomization validity is obtained by ranking over the actual group
+      orbit, or by a valid identity-including conditional-Monte-Carlo sample
+      of transformations; invariance under a proper subgroup does not license
+      ranking against arbitrary rows outside that orbit.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: NOT_APPLICABLE
+    report_role: CORE_THEOREM
+    authority: [T4_FINITE_NULL_ROW_EQUIVARIANCE_THEOREM_PACK, R3_SUBGROUP_COUNTEREXAMPLE_RECEIPT, randomization_inference_primary_sources]
+    assumptions: [null_law_invariant_under_declared_group, reference_statistics_are_actual_group_orbit, identity_included, exact_or_valid_conditional_monte_carlo_rule]
+    domain_binding: statistical_notation.randomization_group_orbit
+    exact_counterexample:
+      states: [[10, 0, -100, -100], [0, 10, -100, -100]]
+      weights: ["1/2", "1/2"]
+      subgroup: identity_and_swap_rows_0_1
+      all_row_p_values: ["1/4", "1/2"]
+      all_row_max_size_excess: "1/2"
+      group_orbit_p_values: ["1/2", "1"]
+      group_orbit_max_size_excess: "0"
+    forbidden_extensions: [arbitrary_rows_outside_group_orbit, subgroup_invariance_implies_joint_exchangeability]
+
+  - id: RA-RESP-001
+    statement: >-
+      WU010 supplies the exact full-sky thermodynamic-temperature local-observer
+      Lorentz pullback on strictly positive absolute skies for d=1.
+    truth_status: DERIVED_EXACT
+    implementation_status: IMPLEMENTATION_VERIFIED
+    report_role: CORE_THEOREM
+    authority: [T5_WU010_LOCAL_OBSERVER_RESPONSE_THEOREM_PACK, T5_WOLFRAM_AND_EXECUTION_RECEIPT, PR442_head_29427a1f, NOTATION_AND_CONVENTION_REGISTRY_v3]
+    domain_binding: [spacetime.observer, sky_and_boost.photon, sky_and_boost.local_observer_boost]
+    forbidden_extensions: [global_matter_frame_tilt, polarization_response, nonpositive_temperature_field]
+
+  - id: RA-RESP-002
+    statement: >-
+      The first-order quadrupole-to-octupole response is
+      (B_Q beta)_abc=3 beta_<a Q_bc>, with M_Q=q_2 I+(6/5)Q^2 and
+      sharp kappa_2(M_Q)<=5/3.
+    truth_status: DERIVED_EXACT
+    implementation_status: IMPLEMENTATION_VERIFIED
+    report_role: CORE_THEOREM
+    authority: [T5_WU010_LOCAL_OBSERVER_RESPONSE_THEOREM_PACK, T5_WOLFRAM_AND_EXECUTION_RECEIPT]
+
+  - id: RA-PROC-001
+    statement: >-
+      WU011 composes local boost, source transfer, HEALPix synthesis, weighted
+      joint ell=0..5 fit, post-fit commonization, and retained ell=2..5
+      projection in that fixed order.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: CORE_THEOREM
+    authority: [T6_WU011_PROCESSED_RESPONSE_QUOTIENT_THEOREM_PACK, PR444_processed_boost_operator]
+    runtime_boundary: current PR444 exact-head jobs executed zero steps
+
+  - id: RA-PROC-002
+    statement: >-
+      The physical T0 column is an exact structural null of the retained
+      first-order scientific Jacobian after simultaneous ell=0,1 fitting;
+      finite HEALPix leakage is a separate replay diagnostic.
+    truth_status: DERIVED_EXACT
+    implementation_status: IMPLEMENTATION_VERIFIED
+    report_role: CORE_THEOREM
+    authority: [T6_WU011_PROCESSED_RESPONSE_QUOTIENT_THEOREM_PACK, T6_WOLFRAM_AND_EVIDENCE_RECEIPT, frozen_Task5B_execution]
+
+  - id: RA-PROC-003
+    statement: >-
+      For a declared nuisance matrix K,
+      rank(P_ImK_perp J)=rank([K J])-rank(K), and cumulative high-source
+      images are nested with source cutoff.
+    truth_status: DERIVED_EXACT
+    implementation_status: NOT_APPLICABLE
+    report_role: CORE_THEOREM
+    authority: [T6_WU011_PROCESSED_RESPONSE_QUOTIENT_THEOREM_PACK, T6_WOLFRAM_AND_EVIDENCE_RECEIPT]
+    forbidden_extensions: [physical_source_identification_from_quotient, replace_rank_by_column_count]
+
+  - id: RA-PROC-004
+    statement: >-
+      The frozen Task7B atlas found no registered cut-sky case passing all
+      conditioning, ell6-alias, and high-source-tail gates.
+    truth_status: NUMERICALLY_CHECKED
+    implementation_status: IMPLEMENTATION_VERIFIED
+    report_role: NEGATIVE_RESULT
+    authority: [Task7B_head_13d40cb4, Task7B_artifact_9832711817, T6_evidence_receipt]
+    forbidden_extensions: [all_possible_masks_or_transfers, physical_nonidentification_theorem]
+
+  - id: RA-PROC-005
+    statement: The last byte-exact matched-control finite-operator result is rank unresolved, with no containment candidate.
+    truth_status: NUMERICALLY_CHECKED
+    implementation_status: IMPLEMENTATION_VERIFIED
+    report_role: EVIDENCE_BOUNDARY
+    authority: [Task7C_head_f635d873, Task7C_artifact_9851300447, T6_evidence_receipt]
+    forbidden_extensions: [finite_healpix_high_source_containment_proved]
+
+  - id: RA-CONT-001
+    statement: >-
+      For the registered continuum wide-mask identity-transfer operator at
+      L=12, the z-direction high-source response has exact row rank 32.
+    truth_status: DERIVED_EXACT
+    implementation_status: LOCAL_NON_BYTE_EXACT
+    report_role: CORE_THEOREM
+    authority: [T7_CONTINUUM_WIDE_MASK_EVIDENCE_PACK, PR446_exact_z_pivot_minor_artifact]
+    execution_boundary: external-verifier GitHub jobs executed zero steps
+
+  - id: RA-CONT-002
+    statement: >-
+      The other five registered directions have continuum row rank 32 at L=12
+      in independent high-precision Wolfram and direct-quadrature calculations.
+    truth_status: NUMERICALLY_CHECKED
+    implementation_status: LOCAL_NON_BYTE_EXACT
+    report_role: CORE_THEOREM
+    authority: [T7_CONTINUUM_WIDE_MASK_EVIDENCE_PACK, T7_CONTINUUM_EVIDENCE_LEDGER, PR447_source_verifiers]
+    novelty_status: UNRESOLVED
+    forbidden_extensions: [all_direction_interval_certificate, repository_executed_external_verifier_pass]
+
+  - id: RA-CONT-003
+    statement: >-
+      Continuum full row rank does not imply finite-HEALPix robust full row
+      rank without a numerical-error bridge.
+    truth_status: DERIVED_EXACT
+    implementation_status: NOT_APPLICABLE
+    report_role: EVIDENCE_BOUNDARY
+    authority: [T7_CONTINUUM_WIDE_MASK_EVIDENCE_PACK, T6_finite_operator_boundary]
+
+  - id: RA-ERR-001
+    statement: >-
+      For a frozen nonempty additive family-ball class,
+      Gamma_E=N_fam sum_f r_f^2 sum_i E_fi E_fi^T+lambda_reg^2 I is a
+      conservative Loewner envelope.
+    truth_status: DERIVED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: CORE_THEOREM
+    authority: [T8_MATRIX_NUMERICAL_ERROR_ENVELOPE_THEOREM_PACK, T8_WOLFRAM_EXACT_RECEIPT, PR444_error_envelope_source, NOTATION_AND_CONVENTION_REGISTRY_v3]
+    domain_binding: numerical_uncertainty.domain
+    runtime_boundary: current exact-head jobs executed zero steps
+
+  - id: RA-ERR-002
+    statement: >-
+      The envelope is invariant under compensated uniform scaling and
+      orthogonal mixing inside each frozen family, while exactly zero families
+      must be rejected or omitted.
+    truth_status: DERIVED_EXACT
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: SUPPORTING_LEMMA
+    authority: [T8_MATRIX_NUMERICAL_ERROR_ENVELOPE_THEOREM_PACK, T8_WOLFRAM_EXACT_RECEIPT]
+
+  - id: RA-ERR-003
+    statement: >-
+      If Delta Delta^T<=Gamma_E, singular values of Gamma_E^(-1/2)K_obs above
+      one give a robust nonzero-rank lower bound; all row singular values above
+      one certify full row rank.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: SOURCE_IMPLEMENTED
+    report_role: CORE_THEOREM
+    authority: [T8_MATRIX_NUMERICAL_ERROR_ENVELOPE_THEOREM_PACK, T8_WOLFRAM_EXACT_RECEIPT]
+    assumptions: [actual_error_belongs_to_declared_class, family_and_radius_registry_frozen_before_evaluation]
+    forbidden_extensions: [actual_finite_healpix_error_class_complete, signal_dependent_radius_tuning]
+
+  - id: RA-ERR-004
+    statement: >-
+      A certified partial rank lower bound does not certify a stable nuisance
+      projector; subspace interpretation additionally requires perturbation
+      control and a singular-value gap.
+    truth_status: DERIVED_CONDITIONAL
+    implementation_status: NOT_APPLICABLE
+    report_role: EVIDENCE_BOUNDARY
+    authority: [T8_Wedin_partial_subspace_lane, Cai_Zhang_2018, Li_1999, Lyu_Wang_2020]
+
+  - id: RA-BOUNDARY-001
+    statement: >-
+      No corrected tensorized Planck rank or other current observation-bearing
+      result exists in the present theory phase.
+    truth_status: ESTABLISHED
+    implementation_status: NOT_APPLICABLE
+    report_role: SCOPE_AND_SUPERSESSION
+    authority: [owner_data_deferral, D0_gate, PR449_control_plane]
+    forbidden_extensions: [placeholder_observed_rank, implicit_reuse_of_superseded_results]
+
+coverage:
+  claim_count: 30
+  canonical_sorted_id_sha256: null
+  canonical_sorted_id_sha256_status: PENDING_SUPPORTED_RUNTIME_REPLAY
+  observational_claim_count: 0
+  corrected_planck_rank_claim_count: 0
+  finite_healpix_no_go_claim_count: 0
+  bianchi_family_claim_count: 0
+  native_bass_claim_count: 0
+  all_claims_have_authority: true
+  all_conditional_claims_have_assumptions_or_boundary: true
+  all_numerical_claims_have_execution_grade: true
+  all_source_only_claims_are_not_labelled_implementation_verified: true
+
+remaining_before_report_freeze:
+  - execute the self-contained v4 authority and manuscript under the supported runtime
+  - compute and bind the canonical sorted-ID SHA-256 from the checked-out v4 ledger
+  - execute and independently review PR450 after the hosted-runner gate clears
+  - execute and independently review PR451 after the hosted-runner gate clears
+  - complete the typeset PDF, visual, provenance, and final referee audits
+
+terminal: >-
+  PASS_REPORT_A_CANONICAL_30_CLAIM_LEDGER_V4_SOURCE__
+  NOTATION_AND_DOMAIN_AUTHORITY_FLATTENED__
+  CLAIM_IDENTIFIERS_UNCHANGED__
+  CANONICAL_ID_HASH_RUNTIME_PENDING__
+  OBSERVATIONAL_DATA_DEFERRED__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY

@@ -1,0 +1,56 @@
+schema: htt.report_a.r4a1nf.multi_cas_verification_plan.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+scope: >-
+  Independent algebraic checks of observer/photon decomposition, local-boost
+  normalisation, and positive numerical regularisation. These scripts do not
+  validate observational inputs, finite-HEALPix rank, or the full Q/O orbit
+  implementation.
+
+verifiers:
+  sympy_mpmath:
+    path: docs/research_reports/verifiers/r4a1nf/verify_conventions_sympy_mpmath.py
+    git_blob_sha1: 7dd5ae6eb94ff2efcec21b013351871416932db6
+    command: python verify_conventions_sympy_mpmath.py
+    intended_grade: SYMBOLIC_AND_HIGH_PRECISION_NUMERICAL_CHECK
+  gnu_octave:
+    path: docs/research_reports/verifiers/r4a1nf/verify_conventions_octave.m
+    git_blob_sha1: 85836a66c71eb3927af99f5ff38bb4bff473fb76
+    command: octave --quiet verify_conventions_octave.m
+    intended_grade: INDEPENDENT_NUMERICAL_SMOKE_CHECK
+  sagemath:
+    path: docs/research_reports/verifiers/r4a1nf/verify_conventions.sage
+    git_blob_sha1: 25ebdd5eac543478391bdcb4ab2a33b259e1b76d
+    command: sage verify_conventions.sage
+    intended_grade: EXACT_RATIONAL_AND_QUOTIENT_RING_CHECK
+  singular:
+    path: docs/research_reports/verifiers/r4a1nf/verify_conventions.sing
+    git_blob_sha1: 53eae3e8c2dc6c05cf19c62a429ccc19e513b846
+    command: Singular verify_conventions.sing
+    intended_grade: INDEPENDENT_IDEAL_REDUCTION_CHECK
+  lean_mathlib:
+    path: docs/research_reports/verifiers/r4a1nf/R4A1NFConvention.lean
+    git_blob_sha1: 0192a6bda7490fae4937b38e0456562dcb99f067
+    command: lake env lean R4A1NFConvention.lean
+    intended_grade: FORMAL_SCALAR_ALGEBRA_CHECK
+
+execution_attempt:
+  wolfram:
+    status: BLOCKED_BY_UPSTREAM_502
+  local_runtime_probe:
+    status: BLOCKED_BY_EXECUTION_BACKEND_CLIENT_ERROR
+  github_actions:
+    status: PRESTART_NO_EXECUTION
+  scripts_source_status: CREATED_AND_CONTENT_ADDRESSED
+  accepted_execution_receipts: 0
+
+claim_boundary:
+  - no script execution is labelled a pass until stdout, exit status, versions, and source identity are preserved
+  - scalar convention scripts do not prove the Q/O Krylov orbit theorem
+  - no finite-HEALPix or observational claim is tested
+  - no merge or publication authority is created
+
+terminal: >-
+  MULTI_CAS_VERIFIER_SOURCES_BOUND__EXECUTION_ENVIRONMENTS_ATTEMPTED_BUT_BLOCKED__
+  NO_VERIFICATION_PASS_CLAIMED

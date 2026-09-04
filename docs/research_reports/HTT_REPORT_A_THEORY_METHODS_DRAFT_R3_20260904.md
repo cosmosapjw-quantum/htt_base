@@ -1,6 +1,6 @@
 # Tensorized Low-Multipole CMB Inference under Conditional Isotropy Bounds and Response-Limited Identifiability
 
-**R3 flattened draft — theory and methods report**  
+**R4A1NF flattened draft — theory and methods report**  
 Date: 2026-09-04  
 Repository: `cosmosapjw-quantum/htt_base`  
 Status: theory/methods release candidate under audit; observational execution remains deferred.
@@ -60,17 +60,35 @@ g_{ab}=(-,+,+,+),
 \epsilon_{123}=+1.
 \]
 
-For a photon measured by a four-velocity \(u^a\),
+The observer is future-directed and unit timelike,
+
+\[
+u^a u_a=-1.
+\]
+
+A photon momentum is future-directed and null,
+
+\[
+p^a p_a=0,
+\]
+
+and the photon energy measured by \(u^a\) is
+
+\[
+E_\gamma=-c\,p_a u^a>0.
+\]
+
+The spatial propagation direction \(e^a\) is defined by
 
 \[
 p^a=\frac{E_\gamma}{c}(u^a+e^a),
 \qquad
-u^a e_a=0,
+u_a e^a=0,
 \qquad
-e^a e_a=1,
+e_a e^a=1.
 \]
 
-and the outward sky direction is
+These relations imply both \(p^a p_a=0\) and \(E_\gamma=-c p_a u^a\). The outward sky direction is
 
 \[
 n^a=-e^a.
@@ -265,17 +283,13 @@ G=\mathscr K_{QO}^T\mathscr K_{QO}
 \det G=\chi^2.
 \]
 
-The two equations \(B^TB=G\) and \(\det B=\chi\) alone do not select a
-canonical frame: if \(R\in SO(3)\), then \(RB\) satisfies the same two
-equations.  We therefore fix a deterministic proper-oriented section.  Let
-\(B_+\) be the unique upper-triangular Cholesky factor with positive diagonal,
+The two equations \(B^TB=G\) and \(\det B=\chi\) alone do not select a canonical frame: if \(R\in SO(3)\), then \(RB\) satisfies the same two equations. We therefore fix a deterministic proper-oriented section. Let \(B_+\) be the unique upper-triangular Cholesky factor with positive diagonal,
 
 \[
 B_+^TB_+=G.
 \]
 
-On the cyclic domain \(\chi\ne0\) and \(\det G=\chi^2\), so
-\(\det B_+=|\chi|\).  Define
+On the cyclic domain \(\chi\ne0\) and \(\det G=\chi^2\), so \(\det B_+=|\chi|\). Define
 
 \[
 S_\chi=\operatorname{diag}\!\left(1,1,\operatorname{sgn}\chi\right),
@@ -283,8 +297,7 @@ S_\chi=\operatorname{diag}\!\left(1,1,\operatorname{sgn}\chi\right),
 B=S_\chi B_+.
 \]
 
-Because \(S_\chi^TS_\chi=I\) and
-\(\det S_\chi=\operatorname{sgn}\chi\), this unique convention gives
+Because \(S_\chi^TS_\chi=I\) and \(\det S_\chi=\operatorname{sgn}\chi\), this unique convention gives
 
 \[
 B^TB=G,
@@ -292,7 +305,7 @@ B^TB=G,
 \det B=\chi.
 \]
 
-and define
+Define
 
 \[
 C=\begin{pmatrix}
@@ -464,12 +477,26 @@ Null fidelity is separate from rank arithmetic. A noisy observation and noise-fr
 
 ## 7. Exact full-sky local-observer response
 
-Let the observer undergo an active local boost
+Let the observer undergo an active local boost with
+
+\[
+u_a\beta_{\rm obs}^a=0,
+\qquad
+0\leq\beta_{\rm obs}^2<1.
+\]
+
+Define
 
 \[
 \widetilde u^a=\gamma(u^a+\beta_{\rm obs}^a),
 \qquad
 \gamma=(1-\beta_{\rm obs}^2)^{-1/2}.
+\]
+
+The stated domain gives
+
+\[
+\widetilde u^a\widetilde u_a=-1.
 \]
 
 For thermodynamic temperature with Doppler weight \(d=1\), the exact full-sky pullback on strictly positive absolute-temperature skies can be written
@@ -641,7 +668,7 @@ The five non-axial results are multi-engine numerical evidence, not portable int
 
 ## 10. Matrix-valued numerical uncertainty
 
-Let each frozen nonempty error family contain matrices \(E_{fi}\), with
+Let each frozen nonempty error family contain matrices \(E_{fi}\), with \(r_f>0\). Fix \(\lambda_{\rm reg}>0\), together with the family partition, basis, radii, calibration set, and holdout set, before inspecting any rank or holdout result. Write
 
 \[
 \Delta_f=\sum_i b_{fi}E_{fi},
@@ -672,6 +699,8 @@ N_{\rm fam}\sum_fr_f^2\sum_iE_{fi}E_{fi}^T
 +\lambda_{\rm reg}^2I
 }.
 \]
+
+The strictly positive regularisation implies \(\Gamma_E\succ0\), so \(\Gamma_E^{-1/2}\) is well defined.
 
 This is the conditional Loewner theorem `RA-ERR-001`. The family partition, basis, radii, calibration set, holdout set, processing settings, and coordinate identity must be fixed before rank inspection.
 
@@ -839,7 +868,7 @@ No manual reference list is a competing authority. Adjacent invariant-theory sou
 
 # Appendix E. Open gates before report freeze
 
-1. supported-runtime validation of the 30-claim ledger, citation matrix, and flattened manuscript contracts;
+1. supported-runtime validation of the self-contained T9 v4 ledger, citation matrix, flattened manuscript, notation registry, and exact-source contracts;
 2. fresh exact-head referee review of this flattened source and formal bibliography;
 3. typeset PDF build, visual inspection, and source/PDF/evidence hash freeze;
 4. explicit owner publication and merge decision.
