@@ -1,6 +1,6 @@
 # Tensorised Low-Multipole CMB Morphology, Kinematical Isotropy Bounds and Response-Limited Identification
 
-**Report A — complete integrated research-report draft, K3 revision 1**  
+**Report A — complete integrated research-report draft, K3 revision 2; K4 bounded corrections applied**  
 Date: 2026-09-05  
 Status: `FULL_DRAFT_FOR_REVIEW_NOT_CANONICAL_NOT_PUBLICATION_APPROVED`
 
@@ -349,7 +349,7 @@ The quadratic shear invariant records a magnitude, while the cubic invariant car
 
 ## 5. MES inequalities as premise-matched sector constraints
 
-### 5.1 Multipole normalisation and inherited ceilings
+### 5.1 Multipole normalisation, rate convention and inherited ceilings
 
 In the retained PSTF normalisation,
 
@@ -359,41 +359,74 @@ In the retained PSTF normalisation,
 \epsilon_3=\frac1{T_0}\sqrt{\frac{245C_3}{8\pi}}.
 \]
 
-These quantities are dimensionless when \(T_0\), \(Q\) and \(O\) use consistent temperature units. The residual dipole amplitude \(\epsilon_1\) is a declared attribution scenario, not a result obtained by inverting a scalar bound.
+These quantities are dimensionless when the harmonic coefficients and the
+positive monopole temperature \(T_0\) use consistent temperature units. The
+residual dipole amplitude \(\epsilon_1\) is a declared attribution scenario,
+not a result obtained by inverting a scalar bound. The observed multipole
+normaliser is not, by itself, proof of the all-observer anisotropy or derivative
+bounds required by the physical MES implication.
 
-After the explicitly maintained gradient and characteristic-time estimates, the registered geodesic reduction is
+The retained theorem is used on its expanding geodesic branch. Choose a common
+rate convention with \(H=\Theta/3>0\). For rates defined geometrically from
+the unit observer, \(\Theta_g=\nabla_a u^a\) and \(H_g=\Theta_g/3\) have
+inverse-length units. The corresponding inverse-time rates satisfy
+
+\[
+H_t=cH_g,\qquad \sigma^{(t)}_{ab}=c\sigma^{(g)}_{ab},
+\qquad \omega^{(t)}_{ab}=c\omega^{(g)}_{ab}.
+\]
+
+The dimensionless quadratic ratios below are identical in those two consistent
+conventions. A geometrical numerator must not be combined with an
+inverse-time Hubble denominator without the conversion.
+
+The source magnitude is the full tensor contraction,
+\(|\sigma|^2=\sigma_{ab}\sigma^{ab}\) and
+\(|\omega|^2=\omega_{ab}\omega^{ab}\), rather than the alternative
+half-contraction scalar convention. The source defines this norm and prints
+the retained coefficient combinations in its MES equations. The independent
+PSTF conversion factors are \(15/2\) for the quadrupole and \(35/2\) for the
+octupole. [@SAG_1999_COBE]
+
+After the maintained gradient and characteristic-time estimates, write
 
 \[
 B_\sigma=\frac53\epsilon_1+3\epsilon_2+\frac37\epsilon_3,
 \qquad
-B_\omega=\frac{10}{3}\epsilon_1+\frac{2}{15}\epsilon_2,
+B_\omega=\frac{10}{3}\epsilon_1+\frac{2}{15}\epsilon_2.
 \]
 
-\[
-U_\sigma=\frac32B_\sigma^2,
-\qquad U_\omega=\frac32B_\omega^2.
-\]
-
-The coefficients are inherited from the repository's MES/PSTF reduction and its primary-source authority, not rederived from a new observational analysis here. Their use retains the declared congruence and frame, the geodesic almost-EGS branch, the all-observer or Copernican extension, the derivative-hierarchy reduction and the residual-dipole scenario. [@MES_1995_LIMITS; @MES_1995_IMPROVED; @SAG_1999_COBE]
-
-The named physical invariants are
+The inequalities \(|\sigma|/\Theta<B_\sigma\) and
+\(|\omega|/\Theta<B_\omega\) then imply
 
 \[
-\psi_\sigma(X)=\frac{\sigma_{ab}\sigma^{ab}}{6H^2},
+\psi_\sigma(X)=\frac{\sigma_{ab}\sigma^{ab}}{6H^2}
+<U_\sigma=\frac32B_\sigma^2,
 \qquad
-\psi_\omega(X)=\frac{\omega_{ab}\omega^{ab}}{6H^2},
+\psi_\omega(X)=\frac{\omega_{ab}\omega^{ab}}{6H^2}
+<U_\omega=\frac32B_\omega^2.
 \]
 
-with \(H\ne0\), the common registered rate convention, and the explicit vorticity vector-to-tensor adapter. One must not replace the antisymmetric-tensor contraction by the axial-vector norm without that adapter. In particular, no unregistered factor of two or factor of \(c\) is inferred by notation.
+The factor \(3/2\) follows from \(\Theta^2/(6H^2)\); it is not altered by
+changing consistently between inverse-length and inverse-time rates. The
+vorticity vector-to-tensor adapter remains part of the registered convention.
+An axial-vector norm cannot be substituted for the antisymmetric-tensor
+contraction without that adapter. [@MES_1995_LIMITS; @MES_1995_IMPROVED;
+@SAG_1999_COBE]
 
-For maintained choices \(\eta\), the MES sector body imposes
+For maintained choices \(\eta\), the closed outer sector body uses
+\(\psi_j(X)\le U_j(y;\eta)\). This non-strict form is a conservative
+closure of the source restriction, not a claim of physical saturation.
+The data argument is retained when the ceiling is constructed from the same
+sky as other parts of the analysis. A fixed external or ensemble calibration
+is a distinct conditioning regime.
 
-\[
-\psi_\sigma(X)\le U_\sigma(y;\eta),
-\qquad \psi_\omega(X)\le U_\omega(y;\eta).
-\]
-
-The data argument is retained when the ceilings are computed from the same sky as other parts of the analysis. A fixed external or ensemble calibration is a distinct conditioning regime. Neither construction makes the ceiling an observation of the shear or vorticity. Compliance does not establish the premises, saturation of a bound or a converse FLRW result.
+All-observer or Copernican extension, the declared frame and congruence,
+geodesic almost-EGS branch, derivative-hierarchy reduction and residual-dipole
+scenario remain substantive premises. Compliance with the sector body does not
+establish those premises, a converse FLRW result or an observation of shear or
+vorticity. Optional sectors receive no anchor by analogy, and degenerate
+zero-radius cases are not admitted to the positive-radius division formulas.
 
 ### 5.2 Acceleration premise and anchor availability
 
@@ -600,29 +633,93 @@ The absolute-temperature field is strictly positive. The retained first-order ge
 
 Harmonic aberration operators and general Doppler-weight kernels provide the relevant response background. Frequency-dependent observables are not silently assigned the \(d=1\) temperature law. [@DAI_CHLUBA_2014; @YASINI_PIERPAOLI_2017]
 
-### 8.2 Quadrupole-to-octupole response
+### 8.2 Quadrupole-to-octupole response, adjoint and inverse
 
-For the registered STF convention,
-
-\[
-\boxed{(B_Q\beta)_{abc}=3\beta_{\langle a}Q_{bc\rangle}},
-\]
-
-and the inherited adjoint normal matrix is
+Use the Euclidean vector inner product and the full STF3 Frobenius contraction
+\(\langle O_1,O_2\rangle_F=(O_1)_{abc}(O_2)_{abc}\). For the registered
+STF projection convention,
 
 \[
-\boxed{M_Q=q_2I+\frac65Q^2},\qquad q_2=Q:Q.
+(B_Q\beta)_{abc}=3\beta_{\langle a}Q_{bc\rangle}.
 \]
 
-For a nonzero quadrupole, the trace-free eigenvalue constraints give the retained sharp conditioning bound
+For STF3 \(O\), symmetry and trace-freeness give
 
 \[
-\boxed{\kappa_2(M_Q)\le\frac53}.
+O:B_Q\beta=3\beta_aO_{abc}Q_{bc},
+\qquad (B_Q^*O)_a=3(O:Q)_a.
 \]
 
-The ideal inverse leaves a four-dimensional STF3 residual orthogonal to the quadrupole-response image. This is a response-space residual, not automatically a physical intrinsic octupole. The local-boost and intrinsic-dipole interpretations remain distinct physical hypotheses. [@ROLDAN_NOTARI_QUARTIN_2016]
+Define the contraction matrix
 
-An available response operator is not an empirical velocity estimate. It also does not identify \(\beta_{\rm RM}\), \(\beta_{\rm MO}\), physical shear or global matter-frame tilt. This scoped response is the concrete link to one physical-state sector; it does not close all other physical responses.
+\[
+M_Q=q_2I+\frac65Q^2,\qquad q_2=Q:Q.
+\]
+
+Direct contraction of the Cartesian STF response yields
+
+\[
+(B_Q\beta):Q=M_Q\beta,
+\qquad
+\boxed{B_Q^*B_Q=3M_Q},
+\qquad
+\|B_Q\beta\|_F^2=3\beta^TM_Q\beta.
+\]
+
+Thus \(M_Q\) is one third of the Frobenius normal matrix, not the unscaled
+normal matrix itself. The distinction affects absolute response norms, even
+though a common positive scalar does not change a condition number.
+
+For \(Q\ne0\), \(q_2>0\) and \(Q^2\succeq0\), so \(M_Q\succ0\).
+The algebraic least-squares response coordinate is
+
+\[
+\widehat\beta_{\rm LS}
+=(B_Q^*B_Q)^{-1}B_Q^*O
+=M_Q^{-1}(O:Q),
+\]
+
+and the Frobenius-orthogonal response projector is
+
+\[
+P_{\operatorname{Im}B_Q}O=B_QM_Q^{-1}(O:Q).
+\]
+
+The factor of three cancels between the two sides of the normal equation.
+The residual \(O_\perp=O-P_{\operatorname{Im}B_Q}O\) satisfies
+\(O_\perp:Q=0\). Since \(B_Q\) has rank three and STF3 has dimension seven,
+the response-orthogonal residual space is four dimensional.
+
+The sharp conditioning result also survives unchanged. Up to scale, sign and
+permutation, take the quadrupole spectrum as \((-1,1-t,t)\) with
+\(0\le t\le1/2\). Then
+
+\[
+\kappa_2(M_Q)=\frac{8-5t+5t^2}{5-5t+8t^2},
+\qquad
+\frac53-\kappa_2(M_Q)
+=\frac{(5t-1)^2}{3(5-5t+8t^2)}\ge0.
+\]
+
+Consequently
+
+\[
+\kappa_2(M_Q)=\kappa_2(B_Q^*B_Q)\le\frac53,
+\qquad \kappa_2(B_Q)\le\sqrt{\frac53}.
+\]
+
+Equality is obtained for spectra proportional to \((-5,4,1)\). These are
+conditioning bounds on the nonzero-quadrupole domain. They do not give a
+quadrupole-amplitude-independent bound on absolute inverse sensitivity as
+\(Q\to0\).
+
+The algebraic coordinate and projector are response-space constructions, not
+an empirical velocity analysis. The residual is not automatically a physical
+intrinsic octupole, and local-boost and intrinsic-dipole interpretations remain
+distinct physical hypotheses. [@ROLDAN_NOTARI_QUARTIN_2016]
+The response closes only the stated \(\beta_{\rm RO}\) lane; it does not
+identify \(\beta_{\rm RM}\), \(\beta_{\rm MO}\), shear or global matter-frame
+tilt.
 
 ## 9. Processed response and the high-source nuisance quotient
 
@@ -781,18 +878,51 @@ and orthogonal mixing within each family leave the envelope unchanged. An exactl
 
 ### 11.2 Conditional robust rank and subspace limits
 
-If the actual numerical error belongs to the declared class, then
+Write \(K_{\rm obs}=K_{\rm true}+\Delta\) and
+\(W=\Gamma_E^{-1/2}\), using the same declared source/output metric. If the
+actual numerical error belongs to the frozen class, then
 
 \[
 \Delta\Delta^T\preceq\Gamma_E,
-\qquad\|\Gamma_E^{-1/2}\Delta\|_2\le1.
+\qquad \|W\Delta\|_2\le1.
 \]
 
-For \(\widetilde K_{\rm obs}=\Gamma_E^{-1/2}K_{\rm obs}\), singular values above one give a robust nonzero-rank lower bound. All retained row singular values above a preregistered margin certify full row rank for that error class. The whitening makes this threshold dimensionless in the declared coordinate metric.
+The singular-value perturbation bound gives
 
-The implication is conditional. It does not establish that the present finite-HEALPix family registry contains the actual error, and it does not permit tuning radii after inspecting the signal. The coverage of the numerical-error class is a separate mathematical and computational obligation.
+\[
+s_i(WK_{\rm true})\ge s_i(WK_{\rm obs})-1.
+\]
 
-A rank lower bound also does not certify the orientation of a singular subspace. A stable nuisance projector requires perturbation control relative to a positive singular-value gap. Singular-subspace perturbation results provide that additional type of bound; they do not follow from the number of singular values exceeding a threshold. [@CAI_ZHANG_2018; @LI_1999; @LYU_WANG_2020]
+Therefore
+
+\[
+\operatorname{rank}K_{\rm true}
+\ge\#\{i:s_i(WK_{\rm obs})>1\}.
+\]
+
+For an \(m\times n\) response with \(m\le n\), a sufficient full-row-rank
+criterion is
+
+\[
+s_m(WK_{\rm obs})\ge1+\delta,
+\qquad \delta>0,
+\]
+
+where \(\delta\) is fixed before rank inspection. This places the margin
+explicitly above the unit perturbation floor. Whitening makes the criterion
+dimensionless in the declared metric; preregistration alone would not make a
+threshold at or below one a positive-rank certificate.
+
+The implication remains conditional. It does not establish that the present
+finite-HEALPix family registry contains the actual error, and it does not
+permit tuning radii after inspecting the signal. Coverage of the numerical
+error class is a separate mathematical and computational obligation.
+
+A rank lower bound also does not certify singular-subspace orientation. A
+stable nuisance projector requires perturbation control relative to a positive
+singular-value gap. Singular-subspace perturbation results supply that
+additional type of bound; it does not follow from counting singular values
+above one. [@CAI_ZHANG_2018; @LI_1999; @LYU_WANG_2020]
 
 ## 12. Integrated interpretation, evidence boundary and conclusions
 
@@ -961,10 +1091,21 @@ resolve finite-HEALPix containment or authorise publication/merge. A complete
 source draft is a writing milestone, not a release or scientific-verification
 milestone.
 
-The next manuscript task is a whole-draft review of equations, assumptions,
-source support, the forty-ID mapping and citation roles. In parallel, the
-existing exact-runtime materialisation and formal-verification tasks remain
-necessary for their own acceptance decisions. The reviewed source may then be
-typeset and visually inspected; final release requires the applicable receipts
-and an explicit owner decision. No additional audit-only infrastructure is
-required merely to begin reading or revising this full draft.
+Revision 2 applies the three replacement passages in
+`docs/research_reports/reviews/K4_BOUNDED_MANUSCRIPT_REPLACEMENTS_20260905.md`
+(Git blob `18c18ca1f8ec55b86152678dd48910e9599da65d`) to Sections 5.1, 8.2
+and 11.2 of the reviewed revision-1 blob
+`3d509ebcb178bd26b96d994690668e225a133dc9`. The replacement source was read at
+head `97635de764cad32a1cb2b7f0e905dbd38fbf79ea`. The K4 review
+`K4_FULL_DRAFT_SOURCE_REVIEW_20260905.md` remains an immutable record of its
+revision-1 target; this application does not retroactively label that target
+as corrected. The heading and this application note are the only intended
+changes outside the three scientific replacement sections.
+
+The corrected source is ready for targeted readback and candidate typesetting.
+No new whole-draft blind review, automated forty-claim bijection, required CAS
+receipt or PDF/page audit is asserted by this revision. Exact-runtime
+materialisation and formal-verification tasks remain necessary for their own
+acceptance decisions, and final release still requires an explicit owner
+decision. The scientific centre, candidate claim map, numerical tables and
+scope restrictions are retained rather than redesigned.
