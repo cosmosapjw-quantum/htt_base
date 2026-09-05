@@ -37,7 +37,7 @@ INPUT_PATHS = dict(legacy.INPUT_PATHS)
 EXPECTED_INPUT_GIT_BLOBS = dict(legacy.EXPECTED_INPUT_GIT_BLOBS)
 OUTPUT_NAMES = dict(legacy.OUTPUT_NAMES)
 LEGACY_PATH = Path("scripts/compile_report_a_k2f_authority.py")
-LEGACY_BLOB = "d22e439211b0058596c27028d382554657b9f532"
+LEGACY_BLOB = "50aca195e6a5a433ee8c4370a38ee52b35e2f0e2"
 PRESERVE_KEYS = (
     "canonical_notation_registry", "registered_survivor_source",
     "active_repairs", "vocabulary",

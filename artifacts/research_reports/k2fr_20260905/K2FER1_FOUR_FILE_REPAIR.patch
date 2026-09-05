@@ -1,0 +1,309 @@
+--- a/scripts/compile_report_a_k2fr0_authority.py
++++ b/scripts/compile_report_a_k2fr0_authority.py
+@@ -37,7 +37,7 @@
+ EXPECTED_INPUT_GIT_BLOBS = dict(legacy.EXPECTED_INPUT_GIT_BLOBS)
+ OUTPUT_NAMES = dict(legacy.OUTPUT_NAMES)
+ LEGACY_PATH = Path("scripts/compile_report_a_k2f_authority.py")
+-LEGACY_BLOB = "d22e439211b0058596c27028d382554657b9f532"
++LEGACY_BLOB = "50aca195e6a5a433ee8c4370a38ee52b35e2f0e2"
+ PRESERVE_KEYS = (
+     "canonical_notation_registry", "registered_survivor_source",
+     "active_repairs", "vocabulary",
+--- a/scripts/compile_report_a_k2f_authority.py
++++ b/scripts/compile_report_a_k2f_authority.py
+@@ -45,7 +45,7 @@
+ EXPECTED_INPUT_GIT_BLOBS: dict[str, str] = {
+     "base_claim_ledger": "58291e9cfac6ff85ceffbdb6bdefd50315240831",
+     "claim_overlay": "394378a796a24410a4174a8222e40c5c59e9700a",
+-    "base_citation_matrix": "3fbaa2f97522cca6d0ad60e0c96655d293ca0d74",
++    "base_citation_matrix": "5087d39edf094f3adf7d72eed3061521ecf0b78d",
+     "citation_overlay": "902b698ef81506179cb0f6e3c5d6616a3f445c55",
+     "section_map": "d42a666ff0eba8fdca8afc9b4e719de6e5e12a8d",
+     "integration_matrix": "28e823ce7705f0c14a4cae5edf39dc32b69d2617",
+--- a/tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py
++++ b/tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py
+@@ -1,8 +1,11 @@
+ from __future__ import annotations
+ 
+ from pathlib import Path
+-
++import re
++
++import pytest
+ import yaml
++from pybtex.database import parse_string
+ 
+ 
+ ROOT = Path(__file__).resolve().parents[2]
+@@ -15,6 +18,103 @@
+ 
+ def _yaml(path: Path) -> dict[str, object]:
+     return yaml.safe_load(path.read_text(encoding="utf-8"))
++
++
++JOINT = "Theorem K1R-T8 — jointly conditioned physical identified set"
++SINGLETON = "Theorem K1R-T9 — singleton feasible-fibre criterion"
++STATUS = "Status and authority"
++SPINE = "Integrated scientific spine"
++
++
++def _prose(text: str) -> str:
++    return " ".join(text.split()).casefold()
++
++
++def _math(text: str) -> str:
++    return "".join(text.split())
++
++
++def _section(text: str, heading: str) -> str:
++    marker = f"## {heading}\n"
++    assert text.count(marker) == 1, heading
++    return text.split(marker, 1)[1].split("\n## ", 1)[0]
++
++
++def _active_text(section: str) -> str:
++    # Historical block quotes and code examples cannot supply active assertions.
++    section = re.sub(r"(?ms)^```[^\n]*\n.*?^```[^\n]*$", "", section)
++    return "\n".join(line for line in section.splitlines() if not line.lstrip().startswith(">"))
++
++
++def _paragraph(section: str, prefix: str) -> str:
++    matches = [
++        paragraph for paragraph in re.split(r"\n\s*\n", _active_text(section))
++        if _prose(paragraph).startswith(_prose(prefix))
++    ]
++    assert len(matches) == 1, prefix
++    return matches[0]
++
++
++def _check_joint_document(text: str) -> None:
++    joint = _section(text, JOINT)
++    shared = _paragraph(joint, "The anchor and response restrictions")
++    assert _prose(
++        "Their appearance as separate set factors does not make them independent evidence"
++    ) in _prose(shared)
++    analysis = _paragraph(joint, "The complete data-to-output map")
++    assert _prose(
++        "The complete data-to-output map used in a finite-null rank must therefore "
++        "include MES ceiling construction, anchor conditioning"
++    ) in _prose(analysis)
++
++    singleton = _section(text, SINGLETON)
++    premise = _paragraph(singleton, "Consider")
++    assert _prose(premise.split(r"\(", 1)[0]) == _prose("Consider an exact linear response")
++    rank = _paragraph(singleton, "Full column rank")
++    assert _prose(
++        "Full column rank of the response is sufficient but not necessary"
++    ) in _prose(rank)
++
++    # Check the source's equations; mathematical letter case is significant.
++    for section, expression in (
++        (joint, r"\Theta(y;\eta)=D_\eta\cap B_{\rm MES}(y;\eta)\cap\mathcal R_\eta^{-1}(C_y(\eta))"),
++        (singleton, r"\Theta(y;\eta)=F_y\cap(X_0+\ker\mathcal R_\eta)"),
++        (singleton, r"\Theta(y;\eta)=\{X_0\}\quad\Longleftrightarrow\quad\{h\in\ker\mathcal R_\eta:X_0+h\in F_y\}=\{0\}"),
++    ):
++        displays = re.findall(r"\\\[(.*?)\\\]", _active_text(section), re.DOTALL)
++        assert any(_math(expression) in _math(display) for display in displays), expression
++
++
++def _check_firewalls_document(text: str) -> None:
++    prologue = _paragraph(_section(text, STATUS), "The donor is imported")
++    for prohibition in (
++        "no Planck/FFP10 execution",
++        "no physical shear, vorticity or acceleration estimate",
++        "no finite-HEALPix no-go theorem",
++        "no native BASS result",
++    ):
++        assert _prose(prohibition) in _prose(prologue), prohibition
++    spine = _paragraph(_section(text, SPINE), "No anchor-to-state")
++    for prohibition in (
++        "No anchor-to-state arrow is generative",
++        "No observable-to-physical tensor map is admitted without a declared response",
++    ):
++        assert _prose(prohibition) in _prose(spine), prohibition
++    assert "NO_CLAIM_PROMOTION" in _section(text, "Terminal").splitlines()
++
++
++def _mutate_section_once(text: str, heading: str, target: str, replacement: str) -> str:
++    section = _section(text, heading)
++    pattern = re.compile(r"\s+".join(re.escape(word) for word in target.split()))
++    assert len(list(pattern.finditer(section))) == 1, target
++    changed, count = pattern.subn(lambda match: replacement, section)
++    assert count == 1 and changed != section, target
++    marker = f"## {heading}\n"
++    before, after = text.split(marker, 1)
++    assert after.startswith(section)
++    mutated = before + marker + changed + after[len(section):]
++    assert mutated != text, target
++    return mutated
+ 
+ 
+ def test_geometry_dimension_and_parity_registry_is_explicit() -> None:
+@@ -53,16 +153,7 @@
+ 
+ def test_k1r_joint_identification_and_shared_data_firewall() -> None:
+     text = PACK.read_text(encoding="utf-8")
+-    required = (
+-        "\\Theta(y;\\eta)",
+-        "B_{\\rm MES}(y;\\eta)",
+-        "Their appearance as separate set factors does not make them independent evidence",
+-        "MES ceiling construction, anchor conditioning",
+-        "feasible response-kernel fibre contains no other admissible state",
+-        "Full column rank of the response is sufficient but not necessary",
+-    )
+-    for needle in required:
+-        assert needle in text
++    _check_joint_document(text)
+ 
+     evidence = _yaml(EVIDENCE)
+     rows = {row["id"]: row for row in evidence["results"]}
+@@ -120,17 +211,7 @@
+ 
+ def test_k1r_scientific_firewalls_remain_closed() -> None:
+     text = PACK.read_text(encoding="utf-8")
+-    required = (
+-        "no Planck/FFP10 execution",
+-        "no physical shear, vorticity or acceleration estimate",
+-        "no finite-HEALPIX no-go theorem",
+-        "no native BASS result",
+-        "No anchor-to-state arrow is generative",
+-        "No observable-to-physical tensor map is admitted without a declared response",
+-        "NO_CLAIM_PROMOTION",
+-    )
+-    for needle in required:
+-        assert needle in text
++    _check_firewalls_document(text)
+ 
+     crosswalk = _yaml(K0)
+     firewall = crosswalk["scope_firewall"]
+@@ -139,3 +220,101 @@
+     assert firewall["finite_healpix_containment"] == "RANK_UNRESOLVED"
+     assert firewall["native_bass_solver"] == "EXCLUDED"
+     assert firewall["claim_promotion"] is False
++
++
++CITATION_TITLES = {
++    "RANDOMIZATION_2024": "Randomization Inference: Theory and Applications",
++    "ROLDAN_NOTARI_QUARTIN_2016": "Interpreting the CMB aberration and Doppler measurements: boost or intrinsic dipole?",
++    "LI_1999": "Relative perturbation theory: II. Eigenspace and singular subspace variations",
++}
++CITATION_MATRIX = BASE / "REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml"
++
++
++def test_citation_matrix_whole_file_preserves_titles_and_keys() -> None:
++    data = _yaml(CITATION_MATRIX)
++    bibliography = parse_string(
++        (ROOT / "docs/research_reports/HTT_REPORT_A_REFERENCES.bib").read_text(encoding="utf-8"),
++        "bibtex",
++    )
++    base = _yaml(BASE / "T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml")
++    assert len(data["source_registry"]) == len(bibliography.entries) == 17
++    assert set(data["source_registry"]) == set(bibliography.entries)
++    assert len(data["claim_citations"]) == len(base["claims"]) == 30
++    assert set(data["claim_citations"]) == {row["id"] for row in base["claims"]}
++    for key, title in CITATION_TITLES.items():
++        assert data["source_registry"][key]["title"] == title
++
++
++@pytest.mark.parametrize("title", CITATION_TITLES.values(), ids=CITATION_TITLES.keys())
++def test_each_unquoted_citation_title_is_rejected(title: str) -> None:
++    corrected = CITATION_MATRIX.read_text(encoding="utf-8")
++    yaml.safe_load(corrected)
++    quoted = f'    title: "{title}"\n'
++    assert corrected.count(quoted) == 1
++    mutated = corrected.replace(quoted, f"    title: {title}\n", 1)
++    assert mutated != corrected
++    with pytest.raises(yaml.YAMLError):
++        yaml.safe_load(mutated)
++
++
++@pytest.mark.parametrize("variant", ("prose_reflow", "healpix_case"))
++def test_documentary_guards_accept_harmless_formatting(variant: str) -> None:
++    original = PACK.read_text(encoding="utf-8")
++    if variant == "prose_reflow":
++        changed = original
++        for heading, prefix in (
++            (JOINT, "The anchor and response restrictions"),
++            (JOINT, "The complete data-to-output map"),
++            (SINGLETON, "Full column rank"),
++            (STATUS, "The donor is imported"),
++            (SPINE, "No anchor-to-state"),
++        ):
++            paragraph = _paragraph(_section(changed, heading), prefix)
++            changed = _mutate_section_once(changed, heading, paragraph, "  \n ".join(paragraph.split()))
++    else:
++        changed = _mutate_section_once(original, STATUS, "HEALPix", "HEALPIX")
++    assert changed != original
++    _check_joint_document(changed)
++    _check_firewalls_document(changed)
++
++
++DOCUMENT_MUTATIONS = (
++    ("shared_data_deleted", "joint", JOINT, "does not make them independent evidence", ""),
++    ("shared_data_reversed", "joint", JOINT, "does not make them independent evidence", "makes them independent evidence"),
++    ("mes_ceiling_deleted", "joint", JOINT, "MES ceiling construction, ", ""),
++    ("anchor_conditioning_deleted", "joint", JOINT, "anchor conditioning, ", ""),
++    ("exact_deleted", "joint", SINGLETON, "an exact linear response", "a linear response"),
++    ("linear_deleted", "joint", SINGLETON, "an exact linear response", "an exact response"),
++    ("equivalence_reversed", "joint", SINGLETON, r"\Longleftrightarrow", r"\Longrightarrow"),
++    ("zero_kernel_changed", "joint", SINGLETON, r"\}=\{0\}", r"\}=\{h_0\}"),
++    ("math_case_changed", "joint", SINGLETON, r"F_y\cap(X_0+\ker\mathcal R_\eta)", r"F_y\cap(x_0+\ker\mathcal R_\eta)"),
++    ("anchor_generative", "firewalls", SPINE, "No anchor-to-state arrow is generative", "An anchor-to-state arrow is generative"),
++    ("response_prerequisite_removed", "firewalls", SPINE, "No observable-to-physical tensor map is admitted without a declared response", "An observable-to-physical tensor map is admitted without a declared response"),
++    ("observation_exclusion_removed", "firewalls", STATUS, "no Planck/FFP10 execution,", ""),
++    ("physical_estimate_exclusion_removed", "firewalls", STATUS, "no physical shear, vorticity or acceleration estimate,", ""),
++    ("bass_exclusion_removed", "firewalls", STATUS, "no native BASS result", "a native BASS result"),
++)
++DOCUMENT_CHECKERS = {"joint": _check_joint_document, "firewalls": _check_firewalls_document}
++
++
++@pytest.mark.parametrize("case", DOCUMENT_MUTATIONS, ids=[case[0] for case in DOCUMENT_MUTATIONS])
++def test_documentary_guards_reject_semantic_mutations(case: tuple[str, ...]) -> None:
++    _, checker, heading, target, replacement = case
++    original = PACK.read_text(encoding="utf-8")
++    DOCUMENT_CHECKERS[checker](original)
++    changed = _mutate_section_once(original, heading, target, replacement)
++    with pytest.raises(AssertionError):
++        DOCUMENT_CHECKERS[checker](changed)
++
++
++@pytest.mark.parametrize("case", (DOCUMENT_MUTATIONS[0], DOCUMENT_MUTATIONS[-1]), ids=("shared_data", "bass"))
++def test_historical_quote_cannot_replace_active_prohibition(case: tuple[str, ...]) -> None:
++    _, checker, heading, target, replacement = case
++    original = PACK.read_text(encoding="utf-8")
++    changed = _mutate_section_once(original, heading, target, replacement)
++    quote = "\n".join("> " + line for line in _section(original, heading).splitlines())
++    marker = f"## {heading}\n"
++    changed = changed.replace(marker, marker + quote + "\n\n", 1)
++    assert changed != original
++    with pytest.raises(AssertionError):
++        DOCUMENT_CHECKERS[checker](changed)
+--- a/docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
++++ b/docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+@@ -39,7 +39,7 @@
+ 
+   RANDOMIZATION_2024:
+     authors: [D. M. Ritzwoller, J. P. Romano, A. M. Shaikh]
+-    title: Randomization Inference: Theory and Applications
++    title: "Randomization Inference: Theory and Applications"
+     arxiv: 2406.09521
+     role: PRIMARY_GROUP_INVARIANCE_AND_FINITE_SAMPLE_SCOPE
+   PHIPSON_SMYTH_2010:
+@@ -69,7 +69,7 @@
+     role: PRIMARY_DOPPLER_WEIGHT_AND_FREQUENCY_SCOPE_SOURCE
+   ROLDAN_NOTARI_QUARTIN_2016:
+     authors: [O. Roldan, A. Notari, M. Quartin]
+-    title: Interpreting the CMB aberration and Doppler measurements: boost or intrinsic dipole?
++    title: "Interpreting the CMB aberration and Doppler measurements: boost or intrinsic dipole?"
+     journal: JCAP 2016(06)026
+     doi: 10.1088/1475-7516/2016/06/026
+     arxiv: 1603.02664
+@@ -99,7 +99,7 @@
+     role: PRIMARY_SINGULAR_SUBSPACE_PERTURBATION_SOURCE
+   LI_1999:
+     authors: [R.-C. Li]
+-    title: Relative perturbation theory: II. Eigenspace and singular subspace variations
++    title: "Relative perturbation theory: II. Eigenspace and singular subspace variations"
+     journal: SIAM Journal on Matrix Analysis and Applications 20(2), 471-492 (1998)
+     doi: 10.1137/S0895479896298506
+     role: PRIMARY_RELATIVE_SUBSPACE_BOUND_SOURCE

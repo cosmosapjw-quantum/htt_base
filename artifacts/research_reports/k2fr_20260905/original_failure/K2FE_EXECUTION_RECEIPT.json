@@ -1,0 +1,744 @@
+{
+  "schema": "htt.report_a.k2fe.execution_receipt.v1",
+  "run_id": "K2FE_RUN_20260905T044357468Z",
+  "recorded_at": "2026-09-05T04:54:09.470433+00:00",
+  "review_mode": "EXECUTOR_FAILURE_READBACK",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "pr": 449,
+  "execution_result": {
+    "observed_live_head": "a8d5417b3beae46e345392b5c2576c15be83a514",
+    "observed_live_tree": "6c45d9134b8d0a30a599e1194e5062957d510e53",
+    "observed_live_base": "687234128d7c12d04e68aad0f303c21d2d470393",
+    "execution_source_snapshot": "a0784f2a1ce1f4a3fe14195a5f169e4959bd8391",
+    "execution_source_tree": "036bc001d333cbc61427179edea2bf77fba3ff0a",
+    "source_method": "HASH_VERIFIED_SOURCE_SET",
+    "execution_grade": "CPYTHON312_LINUX_HASH_VERIFIED_SOURCE_SET_ORIGINAL_REGRESSIONS_EXECUTED_FAILED",
+    "input_blob_identity_verified": true,
+    "test_and_config_closure_verified": true,
+    "compiler_git_blob": "d89ac38f47e221597fbc2b152b4a6c591c673d81",
+    "helper_git_blob": "d22e439211b0058596c27028d382554657b9f532",
+    "workflow_git_blob": "d7d18171f8a91d13c2a10ddb316481bbe7fdacfd",
+    "python_version": "3.12.13",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+    "pytest_version": "8.3.5",
+    "pyyaml_version": "6.0.2",
+    "pybtex_version": "0.26.1",
+    "syntax_exit_code": 0,
+    "existing_regression_exit_code": 1,
+    "strict_regression_exit_code": 1,
+    "tests_collected": 33,
+    "tests_passed": 26,
+    "tests_failed": 7,
+    "tests_errors": 0,
+    "tests_skipped": 0,
+    "tests_xfailed": 0,
+    "tests_xpassed": 0,
+    "strict_cli_executed": false,
+    "strict_cli_exit_code": null,
+    "six_file_bundle_created": false,
+    "claim_count": null,
+    "citation_rows": null,
+    "section_rows": null,
+    "integration_rows": null,
+    "bibliography_entries": null,
+    "claim_id_sha256": null,
+    "authority_memory_preserved": null,
+    "structural_findings": null,
+    "output_readback_status": "NOT_EXECUTED_NO_PRODUCTION_OUTPUT",
+    "source_bytes_unchanged": true,
+    "pdf_rebuilt": false,
+    "scientific_source_modified": false,
+    "repository_committed_or_pushed": false,
+    "required_cas_execution": "NOT_EXECUTED",
+    "canonical_claims": 30,
+    "candidate_claims": 40,
+    "canonical_promotion": false,
+    "observational_data_used": false,
+    "publication_authorized": false,
+    "first_failure": {
+      "classification": "SOURCE_TEST_FAILURE",
+      "test": "tests.contracts.test_report_a_k1r_kinematical_mes_repairs::test_k1r_joint_identification_and_shared_data_firewall",
+      "exception": "AssertionError",
+      "expected_substring": "Their appearance as separate set factors does not make them independent evidence",
+      "test_source_line": 65,
+      "raw_evidence": "receipts/k2-existing-tests.xml"
+    },
+    "overall": "K2FE_TEST_FAILED"
+  },
+  "runtime": {
+    "python_executable": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/bin/python",
+    "python_full_version": "3.12.13 (main, Aug  7 2026, 02:25:39) [Clang 22.1.3 ]",
+    "python_version": "3.12.13",
+    "implementation": "CPython",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+    "system": "Linux",
+    "machine": "x86_64",
+    "packages": {
+      "latexcodec": "3.0.1",
+      "PyYAML": "6.0.2",
+      "packaging": "26.3",
+      "pip": "25.0.1",
+      "pybtex": "0.26.1",
+      "pluggy": "1.6.0",
+      "iniconfig": "2.3.0",
+      "pytest": "8.3.5"
+    },
+    "imports": {
+      "pytest": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/pytest/__init__.py",
+      "yaml": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py",
+      "pybtex": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/pybtex/__init__.py",
+      "scripts_namespace_paths": [
+        "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a/scripts"
+      ],
+      "compiler": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a/scripts/compile_report_a_k2fr0_authority.py",
+      "helper": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a/scripts/compile_report_a_k2f_authority.py"
+    },
+    "pytest": {
+      "rootdir": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a",
+      "configfile": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a/pytest.ini",
+      "ini": {
+        "addopts": "-m \"not slow\"",
+        "testpaths": "dl_pipeline\ndocs/audits/external_round17_2026-04-27/code\nhtt\nscripts\ntests",
+        "python_files": "test_*.py *_test.py",
+        "markers": "smoke: small deterministic harness and package reachability checks; not scientific validation\nfast: quick tests suitable for local pre-commit subsets\nslow: marks tests as slow / end-to-end integration; run explicitly with '-m slow'\nrequires_healpy: tests requiring optional dependency healpy; skip must name healpy when unavailable\nrequires_dynesty: tests requiring optional dependency dynesty; skip must name dynesty when unavailable\nanchor: numerical regression anchors; does not by itself certify production readiness\nverification: v5 design-pack verification bundle checks\nci: fast subset safe to run on every CI push"
+      },
+      "plugin_names": [
+        "139864368486000",
+        "assertion",
+        "cacheprovider",
+        "capture",
+        "capturemanager",
+        "debugging",
+        "doctest",
+        "faulthandler",
+        "fixtures",
+        "freeze_support",
+        "helpconfig",
+        "junitxml",
+        "legacypath",
+        "logging",
+        "main",
+        "mark",
+        "monkeypatch",
+        "pastebin",
+        "pytestconfig",
+        "python",
+        "python_path",
+        "recwarn",
+        "reports",
+        "runner",
+        "setuponly",
+        "setupplan",
+        "skipping",
+        "stepwise",
+        "terminal",
+        "threadexception",
+        "tmpdir",
+        "unittest",
+        "unraisableexception",
+        "warnings"
+      ]
+    },
+    "environment": {
+      "PYTHONPATH": null,
+      "PYTEST_ADDOPTS": null,
+      "PYTEST_DISABLE_PLUGIN_AUTOLOAD": null,
+      "PYTHONPYCACHEPREFIX": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/cache/bytecode",
+      "PYTHONDONTWRITEBYTECODE": null,
+      "TMPDIR": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp"
+    },
+    "sys_path": [
+      "",
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python312.zip",
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12",
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/lib-dynload",
+      "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages"
+    ]
+  },
+  "source_manifest": "source_manifest.json",
+  "original_commands": [
+    {
+      "label": "01_git_clone",
+      "argv": [
+        "git",
+        "clone",
+        "--no-checkout",
+        "--filter=blob:none",
+        "--single-branch",
+        "--branch",
+        "docs/htt-tensorized-mes-response-synthesis-20260903",
+        "https://github.com/cosmosapjw-quantum/htt_base.git",
+        "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a"
+      ],
+      "cwd": "/workspace/scratch/7436fae9cb26",
+      "started_at": "2026-09-05T04:44:00.152754+00:00",
+      "exit_code": 128,
+      "environment_overrides": {
+        "GIT_TERMINAL_PROMPT": "0"
+      },
+      "finished_at": "2026-09-05T04:44:18.321914+00:00"
+    },
+    {
+      "label": "02_materialise_source",
+      "argv": [
+        "python3",
+        "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/materialise_source.py"
+      ],
+      "cwd": "/workspace/scratch/7436fae9cb26",
+      "started_at": "2026-09-05T04:47:03.334208+00:00",
+      "exit_code": 1,
+      "environment_overrides": {},
+      "finished_at": "2026-09-05T04:47:03.364476+00:00"
+    },
+    {
+      "label": "03_materialise_source_modes",
+      "argv": [
+        "python3",
+        "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/materialise_source_v2.py"
+      ],
+      "cwd": "/workspace/scratch/7436fae9cb26",
+      "started_at": "2026-09-05T04:47:29.998358+00:00",
+      "exit_code": 0,
+      "environment_overrides": {},
+      "finished_at": "2026-09-05T04:47:30.051048+00:00"
+    },
+    {
+      "label": "04_create_venv",
+      "argv": [
+        "python3",
+        "-m",
+        "venv",
+        "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv"
+      ],
+      "cwd": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z",
+      "started_at": "2026-09-05T04:47:30.778347+00:00",
+      "exit_code": 0,
+      "environment_overrides": {},
+      "finished_at": "2026-09-05T04:47:32.482703+00:00"
+    },
+    {
+      "label": "05_install_dependencies",
+      "argv": [
+        "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--disable-pip-version-check",
+        "pytest==8.3.5",
+        "PyYAML==6.0.2",
+        "pybtex==0.26.1"
+      ],
+      "cwd": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z",
+      "started_at": "2026-09-05T04:48:00.581829+00:00",
+      "exit_code": 0,
+      "environment_overrides": {},
+      "finished_at": "2026-09-05T04:48:31.790332+00:00"
+    },
+    {
+      "label": "06_pip_freeze",
+      "argv": [
+        "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/bin/python",
+        "-m",
+        "pip",
+        "freeze",
+        "--all"
+      ],
+      "cwd": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a",
+      "started_at": "2026-09-05T04:48:48.586338+00:00",
+      "exit_code": 0,
+      "environment_overrides": {},
+      "finished_at": "2026-09-05T04:48:48.759583+00:00"
+    },
+    {
+      "label": "07_syntax",
+      "argv": [
+        "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/bin/python",
+        "-m",
+        "py_compile",
+        "scripts/compile_report_a_k2f_authority.py",
+        "scripts/compile_report_a_k2fr0_authority.py",
+        "tests/contracts/test_report_a_k2fr0_hardening.py"
+      ],
+      "cwd": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a",
+      "started_at": "2026-09-05T04:49:19.688847+00:00",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONPYCACHEPREFIX": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/cache/bytecode",
+        "TMPDIR": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp"
+      },
+      "finished_at": "2026-09-05T04:49:19.801909+00:00"
+    },
+    {
+      "label": "08_runtime_inventory",
+      "argv": [
+        "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/bin/python",
+        "-c",
+        "import runpy; runpy.run_path('/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/runtime_inventory.py')"
+      ],
+      "cwd": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a",
+      "started_at": "2026-09-05T04:49:20.159178+00:00",
+      "exit_code": 0,
+      "environment_overrides": {
+        "PYTHONPYCACHEPREFIX": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/cache/bytecode",
+        "TMPDIR": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp"
+      },
+      "finished_at": "2026-09-05T04:49:20.684266+00:00"
+    },
+    {
+      "label": "09_existing_regressions",
+      "argv": [
+        "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py",
+        "tests/contracts/test_report_a_k2_kinematical_claim_recompile.py",
+        "tests/contracts/test_report_a_k2f_compiler.py",
+        "--junitxml=/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/receipts/k2-existing-tests.xml"
+      ],
+      "cwd": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a",
+      "started_at": "2026-09-05T04:49:34.552514+00:00",
+      "exit_code": 1,
+      "environment_overrides": {
+        "PYTHONPYCACHEPREFIX": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/cache/bytecode",
+        "TMPDIR": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp"
+      },
+      "finished_at": "2026-09-05T04:49:35.046165+00:00"
+    },
+    {
+      "label": "10_strict_regressions",
+      "argv": [
+        "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/contracts/test_report_a_k2fr0_hardening.py",
+        "--junitxml=/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/receipts/k2fr0-tests.xml"
+      ],
+      "cwd": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a",
+      "started_at": "2026-09-05T04:49:46.521121+00:00",
+      "exit_code": 1,
+      "environment_overrides": {
+        "PYTHONPYCACHEPREFIX": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/cache/bytecode",
+        "TMPDIR": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp"
+      },
+      "finished_at": "2026-09-05T04:49:47.275908+00:00"
+    },
+    {
+      "label": "11_failure_readback",
+      "argv": [
+        "python3",
+        "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/finalise_failure_evidence.py"
+      ],
+      "cwd": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a",
+      "started_at": "2026-09-05T04:54:09.396302+00:00",
+      "exit_code": 0,
+      "environment_overrides": {},
+      "finished_at": "2026-09-05T04:54:09.478843+00:00"
+    }
+  ],
+  "test_results": [
+    {
+      "label": "09_existing_regressions",
+      "junit": "receipts/k2-existing-tests.xml",
+      "command": {
+        "label": "09_existing_regressions",
+        "argv": [
+          "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py",
+          "tests/contracts/test_report_a_k2_kinematical_claim_recompile.py",
+          "tests/contracts/test_report_a_k2f_compiler.py",
+          "--junitxml=/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/receipts/k2-existing-tests.xml"
+        ],
+        "cwd": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a",
+        "started_at": "2026-09-05T04:49:34.552514+00:00",
+        "exit_code": 1,
+        "environment_overrides": {
+          "PYTHONPYCACHEPREFIX": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/cache/bytecode",
+          "TMPDIR": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp"
+        },
+        "finished_at": "2026-09-05T04:49:35.046165+00:00"
+      },
+      "collected": 18,
+      "passed": 15,
+      "failed": 3,
+      "errors": 0,
+      "skipped": 0,
+      "xfailed": 0,
+      "xpassed": 0,
+      "suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "3",
+          "skipped": "0",
+          "tests": "18",
+          "time": "0.316",
+          "timestamp": "2026-09-05T00:49:34.708927-04:00",
+          "hostname": "localhost"
+        }
+      ],
+      "testcases": [
+        {
+          "classname": "tests.contracts.test_report_a_k1r_kinematical_mes_repairs",
+          "name": "test_geometry_dimension_and_parity_registry_is_explicit",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k1r_kinematical_mes_repairs",
+          "name": "test_geodesic_acceleration_premise_is_not_a_numerical_anchor",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k1r_kinematical_mes_repairs",
+          "name": "test_k1r_joint_identification_and_shared_data_firewall",
+          "result": "failed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k1r_kinematical_mes_repairs",
+          "name": "test_product_gauge_quadratic_stress_and_coupled_set_are_separate",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k1r_kinematical_mes_repairs",
+          "name": "test_k2_v2_maps_twelve_results_to_a_provisional_40_claim_surface",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k1r_kinematical_mes_repairs",
+          "name": "test_k1r_scientific_firewalls_remain_closed",
+          "result": "failed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2_kinematical_claim_recompile",
+          "name": "test_candidate_claim_surface_is_exactly_thirty_plus_ten",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2_kinematical_claim_recompile",
+          "name": "test_every_new_claim_has_authority_assumptions_and_forbidden_extensions",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2_kinematical_claim_recompile",
+          "name": "test_uniqueness_and_implication_review_covers_all_additions",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2_kinematical_claim_recompile",
+          "name": "test_citation_overlay_maps_every_addition_and_revision",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2_kinematical_claim_recompile",
+          "name": "test_candidate_bibliography_supplement_has_three_unique_keys",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2_kinematical_claim_recompile",
+          "name": "test_organic_integration_and_section_map_are_exact_bijections",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2_kinematical_claim_recompile",
+          "name": "test_original_and_later_methodology_are_organically_integrated",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2_kinematical_claim_recompile",
+          "name": "test_candidate_architecture_preserves_scientific_firewalls",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2f_compiler",
+          "name": "test_claim_compiler_applies_revisions_and_additions_without_mutating_inputs",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2f_compiler",
+          "name": "test_bibliography_merge_rejects_duplicate_keys",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2f_compiler",
+          "name": "test_exact_repository_inputs_compile_to_one_forty_claim_authority_bundle",
+          "result": "failed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2f_compiler",
+          "name": "test_registered_input_blob_mutation_fails_closed",
+          "result": "passed"
+        }
+      ]
+    },
+    {
+      "label": "10_strict_regressions",
+      "junit": "receipts/k2fr0-tests.xml",
+      "command": {
+        "label": "10_strict_regressions",
+        "argv": [
+          "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/contracts/test_report_a_k2fr0_hardening.py",
+          "--junitxml=/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/receipts/k2fr0-tests.xml"
+        ],
+        "cwd": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a",
+        "started_at": "2026-09-05T04:49:46.521121+00:00",
+        "exit_code": 1,
+        "environment_overrides": {
+          "PYTHONPYCACHEPREFIX": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/cache/bytecode",
+          "TMPDIR": "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp"
+        },
+        "finished_at": "2026-09-05T04:49:47.275908+00:00"
+      },
+      "collected": 15,
+      "passed": 11,
+      "failed": 4,
+      "errors": 0,
+      "skipped": 0,
+      "xfailed": 0,
+      "xpassed": 0,
+      "suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "4",
+          "skipped": "0",
+          "tests": "15",
+          "time": "0.626",
+          "timestamp": "2026-09-05T00:49:46.626741-04:00",
+          "hostname": "localhost"
+        }
+      ],
+      "testcases": [
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_preserve_base_authority_memory_and_input_values",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_normalisation_does_not_inherit_donor_execution",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_unknown_vocabulary_is_rejected[truth_status]",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_unknown_vocabulary_is_rejected[implementation_status]",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_unknown_vocabulary_is_rejected[report_role]",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_conditional_coverage_is_recomputed_not_inherited",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_numerical_execution_grade_is_recomputed_not_inherited",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_unbound_materialisation_is_refused",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_registered_input_mutation_is_rejected_before_publication",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_symlinked_input_ancestor_is_rejected",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_existing_receipt_and_destination_are_never_overwritten",
+          "result": "passed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_mid_write_failure_leaves_no_published_bundle",
+          "result": "failed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_corrupt_staged_write_is_detected_before_publication",
+          "result": "failed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_destination_race_does_not_replace_even_an_empty_directory",
+          "result": "failed"
+        },
+        {
+          "classname": "tests.contracts.test_report_a_k2fr0_hardening",
+          "name": "test_strict_six_file_bundle_is_deterministic_and_preserves_all_bijections",
+          "result": "failed"
+        }
+      ]
+    }
+  ],
+  "first_failure": {
+    "group": "09_existing_regressions",
+    "test": "tests.contracts.test_report_a_k1r_kinematical_mes_repairs::test_k1r_joint_identification_and_shared_data_firewall",
+    "kind": "failure",
+    "message": "AssertionError: assert 'Their appearance as separate set factors does not make them independent evidence' in '# K1R — Typed kinematical MES theorem repair and completion\\n\\n## Status and authority\\n\\nThis pack supersedes the se...YSICAL_RESPONSE_SECTORS_EXCEPT_BETA_RO_UNRESOLVED\\n/\\nWOLFRAM_REPLAY_BLOCKED_NOT_COUNTED\\n/\\nNO_CLAIM_PROMOTION\\n```\\n'",
+    "raw_junit_failure_text": "def test_k1r_joint_identification_and_shared_data_firewall() -> None:\n        text = PACK.read_text(encoding=\"utf-8\")\n        required = (\n            \"\\\\Theta(y;\\\\eta)\",\n            \"B_{\\\\rm MES}(y;\\\\eta)\",\n            \"Their appearance as separate set factors does not make them independent evidence\",\n            \"MES ceiling construction, anchor conditioning\",\n            \"feasible response-kernel fibre contains no other admissible state\",\n            \"Full column rank of the response is sufficient but not necessary\",\n        )\n        for needle in required:\n>           assert needle in text\nE           AssertionError: assert 'Their appearance as separate set factors does not make them independent evidence' in '# K1R — Typed kinematical MES theorem repair and completion\\n\\n## Status and authority\\n\\nThis pack supersedes the se...YSICAL_RESPONSE_SECTORS_EXCEPT_BETA_RO_UNRESOLVED\\n/\\nWOLFRAM_REPLAY_BLOCKED_NOT_COUNTED\\n/\\nNO_CLAIM_PROMOTION\\n```\\n'\n\ntests/contracts/test_report_a_k1r_kinematical_mes_repairs.py:65: AssertionError"
+  },
+  "all_failures": [
+    {
+      "group": "09_existing_regressions",
+      "test": "tests.contracts.test_report_a_k1r_kinematical_mes_repairs::test_k1r_joint_identification_and_shared_data_firewall",
+      "kind": "failure",
+      "message": "AssertionError: assert 'Their appearance as separate set factors does not make them independent evidence' in '# K1R — Typed kinematical MES theorem repair and completion\\n\\n## Status and authority\\n\\nThis pack supersedes the se...YSICAL_RESPONSE_SECTORS_EXCEPT_BETA_RO_UNRESOLVED\\n/\\nWOLFRAM_REPLAY_BLOCKED_NOT_COUNTED\\n/\\nNO_CLAIM_PROMOTION\\n```\\n'",
+      "raw_junit_failure_text": "def test_k1r_joint_identification_and_shared_data_firewall() -> None:\n        text = PACK.read_text(encoding=\"utf-8\")\n        required = (\n            \"\\\\Theta(y;\\\\eta)\",\n            \"B_{\\\\rm MES}(y;\\\\eta)\",\n            \"Their appearance as separate set factors does not make them independent evidence\",\n            \"MES ceiling construction, anchor conditioning\",\n            \"feasible response-kernel fibre contains no other admissible state\",\n            \"Full column rank of the response is sufficient but not necessary\",\n        )\n        for needle in required:\n>           assert needle in text\nE           AssertionError: assert 'Their appearance as separate set factors does not make them independent evidence' in '# K1R — Typed kinematical MES theorem repair and completion\\n\\n## Status and authority\\n\\nThis pack supersedes the se...YSICAL_RESPONSE_SECTORS_EXCEPT_BETA_RO_UNRESOLVED\\n/\\nWOLFRAM_REPLAY_BLOCKED_NOT_COUNTED\\n/\\nNO_CLAIM_PROMOTION\\n```\\n'\n\ntests/contracts/test_report_a_k1r_kinematical_mes_repairs.py:65: AssertionError"
+    },
+    {
+      "group": "09_existing_regressions",
+      "test": "tests.contracts.test_report_a_k1r_kinematical_mes_repairs::test_k1r_scientific_firewalls_remain_closed",
+      "kind": "failure",
+      "message": "AssertionError: assert 'no physical shear, vorticity or acceleration estimate' in '# K1R — Typed kinematical MES theorem repair and completion\\n\\n## Status and authority\\n\\nThis pack supersedes the se...YSICAL_RESPONSE_SECTORS_EXCEPT_BETA_RO_UNRESOLVED\\n/\\nWOLFRAM_REPLAY_BLOCKED_NOT_COUNTED\\n/\\nNO_CLAIM_PROMOTION\\n```\\n'",
+      "raw_junit_failure_text": "def test_k1r_scientific_firewalls_remain_closed() -> None:\n        text = PACK.read_text(encoding=\"utf-8\")\n        required = (\n            \"no Planck/FFP10 execution\",\n            \"no physical shear, vorticity or acceleration estimate\",\n            \"no finite-HEALPIX no-go theorem\",\n            \"no native BASS result\",\n            \"No anchor-to-state arrow is generative\",\n            \"No observable-to-physical tensor map is admitted without a declared response\",\n            \"NO_CLAIM_PROMOTION\",\n        )\n        for needle in required:\n>           assert needle in text\nE           AssertionError: assert 'no physical shear, vorticity or acceleration estimate' in '# K1R — Typed kinematical MES theorem repair and completion\\n\\n## Status and authority\\n\\nThis pack supersedes the se...YSICAL_RESPONSE_SECTORS_EXCEPT_BETA_RO_UNRESOLVED\\n/\\nWOLFRAM_REPLAY_BLOCKED_NOT_COUNTED\\n/\\nNO_CLAIM_PROMOTION\\n```\\n'\n\ntests/contracts/test_report_a_k1r_kinematical_mes_repairs.py:133: AssertionError"
+    },
+    {
+      "group": "09_existing_regressions",
+      "test": "tests.contracts.test_report_a_k2f_compiler::test_exact_repository_inputs_compile_to_one_forty_claim_authority_bundle",
+      "kind": "failure",
+      "message": "yaml.scanner.ScannerError: mapping values are not allowed here\n  in \"<unicode string>\", line 42, column 35:\n        title: Randomization Inference: Theory and Applications\n                                      ^",
+      "raw_junit_failure_text": "tmp_path = PosixPath('/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp/pytest-of-root/pytest-0/test_exact_repository_inputs_c0')\n\n    def test_exact_repository_inputs_compile_to_one_forty_claim_authority_bundle(\n        tmp_path: Path,\n    ) -> None:\n        output_root = tmp_path / \"out\"\n>       receipt = compile_authority_bundle(\n            repository_root=ROOT,\n            output_root=output_root,\n            enforce_registered_input_blobs=True,\n        )\n\ntests/contracts/test_report_a_k2f_compiler.py:115: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nscripts/compile_report_a_k2f_authority.py:445: in compile_authority_bundle\n    base_citations = _load_yaml(repository_root / INPUT_PATHS[\"base_citation_matrix\"])\nscripts/compile_report_a_k2f_authority.py:69: in _load_yaml\n    payload = yaml.safe_load(path.read_text(encoding=\"utf-8\"))\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:125: in safe_load\n    return load(stream, SafeLoader)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:81: in load\n    return loader.get_single_data()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/constructor.py:49: in get_single_data\n    node = self.get_single_node()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:36: in get_single_node\n    document = self.compose_document()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:55: in compose_document\n    node = self.compose_node(None, None)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node\n    item_value = self.compose_node(node, item_key)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node\n    item_value = self.compose_node(node, item_key)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:127: in compose_mapping_node\n    while not self.check_event(MappingEndEvent):\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:98: in check_event\n    self.current_event = self.state()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:428: in parse_block_mapping_key\n    if self.check_token(KeyToken):\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:116: in check_token\n    self.fetch_more_tokens()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:223: in fetch_more_tokens\n    return self.fetch_value()\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <yaml.loader.SafeLoader object at 0x7fb037b39e50>\n\n    def fetch_value(self):\n    \n        # Do we determine a simple key?\n        if self.flow_level in self.possible_simple_keys:\n    \n            # Add KEY.\n            key = self.possible_simple_keys[self.flow_level]\n            del self.possible_simple_keys[self.flow_level]\n            self.tokens.insert(key.token_number-self.tokens_taken,\n                    KeyToken(key.mark, key.mark))\n    \n            # If this key starts a new block mapping, we need to add\n            # BLOCK-MAPPING-START.\n            if not self.flow_level:\n                if self.add_indent(key.column):\n                    self.tokens.insert(key.token_number-self.tokens_taken,\n                            BlockMappingStartToken(key.mark, key.mark))\n    \n            # There cannot be two simple keys one after another.\n            self.allow_simple_key = False\n    \n        # It must be a part of a complex key.\n        else:\n    \n            # Block context needs additional checks.\n            # (Do we really need them? They will be caught by the parser\n            # anyway.)\n            if not self.flow_level:\n    \n                # We are allowed to start a complex value if and only if\n                # we can start a simple key.\n                if not self.allow_simple_key:\n>                   raise ScannerError(None, None,\n                            \"mapping values are not allowed here\",\n                            self.get_mark())\nE                   yaml.scanner.ScannerError: mapping values are not allowed here\nE                     in \"<unicode string>\", line 42, column 35:\nE                           title: Randomization Inference: Theory and Applications\nE                                                         ^\n\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:577: ScannerError"
+    },
+    {
+      "group": "10_strict_regressions",
+      "test": "tests.contracts.test_report_a_k2fr0_hardening::test_mid_write_failure_leaves_no_published_bundle",
+      "kind": "failure",
+      "message": "yaml.scanner.ScannerError: mapping values are not allowed here\n  in \"<unicode string>\", line 42, column 35:\n        title: Randomization Inference: Theory and Applications\n                                      ^",
+      "raw_junit_failure_text": "tmp_path = PosixPath('/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp/pytest-of-root/pytest-1/test_mid_write_failure_leaves_0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f0c9e867560>\n\n    def test_mid_write_failure_leaves_no_published_bundle(tmp_path, monkeypatch):\n        original = compiler._write_payload\n        calls = []\n        def fail_second(path, payload):\n            calls.append(path)\n            if len(calls) == 2:\n                raise OSError(\"injected write failure\")\n            return original(path, payload)\n        monkeypatch.setattr(compiler, \"_write_payload\", fail_second)\n        with pytest.raises(compiler.CompilationError, match=\"injected write failure\"):\n>           compiler.compile_authority_bundle(repository_root=ROOT, output_root=tmp_path / \"out\")\n\ntests/contracts/test_report_a_k2fr0_hardening.py:138: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nscripts/compile_report_a_k2fr0_authority.py:300: in compile_authority_bundle\n    _mapping(payloads[\"base_citation_matrix\"], \"citation base\"),\nscripts/compile_report_a_k2fr0_authority.py:84: in _mapping\n    value = yaml.load(data.decode(\"utf-8\"), Loader=UniqueSafeLoader)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:81: in load\n    return loader.get_single_data()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/constructor.py:49: in get_single_data\n    node = self.get_single_node()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:36: in get_single_node\n    document = self.compose_document()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:55: in compose_document\n    node = self.compose_node(None, None)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node\n    item_value = self.compose_node(node, item_key)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node\n    item_value = self.compose_node(node, item_key)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:127: in compose_mapping_node\n    while not self.check_event(MappingEndEvent):\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:98: in check_event\n    self.current_event = self.state()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:428: in parse_block_mapping_key\n    if self.check_token(KeyToken):\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:116: in check_token\n    self.fetch_more_tokens()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:223: in fetch_more_tokens\n    return self.fetch_value()\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <scripts.compile_report_a_k2fr0_authority.UniqueSafeLoader object at 0x7f0c9ea42690>\n\n    def fetch_value(self):\n    \n        # Do we determine a simple key?\n        if self.flow_level in self.possible_simple_keys:\n    \n            # Add KEY.\n            key = self.possible_simple_keys[self.flow_level]\n            del self.possible_simple_keys[self.flow_level]\n            self.tokens.insert(key.token_number-self.tokens_taken,\n                    KeyToken(key.mark, key.mark))\n    \n            # If this key starts a new block mapping, we need to add\n            # BLOCK-MAPPING-START.\n            if not self.flow_level:\n                if self.add_indent(key.column):\n                    self.tokens.insert(key.token_number-self.tokens_taken,\n                            BlockMappingStartToken(key.mark, key.mark))\n    \n            # There cannot be two simple keys one after another.\n            self.allow_simple_key = False\n    \n        # It must be a part of a complex key.\n        else:\n    \n            # Block context needs additional checks.\n            # (Do we really need them? They will be caught by the parser\n            # anyway.)\n            if not self.flow_level:\n    \n                # We are allowed to start a complex value if and only if\n                # we can start a simple key.\n                if not self.allow_simple_key:\n>                   raise ScannerError(None, None,\n                            \"mapping values are not allowed here\",\n                            self.get_mark())\nE                   yaml.scanner.ScannerError: mapping values are not allowed here\nE                     in \"<unicode string>\", line 42, column 35:\nE                           title: Randomization Inference: Theory and Applications\nE                                                         ^\n\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:577: ScannerError"
+    },
+    {
+      "group": "10_strict_regressions",
+      "test": "tests.contracts.test_report_a_k2fr0_hardening::test_corrupt_staged_write_is_detected_before_publication",
+      "kind": "failure",
+      "message": "yaml.scanner.ScannerError: mapping values are not allowed here\n  in \"<unicode string>\", line 42, column 35:\n        title: Randomization Inference: Theory and Applications\n                                      ^",
+      "raw_junit_failure_text": "tmp_path = PosixPath('/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp/pytest-of-root/pytest-1/test_corrupt_staged_write_is_d0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f0c9ea073b0>\n\n    def test_corrupt_staged_write_is_detected_before_publication(tmp_path, monkeypatch):\n        original = compiler._write_payload\n        def corrupt(path, payload):\n            return original(path, payload + b\"corruption\")\n        monkeypatch.setattr(compiler, \"_write_payload\", corrupt)\n        with pytest.raises(compiler.CompilationError, match=\"staged\"):\n>           compiler.compile_authority_bundle(repository_root=ROOT, output_root=tmp_path / \"out\")\n\ntests/contracts/test_report_a_k2fr0_hardening.py:149: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nscripts/compile_report_a_k2fr0_authority.py:300: in compile_authority_bundle\n    _mapping(payloads[\"base_citation_matrix\"], \"citation base\"),\nscripts/compile_report_a_k2fr0_authority.py:84: in _mapping\n    value = yaml.load(data.decode(\"utf-8\"), Loader=UniqueSafeLoader)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:81: in load\n    return loader.get_single_data()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/constructor.py:49: in get_single_data\n    node = self.get_single_node()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:36: in get_single_node\n    document = self.compose_document()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:55: in compose_document\n    node = self.compose_node(None, None)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node\n    item_value = self.compose_node(node, item_key)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node\n    item_value = self.compose_node(node, item_key)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:127: in compose_mapping_node\n    while not self.check_event(MappingEndEvent):\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:98: in check_event\n    self.current_event = self.state()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:428: in parse_block_mapping_key\n    if self.check_token(KeyToken):\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:116: in check_token\n    self.fetch_more_tokens()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:223: in fetch_more_tokens\n    return self.fetch_value()\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <scripts.compile_report_a_k2fr0_authority.UniqueSafeLoader object at 0x7f0c9e7d1700>\n\n    def fetch_value(self):\n    \n        # Do we determine a simple key?\n        if self.flow_level in self.possible_simple_keys:\n    \n            # Add KEY.\n            key = self.possible_simple_keys[self.flow_level]\n            del self.possible_simple_keys[self.flow_level]\n            self.tokens.insert(key.token_number-self.tokens_taken,\n                    KeyToken(key.mark, key.mark))\n    \n            # If this key starts a new block mapping, we need to add\n            # BLOCK-MAPPING-START.\n            if not self.flow_level:\n                if self.add_indent(key.column):\n                    self.tokens.insert(key.token_number-self.tokens_taken,\n                            BlockMappingStartToken(key.mark, key.mark))\n    \n            # There cannot be two simple keys one after another.\n            self.allow_simple_key = False\n    \n        # It must be a part of a complex key.\n        else:\n    \n            # Block context needs additional checks.\n            # (Do we really need them? They will be caught by the parser\n            # anyway.)\n            if not self.flow_level:\n    \n                # We are allowed to start a complex value if and only if\n                # we can start a simple key.\n                if not self.allow_simple_key:\n>                   raise ScannerError(None, None,\n                            \"mapping values are not allowed here\",\n                            self.get_mark())\nE                   yaml.scanner.ScannerError: mapping values are not allowed here\nE                     in \"<unicode string>\", line 42, column 35:\nE                           title: Randomization Inference: Theory and Applications\nE                                                         ^\n\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:577: ScannerError"
+    },
+    {
+      "group": "10_strict_regressions",
+      "test": "tests.contracts.test_report_a_k2fr0_hardening::test_destination_race_does_not_replace_even_an_empty_directory",
+      "kind": "failure",
+      "message": "yaml.scanner.ScannerError: mapping values are not allowed here\n  in \"<unicode string>\", line 42, column 35:\n        title: Randomization Inference: Theory and Applications\n                                      ^",
+      "raw_junit_failure_text": "tmp_path = PosixPath('/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp/pytest-of-root/pytest-1/test_destination_race_does_not0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f0c9e7d8320>\n\n    @pytest.mark.skipif(sys.platform != \"linux\", reason=\"production publisher is Linux RENAME_NOREPLACE\")\n    def test_destination_race_does_not_replace_even_an_empty_directory(tmp_path, monkeypatch):\n        original = compiler._publish_noreplace\n        def race(stage, destination):\n            destination.mkdir()\n            return original(stage, destination)\n        monkeypatch.setattr(compiler, \"_publish_noreplace\", race)\n        with pytest.raises(compiler.CompilationError):\n>           compiler.compile_authority_bundle(repository_root=ROOT, output_root=tmp_path / \"out\")\n\ntests/contracts/test_report_a_k2fr0_hardening.py:161: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nscripts/compile_report_a_k2fr0_authority.py:300: in compile_authority_bundle\n    _mapping(payloads[\"base_citation_matrix\"], \"citation base\"),\nscripts/compile_report_a_k2fr0_authority.py:84: in _mapping\n    value = yaml.load(data.decode(\"utf-8\"), Loader=UniqueSafeLoader)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:81: in load\n    return loader.get_single_data()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/constructor.py:49: in get_single_data\n    node = self.get_single_node()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:36: in get_single_node\n    document = self.compose_document()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:55: in compose_document\n    node = self.compose_node(None, None)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node\n    item_value = self.compose_node(node, item_key)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node\n    item_value = self.compose_node(node, item_key)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:127: in compose_mapping_node\n    while not self.check_event(MappingEndEvent):\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:98: in check_event\n    self.current_event = self.state()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:428: in parse_block_mapping_key\n    if self.check_token(KeyToken):\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:116: in check_token\n    self.fetch_more_tokens()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:223: in fetch_more_tokens\n    return self.fetch_value()\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <scripts.compile_report_a_k2fr0_authority.UniqueSafeLoader object at 0x7f0c9e86ec60>\n\n    def fetch_value(self):\n    \n        # Do we determine a simple key?\n        if self.flow_level in self.possible_simple_keys:\n    \n            # Add KEY.\n            key = self.possible_simple_keys[self.flow_level]\n            del self.possible_simple_keys[self.flow_level]\n            self.tokens.insert(key.token_number-self.tokens_taken,\n                    KeyToken(key.mark, key.mark))\n    \n            # If this key starts a new block mapping, we need to add\n            # BLOCK-MAPPING-START.\n            if not self.flow_level:\n                if self.add_indent(key.column):\n                    self.tokens.insert(key.token_number-self.tokens_taken,\n                            BlockMappingStartToken(key.mark, key.mark))\n    \n            # There cannot be two simple keys one after another.\n            self.allow_simple_key = False\n    \n        # It must be a part of a complex key.\n        else:\n    \n            # Block context needs additional checks.\n            # (Do we really need them? They will be caught by the parser\n            # anyway.)\n            if not self.flow_level:\n    \n                # We are allowed to start a complex value if and only if\n                # we can start a simple key.\n                if not self.allow_simple_key:\n>                   raise ScannerError(None, None,\n                            \"mapping values are not allowed here\",\n                            self.get_mark())\nE                   yaml.scanner.ScannerError: mapping values are not allowed here\nE                     in \"<unicode string>\", line 42, column 35:\nE                           title: Randomization Inference: Theory and Applications\nE                                                         ^\n\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:577: ScannerError"
+    },
+    {
+      "group": "10_strict_regressions",
+      "test": "tests.contracts.test_report_a_k2fr0_hardening::test_strict_six_file_bundle_is_deterministic_and_preserves_all_bijections",
+      "kind": "failure",
+      "message": "yaml.scanner.ScannerError: mapping values are not allowed here\n  in \"<unicode string>\", line 42, column 35:\n        title: Randomization Inference: Theory and Applications\n                                      ^",
+      "raw_junit_failure_text": "tmp_path = PosixPath('/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp/pytest-of-root/pytest-1/test_strict_six_file_bundle_is0')\n\n    @pytest.mark.skipif(sys.platform != \"linux\", reason=\"production publisher is Linux RENAME_NOREPLACE\")\n    def test_strict_six_file_bundle_is_deterministic_and_preserves_all_bijections(tmp_path):\n        receipts = []\n        for name in (\"first\", \"second\"):\n>           receipts.append(compiler.compile_authority_bundle(repository_root=ROOT, output_root=tmp_path / name))\n\ntests/contracts/test_report_a_k2fr0_hardening.py:171: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nscripts/compile_report_a_k2fr0_authority.py:300: in compile_authority_bundle\n    _mapping(payloads[\"base_citation_matrix\"], \"citation base\"),\nscripts/compile_report_a_k2fr0_authority.py:84: in _mapping\n    value = yaml.load(data.decode(\"utf-8\"), Loader=UniqueSafeLoader)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:81: in load\n    return loader.get_single_data()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/constructor.py:49: in get_single_data\n    node = self.get_single_node()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:36: in get_single_node\n    document = self.compose_document()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:55: in compose_document\n    node = self.compose_node(None, None)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node\n    item_value = self.compose_node(node, item_key)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node\n    item_value = self.compose_node(node, item_key)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node\n    node = self.compose_mapping_node(anchor)\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:127: in compose_mapping_node\n    while not self.check_event(MappingEndEvent):\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:98: in check_event\n    self.current_event = self.state()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:428: in parse_block_mapping_key\n    if self.check_token(KeyToken):\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:116: in check_token\n    self.fetch_more_tokens()\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:223: in fetch_more_tokens\n    return self.fetch_value()\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <scripts.compile_report_a_k2fr0_authority.UniqueSafeLoader object at 0x7f0c9ea06b70>\n\n    def fetch_value(self):\n    \n        # Do we determine a simple key?\n        if self.flow_level in self.possible_simple_keys:\n    \n            # Add KEY.\n            key = self.possible_simple_keys[self.flow_level]\n            del self.possible_simple_keys[self.flow_level]\n            self.tokens.insert(key.token_number-self.tokens_taken,\n                    KeyToken(key.mark, key.mark))\n    \n            # If this key starts a new block mapping, we need to add\n            # BLOCK-MAPPING-START.\n            if not self.flow_level:\n                if self.add_indent(key.column):\n                    self.tokens.insert(key.token_number-self.tokens_taken,\n                            BlockMappingStartToken(key.mark, key.mark))\n    \n            # There cannot be two simple keys one after another.\n            self.allow_simple_key = False\n    \n        # It must be a part of a complex key.\n        else:\n    \n            # Block context needs additional checks.\n            # (Do we really need them? They will be caught by the parser\n            # anyway.)\n            if not self.flow_level:\n    \n                # We are allowed to start a complex value if and only if\n                # we can start a simple key.\n                if not self.allow_simple_key:\n>                   raise ScannerError(None, None,\n                            \"mapping values are not allowed here\",\n                            self.get_mark())\nE                   yaml.scanner.ScannerError: mapping values are not allowed here\nE                     in \"<unicode string>\", line 42, column 35:\nE                           title: Randomization Inference: Theory and Applications\nE                                                         ^\n\n../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:577: ScannerError"
+    }
+  ],
+  "strict_cli": {
+    "status": "NOT_EXECUTED",
+    "attempts": 0,
+    "reason": "REQUIRED_REGRESSION_PREDECESSORS_FAILED",
+    "argv": [
+      "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/venv/bin/python",
+      "scripts/compile_report_a_k2fr0_authority.py",
+      "--repository-root",
+      "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a",
+      "--output-root",
+      "/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/authority-bundle"
+    ],
+    "cwd": "/workspace/scratch/7436fae9cb26/K2FE_SOURCE_a0784f2a",
+    "exit_code": null,
+    "output_parent_exists": true,
+    "output_destination_exists": false,
+    "raw_compiler_receipt_exists": false,
+    "renameat2_publication_status": "NOT_REACHED"
+  },
+  "compiler_receipt": {
+    "created": false,
+    "path": null,
+    "reason": "Strict CLI not executed; regression paths stopped before receipt production."
+  },
+  "output_coverage_booleans": null,
+  "output_structural_findings": null,
+  "output_authority_memory_readback": null,
+  "failure_classification": {
+    "source_test_failure": "OBSERVED",
+    "interpreter_dependency_failure": "NOT_OBSERVED",
+    "source_binding_failure": "NOT_OBSERVED",
+    "filesystem_publication_failure": "NOT_REACHED",
+    "backend_prestart_failure": "NOT_OBSERVED"
+  },
+  "failure_mechanisms": [
+    {
+      "kind": "DOCUMENTARY_EXACT_SUBSTRING_CONTRACT_MISMATCH",
+      "count": 2,
+      "evidence": "receipts/documentary_failure_diagnosis.json",
+      "scientific_truth_adjudicated": false
+    },
+    {
+      "kind": "PINNED_SOURCE_YAML_SYNTAX_ERROR",
+      "count": 5,
+      "source_path": "docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml",
+      "git_blob": "3fbaa2f97522cca6d0ad60e0c96655d293ca0d74",
+      "line": 42,
+      "column": 35,
+      "source_line": "    title: Randomization Inference: Theory and Applications",
+      "exception": "yaml.scanner.ScannerError: mapping values are not allowed here",
+      "strict_publisher_exercised": false
+    }
+  ],
+  "not_executed_next_steps": [
+    "production strict CLI",
+    "six-file output readback",
+    "claim/citation/section/integration output bijections",
+    "20-entry output bibliography parse",
+    "output payload hash checks",
+    "output structural_findings adjudication",
+    "CAS",
+    "canonical promotion",
+    "PDF rebuilding",
+    "commit/push/merge/PR metadata mutation"
+  ],
+  "recovered_acquisition_events": [
+    {
+      "log": "logs/01_git_clone.json",
+      "exit_code": 128,
+      "original_error": "fatal: could not read Username for 'https://github.com': terminal prompts disabled",
+      "resolution": "Used the explicitly permitted connector payload mirror; no full-checkout claim."
+    },
+    {
+      "log": "logs/02_materialise_source.json",
+      "exit_code": 1,
+      "original_error": "AssertionError at assert expected[\"mode\"]==\"100644\"",
+      "classification": "EXECUTOR_SOURCE_STAGING_HELPER_ASSUMED_NONEXECUTABLE_MODE",
+      "resolution": "A separate v2 materialiser accepted original 100644 and 100755 regular files and preserved Git mode. Existing bytes were compared, not rewritten. No repository source or test was patched."
+    }
+  ],
+  "k5_status": {
+    "status": "OWNER_REPORTED_24_PAGE_REVIEW_PDF_ALREADY_DELIVERED",
+    "manuscript_blob_reported": "99a3f75c67ece3cfb00179bfd61787f47cb7e7ac",
+    "pdf_sha256_reported": "9f70061a593c58024a406c643a22004b0535bf60c6f5961d7bcd06ea85d3c97c",
+    "binary_rehashed_in_this_run": false,
+    "pdf_rebuilt": false
+  },
+  "package_digest_binding": "Final ZIP digest is in the separately delivered K2FE_RESULT.yaml and ZIP .sha256 sidecar; no self-referential ZIP digest is embedded.",
+  "command_record_scope": "Acquisition/environment/syntax/original regressions/failure readback; primary admission separately preserved."
+}

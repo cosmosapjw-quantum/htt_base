@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="15" time="0.626" timestamp="2026-09-05T00:49:46.626741-04:00" hostname="localhost"><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_preserve_base_authority_memory_and_input_values" time="0.032" /><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_normalisation_does_not_inherit_donor_execution" time="0.031" /><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_unknown_vocabulary_is_rejected[truth_status]" time="0.031" /><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_unknown_vocabulary_is_rejected[implementation_status]" time="0.031" /><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_unknown_vocabulary_is_rejected[report_role]" time="0.030" /><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_conditional_coverage_is_recomputed_not_inherited" time="0.032" /><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_numerical_execution_grade_is_recomputed_not_inherited" time="0.034" /><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_unbound_materialisation_is_refused" time="0.002" /><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_registered_input_mutation_is_rejected_before_publication" time="0.002" /><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_symlinked_input_ancestor_is_rejected" time="0.001" /><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_existing_receipt_and_destination_are_never_overwritten" time="0.001" /><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_mid_write_failure_leaves_no_published_bundle" time="0.034"><failure message="yaml.scanner.ScannerError: mapping values are not allowed here&#10;  in &quot;&lt;unicode string&gt;&quot;, line 42, column 35:&#10;        title: Randomization Inference: Theory and Applications&#10;                                      ^">tmp_path = PosixPath('/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp/pytest-of-root/pytest-1/test_mid_write_failure_leaves_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0c9e867560&gt;
+
+    def test_mid_write_failure_leaves_no_published_bundle(tmp_path, monkeypatch):
+        original = compiler._write_payload
+        calls = []
+        def fail_second(path, payload):
+            calls.append(path)
+            if len(calls) == 2:
+                raise OSError("injected write failure")
+            return original(path, payload)
+        monkeypatch.setattr(compiler, "_write_payload", fail_second)
+        with pytest.raises(compiler.CompilationError, match="injected write failure"):
+&gt;           compiler.compile_authority_bundle(repository_root=ROOT, output_root=tmp_path / "out")
+
+tests/contracts/test_report_a_k2fr0_hardening.py:138: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/compile_report_a_k2fr0_authority.py:300: in compile_authority_bundle
+    _mapping(payloads["base_citation_matrix"], "citation base"),
+scripts/compile_report_a_k2fr0_authority.py:84: in _mapping
+    value = yaml.load(data.decode("utf-8"), Loader=UniqueSafeLoader)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/constructor.py:49: in get_single_data
+    node = self.get_single_node()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:36: in get_single_node
+    document = self.compose_document()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:55: in compose_document
+    node = self.compose_node(None, None)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:127: in compose_mapping_node
+    while not self.check_event(MappingEndEvent):
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:98: in check_event
+    self.current_event = self.state()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:428: in parse_block_mapping_key
+    if self.check_token(KeyToken):
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:116: in check_token
+    self.fetch_more_tokens()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:223: in fetch_more_tokens
+    return self.fetch_value()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scripts.compile_report_a_k2fr0_authority.UniqueSafeLoader object at 0x7f0c9ea42690&gt;
+
+    def fetch_value(self):
+    
+        # Do we determine a simple key?
+        if self.flow_level in self.possible_simple_keys:
+    
+            # Add KEY.
+            key = self.possible_simple_keys[self.flow_level]
+            del self.possible_simple_keys[self.flow_level]
+            self.tokens.insert(key.token_number-self.tokens_taken,
+                    KeyToken(key.mark, key.mark))
+    
+            # If this key starts a new block mapping, we need to add
+            # BLOCK-MAPPING-START.
+            if not self.flow_level:
+                if self.add_indent(key.column):
+                    self.tokens.insert(key.token_number-self.tokens_taken,
+                            BlockMappingStartToken(key.mark, key.mark))
+    
+            # There cannot be two simple keys one after another.
+            self.allow_simple_key = False
+    
+        # It must be a part of a complex key.
+        else:
+    
+            # Block context needs additional checks.
+            # (Do we really need them? They will be caught by the parser
+            # anyway.)
+            if not self.flow_level:
+    
+                # We are allowed to start a complex value if and only if
+                # we can start a simple key.
+                if not self.allow_simple_key:
+&gt;                   raise ScannerError(None, None,
+                            "mapping values are not allowed here",
+                            self.get_mark())
+E                   yaml.scanner.ScannerError: mapping values are not allowed here
+E                     in "&lt;unicode string&gt;", line 42, column 35:
+E                           title: Randomization Inference: Theory and Applications
+E                                                         ^
+
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:577: ScannerError</failure></testcase><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_corrupt_staged_write_is_detected_before_publication" time="0.038"><failure message="yaml.scanner.ScannerError: mapping values are not allowed here&#10;  in &quot;&lt;unicode string&gt;&quot;, line 42, column 35:&#10;        title: Randomization Inference: Theory and Applications&#10;                                      ^">tmp_path = PosixPath('/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp/pytest-of-root/pytest-1/test_corrupt_staged_write_is_d0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0c9ea073b0&gt;
+
+    def test_corrupt_staged_write_is_detected_before_publication(tmp_path, monkeypatch):
+        original = compiler._write_payload
+        def corrupt(path, payload):
+            return original(path, payload + b"corruption")
+        monkeypatch.setattr(compiler, "_write_payload", corrupt)
+        with pytest.raises(compiler.CompilationError, match="staged"):
+&gt;           compiler.compile_authority_bundle(repository_root=ROOT, output_root=tmp_path / "out")
+
+tests/contracts/test_report_a_k2fr0_hardening.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/compile_report_a_k2fr0_authority.py:300: in compile_authority_bundle
+    _mapping(payloads["base_citation_matrix"], "citation base"),
+scripts/compile_report_a_k2fr0_authority.py:84: in _mapping
+    value = yaml.load(data.decode("utf-8"), Loader=UniqueSafeLoader)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/constructor.py:49: in get_single_data
+    node = self.get_single_node()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:36: in get_single_node
+    document = self.compose_document()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:55: in compose_document
+    node = self.compose_node(None, None)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:127: in compose_mapping_node
+    while not self.check_event(MappingEndEvent):
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:98: in check_event
+    self.current_event = self.state()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:428: in parse_block_mapping_key
+    if self.check_token(KeyToken):
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:116: in check_token
+    self.fetch_more_tokens()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:223: in fetch_more_tokens
+    return self.fetch_value()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scripts.compile_report_a_k2fr0_authority.UniqueSafeLoader object at 0x7f0c9e7d1700&gt;
+
+    def fetch_value(self):
+    
+        # Do we determine a simple key?
+        if self.flow_level in self.possible_simple_keys:
+    
+            # Add KEY.
+            key = self.possible_simple_keys[self.flow_level]
+            del self.possible_simple_keys[self.flow_level]
+            self.tokens.insert(key.token_number-self.tokens_taken,
+                    KeyToken(key.mark, key.mark))
+    
+            # If this key starts a new block mapping, we need to add
+            # BLOCK-MAPPING-START.
+            if not self.flow_level:
+                if self.add_indent(key.column):
+                    self.tokens.insert(key.token_number-self.tokens_taken,
+                            BlockMappingStartToken(key.mark, key.mark))
+    
+            # There cannot be two simple keys one after another.
+            self.allow_simple_key = False
+    
+        # It must be a part of a complex key.
+        else:
+    
+            # Block context needs additional checks.
+            # (Do we really need them? They will be caught by the parser
+            # anyway.)
+            if not self.flow_level:
+    
+                # We are allowed to start a complex value if and only if
+                # we can start a simple key.
+                if not self.allow_simple_key:
+&gt;                   raise ScannerError(None, None,
+                            "mapping values are not allowed here",
+                            self.get_mark())
+E                   yaml.scanner.ScannerError: mapping values are not allowed here
+E                     in "&lt;unicode string&gt;", line 42, column 35:
+E                           title: Randomization Inference: Theory and Applications
+E                                                         ^
+
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:577: ScannerError</failure></testcase><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_destination_race_does_not_replace_even_an_empty_directory" time="0.037"><failure message="yaml.scanner.ScannerError: mapping values are not allowed here&#10;  in &quot;&lt;unicode string&gt;&quot;, line 42, column 35:&#10;        title: Randomization Inference: Theory and Applications&#10;                                      ^">tmp_path = PosixPath('/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp/pytest-of-root/pytest-1/test_destination_race_does_not0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f0c9e7d8320&gt;
+
+    @pytest.mark.skipif(sys.platform != "linux", reason="production publisher is Linux RENAME_NOREPLACE")
+    def test_destination_race_does_not_replace_even_an_empty_directory(tmp_path, monkeypatch):
+        original = compiler._publish_noreplace
+        def race(stage, destination):
+            destination.mkdir()
+            return original(stage, destination)
+        monkeypatch.setattr(compiler, "_publish_noreplace", race)
+        with pytest.raises(compiler.CompilationError):
+&gt;           compiler.compile_authority_bundle(repository_root=ROOT, output_root=tmp_path / "out")
+
+tests/contracts/test_report_a_k2fr0_hardening.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/compile_report_a_k2fr0_authority.py:300: in compile_authority_bundle
+    _mapping(payloads["base_citation_matrix"], "citation base"),
+scripts/compile_report_a_k2fr0_authority.py:84: in _mapping
+    value = yaml.load(data.decode("utf-8"), Loader=UniqueSafeLoader)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/constructor.py:49: in get_single_data
+    node = self.get_single_node()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:36: in get_single_node
+    document = self.compose_document()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:55: in compose_document
+    node = self.compose_node(None, None)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:127: in compose_mapping_node
+    while not self.check_event(MappingEndEvent):
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:98: in check_event
+    self.current_event = self.state()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:428: in parse_block_mapping_key
+    if self.check_token(KeyToken):
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:116: in check_token
+    self.fetch_more_tokens()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:223: in fetch_more_tokens
+    return self.fetch_value()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scripts.compile_report_a_k2fr0_authority.UniqueSafeLoader object at 0x7f0c9e86ec60&gt;
+
+    def fetch_value(self):
+    
+        # Do we determine a simple key?
+        if self.flow_level in self.possible_simple_keys:
+    
+            # Add KEY.
+            key = self.possible_simple_keys[self.flow_level]
+            del self.possible_simple_keys[self.flow_level]
+            self.tokens.insert(key.token_number-self.tokens_taken,
+                    KeyToken(key.mark, key.mark))
+    
+            # If this key starts a new block mapping, we need to add
+            # BLOCK-MAPPING-START.
+            if not self.flow_level:
+                if self.add_indent(key.column):
+                    self.tokens.insert(key.token_number-self.tokens_taken,
+                            BlockMappingStartToken(key.mark, key.mark))
+    
+            # There cannot be two simple keys one after another.
+            self.allow_simple_key = False
+    
+        # It must be a part of a complex key.
+        else:
+    
+            # Block context needs additional checks.
+            # (Do we really need them? They will be caught by the parser
+            # anyway.)
+            if not self.flow_level:
+    
+                # We are allowed to start a complex value if and only if
+                # we can start a simple key.
+                if not self.allow_simple_key:
+&gt;                   raise ScannerError(None, None,
+                            "mapping values are not allowed here",
+                            self.get_mark())
+E                   yaml.scanner.ScannerError: mapping values are not allowed here
+E                     in "&lt;unicode string&gt;", line 42, column 35:
+E                           title: Randomization Inference: Theory and Applications
+E                                                         ^
+
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:577: ScannerError</failure></testcase><testcase classname="tests.contracts.test_report_a_k2fr0_hardening" name="test_strict_six_file_bundle_is_deterministic_and_preserves_all_bijections" time="0.034"><failure message="yaml.scanner.ScannerError: mapping values are not allowed here&#10;  in &quot;&lt;unicode string&gt;&quot;, line 42, column 35:&#10;        title: Randomization Inference: Theory and Applications&#10;                                      ^">tmp_path = PosixPath('/workspace/scratch/7436fae9cb26/K2FE_RUN_20260905T044357468Z/tmp/pytest-of-root/pytest-1/test_strict_six_file_bundle_is0')
+
+    @pytest.mark.skipif(sys.platform != "linux", reason="production publisher is Linux RENAME_NOREPLACE")
+    def test_strict_six_file_bundle_is_deterministic_and_preserves_all_bijections(tmp_path):
+        receipts = []
+        for name in ("first", "second"):
+&gt;           receipts.append(compiler.compile_authority_bundle(repository_root=ROOT, output_root=tmp_path / name))
+
+tests/contracts/test_report_a_k2fr0_hardening.py:171: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/compile_report_a_k2fr0_authority.py:300: in compile_authority_bundle
+    _mapping(payloads["base_citation_matrix"], "citation base"),
+scripts/compile_report_a_k2fr0_authority.py:84: in _mapping
+    value = yaml.load(data.decode("utf-8"), Loader=UniqueSafeLoader)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/constructor.py:49: in get_single_data
+    node = self.get_single_node()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:36: in get_single_node
+    document = self.compose_document()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:55: in compose_document
+    node = self.compose_node(None, None)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:127: in compose_mapping_node
+    while not self.check_event(MappingEndEvent):
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:98: in check_event
+    self.current_event = self.state()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:428: in parse_block_mapping_key
+    if self.check_token(KeyToken):
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:116: in check_token
+    self.fetch_more_tokens()
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:223: in fetch_more_tokens
+    return self.fetch_value()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;scripts.compile_report_a_k2fr0_authority.UniqueSafeLoader object at 0x7f0c9ea06b70&gt;
+
+    def fetch_value(self):
+    
+        # Do we determine a simple key?
+        if self.flow_level in self.possible_simple_keys:
+    
+            # Add KEY.
+            key = self.possible_simple_keys[self.flow_level]
+            del self.possible_simple_keys[self.flow_level]
+            self.tokens.insert(key.token_number-self.tokens_taken,
+                    KeyToken(key.mark, key.mark))
+    
+            # If this key starts a new block mapping, we need to add
+            # BLOCK-MAPPING-START.
+            if not self.flow_level:
+                if self.add_indent(key.column):
+                    self.tokens.insert(key.token_number-self.tokens_taken,
+                            BlockMappingStartToken(key.mark, key.mark))
+    
+            # There cannot be two simple keys one after another.
+            self.allow_simple_key = False
+    
+        # It must be a part of a complex key.
+        else:
+    
+            # Block context needs additional checks.
+            # (Do we really need them? They will be caught by the parser
+            # anyway.)
+            if not self.flow_level:
+    
+                # We are allowed to start a complex value if and only if
+                # we can start a simple key.
+                if not self.allow_simple_key:
+&gt;                   raise ScannerError(None, None,
+                            "mapping values are not allowed here",
+                            self.get_mark())
+E                   yaml.scanner.ScannerError: mapping values are not allowed here
+E                     in "&lt;unicode string&gt;", line 42, column 35:
+E                           title: Randomization Inference: Theory and Applications
+E                                                         ^
+
+../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:577: ScannerError</failure></testcase></testsuite></testsuites>
