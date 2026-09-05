@@ -38,7 +38,7 @@ This report is theory-only. Scalar-only MES observational ranks and withdrawn WU
 
 ### 2.1 Observer, photon and sky direction
 
-The metric signature is \((- ,+,+,+)\), and the spatial orientation convention is \(\epsilon_{123}=+1\). The future-directed observer obeys \(u^a u_a=-1\). For future-directed null photon momentum,
+The metric signature is \((-,+,+,+)\), and the spatial orientation convention is \(\epsilon_{123}=+1\). The future-directed observer obeys \(u^a u_a=-1\). For future-directed null photon momentum,
 
 \[
 p^a p_a=0,
@@ -270,8 +270,7 @@ The physical state is
 
 \[
 \mathcal X_{\rm phys}
-=\mathcal K_u\times\mathcal V_{
-\rm frame}\times\mathcal G,
+=\mathcal K_u\times\mathcal V_{\rm frame}\times\mathcal G,
 \qquad \mathcal K_u=(\sigma_{ab},\omega_a,A_a).
 \]
 
@@ -487,7 +486,7 @@ Thus
 \[
 \boxed{
 \Theta(y;\eta)=\{X_0\}
-\ \Longleftrightarrow\
+\quad\Longleftrightarrow\quad
 \{h\in\ker\mathcal R_\eta:X_0+h\in F_y\}=\{0\}.
 }
 \]
@@ -551,10 +550,10 @@ z^{(1)}=(10,0,-100,-100),\qquad
 z^{(2)}=(0,10,-100,-100).
 \]
 
-This law is invariant under swapping rows 0 and 1. Ranking row 0 against all four rows gives \(p_{m all}=1/4\) or \(1/2\), so
+This law is invariant under swapping rows 0 and 1. Ranking row 0 against all four rows gives \(p_{\mathrm{all}}=1/4\) or \(1/2\), so
 
 \[
-\Pr(p_{m all}\le1/2)=1>1/2.
+\Pr(p_{\mathrm{all}}\le1/2)=1>1/2.
 \]
 
 Ranking over the actual two-element orbit instead gives \(1/2\) or \(1\). Proper-subgroup invariance therefore does not license comparison with rows outside that orbit. These two finite-sample theorems retain different reference objects and are not merged into an exchangeability-or-group premise.
