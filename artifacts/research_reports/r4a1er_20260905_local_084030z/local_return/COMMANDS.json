@@ -1,0 +1,81 @@
+[
+  {
+    "stage": "source acquisition",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "argv": [
+      "git",
+      "fetch",
+      "--no-tags",
+      "--no-write-fetch-head",
+      "origin",
+      "e5956b02119b831fdf6f57852096f8d5ad44b96d",
+      "581d50cb8b8be61ca8ead538d0bf7d75420f9037"
+    ],
+    "exit": 0
+  },
+  {
+    "stage": "source binding",
+    "cwd": "/mnt/sn850x2t/htt_base_e2e/R4A1E_LOCAL_EXISTING_R2_20260905T084030Z/worktree",
+    "argv": [
+      "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "docs/research_reports/verifiers/r4a1nf/verify_source_bindings.py",
+      "--contract",
+      "docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json",
+      "--run-spec",
+      "docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json",
+      "--adjudicator",
+      ".agent-harness/scripts/cas_gate.py",
+      "--out",
+      "docs/research_reports/verifiers/r4a1nf/CAS_SOURCE_BINDINGS_R4A1NF_DOMAIN.json"
+    ],
+    "exit": 0,
+    "stdout": "source-binding.stdout",
+    "stderr": "source-binding.stderr"
+  },
+  {
+    "stage": "cache preparation",
+    "argv": [
+      "cp",
+      "-a",
+      "--reflink=auto",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/packages",
+      "/mnt/sn850x2t/htt_base_e2e/R4A1E_LOCAL_EXISTING_R2_20260905T084030Z/worktree/formal_mathlib/.lake"
+    ],
+    "exit": 0,
+    "started_at": "2026-09-05T08:43:42Z",
+    "completed_at": "2026-09-05T08:44:10Z"
+  },
+  {
+    "stage": "native package toolchain",
+    "cwd": "/mnt/sn850x2t/htt_base_e2e/R4A1E_LOCAL_EXISTING_R2_20260905T084030Z/worktree/formal_mathlib",
+    "argv": [
+      "lake",
+      "env",
+      "lean",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "lake-env-version.stdout",
+    "stderr": "lake-env-version.stderr"
+  },
+  {
+    "stage": "parent adjudicator",
+    "cwd": "/mnt/sn850x2t/htt_base_e2e/R4A1E_LOCAL_EXISTING_R2_20260905T084030Z/worktree",
+    "argv": [
+      "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      ".agent-harness/scripts/cas_gate.py",
+      "run-adjudicate",
+      "--contract",
+      "docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json",
+      "--run-spec",
+      "docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json",
+      "--out",
+      "docs/research_reports/verifiers/r4a1nf/CAS_ADJUDICATION_R4A1NF_DOMAIN.json"
+    ],
+    "exit": 0,
+    "started_at": "2026-09-05T08:45:31Z",
+    "completed_at": "2026-09-05T08:45:36Z",
+    "stdout": "adjudication.stdout",
+    "stderr": "adjudication.stderr"
+  }
+]

@@ -1,0 +1,196 @@
+{
+  "assignment": "R4A1E_LOCAL_EXISTING_R2",
+  "overall": "R2_LOCAL_EXECUTED_PASS_PENDING_SCOPE_REVIEW",
+  "source_identity": {
+    "repository": "cosmosapjw-quantum/htt_base",
+    "local_repository": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "worktree": "/mnt/sn850x2t/htt_base_e2e/R4A1E_LOCAL_EXISTING_R2_20260905T084030Z/worktree",
+    "run_directory": "/mnt/sn850x2t/htt_base_e2e/R4A1E_LOCAL_EXISTING_R2_20260905T084030Z/result",
+    "handoff_ref": "e5956b02119b831fdf6f57852096f8d5ad44b96d",
+    "handoff_path": "docs/codex_handoff/htt_tensorized_report_first_20260903/THREE_LANE_R4A1E_LOCAL_EXECUTION_HANDOFF_20260905.md",
+    "handoff_expected_blob": "0a7f5d755ca06be160c10e4bdea6dcd0df8fbb0e",
+    "handoff_actual_blob": "0a7f5d755ca06be160c10e4bdea6dcd0df8fbb0e",
+    "handoff_sha256": "8364af3419f3039a5490ea73f3149030ec30ca8f7789ff6eda159cd54bcc066b",
+    "source_commit": "581d50cb8b8be61ca8ead538d0bf7d75420f9037",
+    "source_tree": "435de757e124410c6f59bd56e709c4af18c8d3ad",
+    "contract_git_blob": "225f5ed3ebe161b16371513b35b47a8a52f92b80",
+    "contract_sha256": "9e7520e23021430e581a1b27eb5af52c6f3eba6a6fdd4c21614b60249778ffa4",
+    "github_pr452_head": "581d50cb8b8be61ca8ead538d0bf7d75420f9037"
+  },
+  "environment": {
+    "python": {
+      "parent": {
+        "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+        "base_prefix": "/usr",
+        "implementation": "CPython",
+        "version": "3.12.3",
+        "sympy_version": "1.14.0",
+        "mpmath_version": "1.3.0",
+        "sympy_file": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/__init__.py",
+        "mpmath_file": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/mpmath/__init__.py"
+      },
+      "child_python3": {
+        "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python3",
+        "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+        "base_prefix": "/usr",
+        "implementation": "CPython",
+        "version": "3.12.3",
+        "sympy_version": "1.14.0",
+        "mpmath_version": "1.3.0",
+        "sympy_file": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/__init__.py",
+        "mpmath_file": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/mpmath/__init__.py"
+      }
+    },
+    "worktree_local_venv_exists": false,
+    "lean_executable": "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean",
+    "lake_executable": "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lake",
+    "ELAN_TOOLCHAIN": "leanprover/lean4:v4.31.0",
+    "lean_version": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "lake_version": "Lake version 5.0.0-src+68218e8 (Lean version 4.31.0)"
+  },
+  "source_binding_exit": 0,
+  "source_binding_ok": true,
+  "source_binding_verified_rows": 16,
+  "parent_adjudicator_exit": 0,
+  "aggregate_status_raw": "PASS",
+  "exceptions_applied": [],
+  "missing_axes": [],
+  "axis_execution": {
+    "sympy": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "sympy",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/research_reports/verifiers/r4a1nf/cas/axes/sympy/axis_program.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 600,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python -c <sympy exact factor probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "1.14.0\n"
+      },
+      "started_at": "2026-09-05T08:45:31+00:00",
+      "completed_at": "2026-09-05T08:45:32+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\":{\"boosted_observer_unit_timelike\":true,\"observer_measured_photon_energy\":true,\"photon_null_decomposition\":true,\"regularized_error_envelope_positive_definite\":true},\"computed\":{\"boost_high_precision_residual\":\"3.1626593829691569673e-81\",\"general_ordered_quadratic_form\":\"lambda_reg**2*x_norm_sq + q_psd\",\"mpmath_version\":\"1.3.0\",\"nonzero_vector_assumption\":\"x_norm_sq > 0\",\"regularized_quadratic_form_residual\":\"0\",\"strict_regularizer_is_positive\":true,\"sympy_version\":\"1.14.0\"},\"counterexample\":null,\"domain_assumption_diff\":[]}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "boosted_observer_unit_timelike": true,
+          "observer_measured_photon_energy": true,
+          "photon_null_decomposition": true,
+          "regularized_error_envelope_positive_definite": true
+        },
+        "domain_assumption_diff": [],
+        "computed": {
+          "boost_high_precision_residual": "3.1626593829691569673e-81",
+          "general_ordered_quadratic_form": "lambda_reg**2*x_norm_sq + q_psd",
+          "mpmath_version": "1.3.0",
+          "nonzero_vector_assumption": "x_norm_sq > 0",
+          "regularized_quadratic_form_residual": "0",
+          "strict_regularizer_is_positive": true,
+          "sympy_version": "1.14.0"
+        },
+        "counterexample": null
+      }
+    },
+    "lean": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "lean",
+      "argv": [
+        "sh",
+        "docs/research_reports/verifiers/r4a1nf/cas/axes/lean/axis_program"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 3600,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 lean --version",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+        "pinned_toolchain": "leanprover/lean4:v4.31.0"
+      },
+      "started_at": "2026-09-05T08:45:32+00:00",
+      "completed_at": "2026-09-05T08:45:36+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\":{\"photon_null_decomposition\":true,\"observer_measured_photon_energy\":true,\"boosted_observer_unit_timelike\":true,\"regularized_error_envelope_positive_definite\":true},\"domain_assumption_diff\":[],\"computed\":{\"lean_toolchain\":\"leanprover/lean4:v4.31.0\",\"mathlib_commit\":\"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\",\"formal_module\":\"Egs3V8Mathlib.ReportAConvention\"},\"counterexample\":null}\n",
+      "stderr_tail": "\n",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "photon_null_decomposition": true,
+          "observer_measured_photon_energy": true,
+          "boosted_observer_unit_timelike": true,
+          "regularized_error_envelope_positive_definite": true
+        },
+        "domain_assumption_diff": [],
+        "computed": {
+          "lean_toolchain": "leanprover/lean4:v4.31.0",
+          "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+          "formal_module": "Egs3V8Mathlib.ReportAConvention"
+        },
+        "counterexample": null
+      }
+    }
+  },
+  "source_invariance": {
+    "verified_at": "2026-09-05T08:47:21.779902+00:00",
+    "source_commit": "581d50cb8b8be61ca8ead538d0bf7d75420f9037",
+    "source_tree": "435de757e124410c6f59bd56e709c4af18c8d3ad",
+    "source_file_count": 18,
+    "changed_sources": [],
+    "missing_sources": [],
+    "input_bytes_unchanged": true,
+    "tracked_status": "",
+    "git_source_modified": false,
+    "main_head_unchanged": true,
+    "main_status_unchanged": true,
+    "main_tracked_diff_unchanged": true,
+    "main_venv_modified_by_this_run": false,
+    "data_accessed": false,
+    "note": "Read-only reuse of installed Python; independent copies of Lean dependency/cache directories. No full venv or data census/hash was performed."
+  },
+  "source_binding_receipt_sha256": "98b4dea32a8c0cb9986f18b6ce298fecef01f057a68feeb7abd97fc1d3a33510",
+  "adjudication_receipt_sha256": "c2a10f7097db8e2c83e706ba9ee598f3acd03829d54faa704c8544835554cc06",
+  "child_log_coverage": "PARENT_EMITTED_PAYLOAD_AND_TAILS_UNLESS_MORE_ACTUALLY_CAPTURED",
+  "full_child_logs_separately_captured": false,
+  "claim_scope": "SUPPORTING_DOMAIN_LEMMAS_ONLY",
+  "runner_claim_promotion_cas_eligible": true,
+  "canonical_or_publication_promoted": false,
+  "executor_reviewer_overlap": "No separate source review performed in this execution task. Executor inspected original receipts; downstream work-thread review remains pending. Axis programs share their disclosed preparation session.",
+  "remote_mutated": false,
+  "source_repairs": 0,
+  "axis_reruns": 0,
+  "subagents": 0,
+  "K2FER1_repeated": false,
+  "K5_rebuilt": false,
+  "all_40_claims_verified": false,
+  "observational_data_used": false,
+  "failure_classification": {
+    "source_binding": null,
+    "environment_package": null,
+    "implementation_formal_proof": null,
+    "mathematical_counterexample": null
+  },
+  "next_task": "R4A1ER_LOCAL_RESULT_SCOPE_REVIEW",
+  "token_usage": "UNAVAILABLE: this execution interface exposes no exact session token counter."
+}
