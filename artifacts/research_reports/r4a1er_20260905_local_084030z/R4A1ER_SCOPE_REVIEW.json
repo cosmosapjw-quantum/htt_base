@@ -1,0 +1,180 @@
+{
+  "assignment": "R4A1ER_LOCAL_RESULT_SCOPE_REVIEW",
+  "review_verdict": "R4A1ER_REVIEWED_R2_PASS_SUPPORTING_LEMMAS_ONLY",
+  "evidence_grade": "REVIEWED_EXACT_SOURCE_LOCAL_PARENT_OBSERVED_EXECUTION",
+  "manuscript": {
+    "path": "docs/research_reports/drafts/HTT_REPORT_A_FULL_KINEMATICAL_MES_DRAFT_K3_20260905.md",
+    "git_blob": "99a3f75c67ece3cfb00179bfd61787f47cb7e7ac",
+    "contract_input": false
+  },
+  "review_independence": {
+    "reviewer_is_local_R4A1E_executor": false,
+    "blind": false,
+    "prior_context": "Reviewer participated in K2FR and saw submitted R4A1E verdict and receipts.",
+    "axis_programs": "Distinct engine/proof lineages, shared preparation session disclosed by contract."
+  },
+  "lemmas": [
+    {
+      "id": "photon_null_decomposition",
+      "manuscript_sections": [
+        "2.1"
+      ],
+      "decision": "APPLICABLE_WITH_UNCHANGED_REGISTERED_ASSUMPTIONS",
+      "premises": [
+        "metric (-,+,+,+)",
+        "u.u=-1",
+        "u.e=0",
+        "e.e=1",
+        "p=(E_gamma/c)(u+e)",
+        "c>0",
+        "E_gamma>0"
+      ],
+      "transferred_statement": "p.p=(E_gamma/c)^2(-1+2*0+1)=0",
+      "actual_lean_scope": "Scalar real-number contraction after substituting the prescribed vector identities; norm_num, not a Lorentzian-manifold formalization.",
+      "not_verified": [
+        "Existence or global construction of an observer field or null geodesic",
+        "Future orientation, photon transport or Einstein-Boltzmann evolution"
+      ]
+    },
+    {
+      "id": "observer_measured_photon_energy",
+      "manuscript_sections": [
+        "2.1"
+      ],
+      "decision": "APPLICABLE_WITH_UNCHANGED_REGISTERED_ASSUMPTIONS",
+      "premises": [
+        "Same observer/photon decomposition and contractions",
+        "c>0 and E_gamma>0"
+      ],
+      "transferred_statement": "-c p.u=-E_gamma(-1+0)=E_gamma",
+      "actual_lean_scope": "Scalar contraction -((-1)+0)-1=0; the dimensional prefactor cancellation and geometric instantiation are explicit source-level reasoning.",
+      "not_verified": [
+        "A new measurement model or empirical energy estimate",
+        "Full differential geometry or radiation distribution"
+      ]
+    },
+    {
+      "id": "boosted_observer_unit_timelike",
+      "manuscript_sections": [
+        "8.1"
+      ],
+      "decision": "APPLICABLE_TO_NORMALIZATION_ONLY",
+      "premises": [
+        "u.u=-1",
+        "u.beta_obs=0",
+        "0<=beta_obs^2<1",
+        "gamma=(1-beta_obs^2)^(-1/2)>0",
+        "u_tilde=gamma(u+beta_obs)"
+      ],
+      "transferred_statement": "u_tilde.u_tilde=gamma^2(-1+beta_obs^2)=-1",
+      "actual_lean_scope": "gamma2*(1-beta2)=1 implies gamma2*(-1+beta2)=-1; domain-to-hypothesis instantiation is reviewed in manuscript.",
+      "not_verified": [
+        "d=1 temperature pullback and first-order generator",
+        "STF B_Q adjoint, factor B_Q^*B_Q=3M_Q or conditioning in 8.2",
+        "Physical response to shear/vorticity or global matter-frame tilt"
+      ]
+    },
+    {
+      "id": "regularized_error_envelope_positive_definite",
+      "manuscript_sections": [
+        "11.1"
+      ],
+      "decision": "APPLICABLE_TO_POSITIVE_REGULARIZATION_ONLY",
+      "premises": [
+        "P is real PSD in the declared coordinate metric",
+        "lambda_reg>0",
+        "nonzero x for strict quadratic form",
+        "For the manuscript P=N_fam sum_f r_f^2 sum_i E_fi E_fi^T, finite compatible matrices and registered radii"
+      ],
+      "transferred_statement": "P+lambda_reg^2 I is positive definite",
+      "actual_lean_scope": "General Matrix.PosDef regularization theorem via Matrix.PosDef.one, smul, and posSemidef_add.",
+      "source_level_bridge": "Each E E^T is PSD and the declared coefficients are nonnegative. This instantiates generic P. Existence of the finite-dimensional inverse square root is a standard consequence of positive definiteness, not a separately exported Lean theorem here.",
+      "sympy_scope": "Generic 2x2 Gram sum-of-squares identity plus dimension-independent ordered scalar implication q_psd>=0, ||x||^2>0, lambda_reg>0.",
+      "not_verified": [
+        "Full family-wise Cauchy-Schwarz/Loewner envelope derivation",
+        "Error-family invariance, zero-family refusal or complete uncertainty implementation",
+        "Whitened robust rank, singular-subspace projector or finite-HEALPix containment"
+      ]
+    }
+  ],
+  "remaining_obligations": [
+    {
+      "id": "T9_AUTHORITY_RUNTIME_RECONCILIATION",
+      "status": "OPEN_SEPARATE_CONTRACT_NOT_DISCHARGED",
+      "source": "docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml",
+      "detail": "The supported-runtime authority/cross-surface replay and canonical 30-ID hash binding are distinct from the four-lemma CAS run. V3 still expects citation blob 3fbaa2f97522cca6d0ad60e0c96655d293ca0d74; repaired pin contains 5087d39edf094f3adf7d72eed3061521ecf0b78d.",
+      "minimum_next_step": "Discussion thread must explicitly reconcile the old authority contract with the already authorized repaired bytes and choose the applicable existing replay; no silent repin, rerun or canonical update in this review."
+    },
+    {
+      "id": "PR450_REGISTERED_SURVIVOR_EXECUTION_REVIEW",
+      "status": "OPEN_PRESTART_NO_EXECUTION",
+      "source": "https://github.com/cosmosapjw-quantum/htt_base/pull/450",
+      "head": "ba84912bea165896ec8f0c0e5793b47d1736f512",
+      "job": 100677692359,
+      "detail": "Latest dedicated exact-head job has runner_id=0 and steps=[]. Prior 14 source-equivalent tests do not discharge exact registered Git-object replay and independent review.",
+      "minimum_next_step": "Use an accepted runtime for the existing PR450 contract and review source identity, 37 unique rows/36 included/1 deferred, repeat replay and artifacts."
+    },
+    {
+      "id": "PR451_QO_PACKET_IMPLEMENTATION_EXECUTION_REVIEW",
+      "status": "OPEN_PRESTART_NO_EXECUTION",
+      "source": "https://github.com/cosmosapjw-quantum/htt_base/pull/451",
+      "head": "9f7d06dec0fce1c3a8a53fa5372c84d9c679c037",
+      "job": 100686355554,
+      "detail": "Latest dedicated exact-head job has runner_id=0 and steps=[]. Prior 28 source-equivalent tests and 10000-pair stress evidence retain their original grade.",
+      "minimum_next_step": "Execute and independently review the existing exact packet-image/conditioned-decoder contract; do not infer Q/O verification from R2 observer algebra."
+    },
+    {
+      "id": "R4A1V0_ACTION_PINS_BEFORE_FREEZE",
+      "status": "OPEN_FOR_PUBLICATION_FREEZE_NOT_R2_FAILURE",
+      "source": "docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1V0_SOURCE_BINDING_CLOSEOUT.yaml",
+      "detail": "The formal workflow still uses actions/checkout@v4, actions/setup-python@v5, leanprover/lean-action@v1 and actions/upload-artifact@v4.",
+      "minimum_next_step": "Apply the already listed immutable-action-pin hardening in separately authorized source work before publication freeze."
+    },
+    {
+      "id": "PR444_FINITE_OPERATOR_IMPLEMENTATION",
+      "status": "OPEN_IF_IMPLEMENTATION_ACCEPTANCE_IS_REQUIRED",
+      "source": "https://github.com/cosmosapjw-quantum/htt_base/pull/444",
+      "head": "de73549c16ac6ceb63f924c86611e0a5ceb4711d",
+      "detail": "Current PR retains source-equivalent A4 tests and an unsealed byte-exact execution/registry-provenance obligation. R2 PosDef is not an envelope implementation test.",
+      "minimum_next_step": "Preserve the existing A4R0D execution/provenance requirement for any implementation acceptance; no new finite-operator run here."
+    },
+    {
+      "id": "FINITE_HEALPIX_ERROR_AND_SUBSPACE_ADMISSION",
+      "status": "UNRESOLVED_OUTSIDE_R2",
+      "source": "docs/research_reports/theory_packs/T8_MATRIX_NUMERICAL_ERROR_ENVELOPE_THEOREM_PACK.md",
+      "detail": "Actual numerical-error membership/completeness, frozen radii and independent holdouts remain prerequisites. Partial subspace use additionally needs a separation and applicable projector bound.",
+      "minimum_next_step": "Retain PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED and conditional T8 use until the existing scientific admission premises are supported."
+    },
+    {
+      "id": "REMAINING_SOURCE_AUTHORITY_AND_FINAL_REVIEW",
+      "status": "OPEN_DISCUSSION_THREAD_DECISION",
+      "source": "docs/codex_handoff/htt_tensorized_report_first_20260903/THREE_LANE_R4A1E_LOCAL_EXECUTION_HANDOFF_20260905.md",
+      "detail": "Keep K2FR original findings and annex separate. This review does not decide the remaining forty-claim, physical-response, finite-null, final-referee or publication acceptance questions.",
+      "minimum_next_step": "Reconcile these reviewed R2 receipts with the existing source evidence and owner decisions. Preserve the completed K5 PDF rather than reopening typesetting."
+    }
+  ],
+  "completed_components": [
+    "Returned archive delivery digests and 61 internal checksums verified.",
+    "Existing source binding 16/16 and parent-owned SymPy/Lean run accepted as the R2 CAS evidence component only.",
+    "All 18 pinned source payloads match the archived before/after manifests.",
+    "Four limited manuscript applications reviewed without modifying source.",
+    "K2FER1/K2FR and K5 retained as completed prior work, not repeated."
+  ],
+  "boundaries": {
+    "original_receipts_modified": false,
+    "existing_K2FR_bundle_modified": false,
+    "new_CAS_execution": false,
+    "all_40_claims_verified": false,
+    "QO_reconstruction_verified": false,
+    "finite_null_verified": false,
+    "physical_response_verified": false,
+    "STF_normal_matrix_factor_verified": false,
+    "finite_HEALPix_containment_verified": false,
+    "observations_executed": false,
+    "canonical_claims": 30,
+    "candidate_claims": 40,
+    "scientific_publication_authority": false,
+    "merge_authority": false
+  },
+  "recommendation": "Accept the local R2 record as the four supporting-domain evidence component and its limited source-level transfer. Return remaining authority reconciliation to the discussion thread; no repeat of the successful R2 run, K2FER1, K2FR archive or K5 is indicated by this review."
+}

@@ -1,0 +1,192 @@
+{
+  "assignment": "R4A1ER_LOCAL_RESULT_SCOPE_REVIEW",
+  "receipt_verification": "PASS_FOR_DECLARED_R2_EXECUTION_COMPONENT",
+  "source_commit": "581d50cb8b8be61ca8ead538d0bf7d75420f9037",
+  "source_tree": "435de757e124410c6f59bd56e709c4af18c8d3ad",
+  "contract_id": "CAS-R4A1NF-DOMAIN-R2",
+  "contract_version": 2,
+  "contract_sha256": "9e7520e23021430e581a1b27eb5af52c6f3eba6a6fdd4c21614b60249778ffa4",
+  "source_binding_receipt_sha256": "98b4dea32a8c0cb9986f18b6ce298fecef01f057a68feeb7abd97fc1d3a33510",
+  "adjudication_receipt_sha256": "c2a10f7097db8e2c83e706ba9ee598f3acd03829d54faa704c8544835554cc06",
+  "registered_source_bindings_verified": 16,
+  "source_manifest_payloads_verified": 18,
+  "before_after_source_records_match": true,
+  "existing_checkout_records_match": true,
+  "parent_commands_verified": [
+    {
+      "stage": "source acquisition",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "argv": [
+        "git",
+        "fetch",
+        "--no-tags",
+        "--no-write-fetch-head",
+        "origin",
+        "e5956b02119b831fdf6f57852096f8d5ad44b96d",
+        "581d50cb8b8be61ca8ead538d0bf7d75420f9037"
+      ],
+      "exit": 0
+    },
+    {
+      "stage": "source binding",
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/R4A1E_LOCAL_EXISTING_R2_20260905T084030Z/worktree",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "docs/research_reports/verifiers/r4a1nf/verify_source_bindings.py",
+        "--contract",
+        "docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json",
+        "--run-spec",
+        "docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json",
+        "--adjudicator",
+        ".agent-harness/scripts/cas_gate.py",
+        "--out",
+        "docs/research_reports/verifiers/r4a1nf/CAS_SOURCE_BINDINGS_R4A1NF_DOMAIN.json"
+      ],
+      "exit": 0,
+      "stdout": "source-binding.stdout",
+      "stderr": "source-binding.stderr"
+    },
+    {
+      "stage": "cache preparation",
+      "argv": [
+        "cp",
+        "-a",
+        "--reflink=auto",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_mathlib/.lake/packages",
+        "/mnt/sn850x2t/htt_base_e2e/R4A1E_LOCAL_EXISTING_R2_20260905T084030Z/worktree/formal_mathlib/.lake"
+      ],
+      "exit": 0,
+      "started_at": "2026-09-05T08:43:42Z",
+      "completed_at": "2026-09-05T08:44:10Z"
+    },
+    {
+      "stage": "native package toolchain",
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/R4A1E_LOCAL_EXISTING_R2_20260905T084030Z/worktree/formal_mathlib",
+      "argv": [
+        "lake",
+        "env",
+        "lean",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "lake-env-version.stdout",
+      "stderr": "lake-env-version.stderr"
+    },
+    {
+      "stage": "parent adjudicator",
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/R4A1E_LOCAL_EXISTING_R2_20260905T084030Z/worktree",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        ".agent-harness/scripts/cas_gate.py",
+        "run-adjudicate",
+        "--contract",
+        "docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json",
+        "--run-spec",
+        "docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json",
+        "--out",
+        "docs/research_reports/verifiers/r4a1nf/CAS_ADJUDICATION_R4A1NF_DOMAIN.json"
+      ],
+      "exit": 0,
+      "started_at": "2026-09-05T08:45:31Z",
+      "completed_at": "2026-09-05T08:45:36Z",
+      "stdout": "adjudication.stdout",
+      "stderr": "adjudication.stderr"
+    }
+  ],
+  "axis_results": {
+    "sympy": {
+      "solver_executed": true,
+      "exit": 0,
+      "timed_out": false,
+      "status": "PASS",
+      "obligations": {
+        "boosted_observer_unit_timelike": true,
+        "observer_measured_photon_energy": true,
+        "photon_null_decomposition": true,
+        "regularized_error_envelope_positive_definite": true
+      },
+      "domain_assumption_diff": [],
+      "counterexample": null,
+      "started_at": "2026-09-05T08:45:31+00:00",
+      "completed_at": "2026-09-05T08:45:32+00:00",
+      "timeout_seconds": 600
+    },
+    "lean": {
+      "solver_executed": true,
+      "exit": 0,
+      "timed_out": false,
+      "status": "PASS",
+      "obligations": {
+        "photon_null_decomposition": true,
+        "observer_measured_photon_energy": true,
+        "boosted_observer_unit_timelike": true,
+        "regularized_error_envelope_positive_definite": true
+      },
+      "domain_assumption_diff": [],
+      "counterexample": null,
+      "started_at": "2026-09-05T08:45:32+00:00",
+      "completed_at": "2026-09-05T08:45:36+00:00",
+      "timeout_seconds": 3600
+    }
+  },
+  "recorded_python": "CPython 3.12.3",
+  "recorded_sympy": "1.14.0",
+  "recorded_mpmath": "1.3.0",
+  "recorded_lean": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+  "recorded_mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "required_dependency_checkouts_recorded_matching": 9,
+  "cache_boundary": "Copied matching existing cache; four representative fingerprints, not an independent full mathlib rebuild or security attestation.",
+  "aggregate_status_raw": "PASS",
+  "exceptions_applied": [],
+  "counterexamples": [],
+  "parent_log_coverage": "COMPLETE_REDIRECTED_PARENT_STDOUT_STDERR_EXIT",
+  "child_log_coverage": "ORIGINAL_PARENT_PAYLOAD_AND_LAST_2000_CHARACTERS; NO_SEPARATE_FULL_CHILD_TRANSCRIPT",
+  "execution_evidence_origin": "REVIEWED_LOCAL_PARENT_OBSERVED_SUBPROCESS_RECEIPTS; NO_NEW_CAS_EXECUTION",
+  "reviewer_is_local_executor": false,
+  "blind_review": false,
+  "independence_disclosure": "Reviewer saw the submitted verdict and had prior K2FR/source context; local R4A1E executor is separate. Both axis source programs share their disclosed preparation session.",
+  "original_R3_bound_manuscript_blob": "16f8fdd4db4dac384c5c64a8d3f86e0dbbf62e34",
+  "revision2_reviewed_manuscript_blob": "99a3f75c67ece3cfb00179bfd61787f47cb7e7ac",
+  "revision2_is_contract_input": false,
+  "existing_authority_contract_citation_drift": {
+    "contract": "R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml",
+    "expected_old_blob": "3fbaa2f97522cca6d0ad60e0c96655d293ca0d74",
+    "actual_repaired_blob": "5087d39edf094f3adf7d72eed3061521ecf0b78d",
+    "disposition": "Separate authority reconciliation remains open; no repin, rerun or bypass in this review. This file is not the passed CAS-R4A1NF-DOMAIN-R2 contract."
+  },
+  "preserved_K2FR_structural_findings": {
+    "conditional_scope_not_explicit": [
+      "RA-ORBIT-004",
+      "RA-STAT-002",
+      "RA-STAT-003",
+      "RA-PROC-001",
+      "RA-ERR-004"
+    ],
+    "interpretation": "Findings remain visible; this compiler does not silently invent missing assumptions or certify theorems.",
+    "numerical_execution_grade_missing": [],
+    "source_only_execution_promotions": []
+  },
+  "preserved_K2FR_coverage": {
+    "claim_count": 40,
+    "canonical_sorted_id_sha256": "f4f727da892a0d2cdc7d785aede3028ca0c57a7978518a662029fd5b2a6388db",
+    "observational_claim_count": 0,
+    "corrected_planck_rank_claim_count": 0,
+    "finite_healpix_no_go_claim_count": 0,
+    "bianchi_family_claim_count": 0,
+    "native_bass_claim_count": 0,
+    "all_claims_have_authority": true,
+    "all_conditional_claims_have_assumptions_or_boundary": false,
+    "all_numerical_claims_have_execution_grade": true,
+    "all_source_only_claims_are_not_labelled_implementation_verified": true,
+    "canonical_sorted_id_sha256_status": "COMPUTED_SOURCE_CANDIDATE_NOT_CANONICAL_PROMOTION",
+    "scope_count_basis": "Immutable source declarations; no natural-language scientific adjudication is claimed."
+  },
+  "claim_promotion_cas_eligible_raw": true,
+  "claim_ceiling": "SUPPORTING_DOMAIN_LEMMAS_ONLY",
+  "all_40_claims_verified": false,
+  "canonical_claims": 30,
+  "candidate_claims": 40,
+  "scientific_publication_authority": false,
+  "merge_authority": false,
+  "review_runtime_python": "3.12.13 (main, Aug  7 2026, 02:25:39) [Clang 22.1.3 ]"
+}
