@@ -1,0 +1,462 @@
+{
+  "review_checks": "PASS",
+  "native_suite_status": "NONPASS",
+  "reviewer_role": "WORK_THREAD",
+  "local_executor": "LOCAL_CODEX",
+  "blind": false,
+  "source_authored_by_reviewer": false,
+  "new_pytest_invocations_by_reviewer": 0,
+  "new_CAS_executions": 0,
+  "base_commit": "9a37311cc97a9f670ab6c7f300b0cf74ccabe121",
+  "base_tree": "8a0641939dc6e49c1b0f949837e7ce2a3555757a",
+  "candidate_source_tree_computed_not_committed": "46fb44f32320c149c291c70a30289d8e7064f2c4",
+  "original_contract": {
+    "git_blob_sha1": "3c5ea8e7e21c5180b60313e47db2474cdf4d6744",
+    "sha256": "d6e5caf314390acf98cca3cef04f3280cfa2a795579f8e40e3317c6e5992beea",
+    "bytes": 6336
+  },
+  "reconciled_contract": {
+    "git_blob_sha1": "c66a43f94330ca62b0044b0c7f6e919adf12c17a",
+    "sha256": "b53fd22a625ba24d43844fce67b8c0b270329ac54e08caf30478383ec03748a9",
+    "bytes": 7963
+  },
+  "contract_path": "docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml",
+  "parsed_delta_only_one_pin_and_new_metadata": true,
+  "textual_patch_hunks": 2,
+  "patch_check_exit": 0,
+  "patch_sha256": "bc4ecd22a29a82c1a68958339d9651f6331e61950751545eff62e2e42f1808f7",
+  "preserved_source_pin_names": [
+    "claim_ledger",
+    "flattened_manuscript",
+    "formal_bibliography",
+    "provenance_appendix",
+    "notation_registry_v3",
+    "convention_domain_appendix"
+  ],
+  "citation": {
+    "git_blob_sha1": "5087d39edf094f3adf7d72eed3061521ecf0b78d",
+    "sha256": "cc42034f2295106d74a94ec07175daa19f437735f0096197b432b05861655662",
+    "bytes": 11720
+  },
+  "historical_citation": {
+    "git_blob_sha1": "3fbaa2f97522cca6d0ad60e0c96655d293ca0d74",
+    "sha256": "a159d132abcd243ce24dfc01709319cfb931b90ef2bc250004293d0c732b78e6",
+    "bytes": 11714
+  },
+  "historical_quoted_title_keys": [
+    "RANDOMIZATION_2024",
+    "ROLDAN_NOTARI_QUARTIN_2016",
+    "LI_1999"
+  ],
+  "actual_versions": {
+    "implementation": "CPython",
+    "python": "3.12.3",
+    "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "executable_realpath": "/usr/bin/python3.12",
+    "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+    "pytest": "8.4.2",
+    "pytest_module": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+    "PyYAML": "6.0.3",
+    "PyYAML_module": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py"
+  },
+  "local_commands": {
+    "red": {
+      "label": "red",
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/AUTHORITY_CITATION_RECONCILIATION_20260905T130332Z/worktree",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/contracts/test_report_a_r4a1_authority_v3.py::test_r4a1nf_binds_the_exact_declared_git_blobs"
+      ],
+      "versions": {
+        "implementation": "CPython",
+        "python": "3.12.3",
+        "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "executable_realpath": "/usr/bin/python3.12",
+        "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+        "pytest": "8.4.2",
+        "pytest_module": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+        "PyYAML": "6.0.3",
+        "PyYAML_module": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py"
+      },
+      "started_at": "2026-09-05T13:05:57.559620+00:00",
+      "completed_at": "2026-09-05T13:05:57.823977+00:00",
+      "elapsed_seconds": 0.2643635750282556,
+      "child_pid": 3371898,
+      "exit_code": 1,
+      "timeout_seconds": 900,
+      "timed_out": false,
+      "fresh_python_process": true,
+      "removed_environment_override_names": [],
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "stdout": "red.stdout",
+      "stderr": "red.stderr",
+      "junit": null
+    },
+    "post-pin": {
+      "label": "post-pin",
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/AUTHORITY_CITATION_RECONCILIATION_20260905T130332Z/worktree",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/contracts/test_report_a_r4a1_authority_v3.py::test_r4a1nf_binds_the_exact_declared_git_blobs"
+      ],
+      "versions": {
+        "implementation": "CPython",
+        "python": "3.12.3",
+        "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "executable_realpath": "/usr/bin/python3.12",
+        "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+        "pytest": "8.4.2",
+        "pytest_module": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+        "PyYAML": "6.0.3",
+        "PyYAML_module": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py"
+      },
+      "started_at": "2026-09-05T13:07:20.485049+00:00",
+      "completed_at": "2026-09-05T13:07:20.749520+00:00",
+      "elapsed_seconds": 0.26447190903127193,
+      "child_pid": 3375989,
+      "exit_code": 0,
+      "timeout_seconds": 900,
+      "timed_out": false,
+      "fresh_python_process": true,
+      "removed_environment_override_names": [],
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "stdout": "post-pin.stdout",
+      "stderr": "post-pin.stderr",
+      "junit": null
+    },
+    "collect": {
+      "label": "collect",
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/AUTHORITY_CITATION_RECONCILIATION_20260905T130332Z/worktree",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "--collect-only",
+        "tests/contracts/test_report_a_t9_v4.py",
+        "tests/contracts/test_report_a_citation_matrix_r4a1nf.py",
+        "tests/contracts/test_report_a_r3_flattened.py",
+        "tests/contracts/test_report_a_r4a0_source.py",
+        "tests/contracts/test_report_a_r4a1n_notation.py",
+        "tests/contracts/test_report_a_r4a1nf_flattened.py",
+        "tests/contracts/test_report_a_r4a1_authority_v3.py",
+        "tests/contracts/test_report_a_r4a1v0_formal_verifiers.py"
+      ],
+      "versions": {
+        "implementation": "CPython",
+        "python": "3.12.3",
+        "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "executable_realpath": "/usr/bin/python3.12",
+        "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+        "pytest": "8.4.2",
+        "pytest_module": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+        "PyYAML": "6.0.3",
+        "PyYAML_module": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py"
+      },
+      "started_at": "2026-09-05T13:07:35.590019+00:00",
+      "completed_at": "2026-09-05T13:07:36.106350+00:00",
+      "elapsed_seconds": 0.5163940980564803,
+      "child_pid": 3376750,
+      "exit_code": 0,
+      "timeout_seconds": 900,
+      "timed_out": false,
+      "fresh_python_process": true,
+      "removed_environment_override_names": [],
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "stdout": "collect.stdout",
+      "stderr": "collect.stderr",
+      "junit": null
+    },
+    "authority-replay": {
+      "label": "authority-replay",
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/AUTHORITY_CITATION_RECONCILIATION_20260905T130332Z/worktree",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/contracts/test_report_a_t9_v4.py",
+        "tests/contracts/test_report_a_citation_matrix_r4a1nf.py",
+        "tests/contracts/test_report_a_r3_flattened.py",
+        "tests/contracts/test_report_a_r4a0_source.py",
+        "tests/contracts/test_report_a_r4a1n_notation.py",
+        "tests/contracts/test_report_a_r4a1nf_flattened.py",
+        "tests/contracts/test_report_a_r4a1_authority_v3.py",
+        "tests/contracts/test_report_a_r4a1v0_formal_verifiers.py",
+        "--junitxml=/mnt/sn850x2t/htt_base_e2e/AUTHORITY_CITATION_RECONCILIATION_20260905T130332Z/result/authority-replay.xml"
+      ],
+      "versions": {
+        "implementation": "CPython",
+        "python": "3.12.3",
+        "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "executable_realpath": "/usr/bin/python3.12",
+        "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+        "pytest": "8.4.2",
+        "pytest_module": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+        "PyYAML": "6.0.3",
+        "PyYAML_module": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py"
+      },
+      "started_at": "2026-09-05T13:07:36.261244+00:00",
+      "completed_at": "2026-09-05T13:07:37.528229+00:00",
+      "elapsed_seconds": 1.2669838869478554,
+      "child_pid": 3376806,
+      "exit_code": 1,
+      "timeout_seconds": 900,
+      "timed_out": false,
+      "fresh_python_process": true,
+      "removed_environment_override_names": [],
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "stdout": "authority-replay.stdout",
+      "stderr": "authority-replay.stderr",
+      "junit": "authority-replay.xml"
+    }
+  },
+  "local_invocations": {
+    "red": 1,
+    "post_pin": 1,
+    "collection": 1,
+    "full_eight_file_suite": 1,
+    "canonical_hash_record": 1
+  },
+  "registered_test_files": [
+    "tests/contracts/test_report_a_t9_v4.py",
+    "tests/contracts/test_report_a_citation_matrix_r4a1nf.py",
+    "tests/contracts/test_report_a_r3_flattened.py",
+    "tests/contracts/test_report_a_r4a0_source.py",
+    "tests/contracts/test_report_a_r4a1n_notation.py",
+    "tests/contracts/test_report_a_r4a1nf_flattened.py",
+    "tests/contracts/test_report_a_r4a1_authority_v3.py",
+    "tests/contracts/test_report_a_r4a1v0_formal_verifiers.py"
+  ],
+  "junit_sha256": "9a8e10646d24cb89de44b225bbcc7caa67f0efa35350b90e885de8f3c61f1988",
+  "counts": {
+    "collected": 40,
+    "executed": 40,
+    "pass": 37,
+    "fail": 3,
+    "error": 0,
+    "skip": 0,
+    "xfail": 0,
+    "xpass": 0,
+    "deselect": 0
+  },
+  "failed_nodes": [
+    "tests/contracts/test_report_a_r4a0_source.py::test_canonical_krylov_frame_has_a_deterministic_so3_section",
+    "tests/contracts/test_report_a_r4a0_source.py::test_t2_cayley_hamilton_source_has_no_truncated_fraction_tokens",
+    "tests/contracts/test_report_a_r4a0_source.py::test_r4a0_repair_preserves_report_scope_firewalls"
+  ],
+  "all_six_authority_v3_nodes_passed_in_original_suite": true,
+  "canonical_id_sha256": "e103c581ce353b5102af81834831ac292105f18699671e8eb75b171acd97f01e",
+  "canonical_id_count": 30,
+  "canonical_ledger_modified": false,
+  "bibliography_count": 17,
+  "source_review": {
+    "base_tree_recomputed": "8a0641939dc6e49c1b0f949837e7ce2a3555757a",
+    "candidate_source_tree_computed_not_committed": "46fb44f32320c149c291c70a30289d8e7064f2c4",
+    "manifest_rows_compared": 5811,
+    "base_git_blobs_matched_to_fresh_tree": 5811,
+    "reported_unchanged_tracked_files": 5810,
+    "changed_paths": [
+      "docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml"
+    ],
+    "source_payloads_rehashed": 22,
+    "source_payload_records": [
+      {
+        "path": ".github/workflows/report-a-ledger.yml",
+        "git_blob_sha1": "0647f96a65246f691d47f1bf22ca3e7a4f7b07d3",
+        "sha256": "e31a4e4a0b987fc90b4676c2cbd961d1cf1171f6826a9939b28db953942f0560",
+        "bytes": 4796
+      },
+      {
+        "path": "artifacts/research_reports/k2fr_20260905/old_to_new_identities.json",
+        "git_blob_sha1": "e163148f962c55f6b0dc97d23f0a812954a1dbe4",
+        "sha256": "98bf15453d7e492fcbe22cfa460549e58c52db77976791e2e4bd2ec5fe99cf18",
+        "bytes": 1870
+      },
+      {
+        "path": "artifacts/research_reports/r4a1er_20260905_local_084030z/R4A1ER_SCOPE_REVIEW.md",
+        "git_blob_sha1": "65e0c634ab3ab088f8fd50ea14b0aea2ed77eb86",
+        "sha256": "c6314a7a0561f81e7b9f3f6d6a499d8d22a74f5cf9f82f490442f764da8697a5",
+        "bytes": 11125
+      },
+      {
+        "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml",
+        "git_blob_sha1": "3c5ea8e7e21c5180b60313e47db2474cdf4d6744",
+        "sha256": "d6e5caf314390acf98cca3cef04f3280cfa2a795579f8e40e3317c6e5992beea",
+        "bytes": 6336
+      },
+      {
+        "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml",
+        "git_blob_sha1": "5087d39edf094f3adf7d72eed3061521ecf0b78d",
+        "sha256": "cc42034f2295106d74a94ec07175daa19f437735f0096197b432b05861655662",
+        "bytes": 11720
+      },
+      {
+        "path": "tests/contracts/test_report_a_r4a1_authority_v3.py",
+        "git_blob_sha1": "f44f49f96481aca26437ce7be97e5e2fc2be4fc3",
+        "sha256": "8655f069611d5285f4c5ecee24b1e9dd6eb7b2a597a8c7986cd193bf3c468ea8",
+        "bytes": 6131
+      },
+      {
+        "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml",
+        "git_blob_sha1": "2245e291e0b03c65f1a789df8649a194c43fe8fd",
+        "sha256": "72052f01a049c945d653c71b3c0ea8c0e87e1218a737df44379884bd27f684d3",
+        "bytes": 13191
+      },
+      {
+        "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml",
+        "git_blob_sha1": "58291e9cfac6ff85ceffbdb6bdefd50315240831",
+        "sha256": "1d33242a38cb558c5d470f310b303904d22be88876ac82d8abf6acc5bad6f3fa",
+        "bytes": 21683
+      },
+      {
+        "path": "docs/research_reports/HTT_REPORT_A_REFERENCES.bib",
+        "git_blob_sha1": "ba37321119725e52f1a2b0ac827050ee895e5466",
+        "sha256": "7a7848a2b50dd298531ad22afc0682b377d373e07ba4173004450371e703598d",
+        "bytes": 6839
+      },
+      {
+        "path": "docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md",
+        "git_blob_sha1": "16f8fdd4db4dac384c5c64a8d3f86e0dbbf62e34",
+        "sha256": "3f317281b6cadc9a32b42367bbc80ae8fd7a1eb5add1b43bf8ad47070c6a6519",
+        "bytes": 31270
+      },
+      {
+        "path": "docs/research_reports/appendices/HTT_REPORT_A_AUTHORITY_AND_EXECUTION_PROVENANCE.md",
+        "git_blob_sha1": "b2b7d0cb78f995badb118ec92659b41db9d13783",
+        "sha256": "1265ead0caa2686e94c01ad5a7b81b83cf8c3ff1389d637f068b126b997c95f7",
+        "bytes": 7563
+      },
+      {
+        "path": "docs/research_reports/appendices/HTT_REPORT_A_COVARIANT_AND_DOMAIN_CONVENTIONS.md",
+        "git_blob_sha1": "c7a7616c33572499c3c581c26c7c65fa52ba3b6d",
+        "sha256": "76f2f0acd9cdf1536e5f484f3278f38cb22bf08fa6fe4e1cc444cb67559882f2",
+        "bytes": 3245
+      },
+      {
+        "path": "docs/research_reports/drafts/HTT_REPORT_A_FULL_KINEMATICAL_MES_DRAFT_K3_20260905.md",
+        "git_blob_sha1": "99a3f75c67ece3cfb00179bfd61787f47cb7e7ac",
+        "sha256": "3c09f19de450e9ba748926d45459d7c2deeeed73f5eb8b6c3fbede5ad9bbd1ad",
+        "bytes": 56402
+      },
+      {
+        "path": "docs/research_reports/theory_packs/T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md",
+        "git_blob_sha1": "8e66a7bb698932a060cc60057e3541b782167d83",
+        "sha256": "3f10e9f8199d27e5d36ab9f75400ad4c2792213aae70347e3c318bebeb95a0a9",
+        "bytes": 11834
+      },
+      {
+        "path": "pytest.ini",
+        "git_blob_sha1": "453d6809dad598a7d5806acfe851451dcbcf4d46",
+        "sha256": "a3f9fc9415c7eef1e0031c8b37b2201d8c78d0ec414a0d0227763e099d25fce4",
+        "bytes": 839
+      },
+      {
+        "path": "tests/contracts/test_report_a_citation_matrix_r4a1nf.py",
+        "git_blob_sha1": "8ccf87f70854cfb64d6558f796e04611c8a60b73",
+        "sha256": "4b81c4629d40f8116c6efae52406939601b8332c4a006dd5a60793bf0f49ed1d",
+        "bytes": 2062
+      },
+      {
+        "path": "tests/contracts/test_report_a_r3_flattened.py",
+        "git_blob_sha1": "a496a7390ea32cf2159e8cab4075f321e8cc2b1b",
+        "sha256": "5ce707fd582167bb3275cc814f03408e29d7404d89ce6a9a12ac44d22a4fe5d1",
+        "bytes": 4913
+      },
+      {
+        "path": "tests/contracts/test_report_a_r4a0_source.py",
+        "git_blob_sha1": "9e89bd74dce87a17b9f5d97940b7b2ad68061efd",
+        "sha256": "cfb093a351878315dbcce584493d80ccb772cb35af1f55df03f6b4a99f40ad3a",
+        "bytes": 1837
+      },
+      {
+        "path": "tests/contracts/test_report_a_r4a1n_notation.py",
+        "git_blob_sha1": "6ba28d5e1d7c1dde4f30fe5ade35b48ce07d8009",
+        "sha256": "b343f8325eed24b0a2e9de671edcf2d275a55f29be87b91c2527ee5ef87b5a83",
+        "bytes": 5573
+      },
+      {
+        "path": "tests/contracts/test_report_a_r4a1nf_flattened.py",
+        "git_blob_sha1": "75533edafe4ff390413e340fdce2d8800ba27142",
+        "sha256": "651d241736b344212d8225502cd9391cc0645e76e300b78ea68722083bb93073",
+        "bytes": 2211
+      },
+      {
+        "path": "tests/contracts/test_report_a_r4a1v0_formal_verifiers.py",
+        "git_blob_sha1": "1c8afa7d498c59ff6de70fe1a64b06126b92ffbf",
+        "sha256": "bbb998bccc06ed2dee4102a8b6c9c2e0deb973f8948dcff5be2afc0cecb67aac",
+        "bytes": 6506
+      },
+      {
+        "path": "tests/contracts/test_report_a_t9_v4.py",
+        "git_blob_sha1": "acfbde55a376e7e28ca7233102c09c90a9b26e51",
+        "sha256": "4dcc8917ba697912d3c544b29908bc654a930de4f15655069a45dc29a2e803c1",
+        "bytes": 4018
+      }
+    ],
+    "complete_workstation_rehash_by_reviewer": false,
+    "before_manifest_sha256": "f4ced7188e4af6c242e7a56a2b00338c217d74ec8fa6c42360c0519608082ea9",
+    "after_manifest_sha256": "6c52d2850cb90c1a6b0ec43f4c4ee185e2f9d0910cd65402e7ccdb671c36a463",
+    "main_checkout_head_status_records_equal": true,
+    "venv_data_scope": "local preservation statement; no fresh whole-environment/data rehash by work"
+  },
+  "failure_byte_evidence": {
+    "layout_line": 286,
+    "capitalization_line": 48,
+    "test_blob": "9e89bd74dce87a17b9f5d97940b7b2ad68061efd",
+    "manuscript_blob": "16f8fdd4db4dac384c5c64a8d3f86e0dbbf62e34",
+    "t2_blob": "8e66a7bb698932a060cc60057e3541b782167d83",
+    "form_feed_occurrences": [
+      {
+        "line": 234,
+        "byte_offset_zero_based": 4643,
+        "byte_hex": "0c",
+        "excerpt": " =\\frac{s_2}{2}\\bar Q+\frac{s_3}{3}I."
+      },
+      {
+        "line": 241,
+        "byte_offset_zero_based": 4703,
+        "byte_hex": "0c",
+        "excerpt": "\\mu_3=\\frac{s_2}{2}\\mu_1+\frac{s_3}{3}\\mu_0,"
+      },
+      {
+        "line": 245,
+        "byte_offset_zero_based": 4754,
+        "byte_hex": "0c",
+        "excerpt": "\\mu_4=\\frac{s_2}{2}\\mu_2+\frac{s_3}{3}\\mu_1."
+      }
+    ],
+    "additional_assertions_after_first_failure_not_executed_by_original_test": true
+  },
+  "receipt_sha256": "55a44f6bccaae5acec6256490ce42297c1e16aef34883215308b01175a737ae7",
+  "standalone_yaml_sha256": "8987bb061b19fdc82e8857ad12664bf86ce0f3499cd6033d590f8b548f1a8961",
+  "canonical_hash_log_limitation": "record retains prose stdin procedure and main-checkout cwd, not literal stdin or absolute resolved input path; logged ledger SHA256 and hashed bytes match fixed source, independently rehashed here; suite hash node passed",
+  "source_transfer_limit": "22 complete pinned payloads rehashed, remaining records checked against complete Git tree and before/after manifests, not a fresh user-workstation rehash",
+  "completed_at": "2026-09-05T13:28:40.590665+00:00",
+  "review_runtime": {
+    "python": "3.12.13",
+    "PyYAML": "6.0.3"
+  }
+}

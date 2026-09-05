@@ -1,0 +1,37 @@
+...............FFF......................                                 [100%]
+=================================== FAILURES ===================================
+_________ test_canonical_krylov_frame_has_a_deterministic_so3_section __________
+
+    def test_canonical_krylov_frame_has_a_deterministic_so3_section():
+        text = report_text()
+        assert "The two equations \\(B^TB=G\\) and \\(\\det B=\\chi\\) alone do not select a" in text
+>       assert "Let\n\\(B_+\\) be the unique upper-triangular Cholesky factor with positive diagonal" in text
+E       AssertionError: assert 'Let\n\\(B_+\\) be the unique upper-triangular Cholesky factor with positive diagonal' in '# Tensorized Low-Multipole CMB Inference under Conditional Isotropy Bounds and Response-Limited Identifiability\n\n**...t theory/computation programme. None is silently converted into an observational claim or a false completed theorem.\n'
+
+tests/contracts/test_report_a_r4a0_source.py:32: AssertionError
+_______ test_t2_cayley_hamilton_source_has_no_truncated_fraction_tokens ________
+
+    def test_t2_cayley_hamilton_source_has_no_truncated_fraction_tokens():
+        text = theorem_text()
+        assert "\nrac{" not in text
+>       assert "\\bar Q^3\n =\\frac{s_2}{2}\\bar Q+\\frac{s_3}{3}I." in text
+E       AssertionError: assert '\\bar Q^3\n =\\frac{s_2}{2}\\bar Q+\\frac{s_3}{3}I.' in '# T2 — Generic Q/O proper-rotation orbit reconstruction on the cyclic domain\n\nDate: 2026-09-03  \nEvidence grade: `...lect an observational statistic, produce a\nPlanck rank, identify a physical source, or authorize publication/merge.\n'
+
+tests/contracts/test_report_a_r4a0_source.py:45: AssertionError
+______________ test_r4a0_repair_preserves_report_scope_firewalls _______________
+
+    def test_r4a0_repair_preserves_report_scope_firewalls():
+        text = report_text()
+        assert "CURRENT_CORRECTED_TENSORIZED_PLANCK_RANK = NONE" in text
+        assert "PLANCK_OR_FFP10_EXECUTION = DEFERRED_BY_OWNER" in text
+        assert "FINITE_HEALPIX_CONTAINMENT = RANK_UNRESOLVED" in text
+>       assert "no finite-HEALPIX no-go theorem is claimed" in text
+E       AssertionError: assert 'no finite-HEALPIX no-go theorem is claimed' in '# Tensorized Low-Multipole CMB Inference under Conditional Isotropy Bounds and Response-Limited Identifiability\n\n**...t theory/computation programme. None is silently converted into an observational claim or a false completed theorem.\n'
+
+tests/contracts/test_report_a_r4a0_source.py:55: AssertionError
+- generated xml file: /mnt/sn850x2t/htt_base_e2e/AUTHORITY_CITATION_RECONCILIATION_20260905T130332Z/result/authority-replay.xml -
+=========================== short test summary info ============================
+FAILED tests/contracts/test_report_a_r4a0_source.py::test_canonical_krylov_frame_has_a_deterministic_so3_section
+FAILED tests/contracts/test_report_a_r4a0_source.py::test_t2_cayley_hamilton_source_has_no_truncated_fraction_tokens
+FAILED tests/contracts/test_report_a_r4a0_source.py::test_r4a0_repair_preserves_report_scope_firewalls
+3 failed, 37 passed in 0.99s
