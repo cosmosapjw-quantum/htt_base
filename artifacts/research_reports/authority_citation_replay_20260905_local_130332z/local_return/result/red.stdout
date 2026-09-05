@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_r4a1nf_binds_the_exact_declared_git_blobs ________________
+
+    def test_r4a1nf_binds_the_exact_declared_git_blobs():
+        contract = load_yaml(CONTRACT)
+        for name, source in contract["source_blobs"].items():
+            path = ROOT / source["path"]
+            assert path.is_file(), name
+>           assert git_blob_sha1(path) == source["git_blob_sha1"], name
+E           AssertionError: citation_matrix
+E           assert '5087d39edf09...61521ecf0b78d' == '3fbaa2f97522...655d293ca0d74'
+E             
+E             - 3fbaa2f97522cca6d0ad60e0c96655d293ca0d74
+E             + 5087d39edf094f3adf7d72eed3061521ecf0b78d
+
+tests/contracts/test_report_a_r4a1_authority_v3.py:48: AssertionError
+=========================== short test summary info ============================
+FAILED tests/contracts/test_report_a_r4a1_authority_v3.py::test_r4a1nf_binds_the_exact_declared_git_blobs
+1 failed in 0.08s

@@ -1,0 +1,37 @@
+{
+  "raw_suite_status": "NONPASS",
+  "source_binding_mismatch_repaired": true,
+  "environment_package_failure_observed": false,
+  "failures": [
+    {
+      "nodeid": "tests/contracts/test_report_a_r4a0_source.py::test_canonical_krylov_frame_has_a_deterministic_so3_section",
+      "test_location": "tests/contracts/test_report_a_r4a0_source.py:32",
+      "classification": "EXACT_TEXT_LAYOUT_MISMATCH",
+      "source": "docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md:286",
+      "actual_source_line": "The two equations \\(B^TB=G\\) and \\(\\det B=\\chi\\) alone do not select a canonical frame: if \\(R\\in SO(3)\\), then \\(RB\\) satisfies the same two equations. We therefore fix a deterministic proper-oriented section. Let \\(B_+\\) be the unique upper-triangular Cholesky factor with positive diagonal,",
+      "detail": "Assertion requires a newline after Let; existing manuscript puts Let and B_+ on the same line."
+    },
+    {
+      "nodeid": "tests/contracts/test_report_a_r4a0_source.py::test_t2_cayley_hamilton_source_has_no_truncated_fraction_tokens",
+      "test_location": "tests/contracts/test_report_a_r4a0_source.py:45",
+      "classification": "EXISTING_THEOREM_SOURCE_CONTROL_CHARACTER",
+      "source": "docs/research_reports/theory_packs/T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md:234",
+      "actual_source_line": " =\\frac{s_2}{2}\\bar Q+\frac{s_3}{3}I.",
+      "control_character_codepoint": "U+000C",
+      "detail": "Before rac{s_3}{3}I. the pinned source contains form feed (0x0c), not a literal backslash followed by frac. This is a source-text defect, not merely line wrapping."
+    },
+    {
+      "nodeid": "tests/contracts/test_report_a_r4a0_source.py::test_r4a0_repair_preserves_report_scope_firewalls",
+      "test_location": "tests/contracts/test_report_a_r4a0_source.py:55",
+      "classification": "EXACT_TEXT_CAPITALIZATION_MISMATCH",
+      "source": "docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md:48",
+      "actual_source_line": "- no finite-HEALPix no-go theorem is claimed;",
+      "detail": "Test expects HEALPIX; pinned manuscript uses HEALPix."
+    }
+  ],
+  "all_failed_test_and_subject_source_bytes_unchanged_from_base": true,
+  "formal_proof_executed": false,
+  "mathematical_counterexample_produced": false,
+  "automatic_repairs_after_suite": false,
+  "next_action": "Separate work-thread review of these original failure bytes and test/source scope; request distinct authorization before editing their tests or subjects."
+}

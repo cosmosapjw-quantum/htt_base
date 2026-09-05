@@ -1,0 +1,53 @@
+diff --git a/docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml b/docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml
+index 3c5ea8e7e21c5180b60313e47db2474cdf4d6744..c66a43f94330ca62b0044b0c7f6e919adf12c17a 100644
+--- a/docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml
++++ b/docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml
+@@ -29,7 +29,7 @@ source_blobs:
+     git_blob_sha1: 58291e9cfac6ff85ceffbdb6bdefd50315240831
+   citation_matrix:
+     path: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+-    git_blob_sha1: 3fbaa2f97522cca6d0ad60e0c96655d293ca0d74
++    git_blob_sha1: 5087d39edf094f3adf7d72eed3061521ecf0b78d
+   flattened_manuscript:
+     path: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+     git_blob_sha1: 16f8fdd4db4dac384c5c64a8d3f86e0dbbf62e34
+@@ -139,3 +139,39 @@ current_terminal: >-
+   T9_V4_CITATION_V2_AND_MANUSCRIPT_DOMAINS_FLATTENED__
+   CANONICAL_HASH_SUPPORTED_RUNTIME_PENDING__
+   NO_PUBLICATION_OR_MERGE_AUTHORITY
++
++citation_pin_reconciliation:
++  revision: R4A1_AUTHORITY_V3_REPAIRED_CITATION_R1
++  date: 2026-09-05
++  original_contract:
++    commit: 9a37311cc97a9f670ab6c7f300b0cf74ccabe121
++    path: docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml
++    git_blob_sha1: 3c5ea8e7e21c5180b60313e47db2474cdf4d6744
++    preservation: Original V3 bytes remain in this fixed Git object and returned evidence.
++  citation_matrix:
++    old_git_blob_sha1: 3fbaa2f97522cca6d0ad60e0c96655d293ca0d74
++    repaired_git_blob_sha1: 5087d39edf094f3adf7d72eed3061521ecf0b78d
++    published_repair_commit: 581d50cb8b8be61ca8ead538d0bf7d75420f9037
++    published_repair_pr: 452
++    identity_evidence: artifacts/research_reports/k2fr_20260905/old_to_new_identities.json
++    scope_review: artifacts/research_reports/r4a1er_20260905_local_084030z/R4A1ER_SCOPE_REVIEW.json
++  cause: >-
++    The published repair quoted three citation title values containing colons.
++    The V3 citation pin still named the pre-repair bytes. This revision explicitly
++    binds the already reviewed repaired citation bytes without editing that file.
++  quoted_title_source_keys:
++    - RANDOMIZATION_2024
++    - ROLDAN_NOTARI_QUARTIN_2016
++    - LI_1999
++  byte_identical_to_original_v3: false
++  unchanged_boundaries:
++    scientific_scope: true
++    claim_scope_and_counts: true
++    canonical_claim_id_expected_hash: true
++    other_six_source_pins: true
++    inspection_conditions: true
++    history_and_supersession: true
++    runtime_contract: true
++    claim_firewalls: true
++  canonical_or_publication_promotion: false
++  merge_authorized: false
