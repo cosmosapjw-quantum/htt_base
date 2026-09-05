@@ -1,8 +1,9 @@
-schema: htt.report_a.k2fr0_k3.parallel_dag.v1
+schema: htt.report_a.k2fr0_k3.parallel_dag.v2
 date: 2026-09-05
 repository: cosmosapjw-quantum/htt_base
 report_pr: 449
-source_progress_record: K2FR0_SOURCE_AND_K3_DRAFT_PROGRESS_20260905.yaml
+prior_source_progress_record: K2FR0_SOURCE_AND_K3_DRAFT_PROGRESS_20260905.yaml
+source_progress_record: K3_FULL_DRAFT_SOURCE_RECEIPT_20260905.yaml
 canonical_claims: 30
 candidate_claims: 40
 observational_gate: DATA_DEFERRED_BY_OWNER
@@ -15,7 +16,7 @@ nodes:
   K2FE:
     title: CPython 3.12 tests and strict six-file materialisation
     depends_on: [K2FR0]
-    state: BLOCKED_BY_HOSTED_RUNNER_PRESTART_AND_LOCAL_RUNTIME
+    state: EXECUTION_UNOBSERVED_RUNTIME_BLOCKER_NOT_RETESTED_IN_K3_ASSEMBLY
     acceptance:
       - observed syntax and regression results
       - exact input-byte binding
@@ -38,34 +39,48 @@ nodes:
   K3_FULL:
     title: Integrate the complete revised research-report draft
     depends_on: [K3_CORE]
-    state: READY_FOR_CANDIDATE_DRAFTING
-    requirements:
-      - combine core sections with existing Q/O, finite-null, response and numerical sections
-      - rewrite abstract, introduction and conclusion around the restored kinematical lane
-      - preserve declared assumptions, source roles and all scope boundaries
-      - do not present candidate claim or bibliography status as canonical
+    state: COMPLETE_SOURCE_DRAFT_PUSHED_AND_READ_BACK_NOT_CANONICAL
+    output: docs/research_reports/drafts/HTT_REPORT_A_FULL_KINEMATICAL_MES_DRAFT_K3_20260905.md
+    source_commit: 499704db00daee49b6865ccf7fb62c8c1a21da29
+    source_blob: 3d509ebcb178bd26b96d994690668e225a133dc9
+    main_sections: 12
+    appendices: 4
+    abstract_introduction_conclusions_rewritten: true
+    candidate_claim_map_rows: 40
+    automated_mapping_execution: false
+    canonical_source_replaced: false
   K4:
     title: Independent whole-manuscript scientific and provenance review
     depends_on: [K2FR, K3_FULL]
-    state: WAITING
+    state: SOURCE_REVIEW_READY_ACCEPTANCE_WAITS_FOR_K2FR
+    source_review_can_begin_now: true
+    canonical_closure_requires_materialised_authority: true
+    review_scope:
+      - equations, domains and inherited numerical-source provenance
+      - restored typed kinematical MES inheritance and physical-functionals lane
+      - shared-data conditioning and exact versus statistical identification
+      - manual forty-claim placement and bibliography role consistency
+      - explicit distinction between draft completion and claim promotion
   K5:
     title: Typesetting, citations and page-level visual audit
     depends_on: [K4]
     state: WAITING
   FORMAL_EXECUTION:
     title: Required source-bound supporting-domain verifier execution
-    state: BLOCKED_BY_RUNTIME
+    state: EXECUTION_UNOBSERVED_RUNTIME_BLOCKED
   K6:
     title: Frozen-source review and explicit owner release decision
     depends_on: [K4, K5, FORMAL_EXECUTION]
     state: WAITING
 
-current_productive_next_node: K3_FULL
+current_productive_next_node: K4
+current_productive_action: NON_PROMOTING_WHOLE_DRAFT_SOURCE_REVIEW
 current_execution_next_node: K2FE
 rules:
-  - Drafting may proceed from pinned candidate inputs while runtime is unavailable.
-  - Drafting is not canonicalisation or scientific claim promotion.
+  - The complete draft now exists; do not repeat the previous drafting plan as if it were unwritten.
+  - Source review may read the draft immediately, but canonical acceptance still waits for K2FR.
+  - Draft completion is not canonicalisation, proof verification or publication approval.
   - Do not replace a prestart runner failure with a source-test verdict.
-  - Do not introduce another audit-only loop instead of producing the manuscript.
+  - Do not introduce another audit-only infrastructure loop instead of reviewing the actual manuscript.
   - Observational data, corrected Planck ranks and native BASS results remain excluded.
   - Publication and merge require the explicit owner decision.
