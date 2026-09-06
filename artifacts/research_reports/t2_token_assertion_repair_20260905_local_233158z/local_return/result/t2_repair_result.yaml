@@ -1,0 +1,213 @@
+t2_repair_result:
+  work_unit: HTT_T2_TOKEN_ASSERTION_REPAIR_V1
+  repository: cosmosapjw-quantum/htt_base
+  base_commit: 93576d976d6e70b44df80a07fe2d7472af1611d3
+  base_tree: 26d68c52997cff838670ccea9dc05d15f7bda75f
+  live_PR454_head_at_intake: 93576d976d6e70b44df80a07fe2d7472af1611d3
+  execution_pin_is_fixed: true
+  source_writer: LOCAL_CODEX
+  native_executor: LOCAL_CODEX
+  branch: implementation/htt-t2-token-assertion-repair-20260905-r1
+  worktree: /mnt/sn850x2t/htt_base_e2e/HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z/worktree
+  evidence_directory: /mnt/sn850x2t/htt_base_e2e/HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z/result
+  local_commit_created: false
+  candidate_state: UNCOMMITTED_TWO_AUTHORED_FILES
+  changed_paths:
+  - docs/research_reports/theory_packs/T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md
+  - tests/contracts/test_report_a_r4a0_source.py
+  old_new_identities:
+  - path: docs/research_reports/theory_packs/T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md
+    old_git_blob: 8e66a7bb698932a060cc60057e3541b782167d83
+    new_git_blob: adcf38b206c5d80d090fcd10ebbcca56beaba241
+    old_sha256: 3f10e9f8199d27e5d36ab9f75400ad4c2792213aae70347e3c318bebeb95a0a9
+    new_sha256: f283f53abea6e57759ec3e5efc8de2b13a1d7e9a30ab3ca902dfe58f8a8dba66
+    unchanged: false
+    old_bytes: 11834
+    new_bytes: 11837
+  - path: tests/contracts/test_report_a_r4a0_source.py
+    old_git_blob: 9e89bd74dce87a17b9f5d97940b7b2ad68061efd
+    new_git_blob: a04c9964abd713715290918bf24fe599c3a703c9
+    old_sha256: cfb093a351878315dbcce584493d80ccb772cb35af1f55df03f6b4a99f40ad3a
+    new_sha256: 35f5cc1cc623e49f747fc90a50b1ef14911bb25d938b5bfafbe6026cef8564d8
+    unchanged: false
+    old_bytes: 1837
+    new_bytes: 7760
+  intact_formula_authority_blob: 16f8fdd4db4dac384c5c64a8d3f86e0dbbf62e34
+  token_sites_restored: 3
+  token_sites:
+  - old_offset_zero_based: 4643
+    LF_line: 234
+    old_hex: 0c 72 61 63 7b
+    new_hex: 5c 66 72 61 63 7b
+    context_before: " =\\frac{s_2}{2}\\bar Q+\frac{s_3}{3}I."
+    new_offset_zero_based: 4643
+    context_after: ' =\frac{s_2}{2}\bar Q+\frac{s_3}{3}I.'
+  - old_offset_zero_based: 4703
+    LF_line: 241
+    old_hex: 0c 72 61 63 7b
+    new_hex: 5c 66 72 61 63 7b
+    context_before: "\\mu_3=\\frac{s_2}{2}\\mu_1+\frac{s_3}{3}\\mu_0,"
+    new_offset_zero_based: 4704
+    context_after: \mu_3=\frac{s_2}{2}\mu_1+\frac{s_3}{3}\mu_0,
+  - old_offset_zero_based: 4754
+    LF_line: 245
+    old_hex: 0c 72 61 63 7b
+    new_hex: 5c 66 72 61 63 7b
+    context_before: "\\mu_4=\\frac{s_2}{2}\\mu_2+\frac{s_3}{3}\\mu_1."
+    new_offset_zero_based: 4756
+    context_after: \mu_4=\frac{s_2}{2}\mu_2+\frac{s_3}{3}\mu_1.
+  only_three_token_replacements_in_T2: true
+  T2_size_delta_bytes: 3
+  T2_reversal_recovers_original_bytes_and_hash: true
+  token_proof: token-restoration-proof.json
+  original_40_nodes_preserved: true
+  archived_RED:
+    PASS: 37
+    FAIL: 3
+    fresh_execution: false
+    raw_evidence_preserved: true
+    details: archived-red-summary.json
+  original_node_results:
+    executed: 40
+    PASS: 40
+    FAIL: 0
+    inventory: NODE_AND_FIXTURE_RESULTS.json#original_results
+  new_focused_node_results:
+    added_nodes: 40
+    PASS: 40
+    FAIL: 0
+    focused_invocation_total: 43
+    focused_invocation_PASS: 43
+    inventory: NODE_AND_FIXTURE_RESULTS.json#added_results
+  positive_fixture_results:
+    executed: 7
+    PASS: 7
+    inventory: NODE_AND_FIXTURE_RESULTS.json#positive_fixture_results
+  negative_fixture_results:
+    executed: 33
+    PASS: 33
+    intended_mutations_rejected: 33
+    effective_mutation_assertions_before_raises: true
+    inventory: NODE_AND_FIXTURE_RESULTS.json#negative_fixture_results
+    evidence: Same helpers and pytest.raises(AssertionError); source and JUnit preserved. Expected caught exception
+      text is not separately logged.
+  full_suite:
+    collected: 80
+    executed: 80
+    PASS: 80
+    FAIL: 0
+    ERROR: 0
+    SKIP: 0
+    XFAIL: 0
+    XPASS: 0
+    deselected: 0
+    timeout: 0
+  distinct_nodes_across_new_executions: 80
+  focused_43_are_subset_of_full_80: true
+  suite_exit: 0
+  errors_skips_xfail_deselect_timeouts:
+    errors: 0
+    skips: 0
+    xfail: 0
+    xpass: 0
+    deselected: 0
+    timeouts: 0
+  invocations:
+    syntax: 1
+    diff_check: 1
+    focused: 1
+    collection: 1
+    full_suite: 1
+    unchanged_baseline_RED: 0
+  actual_versions:
+    implementation: CPython
+    python: 3.12.3
+    executable: /mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python
+    real_executable: /usr/bin/python3.12
+    prefix: /mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829
+    pytest: 8.4.2
+    PyYAML: 6.0.3
+    pytest_path: /mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py
+    pyyaml_path: /mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py
+  canonical_30_id_digest: e103c581ce353b5102af81834831ac292105f18699671e8eb75b171acd97f01e
+  canonical_digest_evidence: canonical-hash-evidence.json
+  canonical_ledger_hash: null
+  canonical_ledger_status: PENDING_SUPPORTED_RUNTIME_REPLAY
+  protected_sources_unchanged: true
+  protected_tracked_files_unchanged: 5867
+  total_tracked_files: 5869
+  source_before_after:
+  - source-manifest.before.json
+  - source-manifest.after.json
+  main_checkout_and_prior_worktree_preserved: true
+  workspace_preservation_evidence: workspace-preservation.json
+  additional_live_pin_change_required_in_registered_suite: false
+  consumer_evidence: consumer-classification.json
+  raw_log_and_junit_paths:
+  - syntax.stdout
+  - syntax.stderr
+  - syntax.exit
+  - syntax.command.json
+  - diff-check.stdout
+  - diff-check.stderr
+  - diff-check.exit
+  - diff-check.command.json
+  - focused.stdout
+  - focused.stderr
+  - focused.exit
+  - focused.command.json
+  - focused.xml
+  - collect.stdout
+  - collect.stderr
+  - collect.exit
+  - collect.command.json
+  - authority-replay.stdout
+  - authority-replay.stderr
+  - authority-replay.exit
+  - authority-replay.command.json
+  - authority-replay.xml
+  - archived-red/authority-replay.stdout
+  - archived-red/authority-replay.stderr
+  - archived-red/authority-replay.xml
+  - archived-red/EXECUTION_RECEIPT.json
+  execution_receipt: EXECUTION_RECEIPT.json
+  patch: two-file-repair.patch
+  original_bytes_directory: original-source/
+  repaired_bytes_directory: repaired-source/
+  review_independence:
+    local: EXECUTOR_SELF_REVIEW_NOT_INDEPENDENT
+    local_findings: 0
+    local_review: LOCAL_SELF_REVIEW.json
+    work_provenance_claim_review: PENDING
+    work_code_test_review: PENDING
+    work_review_mode: SEQUENTIAL_RESULT_INFORMED_NOT_BLIND
+  publication:
+    status: NOT_PERFORMED
+    designated_publisher: WORK_THREAD
+    remote_mutations: 0
+    local_role_transfer: false
+    later_Draft_PR_target: implementation/htt-authority-citation-reconciliation-20260905-r1
+  return_archive_name: HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z.zip
+  return_archive_sha256: null
+  return_archive_digest_location: External sibling t2_repair_result.yaml and RETURN_SHA256SUMS contain the ZIP digest
+    after sealing; embedded null avoids a self-hash cycle.
+  canonical_claims: 30
+  candidate_claims: 40
+  canonical_ledger_modified: false
+  new_CAS_executions: 0
+  K2FER1_repeated: false
+  K5_rebuilt: false
+  publication_or_merge_promoted: false
+  scientific_claims_promoted: false
+  claim_ceiling: Documentary token restoration and bounded source/assertion regression. No new Cayley-Hamilton/QO
+    proof, finite-HEALPix solution, finite-null or 40-claim scientific validation.
+  preparation_incident:
+    classification: ARCHIVED_MANIFEST_LOCATION
+    resolved: true
+    details: Published artifact omitted large before/after manifests; original durable local manifests reused and
+      checked against published SHA256 values. Original exception summary preserved in intake/manifest-location-initial-error.txt.
+      No baseline or CAS rerun.
+  approval_comment: https://github.com/cosmosapjw-quantum/htt_base/pull/454#issuecomment-5552516210
+  approval_contract_sha256: b7d7ab18124e5ebf3e4637141d33bbb46549c32f487b6f03346557a77d49a66f
+  input_archive_sha256: 4d894fccadc6e0eff79afc1d1641a1a06f88e56edd3dff866b47a5feda2839cc
+  overall: T2_TOKENS_AND_ASSERTIONS_REPAIRED_AUTHORITY_PASS_PENDING_REVIEW

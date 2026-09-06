@@ -1,0 +1,249 @@
+{
+  "work_unit": "HTT_T2_TOKEN_ASSERTION_REPAIR_V1",
+  "source_writer": "LOCAL_CODEX",
+  "native_executor": "LOCAL_CODEX",
+  "fixed_base": "93576d976d6e70b44df80a07fe2d7472af1611d3",
+  "fixed_tree": "26d68c52997cff838670ccea9dc05d15f7bda75f",
+  "versions": {
+    "implementation": "CPython",
+    "python": "3.12.3",
+    "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "real_executable": "/usr/bin/python3.12",
+    "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+    "pytest": "8.4.2",
+    "PyYAML": "6.0.3",
+    "pytest_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+    "pyyaml_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py"
+  },
+  "source_state": "UNCOMMITTED_TWO_FILE_CANDIDATE_AT_FIXED_BASE",
+  "source_freeze": "repaired-source-freeze.json",
+  "commands": [
+    {
+      "label": "syntax",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-c",
+        "from pathlib import Path; p=Path('tests/contracts/test_report_a_r4a0_source.py'); compile(p.read_bytes(), str(p), 'exec'); print('SYNTAX_PASS')"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z/worktree",
+      "child_pid": 1088613,
+      "started_at": "2026-09-05T23:40:48.817822+00:00",
+      "completed_at": "2026-09-05T23:40:48.849718+00:00",
+      "elapsed_seconds": 0.031898343935608864,
+      "exit_code": 0,
+      "timeout_seconds": 900,
+      "timed_out": false,
+      "versions": {
+        "implementation": "CPython",
+        "python": "3.12.3",
+        "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "real_executable": "/usr/bin/python3.12",
+        "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+        "pytest": "8.4.2",
+        "PyYAML": "6.0.3",
+        "pytest_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+        "pyyaml_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py"
+      },
+      "source_freeze_sha256": "baa480ad10517997a120ef9cf03cc2f364333d29ad5910d0dabc9d3abdd95d69",
+      "removed_environment_override_names": [],
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "stdout": "syntax.stdout",
+      "stderr": "syntax.stderr",
+      "junit": null,
+      "invocation_count_for_label": 1
+    },
+    {
+      "label": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z/worktree",
+      "child_pid": 1088616,
+      "started_at": "2026-09-05T23:40:48.881593+00:00",
+      "completed_at": "2026-09-05T23:40:49.296096+00:00",
+      "elapsed_seconds": 0.4145099220331758,
+      "exit_code": 0,
+      "timeout_seconds": 900,
+      "timed_out": false,
+      "versions": {
+        "implementation": "CPython",
+        "python": "3.12.3",
+        "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "real_executable": "/usr/bin/python3.12",
+        "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+        "pytest": "8.4.2",
+        "PyYAML": "6.0.3",
+        "pytest_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+        "pyyaml_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py"
+      },
+      "source_freeze_sha256": "baa480ad10517997a120ef9cf03cc2f364333d29ad5910d0dabc9d3abdd95d69",
+      "removed_environment_override_names": [],
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "stdout": "diff-check.stdout",
+      "stderr": "diff-check.stderr",
+      "junit": null,
+      "invocation_count_for_label": 1
+    },
+    {
+      "label": "focused",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/contracts/test_report_a_r4a0_source.py",
+        "--junitxml=/mnt/sn850x2t/htt_base_e2e/HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z/result/focused.xml"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z/worktree",
+      "child_pid": 1088694,
+      "started_at": "2026-09-05T23:40:49.328609+00:00",
+      "completed_at": "2026-09-05T23:40:49.642863+00:00",
+      "elapsed_seconds": 0.3142617510166019,
+      "exit_code": 0,
+      "timeout_seconds": 900,
+      "timed_out": false,
+      "versions": {
+        "implementation": "CPython",
+        "python": "3.12.3",
+        "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "real_executable": "/usr/bin/python3.12",
+        "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+        "pytest": "8.4.2",
+        "PyYAML": "6.0.3",
+        "pytest_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+        "pyyaml_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py"
+      },
+      "source_freeze_sha256": "baa480ad10517997a120ef9cf03cc2f364333d29ad5910d0dabc9d3abdd95d69",
+      "removed_environment_override_names": [],
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "stdout": "focused.stdout",
+      "stderr": "focused.stderr",
+      "junit": "focused.xml",
+      "invocation_count_for_label": 1
+    },
+    {
+      "label": "collect",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "--collect-only",
+        "tests/contracts/test_report_a_t9_v4.py",
+        "tests/contracts/test_report_a_citation_matrix_r4a1nf.py",
+        "tests/contracts/test_report_a_r3_flattened.py",
+        "tests/contracts/test_report_a_r4a0_source.py",
+        "tests/contracts/test_report_a_r4a1n_notation.py",
+        "tests/contracts/test_report_a_r4a1nf_flattened.py",
+        "tests/contracts/test_report_a_r4a1_authority_v3.py",
+        "tests/contracts/test_report_a_r4a1v0_formal_verifiers.py"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z/worktree",
+      "child_pid": 1089671,
+      "started_at": "2026-09-05T23:41:05.900432+00:00",
+      "completed_at": "2026-09-05T23:41:06.364976+00:00",
+      "elapsed_seconds": 0.46454825485125184,
+      "exit_code": 0,
+      "timeout_seconds": 900,
+      "timed_out": false,
+      "versions": {
+        "implementation": "CPython",
+        "python": "3.12.3",
+        "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "real_executable": "/usr/bin/python3.12",
+        "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+        "pytest": "8.4.2",
+        "PyYAML": "6.0.3",
+        "pytest_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+        "pyyaml_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py"
+      },
+      "source_freeze_sha256": "baa480ad10517997a120ef9cf03cc2f364333d29ad5910d0dabc9d3abdd95d69",
+      "removed_environment_override_names": [],
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "stdout": "collect.stdout",
+      "stderr": "collect.stderr",
+      "junit": null,
+      "invocation_count_for_label": 1
+    },
+    {
+      "label": "authority-replay",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/contracts/test_report_a_t9_v4.py",
+        "tests/contracts/test_report_a_citation_matrix_r4a1nf.py",
+        "tests/contracts/test_report_a_r3_flattened.py",
+        "tests/contracts/test_report_a_r4a0_source.py",
+        "tests/contracts/test_report_a_r4a1n_notation.py",
+        "tests/contracts/test_report_a_r4a1nf_flattened.py",
+        "tests/contracts/test_report_a_r4a1_authority_v3.py",
+        "tests/contracts/test_report_a_r4a1v0_formal_verifiers.py",
+        "--junitxml=/mnt/sn850x2t/htt_base_e2e/HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z/result/authority-replay.xml"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z/worktree",
+      "child_pid": 1089729,
+      "started_at": "2026-09-05T23:41:06.496246+00:00",
+      "completed_at": "2026-09-05T23:41:07.662041+00:00",
+      "elapsed_seconds": 1.165799275971949,
+      "exit_code": 0,
+      "timeout_seconds": 900,
+      "timed_out": false,
+      "versions": {
+        "implementation": "CPython",
+        "python": "3.12.3",
+        "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "real_executable": "/usr/bin/python3.12",
+        "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+        "pytest": "8.4.2",
+        "PyYAML": "6.0.3",
+        "pytest_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+        "pyyaml_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/yaml/__init__.py"
+      },
+      "source_freeze_sha256": "baa480ad10517997a120ef9cf03cc2f364333d29ad5910d0dabc9d3abdd95d69",
+      "removed_environment_override_names": [],
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "stdout": "authority-replay.stdout",
+      "stderr": "authority-replay.stderr",
+      "junit": "authority-replay.xml",
+      "invocation_count_for_label": 1
+    }
+  ],
+  "archived_RED": {
+    "status": "REUSED_UNCHANGED_NOT_FRESH_EXECUTION",
+    "PASS": 37,
+    "FAIL": 3,
+    "invocations_this_task": 0,
+    "details": "archived-red-summary.json"
+  },
+  "node_results": "NODE_AND_FIXTURE_RESULTS.json",
+  "new_full_suite_invocations": 1,
+  "new_focused_invocations": 1,
+  "new_collection_invocations": 1,
+  "timeouts": 0,
+  "raw_outputs_rewritten": false,
+  "post_execution_source_edits": 0,
+  "new_CAS_executions": 0
+}
