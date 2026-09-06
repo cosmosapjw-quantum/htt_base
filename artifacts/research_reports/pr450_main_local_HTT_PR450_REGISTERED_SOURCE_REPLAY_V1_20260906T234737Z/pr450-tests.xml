@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="14" time="0.222" timestamp="2026-09-07T08:49:57.958233+09:00" hostname="cosmosapjw"><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_exact_registered_surface_has_24_plus_8_plus_5_rows" time="0.002" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_registered_survivor_triage_detects_injected_eligible_candidate" time="0.001" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_research_decision_changes_when_source_or_replay_evidence_is_mutated" time="0.002" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_broad_parent_and_narrow_child_have_distinct_statement_identities" time="0.001" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_semantic_duplicate_links_are_retained_without_row_collapse" time="0.001" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_observed_data_use_is_rejected" time="0.000" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_duplicate_candidate_identity_is_rejected" time="0.000" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_missing_statement_identity_is_rejected" time="0.000" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_surface_contains_no_truth_novelty_or_publication_assignment" time="0.001" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_output_is_deterministic_under_input_row_permutation" time="0.002" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_git_object_mode_binds_commit_blob_and_content" time="0.034" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_cli_refuses_existing_output_without_explicit_replace" time="0.077" /><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_repository_source_id_seed_has_37_unique_rows_and_pr284_deferred" time="0.001"><failure message="AssertionError: assert 'PILLAR_S:I-3.2' == 'PILLAR_S:II-3.2'&#10;  &#10;  - PILLAR_S:II-3.2&#10;  ?           -&#10;  + PILLAR_S:I-3.2">def test_repository_source_id_seed_has_37_unique_rows_and_pr284_deferred():
+        seed_path = (
+            ROOT
+            / "docs"
+            / "research_program"
+            / "theory_promotion"
+            / "closeout"
+            / "REGISTERED_SURVIVOR_SEED.json"
+        )
+        seed = json.loads(seed_path.read_text(encoding="utf-8"))
+        rows = seed["rows"]
+        ids = [row["candidate_id"] for row in rows]
+        assert len(ids) == len(set(ids)) == 37
+        assert seed["counts"] == {
+            "exact_or_conditional_broad_included": 24,
+            "synthetic_broad_included": 8,
+            "scoped_included": 4,
+            "scoped_deferred": 1,
+            "included_total": 36,
+            "registered_total": 37,
+        }
+        dispositions = {
+            name: sum(row["triage_disposition"] == name for row in rows)
+            for name in ("INCLUDED", "DEFERRED", "EXCLUDED")
+        }
+        assert dispositions == {"INCLUDED": 36, "DEFERRED": 1, "EXCLUDED": 0}
+        pr284 = next(
+            row
+            for row in rows
+            if row["candidate_id"] == "PR284_NEW:FINITE-REGISTERED-PATH"
+        )
+        assert pr284["triage_disposition"] == "DEFERRED"
+&gt;       assert pr284["parent_candidate_id"] == "PILLAR_S:II-3.2"
+E       AssertionError: assert 'PILLAR_S:I-3.2' == 'PILLAR_S:II-3.2'
+E         
+E         - PILLAR_S:II-3.2
+E         ?           -
+E         + PILLAR_S:I-3.2
+
+tests/contracts/test_theory_survivor_triage.py:369: AssertionError</failure></testcase><testcase classname="tests.contracts.test_theory_survivor_seed_schema" name="test_registered_survivor_seed_rows_have_exact_schema_and_kind_counts" time="0.000" /></testsuite></testsuites>

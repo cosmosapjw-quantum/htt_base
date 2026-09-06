@@ -1,0 +1,48 @@
+............F.                                                           [100%]
+=================================== FAILURES ===================================
+_____ test_repository_source_id_seed_has_37_unique_rows_and_pr284_deferred _____
+
+    def test_repository_source_id_seed_has_37_unique_rows_and_pr284_deferred():
+        seed_path = (
+            ROOT
+            / "docs"
+            / "research_program"
+            / "theory_promotion"
+            / "closeout"
+            / "REGISTERED_SURVIVOR_SEED.json"
+        )
+        seed = json.loads(seed_path.read_text(encoding="utf-8"))
+        rows = seed["rows"]
+        ids = [row["candidate_id"] for row in rows]
+        assert len(ids) == len(set(ids)) == 37
+        assert seed["counts"] == {
+            "exact_or_conditional_broad_included": 24,
+            "synthetic_broad_included": 8,
+            "scoped_included": 4,
+            "scoped_deferred": 1,
+            "included_total": 36,
+            "registered_total": 37,
+        }
+        dispositions = {
+            name: sum(row["triage_disposition"] == name for row in rows)
+            for name in ("INCLUDED", "DEFERRED", "EXCLUDED")
+        }
+        assert dispositions == {"INCLUDED": 36, "DEFERRED": 1, "EXCLUDED": 0}
+        pr284 = next(
+            row
+            for row in rows
+            if row["candidate_id"] == "PR284_NEW:FINITE-REGISTERED-PATH"
+        )
+        assert pr284["triage_disposition"] == "DEFERRED"
+>       assert pr284["parent_candidate_id"] == "PILLAR_S:II-3.2"
+E       AssertionError: assert 'PILLAR_S:I-3.2' == 'PILLAR_S:II-3.2'
+E         
+E         - PILLAR_S:II-3.2
+E         ?           -
+E         + PILLAR_S:I-3.2
+
+tests/contracts/test_theory_survivor_triage.py:369: AssertionError
+- generated xml file: /mnt/sn850x2t/htt_base_e2e/HTT_PR450_REGISTERED_SOURCE_REPLAY_V1_20260906T234737Z/evidence/pr450-tests.xml -
+=========================== short test summary info ============================
+FAILED tests/contracts/test_theory_survivor_triage.py::test_repository_source_id_seed_has_37_unique_rows_and_pr284_deferred
+1 failed, 13 passed in 0.22s
