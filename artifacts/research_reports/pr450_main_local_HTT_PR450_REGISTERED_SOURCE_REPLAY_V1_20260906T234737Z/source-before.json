@@ -1,0 +1,177 @@
+{
+  "stage": "before",
+  "head": "ba84912bea165896ec8f0c0e5793b47d1736f512",
+  "tree": "55065b3b9ff075f8a58a5bda5f3d11d85ba21ab5",
+  "status_porcelain": "",
+  "ancestry_pr408": true,
+  "ancestry_wu001": true,
+  "files": {
+    "scripts/extract_theory_survivor_surface.py": {
+      "git_blob": "9d5bee9b1926e35216b95ab1384dc28f7a25592f",
+      "sha256": "4e3ca8820d0ad7dacae9ee6f4133aba2fe077bb5f31418edab8530295fa124d0",
+      "bytes": 23287,
+      "expected_blob": "9d5bee9b1926e35216b95ab1384dc28f7a25592f"
+    },
+    "tests/contracts/test_theory_survivor_triage.py": {
+      "git_blob": "26ab6150de552bd7d083cdb0118b1d251bcf17fd",
+      "sha256": "f186546c193d468cf89912987eaa1e538f927f6cb290dcab62a12ed8ff542716",
+      "bytes": 12857,
+      "expected_blob": "26ab6150de552bd7d083cdb0118b1d251bcf17fd"
+    },
+    "tests/contracts/test_theory_survivor_seed_schema.py": {
+      "git_blob": "dd31c5e9f5d2e8348a6c8405de04a5b8685594fa",
+      "sha256": "bf1a0cd4e54aedc84505bf5649ba608506bae7acb355d8b20e210e3df0300899",
+      "bytes": 1047,
+      "expected_blob": "dd31c5e9f5d2e8348a6c8405de04a5b8685594fa"
+    },
+    "docs/research_program/theory_promotion/closeout/REGISTERED_SURVIVOR_SEED.json": {
+      "git_blob": "76d0a2396c2cb7e0b514264fe6322a2316adfa69",
+      "sha256": "de47a5ae576c92a602b1f3023fb5a9018eec3002b27d416a0ba30d15ace3a3e1",
+      "bytes": 8518,
+      "expected_blob": "76d0a2396c2cb7e0b514264fe6322a2316adfa69"
+    },
+    ".github/workflows/theory-survivor-triage.yml": {
+      "git_blob": "c0a165c1d150c522b946e47c253f41ab53090b09",
+      "sha256": "4a6c02424c017dbeb9be977b39cc320be3bc27d7ffb0bdddce40d3fcd2b9d429",
+      "bytes": 5019,
+      "expected_blob": "c0a165c1d150c522b946e47c253f41ab53090b09"
+    },
+    "docs/codex_handoff/pr408_final/WU-001.yaml": {
+      "git_blob": "45ee133372bcc7256887c6300c37b2cc6ef8c32d",
+      "sha256": "560bf0450c38fbdd314aec7aed6d65813130b9f9b99ba215a4bd3f5041167409",
+      "bytes": 4629,
+      "expected_blob": "45ee133372bcc7256887c6300c37b2cc6ef8c32d"
+    },
+    "AGENTS.md": {
+      "git_blob": "24e666c89e38159790b659b4b4e75502e50b5f2c",
+      "sha256": "e9492a62a66438418ccd02f78891f4e01f1f2337be3956110886179b16db4e38",
+      "bytes": 25039,
+      "expected_blob": "24e666c89e38159790b659b4b4e75502e50b5f2c"
+    },
+    "pytest.ini": {
+      "git_blob": "453d6809dad598a7d5806acfe851451dcbcf4d46",
+      "sha256": "a3f9fc9415c7eef1e0031c8b37b2201d8c78d0ec414a0d0227763e099d25fce4",
+      "bytes": 839,
+      "expected_blob": null
+    },
+    "scripts/codex_harness/sync_pr_dag_mirrors.py": {
+      "git_blob": "ea0222127b16aa5018334c0ad3d2f154c033522c",
+      "sha256": "fc9be87a41895d0bbed50622c4897e7ce167852a8ea71c012e158c062f6fc592",
+      "bytes": 4034,
+      "expected_blob": null
+    }
+  },
+  "matrix": {
+    "commit": "463f0999949bf8534c60ad7973b7342705c2e3d6",
+    "path": "docs/research_program/theory_promotion/THEORY_PROMOTION_MATRIX_V1.json",
+    "git_blob": "56af1713ef8c4718598e10012819d5ab62c6e37a",
+    "sha256": "8d92325a72b83dd96d1b78df071c47687426bfe1d10bfbe6768a3ab6f9bb244a",
+    "bytes": 292456,
+    "counts": {
+      "deduplication_note": "Rows are evidence dispositions, not theorem counts. Overlapping algebraic cores such as I-2.2/VT-T6 and I-2.3/VT-T7 remain linked conceptually and must not be counted twice without a statement-level equivalence adjudication.",
+      "exact_or_conditional_theory_pass_rows": 24,
+      "legacy_theorem_registry_status": {
+        "ACTIVE": 33,
+        "ACTIVE_CONDITIONAL": 26,
+        "RETRACTED": 2,
+        "SUPERSEDED": 4
+      },
+      "pillar_s_terminal": {
+        "BLOCKED_WITH_RECEIPT": 1,
+        "INCONCLUSIVE_WITH_RECEIPT": 50,
+        "PASS": 21
+      },
+      "pillar_t_terminal": {
+        "BLOCKED_WITH_RECEIPT": 1,
+        "FAIL": 1,
+        "INCONCLUSIVE_WITH_RECEIPT": 67,
+        "PASS": 11
+      },
+      "row_level_pass_total": 32,
+      "row_result_classes": {
+        "BLOCKED_PROGRAM_WITH_SYNTHETIC_POSITIVE_CELL": 1,
+        "EXACT_OR_CONDITIONAL_THEOREM_CORE": 24,
+        "EXTERNAL_CAPABILITY_BLOCKED": 1,
+        "NARROW_ESTABLISHED_CORE_WITHIN_NONPASS_ROW": 3,
+        "NOT_ESTABLISHED": 102,
+        "PREREGISTERED_SYNTHETIC_RESULT_NOT_THEOREM": 8,
+        "RESTRICTED_SOURCE_WITH_COUNTEREXAMPLE_NOT_ROW_PROVED": 2,
+        "UNPROVED_REGISTERED_PROPOSAL": 11
+      },
+      "synthetic_only_pass_rows": 8,
+      "two_pillar_registry_status": {
+        "ACTIVE": 16,
+        "ACTIVE_CONDITIONAL": 11,
+        "OPEN": 2,
+        "ORACLE_VERIFIED": 10,
+        "PROPOSED": 9,
+        "PROVEN_CAS4": 8,
+        "RESTRICTED": 2
+      },
+      "unique_theorem_count": null,
+      "scientific_candidate_count": 157,
+      "scientific_terminal_state_counts": {
+        "PROMOTED": 36,
+        "REFUTED": 1,
+        "UNRESOLVED": 107,
+        "DEFERRED": 2,
+        "NOT_ATTEMPTED": 11
+      }
+    },
+    "candidate_coverage_proof": {
+      "schema": "htt.scientific_candidate_coverage_proof.v1",
+      "candidate_universe": "152 complete PR-285/PR-286 broad adjudication rows plus five independently reportable scoped candidates identified by this audit.",
+      "candidate_universe_sha256": "8e83989a568cefabfdf3a887ed0c1588ad91f44c83dec5a4ec167561e83bf8bc",
+      "candidate_count": 157,
+      "terminal_state_counts": {
+        "PROMOTED": 36,
+        "REFUTED": 1,
+        "UNRESOLVED": 107,
+        "DEFERRED": 2,
+        "NOT_ATTEMPTED": 11
+      },
+      "missing_terminal_state_count": 0,
+      "unknown_terminal_state_count": 0,
+      "duplicate_candidate_id_count": 0,
+      "coverage_complete": true,
+      "not_attempted_is_refuted_overlap_count": 0,
+      "campaign_exhaustion_without_not_attempted": false,
+      "no_scientific_result_survived": {
+        "phrase": "No scientific result survived.",
+        "eligible": false,
+        "required_conditions": {
+          "candidate_universe_coverage_complete": true,
+          "PROMOTED_count": 0,
+          "NOT_ATTEMPTED_count": 0,
+          "all_terminal_states_subset_of": [
+            "REFUTED",
+            "UNRESOLVED",
+            "DEFERRED"
+          ]
+        },
+        "observed_conditions": {
+          "candidate_universe_coverage_complete": true,
+          "PROMOTED_count": 36,
+          "NOT_ATTEMPTED_count": 11,
+          "all_terminal_states_subset_of_REFUTED_UNRESOLVED_DEFERRED": false
+        },
+        "ineligibility_reasons": [
+          "36 scoped candidates are PROMOTED at their exact evidence scope.",
+          "11 registered proposals remain NOT_ATTEMPTED."
+        ]
+      },
+      "coverage_basis": {
+        "PR285_broad_rows_expected": 80,
+        "PR285_broad_rows_classified": 80,
+        "PR286_broad_rows_expected": 72,
+        "PR286_broad_rows_classified": 72,
+        "supplemental_scoped_candidates_expected": 5,
+        "supplemental_scoped_candidates_classified": 5,
+        "expected_total": 157,
+        "classified_total": 157
+      }
+    },
+    "rows_measured": 152,
+    "scoped_measured": 5
+  }
+}
