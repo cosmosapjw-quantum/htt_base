@@ -231,18 +231,18 @@ For every trace-free \(3\times3\) matrix,
 \[
 \boxed{
 \bar Q^3
- =\frac{s_2}{2}\bar Q+\frac{s_3}{3}I.
+ =\frac{s_2}{2}\bar Q+rac{s_3}{3}I.
 }
 \]
 
 Therefore
 
 \[
-\mu_3=\frac{s_2}{2}\mu_1+\frac{s_3}{3}\mu_0,
+\mu_3=\frac{s_2}{2}\mu_1+rac{s_3}{3}\mu_0,
 \]
 
 \[
-\mu_4=\frac{s_2}{2}\mu_2+\frac{s_3}{3}\mu_1.
+\mu_4=\frac{s_2}{2}\mu_2+rac{s_3}{3}\mu_1.
 \]
 
 The first five moments determine the Krylov Gram matrix

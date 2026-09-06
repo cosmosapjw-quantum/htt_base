@@ -1,0 +1,59 @@
+{
+  "performed_by": "LOCAL_CODEX",
+  "kind": "EXECUTOR_SELF_REVIEW",
+  "independence": "NOT_INDEPENDENT_NOT_BLIND",
+  "reviewed_at": "2026-09-05T23:49:30.123709+00:00",
+  "source_candidate": [
+    {
+      "path": "docs/research_reports/theory_packs/T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md",
+      "old_git_blob": "8e66a7bb698932a060cc60057e3541b782167d83",
+      "new_git_blob": "adcf38b206c5d80d090fcd10ebbcca56beaba241",
+      "old_sha256": "3f10e9f8199d27e5d36ab9f75400ad4c2792213aae70347e3c318bebeb95a0a9",
+      "new_sha256": "f283f53abea6e57759ec3e5efc8de2b13a1d7e9a30ab3ca902dfe58f8a8dba66",
+      "unchanged": false,
+      "old_bytes": 11834,
+      "new_bytes": 11837
+    },
+    {
+      "path": "tests/contracts/test_report_a_r4a0_source.py",
+      "old_git_blob": "9e89bd74dce87a17b9f5d97940b7b2ad68061efd",
+      "new_git_blob": "a04c9964abd713715290918bf24fe599c3a703c9",
+      "old_sha256": "cfb093a351878315dbcce584493d80ccb772cb35af1f55df03f6b4a99f40ad3a",
+      "new_sha256": "35f5cc1cc623e49f747fc90a50b1ef14911bb25d938b5bfafbe6026cef8564d8",
+      "unchanged": false,
+      "old_bytes": 1837,
+      "new_bytes": 7760
+    }
+  ],
+  "blocking_findings": [],
+  "source_corrections_after_final_execution": 0,
+  "checks": [
+    "The T2 patch consists exclusively of three context-confirmed token restorations; byte reversal recovers the pinned original.",
+    "The three original test function names and all original complete Cayley-Hamilton/moment requirements remain.",
+    "Only the full Cholesky wording and the two explicitly permitted proper-name spellings receive presentation tolerance; all equations, boundary constants and native-BASS denial retain exact checks.",
+    "C0 except TAB/LF/CR and DEL are rejected before the ASCII-only whitespace operation; readers do not sanitize corruption.",
+    "Every negative fixture constructs an effective mutation before entering pytest.raises and invokes the same helper used by the original tests. Passing fixtures require AssertionError, not an import/runtime exception.",
+    "The frozen source and two-file patch are identical to the versions used by the native focused and full suite runs.",
+    "The original 40 nodes all executed; the 40 added nodes are counted separately. The focused 43 overlap the full 80.",
+    "No additional active identity pin is required by the registered existing suite. Historical pin records remain unchanged.",
+    "Evidence records documentary/semantic regression only; it does not admit Q/O, finite-null or 40 candidate scientific claims."
+  ],
+  "read_only_patch_check": {
+    "argv": [
+      "git",
+      "apply",
+      "--reverse",
+      "--check",
+      "/mnt/sn850x2t/htt_base_e2e/HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z/result/two-file-repair.patch"
+    ],
+    "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_T2_TOKEN_ASSERTION_REPAIR_V1_20260905T233158Z/worktree",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "",
+    "source_mutated": false,
+    "evidence": "Observed native exec tool result during self-review; no test rerun."
+  },
+  "work_thread_provenance_claim_review": "PENDING",
+  "work_thread_code_test_review": "PENDING",
+  "successful_full_suite_repeated": false
+}
