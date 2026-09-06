@@ -1,0 +1,42 @@
+{
+  "REPO": "/mnt/sn850x2t/htt_base_e2e/HTT_PR451_EXACT_SOURCE_DECODER_VALIDATION_V1_20260906T085720Z/worktree",
+  "OUT": "/mnt/sn850x2t/htt_base_e2e/HTT_PR451_EXACT_SOURCE_DECODER_VALIDATION_V1_20260906T085720Z/result",
+  "PY": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+  "timeout_seconds": 900,
+  "timeout_source": "Existing focused workflow timeout-minutes: 15; per-command upper bound here.",
+  "commands": {
+    "syntax": [
+      "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "-m",
+      "py_compile",
+      "htt/src/common/mes_krylov_completion.py"
+    ],
+    "collection": [
+      "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "--collect-only",
+      "-q",
+      "tests/common/test_mes_krylov_completion.py",
+      "tests/common/test_mes_krylov_stable_decoder.py"
+    ],
+    "suite": [
+      "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/common/test_mes_krylov_completion.py",
+      "tests/common/test_mes_krylov_stable_decoder.py",
+      "--junitxml=/mnt/sn850x2t/htt_base_e2e/HTT_PR451_EXACT_SOURCE_DECODER_VALIDATION_V1_20260906T085720Z/result/pr451-decoder.xml"
+    ]
+  },
+  "maximum_native_invocations": {
+    "syntax": 1,
+    "collection": 1,
+    "suite": 1
+  },
+  "source_edits_authorized": false,
+  "diagnostic_branch_instrumentation": false
+}
