@@ -1,0 +1,210 @@
+{
+  "exception_hierarchy": [
+    "OrbitChartUnavailable (test this subclass first)",
+    "OrbitInputError (base family)"
+  ],
+  "expected_exception_contracts": [
+    {
+      "test_function": "tests/common/test_mes_krylov_completion.py::test_zero_shape_is_typed_unavailable",
+      "asserted_expected_exceptions": [
+        {
+          "type_expression": "MOD.OrbitChartUnavailable",
+          "message_regex": null,
+          "source_line": 116
+        },
+        {
+          "type_expression": "MOD.OrbitChartUnavailable",
+          "message_regex": null,
+          "source_line": 118
+        }
+      ],
+      "permitted_caught_branches": [],
+      "node_results": [
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_zero_shape_is_typed_unavailable",
+          "status": "PASS",
+          "seconds": "0.000",
+          "detail": null
+        }
+      ]
+    },
+    {
+      "test_function": "tests/common/test_mes_krylov_completion.py::test_axisymmetric_stabilizer_cannot_manufacture_a_full_frame",
+      "asserted_expected_exceptions": [
+        {
+          "type_expression": "MOD.OrbitChartUnavailable",
+          "message_regex": null,
+          "source_line": 127
+        }
+      ],
+      "permitted_caught_branches": [],
+      "node_results": [
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_axisymmetric_stabilizer_cannot_manufacture_a_full_frame",
+          "status": "PASS",
+          "seconds": "0.000",
+          "detail": null
+        }
+      ]
+    },
+    {
+      "test_function": "tests/common/test_mes_krylov_completion.py::test_malformed_q_is_refused",
+      "asserted_expected_exceptions": [
+        {
+          "type_expression": "MOD.OrbitInputError",
+          "message_regex": null,
+          "source_line": 142
+        }
+      ],
+      "permitted_caught_branches": [],
+      "node_results": [
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_malformed_q_is_refused[complex]",
+          "status": "PASS",
+          "seconds": "0.000",
+          "detail": null
+        },
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_malformed_q_is_refused[boolean]",
+          "status": "PASS",
+          "seconds": "0.000",
+          "detail": null
+        },
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_malformed_q_is_refused[object]",
+          "status": "PASS",
+          "seconds": "0.000",
+          "detail": null
+        },
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_malformed_q_is_refused[nonfinite]",
+          "status": "PASS",
+          "seconds": "0.000",
+          "detail": null
+        },
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_malformed_q_is_refused[not_stf]",
+          "status": "PASS",
+          "seconds": "0.000",
+          "detail": null
+        },
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_malformed_q_is_refused[not_symmetric]",
+          "status": "PASS",
+          "seconds": "0.000",
+          "detail": null
+        }
+      ]
+    },
+    {
+      "test_function": "tests/common/test_mes_krylov_completion.py::test_semantic_or_algebraic_signature_mutation_is_refused",
+      "asserted_expected_exceptions": [
+        {
+          "type_expression": "MOD.OrbitInputError",
+          "message_regex": null,
+          "source_line": 157
+        }
+      ],
+      "permitted_caught_branches": [],
+      "node_results": [
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_semantic_or_algebraic_signature_mutation_is_refused[schema]",
+          "status": "PASS",
+          "seconds": "0.001",
+          "detail": null
+        },
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_semantic_or_algebraic_signature_mutation_is_refused[group]",
+          "status": "PASS",
+          "seconds": "0.000",
+          "detail": null
+        },
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_semantic_or_algebraic_signature_mutation_is_refused[normalization]",
+          "status": "PASS",
+          "seconds": "0.000",
+          "detail": null
+        },
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_semantic_or_algebraic_signature_mutation_is_refused[triple_order]",
+          "status": "PASS",
+          "seconds": "0.001",
+          "detail": null
+        },
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_semantic_or_algebraic_signature_mutation_is_refused[volume]",
+          "status": "PASS",
+          "seconds": "0.001",
+          "detail": null
+        },
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_semantic_or_algebraic_signature_mutation_is_refused[negative_norm]",
+          "status": "PASS",
+          "seconds": "0.001",
+          "detail": null
+        }
+      ]
+    },
+    {
+      "test_function": "tests/common/test_mes_krylov_completion.py::test_reconstruction_rejects_tracefree_unit_o_outside_packet_image",
+      "asserted_expected_exceptions": [
+        {
+          "type_expression": "MOD.OrbitInputError",
+          "message_regex": "O:Q vector disagrees",
+          "source_line": 231
+        }
+      ],
+      "permitted_caught_branches": [],
+      "node_results": [
+        {
+          "nodeid": "tests/common/test_mes_krylov_completion.py::test_reconstruction_rejects_tracefree_unit_o_outside_packet_image",
+          "status": "PASS",
+          "seconds": "0.018",
+          "detail": null
+        }
+      ]
+    },
+    {
+      "test_function": "tests/common/test_mes_krylov_stable_decoder.py::test_forward_packet_inverse_is_admitted_or_typed_unavailable",
+      "asserted_expected_exceptions": [],
+      "permitted_caught_branches": [
+        {
+          "caught_type": "MOD.OrbitChartUnavailable",
+          "source_line": 50
+        }
+      ],
+      "node_results": [
+        {
+          "nodeid": "tests/common/test_mes_krylov_stable_decoder.py::test_forward_packet_inverse_is_admitted_or_typed_unavailable",
+          "status": "PASS",
+          "seconds": "0.001",
+          "detail": null
+        }
+      ]
+    },
+    {
+      "test_function": "tests/common/test_mes_krylov_stable_decoder.py::test_near_boundary_forward_packet_replays_without_silent_projection",
+      "asserted_expected_exceptions": [],
+      "permitted_caught_branches": [
+        {
+          "caught_type": "MOD.OrbitChartUnavailable",
+          "source_line": 98
+        }
+      ],
+      "node_results": [
+        {
+          "nodeid": "tests/common/test_mes_krylov_stable_decoder.py::test_near_boundary_forward_packet_replays_without_silent_projection",
+          "status": "PASS",
+          "seconds": "0.001",
+          "detail": null
+        }
+      ]
+    }
+  ],
+  "unexpected_test_failures": [],
+  "unexpected_runtime_errors": [],
+  "actual_expected_exception_messages_separately_logged": false,
+  "actual_subclass_counts_for_base_class_raises": "NOT_OBSERVED",
+  "stable_witness_branch_counts": "NOT_OBSERVED_UNLESS_ACTUALLY_RECORDED",
+  "interpretation": "PASS for an expected-refusal fixture establishes its frozen pytest.raises contract. The two stable-forward fixtures permit replay or typed unavailable; ordinary logs do not record which. These results are not decoded-success counts."
+}

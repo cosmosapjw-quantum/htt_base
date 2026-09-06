@@ -1,0 +1,50 @@
+{
+  "implementation": "CPython",
+  "python": "3.12.3",
+  "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+  "real_executable": "/usr/bin/python3.12",
+  "prefix": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829",
+  "base_prefix": "/usr",
+  "platform": "Linux-7.0.0-29-generic-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "byteorder": "little",
+  "numpy": "2.4.6",
+  "numpy_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/numpy/__init__.py",
+  "pytest": "8.4.2",
+  "pytest_path": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/pytest/__init__.py",
+  "float64": {
+    "dtype": "float64",
+    "bits": 64,
+    "eps": 2.220446049250313e-16
+  },
+  "numpy_show_config": "Build Dependencies:\n  blas:\n    detection method: pkgconfig\n    found: true\n    include directory: /opt/_internal/cpython-3.12.12/lib/python3.12/site-packages/scipy_openblas64/include\n    lib directory: /opt/_internal/cpython-3.12.12/lib/python3.12/site-packages/scipy_openblas64/lib\n    name: scipy-openblas\n    openblas configuration: OpenBLAS 0.3.31.188.0  USE64BITINT DYNAMIC_ARCH NO_AFFINITY\n      SkylakeX MAX_THREADS=64\n    pc file directory: /project/.openblas\n    version: 0.3.31.188.0\n  lapack:\n    detection method: pkgconfig\n    found: true\n    include directory: /opt/_internal/cpython-3.12.12/lib/python3.12/site-packages/scipy_openblas64/include\n    lib directory: /opt/_internal/cpython-3.12.12/lib/python3.12/site-packages/scipy_openblas64/lib\n    name: scipy-openblas\n    openblas configuration: OpenBLAS 0.3.31.188.0  USE64BITINT DYNAMIC_ARCH NO_AFFINITY\n      SkylakeX MAX_THREADS=64\n    pc file directory: /project/.openblas\n    version: 0.3.31.188.0\nCompilers:\n  c:\n    commands: cc\n    linker: ld.bfd\n    name: gcc\n    version: 14.2.1\n  c++:\n    commands: c++\n    linker: ld.bfd\n    name: gcc\n    version: 14.2.1\n  cython:\n    commands: cython\n    linker: cython\n    name: cython\n    version: 3.2.4\nMachine Information:\n  build:\n    cpu: x86_64\n    endian: little\n    family: x86_64\n    system: linux\n  host:\n    cpu: x86_64\n    endian: little\n    family: x86_64\n    system: linux\nPython Information:\n  path: /tmp/build-env-tgi5ymto/bin/python\n  version: '3.12'\nSIMD Extensions:\n  baseline:\n  - X86_V2\n  found:\n  - X86_V3\n  not found:\n  - X86_V4\n  - AVX512_ICL\n  - AVX512_SPR\n\n",
+  "numpy_show_runtime": "WARNING: `threadpoolctl` not found in system! Install it by `pip install threadpoolctl`. Once installed, try `np.show_runtime` again for more detailed build information\n[{'numpy_version': '2.4.6',\n  'python': '3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]',\n  'uname': uname_result(system='Linux', node='cosmosapjw', release='7.0.0-29-generic', version='#29~24.04.2-Ubuntu SMP PREEMPT_DYNAMIC Wed Aug 12 17:25:56 UTC 2', machine='x86_64')},\n {'simd_extensions': {'baseline': ['X86_V2'],\n                      'found': ['X86_V3'],\n                      'not_found': ['X86_V4', 'AVX512_ICL', 'AVX512_SPR']}},\n {'ignore_floating_point_errors_in_matmul': False}]\n",
+  "import_records": [
+    {
+      "test_file": "/mnt/sn850x2t/htt_base_e2e/HTT_PR451_EXACT_SOURCE_DECODER_VALIDATION_V1_20260906T085720Z/worktree/tests/common/test_mes_krylov_completion.py",
+      "module_name": "mes_krylov_under_test",
+      "module_file": "/mnt/sn850x2t/htt_base_e2e/HTT_PR451_EXACT_SOURCE_DECODER_VALIDATION_V1_20260906T085720Z/worktree/htt/src/common/mes_krylov_completion.py",
+      "module_spec_origin": "/mnt/sn850x2t/htt_base_e2e/HTT_PR451_EXACT_SOURCE_DECODER_VALIDATION_V1_20260906T085720Z/worktree/htt/src/common/mes_krylov_completion.py",
+      "module_sha256": "d006612907e3e4d9ffb73115ad88ea88160f44592ce77044d43bab7dba46e43d",
+      "STF3_basis_dtype": "float64",
+      "OrbitChartUnavailable_inherits_OrbitInputError": true
+    },
+    {
+      "test_file": "/mnt/sn850x2t/htt_base_e2e/HTT_PR451_EXACT_SOURCE_DECODER_VALIDATION_V1_20260906T085720Z/worktree/tests/common/test_mes_krylov_stable_decoder.py",
+      "module_name": "mes_krylov_stable_decoder_under_test",
+      "module_file": "/mnt/sn850x2t/htt_base_e2e/HTT_PR451_EXACT_SOURCE_DECODER_VALIDATION_V1_20260906T085720Z/worktree/htt/src/common/mes_krylov_completion.py",
+      "module_spec_origin": "/mnt/sn850x2t/htt_base_e2e/HTT_PR451_EXACT_SOURCE_DECODER_VALIDATION_V1_20260906T085720Z/worktree/htt/src/common/mes_krylov_completion.py",
+      "module_sha256": "d006612907e3e4d9ffb73115ad88ea88160f44592ce77044d43bab7dba46e43d",
+      "STF3_basis_dtype": "float64",
+      "OrbitChartUnavailable_inherits_OrbitInputError": true
+    }
+  ],
+  "sys_path": [
+    "",
+    "/usr/lib/python312.zip",
+    "/usr/lib/python3.12",
+    "/usr/lib/python3.12/lib-dynload",
+    "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages"
+  ],
+  "probe_scope": "Imports the exact existing two test loaders and records MOD paths/dtype. No test functions, decoder call, stress or basis identity assertion executed by this probe."
+}

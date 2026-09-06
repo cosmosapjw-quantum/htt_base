@@ -1,0 +1,88 @@
+{
+  "historical_receipt_path": "docs/research_program/theory_promotion/closeout/PR451_STABLE_STF_DECODER_RECEIPT.json",
+  "historical_receipt_blob": "9954d918f1fc63c8b3df89fbff1b9e1448305150",
+  "unmodified_copy": "source-readback/docs/research_program/theory_promotion/closeout/PR451_STABLE_STF_DECODER_RECEIPT.json",
+  "clarification_comment": 5557723200,
+  "local_source_equivalent_validation": {
+    "grade": "LOCAL_SOURCE_EQUIVALENT",
+    "historical": true,
+    "fresh_execution": false,
+    "relabelled": false,
+    "original_block": {
+      "python": "3.13",
+      "numpy": "2.3.5",
+      "focused_tests": "28 passed",
+      "basis_gram_max_residual": 2.220446049250313e-16,
+      "basis_trace_max_residual": 0.0,
+      "basis_symmetry_max_residual": 0.0,
+      "stress": {
+        "seed": 20260903,
+        "generated_pairs": 10000,
+        "forward_accepted": 10000,
+        "decoder_typed_unavailable": 7,
+        "replay_failures": 0,
+        "maximum_absolute_packet_residual": 5.2119071003442485e-09,
+        "maximum_observed_k_condition": 47710.77454526557
+      }
+    }
+  },
+  "exact_basis_validation": {
+    "grade": "HISTORICAL_SYMPY_EXACT_ARITHMETIC_BASIS_CHECK",
+    "historical": true,
+    "fresh_execution": false,
+    "downgraded_to_numerical": false,
+    "relabelled": false,
+    "original_block": {
+      "engine": "SymPy exact arithmetic",
+      "gram": "IdentityMatrix[7]",
+      "trace_residuals": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "symmetry_residual": 0,
+      "basis_rank": 7,
+      "fresh_wolfram": "BLOCKED_BY_UPSTREAM_502"
+    }
+  },
+  "stress_repeated": false,
+  "basis_validation_repeated": false,
+  "historical_exact_head_execution_field_preserved": "PRESTART_NO_EXECUTION",
+  "new_exact_source_two_file_execution_evidence": [
+    "NODE_RESULTS.json",
+    "pr451-decoder.xml"
+  ],
+  "basis_and_stress_results_not_substituted_for_new_execution": true
+}

@@ -1,0 +1,89 @@
+{
+  "verified_at": "2026-09-06T15:09:21.562698+00:00",
+  "assignment": "HTT_PR451_EXACT_SOURCE_DECODER_VALIDATION_V1",
+  "baseline_commit": "9f7d06dec0fce1c3a8a53fa5372c84d9c679c037",
+  "baseline_tree": "6f2fdfd5b8fbf5e4ee3579288fb5aa3da1bb1060",
+  "handoff": {
+    "commit": "af5d79ad572211247bd78ec4c1667f02b62bc087",
+    "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/PR451_MAIN_LOCAL_GIT_HANDOFF_20260906.md",
+    "git_blob": "b2b270a636ebc087142810524c9e16d3f0252b1f",
+    "sha256": "e6776b14a0378f5fba3eda4e3de72ee8b04a481cdd9944b6396d2a53c9a4b76e"
+  },
+  "reused_native_run_id": "HTT_PR451_EXACT_SOURCE_DECODER_VALIDATION_V1_20260906T085720Z",
+  "prior_sha256_index_entries_verified": 59,
+  "prior_evidence_index_sha256": "3a4ba896e0dbc18e60d70b16672110084b70b552337a7604aa0bd268d35ccfc1",
+  "source_files": [
+    {
+      "path": "htt/src/common/mes_krylov_completion.py",
+      "git_blob": "f22132c7a3f247abd00f01cf1cce13dcad091070",
+      "sha256": "d006612907e3e4d9ffb73115ad88ea88160f44592ce77044d43bab7dba46e43d",
+      "bytes": 13568,
+      "matches_complete_git_blob": true,
+      "current_worktree_matches_original_execution": true
+    },
+    {
+      "path": "tests/common/test_mes_krylov_completion.py",
+      "git_blob": "32ff53f371b9f5d79c94cfad2073906df0dd34ad",
+      "sha256": "108de5f19f58e23f322a9be92d8c6c1e1cb897c4821d1ac063ffa67dd2233a2d",
+      "bytes": 7317,
+      "matches_complete_git_blob": true,
+      "current_worktree_matches_original_execution": true
+    },
+    {
+      "path": "tests/common/test_mes_krylov_stable_decoder.py",
+      "git_blob": "6834e6c658b828d6e442d9b12785ccbb75d67c1d",
+      "sha256": "ef684b45588297df214d590f423490799e45f8e2e9b7951ebd61c697cc706c9d",
+      "bytes": 3508,
+      "matches_complete_git_blob": true,
+      "current_worktree_matches_original_execution": true
+    },
+    {
+      "path": ".github/workflows/qo-krylov-packet-image.yml",
+      "git_blob": "08d8d868bb971721016e2071c0eb2d943ac30a8a",
+      "sha256": "5d6c53f8799af4d358d81d882c5e46eaccc1127a5006ede5729b49976e4ac61b",
+      "bytes": 1164,
+      "matches_complete_git_blob": true,
+      "current_worktree_matches_original_execution": true
+    },
+    {
+      "path": "docs/research_program/theory_promotion/closeout/PR451_STABLE_STF_DECODER_RECEIPT.json",
+      "git_blob": "9954d918f1fc63c8b3df89fbff1b9e1448305150",
+      "sha256": "01db73f15d47c5a4f286f4f7eed79d06fd74c937e44adc550f359ab1f057df81",
+      "bytes": 2383,
+      "matches_complete_git_blob": true,
+      "current_worktree_matches_original_execution": true
+    },
+    {
+      "path": "pytest.ini",
+      "git_blob": "453d6809dad598a7d5806acfe851451dcbcf4d46",
+      "sha256": "a3f9fc9415c7eef1e0031c8b37b2201d8c78d0ec414a0d0227763e099d25fce4",
+      "bytes": 839,
+      "matches_complete_git_blob": true,
+      "current_worktree_matches_original_execution": true
+    },
+    {
+      "path": "AGENTS.md",
+      "git_blob": "ce0ff3f16068c5b2822bfeb709bd587ce9af563d",
+      "sha256": "5cb3a38a90310a8ecae9bbcf9ab812c5e33cc876905f72e1dea2daf83af23ec8",
+      "bytes": 22240,
+      "matches_complete_git_blob": true,
+      "current_worktree_matches_original_execution": true
+    },
+    {
+      "path": "htt/src/common/AGENTS.md",
+      "git_blob": "ba5ca86c8a1c7aef7e32b10ccdfb96621cc8ac2a",
+      "sha256": "37a390925af1d9dd872829593bd07edb1242e45faa21d33468812488818901ec",
+      "bytes": 3093,
+      "matches_complete_git_blob": true,
+      "current_worktree_matches_original_execution": true
+    }
+  ],
+  "original_and_executed_node_ids_match": true,
+  "collected": 28,
+  "passed": 28,
+  "fresh_native_test_invocations_this_delivery": 0,
+  "source_repairs_required": false,
+  "reason": "The fully matching prior native exact-source baseline passed. Handoff section 4 explicitly requires reuse; no relevant source edit requires a new final run.",
+  "original_receipts_unchanged": true,
+  "prior_native_command_seconds": 2.8116588869597763
+}
