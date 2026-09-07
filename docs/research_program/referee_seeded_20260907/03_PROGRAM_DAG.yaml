@@ -1,0 +1,230 @@
+schema: htt.referee_seeded_program.continuation.v2
+as_of: '2026-09-07'
+work_unit: HTT_POST_REVIEW_PLAN_COMPLETION
+planning_status: COMPLETE
+scientific_specification_status: PENDING_M1_M2_M3
+execution_release: false
+predecessor:
+  pr: 462
+  commit: b4d04e62d664997eb9e1858b6195c35e4ece3378
+  tree: ea95984f5f1b1d977ca625dfde9a34d71202b115
+  directory: docs/research_program/post_review_20260907
+  contract_blob: b55f9e01916875b2940781e6e6fb0ebf42a7bb0e
+  reuse_blob: bef155a1bb5a032e8cb65c97c3d264292dbd8778
+  dag_blob: 5afa78b7d001d0aba25c6a3aeacf40cb98ad425c
+  interpretation: reuse_completed_derivations_and_existing_three_model_contracts
+continuation:
+  pr: 463
+  active_master: 00_MASTER_PLAN_KO.md
+  derivation_and_new_source_oracles: 01_DERIVATIONS_AND_REVIEW.md
+  supplementary_reuse_map: 02_REUSE_AND_EXECUTION_CONTRACT.md
+  old_draft_label_mapping:
+    T1: prior_T_CORE_recap_not_new_gate
+    T2: M1_CMB_MODEL
+    T3: M1_CMB_MODEL_and_M3_EXPERIMENT
+    T4: M2_REDSHIFT_MODEL
+    C0: C0_INTEGRATION_and_C3_SELECTED_DATA_INTAKE
+    C1: C1_IMPLEMENTATION
+    C2: C2_SYNTHETIC_VALIDATION_operator_subtask
+    C3: C2_SYNTHETIC_VALIDATION_statistical_subtask
+    C4: C2_SYNTHETIC_VALIDATION_end_to_end_subtask
+    C5A: C4_OBSERVED_ANALYSIS_CMB_branch
+    C5B: C4_OBSERVED_ANALYSIS_depth_branch
+    C6: C5_GIT_RETURN_scientific_synthesis
+  do_not_duplicate_predecessor_regression_oracles: true
+baseline:
+  report_commit: 9c86759f4ac7054d01d88689290a658e8ffd5863
+  report_tree: e6f704e12a8c0388b4740e58987171a082156b95
+  observed_default_code_commit: 50ea6d76ace70dec57b8794ab0d1cf9b8fab42cb
+  exact_decoder_commit: 9f7d06dec0fce1c3a8a53fa5372c84d9c679c037
+  exact_boost_donor_commit: 29427a1f7f2c5d46e43ffe03053c4ac13e969228
+  processed_response_donor_commit: de73549c16ac6ceb63f924c86611e0a5ceb4711d
+  donor_source_roles: preserve_predecessor_reuse_map_and_actual_import_identity
+verification:
+  new_native_execution: false
+  new_CAS_or_Monte_Carlo: false
+  main_runtime: CLIENT_ERROR_BEFORE_RESULT
+  exact_result_status: direct_derivation_not_new_execution_receipt
+  scalar_decimals: calculator_checked
+  YAML_native_parse: NOT_EXECUTED
+  repository_scan: global_structure_and_selected_source_not_all_historical_bodies
+  local_asset_list: owner_supplied_metadata_not_scientific_admission
+protected:
+  - existing_29_and_55_page_document_artifacts
+  - canonical_T9_v4_30_original_candidate_40
+  - original_failed_and_successful_receipts
+  - CF4_P0_quarantine_and_retired_scalar_MES_results
+  - PR284_deferred_and_finite_pixel_unresolved_until_new_evidence
+  - raw_data_partial_files_symlinks_original_checkout
+  - no_native_BASS_REI_REC_solver_work
+  - no_merge_ready_public_disclosure_or_scientific_promotion
+nodes:
+  - id: T_CORE
+    owner: MAIN
+    status: REUSED_DERIVED_NOT_NATIVE_TESTED
+    requires: []
+    source: predecessor/THEORY_RESULTS.md
+    includes: [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]
+    rule: do_not_reopen_or_count_again_due_to_interruption
+  - id: REUSE
+    owner: MAIN
+    status: PRIOR_SCAN_REUSED_AND_SELECTED_SOURCE_REVIEW_EXTENDED
+    requires: []
+    sources: [predecessor/CODE_DATA_REUSE.md, 02_REUSE_AND_EXECUTION_CONTRACT.md]
+    new_findings:
+      - CR_H_zero_vs_data_zero_conditional_variance
+      - affine_full_vs_half_contraction_norm_adapter
+      - rank_deficient_affine_design_and_uncalibrated_cell_bootstrap
+    preserves_prior_findings:
+      - inverse_selection_weight_is_not_precision
+      - active_count_is_not_response_rank
+      - NaN_must_not_enter_finite_rank
+      - source_Jacobian_is_not_velocity_Jacobian
+  - id: M1_CMB_MODEL
+    owner: MAIN
+    status: NEXT_SCIENTIFIC_CLOSURE
+    requires: [T_CORE, REUSE]
+    deliverables:
+      - selected_PR3_product_and_ordered_transform_semantics
+      - full_low_high_foreground_noise_joint_law
+      - primary_morphology_score_and_secondary_controls
+      - chart_status_and_shared_sky_null_policy
+      - finite_source_tail_and_actual_matrix_error_target
+    exit:
+      - formulas_units_array_roles_and_admission_predicates_explicit
+      - no_statistic_prior_null_or_product_substitution_left_to_Codex
+      - beta_squared_monopole_and_source_velocity_derivatives_distinguished
+  - id: M2_REDSHIFT_MODEL
+    owner: MAIN
+    status: REMAINING_SCIENTIFIC_CLOSURE
+    requires: [T_CORE, REUSE]
+    deliverables:
+      - actual_distance_redshift_observation_likelihood
+      - calibration_selection_frame_and_shell_windows
+      - shared_catalog_and_reconstruction_covariance
+      - identifiable_bulk_symmetric_affine_and_dipole_targets
+      - exact_radial_vorticity_and_free_shell_gauge_nulls
+    exit:
+      - no_toy_profile_promoted_to_global_native_tilt
+      - no_quarantined_CF4_headline_reused
+      - supported_response_and_partial_identification_outputs_explicit
+  - id: M3_EXPERIMENT
+    owner: MAIN
+    status: REMAINING_DEPENDENT_SCIENTIFIC_CLOSURE
+    requires: [M1_CMB_MODEL, M2_REDSHIFT_MODEL]
+    deliverables:
+      - exact_estimand_input_algorithm_output_contract
+      - explicit_masks_bins_parameter_grid_and_covariance_choices
+      - coupled_mock_injection_training_calibration_test_schedule
+      - finite_MC_multiplicity_coverage_power_abstention_criteria
+      - numerical_tolerance_and_error_budget_justification
+      - selected_data_missing_input_and_model_inadequacy_branches
+    exit:
+      - single_immutable_implementation_and_data_contract
+      - no_appropriate_setting_to_be_selected_by_executor
+      - scientific_null_or_unidentified_result_is_valid_outcome
+  - id: THEORY_FREEZE
+    owner: MAIN
+    status: NOT_ISSUED
+    requires: [M3_EXPERIMENT]
+    produces: final_Git_readable_Local_Codex_handoff
+    release_only_when: all_scientific_choices_for_selected_finite_campaign_closed
+    not_sufficient: [this_plan_exists, many_assets_exist, structural_tests_pass]
+  - id: C0_INTEGRATION
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    requires: [THEORY_FREEZE]
+    produces: [isolated_candidate, exact_import_donor_map, affected_tests]
+    rule: reuse_selected_donors_not_whole_report_branch_merge
+  - id: C1_IMPLEMENTATION
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    requires: [C0_INTEGRATION]
+    produces: [actual_patch, focused_RED_GREEN, fixed_numeric_consumers]
+    required_oracles:
+      - predecessor_REGRESSION_ORACLES_deduplicated
+      - CR_H_zero_and_data_zero_variances_differ
+      - STF_derivative_adjoint_LLstar_7_over_5
+      - weighted_cancellation_range_and_pairwise_2R
+      - same_data_Gaussian_cross_covariance_and_marginal_information
+      - finite_scalar_rank_nonfinite_rejection
+    autonomous_repairs: ordinary_in_scope_implementation_and_numerical_defects
+  - id: C2_SYNTHETIC_VALIDATION
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    requires: [C1_IMPLEMENTATION]
+    produces:
+      - exact_oracle_and_same_target_operator_comparisons
+      - synthetic_forward_and_depth_injections
+      - bias_coverage_size_power_and_abstention_with_MC_uncertainty
+      - rigorous_or_empirical_finite_error_statement
+    controls:
+      - known_and_zero_boost_with_monopole_higher_order_terms
+      - full_sky_and_small_mask_limit
+      - actual_L10_axial_scope_not_all_direction_numerical_claim
+      - degeneracy_singular_covariance_and_unknown_model_cases
+      - no_reference_row_drop_or_desired_detection_tuning
+  - id: C3_SELECTED_DATA_INTAKE
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    requires: [C0_INTEGRATION]
+    produces: [selected_input_manifest, units_frames_beams_corrections, unique_null_IDs]
+    start_with: existing_workdir_asset_inventory_20260907
+    no_whole_1_5TB_copy_or_hash: true
+    no_blanket_install_or_download: true
+    input_rules:
+      - PR3_and_FFP10_product_matching_not_file_count
+      - PR4_empty_path_distinct_from_separate_RRSS_products
+      - Commander_partial_files_excluded_not_deleted
+      - WMAP7_sims_not_automatically_WMAP9_null
+      - posterior_draws_not_null_universes
+      - ACT_kappa_not_temperature_map
+      - correlated_CF4_2MRS_reconstructions_not_independent_anchors
+    missing_action: explicit_product_level_blocker_no_new_scientific_substitution
+  - id: C4_OBSERVED_ANALYSIS
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    requires: [C2_SYNTHETIC_VALIDATION, C3_SELECTED_DATA_INTAKE]
+    branches:
+      CMB: joint_QO_and_four_nuisance_models_plus_matched_controls
+      DEPTH: supported_distance_catalog_and_window_matched_motion_poles
+    missing_branch_policy: preserve_other_admitted_branch_and_report_partial_completion
+    produces: [actual_effects_uncertainties_and_diagnostics, prespecified_sensitivities]
+    valid_science_outcomes: [NULL_CONSISTENT, PARTIALLY_IDENTIFIED, MODEL_DEPENDENT, MODEL_INADEQUATE]
+  - id: C5_GIT_RETURN
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    success_requires: [C4_OBSERVED_ANALYSIS]
+    failure_return_from: [C0_INTEGRATION, C1_IMPLEMENTATION, C2_SYNTHETIC_VALIDATION, C3_SELECTED_DATA_INTAKE, C4_OBSERVED_ANALYSIS]
+    produces: [readable_source_patch_logs_results, figures_and_generation_tables, RETURN_TO_MAIN]
+    never_wait_for_downstream_success_to_return_failure: true
+    mutation: isolated_branch_non_force_push_Draft_PR
+  - id: MAIN_RESULT
+    owner: MAIN
+    status: NOT_STARTED
+    requires: [C5_GIT_RETURN]
+    action: assess_actual_scientific_result_and_claim_scope
+    role_name_is_not_blind_review: true
+parallelism:
+  MAIN: [M1_CMB_MODEL, M2_REDSHIFT_MODEL]
+  LOCAL: [C2_SYNTHETIC_VALIDATION, C3_SELECTED_DATA_INTAKE]
+  concurrent_same_branch_writers: 1
+budgets:
+  planning_estimates: adjustable_with_reason_and_cumulative_accounting
+  actual_runtime_estimates: measure_selected_small_pilot_before_production
+  hard_limits: explicit_owner_platform_privilege_or_registered_experiment_only
+  blind_retry: bounded
+  productive_in_scope_repair: not_one_edit_limited
+out_of_current_campaign:
+  - new_native_Bianchi_solver_and_family_atlas
+  - empirical_global_tilt_without_physical_response
+  - new_remote_kSZ_pSZ_without_specific_owned_inputs
+  - required_ELC_or_new_survey_acquisition
+  - general_nonlinear_almost_EGS_and_finite_amplitude_remainder_claim
+  - public_repository_visibility_or_recipient_send
+completion:
+  planning: COMPLETE
+  reused_T_CORE: DERIVED
+  M1_M2_M3_scientific_closure: NOT_YET_COMPLETE
+  code_data_execution: NOT_STARTED
+  prior_report_artifact_completion: RETAINED
