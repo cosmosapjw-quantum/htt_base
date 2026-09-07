@@ -1,97 +1,80 @@
 # Post-review theoretical results and computational forms
 
-MAIN, 2026-09-07. Status: explicit derivations and selected scalar arithmetic checks. No new native numerical/CAS/observational execution. Novelty is not certified.
+MAIN, 2026-09-07. Explicit derivations and selected scalar arithmetic checks; no new native numerical/CAS/observational execution. Novelty is not certified.
 
-The source conventions are the accepted pedagogical Report A at `9c86759f4ac7054d01d88689290a658e8ffd5863`. Existing results and original receipts remain unchanged. This note is a follow-up mathematical development and a narrow correction to one overly restrictive numerical-policy sentence, not a retroactive rewrite of a verified artifact.
-
-Spatial tensors use the full Euclidean Frobenius metric. Spacetime signature is (-,+,+,+); beta is physical velocity divided by c. Q and O have temperature units. The unit shapes q=Q/A_Q and o=O/A_O, with A_Q squared=Q:Q and A_O squared=O:O, are dimensionless. All statistical results explicitly state the probability model. Bounds on geometric rates use one common rate convention; converting all rates by c leaves the dimensionless ratios unchanged.
+Conventions and inherited inputs are the accepted pedagogical Report A at `9c86759f4ac7054d01d88689290a658e8ffd5863`. Existing artifacts and receipts remain unchanged. Spatial tensors use the full Euclidean Frobenius metric. Spacetime signature is (-,+,+,+); beta is velocity divided by c. Q and O have temperature units, q=Q/A_Q and o=O/A_O are unit dimensionless shapes. Rates use one common geometric or inverse-time convention, with a factor c converting all rates together. Probability models and physical premises below are part of the statements.
 
 ## T1. The exact axial continuum threshold is L=10
 
-Keep precisely the report's finite fit through ell=5, retained ell=2..5, identity transfer, axial boost generator, and piecewise wide mask. The retained real output dimension is 32. Its m=0,1,2,3,4,5 complex blocks have row counts (4,4,4,3,2,1).
+Retain the report's fit through ell=5, output ell=2..5, source ell=7..L, identity transfer, axial first-order generator and exact wide mask. The m=0..5 complex blocks have row counts (4,4,4,3,2,1).
 
-The exact nonzero minors printed in Appendix B use source columns 7..10 for m=0,1,2; 7..9 for m=3; 7..8 for m=4; and 7 for m=5. Every column is already present at L=10. The existing twelve Fraction comparisons and printed certificate therefore imply
+The existing nonzero minors use source columns 7..10 for m=0,1,2; 7..9 for m=3; 7..8 for m=4; and 7 for m=5. All are already available at L=10. Thus the accepted certificate implies
 
 \[
 \operatorname{rank}_{\mathbb R}K_z^{\rm cont}(10)
 =4+2(4+4+3+2+1)=32.
 \]
 
-At L<=9 the m=0 block has at most three source columns but four retained rows, and hence cannot be surjective. It follows that **ten is the minimum axial full-row-rank cutoff for this exact operator**. This is a deduction from the existing certificate, not a new invocation of its checker. It does not certify a finite pixel transform.
+At L<=9 the m=0 block has at most three columns for four rows. Full row rank is impossible. **Ten is therefore the minimum axial full-row-rank cutoff for this operator.** This deduction does not rerun the certificate or certify a finite pixel calculation.
 
-For a fixed cutoff and mask, the first-order generator makes K_b linear in the three Cartesian components of b. Choose one 32-column minor nonzero for b=z. Its determinant is a nonzero homogeneous polynomial in b. Its zero set has measure zero on the unit sphere: a nonzero homogeneous polynomial cannot vanish identically on the sphere, and polynomial zeros have measure zero unless the polynomial is identically zero. A proof of the latter follows by treating one variable at a time and applying the finite number of roots of a nonzero one-variable polynomial, outside the lower-dimensional zero set of its coefficients. Thus full row rank holds for almost every direction at L=10. This does **not** assert every direction, give a uniform singular-value margin, or replace an exceptional-direction analysis.
+For fixed mask/cutoff, K_b is linear in the three components of the direction vector b. A 32-column minor nonzero at b=z has a nonzero homogeneous polynomial determinant. Its exceptional zero set on the unit sphere has measure zero. One proof uses rational stereographic charts on the sphere and the fact that a nonzero polynomial has measure-zero zeros, proved by induction on variables and the finite-root property outside the zero set of its coefficient polynomials. Homogeneity excludes a nonzero polynomial vanishing on the entire sphere. Consequently full rank holds for almost every direction at L=10. This is not every-direction certification or a uniform singular-value bound.
 
-Computational use: retain the old fractions; label the L=10 consequence separately. Do not change source columns to manufacture the result or turn a reviewer's unacquired rank scan into exact evidence.
+## T2. A posteriori deterministic rank slack is valid
 
-## T2. Deterministic rank certification does not require a prechosen slack
-
-Suppose an actual deterministic perturbation obeys Delta Delta^T <= Gamma, Gamma positive definite, and W=Gamma^(-1/2). For K_obs=K_true+Delta, Weyl's inequality gives
+Suppose the actual error satisfies Delta Delta^T <= Gamma, Gamma positive definite, with W=Gamma^(-1/2) and K_obs=K_true+Delta. Then
 
 \[
 s_m(WK_{\rm true})\ge s_m(WK_{\rm obs})-1.
 \]
 
-Therefore any rigorously established s_m(WK_obs)>1 implies full row rank. A displayed delta=s_m(WK_obs)-1 may be chosen after the computation. Prechoosing a positive slack is a reporting convention, not a hypothesis of this deterministic implication.
+A rigorously established s_m(WK_obs)>1 proves full row rank. The slack delta=s_m(WK_obs)-1 may be reported after computing it. Prechoosing delta is not a mathematical hypothesis. If the numerical singular value has certified absolute error epsilon_s, use s_computed-epsilon_s>1.
 
-If the computed singular value has absolute error bounded by epsilon_s, the sufficient test is s_computed-epsilon_s>1. The premise that Gamma contains the actual error cannot be obtained by shrinking Gamma after seeing the desired rank. An empirically selected error family or radius needs its own justified coverage. This separates numerical logic from statistical selection.
+What cannot be inferred from the desired rank is actual error membership in Gamma. An empirical family/radius selected on the same outputs needs justified coverage; shrinking an unjustified envelope until it passes is invalid. This corrects the old report's blanket prohibition on choosing a margin after inspecting singular values. The archived PDF remains unchanged; its next scientific revision should distinguish deterministic logic from statistical calibration.
 
-This corrects the pedagogical report's blanket sentence that delta 'must not be tuned after inspecting the same singular values'. The stronger, correct restriction is: **do not tune an unjustified error envelope or ignore singular-value uncertainty to make a certificate pass**. An existing witness above the certified floor can be reported a posteriori. The archived PDF is preserved; the correction belongs in its next scientific revision/addendum.
+## T3. Projection null and the low-QO LS variance
 
-## T3. The low-QO projection null, alternatives and velocity-coordinate variance
-
-For nonzero Q define L_Q O=O:Q and B_Q beta=3 STF(beta tensor Q). The report proves
+For nonzero Q, let L_Q O=O:Q and B_Q beta=3 STF(beta tensor Q). Inherited algebra gives
 
 \[
 B_Q^*=3L_Q,\qquad B_Q^*B_Q=3M_Q,
 \qquad M_Q=(Q:Q)I+\frac65Q^2.
 \]
 
-The projector P_Q=B_Q(3M_Q)^(-1)B_Q^* has rank three in the seven-dimensional real STF3 space.
+P_Q=B_Q(3M_Q)^(-1)B_Q^* is a rank-three orthogonal projector in real STF3, which has dimension seven.
 
-### Ideal null law
-
-Assume conditional on Q that O=tau g, where g is a standard seven-dimensional Gaussian independent of Q. Choose an orthonormal basis diagonalising P_Q. The squared projected and complementary norms divided by tau squared are independent chi-square variables of dimensions three and four. Their ratio to their sum gives
+Assume O conditional on Q is tau times a standard seven-dimensional Gaussian independent of Q. In an orthonormal basis adapted to P_Q, its projected and residual norm squares divided by tau squared are independent chi-square variables of dimensions three and four. A sum/ratio change of variables in their gamma densities gives
 
 \[
 f_B=\frac{\|P_QO\|_F^2}{\|O\|_F^2}
-\sim\mathrm{Beta}(3/2,2),
-\qquad p(x)=\frac{15}{4}\sqrt{x}(1-x),
+\sim\mathrm{Beta}(3/2,2),\qquad
+p(x)=\frac{15}{4}\sqrt{x}(1-x),
 \]
 \[
 F(x)=\frac52x^{3/2}-\frac32x^{5/2},\qquad
 \mathbb E f_B=\frac37.
 \]
 
-The density follows either from the chi-square gamma densities and a sum/ratio change of variables or from uniform spherical direction. Integrating the displayed density proves the CDF. The same ratio law holds for an independent uniform octupole direction with fixed nonzero norm. That fixed-norm law is not itself Gaussian.
+The ratio has the same law for a uniform spherical direction at fixed norm, but that law is not Gaussian. SO(3) invariance alone is insufficient for arbitrary non-Gaussian O: rotation does not act transitively on its six-sphere of shapes. Isotropic covariance alone likewise does not determine the ratio distribution. Masked/noisy Q and O need not be independent. This is an ideal-model oracle, not an automatic observational p-value.
 
-Mere SO(3) invariance of an arbitrary non-Gaussian octupole distribution is insufficient: the three-dimensional rotation group does not act transitively on the six-sphere of octupole shapes. A covariance proportional to identity does not determine the full projection-fraction distribution. Masked/noisy Q and O can also be dependent. The beta law is an oracle and an ideal-model benchmark, not an automatic Planck p-value.
+For conditional Gaussian mean B_Q beta and the same covariance, the numerator is noncentral chi-square with parameter lambda=3 beta^T M_Q beta/tau squared. The residual remains central and independent. This gives a singly noncentral beta alternative only for that mean model.
 
-For a Gaussian mean B_Q beta with the same covariance, the numerator is noncentral chi-square with parameter
-
-\[
-\lambda=3\beta^TM_Q\beta/\tau^2,
-\]
-
-while the four-dimensional residual remains central and independent. Thus f_B has the corresponding singly noncentral beta law. This provides a power calculation only for this stated conditional mean model.
-
-### Exact LS covariance and the proposal's decimal discrepancy
-
-The algebraic estimator is beta_hat=M_Q^(-1)L_QO. Under the null,
+The algebraic estimator beta_hat=M_Q^(-1)L_QO obeys
 
 \[
-\operatorname{Cov}(\widehat\beta\mid Q)=\frac{\tau^2}{3}M_Q^{-1}
+\operatorname{Cov}(\widehat\beta\mid Q)
+=\frac{\tau^2}{3}M_Q^{-1}
 =\frac{A_O^2}{21}M_Q^{-1},
 \]
 
-where A_O squared=7 tau squared denotes the expected squared octupole norm. The same covariance follows for the fixed-amplitude sphere with that amplitude, but not the same Gaussian likelihood or Fisher theorem.
+where A_O squared=7 tau squared is the expected squared norm. The same second moment holds for a fixed-amplitude spherical O with that amplitude; Gaussian likelihood/Fisher conclusions do not follow for that distinct law.
 
-For unit q, let s3=tr(q cubed). The previously derived polynomial inverse gives
+For unit q and s3=tr(q cubed), the inherited polynomial inverse gives
 
 \[
 \operatorname{tr}M_q^{-1}=\frac{90}{40+3s_3^2}.
 \]
 
-Tracefree unit eigenvalues imply s3 squared<=1/6. For completeness, maximise their product subject to fixed sum zero and squared norm one using Lagrange multipliers; an extremum has two equal eigenvalues, giving spectra proportional to (-1,-1,2) and s3 squared=1/6. The value zero is attained at (-1,0,1)/sqrt(2). Therefore
+The tracefree unit-eigenvalue constraints give 0<=s3 squared<=1/6. To derive the upper endpoint, extremise the product of the three eigenvalues at fixed sum and norm: the multiplier equations imply two eigenvalues coincide at a nonzero extremum. Spectra proportional to (-1,-1,2) attain s3 squared=1/6; (-1,0,1) attains zero. Hence
 
 \[
 \frac{20}{9}\le\operatorname{tr}M_q^{-1}\le\frac94,
@@ -101,17 +84,15 @@ Tracefree unit eigenvalues imply s3 squared<=1/6. For completeness, maximise the
 \le\sqrt{\frac3{28}}\frac{A_O}{A_Q}.
 \]
 
-The illustrative inputs D2=226 and D3=1018 microkelvin squared obey A_Q squared=25 D2/8 and A_O squared=245 D3/48. Scalar calculator evaluation gives the bracket **0.882350584718888 to 0.8878481493381544**, not 0.8435. These are dimensionless formal LS-coordinate fluctuations under the supplied ideal model, not inferred physical speeds. They are comparable to unity, so interpreting them as a measured small-beta physical posterior is especially inappropriate.
+For the supplied illustrative D2=226 and D3=1018 microkelvin squared, A_Q squared=25 D2/8 and A_O squared=245 D3/48. Calculator evaluation gives **0.882350584718888 to 0.8878481493381544**, not 0.8435. This is an unconstrained LS-coordinate fluctuation, not an inferred near-light-speed physical velocity or a prior-independent uncertainty bound. The Gaussian known-Q Fisher matrix is 3M_Q/tau squared; arbitrary intrinsic O instead gives deterministic nonidentifiability. Neither excludes high-multipole, spectral or external-frame information.
 
-The Gaussian known-Q Fisher matrix is 3M_Q/tau squared. An arbitrary intrinsic O gives a deterministic degeneracy instead; a prior changes the inference. None of these statements rules out estimating motion with higher CMB multipoles, frequency information or other data.
+A scalar calculator check also gives P(f_B>0.8)=0.06979572136008738. A large projection fraction is therefore not, by itself, strong attribution evidence even in the ideal null.
 
-Scalar check: P(f_B>0.8)=0.06979572136008738. This relatively large null tail illustrates why a large projection fraction alone is weak attribution evidence.
+## T4. Sharper bounds within the explicit first-order radiation model
 
-## T4. Sharper kinematical estimates inside the explicitly retained radiation model
+Use precisely Appendix E's geodesic collisionless first-order model and derivative envelopes, not an unrestricted nonlinear MES theorem. Its radiation moments are q_a=(4/3)rho vartheta_a, pi_ab=(8/15)rho vartheta_ab and xi_abc=(8/35)rho vartheta_abc. The background product rule is dot(rho)=-(4/3)Theta rho in first-order products.
 
-These results concern Appendix E's first-order geodesic collisionless radiation model and its precise derivative envelopes. They are not replacements for every MES theorem or unqualified observational improvements.
-
-At retained order, the brightness moments are q_a=(4/3)rho vartheta_a, pi_ab=(8/15)rho vartheta_ab and xi_abc=(8/35)rho vartheta_abc, with dot(rho)=-(4/3)Theta rho in first-order products. The quadrupole equation is
+The quadrupole equation is
 
 \[
 \dot\pi_{\langle ab\rangle}+\frac43\Theta\pi_{ab}
@@ -119,7 +100,7 @@ At retained order, the brightness moments are q_a=(4/3)rho vartheta_a, pi_ab=(8/
 +\frac25D_{\langle a}q_{b\rangle}+D^c\xi_{abc}=0.
 \]
 
-Cancel the two background-expansion terms before applying a triangle inequality:
+Cancel the background expansion BEFORE applying norm inequalities:
 
 \[
 \sigma_{ab}=-\dot\vartheta_{ab}
@@ -127,90 +108,90 @@ Cancel the two background-expansion terms before applying a triangle inequality:
 -\frac37D^c\vartheta_{abc}.
 \]
 
-### Sharp norm of the STF derivative contraction
+### Sharp STF derivative-contraction factor
 
-Let T map X in R^3 tensor STF3 to STF2 by (TX)_ab=sum_c X_c,abc. Its adjoint has components (T^*S)_c,abc=STF_abc(delta_ca S_bc), equivalently B_S e_c/3. By the normal-matrix identity,
+Let T: R^3 tensor STF3 -> STF2 satisfy (TX)_ab=sum_c X_{c,abc}. For an STF2 tensor S, use a separate free derivative index d in the adjoint:
 
 \[
-\|T^*S\|^2=\frac19\sum_c\|B_Se_c\|^2
+(T^*S)_{d,abc}=\mathrm{STF}_{abc}(\delta_{da}S_{bc})
+=\frac13(B_Se_d)_{abc}.
+\]
+
+Only a,b,c are symmetrised; d is not contracted in this definition. The inherited normal-matrix identity gives
+
+\[
+\|T^*S\|^2=\frac19\sum_d\|B_Se_d\|^2
 =\frac13\operatorname{tr}M_S
 =\frac75\|S\|_F^2.
 \]
 
-Thus T T^*=(7/5)I and ||T||=sqrt(7/5), with equality on a suitable adjoint-image vector. The old sqrt(3) contraction bound is valid but not sharp on the STF domain. STF projection of D_a vartheta_b is orthogonal and norm nonincreasing. The improved envelope is consequently
+By polarisation, T T^*=(7/5)I on STF2; its operator norm is sqrt(7/5), attained by an adjoint-image input. This improves the valid but loose sqrt(3) contraction bound. The STF projection of D_a vartheta_b is orthogonal and nonexpansive. Thus
 
 \[
 \boxed{\frac{\|\sigma\|_F}{\Theta}
-\le\epsilon_2^*+\epsilon_1'+\frac3{\sqrt{35}}\epsilon_3'.}
-\]
-
-Under the same characteristic scale substitutions epsilon2*<=epsilon2/3, epsilon1'<=epsilon1/3 and epsilon3'<=epsilon3/3,
-
-\[
-\boxed{\frac{\|\sigma\|_F}{\Theta}
+\le\epsilon_2^*+\epsilon_1'+\frac3{\sqrt{35}}\epsilon_3'
 \le\frac{\epsilon_1}{3}+\frac{\epsilon_2}{3}
 +\frac{\epsilon_3}{\sqrt{35}}.}
 \]
 
-### The analogous vorticity cancellation
+The last step uses the same maintained characteristic-derivative estimates as Appendix E. It is not a statement that observed amplitudes imply those estimates.
 
-Let C_ab=D_[a vartheta_b] and Q_ab=D_[a q_b]. The retained commutator and flux equation give
+### Vorticity cancellation
+
+Let C_ab=D_[a vartheta_b] and Q_ab=D_[a q_b]. The retained flux equation and commutators give
 
 \[
 \frac49\Theta\rho\omega_{ab}
 =-\dot Q_{ab}-\frac53\Theta Q_{ab}-D_{[a}D^c\pi_{b]c}.
 \]
 
-Insert Q=(4/3)rho C and cancel the background product before taking norms:
+Substitute Q=(4/3)rho C before taking norms:
 
 \[
 \omega_{ab}=-\frac3\Theta\dot C_{ab}-C_{ab}
 -\frac6{5\Theta}D_{[a}D^c\vartheta_{b]c}.
 \]
 
-Using exactly the contracted derivative envelope of Appendix E,
+The exact contracted-operator envelopes then imply
 
 \[
 \boxed{\frac{\|\omega_{ab}\|_F}{\Theta}
-\le3\epsilon_1^{\prime *}+\epsilon_1'
-+\frac65\epsilon_2^{\prime\prime}
+\le3\epsilon_1^{\prime *}+\epsilon_1'+\frac65\epsilon_2^{\prime\prime}
 \le\frac23\epsilon_1+\frac2{15}\epsilon_2.}
 \]
 
-Weak assumptions imply weak inequalities. With H=Theta/3, the corresponding quadratic ceilings are (3/2) times the squares of these displayed bounds. Full antisymmetric tensor norm is used, with omega_ab omega^ab=2 omega_a omega^a. All rates must be converted together if inverse-time units are used.
+These are non-strict bounds from weak premises. With H=Theta/3 the quadratic sector ceilings equal (3/2) times their squares. Full tensor vorticity norm is used, with omega_ab omega^ab=2 omega_a omega^a. All rates must use the same c convention.
 
-The gain is obtained by retaining algebraic cancellation and the correct STF domain, not by new data. A small-amplitude field epsilon F((x-x0)/d) can have derivatives of size epsilon/d or epsilon/d squared. Finite point/shell measurements cannot bound all-domain derivatives without regularity or dynamical assumptions. This supplies an explicit counterexample to an unconditional 'single-sky MES bound' or a finite-tomography proof of every observer premise.
+Small amplitudes do not bound gradients: epsilon F((x-x0)/d) can have derivatives of order epsilon/d and epsilon/d squared. Finite point or shell measurements cannot impose all-domain derivative bounds without a dynamical/regularity premise. No empirical all-observer claim follows from this model-specific improvement.
 
-## T5. Bounded nuisance is an optimisation problem, not an image-rank slogan
+## T5. Minimum bounded-nuisance cost
 
-Consider y=A theta+K h+n with a declared source metric S positive definite and h^T S^(-1)h<=R squared. For an exact output displacement d in Im K, the minimum source cost is
+For y=A theta+K h+n and a fixed positive-definite source metric S, constrain h^T S^(-1)h<=R squared. For d in Im K,
 
 \[
-c(d)^2=d^T(KSK^T)^+d,
-\qquad h_*(d)=SK^T(KSK^T)^+d.
+c(d)^2=d^T(KSK^T)^+d,\qquad
+h_*(d)=SK^T(KSK^T)^+d.
 \]
 
-Outside Im K the exact cost is infinite. To prove the formula, set h=S^(1/2)z, use the SVD of K S^(1/2), solve each nonzero singular coordinate, and set null coordinates to zero. Every other solution adds an orthogonal null vector and increases squared norm.
+Outside Im K the exact matching cost is infinite. Proof: set h=S^(1/2)z and use the SVD of K S^(1/2). Solve each nonzero singular coordinate and set null coordinates to zero. Any other solution adds an orthogonal null vector and increases the norm.
 
-At a fixed zero nuisance reference, d can be mimicked iff c(d)<=R. When comparing TWO arbitrary admissible nuisance states, their difference ranges over the radius-2R ellipsoid. The indistinguishability condition is c(A(theta1-theta2))<=2R, not R. Failing to distinguish these two questions changes the claimed identification region by a factor two.
+A fixed zero-nuisance reference can be shifted by d iff c(d)<=R. Differences of TWO admissible nuisance states span the radius-2R ellipsoid. Pairwise parameter ambiguity therefore uses c(A(theta1-theta2))<=2R, not R.
 
-A finite positive absolute-temperature sky adds another constraint. For a band-limited nuisance with harmonic row vector Y_H(n),
+Positivity is an additional physical restriction. For finite-band harmonic row Y_H(n),
 
 \[
 |Y_H(n)h|\le R\sqrt{Y_H(n)S Y_H(n)^T}.
 \]
 
-This gives a sufficient positivity margin if the baseline temperature exceeds the supremum. It is not an unrestricted permission to use a large cancelling sky. Image-rank nonidentifiability is global in a linear unconstrained model; physical positivity and norm constraints must be checked in the actual model.
+A baseline positive temperature exceeding the supremum supplies a sufficient margin. The unrestricted linear image does not authorise an arbitrarily large cancelling physical sky. Compute costs by whitened QR/SVD with explicit numerical range residuals; model radius and numerical rank tolerance are distinct.
 
-Computational form: use a whitened SVD/QR solve and report finite cost, null directions and singular scales. Never form a pseudoinverse with a threshold selected merely to obtain the desired scientific rank. Numerical accuracy and the model's nuisance radius are different quantities.
+## T6. Information is directional; measured high modes require the joint law
 
-## T6. Gaussian marginalisation, measured high modes and directional information
+For independent Gaussian h,n with fixed covariances S,N, marginalising h gives C=N+KSK^T. This is a stochastic model, not a deduction from image rank.
 
-If h and n are independent zero-mean Gaussians with fixed covariances S and N, then y has covariance C=N+KSK^T. This is a model choice, not a consequence of deterministic nuisance geometry.
+Take A=e1 and N=I2. The nuisance covariances diag(k squared,0) and diag(0,k squared) have the same trace but mean-response Fisher informations 1/(1+k squared) and 1. A trace fraction cannot measure information loss about a specified parameter.
 
-For a scalar parameter with response A=e1 and N=I2, compare KSK^T=diag(k squared,0) with diag(0,k squared). Their trace powers are identical. Their Fisher informations are 1/(1+k squared) and 1, respectively. Hence a nuisance trace fraction, however close to one, does not determine the information about that parameter.
-
-High modes are often measured by the same experiment. For a joint Gaussian vector (y,z), let its mean be (A_y theta,A_z theta) and covariance blocks C_yy,C_yz,C_zz. Conditional on z,
+For a joint Gaussian (y,z) with mean (A_y theta,A_z theta),
 
 \[
 C_{y|z}=C_{yy}-C_{yz}C_{zz}^{-1}C_{zy},
@@ -220,114 +201,92 @@ C_{y|z}=C_{yy}-C_{yz}C_{zz}^{-1}C_{zy},
 \qquad A_c=A_y-C_{yz}C_{zz}^{-1}A_z.
 \]
 
-For parameter-independent covariance the complete information is
+With parameter-independent covariance,
 
 \[
 F_{\rm joint}=A_z^TC_{zz}^{-1}A_z+A_c^TC_{y|z}^{-1}A_c.
 \]
 
-This follows by block Gaussian elimination, or by factoring p(y,z|theta)=p(z|theta)p(y|z,theta). The conditional residual has zero cross-covariance with z, so the score information adds. Dropping the z term describes a different conditioning experiment; ignoring A_z or C_yz generally changes the answer. A reconstructed high sky conditioned on the same data is not an independent second measurement.
+Block Gaussian elimination proves the conditional law. The conditional residual has zero cross-covariance with z, so information adds as shown. Ignoring C_yz, ignoring A_z or treating a same-data posterior high sky as an independent measurement changes the experiment. A conditional-only likelihood is not the entire joint likelihood.
 
-When beta enters the mixing matrix, it also enters the covariance. The general Gaussian Fisher matrix has the additional term
+When beta changes the covariance, include the Gaussian term one half times tr(C^(-1) C_,i C^(-1) C_,j), in addition to the mean-response term. The existing processed tensor has shape (3,32,49); for a fixed source s the velocity derivative is D_alpha,i=sum_A J_i,alpha,A s_A, shape (32,3). J_b with shape (32,48) is a different source-coordinate operator.
 
-\[
-\frac12\operatorname{tr}(C^{-1}C_{,i}C^{-1}C_{,j})
-\]
+For absolute processed maps, high modes also have zero-boost leakage under a mask. A pure boost-difference matrix is not the whole nuisance response. Use the complete ordered operator and the actual release's boosting/dipole/quadrupole corrections; do not add a second boost blindly.
 
-besides mean derivatives. A fixed-source derivative is not a substitute for this latent-sky covariance response.
+## T7. Soft-mask rank versus quantitative nuisance cost
 
-The existing processed tensor has shape (3,32,49). The parameter derivative for a specified source s is D_alpha,i=sum_A J_i,alpha,A s_A and has shape (32,3). J_b with shape (32,48), after fixing direction b and removing the monopole source column, answers a source-coordinate question. The distinction must be enforced in types and tests.
-
-The absolute processed-sky likelihood also contains zero-boost leakage of high modes under a mask. A pure boost-response K is not the entire high-mode matrix. The model must use the complete ordered transfer/boost/fit operator, including the already boosted or dipole-corrected state of each data release, rather than add a second boost to an existing one.
-
-## T7. Soft-mask rank can remain full while nuisance information loss vanishes
-
-This gives the central quantitative alternative to an unrestricted-image no-go.
-
-Let F be the finite orthonormal fit space through ell=5 and retain its ell=2..5 rows by P. Let H be source ell=7..L, and B_b be the first-order temperature boost in a fixed direction. Define a soft-mask family
+Let F be the orthonormal fit space through ell=5, P retain ell=2..5, and H contain source ell=7..L. For a fixed direction b define
 
 \[
-w_\varepsilon=1-\varepsilon m,\qquad0\le m\le1,
-\qquad0\le\varepsilon\le1.
+w_\varepsilon=1-\varepsilon m,\qquad0\le m\le1,\quad0\le\varepsilon\le1.
 \]
 
-Let M be multiplication by m restricted between fit modes, M_FF, and V_b=<Y_F,m B_bY_H>. At full sky, the boost of source ell>=7 has ell>=6 and is orthogonal to F. Thus
+Let M_FF be multiplication by m projected between fit modes and V_b=<Y_F,m B_b Y_H>. At full sky the first-order boost of H has no fit component, since its smallest possible ell is six. Therefore
 
 \[
-N_\varepsilon=I-\varepsilon M_{FF},\qquad
-R_\varepsilon=-\varepsilon V_b,
-\]
-\[
-\boxed{K_\varepsilon=-\varepsilon P(I-\varepsilon M_{FF})^{-1}V_b.}
+N_\varepsilon=I-\varepsilon M_{FF},\quad R_\varepsilon=-\varepsilon V_b,
+\quad\boxed{K_\varepsilon=-\varepsilon P(I-\varepsilon M_{FF})^{-1}V_b.}
 \]
 
-For epsilon ||M_FF||<1, the Neumann-series/operator-norm inequality gives
+The resolvent/Neumann bound gives
 
 \[
 \|K_\varepsilon\|_2\le
-\frac{\varepsilon\|V_b\|_2}{1-\varepsilon\|M_{FF}\|_2}=O(\varepsilon).
+\frac{\varepsilon\|V_b\|_2}{1-\varepsilon\|M_{FF}\|_2}=O(\varepsilon)
 \]
 
-Choose m=1-w_wide of the exact axial example and L=10. N_epsilon remains positive definite for the whole closed interval: for epsilon<1 the weight is bounded below, and at one the positive open cap and finite harmonic uniqueness suffice. The exact full-rank minor at epsilon=1 is a nonzero rational function of epsilon, with nonvanishing denominator. Its numerator is a nonzero polynomial. It therefore vanishes only at finitely many epsilon values. Except for those values, the nuisance image is all 32 retained dimensions, even arbitrarily close to the unmasked limit.
+whenever its denominator is positive. Choose m=1-w_wide and the axial L=10 example. N_epsilon is positive definite on the whole interval: for epsilon<1 the weight is bounded below; at one the positive open cap and finite-harmonic uniqueness suffice. The nonzero minor at epsilon=1 is a rational function of epsilon with nonvanishing denominator. Its numerator is a nonzero polynomial, so it vanishes only at finitely many values. The nuisance image is all 32 output dimensions at every other positive epsilon, including values arbitrarily near zero.
 
-Nevertheless, to mimic a fixed nonzero d, any nuisance h must satisfy
+Yet any h reproducing a fixed nonzero d satisfies
 
 \[
-\|h\|_2\ge\frac{\|d\|_2}{\|K_\varepsilon\|_2}
-=\Omega(\varepsilon^{-1}).
+\|h\|_2\ge\|d\|_2/\|K_\varepsilon\|_2=\Omega(\varepsilon^{-1}).
 \]
 
-The cost metric has the corresponding divergence when its fixed source covariance is bounded. A leading-order equality of order epsilon^(-2) for squared cost additionally requires full row rank of P V_b; that stronger condition is NOT assumed here.
+For fixed positive-definite source metric the cost norm has the same lower-order divergence. An exact leading epsilon^(-2) squared-cost asymptotic additionally requires full row rank of P V_b, which is NOT assumed here.
 
-For a fixed bounded Gaussian S,
+For fixed bounded S,
 
 \[
 \|K_\varepsilon S K_\varepsilon^T\|_2=O(\varepsilon^2).
 \]
 
-With a nonsingular baseline noise covariance and continuous parameter response, the fixed-covariance Fisher information approaches the no-leakage full-sky value. It need not approach zero although the unrestricted deterministic quotient vanishes at generic positive epsilon. An analogous expansion includes the zero-boost high-mode leakage of the absolute fit, which also vanishes at epsilon=0 for these source bands.
+With nonsingular baseline noise and continuous parameter response, the fixed-covariance information approaches the no-leakage full-sky limit, not necessarily zero. The absolute high-mode leakage has an analogous vanishing limit and must also be included in an actual map model.
 
-This theorem concerns decreasing mask AMPLITUDE along a specified smooth family, not every sequence of binary masks with the same f_sky. It proves a distinction among exact image rank, bounded-nuisance cost and Gaussian information. Numerical tests of that distinction can be designed without pretending to have a physical prior-free global-tilt measurement.
+Thus exact unrestricted image rank, bounded-source cost and stochastic information have different limits. This is a specified SOFT MASK AMPLITUDE family, not a universal claim about binary masks or f_sky. It supplies a testable quantitative replacement for an overbroad information-loss interpretation of the rank no-go.
 
-## T8. Finite observer motion and physical scale ordering
+## T8. Finite-beta monopole terms matter
 
-For a positive monopole in the outward-sky convention,
-
-\[
-T'(n)=\frac{T_0}{\gamma(1-\beta\cdot n)}.
-\]
-
-Writing x=beta dot n, its expansion through cubic order is T0[1+x+x squared-beta squared/2+x cubed-(beta squared/2)x]+O(beta to the fourth). The STF quadrupole is T0 beta_<a beta_b>, and the leading STF octupole is T0 beta_<a beta_b beta_c>. These do not vanish because the retained linear monopole response is a dipole.
-
-For the explicitly illustrative T0=2.7255 K and |beta|=0.001234, the coefficient scale T0 beta squared is **4.150271478 microkelvin**. This is not itself the Frobenius quadrupole norm, and it is not a new sky measurement. It shows why retaining only terms linear in beta but dropping a known large monopole can be inconsistent with the precision sought for beta times anisotropy. Use the existing exact positive-temperature pullback and the actual release convention; do not double-subtract a kinematic correction already in the map.
-
-## T9. Redshift data need new response directions, not merely more bins
-
-For a local affine velocity field,
+In the outward convention,
 
 \[
-v(rn)=V+r Hn+r\Sigma n+\Omega\times(rn),
-\qquad n\cdot v=n\cdot V+rH+r n^T\Sigma n.
+T'(n)=T_0/[\gamma(1-\beta\cdot n)].
 \]
 
-The antisymmetric/rigid-rotation term has zero radial projection for every n and r. Perfect radial data therefore leave that vorticity mode unidentifiable. This is an exact kernel statement, not a sample-size limitation. Weak-lensing shear has a different physical response and is not a direct measurement of this congruence shear by shared terminology.
+For x=beta dot n its expansion is T0[1+x+x squared-beta squared/2+x cubed-(beta squared/2)x]+O(beta to the fourth). The STF quadrupole is T0 beta_<a beta_b>, and the leading octupole is T0 beta_<a beta_b beta_c>. The linear monopole null in a retained quadrupole fit does not remove these finite-beta terms.
 
-A simple frame-degeneracy example is
+At illustrative T0=2.7255 K and |beta|=0.001234, T0 beta squared is **4.150271478 microkelvin** by calculator evaluation. This is a coefficient scale, not a full Frobenius norm or a measured sky value. It shows why beta squared times the large monopole can matter relative to beta times a small anisotropy. Reuse the exact positive-temperature operator and correct release conventions rather than a blanket first-order truncation.
+
+## T9. Redshift information must add response directions
+
+A local affine flow obeys
 
 \[
-d=\beta+d_{\rm int},\qquad
-u_b(n)=n\cdot(V_b-c\beta).
+v(rn)=V+rHn+r\Sigma n+\Omega\times(rn),
+\quad n\cdot v=n\cdot V+rH+r n^T\Sigma n.
 \]
 
-For any three-vector a, beta -> beta+a, d_int -> d_int-a and V_b -> V_b+c a leaves all these observations unchanged. Free shell velocities plus a dipole do not break the degeneracy. High-multipole aberration/modulation, or a declared dynamical prior/tracer response, can add genuinely new directions. A density-reconstructed velocity field that already used the CMB frame, the same distances or the same galaxies is not an independent anchor unless the joint law accounts for that reuse.
+Rigid rotation about the observer has exactly zero radial projection. Perfect radial data leave that mode unidentifiable. Lensing shear has a different physical response and cannot supply a congruence-shear measurement merely by sharing a name.
 
-The identity a_lm=sum_b a_lm^(b) is a source-integral decomposition, not observation of a CMB sky at each redshift. A remote dipole/quadrupole estimator is a windowed electron-scattering response. Finite windows have a nontrivial nullspace; smooth functions supported between sampled locations, or orthogonal to the finite window span, can have arbitrarily large derivatives after rescaling their variation length. Thus such data cannot by themselves establish the universal derivative premises of T4. A regularity or transfer hypothesis must be stated and tested where possible.
+For the simple model d=beta+d_int and u_b(n)=n dot (V_b-c beta), the transformation beta -> beta+a, d_int -> d_int-a, V_b -> V_b+c a preserves every prediction. More free redshift bins do not break this gauge. A high-multipole/spectral response or a declared dynamical/tracer model can add information; a CMB-frame-corrected catalogue or shared-data reconstruction is not automatically an independent anchor.
 
-## T10. Survey weights, covariance and a concrete static code finding
+The decomposition a_lm=sum_b a_lm^(b) is a source integral, not separately observed CMB skies at every redshift. Remote dipole/quadrupole estimators have scattering windows and optical-depth/tracer structure. Finite windows have null directions; functions supported between points or orthogonal to the finite window span can have large derivatives after rescaling their variation length. Thus finite tomography does not by itself prove the all-domain derivative premises of T4.
 
-The existing `common/bulkflow_likelihood.py` treats selection weights as Gaussian precision and describes weight two as two independent measurements. A Gaussian with variance sigma squared/w is a valid normalised model IF w is genuinely a precision factor. It is not automatically the likelihood of a survey inverse-inclusion weight. Even its normalisation is not the product of two identical Gaussian observation densities. The distinction affects evidence and nuisance-scatter inference as well as uncertainty.
+## T10. Survey weights and concrete code-consumer counterexamples
 
-For a fixed weighting matrix W and actual observational covariance C, the linear estimator and covariance are
+The existing bulk-flow likelihood treats selection weights as Gaussian precision and describes weight two as two independent measurements. Variance sigma squared/w defines a valid Gaussian IF w is genuine precision. An inverse-inclusion survey weight is a different object, and the normalisation is not that of two independent Gaussian observations. This affects both uncertainty and evidence.
+
+For a fixed design weight W and true data covariance C,
 
 \[
 \widehat b=(X^TWX)^{-1}X^TWu,
@@ -337,14 +296,14 @@ For a fixed weighting matrix W and actual observational covariance C, the linear
 (X^TWX)^{-1}X^TWCWX(X^TWX)^{-1}.
 \]
 
-A common rescaling W -> aW leaves both the estimate and this sandwich covariance unchanged. Treating (X^TWX)^(-1) as the uncertainty instead rescales it by 1/a. This is appropriate only under the different model C=W^(-1), not under arbitrary design reweighting.
+A common positive rescaling of W leaves both unchanged; an inverse-Hessian proxy instead rescales by the inverse factor. That proxy is justified by a different precision model, not arbitrary selection reweighting.
 
-Required regression counterexamples follow directly: at least four active rows all along e1 have design rank one, not three; adding inverse-selection weights does not create two missing response directions. Nonfinite velocities/errors/weights must be rejected explicitly. The current `pooled_rank_p` also lacks an input-finiteness check: if the observation score is NaN, every comparison s>=obs is false under ordinary floating semantics and the formula produces its smallest p. This is a static, source-visible failure mode, not a newly executed failing test. A caller must not encode chart unavailability as NaN and then rank it.
+Four active unit directions all equal to e1 give design rank one. A bounded prior can make a proper posterior, but adds no data information in the other two directions. Nonfinite inputs must be rejected explicitly. The current pooled_rank_p code does not check score finiteness: an observed NaN makes every ordinary floating comparison false and yields the minimum finite p. This is a source-visible failure mode, NOT a newly run failed test. Chart unavailability must not enter ranking as NaN.
 
-These findings justify focused future adapters and negative tests, not unscoped cleanup or reopening every historical result. Old CF4 P0 quarantine remains enforced until the relevant physical-data likelihood is genuinely repaired and admitted.
+These independent counterexamples define focused future regressions and typed consumers. They do not authorise global legacy cleanup or lifting the existing CF4 P0 quarantine.
 
-## Evidence status and closure
+## Evidence and remaining closure
 
-T1–T10 are explicit finite-dimensional or retained-model derivations. Their assumptions and limiting cases are part of the results. The cited baseline certificate and implementations are source inputs; they are not new executions. The f_B tail, LS RMS bracket and monopole coefficient scale were evaluated with the web calculator. Shell/Python and Wolfram failures prevented new native tests/CAS. No empirical anomaly probability, fitted velocity, simulated power curve or model-independent Bianchi-family statement is reported.
+T1–T10 are derived under their stated hypotheses. Existing certificate/implementation records are inputs, not new executions. Scalar calculator checks cover the Beta tail, LS RMS bracket and monopole scale. Shell/Python and Wolfram failures prevented new native/CAS/Monte Carlo verification. No empirical anomaly probability, fitted velocity or Bianchi-family inference is reported.
 
-These results close the general algebra needed by the next programme. They do NOT specify the entire survey likelihood, foreground policy, actual release-matched covariance and data-selection function. The remaining MAIN theory decisions and a no-research-choice execution contract are listed in `IMPLEMENTATION_CONTRACT.md` and `THEORY_FIRST_DAG.yaml`; full production/data delegation is held until those choices are resolved rather than outsourced to Codex.
+The general algebra is now explicit; the actual CMB foreground/null law, redshift distance/selection likelihood and end-to-end calibration are still MAIN scientific decisions. IMPLEMENTATION_CONTRACT and THEORY_FIRST_DAG keep those three closures ahead of production/data delegation. Codex is not asked to invent their missing assumptions.
