@@ -1,0 +1,154 @@
+{
+  "commands": {
+    "evidence-commit": {
+      "record": {
+        "argv": [
+          "git",
+          "commit",
+          "-m",
+          "PR450: Publish repaired real-object replay and preserved validation evidence"
+        ],
+        "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/worktree",
+        "elapsed_seconds": 0.06453544995747507,
+        "environment_overrides": {
+          "PYTEST_ADDOPTS": "-o cache_dir=/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pytest-cache",
+          "PYTHONPYCACHEPREFIX": "/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pycache"
+        },
+        "exit_code": 0,
+        "expected_exit": 0,
+        "invocation": 1,
+        "name": "evidence-commit",
+        "started_at": "2026-09-07T01:57:22.200411+00:00",
+        "timed_out": false,
+        "timeout_seconds": 120,
+        "validation_budget": false
+      },
+      "stderr": "",
+      "stdout": "[repair/pr450-seed-parent-coverage-basis-20260907-r1 d9a9863e] PR450: Publish repaired real-object replay and preserved validation evidence\n 83 files changed, 2074 insertions(+)\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/EXECUTION_RECEIPT.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/REGISTERED_SURVIVOR_SURFACE.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/RETURN_TO_MAIN.md\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/SHA256SUMS\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/ancestry-pr408.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/ancestry-pr408.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/ancestry-pr408.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/ancestry-wu001.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/ancestry-wu001.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/ancestry-wu001.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/baseline-reuse.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/candidate-frozen.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/command-runner.py\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/commit-source.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/commit-source.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/commit-source.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-collection.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-collection.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-collection.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-compile.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-compile.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-compile.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-dag-mirrors.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-dag-mirrors.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-dag-mirrors.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-suite.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-suite.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/final-suite.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/original-tests-preservation.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pr450-repaired-tests.xml\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pr450_result.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/preparation-correction.txt\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/reader-real-layout-red.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/reader-real-layout-red.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/reader-real-layout-red.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/reader-real-layout-red.xml\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/repair.patch\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/replay-a.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/replay-a.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/replay-a.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/replay-b.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/replay-b.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/replay-b.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/replay-cmp.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/replay-cmp.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/replay-cmp.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/runtime.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/runtime.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/runtime.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/seed-amendment.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/self-review.md\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/source-after-validation.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/source-before.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/source-commit.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/source-commit.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/source-commit.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/source-diff-check.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/source-diff-check.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/source-diff-check.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/source-invariance.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/source-reader-red.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/surface-a.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/surface-b.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/surface-verification.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/surface-verify-corrected.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/surface-verify-corrected.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/surface-verify-corrected.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/surface-verify.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/surface-verify.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/surface-verify.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/targeted-green.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/targeted-green.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/targeted-green.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/targeted-green.xml\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/test-accounting.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/tested-candidate.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/verify-surface-initial.py\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/verify-surface.py\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/workflow-block-identity.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/workflow-validate.command.json\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/workflow-validate.stderr\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/workflow-validate.stdout\n create mode 100644 artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/workflow-validation.py\n"
+    },
+    "initial-push": {
+      "record": {
+        "argv": [
+          "git",
+          "push",
+          "-u",
+          "origin",
+          "HEAD:refs/heads/repair/pr450-seed-parent-coverage-basis-20260907-r1"
+        ],
+        "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/worktree",
+        "elapsed_seconds": 2.118511450011283,
+        "environment_overrides": {
+          "PYTEST_ADDOPTS": "-o cache_dir=/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pytest-cache",
+          "PYTHONPYCACHEPREFIX": "/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pycache"
+        },
+        "exit_code": 0,
+        "expected_exit": 0,
+        "invocation": 1,
+        "name": "initial-push",
+        "started_at": "2026-09-07T01:57:22.271822+00:00",
+        "timed_out": false,
+        "timeout_seconds": 120,
+        "validation_budget": false
+      },
+      "stderr": "remote: \nremote: Create a pull request for 'repair/pr450-seed-parent-coverage-basis-20260907-r1' on GitHub by visiting:        \nremote:      https://github.com/cosmosapjw-quantum/htt_base/pull/new/repair/pr450-seed-parent-coverage-basis-20260907-r1        \nremote: \nTo https://github.com/cosmosapjw-quantum/htt_base.git\n * [new branch]        HEAD -> repair/pr450-seed-parent-coverage-basis-20260907-r1\n",
+      "stdout": "branch 'repair/pr450-seed-parent-coverage-basis-20260907-r1' set up to track 'origin/repair/pr450-seed-parent-coverage-basis-20260907-r1'.\n"
+    },
+    "remote-before-push": {
+      "record": {
+        "argv": [
+          "git",
+          "ls-remote",
+          "--heads",
+          "origin",
+          "repair/pr450-seed-parent-coverage-basis-20260907-r1",
+          "validation/pr450-main-local-source-replay-20260907-r1"
+        ],
+        "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/worktree",
+        "elapsed_seconds": 0.8657244970090687,
+        "environment_overrides": {
+          "PYTEST_ADDOPTS": "-o cache_dir=/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pytest-cache",
+          "PYTHONPYCACHEPREFIX": "/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pycache"
+        },
+        "exit_code": 0,
+        "expected_exit": 0,
+        "invocation": 1,
+        "name": "remote-before-push",
+        "started_at": "2026-09-07T01:57:20.739770+00:00",
+        "timed_out": false,
+        "timeout_seconds": 120,
+        "validation_budget": false
+      },
+      "stderr": "",
+      "stdout": "bf09ba531b3afde184ded85c7e147839bf572c85\trefs/heads/validation/pr450-main-local-source-replay-20260907-r1\n"
+    },
+    "same-task-pr-inventory": {
+      "record": {
+        "argv": [
+          "gh",
+          "pr",
+          "list",
+          "--repo",
+          "cosmosapjw-quantum/htt_base",
+          "--state",
+          "all",
+          "--head",
+          "repair/pr450-seed-parent-coverage-basis-20260907-r1",
+          "--json",
+          "number,title,state,isDraft,headRefName,headRefOid,baseRefName,url"
+        ],
+        "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/worktree",
+        "elapsed_seconds": 0.5152722608763725,
+        "environment_overrides": {
+          "PYTEST_ADDOPTS": "-o cache_dir=/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pytest-cache",
+          "PYTHONPYCACHEPREFIX": "/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pycache"
+        },
+        "exit_code": 0,
+        "expected_exit": 0,
+        "invocation": 1,
+        "name": "same-task-pr-inventory",
+        "started_at": "2026-09-07T01:57:21.606765+00:00",
+        "timed_out": false,
+        "timeout_seconds": 120,
+        "validation_budget": false
+      },
+      "stderr": "",
+      "stdout": "[]\n"
+    },
+    "source-commit": {
+      "record": {
+        "argv": [
+          "git",
+          "commit",
+          "-m",
+          "PR450: Repair approved seed parent and nested coverage reader"
+        ],
+        "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/worktree",
+        "elapsed_seconds": 0.03222085605375469,
+        "environment_overrides": {
+          "PYTEST_ADDOPTS": "-o cache_dir=/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pytest-cache",
+          "PYTHONPYCACHEPREFIX": "/mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/pycache"
+        },
+        "exit_code": 0,
+        "expected_exit": 0,
+        "invocation": 1,
+        "name": "source-commit",
+        "started_at": "2026-09-07T01:55:02.213479+00:00",
+        "timed_out": false,
+        "timeout_seconds": 120,
+        "validation_budget": false
+      },
+      "stderr": "",
+      "stdout": "[repair/pr450-seed-parent-coverage-basis-20260907-r1 57648769] PR450: Repair approved seed parent and nested coverage reader\n 3 files changed, 161 insertions(+), 9 deletions(-)\n"
+    }
+  },
+  "first_evidence_commit": "d9a9863e709a33e50beb822ac83bbd89bfeb6066",
+  "first_evidence_tree": "f3afdfc501b1cd3db362ec67f0db78b08b4dc913",
+  "raw_evidence_diff_check": {
+    "classification": "Raw pytest/JUnit whitespace retained verbatim. Source-only check passed.",
+    "exit": 2,
+    "stderr": "",
+    "stdout": "artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/reader-real-layout-red.stdout:20: trailing whitespace.\n+tests/contracts/test_theory_survivor_triage.py:384: \nartifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/reader-real-layout-red.stdout:21: trailing whitespace.\n+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nartifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/reader-real-layout-red.stdout:26: trailing whitespace.\n+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nartifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/reader-real-layout-red.xml:16: trailing whitespace.\n+tests/contracts/test_theory_survivor_triage.py:384: \nartifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/reader-real-layout-red.xml:17: trailing whitespace.\n+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nartifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/reader-real-layout-red.xml:22: trailing whitespace.\n+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nartifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/repair.patch:20: trailing whitespace.\n+ \nartifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/repair.patch:21: trailing whitespace.\n+ \nartifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/repair.patch:54: trailing whitespace.\n+ \n"
+  },
+  "source_candidate": "576487696695eb56cf57313eefc4efe4c228bd3b",
+  "source_unchanged_since_validation": true
+}

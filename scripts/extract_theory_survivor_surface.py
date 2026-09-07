@@ -77,6 +77,32 @@ def _integer(value: object, name: str, *, minimum: int = 0) -> int:
     return value
 
 
+def _scoped_coverage_counts(coverage: Mapping[str, Any]) -> tuple[int, int]:
+    """Read the real nested declaration or a complete legacy flat pair."""
+    keys = (
+        "supplemental_scoped_candidates_expected",
+        "supplemental_scoped_candidates_classified",
+    )
+    path = "candidate_coverage_proof"
+
+    def pair(value: Mapping[str, Any], name: str) -> tuple[int, int]:
+        return (
+            _integer(value.get(keys[0]), f"{name}.{keys[0]}"),
+            _integer(value.get(keys[1]), f"{name}.{keys[1]}"),
+        )
+
+    if "coverage_basis" not in coverage:
+        return pair(coverage, path)
+    nested = _mapping(coverage["coverage_basis"], f"{path}.coverage_basis")
+    counts = pair(nested, f"{path}.coverage_basis")
+    if any(key in coverage for key in keys):
+        if pair(coverage, path) != counts:
+            raise SurvivorTriageError(
+                "duplicate scoped coverage declarations disagree"
+            )
+    return counts
+
+
 def _sha256(value: object, name: str) -> str:
     text = _text(value, name)
     if _SHA256_RE.fullmatch(text) is None:
@@ -503,14 +529,7 @@ def build_surface(
             f"total={observed_broad}/{declared_broad}"
         )
 
-    declared_scoped = _integer(
-        coverage_source.get("supplemental_scoped_candidates_expected"),
-        "candidate_coverage_proof.supplemental_scoped_candidates_expected",
-    )
-    classified_scoped = _integer(
-        coverage_source.get("supplemental_scoped_candidates_classified"),
-        "candidate_coverage_proof.supplemental_scoped_candidates_classified",
-    )
+    declared_scoped, classified_scoped = _scoped_coverage_counts(coverage_source)
     if (
         len(scoped_rows) != declared_scoped
         or classified_scoped != declared_scoped

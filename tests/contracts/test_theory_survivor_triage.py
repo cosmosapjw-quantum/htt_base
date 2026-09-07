@@ -367,3 +367,136 @@ def test_repository_source_id_seed_has_37_unique_rows_and_pr284_deferred():
     )
     assert pr284["triage_disposition"] == "DEFERRED"
     assert pr284["parent_candidate_id"] == "PILLAR_S:II-3.2"
+
+
+def test_nested_coverage_basis_matches_legacy_surface_without_mutation():
+    legacy = matrix()
+    nested = deepcopy(legacy)
+    proof = nested["candidate_coverage_proof"]
+    proof["coverage_basis"] = {
+        key: proof.pop(key)
+        for key in (
+            "supplemental_scoped_candidates_expected",
+            "supplemental_scoped_candidates_classified",
+        )
+    }
+    legacy_before, nested_before = deepcopy(legacy), deepcopy(nested)
+    assert build(nested) == build(legacy)
+    assert legacy == legacy_before
+    assert nested == nested_before
+
+
+_COVERAGE_KEYS = (
+    "supplemental_scoped_candidates_expected",
+    "supplemental_scoped_candidates_classified",
+)
+
+
+def _coverage_layout(value, layout):
+    proof = value["candidate_coverage_proof"]
+    if layout == "flat":
+        return proof
+    proof["coverage_basis"] = {key: proof[key] for key in _COVERAGE_KEYS}
+    if layout == "nested":
+        for key in _COVERAGE_KEYS:
+            del proof[key]
+    return proof["coverage_basis"]
+
+
+def test_consistent_duplicate_coverage_matches_legacy_without_mutation():
+    legacy = matrix()
+    duplicate = deepcopy(legacy)
+    _coverage_layout(duplicate, "duplicate")
+    before = deepcopy(duplicate)
+    assert build(duplicate) == build(legacy)
+    assert duplicate == before
+
+
+@pytest.mark.parametrize("key", _COVERAGE_KEYS)
+@pytest.mark.parametrize("defect", ["missing", "conflict", "null", "bool", "string", "fractional", "negative"])
+def test_invalid_flat_duplicate_cannot_override_nested_coverage(key, defect):
+    value = matrix()
+    _coverage_layout(value, "duplicate")
+    proof = value["candidate_coverage_proof"]
+    if defect == "missing":
+        del proof[key]
+    else:
+        proof[key] = {"conflict": 4, "null": None, "bool": True,
+                      "string": "5", "fractional": 5.5, "negative": -1}[defect]
+    before = deepcopy(value)
+    with pytest.raises(MOD.SurvivorTriageError, match="coverage"):
+        build(value)
+    assert value == before
+
+
+@pytest.mark.parametrize("nested", [None, [], "invalid", False, 5, {}])
+def test_present_malformed_nested_coverage_has_no_flat_fallback(nested):
+    value = matrix()
+    value["candidate_coverage_proof"]["coverage_basis"] = nested
+    before = deepcopy(value)
+    with pytest.raises(MOD.SurvivorTriageError, match="coverage_basis"):
+        build(value)
+    assert value == before
+
+
+@pytest.mark.parametrize("layout", ["flat", "nested", "duplicate"])
+@pytest.mark.parametrize("key", _COVERAGE_KEYS)
+@pytest.mark.parametrize("defect", ["missing", "null", "bool", "string", "fractional", "negative"])
+def test_invalid_coverage_counts_fail_without_input_mutation(layout, key, defect):
+    value = matrix()
+    declaration = _coverage_layout(value, layout)
+    if defect == "missing":
+        del declaration[key]
+    else:
+        declaration[key] = {"null": None, "bool": True, "string": "5",
+                            "fractional": 5.5, "negative": -1}[defect]
+    before = deepcopy(value)
+    with pytest.raises(MOD.SurvivorTriageError, match="coverage"):
+        build(value)
+    assert value == before
+
+
+@pytest.mark.parametrize("layout", ["flat", "nested"])
+@pytest.mark.parametrize("counts", [(5, 4), (4, 5), (4, 4), (0, 0)])
+def test_coverage_counts_must_match_each_other_and_actual_rows(layout, counts):
+    value = matrix()
+    declaration = _coverage_layout(value, layout)
+    declaration.update(zip(_COVERAGE_KEYS, counts))
+    before = deepcopy(value)
+    with pytest.raises(MOD.SurvivorTriageError, match="scoped-child count"):
+        build(value)
+    assert value == before
+
+
+@pytest.mark.parametrize("layout", ["flat", "nested", "duplicate"])
+def test_coverage_complete_remains_required_at_enclosing_level(layout):
+    value = matrix()
+    declaration = _coverage_layout(value, layout)
+    declaration["coverage_complete"] = True
+    value["candidate_coverage_proof"]["coverage_complete"] = False
+    with pytest.raises(MOD.SurvivorTriageError, match="coverage is not complete"):
+        build(value)
+
+
+@pytest.mark.parametrize("layout", ["flat", "nested"])
+@pytest.mark.parametrize("count", [0, 1, 6])
+def test_declared_scoped_count_is_not_fixed_to_five(layout, count):
+    value = matrix()
+    scoped = value["supplemental_scoped_candidates"]
+    if count <= len(scoped):
+        del scoped[count:]
+    else:
+        scoped.append(_scoped("NARROW:ADDITIONAL", "PARENT:LOCAL-CHART"))
+    declaration = _coverage_layout(value, layout)
+    declaration.update({key: count for key in _COVERAGE_KEYS})
+    before = deepcopy(value)
+    assert build(value)["coverage"]["scoped_children"] == count
+    assert value == before
+
+
+def test_missing_legacy_coverage_pair_fails():
+    value = matrix()
+    for key in _COVERAGE_KEYS:
+        del value["candidate_coverage_proof"][key]
+    with pytest.raises(MOD.SurvivorTriageError, match="coverage"):
+        build(value)

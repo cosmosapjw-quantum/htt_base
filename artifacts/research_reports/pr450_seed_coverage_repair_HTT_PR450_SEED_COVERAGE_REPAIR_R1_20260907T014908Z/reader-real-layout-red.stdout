@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_nested_coverage_basis_matches_legacy_surface_without_mutation ______
+
+    def test_nested_coverage_basis_matches_legacy_surface_without_mutation():
+        legacy = matrix()
+        nested = deepcopy(legacy)
+        proof = nested["candidate_coverage_proof"]
+        proof["coverage_basis"] = {
+            key: proof.pop(key)
+            for key in (
+                "supplemental_scoped_candidates_expected",
+                "supplemental_scoped_candidates_classified",
+            )
+        }
+        legacy_before, nested_before = deepcopy(legacy), deepcopy(nested)
+>       assert build(nested) == build(legacy)
+               ^^^^^^^^^^^^^
+
+tests/contracts/test_theory_survivor_triage.py:384: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/contracts/test_theory_survivor_triage.py:172: in build
+    return MOD.build_surface(
+scripts/extract_theory_survivor_surface.py:506: in build_surface
+    declared_scoped = _integer(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None
+name = 'candidate_coverage_proof.supplemental_scoped_candidates_expected'
+
+    def _integer(value: object, name: str, *, minimum: int = 0) -> int:
+        if isinstance(value, bool) or not isinstance(value, int) or value < minimum:
+>           raise SurvivorTriageError(f"{name} must be an integer >= {minimum}")
+E           survivor_triage_under_test.SurvivorTriageError: candidate_coverage_proof.supplemental_scoped_candidates_expected must be an integer >= 0
+
+scripts/extract_theory_survivor_surface.py:76: SurvivorTriageError
+- generated xml file: /mnt/sn850x2t/htt_base_e2e/HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/evidence/reader-real-layout-red.xml -
+=========================== short test summary info ============================
+FAILED tests/contracts/test_theory_survivor_triage.py::test_nested_coverage_basis_matches_legacy_surface_without_mutation
+1 failed in 0.10s
