@@ -1,0 +1,11 @@
+--- structure.lua.before
++++ structure.lua.after
+@@ -13,7 +13,7 @@
+   h.level=1; h.content=strip(h.content,'^Appendix [A-E]%. ')
+   if not appendix_started then appendix_started=true;return {pandoc.RawBlock('latex','\\appendix'),h} end
+  elseif s=='Abstract' or s=='How to read this report' or s=='References' then
+-  h.level=1;h.classes:insert('unnumbered')
++  h.level=1;h.classes:insert('unnumbered');return {pandoc.RawBlock('latex','\\clearpage\n\\phantomsection'),h}
+  elseif s:match('^[A-E]%.%d+ ') then
+   h.level=2;h.content=strip(h.content,'^[A-E]%.%d+ ')
+  elseif s:match('^%d+%.%d+ ') then

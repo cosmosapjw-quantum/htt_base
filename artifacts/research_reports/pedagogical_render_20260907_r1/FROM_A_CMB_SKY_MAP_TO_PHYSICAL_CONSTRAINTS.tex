@@ -1,0 +1,2506 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  11pt,
+  a4paper]{article}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=25mm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{british}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+
+\usepackage{xurl}
+\usepackage{titlesec}
+\usepackage{microtype}
+\setmonofont{Latin Modern Mono}[Scale=0.85]
+\titleformat{\section}{\normalfont\Large\bfseries\raggedright}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\raggedright}{\thesubsection}{1em}{}
+\setlength{\emergencystretch}{2em}
+
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={From a CMB Sky Map to Physical Constraints},
+  pdfauthor={Jiwon Park},
+  pdflang={en-GB},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{From a CMB Sky Map to Physical Constraints}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{An introductory account of tensor morphology, kinematical bounds and response-limited inference}
+\author{Jiwon Park}
+\date{7 September 2026}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\clearpage
+\phantomsection
+
+\hypertarget{abstract}{%
+\section*{Abstract}\label{abstract}}
+\addcontentsline{toc}{section}{Abstract}
+
+A map of the cosmic microwave background describes a temperature in each direction. A cosmological model describes matter, radiation and geometry throughout spacetime. How can the first constrain the second? We develop this question from elementary tensor algebra. We construct the temperature quadrupole and octupole, prove their harmonic normalisations, and explain how a proper-rotation invariant description can retain information lost by scalar powers. We then introduce the kinematics of a family of observers and distinguish physical shear and vorticity from temperature tensors. Conditional isotropy bounds constrain the sizes of physical sectors, but do not reconstruct their directions. A response map and a feasible set are needed for that further step.
+
+The account includes proofs of the finite-dimensional reconstruction and inference statements, exact finite-sample rank arguments, the local-observer temperature response, the quotient by an unrestricted nuisance image, and a matrix-valued numerical-error criterion. Worked counterexamples identify the assumptions that cannot be removed. A continuum masked-sky calculation is explained by an explicit algebraic certificate; finite-resolution conclusions and numerical observations are kept separate. No new observational estimate is made. The purpose is to make the relation between an observable pattern, a physical model and an identifiable conclusion understandable without access to the research project's internal records.
+
+\clearpage
+\phantomsection
+
+\hypertarget{how-to-read-this-report}{%
+\section*{How to read this report}\label{how-to-read-this-report}}
+\addcontentsline{toc}{section}{How to read this report}
+
+We assume basic differentiation and integration, elementary matrix multiplication, and the usual rules for probabilities of events. No prior knowledge of symmetric trace-free tensors, rotation orbits, partial identification or CMB aberration is required. Section 2 supplies the finite-dimensional linear algebra used later. Section 3 introduces the angular description of a sky. Readers already familiar with these topics may begin with Section 4, returning to the definitions when needed.
+
+The exposition follows one question throughout: which information is retained at each step from a temperature map to a physical conclusion? A definition tells us what object we use. A proposition or theorem states a mathematical consequence of specified hypotheses; its proof is supplied in the text or in the explicitly indicated appendix. A physical-input box states a modelling or literature premise rather than pretending that it has been proved from a sky map. A computational-result box reports a calculation, not a universal theorem. References provide attribution and further context. They are not substitutes for the proofs of the finite-dimensional propositions below.
+
+The mathematical development is self-contained relative to the stated physical model. In particular, Appendix E derives the kinematical bounds used in Section 6 from an explicit first-order collisionless-radiation system and precisely defined derivative envelopes. These are sufficient physical premises, not observations extracted from one sky. The general nonlinear almost-isotropy theorem is not asserted here. Historical nonaxial numerical results remain labelled calculations, while the axial continuum rank result has its defining finite arithmetic and exact certificate in Appendix B.
+
+\clearpage
+\part{Why a tensor description is needed}
+
+\hypertarget{from-a-temperature-pattern-to-a-physical-question}{%
+\section{From a temperature pattern to a physical question}\label{from-a-temperature-pattern-to-a-physical-question}}
+
+\hypertarget{what-the-sky-tells-us-directly}{%
+\subsection{What the sky tells us directly}\label{what-the-sky-tells-us-directly}}
+
+The cosmic microwave background, abbreviated CMB, is observed as radiation arriving from different directions. At a fixed observation event, let \(T(n)\) denote its thermodynamic temperature in the outward unit direction \(n\). The direction lies on the unit sphere, \(n\cdot n=1\). We split the field into its angular average and anisotropy,
+
+\[
+T(n)=T_0+\Delta T(n),\qquad
+T_0=\frac1{4\pi}\int_{S^2}T(n)\,d\Omega.
+\tag{1.1}
+\]
+
+The solid-angle element is \(d\Omega=\sin\theta\,d\theta\,d\varphi\), and the area of the unit sphere is \(4\pi\). Temperature has not been made dimensionless. The fractional anisotropy is \(\Delta T/T_0\), which is meaningful when \(T_0>0\).
+
+A low angular multipole describes a pattern varying slowly across the sky. The dipole has one positive and one negative lobe. The quadrupole and octupole describe the next angular sectors. Their powers measure sizes, but not the complete arrangement of the pattern. Two maps can have the same quadrupole and octupole powers and different relative orientations. Later we will construct an even stronger example: a pattern and its mirror can agree in several scalar summaries while differing in an orientation-sensitive invariant.
+
+This is the first reason to retain tensors. A scalar summary can be useful, but it is a many-to-one map. We should know what it removes before trying to invert it.
+
+\hypertarget{what-the-sky-does-not-tell-us-by-representation-alone}{%
+\subsection{What the sky does not tell us by representation alone}\label{what-the-sky-does-not-tell-us-by-representation-alone}}
+
+Now consider the motion of matter in spacetime. A family of observers may expand, distort a small material ball into an ellipsoid, rotate, or accelerate. These effects are described by expansion, shear, vorticity and acceleration. They are not temperature multipoles. A temperature quadrupole and a shear tensor both have five independent components, but this does not make them the same physical object.
+
+The missing ingredient is a response: a rule telling us how a change in a physical state changes the observation. The rule can depend on matter content, the observer, the epoch, the angular window and the data-processing procedure. Without such a rule, a similarity of tensor type is only a similarity of representation.
+
+We therefore separate three questions. First, how completely have we represented the observable sky? Second, which physical states obey the maintained bounds and assumptions? Third, which of those states can produce the observation under a declared response? The distinction is the central organising principle of this report.
+
+\hypertarget{a-small-inverse-problem-before-the-cosmological-one}{%
+\subsection{A small inverse problem before the cosmological one}\label{a-small-inverse-problem-before-the-cosmological-one}}
+
+Suppose a measurement gives
+
+\[
+y=x_1+x_2.
+\tag{1.2}
+\]
+
+The value \(y\) certainly responds to either coordinate. It does not identify the two coordinates separately: \((x_1+t,x_2-t)\) gives the same observation for every real \(t\). This is a degeneracy, not a failure of measurement precision.
+
+An independent bound, such as \(|x_1|\le1\) and \(|x_2|\le1\), can shorten the compatible line to a segment. It does not generally select a point. With the different maintained conditions \(x_1,x_2\ge0\) and the exact observation \(y=0\), however, the only compatible state is \((0,0)\). An inequality can remove a degeneracy, but only through its stated domain and the actual observation.
+
+The CMB problem is more elaborate, but the logical structure is the same. A complete angular representation, a bound on physical magnitudes and a unique physical interpretation are three different achievements.
+
+\hypertarget{mathematical-tools-used-in-the-report}{%
+\section{Mathematical tools used in the report}\label{mathematical-tools-used-in-the-report}}
+
+\hypertarget{components-contractions-and-norms}{%
+\subsection{Components, contractions and norms}\label{components-contractions-and-norms}}
+
+Spatial indices \(i,j,k\) run from 1 to 3. Repeated spatial indices are summed with the Euclidean metric \(\delta_{ij}\). Thus \(x_ix_i=x_1^2+x_2^2+x_3^2\). A rank-two tensor is represented by a matrix; a rank-three tensor is an array with three indices. Changing an orthonormal frame changes their components, but not their tensorial meaning.
+
+The full Frobenius products are
+
+\[
+A:B=A_{ij}B_{ij},\qquad
+U:V=U_{ijk}V_{ijk},\qquad
+\|A\|_F=\sqrt{A:A}.
+\tag{2.1}
+\]
+
+Every component is counted. For example, a symmetric matrix with \(A_{12}=A_{21}=a\) contributes \(2a^2\) to its squared norm. Storing only independent components does not remove their multiplicities from the metric.
+
+Symmetrisation averages over the permutations of the indices. For two indices,
+
+\[
+A_{(ij)}=\tfrac12(A_{ij}+A_{ji}),\qquad
+A_{[ij]}=\tfrac12(A_{ij}-A_{ji}).
+\tag{2.2}
+\]
+
+Angle brackets denote a symmetric trace-free projection. For a symmetric rank-two tensor,
+
+\[
+A_{\langle ij\rangle}=A_{ij}-\tfrac13\delta_{ij}A_{kk}.
+\tag{2.3}
+\]
+
+The notation STF means symmetric trace-free. For a fully symmetric rank-three tensor \(S\), put \(t_i=S_{ijj}\). Then
+
+\[
+S_{\langle ijk\rangle}
+=S_{ijk}-\frac15(\delta_{ij}t_k+\delta_{ik}t_j+\delta_{jk}t_i).
+\tag{2.4}
+\]
+
+To check the factor, contract \(j\) with \(k\). The three subtraction terms give \(t_i+t_i+3t_i=5t_i\), so the trace vanishes. The removed tensor is orthogonal to every STF3 tensor, because every contraction of a Kronecker delta with that tensor is a trace. Thus this is an orthogonal projection in the full Frobenius metric. The rank-two statement follows in the same way.
+
+\textbf{Proposition 2.1 --- component counts.} The real spaces of STF2 and STF3 tensors have dimensions five and seven.
+
+\textbf{Proof.} A symmetric \(3\times3\) matrix has six entries, and its trace is one independent linear condition. A fully symmetric rank-three tensor has one entry for each unordered triple, hence \(\binom{5}{3}=10\) entries. Its trace is a vector, so there are three conditions. They are independent: the trace of \(\delta_{ij}w_k+\delta_{ik}w_j+\delta_{jk}w_i\) is \(5w_i\), and any trace vector can be obtained. The dimension is therefore \(10-3=7\). \(\square\)
+
+\hypertarget{linear-maps-kernels-and-images}{%
+\subsection{Linear maps, kernels and images}\label{linear-maps-kernels-and-images}}
+
+For a linear map \(A:V\to W\), its kernel is \(\ker A=\{x:Ax=0\}\), and its image is \(\operatorname{Im}A=\{Ax:x\in V\}\). The rank is the dimension of the image. Two vectors have the same image precisely when their difference is in the kernel.
+
+The rank--nullity identity is
+
+\[
+\dim V=\dim\ker A+\operatorname{rank}A.
+\tag{2.5}
+\]
+
+To prove it, take a basis of the kernel and extend it to a basis of \(V\). The images of the added basis vectors span the image. They are independent, because any relation between them would put a combination of the added vectors in the original kernel basis. Counting the basis vectors gives Eq. (2.5).
+
+The adjoint \(A^*\) is defined by \(\langle Ax,y\rangle_W=\langle x,A^*y\rangle_V\). With orthonormal real coordinates it is the transpose. With non-Euclidean coordinate metrics \(G_V,G_W\), it is instead \(G_V^{-1}A^TG_W\). This distinction will matter when real and imaginary harmonic coefficients are stored without their normalising factors.
+
+A symmetric matrix \(H\) is positive semidefinite when \(x^THx\ge0\) for every \(x\); it is positive definite when the inequality is strict for nonzero \(x\). The notation \(H_1\preceq H_2\), called Loewner order, means that \(H_2-H_1\) is positive semidefinite. It compares quadratic forms, not individual matrix entries.
+
+\hypertarget{spectral-decomposition-and-singular-values}{%
+\subsection{Spectral decomposition and singular values}\label{spectral-decomposition-and-singular-values}}
+
+\textbf{Lemma 2.2 --- spectral decomposition.} A real symmetric matrix has an orthonormal basis of real eigenvectors.
+
+\textbf{Proof.} The continuous function \(x^THx\) has a maximum on the unit sphere. At a maximiser \(u\), differentiation along every direction perpendicular to \(u\) gives \(z^THu=0\), so \(Hu\) is parallel to \(u\). Thus \(u\) is an eigenvector. Symmetry makes its orthogonal complement invariant: \(u^THz=(Hu)^Tz=0\). Repeat the argument on that lower-dimensional space. Induction completes the proof. \(\square\)
+
+Apply the lemma to \(A^TA\). Its nonnegative eigenvalues are the squares of the singular values \(s_1(A)\ge s_2(A)\ge\cdots\ge0\). If \(v_i\) is an eigenvector with positive singular value, set \(u_i=Av_i/s_i\); these vectors are orthonormal. This gives
+
+\[
+A=U\Sigma V^T
+\tag{2.6}
+\]
+
+after completing bases in the null spaces. This is the singular-value decomposition, or SVD. The operator norm is
+
+\[
+\|A\|_2=\sup_{\|x\|=1}\|Ax\|=s_1(A).
+\tag{2.7}
+\]
+
+For an invertible square matrix, \(\kappa_2(A)=s_1(A)/s_n(A)\) is its relative condition number. A large value signals directions in which inversion can amplify relative errors. It is not itself an error estimate; the perturbation size and the quantities being compared still matter.
+
+For later use, the singular values satisfy
+
+\[
+s_i(A)=\max_{\dim S=i}\ \min_{x\in S,\ \|x\|=1}\|Ax\|.
+\tag{2.8}
+\]
+
+Indeed, the span of the first \(i\) right singular vectors achieves the value \(s_i\). Any \(i\)-dimensional subspace intersects the span of right singular vectors \(i,i+1,\ldots\) nontrivially, by the dimension count. A unit vector in that intersection has image norm at most \(s_i\). This proves the converse inequality.
+
+\textbf{Proposition 2.3 --- singular-value perturbation.} If \(A\) and \(E\) have the same shape, then
+
+\[
+|s_i(A+E)-s_i(A)|\le\|E\|_2.
+\tag{2.9}
+\]
+
+\textbf{Proof.} For every unit vector, \(\|(A+E)x\|\le\|Ax\|+\|E\|_2\). Apply Eq. (2.8) to obtain the upper bound, and interchange \(A\) and \(A+E\) for the lower bound. \(\square\)
+
+\hypertarget{projection-least-squares-and-coordinates}{%
+\subsection{Projection, least squares and coordinates}\label{projection-least-squares-and-coordinates}}
+
+Let the columns of \(U\) be an orthonormal basis of a subspace \(H\). Its orthogonal projector is \(P_H=UU^T\). We have \(P_H^2=P_H=P_H^T\), and every vector splits uniquely into
+
+\[
+x=P_Hx+(I-P_H)x,
+\qquad P_Hx\perp(I-P_H)x.
+\tag{2.10}
+\]
+
+The first term minimises \(\|x-h\|\) over \(h\in H\), because
+\(\|x-h\|^2=\|(I-P_H)x\|^2+\|P_Hx-h\|^2\). This proof also explains why projections will appear in nuisance removal.
+
+For a full-column-rank matrix \(A\), minimising \(\|Ax-y\|^2\) gives the normal equation \(A^TAx=A^Ty\). It has one solution since \(x^TA^TAx=\|Ax\|^2>0\) for nonzero \(x\). With positive weights \(W\), the same argument gives \(A^TWAx=A^TWy\). These equations define a least-squares fit; they do not say that the fitted model is physically correct.
+
+A positive-definite matrix also has one upper-triangular positive-diagonal Cholesky factor \(B_+\) with \(B_+^TB_+=G\). Here is the construction rather than just its name. Split
+
+\[
+G=\begin{pmatrix}g_{11}&r^T\\r&G_2\end{pmatrix}.
+\]
+
+Set the first diagonal entry to \(\sqrt{g_{11}}>0\) and the rest of the first row to \(r^T/\sqrt{g_{11}}\). The remaining block must factor the Schur complement \(G_2-rr^T/g_{11}\). It is positive definite: insert \((-r^Ty/g_{11},y)\) into the quadratic form of \(G\). Repeat in lower dimension. The positive square root and triangular structure force every step, proving existence and uniqueness. No eigenvector sign choice is needed.
+
+\hypertarget{describing-the-sky-by-harmonics-and-stf-tensors}{%
+\section{Describing the sky by harmonics and STF tensors}\label{describing-the-sky-by-harmonics-and-stf-tensors}}
+
+\hypertarget{spherical-harmonics-from-polynomials}{%
+\subsection{Spherical harmonics from polynomials}\label{spherical-harmonics-from-polynomials}}
+
+A homogeneous polynomial of degree \(\ell\) scales as \(P(tx)=t^\ell P(x)\). If its Euclidean Laplacian vanishes, it is harmonic. Restricted to the unit sphere, such polynomials form the angular multipole space of order \(\ell\). This explains why a quadratic STF tensor gives a quadrupole: for \(P(x)=Q_{ij}x_ix_j\), \(\nabla^2P=2Q_{ii}\). A cubic tensor gives an octupole because \(\nabla^2(O_{ijk}x_ix_jx_k)=6O_{iik}x_k\).
+
+For explicit angular integration, use \(x=\cos\theta\). Define the Legendre polynomial by Rodrigues' formula,
+
+\[
+P_\ell(x)=\frac1{2^\ell\ell!}\frac{d^\ell}{dx^\ell}(x^2-1)^\ell,
+\qquad
+P_\ell^m(x)=(-1)^m(1-x^2)^{m/2}\frac{d^mP_\ell}{dx^m}.
+\tag{3.1}
+\]
+
+For \(0\le m\le\ell\), let
+
+\[
+Y_{\ell m}(\theta,\varphi)
+=\sqrt{\frac{2\ell+1}{4\pi}\frac{(\ell-m)!}{(\ell+m)!}}
+P_\ell^m(\cos\theta)e^{im\varphi},
+\qquad
+Y_{\ell,-m}=(-1)^mY_{\ell m}^*.
+\tag{3.2}
+\]
+
+The star is complex conjugation. The Fourier integral in \(\varphi\) makes different \(m\)'s orthogonal. For fixed \(m\), integration by parts in Rodrigues' formula, or the corresponding self-adjoint Legendre equation, gives
+
+\[
+\int_{-1}^1P_\ell^mP_k^m\,dx
+=\frac{2(\ell+m)!}{(2\ell+1)(\ell-m)!}\,\delta_{\ell k}.
+\tag{3.3}
+\]
+
+For clarity, the norm in Eq. (3.3) follows by integrating the \(m\) derivatives off one factor. Repeated differentiation of the Legendre equation yields
+\(d^m[(1-x^2)^mP_\ell^{(m)}]/dx^m=(-1)^m(\ell+m)!P_\ell/(\ell-m)!\). Boundary terms vanish because of the powers of \(1-x^2\). Rodrigues' formula similarly gives \(\int P_\ell^2dx=2/(2\ell+1)\). Combining these two identities proves the displayed norm. For \(\ell\ne k\), subtract the two self-adjoint equations; the boundary term vanishes and the distinct eigenvalues \(\ell(\ell+1)\) and \(k(k+1)\) force the cross integral to zero. Thus \(\int Y_{\ell m}^*Y_{kn}\,d\Omega=\delta_{\ell k}\delta_{mn}\).
+
+We need only finite harmonic bands in the constructions below. No convergence theorem for an arbitrary infinite sky expansion is being used in a finite matrix proof.
+
+\hypertarget{real-temperature-and-stored-coordinates}{%
+\subsection{Real temperature and stored coordinates}\label{real-temperature-and-stored-coordinates}}
+
+Write a finite multipole as \(T_\ell(n)=\sum_m a_{\ell m}Y_{\ell m}(n)\). Reality implies
+
+\[
+a_{\ell,-m}=(-1)^m a_{\ell m}^*.
+\tag{3.4}
+\]
+
+This follows by conjugating the expansion, substituting Eq. (3.2), and equating coefficients in an orthonormal basis. For \(m>0\), introduce the real basis \(\sqrt2\Re Y_{\ell m}\), \(\sqrt2\Im Y_{\ell m}\). Its coefficients are
+
+\[
+c_{\ell0}=a_{\ell0},\qquad
+c_{\ell m,c}=\sqrt2\Re a_{\ell m},\qquad
+c_{\ell m,s}=-\sqrt2\Im a_{\ell m}.
+\tag{3.5}
+\]
+
+The minus sign is not optional under this sine-basis convention: the pair of complex terms is \(2\Re(a_{\ell m}Y_{\ell m})\).
+
+\textbf{Proposition 3.1 --- real-carrier isometry.} If
+\(C_\ell=(2\ell+1)^{-1}\sum_m|a_{\ell m}|^2\), then
+
+\[
+\int_{S^2}T_\ell^2\,d\Omega
+=\|c_\ell\|_2^2
+=\sum_m|a_{\ell m}|^2
+=(2\ell+1)C_\ell.
+\tag{3.6}
+\]
+
+\textbf{Proof.} Orthogonality eliminates all unequal harmonic pairs in the integral. For each positive \(m\), the two equal complex moduli contribute \(2[(\Re a)^2+(\Im a)^2]\), precisely the squared norm of the two real coordinates in Eq. (3.5). \(\square\)
+
+Here \(C_\ell\) is a power computed from a specified sky, not automatically an ensemble expectation. It has temperature-squared units. A probabilistic model for sky realisations is a separate ingredient.
+
+If we instead store \(r=(a_{\ell0},\Re a_{\ell1},\Im a_{\ell1},\ldots)\), its metric is
+
+\[
+G_\ell=\operatorname{diag}(1,2,2,\ldots),\qquad
+c=D_\ell r,\qquad D_\ell^TD_\ell=G_\ell.
+\tag{3.7}
+\]
+
+The entries of \(D_\ell\) are \(1\) and repeated pairs \((\sqrt2,-\sqrt2)\). A rank is unchanged by this invertible adapter; a Euclidean singular value need not be. Before comparing numerical sensitivities, we must therefore specify the metric as well as the coordinate list.
+
+\hypertarget{angular-moments-and-the-normalisation-of-q-and-o}{%
+\subsection{Angular moments and the normalisation of Q and O}\label{angular-moments-and-the-normalisation-of-q-and-o}}
+
+The tensor representation is
+
+\[
+T_2(n)=Q_{ij}n_in_j,\qquad
+T_3(n)=O_{ijk}n_in_jn_k,
+\tag{3.8}
+\]
+
+with \(Q\) STF2 and \(O\) STF3. Their independent component counts agree with \(2\ell+1\) at \(\ell=2,3\). We now derive the conversion factors instead of relying on a table.
+
+\textbf{Lemma 3.2 --- isotropic angular moments.} Odd products of components of \(n\) integrate to zero. For an even product,
+
+\[
+\int_{S^2} n_{i_1}\cdots n_{i_{2r}}\,d\Omega
+=\frac{4\pi}{(2r+1)!!}
+\sum_{\text{pairings}}\delta_{i_{a_1}i_{b_1}}\cdots
+\delta_{i_{a_r}i_{b_r}}.
+\tag{3.9}
+\]
+
+The double factorial is \((2r+1)!!=(2r+1)(2r-1)\cdots3\cdot1\), and the sum contains each pairing of the \(2r\) index positions once.
+
+\textbf{Proof.} Oddness under \(n\mapsto-n\) gives the first statement. Contract the even integral with \(x_{i_1}\cdots x_{i_{2r}}\). Rotate \(x\) to the polar axis; the integral becomes
+\(2\pi\|x\|^{2r}\int_{-1}^1\mu^{2r}d\mu=4\pi\|x\|^{2r}/(2r+1)\).
+There are \((2r-1)!!\) pairings, each giving \(\|x\|^{2r}\). The proposed coefficient is forced. Equality of the resulting polynomials for every \(x\) gives equality of their symmetric coefficient tensors. \(\square\)
+
+\textbf{Proposition 3.3 --- harmonic-to-STF norm conversion.} With Eq. (3.8),
+
+\[
+\boxed{Q:Q=\frac{15}{8\pi}\|c_2\|_2^2
+=\frac{75}{8\pi}C_2},\qquad
+\boxed{O:O=\frac{35}{8\pi}\|c_3\|_2^2
+=\frac{245}{8\pi}C_3}.
+\tag{3.10}
+\]
+
+\textbf{Proof.} In the fourth angular moment, contracting with \(Q_{ij}Q_{kl}\) kills the pairing that traces either tensor. The remaining two pairings each give \(Q:Q\). Thus \(\int T_2^2d\Omega=(8\pi/15)Q:Q\). In the sixth angular moment, any pairing internal to either STF3 tensor gives a trace and vanishes. The remaining \(3!=6\) pairings connect every index across the two tensors, giving \(\int T_3^2d\Omega=(8\pi/35)O:O\). Combine these expressions with Eq. (3.6). \(\square\)
+
+The tensors themselves can be recovered directly from angular integrals,
+
+\[
+Q_{ij}=\frac{15}{8\pi}\int T_2(n)n_{\langle ij\rangle}\,d\Omega,
+\qquad
+O_{ijk}=\frac{35}{8\pi}\int T_3(n)n_{\langle ijk\rangle}\,d\Omega.
+\tag{3.11}
+\]
+
+To verify either formula, substitute Eq. (3.8), use Eq. (3.9), and retain only cross-pairings. This proves uniqueness as well as the normalisation. Harmonic coefficients and STF tensors are two complete coordinate descriptions of the same angular sector.
+
+Before moving on, note what has not appeared: no Hubble rate, matter velocity or spacetime shear entered this construction. We have translated the observable temperature field into tensor language. We have not yet translated it into cosmological kinematics.
+
+\clearpage
+\part{What the observable tensors retain}
+
+\hypertarget{rotations-invariant-information-and-reconstruction}{%
+\section{Rotations, invariant information and reconstruction}\label{rotations-invariant-information-and-reconstruction}}
+
+\hypertarget{a-pattern-and-its-rotated-copies}{%
+\subsection{A pattern and its rotated copies}\label{a-pattern-and-its-rotated-copies}}
+
+A proper rotation is a real matrix \(R\) satisfying \(R^TR=I\) and \(\det R=1\). The collection of such matrices is the group \(SO(3)\). Allowing determinant \(-1\) gives \(O(3)\), which also contains reflections. We keep this distinction because a reflection can reverse handedness without changing many ordinary scalar summaries.
+
+Under a rotation,
+
+\[
+Q\longmapsto RQR^T,\qquad
+O_{ijk}\longmapsto R_{ia}R_{jb}R_{kc}O_{abc}.
+\tag{4.1}
+\]
+
+The orbit of \((Q,O)\) is the set of all its rotated copies. An invariant has the same value on an orbit. A collection of invariants separates orbits on a specified domain if equal invariant values imply that the two states are related by a proper rotation. This does not mean that it generates every invariant polynomial, nor that it supplies independent coordinates without algebraic relations.
+
+A useful invariant description should permit reconstruction, at least on a clearly identified domain. Let us construct one rather than infer its existence from a dimension count.
+
+\hypertarget{amplitudes-a-contraction-vector-and-a-krylov-frame}{%
+\subsection{Amplitudes, a contraction vector and a Krylov frame}\label{amplitudes-a-contraction-vector-and-a-krylov-frame}}
+
+For nonzero tensors define
+
+\[
+A_Q=\sqrt{Q:Q},\quad A_O=\sqrt{O:O},\quad
+q=Q/A_Q,\quad o=O/A_O,\quad v_i=o_{ijk}q_{jk}.
+\tag{4.2}
+\]
+
+The amplitudes have temperature units; \(q,o,v\) are dimensionless. The vector \(v\) transforms as an ordinary spatial vector because all contracted rotation matrices cancel in pairs. It is not a physical velocity.
+
+Form the ordered matrix
+
+\[
+K=[v,qv,q^2v].
+\tag{4.3}
+\]
+
+Such a matrix is called a Krylov matrix: it collects a vector and its successive images under a linear operator. We call a pair cyclic here when \(A_Q,A_O>0\) and \(\det K\ne0\). Then these three vectors form a basis of space.
+
+\textbf{Proposition 4.1 --- cyclicity criterion.} In an orthonormal eigenframe of \(q\),
+
+\[
+\det K=v_1v_2v_3\prod_{i<j}(\lambda_j-\lambda_i).
+\tag{4.4}
+\]
+
+Thus cyclicity is equivalent to three distinct quadrupole eigenvalues and a nonzero contraction component along each eigenvector.
+
+\textbf{Proof.} In that frame,
+\(K=\operatorname{diag}(v_1,v_2,v_3)V\), where the rows of \(V\) are \((1,\lambda_i,\lambda_i^2)\). Subtract the first row from the second and third, factor their eigenvalue differences, and expand the remaining \(2\times2\) determinant. It gives \(\lambda_3-\lambda_2\), proving Eq. (4.4). Nonzero factors are necessary and sufficient. \(\square\)
+
+Repeated eigenvalues or a zero contraction component are therefore genuine boundaries of this coordinate chart. An arbitrary choice of a missing axis would change the construction rather than complete its proof.
+
+\hypertarget{the-invariant-packet}{%
+\subsection{The invariant packet}\label{the-invariant-packet}}
+
+Define
+
+\[
+s_2=\operatorname{tr}q^2=1,\quad s_3=\operatorname{tr}q^3,\quad
+\mu_r=v^Tq^rv\quad(r=0,1,2),\quad\chi=\det K,
+\tag{4.5}
+\]
+
+and the ten distinct symmetric trilinears
+
+\[
+\tau_{ijk}=o(q^iv,q^jv,q^kv),\qquad0\le i\le j\le k\le2.
+\tag{4.6}
+\]
+
+The arguments \(0,1,2\) in \(\tau\) label powers of \(q\), not spatial axes. There are ten unordered triples. Together with the amplitudes, these values give more entries than the number of independent shape parameters. Redundancy allows us to test whether an arbitrary numerical packet really comes from a tensor pair.
+
+Every entry except the signed-volume distinction is invariant under all orthogonal frame changes. Under an improper rotation, \(\chi\) changes by the determinant of that transformation. It is a pseudoscalar: invariant under proper rotations and sign-changing under reflection.
+
+\hypertarget{recovering-the-gram-matrix}{%
+\subsection{Recovering the Gram matrix}\label{recovering-the-gram-matrix}}
+
+For a trace-free symmetric \(3\times3\) matrix, the eigenvalues satisfy
+\(\lambda_1+\lambda_2+\lambda_3=0\),
+\(\sum_{i<j}\lambda_i\lambda_j=-s_2/2\), and
+\(\lambda_1\lambda_2\lambda_3=s_3/3\).
+The last identity follows from \(a^3+b^3+c^3-3abc=(a+b+c)(a^2+b^2+c^2-ab-bc-ca)\).
+The characteristic polynomial is consequently
+\(z^3-(s_2/2)z-s_3/3\). Diagonalise \(q\) and apply this polynomial to each eigenvalue. This proves the required form of Cayley--Hamilton without an additional matrix theorem:
+
+\[
+q^3=\frac{s_2}{2}q+\frac{s_3}{3}I.
+\tag{4.7}
+\]
+
+Multiplying by \(v^T\) and \(v\), and then by one further \(q\), gives
+
+\[
+\mu_3=\frac{s_2}{2}\mu_1+\frac{s_3}{3}\mu_0,\qquad
+\mu_4=\frac{s_2}{2}\mu_2+\frac{s_3}{3}\mu_1.
+\tag{4.8}
+\]
+
+Thus the packet determines the Gram matrix
+
+\[
+G=K^TK=
+\begin{pmatrix}
+\mu_0&\mu_1&\mu_2\\
+\mu_1&\mu_2&\mu_3\\
+\mu_2&\mu_3&\mu_4
+\end{pmatrix},\qquad \det G=\chi^2.
+\tag{4.9}
+\]
+
+On the cyclic domain it is positive definite, since \(x^TGx=\|Kx\|^2>0\) for nonzero \(x\).
+
+\hypertarget{why-a-cholesky-convention-is-needed}{%
+\subsection{Why a Cholesky convention is needed}\label{why-a-cholesky-convention-is-needed}}
+
+A matrix satisfying \(B^TB=G\) is not unique. Multiplication on the left by any orthogonal matrix preserves this equation. A determinant condition alone still leaves all proper rotations. We use the unique upper-triangular positive-diagonal Cholesky factor from Section 2,
+
+\[
+B_+^TB_+=G,
+\quad S_\chi=\operatorname{diag}(1,1,\operatorname{sgn}\chi),
+\quad B=S_\chi B_+.
+\tag{4.10}
+\]
+
+Then \(B^TB=G\) and \(\det B=\chi\), because \(\det B_+=\sqrt{\det G}=|\chi|\). We have specified a deterministic convention rather than leaving an unspoken rotation freedom.
+
+With the coordinate basis \(e_0,e_1,e_2\) for the three columns of \(K\), define
+
+\[
+C=\begin{pmatrix}0&0&s_3/3\\1&0&s_2/2\\0&1&0\end{pmatrix}.
+\tag{4.11}
+\]
+
+Equation (4.7) implies \(qK=KC\). The proposed representative is
+
+\[
+q_{\rm can}=BCB^{-1},\qquad
+(o_{\rm can})_{abc}
+=(B^{-1})_{ia}(B^{-1})_{jb}(B^{-1})_{kc}\,\tau_{ijk},
+\tag{4.12}
+\]
+
+where the ten trilinears are extended to all index orderings by symmetry.
+
+\textbf{Theorem 4.2 --- reconstruction on the nonzero cyclic image.} A packet obtained from a nonzero cyclic real STF2/STF3 pair determines that pair up to one proper rotation. Equations (4.8)--(4.12) give a representative.
+
+\textbf{Proof.} Put \(U=KB^{-1}\). Then
+\(U^TU=B^{-T}GB^{-1}=I\) and
+\(\det U=\det K/\det B=1\), so \(U\in SO(3)\).
+From \(qK=KC\), we obtain \(q=Uq_{\rm can}U^T\).
+The trilinears are evaluations of \(o\) on the basis columns of \(K\). A trilinear form is determined by its values on a basis, so changing those basis coordinates using \(K=UB\) yields
+\(o=U^{\otimes3}o_{\rm can}\).
+The reconstructed tensors inherit symmetry, trace-freeness and unit norms because they are rotated copies of the original pair. Restoring \(A_Q,A_O\) recovers their amplitudes.
+
+If two cyclic pairs have the same packet, they construct the same \(B,C,o_{\rm can}\). Their matrices \(U_1,U_2\) differ by the proper rotation \(U_2U_1^T\), which maps one pair to the other. This proves separation. \(\square\)
+
+The theorem assumes the packet belongs to the forward image. It does not say that every list of numbers satisfying only \(\det G=\chi^2\) is valid. In particular, an implementation must test that the reconstructed tensor is STF and correctly normalised and that
+
+\[
+\boxed{o_{\rm can}:q_{\rm can}=Be_0}
+\tag{4.13}
+\]
+
+holds. It must also recompute the complete packet. These are consistency checks on one reconstructed object, not independent opportunities to replace an invalid input by a nearby projection.
+
+One useful direct check is that \(GC=C^TG\), using Eq. (4.8). Multiplying this identity by the appropriate inverse Cholesky factors shows \(BCB^{-1}\) is symmetric. Its trace and quadratic trace are those of \(C\). Nevertheless, trace and norm constraints on the reconstructed octupole do not follow for arbitrary trilinears; they must still be checked.
+
+\hypertarget{a-worked-mirror-example}{%
+\subsection{A worked mirror example}\label{a-worked-mirror-example}}
+
+Take the unnormalised quadrupole \(Q=\operatorname{diag}(1,2,-3)\). Specify the ten independent octupole entries by
+
+\[
+\begin{array}{c|rrrrrrrrrr}
+ijk&111&112&113&122&123&133&222&223&233&333\\\hline
+O_{ijk}&1&2&3&4&5&-5&6&7&-8&-10
+\end{array}
+\tag{4.14}
+\]
+
+All permutations have the same value. The three traces are \(1+4-5=0\), \(2+6-8=0\), and \(3+7-10=0\). Multiplicity-weighted summation gives \(Q:Q=14\) and \(O:O=788\). Direct contraction gives
+
+\[
+O:Q=(24,38,47).
+\tag{4.15}
+\]
+
+The eigenvalues are distinct and all three components are nonzero, so normalising does not destroy cyclicity. The unnormalised determinant is
+\(24\cdot38\cdot47\,(2-1)(-3-1)(-3-2)=857280\ne0\).
+
+Apply spatial inversion \(R=-I\). It leaves \(Q\) unchanged and sends \(O\) to \(-O\). The four scalars
+\(Q:Q\), \(O:O\), \(\operatorname{tr}Q^3\), and \(Q_{ij}O_{ikl}O_{jkl}\) are unchanged. In contrast, \(v\mapsto-v\) and \(\chi\mapsto-\chi\). No proper rotation can connect the two pairs, because it would have to preserve \(\chi\). This proves that the named four-scalar summary does not separate this mirror pair. It says nothing about every possible invariant collection.
+
+\hypertarget{dimension-and-numerical-refusal}{%
+\subsection{Dimension and numerical refusal}\label{dimension-and-numerical-refusal}}
+
+A cyclic pair has no nontrivial proper-rotation stabiliser. If a rotation fixes \(Q\) and \(O\), it fixes \(v,qv,q^2v\); since these form a basis, it is the identity. The local rotation freedom therefore has three independent parameters. The twelve-dimensional tensor-pair space has a nine-dimensional quotient on this domain. Equivalently, two amplitudes and seven normalised shape parameters remain. The smooth Cholesky frame supplies a local separation of these rotation parameters from the shape; the dimension statement is not extended through singular strata.
+
+The exact inverse in Eq. (4.12) can magnify numerical errors when \(K\) is poorly conditioned. The retained numerical method instead expands \(o\) in a Frobenius-orthonormal seven-element STF3 basis, evaluates its ten trilinears, and solves the resulting row-scaled \(10\times7\) least-squares system. For invertible \(K\), that design has rank seven: a trilinear form vanishing on all triples of a basis vanishes everywhere. Numerical rank and accuracy, however, need a finite tolerance and conditioning domain. A typed refusal reports that the chosen inverse chart is unavailable; it is not a reconstructed zero tensor.
+
+This completes the observable problem on the stated domain. We next ask what the physical tensors mean.
+
+\clearpage
+\part{Physical kinematics and conditional isotropy bounds}
+
+\hypertarget{observers-motion-and-the-physical-state}{%
+\section{Observers, motion and the physical state}\label{observers-motion-and-the-physical-state}}
+
+\hypertarget{a-spacetime-observer-and-its-rest-space}{%
+\subsection{A spacetime observer and its rest space}\label{a-spacetime-observer-and-its-rest-space}}
+
+Spacetime indices \(a,b,c\) run from 0 to 3. The metric has signature \((-,+,+,+)\). An observer direction \(u^a\) is future-directed and unit timelike, \(u^au_a=-1\). If proper time is measured in seconds, the physical four-velocity is \(cu^a\). This convention keeps the speed of light explicit.
+
+The projector onto the observer's instantaneous rest space is
+
+\[
+h_{ab}=g_{ab}+u_au_b.
+\tag{5.1}
+\]
+
+Indeed, \(h_{ab}u^b=0\), and \(h_a{}^ch_c{}^b=h_a{}^b\). The restriction of \(h\) to that rest space is positive definite. Spatial Euclidean formulas used earlier apply in an orthonormal frame in this space.
+
+The covariant derivative \(\nabla\) differentiates tensors while accounting for the variation of the coordinate basis. For example,
+\(\nabla_aX^b=\partial_aX^b+\Gamma^b{}_{ac}X^c\), where the Levi-Civita connection is
+\(\Gamma^a{}_{bc}=\tfrac12g^{ad}(\partial_bg_{dc}+\partial_cg_{bd}-\partial_dg_{bc})\).
+It preserves the metric. We use a dot for \(u^a\nabla_a\), and \(D\) for projecting both the derivative index and every free tensor index into the rest space. These definitions fix the geometric, inverse-length rate convention; physical inverse-time rates are obtained by multiplying by \(c\).
+
+\hypertarget{expansion-shear-rotation-and-acceleration}{%
+\subsection{Expansion, shear, rotation and acceleration}\label{expansion-shear-rotation-and-acceleration}}
+
+Define
+
+\[
+A_a=u^b\nabla_bu_a,\quad
+\Theta=D_au^a,\quad H_g=\Theta/3,\quad
+\sigma_{ab}=D_{(b}u_{a)}-H_gh_{ab},\quad
+\omega_{ab}=\tfrac12(D_bu_a-D_au_b).
+\tag{5.2}
+\]
+
+The derivative decomposition is
+
+\[
+\nabla_bu_a=H_gh_{ab}+\sigma_{ab}+\omega_{ab}-A_au_b.
+\tag{5.3}
+\]
+
+To prove it, differentiate \(u^au_a=-1\), so the first index of \(\nabla_bu_a\) is spatial. Split its second index with \(\delta_b{}^c=h_b{}^c-u_bu^c\). The spatial part then splits uniquely into its trace, symmetric trace-free and antisymmetric parts. These are exactly the definitions in Eq. (5.2).
+
+Expansion changes all lengths at the same local fractional rate. Shear changes relative lengths along different directions without contributing to that trace. Vorticity is local rotation, and acceleration measures departure from geodesic motion. Their component counts are one, five, three and three. An observer family is called geodesic here when \(A_a=0\).
+
+Fix a spatial orientation \(\epsilon_{123}=+1\). The vorticity vector is
+\(\omega^a=\tfrac12\epsilon^{abc}\omega_{bc}\), with inverse
+\(\omega_{ab}=\epsilon_{abc}\omega^c\). Therefore
+
+\[
+\omega_{ab}\omega^{ab}=2\omega_a\omega^a.
+\tag{5.4}
+\]
+
+This factor prevents a vector norm from being silently substituted for an antisymmetric-tensor norm. It follows by contracting two Levi-Civita symbols, \(\epsilon_{abc}\epsilon^{abd}=2\delta_c{}^d\).
+
+A polar vector changes by \(R\) under an orthogonal transformation. An axial vector changes by \((\det R)R\). Vorticity is axial because its definition uses the orientation tensor. Hence the dot product of a physical velocity with vorticity is a pseudoscalar. This is a precise parity statement, not an inference that a particular parity signal has been observed.
+
+\hypertarget{photon-energy-and-sky-direction}{%
+\subsection{Photon energy and sky direction}\label{photon-energy-and-sky-direction}}
+
+For future-directed null momentum \(p^a\), the measured energy is
+
+\[
+E_\gamma=-c\,p_au^a>0.
+\tag{5.5}
+\]
+
+Define \(e^a=cp^a/E_\gamma-u^a\). Direct contraction gives \(u\cdot e=0\) and \(e\cdot e=1\). Conversely,
+
+\[
+p^a=\frac{E_\gamma}{c}(u^a+e^a)
+\tag{5.6}
+\]
+
+has \(p^2=0\) and energy Eq. (5.5). The photon propagates along \(e\); the outward direction on the observer's sky is \(n=-e\). This sign is used in the Doppler formula of Section 9.
+
+These elementary identities follow from local metric contractions. They do not require solving a photon geodesic or specifying the full spacetime history.
+
+\hypertarget{which-velocity-relates-which-frames}{%
+\subsection{Which velocity relates which frames?}\label{which-velocity-relates-which-frames}}
+
+We distinguish radiation, matter and observer frames. Write \(\beta_{\rm RO}\), \(\beta_{\rm RM}\), and \(\beta_{\rm MO}\) for radiation--observer, radiation--matter and matter--observer relative velocities divided by \(c\). The direction of each relative velocity is fixed by this convention. At first order in small velocities,
+
+\[
+\beta_{\rm RO}^a=\beta_{\rm RM}^a+\beta_{\rm MO}^a+O(\beta^2).
+\tag{5.7}
+\]
+
+To see the order, a boost matrix has the form \(I+\beta_iK_i+O(\beta^2)\), where \(K_i\) mixes the time component and spatial component \(i\). Multiplying two such matrices adds the linear terms; products of velocities first appear at second order. This proves the stated first-order composition, not an exact three-vector addition law.
+
+The word velocity here concerns physical frames. It is not the contraction vector \(v=o:q\) in Section 4. A temperature response to \(\beta_{\rm RO}\) does not determine the other two terms in Eq. (5.7) without further information.
+
+\hypertarget{geometry-and-functionals}{%
+\subsection{Geometry and functionals}\label{geometry-and-functionals}}
+
+For later interpretation we retain a physical state with three groups: congruence kinematics \((\sigma_{ab},\omega_a,A_a)\), the specified frame velocities, and geometry or matter quantities supplied by a chosen model. The core geometry coordinate \(\Delta\Omega_k\) denotes a signed scalar curvature-budget difference in that model; it is not the anisotropic curvature tensor. Its numerical definition must be supplied with the model, and an unavailable definition is not replaced by zero.
+
+Where a spatial hypersurface is specified, its trace-free Ricci tensor is \({}^{(3)}S_{ab}={}^{(3)}R_{ab}-\tfrac13{}^{(3)}R h_{ab}\). This refers to that hypersurface; a vortical congruence need not have orthogonal rest spaces fitting into such hypersurfaces. The electric and magnetic Weyl tensors are projections of the trace-free spacetime curvature, \(E_{ab}=C_{acbd}u^cu^d\) and \(H_{ab}=\tfrac12\epsilon_{acd}C^{cd}{}_{be}u^e\), with the stated orientation. Anisotropic stress is \(\pi_{ab}=T_{\langle ab\rangle}\). They are optional STF2 blocks, not quantities inferred in this report. The Weyl tensor itself is
+
+\[
+C_{abcd}=R_{abcd}-\tfrac12(g_{ac}R_{bd}-g_{ad}R_{bc}-g_{bc}R_{ad}+g_{bd}R_{ac})
++\tfrac16R(g_{ac}g_{bd}-g_{ad}g_{bc}).
+\tag{5.8}
+\]
+
+Here curvature is defined by \([\nabla_c,\nabla_d]X^a=R^a{}_{bcd}X^b\), and the Ricci tensor and scalar are its contractions. These definitions suffice to identify the optional blocks; no field equation for them is solved below. The covariant background follows the conventions of (Ellis and Elst 1999).
+
+If \(\beta_{\rm RO}\) is treated as the derived first-order relation, the unconstrained core has
+\(5+3+3+3+3+1=18\) raw components. On a locally free rotation stratum its quotient has dimension 15. Imposing the geodesic condition removes three components, giving 15 raw and 12 quotient components on such a stratum. Each optional STF2 block adds five raw components before any dynamical constraints. These are parameter counts, not counts of Einstein-equation solutions or identified parameters.
+
+A physical functional is a specified map \(\phi\) of this state. Examples are \(\operatorname{tr}\sigma^2\), \(\operatorname{tr}\sigma^3\), \(\omega_a\omega^a\), \(\beta_{\rm RM}\cdot\omega\), and \(\beta_{\rm RM}^a\sigma_{ab}\beta_{\rm RM}^b\). The first shear invariant records a magnitude; the cubic invariant carries shape information. Each functional must retain its frame, congruence, epoch, scale and units. Defining it does not measure it.
+
+\hypertarget{what-mes-bounds-do-and-do-not-imply}{%
+\section{What MES bounds do and do not imply}\label{what-mes-bounds-do-and-do-not-imply}}
+
+\hypertarget{the-physical-input-is-conditional}{%
+\subsection{The physical input is conditional}\label{the-physical-input-is-conditional}}
+
+The Maartens--Ellis--Stoeger programme links almost-isotropic freely propagating radiation to restrictions on spacetime kinematics under explicit assumptions. The retained application concerns an expanding domain, a declared geodesic matter congruence, Einstein--Liouville dynamics, almost-isotropy for all relevant fundamental observers, and bounds on spatial and temporal derivatives of radiation multipoles. A single local temperature map does not establish the all-observer or derivative premises. The original and improved analyses and their COBE-era normalisation are the physical sources. (Maartens, Ellis, and Stoeger 1995b, 1995a; Stoeger, Araujo, and Gebbie 1997)
+
+To specify the derivative premises, let \(\tau_{A_\ell}\) denote a fractional-temperature STF multipole; \(A_\ell\) is a list of \(\ell\) spatial indices. Let \(\epsilon_\ell\) bound its full tensor norm. A star denotes a derivative along the observer, and a prime a projected spatial derivative, with each derivative normalised by the expansion rate. The exact normed operators used for the mixed and second derivative envelopes are stated in Eqs. (E.9)--(E.10). In particular, the double-prime quadrupole envelope bounds the displayed antisymmetric differentiated divergence, not an unspecified second-derivative norm with an omitted contraction factor. Propagation-direction and outward-sky multipoles have the same norms. Appendix E derives a sufficient first-order radiation model for the bounds below; this is a specific, explicit branch of the broader physical programme.
+
+\textbf{Model M --- a sufficient first-order radiation branch.} Appendix E derives the following norm bounds from the stated moment equations and derivative envelopes. Weak envelope assumptions give non-strict inequalities. Where the displays use a strict sign, a corresponding strict envelope or slack is an additional premise:
+
+\[
+\frac{\|\sigma\|_F}{\Theta}
+<\frac83\epsilon_2+\epsilon_2^*+5\epsilon_1'
++\frac97\epsilon_3',
+\qquad
+\frac{\|\omega_{ab}\|_F}{\Theta}
+<9\epsilon_1'+3\epsilon_1^{\prime *}+\frac65\epsilon_2^{\prime\prime}.
+\tag{6.1}
+\]
+
+The amplitude-only application further adopts the characteristic-derivative estimates
+
+\[
+\epsilon_2^*\le\epsilon_2/3,\quad
+\epsilon_1'\le\epsilon_1/3,\quad
+\epsilon_3'\le\epsilon_3/3,\quad
+\epsilon_1^{\prime *}\le\epsilon_1/9,\quad
+\epsilon_2^{\prime\prime}\le\epsilon_2/9.
+\tag{6.2}
+\]
+
+In their original physical use these substitutions are scale assumptions about the variation of the radiation field. They are not forced by small multipole amplitudes. Equations (6.1)--(6.2) make the input of our conditional deduction explicit. The local derivation and the distinction between weak and strict bounds are supplied in Appendix E. No nonlinear converse or inference of the derivative premises from a local sky is used.
+
+\textbf{Proposition 6.1 --- the retained amplitude ceilings.} Conditional on M,
+
+\[
+\frac{\|\sigma\|_F}{\Theta}<B_\sigma
+:=\frac53\epsilon_1+3\epsilon_2+\frac37\epsilon_3,
+\qquad
+\frac{\|\omega_{ab}\|_F}{\Theta}<B_\omega
+:=\frac{10}{3}\epsilon_1+\frac{2}{15}\epsilon_2.
+\tag{6.3}
+\]
+
+\textbf{Proof.} Insert Eq. (6.2) into Eq. (6.1). The quadrupole coefficient in the shear bound is \(8/3+1/3=3\), the dipole coefficient is \(5/3\), and the octupole coefficient is \((9/7)/3=3/7\). For vorticity, \(9/3+3/9=10/3\), and \((6/5)/9=2/15\). All coefficients and norm envelopes are nonnegative, so these substitutions preserve the upper-bound direction. \(\square\)
+
+This is the full coefficient reduction used in the report. It is exact arithmetic under the stated derivative estimates, not a proof that the derivative estimates hold in our Universe. Treating a characteristic-time estimate as an unconditional measured bound would remove a physical premise without justification.
+
+\hypertarget{connecting-multipole-powers-and-physical-sector-norms}{%
+\subsection{Connecting multipole powers and physical-sector norms}\label{connecting-multipole-powers-and-physical-sector-norms}}
+
+From Proposition 3.3, the corresponding local normalisers are
+
+\[
+\epsilon_2=\frac{\sqrt{Q:Q}}{T_0}
+=\frac1{T_0}\sqrt{\frac{75C_2}{8\pi}},\qquad
+\epsilon_3=\frac{\sqrt{O:O}}{T_0}
+=\frac1{T_0}\sqrt{\frac{245C_3}{8\pi}}.
+\tag{6.4}
+\]
+
+Using these as the all-observer envelopes in M requires the declared extension premise. The residual dipole \(\epsilon_1\) also requires an attribution scenario. Setting it to zero does not follow merely from removing a measured Doppler dipole.
+
+Let \(H=\Theta/3>0\) in the common geometric rate convention. Define
+
+\[
+\psi_\sigma=\frac{\sigma_{ab}\sigma^{ab}}{6H^2},\qquad
+\psi_\omega=\frac{\omega_{ab}\omega^{ab}}{6H^2}.
+\tag{6.5}
+\]
+
+Squaring Eq. (6.3) gives
+
+\[
+\boxed{\psi_\sigma<U_\sigma:=\frac32B_\sigma^2},\qquad
+\boxed{\psi_\omega<U_\omega:=\frac32B_\omega^2}.
+\tag{6.6}
+\]
+
+The factor \(3/2\) is \(\Theta^2/(6H^2)\). Both numerator and denominator must use the same rate convention: \(H_t=cH_g\), \(\sigma^{(t)}=c\sigma^{(g)}\) and \(\omega^{(t)}=c\omega^{(g)}\) leave the ratios unchanged. Equation (5.4) specifies the separate vector/tensor conversion for vorticity. The norms here are full contractions, not half-contraction scalars.
+
+For the additional scenario \(\epsilon_1=0\), Eq. (6.4) gives
+\(U_\omega=(3/2)(2\epsilon_2/15)^2=C_2/(4\pi T_0^2)\). This is a useful units and coefficient check. It is not an observational determination of the intrinsic dipole.
+
+\hypertarget{necessary-conditions-do-not-reconstruct-a-state}{%
+\subsection{Necessary conditions do not reconstruct a state}\label{necessary-conditions-do-not-reconstruct-a-state}}
+
+The implication is M \(\Rightarrow\) Eq. (6.6). The converse is not supplied. A state may happen to satisfy two norm bounds without satisfying the derivative, matter or all-observer assumptions used to obtain them. Likewise, small shear and vorticity by themselves do not characterise an FLRW spacetime.
+
+A norm bound also loses direction. Let \(B_R=\{x:\|x\|\le R\}\). For any orthogonal representation of rotations, \(\|Rx\|^2=x^TR^TRx=\|x\|^2\), so membership in the ball cannot select one orientation. It also cannot distinguish different shape invariants at the same norm.
+
+\textbf{Proposition 6.2 --- no direction from rotational scalars alone.} An equivariant map from rotation-invariant scalar inputs to a vector or STF2/STF3 tensor has zero output.
+
+\textbf{Proof.} Equivariance says \(F(s)=F(Rs)=RF(s)\), since a rotation leaves the scalar input unchanged. A nonzero vector cannot be fixed by all rotations: a half-turn about a perpendicular axis reverses it. A symmetric rank-two tensor fixed by all rotations must have equal eigenvalues, hence be proportional to \(I\); trace-freeness then gives zero. For STF3, associate the homogeneous harmonic cubic \(p(x)=F(s)_{ijk}x_ix_jx_k\). Rotational invariance makes its restriction to the sphere constant, while oddness makes the value at \(-n\) its negative. The constant is zero, and homogeneity implies \(p=0\) everywhere. All its coefficients therefore vanish. \(\square\)
+
+This does not prohibit forming scalars from observed tensors. It prohibits reversing that information-losing operation without additional directional data or a model.
+
+\hypertarget{several-sectors-gauges-and-non-cancellation}{%
+\subsection{Several sectors: gauges and non-cancellation}\label{several-sectors-gauges-and-non-cancellation}}
+
+Suppose a finite collection of Euclidean blocks has positive radii \(R_j\), and let \(B=\prod_j\{x_j:\|x_j\|\le R_j\}\). Its gauge is the least common dilation needed to include a point,
+
+\[
+\rho_B(x)=\inf\{t>0:x\in tB\}.
+\tag{6.7}
+\]
+
+\textbf{Proposition 6.3 --- product gauge.}
+
+\[
+\rho_B(x)=\max_j\frac{\|x_j\|}{R_j},\qquad
+\rho_B(x)^2=\max_j\frac{\|x_j\|^2}{R_j^2}.
+\tag{6.8}
+\]
+
+\textbf{Proof.} Membership in \(tB\) is equivalent to \(\|x_j\|/R_j\le t\) for every block. The smallest common upper bound is their maximum. Squaring is order-preserving for nonnegative numbers. \(\square\)
+
+A large shear excess cannot be cancelled by a negative contribution from an unrelated sector. The gauge is neither a probability nor a posterior. Its square has the same threshold one but a different numerical excess margin.
+
+The product formula need not survive additional coupled constraints. With \(B_0=[-1,1]^2\) and \(F=B_0\cap\{x_1+x_2\le1\}\), the point \((1,1)\) has \(\rho_{B_0}=1\). In \(tF\), however, its coordinate sum requires \(2\le t\), so \(\rho_F=2\). This exact example separates an anchor product from a full physical feasible body.
+
+Ratios require the same sector, invariant, frame, congruence, epoch, units and approximation branch. For a fixed \(U>0\), a numerator interval \([a,b]\) becomes \([a/U,b/U]\) by monotonicity. A data-dependent random denominator needs a joint sampling model; separate marginal intervals do not justify the same operation. A missing anchor is not a zero-radius ball, and a missing numerator is not a measured zero. In the geodesic branch \(A_a=0\) is a physical domain condition; absence of a numerical acceleration anchor is a different statement.
+
+\clearpage
+\part{From a physical model to an inference}
+
+\hypertarget{responses-feasible-sets-and-identification}{%
+\section{Responses, feasible sets and identification}\label{responses-feasible-sets-and-identification}}
+
+\hypertarget{a-forward-map-is-needed-before-inversion}{%
+\subsection{A forward map is needed before inversion}\label{a-forward-map-is-needed-before-inversion}}
+
+Let \(X\) denote a physical state, and let \(\eta\) collect maintained choices: frame, congruence, epoch, model branch, nuisance policy and the observation procedure. A response \(\mathcal R_\eta\) maps a physical state to a predicted observable. A response may be nonlinear. A missing response is not the zero map; it means that the corresponding inference has not been specified.
+
+Let \(D_\eta\) be the physical domain, \(B_{\rm MES}(y;\eta)\) the premise-matched sector body, and \(C_y(\eta)\) the set of predictions judged compatible with data \(y\). We define
+
+\[
+\Theta(y;\eta)
+=D_\eta\cap B_{\rm MES}(y;\eta)
+\cap\mathcal R_\eta^{-1}(C_y(\eta)).
+\tag{7.1}
+\]
+
+A preimage \(\mathcal R^{-1}(C)\) is the set of states whose predicted observations lie in \(C\); it does not assume that \(\mathcal R\) has an inverse function. Equation (7.1) is a definition. Its scientific content comes from the actual domain, response and compatibility criterion, not from writing an intersection symbol.
+
+The same sky may be used to set a multipole ceiling and to define \(C_y\). Those are then two restrictions constructed from shared data. Writing them as separate factors does not make them independent observations. A probabilistic factorisation requires a joint-law argument. This is the point at which physical modelling and statistical modelling meet.
+
+\hypertarget{exact-response-fibres}{%
+\subsection{Exact response fibres}\label{exact-response-fibres}}
+
+Suppose for the moment that the response is linear and the observable vector is exact, so \(C_y=\{y\}\). Let \(X_0\) be any state with \(\mathcal R X_0=y\), and put \(F_y=D_\eta\cap B_{\rm MES}(y;\eta)\). Linearity gives
+
+\[
+\{X:\mathcal RX=y\}=X_0+\ker\mathcal R,
+\qquad
+\Theta(y;\eta)=F_y\cap(X_0+\ker\mathcal R).
+\tag{7.2}
+\]
+
+The translate of a kernel is called an affine fibre. It contains every exact solution before the domain and inequality restrictions are applied.
+
+\textbf{Theorem 7.1 --- uniqueness within the maintained feasible domain.} If \(X_0\in F_y\), then
+
+\[
+\Theta(y;\eta)=\{X_0\}
+\quad\Longleftrightarrow\quad
+\{h\in\ker\mathcal R:X_0+h\in F_y\}=\{0\}.
+\tag{7.3}
+\]
+
+\textbf{Proof.} A second compatible point \(X\ne X_0\) gives a nonzero displacement \(h=X-X_0\) with \(\mathcal Rh=0\) and \(X_0+h\in F_y\). Conversely, every such nonzero displacement gives a distinct compatible state. Negating the existence of these equivalent objects proves the equivalence. \(\square\)
+
+Full column rank makes the kernel zero and is sufficient for uniqueness whenever a feasible solution exists. It is not necessary. In the example \(\mathcal R=(1\ \ 1)\), \(y=0\), \(F_y=\{x_1,x_2\ge0\}\), the kernel is the line spanned by \((1,-1)\), but no nonzero displacement from the origin stays in the nonnegative quadrant. The origin is therefore unique. This is the example of Section 1 now written as a general criterion.
+
+An empty feasible set means that the maintained constraints are mutually incompatible with the observation. It is not a detection of a preferred physical state. A bounded non-singleton set represents remaining ambiguity; an unbounded set leaves some directions unrestricted. A disconnected set can encode several separated alternatives. If a required response has not been supplied, none of these geometries can be inferred by calling the state zero.
+
+\hypertarget{realised-compatibility-and-statistical-identification}{%
+\subsection{Realised compatibility and statistical identification}\label{realised-compatibility-and-statistical-identification}}
+
+The previous theorem concerns exact data and a declared deterministic map. Statistical identification is a different question: can two physical parameters generate the same probability law for observations? If a model assigns law \(P_{X,\eta}\) to a random observation, a population identified set consists of states producing the same specified population law, after any allowed nuisance variation. A confidence region is instead a random set \(C(Y)\) designed to contain a true state with probability at least a declared coverage level under repeated sampling.
+
+These definitions distinguish a distribution, one realised dataset and a random procedure. A realised set can happen to contain one point without the sampling model being identifiable or the set having confidence coverage. Equation (7.3) does not prove a confidence theorem. Partial-identification and constraint-qualification literature discusses these distinctions in general settings; our specific deterministic fibre argument has been proved directly above. (Molinari 2020; Kaido, Molinari, and Stoye 2022)
+
+For a CMB analysis, the sampling law must account for whatever is random in the comparison: sky realisation, instrumental noise, masks, calibration and any data-derived anchor. A model that changes an observable has demonstrated a response. It has not yet demonstrated a distinguishable physical signature.
+
+\hypertarget{finite-null-ranks-and-the-complete-analysis}{%
+\section{Finite-null ranks and the complete analysis}\label{finite-null-ranks-and-the-complete-analysis}}
+
+\hypertarget{why-a-rank-needs-a-probability-argument}{%
+\subsection{Why a rank needs a probability argument}\label{why-a-rank-needs-a-probability-argument}}
+
+A common analysis compares an observed score with scores from simulated or transformed references. A small rank looks unusual, but this interpretation is valid only when the observation could legitimately occupy the reference positions under the null hypothesis.
+
+Let \(Z=(Z_0,\ldots,Z_{n-1})\) contain one labelled observation and \(n-1\) reference rows. Joint exchangeability means that permuting all row labels does not change their joint probability law. This is weaker than independence, but stronger than having identical one-row distributions. Correlations are permitted if the whole law has the required symmetry.
+
+Let \(S=\mathcal A(Z)\in\mathbb R^n\) be the output of the complete analysis. It includes preprocessing, tensor conversion, chart selection, nuisance estimation, MES construction, adaptation, missingness handling and final scoring. Row equivariance means
+
+\[
+\mathcal A(\pi Z)=\pi\mathcal A(Z)
+\tag{8.1}
+\]
+
+for every permutation \(\pi\). In words, changing the labels changes only the labels of the results, not the algorithm applied to a preferred row.
+
+\hypertarget{a-deterministic-counting-lemma}{%
+\subsection{A deterministic counting lemma}\label{a-deterministic-counting-lemma}}
+
+For a fixed real score vector \(s\), define
+
+\[
+p_i(s)=\frac1n\#\{j:s_j\ge s_i\}.
+\tag{8.2}
+\]
+
+\textbf{Lemma 8.1.} For every \(0\le\alpha\le1\), at most \(\alpha n\) indices satisfy \(p_i\le\alpha\).
+
+\textbf{Proof.} Arrange distinct score values from largest to smallest. If their tie groups have sizes \(m_1,\ldots,m_k\), every member of group \(r\) has rank \((m_1+\cdots+m_r)/n\). The included groups must therefore end at a cumulative size no larger than \(\alpha n\). Counting their members proves the statement, including arbitrary ties. \(\square\)
+
+The non-strict inequality \(\ge\) is important. It counts all members of a tie at the conservative edge of that tie group.
+
+\textbf{Theorem 8.2 --- exchangeable-row rank validity.} If \(Z\) is jointly exchangeable and \(\mathcal A\) is equivariant, then, for any fixed row \(i\),
+
+\[
+\Pr\{p_i(\mathcal A(Z))\le\alpha\}\le\alpha.
+\tag{8.3}
+\]
+
+If the scores have no ties almost surely, the rank is uniform on \(\{1/n,2/n,\ldots,1\}\).
+
+\textbf{Proof.} The vector of scores is exchangeable because
+\(\mathcal A(Z)\overset d=\mathcal A(\pi Z)=\pi\mathcal A(Z)\).
+Thus all events \(p_i\le\alpha\) have the same probability. Averaging their indicators and using Lemma 8.1 gives
+\(\Pr(p_i\le\alpha)=n^{-1}\mathbb E\sum_j\mathbf1\{p_j\le\alpha\}\le\alpha\).
+Without ties, each fixed score vector has each rank \(1/n,\ldots,1\) exactly once. Exchangeability makes the probability at every rank \(1/n\). \(\square\)
+
+For the observed row and \(N=n-1\) references, Eq. (8.2) becomes
+
+\[
+p_0=\frac{1+\sum_{j=1}^{N}\mathbf1\{S_j\ge S_0\}}{N+1}.
+\tag{8.4}
+\]
+
+The observation contributes the one in the numerator. The fraction is never zero. It is valid because of the preceding symmetry argument, not because the denominator looks familiar.
+
+\hypertarget{a-finite-transformation-group-is-a-different-reference-set}{%
+\subsection{A finite transformation group is a different reference set}\label{a-finite-transformation-group-is-a-different-reference-set}}
+
+Let a finite group \(\mathcal G\) act on the dataset, and suppose the null law is invariant under that action. For a fixed statistic \(T\), define
+
+\[
+p_{\mathcal G}(Z)=\frac1{|\mathcal G|}
+\sum_{g\in\mathcal G}\mathbf1\{T(gZ)\ge T(Z)\}.
+\tag{8.5}
+\]
+
+\textbf{Theorem 8.3 --- finite-group rank validity.} Under the stated invariant law, \(\Pr(p_{\mathcal G}\le\alpha)\le\alpha\).
+
+\textbf{Proof.} For fixed \(z\), form the score list \(T(gz)\), with one position for each group element. Stabiliser duplicates are allowed. Since \(h\mapsto hg\) is a permutation of the group, \(p_{\mathcal G}(gz)\) is precisely the upper-tail rank of the position \(g\) in this list. Lemma 8.1 implies that at most a fraction \(\alpha\) of these positions have rank at most \(\alpha\). Group invariance lets us average the event over all transformed datasets before taking its expectation, giving the same bound. \(\square\)
+
+The relevant positions in this proof are group elements, not arbitrary simulation rows. A sampled subset of transformations needs a construction giving the corresponding conditional exchangeability, including the observed statistic. Merely appending the identity to an arbitrary selected list does not prove that condition. The distinction is the basis of the cited randomisation results. (Ritzwoller, Romano, and Shaikh 2024; Phipson and Smyth 2010; Hemerik and Goeman 2018)
+
+Here is an exact counterexample to enlarging the reference set without enlarging the symmetry. Give equal probability to
+
+\[
+(10,0,-100,-100),\qquad(0,10,-100,-100).
+\tag{8.6}
+\]
+
+The law is invariant under swapping the first two coordinates. Ranking the first coordinate against all four gives \(1/4\) or \(1/2\), each with probability one half. At \(\alpha=1/2\), the rejection probability is one, not at most one half. Ranking over the genuine two-element orbit instead gives \(1/2\) or \(1\), which has the correct finite-group behaviour. Every number follows by counting the two displayed possibilities.
+
+\hypertarget{an-adaptive-counterexample-with-all-counts-visible}{%
+\subsection{An adaptive counterexample with all counts visible}\label{an-adaptive-counterexample-with-all-counts-visible}}
+
+Consider the four two-coordinate rows
+
+\[
+A=(-2,-2),\quad B=(-2,-1),\quad C=(-2,0),\quad D=(-1,-2),
+\tag{8.7}
+\]
+
+and assign probability \(1/24\) to every ordering. An asymmetric rule chooses the coordinate with the larger absolute value in the distinguished first row, breaking an exact tie towards coordinate 2. It then ranks that row by absolute value in the chosen coordinate.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1579}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2105}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2105}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2105}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2105}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+First row
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Selected coordinate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Number of rows at least as extreme
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Rank
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Orderings with this first row
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+A & 2 & 2 & 1/2 & 6 \\
+B & 1 & 3 & 3/4 & 6 \\
+C & 1 & 3 & 3/4 & 6 \\
+D & 2 & 2 & 1/2 & 6 \\
+\end{longtable}
+
+The remaining three labels can be ordered in \(3!=6\) ways, proving the final column. Thus the ranks split into twelve at \(1/2\) and twelve at \(3/4\). At \(\alpha=3/4\), all 24 are rejected, giving a size excess of \(1/4\). If exact ties go to coordinate 1, row A joins B and C: there are six ranks at \(1/2\) and eighteen at \(3/4\), with the same maximal excess.
+
+Now choose a coordinate from the pooled sums of squares instead. The first coordinate has sum 13 and the second sum 9, independent of row ordering. Selecting the larger pooled sum always chooses coordinate 1. Rows A, B and C then have rank \(3/4\), while D has rank 1. The probabilities are \(3/4\) and \(1/4\), and Eq. (8.3) holds. The problem was label-asymmetric adaptation, not adaptation itself.
+
+\hypertarget{missing-charts-shared-data-and-null-fidelity}{%
+\subsection{Missing charts, shared data and null fidelity}\label{missing-charts-shared-data-and-null-fidelity}}
+
+A chart refusal must remain part of the complete analysis. Deleting only reference rows whose inverse chart is unavailable changes the law of the comparison while treating the observed row differently. One may instead use a full-tensor statistic defined for every row, a genuinely symmetric status-aware construction, or abstain for the pool. Replacing an unavailable value by zero is not the same operation.
+
+Similarly, the same data-dependent MES prescription must be included in every symmetrically treated row if the row theorem is invoked. A different anchor construction for the observation violates the hypothesis even if the final score formula is identical.
+
+Finally, exact rank arithmetic cannot repair an unsuitable null law. A noisy observation and noise-free reference skies do not become exchangeable merely by using the same harmonic coordinates. Shared sky realisations also prevent several analysis outputs from being automatically independent replications. No current observational p-value is produced by this report.
+
+\clearpage
+\part{A concrete response: changing the observer}
+
+\hypertarget{doppler-response-and-its-stf-form}{%
+\section{Doppler response and its STF form}\label{doppler-response-and-its-stf-form}}
+
+\hypertarget{relative-observers-and-the-temperature-transformation}{%
+\subsection{Relative observers and the temperature transformation}\label{relative-observers-and-the-temperature-transformation}}
+
+Let \(\beta^a\) be spatial relative to \(u\), with \(\beta^2<1\), and define
+
+\[
+\widetilde u^a=\gamma(u^a+\beta^a),\qquad
+\gamma=(1-\beta^2)^{-1/2}.
+\tag{9.1}
+\]
+
+Its norm is \(\gamma^2(-1+\beta^2)=-1\). The physical relative velocity is \(c\beta\); this is the radiation--observer response, not a statement about a global matter-frame tilt.
+
+Using \(p=(E_\gamma/c)(u-n)\) from Section 5,
+
+\[
+\widetilde E_\gamma=-c\,p\cdot\widetilde u
+=\gamma E_\gamma(1+\beta\cdot n).
+\tag{9.2}
+\]
+
+A Lorentz transformation parallel and perpendicular to \(\widehat\beta\) gives the outward direction
+
+\[
+\widetilde n=
+\frac{n+[(\gamma-1)(\widehat\beta\cdot n)+\gamma|\beta|]\widehat\beta}
+{\gamma(1+\beta\cdot n)}.
+\tag{9.3}
+\]
+
+At \(\beta=0\) the formula is understood by continuity. To obtain the inverse, replace \(\beta\) by \(-\beta\) and interchange the two observers. In particular,
+\(\gamma(1+\beta\cdot n)=1/[\gamma(1-\beta\cdot\widetilde n)]\).
+
+For thermodynamic temperature, the photon occupation number has directional Planck form \(f=[\exp(E_\gamma/(k_BT(n)))-1]^{-1}\). Occupation number is a scalar on photon phase space. Equating it in the two frames leaves \(E_\gamma/T\) unchanged for the same ray, giving
+
+\[
+\boxed{\widetilde T(\widetilde n)
+=\frac{T(n(\widetilde n))}{\gamma(1-\beta\cdot\widetilde n)}}.
+\tag{9.4}
+\]
+
+This derivation states the physical input: a scalar occupation number and thermodynamic temperature, often called Doppler weight one. A frequency-dependent intensity or another observable has a different transformation law and cannot silently use Eq. (9.4). (Dai and Chluba 2014; Yasini and Pierpaoli 2017)
+
+\hypertarget{the-first-order-generator}{%
+\subsection{The first-order generator}\label{the-first-order-generator}}
+
+Expand the inverse of Eq. (9.3) at fixed \(\widetilde n\):
+\(n=\widetilde n-\beta+(\beta\cdot\widetilde n)\widetilde n+O(\beta^2)\).
+The displacement is tangent to the sphere. Since \(\gamma=1+O(\beta^2)\), Taylor expansion of Eq. (9.4), dropping the tilde on its argument, yields
+
+\[
+\delta_\beta T(n)
+=(\beta\cdot n)T(n)
+-[\beta-(\beta\cdot n)n]\cdot\nabla_{S^2}T(n).
+\tag{9.5}
+\]
+
+The surface gradient is the tangential projection of an ambient gradient. The first term is Doppler modulation; the second shifts the angular argument. Both signs follow from the outward-sky convention. This is a first-order expansion for sufficiently smooth positive temperature fields and small \(\beta\), not an exact finite-velocity truncation.
+
+For a constant monopole, the gradient term vanishes, so \(\delta_\beta T_0=T_0\beta\cdot n\): a pure dipole. For a quadrupole \(T_Q=Q_{ij}n_in_j\), the surface gradient is
+\(2[Qn-(Q_{ij}n_in_j)n]\). Consequently,
+
+\[
+\delta_\beta T_Q
+=3(\beta\cdot n)Q_{ij}n_in_j-2(Q\beta)\cdot n.
+\tag{9.6}
+\]
+
+The cubic term contains both octupole and dipole parts. To separate them, apply the STF projection rather than reading the polynomial degree alone.
+
+\hypertarget{the-quadrupole-to-octupole-map}{%
+\subsection{The quadrupole-to-octupole map}\label{the-quadrupole-to-octupole-map}}
+
+Define the linear map \(B_Q:\mathbb R^3\to\mathrm{STF}_3\) by
+
+\[
+(B_Q\beta)_{ijk}=3\beta_{\langle i}Q_{jk\rangle}.
+\tag{9.7}
+\]
+
+Using Eq. (2.4), its complete Cartesian form is
+
+\[
+(B_Q\beta)_{ijk}
+=\beta_iQ_{jk}+\beta_jQ_{ik}+\beta_kQ_{ij}
+-\frac25[\delta_{ij}(Q\beta)_k+\delta_{ik}(Q\beta)_j+\delta_{jk}(Q\beta)_i].
+\tag{9.8}
+\]
+
+The trace of the first three terms is \(2(Q\beta)_i\), explaining the coefficient \(2/5\). Contracting with \(n_in_jn_k\) and using Eq. (9.6) shows
+\(\delta_\beta T_Q=(B_Q\beta)_{ijk}n_in_jn_k-\tfrac45(Q\beta)\cdot n\).
+Thus \(B_Q\beta\) is precisely its octupole contribution. This calculation is independent of a coordinate-specific spherical-harmonic table.
+
+\textbf{Proposition 9.1 --- adjoint and normal matrix.} In the full Frobenius metric,
+
+\[
+(B_Q^*O)_i=3(O:Q)_i,\qquad
+(B_Q\beta):Q=M_Q\beta,
+\quad M_Q=(Q:Q)I+\frac65Q^2,
+\tag{9.9}
+\]
+
+and hence \(B_Q^*B_Q=3M_Q\).
+
+\textbf{Proof.} Contract Eq. (9.8) with an STF3 tensor. The delta terms vanish by trace-freeness, and symmetry makes the first three terms equal to \(\beta_iO_{ijk}Q_{jk}\). This proves the adjoint formula. Next contract Eq. (9.8) with \(Q_{jk}\). The first three terms give \((Q:Q)\beta+2Q^2\beta\). The first two delta terms contribute \(-\tfrac45Q^2\beta\), while the last contains \(\operatorname{tr}Q=0\). The total is Eq. (9.9). Apply the adjoint formula once more to obtain \(3M_Q\). \(\square\)
+
+For \(Q\ne0\), \(M_Q\) is positive definite since
+\(x^TM_Qx=(Q:Q)\|x\|^2+\tfrac65\|Qx\|^2>0\).
+The map therefore has rank three.
+
+\hypertarget{least-squares-response-coordinates-and-the-residual}{%
+\subsection{Least-squares response coordinates and the residual}\label{least-squares-response-coordinates-and-the-residual}}
+
+\textbf{Theorem 9.2 --- inverse on the response image and orthogonal residual.} For nonzero \(Q\), the minimum of \(\|O-B_Q\beta\|_F^2\) occurs uniquely at
+
+\[
+\widehat\beta_{\rm LS}=M_Q^{-1}(O:Q).
+\tag{9.10}
+\]
+
+The corresponding projection is
+\(P_QO=B_QM_Q^{-1}(O:Q)\), and the residual \(O_\perp=O-P_QO\) satisfies \(O_\perp:Q=0\). The residual subspace has dimension four.
+
+\textbf{Proof.} The normal equation is \(B_Q^*B_Q\beta=B_Q^*O\). Both sides contain the same factor three by Proposition 9.1, giving Eq. (9.10). Since \(M_Q\succ0\), the minimiser is unique. Its residual is orthogonal to the image, equivalently \(B_Q^*O_\perp=0\), which is the contraction statement. Rank--nullity gives \(7-3=4\). \(\square\)
+
+An image vector has the form \(B_Q\beta\), so Eq. (9.10) also recovers that \(\beta\) exactly. For a general observed octupole it is only an algebraic response coordinate. An arbitrary intrinsic octupole can have a component in the same image. Without a physical model separating those contributions, the coordinate is not an empirical observer velocity. The residual is not automatically an identified intrinsic octupole. (Roldan, Notari, and Quartin 2016)
+
+\hypertarget{a-sharp-relative-conditioning-bound}{%
+\subsection{A sharp relative-conditioning bound}\label{a-sharp-relative-conditioning-bound}}
+
+\textbf{Theorem 9.3.} For every nonzero real STF2 quadrupole,
+
+\[
+\kappa_2(M_Q)\le\frac53,\qquad
+\kappa_2(B_Q)\le\sqrt{\frac53}.
+\tag{9.11}
+\]
+
+\textbf{Proof.} Diagonalise \(Q\). Up to an overall scale, sign and permutation, any nonzero trace-free spectrum can be written \((-1,1-t,t)\), with \(0\le t\le1/2\): choose the eigenvalue of the isolated sign, scale its magnitude to one, and order the other two. The largest squared eigenvalue is 1 and the smallest is \(t^2\). Substitution into Eq. (9.9) gives
+
+\[
+\kappa_2(M_Q)=\frac{8-5t+5t^2}{5-5t+8t^2},\qquad
+\frac53-\kappa_2(M_Q)
+=\frac{(5t-1)^2}{3(5-5t+8t^2)}\ge0.
+\tag{9.12}
+\]
+
+The denominator is positive. Equality occurs at \(t=1/5\), or spectra proportional to \((-5,4,1)\). Finally, singular values of \(B_Q\) are square roots of eigenvalues of \(3M_Q\), proving the second bound and its sharpness. \(\square\)
+
+This is a relative condition bound. Multiplying \(Q\) by a small amplitude multiplies \(B_Q\) by that amplitude, so the absolute inverse sensitivity still diverges as \(Q\to0\). A small condition number does not remove the need for a nonzero signal or a physical error model.
+
+\clearpage
+\part{What changes after observing and processing the sky?}
+
+\hypertarget{masking-fitting-and-unobserved-angular-structure}{%
+\section{Masking, fitting and unobserved angular structure}\label{masking-fitting-and-unobserved-angular-structure}}
+
+\hypertarget{the-order-of-operations-is-part-of-the-model}{%
+\subsection{The order of operations is part of the model}\label{the-order-of-operations-is-part-of-the-model}}
+
+A physical sky is not usually analysed by taking exact integrals over the whole sphere. Some directions may be downweighted, a beam smooths the signal, a finite pixelisation samples it, and a fitting procedure returns a selected set of coefficients. These operations define a new observable. We should derive its response rather than insert the full-sky response after processing.
+
+We use the following order: begin with a positive thermodynamic-temperature sky, change the observer, apply the source beam and pixel-window transfer, synthesise the sampled sky, perform a weighted simultaneous fit through multipole five, apply the declared post-fit commonisation, and retain multipoles two through five. A transfer factor is the coefficient multiplying a harmonic mode under a specified linear smoothing operation. Commonisation here means converting the fitted response to the chosen common source/target smoothing convention; it must not be mistaken for a different order of the physical boost and smoothing.
+
+The order matters even for simple diagonal transfer. If a transfer multiplies multipole \(\ell\) by \(b_\ell\), while the boost takes part of that multipole to \(\ell+1\), transfer after boost multiplies that part by \(b_{\ell+1}\). Transfer before boost multiplies it by \(b_\ell\). They agree only under an additional condition on the factors or the signal. Mask-induced mode mixing and matrix-valued responses for general filtering provide the relevant observational background. (Hivon et al. 2002; Leung et al. 2022)
+
+\hypertarget{the-weighted-fit-and-its-structural-monopole-null}{%
+\subsection{The weighted fit and its structural monopole null}\label{the-weighted-fit-and-its-structural-monopole-null}}
+
+Let \(Y_{p\alpha}\) evaluate the fitted real spherical harmonic \(\alpha\) at pixel \(p\), and let \(W\) be a diagonal matrix of nonnegative pixel weights. Assume the weighted columns are linearly independent. The fitted coefficient vector for sampled data \(t\) is
+
+\[
+\widehat a=(Y^TWY)^{-1}Y^TWt.
+\tag{10.1}
+\]
+
+This follows by differentiating \((t-Ya)^TW(t-Ya)\); the positive normal matrix makes the minimiser unique. The positivity requirement is a property of the particular mask and fitting grid. A rank-deficient design is not repaired by calling its inverse an ordinary inverse.
+
+\textbf{Proposition 10.1 --- a fitted dipole does not become a retained quadrupole in the exact fit.} If the simultaneous model includes the monopole and all dipoles and the retained output begins at \(\ell=2\), the first-order response to a physical constant monopole is zero in the retained output.
+
+\textbf{Proof.} Section 9 gives \(\delta_\beta T_0=T_0\beta\cdot n\), a dipole. Its sampled vector is exactly \(Yd\) for a coefficient vector \(d\) supported on the fitted dipole columns. Substituting into Eq. (10.1) gives \(\widehat a=d\), independent of nonuniform weights. The retention operator removes those columns. Diagonal source/target smoothing preserves the dipole sector and does not alter this conclusion. \(\square\)
+
+A separately implemented transform or iterative solve can nevertheless produce a small numerical leakage. Such leakage is an implementation residual, not a new physical monopole response. The proposition refers to the exact declared linear fit with consistent samples.
+
+\hypertarget{source-and-output-dimensions}{%
+\subsection{Source and output dimensions}\label{source-and-output-dimensions}}
+
+The low-source coordinate is
+
+\[
+s_{\rm low}=(T_0,r_1,\ldots,r_6)\in\mathbb R^{49},
+\qquad a_{00}=\sqrt{4\pi}\,T_0.
+\tag{10.2}
+\]
+
+There are \(\sum_{\ell=1}^{6}(2\ell+1)=48\) anisotropy coordinates and one physical monopole coordinate. Retaining \(\ell=2,3,4,5\) gives \(5+7+9+11=32\) outputs. The first-order response coefficient is
+
+\[
+J_{i\alpha A}
+=\left.\frac{\partial^2y_\alpha}
+{\partial\beta_i\partial s_A}\right|_{\beta=0},
+\qquad J\in\mathbb R^{3\times32\times49}.
+\tag{10.3}
+\]
+
+All entries are dimensionless when source and output use the same temperature unit. For one unit boost direction \(\widehat b\), contraction with \(\widehat b_i\) and removal of the structural monopole column give a matrix \(J_{\widehat b}\) of shape \(32\times48\).
+
+The source and output metrics in raw real coordinates are
+
+\[
+G_S=\operatorname{diag}(4\pi,G_1,\ldots,G_6),\qquad
+G_R=\operatorname{diag}(G_2,G_3,G_4,G_5).
+\tag{10.4}
+\]
+
+The monopole factor follows from \(a_{00}=\sqrt{4\pi}T_0\). Replacing coordinates by \(G^{1/2}\) times those coordinates converts their norm to the Euclidean norm. Singular-value statements must use the resulting transformed response, or state the original metrics explicitly. Rank is invariant under these invertible coordinate changes, while singular values are metric dependent.
+
+\hypertarget{nuisance-directions-and-quotient-information}{%
+\subsection{Nuisance directions and quotient information}\label{nuisance-directions-and-quotient-information}}
+
+Higher source multipoles can contribute to the same retained output after masking and fitting. For a cutoff \(L\ge7\), let
+
+\[
+K_{\widehat b}^{\rm hi}(L):
+\bigoplus_{\ell=7}^{L}V_\ell\longrightarrow\mathbb R^{32},
+\qquad
+H_{\widehat b}(L)=\operatorname{Im}K_{\widehat b}^{\rm hi}(L),
+\tag{10.5}
+\]
+
+where \(V_\ell\) is the \((2\ell+1)\)-dimensional real harmonic space. The number of high-source coordinates is
+
+\[
+d_H(L)=\sum_{\ell=7}^{L}(2\ell+1)
+=(L+1)^2-49=(L-6)(L+8).
+\tag{10.6}
+\]
+
+Here the high-source vector is an unrestricted deterministic nuisance. If two low-source responses differ by an element of \(H\), an appropriate nuisance change can make their total outputs coincide. Thus the retained information is an equivalence class modulo \(H\). The orthogonal representative of that class is
+
+\[
+J_{\rm surv}(L)=(I-P_H)J_{\widehat b}.
+\tag{10.7}
+\]
+
+The subscript indicates the part surviving nuisance quotienting; it does not name a new observed tensor.
+
+\textbf{Theorem 10.2 --- quotient-rank identity.} For any compatible real matrices \(K,J\),
+
+\[
+\boxed{\operatorname{rank}[(I-P_{\operatorname{Im}K})J]
+=\operatorname{rank}[K\ J]-\operatorname{rank}K.}
+\tag{10.8}
+\]
+
+\textbf{Proof.} Let \(V=\operatorname{Im}K+\operatorname{Im}J\). Restrict the projection \(I-P_{\operatorname{Im}K}\) to \(V\). Its kernel is exactly \(\operatorname{Im}K\), since a vector is projected to zero precisely when it lies in that subspace. Its image is the image of the projected \(J\). Rank--nullity on \(V\) gives Eq. (10.8), since \(\dim V=\operatorname{rank}[K\ J]\). \(\square\)
+
+\textbf{Corollary 10.3 --- nesting cannot restore information already removed.} Appending higher-source columns enlarges \(H(L)\). Once \(\operatorname{Im}J\subseteq H(L)\), the projected response remains zero at every larger cutoff.
+
+\textbf{Proof.} Each earlier column remains an available nuisance column. The inclusion therefore persists. Projection onto the orthogonal complement annihilates every vector in that inclusion. \(\square\)
+
+This result concerns an unrestricted nuisance image. An amplitude bound, covariance model or prior can assign very different costs to different nuisance vectors; it defines a different inference problem. A vanishing deterministic quotient is not a statement that every statistical analysis has zero information.
+
+\hypertarget{a-continuum-example-with-an-internal-rank-certificate}{%
+\section{A continuum example with an internal rank certificate}\label{a-continuum-example-with-an-internal-rank-certificate}}
+
+\hypertarget{the-model-and-why-its-normal-matrix-is-invertible}{%
+\subsection{The model and why its normal matrix is invertible}\label{the-model-and-why-its-normal-matrix-is-invertible}}
+
+We now use exact angular integrals, identity transfer, and the piecewise axisymmetric weight
+
+\[
+w(x)=
+\begin{cases}
+0,&-1\le x\le-3/4,\\
+1/2+2x/3,&-3/4<x<3/4,\\
+1,&3/4\le x\le1,
+\end{cases}
+\qquad x=\cos\theta.
+\tag{11.1}
+\]
+
+Fit harmonics through \(\ell=5\), retain \(\ell=2\) through 5, and consider source multipoles 7 through \(L\). Let \(\alpha\) label the fitted harmonics and \(p\) the source harmonics. With the generator of Eq. (9.5), define
+
+\[
+N_{\alpha\beta}=\int_{S^2}wY_\alpha^*Y_\beta\,d\Omega,
+\qquad
+R_{\alpha p}^{(\widehat b)}=\int_{S^2}wY_\alpha^*\mathcal B_{\widehat b}Y_p\,d\Omega,
+\tag{11.2}
+\]
+
+\[
+K_{\widehat b}^{\rm cont}(L)=P_{2:5}N^{-1}R_{\widehat b}^{7:L}.
+\tag{11.3}
+\]
+
+The symbol \(\mathcal B_{\widehat b}\) here acts on angular functions by Eq. (9.5); it is not the finite-dimensional tensor map \(B_Q\). The selection matrix \(P_{2:5}\) keeps the fitted rows in the stated range.
+
+To see that \(N\) is positive definite, take a finite harmonic combination \(f\). Its quadratic form is \(\int w|f|^2d\Omega\). If it vanishes, continuity implies that \(f\) vanishes on the open cap where \(w>0\). A finite harmonic combination is real analytic on the sphere: in local coordinates it is a finite combination of the polynomial restrictions introduced in Section 3. A real-analytic function zero on an open neighbourhood has all Taylor coefficients zero there; propagating overlapping Taylor neighbourhoods on the connected sphere makes it identically zero. Harmonic orthogonality then makes every coefficient zero. This proves positivity for a nonzero coefficient vector. It is a continuum argument, not an assumption about a finite pixel grid.
+
+\hypertarget{reducing-the-axial-calculation-to-polynomial-integrals}{%
+\subsection{Reducing the axial calculation to polynomial integrals}\label{reducing-the-axial-calculation-to-polynomial-integrals}}
+
+For \(\widehat b=\widehat z\), Eq. (9.5) becomes
+
+\[
+\mathcal B_zf=xf-(1-x^2)\partial_xf.
+\tag{11.4}
+\]
+
+Define
+\(a_{\ell m}=\sqrt{(\ell^2-m^2)/[(2\ell-1)(2\ell+1)]}\).
+The associated Legendre recurrences imply
+
+\[
+xY_{\ell m}=a_{\ell+1,m}Y_{\ell+1,m}+a_{\ell m}Y_{\ell-1,m},
+\]
+
+\[
+(1-x^2)\partial_xY_{\ell m}
+=-\ell a_{\ell+1,m}Y_{\ell+1,m}
++(\ell+1)a_{\ell m}Y_{\ell-1,m}.
+\tag{11.5}
+\]
+
+A direct derivation of the needed polynomial identities is given in Appendix A. Subtracting Eq. (11.5) from its first line as in Eq. (11.4) gives
+
+\[
+\boxed{\mathcal B_zY_{\ell m}
+=-\ell a_{\ell m}Y_{\ell-1,m}
++(\ell+1)a_{\ell+1,m}Y_{\ell+1,m}.}
+\tag{11.6}
+\]
+
+The axial boost preserves \(m\). Since the mask is also independent of \(\varphi\), the Fourier integral makes the normal and response matrices block diagonal in \(m\).
+
+For \(0\le m\le5\), define the normalised overlap
+
+\[
+I_m(\ell,k)=\frac12
+\sqrt{\frac{(2\ell+1)(2k+1)(\ell-m)!(k-m)!}
+{(\ell+m)!(k+m)!}}
+\int_{-1}^1 w(x)(1-x^2)^mP_\ell^{(m)}(x)P_k^{(m)}(x)\,dx.
+\tag{11.7}
+\]
+
+It is zero when either degree is smaller than \(m\). The two signs in associated Legendre functions cancel. The factor in front includes the azimuthal integral of the normalised harmonics.
+
+The block equations are now fully specified:
+
+\[
+(N_m)_{\ell k}=I_m(\ell,k),\qquad \ell,k=m,\ldots,5,
+\]
+
+\[
+(R_m)_{\ell p}
+=-p a_{pm}I_m(\ell,p-1)+(p+1)a_{p+1,m}I_m(\ell,p+1),
+\qquad p=7,\ldots,L,
+\tag{11.8}
+\]
+
+and \(K_m\) consists of rows \(\ell\ge2\) of \(N_m^{-1}R_m\). Every integral is a polynomial integral with rational endpoints, followed by known harmonic normalisations. The complete finite recipe and exact minor values are printed in Appendix B; no external matrix file is needed to define the calculation.
+
+\hypertarget{exact-axial-full-row-rank}{%
+\subsection{Exact axial full row rank}\label{exact-axial-full-row-rank}}
+
+\textbf{Theorem 11.1 --- axial continuum rank at the stated cutoff.} The operator in Eq. (11.3), with Eqs. (11.1) and (11.4), has real row rank 32 at \(L=12\).
+
+\textbf{Proof.} The retained row counts in the \(m=0,1,2,3,4,5\) blocks are \((4,4,4,3,2,1)\). The exact tabulation in Appendix B gives a nonzero determinant square for the square minor using the first corresponding number of source columns in every block. The tabulation is specified by Rodrigues' coefficients, elementary power integrals, the finite matrices in Eq. (11.8), and the determinant formula. All its numerators and denominators are strictly positive integers. Hence each block has at least its full row count as rank, and cannot have a larger rank because it has no further rows.
+
+For a real field, the \(m=0\) block occurs once, while each positive \(m\) contributes two identical-rank real blocks from the real and imaginary coordinates. The total is
+\(4+2(4+4+3+2+1)=32\). This is all retained dimensions. \(\square\)
+
+The proof is an exact finite algebraic certificate, not a singular-value threshold argument. The integer fractions are reproduced from the retained exact calculation, with enough defining equations to check every entry. Their reproduction in this exposition is not a claim of a new independent numerical or computer-algebra run.
+
+By Corollary 10.3, the axial continuum nuisance image is all of \(\mathbb R^{32}\) at this cutoff and every larger one. The unrestricted deterministic low-source quotient therefore vanishes for this operator. This conclusion neither bounds a physical high-source amplitude nor removes information under a separately specified stochastic model.
+
+\hypertarget{the-numerical-rank-ladder-and-its-interpretation}{%
+\subsection{The numerical rank ladder and its interpretation}\label{the-numerical-rank-ladder-and-its-interpretation}}
+
+\textbf{Computational results, not new analytic theorems.} The preceding research calculations reported the following ranks for the same continuum weight and identity transfer:
+
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedleft
+Source cutoff
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Axial direction \(\widehat z\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Transverse directions \(\widehat x,\widehat y\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Specified diagonal directions
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+8 & 20 & 24 & 24 \\
+9 & 27 & 29 & 32 \\
+12 & 32 & 32 & 32 \\
+\end{longtable}
+
+The diagonal directions are \((1,1,1)/\sqrt3\), \((1,-1,1)/\sqrt3\) and \((1,1,-1)/\sqrt3\). This defines the six directions used in the comparison. At \(L=12\), the reported smallest singular values in orthonormal source and retained coordinates are
+
+\[
+s_{32}^{Z}\simeq0.006905664979696537,
+\quad s_{32}^{X/Y}\simeq0.010490334912761,
+\quad s_{32}^{\rm diag}\simeq0.008510322776380.
+\tag{11.9}
+\]
+
+The nonaxial entries are multi-algorithm numerical evidence, not interval enclosures or analytic proofs for arbitrary directions. To define an independent direct-quadrature route, evaluate the harmonics of Section 3 and their angular derivatives, apply Eq. (9.5) for each of the six vectors, integrate Eq. (11.2) piecewise across the mask breakpoints, and solve the normal equations. The recorded cross-check used 48 Gauss--Legendre nodes on each of \((-3/4,3/4)\) and \((3/4,1)\), and 64 equally spaced azimuths. These quadrature settings describe that calculation; they are not claimed to provide rigorous interval errors.
+
+At \(L=8\) there are already 32 high-source columns, yet the reported ranks are below 32. Column count is not a rank calculation. At \(L=12\), numerical agreement across methods is useful evidence, but it does not replace a mathematical error bound. Only the axial full-rank statement in Theorem 11.1 is supplied here with its exact minor certificate.
+
+\hypertarget{why-finite-pixelisation-remains-a-different-problem}{%
+\subsection{Why finite pixelisation remains a different problem}\label{why-finite-pixelisation-remains-a-different-problem}}
+
+A finite HEALPix calculation replaces the continuum integrals and synthesis with a particular equal-area pixel grid and finite transform/fit algorithms. HEALPix is the name of that spherical pixelisation, not another continuum measure. Its computed response can differ from Eq. (11.3) by quadrature, iteration, transfer and roundoff errors.
+
+The earlier finite matched-control investigation reported seventeen ambiguous coordinates, one resolved survivor and no containment candidate among its eighteen registered cases. These are historical finite-computation outcomes under its selected settings, not eighteen theorems and not a statement about every mask. This exposition does not rerun those cases or infer their missing error bounds from the continuum result.
+
+A positive continuum smallest singular value can be overwhelmed by a numerical perturbation of comparable size. We therefore retain the finite-operator conclusion as unresolved. The next section explains precisely what kind of bound would permit a rank statement; it does not assume that the bound has already been established for an actual pixel calculation.
+
+\clearpage
+\part{Numerical uncertainty and the meaning of a conclusion}
+
+\hypertarget{matrix-errors-rank-and-subspace-orientation}{%
+\section{Matrix errors, rank and subspace orientation}\label{matrix-errors-rank-and-subspace-orientation}}
+
+\hypertarget{a-declared-family-of-errors}{%
+\subsection{A declared family of errors}\label{a-declared-family-of-errors}}
+
+Let the response error have the same matrix shape as the response itself. Suppose the allowed perturbations are represented by finite families
+
+\[
+\Delta_f=\sum_i b_{fi}E_{fi},\qquad
+\|b_f\|_2\le r_f,\qquad
+\Delta=\sum_{f=1}^{F}\Delta_f.
+\tag{12.1}
+\]
+
+Here \(F\ge1\) is the number of families, \(r_f>0\) is a declared coefficient radius, and every \(E_{fi}\) is a known error-direction matrix. The families, basis, coordinate metrics and radii must be fixed independently of the later rank decision. A matrix measured on one calibration sample does not by itself prove that all actual errors lie in the class.
+
+An error family is a set of possible perturbations, not necessarily a probability distribution. Independent family coefficients are not assumed. The following bound holds even when they are dependent, since it uses worst-case norm bounds.
+
+\textbf{Theorem 12.1 --- a matrix-valued error envelope.} Every perturbation in Eq. (12.1) satisfies
+
+\[
+\Delta\Delta^T\preceq F\sum_f r_f^2\sum_iE_{fi}E_{fi}^T.
+\tag{12.2}
+\]
+
+\textbf{Proof.} For any output-space vector \(x\), Cauchy--Schwarz in the finite family sum gives
+\(\|\sum_f\Delta_f^Tx\|^2\le F\sum_f\|\Delta_f^Tx\|^2\).
+Within one family,
+\(\|\sum_i b_{fi}E_{fi}^Tx\|\le\|b_f\|_2(\sum_i\|E_{fi}^Tx\|^2)^{1/2}\),
+which follows by applying scalar Cauchy--Schwarz to each component and summing. Squaring, using the radius bounds and adding families yields Eq. (12.2) as an inequality for every quadratic form \(x\). That is exactly the definition of Loewner order. \(\square\)
+
+Add a positive regularisation scale,
+
+\[
+\Gamma_E=F\sum_f r_f^2\sum_iE_{fi}E_{fi}^T+\lambda^2I,
+\qquad\lambda>0.
+\tag{12.3}
+\]
+
+For nonzero \(x\),
+\(x^T\Gamma_Ex=F\sum_fr_f^2\sum_i\|E_{fi}^Tx\|^2+\lambda^2\|x\|^2>0\).
+Thus \(\Gamma_E\) is positive definite and has the inverse square root \(W=\Gamma_E^{-1/2}\), obtained from Lemma 2.2 by replacing each positive eigenvalue with its inverse square root. All terms in Eq. (12.3) have squared-response units; whitening by \(W\) removes those units in the chosen metric.
+
+\hypertarget{which-reparametrisations-leave-the-bound-unchanged}{%
+\subsection{Which reparametrisations leave the bound unchanged?}\label{which-reparametrisations-leave-the-bound-unchanged}}
+
+Replacing all matrices of family \(f\) by \(c_fE_{fi}\), with \(c_f>0\), and its radius by \(r_f/c_f\) leaves both the represented perturbation set and the corresponding Gram sum in Eq. (12.3) unchanged. Replacing the family basis by an orthogonal mixing also preserves the sum: if \(E_i'=\sum_jO_{ij}E_j\) and \(O^TO=I\), then
+\(\sum_iE_i'E_i'^T=\sum_{jk}(\sum_iO_{ij}O_{ik})E_jE_k^T=\sum_jE_jE_j^T\).
+These are exact invariances within the fixed family partition.
+
+An exactly zero family is different. It adds no possible perturbation but changes the conservative prefactor \(F\). Therefore it should be omitted or rejected when defining the representation. Splitting or merging families is not covered by the preceding invariance: the coefficient geometry and the bound can change. This is why the partition itself is part of the error model.
+
+\hypertarget{a-conditional-rank-certificate}{%
+\subsection{A conditional rank certificate}\label{a-conditional-rank-certificate}}
+
+Write \(K_{\rm obs}=K_{\rm true}+\Delta\), where the first is a computed matrix and the second the ideal matrix in the same coordinates. The word observed here refers to the computed response, not a new sky observation. If the actual error belongs to Eq. (12.1), then
+
+\[
+W\Delta\Delta^TW\preceq I,
+\qquad\|W\Delta\|_2\le1.
+\tag{12.4}
+\]
+
+The first inequality follows by congruence transformation of Eq. (12.2) with \(W\), using \(\Delta\Delta^T\preceq\Gamma_E\). The second follows because the squared operator norm is the largest eigenvalue of the product with its transpose.
+
+\textbf{Theorem 12.2 --- rank under a contained numerical error.} Under these hypotheses,
+
+\[
+s_i(WK_{\rm true})\ge s_i(WK_{\rm obs})-1,
+\]
+
+\[
+\operatorname{rank}K_{\rm true}
+\ge\#\{i:s_i(WK_{\rm obs})>1\}.
+\tag{12.5}
+\]
+
+\textbf{Proof.} Apply Proposition 2.3 to \(WK_{\rm obs}\) and perturbation \(-W\Delta\). Every strictly positive lower bound gives a nonzero singular value of \(WK_{\rm true}\). Invertible left multiplication by \(W\) preserves the rank. \(\square\)
+
+For an \(m\times n\) response with \(m\le n\), a sufficient full-row-rank condition is
+
+\[
+s_m(WK_{\rm obs})\ge1+\delta,\qquad\delta>0.
+\tag{12.6}
+\]
+
+The positive margin is above the unit perturbation floor. A threshold at or below one is not justified by Eq. (12.5), however early that threshold was chosen. The parameter \(\delta\) must not be tuned after inspecting the same singular values.
+
+This theorem is conditional on actual error membership. It does not establish that the error registry is complete. That premise is precisely what prevents us from replacing the unresolved finite-pixel result by the continuum rank certificate.
+
+\hypertarget{why-rank-does-not-fix-a-singular-subspace}{%
+\subsection{Why rank does not fix a singular subspace}\label{why-rank-does-not-fix-a-singular-subspace}}
+
+A matrix can retain the same rank while its singular vectors rotate. For example, the two rank-one projectors onto distinct lines in a plane both have rank one, regardless of their angle. To control a nuisance projector, we need a separation between the selected spectral cluster and its complement as well as a perturbation bound.
+
+Here is an explicit finite-dimensional version of that requirement. It supplies the argument instead of only naming a perturbation theorem; sharper or differently normalised bounds are available in the cited subspace literature. (Cai and Zhang 2018; Li 1998; Lyu and Wang 2020)
+
+\textbf{Proposition 12.3 --- a gap-dependent projector bound.} Let \(H\) and \(\widehat H=H+E\) be real symmetric matrices. Let \(U\) and \(\widehat U\) have orthonormal columns spanning specified eigenspaces of equal dimension \(r\), and let \(U_c\) span the orthogonal complement of \(U\). Assume every eigenvalue \(\lambda_i\) of \(H\) in \(U_c\) is separated from every selected eigenvalue \(\widehat\lambda_j\) of \(\widehat H\) by at least \(g>0\). Then
+
+\[
+\|UU^T-\widehat U\widehat U^T\|_F
+\le\frac{\sqrt2\,\|E\|_F}{g}.
+\tag{12.7}
+\]
+
+\textbf{Proof.} Choose the displayed bases to be eigenvector bases, allowed by Lemma 2.2. Put \(C=U_c^T\widehat U\). Multiplying \(\widehat H\widehat U=\widehat U\widehat\Lambda\) by \(U_c^T\) gives
+\(\Lambda_cC-C\widehat\Lambda=-U_c^TE\widehat U\).
+Entrywise,
+\((\lambda_i-\widehat\lambda_j)C_{ij}=-(U_c^TE\widehat U)_{ij}\).
+The gap assumption implies
+\(\|C\|_F\le\|U_c^TE\widehat U\|_F/g\le\|E\|_F/g\),
+because orthogonal projections cannot increase a Frobenius norm. Finally,
+\(\|UU^T-\widehat U\widehat U^T\|_F^2=2r-2\|U^T\widehat U\|_F^2=2\|C\|_F^2\),
+where the last equality uses the orthogonal decomposition into \(U\) and \(U_c\). This proves Eq. (12.7). \(\square\)
+
+For a rectangular response, use \(H=AA^T\); its eigenvectors are the left singular vectors of \(A\). If \(\widehat A=A+D\), then
+
+\[
+\widehat H-H=AD^T+DA^T+DD^T,
+\qquad
+\|\widehat H-H\|_F
+\le(2\|A\|_2+\|D\|_2)\|D\|_F.
+\tag{12.8}
+\]
+
+The norm bound follows from the triangle inequality and \(\|AB\|_F\le\|A\|_2\|B\|_F\), proved by applying the operator-norm bound to every column. Combining Eqs. (12.7)--(12.8) gives a concrete, possibly conservative, sufficient projector control once the specified cross-gap is known. It does not assert that an arbitrary numerically selected cluster has that gap or that the finite CMB error is already bounded. These are additional hypotheses, not consequences of a rank count.
+
+\hypertarget{what-we-have-learned-and-what-remains-physical-input}{%
+\section{What we have learned and what remains physical input}\label{what-we-have-learned-and-what-remains-physical-input}}
+
+We began with a temperature map, not a spacetime solution. Harmonic and STF representations retain the same angular information, while scalar powers generally do not. On a nonzero cyclic domain, the invariant packet separates proper-rotation orbits and yields an explicit representative. Its singular boundaries are part of the result, not defects to hide by an arbitrary axis choice.
+
+We then introduced physical kinematics independently. A shear tensor belongs to an observer congruence; a temperature quadrupole belongs to an angular field. Their common STF2 type does not supply a response. Conditional MES inequalities bound physical-sector norms under radiation, derivative and observer premises. They cannot recover directions from invariant scalars alone. The product gauge, exact affine fibre and finite-null arguments show where additional inequalities, shared data and sampling symmetry enter an inference.
+
+The local-observer response provides one concrete translation between a change of frame and an angular pattern. We derived its temperature pullback, quadrupole-to-octupole tensor map, normal matrix and residual. Its least-squares coordinate remains an algebraic response coordinate unless a model distinguishes intrinsic and observer-induced contributions. General shear, vorticity or global-matter-tilt inference still needs the corresponding physical response.
+
+Processing adds another layer. Weighted fitting and mask coupling change which nuisance patterns can occupy the retained output space. The continuum axial example demonstrates exact full nuisance-image rank for one stated operator, using a certificate included in this report. Numerical nonaxial results and finite-pixel studies retain different evidential status. A matrix error bound can support a rank or subspace conclusion only when it actually contains the relevant perturbations and has the required margin or gap.
+
+The mathematical statements have their hypotheses and proofs within this report. For the kinematical bounds, Appendix E supplies an explicit sufficient first-order radiation model, moment equations and derivative-envelope calculation. Its premises remain physical assumptions; a full nonlinear almost-isotropy or converse theorem is not claimed. Historical numerical results remain calculations with stated domains. These distinctions make the conclusions usable without confusing an assumed physical model, an exact deduction and a finite numerical observation.
+
+No current observational p-value, physical shear estimate, intrinsic-octupole fraction, global-tilt estimate or finite-HEALPix containment conclusion is claimed. The practical outcome is a chain of well-defined questions: represent the observable, specify the physical state, declare the response and constraints, identify the compatible set, then justify the statistical and numerical interpretation. A future analysis can refine one of these steps without confusing it with all the others.
+
+\appendix
+
+\hypertarget{appendix-a.-polynomial-identities-used-in-the-angular-calculation}{%
+\section{Polynomial identities used in the angular calculation}\label{appendix-a.-polynomial-identities-used-in-the-angular-calculation}}
+
+\hypertarget{a.1-legendre-coefficients-and-their-norm}{%
+\subsection{Legendre coefficients and their norm}\label{a.1-legendre-coefficients-and-their-norm}}
+
+Expanding Rodrigues' formula in Eq. (3.1) gives the finite expression
+
+\[
+P_\ell(x)=2^{-\ell}\sum_{j=0}^{\lfloor\ell/2\rfloor}
+(-1)^j\frac{(2\ell-2j)!}{j!(\ell-j)!(\ell-2j)!}\,x^{\ell-2j}.
+\tag{A.1}
+\]
+
+This formula defines every polynomial needed in the report using factorials and powers. Terms with a negative factorial argument are omitted. In particular, the leading coefficient is \((2\ell)!/[2^\ell(\ell!)^2]\), so the \(\ell\)-th derivative is \((2\ell)!/(2^\ell\ell!)\).
+
+To obtain the norm without consulting an orthogonality table, substitute Rodrigues' formula into one factor of \(\int_{-1}^1P_\ell^2dx\) and integrate by parts \(\ell\) times. The derivatives of \((x^2-1)^\ell\) below order \(\ell\) vanish at both endpoints. Therefore
+
+\[
+\int_{-1}^1P_\ell^2dx
+=\frac{(2\ell)!}{2^{2\ell}(\ell!)^2}
+\int_{-1}^1(1-x^2)^\ell dx.
+\tag{A.2}
+\]
+
+Let \(J_\ell\) be the final integral. Integrating the derivative of \(x(1-x^2)^\ell\) gives
+\(0=J_\ell-2\ell\int x^2(1-x^2)^{\ell-1}dx\).
+Since the second integral is \(J_{\ell-1}-J_\ell\),
+\(J_\ell=2\ell J_{\ell-1}/(2\ell+1)\), with \(J_0=2\).
+Thus
+\(J_\ell=2^{2\ell+1}(\ell!)^2/(2\ell+1)!\), and Eq. (A.2) reduces to \(2/(2\ell+1)\).
+
+Differentiating the Legendre equation \((1-x^2)P_\ell''-2xP_\ell'+\ell(\ell+1)P_\ell=0\) successively gives the weighted derivative identity
+
+\[
+\frac{d^m}{dx^m}\left[(1-x^2)^mP_\ell^{(m)}(x)\right]
+=(-1)^m\frac{(\ell+m)!}{(\ell-m)!}P_\ell(x).
+\tag{A.3}
+\]
+
+It can also be checked term by term using Eq. (A.1): differentiate each monomial, multiply by the binomial expansion of \((1-x^2)^m\), and collect equal powers. The resulting coefficient of each \(x^{\ell-2j}\) is the coefficient in Eq. (A.1) multiplied by the common factor in Eq. (A.3). Integration by parts \(m\) times therefore gives
+
+\[
+\int_{-1}^1(1-x^2)^m[P_\ell^{(m)}]^2dx
+=\frac{(\ell+m)!}{(\ell-m)!}\int_{-1}^1P_\ell^2dx.
+\tag{A.4}
+\]
+
+All endpoint terms vanish, because the weighted polynomial and its first \(m-1\) derivatives have the corresponding zeros. This proves the normalisation in Eq. (3.3). The Legendre equation itself follows by substituting Eq. (A.1) and equating adjacent powers. Thus no infinite-series or unproved completeness assertion is needed for these finite-band calculations.
+
+\hypertarget{a.2-associated-recurrences-and-axial-boost-coefficients}{%
+\subsection{Associated recurrences and axial boost coefficients}\label{a.2-associated-recurrences-and-axial-boost-coefficients}}
+
+Write \(F_{\ell m}=P_\ell^m\). The two identities needed for the axial derivative are
+
+\[
+(2\ell+1)xF_{\ell m}
+=(\ell-m+1)F_{\ell+1,m}+(\ell+m)F_{\ell-1,m},
+\]
+
+\[
+(1-x^2)F_{\ell m}'
+=-\ell xF_{\ell m}+(\ell+m)F_{\ell-1,m}.
+\tag{A.5}
+\]
+
+Both are finite polynomial identities after dividing out the common factor \((-1)^m(1-x^2)^{m/2}\). For example, the second becomes
+
+\[
+(1-x^2)P_\ell^{(m+1)}
++(\ell-m)xP_\ell^{(m)}
+-(\ell+m)P_{\ell-1}^{(m)}=0.
+\tag{A.6}
+\]
+
+Equation (A.1) verifies it by matching the coefficient of every \(x^{\ell-m+1-2j}\); the leading powers cancel and the remaining two factorial ratios give the adjacent \(j\) term. The first identity follows in the same way with \(P_{\ell+1}^{(m)}\), \(P_\ell^{(m)}\) and \(P_{\ell-1}^{(m)}\). These formulas include the vanishing terms when \(\ell-1<m\).
+
+Multiplying by the normalisation in Eq. (3.2), the coefficient of \(Y_{\ell-1,m}\) in the first identity is
+
+\[
+\frac{\ell+m}{2\ell+1}
+\sqrt{\frac{(2\ell+1)(\ell-m)!/(\ell+m)!}
+{(2\ell-1)(\ell-1-m)!/(\ell-1+m)!}}
+=\sqrt{\frac{\ell^2-m^2}{(2\ell-1)(2\ell+1)}}.
+\tag{A.7}
+\]
+
+The upper coefficient is obtained with \(\ell+1\). Insert those two coefficients into the second identity to obtain Eq. (11.5), and then Eq. (11.6). This displays the sign and normalisation of the nearest-neighbour boost coupling explicitly.
+
+\hypertarget{appendix-b.-exact-axial-certificate-in-finite-arithmetic}{%
+\section{Exact axial certificate in finite arithmetic}\label{appendix-b.-exact-axial-certificate-in-finite-arithmetic}}
+
+\hypertarget{b.1-all-matrix-entries-from-rational-power-integrals}{%
+\subsection{All matrix entries from rational power integrals}\label{b.1-all-matrix-entries-from-rational-power-integrals}}
+
+Let \(a=-3/4\), \(b=3/4\), and define the weighted moment for any nonnegative integer \(k\):
+
+\[
+J_k=\int_{-1}^1w(x)x^kdx
+=\frac{b^{k+1}-a^{k+1}}{2(k+1)}
++\frac{2(b^{k+2}-a^{k+2})}{3(k+2)}
++\frac{1-b^{k+1}}{k+1}.
+\tag{B.1}
+\]
+
+This is simply the integral on each nonzero piece of the weight. If
+\((1-x^2)^mP_\ell^{(m)}P_k^{(m)}=\sum_j c_jx^j\), its integral in Eq. (11.7) is \(\sum_jc_jJ_j\). Equations (A.1) and (B.1) therefore determine every entry using finitely many rational operations and the displayed harmonic square roots.
+
+One can avoid square roots during elimination. Set
+
+\[
+\widetilde N_{\ell k}=\int_{-1}^1w(x)P_\ell^m(x)P_k^m(x)dx,
+\qquad
+d_{\ell m}=\frac{(2\ell+1)(\ell-m)!}{2(\ell+m)!}.
+\tag{B.2}
+\]
+
+The integral is rational by the common-factor cancellation in Eq. (11.7). In this unnormalised basis,
+
+\[
+\widetilde R_{\ell p}
+=-\frac{p(p+m)}{2p+1}\widetilde N_{\ell,p-1}
++\frac{(p+1)(p-m+1)}{2p+1}\widetilde N_{\ell,p+1}.
+\tag{B.3}
+\]
+
+These coefficients follow directly by inserting Eq. (A.5) into \(xP_p^m-(1-x^2)(P_p^m)'\). With diagonal matrices \(D_{\rm fit}\) and \(D_{\rm src}\) whose entries are \(\sqrt{d_{\ell m}}\), the normalised matrices satisfy
+
+\[
+N_m=D_{\rm fit}\widetilde N_mD_{\rm fit},\qquad
+R_m=D_{\rm fit}\widetilde R_mD_{\rm src},
+\]
+
+\[
+N_m^{-1}R_m
+=D_{\rm fit}^{-1}\widetilde N_m^{-1}\widetilde R_mD_{\rm src}.
+\tag{B.4}
+\]
+
+For a selected square retained minor \(\widetilde K_{I,J}\),
+
+\[
+\det(K_{I,J})^2
+=\det(\widetilde K_{I,J})^2
+\frac{\prod_{p\in J}d_{pm}}{\prod_{\ell\in I}d_{\ell m}}.
+\tag{B.5}
+\]
+
+The right side is rational. This is a complete arithmetic prescription for the squares tabulated below. The inverse can be computed by rational elimination, or by the adjugate formula: the \((i,j)\) entry of \(\operatorname{adj}A\) is \((-1)^{i+j}\) times the determinant obtained by deleting row \(j\) and column \(i\), and \(A^{-1}=\operatorname{adj}A/\det A\). Every determinant is the finite sum \(\sum_\pi\operatorname{sgn}(\pi)\prod_iA_{i,\pi(i)}\). Thus the certificate is defined without an external software package or unpublished matrix.
+
+\hypertarget{b.2-nonzero-normal-determinants}{%
+\subsection{Nonzero normal determinants}\label{b.2-nonzero-normal-determinants}}
+
+In order \(m=0,1,2,3,4,5\), the normalised normal-block determinants are the following exact fractions:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m=0:}
+\NormalTok{2371221567616482963655661538277}
+\NormalTok{/ 124939643158494289811515067921858560}
+
+\NormalTok{m=1:}
+\NormalTok{1784012728720795037550100553}
+\NormalTok{/ 1743019575313815427057966907392}
+
+\NormalTok{m=2:}
+\NormalTok{10945595347193184954026503331}
+\NormalTok{/ 871509787656907713528983453696}
+
+\NormalTok{m=3:}
+\NormalTok{104531461379720327}
+\NormalTok{/ 1585267068834414592}
+
+\NormalTok{m=4:}
+\NormalTok{665044625583572687}
+\NormalTok{/ 3170534137668829184}
+
+\NormalTok{m=5:}
+\NormalTok{1 / 2}
+\end{Highlighting}
+\end{Shaded}
+
+The division slash joins the numerator and denominator across the displayed line break. No rounding is used. Positivity also follows independently from Section 11.1; these values make the finite certificate explicit.
+
+\hypertarget{b.3-nonzero-retained-minors}{%
+\subsection{Nonzero retained minors}\label{b.3-nonzero-retained-minors}}
+
+For each \(m\), retain rows \(\ell=\max(m,2),\ldots,5\). Select the first as many source columns as there are rows. The following values are the exact squared determinants in the normalised coordinate convention of Eq. (11.7).
+
+Long integers continue on indented lines; concatenate their decimal lines before applying division.
+
+\begin{verbatim}
+m=0; source columns 7,8,9,10:
+13854851227718467321621702138503980744130367185396095166590753194419
+  819749485140749388736644495507
+/ 29463859645287640016027292869177048363234454079413745037896743657684
+  29551770231683936450693300224
+
+m=1; source columns 7,8,9,10:
+45897747416692690585791274614572327208356017181052125887012037607944
+  001265218344300648587575
+/ 11439368869955288869320571209776405550745656790554396265529415077685
+  155349137762741139313524736
+
+m=2; source columns 7,8,9,10:
+39493718757090374514153222808257755001282326150716790292260982205042
+  519060828776367475925
+/ 21530541282585251935501076163558668725406184135958880601469204261734
+  4168936576686059039460687872
+
+m=3; source columns 7,8,9:
+3965156020663594870880515310630136258902710414400775484668459177
+/ 61364929126036669075158133453533151125302601561190949878312615840999
+  0144
+
+m=4; source columns 7,8:
+33648590107505417977636161099564743354425815
+/ 321031865290431140061490488646804497908163936256
+
+m=5; source column 7:
+1654580299939355708034129
+/ 1995199839012425102786560
+\end{verbatim}
+
+These are the retained exact tabulation, not newly rounded numerical determinants. Every fraction is positive, proving the needed nonvanishing once calculated by Eqs. (A.1), (B.1)--(B.5). The proof does not require the determinant squares to be large. It requires them to be nonzero. Their numerical scale cannot, however, substitute for a finite-precision error analysis.
+
+The same construction defines blocks at other cutoffs, but the table is the certificate used for the stated \(L=12\) conclusion. We do not claim that printing these values supplies an interval certificate for nonaxial directions or for a finite pixelisation.
+
+\hypertarget{appendix-c.-what-remains-when-only-a-contraction-is-retained}{%
+\section{What remains when only a contraction is retained?}\label{appendix-c.-what-remains-when-only-a-contraction-is-retained}}
+
+This appendix explains two related geometric results in full rather than directing the reader to separate research notes. They concern normalised observable tensors at fixed quadrupole. They are not new empirical estimates or extensions of the physical MES assumptions.
+
+\hypertarget{c.1-the-contraction-map-and-its-minimum-norm-solution}{%
+\subsection{The contraction map and its minimum-norm solution}\label{c.1-the-contraction-map-and-its-minimum-norm-solution}}
+
+Fix a real unit STF2 tensor \(q\), and define \(L_qo=o:q\) on the seven-dimensional STF3 space. Proposition 9.1 gives
+
+\[
+L_q^*=\tfrac13B_q,\qquad L_qB_q=M_q,
+\qquad M_q=I+\tfrac65q^2\succ0.
+\tag{C.1}
+\]
+
+Thus \(L_qL_q^*=M_q/3\) is invertible, the contraction map is onto \(\mathbb R^3\), and its kernel \(N\) has dimension four. Its minimum-norm right inverse is
+
+\[
+R_q=B_qM_q^{-1}.
+\tag{C.2}
+\]
+
+Indeed, \(L_qR_q=I\). For \(z\in N\), adjointness gives
+\(\langle R_qv,z\rangle=3\langle M_q^{-1}v,L_qz\rangle=0\).
+Every solution to \(L_qo=v\) is consequently
+
+\[
+o=R_qv+z,\qquad z\in N,
+\qquad
+\|o\|_F^2=3v^TM_q^{-1}v+\|z\|_F^2.
+\tag{C.3}
+\]
+
+The first term is the unique minimum-norm solution; no nullspace vector can reduce its norm because the two summands are orthogonal.
+
+\hypertarget{c.2-the-exact-unit-norm-fibre}{%
+\subsection{The exact unit-norm fibre}\label{c.2-the-exact-unit-norm-fibre}}
+
+Define \(\eta_v=3v^TM_q^{-1}v\). By Eq. (C.3),
+
+\[
+F_q(v)=\{o:\|o\|_F=1,\ L_qo=v\}
+=\begin{cases}
+\varnothing,&\eta_v>1,\\
+\{R_qv\},&\eta_v=1,\\
+R_qv+\sqrt{1-\eta_v}\,S(N),&0\le\eta_v<1,
+\end{cases}
+\tag{C.4}
+\]
+
+where \(S(N)=\{z\in N:\|z\|_F=1\}\) is a three-sphere in a four-dimensional linear space. Existence, uniqueness at the boundary, and the sphere radius all follow by solving the final scalar norm equation in Eq. (C.3). There is no additional rotational quotient in this statement: \(q\) and \(v\) are fixed in a declared frame.
+
+The image of the unit STF3 sphere under contraction is therefore the filled ellipsoid \(\eta_v\le1\), not merely its boundary. Interior points are possible because the nonzero kernel supplies the rest of the unit norm. Knowing \(q\), \(v\) and the norm generally leaves three continuous degrees of octupole morphology.
+
+For a unit \(q\), Cayley--Hamilton gives \(q^3=q/2+(s_3/3)I\). Multiplication and reduction of \(q^3,q^4\) verify
+
+\[
+M_q^{-1}=\frac{40I+(15/2)s_3q-30q^2}{40+3s_3^2},
+\qquad
+\eta_v=\frac{120\mu_0+(45/2)s_3\mu_1-90\mu_2}{40+3s_3^2}.
+\tag{C.5}
+\]
+
+To display the cancellation, multiplying the numerator matrix by \(I+(6/5)q^2\) produces
+\(40I+(15/2)s_3q+18q^2+9s_3q^3-36q^4\).
+Use \(q^4=q^2/2+(s_3/3)q\); the nonconstant terms cancel, leaving \((40+3s_3^2)I\). The moment formula then follows from \(\mu_j=v^Tq^jv\). The denominator is strictly positive.
+
+This criterion is sufficient only for the reduced contraction-and-norm problem. Arbitrary trilinears in a full packet may still disagree with every member of this fibre. Equation (4.13) and forward replay are not replaced by a single scalar check.
+
+\hypertarget{c.3-a-sharp-contraction-bound}{%
+\subsection{A sharp contraction bound}\label{c.3-a-sharp-contraction-bound}}
+
+The squared operator norm of \(L_q\) is \(\lambda_{\max}(M_q)/3\). If \(a,b,c\) are eigenvalues of unit trace-free \(q\), then \(b+c=-a\) and
+\(1=a^2+b^2+c^2\ge a^2+(b+c)^2/2=3a^2/2\).
+Thus the largest squared eigenvalue is at most \(2/3\), giving
+
+\[
+\|o:q\|^2\le\frac35\|o\|_F^2,
+\qquad
+\boxed{\|O:Q\|^2\le\frac35(Q:Q)(O:O)}.
+\tag{C.6}
+\]
+
+The second formula restores the physical temperature amplitudes; both sides have fourth-power temperature units. The bound is sharp. Take \(q=\operatorname{diag}(-1,-1,2)/\sqrt6\), let \(e_3\) be its third eigenvector and set \(o=B_qe_3/\|B_qe_3\|_F\). Proposition 9.1 gives \(\|B_qe_3\|_F^2=3(9/5)\), and contraction then has squared norm \((9/5)/3=3/5\). This example has repeated quadrupole eigenvalues and is not a cyclic inverse-chart example.
+
+\hypertarget{c.4-distances-to-the-fibre}{%
+\subsection{Distances to the fibre}\label{c.4-distances-to-the-fibre}}
+
+Let \(P=R_qL_q\), the orthogonal projector onto the complement of \(N\), and let \(\widehat o\) be any STF3 candidate. Put \(r=L_q\widehat o-v\). The least change needed to meet the affine contraction condition is \(R_qr\), since it lies orthogonal to every allowed nullspace displacement. Hence
+
+\[
+\operatorname{dist}(\widehat o,\{o:L_qo=v\})^2
+=3r^TM_q^{-1}r.
+\tag{C.7}
+\]
+
+If \(\eta_v\le1\), the unit-norm condition adds the distance within the kernel to the sphere of radius \(\sqrt{1-\eta_v}\). Orthogonality gives
+
+\[
+\operatorname{dist}(\widehat o,F_q(v))^2
+=3r^TM_q^{-1}r+
+\left(\|(I-P)\widehat o\|_F-\sqrt{1-\eta_v}\right)^2.
+\tag{C.8}
+\]
+
+The distance from a vector of norm \(a\) to a centred sphere of radius \(b\) is \(|a-b|\): the reverse triangle inequality is a lower bound and the radial point attains it. If the vector is zero, every point on that sphere is equally near. This proves Eq. (C.8), including the zero-radius boundary case. It is a diagnostic distance, not permission to replace a malformed observed packet by a projected one.
+
+\hypertarget{c.5-hausdorff-distance-and-boundary-sensitivity}{%
+\subsection{Hausdorff distance and boundary sensitivity}\label{c.5-hausdorff-distance-and-boundary-sensitivity}}
+
+For nonempty compact sets, the Hausdorff distance is the larger of the two greatest nearest-point distances from one set to the other. For two feasible contractions at the same \(q\), define \(\rho_v=\sqrt{1-\eta_v}\) and \(\rho_w=\sqrt{1-\eta_w}\). Their centres differ in \(N^\perp\), and both spheres lie in translates of the same \(N\). For unit \(z,z'\in N\),
+
+\[
+\|R_q(v-w)+\rho_vz-\rho_wz'\|_F^2
+=\|R_q(v-w)\|_F^2+\|\rho_vz-\rho_wz'\|_F^2.
+\]
+
+For any fixed \(z\), the second term has minimum \((\rho_v-\rho_w)^2\), independent of \(z\). The same holds with the roles reversed, including either zero radius. We have therefore proved
+
+\[
+\boxed{d_H(F_q(v),F_q(w))^2
+=3(v-w)^TM_q^{-1}(v-w)
++(\sqrt{1-\eta_v}-\sqrt{1-\eta_w})^2.}
+\tag{C.9}
+\]
+
+Write \(\|a\|_q=\sqrt{3a^TM_q^{-1}a}\), and let \(s=\|v-w\|_q\). On the feasible ellipsoid,
+\(|\eta_v-\eta_w|\le(\|v\|_q+\|w\|_q)s\le2s\).
+Since \(|\sqrt a-\sqrt b|^2\le|a-b|\) for nonnegative \(a,b\),
+
+\[
+d_H(F_q(v),F_q(w))\le\sqrt{s^2+2s}.
+\tag{C.10}
+\]
+
+If both \(\eta_v,\eta_w\le1-\delta\) for \(\delta>0\), divide their difference by \(\rho_v+\rho_w\ge2\sqrt\delta\) and use \(\|v\|_q+\|w\|_q\le2\sqrt{1-\delta}\). Equation (C.9) then gives
+
+\[
+d_H(F_q(v),F_q(w))\le\delta^{-1/2}\|v-w\|_q.
+\tag{C.11}
+\]
+
+This is Lipschitz control away from saturation. Near the boundary, the square-root exponent is exact. Choose \(v_*\) with \(\eta_*=1\) and set \(v_t=(1-t)v_*\), \(0<t<1\). Then \(\|v_t-v_*\|_q=t\) and \(\rho_t^2=2t-t^2\), so
+
+\[
+\boxed{d_H(F_q(v_t),F_q(v_*))=\sqrt{2t}.}
+\tag{C.12}
+\]
+
+The ratio to \(t^\alpha\) diverges for every \(\alpha>1/2\). Thus no uniform Lipschitz bound extends to this boundary. This concerns feasible perturbations; an outward perturbation can make the set empty, where the stated nonempty-set distance no longer applies.
+
+The effect is not restricted to a singular quadrupole. Take
+
+\[
+q=\frac1{\sqrt2}\operatorname{diag}(-1,0,1),\quad
+v_*=(\sqrt{8/45},1/3,\sqrt{8/45})^T.
+\tag{C.13}
+\]
+
+Here \(M_q=\operatorname{diag}(8/5,1,8/5)\), \(\eta_*=1\), and
+
+\[
+K_*^TK_*=\frac1{45}
+\begin{pmatrix}21&0&8\\0&8&0\\8&0&4\end{pmatrix},
+\qquad
+\det K_*=\frac{4\sqrt2}{135}>0.
+\tag{C.14}
+\]
+
+The Gram eigenvalues are \((25-\sqrt{545})/90\), \(8/45\), and \((25+\sqrt{545})/90\). Hence \(\kappa_2(K_*)=\sqrt{(25+\sqrt{545})/(25-\sqrt{545})}\), approximately 5.40516. Along \(v_t\), \(K_t=(1-t)K_*\), so this relative condition number is constant. The linear contraction matrix is also well conditioned, with \(\kappa_2(M_q)=8/5\). The square-root sensitivity arises from the unit-norm boundary, not from a singular frame.
+
+An explicit unit kernel tensor has the six permutations of component 123 equal to \(1/\sqrt6\), all other entries zero. It is STF and contracts to zero with this diagonal \(q\). Writing it as \(z\), the tensors
+\(o_t=(1-t)R_qv_*+\sqrt{2t-t^2}z\) verify Eq. (C.12) directly.
+
+This is not a counterexample to complete packet reconstruction. The trilinear coordinates in the changing frame satisfy
+\(\tau_t=(1-t)^3[(1-t)A_*R_qv_*+\sqrt{2t-t^2}A_*z]\),
+where \(A_*\) evaluates a tensor on triples of \(K_*\)'s columns. Since that basis is invertible, \(A_*\) is injective and \(A_*z\ne0\). The full packet therefore already changes at square-root order. Discarding those coordinates changes the information problem.
+
+\hypertarget{appendix-d.-notation-and-the-status-of-statements}{%
+\section{Notation and the status of statements}\label{appendix-d.-notation-and-the-status-of-statements}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Symbol or term
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Meaning in this report
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(T(n),T_0\) & Directional thermodynamic temperature and its sphere average \\
+\(Y_{\ell m},a_{\ell m},C_\ell\) & Normalised spherical harmonic, its coefficient, and the specified sky's multipole power \\
+\(c_\ell,r_\ell,G_\ell\) & Orthonormal real coefficients, raw real/imaginary coefficients, and their coordinate metric \\
+\(Q,O\) & Temperature quadrupole STF2 and octupole STF3 tensors \\
+\(A_Q,A_O,q,o\) & Frobenius amplitudes and unit-normalised observable tensors \\
+\(v=o:q\) & Dimensionless observable contraction vector; never a physical velocity in this use \\
+\(K,G,\chi\) & Krylov basis matrix, its Gram matrix, and its signed determinant \\
+\(s_3,\mu_r,\tau_{ijk}\) & Cubic quadrupole invariant, contraction moments, and symmetric trilinear coordinates \\
+\(u,h,D,A,\Theta,H_g,\sigma,\omega\) & Observer, rest-space metric, projected derivative, acceleration, geometric expansion/Hubble rate, shear and vorticity \\
+\(E_\gamma,e,n\) & Photon energy, propagation direction and outward sky direction \(n=-e\) \\
+\(\beta\) & A specifically labelled physical relative velocity divided by \(c\) \\
+\(\epsilon_\ell,\epsilon_\ell',\epsilon_\ell^*\) & Multipole and normalised derivative envelopes in physical input M \\
+\(B_\sigma,B_\omega,U_\sigma,U_\omega\) & Conditional MES norm ceilings and their quadratic versions \\
+\(\rho_B\) & Gauge of a specified admissible body, not a p-value \\
+\(\mathcal R,\Theta(y;\eta)\) & Declared response and realised compatible physical states \\
+\(p_i,p_{\mathcal G}\) & Exchangeable-row and finite-group ranks, with different reference objects \\
+\(B_Q,M_Q\) & STF quadrupole-to-octupole response map and one third of its normal matrix \\
+\(N,R,K^{\rm cont}\) & Continuum fit normal matrix, generator overlap and retained response; distinguished by section from the right inverse \(R_q\) \\
+\(H, P_H, J_{\rm surv}\) & Nuisance image, its orthogonal projector and surviving response \\
+\(E_{fi},r_f,\Gamma_E,W\) & Error directions, family radii, positive error envelope and whitening map \\
+\(F_q(v),\eta_v,d_H\) & Fixed-quadrupole unit-contraction fibre, its minimum squared norm and Hausdorff distance \\
+\end{longtable}
+
+A theorem in the text is a conditional mathematical statement with an internal proof. Model M states an explicit first-order radiation system and derivative controls; Appendix E derives the resulting kinematical estimates. The finite-direction rank ladder and finite-pixel outcomes remain reported calculations, not universal theorems. The exact axial certificate includes its defining arithmetic and its tabulated values. The contraction-fibre appendix is a finite-dimensional derivation, not an empirical velocity analysis.
+
+The mathematical exposition is independent of repository issue numbers, private execution paths or a claim ledger. Its conceptual lineage includes covariant cosmology, conditional isotropy bounds, tensor invariants, partial identification, randomisation inference and matrix perturbation theory. The invariant-theory literature provides context for separating orbit information; it does not replace the constructive cyclic proof in Section 4. (Olive, Kolev, and Auffray 2013; Börnsen and Ven 2018; Lopatin and Ferreira 2018)
+
+The internal derivation is sufficient for the conditional model used in this account. References acknowledge the physical and mathematical lineage; none is needed to supply a missing step in a claimed finite-dimensional theorem. More general nonlinear spacetime statements, error bounds for neglected perturbative orders and the validity of the maintained physical assumptions are distinct questions, not conclusions deduced from the observable tensors.
+
+\hypertarget{appendix-e.-a-local-radiation-model-behind-the-kinematical-bounds}{%
+\section{A local radiation model behind the kinematical bounds}\label{appendix-e.-a-local-radiation-model-behind-the-kinematical-bounds}}
+
+\hypertarget{e.1-why-state-the-radiation-model}{%
+\subsection{Why state the radiation model?}\label{e.1-why-state-the-radiation-model}}
+
+Section 6 uses restrictions on shear and vorticity that depend on radiation multipoles and their derivatives. A small temperature anisotropy at one event does not determine those derivatives. To separate the physical premise from the mathematical deduction, this appendix specifies a sufficient first-order collisionless-radiation model and derives the two bounds used in the report. The result is conditional on the model and its derivative envelopes. It is not a converse theorem reconstructing spacetime from one sky, nor a proof of every version of the almost-Ehlers--Geren--Sachs programme.
+
+The model is local to an expanding, nearly isotropic region. All equations in this appendix are equations of the retained first-order system. Products of two perturbations, including a first-order spatial density gradient times a first-order radiation anisotropy, are omitted. The expansion below does not imply an error-controlled nonlinear bound at a specified finite perturbation amplitude. Such a statement would require bounds on the discarded terms.
+
+We use the geodesic congruence and geometric rate convention of Section 5. Spatial distances and the parameter along the unit observer have length units; multiplying rates by c converts them to inverse-time rates. The energy density rho, energy-flux coordinate q\_a and anisotropic stress pi\_ab below all have energy-density units in the decomposition relative to a unit observer. The physical energy flux is c q\_a. The symbol q\_a in this appendix is not the unit quadrupole q\_ab used elsewhere.
+
+\hypertarget{e.2-brightness-multipoles-and-the-transport-equation}{%
+\subsection{Brightness, multipoles and the transport equation}\label{e.2-brightness-multipoles-and-the-transport-equation}}
+
+Let e be a unit propagation direction in the observer's rest space. It is the negative of the outward sky direction n.~Let I(x,e) be the frequency-integrated radiation brightness, normalised so that its angular integral is the radiation energy density. A possible definition is a positive constant times the integral of E\_gamma cubed times the scalar photon occupation number over positive energy; the constant fixes units and cancels in the ratios below. We assume the energy boundary terms vanish when integrating the collisionless transport equation.
+
+Define the radiation moments by
+
+\[
+\rho=\int I\,d\Omega,\qquad q_a=\int I e_a\,d\Omega,\qquad
+\pi_{ab}=\int I e_{\langle a}e_{b\rangle}\,d\Omega,
+\qquad
+\xi_{abc}=\int I e_{\langle a}e_be_{c\rangle}\,d\Omega.
+\tag{E.1}
+\]
+
+At first order, a direction-dependent Planck temperature has brightness proportional to its fourth power. More explicitly, changing variable from photon energy to E\_gamma divided by k\_B T in the Planck integral gives I proportional to T to the fourth power; expanding that power gives a factor four multiplying the fractional temperature anisotropy. Write the propagation-direction multipoles as vartheta\_A and use
+
+\[
+I=\frac{\rho}{4\pi}\left[1+4\vartheta_a e^a
++4\vartheta_{ab}e^ae^b+4\vartheta_{abc}e^ae^be^c+\cdots\right].
+\tag{E.2}
+\]
+
+Each tensor with at least two indices is STF. The outward-temperature multipoles differ by the factor (-1) to the multipole order, so their full norms agree. The angular integrals in Lemma 3.2 now give
+
+\[
+q_a=\frac43\rho\vartheta_a,\qquad
+\pi_{ab}=\frac8{15}\rho\vartheta_{ab},\qquad
+\xi_{abc}=\frac8{35}\rho\vartheta_{abc}.
+\tag{E.3}
+\]
+
+For example, the dipole uses the second angular moment 4 pi delta\_ab divided by three; the quadrupole and octupole use exactly the trace-free pairings already proved in Section 3. Higher multipoles do not contribute to these lower moments at linear order because the corresponding harmonic sectors are orthogonal.
+
+The local first-order brightness equation of the model is
+
+\[
+\dot I+e^aD_a I+\frac43\Theta I
++4\bar I\,\sigma_{ab}e^ae^b=0,
+\qquad \bar I=\frac{\bar\rho}{4\pi}.
+\tag{E.4}
+\]
+
+Here a bar on rho or I denotes the isotropic background, not a unit tensor. The equation follows from frequency-integrated collisionless Liouville transport as follows. At zeroth order the photon energy redshifts at rate -Theta divided by three; at first order the additional rate is -sigma\_ab e\^{}a e\^{}b. Multiplying the energy-derivative term of the occupation-number equation by E\_gamma cubed and integrating by parts yields the factor four. The angular-direction drift acts on an isotropic background brightness and therefore gives no first-order term there; its action on an anisotropy would be a product of first-order quantities. Geodesicity removes the acceleration-redshift term. The derivative of the anisotropy itself is retained in the first two terms of Eq. (E.4). This specifies the transport approximation rather than appealing to an unnamed temperature--geometry rule.
+
+The energy redshift used in this derivation can also be checked directly. For an affine photon geodesic, p\^{}b nabla\_b p\^{}a equals zero and E\_gamma equals -c p\_a u\^{}a. Differentiating the latter gives a contraction of p\^{}a p\^{}b with nabla\_b u\_a. Substituting Eq. (5.3), using a geodesic observer and the symmetric photon product, removes acceleration and vorticity and leaves the isotropic expansion plus sigma\_ab e\^{}a e\^{}b. Parameterising the ray by the observer-frame path length yields the rate just stated. Thus no Einstein field equation is needed for these two local kinematical estimates once the observer and radiation model are fixed. Additional curvature conclusions of the broader almost-isotropy programme require additional equations.
+
+\hypertarget{e.3-the-three-moment-equations}{%
+\subsection{The three moment equations}\label{e.3-the-three-moment-equations}}
+
+Integrate Eq. (E.4) against 1, e\_a and e\_\textless a e\_b\textgreater{}. The result is
+
+\[
+\dot\rho+\frac43\Theta\rho+D^a q_a=0,
+\tag{E.5}
+\]
+
+\[
+\dot q_{\langle a\rangle}+\frac43\Theta q_a
++\frac13D_a\rho+D^b\pi_{ab}=0,
+\tag{E.6}
+\]
+
+\[
+\dot\pi_{\langle ab\rangle}+\frac43\Theta\pi_{ab}
++\frac8{15}\bar\rho\sigma_{ab}
++\frac25D_{\langle a}q_{b\rangle}+D^c\xi_{abc}=0.
+\tag{E.7}
+\]
+
+The coefficient two fifths in Eq. (E.7) is important. The fully symmetric third angular moment satisfies
+
+\[
+\int I e_a e_b e_c\,d\Omega
+=\xi_{abc}+\frac15(h_{ab}q_c+h_{ac}q_b+h_{bc}q_a).
+\tag{E.8}
+\]
+
+Its trace determines the one-fifth coefficient. Subtracting one third h\_ab times the flux and then differentiating gives the streaming contribution two fifths D\_\textless a q\_b\textgreater{} plus the divergence of xi. The shear coefficient comes from four times the isotropic fourth angular moment contracted with an STF2 tensor, giving eight fifteenths times rho. Thus every coefficient of the retained equations follows from the angular moments already proved in the report.
+
+When a first-order quantity multiplies rho, we may replace rho by its background value at this order. Equation (E.5) consequently supplies the background relation dot(rho) equals minus four thirds Theta rho in such products. This does not remove the first-order divergence of flux from the full monopole equation.
+
+\hypertarget{e.4-the-derivative-envelopes-used-here}{%
+\subsection{The derivative envelopes used here}\label{e.4-the-derivative-envelopes-used-here}}
+
+At every point of the domain where the conclusion is intended, suppose rho is positive, Theta is positive and
+
+\[
+\|\vartheta_{A_\ell}\|\le\epsilon_\ell,\qquad
+\|\dot\vartheta_{ab}\|\le\Theta\epsilon_2^*,\qquad
+\|D_a\vartheta_b\|\le\Theta\epsilon_1',\qquad
+\|D_d\vartheta_{abc}\|\le\Theta\epsilon_3'.
+\tag{E.9}
+\]
+
+All tensor norms are full spatial Frobenius norms. In addition, set C\_ab equal to D\_{[}a vartheta\_b{]} and assume
+
+\[
+\|\dot C_{ab}\|\le\Theta^2\epsilon_1^{\prime *},
+\qquad
+\|D_{[a}D^c\vartheta_{b]c}\|
+\le\Theta^2\epsilon_2^{\prime\prime}.
+\tag{E.10}
+\]
+
+Dots in these formulas include the indicated spatial projections. The second double-prime envelope in Eq. (E.10) bounds the explicitly written differentiated-divergence operator. It is not silently equated to the full norm of an uncontracted second derivative. A stronger uncontracted derivative bound may imply it with a dimension-dependent operator factor, which must then be retained. Equations (E.9)--(E.10) are an explicit sufficient derivative prescription for this appendix. Their applicability must be supplied by the physical model; they are not inferred from the local powers C\_ell.
+
+This precision matters. Naming an epsilon a derivative bound does not determine which contraction or norm it bounds. The amplitude-only specialisation below assumes the displayed operator envelopes themselves satisfy the scale restrictions. It does not claim those restrictions for every smooth almost-isotropic radiation field.
+
+\hypertarget{e.5-shear-estimate}{%
+\subsection{Shear estimate}\label{e.5-shear-estimate}}
+
+Take norms in Eq. (E.7) and apply Eq. (E.3). The background product rule gives
+
+\[
+\|\dot\pi\|
+\le\frac8{15}\rho\Theta
+\left(\epsilon_2^*+\frac43\epsilon_2\right),
+\qquad
+\frac43\Theta\|\pi\|\le\frac8{15}\rho\Theta\frac43\epsilon_2.
+\tag{E.11}
+\]
+
+Orthogonal STF projection does not enlarge a norm. Furthermore,
+
+\[
+\|D^c\vartheta_{abc}\|\le\sqrt3\,\|D_d\vartheta_{abc}\|.
+\tag{E.12}
+\]
+
+For each free pair a,b, this is Cauchy--Schwarz on the sum over the three contracted index values, followed by summation over a,b. Substitution into Eq. (E.7) therefore proves the sufficient estimate
+
+\[
+\frac{\|\sigma\|}{\Theta}
+\le\frac83\epsilon_2+\epsilon_2^*+\epsilon_1'
++\frac{3\sqrt3}{7}\epsilon_3'
+\le\frac83\epsilon_2+\epsilon_2^*+5\epsilon_1'
++\frac97\epsilon_3'.
+\tag{E.13}
+\]
+
+The final inequality deliberately uses a less sharp positive bound to recover the coefficient combination retained in Section 6. The passage from one to five in the dipole term is a valid weakening, not the value of the quadrupole streaming coefficient. Cancellation of the background expansion terms before the norm estimate would yield a stronger bound in this particular first-order model; no optimality of Eq. (E.13) is asserted.
+
+\hypertarget{e.6-vorticity-estimate}{%
+\subsection{Vorticity estimate}\label{e.6-vorticity-estimate}}
+
+With the vorticity convention of Eq. (5.2), a scalar f satisfies
+
+\[
+D_{[a}D_{b]}f=-\omega_{ab}\dot f.
+\tag{E.14}
+\]
+
+To derive the identity, differentiate the rest-space projection h\_b\{\}\^{}c in D\_a D\_b f.~Antisymmetrisation kills the symmetric spacetime second derivative of a scalar. The surviving projected derivative of u\_b is D\_{[}a u\_b{]} times dot(f), equal to minus omega\_ab dot(f) under the stated index convention.
+
+The first-order commutator for the flux is
+
+\[
+D_{[a}\dot q_{b]}=(D_{[a}q_{b]})^{\displaystyle\cdot}
++\frac13\Theta D_{[a}q_{b]}.
+\tag{E.15}
+\]
+
+For the retained nearly isotropic background this follows from the projected derivative definition: differentiating a spatial covector gradient along the flow differentiates two spatial basis factors, whereas taking a spatial derivative after the covector time derivative differentiates one. Their difference is H\_g times that gradient. Corrections involving shear, vorticity, acceleration or a spatial gradient of Theta multiplied by the first-order flux are higher order in this model. The same result can be checked in comoving coordinates of the background metric, where the relevant spatial connection in the time direction is H\_g times the identity.
+
+Antisymmetrise the spatial derivative of Eq. (E.6). Products q\_a D\_b Theta are second order. Put Q\_ab equal to D\_{[}a q\_b{]}. Using Eqs. (E.14)--(E.15) and the background monopole equation gives
+
+\[
+\frac49\Theta\rho\,\omega_{ab}
+=-\dot Q_{ab}-\frac53\Theta Q_{ab}
+-D_{[a}D^c\pi_{b]c}.
+\tag{E.16}
+\]
+
+Now Q\_ab equals four thirds rho C\_ab at retained order. Applying the product rule, Eq. (E.10), and the norm-decreasing property of antisymmetrisation gives
+
+\[
+\|Q\|\le\frac43\rho\Theta\epsilon_1',
+\qquad
+\|\dot Q\|\le\frac43\rho\Theta^2
+\left(\epsilon_1^{\prime *}+\frac43\epsilon_1'\right),
+\tag{E.17}
+\]
+
+\[
+\|D_{[a}D^c\pi_{b]c}\|
+\le\frac8{15}\rho\Theta^2\epsilon_2^{\prime\prime}.
+\tag{E.18}
+\]
+
+Terms in which a density derivative multiplies a temperature anisotropy have been omitted at the specified perturbative order. Divide the norm bound from Eq. (E.16) by Theta and insert Eqs. (E.17)--(E.18). All coefficients are then explicit:
+
+\[
+\frac{\|\omega_{ab}\|}{\Theta}
+\le
+\frac94\frac43\left(\frac43+\frac53\right)\epsilon_1'
++\frac94\frac43\epsilon_1^{\prime *}
++\frac94\frac8{15}\epsilon_2^{\prime\prime}
+=9\epsilon_1'+3\epsilon_1^{\prime *}
++\frac65\epsilon_2^{\prime\prime}.
+\tag{E.19}
+\]
+
+This is the second derivative-envelope combination used in Section 6, now with the precise derivative operator in its hypothesis.
+
+\hypertarget{e.7-amplitude-ceilings-and-the-scope-of-the-conclusion}{%
+\subsection{Amplitude ceilings and the scope of the conclusion}\label{e.7-amplitude-ceilings-and-the-scope-of-the-conclusion}}
+
+Finally adopt, as maintained characteristic-scale assumptions,
+
+\[
+\epsilon_2^*\le\epsilon_2/3,\quad
+\epsilon_1'\le\epsilon_1/3,\quad
+\epsilon_3'\le\epsilon_3/3,\quad
+\epsilon_1^{\prime *}\le\epsilon_1/9,\quad
+\epsilon_2^{\prime\prime}\le\epsilon_2/9.
+\tag{E.20}
+\]
+
+Equations (E.13) and (E.19) then give the two amplitude bounds of Eq. (6.3), in non-strict form. Strict inequalities require strict envelope premises or a strict slack at one of the corresponding bounding steps; weak assumptions alone do not prove a strict conclusion. The closed outer bodies used for inference are consequently valid with the non-strict version. No saturation observation is implied.
+
+The derivation is internally complete for the stated first-order model, moment definitions, commutators and derivative envelopes. Its physical premises remain premises: geodesic fundamental observers, collisionless thermodynamic radiation, the retained perturbation order, a positive expanding background and the specified all-domain derivative controls. Their general validity does not follow from the algebra, and the complete nonlinear Einstein--Liouville almost-isotropy theorem is not claimed. What is obtained is the self-contained sufficient branch needed to understand the report's radial physical constraints, with every conversion and contraction shown.
+
+\clearpage
+\phantomsection
+
+\hypertarget{references}{%
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-BORNSEN_VANDEVEN_2018}{}}%
+Börnsen, Jan-Peter, and Anton E. M. van de Ven. 2018. {`Tangent Developable Orbit Space of an Octupole'}. \url{https://arxiv.org/abs/1807.04817}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-CAI_ZHANG_2018}{}}%
+Cai, T. Tony, and Anru Zhang. 2018. {`Rate-Optimal Perturbation Bounds for Singular Subspaces with Applications to High-Dimensional Statistics'}. \emph{The Annals of Statistics} 46 (1): 60--89. \url{https://doi.org/10.1214/17-AOS1541}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-DAI_CHLUBA_2014}{}}%
+Dai, Liang, and Jens Chluba. 2014. {`New Operator Approach to the {CMB} Aberration Kernels in Harmonic Space'}. \emph{Physical Review D} 89: 123504. \url{https://doi.org/10.1103/PhysRevD.89.123504}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ELLIS_VAN_ELST_1999}{}}%
+Ellis, George F. R., and Henk van Elst. 1999. {`Cosmological Models'}. In \emph{Theoretical and Observational Cosmology}, edited by Marc Lachièze-Rey, 541:1--116. NATO Science Series c. Dordrecht: Springer. \url{https://doi.org/10.1007/978-94-011-4455-1_1}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-HEMERIK_GOEMAN_2018}{}}%
+Hemerik, Jesse, and Jelle Goeman. 2018. {`Exact Testing with Random Permutations'}. \emph{TEST} 27 (4): 811--25. \url{https://doi.org/10.1007/s11749-017-0571-1}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-MASTER_2002}{}}%
+Hivon, Eric, Krzysztof M. Gorski, C. Barth Netterfield, Brendan P. Crill, Simon Prunet, and Frode Hansen. 2002. {`{MASTER} of the {CMB} Anisotropy Power Spectrum: A Fast Method for Statistical Analysis of Large and Complex {CMB} Data Sets'}. \emph{The Astrophysical Journal} 567 (1): 2--17. \url{https://doi.org/10.1086/338126}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-KAIDO_MOLINARI_STOYE_2022}{}}%
+Kaido, Hiroaki, Francesca Molinari, and Jörg Stoye. 2022. {`Constraint Qualifications in Partial Identification'}. \emph{Econometric Theory} 38 (3): 596--619. \url{https://doi.org/10.1017/S0266466621000207}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-LEUNG_2022}{}}%
+Leung, J. S.-Y., J. Hartley, J. M. Nagy, C. B. Netterfield, et al. 2022. {`A Simulation-Based Method for Correcting Mode Coupling in {CMB} Angular Power Spectra'}. \emph{The Astrophysical Journal} 928 (2): 109. \url{https://doi.org/10.3847/1538-4357/ac562f}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-LI_1999}{}}%
+Li, Ren-Cang. 1998. {`Relative Perturbation Theory: {II}. Eigenspace and Singular Subspace Variations'}. \emph{SIAM Journal on Matrix Analysis and Applications} 20 (2): 471--92. \url{https://doi.org/10.1137/S0895479896298506}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-LOPATIN_FERREIRA_2018}{}}%
+Lopatin, Artem A., and Ronaldo José Sousa Ferreira. 2018. {`Minimal Generating and Separating Sets for \(O(3)\)-Invariants of Several Matrices'}. \url{https://arxiv.org/abs/1810.10397}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-LYU_WANG_2020}{}}%
+Lyu, He, and Rongrong Wang. 2020. {`An Exact \(\sin\Theta\) Formula for Matrix Perturbation Analysis and Its Applications'}. \url{https://arxiv.org/abs/2011.07669}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-MES_1995_IMPROVED}{}}%
+Maartens, Roy, George F. R. Ellis, and William R. Stoeger. 1995a. {`Improved Limits on Anisotropy and Inhomogeneity from the Cosmic Background Radiation'}. \emph{Physical Review D} 51 (10): 5942--45. \url{https://doi.org/10.1103/PhysRevD.51.5942}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-MES_1995_LIMITS}{}}%
+---------. 1995b. {`Limits on Anisotropy and Inhomogeneity from the Cosmic Background Radiation'}. \emph{Physical Review D} 51 (4): 1525--35. \url{https://doi.org/10.1103/PhysRevD.51.1525}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-MOLINARI_2020}{}}%
+Molinari, Francesca. 2020. {`Microeconometrics with Partial Identification'}. In \emph{Handbook of Econometrics}, edited by Steven N. Durlauf, Lars Peter Hansen, James J. Heckman, and Rosa L. Matzkin, 7A:355--486. Elsevier. \url{https://doi.org/10.1016/bs.hoe.2020.05.002}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-OLIVE_KOLEV_AUFFRAY_2013}{}}%
+Olive, Marc, Boris Kolev, and Nicolas Auffray. 2013. {`Espace de Tenseurs Et Théorie Classique Des Invariants'}. HAL open archive.
+
+\leavevmode\vadjust pre{\hypertarget{ref-PHIPSON_SMYTH_2010}{}}%
+Phipson, Belinda, and Gordon K. Smyth. 2010. {`Permutation p-Values Should Never Be Zero: Calculating Exact p-Values When Permutations Are Randomly Drawn'}. \emph{Statistical Applications in Genetics and Molecular Biology} 9 (1): 1--16. \url{https://doi.org/10.2202/1544-6115.1585}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-RANDOMIZATION_2024}{}}%
+Ritzwoller, David M., Joseph P. Romano, and Azeem M. Shaikh. 2024. {`Randomization Inference: Theory and Applications'}. \url{https://arxiv.org/abs/2406.09521}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ROLDAN_NOTARI_QUARTIN_2016}{}}%
+Roldan, Omar, Alessio Notari, and Miguel Quartin. 2016. {`Interpreting the {CMB} Aberration and Doppler Measurements: Boost or Intrinsic Dipole?'} \emph{Journal of Cosmology and Astroparticle Physics} 2016 (06): 026. \url{https://doi.org/10.1088/1475-7516/2016/06/026}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-SAG_1999_COBE}{}}%
+Stoeger, William R., Marcelo E. Araujo, and Tim Gebbie. 1997. {`The Limits on Cosmological Anisotropies and Inhomogeneities from {COBE} Data'}. \emph{The Astrophysical Journal} 476 (2): 435--39. \url{https://doi.org/10.1086/303633}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-YASINI_PIERPAOLI_2017}{}}%
+Yasini, Siavash, and Elena Pierpaoli. 2017. {`Generalized Doppler and Aberration Kernel for Frequency-Dependent Cosmological Observables'}. \emph{Physical Review D} 96: 103502. \url{https://doi.org/10.1103/PhysRevD.96.103502}.
+
+\end{CSLReferences}
+
+\end{document}
