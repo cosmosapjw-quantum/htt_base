@@ -1,0 +1,17 @@
+% Report A publication-only support. Scientific prose remains in the Markdown SSOT.
+% XeLaTeX uses Unicode fonts; no unconditional legacy T1 override.
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{booktabs,longtable,array}
+\usepackage{microtype}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks
+\newcommand{\claimid}[1]{\texttt{#1}}
+
+% Edition-only layout; scientific Markdown remains untouched.
+\usepackage{xurl}
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\Large\bfseries\raggedright}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\raggedright}{\thesubsection}{1em}{}
+\setmonofont{Latin Modern Mono}[Scale=0.85]

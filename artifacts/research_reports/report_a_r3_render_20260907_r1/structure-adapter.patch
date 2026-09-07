@@ -1,0 +1,36 @@
+--- structure-source
++++ structure-r3
+@@ -49,6 +49,20 @@
+           if app_title ~= "" then
+             block.content = {pandoc.Str(app_title)}
+           end
++        elseif label == "References" then
++          block.level = 1
++          block.identifier = "references"
++          table.insert(block.classes, "unnumbered")
++        elseif appendix_started then
++          -- This edition already uses natural Markdown appendix levels.
++          -- B.1/D.1 prefixes are supplied by LaTeX subsection numbering.
++          if #block.content > 0 and block.content[1].t == "Str"
++              and block.content[1].text:match("^[A-Z]%.%d+[%.%d]*%.?$") then
++            table.remove(block.content, 1)
++            if #block.content > 0 and block.content[1].t == "Space" then
++              table.remove(block.content, 1)
++            end
++          end
+         else
+           if block.level >= 2 then
+             block.level = block.level - 1
+@@ -65,3 +79,12 @@
+   doc.blocks = output
+   return doc
+ end
++
++-- Formatting only: permit long source paths/hashes/IDs to break, without
++-- changing their literal content. xurl supplies safe break opportunities.
++function Code(code)
++  if #code.text > 24 then
++    assert(not code.text:find("[{}\\]"), "unsupported literal in code wrapper")
++    return pandoc.RawInline("latex", "{\\ttfamily\\nolinkurl{" .. code.text .. "}}")
++  end
++end

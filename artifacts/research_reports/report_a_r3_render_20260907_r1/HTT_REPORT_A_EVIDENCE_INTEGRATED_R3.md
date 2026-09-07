@@ -1,0 +1,1103 @@
+# Tensorised Low-Multipole CMB Morphology, Kinematical Isotropy Bounds and Response-Limited Identification
+
+**Report A — evidence-integrated theory-and-methods edition, revision 3**  
+Jiwon Park  
+Date: 2026-09-07  
+Status: `EVIDENCE_INTEGRATED_REVIEW_CANDIDATE_NOT_CANONICAL`  
+Owner: manuscript / MAIN conversation. Scope: theory and methods; no new transfer or observational data.
+
+This edition retains the scientific scope of the K4-corrected revision 2 and incorporates the subsequently reviewed execution and source-replay records. The original manuscript and all historical receipts remain unchanged. The core map contains the same forty candidate identities: thirty existing identities, including four revised statements, and ten additional kinematical candidates. The canonical ledger remains T9 v4 with thirty claims. This is a complete manuscript source for final-text review and rendering, not a claim that this new edition has already been typeset, independently audited or approved for scientific publication. Appendix A maps each core claim to its evidence scope; Appendices B–D distinguish prior execution, current editorial reconciliation and remaining decisions.
+
+## Abstract
+
+Low-multipole cosmic-microwave-background morphology and spacetime kinematics are related physical questions, but they are not the same state. We construct a theory and methods framework that retains both the full quadrupole–octupole temperature tensors and a separately typed physical state of congruence shear, vorticity, acceleration, frame-relative velocities and geometry. The Maartens–Ellis–Stoeger inequalities are inherited as one-way, premise-matched radial constraints on named physical sectors, rather than discarded or treated as observations of those sectors. Physical tensor functionals retain shape, parity and relative orientation that scalar ceilings cannot determine.
+
+The orthonormal real harmonic carrier maps exactly to symmetric trace-free tensors \(Q_{ab}\) and \(O_{abc}\). On a nonzero cyclic forward-image domain, an overcomplete Krylov packet reconstructs a deterministic proper-oriented representative. The physical state remains distinct from this observable representation: attribution requires a declared response and a jointly conditioned feasible set. We distinguish exact affine-fibre uniqueness from population identification and sampling coverage, and retain dependence when the same data construct both MES ceilings and observational compatibility regions. Finite-null validity consequently applies to the complete data-dependent analysis, including anchor construction, rather than to rank arithmetic alone.
+
+The exact full-sky local-observer response closes the radiation–observer velocity lane, not the general shear, vorticity or global-tilt response. After a declared cut-sky processing operation, the low-source response is identifiable only modulo a high-source nuisance image. The inherited continuum wide-mask analysis has row rank 32 at source cutoff \(L=12\), with an exact axial certificate and numerical evidence for the other registered directions. The finite-HEALPix matched-control operator remains rank unresolved. A frozen matrix-valued numerical-error envelope gives a conditional robust-rank criterion, while subspace interpretation additionally requires a perturbation-to-gap bound. No corrected Planck rank, empirical kinematical estimate or native-solver result is reported. The central result is a unified separation of observable morphology, physical-sector constraints and response-limited identification.
+
+## 1. Physical question, scope and supersession
+
+A complete description of a low-multipole temperature pattern does not, by itself, identify its physical origin. Conversely, an upper bound on a physical kinematical invariant does not reconstruct the direction or morphology of the underlying tensor. These two limitations motivate a framework in which observable representation, physical state, conditional constraints and inference are distinct but connected objects.
+
+The observable state is the quadrupole–octupole pair
+
+\[
+\mathcal O_{\rm low}=(Q_{ab},O_{abc},\ldots).
+\]
+
+The physical state contains kinematics of a declared congruence, velocities between declared frames and separately typed geometry. A family of MES anchors restricts selected physical invariants under specified premises. A response-constrained set describes which physical states remain compatible with the observations and those premises. None of these objects is a substitute for another.
+
+The original MES approach uses matter–radiation equations to constrain departures from a Friedmann–Robertson–Walker geometry. Its physical content is therefore not exhausted by a collection of scalar anomaly statistics. Its inequalities nevertheless require maintained assumptions and do not constitute a model-free inverse map from one observed sky to a spacetime tensor field. The later improved limits and the connection between covariant multipole norms and COBE-era quantities supply the relevant lineage. [@MES_1995_LIMITS; @MES_1995_IMPROVED; @SAG_1999_COBE]
+
+The present report retains that physical lineage while replacing scalar-only observable compression by a tensorial carrier. It also restores the physical-state programme in which shear, vorticity, acceleration, frame velocities and geometry remain component-native. The resulting methodology does not infer shear from the temperature quadrupole merely because both transform in an STF2 representation. It asks separately which components are represented, which are constrained, which have an available response and which are identifiable.
+
+The scientific order is therefore observable tensor representation and orbit geometry; typed physical kinematics and functionals; premise-matched MES constraints; response-constrained sets; finite-null validity; local-observer response; processed nuisance quotients; and numerical uncertainty. The existing repository lineages supplying these ingredients are composed by their source and semantic roles, not presented as one fictitious linear Git ancestry.
+
+This report is theory-only. Scalar-only MES observational ranks and withdrawn WU-006–008 tensor-rank, foreground and carrier-injection interpretations remain historical provenance. There is no corrected tensorised Planck result in this phase. Local observer motion is not equated with global matter-frame tilt. No finite-HEALPix containment theorem, Bianchi-family identification, or native BASS background, recombination, reionisation or solver result enters the report. A model-family label would require a separate forward model and identification argument.
+
+## 2. Conventions and observable tensor representation
+
+### 2.1 Observer, photon and sky direction
+
+The metric signature is \((-,+,+,+)\), and the spatial orientation convention is \(\epsilon_{123}=+1\). The future-directed observer obeys \(u^a u_a=-1\). For future-directed null photon momentum,
+
+\[
+p^a p_a=0,
+\qquad E_\gamma=-c\,p_a u^a>0,
+\]
+
+we define the propagation direction by
+
+\[
+p^a=\frac{E_\gamma}{c}(u^a+e^a),
+\qquad u_a e^a=0,
+\qquad e_a e^a=1.
+\]
+
+The outward sky direction is \(n^a=-e^a\). These conventions are used consistently in the local-observer response below. Physical frame and congruence labels are not removed by a coordinate change.
+
+The accepted R2 execution record covers the scalar contractions obtained after substituting these observer and direction identities. Its use here is limited to the null decomposition and observer-energy identities. It does not formalise an observer field on a Lorentzian manifold, construct a null geodesic or validate photon transport. The dimensional interpretation and the geometric assumptions remain explicit in this section. The exact scope and source-bound record are identified as E2 in Appendix B.
+
+### 2.2 Orthonormal and raw real harmonic coordinates
+
+For a real temperature field,
+
+\[
+T(\hat n)=\sum_{\ell m}a_{\ell m}Y_{\ell m}(\hat n),
+\qquad a_{\ell,-m}=(-1)^m a_{\ell m}^{*}.
+\]
+
+The orthonormal stored-real carrier is
+
+\[
+c_{\ell0}=a_{\ell0},\qquad
+c_{\ell m,c}=\sqrt2\,\Re a_{\ell m},\qquad
+c_{\ell m,s}=-\sqrt2\,\Im a_{\ell m}
+\quad(m>0).
+\]
+
+It satisfies the exact isometry
+
+\[
+\|c_\ell\|_2^2
+=\sum_{m=-\ell}^{\ell}|a_{\ell m}|^2
+=(2\ell+1)C_\ell.
+\]
+
+The processed-response construction also uses raw real and imaginary components,
+
+\[
+r_{\ell0}=a_{\ell0},\qquad
+r_{\ell m,R}=\Re a_{\ell m},\qquad
+r_{\ell m,I}=\Im a_{\ell m}.
+\]
+
+Their metric is
+
+\[
+G_\ell=\operatorname{diag}(1,2,2,\ldots,2),
+\qquad c_\ell=D_\ell r_\ell,
+\qquad D_\ell^TD_\ell=G_\ell.
+\]
+
+The two coordinate descriptions encode the same temperature field but do not have the same Euclidean component metric. Singular values or conditioning estimates computed in raw coordinates require the declared metric adapter before comparison with orthonormal-carrier results.
+
+### 2.3 Harmonic-to-STF map
+
+The quadrupole and octupole are defined by
+
+\[
+T_2(\hat n)=Q_{ab}n^a n^b,
+\qquad Q_{ab}=Q_{(ab)},\qquad Q^a{}_a=0,
+\]
+
+\[
+T_3(\hat n)=O_{abc}n^a n^b n^c,
+\qquad O_{abc}=O_{(abc)},\qquad O^a{}_{ac}=0.
+\]
+
+The real dimensions are \(5\) and \(7\), respectively. In the retained normalisation,
+
+\[
+\boxed{Q:Q=\frac{15}{8\pi}\|c_2\|_2^2
+=\frac{75}{8\pi}C_2},
+\]
+
+\[
+\boxed{O:O=\frac{35}{8\pi}\|c_3\|_2^2
+=\frac{245}{8\pi}C_3}.
+\]
+
+Here \(Q\) and \(O\) have temperature units when the harmonic coefficients do. These are observable temperature tensors, not Hubble-normalised shear or vorticity. Retaining their complete components avoids replacing the observable morphology by powers or a small set of scalar summaries.
+
+## 3. Proper-rotation orbit geometry of the observable state
+
+### 3.1 Domain and invariant packet
+
+On a locally free stratum of \(\mathrm{STF}_2\oplus\mathrm{STF}_3\), the proper-rotation quotient has dimension \(5+7-3=9\). This is a conditional dimension count, not a global orbit atlas. General tensor-invariant and orbit-space constructions provide adjacent methods, but do not constitute a proof of the specific reconstruction used here. [@OLIVE_KOLEV_AUFFRAY_2013; @BORNSEN_VANDEVEN_2018; @LOPATIN_FERREIRA_2018]
+
+For nonzero amplitudes
+
+\[
+A_Q=(Q:Q)^{1/2},\qquad A_O=(O:O)^{1/2},
+\qquad \bar Q=Q/A_Q,\qquad \bar O=O/A_O,
+\]
+
+define
+
+\[
+v_a=\bar O_{abc}\bar Q_{bc},
+\qquad \mathscr K_{QO}=[v,\bar Qv,\bar Q^2v].
+\]
+
+In an ordered eigenframe of \(\bar Q\),
+
+\[
+\det\mathscr K_{QO}
+=v_1v_2v_3\prod_{i<j}(\lambda_j-\lambda_i)
+\]
+
+with the inherited ordering convention. The chart is cyclic when the quadrupole spectrum is simple and every eigenframe component of \(v\) is nonzero.
+
+The normalised packet contains
+
+\[
+s_2=\operatorname{tr}\bar Q^2=1,
+\qquad s_3=\operatorname{tr}\bar Q^3,
+\]
+
+\[
+\mu_r=v^T\bar Q^rv\quad(r=0,1,2),
+\qquad \chi=\det\mathscr K_{QO},
+\]
+
+and the ten symmetric entries
+
+\[
+\tau_{ijk}=\bar O(\bar Q^iv,\bar Q^jv,\bar Q^kv),
+\qquad 0\le i\le j\le k\le2.
+\]
+
+Together with the two amplitudes, these data give an overcomplete representation on the declared domain. No assertion is made that arbitrary numerical packet values lie in its image.
+
+### 3.2 Reconstruction and orientation
+
+Cayley–Hamilton gives
+
+\[
+\bar Q^3=\frac{s_2}{2}\bar Q+\frac{s_3}{3}I,
+\]
+
+hence
+
+\[
+\mu_3=\frac{s_2}{2}\mu_1+\frac{s_3}{3}\mu_0,
+\qquad
+\mu_4=\frac{s_2}{2}\mu_2+\frac{s_3}{3}\mu_1.
+\]
+
+The packet therefore fixes
+
+\[
+G=\mathscr K_{QO}^{T}\mathscr K_{QO}
+=\begin{pmatrix}
+\mu_0&\mu_1&\mu_2\\
+\mu_1&\mu_2&\mu_3\\
+\mu_2&\mu_3&\mu_4
+\end{pmatrix},
+\qquad \det G=\chi^2.
+\]
+
+The conditions \(B^TB=G\) and \(\det B=\chi\) alone do not select a canonical frame: \(RB\) satisfies them for every \(R\in SO(3)\). We instead use the unique upper-triangular positive-diagonal Cholesky factor \(B_+\), followed by a fixed orientation correction,
+
+\[
+B_+^TB_+=G,\qquad
+S_\chi=\operatorname{diag}(1,1,\operatorname{sgn}\chi),
+\qquad B=S_\chi B_+.
+\]
+
+On the cyclic domain, \(G\) is positive definite and \(\det B_+=|\chi|\). Thus
+
+\[
+B^TB=G,\qquad \det B=\chi.
+\]
+
+With
+
+\[
+C=\begin{pmatrix}
+0&0&s_3/3\\
+1&0&s_2/2\\
+0&1&0
+\end{pmatrix},
+\]
+
+the canonical quadrupole is \(\bar Q_{\rm can}=BCB^{-1}\). If \(T_{ijk}\) is the symmetric coordinate tensor determined by the ten trilinear entries, then
+
+\[
+(\bar O_{\rm can})_{abc}
+=(B^{-1})_{ia}(B^{-1})_{jb}(B^{-1})_{kc}T_{ijk}.
+\]
+
+These formulae reconstruct a symmetric, trace-free, unit-normalised octupole on the exact packet image. For the ordered coordinate vectors \(e_0,e_1,e_2\), the image conditions include
+
+\[
+Ce_0=e_1,\qquad C^2e_0=e_2,
+\qquad \boxed{\bar O_{\rm can}:\bar Q_{\rm can}=Be_0}.
+\]
+
+Equivalently,
+
+\[
+\bar O:\bar Q=\mathscr K_{QO}e_0,
+\qquad O:Q=A_QA_O\,\mathscr K_{QO}e_0.
+\]
+
+An image-safe numerical decoder must enforce these constraints and complete forward replay. The recorded implementation expands the octupole in a fixed Frobenius-orthonormal STF3 basis and solves the ten trilinear equations as a row-scaled least-squares system, rather than applying an inverse Krylov basis independently in three tensor slots. Rank and conditioning refusal, trace and norm checks, the contraction-image condition and complete forward replay remain part of its numerical contract.
+
+The exact-source native execution identified as E4 in Appendix B passed all 28 registered tests without source modification. Its forged-octupole regression checks the specific contraction-image rejection. The two stable-forward tests permit either consistent replay or typed chart unavailability; their realised branch counts were not logged. This record therefore supports the registered numerical assertions, not universal successful inversion, uniform stability or an all-strata theorem. The earlier numerical source-equivalent stress and the separate exact-arithmetic STF3-basis record retain their historical grades and are not relabelled as this native run.
+
+### 3.3 Mirror information and chart failures
+
+The signed volume \(\chi\) is an \(SO(3)\) scalar and an \(O(3)\) pseudoscalar. It distinguishes a registered cyclic mirror pair sharing
+
+\[
+(Q:Q,\ O:O,\ \operatorname{tr}Q^3,\ Q_{ij}O_{ikl}O_{jkl}).
+\]
+
+This is a limitation of that named scalar compression, not a non-separation theorem for every possible bispectrum. The orbit theorem is confined to nonzero cyclic forward-image packets. Zero tensors, contraction-null states, repeated spectra, noncyclic states and condition-limit cases remain typed chart failures. Original tensors and row membership are preserved; no axis or zero statistic is manufactured to conceal a chart failure. Global invariant-ring completeness, an all-strata atlas and novelty adjudication remain outside the established result.
+
+## 4. Physical kinematics, frame relations and tensor morphology
+
+### 4.1 Physical state and unavailable components
+
+The physical state is
+
+\[
+\mathcal X_{\rm phys}
+=\mathcal K_u\times\mathcal V_{\rm frame}\times\mathcal G,
+\qquad \mathcal K_u=(\sigma_{ab},\omega_a,A_a).
+\]
+
+Shear, vorticity and acceleration describe the declared timelike congruence, not the angular temperature field. This covariant separation is standard background; the present framework further retains the metadata needed to compare or constrain individual sectors. [@ELLIS_VAN_ELST_1999]
+
+Every component carries its frame, congruence, epoch or window, averaging scale, basis, units and perturbative branch. An untyped legacy vector is not assigned a frame role without an explicit adapter. A missing component is not a numerical zero: the former reports unavailable information or a missing provider, whereas the latter is a physical assertion. Typed abstention is therefore part of the state description rather than a cosmetic output label.
+
+Representation equivalence is also not physical identification. A map from \(Q_{ab}\) to \(\sigma_{ab}\) requires dynamics, a specified observational response and the associated assumptions. None is supplied by the fact that both tensors are STF2.
+
+### 4.2 Three frame velocities
+
+The frame block is
+
+\[
+\mathcal V_{\rm frame}
+=(\beta_{\rm RO}^a,\beta_{\rm RM}^a,\beta_{\rm MO}^a),
+\qquad \beta^a=v^a/c.
+\]
+
+Radiation–observer, radiation–matter and matter–observer labels are retained separately. The registered first-order closure is
+
+\[
+\boxed{\beta_{\rm RO}^a
+=\beta_{\rm RM}^a+\beta_{\rm MO}^a+O(\beta^2)}.
+\]
+
+This is not an exact relativistic velocity-addition law or a measurement of any term. In particular, identifying \(\beta_{\rm RO}\) with \(\beta_{\rm MO}\) requires an additional premise concerning \(\beta_{\rm RM}\). The available local-observer temperature response acts in the radiation–observer lane. It does not by itself estimate matter-frame tilt or congruence kinematics.
+
+The velocity in this frame definition is a dimensionful physical velocity. It is not the dimensionless observable contraction vector denoted by \(v_a\) in Section 3.1. Their distinct types and definitions are retained even where a conventional letter is shared.
+
+### 4.3 Geometry, parity and dimension
+
+The signed scalar curvature-budget coordinate \(\Delta\Omega_k\) is distinct from anisotropic spatial curvature. Optional geometry or matter blocks include \({}^{(3)}S_{ab}\), \(E_{ab}\), \(H_{ab}\) and \(\pi_{ab}\), each admitted under its own convention and provider.
+
+| Block | Raw dimension | Representation | Role |
+|---|---:|---|---|
+| \(\sigma_{ab}\) | 5 | polar STF2 | congruence shear |
+| \(\omega_a\) | 3 | axial vector | congruence vorticity |
+| \(A_a\) | 3 | polar vector | congruence acceleration |
+| \(\beta_{\rm RM}\), \(\beta_{\rm MO}\) | 3 each | polar vectors | independent frame relations in the first-order chart |
+| \(\beta_{\rm RO}\) | 3 | polar vector | closure-derived view in that chart |
+| \(\Delta\Omega_k\) | 1 | scalar | signed curvature budget |
+| \({}^{(3)}S_{ab}\), \(E_{ab}\), \(\pi_{ab}\) | 5 each | polar STF2 | optional curvature, Weyl or stress blocks |
+| \(H_{ab}\) | 5 | axial STF2 | optional magnetic Weyl block |
+
+Excluding optional tensors and treating \(\beta_{\rm RO}\) as closure-derived gives
+
+\[
+\dim\mathcal X_{\rm core}^{\rm general}
+=5+3+3+3+3+1=18.
+\]
+
+On a locally free \(SO(3)\) stratum only, the quotient dimension is \(15\). On the geodesic subdomain \(A_a=0\), the raw and corresponding locally free quotient dimensions are \(15\) and \(12\). These are dimensions of the declared kinematical parameter space, not a count of Einstein-equation solutions or observationally identified degrees of freedom. Additional constraints and stabilisers require their own analysis. Each optional STF2 block adds five raw components before such constraints are imposed.
+
+### 4.4 Physical tensor functionals and orbit morphology
+
+A registered functional
+
+\[
+\phi:\mathcal X_{\rm phys}\longrightarrow W_\phi
+\]
+
+retains input-state identity, output tensor type, parity, frame, congruence, epoch, scale, normalisation and branch. Its codomain may be scalar, pseudoscalar, vector, STF, set or path valued. Relevant examples are
+
+\[
+\sigma_{ab},\quad\omega_a,\quad A_a,
+\quad\operatorname{tr}\sigma^2,
+\quad\operatorname{tr}\sigma^3,
+\quad\omega_a\omega^a,
+\]
+
+\[
+\beta_{\rm RM}\cdot\omega,
+\qquad\beta_{\rm RM}^{a}\sigma_{ab}\beta_{\rm RM}^{b}.
+\]
+
+The quadratic shear invariant records a magnitude, while the cubic invariant carries additional shape information. The polar–axial velocity-vorticity contraction is a pseudoscalar. These functionals preserve physical morphology beyond a scalar budget, but their definition is not an observational estimate. A legacy scalar projection remains one functional of a richer state rather than becoming the primary physical representation.
+
+## 5. MES inequalities as premise-matched sector constraints
+
+### 5.1 Multipole normalisation, rate convention and inherited ceilings
+
+In the retained PSTF normalisation,
+
+\[
+\epsilon_2=\frac1{T_0}\sqrt{\frac{75C_2}{8\pi}},
+\qquad
+\epsilon_3=\frac1{T_0}\sqrt{\frac{245C_3}{8\pi}}.
+\]
+
+These quantities are dimensionless when the harmonic coefficients and the
+positive monopole temperature \(T_0\) use consistent temperature units. The
+residual dipole amplitude \(\epsilon_1\) is a declared attribution scenario,
+not a result obtained by inverting a scalar bound. The observed multipole
+normaliser is not, by itself, proof of the all-observer anisotropy or derivative
+bounds required by the physical MES implication.
+
+The retained theorem is used on its expanding geodesic branch. Choose a common
+rate convention with \(H=\Theta/3>0\). For rates defined geometrically from
+the unit observer, \(\Theta_g=\nabla_a u^a\) and \(H_g=\Theta_g/3\) have
+inverse-length units. The corresponding inverse-time rates satisfy
+
+\[
+H_t=cH_g,\qquad \sigma^{(t)}_{ab}=c\sigma^{(g)}_{ab},
+\qquad \omega^{(t)}_{ab}=c\omega^{(g)}_{ab}.
+\]
+
+The dimensionless quadratic ratios below are identical in those two consistent
+conventions. A geometrical numerator must not be combined with an
+inverse-time Hubble denominator without the conversion.
+
+The source magnitude is the full tensor contraction,
+\(|\sigma|^2=\sigma_{ab}\sigma^{ab}\) and
+\(|\omega|^2=\omega_{ab}\omega^{ab}\), rather than the alternative
+half-contraction scalar convention. The source defines this norm and prints
+the retained coefficient combinations in its MES equations. The independent
+PSTF conversion factors are \(15/2\) for the quadrupole and \(35/2\) for the
+octupole. [@SAG_1999_COBE]
+
+After the maintained gradient and characteristic-time estimates, write
+
+\[
+B_\sigma=\frac53\epsilon_1+3\epsilon_2+\frac37\epsilon_3,
+\qquad
+B_\omega=\frac{10}{3}\epsilon_1+\frac{2}{15}\epsilon_2.
+\]
+
+The inequalities \(|\sigma|/\Theta<B_\sigma\) and
+\(|\omega|/\Theta<B_\omega\) then imply
+
+\[
+\psi_\sigma(X)=\frac{\sigma_{ab}\sigma^{ab}}{6H^2}
+<U_\sigma=\frac32B_\sigma^2,
+\qquad
+\psi_\omega(X)=\frac{\omega_{ab}\omega^{ab}}{6H^2}
+<U_\omega=\frac32B_\omega^2.
+\]
+
+The factor \(3/2\) follows from \(\Theta^2/(6H^2)\); it is not altered by
+changing consistently between inverse-length and inverse-time rates. The
+vorticity vector-to-tensor adapter remains part of the registered convention.
+An axial-vector norm cannot be substituted for the antisymmetric-tensor
+contraction without that adapter. [@MES_1995_LIMITS; @MES_1995_IMPROVED;
+@SAG_1999_COBE]
+
+For maintained choices \(\eta\), the closed outer sector body uses
+\(\psi_j(X)\le U_j(y;\eta)\). This non-strict form is a conservative
+closure of the source restriction, not a claim of physical saturation.
+The data argument is retained when the ceiling is constructed from the same
+sky as other parts of the analysis. A fixed external or ensemble calibration
+is a distinct conditioning regime.
+
+All-observer or Copernican extension, the declared frame and congruence,
+geodesic almost-EGS branch, derivative-hierarchy reduction and residual-dipole
+scenario remain substantive premises. Compliance with the sector body does not
+establish those premises, a converse FLRW result or an observation of shear or
+vorticity. Optional sectors receive no anchor by analogy, and degenerate
+zero-radius cases are not admitted to the positive-radius division formulas.
+
+### 5.2 Acceleration premise and anchor availability
+
+On the registered geodesic branch, \(A_a=0\) is a structural domain condition. The statistical interface separately records the absence of a numerical acceleration denominator. These statements are compatible but not identical. `NO_MES_ANCHOR` is not a zero-radius measured acceleration ball.
+
+Outside the geodesic branch, acceleration remains a typed physical component, and no active verified numerical MES ceiling is supplied. Optional geometry sectors also receive no anchor by analogy. An external physical bound would require its own matter assumptions, gradients and convention; it is not admitted merely by retaining the state component.
+
+### 5.3 Radial information versus tensor direction
+
+For a positive-radius Euclidean sector ball
+
+\[
+B_R=\{x:\|x\|\le R\},\qquad R>0,
+\]
+
+an orthogonal representation action gives
+
+\[
+\|gx\|^2=\langle x,g^Tgx\rangle=\|x\|^2.
+\]
+
+Hence \(x\in B_R\) if and only if \(gx\in B_R\). A norm-only anchor is constant on every rotational orbit and, more strongly, assigns the same decision to states of the same norm even when their non-radial shape invariants differ. It cannot select an eigenframe, direction or handedness.
+
+This is consistent with the exact equivariance obstruction: a rotation-equivariant map from rotational scalars alone must return an object fixed by all rotations. The only such vector is zero, and the only such rank-two tensor is proportional to the spatial identity, whose STF part vanishes. Directional reconstruction therefore requires additional data or a response; it is not hidden inside the scalar normalisation.
+
+### 5.4 Product geometry, quadratic stress and matching
+
+For a finite nonempty family of matched positive-radius Euclidean blocks,
+
+\[
+B_{\rm prod}=\prod_jB_j,
+\qquad
+\rho_{B_{\rm prod}}(x)=\max_j\frac{\|x_j\|}{R_j}.
+\]
+
+Indeed, \(x\in tB_{\rm prod}\) requires all sector gauges to be at most \(t\), so the infimum admissible value is their maximum. Sector excesses consequently cannot cancel through a signed sum.
+
+With quadratic numerator \(N_j=\|x_j\|^2\), ceiling \(U_j=R_j^2\), and \(S_j=N_j/U_j\),
+
+\[
+\boxed{\rho_{B_{\rm prod}}(x)^2=\max_jS_j}.
+\]
+
+The gauge and quadratic saturation share the threshold one, but their exceedance margins are different numbers. Neither is automatically a probability, posterior or evidence term. The formula applies to the factorised anchor body, not to a full response-constrained set. For example,
+
+\[
+B_0=[-1,1]^2,\qquad
+F=B_0\cap\{x_1+x_2\le1\}
+\]
+
+gives \(\rho_{B_0}(1,1)=1\) and \(\rho_F(1,1)=2\).
+
+A numerical sector ratio requires matching sector, invariant, frame, congruence, normalisation, order and branch. For fixed ensemble-calibrated \(U_j>0\), an identified numerator interval maps to
+
+\[
+[\underline N_j,\overline N_j]/U_j
+=[\underline N_j/U_j,\overline N_j/U_j].
+\]
+
+A realisation-conditioned random denominator is not divided as though fixed. It remains `RATIO_UNIDENTIFIED` until the joint random-anchor inference problem is specified. Missing numerators, absent anchors and channel mismatches similarly remain typed non-numerical outcomes. Degenerate zero-radius anchors are not covered by the positive-radius gauge or division formulae.
+
+## 6. Jointly conditioned response sets and identification
+
+### 6.1 The joint feasible construction
+
+Let \(\eta\) collect the maintained frame, congruence, perturbative branch, attribution and nuisance policy, together with the registered analysis procedure. Define
+
+\[
+\boxed{
+\Theta(y;\eta)
+=D_\eta\cap B_{\rm MES}(y;\eta)
+\cap\mathcal R_\eta^{-1}(C_y(\eta)).
+}
+\]
+
+The physical domain \(D_\eta\), sector constraints \(B_{\rm MES}\), response \(\mathcal R_\eta\) and observational compatibility region \(C_y\) must each be specified. The intersection does not create a response where none is available.
+
+If the same data construct the MES ceilings and the compatibility region, the factors are restrictions within one jointly conditioned system, not independent observations. Any likelihood or evidence factorisation requires an additional joint-law argument. Partial-identification literature distinguishes characterisation of admissible parameter sets from their estimation and confidence procedures; it provides context rather than a proof of the project-specific tensor response. [@MOLINARI_2020; @KAIDO_MOLINARI_STOYE_2022]
+
+### 6.2 Exact affine fibres
+
+For an exact linear response and exact observed vector \(y\), let \(X_0\) be feasible and write \(F_y=D_\eta\cap B_{\rm MES}(y;\eta)\). Then
+
+\[
+\Theta(y;\eta)=F_y\cap(X_0+\ker\mathcal R_\eta).
+\]
+
+Thus
+
+\[
+\boxed{
+\Theta(y;\eta)=\{X_0\}
+\quad\Longleftrightarrow\quad
+\{h\in\ker\mathcal R_\eta:X_0+h\in F_y\}=\{0\}.
+}
+\]
+
+The equivalence follows by translating every other feasible point by \(-X_0\). Full column rank is sufficient but need not be necessary: predeclared inequalities may exclude every nonzero kernel displacement. The exact example
+
+\[
+\mathcal R=(1\ \ 1),\qquad y=0,\qquad x_1,x_2\ge0
+\]
+
+has only the feasible point \((0,0)\), although the response has rank one.
+
+An empty feasible set reports inconsistency with the maintained constraints, not a detection. A bounded non-singleton set retains partial ambiguity; unbounded and disconnected sets retain their corresponding geometry. Failure to supply or solve a response is undetermined, not evidence for a physical null. No shear, vorticity, acceleration or global-tilt estimate is inferred in a sector whose physical response is absent.
+
+### 6.3 Sampling uncertainty is a separate question
+
+For noisy finite data, the displayed \(\Theta(y;\eta)\) is first a realised compatibility construction. Its cardinality alone does not establish population point identification or confidence coverage. A statistical statement requires a sampling law and justified constructions of both the compatibility region and any data-derived anchors. The exact affine-fibre criterion is not extended to such a theorem by terminology alone.
+
+The evidence integration preserves this distinction from the K3 core draft. Neither the materialised claim map nor a successful source replay supplies a sampling law. A future statistical analysis must calibrate the complete data-to-output operation rather than attach a nominal rank to an already selected physical explanation.
+
+## 7. Finite-null validity of the complete analysis
+
+### 7.1 Exchangeable observation/reference rows
+
+Let \(Z=(Z_0,\ldots,Z_N)\) contain an observation and reference rows, and let the complete analysis return \(S(Z)=(S_0(Z),\ldots,S_N(Z))\). Complete analysis includes observable construction, MES ceilings and their conditioning, chart availability, nuisance fitting, adaptive selection, missingness, ties and final scoring.
+
+If the rows are jointly exchangeable under the null and
+
+\[
+S_i(\pi Z)=S_{\pi^{-1}i}(Z)
+\]
+
+for every row permutation, the observation-inclusive upper-tail rank
+
+\[
+\boxed{
+p_{\rm row}(Z)=
+\frac{1+\sum_{i=1}^N\mathbf1\{S_i(Z)\ge S_0(Z)\}}{N+1}
+}
+\]
+
+is conservative and super-uniform. Joint exchangeability and complete row equivariance are substantive premises; they are not implied by the denominator \(N+1\).
+
+### 7.2 Finite transformation-group randomisation
+
+For a finite transformation group \(\mathcal G\) under which the null law is invariant, the exact orbit rank is instead
+
+\[
+\boxed{
+p_{\mathcal G}(Z)=\frac1{|\mathcal G|}
+\sum_{g\in\mathcal G}\mathbf1\{T(gZ)\ge T(Z)\}.
+}
+\]
+
+A sampled set of transformations requires a valid identity-including conditional-Monte-Carlo construction, not an arbitrary collection of reference rows. [@RANDOMIZATION_2024; @PHIPSON_SMYTH_2010; @HEMERIK_GOEMAN_2018]
+
+The inherited exact counterexample assigns probability \(1/2\) to each of
+
+\[
+z^{(1)}=(10,0,-100,-100),\qquad
+z^{(2)}=(0,10,-100,-100).
+\]
+
+This law is invariant under swapping rows 0 and 1. Ranking row 0 against all four rows gives \(p_{\mathrm{all}}=1/4\) or \(1/2\), so
+
+\[
+\Pr(p_{\mathrm{all}}\le1/2)=1>1/2.
+\]
+
+Ranking over the actual two-element orbit instead gives \(1/2\) or \(1\). Proper-subgroup invariance therefore does not license comparison with rows outside that orbit. These two finite-sample theorems retain different reference objects and are not merged into an exchangeability-or-group premise.
+
+### 7.3 Adaptation, chart failures and null fidelity
+
+Adaptive selection is valid only when the complete map preserves the relevant symmetry or uses a separately justified independent design. In the registered four-row enumeration, one asymmetric tie rule gives 12 permutations at \(p=1/2\) and 12 at \(p=3/4\); the alternative asymmetric tie rule gives 6 and 18. Both have rejection probability one at \(\alpha=3/4\), an exact size excess \(1/4\). The registered pooled permutation-invariant rule has zero maximum super-uniformity violation. These are inherited finite enumeration results, not newly executed simulations.
+
+Chart failure belongs to the analysis map. Deleting chart-unavailable reference rows while retaining an available observation changes the comparison law. A valid construction uses a statistic for every row, a symmetric pooled fallback or abstention. Data-derived anchor construction is subject to the same requirement.
+
+Null fidelity is separate from valid rank arithmetic. A noisy observation and noise-free CMB-only simulations are not jointly exchangeable without a matched joint law. Multiple outputs sharing the same sky or simulation rows are not independent replications merely because they have different names or use different tensor summaries.
+
+## 8. Exact local radiation–observer response
+
+### 8.1 Domain and pullback
+
+For the local response, identify \(\beta_{\rm obs}\) with the radiation–observer velocity \(\beta_{\rm RO}\), retaining
+
+\[
+u_a\beta_{\rm obs}^a=0,\qquad
+0\le\beta_{\rm obs}^2<1,
+\]
+
+\[
+\widetilde u^a=\gamma(u^a+\beta_{\rm obs}^a),
+\qquad \gamma=(1-\beta_{\rm obs}^2)^{-1/2}.
+\]
+
+These conditions imply \(\widetilde u^a\widetilde u_a=-1\). With the outward sky convention of Section 2, the exact full-sky thermodynamic-temperature pullback for Doppler weight \(d=1\) is
+
+\[
+\widetilde T(\widetilde n)
+=\frac{T(n(\widetilde n))}
+{\gamma(1-\beta_{\rm obs}\cdot\widetilde n)}.
+\]
+
+The absolute-temperature field is strictly positive. The retained first-order generator is
+
+\[
+\delta_\beta T
+=(\beta_{\rm obs}\cdot n)T
+-[\beta_{\rm obs}-(\beta_{\rm obs}\cdot n)n]\cdot\nabla_{S^2}T.
+\]
+
+Harmonic aberration operators and general Doppler-weight kernels provide the relevant response background. Frequency-dependent observables are not silently assigned the \(d=1\) temperature law. [@DAI_CHLUBA_2014; @YASINI_PIERPAOLI_2017]
+
+The accepted R2 obligation in this subsection verifies the boosted-observer normalisation under its Lorentz-factor premise. It does not by itself verify the complete temperature pullback, its generator or the STF response below. Those results retain their stated analytic and inherited implementation sources.
+
+### 8.2 Quadrupole-to-octupole response, adjoint and inverse
+
+Use the Euclidean vector inner product and the full STF3 Frobenius contraction
+\(\langle O_1,O_2\rangle_F=(O_1)_{abc}(O_2)_{abc}\). For the registered
+STF projection convention,
+
+\[
+(B_Q\beta)_{abc}=3\beta_{\langle a}Q_{bc\rangle}.
+\]
+
+For STF3 \(O\), symmetry and trace-freeness give
+
+\[
+O:B_Q\beta=3\beta_aO_{abc}Q_{bc},
+\qquad (B_Q^*O)_a=3(O:Q)_a.
+\]
+
+Define the contraction matrix
+
+\[
+M_Q=q_2I+\frac65Q^2,\qquad q_2=Q:Q.
+\]
+
+Direct contraction of the Cartesian STF response yields
+
+\[
+(B_Q\beta):Q=M_Q\beta,
+\qquad
+\boxed{B_Q^*B_Q=3M_Q},
+\qquad
+\|B_Q\beta\|_F^2=3\beta^TM_Q\beta.
+\]
+
+Thus \(M_Q\) is one third of the Frobenius normal matrix, not the unscaled
+normal matrix itself. The distinction affects absolute response norms, even
+though a common positive scalar does not change a condition number.
+
+For \(Q\ne0\), \(q_2>0\) and \(Q^2\succeq0\), so \(M_Q\succ0\).
+The algebraic least-squares response coordinate is
+
+\[
+\widehat\beta_{\rm LS}
+=(B_Q^*B_Q)^{-1}B_Q^*O
+=M_Q^{-1}(O:Q),
+\]
+
+and the Frobenius-orthogonal response projector is
+
+\[
+P_{\operatorname{Im}B_Q}O=B_QM_Q^{-1}(O:Q).
+\]
+
+The factor of three cancels between the two sides of the normal equation.
+The residual \(O_\perp=O-P_{\operatorname{Im}B_Q}O\) satisfies
+\(O_\perp:Q=0\). Since \(B_Q\) has rank three and STF3 has dimension seven,
+the response-orthogonal residual space is four dimensional.
+
+The sharp conditioning result also survives unchanged. Up to scale, sign and
+permutation, take the quadrupole spectrum as \((-1,1-t,t)\) with
+\(0\le t\le1/2\). Then
+
+\[
+\kappa_2(M_Q)=\frac{8-5t+5t^2}{5-5t+8t^2},
+\qquad
+\frac53-\kappa_2(M_Q)
+=\frac{(5t-1)^2}{3(5-5t+8t^2)}\ge0.
+\]
+
+Consequently
+
+\[
+\kappa_2(M_Q)=\kappa_2(B_Q^*B_Q)\le\frac53,
+\qquad \kappa_2(B_Q)\le\sqrt{\frac53}.
+\]
+
+Equality is obtained for spectra proportional to \((-5,4,1)\). These are
+conditioning bounds on the nonzero-quadrupole domain. They do not give a
+quadrupole-amplitude-independent bound on absolute inverse sensitivity as
+\(Q\to0\).
+
+The algebraic coordinate and projector are response-space constructions, not
+an empirical velocity analysis. The residual is not automatically a physical
+intrinsic octupole, and local-boost and intrinsic-dipole interpretations remain
+distinct physical hypotheses. [@ROLDAN_NOTARI_QUARTIN_2016]
+The response closes only the stated \(\beta_{\rm RO}\) lane; it does not
+identify \(\beta_{\rm RM}\), \(\beta_{\rm MO}\), shear or global matter-frame
+tilt.
+
+## 9. Processed response and the high-source nuisance quotient
+
+### 9.1 Ordered estimator
+
+The processed construction applies a positive absolute thermodynamic-temperature sky, then the exact or first-order local boost, source beam and pixel-window transfer, spherical synthesis, a weighted joint \(\ell=0,\ldots,5\) fit, post-fit source/target commonisation and retention of \(\ell=2,\ldots,5\). This order is part of the estimator definition.
+
+Partial-sky masks mix modes, and filtering can require a matrix-valued transfer rather than a scalar transfer function. [@MASTER_2002; @LEUNG_2022] Consequently, a response defined before masking or fitting cannot simply be inserted after those operations without establishing the required equivalence.
+
+The retained output has 32 coordinates. The low-source coordinate includes the physical monopole and raw real harmonics through \(\ell=6\), giving the first-order Jacobian shape
+
+\[
+J\in\mathbb R^{3\times32\times49}.
+\]
+
+A constant physical monopole produces a pure dipole at first order. Because the simultaneous fit includes \(\ell=0,1\) and the retained carrier starts at \(\ell=2\), its physical \(T_0\) column is an exact structural null. Finite transform leakage is separately recorded as a numerical replay diagnostic rather than promoted into a physical column.
+
+### 9.2 Quotient identity and nested nuisance spaces
+
+For fixed boost direction \(\hat b\), let
+
+\[
+J_{\hat b}\in\mathbb R^{32\times48},
+\qquad
+K_{\hat b}^{\rm hi}(L)
+=[K_{\hat b}^{(7)}|\cdots|K_{\hat b}^{(L)}].
+\]
+
+The unrestricted deterministic high-source band has column dimension
+
+\[
+d_H(L)=(L-6)(L+8).
+\]
+
+Define \(\mathcal H_{\hat b}(L)=\operatorname{Im}K_{\hat b}^{\rm hi}(L)\). The low-source survivor is
+
+\[
+J_{\rm surv}(L)=P_{\mathcal H_{\hat b}(L)^\perp}J_{\hat b},
+\]
+
+and the exact rank relation is
+
+\[
+\boxed{
+\operatorname{rank}J_{\rm surv}(L)
+=\operatorname{rank}[K_{\hat b}^{\rm hi}(L)\;J_{\hat b}]
+-\operatorname{rank}K_{\hat b}^{\rm hi}(L).
+}
+\]
+
+The identity compares the dimension added by \(J\) to the nuisance image with the dimension of its projected image. The high-source images are nested as \(L\) increases. Once valid containment has been established, increasing the unrestricted nuisance cutoff cannot restore a model-free survivor. Column count alone, however, is not a rank certificate.
+
+### 9.3 Finite-operator evidence boundary
+
+The inherited frozen Task-7B atlas found no registered cut-sky case satisfying all conditioning, \(\ell=6\)-alias and extended-tail criteria. This is a result for that atlas, not a theorem about all masks or physical sources. The last accepted byte-exact matched-control Task-7C result remains rank unresolved: 17 registered coordinates were ambiguous, one had a resolved survivor and none was a containment candidate.
+
+These statements retain their original source and execution grades. They are not rerun here. They do not establish a finite-HEALPix no-go theorem, nor do they identify a physical high-source amplitude distribution. The quotient is defined for the stated deterministic nuisance class; a physical covariance, prior or bounded nuisance body is a different inference problem.
+
+## 10. Registered continuum wide-mask evidence
+
+For the registered axisymmetric wide mask,
+
+\[
+w(\mu)=\operatorname{clip}\!\left(\frac{\mu+3/4}{3/2},0,1\right),
+\]
+
+let
+
+\[
+N_{\alpha\beta}=\int wY_\alpha^*Y_\beta\,d\Omega,
+\qquad
+R_{\alpha p}^{(\hat b)}=\int wY_\alpha^*\mathcal B_{\hat b}Y_p\,d\Omega,
+\]
+
+\[
+K_{\hat b}^{\rm cont}(L)=P_{2:5}N^{-1}R_{\hat b}^{7:L}.
+\]
+
+The model uses the registered continuum identity-transfer construction. It is not the finite-HEALPix operator with its numerical implementation errors omitted by declaration.
+
+For the axial direction at \(L=12\), the inherited exact rational complex-block ranks for \(m=0,\ldots,5\) are
+
+\[
+(4,4,4,3,2,1).
+\]
+
+The corresponding stored-real count is \(4+2(4+4+3+2+1)=32\). Independent high-precision and direct-quadrature calculations in the source evidence report:
+
+| Source cutoff \(L\) | Axial \(Z\) rank | \(X/Y\) rank | Registered diagonal rank |
+|---:|---:|---:|---:|
+| 8 | 20 | 24 | 24 |
+| 9 | 27 | 29 | 32 |
+| 12 | 32 | 32 | 32 |
+
+At \(L=12\), the inherited smallest singular values are
+
+\[
+\sigma_{\min}^{Z}\simeq0.00690566498,
+\qquad
+\sigma_{\min}^{X/Y}\simeq0.01049033491,
+\qquad
+\sigma_{\min}^{\rm diagonal}\simeq0.00851032278.
+\]
+
+These numerical scales belong to the registered continuum coordinate and transfer convention. They are not dimensionless physical kinematical bounds. The axial result has an exact author-artifact rank certificate; the other five registered directions have multi-engine numerical evidence, not portable interval certificates. This edition retains those source results and qualifications without claiming a new continuum computation.
+
+Continuum full row rank does not certify finite-HEALPix robust full row rank. Weak singular modes can be affected by transform, quadrature, iterative-fit and roundoff errors. A numerical-error bridge is required before the finite operator can inherit a containment conclusion. The current finite result therefore remains unresolved even though the registered continuum model has full row rank at the stated cutoff.
+
+## 11. Matrix-valued numerical uncertainty
+
+### 11.1 Frozen error families and a Loewner envelope
+
+Let each nonempty error family contain matrices \(E_{fi}\) of compatible shape. Fix the partition, basis, radii \(r_f>0\), calibration and holdout sets, processing settings and coordinate identity before examining rank or holdout outcomes. For
+
+\[
+\Delta_f=\sum_i b_{fi}E_{fi},\qquad \|b_f\|_2\le r_f,
+\qquad
+\Delta=\sum_{f=1}^{N_{\rm fam}}\Delta_f,
+\]
+
+Cauchy–Schwarz yields
+
+\[
+\Delta\Delta^T
+\preceq N_{\rm fam}\sum_f r_f^2\sum_iE_{fi}E_{fi}^T.
+\]
+
+The registered regularised envelope is
+
+\[
+\boxed{
+\Gamma_E=N_{\rm fam}\sum_f r_f^2\sum_iE_{fi}E_{fi}^T
++\lambda_{\rm reg}^2I,
+\qquad\lambda_{\rm reg}>0.
+}
+\]
+
+Its terms have the same squared response units in the chosen coordinates. For nonzero \(x\),
+
+\[
+x^T\Gamma_Ex
+=N_{\rm fam}\sum_f r_f^2\sum_i\|E_{fi}^Tx\|^2
++\lambda_{\rm reg}^2\|x\|^2>0,
+\]
+
+so \(\Gamma_E^{-1/2}\) exists. The displayed quadratic-form argument supplies the direct justification for this domain. The accepted R2 record additionally supports the generic positive-semidefinite-plus-positive-identity regularisation lemma, after the stated source-level identification of the Gram sum with a positive-semidefinite matrix. It does not certify the complete family-wise envelope derivation, the completeness of an actual error family or the later subspace conclusions.
+
+Within the fixed partition, compensated positive scaling
+
+\[
+E_{fi}\mapsto c_fE_{fi},\qquad r_f\mapsto r_f/c_f,
+\qquad c_f>0,
+\]
+
+and orthogonal mixing within each family leave the envelope unchanged. An exactly zero family must be omitted or rejected: it leaves the perturbation set unchanged while altering the conservative factor \(N_{\rm fam}\).
+
+### 11.2 Conditional robust rank and subspace limits
+
+Write \(K_{\rm obs}=K_{\rm true}+\Delta\) and
+\(W=\Gamma_E^{-1/2}\), using the same declared source/output metric. If the
+actual numerical error belongs to the frozen class, then
+
+\[
+\Delta\Delta^T\preceq\Gamma_E,
+\qquad \|W\Delta\|_2\le1.
+\]
+
+The singular-value perturbation bound gives
+
+\[
+s_i(WK_{\rm true})\ge s_i(WK_{\rm obs})-1.
+\]
+
+Therefore
+
+\[
+\operatorname{rank}K_{\rm true}
+\ge\#\{i:s_i(WK_{\rm obs})>1\}.
+\]
+
+For an \(m\times n\) response with \(m\le n\), a sufficient full-row-rank
+criterion is
+
+\[
+s_m(WK_{\rm obs})\ge1+\delta,
+\qquad \delta>0,
+\]
+
+where \(\delta\) is fixed before rank inspection. This places the margin
+explicitly above the unit perturbation floor. Whitening makes the criterion
+dimensionless in the declared metric; preregistration alone would not make a
+threshold at or below one a positive-rank certificate.
+
+The implication remains conditional. It does not establish that the present
+finite-HEALPix family registry contains the actual error, and it does not
+permit tuning radii after inspecting the signal. Coverage of the numerical
+error class is a separate mathematical and computational obligation.
+
+A rank lower bound also does not certify singular-subspace orientation. A
+stable nuisance projector requires perturbation control relative to a positive
+singular-value gap. Singular-subspace perturbation results supply that
+additional type of bound; it does not follow from counting singular values
+above one. [@CAI_ZHANG_2018; @LI_1999; @LYU_WANG_2020]
+
+## 12. Integrated interpretation, evidence boundary and conclusions
+
+### 12.1 What the integrated framework retains
+
+The framework retains two tensorial descriptions without conflating them. The observable \(Q/O\) carrier preserves low-multipole morphology, and its cyclic packet supplies a proper-rotation chart on the stated forward-image domain. The physical state separately retains congruence kinematics, frame relations, scalar curvature budget and optional geometry tensors. Physical functionals can retain shape, parity and relative orientation before any scalar diagnostic is selected.
+
+MES inequalities are inherited within this physical state as premise-matched radial constraints on shear and vorticity. They neither disappear into a historical appendix nor become directional tensor estimators. The distinction between the geodesic acceleration premise and absence of a numerical acceleration anchor prevents a structural assumption from being misreported as a measured zero. The exact channel and denominator rules also prevent a convenient scalar ratio from concealing frame or conditioning mismatches.
+
+The relation to observations is supplied by a declared response and a joint feasible construction. Shared-data constraints are not independent evidence. Exact fibre uniqueness, finite-sample compatibility and statistical identification remain distinct questions. Consequently, a complete observable tensor representation can coexist with a broad or unavailable physical identified set.
+
+### 12.2 What is and is not established
+
+The local \(\beta_{\rm RO}\) response is a concrete available lane, but it does not close the physical shear, vorticity, acceleration, global-tilt or geometry responses. After the stated processing operation, nuisance quotienting and numerical uncertainty further limit attribution. The registered continuum calculation provides exact or numerical full-row-rank evidence according to direction, whereas the finite-HEALPix matched-control result remains rank unresolved.
+
+| Result layer | Evidence retained in this edition | Limitation |
+|---|---|---|
+| Observer/photon contractions | stated geometric premises and direct substitution; limited R2 execution E2 | scalar contraction proof, not a spacetime or transport formalisation |
+| Real carrier and STF norm map | inherited exact derivations and implementation source | no new end-to-end sky analysis |
+| Cyclic Q/O reconstruction | inherited exact forward-image result; exact-source 28-test record E4 | conditioning and typed refusals remain; no all-strata or uniform-stability theorem |
+| Physical state and functionals | typed donor source, K1R definitions and derivations | donor execution and physical inference are not inherited from document tests |
+| MES sector inequalities | conditional primary-source/repository reduction; K4 convention corrections retained | all-observer, frame, derivative and attribution premises remain explicit |
+| Radial/gauge/fibre relations | direct exact or conditional derivations in the declared domain | no new general CAS receipt or noisy-data coverage theorem |
+| Finite-null constructions | distinct row/orbit theorems and inherited exact counterexamples | no certification of an actual Planck/FFP10 pool |
+| Local-observer response | inherited frozen-scope analytic/implementation evidence; E2 normalisation only | no empirical velocity, shear response or global-tilt response |
+| Processed nuisance quotient | exact linear-algebra identities | depends on the declared nuisance class and operator ordering |
+| Finite atlas and matched control | inherited frozen numerical evidence | finite robust containment remains unresolved |
+| Continuum axial/non-axial results | exact axial artifact; non-axial numerical evidence | not a finite-HEALPix certificate |
+| Numerical-error envelope | conditional direct inequality; E2 generic positive regularisation | actual error-class completeness and projector gap must be justified separately |
+| Claim and source bookkeeping | E1 materialised candidate, E3 authority tests, E5 real-source extraction | structural consistency and provenance are not theorem-truth or novelty decisions |
+
+The original compiler returned five conditional-scope findings. They remain in its immutable output, accompanied by a separate source-supported review annex; this edition does not retrospectively change the compiler's coverage fields. Likewise, the registered-source replay produces 37 source dispositions, not 37 new theorems or a replacement for the forty-claim map. Its PR284 finite-path candidate remains deferred because the underlying source conflict was not resolved.
+
+The literal observational boundary remains
+
+```text
+CURRENT_CORRECTED_TENSORIZED_PLANCK_RANK = NONE
+CURRENT_OBSERVATIONAL_RESULT = NONE
+PLANCK_OR_FFP10_EXECUTION = DEFERRED_BY_OWNER
+FINITE_HEALPIX_CONTAINMENT = RANK_UNRESOLVED
+```
+
+### 12.3 Conclusions
+
+The physical content of MES bounds is compatible with tensorised inference, provided that observable morphology, physical kinematics, anchor constraints and identification are kept distinct. The original physical-state programme and the later \(Q/O\), finite-null and response developments can therefore be combined without reverting to the retired scalar-collection observational methodology.
+
+The resulting report does not force a physical point estimate. It states which sectors are represented, which are conditionally restricted, which have a response and which remain unresolved. A physical covariance or prior, polarisation, frequency dependence, additional angular modes or independent depth information may refine the feasible set, but each requires its own response and statistical premises. These extensions are not silently supplied by the present formulation.
+
+The current evidence supports this separation: numerical decoder execution tests a specified inverse-domain contract, formal execution supports four named elementary obligations, and source replay preserves the provenance and disposition of the inherited material. None converts an unavailable physical response into an identified state. Corrected observational analysis remains a subsequent, separately authorised task. This edition is a consolidated theory-and-methods report with explicit mathematical domains and execution boundaries; canonical adoption and scientific publication remain separate decisions.
+
+# Appendix A. Forty-claim evidence-to-text map
+
+The following map uses the same forty identities as the materialised E1 section map. The labels retained, revised and new describe their relation to T9 v4, not an automatic promotion decision. There are thirty existing identities, of which four statements are revised, and ten new kinematical candidates. The support descriptions below distinguish an analytic result from a structural test or a source inventory; a row is not assigned formal-verification status merely because it occurs in a compiled file.
+
+| Claim ID | Section; relation to T9 v4 | Support and retained boundary |
+|---|---|---|
+| `RA-SCOPE-001` | 1; retained | Source-grounded scope and supersession; E1/E3 structural checks do not authorise observations. |
+| `RA-REP-001` | 2.2; retained | Inherited exact real-carrier isometry; not an empirical calibration. |
+| `RA-REP-002` | 2.2; retained | Explicit coordinate-metric adapter; raw and orthonormal Euclidean metrics differ. |
+| `RA-REP-003` | 2.3; retained | Inherited STF normalisation; temperature tensors are not kinematical tensors. |
+| `RA-ORBIT-001` | 3.1; retained | Dimension count on a locally free stratum; not a global atlas. |
+| `RA-ORBIT-002` | 3.2; retained | Exact cyclic forward-image reconstruction and E4 numerical assertions; no arbitrary-packet or uniform inverse claim. |
+| `RA-ORBIT-003` | 3.3; retained | Named mirror witness and E4 rotation/mirror tests; not a claim about every scalar compression. |
+| `RA-ORBIT-004` | 3.3; retained | Typed chart policy; E1 scope annex separates successful cyclic reconstruction from failure/refusal. |
+| `RA-KIN-001` | 4.1; new | Typed physical-state definition from the retained donor/K1R source; no inherited donor execution. |
+| `RA-KIN-002` | 4.2; new | First-order frame-velocity semantics; not exact velocity addition or global-tilt inference. |
+| `RA-KIN-003` | 4.1; new | Typed unavailable/zero distinction; absence of a provider is not a measured zero. |
+| `RA-GEO-001` | 4.3; new | Declared component types and dimension count; no count of field-equation solutions. |
+| `RA-KFUNC-001` | 4.4; new | Registered physical functional definition and parity; not an observational estimate. |
+| `RA-MES-001` | 5.1; retained | Primary-source/PSTF normalisation; common units and attribution premises retained. |
+| `RA-MES-002` | 5.1–5.2; revised | Conditional physical-sector ceilings with K4 rate/norm convention; no converse implication. |
+| `RA-MES-003` | 5.3; revised | Direct radial/equivariance argument; no tensor direction from scalars alone. |
+| `RA-MESA-001` | 5.1–5.2; new | Geodesic acceleration premise separated from missing numerical anchor. |
+| `RA-MESA-002` | 5.4; new | Channel/denominator matching and fixed-denominator interval rule; random denominator needs joint inference. |
+| `RA-MESA-003` | 5.4; new | Product-gauge derivation and coupled-set counterexample; not an evidence or probability score. |
+| `RA-ID-001` | 6.1, 6.3; new | Jointly conditioned feasible-set construction; no independent-evidence factorisation or automatic coverage. |
+| `RA-ID-002` | 6.2; new | Exact affine-fibre singleton equivalence; exact response/data domain only. |
+| `RA-STAT-001` | 7.1; retained | Exchangeable-row rank theorem under complete row equivariance; no admission of a real reference pool. |
+| `RA-STAT-002` | 7.1, 7.3; revised | Complete analysis includes MES construction; E1 annex binds symmetry and fixed tail/tie conditions. |
+| `RA-STAT-003` | 7.3; retained | Matched-joint-law admission boundary; E1 annex does not claim every noisy/noiseless pair must differ. |
+| `RA-STAT-004` | 7.2; retained | Finite-group orbit rank and inherited subgroup counterexample; not interchangeable with row exchangeability. |
+| `RA-RESP-001` | 8.1; revised | Inherited radiation–observer response; E2 verifies normalisation only, not the entire pullback. |
+| `RA-RESP-002` | 8.2; retained | Direct/inherited STF adjoint, inverse, projector and sharp conditioning; not an R2 obligation or empirical velocity. |
+| `RA-PROC-001` | 9.1; retained | Declared processing order and E1 scope annex; positive temperature, d=1 and coordinate metric retained. |
+| `RA-PROC-002` | 9.1; retained | Structural monopole null for the declared fit/retention; leakage is a numerical diagnostic. |
+| `RA-PROC-003` | 9.2; retained | Exact quotient-rank and nesting identities; fixed deterministic nuisance class. |
+| `RA-PROC-004` | 9.3; retained | Inherited Task-7B registered-atlas negative result; no all-mask theorem. |
+| `RA-PROC-005` | 9.3; retained | Inherited Task-7C matched-control result; rank unresolved, not containment. |
+| `RA-CONT-001` | 10; retained | Inherited exact axial continuum certificate at its registered convention. |
+| `RA-CONT-002` | 10; retained | Inherited non-axial numerical evidence; no portable interval certificate claimed. |
+| `RA-CONT-003` | 10; retained | Continuum/discrete distinction; no finite-HEALPix inference from the continuum rank. |
+| `RA-ERR-001` | 11.1; retained | Direct conditional Loewner envelope; E2 adds only the generic positive-regularisation component. |
+| `RA-ERR-002` | 11.1; retained | Fixed-partition scaling/mixing invariances and zero-family warning; not an implementation acceptance. |
+| `RA-ERR-003` | 11.2; retained | Conditional robust-rank inequality above the unit floor; actual error membership remains required. |
+| `RA-ERR-004` | 11.2; retained | Perturbation/gap requirement with E1 scope annex; rank count alone does not stabilise a projector. |
+| `RA-BOUNDARY-001` | 12.2; retained | Explicit absence of current observational and native-solver results; no promotion from bookkeeping. |
+
+# Appendix B. Source and execution provenance
+
+## B.1 Manuscript and candidate authorities
+
+The immediate scientific text predecessor is the complete K4-corrected revision 2:
+
+`docs/research_reports/drafts/HTT_REPORT_A_FULL_KINEMATICAL_MES_DRAFT_K3_20260905.md`, Git blob `99a3f75c67ece3cfb00179bfd61787f47cb7e7ac`, read at report commit `491acfc6badac59b0fd20cbf0f5970d6b0589f8a`.
+
+Its own assembly provenance remains at its original snapshot `6bea7a5e2cda1b3e001657061d329fe5cec6bed2`, including the observable/statistical R3 source, typed kinematical core, earlier candidate section map and bibliography supplement. This edition does not rewrite that history or imply that all source branches form one linear implementation ancestry. The inherited physical-state donor remains the source contribution traced through the K0/K1R and core-draft authorities, not a newly executed donor in this edition.
+
+The materialised E1 section map has Git blob `1478f55c074ec0aeb62a8680a5e7fc76849b89c4` at `581d50cb8b8be61ca8ead538d0bf7d75420f9037`. Its forty identities and section roles are the comparison authority for Appendix A. The matching self-contained bibliography has Git blob `331c557c0f6a7de84fdd97123d8bdb8fae0e0a53` and twenty entries. A local copy accompanies this edition for rendering; the original candidate artifact remains unchanged.
+
+## B.2 Reviewed records and what they establish
+
+The labels E0–E5 below are reading pointers in this report, not new claim IDs or new verification gates.
+
+**E0 — K5 review rendering.** The earlier K4-corrected revision 2 was rendered as a 24-page review PDF, with 24/24 visual page checks reported and received. Its PDF SHA-256 is `9f70061a593c58024a406c643a22004b0535bf60c6f5961d7bcd06ea85d3c97c`. That digest and page count belong to the earlier render, not to a future rendering of this revision. The record is linked by [K5 intake](https://github.com/cosmosapjw-quantum/htt_base/pull/449#issuecomment-5549138545).
+
+**E1 — K2FER1/K2FR materialisation and scope review.** The repaired strict compiler's recorded regression result was 55 PASS, with the original 33 nodes retained and 19 negative fixtures included rather than added again to that total. It produced a six-file candidate bundle with matching forty-ID claim/citation/section/integration surfaces and twenty bibliography entries. The [compilation receipt](https://github.com/cosmosapjw-quantum/htt_base/blob/581d50cb8b8be61ca8ead538d0bf7d75420f9037/artifacts/research_reports/k2fr_20260905/authority-bundle/K2F_COMPILATION_RECEIPT.json), [section map](https://github.com/cosmosapjw-quantum/htt_base/blob/581d50cb8b8be61ca8ead538d0bf7d75420f9037/artifacts/research_reports/k2fr_20260905/authority-bundle/REPORT_SECTION_CLAIM_MAP_V3.csv) and [review annex](https://github.com/cosmosapjw-quantum/htt_base/blob/581d50cb8b8be61ca8ead538d0bf7d75420f9037/artifacts/research_reports/k2fr_20260905/K2FR_REVIEW_ANNEX.json) remain fixed at PR452's publication commit `581d50cb8b8be61ca8ead538d0bf7d75420f9037`.
+
+The five original findings concern `RA-ORBIT-004`, `RA-STAT-002`, `RA-STAT-003`, `RA-PROC-001` and `RA-ERR-004`. Each has a separately recorded source-supported scope binding. The compiler did not consume that later annex, and its original false aggregate scope-field coverage is not changed to true by this manuscript. Scope binding does not prove a theorem, admit an empirical reference pool or authorise a physical estimate.
+
+**E2 — R2 supporting-domain execution.** The [original adjudication](https://github.com/cosmosapjw-quantum/htt_base/blob/9a37311cc97a9f670ab6c7f300b0cf74ccabe121/artifacts/research_reports/r4a1er_20260905_local_084030z/local_return/CAS_ADJUDICATION_R4A1NF_DOMAIN.json) and [scope review](https://github.com/cosmosapjw-quantum/htt_base/blob/9a37311cc97a9f670ab6c7f300b0cf74ccabe121/artifacts/research_reports/r4a1er_20260905_local_084030z/R4A1ER_SCOPE_REVIEW.md) record the source-bound SymPy/Lean execution of `CAS-R4A1NF-DOMAIN-R2`. The four obligations are photon null decomposition, observer-measured photon energy, boosted-observer unit timelikeness and positive regularisation. The recorded environment was CPython 3.12.3, SymPy 1.14.0, mpmath 1.3.0, Lean 4.31.0 and mathlib commit `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`. Both required axes returned PASS without timeout, exception or counterexample. The first two Lean obligations are scalar contractions; the last is a generic matrix regularisation statement. Full child transcripts and a complete independent mathlib rebuild were not part of the record. [MAIN acceptance](https://github.com/cosmosapjw-quantum/htt_base/pull/453#issuecomment-5551797917) is limited to these four components and their specified transfer to Sections 2.1, 8.1 and 11.1.
+
+**E3 — Authority/citation and T2 source-contract replay.** PR454 preserves the one-file citation-pin correction and its historical 37 PASS/3 FAIL outcome. PR455's tested correction restored three malformed T2 fraction tokens and repaired presentation-sensitive assertions without relaxing mathematical conditions. Its full suite passed 80 cases: the original forty, seven additional positive cases and thirty-three negative cases. The focused 43-case run is a subset, not another 43 distinct obligations. The [MAIN intake](https://github.com/cosmosapjw-quantum/htt_base/pull/455#issuecomment-5557570489) binds the source-contract result to publication `203ed5a53f2d881ceb103021c3ddd2e91108cb56`, tree `7179828fac93fb27b1e12b5f3837ca06dce95cb6`. This supports the declared document/source checks, not independent mathematical verification of every report statement. The canonical thirty-ID digest was measured in the accepted replay while the ledger's own hash field remained null/pending; this edition does not fill it.
+
+**E4 — Exact-source Q/O decoder execution.** The [return and native records](https://github.com/cosmosapjw-quantum/htt_base/blob/43b21fada60ddd610e65d58fb995661939bd4050/artifacts/research_reports/pr451_main_local_20260906T150921Z/RETURN_TO_MAIN.md) bind the 28-test execution to source commit `9f7d06dec0fce1c3a8a53fa5372c84d9c679c037`, tree `6f2fdfd5b8fbf5e4ee3579288fb5aa3da1bb1060`. The environment was CPython 3.12.3, NumPy 2.4.6 and pytest 8.4.2. No source repair was needed; the matching native run was reused rather than repeated for publication. The [MAIN review](https://github.com/cosmosapjw-quantum/htt_base/pull/456#issuecomment-5560742944) checked the source and numerical contract and verified the collection/JUnit node correspondence. The evidence-only publication commit `43b21fada60ddd610e65d58fb995661939bd4050` was not itself rerun. The replay-or-typed-unavailability interpretation in Section 3.2 remains essential.
+
+**E5 — Registered-source extraction and deterministic replay.** The approved seed-parent and nested-coverage reader correction was tested on frozen source subsequently committed as `576487696695eb56cf57313eefc4efe4c228bd3b`, tree `045af320949387a2e53b2fc0e4fff56f342b04b8`. Its final suite passed 90 cases, comprising the original fourteen and seventy-six additions. Two actual `GIT_OBJECT` CLI invocations read the untouched matrix at `463f0999949bf8534c60ad7973b7342705c2e3d6`, blob `56af1713ef8c4718598e10012819d5ab62c6e37a`, and generated identical bytes. The [workflow receipt](https://github.com/cosmosapjw-quantum/htt_base/blob/09857c15e2a42bd747188a89f08e4a0fde0aaae4/artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/EXECUTION_RECEIPT.json), [surface](https://github.com/cosmosapjw-quantum/htt_base/blob/09857c15e2a42bd747188a89f08e4a0fde0aaae4/artifacts/research_reports/pr450_seed_coverage_repair_HTT_PR450_SEED_COVERAGE_REPAIR_R1_20260907T014908Z/REGISTERED_SURVIVOR_SURFACE.json) and [MAIN review](https://github.com/cosmosapjw-quantum/htt_base/pull/458#issuecomment-5564296516) preserve the exact scope. Output is 37 source dispositions: 24 exact/conditional broad rows, eight synthetic broad rows and five scoped children; 36 are included and one is deferred. The PR284 parent is corrected to `PILLAR_S:II-3.2`, while its source conflict and deferred status remain. This is provenance and extraction evidence, not thirty-seven fresh theorem proofs.
+
+## B.3 Execution, source and publication are different identities
+
+Tests on a frozen working tree may precede the commit that records identical bytes; the corresponding source manifest must establish that connection. An evidence-only publication commit is not thereby a newly executed source. Historical source-equivalent numerical evidence, exact-arithmetic proof records, native tests and hosted CI retain their separate grades. Test counts from different suites are not summed into a completion percentage or proof count.
+
+The hosted jobs associated with these branches have prestart failures distinct from the accepted local executions. Where payment or spending-limit annotations were read by the local executor, that causal report is attributed to that reader rather than a new MAIN account diagnosis. No hosted PASS, permission waiver or account change follows from this edition. Prior MAIN reviews distinguish directly inspected payloads from a publisher's full remote-byte readback and disclose that those reviews were result-informed rather than blind. This assembly does not repeat those runs or claim a second independent verification.
+
+# Appendix C. Bibliography and citation roles
+
+The bibliography is the existing self-contained twenty-entry E1 candidate, not a newly invented list. Its exact source is `artifacts/research_reports/k2fr_20260905/authority-bundle/HTT_REPORT_A_REFERENCES_V2.bib` at commit `581d50cb8b8be61ca8ead538d0bf7d75420f9037`, Git blob `331c557c0f6a7de84fdd97123d8bdb8fae0e0a53`. The accompanying `HTT_REPORT_A_REFERENCES.bib` is intended as an identical rendering copy. Rendering must check the copy's bytes, the twenty unique keys and resolution of every citation. Producing this candidate bibliography did not replace the canonical ledger or retrospectively change the original K3 assembly.
+
+The MES and COBE-era papers supply the physical lineage and conventions. Ellis–van Elst supplies covariant background. Molinari separates characterisation, estimation and confidence statements for partially identified parameters; Kaido–Molinari–Stoye concerns constraint qualifications and identified-set geometry. These are contextual roles, not proofs of the project-specific tensor response or exact channel contract. The original arXiv abstracts of the latter two works were rechecked during this edition's preparation; no new empirical construction or full-paper proof verification is inferred from that check.
+
+Invariant-theory sources remain adjacent literature, not a proof of this exact Krylov decoder. Randomisation sources are used with the distinction between row exchangeability and finite transformation-group invariance. Aberration references supply the Doppler/response background, not a global-matter-tilt interpretation. Matrix perturbation references supply gap-dependent subspace tools, not actual finite-HEALPix error membership.
+
+Legacy citation-key spelling is not a publication-year authority. In particular, `SAG_1999_COBE` retains the bibliography's 1997 journal year, and `LI_1999` retains its 1998 journal year. Their keys are not renamed for cosmetic consistency. The twenty-entry bibliography and all cited scientific results retain their recorded source versions. Novelty remains unresolved rather than inferred from the integration of these methods.
+
+# Appendix D. Edition boundary, companion results and remaining decisions
+
+## D.1 What changed in revision 3
+
+This is a new manuscript file, not an overwrite of revision 2 or its review PDF. The scientific equations, inherited numerical table and main twelve-section organisation are intended to be retained. Changes concern the opening edition status; the scope of the accepted R2 records in Sections 2.1, 8.1 and 11.1; the actual numerical decoder method and execution interpretation in Section 3.2; an explicit distinction between the two uses of the symbol v in Section 4.2; the evidence interpretation in Sections 6.3, 10 and 12; and the evidence-to-text appendices. The three K4 corrections remain in Sections 5.1, 8.2 and 11.2.
+
+The forty-row map is an editorial reconciliation against the materialised E1 identities, not a replacement claim ledger or a new forty-theorem formal certificate. The five original E1 findings and their later annex remain separate. No conclusion is strengthened from a source-disposition label or a passing structural assertion alone.
+
+MAIN assembled and reviewed this text from the pinned manuscript, existing section map, bibliography and accepted evidence records. Shell-backed and independent Python calls failed before execution in this preparation session; no new machine check of the entire assembled file, PDF render or visual page audit is asserted here. Academic Writing Toolkit reviewed five new explanatory paragraphs and returned no paragraph-logic issues; that limited check is not a mathematical proof or whole-manuscript audit. The subsequent rendering record must identify this edition's actual bytes and report its own checks. A mechanical transcription or formatting issue must be corrected against the pinned sources without changing their mathematics.
+
+## D.2 Companion derivations remain separately graded
+
+Two recent MAIN research notes extend the observable contraction geometry: [contraction fibres and packet-consistency geometry](https://github.com/cosmosapjw-quantum/htt_base/blob/d5a5444bab6be7dcc79e362a52811882dd0a66a3/docs/research_reports/notes/QO_CONTRACTION_FIBRE_GEOMETRY_20260907.md), blob `0201ac7c08a33a2b041ccfedbb9dc582aa198abd`, and [fixed-quadrupole Hausdorff stability](https://github.com/cosmosapjw-quantum/htt_base/blob/c09fa9f18f8a6c997f4d7420088653e1cb9af042/docs/research_reports/notes/QO_FIBRE_HAUSDORFF_STABILITY_20260907.md), blob `b666d1b6756f83a8fa6bee35584a61c98f895773`.
+
+The first classifies the unit-STF3 contraction fibre and supplies its moment expression and distances. The second distinguishes conditioning of the linear contraction/Krylov maps from the square-root sensitivity of a norm-constrained reduced feasible set at saturation, including a cyclic example. They are explicit direct derivations with their own limitations and limited arithmetic checks. They are not added to the forty core candidate identities, not retroactively included in R2 or E4 execution, and not converted into physical-velocity or observational results. The complete derivations remain accessible as companion notes rather than becoming new preconditions for finishing this core report.
+
+## D.3 Completion of the document is not release admission
+
+The report-source reconciliation is the current completed editorial operation. A final rendered artifact still needs its own source identity, citation and formula checks, page inspection and durable Git-readable return. The earlier 24-page K5 PDF remains valid for its own revision; it is not silently renamed as this edition. Re-rendering this changed text is a new artifact task, not repetition of the old K5 test merely for reassurance.
+
+A theory-only report can retain a conditional error-envelope result and an unresolved finite-HEALPix rank conclusion. That does not waive an existing implementation/provenance obligation if a later edition claims the corresponding PR444 implementation is validated, nor does it discharge actual error-family completeness or subspace admission. This edition makes neither upgrade. Any independently applicable release review, immutable Action pinning for a release workflow, canonical migration or repository integration must be handled under its own explicit authority rather than inferred from document completion. No merge, ready transition or scientific-publication approval is asserted.
+
+The next artifact is the rendered and checked version of this manuscript together with its bibliography and reading links to E0–E5. No new observation, solver calculation, PR284 proof attempt, broad repository census or replay of the accepted K2/R2/authority/decoder/extractor components is required merely to render this edition.
+
+# References

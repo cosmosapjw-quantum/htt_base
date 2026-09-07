@@ -1,0 +1,27 @@
+# Report A revision 3 — return to MAIN
+
+**PASS_R3_RENDER_SOURCE_AND_ALL_PAGE_REVIEW. MAIN artifact acceptance pending.**
+
+A new 29-page PDF and standalone generated TeX were built from MAIN's complete revision-3 manuscript. All 29 pages were directly viewed. One observed discretionary hyphen inside RATIO_UNIDENTIFIED on page 10 was repaired in the run-local formatting adapter. The final page 10 was viewed again; final pages 1–9 and 11–29 are pixel-identical to the images already reviewed. No page was omitted. No unresolved rendering finding remains.
+
+Source commit `c105c1456e2de919f0927adb12995cfeb0357f9c`, tree `f55b3a1b5c0f2777dcfd0db559b4de2f989d51f0`. Manuscript blob `e8566be7c8095c38befdbbdbe7851f9502510753`, SHA-256 `cc5a659a4e64e37f7028c00c526fc6fe4c6c7b2864859978c60d1195690a4f83`; bibliography blob `331c557c0f6a7de84fdd97123d8bdb8fae0e0a53`, SHA-256 `f7025411e2c38ab33f9663820b6d8a86faba05c5b0ca613f161d23692daa9d33`. Both original files remain byte unchanged. The exact predecessor blob is `99a3f75c67ece3cfb00179bfd61787f47cb7e7ac`. The source snapshot is the input authority, not an assertion that PR449's moving head is unchanged.
+
+The parsed comparison found all 85 displayed mathematical expressions in core Sections 1–12 token-identical, allowing only ASCII spacing while retaining macros, case, signs and control-character checks. No source-transcription correction was required. The inherited continuum table is exactly equal as parsed, and K4 Sections 5.1, 8.2 and 11.2 are exact text matches. Source-to-R2 prose changes are retained in r2-to-r3.patch; the new evidence paragraphs remain present.
+
+Twelve main sections, Appendices A–D and exactly forty Appendix-A IDs match the fixed materialised section map. Those are 26 retained + 4 revised existing identities and 10 additional candidates, not forty new claims. All twenty unique bibliography keys match the fixed E1 copy, are cited and resolve; twenty bibliography entries render under one unnumbered References heading. Appendix B.1–B.3 and D.1–D.3 render as subsections, not new lettered appendices.
+
+All 244 source math nodes are retained in order in the final TeX. Its two additional math nodes are O(3) and sinTheta from the fixed bibliography titles. Layout changes preserve every math node. No figure assets are requested by this manuscript, and none are missing.
+
+Pandoc 3.1.3 and XeLaTeX/latexmk 4.83 generated the actual files. Pandoc was absent on this host; the official portable 3.1.3 release, matching the earlier K5 tool version, was acquired in the external run directory only. Existing TeX/PDF tools were used. There was no math-package census, environment replacement or system installation. /home/oai/skills/pdfs/SKILL.md was absent and is not claimed as read.
+
+Both initial and final Pandoc/latexmk commands exited 0. Individual raw stdout/stderr and command records retain argv, cwd, timestamps, finite timeout allowances and elapsed time. No timeout or compilation failure occurred. The initial successful build contained the subsequently observed page-10 layout issue; success is not mislabelled as a clean initial visual pass. Font support, long-code wrapping, appendix hierarchy and package ordering were derived from the pinned adapter/header and the prior rendering precedent; their patches are included.
+
+Final warnings: zero Pandoc warnings, overfull/underfull boxes, missing glyphs, undefined citations/references or duplicate labels. Two unicode-math/mathtools warnings concern macros absent from the body. One rsfs 5.475pt-to-5pt substitution and its summary warning remain; script symbols were visually legible. These warning judgements are bounded layout findings, not mathematical validation.
+
+Final PDF: 184676 bytes, SHA-256 `46e8d6d8e09f801b9ef60e5a0ee1dc78d74ceee6fc551ae74451b51226e10d77`. Final TeX: 94374 bytes, SHA-256 `45b2efd48e15034bb66cd4253b42e73205193f3f3ae8e7eec8df0e1d3904407e`. This is newly generated revision 3, not the old 24-page K5 PDF renamed. Earlier PDFs, user checkout, accepted execution evidence, source map, bibliography authority and old receipts were preserved. The small PDF has no special Git/LFS attribute; only this requested document/evidence bundle is added.
+
+The source review confirms the observable-v/physical-velocity distinction, exact inverse/numerical implementation distinction, R2 four-obligation limit and original five K2 findings with their separate annex. PR284 remains deferred, finite-HEALPix rank unresolved and observational results absent. Canonical T9 v4/30 and candidate forty retain their scopes. No K2/R2/authority/decoder/PR450 execution was repeated, and no theorem, coefficient, condition, tolerance or citation metadata was changed.
+
+Publication uses the isolated branch docs/htt-report-a-r3-render-20260907-r1, with its own Draft PR targeting the report branch. Artifact candidate and evidence-publication commit/tree identities are recorded after commit in remote-readback.json and the final return links; this avoids a self-hash cycle. The readback explicitly scopes every checked file. Hosted CI is separate and is not a condition for claiming an observed local render.
+
+See HTT_REPORT_A_R3.pdf, HTT_REPORT_A_R3.tex, RENDER_RECEIPT.json, source-comparison-initial.json, final-verification.json, PAGE_REVIEW.md and SCOPE_REVIEW.md. All decisive evidence is readable directly in Git; no ZIP or WORK_THREAD is required. MAIN's next action is limited artifact acceptance. No merge, ready transition, canonical migration or scientific publication approval is asserted.

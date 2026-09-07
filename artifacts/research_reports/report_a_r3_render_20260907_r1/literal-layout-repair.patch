@@ -1,0 +1,13 @@
+--- structure-r3-initial.lua
++++ structure-r3.lua
+@@ -83,6 +83,10 @@
+ -- Formatting only: permit long source paths/hashes/IDs to break, without
+ -- changing their literal content. xurl supplies safe break opportunities.
+ function Code(code)
++  -- Page 10 review found an inserted line-end hyphen inside this literal.
++  if code.text == "RATIO_UNIDENTIFIED" then
++    return pandoc.RawInline("latex", "\\mbox{\\texttt{RATIO\\_UNIDENTIFIED}}")
++  end
+   if #code.text > 24 then
+     assert(not code.text:find("[{}\\]"), "unsupported literal in code wrapper")
+     return pandoc.RawInline("latex", "{\\ttfamily\\nolinkurl{" .. code.text .. "}}")
