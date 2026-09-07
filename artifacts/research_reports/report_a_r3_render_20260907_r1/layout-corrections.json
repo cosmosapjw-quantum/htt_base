@@ -1,0 +1,17 @@
+{
+  "initial_adapter_adjustments": [
+    "Preserve natural appendix subheadings and strip manual B.1/D.1 prefixes",
+    "Unique unnumbered References heading",
+    "Retain revision/status subtitle",
+    "Omit unconditional legacy T1 encoding under Unicode XeLaTeX",
+    "Load mathtools before unicode-math using exact generated-preamble replacement",
+    "Long paths/hashes use literal xurl wrapping; ragged-right headings"
+  ],
+  "observed_correction": {
+    "finding": "RATIO_UNIDENTIFIED broke as RA- / TIO_UNIDENTIFIED with a discretionary hyphen in monospaced text.",
+    "page": 10,
+    "repair": "Keep this one source literal together with mbox/texttt in run-local Lua adapter.",
+    "scientific_or_bibliography_source_changed": false
+  },
+  "source_transcription_changes": 0
+}
