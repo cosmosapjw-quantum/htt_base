@@ -1,0 +1,28 @@
+{
+  "compiler_failure": {
+    "cause": "Run-local header called hypersetup before Pandoc loaded hyperref",
+    "command": "tex-initial",
+    "exit": 12,
+    "fix": "Move colour options to Pandoc metadata; remove premature command",
+    "source_math_changed": false
+  },
+  "integer_layout": "Digits longer than 68 split into explicitly explained indented continuation lines, no hyphens or digits inserted",
+  "math_rewrites": 0,
+  "source_transcription": "C.14 form-feed repair only",
+  "toc_hyperlink_correction": {
+    "cause": "Starred headings with titlesec inherited Doc-Start or last AMS equation anchor",
+    "fix": "Start Abstract, reading guide and References on explicit new pages with phantomsection before the heading",
+    "observed_in": "layout3 .toc",
+    "source_content_changed": false
+  },
+  "visual_failure": {
+    "cause": "Part II TOC page 10 versus visible Part II page 11; floating title placement follows earlier contents write",
+    "essential_proofs_removed": false,
+    "fix": "Start each thematic Part with clearpage before its part command",
+    "observed_pages": [
+      1,
+      10,
+      11
+    ]
+  }
+}

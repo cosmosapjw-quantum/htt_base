@@ -1,0 +1,11 @@
+--- structure.lua.before
++++ structure.lua.after
+@@ -8,7 +8,7 @@
+  local s=pandoc.utils.stringify(h.content)
+  if s:match('^Part [IVX]+%. ') then
+   local title=s:gsub('^Part [IVX]+%. ', '')
+-  return pandoc.RawBlock('latex', '\\part{'..title..'}')
++  return pandoc.RawBlock('latex', '\\clearpage\n\\part{'..title..'}')
+  elseif s:match('^Appendix [A-E]%. ') then
+   h.level=1; h.content=strip(h.content,'^Appendix [A-E]%. ')
+   if not appendix_started then appendix_started=true;return {pandoc.RawBlock('latex','\\appendix'),h} end
