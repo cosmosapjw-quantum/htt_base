@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="0.101" timestamp="2026-09-07T10:50:34.739055+09:00" hostname="cosmosapjw"><testcase classname="tests.contracts.test_theory_survivor_triage" name="test_nested_coverage_basis_matches_legacy_surface_without_mutation" time="0.002"><failure message="survivor_triage_under_test.SurvivorTriageError: candidate_coverage_proof.supplemental_scoped_candidates_expected must be an integer &gt;= 0">def test_nested_coverage_basis_matches_legacy_surface_without_mutation():
+        legacy = matrix()
+        nested = deepcopy(legacy)
+        proof = nested["candidate_coverage_proof"]
+        proof["coverage_basis"] = {
+            key: proof.pop(key)
+            for key in (
+                "supplemental_scoped_candidates_expected",
+                "supplemental_scoped_candidates_classified",
+            )
+        }
+        legacy_before, nested_before = deepcopy(legacy), deepcopy(nested)
+&gt;       assert build(nested) == build(legacy)
+               ^^^^^^^^^^^^^
+
+tests/contracts/test_theory_survivor_triage.py:384: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/contracts/test_theory_survivor_triage.py:172: in build
+    return MOD.build_surface(
+scripts/extract_theory_survivor_surface.py:506: in build_surface
+    declared_scoped = _integer(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = None
+name = 'candidate_coverage_proof.supplemental_scoped_candidates_expected'
+
+    def _integer(value: object, name: str, *, minimum: int = 0) -&gt; int:
+        if isinstance(value, bool) or not isinstance(value, int) or value &lt; minimum:
+&gt;           raise SurvivorTriageError(f"{name} must be an integer &gt;= {minimum}")
+E           survivor_triage_under_test.SurvivorTriageError: candidate_coverage_proof.supplemental_scoped_candidates_expected must be an integer &gt;= 0
+
+scripts/extract_theory_survivor_surface.py:76: SurvivorTriageError</failure></testcase></testsuite></testsuites>

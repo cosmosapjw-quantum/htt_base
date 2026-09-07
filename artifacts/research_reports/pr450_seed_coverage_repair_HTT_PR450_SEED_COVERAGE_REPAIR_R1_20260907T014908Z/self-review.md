@@ -1,0 +1,15 @@
+# Local self-review
+
+Outcome: no remaining finding in the approved source/replay scope. This is LOCAL_CODEX self-review; no outside or blind review is claimed. MAIN review remains pending.
+
+The exact source diff contains only the three authorized paths. The seed changes one parent value by one byte; its reverse recovers the original Git blob and restored JSON equals the original. The other 36 rows, DEFERRED disposition, counts and historical wolfram_registry_check remain unchanged. This inherited check does not verify the repaired whole seed or establish a new CAS result.
+
+The reader selects a present nested mapping and validates both counts before considering duplicate flat aliases. Any flat alias requires a complete valid matching pair. Invalid nested declarations cannot fall back; only absence permits the legacy pair. The existing coverage_complete and observed scoped-length comparison remain intact. The helper makes no input mutations and changes no output serializer, candidate selection, source mode, statement hash or semantic relation logic.
+
+The original triage file is an exact prefix of the changed file and the seed-schema file is byte unchanged. All original 14 JUnit node identities remain in the final 90-node suite (76 additions), with no skip/xfail/deselection. The new regression observed a typed nested-layout failure before the reader changed; the original seed RED was reused from PR457. Final DAG mirrors, compilation, collection and suite passed on the frozen source manifest. Both production CLI runs used the real historical Git object, succeeded and produced byte-identical JSON. The unchanged workflow block passed after only output-directory replacement.
+
+The additional verification script initially used direct parent indexing on broad seed rows, which omit that optional field. Its KeyError and initial script are retained. Only that comparison now interprets absent broad parent as None, matching the output schema; all child parents remain exact. The corrected comparison passed for all 37 IDs, kinds, classes, parents and dispositions. Production source and workflow receipt did not change, so the completed suite and two replays were carried forward.
+
+All ten coverage fields match: 24 exact/conditional broad, 8 synthetic broad, 5 scoped, 37 total, 36 INCLUDED, 1 DEFERRED, 0 EXCLUDED, 0 missing and 0 duplicate. PR284 remains UNRESOLVED / NOT_ELIGIBLE_CAS_CONFLICT at source and DEFERRED in extraction. Source statements, statement hashes, evidence references and relevant semantic links are preserved. The whole-file digest and canonical content_id were checked with their distinct inputs.
+
+Scope and risks: this verifies source extraction, not mathematical truth, novelty, unique theorem counts or scientific admission. Canonical T9 v4/30 and Report-A candidate 40 remain unchanged. Observational data and release authority remain false. No K2/R2/K5/authority/decoder execution, mathematical/CAS rerun, merge, ready transition or canonical migration occurred. Raw log whitespace will remain verbatim; source-only diff check passed.
