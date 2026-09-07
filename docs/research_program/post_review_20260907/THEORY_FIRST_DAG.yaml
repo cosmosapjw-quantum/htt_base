@@ -1,0 +1,160 @@
+schema: htt.postreview.theory_first_plan.v1
+created: '2026-09-07'
+objective: quantitative_lowell_morphology_and_response_conditioned_redshift_inference
+route: MAIN_TO_LOCAL_CODEX_DIRECT_GIT_RETURN
+execution_release: HELD_PENDING_MAIN_THEORY_FREEZE
+scope:
+  base_artifact_commit: 9c86759f4ac7054d01d88689290a658e8ffd5863
+  audited_default_commit: 50ea6d76ace70dec57b8794ab0d1cf9b8fab42cb
+  canonical_ledger_changed: false
+  old_report_artifact_acceptance_reopened: false
+  production_code_changed_in_this_pack: false
+  observation_executed: false
+  work_thread_required: false
+  native_bass_solver_in_scope: false
+  old_scalar_mes_results_admitted: false
+  cf4_quarantine_lifted: false
+  budget_policy: adjustable_planning_estimates_with_cumulative_accounting
+  explicit_owner_platform_and_privilege_limits_preserved: true
+nodes:
+  - id: R0
+    owner: MAIN
+    status: COMPLETED_SOURCE_INFORMED
+    output: REVIEW_ADJUDICATION.md
+    requires: []
+    meaning: distinguish_reported_reviewer_runs_from_verified_source_and_derivation
+  - id: T_CORE
+    owner: MAIN
+    status: DERIVED_NOT_NATIVE_TESTED
+    output: THEORY_RESULTS.md
+    requires: [R0]
+    results: [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]
+    scalar_arithmetic_checked: true
+    monte_carlo_or_cas_pass_claimed: false
+  - id: REUSE
+    owner: MAIN
+    status: COMPLETED_STRUCTURE_AND_TARGETED_SOURCE_REVIEW
+    output: CODE_DATA_REUSE.md
+    requires: [R0]
+    all_historical_file_bodies_reviewed: false
+    user_asset_inventory_role: METADATA_NOT_CONTENT_ADMISSION
+  - id: M1_CMB_MODEL
+    owner: MAIN
+    status: NEXT_THEORY_WORK
+    requires: [T_CORE, REUSE]
+    outputs:
+      - selected_pr3_product_and_exact_transform_semantics
+      - joint_low_high_sky_foreground_noise_law
+      - primary_morphology_statistic_and_complete_null_map
+      - justified_mask_tail_and_numerical_error_policy
+    prohibited_delegated_choices:
+      - substitute_pr4_without_matched_inputs
+      - treat_projection_fraction_as_true_boost_fraction
+      - use_trace_ratio_as_fisher_information
+      - treat_posterior_draws_as_independent_nulls
+  - id: M2_REDSHIFT_MODEL
+    owner: MAIN
+    status: OPEN_THEORY_WORK
+    requires: [T_CORE, REUSE]
+    outputs:
+      - selected_distance_redshift_product_and_forward_likelihood
+      - calibration_selection_group_and_frame_dependencies
+      - physical_response_estimands_and_unidentified_directions
+      - shared_catalogue_and_reconstruction_covariance
+    prohibited_delegated_choices:
+      - choose_toy_profile_as_global_tilt_dynamics
+      - infer_vorticity_from_radial_rigid_rotation_mode
+      - multiply_correlated_reconstructions_as_independent_likelihoods
+      - silently_use_inverse_selection_weight_as_precision
+  - id: M3_EXPERIMENT
+    owner: MAIN
+    status: OPEN_DEPENDENT_THEORY_WORK
+    requires: [M1_CMB_MODEL, M2_REDSHIFT_MODEL]
+    outputs:
+      - complete_estimand_input_algorithm_output_contract
+      - fixed_primary_secondary_masks_bins_and_scan_family
+      - coupled_mock_and_injection_design
+      - matched_null_roles_and_joint_coverage_statement
+      - numerical_tolerances_with_error_justification
+      - data_intake_success_and_abstention_branches
+      - explicit_scientific_result_limits
+  - id: THEORY_FREEZE
+    owner: MAIN
+    status: NOT_REACHED
+    requires: [M3_EXPERIMENT]
+    exit_condition: all_scientific_choices_in_the_finite_campaign_are_explicit
+    not_sufficient:
+      - presence_of_this_yaml
+      - code_file_names
+      - a_green_structural_test
+      - availability_of_many_assets
+    output: immutable_complete_local_execution_handoff
+  - id: C0_INTEGRATION
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    requires: [THEORY_FREEZE]
+    action: integrate_exact_donor_interfaces_in_one_isolated_candidate
+    single_writer: true
+    output: actual_import_map_and_affected_native_tests
+  - id: C1_IMPLEMENTATION
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    requires: [C0_INTEGRATION]
+    action: implement_fixed_response_nuisance_and_weighting_contracts
+    may_fix: ordinary_in_scope_code_loader_parsing_and_numerical_defects
+    may_not_choose: new_physical_models_priors_statistics_or_claims
+  - id: C2_SYNTHETIC_VALIDATION
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    requires: [C1_IMPLEMENTATION]
+    action: run_frozen_oracles_injections_coverage_and_boundary_cases
+    outputs:
+      - raw_original_failure_and_final_test_records
+      - exact_and_model_oracle_comparisons
+      - nullspace_and_degeneracy_results
+      - effects_and_uncertainties_not_only_pass_counts
+  - id: C3_SELECTED_DATA_INTAKE
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    requires: [C0_INTEGRATION]
+    action: verify_only_the_inputs_selected_by_theory_freeze
+    start_with: existing_asset_inventory
+    whole_workstation_rehash: false
+    download_new_survey_by_default: false
+    missing_input_policy: typed_product_level_blocker_no_scientific_substitution
+  - id: C4_OBSERVED_ANALYSIS
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    requires: [C2_SYNTHETIC_VALIDATION, C3_SELECTED_DATA_INTAKE]
+    action: execute_the_frozen_full_analysis_and_prespecified_robustness_runs
+    valid_outcomes: [NULL_CONSISTENT, PARTIALLY_IDENTIFIED, MODEL_DEPENDENT_CONSTRAINT, NONPASS, BLOCKED]
+    automatic_detection_or_global_tilt_claim: false
+  - id: C5_GIT_RETURN
+    owner: LOCAL_CODEX
+    status: NOT_STARTED
+    requires: [C4_OBSERVED_ANALYSIS]
+    action: nonforce_publish_actual_source_results_logs_and_RETURN_TO_MAIN
+    manual_zip_relay_required: false
+    no_secrets_private_corpus_fonts_or_raw_survey_dump: true
+    merge_or_ready_authorized: false
+  - id: MAIN_RESULT
+    owner: MAIN
+    status: NOT_STARTED
+    requires: [C5_GIT_RETURN]
+    action: review_actual_effects_uncertainties_and_claim_scope
+    no_blind_review_label_by_role_renaming: true
+parallelism:
+  theory_allowed: [M1_CMB_MODEL, M2_REDSHIFT_MODEL]
+  local_after_freeze_allowed: [C2_SYNTHETIC_VALIDATION, C3_SELECTED_DATA_INTAKE]
+  shared_candidate_ref_writers: 1
+stop_boundaries:
+  - missing_or_changed_physical_model_or_statistical_target
+  - new_privilege_cost_or_destructive_action
+  - competing_writer_or_unresolved_source_authority
+  - explicit_owner_or_platform_hard_limit
+  - demonstrated_scientific_counterexample_requiring_MAIN_adjudication
+non_stop_boundaries:
+  - second_productive_edit_inside_the_same_approved_scope
+  - revisable_planning_time_estimate
+  - existing_hosted_ci_billing_prestart_failure_when_local_execution_is_available
+  - a_null_or_nonidentifiable_scientific_result
