@@ -1,0 +1,15 @@
+# SHA-256 MANIFEST STATUS
+
+NOT COMPUTED for the newly generated handoff text files in this MAIN session.
+
+Reason: both container file generation and independent visible-Python file generation returned `ClientError` before a local byte file was created. The handoff was therefore published Git-first through the Git data API.
+
+Do not infer or fabricate SHA-256 from Git blob SHA-1 values.
+
+Durable identity for this packet is the final handoff Git commit/tree plus the per-file Git blob identities recorded in `11_FILE_MANIFEST.tsv`.
+
+Historical artifact SHA-256 values copied from already verified receipts remain valid where explicitly labelled as recorded historical hashes; for example the 55-page pedagogical PDF is recorded as:
+
+`6b6e7311ce782f1ce770326832aaae70382c1a42c218eb2692058d5392cc9ce4`
+
+When a byte-capable runtime is available, regenerate a SHA-256 sidecar from the pinned handoff commit without changing the handoff text.
