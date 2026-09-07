@@ -1,340 +1,108 @@
 {
-  "programme": "HTT_REVIEW_SEEDED_THEORY_FIRST_20260907",
-  "date": "2026-09-07",
-  "owner": "MAIN",
-  "repository": "cosmosapjw-quantum/htt_base",
+  "document_role": "SUPPORTING_CROSSWALK_NOT_AN_ADDITIONAL_EXECUTION_GRAPH",
+  "as_of": "2026-09-07",
   "planning_status": "COMPLETE",
-  "selected_theory_status": "IN_PROGRESS",
-  "production_handoff_ready": false,
-  "current_native_runs": 0,
-  "current_observational_runs": 0,
-  "scope": [
-    "low_ell_full_tensor_morphology",
-    "local_boost_intrinsic_dipole_and_global_tilt_discrimination",
-    "conditional_physical_kinematical_bounds",
-    "dipole_and_other_low_multipole_anomaly_tests",
-    "redshift_dependent_distance_and_number_count_analysis"
-  ],
-  "documents": {
+  "scientific_specification_status": "PENDING_EXISTING_M1_M2_M3",
+  "execution_release": false,
+  "predecessor": {
+    "pr": 462,
+    "commit": "b4d04e62d664997eb9e1858b6195c35e4ece3378",
+    "tree": "ea95984f5f1b1d977ca625dfde9a34d71202b115",
+    "directory": "docs/research_program/post_review_20260907",
+    "reuse": ["THEORY_RESULTS.md", "IMPLEMENTATION_CONTRACT.md", "CODE_DATA_REUSE.md", "REGRESSION_ORACLES.json"]
+  },
+  "active_plan": {
+    "pr": 463,
+    "commit": "0e2d6e3a890ae44303440e8534fb6080d1dac881",
+    "master_path": "docs/research_program/referee_seeded_20260907/00_MASTER_PLAN_KO.md",
+    "dag_path": "docs/research_program/referee_seeded_20260907/03_PROGRAM_DAG.yaml",
+    "dag_git_blob": "1dfe55d6228841c14c547cdaf8364758c8bcddea",
+    "authority": "Use this actual DAG, not the earlier independent labels in PR464"
+  },
+  "addendum": {
+    "pr": 464,
     "master": "REVIEW_SEEDED_RESEARCH_PLAN_KO.md",
-    "derivations": "THEORY_RESULTS_AND_CORRECTIONS.md",
-    "reuse_and_inputs": "REUSE_AND_DATA_MAP.md"
+    "source_findings": "REUSE_AND_DATA_MAP.md",
+    "supporting_derivations": "THEORY_RESULTS_AND_CORRECTIONS.md",
+    "earlier_parallel_draft_commit": "f6ee52673dbd1566b0c76c700f34fa326d01f7b6",
+    "earlier_parallel_draft_role": "Historical articulation, not a separate active programme or additional gates"
   },
-  "source_observations": {
-    "planning_branch_parent": "9c86759f4ac7054d01d88689290a658e8ffd5863",
-    "default_branch_read": "50ea6d76ace70dec57b8794ab0d1cf9b8fab42cb",
-    "accepted_decoder_source": "9f7d06dec0fce1c3a8a53fa5372c84d9c679c037",
-    "inspection_scope": "repository_discovery_and_targeted_source_reads",
-    "exhaustive_all_branch_byte_audit": false,
-    "workstation_inventory": "owner_supplied_20260907_metadata_not_fresh_MAIN_measurement"
-  },
-  "invariants": [
-    "Metric signature minus plus plus plus and dimensional c retained in physical formulae",
-    "Observable Q and O are not identified with physical shear or global tilt",
-    "Primary full tensor state is retained when an inverse chart is unavailable",
-    "Retired scalar-only observational ranks are not current analysis evidence",
-    "No native Bianchi family inference without an explicitly validated external response",
-    "Same-sky maps, catalogue groups, calibrators and reconstructed fields are not independent by default",
-    "Covariance and parameter Jacobians are numerical objects, not metadata support scores",
-    "Do not weaken tests, priors or physical conditions in response to an inconvenient observation",
-    "No target-statistic unblinding before the selected science specification is closed",
-    "No merge, force push, ready transition, public dissemination or canonical promotion is implied"
-  ],
-  "topological_order": [
-    "R0", "S0", "T1", "T2", "T3", "F0", "C0", "C1", "C2", "C3", "C4", "V0", "V1", "D1", "D2", "J0", "P0"
-  ],
-  "nodes": [
+  "remaining_MAIN_contracts": [
     {
-      "id": "R0",
-      "level": 0,
-      "owner": "MAIN",
-      "status": "COMPLETE_AT_DECLARED_SCOPE",
-      "depends_on": [],
-      "deliverable": "Critical review dispositions and explicit mathematical derivations",
-      "evidence": "THEORY_RESULTS_AND_CORRECTIONS.md",
-      "acceptance": [
-        "Separate valid review criticisms from overclaims and unsupported execution assertions",
-        "Derive cutoff, conditional projection law, variance limits, nuisance conditioning and radial null results with domains",
-        "Keep scalar calculator checks distinct from native or formal verification"
-      ]
+      "id": "M1_CMB_MODEL",
+      "status": "NEXT_SCIENTIFIC_CLOSURE",
+      "consumes": ["T_CORE", "REUSE"],
+      "purpose": "CMB observation, low/high/foreground/noise joint law, response and complete null procedure"
     },
     {
-      "id": "S0",
-      "level": 0,
-      "owner": "MAIN",
-      "status": "COMPLETE_ARCHITECTURE_TRIAGE_NOT_EXHAUSTIVE_AUDIT",
-      "depends_on": [],
-      "deliverable": "Reusable code and data-product map, including concrete source-level failure classes",
-      "evidence": "REUSE_AND_DATA_MAP.md",
-      "acceptance": [
-        "Identify accepted numerical kernels separately from schema-only and diagnostic components",
-        "Keep CF4 quarantine and old result provenance intact",
-        "Record DESI coordinate and masked-moment response findings without claiming executed tests",
-        "Distinguish supplied file inventory from release-matched scientific input eligibility"
-      ]
+      "id": "M2_REDSHIFT_MODEL",
+      "status": "REMAINING_SCIENTIFIC_CLOSURE",
+      "consumes": ["T_CORE", "REUSE"],
+      "purpose": "Distance/redshift likelihood, survey selection, calibration, frame and identifiable functional"
     },
     {
-      "id": "T1",
-      "level": 1,
-      "owner": "MAIN",
-      "status": "NEXT_RESEARCH_UNIT",
-      "depends_on": ["R0", "S0"],
-      "deliverable": "Closed CMB forward, nuisance, interest-parameter and finite-null theory pack",
-      "acceptance": [
-        "Exact monopole and controlled anisotropy boost with product unit and frame conventions",
-        "Mean and parameter-dependent covariance including same-sky auxiliary blocks",
-        "All four nuisance regimes use the same defined interest parameter and observable",
-        "Finite primary and secondary statistics, tails, fitting and selection calibration are fixed",
-        "Synthetic analytic limits and chart-unavailable treatment are explicitly specified",
-        "No scientific choice is delegated as a coding implementation detail"
-      ]
-    },
-    {
-      "id": "T2",
-      "level": 2,
-      "owner": "MAIN",
-      "status": "PLANNED",
-      "depends_on": ["R0", "S0", "T1"],
-      "deliverable": "Closed redshift, catalogue selection, physical-frame and kinematical-bound theory pack",
-      "acceptance": [
-        "Original distance likelihood, grouped calibration, selection and redshift frame are specified",
-        "Number-count response includes actual survey selection and per-cap normalisation",
-        "Local approximation and light-cone response are not conflated",
-        "Intrinsic dipole and three physical frame velocities retain their distinct definitions",
-        "Radial vorticity null and any absent physical global-tilt response are explicit outcomes",
-        "MES branches, derivative-envelope sensitivity and data uncertainty are separated"
-      ]
-    },
-    {
-      "id": "T3",
-      "level": 3,
-      "owner": "MAIN",
-      "status": "PLANNED",
-      "depends_on": ["T1", "T2", "S0"],
-      "deliverable": "Complete science specification, numerical error budget, product policy and exact source/API/test closure",
-      "acceptance": [
-        "Numerical tolerances are linked to declared metric and scientific uncertainty",
-        "Rigorous enclosure and convergence-only outputs have different report labels",
-        "Selected product headers and variable definitions are known before unblinding",
-        "Every source dependency, new file, signature, array shape, units and exception is fixed",
-        "All prior, null, survey-cut, solver, Monte Carlo and output decisions are explicit",
-        "Optional input absence disables only the declared dependent comparison"
-      ],
-      "local_exception": "Only read-only metadata/header retrieval or a narrowly specified scientific check if inaccessible in MAIN; no target analysis or scientific model selection"
-    },
-    {
-      "id": "F0",
-      "level": 4,
-      "owner": "MAIN",
-      "status": "NOT_RELEASED",
-      "depends_on": ["T1", "T2", "T3"],
-      "deliverable": "Immutable complete SCIENCE_SPEC and single Codex implementation/data handoff",
-      "acceptance": [
-        "All selected theory questions are derived or explicitly closed with a nonidentification boundary",
-        "No missing physical model or inferential convention remains for Codex to invent",
-        "Full execution graph, concrete fixtures, allowed repairs and return protocol are bound",
-        "Publishing this research plan alone does not satisfy this node"
-      ]
-    },
-    {
-      "id": "C0",
-      "level": 5,
-      "owner": "LOCAL_CODEX",
-      "status": "BLOCKED_BY_F0",
-      "depends_on": ["F0"],
-      "deliverable": "Isolated executable source closure and selected input metadata admission",
-      "acceptance": [
-        "Reuse matching existing work and prevent a competing writer",
-        "Verify actual import origins and release/variable/realisation identities",
-        "No whole-storage rescan, blind package installation or target-statistic inspection"
-      ]
-    },
-    {
-      "id": "C1",
-      "level": 6,
-      "owner": "LOCAL_CODEX",
-      "status": "BLOCKED_BY_F0",
-      "depends_on": ["C0"],
-      "deliverable": "Full-tensor and observer-response implementation",
-      "acceptance": [
-        "Retained Q/O controls pass on actual integrated source",
-        "Exact pure-monopole boost and kinematic quadrupole controls",
-        "Coordinate/scale/parity covariance and explicit undefined-chart outcomes"
-      ]
-    },
-    {
-      "id": "C2",
-      "level": 7,
-      "owner": "LOCAL_CODEX",
-      "status": "BLOCKED_BY_F0",
-      "depends_on": ["C1"],
-      "deliverable": "Finite processed response and four nuisance treatments",
-      "acceptance": [
-        "Full-sky and small-mask controls reproduce the sealed limits",
-        "Bounded minimum cost, Gaussian and correlated auxiliary cases are distinguished",
-        "Physical parameter Jacobians and covariance derivatives match synthetic references",
-        "Operator error is reported at the actual attained evidence grade"
-      ]
-    },
-    {
-      "id": "C3",
-      "level": 6,
-      "owner": "LOCAL_CODEX",
-      "status": "BLOCKED_BY_F0",
-      "depends_on": ["C0"],
-      "deliverable": "Original-distance catalogue likelihood inputs and joint angular selection estimator",
-      "acceptance": [
-        "No resurrection of quarantined CF4 numerical claims",
-        "Known equatorial vector transforms consistently to comparison frame",
-        "Hemisphere and disjoint-cap normalisation responses are reproduced",
-        "Grouped observations and original error variable are preserved",
-        "Zero amplitude gives undefined direction rather than a fictitious axis"
-      ]
-    },
-    {
-      "id": "C4",
-      "level": 8,
-      "owner": "LOCAL_CODEX",
-      "status": "BLOCKED_BY_F0",
-      "depends_on": ["C2", "C3"],
-      "deliverable": "Joint numerical likelihood and feasible-set machinery from the sealed equations",
-      "acceptance": [
-        "Actual covariance operators replace support-score proxies",
-        "Shared sky, LSS and calibration blocks are consumed rather than asserted independent",
-        "Null directions and typed unavailable physical responses remain visible",
-        "Original and added regressions run after the final relevant source edit"
-      ]
-    },
-    {
-      "id": "V0",
-      "level": 9,
-      "owner": "LOCAL_CODEX",
-      "status": "BLOCKED_BY_F0",
-      "depends_on": ["C4"],
-      "deliverable": "End-to-end synthetic numerical and statistical validation",
-      "acceptance": [
-        "Known truth injection, estimator bias, uncertainty and abstention are measured",
-        "Expected analytic failures and scientific null directions are tested explicitly",
-        "FPR, coverage and power use their declared uncertainty and alternatives",
-        "A valid negative result is not converted to a failure demanding model changes"
-      ]
-    },
-    {
-      "id": "V1",
-      "level": 10,
-      "owner": "LOCAL_CODEX",
-      "status": "BLOCKED_BY_F0",
-      "depends_on": ["V0"],
-      "deliverable": "Release-matched complete-map null calibration",
-      "acceptance": [
-        "Every fitted or selected operation required by the null is repeated symmetrically",
-        "Simulation file count is not substituted for independent realisation count",
-        "Tie-conservative ranks are not incorrectly tested for exact continuous uniformity",
-        "Actual tail resolution and Monte Carlo uncertainty are reported"
-      ]
-    },
-    {
-      "id": "D1",
-      "level": 11,
-      "owner": "LOCAL_CODEX",
-      "status": "BLOCKED_BY_F0",
-      "depends_on": ["V1"],
-      "deliverable": "Primary CMB morphology and response-conditioned data results",
-      "acceptance": [
-        "Only the frozen eligible primary and control products are used",
-        "Full tensor uncertainty and declared finite statistic family are reported",
-        "All four nuisance model results retain their different assumptions",
-        "No unplanned favourable-map selection or double use of the same sky"
-      ]
-    },
-    {
-      "id": "D2",
-      "level": 11,
-      "owner": "LOCAL_CODEX",
-      "status": "BLOCKED_BY_F0",
-      "depends_on": ["V1"],
-      "deliverable": "Redshift-dependent catalogue and frame-consistency data results",
-      "acceptance": [
-        "Original-distance and selection-calibrated count likelihoods are used",
-        "Physical inference is limited to the sealed response and priors",
-        "Shared calibrators and structures are not independent replications",
-        "Nonidentified vorticity/global-tilt components remain nonidentified rather than fitted by proxy"
-      ]
-    },
-    {
-      "id": "J0",
-      "level": 12,
-      "owner": "LOCAL_CODEX_THEN_MAIN",
-      "status": "BLOCKED_BY_F0",
-      "depends_on": ["D1", "D2"],
-      "deliverable": "Joint or explicitly separate scientific results and immutable Git return",
-      "acceptance": [
-        "Use a joint likelihood only where its covariance and shared variables are defined",
-        "Publish successful, null and blocked branches with their actual evidence",
-        "Return source/config/result identities, original logs and reproducible tables/figures",
-        "MAIN reads the actual return rather than requiring an intermediate work thread"
-      ]
-    },
-    {
-      "id": "P0",
-      "level": 13,
-      "owner": "MAIN",
-      "status": "PLANNED_AFTER_RESULTS",
-      "depends_on": ["J0"],
-      "deliverable": "Two focused research manuscripts and a separate explicit pedagogical erratum where required",
-      "acceptance": [
-        "Every quantitative conclusion is backed by generated output or an explicit derivation",
-        "Novelty is compared with the primary literature at the concrete result level",
-        "Old reports and receipts retain their own immutable identities",
-        "Publication and merge require their own authority, not a test-count proxy"
-      ]
+      "id": "M3_EXPERIMENT",
+      "status": "REMAINING_DEPENDENT_SCIENTIFIC_CLOSURE",
+      "consumes": ["M1_CMB_MODEL", "M2_REDSHIFT_MODEL"],
+      "purpose": "Complete finite scientific experiment and implementation/input/error contract with no scientific placeholders"
     }
   ],
-  "primary_product_policy": {
-    "CMB": "Prioritise PR3 SMICA with truly matched FFP10 signal/noise/component records; verify eligibility before analysis",
-    "CMB_controls": "Other component maps and later releases are predeclared same-sky sensitivity analyses, not independent replications",
-    "PR4": "Candidate upgrade only; empty raw NPIPE directory and other PR4-labelled files do not establish a matched simulation pool",
-    "CF4": "Original object/group distance variables, not quarantined derived significance or independent grid cells",
-    "DESI": "Release-specific objects, randoms and matched mocks, not compressed full-shape summaries",
-    "missing_optional_product": "Mark only its predeclared dependent comparison NOT_RUN",
-    "missing_primary_product": "Do not silently substitute an unmatched product; return the exact scientific input blocker"
+  "earlier_PR464_label_mapping": {
+    "R0": "T_CORE review recap, not ten new results",
+    "S0": "REUSE with supplementary DESI and schema-versus-numerical findings",
+    "T1": "M1_CMB_MODEL",
+    "T2": "M2_REDSHIFT_MODEL",
+    "T3": "M3_EXPERIMENT",
+    "F0": "THEORY_FREEZE",
+    "C0": "C0_INTEGRATION plus C3_SELECTED_DATA_INTAKE",
+    "C1": "C1_IMPLEMENTATION geometry/observer subtask",
+    "C2": "C1_IMPLEMENTATION finite-operator/nuisance subtask",
+    "C3": "C1_IMPLEMENTATION catalogue/selection subtask",
+    "C4": "C1_IMPLEMENTATION joint-inference subtask",
+    "V0": "C2_SYNTHETIC_VALIDATION",
+    "V1": "C2_SYNTHETIC_VALIDATION matched-null/statistical-calibration subtask",
+    "D1": "C4_OBSERVED_ANALYSIS CMB branch",
+    "D2": "C4_OBSERVED_ANALYSIS DEPTH branch",
+    "J0": "C5_GIT_RETURN then MAIN_RESULT",
+    "P0": "Subsequent manuscript synthesis, not a prerequisite for a partial Git return"
   },
-  "future_extensions_not_on_current_critical_path": [
-    {
-      "id": "FUT_POLARISATION",
-      "description": "Polarisation or remote dipole/kSZ after a complete response, product and likelihood are supplied",
-      "status": "NOT_RELEASED"
-    },
-    {
-      "id": "FUT_NATIVE_TILT",
-      "description": "Global Bianchi-family inference with an externally validated native transfer and identifiability analysis",
-      "status": "EXTERNAL_RESPONSE_DEPENDENCY_NOT_A_CURRENT_IMPLEMENTATION_TASK"
-    }
+  "additional_source_oracles_to_deduplicate": [
+    "DESI equatorial n_hat must not be compared with Galactic CMB components without a transform",
+    "Normalised masked dipole moment responds with 3 Cov_R(n), including hemisphere diag(1,1,1/4)",
+    "Independent cap normalisations appear as separate nuisance columns",
+    "Zero-amplitude direction is undefined, not a finite physical axis",
+    "Metadata feature-support overlap is not a physical Fisher matrix or covariance"
   ],
-  "execution_policy": {
-    "current_mutation_scope": "Planning and direct-derivation documents only",
-    "single_candidate_writer": true,
-    "ordinary_in_scope_repairs": "Autonomous evidence-driven corrections preserving the first failure and all scientific invariants",
-    "scientific_counterexample": "Return to MAIN with exact source/input and minimal reproducible evidence; do not change the theory to obtain PASS",
-    "budgets": "Adjust planning estimates with reason and old/new/cumulative accounting; preserve explicit owner/tool/cost/experimental hard boundaries",
-    "delivery": "Non-force isolated Git branch, readable RETURN_TO_MAIN, source/config/output/logs and immutable links",
-    "manual_zip_relay_required": false,
+  "retain_existing_stronger_results": [
+    "PR462 sharp STF derivative contraction norm sqrt(7/5), rather than treating the addendum sqrt(3) bound as strongest",
+    "PR462 vorticity background cancellation and precise contracted-derivative assumptions",
+    "PR462 generic-direction polynomial rank qualification",
+    "Pairwise bounded-nuisance ambiguity uses 2R, not the R single-reference displacement bound",
+    "PR463 absent response H=0 differs from observed zero d=0",
+    "PR463 full/half shear norm, affine design rank and correlated-cell bootstrap qualifications"
+  ],
+  "execution_route": {
+    "MAIN_parallel_contracts": ["M1_CMB_MODEL", "M2_REDSHIFT_MODEL"],
+    "join": "M3_EXPERIMENT",
+    "release": "THEORY_FREEZE only after actual closure",
+    "LOCAL_nodes": ["C0_INTEGRATION", "C1_IMPLEMENTATION", "C2_SYNTHETIC_VALIDATION", "C3_SELECTED_DATA_INTAKE", "C4_OBSERVED_ANALYSIS", "C5_GIT_RETURN"],
+    "failure_or_partial_return_from_any_LOCAL_node": true,
+    "never_require_observed_analysis_success_before_returning_a_failure": true,
+    "scientific_choice_by_Codex": false,
+    "ordinary_in_scope_debugging_by_Codex": true,
+    "one_candidate_writer": true,
     "WORK_THREAD_required": false,
-    "automatic_Codex_session_started": false
+    "manual_ZIP_relay_required": false
   },
-  "dag_validation": {
-    "method": "Explicit topological order and strictly lower dependency levels in this authored graph",
-    "machine_execution": "NOT_RUN_RUNTIME_UNAVAILABLE",
-    "existing_repository_canonical_backlog_modified": false,
-    "meaning": "Scientific work graph for the requested programme, not replacement of prior execution receipts or unrelated dependency graphs"
-  },
-  "retained_state": {
-    "canonical_claims": 30,
-    "existing_report_core_candidates": 40,
-    "PR284": "DEFERRED",
-    "finite_HEALPix_containment": "UNRESOLVED",
-    "new_observational_conclusion": false,
-    "new_native_Bianchi_result": false,
-    "public_repository_or_data_release": false
+  "verification_and_scope": {
+    "new_native_runs": 0,
+    "new_observational_runs": 0,
+    "new_independent_CAS": false,
+    "native_DAG_parser": "NOT_RUN",
+    "repository_review": "Broad discovery plus selected actual source reads; not an all-branch execution audit",
+    "data_inventory": "Owner-supplied metadata, not fresh MAIN measurement or analysis admission",
+    "budgets": "Evidence-driven adjustment of planning estimates with cumulative accounting; preserve explicit owner/platform/cost/experimental limits",
+    "old_reports_receipts_production_and_canonical_ledger_modified": false,
+    "merge_ready_public_disclosure_or_scientific_promotion": false
   }
 }
