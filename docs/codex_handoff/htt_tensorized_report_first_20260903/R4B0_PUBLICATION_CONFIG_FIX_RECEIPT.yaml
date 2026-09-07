@@ -1,0 +1,37 @@
+schema: htt.report_a.r4b0.publication_config_fix_receipt.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+parent_source_commit: 055d8d31d4a9a11d9bc27b9a2a99594ba127638f
+
+findings:
+  - id: R4B0-CONFIG-001
+    severity: P1_TYPESETTING
+    issue: >-
+      metadata.yaml contained a doubly escaped LaTeX hypersetup command, which
+      would emit two leading backslashes in the Pandoc metadata block.
+    repair: use one literal LaTeX backslash and add a source contract
+  - id: R4B0-CONFIG-002
+    severity: P2_TYPESETTING
+    issue: >-
+      header.tex loaded xcolor with dvipsnames while the Pandoc template may
+      already load xcolor, creating an avoidable package-option clash.
+    repair: use standard colour names in metadata and do not reload xcolor
+
+scientific_content_changed: false
+claim_ids_changed: false
+citation_keys_changed: false
+observational_data_used: false
+corrected_planck_tensor_rank: null
+finite_healpix_containment: RANK_UNRESOLVED
+bass_scope: EXCLUDED
+
+verification:
+  remote_source_readback_before_repair: PASS
+  test_contract_extended: true
+  accepted_runtime_execution: false
+  github_actions: PENDING_OR_PRESTART_NO_EXECUTION
+
+terminal: >-
+  R4B0_METADATA_ESCAPE_AND_XCOLOR_OPTION_CLASH_REPAIRED_SOURCE__
+  STATIC_RUNTIME_VALIDATION_PENDING__NO_PDF_OR_PUBLICATION_AUTHORITY

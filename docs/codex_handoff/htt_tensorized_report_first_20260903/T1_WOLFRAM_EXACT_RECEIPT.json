@@ -1,0 +1,87 @@
+{
+  "schema": "htt.report_a.t1_wolfram_exact_receipt.v1",
+  "date": "2026-09-03",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "report_pr": 449,
+  "source_authority": {
+    "pr": 440,
+    "commit": "687234128d7c12d04e68aad0f303c21d2d470393",
+    "orbit_source": {
+      "path": "htt/src/common/mes_krylov_completion.py",
+      "blob_sha": "c9dfaa5c55a103f3625f94629f701bc2a06e242c"
+    },
+    "harmonic_stf_source": {
+      "path": "scripts/observed_runs/rebuild_mes_tensor_carriers.py",
+      "blob_sha": "d5dcb8256bf49df45269938e54b7c124619fc02f"
+    }
+  },
+  "conventions": {
+    "harmonics": "Condon-Shortley orthonormal Y_lm",
+    "reality": "a_l,-m=(-1)^m conjugate(a_lm)",
+    "stored_real": [
+      "c_l0=a_l0",
+      "c_lm,c=sqrt(2) Re(a_lm)",
+      "c_lm,s=-sqrt(2) Im(a_lm)"
+    ],
+    "stored_real_basis_functions": [
+      "Y_l0",
+      "sqrt(2) Re(Y_lm)",
+      "sqrt(2) Im(Y_lm)"
+    ],
+    "carrier_metric": "EUCLIDEAN",
+    "tensor_metric": "FROBENIUS"
+  },
+  "exact_projection": {
+    "quadrupole": "Q_ij=(15/(8*pi)) integral T_2(n) n_<i n_j> dOmega",
+    "octupole": "O_ijk=(35/(8*pi)) integral T_3(n) n_<i n_j n_k> dOmega"
+  },
+  "basis_order": {
+    "ell_2": ["20", "21c", "21s", "22c", "22s"],
+    "ell_3": ["30", "31c", "31s", "32c", "32s", "33c", "33s"]
+  },
+  "wolfram_exact_results": {
+    "Q_symmetric": true,
+    "Q_tracefree": true,
+    "O_fully_symmetric_by_construction": true,
+    "O_tracefree": true,
+    "Q_polynomial_residuals_zero": true,
+    "O_polynomial_residuals_zero": true,
+    "Q_Gram": "(15/(8*pi)) I_5",
+    "O_Gram": "(35/(8*pi)) I_7",
+    "Q_Gram_residual_zero": true,
+    "O_Gram_residual_zero": true,
+    "Q_map_rank": 5,
+    "O_map_rank": 7
+  },
+  "inverse_maps": {
+    "ell_2": "c_2A=(8*pi/15) B_A^(2):Q",
+    "ell_3": "c_3A=(8*pi/35) B_A^(3):O"
+  },
+  "norm_closure": {
+    "quadrupole": "Q:Q=(15/(8*pi))||c_2||^2=(75/(8*pi))C_2",
+    "octupole": "O:O=(35/(8*pi))||c_3||^2=(245/(8*pi))C_3"
+  },
+  "dimension_and_limit_checks": {
+    "dim_STF2": 5,
+    "dim_STF3": 7,
+    "zero_amplitude_map_regular": true,
+    "zero_amplitude_orbit_chart_regular": false,
+    "coefficient_and_tensor_unit": "temperature",
+    "C_l_unit": "temperature_squared"
+  },
+  "evidence_status": {
+    "theory_truth": "DERIVED_AND_WOLFRAM_EXACTLY_CHECKED",
+    "source_implementation": "PRESENT",
+    "exact_head_runtime": "PRESTART_NO_EXECUTION",
+    "observational_data_used": false
+  },
+  "terminal": "PASS_STORED_REAL_STF_REPRESENTATION_THEORY",
+  "claim_boundary": {
+    "qo_orbit_chart_certified": false,
+    "statistical_result": false,
+    "physical_shear_or_vorticity": false,
+    "empirical_beta": false,
+    "bianchi_family": false,
+    "merge_authorized": false
+  }
+}

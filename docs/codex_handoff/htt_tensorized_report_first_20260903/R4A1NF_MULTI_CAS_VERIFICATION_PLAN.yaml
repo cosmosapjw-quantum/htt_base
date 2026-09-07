@@ -1,0 +1,135 @@
+schema: htt.report_a.r4a1nf.multi_cas_verification_plan.v4
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+scope: >-
+  Independent verification of four supporting observer/photon/boost and
+  regularized-matrix domain lemmas. This node does not verify the Q/O orbit
+  theorem, finite-HEALPix rank, any observational result, or BASS physics.
+
+canonical_r2_contract:
+  contract_id: CAS-R4A1NF-DOMAIN-R2
+  contract_version: 2
+  path: docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json
+  run_spec: docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json
+  source_binding_receipt: docs/research_reports/verifiers/r4a1nf/CAS_SOURCE_BINDINGS_R4A1NF_DOMAIN.json
+  adjudication: docs/research_reports/verifiers/r4a1nf/CAS_ADJUDICATION_R4A1NF_DOMAIN.json
+  risk_tier: R2
+  required_axes: [sympy, lean]
+  aggregate_rule: SOURCE_BINDING_PASS_AND_BOTH_REQUIRED_AXES_PASS_UNDER_ONE_CONTRACT_HASH
+  claim_ceiling: SUPPORTING_DOMAIN_LEMMAS_ONLY
+  obligations:
+    - photon_null_decomposition
+    - observer_measured_photon_energy
+    - boosted_observer_unit_timelike
+    - regularized_error_envelope_positive_definite
+
+source_binding:
+  verifier: docs/research_reports/verifiers/r4a1nf/verify_source_bindings.py
+  required_before_axis_execution: true
+  registered_objects:
+    - semantic source inputs
+    - run specification
+    - parent adjudicator and support module
+    - source-binding verifier
+    - SymPy axis source
+    - Lean wrapper, theorem module, root module, toolchains, lakefile, and manifest
+  algorithms: [git_blob_sha1, sha256]
+  path_policy:
+    repo_relative_only: true
+    symlinks_forbidden: true
+    repository_escape_forbidden: true
+  failure_policy: FAIL_CLOSED_BEFORE_REQUIRED_AXIS_EXECUTION
+
+required_verifiers:
+  sympy:
+    path: docs/research_reports/verifiers/r4a1nf/cas/axes/sympy/axis_program.py
+    toolchain: CPython_3_12__SymPy_1_14_0__mpmath_1_3_0
+    evidence: EXACT_SYMBOLIC_WITH_HIGH_PRECISION_SUPPLEMENT
+    ordered_matrix_scope: >-
+      The required check combines an explicit Gram-type sum-of-squares
+      decomposition with the dimension-independent implication q_psd>=0,
+      ||x||^2>0, and lambda_reg>0 => q_psd+lambda_reg^2||x||^2>0.
+  lean:
+    wrapper: docs/research_reports/verifiers/r4a1nf/cas/axes/lean/axis_program
+    module: formal_mathlib/Egs3V8Mathlib/ReportAConvention.lean
+    package: formal_mathlib
+    toolchain: leanprover_lean4_v4_31_0
+    mathlib_commit: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+    evidence: KERNEL_CHECKED_FORMAL_PROOF
+    parent_owned_execution: >-
+      lean-action installs and caches the pinned toolchain but does not build
+      the verifier. The Lean wrapper is launched by cas_gate run-adjudicate,
+      so elaboration success or failure enters the typed parent adjudication.
+
+supplemental:
+  gnu_octave:
+    path: docs/research_reports/verifiers/r4a1nf/verify_conventions_octave.m
+    role: INDEPENDENT_NUMERICAL_SMOKE_ONLY
+    substitutes_for_required_axis: false
+  sagemath:
+    path: docs/research_reports/verifiers/r4a1nf/verify_conventions.sage
+    role: EXACT_RATIONAL_FIXTURE_AND_QUOTIENT_RING
+    substitutes_for_required_axis: false
+  singular:
+    path: docs/research_reports/verifiers/r4a1nf/verify_conventions.sing
+    role: EXACT_POLYNOMIAL_IDEAL_REDUCTION
+    substitutes_for_required_axis: false
+  wolfram_shadow:
+    role: OPTIONAL_R3_SHADOW_AXIS
+    current_status: BLOCKED_BY_UPSTREAM_502
+    substitutes_for_required_axis: false
+    rule: >-
+      Wolfram remains a typed blocker for any future four-axis R3 contract;
+      it is not required by this release-critical R2 supporting-lemma contract.
+
+workflow_routing:
+  workflow: .github/workflows/report-a-formal-verifiers.yml
+  source_binding_command: >-
+    python3 docs/research_reports/verifiers/r4a1nf/verify_source_bindings.py
+    --contract docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json
+    --run-spec docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json
+    --adjudicator .agent-harness/scripts/cas_gate.py
+    --out docs/research_reports/verifiers/r4a1nf/CAS_SOURCE_BINDINGS_R4A1NF_DOMAIN.json
+  authoritative_command: >-
+    python3 .agent-harness/scripts/cas_gate.py run-adjudicate
+    --contract docs/research_reports/verifiers/r4a1nf/CAS_CONTRACT_R4A1NF_DOMAIN.json
+    --run-spec docs/research_reports/verifiers/r4a1nf/CAS_RUN_SPEC_R4A1NF_DOMAIN.json
+    --out docs/research_reports/verifiers/r4a1nf/CAS_ADJUDICATION_R4A1NF_DOMAIN.json
+  source_binding_precedes_parent_adjudication: true
+  lean_prebuild_outside_parent_adjudication: false
+  stored_result_replay_is_execution_authority: false
+  parent_owned_process_observation_required: true
+  artifact_upload_required: true
+
+execution_state:
+  red_contract_commit: 273ae55bc2fc01a7bc7aec1dfc821aa09a8c80b5
+  red_execution: PRESTART_NO_EXECUTION
+  source_binding_commit: 387d1939fb5ed563aa0077413b4003510afe2c23
+  sympy_general_order_commit: 20fa852d1d870d4eae107c120a8e902455c0c00c
+  contract_binding_commit: 98428f1d87a7649666fe88eadeed600f5e851bfb
+  workflow_binding_commit: a9e4ab7285b4c0fa72a6e3e0884e0da38a290f71
+  parent_owned_lean_routing_commit: fa415a9c32892c0e29b7be0fd62ee623fbf2b54f
+  latest_formal_workflow_run: 33846676537
+  latest_initial_job: 100939997601
+  latest_retry_job: 100940139927
+  initial_steps: null
+  retry_steps: null
+  classification: PRESTART_NO_EXECUTION
+  accepted_execution_receipts: 0
+  source_level_red_green_observed: false
+
+claim_boundary:
+  observational_data_used: false
+  corrected_tensorized_planck_rank: null
+  finite_healpix_containment: RANK_UNRESOLVED
+  qo_orbit_theorem_verified_by_this_contract: false
+  native_bass_claim: false
+  merge_authorized: false
+  publication_authority: false
+
+terminal: >-
+  R4A1V0_SOURCE_BINDING_AND_PARENT_ROUTING_SOURCE_COMPLETE__
+  REQUIRED_SYMPY_AND_LEAN_AXES_DISTINCT__SUPPLEMENTAL_AXES_NON_SUBSTITUTING__
+  INITIAL_AND_RETRY_PRESTART_NO_EXECUTION__NO_ACCEPTED_AXIS_RECEIPT__
+  NO_SCIENTIFIC_OR_PUBLICATION_PROMOTION

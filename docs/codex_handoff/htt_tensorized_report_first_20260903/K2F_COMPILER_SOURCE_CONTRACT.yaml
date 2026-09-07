@@ -1,0 +1,83 @@
+schema: htt.report_a.k2f.compiler_source_contract.v1
+date: 2026-09-05
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+purpose: >-
+  Deterministically compile the exact K2C base and overlay authorities into a
+  self-contained forty-claim ledger, citation matrix, section map, organic
+  integration matrix and twenty-key bibliography candidate without performing
+  observational analysis or granting claim/publication authority.
+
+source_head_at_contract_creation: d9dd071018c36a21d9cc0fd52d9ba8a045ff186d
+source_lineage:
+  parent_k2c_head: 855f139cdd6c347e8239ef21a1281e472a77d6df
+  test_first_commit: d9dd071018c36a21d9cc0fd52d9ba8a045ff186d
+  observed_red: false
+  reason: GitHub-hosted runner has not admitted a job and no exact local checkout is available
+
+registered_inputs:
+  T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml: 58291e9cfac6ff85ceffbdb6bdefd50315240831
+  K2_40_CLAIM_CANDIDATE_OVERLAY.yaml: 394378a796a24410a4174a8222e40c5c59e9700a
+  REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml: 3fbaa2f97522cca6d0ad60e0c96655d293ca0d74
+  K2_CITATION_PROVENANCE_CANDIDATE_OVERLAY.yaml: 902b698ef81506179cb0f6e3c5d6616a3f445c55
+  REPORT_SECTION_CLAIM_MAP_V2_CANDIDATE.csv: d42a666ff0eba8fdca8afc9b4e719de6e5e12a8d
+  REPORT_A_ORGANIC_INTEGRATION_MATRIX_V2_CANDIDATE.yaml: 28e823ce7705f0c14a4cae5edf39dc32b69d2617
+  HTT_REPORT_A_REFERENCES.bib: ba37321119725e52f1a2b0ac827050ee895e5466
+  K2_BIBLIOGRAPHY_SUPPLEMENT_CANDIDATE.bib: 930457120f5def21321008f4f77cc2b9c0f5694a
+
+compiler:
+  path: scripts/compile_report_a_k2f_authority.py
+  mode: fail_closed_on_registered_input_blob_drift
+  overwrite_policy: refuse_existing_outputs
+  deterministic_order: candidate_claim_ids_and_candidate_section_order
+
+outputs:
+  - T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V5.yaml
+  - REPORT_A_CITATION_PROVENANCE_MATRIX_V3.yaml
+  - REPORT_SECTION_CLAIM_MAP_V3.csv
+  - REPORT_A_ORGANIC_INTEGRATION_MATRIX_V3.yaml
+  - HTT_REPORT_A_REFERENCES_V2.bib
+  - K2F_COMPILATION_RECEIPT.json
+
+acceptance:
+  claim_count: 40
+  unique_claim_ids: 40
+  revised_base_claims: [RA-MES-002, RA-MES-003, RA-STAT-002, RA-RESP-001]
+  added_claims:
+    - RA-KIN-001
+    - RA-KIN-002
+    - RA-KIN-003
+    - RA-GEO-001
+    - RA-KFUNC-001
+    - RA-MESA-001
+    - RA-MESA-002
+    - RA-MESA-003
+    - RA-ID-001
+    - RA-ID-002
+  citation_rows: 40
+  section_rows: 40
+  integration_rows: 40
+  bibliography_keys: 20
+  exact_bijections:
+    - claims_to_citations
+    - claims_to_section_rows
+    - claims_to_integration_layers
+    - source_registry_to_bibliography_keys
+  firewalls:
+    observational_claim_count: 0
+    corrected_planck_rank_claim_count: 0
+    finite_healpix_no_go_claim_count: 0
+    bianchi_family_claim_count: 0
+    native_bass_claim_count: 0
+
+claim_boundary:
+  generated_bundle_is_canonical: false
+  claim_promotion: false
+  publication_authority: false
+  merge_authority: false
+  observational_data_used: false
+  runtime_execution_required_before_promotion: true
+
+current_status: >-
+  TEST_FIRST_SOURCE_COMMIT_CREATED__IMPLEMENTATION_SOURCE_PENDING_COMMIT__
+  OBSERVED_RED_AND_GREEN_NOT_AVAILABLE__NO_CLAIM_PROMOTION

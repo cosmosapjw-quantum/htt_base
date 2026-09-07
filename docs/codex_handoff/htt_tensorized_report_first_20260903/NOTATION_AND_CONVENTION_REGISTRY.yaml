@@ -1,0 +1,306 @@
+schema: htt.report_a.notation_and_convention_registry.v3
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+status: FROZEN_FOR_R4A1N_AFTER_FINITE_SAMPLE_AND_DOMAIN_SPLIT
+scope: >-
+  HTT-only theory/methods report on the corrected low-ell temperature
+  representation, conditional MES functionals, finite-sample calibration,
+  local-observer response, processed-response identifiability, and numerical
+  uncertainty. Observational execution and native BASS solver physics remain
+  outside this registry.
+
+supersedes:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml
+  prior_git_blob_sha1: 91f319ba1e9d0be53b013456b5cfa78b49660b79
+  prior_schema: htt.report_a.notation_and_convention_registry.v2
+  reason: >-
+    V2 combined jointly exchangeable-row ranks and finite transformation-group
+    randomization under one disjunctive premise and left observer, photon,
+    boost, and numerical-positivity domains partly implicit. V3 makes those
+    contracts explicit without changing the 30-claim scientific surface.
+
+authority_labels:
+  canonical: NOTATION_AND_CONVENTION_REGISTRY_v3
+  legacy_aliases:
+    - NOTATION_AND_CONVENTION_REGISTRY_v2
+  alias_rule: >-
+    The legacy v2 label in the current T9 v3 ledger resolves to this same
+    repository path only until the next self-contained ledger flattening. New
+    authority references must use the canonical v3 label.
+
+authority:
+  report_pr: 449
+  authority_federation:
+    - PR367_TYPED_FRAMEWORK
+    - PR405_CANDIDATE_MATRIX
+    - PR408_MERGED_SURVIVOR_TRIAGE_CONTRACT
+    - PR440_QO_TENSORIZATION
+    - PR442_WU010_RESPONSE
+    - PR444_WU011_PROCESSED_RESPONSE
+    - PR446_PR447_EXTERNAL_VERIFIER_LINEAGES
+  rule: NO_SINGLE_BRANCH_IMPLICITLY_OVERRIDES_THE_FEDERATED_LEDGER
+
+spacetime:
+  metric_signature: "(-,+,+,+)"
+  spatial_orientation: "epsilon_123=+1"
+  observer:
+    symbol: u^a
+    time_orientation: FUTURE_DIRECTED
+    normalization: "u^a u_a=-1"
+  expansion_scalar: "Theta=nabla_a u^a"
+  hubble_scalar: "H=Theta/3"
+  speed_of_light: "c is retained unless a source-specific natural-unit formula is explicitly translated"
+
+sky_and_boost:
+  photon:
+    momentum_symbol: p^a
+    causal_type: FUTURE_DIRECTED_NULL
+    null_condition: "p^a p_a=0"
+    measured_energy_symbol: E_gamma
+    measured_energy_definition: "E_gamma=-c p_a u^a>0"
+    decomposition: "p^a=(E_gamma/c)(u^a+e^a)"
+    decomposition_closure: >-
+      Given u^a u_a=-1, u_a e^a=0, and e_a e^a=1, the decomposition
+      implies p^a p_a=0 and recovers E_gamma=-c p_a u^a.
+  spatial_direction: "e_a e^a=1 and u_a e^a=0"
+  outward_sky_direction: "n^a=-e^a"
+  local_observer_boost:
+    symbol: beta_obs^a
+    definition: "beta_obs^a=v_obs^a/c"
+    observer_spatiality: "u_a beta_obs^a=0"
+    domain: "0<=beta_obs^2<1"
+    active_boost_sign: "+beta_obs"
+    lorentz_factor: "gamma=(1-beta_obs^2)^(-1/2)"
+    boosted_observer: "u_tilde^a=gamma(u^a+beta_obs^a)"
+    boosted_normalization: "u_tilde^a u_tilde_a=-1"
+  thermodynamic_temperature_doppler_weight: 1
+  finite_pullback_domain: STRICTLY_POSITIVE_ABSOLUTE_THERMODYNAMIC_TEMPERATURE
+  finite_pullback_notation: "T_tilde(n_tilde)=T(n(n_tilde))/[gamma(1-beta_obs dot n_tilde)]"
+  first_order_generator: >-
+    delta_beta T=(beta_obs dot n)T-[beta_obs-(beta_obs dot n)n] dot grad_S2 T
+  forbidden_aliases:
+    - bare_beta_when_local_or_global_role_is_material
+    - local_observer_boost_equals_global_matter_tilt
+
+harmonics:
+  complex_basis: "Condon-Shortley spherical harmonics Y_lm"
+  reality_condition: "a_l,-m=(-1)^m conjugate(a_lm)"
+  orthonormal_stored_real_carrier:
+    symbol: c_lA
+    m_zero: "c_l0=a_l0"
+    cosine_slot: "c_lm,c=sqrt(2) Re(a_lm), m>0"
+    sine_slot: "c_lm,s=-sqrt(2) Im(a_lm), m>0"
+    metric: EUCLIDEAN
+    norm_identity: "||c_l||_2^2=sum_m |a_lm|^2=(2l+1) C_l"
+    authority: PR440_AND_T1
+  raw_complex_component_coordinate:
+    symbol: r_lA
+    m_zero: "r_l0=a_l0"
+    real_slot: "r_lm,R=Re(a_lm), m>0"
+    imaginary_slot: "r_lm,I=Im(a_lm), m>0"
+    metric: "G_l=diag(1,2,2,...,2)"
+    norm_identity: "r_l^T G_l r_l=sum_m |a_lm|^2"
+    code_alias: "PR444 calls this SCIENTIFIC_STORED_REAL; Report A does not use that ambiguous name"
+    authority: PR444_WU011
+  coordinate_adapter:
+    formula: "c_l=D_l r_l, D_l=diag(1,sqrt(2),-sqrt(2),...,sqrt(2),-sqrt(2)) in ordered Re/Im pairs"
+    metric_identity: "D_l^T D_l=G_l"
+    inverse: "r_l=D_l^(-1)c_l"
+    rule: >-
+      T1 tensorization uses c_lA. WU011 source maps may be stored as r_lA but
+      every invariant singular/rank comparison must either use G_l explicitly
+      or transform to c_lA. The coordinates are equivalent but not byte-identical.
+  joint_fit_real_basis:
+    relation: "the PR444 joint sqrt(2) real basis is adapted to c_lA; the public raw source coordinate r_lA is converted explicitly"
+  phase_rule: >-
+    Any external harmonic library must be adapted explicitly to this
+    Condon-Shortley, reality, coefficient-order, and sine-slot sign convention.
+
+low_ell_temperature_tensors:
+  quadrupole_symbol: Q_ab
+  quadrupole_definition: "T_2(n)=Q_ab n^a n^b"
+  quadrupole_space: "STF2(R^3), dimension 5"
+  octupole_symbol: O_abc
+  octupole_definition: "T_3(n)=O_abc n^a n^b n^c"
+  octupole_space: "STF3(R^3), dimension 7"
+  tensor_metric: FROBENIUS
+  units: SAME_TEMPERATURE_UNIT_AS_A_LM
+  norm_identities:
+    quadrupole: "Q:Q=15/(8 pi)||c_2||^2=75/(8 pi)C_2"
+    octupole: "O:O=35/(8 pi)||c_3||^2=245/(8 pi)C_3"
+  generic_representation:
+    space: STF2_PLUS_STF3
+    ambient_dimension: 12
+    generic_so3_orbit_dimension: 3
+    generic_so3_quotient_dimension: 9
+  forbidden_aliases:
+    - bare_Q_for_an_acceptance_gauge_or_test_statistic
+    - O_abc_confused_with_big_O_asymptotic_notation
+
+physical_state:
+  shear_symbol: sigma_ab
+  shear_type: SPATIAL_STF2_POLAR
+  vorticity_vector_symbol: omega_a
+  vorticity_vector_type: SPATIAL_AXIAL_VECTOR
+  acceleration_symbol: A_a
+  acceleration_type: SPATIAL_POLAR_VECTOR
+  frame_velocities:
+    radiation_to_observer: beta_RO
+    radiation_to_matter: beta_RM
+    matter_to_observer: beta_MO
+    first_order_relation: "beta_RO=beta_RM+beta_MO+mathcal O(beta^2)"
+  rule: >-
+    A temperature-morphology coordinate, a local observer boost, a global
+    matter-frame tilt, and a congruence kinematic tensor are distinct objects.
+
+rotation_and_parity:
+  groups:
+    proper_rotations: SO3
+    full_orthogonal_group: O3
+  polar_vector_action: "v -> R v"
+  axial_vector_action: "w -> det(R) R w"
+  stf2_action: "Q -> R Q R^T"
+  stf3_action: "O_abc -> R_a^d R_b^e R_c^f O_def"
+  polar_krylov_determinant: O3_PSEUDOSCALAR
+  axial_krylov_determinant: O3_SCALAR
+  chirality_rule: >-
+    Even O(3) invariants cannot replace a proper-rotation chirality coordinate
+    when mirror-related states are distinct SO(3) orbits.
+  representation_firewall:
+    temperature_qo: "STF2+STF3, generic quotient dimension 9"
+    joint_vector_tensor_vt_t8: "STF2+four vectors, generic quotient dimension 14"
+    forbidden_substitution: VT_T8_LOCAL_JACOBIAN_IS_NOT_A_QO_ORBIT_PROOF
+
+mes_functionals:
+  epsilon_1: "declared residual PSTF dipole norm divided by T0"
+  epsilon_2: "sqrt(75 C_2/(8 pi))/T0"
+  epsilon_3: "sqrt(245 C_3/(8 pi))/T0"
+  B_sigma: "(5/3)epsilon_1+3epsilon_2+(3/7)epsilon_3"
+  B_omega: "(10/3)epsilon_1+(2/15)epsilon_2"
+  U_sigma: "(3/2)B_sigma^2"
+  U_omega: "(3/2)B_omega^2"
+  status: ONE_WAY_PREMISE_CONDITIONAL_SCALAR_FUNCTIONALS
+  forbidden_interpretations:
+    - physical_shear_measurement
+    - physical_vorticity_measurement
+    - tensor_morphology_coordinate
+    - converse_FLRW_certificate
+    - saturation_or_occupancy_without_a_separate_model
+
+statistical_notation:
+  acceptance_gauge: "p_A(x) or rho_A(x); never bare Q"
+  survival_function: "Pi(t)=P[X>t] under a declared probability law"
+  finite_pool_order_rank: rank_pool
+  p_value_rule: CONSERVATIVE_UPPER_TAIL_INCLUSIVE_UNLESS_EXPLICITLY_REPLACED
+  exchangeable_row_rank:
+    reference_object: OBSERVATION_PLUS_REFERENCE_ROW_POOL
+    assumptions:
+      - joint_exchangeability
+      - complete_row_permutation_equivariance
+      - fixed_tie_and_tail_rule
+  randomization_group_orbit:
+    reference_object: ACTUAL_DECLARED_TRANSFORMATION_GROUP_ORBIT
+    assumptions:
+      - null_law_invariant_under_declared_group
+      - reference_statistics_are_actual_group_orbit
+      - identity_included
+      - exact_or_valid_conditional_monte_carlo_rule
+  exactness_firewall:
+    forbidden_legacy_premise: joint_exchangeability_or_declared_group_randomization_hypothesis
+    rule: >-
+      Proper-subgroup invariance does not make arbitrary rows outside the
+      subgroup orbit jointly exchangeable.
+  synthetic_label: PREREGISTERED_SYNTHETIC_VALIDATION
+  forbidden_interpretations:
+    - optimizer_point_as_draw
+    - profile_objective_as_probability_law
+    - noisy_observation_vs_noise_free_null_as_exchangeable
+    - shared_realizations_as_independent_replications
+
+rank_namespace:
+  algebraic_rank: "rank_alg(M), exact field-dependent matrix rank"
+  numerical_rank: "rank_num(M;tau), explicitly tolerance-dependent"
+  robust_rank: "rank_rob(M;Gamma_E), certified against a declared error set"
+  quotient_rank: "rank_quot(J|K)=rank([K J])-rank(K)"
+  finite_pool_order_rank: "rank_pool of one row among a declared finite pool"
+  rule: BARE_RANK_IS_FORBIDDEN_WHEN_TWO_OR_MORE_NOTIONS_ARE_IN_SCOPE
+
+null_namespace:
+  structural_null: exact zero response imposed by symmetry or representation
+  covariance_null: direction removed because the covariance support vanishes
+  nuisance_image: modeled response subspace projected or quotiented out
+  statistical_null: probability law or randomization orbit used for calibration
+  typed_missingness: unavailable or inadmissible coordinate; never imputed zero
+  rule: THESE_OBJECTS_MUST_NOT_BE_COLLAPSED_TO_THE_WORD_NULL_WITHOUT_A_QUALIFIER
+
+processed_response:
+  low_source_response: J_b
+  high_source_response: "K_b^hi(L) for source multipoles 7<=ell<=L"
+  quotient_identity: "rank_quot(J_b|K_b^hi)=rank([K_b^hi J_b])-rank(K_b^hi)"
+  nested_images: "Im K_b^hi(L) subseteq Im K_b^hi(L+1)"
+  continuum_operator: K_cont
+  finite_healpix_operator: K_pix
+  rule: CONTINUUM_SURJECTIVITY_DOES_NOT_IMPLY_FINITE_HEALPIX_SURJECTIVITY
+
+numerical_uncertainty:
+  family_elements: E_fi
+  deterministic_family_radius: r_f
+  family_count: N_fam
+  regularization_scale: lambda_reg
+  domain:
+    family_registry_nonempty: true
+    every_registered_family_nonempty: true
+    radius_condition: "r_f>0 for every registered family"
+    regularization_condition: "lambda_reg>0"
+    freeze_rule: >-
+      Family partition, basis, radii, calibration rows, holdout rows, and
+      lambda_reg are fixed before inspecting any rank or holdout result.
+  loewner_envelope: "Gamma_E=N_fam sum_f r_f^2 sum_i E_fi E_fi^T+lambda_reg^2 I"
+  positive_definiteness: "lambda_reg>0 implies Gamma_E is positive definite"
+  whitened_operator: "K_tilde=Gamma_E^(-1/2) K"
+  whitened_singular_values: g_j
+  full_row_certificate: "min_j g_j>1, conditional on Delta Delta^T <= Gamma_E"
+  partial_subspace_rule: >-
+    A thresholded partial image requires a separate perturbation-to-gap or
+    Wedin-type singular-subspace bound; numerical rank alone is insufficient.
+
+evidence_namespace:
+  ESTABLISHED: standard theorem with matched assumptions
+  LITERATURE_SUPPORTED: directly supported by an identified source at the stated scope
+  DERIVED: reproduced in the current research audit
+  NUMERICALLY_CHECKED: computed under a declared numerical contract
+  SOURCE_IMPLEMENTED: code or proof script exists but accepted execution is absent
+  IMPLEMENTATION_VERIFIED: exact implementation plus accepted execution receipt
+  SUMMARY_ONLY: prose or user-supplied theorem summary without independent proof replay
+  UNRESOLVED: evidence does not decide the statement
+  BLOCKED: a named evidence requirement is unavailable
+
+execution_namespace:
+  EXECUTED_SUCCESS: accepted runtime completed with the stated checks
+  EXECUTED_FAILURE: runtime completed and failed
+  MIXED_EXECUTED_EVIDENCE: scoped successes coexist with preserved failures
+  PRESTART_NO_EXECUTION: workflow ended before runner assignment or steps
+  SOURCE_ONLY: implementation source exists without accepted runtime evidence
+  ARTIFACT_ONLY: committed artifact exists without the claimed independent execution
+  LOCAL_NON_BYTE_EXACT: independent local behavior was checked without exact checkout identity
+  SUMMARY_ONLY: result is carried only as a summary
+
+terminal_namespace:
+  theorem_truth: mathematical statement status
+  implementation_status: source and runtime status
+  scientific_terminal: scoped scientific adjudication
+  publication_status: manuscript or release authority
+  rule: >-
+    PASS, promoted, verified, admitted, released, and merged are not synonyms;
+    every occurrence must carry its namespace.
+
+forbidden_current_result_language:
+  - current_scalar_only_MES_rank
+  - current_WU006_WU008_tensor_or_foreground_result
+  - corrected_Planck_tensorized_rank
+  - empirical_beta_or_boost_subtraction
+  - global_tilt_identification
+  - physical_shear_or_vorticity_from_morphology_alone
+  - finite_HEALPix_no_go_before_error_class_closure
+  - Bianchi_family_attribution
+  - native_BASS_solver_result

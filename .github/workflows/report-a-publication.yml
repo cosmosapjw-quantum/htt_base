@@ -1,0 +1,77 @@
+name: Report A R4B0 publication assembly
+
+on:
+  pull_request:
+    paths:
+      - docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+      - docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+      - docs/research_reports/report_a/**
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+      - scripts/validate_report_a_generated_tex.py
+      - tests/contracts/test_report_a_r4b0_assembly.py
+      - tests/contracts/test_report_a_r4b0_generated_tex_validator.py
+      - .github/workflows/report-a-publication.yml
+  push:
+    paths:
+      - docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+      - docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+      - docs/research_reports/report_a/**
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+      - scripts/validate_report_a_generated_tex.py
+      - tests/contracts/test_report_a_r4b0_assembly.py
+      - tests/contracts/test_report_a_r4b0_generated_tex_validator.py
+      - .github/workflows/report-a-publication.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-r4b0:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Install pinned static-contract dependencies
+        run: python -m pip install --disable-pip-version-check pytest==8.4.2 PyYAML==6.0.3
+      - name: Validate R4B0 source contracts
+        run: |
+          python -m pytest -q \
+            tests/contracts/test_report_a_r4b0_assembly.py \
+            tests/contracts/test_report_a_r4b0_generated_tex_validator.py
+      - name: Download and verify pinned Pandoc 3.11
+        env:
+          PANDOC_SHA256: 37edb3bbcf722f921a009941bf5874e2e0c09263226c9b4a2d980788cb062ab6
+        run: |
+          curl -fsSL \
+            https://github.com/jgm/pandoc/releases/download/3.11/pandoc-3.11-linux-amd64.tar.gz \
+            -o "$RUNNER_TEMP/pandoc-3.11-linux-amd64.tar.gz"
+          echo "$PANDOC_SHA256  $RUNNER_TEMP/pandoc-3.11-linux-amd64.tar.gz" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/pandoc"
+          tar -xzf "$RUNNER_TEMP/pandoc-3.11-linux-amd64.tar.gz" \
+            -C "$RUNNER_TEMP/pandoc" --strip-components=1
+          echo "$RUNNER_TEMP/pandoc/bin" >> "$GITHUB_PATH"
+      - name: Generate non-authoritative LaTeX artifact
+        working-directory: docs/research_reports/report_a
+        run: |
+          mkdir -p build
+          pandoc --defaults=pandoc.yaml --fail-if-warnings
+      - name: Validate generated LaTeX against canonical claims and firewalls
+        run: |
+          python scripts/validate_report_a_generated_tex.py \
+            --tex docs/research_reports/report_a/build/HTT_REPORT_A_THEORY_METHODS_R4B0.tex \
+            --ledger docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml \
+            --receipt docs/research_reports/report_a/build/R4B0_GENERATED_TEX_VALIDATION.json
+      - name: Upload generated TeX and validation receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: report-a-r4b0-generated-tex
+          path: |
+            docs/research_reports/report_a/build/HTT_REPORT_A_THEORY_METHODS_R4B0.tex
+            docs/research_reports/report_a/build/R4B0_GENERATED_TEX_VALIDATION.json
+          if-no-files-found: warn
+          retention-days: 30

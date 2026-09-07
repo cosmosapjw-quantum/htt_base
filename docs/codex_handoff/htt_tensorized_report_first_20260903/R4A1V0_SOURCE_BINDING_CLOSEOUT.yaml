@@ -1,0 +1,120 @@
+schema: htt.report_a.r4a1v0.source_binding_closeout.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+branch: docs/htt-tensorized-mes-response-synthesis-20260903
+
+scope: >-
+  Close the source-identity, general-positivity, and parent-owned execution
+  routing defects in the release-critical R2 supporting-domain verifier.
+  This closeout does not verify the Q/O orbit theorem, finite-HEALPix rank,
+  observational inference, or BASS solver physics.
+
+commit_chain:
+  red_contract: 273ae55bc2fc01a7bc7aec1dfc821aa09a8c80b5
+  source_binding_verifier: 387d1939fb5ed563aa0077413b4003510afe2c23
+  sympy_general_ordered_quadratic_form: 20fa852d1d870d4eae107c120a8e902455c0c00c
+  exact_source_contract_v2: 98428f1d87a7649666fe88eadeed600f5e851bfb
+  source_binding_workflow: a9e4ab7285b4c0fa72a6e3e0884e0da38a290f71
+  parent_owned_lean_red_contract: cc69a89949a989afa035b5a1c57bd32e34b728a1
+  parent_owned_lean_workflow: fa415a9c32892c0e29b7be0fd62ee623fbf2b54f
+  plan_v4: fdfd25941c3f775e6a500c79178af7df890e688e
+
+active_source_blobs:
+  source_binding_verifier: 5b20612efd6d1a9b080b3386c224939aeb6f1ce4
+  sympy_axis: bfb92f12687b6447f0b8eca234601f9e5c0402a7
+  lean_axis_wrapper: fe5e451e4cc5cc1f094b6f88194a473cb3ee5181
+  lean_module: da950d0b29f7ab242ff1322e6ae7c794785cc95b
+  cas_contract_v2: 225f5ed3ebe161b16371513b35b47a8a52f92b80
+  run_spec: cbb341cd224be947b7951cd5446a7ba511df8255
+  parent_adjudicator: a0d5ed80f8714a061b464f0cd179b3dc12fb6942
+  adjudicator_support: 718f8fd9150092326755ae9e5db1793ff32c065f
+  formal_workflow: 065a4685559d3f624d65254f3f961e9174c2a095
+  source_contract_tests: 1c8afa7d498c59ff6de70fe1a64b06126b92ffbf
+  plan_v4: 25f4e011cd7e35fe32797d5664ec39d28511a64b
+
+closed_source_defects:
+  - id: R4A1V0-BIND-01
+    previous_state: >-
+      cas_gate run-adjudicate did not compare the registered semantic inputs,
+      run spec, adjudicator, support module, or axis sources with working-tree
+      bytes before launching required axes.
+    repair: >-
+      A standard-library preflight now verifies repo-relative non-symlinked
+      files under registered git-blob-SHA1 or SHA-256 digests and emits a
+      separate source-binding receipt before parent adjudication.
+    state: SOURCE_IMPLEMENTED
+  - id: R4A1V0-SYMPY-01
+    previous_state: >-
+      The SymPy axis used a generic 2-by-2 Gram fixture but did not explicitly
+      encode the nonzero-vector condition required by the general PosDef
+      implication.
+    repair: >-
+      The axis retains the exact Gram-type SOS identity and separately checks
+      the dimension-independent ordered implication q_psd>=0, ||x||^2>0,
+      lambda_reg>0 => q_psd+lambda_reg^2||x||^2>0.
+    state: SOURCE_IMPLEMENTED
+  - id: R4A1V0-ROUTE-01
+    previous_state: >-
+      lean-action built the package before cas_gate, so an elaboration failure
+      could terminate the workflow without a typed parent adjudication.
+    repair: >-
+      lean-action now installs/caches only; the Lean wrapper and module
+      elaboration are launched by cas_gate run-adjudicate.
+    state: SOURCE_IMPLEMENTED
+
+execution_receipts:
+  red_contract_head:
+    head: 273ae55bc2fc01a7bc7aec1dfc821aa09a8c80b5
+    formal_run: 33845963169
+    formal_job: 100937799248
+    steps: null
+    classification: PRESTART_NO_EXECUTION
+  final_source_head:
+    head: fa415a9c32892c0e29b7be0fd62ee623fbf2b54f
+    formal_run: 33846676537
+    initial_job: 100939997601
+    retry_job: 100940139927
+    initial_steps: null
+    retry_steps: null
+    classification: PRESTART_NO_EXECUTION
+
+verification_state:
+  source_readback: PASS
+  git_blob_binding_table: PASS_BY_REMOTE_READBACK
+  local_red_green_execution: NOT_OBSERVED_CLIENTERROR
+  github_exact_head_execution: PRESTART_NO_EXECUTION
+  accepted_required_axis_receipts: 0
+  fresh_wolfram: BLOCKED_BY_UPSTREAM_502
+  lean_kernel_check: NOT_EXECUTED
+  sympy_axis_execution: NOT_EXECUTED
+
+literature_boundary:
+  status: ADJACENT_METHODS_ONLY
+  note: >-
+    SciSpace returned literature on verifiable computation, formal-proof
+    engineering, isolated execution, and computational input integrity. These
+    support exact source/environment provenance as a method but do not replace
+    the repository-specific source-binding receipt or execute either axis.
+
+remaining_hardening:
+  - pin third-party GitHub Actions to immutable commit SHAs before publication freeze
+  - execute the source-binding preflight and both required axes on an accepted runtime
+  - preserve the binding and adjudication artifacts together
+  - flatten the accepted execution receipts only after independent readback
+
+claim_boundary:
+  observational_data_used: false
+  corrected_tensorized_planck_rank: null
+  finite_healpix_containment: RANK_UNRESOLVED
+  qo_orbit_theorem_verified_by_this_node: false
+  native_bass_claim: false
+  scientific_claim_promotion: false
+  merge_authorized: false
+  publication_authority: false
+
+terminal: >-
+  R4A1V0_SOURCE_BINDING_AND_PARENT_ROUTING_SOURCE_COMPLETE__
+  GENERAL_SYMPY_POSITIVITY_DOMAIN_SOURCE_COMPLETE__
+  INITIAL_AND_RETRY_PRESTART_NO_EXECUTION__
+  NO_ACCEPTED_AXIS_RECEIPT__NO_SCIENTIFIC_OR_PUBLICATION_PROMOTION

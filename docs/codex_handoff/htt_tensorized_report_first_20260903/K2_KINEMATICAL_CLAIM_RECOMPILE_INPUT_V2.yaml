@@ -1,0 +1,295 @@
+schema: htt.report_a.k2.kinematical_claim_recompile_input.v2
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+status: K2_INPUT_RECOMPILED_AFTER_K1R_FINAL_COUNT_NOT_FROZEN
+supersedes:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/K2_KINEMATICAL_CLAIM_RECOMPILE_INPUT.yaml
+  git_blob_sha1: 9102eb6d872a6b9e9b3dd3d2fb29c8e3f3125f57
+  reason: >-
+    V2 incorporates the K1R geometry, dimension/parity, acceleration,
+    shared-data identification and gauge-versus-saturation repairs.
+
+depends_on:
+  - K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK_V2
+  - K1R_TYPED_KINEMATICAL_MES_THEOREM_PACK
+  - K1R_TYPED_KINEMATICAL_MES_EVIDENCE_LEDGER
+
+current_claim_surface:
+  version: T9_V4
+  claim_count: 30
+  existing_ids_stable: true
+
+candidate_surface:
+  proposed_new_atomic_claims: 10
+  proposed_existing_claim_revisions: 4
+  provisional_candidate_total: 40
+  final_count_status: PROVISIONAL_UNTIL_K2_UNIQUENESS_IMPLICATION_AND_CITATION_AUDIT
+
+proposed_new_claims:
+  - id: RA-KIN-001
+    source_theorems:
+      - K1R-T1-STATE-PARTITION
+    statement: >-
+      The physical anisotropy state is a typed product of congruence
+      kinematics, frame-relative velocities and geometry, distinct from the
+      observable Q/O tensor state.
+    assumptions:
+      - declared metadata and perturbative branch
+    forbidden_extensions:
+      - observable_tensor_equals_physical_tensor
+      - untyped_legacy_projection_as_state
+
+  - id: RA-KIN-002
+    source_theorems:
+      - K1R-T1-STATE-PARTITION
+      - K1R-T11-BETA-BOUNDARY
+    statement: >-
+      beta_RO, beta_RM and beta_MO have different frame semantics; their
+      registered first-order closure is diagnostic and does not identify
+      global matter-frame tilt.
+    assumptions:
+      - first-order velocity closure convention
+    forbidden_extensions:
+      - beta_RO_equals_beta_MO_without_beta_RM_premise
+      - beta_RO_equals_global_tilt
+
+  - id: RA-KIN-003
+    source_theorems:
+      - K1R-T1-STATE-PARTITION
+      - K1R-T3-ACCELERATION-PREMISE-ANCHOR-SPLIT
+    statement: >-
+      Missing physical components and unavailable numerical anchors remain
+      typed and are never replaced by zero, an infinite bound or a guessed
+      radius.
+    assumptions:
+      - exact typed-state and anchor-status contracts
+    forbidden_extensions:
+      - zero_imputation
+      - guessed_anchor
+
+  - id: RA-GEO-001
+    source_theorems:
+      - K1R-T2-GEOMETRY-DIMENSION-PARITY
+    statement: >-
+      DeltaOmega_k is a signed scalar curvature-budget coordinate distinct
+      from the optional anisotropic spatial-curvature, Weyl and stress STF
+      tensors.
+    assumptions:
+      - registered GeometryState convention
+    forbidden_extensions:
+      - scalar_budget_as_anisotropic_curvature_tensor
+      - dimension_count_as_global_orbit_theorem
+
+  - id: RA-KFUNC-001
+    source_theorems:
+      - K1R-T12-PHYSICAL-MORPHOLOGY-AND-SCALAR-INHERITANCE
+    statement: >-
+      Physical tensor functionals retain codomain, O(3) type, parity, frame,
+      congruence, source-state identity and optional anchor identity
+      independently of observational identification.
+    assumptions:
+      - registered TensorFunctionalSpec and Result contract
+    forbidden_extensions:
+      - functional_exists_implies_observational_identification
+
+  - id: RA-MESA-001
+    source_theorems:
+      - K1R-T3-ANCHOR-SEPARATION
+      - K1R-T4-ACCELERATION-PREMISE-ANCHOR-SPLIT
+    statement: >-
+      The active geodesic MES authority provides numerical shear and
+      vorticity anchors, while acceleration is a structural geodesic premise
+      with no numerical MES denominator and optional geometry sectors remain
+      unanchored.
+    assumptions:
+      - exact registered geodesic MES branch
+    forbidden_extensions:
+      - zero_radius_acceleration_anchor
+      - nongeodesic_acceleration_ceiling
+      - invented_geometry_anchor
+
+  - id: RA-MESA-002
+    source_theorems:
+      - K1R-T7-QUADRATIC-STRESS
+      - K1R-T8-CHANNEL-MATCH
+    statement: >-
+      A numerical sector stress requires exact channel matching and a fixed
+      ensemble-calibrated positive denominator; a realisation-conditional
+      anchor remains ratio-unidentified and requires joint random-anchor
+      inference.
+    assumptions:
+      - exact channel identity
+      - fixed ensemble-calibrated denominator for direct division
+    forbidden_extensions:
+      - cross_channel_ratio
+      - random_denominator_treated_as_fixed
+
+  - id: RA-MESA-003
+    source_theorems:
+      - K1R-T6-PRODUCT-GAUGE
+      - K1R-T7-QUADRATIC-STRESS
+    statement: >-
+      For a factorised product anchor body the combined Minkowski gauge is the
+      maximum sector gauge and its square equals the maximum quadratic sector
+      saturation; this formula does not extend automatically to the coupled
+      response-constrained feasible set.
+    assumptions:
+      - factorised product anchor body
+      - available absorbing sector blocks
+      - positive registered radii
+    forbidden_extensions:
+      - signed_cross_sector_cancellation
+      - product_gauge_as_coupled_feasible_set_gauge
+      - gauge_margin_equals_quadratic_exceedance
+
+  - id: RA-ID-001
+    source_theorems:
+      - K1R-T9-JOINT-IDENTIFIED-SET
+    statement: >-
+      When MES ceilings and response compatibility use the same data, the
+      physical identified set jointly conditions on both restrictions and the
+      two restrictions are not independent evidence without an additional
+      joint-law argument.
+    assumptions:
+      - predeclared analysis and nuisance policy eta
+      - declared response and compatibility region
+      - data-derived anchor construction included in the analysis map
+    forbidden_extensions:
+      - independent_evidence_multiplication
+      - anchor_construction_omitted_from_finite_null_map
+
+  - id: RA-ID-002
+    source_theorems:
+      - K1R-T10-SINGLETON-FIBRE
+      - K1R-T11-BETA-BOUNDARY
+    statement: >-
+      Under an exact linear response, point identification is equivalent to a
+      singleton admissible response-kernel fibre; absent or inadequate
+      response providers yield partial identification, non-identification or
+      abstention rather than inferred tensors.
+    assumptions:
+      - exact linear response for the stated singleton criterion
+      - predeclared feasible domain
+    forbidden_extensions:
+      - full_column_rank_as_necessary
+      - solver_failure_as_nonidentification
+      - missing_response_as_point_estimate
+
+proposed_existing_claim_revisions:
+  - id: RA-MES-002
+    source_theorems:
+      - K1R-T3-ANCHOR-SEPARATION
+      - K1R-T5-RADIAL-ONLY
+      - K1R-T12-PHYSICAL-MORPHOLOGY-AND-SCALAR-INHERITANCE
+    revision: >-
+      Retain the one-way MES ceiling but state explicitly that it is a radial
+      anchor on a named physical sector, not a tensor observation, state
+      estimate, distance or occupancy measure.
+
+  - id: RA-MES-003
+    source_theorems:
+      - K1R-T5-RADIAL-ONLY
+      - K1R-T12-PHYSICAL-MORPHOLOGY-AND-SCALAR-INHERITANCE
+    revision: >-
+      Preserve the scalar-to-vector/STF equivariance no-go and connect it to
+      orbit-constant MES anchor bodies without denying separately typed
+      physical morphology.
+
+  - id: RA-RESP-001
+    source_theorems:
+      - K1R-T11-BETA-BOUNDARY
+    revision: >-
+      State that WU-010 is the presently closed beta_RO local-observer
+      response lane and does not close beta_RM, beta_MO, global tilt or
+      congruence-kinematical responses.
+
+  - id: RA-STAT-002
+    source_theorems:
+      - K1R-T9-JOINT-IDENTIFIED-SET
+    revision: >-
+      Require the complete row-equivariant finite-null analysis map to include
+      data-derived MES ceiling construction, anchor conditioning, chart
+      handling, nuisance fitting, selection, missingness, ties and final
+      scoring.
+
+source_theorem_coverage:
+  K1R-T1-STATE-PARTITION:
+    - RA-KIN-001
+    - RA-KIN-002
+    - RA-KIN-003
+  K1R-T2-GEOMETRY-DIMENSION-PARITY:
+    - RA-GEO-001
+  K1R-T3-ANCHOR-SEPARATION:
+    - RA-MESA-001
+    - RA-MES-002
+  K1R-T4-ACCELERATION-PREMISE-ANCHOR-SPLIT:
+    - RA-KIN-003
+    - RA-MESA-001
+  K1R-T5-RADIAL-ONLY:
+    - RA-MES-002
+    - RA-MES-003
+  K1R-T6-PRODUCT-GAUGE:
+    - RA-MESA-003
+  K1R-T7-QUADRATIC-STRESS:
+    - RA-MESA-002
+    - RA-MESA-003
+  K1R-T8-CHANNEL-MATCH:
+    - RA-MESA-002
+  K1R-T9-JOINT-IDENTIFIED-SET:
+    - RA-ID-001
+    - RA-STAT-002
+  K1R-T10-SINGLETON-FIBRE:
+    - RA-ID-002
+  K1R-T11-BETA-BOUNDARY:
+    - RA-KIN-002
+    - RA-ID-002
+    - RA-RESP-001
+  K1R-T12-PHYSICAL-MORPHOLOGY-AND-SCALAR-INHERITANCE:
+    - RA-KFUNC-001
+    - RA-MES-002
+    - RA-MES-003
+
+proposed_manuscript_order:
+  - scope, authority and supersession
+  - observable low-ell Q/O tensor state
+  - typed congruence kinematics, frame velocities and geometry
+  - geometry dimension/parity and orbit-scope registry
+  - sector-wise MES anchors and radial-only theorem
+  - product anchor geometry, quadratic stress and channel matching
+  - physical tensor functionals and jointly conditioned identified sets
+  - finite-null validity of the complete data-dependent analysis map
+  - local observer beta_RO response
+  - processed response and nuisance quotient
+  - continuum and finite numerical boundary
+  - conditional robust-rank certification
+  - integrated interpretation and deferred observations
+
+required_K2_tests:
+  - exactly 40 unique candidate claim IDs after applying ten additions
+  - all twelve K1R result rows map to at least one addition or revision
+  - current 30 claim IDs remain stable unless explicitly revised
+  - no duplicate state, anchor, radial, gauge or identification statement
+  - every conditional claim has assumptions and forbidden extensions
+  - DeltaOmega_k remains a scalar and is not called anisotropic curvature
+  - acceleration structural premise and numerical no-anchor remain separate
+  - product-body gauge and coupled feasible-set boundary remain separate
+  - quadratic saturation and gauge margin remain separate diagnostics
+  - shared-data anchor and response constraints are not independent evidence
+  - every final claim has one citation/provenance matrix row
+  - organic integration matrix maps every final claim exactly once
+  - revised manuscript contains every final claim ID
+  - scalar-only observational rank remains retired
+  - corrected Planck result remains absent
+  - finite-HEALPix containment remains RANK_UNRESOLVED
+  - native BASS content remains excluded
+
+claim_count_policy:
+  canonical_before_K2: 30
+  provisional_after_additions: 40
+  final_count_frozen: false
+  freeze_node: K2_CLAIM_UNIQUENESS_IMPLICATION_CITATION_AUDIT
+
+terminal: >-
+  K2_INPUT_V2_COMPILED_FOR_40_CLAIM_CANDIDATE_SURFACE__
+  TEN_NEW_ATOMIC_CLAIMS__FOUR_EXISTING_CLAIM_REVISIONS__
+  ALL_TWELVE_K1R_RESULTS_MAPPED__FINAL_COUNT_NOT_YET_FROZEN

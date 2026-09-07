@@ -1,0 +1,48 @@
+{
+  "schema": "htt.report_a.r2d_mes_primary_source_audit.v1",
+  "date": "2026-09-03",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "report_pr": 449,
+  "primary_sources": [
+    {
+      "id": "MES_1995_LIMITS",
+      "doi": "10.1103/PhysRevD.51.1525",
+      "arxiv": "astro-ph/9501016",
+      "equations": [59, 60],
+      "premises": [
+        "geodesic fundamental congruence",
+        "all-observer almost isotropy",
+        "C1 spatial-gradient estimate",
+        "C2 characteristic-time estimate"
+      ]
+    },
+    {
+      "id": "MES_1995_IMPROVED",
+      "doi": "10.1103/PhysRevD.51.5942",
+      "role": "improved observational-premise programme"
+    },
+    {
+      "id": "SAG_1999_COBE",
+      "doi": "10.1086/303633",
+      "arxiv": "astro-ph/9904346",
+      "equations": [3, 4, 12, 15, 17, 18, 19]
+    }
+  ],
+  "coefficients": {
+    "B_sigma": ["5/3", "3", "3/7"],
+    "B_omega": ["10/3", "2/15", "0"]
+  },
+  "exact_normalization": {
+    "factorial_coefficient_l2": "15/2",
+    "factorial_coefficient_l3": "35/2",
+    "epsilon2_squared": "75*C2/(8*pi*T0^2)",
+    "epsilon3_squared": "245*C3/(8*pi*T0^2)",
+    "epsilon1_zero_Uomega": "C2/(4*pi*T0^2)",
+    "fresh_sympy_residuals": ["0", "0", "0"]
+  },
+  "dipole_semantics": "EPSILON1_ZERO_IS_AN_ATTRIBUTION_SCENARIO_NOT_AN_INTRINSIC_DIPOLE_MEASUREMENT",
+  "fresh_wolfram": "BLOCKED_BY_UPSTREAM_502",
+  "observational_data_used": false,
+  "physical_parameter_estimate": false,
+  "terminal": "PASS_MES_PRIMARY_SOURCE_EQUATION_AND_PREMISE_BINDING"
+}

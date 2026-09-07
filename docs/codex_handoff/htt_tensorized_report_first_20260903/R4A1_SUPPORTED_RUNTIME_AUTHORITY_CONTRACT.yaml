@@ -1,0 +1,78 @@
+schema: htt.report_a.r4a1.supported_runtime_authority_contract.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+source_head_at_contract_creation: 1801d3825d535ba1c2ba495119c35df151ffc397
+observational_data_used: false
+corrected_planck_tensor_rank: null
+finite_healpix_containment: RANK_UNRESOLVED
+merge_authorized: false
+
+runtime_contract:
+  implementation: CPython
+  major: 3
+  minor: 12
+  yaml_library: PyYAML
+  required_execution: exact_checked_out_git_blobs
+
+source_blobs:
+  claim_ledger:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V3.yaml
+    git_blob_sha1: 718f536420be3527b06bf46c2a2575309f932f79
+  citation_matrix:
+    path: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+    git_blob_sha1: fe94f10994fffaa52b0c96da7ee86480062a72cc
+  flattened_manuscript:
+    path: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+    git_blob_sha1: df490a70fa3ceb3becc786916d4494f1cffca388
+  formal_bibliography:
+    path: docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+    git_blob_sha1: ba37321119725e52f1a2b0ac827050ee895e5466
+  provenance_appendix:
+    path: docs/research_reports/appendices/HTT_REPORT_A_AUTHORITY_AND_EXECUTION_PROVENANCE.md
+    git_blob_sha1: b2b7d0cb78f995badb118ec92659b41db9d13783
+
+canonical_claim_id_contract:
+  algorithm: sha256_utf8_sorted_ids_newline_terminated
+  pseudocode: sha256(("\\n".join(sorted(claim_ids)) + "\\n").encode("utf-8"))
+  claim_count: 30
+  expected_sha256: e103c581ce353b5102af81834831ac292105f18699671e8eb75b171acd97f01e
+  current_authority_grade: SOURCE_BOUND_PENDING_SUPPORTED_RUNTIME_REPLAY
+  ledger_field_before_replay: null
+  ledger_status_before_replay: PENDING_SUPPORTED_RUNTIME_REPLAY
+
+cross_surface_contract:
+  - claim ledger contains exactly 30 unique claim identifiers
+  - citation matrix contains exactly one row for every claim identifier
+  - formal bibliography keys equal the citation source registry keys
+  - manuscript citation keys equal the formal bibliography keys
+  - every canonical claim identifier appears in the flattened manuscript
+  - formal bibliography is the sole rendered bibliography authority
+  - source Git-blob identities match this contract
+
+claim_firewall:
+  - no current scalar-only MES rank
+  - no corrected tensorized Planck result
+  - no empirical observer velocity or boost subtraction
+  - no local-global velocity equivalence
+  - no physical shear or vorticity measurement
+  - no foreground causal attribution
+  - no Bianchi-family attribution
+  - no finite-HEALPix containment theorem
+  - no native BASS solver claim
+  - no merge or publication authority
+
+execution_state:
+  github_exact_head: PRESTART_NO_EXECUTION
+  local_exact_checkout_python_3_12: NOT_YET_EXECUTED
+  source_equivalent_hash_probe: PASS_PYTHON_3_13_5
+  fresh_wolfram: BLOCKED_BY_UPSTREAM_502
+
+allowed_terminal_after_execution:
+  - PASS_R4A1_SUPPORTED_RUNTIME_AUTHORITY_VALIDATION
+  - FAIL_R4A1_SOURCE_IDENTITY
+  - FAIL_R4A1_CANONICAL_HASH
+  - FAIL_R4A1_CROSS_SURFACE_CONTRACT
+  - BLOCKED_R4A1_RUNTIME_UNAVAILABLE
+
+current_terminal: R4A1_CONTRACT_BOUND__SUPPORTED_RUNTIME_EXECUTION_PENDING

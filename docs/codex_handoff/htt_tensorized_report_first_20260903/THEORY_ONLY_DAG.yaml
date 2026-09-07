@@ -1,0 +1,319 @@
+schema: htt.theory_report_first.master_dag.v5
+date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+goal: >-
+  Freeze an HTT-only theory/methods report integrating corrected tensorized
+  low-ell temperature representation, conditional MES geometry, exact
+  finite-null theory, local-observer response, processed-response
+  identifiability, and numerical uncertainty. All observational execution and
+  native BASS solver work remain outside the current programme.
+
+report_pr:
+  number: 449
+  branch: docs/htt-tensorized-mes-response-synthesis-20260903
+  theory_pack_source_head: dac92cc23ce869397758fef2f652df04a961bcdb
+  merge_authorized: false
+
+authority_federation:
+  default_framework: {ref: research/pr04-multicomponent, head: 50ea6d76ace70dec57b8794ab0d1cf9b8fab42cb}
+  vector_tensor_foundation: {pr: 367, head: 6bafca66285ef071081453313bb7d2d6b261599c}
+  candidate_matrix: {pr: 405, head: 463f0999949bf8534c60ad7973b7342705c2e3d6}
+  survivor_contract: {pr: 408, head: 40dce3ab9328c1f3acb99adba11046056c639737, merge_commit: 2dce66ca019609e6d07625bc6382bc347fbf5a8c}
+  tensorized_qo: {pr: 440, head: 687234128d7c12d04e68aad0f303c21d2d470393}
+  theorem_summary: {pr: 441, head: 04680e99d56b9974fe1120854370af1fb94fb1d6, provenance: SUMMARY_ONLY_FORMAL_DOSSIER_PENDING}
+  wu010: {pr: 442, head: 29427a1f7f2c5d46e43ffe03053c4ac13e969228}
+  wu011_current: {pr: 444, head: de73549c16ac6ceb63f924c86611e0a5ceb4711d, execution: PRESTART_NO_EXECUTION}
+  wu011_last_byte_exact: {head: f635d873cf5e77f7cb0d2756469acde60b8609e5, terminal: PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED}
+  external_verifiers: {prs: [446, 447], execution: PRESTART_NO_EXECUTION}
+
+global_state:
+  scalar_only_mes: RETIRED
+  old_wu006_wu008_results: WITHDRAWN
+  corrected_planck_tensor_rank: NONE
+  observational_execution: DATA_DEFERRED_BY_OWNER
+  raw_map_access: FORBIDDEN_IN_CURRENT_PHASE
+  carrier_processing: FORBIDDEN_IN_CURRENT_PHASE
+  native_bass_scope: EXCLUDED
+  scientific_claim_promotion: false
+  merge: NOT_AUTHORIZED
+
+representation_firewall:
+  temperature_qo: {space: STF2_PLUS_STF3, ambient_dimension: 12, generic_so3_quotient_dimension: 9}
+  vector_tensor_vt_t8: {space: STF2_PLUS_FOUR_VECTORS, ambient_dimension: 17, generic_so3_quotient_dimension: 14}
+  rule: VT_T8_LOCAL_JACOBIAN_IS_NOT_A_QO_ORBIT_PROOF
+
+harmonic_coordinate_firewall:
+  orthonormal_carrier:
+    symbol: c_lA
+    layout: [a_l0, sqrt2_Re_a_lm, minus_sqrt2_Im_a_lm]
+    metric: IDENTITY
+    authority: PR440_T1
+  wu011_raw_coordinate:
+    symbol: r_lA
+    layout: [a_l0, Re_a_lm, Im_a_lm]
+    metric: diag_1_2_2
+    source_code_alias: SCIENTIFIC_STORED_REAL
+    authority: PR444_T6
+  adapter: c_l=D_l_r_l_with_DtD_equals_G_l
+  rule: EQUIVALENT_NOT_BYTE_IDENTICAL
+
+nodes:
+  A0:
+    title: Repository-surface inventory
+    state: DONE_REPORT_SCOPE
+    outputs: [REPO_SURFACE_INVENTORY.yaml, HTT_REPO_WIDE_THEORY_SURFACE_AUDIT_20260903.md]
+
+  A1:
+    title: Authority precedence and supersession
+    state: DONE_REPORT_SCOPE
+    depends_on: [A0]
+    outputs: [AUTHORITY_LEDGER.yaml]
+
+  A2:
+    title: Registered survivor-surface triage
+    state: DONE_AFTER_P0_SOURCE_SURFACE_REPAIR
+    depends_on: [A1]
+    outputs:
+      - REGISTERED_SURVIVOR_SURFACE.csv
+      - WOLFRAM_A2_VALIDATION_RECEIPT.json
+      - A2_REGISTERED_SURVIVOR_TRIAGE_CLOSEOUT.md
+    receipt:
+      registered_rows: 37
+      exact_or_conditional: 24
+      synthetic: 8
+      scoped_candidates: 5
+      included: 16
+      excluded: 13
+      deferred: 8
+      deferred_unresolved_scoped_candidate: PR284_NEW:FINITE-REGISTERED-PATH
+      duplicate_groups_closed: true
+      representation_firewall_closed: true
+      included_report_map_unchanged_by_repair: true
+    boundary: truth_novelty_and_publication_not_promoted
+
+  A3:
+    title: Representation-family firewall
+    state: DONE_CONTRACT
+    depends_on: [A1]
+
+  A4:
+    title: Execution-receipt index
+    state: DONE_INITIAL
+    depends_on: [A0]
+    outputs: [EXECUTION_RECEIPT_INDEX.yaml]
+
+  A5:
+    title: Contradiction notation and coordinate-adapter closure
+    state: DONE_AFTER_A2_P0_REPAIR_AND_HARMONIC_ADAPTER_REPAIR
+    depends_on: [A2, A3, A4]
+    outputs:
+      - NOTATION_AND_CONVENTION_REGISTRY.yaml
+      - REPORT_SECTION_CLAIM_MAP.csv
+      - CONTRADICTION_LEDGER.yaml
+      - A5_CONTRADICTION_NOTATION_CLOSEOUT.md
+    receipt:
+      registered_A2_rows: 37
+      included_rows_mapped: 16
+      direct_report_contradictions: 0
+      unqualified_symbol_collisions: 0
+      harmonic_coordinate_collision_closed: true
+
+  T1:
+    title: Stored-real to STF representation theorem
+    state: DONE_THEORY_RUNTIME_UNVERIFIED
+    depends_on: [A5]
+    outputs:
+      - T1_STORED_REAL_STF_THEOREM_PACK.md
+      - T1_WOLFRAM_EXACT_RECEIPT.json
+    terminal: PASS_STORED_REAL_STF_REPRESENTATION_THEORY
+    evidence: DERIVED_AND_WOLFRAM_EXACTLY_CHECKED
+    implementation: SOURCE_PRESENT_PR440_EXACT_HEAD_PRESTART_NO_EXECUTION
+
+  T2:
+    title: Q/O proper-rotation orbit reconstruction on the cyclic domain
+    state: DONE_THEORY_RUNTIME_UNVERIFIED
+    depends_on: [T1]
+    outputs:
+      - T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md
+      - T2_WOLFRAM_EXACT_RECEIPT.json
+      - T2_QO_STRATA_AND_SCOPE_LEDGER.yaml
+    terminal: PASS_QO_SO3_ORBIT_RECONSTRUCTION_ON_NONZERO_CYCLIC_DOMAIN_WITH_NOVELTY_UNRESOLVED
+    evidence: DERIVED_AND_WOLFRAM_EXACTLY_CHECKED
+    boundaries:
+      - arbitrary_packet_image_characterization_not_claimed
+      - all_strata_atlas_not_claimed
+      - polynomial_invariant_ring_completeness_not_claimed
+      - novelty_unresolved
+      - PR440_exact_head_runtime_prestart_no_execution
+
+  T3:
+    title: Conditional MES geometry and scalar-to-tensor no-go
+    state: DONE_CONDITIONAL_THEORY
+    depends_on: [A5, T1]
+    outputs:
+      - T3_CONDITIONAL_MES_GEOMETRY_THEOREM_PACK.md
+      - T3_WOLFRAM_AND_SOURCE_RECEIPT.json
+    terminal: PASS_CONDITIONAL_MES_GEOMETRY_AND_EQUIVARIANCE_FIREWALL
+    evidence:
+      coefficients: LITERATURE_SUPPORTED
+      normalization_and_no_go: DERIVED_AND_WOLFRAM_CHECKED
+
+  T4:
+    title: Exact finite-null ranks under row-equivariant analysis
+    state: DONE_CONDITIONAL_THEORY
+    depends_on: [A5]
+    outputs:
+      - T4_FINITE_NULL_ROW_EQUIVARIANCE_THEOREM_PACK.md
+      - T4_WOLFRAM_FINITE_RANK_RECEIPT.json
+    terminal: PASS_FINITE_NULL_ROW_EQUIVARIANCE_THEORY
+    boundary: PARTICULAR_PLANCK_FFP10_EXCHANGEABILITY_NOT_CERTIFIED
+
+  T5:
+    title: WU-010 exact full-sky local-observer response
+    state: DONE_SCOPED_THEORY_AND_IMPLEMENTATION_READBACK
+    depends_on: [A5]
+    outputs:
+      - T5_WU010_LOCAL_OBSERVER_RESPONSE_THEOREM_PACK.md
+      - T5_WOLFRAM_AND_EXECUTION_RECEIPT.json
+    terminal: PASS_WU010_EXACT_LOCAL_OBSERVER_RESPONSE_SYNTHESIS
+    evidence: DERIVED_LITERATURE_SUPPORTED_WOLFRAM_CHECKED_AND_IMPLEMENTATION_VERIFIED
+
+  T6:
+    title: WU-011 processed-response quotient synthesis
+    state: DONE_THEORY_WITH_TIERED_EXECUTION_EVIDENCE
+    depends_on: [A5, T5]
+    outputs:
+      - T6_WU011_PROCESSED_RESPONSE_QUOTIENT_THEOREM_PACK.md
+      - T6_WOLFRAM_AND_EVIDENCE_RECEIPT.json
+    terminal: PASS_WU011_PROCESSED_RESPONSE_QUOTIENT_SYNTHESIS_WITH_FINITE_OPERATOR_UNRESOLVED
+    evidence:
+      exact_linear_algebra: DERIVED_AND_WOLFRAM_CHECKED
+      task7b: IMPLEMENTATION_VERIFIED_NO_CANDIDATE
+      task7c: IMPLEMENTATION_VERIFIED_RANK_UNRESOLVED
+      current_a4: SOURCE_IMPLEMENTED_PRESTART_NO_EXECUTION
+    boundary: NO_FINITE_HEALPIX_CONTAINMENT_PROMOTION
+
+  T7:
+    title: Continuum wide-mask proof strengthening
+    state: ACTIVE_PRIMARY_NEXT
+    depends_on: [T6]
+    outputs:
+      - z_exact_minor_review
+      - all_direction_verifier_matrix
+      - interval_or_ball_status
+      - continuum_discrete_firewall
+    terminal_options:
+      - PASS_ALL_SIX_CONTINUUM_SURJECTIVITY_CERTIFIED
+      - PASS_Z_EXACT_FIVE_DIRECTION_NUMERICAL
+      - BLOCKED_BY_INTERVAL_TOOLCHAIN
+
+  T8:
+    title: Matrix-valued numerical-error theorem and completeness boundary
+    state: ACTIVE_PARALLEL_NEXT
+    depends_on: [T6]
+    outputs:
+      - Loewner_bound_and_invariance_proofs
+      - zero_family_guard
+      - generalized_singular_value_certificate
+      - Wedin_partial_subspace_lane
+      - error_class_completeness_requirements
+
+  T9:
+    title: Integrated theorem evidence claim ledger
+    state: WAITING
+    depends_on: [T1, T2, T3, T4, T5, T6, T7, T8]
+
+  R1:
+    title: Full Theory and Methods Report A manuscript
+    state: WAITING
+    depends_on: [T9]
+
+  R2:
+    title: Independent PHYS-MATH STATISTICS CODE PROVENANCE audit
+    state: WAITING
+    depends_on: [R1]
+
+  R3:
+    title: Blind referee audit and bounded revision
+    state: WAITING
+    depends_on: [R2]
+
+  R4:
+    title: Freeze Theory and Methods Report A
+    state: WAITING
+    depends_on: [R3]
+    terminal: REPORT_A_THEORY_METHODS_FROZEN
+
+  P1: {title: WU-011 finite-operator numerical closeout, state: READY_AFTER_REPORT, depends_on: [R4]}
+  P2: {title: Ideal inverse intrinsic-octupole and noisy-estimation theory, state: READY_AFTER_REPORT, depends_on: [R4]}
+  P3: {title: Depth local-global and remote-field identifiability, state: READY_AFTER_REPORT, depends_on: [R4]}
+  P4: {title: Publication split decision, state: WAITING, depends_on: [P1, P2, P3]}
+  D0: {title: Observational-data authorization, state: DATA_DEFERRED_BY_OWNER, depends_on: [P4]}
+  O1: {title: Corrected carrier repair and independent review, state: BLOCKED_BY_D0, depends_on: [D0]}
+  O2: {title: Observation-blind statistic and nuisance registry, state: BLOCKED_BY_D0, depends_on: [O1]}
+  O3: {title: Corrected local Planck and FFP10 run, state: BLOCKED_BY_D0, depends_on: [O2]}
+  O4: {title: Observation Report B, state: BLOCKED_BY_D0, depends_on: [O3]}
+
+edges:
+  - [A0, A1]
+  - [A1, A2]
+  - [A1, A3]
+  - [A0, A4]
+  - [A2, A5]
+  - [A3, A5]
+  - [A4, A5]
+  - [A5, T1]
+  - [T1, T2]
+  - [A5, T3]
+  - [T1, T3]
+  - [A5, T4]
+  - [A5, T5]
+  - [T5, T6]
+  - [T6, T7]
+  - [T6, T8]
+  - [T1, T9]
+  - [T2, T9]
+  - [T3, T9]
+  - [T4, T9]
+  - [T5, T9]
+  - [T6, T9]
+  - [T7, T9]
+  - [T8, T9]
+  - [T9, R1]
+  - [R1, R2]
+  - [R2, R3]
+  - [R3, R4]
+  - [R4, P1]
+  - [R4, P2]
+  - [R4, P3]
+  - [P1, P4]
+  - [P2, P4]
+  - [P3, P4]
+  - [P4, D0]
+  - [D0, O1]
+  - [O1, O2]
+  - [O2, O3]
+  - [O3, O4]
+
+claim_firewall:
+  - no current scalar-only MES rank
+  - no old WU006-WU008 tensor foreground or injection result
+  - no VT_T8_to_QO proof substitution
+  - no PR441 summary label as proof
+  - no source-only verifier as executed evidence
+  - no raw_r_coordinate conflated with orthonormal_c_carrier
+  - no empirical beta or boost subtraction
+  - no local observer boost equals global matter tilt
+  - no physical shear or vorticity from morphology alone
+  - no continuum to finite_HEALPix promotion
+  - no Bianchi family attribution
+  - no native BASS claim
+  - no observational execution before D0
+
+current_primary_next_node: T7
+current_parallel_next_node: T8
+current_terminal: >-
+  A2_A5_CLOSED_AFTER_P0_AND_COORDINATE_ADAPTER_REPAIRS__
+  T1_T2_T3_T4_T5_T6_THEORY_PACKS_COMPLETE_AT_TYPED_SCOPE__
+  T7_PRIMARY_AND_T8_PARALLEL_ACTIVE__
+  DATA_DEFERRED__NO_MERGE_OR_CLAIM_PROMOTION

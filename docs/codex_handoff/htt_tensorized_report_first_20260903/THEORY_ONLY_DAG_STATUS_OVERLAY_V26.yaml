@@ -1,0 +1,88 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v26
+revision_date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_gate: DATA_DEFERRED_BY_OWNER
+
+nodes:
+  K0:
+    title: Typed kinematical MES authority crosswalk
+    state: SOURCE_COMPLETE_REMOTE_READBACK_PASS
+  K1:
+    title: Typed kinematical MES theorem pack
+    state: SOURCE_COMPLETE_EXECUTION_NOT_OBSERVED
+    depends_on: [K0]
+    outputs:
+      - ten classified theorem rows
+      - radial-only and product-body-gauge proofs
+      - typed no-anchor and channel-match propositions
+      - response-constrained identified-set theorem
+      - K2 37-claim candidate input
+  K2:
+    title: Claim ledger, integration matrix and manuscript architecture recompile
+    state: READY
+    depends_on: [K1]
+    candidate_claim_surface: 37
+    additions: 7
+    revisions: 3
+  K3:
+    title: Revised full research-report draft
+    state: WAITING
+    depends_on: [K2]
+  K4:
+    title: Independent physics, statistics, code and provenance audit
+    state: WAITING
+    depends_on: [K3]
+  K5:
+    title: LaTeX/PDF, citation and visual audit
+    state: WAITING
+    depends_on: [K4]
+  K6:
+    title: Formal receipts and frozen report
+    state: WAITING_ON_K5_AND_RUNTIME
+    depends_on: [K5, R4A1E]
+  R4A1E:
+    title: Exact CPython 3.12 SymPy/Lean runtime verification
+    state: BLOCKED_BY_HOSTED_RUNNER_AND_LOCAL_TOOLCHAIN
+  R4B0E:
+    title: Previous 30-claim publication assembly
+    state: PAUSED_AND_SUPERSEDED_PENDING_K2_K3_RECOMPILE
+  D0:
+    title: Corrected observational analysis authorisation
+    state: DEFERRED_BY_OWNER
+
+critical_path: [K0, K1, K2, K3, K4, K5, K6]
+parallel_runtime_path: [R4A1E, K6]
+current_next_node: K2_CLAIM_LEDGER_AND_MANUSCRIPT_ARCHITECTURE_RECOMPILE
+
+remaining_major_stages:
+  to_coherent_revised_draft: 2
+  to_independently_audited_manuscript: 3
+  to_typeset_candidate: 4
+  to_frozen_report: 5
+
+readiness:
+  K0_authority_crosswalk: 1.0
+  K1_theorem_pack_source: 1.0
+  K1_execution_verification: 0.0
+  K2_recompile: 0.35
+  K3_revised_draft: 0.2
+  K4_audit: 0.0
+  K5_typesetting: 0.0
+  K6_freeze: 0.0
+
+firewall:
+  scalar_only_observational_rank: RETIRED
+  scalar_mes_sector_anchor: RETAINED
+  scalar_to_tensor_reconstruction: FORBIDDEN
+  observable_QO_equals_physical_sigma_omega: FORBIDDEN
+  local_observer_equals_global_tilt: FORBIDDEN
+  acceleration_anchor_invention: FORBIDDEN
+  corrected_planck_result: NONE
+  finite_healpix_containment: RANK_UNRESOLVED
+  native_bass_solver: EXCLUDED
+
+terminal: >-
+  K0_AND_K1_SOURCE_COMPLETE__K2_READY__
+  K1_EXECUTION_NOT_OBSERVED__RUNTIME_PARTIAL__
+  OBSERVATIONAL_DATA_DEFERRED__NO_CLAIM_PROMOTION_OR_MERGE

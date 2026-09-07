@@ -1,0 +1,103 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v28
+revision_date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_gate: DATA_DEFERRED_BY_OWNER
+
+nodes:
+  K0R:
+    title: Corrected typed kinematical MES authority crosswalk
+    state: SOURCE_COMPLETE
+  K1R:
+    title: Typed kinematical MES theorem repair and completion
+    state: SOURCE_COMPLETE_EXECUTION_PRESTART_BLOCKED
+  K2C:
+    title: Forty-claim candidate ledger citation and report architecture
+    state: SOURCE_COMPLETE_EXECUTION_PENDING
+    outputs:
+      - K2_40_CLAIM_CANDIDATE_OVERLAY.yaml
+      - K2_CITATION_PROVENANCE_CANDIDATE_OVERLAY.yaml
+      - REPORT_A_ORGANIC_INTEGRATION_MATRIX_V2_CANDIDATE.yaml
+      - REPORT_SECTION_CLAIM_MAP_V2_CANDIDATE.csv
+      - K2_BIBLIOGRAPHY_SUPPLEMENT_CANDIDATE.bib
+      - K2_REPORT_A_CLAIM_ARCHITECTURE.md
+      - K2_CANDIDATE_REVIEW_RECEIPT.yaml
+    counts:
+      base_claims: 30
+      additions: 10
+      revisions: 4
+      candidate_total: 40
+      candidate_bibliography_additions: 3
+    review:
+      duplicate_ids: 0
+      implication_collapses: 0
+      paragraph_logic: PASS_NO_ISSUES
+      candidate_bibtex_parse: PASS_NO_ISSUES
+      canonical_promotion: false
+  K2F:
+    title: Self-contained T9 v5 and final forty-claim authority freeze
+    state: NEXT
+    requirements:
+      - execute or independently reproduce K2 parser and bijection contracts
+      - flatten base plus overlay into self-contained T9 v5
+      - bind final citation matrix and organic-integration matrix to v5
+      - deliberately merge retained bibliography supplement and revalidate
+      - compute canonical forty-ID digest from checked-out v5
+      - independent source review
+  K3:
+    title: Coherent revised full research-report draft
+    state: READY_AFTER_K2F
+    note: >-
+      Scientific architecture is complete enough for drafting, but claim IDs,
+      citations and section placement must be frozen first to prevent another
+      manuscript-authority drift.
+  K4:
+    title: Independent PHYS-MATH, statistics, code and provenance audit
+    state: WAITING_ON_K3
+  K5:
+    title: LaTeX, PDF, citation and visual audit
+    state: WAITING_ON_K4
+  K6:
+    title: Formal receipts, frozen-source referee and owner decision
+    state: WAITING_ON_K5_AND_RUNTIME
+  R4A1E:
+    title: Exact CPython 3.12 SymPy and Lean execution
+    state: BLOCKED_BY_RUNTIME
+  D0:
+    title: Observational authorisation
+    state: DEFERRED_BY_OWNER
+
+execution_boundary:
+  k1r_workflow: PRESTART_NO_EXECUTION
+  k2_workflow_source: PRESENT
+  k2_workflow_execution: NOT_OBSERVED
+  local_runtime: PARTIAL_RUNTIME_RECOVERY_NO_EXACT_CHECKOUT
+  fresh_wolfram: BLOCKED_BY_UPSTREAM_HTTP_502
+  accepted_scientific_receipts: 0
+
+claim_boundary:
+  current_canonical_ledger: T9_V4_30
+  current_canonical_claims: 30
+  K2_candidate_claims: 40
+  K2_candidate_is_canonical: false
+  scalar_only_mes_observational_rank: RETIRED
+  corrected_planck_result: NONE
+  physical_kinematical_point_estimate: NONE
+  global_tilt_detection: NONE
+  finite_healpix_containment: RANK_UNRESOLVED
+  native_bass_solver: EXCLUDED
+  publication_authority: false
+  merge_authority: false
+
+critical_path:
+  - K2F_SELF_CONTAINED_V5_AND_BIJECTION_FREEZE
+  - K3_REVISED_FULL_DRAFT
+  - K4_INDEPENDENT_AUDIT
+  - K5_TYPESET_AND_VISUAL_AUDIT
+  - K6_FORMAL_RECEIPTS_AND_OWNER_DECISION
+
+current_next_node: K2F_SELF_CONTAINED_T9_V5_AND_FORTY_CLAIM_AUTHORITY_FREEZE
+terminal: >-
+  K1RF_SOURCE_COMPLETE__K2C_FORTY_CLAIM_CANDIDATE_ARCHITECTURE_SOURCE_COMPLETE__
+  K2F_SELF_CONTAINED_V5_NEXT__EXECUTION_NOT_OBSERVED__
+  OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY

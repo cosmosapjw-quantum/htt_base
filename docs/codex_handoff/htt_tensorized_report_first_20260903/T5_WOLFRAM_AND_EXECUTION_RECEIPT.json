@@ -1,0 +1,108 @@
+{
+  "schema": "htt.report_a.t5_wolfram_and_execution_receipt.v1",
+  "date": "2026-09-03",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "report_pr": 449,
+  "repository_authority": {
+    "pr": 442,
+    "head": "29427a1f7f2c5d46e43ffe03053c4ac13e969228",
+    "audit_path": "docs/research_program/post_pr327/planck_mes_wu010_independent_local_boost_audit.md",
+    "audit_blob_sha": "9e4b02eb2601eacd4962626654ac37bb07aa6c7d"
+  },
+  "domain": {
+    "metric_signature": "(-,+,+,+)",
+    "outward_sky_direction": "n=-e",
+    "active_observer_boost": "+beta_obs",
+    "beta_definition": "v/c",
+    "observable": "strictly positive absolute thermodynamic blackbody temperature",
+    "doppler_weight": 1,
+    "sky_scope": "FULL_SKY"
+  },
+  "exact_formulas": {
+    "energy": "epsilon_tilde=gamma(1+beta_obs dot n) epsilon",
+    "temperature_pullback": "T_tilde(n_tilde)=T(n(n_tilde))/[gamma(1-beta_obs dot n_tilde)]",
+    "solid_angle": "dOmega_tilde=D^(-2)dOmega",
+    "first_order_generator": "delta_beta T=(beta dot n)T-[beta-(beta dot n)n] dot grad_S2 T",
+    "quadrupole_STF3": "(B_Q beta)_abc=3 beta_<a Q_bc>",
+    "quadrupole_decomposition": "delta_beta T_Q=(B_Q beta)_abc n^a n^b n^c-(4/5)(Q beta)_a n^a",
+    "normal_matrix": "M_Q=(Q:Q)I+(6/5)Q^2",
+    "adjoint": "B_Q^* O=3(O:Q)",
+    "normal_operator": "B_Q^*B_Q=3M_Q",
+    "inverse": "beta_hat=M_Q^(-1)(O:Q)",
+    "projector": "P_ImB O=B_Q M_Q^(-1)(O:Q)",
+    "orthogonal_residual": "O_perp:Q=0",
+    "orthogonal_complement_dimension": 4,
+    "condition_bound": "kappa_2(M_Q)<=5/3"
+  },
+  "wolfram_exact_results": {
+    "STF3_trace_vector": ["0", "0", "0"],
+    "normal_matrix_identity_residual": "0",
+    "condition_parameterization": "(8+5(t-1)t)/(5+t(-5+8t))",
+    "condition_derivative": "3(t-5)(5t-1)/(5-5t+8t^2)^2",
+    "unique_interior_maximum": "t=1/5",
+    "maximum_condition_number": "5/3",
+    "endpoint_values": ["8/5", "3/2"],
+    "sharp_spectrum": "proportional to (-5,4,1), up to sign and permutation",
+    "generator_decomposition_unit_sphere_residual": "0",
+    "projector_exact_witness": {
+      "Q": "diag(1,2,-3)",
+      "M_Q": ["76/5", "94/5", "124/5"],
+      "O_contraction_Q": ["24", "38", "47"],
+      "beta_hat": ["30/19", "95/47", "235/124"],
+      "projected_contraction_minus_input": ["0", "0", "0"],
+      "residual_contraction": ["0", "0", "0"],
+      "self_adjoint_second_witness_residual": "0"
+    }
+  },
+  "accepted_repository_execution": {
+    "implementation_candidate": "8a59ee1126b9eccdaa6fecb14de442e8c68b988d",
+    "PR07": {
+      "run": 33529400104,
+      "conclusion": "SUCCESS"
+    },
+    "PR04": {
+      "run": 33529400157,
+      "conclusion": "SUCCESS"
+    },
+    "repository_integrity": {
+      "run": 33529400115,
+      "conclusion": "SUCCESS"
+    }
+  },
+  "literature": [
+    {
+      "title": "New operator approach to the CMB aberration kernels in harmonic space",
+      "doi": "10.1103/PhysRevD.89.123504",
+      "arxiv": "1403.6117",
+      "scope": "exact full-sky boost operator and d=1 kernel structure"
+    },
+    {
+      "title": "Generalized Doppler and aberration kernel for frequency-dependent cosmological observables",
+      "doi": "10.1103/PhysRevD.96.103502",
+      "arxiv": "1709.08298",
+      "scope": "frequency and Doppler-weight dependence and cut-sky boundary"
+    },
+    {
+      "title": "Disentangling Doppler modulation, aberration and the temperature dipole in the CMB",
+      "doi": "10.1103/PhysRevD.104.063503",
+      "arxiv": "2107.10846",
+      "scope": "realistic masks noise and independent modulation-aberration estimation"
+    }
+  ],
+  "evidence_status": {
+    "exact_Lorentz_and_first_order_response": "DERIVED_AND_LITERATURE_SUPPORTED",
+    "STF_inverse_projector_condition_bound": "DERIVED_AND_WOLFRAM_EXACTLY_CHECKED",
+    "repository_implementation": "IMPLEMENTATION_VERIFIED_WITH_TYPED_LIMITATIONS"
+  },
+  "terminal": "PASS_WU010_EXACT_LOCAL_OBSERVER_RESPONSE_SYNTHESIS",
+  "claim_boundary": {
+    "empirical_beta": false,
+    "boost_subtraction": false,
+    "processed_cut_sky": false,
+    "global_tilt_identification": false,
+    "polarization": false,
+    "Planck_data_admitted": false,
+    "Bianchi_family": false,
+    "merge_authorized": false
+  }
+}

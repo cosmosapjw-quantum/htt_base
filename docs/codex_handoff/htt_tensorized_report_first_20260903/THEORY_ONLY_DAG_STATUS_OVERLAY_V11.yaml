@@ -1,0 +1,56 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v11
+date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+observational_data_used: false
+corrected_tensorized_planck_rank: null
+merge_authorized: false
+
+nodes:
+  A2M:
+    state: SOURCE_COMPLETE_SCHEMA_REPAIRED_EXACT_HEAD_PRESTART_BLOCKED
+    authority: PR450@ba84912bea165896ec8f0c0e5793b47d1736f512
+    local_contract: 14_PASSED
+  T2C:
+    state: IMAGE_SAFE_STABLE_DECODER_SOURCE_COMPLETE_LOCAL_STRESS_PASS
+    authority: PR451@9f7d06dec0fce1c3a8a53fa5372c84d9c679c037
+    local_contract: 28_PASSED
+    stress: 10000_PAIRS_7_TYPED_REFUSALS_0_REPLAY_FAILURES
+    exact_head_execution: PRESTART_NO_EXECUTION
+  T4R:
+    state: DONE_EXACT_TIE_RULE_RECORDED
+  T9:
+    state: DONE_SELF_CONTAINED_V2_29_CLAIMS
+  R1:
+    state: DONE_AS_FIRST_DRAFT
+  R2B:
+    state: DONE_R2_WORKING_DRAFT_LOCAL_CONTRACT_GREEN
+  R2C:
+    state: DONE_LOCAL_INDEPENDENT_AUDIT_P0_ZERO
+  R2D:
+    state: DONE_MES_PRIMARY_SOURCE_EQUATION_AND_PREMISE_BINDING
+  R2E:
+    state: DONE_BLIND_REVIEW_WITH_MANUSCRIPT_REGENERATION_REQUIRED
+    P0: 0
+    P1: 2
+    P2: 3
+  R2F:
+    state: NEXT
+    objective: regenerate manuscript statuses and provenance from current frozen heads
+  R3:
+    state: WAITING_ON_R2F_AND_EXACT_HEAD_EXECUTION
+  R4:
+    state: WAITING_ON_R3
+  D0:
+    state: DATA_DEFERRED_BY_OWNER
+
+critical_path:
+  - R2F_CURRENT_HEAD_MANUSCRIPT_REGENERATION
+  - EXACT_HEAD_RUNNER_ADMISSION
+  - R3_BLIND_REFEREE_BOUNDED_REVISION
+  - R4_REPORT_FREEZE
+
+current_terminal: >-
+  R2E_THEORY_CORE_PASS__A2_SCHEMA_REPAIRED__T2_STABLE_DECODER_LOCAL_PASS__
+  MES_PRIMARY_SOURCE_AUDIT_PASS__MANUSCRIPT_REGENERATION_NEXT__
+  EXACT_HEAD_PRESTART_BLOCKED__OBSERVATIONAL_DATA_DEFERRED__NO_MERGE

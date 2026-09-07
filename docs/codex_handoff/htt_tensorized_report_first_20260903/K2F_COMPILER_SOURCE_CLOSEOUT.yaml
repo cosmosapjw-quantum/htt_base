@@ -1,0 +1,131 @@
+schema: htt.report_a.k2f.compiler_source_closeout.v1
+date: 2026-09-05
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+
+source_chain:
+  k2c_parent:
+    commit: 855f139cdd6c347e8239ef21a1281e472a77d6df
+    tree: 4a1a77c68b484676ef35aa525c2d5255542a05e5
+  test_first_commit:
+    commit: d9dd071018c36a21d9cc0fd52d9ba8a045ff186d
+    tree: f6328f91e07755c01d38598052db35c9901da16a
+    test_blob: d90a80c8836c3340c3f50b9f3c621c84a647fa02
+    observed_red: false
+  implementation_commit:
+    commit: 268232dedb47b40a54e2a1582753e8a00bb69808
+    tree: c44f475dd139930d35afebebeb31e2e39c194919
+    compiler_blob: d22e439211b0058596c27028d382554657b9f532
+    workflow_blob: 2972e21f05baf9709dd96e6d95a99c3355872b92
+    contract_blob: 63ed18624e0aae9e4dd627755c843289d79bea6f
+
+registered_input_blobs:
+  T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml: 58291e9cfac6ff85ceffbdb6bdefd50315240831
+  K2_40_CLAIM_CANDIDATE_OVERLAY.yaml: 394378a796a24410a4174a8222e40c5c59e9700a
+  REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml: 3fbaa2f97522cca6d0ad60e0c96655d293ca0d74
+  K2_CITATION_PROVENANCE_CANDIDATE_OVERLAY.yaml: 902b698ef81506179cb0f6e3c5d6616a3f445c55
+  REPORT_SECTION_CLAIM_MAP_V2_CANDIDATE.csv: d42a666ff0eba8fdca8afc9b4e719de6e5e12a8d
+  REPORT_A_ORGANIC_INTEGRATION_MATRIX_V2_CANDIDATE.yaml: 28e823ce7705f0c14a4cae5edf39dc32b69d2617
+  HTT_REPORT_A_REFERENCES.bib: ba37321119725e52f1a2b0ac827050ee895e5466
+  K2_BIBLIOGRAPHY_SUPPLEMENT_CANDIDATE.bib: 930457120f5def21321008f4f77cc2b9c0f5694a
+
+compiler_contract:
+  exact_input_blob_validation: SOURCE_IMPLEMENTED
+  registered_revision_count: 4
+  registered_addition_count: 10
+  deterministic_claim_order: K2_candidate_claim_ids
+  refuse_duplicate_claim_ids: true
+  refuse_duplicate_bibliography_keys: true
+  refuse_input_blob_drift: true
+  refuse_existing_output_overwrite: true
+  exact_bijections:
+    - claims_to_citations
+    - claims_to_section_rows
+    - claims_to_integration_layers
+    - bibliography_keys_to_source_registry
+  expected_output:
+    claim_count: 40
+    citation_rows: 40
+    section_rows: 40
+    integration_rows: 40
+    bibliography_keys: 20
+  scope_firewalls:
+    observational_claim_count: 0
+    corrected_planck_rank_claim_count: 0
+    finite_healpix_no_go_claim_count: 0
+    bianchi_family_claim_count: 0
+    native_bass_claim_count: 0
+
+source_review:
+  status: PASS_STATIC_SOURCE_REVIEW_WITH_EXECUTION_BOUNDARY
+  findings:
+    - The ten K2 additions remain distinct from the thirty base claims under the recorded implication review.
+    - The four revisions alter statements and append authority/forbidden extensions without silently replacing claim identities.
+    - The final citation registry is constrained to the same twenty keys as the merged bibliography candidate.
+    - The section map and organic integration matrix must remain exact forty-row bijections.
+    - The compiled files remain source candidates and do not become canonical merely by being generated.
+  academic_paragraph_logic: PASS_NO_ISSUES
+  conservative_british_english: PASS_NO_ISSUES
+  bibliography_supplement_parse: PASS_NO_ISSUES
+  scispace_partial_identification_context: PRESENT
+  repository_specific_theorems_require_direct_source_authority: true
+
+execution:
+  workflow_name: Report A K2 claim architecture and K2F compiler contracts
+  run_id: 33911172461
+  initial_job_id: 101147676378
+  retry_job_id: 101147867554
+  initial_steps: null
+  retry_steps: null
+  initial_conclusion: failure
+  retry_conclusion: failure
+  classification: PRESTART_NO_EXECUTION
+  compiler_executed: false
+  materialized_outputs_created: false
+  accepted_scientific_receipts_created: 0
+  attached_independent_runtime_probe: PARTIAL_RUNTIME_RECOVERY
+  local_exact_checkout_available: false
+  fresh_wolfram: BLOCKED_BY_UPSTREAM_HTTP_502
+
+canonical_memory:
+  exact_named_plugin_found: false
+  replacement_authority_surface:
+    - live PR head and tree
+    - registered Git blob identities
+    - K0R and K1R closeouts
+    - K2C candidate review receipt
+    - K2F compiler contract and source closeout
+    - workflow execution receipts
+  rule: source existence is never promoted to observed execution
+
+claim_boundary:
+  canonical_ledger_remains: T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+  canonical_claim_count_remains: 30
+  k2f_compiled_candidate_target: 40
+  claim_promotion: false
+  publication_authority: false
+  merge_authority: false
+  observational_execution: DATA_DEFERRED_BY_OWNER
+  corrected_tensorized_planck_rank: NONE
+  finite_healpix_containment: RANK_UNRESOLVED
+  physical_kinematical_point_estimate: NONE
+  native_bass_solver: EXCLUDED
+
+next_node:
+  id: K2FE_EXACT_COMPILER_EXECUTION_AND_MATERIALIZATION
+  requirements:
+    - exact checkout of the live K2F source head
+    - CPython 3.12 and PyYAML
+    - execute test_report_a_k2f_compiler.py
+    - run compile_report_a_k2f_authority.py against the registered inputs
+    - independently parse and review all six outputs
+    - commit materialized v5, citation v3, section v3, integration v3, bibliography v2 and receipt
+  accepted_terminal:
+    - PASS_K2F_MATERIALIZED_FORTY_CLAIM_AUTHORITY_CANDIDATE
+    - BLOCKED_BY_RUNTIME_ADMISSION
+    - FAIL_K2F_SOURCE_OR_BIJECTION_CONTRACT
+
+terminal: >-
+  K2F_TEST_FIRST_AND_COMPILER_SOURCE_COMPLETE__EXACT_INPUT_IDENTITIES_BOUND__
+  INITIAL_AND_RETRY_PRESTART_NO_EXECUTION__MATERIALIZED_V5_NOT_CREATED__
+  CANONICAL_LEDGER_REMAINS_T9_V4_30__NO_CLAIM_PUBLICATION_OR_MERGE_PROMOTION

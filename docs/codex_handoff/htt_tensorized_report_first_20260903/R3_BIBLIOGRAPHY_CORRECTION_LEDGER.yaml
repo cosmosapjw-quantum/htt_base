@@ -1,0 +1,43 @@
+schema: htt.report_a.r3.bibliography_correction_ledger.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+base_citation_matrix: REPORT_A_CITATION_PROVENANCE_MATRIX_V1.yaml
+formal_bibliography: HTT_REPORT_A_REFERENCES.bib
+observational_data_used: false
+novelty_adjudicated: false
+corrections:
+  LEUNG_2022:
+    old_title: Measuring the Two-dimensional Transfer Function for CMB Experiments
+    corrected_title: A Simulation-Based Method for Correcting Mode Coupling in CMB Angular Power Spectra
+    old_journal_locator: Astrophysical Journal 928, 175
+    corrected_journal_locator: The Astrophysical Journal 928(2), 109
+    doi: 10.3847/1538-4357/ac562f
+    arxiv: 2111.01113
+    effect_on_scientific_claims: NONE
+  LI_1999:
+    compatibility_key_retained: true
+    corrected_publication_year: 1998
+    journal: SIAM Journal on Matrix Analysis and Applications
+    volume: 20
+    issue: 2
+    pages: 471-492
+    doi: 10.1137/S0895479896298506
+    effect_on_scientific_claims: NONE
+  SAG_1999_COBE:
+    compatibility_key_retained: true
+    journal_publication_year: 1997
+    arxiv_posting_identifier: astro-ph/9904346
+    effect_on_scientific_claims: NONE
+literature_boundary:
+  exact_qo_krylov_direct_match_found: false
+  statement: >-
+    The current SciSpace search found adjacent orbit-space and separating-invariant
+    methods, but no direct primary source matching the exact STF2(Q) plus STF3(O)
+    Krylov construction v=O:Q and K=[v,Qv,Q^2v]. This is not a novelty proof.
+validation:
+  expected_bibtex_keys: 17
+  citation_key_compatibility_preserved: true
+  unregistered_new_scientific_claims: 0
+  corrected_planck_rank: null
+  merge_authorized: false
+terminal: PASS_R3_FORMAL_BIBLIOGRAPHY_METADATA_CORRECTION_SOURCE

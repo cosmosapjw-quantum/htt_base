@@ -1,0 +1,107 @@
+schema: htt.report_a.k2.kinematical_claim_recompile_input.v1
+date: 2026-09-04
+depends_on:
+  - K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK
+  - K1_TYPED_KINEMATICAL_MES_THEOREM_PACK
+
+current_claim_surface:
+  version: T9_V4
+  claim_count: 30
+
+normalisation_of_K0_candidates:
+  provisional_candidates: 10
+  proposed_new_atomic_claims: 7
+  proposed_existing_claim_revisions: 3
+  candidate_total_after_recompile: 37
+  final_count_status: PROVISIONAL_UNTIL_K2_VALIDATION
+
+proposed_new_claims:
+  - id: RA-KIN-001
+    source_theorems: [K1-T1-STATE-PARTITION]
+    statement: >-
+      The physical anisotropy state is a typed product of congruence
+      kinematics, frame-relative velocities and geometry, distinct from the
+      observable Q/O tensor state.
+  - id: RA-KIN-002
+    source_theorems: [K1-T1-STATE-PARTITION, K1-T8-BETA-BOUNDARY]
+    statement: >-
+      beta_RO, beta_RM and beta_MO have different frame semantics; their
+      first-order closure is diagnostic and does not identify global tilt.
+  - id: RA-KIN-003
+    source_theorems: [K1-T1-STATE-PARTITION, K1-T6-NO-ANCHOR]
+    statement: >-
+      Missing physical components and unavailable anchors remain typed and are
+      never replaced by numerical zero or a guessed radius.
+  - id: RA-KFUNC-001
+    source_theorems: [K1-T9-PHYSICAL-MORPHOLOGY]
+    statement: >-
+      Physical tensor functionals retain codomain, O(3) type, parity, frame,
+      congruence and anchor identity independently of observational
+      identification.
+  - id: RA-MESA-001
+    source_theorems: [K1-T2-ANCHOR-SEPARATION, K1-T6-NO-ANCHOR]
+    statement: >-
+      Active geodesic MES anchors are registered for the shear and vorticity
+      invariants; acceleration and anisotropic curvature carry typed no-anchor
+      outcomes.
+  - id: RA-MESA-002
+    source_theorems: [K1-T4-PRODUCT-GAUGE, K1-T5-CHANNEL-MATCH]
+    statement: >-
+      A matched multi-sector MES stress uses exact channel keys and the maximum
+      product-body gauge, preventing cross-sector signed cancellation.
+  - id: RA-ID-001
+    source_theorems: [K1-T7-RESPONSE-IDENTIFIED-SET]
+    statement: >-
+      Available anchors and a declared response define a physical identified
+      set; point attribution is allowed only when that set is a singleton under
+      the declared assumptions.
+
+proposed_existing_claim_revisions:
+  - id: RA-MES-002
+    source_theorems: [K1-T2-ANCHOR-SEPARATION, K1-T3-RADIAL-ONLY, K1-T10-SCALAR-INHERITANCE]
+    revision: >-
+      Retain the one-way MES ceiling but state explicitly that it is a radial
+      anchor on a named physical sector, not a tensor observation or state
+      estimate.
+  - id: RA-MES-003
+    source_theorems: [K1-T3-RADIAL-ONLY, K1-T10-SCALAR-INHERITANCE]
+    revision: >-
+      Preserve the scalar-to-vector/STF equivariance no-go and connect it to
+      orbit-constant anchor bodies.
+  - id: RA-RESP-001
+    source_theorems: [K1-T8-BETA-BOUNDARY]
+    revision: >-
+      State that WU-010 is the presently closed beta_RO response lane and does
+      not close beta_RM, beta_MO or congruence-kinematical responses.
+
+proposed_manuscript_order:
+  - scope, authority and supersession
+  - observable low-ell Q/O tensor state
+  - typed physical kinematical, frame and geometry state
+  - sector-wise MES anchors and radial-only theorem
+  - physical tensor functionals, product stress and identified sets
+  - finite-null validity
+  - local observer beta_RO response
+  - processed response and nuisance quotient
+  - continuum and finite numerical boundary
+  - conditional robust-rank certification
+  - integrated interpretation and deferred observations
+
+required_K2_tests:
+  - exactly 37 unique candidate claim IDs after applying seven additions
+  - all ten K1 theorem rows map to at least one claim addition or revision
+  - no duplicate state/anchor/radial theorem statement
+  - every conditional claim has assumptions and forbidden extensions
+  - current 30 claim IDs remain stable unless explicitly revised
+  - citation matrix has one row per final claim
+  - organic integration matrix maps every final claim exactly once
+  - manuscript contains every final claim ID
+  - scalar-only observational rank remains retired
+  - corrected Planck result remains absent
+  - finite-HEALPix containment remains RANK_UNRESOLVED
+  - native BASS content remains excluded
+
+terminal: >-
+  K2_INPUT_COMPILED_FOR_37_CLAIM_CANDIDATE_SURFACE__
+  SEVEN_NEW_ATOMIC_CLAIMS__THREE_EXISTING_CLAIM_REVISIONS__
+  FINAL_COUNT_NOT_YET_FROZEN

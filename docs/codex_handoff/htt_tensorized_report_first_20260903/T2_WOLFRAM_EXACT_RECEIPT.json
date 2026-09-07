@@ -1,0 +1,90 @@
+{
+  "schema": "htt.report_a.t2_qo_orbit_reconstruction_wolfram_receipt.v1",
+  "date": "2026-09-03",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "report_pr": 449,
+  "source_implementation": {
+    "pr": 440,
+    "commit": "687234128d7c12d04e68aad0f303c21d2d470393",
+    "path": "htt/src/common/mes_krylov_completion.py",
+    "blob_sha": "c9dfaa5c55a103f3625f94629f701bc2a06e242c",
+    "test_path": "tests/common/test_mes_krylov_completion.py",
+    "test_blob_sha": "fbc7d586a3f47371b0bff9f6d66469cc812d5fb4",
+    "exact_head_runtime": "PRESTART_NO_EXECUTION"
+  },
+  "execution": {
+    "engine": "Wolfram Language evaluator",
+    "arithmetic": "exact rational and symbolic",
+    "observational_data_opened": false,
+    "native_bass_solver_used": false
+  },
+  "theorem_domain": {
+    "representation": "STF2(R3)_Q direct-sum STF3(R3)_O",
+    "action_group": "SO(3)",
+    "amplitudes_positive": true,
+    "krylov_matrix": "K_QO=[v,Qbar v,Qbar^2 v], v=Obar:Qbar",
+    "cyclic_condition": "det(K_QO) != 0",
+    "numerical_implementation_condition": "condition_number(K_QO) <= frozen limit"
+  },
+  "symbolic_checks": {
+    "companion_G_self_adjoint_residual": [[0,0,0],[0,0,0],[0,0,0]],
+    "companion_trace_checks": {
+      "trace_C": "0",
+      "trace_C2_minus_s2": "0",
+      "trace_C3_minus_s3": "0"
+    },
+    "eigenframe_krylov_determinant": "-v1*v2*v3*(lambda1-lambda2)*(lambda1-lambda3)*(lambda2-lambda3)",
+    "symmetric_rank3_coordinate_count": 10,
+    "ambient_dimension": 12,
+    "normalized_shape_ambient_dimension": 10,
+    "generic_so3_quotient_dimension": 9,
+    "normalized_shape_quotient_plus_amplitudes": 9
+  },
+  "exact_witness": {
+    "Q": "diag(1,2,-3)",
+    "O_independent_components": {
+      "111": 1,
+      "112": 2,
+      "113": 3,
+      "122": 4,
+      "123": 5,
+      "222": 6,
+      "223": 7,
+      "133": -5,
+      "233": -8,
+      "333": -10
+    },
+    "O_trace_vector": [0,0,0],
+    "v": [24,38,47],
+    "det_K": 857280,
+    "det_Gram_minus_det_K_squared": "0",
+    "Q_reconstruction_residual": [[0,0,0],[0,0,0],[0,0,0]],
+    "O_reconstruction_residual_max": "0"
+  },
+  "group_and_mirror_checks": {
+    "proper_rotation_K_residual": [[0,0,0],[0,0,0],[0,0,0]],
+    "proper_rotation_kappa_residual": "0",
+    "reflection_kappa_residual": "0",
+    "ordinary_QO_mirror_statistic_residual": [0,0,0,0],
+    "mirror_kappa_sum": "0"
+  },
+  "theorem_result": {
+    "orbit_invariance": "PASS",
+    "canonical_frame_from_Gram_and_signed_volume": "PASS",
+    "quadrupole_reconstruction": "PASS",
+    "octupole_reconstruction_on_packet_image": "PASS",
+    "same_packet_implies_same_SO3_orbit_on_cyclic_domain": "PASS",
+    "mirror_pair_separated_by_signed_krylov_determinant": "PASS"
+  },
+  "scope_boundary": {
+    "arbitrary_packet_image_characterization": "NOT_CLAIMED",
+    "singular_strata_reconstruction": "NOT_CLAIMED_TYPED_UNAVAILABLE",
+    "polynomial_invariant_ring_completeness": "NOT_CLAIMED",
+    "minimal_coordinate_catalogue": "NOT_CLAIMED",
+    "novelty": "UNRESOLVED",
+    "observational_result": false,
+    "physical_source_identification": false,
+    "merge_authorized": false
+  },
+  "terminal": "PASS_QO_SO3_ORBIT_RECONSTRUCTION_ON_NONZERO_CYCLIC_DOMAIN_WITH_NOVELTY_UNRESOLVED"
+}

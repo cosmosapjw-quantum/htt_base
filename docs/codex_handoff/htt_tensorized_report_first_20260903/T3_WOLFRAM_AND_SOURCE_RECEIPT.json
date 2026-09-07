@@ -1,0 +1,85 @@
+{
+  "schema": "htt.report_a.t3_wolfram_and_source_receipt.v1",
+  "date": "2026-09-03",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "report_pr": 449,
+  "primary_sources": [
+    {
+      "title": "Limits on anisotropy and inhomogeneity from the cosmic background radiation",
+      "authors": ["Roy Maartens", "George F. R. Ellis", "William R. Stoeger"],
+      "journal": "Physical Review D",
+      "volume": 51,
+      "pages": "1525-1535",
+      "year": 1995,
+      "doi": "10.1103/PhysRevD.51.1525",
+      "arxiv": "astro-ph/9501016"
+    },
+    {
+      "title": "Improved limits on anisotropy and inhomogeneity from the cosmic background radiation",
+      "authors": ["Roy Maartens", "George F. R. Ellis", "William R. Stoeger"],
+      "journal": "Physical Review D",
+      "volume": 51,
+      "pages": "5942-5945",
+      "year": 1995,
+      "doi": "10.1103/PhysRevD.51.5942"
+    },
+    {
+      "title": "The Limits on Cosmological Anisotropies and Inhomogeneities from COBE Data",
+      "authors": ["William R. Stoeger", "Marcelo E. Araujo", "Tim Gebbie"],
+      "arxiv": "astro-ph/9904346",
+      "role": "PRINTED_MES_EQUATIONS_AND_MULTIPOLE_NORMALIZATION"
+    }
+  ],
+  "source_equations": {
+    "shear": "|sigma_ab|/Theta < (5/3) epsilon1 + 3 epsilon2 + (3/7) epsilon3",
+    "vorticity": "|omega_ab|/Theta < (10/3) epsilon1 + (2/15) epsilon2",
+    "multipole_norm": "tau_Al tau^Al = ((2l+1)(2l)!)/(2^l(l!)^2) DeltaT_l^2/T0^2",
+    "angular_power": "DeltaT_l^2=(1/(4*pi)) sum_m |a_lm|^2"
+  },
+  "source_scope": {
+    "general_relativity_and_Einstein_Liouville": true,
+    "expanding_domain": true,
+    "fundamental_geodesic_congruence_for_retained_branch": true,
+    "all_relevant_fundamental_observers_almost_isotropic": true,
+    "radiation_multipole_spatial_and_time_derivative_assumptions": true,
+    "Gaussian_matter_fluctuations_required": false,
+    "exact_spatial_homogeneity_required": false,
+    "epsilon1_zero_is_observed_fact": false
+  },
+  "wolfram_exact_results": {
+    "MES_factorial_coefficient_l2": "15/2",
+    "MES_factorial_coefficient_l3": "35/2",
+    "epsilon2_squared": "75*C2/(8*pi*T0^2)",
+    "epsilon3_squared": "245*C3/(8*pi*T0^2)",
+    "epsilon2_closure_residual": "0",
+    "epsilon3_closure_residual": "0",
+    "Uomega_epsilon1_zero_closure_residual": "0",
+    "SO3_fixed_vector_subspace": "ZERO",
+    "SO3_fixed_STF2_subspace": "ZERO"
+  },
+  "derived_definitions": {
+    "B_sigma": "(5/3)epsilon1+3epsilon2+(3/7)epsilon3",
+    "B_omega": "(10/3)epsilon1+(2/15)epsilon2",
+    "Sigma2": "sigma_ab sigma^ab/(6 H^2)",
+    "W2": "omega_ab omega^ab/(6 H^2)",
+    "U_sigma": "(3/2) B_sigma^2",
+    "U_omega": "(3/2) B_omega^2"
+  },
+  "evidence_grades": {
+    "MES_coefficients": "LITERATURE_SUPPORTED",
+    "PSTF_harmonic_normalization": "DERIVED_AND_WOLFRAM_CHECKED",
+    "standard_variable_conversion": "DERIVED_AND_WOLFRAM_CHECKED",
+    "one_way_logic": "ESTABLISHED",
+    "scalar_to_tensor_equivariance_no_go": "DERIVED_AND_WOLFRAM_CHECKED"
+  },
+  "terminal": "PASS_CONDITIONAL_MES_GEOMETRY_AND_EQUIVARIANCE_FIREWALL",
+  "claim_boundary": {
+    "converse_FLRW_claim": false,
+    "physical_shear_measurement": false,
+    "physical_vorticity_measurement": false,
+    "nongeodesic_acceleration_branch": false,
+    "observational_result": false,
+    "native_BASS_or_Bianchi_family": false,
+    "merge_authorized": false
+  }
+}

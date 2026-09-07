@@ -1,0 +1,59 @@
+schema: htt.report_a.r4b0.execution_attempt_receipt.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+
+source_chain:
+  assembly_commit: 055d8d31d4a9a11d9bc27b9a2a99594ba127638f
+  config_hardening_commit: 58eb7c668780a262f6d481a087ad82037e6cb46e
+  final_source_tree: 0ccffcd146e4a0c851c14cc6dbb201be0c565679
+
+source_readback:
+  integration_matrix_blob: 4dc91bbeb5943495ac9fa2069809027ef7be6ca7
+  assembly_spec_blob: ef3068fad98a4e0cdf3ed89dab2b91cbff30b689
+  metadata_blob: 5ab67fb4bef8f5f7255ab3b78506952aa0dcde3e
+  pandoc_defaults_blob: f669c1ebdf402a2af9a6f96748a65396f635c4a3
+  header_blob: 21102ea9ae0a117fc921189884916226c13d5aae
+  structure_filter_blob: afaf143126319a864b7f08790348db20963d55d2
+  source_contract_blob: 01ec50e0ebade955a07488b1c307fa5dc6428ff2
+  workflow_blob: 237edabc0026197b159fda0e34a41a42996a8bac
+  status: PASS_REMOTE_SOURCE_IDENTITY
+
+workflow:
+  name: Report A R4B0 publication assembly
+  run: 33863462486
+  initial_job: 100992907600
+  retry_job: 100993037702
+  initial_status: completed
+  retry_status: completed
+  initial_conclusion: failure
+  retry_conclusion: failure
+  initial_steps: null
+  retry_steps: null
+  logs_available: false
+  classification: PRESTART_NO_EXECUTION
+  checkout_executed: false
+  python_setup_executed: false
+  yaml_parse_executed: false
+  pytest_executed: false
+
+publication_outputs:
+  generated_tex: false
+  generated_pdf: false
+  bibliography_resolution: NOT_EXECUTED
+  page_visual_audit: NOT_EXECUTED
+
+scientific_state:
+  canonical_claims: 30
+  citation_keys: 17
+  corrected_planck_tensor_rank: null
+  finite_healpix_containment: RANK_UNRESOLVED
+  observational_data_used: false
+  bass_scope: EXCLUDED
+  publication_authorized: false
+  merge_authorized: false
+
+terminal: >-
+  R4B0_SOURCE_AND_ORGANIC_INTEGRATION_REMOTE_READBACK_PASS__
+  INITIAL_AND_RETRY_PRESTART_NO_EXECUTION__TEX_AND_PDF_NOT_GENERATED__
+  OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY

@@ -1,0 +1,96 @@
+schema: htt.report_a.r4b0.publication_assembly_spec.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+stage: R4B0_LATEX_SOURCE_ASSEMBLY_AND_STATIC_PREFLIGHT
+
+source_of_truth:
+  manuscript: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+  manuscript_git_blob_sha1: 16f8fdd4db4dac384c5c64a8d3f86e0dbbf62e34
+  claim_ledger: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+  claim_ledger_git_blob_sha1: 58291e9cfac6ff85ceffbdb6bdefd50315240831
+  citation_matrix: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+  citation_matrix_git_blob_sha1: 3fbaa2f97522cca6d0ad60e0c96655d293ca0d74
+  bibliography: docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+  bibliography_git_blob_sha1: ba37321119725e52f1a2b0ac827050ee895e5466
+  notation_registry: docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml
+  notation_registry_git_blob_sha1: 2245e291e0b03c65f1a789df8649a194c43fe8fd
+  rule: >-
+    The flattened Markdown manuscript is the sole editable scientific-prose
+    authority. Generated TeX and PDF files are build products, not competing
+    sources.
+
+generated_outputs:
+  latex: docs/research_reports/report_a/build/HTT_REPORT_A_THEORY_METHODS_R4B0.tex
+  pdf: docs/research_reports/report_a/build/HTT_REPORT_A_THEORY_METHODS_R4B0.pdf
+  status: NOT_GENERATED_IN_R4B0
+  edit_policy: GENERATED_DO_NOT_EDIT
+
+excluded_inputs:
+  - path: docs/manuscript/main.tex
+    reason: >-
+      Quarantined historical manuscript containing superseded scalar and
+      Bianchi-conditioned content; not an authority or assembly input.
+  - current scalar-only MES observational ranks
+  - historical WU006-WU008 tensor-rank foreground and carrier-injection interpretations
+  - corrected tensorized Planck or FFP10 result
+  - BASS/native-solver background recombination or reionization material
+
+toolchain:
+  pandoc:
+    version: 3.11
+    asset: pandoc-3.11-linux-amd64.tar.gz
+    sha256: 37edb3bbcf722f921a009941bf5874e2e0c09263226c9b4a2d980788cb062ab6
+    role: markdown_to_latex_and_citeproc
+  tectonic:
+    version: 0.17.0
+    asset: tectonic-0.17.0-x86_64-unknown-linux-gnu.tar.gz
+    sha256: 1a715688baf591e650c8aeb160ae934e181685eecbb38b317de30b269ac5d606
+    role: pdf_engine_for_R4B1_only
+  github_actions:
+    checkout_commit: 11d5960a326750d5838078e36cf38b85af677262
+    setup_python_commit: a26af69be951a213d495a4c3e4e4022e16d87065
+    upload_artifact_commit: ea165f8d65b6e75b540449e92b4886f43607fa02
+
+assembly:
+  working_directory: docs/research_reports/report_a
+  pandoc_defaults: pandoc.yaml
+  metadata: metadata.yaml
+  header: header.tex
+  structure_filter: structure.lua
+  citation_engine: pandoc_citeproc
+  bibliography_authority: docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+  number_sections: true
+  table_of_contents: false
+  top_level_division: section
+  transformations:
+    - remove title and control-plane prologue before the Abstract heading
+    - mark Abstract unnumbered
+    - promote manuscript level-2 sections to article-level sections
+    - remove existing numeric prefixes from section headings before LaTeX numbering
+    - insert LaTeX appendix mode before Appendix A and remove literal Appendix-letter prefixes
+    - retain scientific prose and equations without semantic rewriting
+
+static_acceptance:
+  - all source-of-truth paths and declared Git blobs remain explicit
+  - the legacy quarantined manuscript is not referenced by any build input
+  - the organic integration matrix covers all seven scientific layers
+  - all thirty claim identifiers remain represented by the manuscript authority
+  - all seventeen citation keys remain governed by the formal bibliography
+  - generated outputs live only under report_a/build
+  - no observational result or finite-HEALPix containment theorem is introduced
+  - no BASS/native-solver claim is introduced
+  - R4B0 does not claim PDF compilation or visual review
+
+execution_state:
+  static_contract_source: SOURCE_IMPLEMENTED
+  accepted_static_execution: false
+  pdf_compilation: NOT_STARTED
+  page_visual_audit: NOT_STARTED
+  github_actions: PRESTART_NO_EXECUTION
+  local_runtime: BLOCKED_INTERMITTENT_CLIENTERROR
+  fresh_wolfram: BLOCKED_BY_UPSTREAM_502
+
+terminal: >-
+  R4B0_PUBLICATION_ASSEMBLY_SOURCE_DEFINED__STATIC_EXECUTION_PENDING__
+  PDF_NOT_GENERATED__OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY

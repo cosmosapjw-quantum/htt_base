@@ -1,0 +1,84 @@
+name: Report A canonical ledgers and flattened manuscript
+
+on:
+  pull_request:
+    paths:
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1NF_FLATTENING_CLOSEOUT.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/THEORY_ONLY_DAG_STATUS_OVERLAY_V20.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1NF_MULTI_CAS_VERIFICATION_PLAN.yaml
+      - docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+      - docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+      - docs/research_reports/appendices/HTT_REPORT_A_AUTHORITY_AND_EXECUTION_PROVENANCE.md
+      - docs/research_reports/appendices/HTT_REPORT_A_COVARIANT_AND_DOMAIN_CONVENTIONS.md
+      - docs/research_reports/theory_packs/T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md
+      - docs/research_reports/verifiers/r4a1nf/**
+      - formal_mathlib/Egs3V8Mathlib/ReportAConvention.lean
+      - formal_mathlib/Egs3V8Mathlib.lean
+      - tests/contracts/test_report_a_t9_v4.py
+      - tests/contracts/test_report_a_citation_matrix_r4a1nf.py
+      - tests/contracts/test_report_a_r3_flattened.py
+      - tests/contracts/test_report_a_r4a0_source.py
+      - tests/contracts/test_report_a_r4a1n_notation.py
+      - tests/contracts/test_report_a_r4a1nf_flattened.py
+      - tests/contracts/test_report_a_r4a1_authority_v3.py
+      - tests/contracts/test_report_a_r4a1v0_formal_verifiers.py
+      - .github/workflows/report-a-formal-verifiers.yml
+      - .github/workflows/report-a-ledger.yml
+  push:
+    paths:
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V4.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V2.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT_V3.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1NF_FLATTENING_CLOSEOUT.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/THEORY_ONLY_DAG_STATUS_OVERLAY_V20.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1NF_MULTI_CAS_VERIFICATION_PLAN.yaml
+      - docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+      - docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+      - docs/research_reports/appendices/HTT_REPORT_A_AUTHORITY_AND_EXECUTION_PROVENANCE.md
+      - docs/research_reports/appendices/HTT_REPORT_A_COVARIANT_AND_DOMAIN_CONVENTIONS.md
+      - docs/research_reports/theory_packs/T2_QO_ORBIT_RECONSTRUCTION_THEOREM_PACK.md
+      - docs/research_reports/verifiers/r4a1nf/**
+      - formal_mathlib/Egs3V8Mathlib/ReportAConvention.lean
+      - formal_mathlib/Egs3V8Mathlib.lean
+      - tests/contracts/test_report_a_t9_v4.py
+      - tests/contracts/test_report_a_citation_matrix_r4a1nf.py
+      - tests/contracts/test_report_a_r3_flattened.py
+      - tests/contracts/test_report_a_r4a0_source.py
+      - tests/contracts/test_report_a_r4a1n_notation.py
+      - tests/contracts/test_report_a_r4a1nf_flattened.py
+      - tests/contracts/test_report_a_r4a1_authority_v3.py
+      - tests/contracts/test_report_a_r4a1v0_formal_verifiers.py
+      - .github/workflows/report-a-formal-verifiers.yml
+      - .github/workflows/report-a-ledger.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  report-authority:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install focused dependencies
+        run: python -m pip install --disable-pip-version-check pytest PyYAML
+      - name: Validate active canonical report authority
+        run: |
+          python -m pytest -q \
+            tests/contracts/test_report_a_t9_v4.py \
+            tests/contracts/test_report_a_citation_matrix_r4a1nf.py \
+            tests/contracts/test_report_a_r3_flattened.py \
+            tests/contracts/test_report_a_r4a0_source.py \
+            tests/contracts/test_report_a_r4a1n_notation.py \
+            tests/contracts/test_report_a_r4a1nf_flattened.py \
+            tests/contracts/test_report_a_r4a1_authority_v3.py \
+            tests/contracts/test_report_a_r4a1v0_formal_verifiers.py

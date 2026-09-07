@@ -1,0 +1,265 @@
+schema: htt.report_a.k0.typed_kinematical_mes_authority_crosswalk.v2
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+status: K0R_SEMANTIC_CORRECTIONS_FLATTENED_SOURCE
+supersedes:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK.yaml
+  git_blob_sha1: f3b99645556f0caf5579c3061338e13a0f0662c0
+  reason: >-
+    V2 corrects the scalar-curvature nomenclature, separates the geodesic
+    acceleration premise from numerical anchor availability, and adds the
+    dimension/parity registry required before K2 claim recompilation.
+
+report_input:
+  pull_request: 449
+  head: 409ad49a341870f49694b9a57e0baa19ddf841c4
+  tree: 461bfd0f1e1089ef656ffe017269ee637f2d68ec
+  canonical_claims: 30
+  claim_promotion_in_k0r: false
+
+donor_authority:
+  merged_pr: 367
+  published_head: 6bafca66285ef071081453313bb7d2d6b261599c
+  relation_to_report: GIT_DIVERGED_SEMANTIC_AUTHORITY_IMPORT_ONLY
+  merge_base: c0269bf5fc731081a0486a53036056d4ab786c12
+  source_files:
+    - path: htt/src/common/joint_anisotropy_state.py
+      git_blob_sha1: e2b9651b79e2e334d9d402afbe44566e0c4bad67
+      role: typed congruence, frame-velocity, geometry and missing-component state
+    - path: htt/src/common/statistical_foundations.py
+      git_blob_sha1: f52d7716314d0574a1b7203b09787f70d7f3ec2d
+      role: typed MES anchors, sector stress and identified-set semantics
+    - path: htt/src/common/tensor_functionals.py
+      git_blob_sha1: eeb938f3f4d3cda892e41ab45128ae1bfdcfcffe
+      role: O3-typed physical functionals
+    - path: htt/src/common/anchor_geometry.py
+      git_blob_sha1: d9c2134961a6d1e786b72321d829db025bb758fa
+      role: convex anchor bodies, Minkowski gauges and margin reports
+    - path: htt/src/common/identified_set.py
+      git_blob_sha1: 6a7de849a646abcc22fdea5f9a2396af0e9db472
+      role: set-valued identification engine
+    - path: htt/src/common/joint_feasible_set.py
+      git_blob_sha1: 257b238ddcc52971286c165e9a1bd97e554574d4
+      role: coupled feasible-set support and product-box boundary
+
+four_object_separation:
+  observable_state:
+    symbol: O_low
+    components:
+      - Q_ab
+      - O_abc
+    meaning: observable low-multipole temperature-tensor morphology
+  physical_state:
+    symbol: X_phys
+    factors:
+      - K_congruence
+      - V_frame
+      - G_geometry
+    meaning: typed pre-solver physical state
+  anchor_family:
+    symbol: B_MES
+    meaning: premise-conditioned constraints on named physical invariants
+  identified_set:
+    symbol: Theta
+    meaning: physical states jointly compatible with anchor and response restrictions
+
+state_factorisation:
+  congruence_kinematics:
+    symbol: K_congruence
+    components:
+      - sigma_ab
+      - omega_a
+      - A_a
+  frame_velocities:
+    symbol: V_frame
+    components:
+      - beta_RO
+      - beta_RM
+      - beta_MO
+    first_order_relation: beta_RO = beta_RM + beta_MO + O(beta^2)
+    rule: beta_RO is closure-derived rather than an additional independent block
+  geometry:
+    symbol: G_geometry
+    scalar_coordinate:
+      name: DeltaOmega_k
+      semantic_type: SIGNED_SCALAR_CURVATURE_BUDGET_COORDINATE
+      dimension: 1
+      forbidden_name: anisotropic_curvature_budget
+    optional_tensor_components:
+      - name: spatial_curvature_stf5
+        symbol: three_R_angle_ab
+        dimension: 5
+        o3_type: STF2_POLAR
+      - name: electric_weyl_stf5
+        symbol: E_ab
+        dimension: 5
+        o3_type: STF2_POLAR
+      - name: magnetic_weyl_stf5
+        symbol: H_ab
+        dimension: 5
+        o3_type: STF2_AXIAL
+      - name: anisotropic_stress_stf5
+        symbol: pi_ab
+        dimension: 5
+        o3_type: STF2_POLAR
+
+representation_registry:
+  - id: Q_ab
+    dimension: 5
+    o3_type: STF2_POLAR
+    parity_note: ell_2_even_temperature_multipole
+    independence: OBSERVABLE_BLOCK
+  - id: O_abc
+    dimension: 7
+    o3_type: STF3_POLAR
+    parity_note: ell_3_odd_temperature_multipole
+    independence: OBSERVABLE_BLOCK
+  - id: sigma_ab
+    dimension: 5
+    o3_type: STF2_POLAR
+    independence: PHYSICAL_CORE_BLOCK
+  - id: omega_a
+    dimension: 3
+    o3_type: VECTOR_AXIAL
+    independence: PHYSICAL_CORE_BLOCK
+  - id: A_a
+    dimension: 3
+    o3_type: VECTOR_POLAR
+    independence: PHYSICAL_CORE_BLOCK_GENERAL_ONLY
+  - id: beta_RM
+    dimension: 3
+    o3_type: VECTOR_POLAR
+    independence: PHYSICAL_CORE_BLOCK
+  - id: beta_MO
+    dimension: 3
+    o3_type: VECTOR_POLAR
+    independence: PHYSICAL_CORE_BLOCK
+  - id: beta_RO
+    dimension: 3
+    o3_type: VECTOR_POLAR
+    independence: FIRST_ORDER_CLOSURE_DERIVED
+  - id: DeltaOmega_k
+    dimension: 1
+    o3_type: SCALAR
+    independence: PHYSICAL_CORE_BLOCK
+  - id: spatial_curvature_stf5
+    dimension: 5
+    o3_type: STF2_POLAR
+    independence: OPTIONAL_GEOMETRY_BLOCK
+  - id: electric_weyl_stf5
+    dimension: 5
+    o3_type: STF2_POLAR
+    independence: OPTIONAL_GEOMETRY_BLOCK
+  - id: magnetic_weyl_stf5
+    dimension: 5
+    o3_type: STF2_AXIAL
+    independence: OPTIONAL_GEOMETRY_BLOCK
+  - id: anisotropic_stress_stf5
+    dimension: 5
+    o3_type: STF2_POLAR
+    independence: OPTIONAL_GEOMETRY_BLOCK
+
+dimension_counts:
+  general_core:
+    included_independent_blocks:
+      - sigma_ab
+      - omega_a
+      - A_a
+      - beta_RM
+      - beta_MO
+      - DeltaOmega_k
+    raw_dimension: 18
+    locally_free_SO3_quotient_dimension: 15
+  geodesic_core:
+    domain_premise: A_a = 0
+    included_independent_blocks:
+      - sigma_ab
+      - omega_a
+      - beta_RM
+      - beta_MO
+      - DeltaOmega_k
+    raw_dimension: 15
+    locally_free_SO3_quotient_dimension: 12
+  qualifier: >-
+    Quotient dimensions use d-3 only on locally free SO3 strata. They are not
+    global orbit-separation theorems and do not apply unchanged on strata with
+    non-trivial stabilisers. Each admitted optional STF2 geometry block adds
+    five raw dimensions before stabiliser corrections.
+
+sector_authority:
+  shear:
+    state_component: CongruenceKinematics.sigma_stf5
+    mes_branch: MES_G_SIGMA
+    authority_status: VERIFIED_NUMERICAL_ANCHOR
+    target_invariant: sigma_ab_sigma_ab_over_6H2
+    response_status: NO_CURRENT_FULL_PHYSICAL_CMB_RESPONSE
+  vorticity:
+    state_component: CongruenceKinematics.omega_axial3
+    mes_branch: MES_G_OMEGA
+    authority_status: VERIFIED_NUMERICAL_ANCHOR
+    target_invariant: omega_ab_omega_ab_over_6H2
+    response_status: NO_CURRENT_FULL_PHYSICAL_CMB_RESPONSE
+  acceleration:
+    state_component: CongruenceKinematics.acceleration_polar3
+    branch_authority:
+      branch: MES_G_ACCEL
+      status: VERIFIED_STRUCTURAL
+      meaning: GEODESIC_DOMAIN_PREMISE_A_EQUALS_ZERO
+    numerical_anchor:
+      status: NO_MES_ANCHOR
+      meaning: NO_NUMERICAL_RADIUS_OR_DENOMINATOR
+    outside_geodesic_branch: NO_ACTIVE_VERIFIED_ACCELERATION_BOUND
+    response_status: UNRESOLVED
+  beta_RO:
+    state_component: VelocityFrameBundle.beta_RO
+    mes_anchor: NOT_A_MES_ANCHOR
+    response_status: WU010_SCOPED_LOCAL_OBSERVER_RESPONSE
+  beta_RM:
+    state_component: VelocityFrameBundle.beta_RM
+    mes_anchor: NO_ACTIVE_MES_ANCHOR
+    response_status: GLOBAL_TILT_RESPONSE_UNRESOLVED
+  beta_MO:
+    state_component: VelocityFrameBundle.beta_MO
+    mes_anchor: NO_ACTIVE_MES_ANCHOR
+    response_status: DISTINCT_FROM_BETA_RO_UNLESS_CLOSURE_PREMISES_FIX_BETA_RM
+  DeltaOmega_k:
+    state_component: GeometryState.delta_omega_k
+    mes_anchor: NO_ACTIVE_MES_ANCHOR
+    response_status: MODEL_DEPENDENT_UNRESOLVED
+  optional_geometry_tensors:
+    state_component: GeometryState.optional_STF2_fields
+    mes_anchor: NO_CURRENT_REPORT_A_ANCHOR
+    response_status: NEEDS_DECLARED_FORWARD_PROVIDER
+
+runtime_type_mapping:
+  physical_state: JointAnisotropyState
+  kinematics: CongruenceKinematics
+  frame_velocities: VelocityFrameBundle
+  geometry: GeometryState
+  scalar_anchor: MESAnchorSpec
+  convex_anchor_body: AnchorBodySpec
+  functionals:
+    - TensorFunctionalSpec
+    - TensorFunctionalResult
+  identified_set: IdentifiedDepartureSet
+  warning: >-
+    ObservableIrrepState and MESAnchorBody are report-level conceptual names,
+    not claimed runtime class names on the exact searched authority surface.
+
+scope_firewall:
+  scalar_only_mes_observational_rank: RETIRED
+  scalar_mes_sector_bounds: RETAINED_AS_CONDITIONAL_ANCHORS
+  observable_QO_equals_physical_sigma_omega: FORBIDDEN
+  scalar_to_tensor_reconstruction: FORBIDDEN
+  beta_RO_equals_beta_MO_without_premise: FORBIDDEN
+  geodesic_A_zero_equals_numerical_anchor: FORBIDDEN
+  missing_component_zero_imputation: FORBIDDEN
+  corrected_planck_result: NONE
+  finite_healpix_containment: RANK_UNRESOLVED
+  native_bass_solver: EXCLUDED
+  claim_promotion: false
+
+terminal: >-
+  PASS_K0R_AUTHORITY_CROSSWALK_V2_SOURCE__SCALAR_CURVATURE_AND_OPTIONAL_TENSOR_GEOMETRY_SEPARATED__
+  GENERAL_AND_GEODESIC_DIMENSIONS_REGISTERED__ACCELERATION_PREMISE_AND_NUMERICAL_ANCHOR_SEPARATED__
+  NO_CLAIM_PROMOTION

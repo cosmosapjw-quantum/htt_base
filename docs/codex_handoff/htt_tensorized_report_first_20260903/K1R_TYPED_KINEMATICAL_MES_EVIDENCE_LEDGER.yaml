@@ -1,0 +1,238 @@
+schema: htt.report_a.k1r.typed_kinematical_mes_evidence_ledger.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+status: K1R_SOURCE_COMPILED_PENDING_RUNTIME_EXECUTION_AND_K2_RECOMPILE
+supersedes_semantically:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/K1_TYPED_KINEMATICAL_MES_EVIDENCE_LEDGER.yaml
+  git_blob_sha1: 5f7e5176ee3deade7829604d077c875065d1fd10
+
+source_authority:
+  report_input_head: 409ad49a341870f49694b9a57e0baa19ddf841c4
+  donor_pr367_head: 6bafca66285ef071081453313bb7d2d6b261599c
+  donor_relation: GIT_DIVERGED_SEMANTIC_AUTHORITY_IMPORT_ONLY
+
+results:
+  - id: K1R-T1-STATE-PARTITION
+    disposition: INCLUDE_CORE
+    truth_status: SOURCE_DEFINED_EXACT
+    evidence:
+      - joint_anisotropy_state.py blob e2b9651b79e2e334d9d402afbe44566e0c4bad67
+    assumptions:
+      - declared frame
+      - declared congruence
+      - declared epoch and averaging scale
+      - declared basis, units and perturbative order
+    forbidden:
+      - untyped legacy beta reinterpretation
+      - missing_component_zero_imputation
+      - scalar_to_tensor_inference
+
+  - id: K1R-T2-GEOMETRY-DIMENSION-PARITY
+    disposition: INCLUDE_CORE
+    truth_status: DERIVED_EXACT_WITH_STRATUM_QUALIFIER
+    evidence:
+      - joint_anisotropy_state.py parity contracts
+      - direct representation dimension count
+    general_core_raw_dimension: 18
+    general_core_locally_free_SO3_quotient_dimension: 15
+    geodesic_core_raw_dimension: 15
+    geodesic_core_locally_free_SO3_quotient_dimension: 12
+    assumptions:
+      - beta_RO treated as first-order closure-derived
+      - optional geometry tensors excluded from the stated core count
+      - SO3 action locally free for quotient subtraction
+    forbidden:
+      - anisotropic_curvature_budget_name_for_DeltaOmega_k
+      - global_orbit_separation_from_dimension_count
+      - reuse_on_nontrivial_stabiliser_strata_without_correction
+
+  - id: K1R-T3-ANCHOR-SEPARATION
+    disposition: INCLUDE_CORE
+    truth_status: SOURCE_DEFINED_EXACT
+    evidence:
+      - statistical_foundations.py blob f52d7716314d0574a1b7203b09787f70d7f3ec2d
+      - mes_theorem_authority.py default-branch source
+    active_numeric_anchors:
+      - MES_G_SIGMA
+      - MES_G_OMEGA
+    forbidden:
+      - anchor_as_state_estimate
+      - anchor_as_likelihood
+      - FLRW_converse
+
+  - id: K1R-T4-ACCELERATION-PREMISE-ANCHOR-SPLIT
+    disposition: INCLUDE_CORE
+    truth_status: SOURCE_DEFINED_STRUCTURAL_BOUNDARY
+    evidence:
+      - MES_G_ACCEL status VERIFIED_STRUCTURAL with zero coefficient triple
+      - statistical_foundations acceleration absence object with value null
+    geodesic_domain_premise: A_a = 0
+    numerical_anchor_status: NO_MES_ANCHOR
+    outside_geodesic_branch: NO_ACTIVE_VERIFIED_ACCELERATION_BOUND
+    forbidden:
+      - zero_radius_acceleration_anchor
+      - infer_A_zero_outside_geodesic_branch
+      - invent_non_geodesic_acceleration_ceiling
+
+  - id: K1R-T5-RADIAL-ONLY
+    disposition: INCLUDE_CORE
+    truth_status: DERIVED_EXACT
+    evidence:
+      - orthogonal_action_norm_proof
+      - scalar_to_vector_and_STF_equivariance_obstruction
+    wolfram: BLOCKED_BY_UPSTREAM_HTTP_502
+    independent_execution: NOT_OBSERVED
+    forbidden:
+      - direction_from_norm_bound
+      - eigenframe_from_scalar_ceiling
+      - morphology_from_scalar_radius
+
+  - id: K1R-T6-PRODUCT-GAUGE
+    disposition: INCLUDE_CORE
+    truth_status: DERIVED_EXACT_WITH_SCOPE_BOUNDARY
+    evidence:
+      - direct Minkowski-functional proof
+      - anchor_geometry.py blob d9c2134961a6d1e786b72321d829db025bb758fa
+      - joint_feasible_set.py blob 257b238ddcc52971286c165e9a1bd97e554574d4
+    assumptions:
+      - all included blocks available
+      - every included body absorbing
+      - Cartesian product anchor body
+    identity: rho_product = max_j rho_j
+    forbidden:
+      - signed_cross_sector_sum
+      - guessed_radius_for_missing_anchor
+      - apply_product_gauge_to_coupled_response_feasible_set
+
+  - id: K1R-T7-QUADRATIC-STRESS
+    disposition: INCLUDE_CORE
+    truth_status: DERIVED_EXACT_PLUS_SOURCE_CONTRACT
+    evidence:
+      - statistical_foundations SectorStress semantics
+      - anchor_geometry AnchorMarginReport semantics
+    identity: rho_product_squared = max_j S_j for S_j = norm_j_squared / R_j_squared
+    fixed_denominator_interval_rule: monotone endpoint division
+    realization_conditional_denominator: RATIO_UNIDENTIFIED
+    forbidden:
+      - equate_gauge_margin_with_quadratic_exceedance
+      - divide_realization_conditional_anchor_as_fixed
+      - interpret_exceedance_as_probability_or_evidence
+
+  - id: K1R-T8-CHANNEL-MATCH
+    disposition: INCLUDE_CORE
+    truth_status: SOURCE_DEFINED_EXACT
+    evidence:
+      - statistical_foundations.py blob f52d7716314d0574a1b7203b09787f70d7f3ec2d
+    statuses:
+      - DEFINED
+      - RATIO_UNIDENTIFIED
+      - ANCHOR_UNAVAILABLE
+      - CHANNEL_MISMATCH
+      - NUMERATOR_UNIDENTIFIED
+    channel_key:
+      - sector
+      - invariant
+      - frame
+      - congruence
+      - normalisation
+      - perturbative_order
+      - branch
+    forbidden:
+      - cross_channel_ratio
+      - realization_conditional_ratio_without_joint_analysis
+
+  - id: K1R-T9-JOINT-IDENTIFIED-SET
+    disposition: INCLUDE_CORE
+    truth_status: DERIVED_CONDITIONAL
+    evidence:
+      - identified_set.py blob 6a7de849a646abcc22fdea5f9a2396af0e9db472
+      - joint_feasible_set.py blob 257b238ddcc52971286c165e9a1bd97e554574d4
+      - partial-identification literature
+    definition: Theta(y;eta) = D_eta intersect B_MES(y;eta) intersect R_eta_inverse(C_y(eta))
+    assumptions:
+      - predeclared eta
+      - declared response
+      - declared compatibility region
+      - anchor-construction procedure included in the analysis map
+    shared_data_rule: anchor and response restrictions are not independent evidence merely because they are separate set factors
+    forbidden:
+      - independent_evidence_multiplication_without_joint_law
+      - data_dependent_anchor_omitted_from_row_equivariance
+      - empty_set_as_detection
+      - broad_set_as_central_estimate
+
+  - id: K1R-T10-SINGLETON-FIBRE
+    disposition: INCLUDE_CORE
+    truth_status: DERIVED_EXACT_SET_THEOREM_WITH_CONDITIONAL_APPLICATION
+    evidence:
+      - direct affine-fibre proof
+      - identified-set source semantics
+    criterion: feasible response-kernel fibre equals singleton zero displacement
+    forbidden:
+      - full_column_rank_as_necessary_condition
+      - solver_failure_as_nonidentification
+      - missing_response_as_point_estimate
+
+  - id: K1R-T11-BETA-BOUNDARY
+    disposition: INCLUDE_CORE
+    truth_status: LITERATURE_AND_IMPLEMENTATION_SUPPORTED_SCOPED
+    evidence:
+      - VelocityFrameBundle source contract
+      - WU010 PR442 scoped execution authority
+    closed:
+      - beta_RO local observer response
+    unresolved:
+      - beta_RM response
+      - beta_MO response
+      - global matter tilt
+      - congruence-kinematical response
+    forbidden:
+      - beta_RO_equals_beta_MO_without_beta_RM_premise
+      - beta_RO_equals_global_tilt
+
+  - id: K1R-T12-PHYSICAL-MORPHOLOGY-AND-SCALAR-INHERITANCE
+    disposition: INCLUDE_CORE
+    truth_status: SOURCE_DEFINED_PLUS_DERIVED_POLICY_EXACT
+    evidence:
+      - tensor_functionals.py blob eeb938f3f4d3cda892e41ab45128ae1bfdcfcffe
+      - tensor_departure_statistics source semantics
+      - scalar-only rank retirement policy
+    retained: scalar MES quantities as typed radial sector constraints
+    retired: scalar collection as primary observable representation or current anomaly rank
+    forbidden:
+      - functional_exists_implies_observational_identification
+      - scalar_method_revival
+
+coverage:
+  theorem_rows: 12
+  include_core: 12
+  observational_claims: 0
+  point_attribution_claims: 0
+  native_bass_claims: 0
+  finite_healpix_no_go_claims: 0
+  corrected_planck_results: 0
+
+review:
+  source_identity_readback: PASS
+  academic_paragraph_logic: PASS_NO_ISSUES
+  academic_british_english: PASS_NO_ISSUES
+  scispace_covariant_support: PRESENT
+  scispace_partial_identification_support: PRESENT
+  repository_specific_contract_requires_direct_derivation: true
+  wolfram: BLOCKED_BY_UPSTREAM_HTTP_502
+  local_sympy: BLOCKED_BY_CLIENT_ERROR
+  contract_execution: NOT_EXECUTED
+
+claim_projection:
+  current_canonical_claims: 30
+  proposed_new_atomic_claims: 10
+  proposed_existing_claim_revisions: 4
+  provisional_candidate_total: 40
+  final_decision_node: K2_CLAIM_LEDGER_RECOMPILE
+  no_claim_promotion_in_K1R: true
+
+terminal: >-
+  PASS_K1R_TYPED_KINEMATICAL_MES_REPAIR_LEDGER_SOURCE__
+  TWELVE_RESULTS_SUPPORTED_FOR_K2__SHARED_DATA_AND_COUPLED_FEASIBLE_SET_BOUNDARIES_EXPLICIT__
+  EXECUTION_NOT_OBSERVED__NO_CLAIM_PROMOTION

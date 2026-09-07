@@ -1,0 +1,63 @@
+schema: htt.report_a.r4a0f.flattening_closeout.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+previous_head: 15d052890d70a7dadb67b673a7d36804dcea7fdc
+flattening_commit: d6e53643f489d75321c5a329d913130600a77932
+flattening_tree: d68ef14a1112517440ab815949c264f0254a1375
+manuscript:
+  path: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+  previous_blob: be5e8459b51741eaac87e659c63524902ae4d40b
+  flattened_blob: df490a70fa3ceb3becc786916d4494f1cffca388
+  repair: >-
+    Replace the nonunique instruction to choose B from B^T B=G and det B=chi
+    by the unique positive-diagonal upper Cholesky factor B_plus and the signed
+    orientation section B=S_chi B_plus.
+mathematical_contract:
+  definitions:
+    - B_plus^T B_plus = G
+    - S_chi = diag(1,1,sgn chi)
+    - B = S_chi B_plus
+  deductions:
+    - det B_plus = sqrt(det G) = abs(chi)
+    - B^T B = G
+    - det B = chi
+  nonuniqueness_counterfactual: >-
+    Without the deterministic section, R B has the same Gram matrix and signed
+    determinant for every R in SO(3).
+verification:
+  local_source_equivalent_tdd:
+    red: 1 failed, 2 passed
+    green: 3 passed
+  git_apply_check: PASS
+  exact_sympy:
+    positive_chi: PASS
+    negative_chi: PASS
+    left_SO3_nonuniqueness: PASS
+  fresh_wolfram: BLOCKED_BY_UPSTREAM_502
+  github_exact_head:
+    workflow_run: 33824854288
+    initial_job: 100875223700
+    retry_job: 100875398247
+    runner_id: 0
+    steps: []
+    classification: PRESTART_NO_EXECUTION
+t2_tex_finding:
+  previous_classification: P2_SOURCE_TEX_DEFECT
+  corrected_classification: CONNECTOR_RENDERING_ARTIFACT
+  theorem_pack_blob: 8e66a7bb698932a060cc60057e3541b782167d83
+  source_edit_applied: false
+  readback: literal backslash-frac commands present in all three equations
+scope:
+  observational_data_used: false
+  corrected_tensorized_planck_rank: null
+  finite_healpix_containment: RANK_UNRESOLVED
+  native_bass_scope: EXCLUDED
+  scientific_claim_promotion: false
+  merge_authorized: false
+next_node: R4A1_SUPPORTED_RUNTIME_CONTRACT_AND_CANONICAL_ID_HASH
+terminal: >-
+  PASS_R4A0F_CANONICAL_SECTION_FLATTENED__
+  T2_TEX_RENDERING_FALSE_POSITIVE_CLOSED__
+  EXACT_HEAD_EXECUTION_PRESTART_BLOCKED__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY

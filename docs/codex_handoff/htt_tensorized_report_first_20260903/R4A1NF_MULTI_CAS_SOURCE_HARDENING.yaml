@@ -1,0 +1,41 @@
+schema: htt.report_a.r4a1nf.multi_cas_source_hardening.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+base_head: 8f78c1390cc3a598d7054ec50664d2bc70d63b9d
+observational_data_used: false
+merge_authorized: false
+
+finding:
+  id: R4A1NF-SAGE-STATIC-01
+  class: SOURCE_COMPATIBILITY
+  description: >-
+    The initial Sage verifier called Matrix.is_positive_definite on a rational
+    QQ matrix. The official documented implementation is tied to the RDF/CDF
+    dense numerical backend. The exact verifier now uses Sylvester's leading
+    principal-minor criterion over QQ instead.
+  scientific_formula_changed: false
+  evidence_grade_changed: false
+
+source_transition:
+  old_sage_blob: 25ebdd5eac543478391bdcb4ab2a33b259e1b76d
+  new_sage_blob: d99c8ea22351963078a50bb6d4630d9e5f0232ec
+  old_plan_blob: 29459852b63b46a5ba352bbada1a98efeb0f9843
+  new_plan_blob: 963dd09932abae2599033f5989635c1638c2f31e
+  method: EXACT_SYLVESTER_LEADING_PRINCIPAL_MINORS
+
+verification_boundary:
+  official_documentation_review: PASS
+  sagemath_execution: NOT_EXECUTED_BACKEND_UNAVAILABLE
+  other_verifier_execution: NOT_EXECUTED
+  no_pass_claimed: true
+
+claim_boundary:
+  finite_healpix_containment: RANK_UNRESOLVED
+  corrected_tensorized_planck_rank: null
+  native_bass_claim: false
+  publication_authority: false
+
+terminal: >-
+  SAGEMATH_VERIFIER_STATICALLY_HARDENED__EXECUTION_PENDING__
+  NO_SCIENTIFIC_OR_PUBLICATION_PROMOTION

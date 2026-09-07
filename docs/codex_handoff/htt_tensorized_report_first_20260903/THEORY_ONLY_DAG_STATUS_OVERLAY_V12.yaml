@@ -1,0 +1,55 @@
+schema: htt.report_a.theory_only_dag_status_overlay.v12
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+created_from_head: d78fc646721942faadaf7594990f118ef7e21aef
+observational_gate: DATA_DEFERRED_BY_OWNER
+nodes:
+  A2M:
+    state: SOURCE_COMPLETE_LOCAL_EQUIVALENT_PASS_CI_PRESTART_BLOCKED
+    authority: PR450@ba84912bea165896ec8f0c0e5793b47d1736f512
+  T2C:
+    state: SOURCE_COMPLETE_LOCAL_STRESS_PASS_CI_PRESTART_BLOCKED
+    authority: PR451@9f7d06dec0fce1c3a8a53fa5372c84d9c679c037
+  R2F:
+    state: LOCAL_CANDIDATE_GREEN_PATCH_BOUND_NOT_FLATTENED
+  R3:
+    state: BLIND_REFEREE_COMPLETE_BOUNDED_MAJOR_REVISION
+  R3B:
+    state: FORMAL_BIBLIOGRAPHY_SOURCE_COMPLETE
+    outputs:
+      - docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/R3_BIBLIOGRAPHY_CORRECTION_LEDGER.yaml
+  R3P:
+    state: PROVENANCE_APPENDIX_SOURCE_COMPLETE
+    outputs:
+      - docs/research_reports/appendices/HTT_REPORT_A_AUTHORITY_AND_EXECUTION_PROVENANCE.md
+  R3F:
+    state: NEXT
+    objective: >-
+      Materialize the bounded R3 candidate as the branch manuscript authority,
+      link the formal bibliography and provenance appendix, and preserve all
+      29 claim IDs and the closed observational firewall.
+  R3A:
+    state: WAITING_ON_R3F
+    objective: fresh exact-head blind referee and claim/citation audit
+  R4:
+    state: WAITING_ON_R3A
+    objective: freeze Report A source, references, evidence ledger and hashes
+  P1:
+    state: AFTER_R4
+    objective: WU011 finite-operator numerical-error closeout
+  P2:
+    state: AFTER_R4
+    objective: ideal inverse, intrinsic-octupole nuisance and noisy estimation
+  P3:
+    state: AFTER_R4
+    objective: depth and local/global identifiability theory
+claim_boundaries:
+  corrected_tensorized_planck_rank: null
+  finite_healpix_containment: RANK_UNRESOLVED
+  exact_qo_krylov_novelty: UNRESOLVED
+  scientific_claim_promotion: false
+  merge_authorized: false
+current_next_node: R3F_FLATTEN_REVISED_MANUSCRIPT_AND_BIND_BIBLIOGRAPHY
+terminal: R3_BIBLIOGRAPHY_AND_PROVENANCE_SOURCE_COMPLETE__R3F_NEXT

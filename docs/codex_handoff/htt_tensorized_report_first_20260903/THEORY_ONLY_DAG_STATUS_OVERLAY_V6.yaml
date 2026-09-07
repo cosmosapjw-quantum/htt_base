@@ -1,0 +1,78 @@
+schema: htt.theory_report_first.dag_status_overlay.v6
+date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+base_dag:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/THEORY_ONLY_DAG.yaml
+  version: v5
+  git_blob_sha: 159356aeaf4caac37ef9c4ba7447327b2771d244
+
+state_updates:
+  T7:
+    state: DONE_GRADED_CONTINUUM_EVIDENCE
+    terminal: >-
+      PASS_CONTINUUM_L12_SURJECTIVITY_EVIDENCE__
+      Z_EXACT_OTHER_FIVE_NUMERICAL__FINITE_HEALPIX_UNRESOLVED
+    outputs:
+      - docs/research_reports/theory_packs/T7_CONTINUUM_WIDE_MASK_EVIDENCE_PACK.md
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/T7_CONTINUUM_EVIDENCE_LEDGER.yaml
+    boundaries:
+      - all_direction_interval_certificate_not_obtained
+      - external_verifier_GitHub_jobs_prestart_no_execution
+      - continuum_does_not_promote_finite_healpix_rank
+  T8:
+    state: DONE_CONDITIONAL_NUMERICAL_ANALYSIS_THEORY
+    terminal: >-
+      PASS_INVARIANT_MATRIX_ERROR_ENVELOPE_THEORY_WITH_ERROR_CLASS_COMPLETENESS_UNRESOLVED
+    outputs:
+      - docs/research_reports/theory_packs/T8_MATRIX_NUMERICAL_ERROR_ENVELOPE_THEOREM_PACK.md
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/T8_WOLFRAM_EXACT_RECEIPT.json
+    boundaries:
+      - actual_healpix_error_class_completeness_unresolved
+      - current_exact_head_runtime_prestart_no_execution
+      - partial_subspace_requires_gap_bound
+  T9:
+    state: DONE_WITH_CONTENT_BOUND_COUNT_CORRECTION
+    terminal: PASS_REPORT_A_INTEGRATED_CLAIM_LEDGER
+    outputs:
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER.yaml
+      - docs/codex_handoff/htt_tensorized_report_first_20260903/T9_LEDGER_COUNT_CORRECTION_AND_VALIDATION.json
+    receipt:
+      actual_claim_count: 29
+      unique_claim_ids: true
+      corrected_planck_rank_claims: 0
+      observational_claims: 0
+      finite_healpix_no_go_claims: 0
+      canonical_sorted_id_sha256: bc81bdd2d5325f5561834594cb3f4195dc29c22ee461dcf77e067373678b22fe
+    repair_required_before_R4: flatten count correction into self-contained ledger v2
+  R1:
+    state: ACTIVE_MANUSCRIPT_INTEGRATION
+    depends_on: [T9]
+  R2:
+    state: WAITING_ON_R1
+  R3:
+    state: WAITING_ON_R2
+  R4:
+    state: WAITING_ON_R3
+
+current_primary_next_node: R1_FULL_THEORY_AND_METHODS_REPORT_A_DRAFT
+current_parallel_nodes:
+  - STATEMENT_LEVEL_PRIMARY_CITATION_AND_NOVELTY_MATRIX
+  - SUPPORTED_RUNTIME_EXECUTION_RECOVERY
+current_terminal: >-
+  A2_A5_AND_T1_THROUGH_T9_COMPLETE_AT_TYPED_SCOPE__
+  R1_MANUSCRIPT_ACTIVE__
+  DATA_DEFERRED__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY
+
+unchanged_firewalls:
+  - no current scalar-only MES observational result
+  - no old WU006-WU008 tensor foreground or injection result
+  - no corrected Planck tensorized rank
+  - no empirical beta or boost subtraction
+  - no local observer boost equals global matter tilt
+  - no continuum to finite-healpix promotion
+  - no physical shear or vorticity from morphology alone
+  - no Bianchi family attribution
+  - no native BASS solver content
+  - no observational execution before D0

@@ -1,0 +1,193 @@
+--- a/docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R2_20260903.md
++++ b/docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R2_20260903.md
+@@ -1,6 +1,6 @@
+ # Tensorized Low-Multipole CMB Inference under Conditional Isotropy Bounds and Response-Limited Identifiability
+ 
+-**R2 working draft — theory and methods report**  
++**R2 working draft — R2F regeneration — theory and methods report**  
+ Date: 2026-09-03  
+ Repository: `cosmosapjw-quantum/htt_base`  
+ Status: this is not a publication-ready manuscript; observational execution remains deferred.
+@@ -12,20 +12,25 @@
+ ```
+ 
+ This document is regenerated from the self-contained 29-claim canonical ledger,
+-the citation/provenance matrix, and the first independent audit.  The neutral
++the citation/provenance matrix, the R2C/R2E independent audits, and the R2D
++primary-source equation audit.  The neutral
+ survivor source contains 37 registered source rows: 36 `INCLUDED` rows and one `DEFERRED` row, `PR284_NEW:FINITE-REGISTERED-PATH`.  The 37 source rows are an
+ evidence-disposition surface, not a count of unique theorems.  The report
+ projects them onto 29 publication-facing claims with explicit truth,
+ implementation, execution, and scope fields.
+ 
+ PR #450 implements the neutral 37-row extraction on the merged PR #408
+-lineage.  Its source-equivalent local contract reports 13 passing tests, but
+-its exact-head GitHub job is `PRESTART_NO_EXECUTION`.  PR #451 repairs the
+-arbitrary Q/O packet decoder by enforcing the forward-image syzygy
+-`O:Q = \mathscr K_{QO} e_0`; its source-equivalent RED/GREEN run reports 26
+-passing tests after the repair, while its exact-head GitHub job is also
+-`PRESTART_NO_EXECUTION`.  Neither repair is labelled implementation-verified
+-in this draft.
++lineage.  Its source-equivalent local contract reports 14 passing tests after
++an exact row-schema guard repaired the seed key `source_kkind` to
++`source_kind`; its exact-head GitHub job remains `PRESTART_NO_EXECUTION`.
++PR #451 enforces the normalized forward-image syzygy
++`\bar O:\bar Q = \mathscr K_{QO}e_0`, reconstructs the octupole in a
++fixed Frobenius-orthonormal seven-dimensional STF3 basis through a row-scaled
++`10 x 7` least-squares solve, and requires complete packet replay.  Its
++source-equivalent focused suite reports 28 passing tests, and a deterministic
++10,000-pair stress run produced seven typed chart refusals and no silent replay
++failure.  Both exact-head GitHub jobs remain `PRESTART_NO_EXECUTION`; neither
++repair is labelled implementation-verified in this draft.
+ 
+ ## Abstract
+ 
+@@ -45,11 +50,15 @@
+ an arbitrary packet decoder must additionally enforce the image condition
+ 
+ \[
+-O:Q=\mathscr K_{QO}e_0.
++\bar O:\bar Q=\mathscr K_{QO}e_0,
++\qquad
++O:Q=A_QA_O\,\mathscr K_{QO}e_0.
+ \]
+ 
+-The corresponding source repair exists in PR #451 but has not received an
+-exact-head execution receipt.  A signed Krylov determinant distinguishes a
++PR #451 now enforces this image relation, replaces the numerically unstable
++triple inverse-basis octupole reconstruction by the conditioned STF3 solve
++described above, and requires full packet replay.  Its local evidence is not
++an exact-head execution receipt.  A signed Krylov determinant distinguishes a
+ registered mirror pair sharing a named power/cubic-bispectrum compression.
+ No global invariant-ring or all-strata completeness statement is made.
+ 
+@@ -339,7 +348,7 @@
+ 
+ For a forward-generated valid packet, these constructions give a symmetric,
+ trace-free, unit-normalized Q/O pair and one canonical `SO(3)` representative.
+-The required packet-image identities include
++The required normalized packet-image identities include
+ 
+ \[
+ Ce_0=e_1,\qquad C^2e_0=e_2,
+@@ -351,17 +360,21 @@
+ \boxed{\bar O_{\rm can}:\bar Q_{\rm can}=Be_0}.
+ \]
+ 
+-Equivalently, in the original notation,
++Equivalently, because `\mathscr K_{QO}` is built from normalized tensors,
+ 
+ \[
+-\boxed{O:Q=\mathscr K_{QO}e_0}.
++\boxed{\bar O:\bar Q=\mathscr K_{QO}e_0},
++\qquad
++\boxed{O:Q=A_QA_O\,\mathscr K_{QO}e_0}.
+ \]
+ 
+ The mathematical statement `RA-ORBIT-002` is therefore restricted to nonzero,
+-cyclic, conditioned packets in the image of the forward map.  The original
+-arbitrary-packet decoder did not enforce the last syzygy; PR #451 adds a
+-source-level guard and adversarial mutation test, but remains
+-`PRESTART_NO_EXECUTION` at its exact head.
++cyclic, conditioned packets in the image of the forward map.  PR #451 now
++enforces the contraction syzygy and full forward replay.  To avoid cubic
++amplification from applying an inverse Krylov basis in three tensor slots, it
++solves the ten trilinear equations in a fixed Frobenius-orthonormal STF3 basis.
++The source-equivalent 28-test and 10,000-pair stress receipts are numerical
++debugging evidence; the exact-head GitHub job remains `PRESTART_NO_EXECUTION`.
+ 
+ The signed volume `chi` is invariant under `SO(3)` and odd under improper
+ rotations.  It separates a registered mirror pair sharing
+@@ -404,6 +417,17 @@
+ U_\omega=\frac32B_\omega^2.
+ \]
+ 
++The coefficient and premise chain is equation-bound to the primary sources.
++After the explicitly named C1 spatial-gradient estimate and C2 characteristic-
++time estimate, Eqs. (59) and (60) of `astro-ph/9501016` give the displayed
++geodesic shear and vorticity triples.  The COBE bridge `astro-ph/9904346`
++gives the harmonic/PSTF conversion in Eqs. (15), (17)--(19), and adopts
++`epsilon_1=0` in Eq. (12) as a peculiar-motion attribution while acknowledging
++a possible non-Doppler residual.  Thus the coefficients are
++`LITERATURE_SUPPORTED`, the normalization is `DERIVED_EXACT`, and
++`epsilon_1=0` remains a scenario input rather than an intrinsic-dipole
++measurement.
++
+ These are premise-conditioned scalar functions under a declared congruence,
+ frame, perturbative branch, Copernican extension, derivative-hierarchy
+ reduction, and residual-dipole scenario.  They are one-way implications only
+@@ -771,7 +795,7 @@
+ ```text
+ stored-real/STF normalization        DERIVED_EXACT; source implemented
+ Q/O cyclic reconstruction            DERIVED_EXACT on forward-image domain
+-PR451 arbitrary-packet repair         SOURCE_PRESENT; PRESTART_NO_EXECUTION
++PR451 image-safe stable decoder       SOURCE_PRESENT; 28 local tests; PRESTART_NO_EXECUTION
+ conditional MES functions            DERIVED_CONDITIONAL; primary-source supported
+ finite-null row-equivariance          DERIVED_CONDITIONAL
+ WU-010 local-observer response        IMPLEMENTATION_VERIFIED at frozen scope
+@@ -782,7 +806,7 @@
+ continuum other directions            NUMERICALLY_CHECKED; local non-byte-exact
+ matrix error envelope                 DERIVED_EXACT; source implemented
+ finite-HEALPix robust containment     UNRESOLVED
+-PR450 neutral source extraction       SOURCE_PRESENT; PRESTART_NO_EXECUTION
++PR450 neutral source extraction       SOURCE_PRESENT; 14 local tests; PRESTART_NO_EXECUTION
+ ```
+ 
+ The observational gate remains closed:
+@@ -797,8 +821,9 @@
+ The corrected real harmonic carrier maps exactly to the CMB quadrupole and
+ octupole tensors.  On the declared nonzero cyclic chart, a signed Krylov packet
+ preserves proper-rotation morphology absent from a small scalar compression.
+-The theorem applies to valid forward-image packets; PR #451 repairs the
+-arbitrary decoder but awaits exact-head execution.  Conditional MES ceilings
++The theorem applies to valid forward-image packets; PR #451 now carries an
++image-safe conditioned STF3 decoder with full replay, but still awaits exact-
++head execution.  Conditional MES ceilings
+ remain scalar, one-way, and premise-bound.  Finite-null ranks require symmetry
+ of the complete adaptive algorithm, including deterministic ties and missing
+ rows.
+@@ -868,11 +893,13 @@
+ canonical_report_claims: 29
+ PR450:
+   role: mechanical survivor extraction
+-  local_source_equivalent_tests: 13 passed
++  local_source_equivalent_tests: 14 passed
++  seed_schema_repair: source_kkind -> source_kind
+   exact_head_execution: PRESTART_NO_EXECUTION
+ PR451:
+-  role: Q/O packet-image decoder repair
+-  local_source_equivalent_tests: 26 passed after observed RED
++  role: Q/O packet-image and stable-decoder repair
++  local_source_equivalent_tests: 28 passed
++  local_stress: 10000 pairs / 7 typed refusals / 0 replay failures
+   exact_head_execution: PRESTART_NO_EXECUTION
+ finite_operator_terminal:
+   state: PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED
+@@ -944,12 +971,24 @@
+ 
+ 1. exact-head execution and independent review of PR #450;
+ 2. exact-head execution and independent review of PR #451;
+-3. supported-runtime verification of the R2 draft contracts;
+-4. final primary-source page/equation audit for MES premises;
+-5. blind PHYS--MATH, statistics, code/execution, and provenance review;
++3. supported-runtime verification of the R2F draft contracts;
++4. frozen-source blind PHYS--MATH, statistics, code/execution, and provenance review;
++5. bounded referee revision;
+ 6. explicit publication/merge decision after the audit.
+ 
+ The portable all-direction interval certificate and complete finite-HEALPix
+ error-family proof remain desirable but are not silently converted into
+ publication prerequisites.  Their unresolved status is part of the scientific
+ result boundary.
++
++
++---
++
++## R2F regeneration receipt
++
++This revision changes implementation-status and primary-source provenance only.
++It does not alter any scientific theorem, numerical continuum result, finite-
++operator terminal, or observational firewall.  The current source heads are
++PR #450 `ba84912bea165896ec8f0c0e5793b47d1736f512` and PR #451
++`9f7d06dec0fce1c3a8a53fa5372c84d9c679c037`; both exact-head workflows remain
++`PRESTART_NO_EXECUTION`.

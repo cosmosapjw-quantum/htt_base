@@ -1,0 +1,154 @@
+--- a/docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R2_20260903.md
++++ b/docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R2_20260903.md
+@@ -55,12 +55,13 @@
+ O:Q=A_QA_O\,\mathscr K_{QO}e_0.
+ \]
+ 
+-PR #451 now enforces this image relation, replaces the numerically unstable
+-triple inverse-basis octupole reconstruction by the conditioned STF3 solve
+-described above, and requires full packet replay.  Its local evidence is not
+-an exact-head execution receipt.  A signed Krylov determinant distinguishes a
+-registered mirror pair sharing a named power/cubic-bispectrum compression.
+-No global invariant-ring or all-strata completeness statement is made.
++An image-safe decoder must enforce this relation and reproduce the complete
++forward packet.  A numerically stable construction expands the octupole in a
++fixed Frobenius-orthonormal STF3 basis and solves the ten trilinear equations
++without applying an inverse Krylov basis in all three tensor slots.  A signed
++Krylov determinant distinguishes a registered mirror pair sharing a named
++power/cubic-bispectrum compression.  No global invariant-ring or all-strata
++completeness statement is made.
+ 
+ Second, Maartens--Ellis--Stoeger-type shear and vorticity ceilings are retained
+ only as one-way, premise-conditioned scalar functionals of multipole norms
+@@ -68,14 +69,16 @@
+ cannot equivariantly generate nonzero vector or STF morphology without
+ additional directional information.
+ 
+-Third, an observation-inclusive finite rank is valid only under a matched null
+-symmetry: joint exchangeability or an explicit randomization group, together
+-with row-equivariance of the complete representation, selection, nuisance,
+-missingness, tie, and scoring map [@RANDOMIZATION_2024]
++Third, for an observation-plus-reference pool, joint exchangeability and
++row-equivariance of the complete representation, selection, nuisance,
++missingness, tie, and scoring map imply a conservative finite rank.  A distinct
++randomization-test construction ranks the statistic over the orbit of a
++specified null-invariant group, with identity inclusion and a valid exact or
++conditional-Monte-Carlo sampling rule [@RANDOMIZATION_2024]
+ [@PHIPSON_SMYTH_2010] [@HEMERIK_GOEMAN_2018].  A finite counterexample shows
+-that observation-asymmetric adaptive selection violates the nominal size for
+-either deterministic tie convention considered, whereas a pooled symmetric
+-rule preserves it.
++both that observation-asymmetric adaptive selection violates nominal size and
++that invariance under a proper subgroup does not license ranking against rows
++outside that subgroup orbit.
+ 
+ Fourth, we combine the exact full-sky thermodynamic-temperature local-observer
+ Lorentz response [@DAI_CHLUBA_2014] [@YASINI_PIERPAOLI_2017] with a declared
+@@ -138,8 +141,8 @@
+ For a photon measured by a four-velocity `u^a`,
+ 
+ \[
+-p^a=\frac{\epsilon}{c}(u^a+e^a),\qquad
+-u^ae_a=0,\qquad e^ae_a=1,
++p^a=\frac{E_\gamma}{c}(u^a+e^a),\qquad
++u^a e_a=0,\qquad e^a e_a=1,
+ \]
+ 
+ and the outward sky direction is
+@@ -457,33 +460,68 @@
+ 
+ The word *complete* includes representation construction, chart status,
+ feature selection, nuisance fitting, missingness, deterministic ties, and
+-final scoring.  If the rows are jointly exchangeable under the null, or arise
+-from a valid randomization group, and
++final scoring.  Suppose first that the rows are jointly exchangeable under the
++null and that
+ 
+ \[
+ S_i(\pi Z)=S_{\pi^{-1}i}(Z)
+ \]
+ 
+-for every permitted permutation, then the conservative upper-tail rank
++for every row permutation.  Then the conservative upper-tail rank
+ 
+ \[
+-p(Z)=\frac{1+\sum_{i=1}^{N}\mathbf 1\{S_i(Z)\ge S_0(Z)\}}{N+1}
++p_{\rm row}(Z)=\frac{1+\sum_{i=1}^{N}\mathbf 1\{S_i(Z)\ge S_0(Z)\}}{N+1}
+ \]
+ 
+-is super-uniform.  This is `RA-STAT-001`.  Identity inclusion and random-subset
+-issues are discussed in the finite-test literature [@PHIPSON_SMYTH_2010]
+-[@HEMERIK_GOEMAN_2018].
++is super-uniform.  This is the exchangeable-row theorem `RA-STAT-001`.
++
++A randomization test is a separate construction.  For a finite group
++\(\mathcal G\) under which the null law is invariant, it ranks
++\(T(Z)\) against the orbit \(\{T(gZ):g\in\mathcal G\}\), not against
++arbitrary rows outside that orbit.  Exact use of all group elements, or a valid
++identity-including conditional-Monte-Carlo sample of transformations, gives the
++corresponding finite randomization statement [@RANDOMIZATION_2024]
++[@PHIPSON_SMYTH_2010] [@HEMERIK_GOEMAN_2018].
+ 
+ Adaptive selection is valid only if the entire operation remains equivariant,
+ or if selection occurs in a separately valid independent design.  An exact
+ four-row counterexample makes the tie policy explicit (`RA-STAT-002`).
+ 
+-- with ties assigned to coordinate 2, there are 12 rows at `p=1/2` and
+-  12 rows at `p=3/4`;
+-- with ties assigned to coordinate 1, there are 6 rows at `p=1/2` and
+-  18 rows at `p=3/4`;
++- with ties assigned to coordinate 2, there are 12 permutations at `p=1/2`
++  and 12 permutations at `p=3/4`;
++- with ties assigned to coordinate 1, there are 6 permutations at `p=1/2`
++  and 18 permutations at `p=3/4`;
+ - the maximum size violation is `1/4` under either asymmetric rule;
+-- the symmetric pooled rule has 18 rows at `p=3/4`, 6 at `p=1`, and zero maximum violation.
++- the symmetric pooled rule has 18 permutations at `p=3/4`, 6 at `p=1`,
++  and zero maximum violation.
++
++A second exact fixture separates row exchangeability from subgroup
++randomization.  Let the null put probability `1/2` on each of
++
++\[
++z^{(1)}=(10,0,-100,-100),\qquad
++z^{(2)}=(0,10,-100,-100).
++\]
++
++This law is invariant under the two-element group that swaps rows 0 and 1.
++Nevertheless, ranking row 0 against all four rows gives
++
++\[
++p_{\rm all}(z^{(1)})=\frac14,\qquad
++p_{\rm all}(z^{(2)})=\frac12,
++\]
++
++so
++
++\[
++\Pr(p_{\rm all}\le\tfrac12)=1>\frac12.
++\]
++
++The group-orbit rank uses only the two transformed statistics and gives
++\(p_{\mathcal G}=1/2\) or \(1\), which is super-uniform.  Thus a
++proper-subgroup invariance hypothesis does not validate the all-row rank; the
++reference set must be the actual null orbit or satisfy the stronger joint
++exchangeability theorem.
+ 
+ Chart failure is part of the row map.  Deleting only chart-unavailable
+ reference rows, while keeping the observation, changes the effective null law.
+@@ -992,3 +1030,15 @@
+ PR #450 `ba84912bea165896ec8f0c0e5793b47d1736f512` and PR #451
+ `9f7d06dec0fce1c3a8a53fa5372c84d9c679c037`; both exact-head workflows remain
+ `PRESTART_NO_EXECUTION`.
++
++
++---
++
++## R3 blind-review revision receipt
++
++This bounded revision separates the exchangeable-row theorem from the finite
++randomization-group theorem, corrects `rows` to `permutations` in the exact
++four-row enumeration, removes repository implementation detail from the
++abstract, and distinguishes photon energy `E_\gamma` from the MES multipole
++amplitudes `\epsilon_\ell`.  It changes no tensor theorem, MES coefficient,
++continuum rank, finite-operator terminal, or observational firewall.

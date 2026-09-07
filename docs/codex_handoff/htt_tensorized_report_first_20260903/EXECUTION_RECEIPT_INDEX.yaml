@@ -1,0 +1,178 @@
+schema: htt.report_a.execution_receipt_index.v2
+date: 2026-09-03
+repository: cosmosapjw-quantum/htt_base
+purpose: >-
+  Separate scientific truth, source presence, execution, byte-exact replay,
+  and publication status. A workflow conclusion without executed steps is not
+  a test failure or pass.
+
+status_vocabulary:
+  EXECUTED_SUCCESS: runner assigned and declared checks completed successfully
+  EXECUTED_FAILURE: runner assigned and at least one declared check failed
+  MIXED_EXECUTED_EVIDENCE: scoped checks succeeded but a broader suite remained non-green
+  PRESTART_NO_EXECUTION: job completed without runner assignment or steps
+  SOURCE_ONLY: code or test source exists without an accepted execution receipt
+  ARTIFACT_ONLY: committed generated evidence exists without accepted generating-run readback
+  LOCAL_NON_BYTE_EXACT: an external or source-equivalent local run exists but not on the exact repository checkout
+  SUMMARY_ONLY: a prose or user-supplied result is not a materialized proof/execution
+
+receipts:
+  - id: VT_FOUNDATION_PR367
+    head: 6bafca66285ef071081453313bb7d2d6b261599c
+    status: MIXED_EXECUTED_EVIDENCE
+    evidence:
+      - targeted_per_slice_test_receipts_reported
+      - four_axis_PR270_scope_reported_pass
+      - PR273_blind_synthetic_and_PR275_replay_reported
+    non_green:
+      full_repository_suite:
+        passed: 10038
+        failed: 406
+        skipped: 69
+        deselected: 59
+        xfailed: 15
+    interpretation: >-
+      Framework slices and generated synthetic evidence exist; the entire
+      repository was not green and the proof atlas did not adjudicate all
+      source rows.
+
+  - id: THEORY_PROMOTION_PR405
+    head: 463f0999949bf8534c60ad7973b7342705c2e3d6
+    status: MIXED_EXECUTED_EVIDENCE
+    evidence:
+      - matrix_parsed
+      - candidate_universe_coverage_checks_reported
+      - claim_language_and_DAG_checks_reported
+    scientific_gate: STOP_INVALID_FOR_CURRENT_PROMOTION
+    interpretation: audit execution does not convert proposed promotions into publication authority
+
+  - id: SURVIVOR_AUDIT_PR408
+    head: 40dce3ab9328c1f3acb99adba11046056c639737
+    status: SOURCE_ONLY
+    role: planning_and_validator_contract
+    interpretation: first implementation unit remains mechanical survivor triage
+
+  - id: TENSORIZED_PR440
+    head: 687234128d7c12d04e68aad0f303c21d2d470393
+    status: PRESTART_NO_EXECUTION
+    workflows:
+      - name: PR07 audit-repair gates
+        run_id: 33299973246
+        conclusion: failure
+        executed_steps: 0
+      - name: PR04 theory and integration gates
+        conclusion: failure
+        executed_steps: 0
+      - name: Repository integrity
+        conclusion: failure
+        executed_steps: 0
+    source_tests:
+      - tests/common/test_mes_krylov_completion.py
+      - tests/integration/test_mes_tensor_mapfree_repair.py
+    interpretation: >-
+      Source implementation and tests are inspectable; GitHub did not execute
+      them on this exact head. No test failure is inferred from prestart jobs.
+
+  - id: WU009_PR441
+    head: 04680e99d56b9974fe1120854370af1fb94fb1d6
+    status: SUMMARY_ONLY
+    row_count: 78
+    authority_source: USER_SUPPLIED_SUMMARY
+    formal_dossier: PENDING
+    interpretation: wording and proof-obligation inventory only
+
+  - id: WU010_PR442
+    head: 29427a1f7f2c5d46e43ffe03053c4ac13e969228
+    status: EXECUTED_SUCCESS
+    workflows:
+      - name: PR07 audit-repair gates
+        run_id: 33529400104
+        conclusion: success
+      - name: PR04 theory and integration gates
+        run_id: 33529400157
+        conclusion: success
+      - name: Repository integrity
+        run_id: 33529400115
+        conclusion: success
+    reported_scoped_results:
+      python_3_12_fast: 26_passed_2_skipped
+      named_lowell_regression: 46_passed
+      theorem_property_unit: 25_passed
+    interpretation: scoped full-sky local-observer response is implementation-verified with typed limits
+
+  - id: WU011_LAST_BYTE_EXACT_SCIENCE
+    head: f635d873cf5e77f7cb0d2756469acde60b8609e5
+    status: EXECUTED_SUCCESS
+    terminal: PASS_TASK7C_MATCHED_CONTROL_RANK_UNRESOLVED
+    artifact_id: 9851300447
+    artifact_digest: sha256:c9d6235f69fd27381279b0d007fd8dd1b75365f70bd5ce4e535f63ade4bb56a6
+    interpretation: last accepted Task7C finite-operator scientific execution
+
+  - id: WU011_CURRENT_SOURCE_PR444
+    head: de73549c16ac6ceb63f924c86611e0a5ceb4711d
+    status: PRESTART_NO_EXECUTION
+    workflows:
+      - {name: WU011 processed boost, run_id: 33718012488, conclusion: failure, executed_steps: 0}
+      - {name: WU011 Task7A evidence, run_id: 33718012443, conclusion: failure, executed_steps: 0}
+      - {name: WU011 Task7B identifiability, run_id: 33718012447, conclusion: failure, executed_steps: 0}
+      - {name: WU011 Task7C nuisance span, run_id: 33718012441, conclusion: failure, executed_steps: 0}
+      - {name: WU011 Task7C rank policy, run_id: 33718012446, conclusion: failure, executed_steps: 0}
+      - {name: WU011 Task7C matrix error envelope, run_id: 33718012456, conclusion: failure, executed_steps: 0}
+      - {name: PR04 theory and integration gates, run_id: 33718012444, conclusion: failure, executed_steps: 0}
+      - {name: PR07 audit-repair gates, run_id: 33718012454, conclusion: failure, executed_steps: 0}
+      - {name: Repository integrity, run_id: 33718012445, conclusion: failure, executed_steps: 0}
+    local_behavioral_evidence:
+      status: LOCAL_NON_BYTE_EXACT
+      reported_paths: 12_passed_0_failed
+      limitation: source_equivalent_functional_execution_not_exact_checkout
+    interpretation: >-
+      Invariant-envelope and registry guards are source-level changes. Their
+      exact-head Python and integration status is unobserved.
+
+  - id: WU011_Z_EXACT_ARTIFACT_PR446
+    head: 033e0d19d61448492489ed1469bc687b2ecb4552
+    status: ARTIFACT_ONLY
+    artifact:
+      path: docs/generated/wu011_task7c_external_verifiers/wolfram_exact_z_L12_pivot_minors.json
+      result: z_direction_real_stored_rank_32
+      exact_block_ranks: [4, 4, 4, 3, 2, 1]
+    workflow:
+      name: WU011 Task7C external verifiers
+      run_id: 33671028538
+      conclusion: failure
+      executed_steps: 0
+    interpretation: exact rational artifact is author-derived and durable; external package axes did not execute on GitHub
+
+  - id: WU011_EXTERNAL_CAS_PR447
+    head: bf6cc2dd75336ec5584b86dccd8de5cb352ab8f3
+    status: SOURCE_ONLY
+    workflows:
+      - name: WU011 external CAS verification
+        run_id: 33676453561
+        jobs:
+          - {name: Julia direct continuum quadrature, executed_steps: 0}
+          - {name: GNU Octave direct continuum quadrature, executed_steps: 0}
+          - {name: Java Algebra System exact rational rank, executed_steps: 0}
+    thread_local_evidence:
+      status: LOCAL_NON_BYTE_EXACT
+      axes_reported: [Julia, GNU_Octave, JAS]
+    interpretation: verifier implementations and local receipts are useful but not repository-executed proof axes
+
+  - id: REPORT_PR449_PRE_AUDIT
+    head: 5546584385836bdb734b95675b292661ccb7fb1a
+    status: PRESTART_NO_EXECUTION
+    workflow:
+      name: Repository integrity
+      run_id: 33733291632
+      conclusion: failure
+      executed_steps: 0
+    interpretation: documentation content is reviewable; no CI validation occurred
+
+report_rules:
+  - never map PRESTART_NO_EXECUTION to theorem or test failure
+  - never map SOURCE_ONLY or ARTIFACT_ONLY to IMPLEMENTATION_VERIFIED
+  - never map LOCAL_NON_BYTE_EXACT to exact-head replay
+  - never map focused success to whole-repository green
+  - keep scientific terminal, implementation status, and publication status as separate fields
+
+current_terminal: EXECUTION_RECEIPT_INDEX_INITIAL_PASS_COMPLETE

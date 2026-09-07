@@ -1,0 +1,75 @@
+schema: htt.report_a.k0.typed_kinematical_mes_closeout.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+pull_request: 449
+
+source_commit:
+  sha: 1292b30b0aa30335c1253c41674ab84ff55f580b
+  tree: a5a7f00383210b8b58418a448831a14426ab448f
+  parent: 0ae24eedc4c8ed95bd7a9be91e971842a22e2ce8
+  message: "docs(report): restore typed kinematical MES authority lane"
+
+created_sources:
+  - path: docs/codex_handoff/htt_tensorized_report_first_20260903/K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK.yaml
+    git_blob_sha1: f3b99645556f0caf5579c3061338e13a0f0662c0
+  - path: docs/research_reports/theory_packs/K0_TYPED_KINEMATICAL_MES_AUTHORITY_NOTE.md
+    git_blob_sha1: d4a5bb4cc8bb1dd874ca10fc2864776334eaa7b7
+  - path: docs/codex_handoff/htt_tensorized_report_first_20260903/K1_TYPED_KINEMATICAL_MES_THEOREM_CONTRACT.yaml
+    git_blob_sha1: e9827698e7fabb0bc47f3fa82abe52330ba07300
+  - path: docs/codex_handoff/htt_tensorized_report_first_20260903/THEORY_ONLY_DAG_STATUS_OVERLAY_V25.yaml
+    git_blob_sha1: e10be290f8c1d7846c2d65df0f05a12582a40822
+  - path: tests/contracts/test_report_a_k0_kinematical_crosswalk.py
+    git_blob_sha1: 8e48c7bf3273fa59126ea1a53cea68070b92d39d
+
+donor_authority:
+  merged_pr: 367
+  published_head: 6bafca66285ef071081453313bb7d2d6b261599c
+  relation: GIT_DIVERGED_SEMANTIC_AUTHORITY_IMPORT_ONLY
+  production_code_copied: false
+  report_branch_execution_claimed: false
+
+scientific_result:
+  observable_state: "Q_ab and O_abc remain the primary low-ell observable tensors"
+  physical_state: "CongruenceKinematics x VelocityFrameBundle x GeometryState restored as a distinct typed layer"
+  mes_inheritance: "registered scalar MES bounds become sector-wise anchors on physical invariants"
+  radial_only: "sector norm bounds constrain magnitude but do not reconstruct tensor directions"
+  active_anchors: [MES_G_SIGMA, MES_G_OMEGA]
+  typed_absences: [acceleration_NO_MES_ANCHOR, anisotropic_curvature_NO_MES_ANCHOR]
+  closed_response_lane: beta_RO_via_WU010_local_observer_only
+  unresolved_response_lanes: [sigma, omega, acceleration, beta_RM, beta_MO, optional_geometry]
+  identification_rule: "missing or rank-deficient response yields an identified set or abstention, not point attribution"
+
+review:
+  academic_writing_paragraph_logic: PASS_NO_ISSUES
+  academic_writing_british_english: PASS_NO_ISSUES
+  scispace: >-
+    Primary and adjacent literature supports covariant radiation-multipole and
+    kinematical-sector treatment and set-valued partial identification, but it
+    does not replace the repository-specific state/anchor/response contract.
+  wolfram: BLOCKED_BY_UPSTREAM_HTTP_502
+  fallback_algebra: DIRECT_DERIVATION_ONLY
+  local_python_artifact_run: BLOCKED_BY_CLIENT_ERROR
+  contract_source_present: true
+  contract_execution: NOT_EXECUTED
+
+claim_policy:
+  canonical_claims_before_K0: 30
+  provisional_new_claims: 10
+  canonical_claims_after_K0: 30
+  claim_promotion: false
+  final_claim_count_node: K2_CLAIM_LEDGER_RECOMPILE
+
+scope:
+  scalar_only_observational_rank: RETIRED
+  scalar_mes_sector_bounds: RETAINED_AS_CONDITIONAL_ANCHORS
+  corrected_planck_result: NONE
+  finite_healpix_containment: RANK_UNRESOLVED
+  native_bass_solver: EXCLUDED
+  observational_execution: DATA_DEFERRED_BY_OWNER
+  merge_authorized: false
+
+next_node: K1_TYPED_KINEMATICAL_MES_THEOREM_PACK
+terminal: >-
+  PASS_K0_TYPED_KINEMATICAL_MES_AUTHORITY_CROSSWALK_SOURCE__
+  REMOTE_COMMIT_AND_BLOB_READBACK_PASS__CONTRACT_EXECUTION_NOT_RUN__
+  K1_READY__NO_CLAIM_PROMOTION_OR_MERGE

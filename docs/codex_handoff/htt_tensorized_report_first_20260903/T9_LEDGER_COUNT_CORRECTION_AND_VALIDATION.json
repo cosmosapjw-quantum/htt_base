@@ -1,0 +1,29 @@
+{
+  "schema": "htt.report_a.integrated_claim_ledger_validation_overlay.v1",
+  "date": "2026-09-03",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "report_pr": 449,
+  "base_ledger": {
+    "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER.yaml",
+    "git_blob_sha": "be0fed9ef2a5c764a71d2270c7d24b6d5cbeffa6",
+    "declared_claim_count": 27
+  },
+  "mechanical_validation": {
+    "actual_claim_count": 29,
+    "unique_claim_ids": true,
+    "canonical_sorted_id_sha256": "bc81bdd2d5325f5561834594cb3f4195dc29c22ee461dcf77e067373678b22fe",
+    "scientific_content_changed": false,
+    "authority_or_evidence_changed": false,
+    "only_correction": "coverage.claim_count must be read as 29 rather than 27"
+  },
+  "canonical_read_rule": "Read the base ledger together with this overlay. The overlay supersedes only the stale coverage.claim_count field.",
+  "flattening_requirement": "Before manuscript freeze, rewrite the base ledger as a self-contained v2 file with claim_count=29 and preserve this overlay as repair history.",
+  "claim_boundary": {
+    "observational_data_used": false,
+    "corrected_planck_rank": null,
+    "finite_healpix_no_go_promoted": false,
+    "scientific_claim_promotion": false,
+    "merge_authorized": false
+  },
+  "terminal": "PASS_T9_CLAIM_LEDGER_CONTENT_WITH_COUNT_CORRECTION_OVERLAY"
+}

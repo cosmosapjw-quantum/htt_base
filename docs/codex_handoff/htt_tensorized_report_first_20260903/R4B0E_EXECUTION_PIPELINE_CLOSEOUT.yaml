@@ -1,0 +1,80 @@
+schema: htt.report_a.r4b0e.execution_pipeline_closeout.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+
+source_chain:
+  publication_assembly: 055d8d31d4a9a11d9bc27b9a2a99594ba127638f
+  config_hardening: 58eb7c668780a262f6d481a087ad82037e6cb46e
+  initial_closeout: 4f4a031caa328db9acff7564d1d66d5cd9343152
+  pandoc_execution_routing: b1c6b412ac4677be19fe2a0da2e908aa62ec0ee4
+  boundary_validator_repair: 252aafe07de22a28435cd0bd3161b6686abc8f2c
+
+execution_pipeline:
+  source_contracts:
+    - tests/contracts/test_report_a_r4b0_assembly.py
+    - tests/contracts/test_report_a_r4b0_generated_tex_validator.py
+  generator:
+    tool: Pandoc 3.11
+    sha256: 37edb3bbcf722f921a009941bf5874e2e0c09263226c9b4a2d980788cb062ab6
+    defaults: docs/research_reports/report_a/pandoc.yaml
+    output: docs/research_reports/report_a/build/HTT_REPORT_A_THEORY_METHODS_R4B0.tex
+  generated_tex_validator: scripts/validate_report_a_generated_tex.py
+  artifact_policy: GENERATED_NON_AUTHORITATIVE_DO_NOT_EDIT
+  pdf_engine_reserved_for_r4b1:
+    tool: Tectonic 0.17.0
+    sha256: 1a715688baf591e650c8aeb160ae934e181685eecbb38b317de30b269ac5d606
+
+validator_semantics:
+  removes:
+    - pre-Abstract repository and draft-status prologue
+    - manual heading-number prefixes before LaTeX numbering
+  preserves:
+    - all 30 canonical claim identifiers
+    - explicit observation-deferred boundary
+    - explicit finite-HEALPix RANK_UNRESOLVED boundary
+    - formal citeproc bibliography
+    - appendix structure
+  rejects:
+    - unresolved citation markers
+    - legacy quarantined manuscript content
+    - duplicate or absent appendix transition
+    - omitted canonical claim identifiers
+
+workflow:
+  run: 33864245329
+  initial_job: 100995351365
+  retry_job: 100995547172
+  initial_steps: null
+  retry_steps: null
+  initial_conclusion: failure
+  retry_conclusion: failure
+  logs_available: false
+  classification: PRESTART_NO_EXECUTION
+  source_contracts_executed: false
+  pandoc_download_executed: false
+  pandoc_sha_check_executed: false
+  latex_generation_executed: false
+  generated_tex_validation_executed: false
+  artifact_upload_executed: false
+
+publication_outputs:
+  generated_tex: false
+  generated_pdf: false
+  bibliography_resolution: NOT_EXECUTED
+  page_visual_audit: NOT_EXECUTED
+
+scientific_state:
+  canonical_claims: 30
+  citation_keys: 17
+  corrected_planck_tensor_rank: null
+  finite_healpix_containment: RANK_UNRESOLVED
+  observational_data_used: false
+  bass_scope: EXCLUDED
+  publication_authorized: false
+  merge_authorized: false
+
+terminal: >-
+  R4B0E_PINNED_PANDOC_AND_GENERATED_TEX_VALIDATION_SOURCE_COMPLETE__
+  INITIAL_AND_RETRY_PRESTART_NO_EXECUTION__NO_TEX_OR_PDF_ARTIFACT__
+  OBSERVATIONAL_DATA_DEFERRED__NO_PUBLICATION_OR_MERGE_AUTHORITY

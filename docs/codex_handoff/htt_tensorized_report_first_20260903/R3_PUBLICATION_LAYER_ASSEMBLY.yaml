@@ -1,0 +1,35 @@
+schema: htt.report_a.r3.publication_layer_assembly.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+base_head: d78fc646721942faadaf7594990f118ef7e21aef
+inputs:
+  manuscript_base: docs/research_reports/HTT_REPORT_A_THEORY_METHODS_DRAFT_R2_20260903.md
+  r2f_patch: docs/codex_handoff/htt_tensorized_report_first_20260903/R2F_MANUSCRIPT_REGENERATION.patch
+  r3_patch: docs/codex_handoff/htt_tensorized_report_first_20260903/R3_BOUNDED_REVISION.patch
+  claim_ledger: docs/codex_handoff/htt_tensorized_report_first_20260903/T9_INTEGRATED_CLAIM_EVIDENCE_LEDGER_V2.yaml
+  citation_matrix: docs/codex_handoff/htt_tensorized_report_first_20260903/REPORT_A_CITATION_PROVENANCE_MATRIX_V1.yaml
+new_publication_layer:
+  bibliography: docs/research_reports/HTT_REPORT_A_REFERENCES.bib
+  provenance_appendix: docs/research_reports/appendices/HTT_REPORT_A_AUTHORITY_AND_EXECUTION_PROVENANCE.md
+  bibliography_correction_ledger: docs/codex_handoff/htt_tensorized_report_first_20260903/R3_BIBLIOGRAPHY_CORRECTION_LEDGER.yaml
+  dag_overlay: docs/codex_handoff/htt_tensorized_report_first_20260903/THEORY_ONLY_DAG_STATUS_OVERLAY_V12.yaml
+candidate_contract:
+  local_r3_candidate_sha256: 1e9146531c3978e151b2d55552f1b058cada5650fd9e86f84c992565326d3341
+  claim_ids_required: 29
+  citation_keys_required: 17
+  formal_bibtex_keys_required: 17
+  abstract_pr_identifiers_forbidden: true
+  exchangeable_row_and_group_orbit_theorems_separate: true
+  photon_energy_symbol: E_gamma
+  corrected_planck_rank: null
+  observational_execution: false
+verification_status:
+  scispace_orbit_search: NO_DIRECT_QO_KRYLOV_MATCH_FOUND
+  novelty_status: UNRESOLVED
+  wolfram_fresh_r3_replay: BLOCKED_BY_UPSTREAM_502
+  github_exact_head_ci: PRESTART_NO_EXECUTION
+  local_r3_candidate: GREEN_CONTENT_CONTRACT
+next_node: R3F_FLATTEN_REVISED_MANUSCRIPT_AND_BIND_BIBLIOGRAPHY
+merge_authorized: false
+terminal: PASS_R3_PUBLICATION_LAYER_SOURCE_ASSEMBLY__MANUSCRIPT_FLATTENING_PENDING

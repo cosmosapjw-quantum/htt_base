@@ -1,0 +1,111 @@
+{
+  "schema": "htt.report_a.t8_matrix_error_envelope_wolfram_receipt.v1",
+  "date": "2026-09-03",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "report_pr": 449,
+  "source_implementation": {
+    "pr": 444,
+    "commit": "de73549c16ac6ceb63f924c86611e0a5ceb4711d",
+    "path": "htt/obsstat/processed_boost_error_envelope.py",
+    "blob_sha": "ab5d792c699566c40b0bca0230333991519d974c",
+    "exact_head_runtime": "PRESTART_NO_EXECUTION"
+  },
+  "theorem_contract": {
+    "perturbation_class": "additive_family_l2_balls",
+    "family_count_symbol": "N_fam",
+    "family_perturbation": "Delta_f=sum_i b_fi E_fi with ||b_f||_2<=r_f",
+    "total_perturbation": "Delta=sum_f Delta_f",
+    "envelope": "Gamma_E=N_fam sum_f r_f^2 sum_i E_fi E_fi^T+lambda_reg^2 I",
+    "rank_whitening": "K_tilde=Gamma_E^(-1/2) K_obs"
+  },
+  "fresh_wolfram_checks": {
+    "loewner_example": {
+      "residual_eigenvalues_exact": [
+        "(25813247939+sqrt(185470798109970171241))/9658958400",
+        "(25813247939-sqrt(185470798109970171241))/9658958400"
+      ],
+      "residual_eigenvalues_numeric": [
+        4.082429253818269746778155819254,
+        1.262504820853798413283492235882
+      ],
+      "positive_semidefinite": true
+    },
+    "compensated_scaling": {
+      "scalings": ["7", "11/5"],
+      "covariance_residual": [[0,0],[0,0]],
+      "invariant": true
+    },
+    "zero_family_pathology": {
+      "inflation_matrix_if_family_count_is_incremented": [
+        ["57493/22050", "104/2835"],
+        ["104/2835", "39205/46656"]
+      ],
+      "zero_family_must_be_omitted_or_rejected": true
+    },
+    "generalized_spectrum": {
+      "generalized_eigenvalues": [
+        "1.6153590323339096685208696566452075439226696158988",
+        "3.2258536775033474678807310245724954232895431101444"
+      ],
+      "whitened_singular_value_squares": [
+        "1.6153590323339096685208696566452075439226696158988",
+        "3.2258536775033474678807310245724954232895431101444"
+      ],
+      "spectrum_residual": "0 at approximately 79 decimal digits",
+      "sample_minimum_whitened_singular_value": "1.27096775424631040027951835958",
+      "sample_full_row_certificate": true
+    }
+  },
+  "validation_repair_record": [
+    {
+      "stage": "first generalized-spectrum expression",
+      "result": "FAILED_INTERNAL_CHECK",
+      "cause": "the inverse square root was assembled from unnormalized exact Eigensystem vectors, so the computed whitening matrix was not Gamma_E^(-1/2)",
+      "scientific_data_changed": false
+    },
+    {
+      "stage": "corrected generalized-spectrum expression",
+      "repair": "use high-precision MatrixPower[Gamma_E,-1/2] and compare against Eigenvalues[{K K^T,Gamma_E}]",
+      "result": "PASS_ZERO_SPECTRUM_RESIDUAL"
+    }
+  ],
+  "proved_statements": {
+    "single_family_loewner_bound": true,
+    "additive_family_loewner_bound": true,
+    "positive_definite_regularized_envelope": true,
+    "compensated_uniform_family_scaling_invariance": true,
+    "family_internal_orthogonal_mixing_invariance": true,
+    "zero_family_semantic_guard": true,
+    "error_whitened_perturbation_norm_at_most_one": true,
+    "weyl_robust_rank_lower_bound": true,
+    "full_row_certificate_when_all_whitened_singular_values_exceed_one": true
+  },
+  "separate_partial_subspace_lane": {
+    "rank_lower_bound_does_not_fix_singular_vectors": true,
+    "required": [
+      "certified perturbation bound",
+      "certified singular-value gap",
+      "Wedin or equivalent projector-angle bound",
+      "survivor lower bound exceeding projector uncertainty"
+    ]
+  },
+  "open_scientific_premises": {
+    "family_partition_provenance": "UNSEALED",
+    "family_basis_hashes": "UNSEALED",
+    "family_radius_registry": "UNSEALED",
+    "calibration_holdout_separation": "PARTIAL",
+    "actual_healpix_error_belongs_to_declared_class": "UNRESOLVED",
+    "finite_healpix_full_row_rank": "UNRESOLVED"
+  },
+  "claim_boundary": {
+    "physical_high_ell_prior": false,
+    "observational_data": false,
+    "empirical_beta": false,
+    "boost_subtraction": false,
+    "global_tilt": false,
+    "bianchi_family": false,
+    "finite_healpix_no_go_promoted": false,
+    "merge_authorized": false
+  },
+  "terminal": "PASS_INVARIANT_MATRIX_ERROR_ENVELOPE_THEORY_WITH_ERROR_CLASS_COMPLETENESS_UNRESOLVED"
+}

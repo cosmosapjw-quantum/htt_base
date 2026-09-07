@@ -1,0 +1,18 @@
+from: markdown+tex_math_single_backslash+raw_tex+citations+fenced_code_blocks+pipe_tables
+to: latex
+input-files:
+  - ../HTT_REPORT_A_THEORY_METHODS_DRAFT_R3_20260904.md
+output-file: build/HTT_REPORT_A_THEORY_METHODS_R4B0.tex
+standalone: true
+citeproc: true
+bibliography:
+  - ../HTT_REPORT_A_REFERENCES.bib
+metadata-file: metadata.yaml
+include-in-header:
+  - header.tex
+lua-filter:
+  - structure.lua
+number-sections: true
+top-level-division: section
+table-of-contents: false
+wrap: preserve

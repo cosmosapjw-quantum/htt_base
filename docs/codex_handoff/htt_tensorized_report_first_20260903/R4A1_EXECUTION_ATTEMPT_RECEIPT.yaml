@@ -1,0 +1,78 @@
+schema: htt.report_a.r4a1.execution_attempt_receipt.v1
+date: 2026-09-04
+repository: cosmosapjw-quantum/htt_base
+report_pr: 449
+contract_commit: 7a7372920aa0c6dc1b376c5b74d4fde112649d52
+validator_commit: d69bc58b3153af6703f17a825c93b334db23fabc
+workflow_commit: 29a1c88f13a66b16aeab8a768a039d31a68e5ce5
+observational_data_used: false
+corrected_planck_tensor_rank: null
+finite_healpix_containment: RANK_UNRESOLVED
+merge_authorized: false
+
+contract:
+  path: docs/codex_handoff/htt_tensorized_report_first_20260903/R4A1_SUPPORTED_RUNTIME_AUTHORITY_CONTRACT.yaml
+  git_blob_sha1: cd9d125329925b63676a4f13b16b844eedf3a1e9
+  runtime: CPython_3_12
+  exact_checkout_required: true
+
+validator:
+  path: tests/contracts/test_report_a_r4a1_authority.py
+  git_blob_sha1: 0970ccb40f575172ac3e68ebde16d64230f3beb0
+  checks:
+    - exact declared Git-blob identities
+    - 30 unique canonical claim identifiers
+    - canonical sorted-ID SHA-256
+    - 30-by-30 ledger/citation bijection
+    - formal bibliography keys equal citation source registry
+    - manuscript citation keys equal formal bibliography keys
+    - all canonical claim identifiers appear in manuscript
+    - single rendered bibliography authority
+    - observational finite-HEALPix and BASS firewalls
+
+canonical_claim_id:
+  expected_sha256: e103c581ce353b5102af81834831ac292105f18699671e8eb75b171acd97f01e
+  grade: SOURCE_BOUND_PENDING_SUPPORTED_RUNTIME_REPLAY
+  ledger_field_remains: null
+  reason_not_promoted: exact_checked_out_ledger_not_executed_under_CPython_3_12
+
+exact_head_workflow:
+  head: 29a1c88f13a66b16aeab8a768a039d31a68e5ce5
+  run: 33828253240
+  initial_job: 100885436770
+  retry_job: 100887279874
+  initial_runner_id: 0
+  retry_runner_id: 0
+  runner_name: ""
+  initial_steps: []
+  retry_steps: []
+  initial_conclusion: failure
+  retry_conclusion: failure
+  classification: PRESTART_NO_EXECUTION
+  checkout_executed: false
+  python_setup_executed: false
+  pytest_executed: false
+
+prior_closeout_head_retry:
+  head: 1801d3825d535ba1c2ba495119c35df151ffc397
+  run: 33825215995
+  retry_job: 100884300458
+  steps: []
+  classification: PRESTART_NO_EXECUTION
+
+local_runtime:
+  exact_Python_3_12_available: false
+  latest_available_probe: CPython_3_13_5
+  exact_repository_checkout_reconstructed: false
+  classification: BLOCKED_R4A1_RUNTIME_UNAVAILABLE
+
+fresh_wolfram:
+  status: BLOCKED_BY_UPSTREAM_502
+  counted_as_pass: false
+
+current_terminal: >-
+  R4A1_CONTRACT_AND_EXACT_SOURCE_VALIDATOR_BOUND__
+  CANONICAL_HASH_SOURCE_BOUND_NOT_PROMOTED__
+  INITIAL_AND_RETRY_PRESTART_NO_EXECUTION__
+  SUPPORTED_RUNTIME_UNAVAILABLE__
+  NO_PUBLICATION_OR_MERGE_AUTHORITY
