@@ -1,0 +1,108 @@
+{
+  "document_role": "SUPPORTING_CROSSWALK_NOT_AN_ADDITIONAL_EXECUTION_GRAPH",
+  "as_of": "2026-09-07",
+  "planning_status": "COMPLETE",
+  "scientific_specification_status": "PENDING_EXISTING_M1_M2_M3",
+  "execution_release": false,
+  "predecessor": {
+    "pr": 462,
+    "commit": "b4d04e62d664997eb9e1858b6195c35e4ece3378",
+    "tree": "ea95984f5f1b1d977ca625dfde9a34d71202b115",
+    "directory": "docs/research_program/post_review_20260907",
+    "reuse": ["THEORY_RESULTS.md", "IMPLEMENTATION_CONTRACT.md", "CODE_DATA_REUSE.md", "REGRESSION_ORACLES.json"]
+  },
+  "active_plan": {
+    "pr": 463,
+    "commit": "0e2d6e3a890ae44303440e8534fb6080d1dac881",
+    "master_path": "docs/research_program/referee_seeded_20260907/00_MASTER_PLAN_KO.md",
+    "dag_path": "docs/research_program/referee_seeded_20260907/03_PROGRAM_DAG.yaml",
+    "dag_git_blob": "1dfe55d6228841c14c547cdaf8364758c8bcddea",
+    "authority": "Use this actual DAG, not the earlier independent labels in PR464"
+  },
+  "addendum": {
+    "pr": 464,
+    "master": "REVIEW_SEEDED_RESEARCH_PLAN_KO.md",
+    "source_findings": "REUSE_AND_DATA_MAP.md",
+    "supporting_derivations": "THEORY_RESULTS_AND_CORRECTIONS.md",
+    "earlier_parallel_draft_commit": "f6ee52673dbd1566b0c76c700f34fa326d01f7b6",
+    "earlier_parallel_draft_role": "Historical articulation, not a separate active programme or additional gates"
+  },
+  "remaining_MAIN_contracts": [
+    {
+      "id": "M1_CMB_MODEL",
+      "status": "NEXT_SCIENTIFIC_CLOSURE",
+      "consumes": ["T_CORE", "REUSE"],
+      "purpose": "CMB observation, low/high/foreground/noise joint law, response and complete null procedure"
+    },
+    {
+      "id": "M2_REDSHIFT_MODEL",
+      "status": "REMAINING_SCIENTIFIC_CLOSURE",
+      "consumes": ["T_CORE", "REUSE"],
+      "purpose": "Distance/redshift likelihood, survey selection, calibration, frame and identifiable functional"
+    },
+    {
+      "id": "M3_EXPERIMENT",
+      "status": "REMAINING_DEPENDENT_SCIENTIFIC_CLOSURE",
+      "consumes": ["M1_CMB_MODEL", "M2_REDSHIFT_MODEL"],
+      "purpose": "Complete finite scientific experiment and implementation/input/error contract with no scientific placeholders"
+    }
+  ],
+  "earlier_PR464_label_mapping": {
+    "R0": "T_CORE review recap, not ten new results",
+    "S0": "REUSE with supplementary DESI and schema-versus-numerical findings",
+    "T1": "M1_CMB_MODEL",
+    "T2": "M2_REDSHIFT_MODEL",
+    "T3": "M3_EXPERIMENT",
+    "F0": "THEORY_FREEZE",
+    "C0": "C0_INTEGRATION plus C3_SELECTED_DATA_INTAKE",
+    "C1": "C1_IMPLEMENTATION geometry/observer subtask",
+    "C2": "C1_IMPLEMENTATION finite-operator/nuisance subtask",
+    "C3": "C1_IMPLEMENTATION catalogue/selection subtask",
+    "C4": "C1_IMPLEMENTATION joint-inference subtask",
+    "V0": "C2_SYNTHETIC_VALIDATION",
+    "V1": "C2_SYNTHETIC_VALIDATION matched-null/statistical-calibration subtask",
+    "D1": "C4_OBSERVED_ANALYSIS CMB branch",
+    "D2": "C4_OBSERVED_ANALYSIS DEPTH branch",
+    "J0": "C5_GIT_RETURN then MAIN_RESULT",
+    "P0": "Subsequent manuscript synthesis, not a prerequisite for a partial Git return"
+  },
+  "additional_source_oracles_to_deduplicate": [
+    "DESI equatorial n_hat must not be compared with Galactic CMB components without a transform",
+    "Normalised masked dipole moment responds with 3 Cov_R(n), including hemisphere diag(1,1,1/4)",
+    "Independent cap normalisations appear as separate nuisance columns",
+    "Zero-amplitude direction is undefined, not a finite physical axis",
+    "Metadata feature-support overlap is not a physical Fisher matrix or covariance"
+  ],
+  "retain_existing_stronger_results": [
+    "PR462 sharp STF derivative contraction norm sqrt(7/5), rather than treating the addendum sqrt(3) bound as strongest",
+    "PR462 vorticity background cancellation and precise contracted-derivative assumptions",
+    "PR462 generic-direction polynomial rank qualification",
+    "Pairwise bounded-nuisance ambiguity uses 2R, not the R single-reference displacement bound",
+    "PR463 absent response H=0 differs from observed zero d=0",
+    "PR463 full/half shear norm, affine design rank and correlated-cell bootstrap qualifications"
+  ],
+  "execution_route": {
+    "MAIN_parallel_contracts": ["M1_CMB_MODEL", "M2_REDSHIFT_MODEL"],
+    "join": "M3_EXPERIMENT",
+    "release": "THEORY_FREEZE only after actual closure",
+    "LOCAL_nodes": ["C0_INTEGRATION", "C1_IMPLEMENTATION", "C2_SYNTHETIC_VALIDATION", "C3_SELECTED_DATA_INTAKE", "C4_OBSERVED_ANALYSIS", "C5_GIT_RETURN"],
+    "failure_or_partial_return_from_any_LOCAL_node": true,
+    "never_require_observed_analysis_success_before_returning_a_failure": true,
+    "scientific_choice_by_Codex": false,
+    "ordinary_in_scope_debugging_by_Codex": true,
+    "one_candidate_writer": true,
+    "WORK_THREAD_required": false,
+    "manual_ZIP_relay_required": false
+  },
+  "verification_and_scope": {
+    "new_native_runs": 0,
+    "new_observational_runs": 0,
+    "new_independent_CAS": false,
+    "native_DAG_parser": "NOT_RUN",
+    "repository_review": "Broad discovery plus selected actual source reads; not an all-branch execution audit",
+    "data_inventory": "Owner-supplied metadata, not fresh MAIN measurement or analysis admission",
+    "budgets": "Evidence-driven adjustment of planning estimates with cumulative accounting; preserve explicit owner/platform/cost/experimental limits",
+    "old_reports_receipts_production_and_canonical_ledger_modified": false,
+    "merge_ready_public_disclosure_or_scientific_promotion": false
+  }
+}
