@@ -1,0 +1,90 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_citation_matrix_whole_file_preserves_titles_and_keys ___________
+
+    def test_citation_matrix_whole_file_preserves_titles_and_keys() -> None:
+>       data = _yaml(CITATION_MATRIX)
+
+tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py:20: in _yaml
+    return yaml.safe_load(path.read_text(encoding="utf-8"))
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:125: in safe_load
+    return load(stream, SafeLoader)
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/__init__.py:81: in load
+    return loader.get_single_data()
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/constructor.py:49: in get_single_data
+    node = self.get_single_node()
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:36: in get_single_node
+    document = self.compose_document()
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:55: in compose_document
+    node = self.compose_node(None, None)
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:133: in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:84: in compose_node
+    node = self.compose_mapping_node(anchor)
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/composer.py:127: in compose_mapping_node
+    while not self.check_event(MappingEndEvent):
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:98: in check_event
+    self.current_event = self.state()
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/parser.py:428: in parse_block_mapping_key
+    if self.check_token(KeyToken):
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:116: in check_token
+    self.fetch_more_tokens()
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:223: in fetch_more_tokens
+    return self.fetch_value()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <yaml.loader.SafeLoader object at 0x7f99ab036ba0>
+
+    def fetch_value(self):
+    
+        # Do we determine a simple key?
+        if self.flow_level in self.possible_simple_keys:
+    
+            # Add KEY.
+            key = self.possible_simple_keys[self.flow_level]
+            del self.possible_simple_keys[self.flow_level]
+            self.tokens.insert(key.token_number-self.tokens_taken,
+                    KeyToken(key.mark, key.mark))
+    
+            # If this key starts a new block mapping, we need to add
+            # BLOCK-MAPPING-START.
+            if not self.flow_level:
+                if self.add_indent(key.column):
+                    self.tokens.insert(key.token_number-self.tokens_taken,
+                            BlockMappingStartToken(key.mark, key.mark))
+    
+            # There cannot be two simple keys one after another.
+            self.allow_simple_key = False
+    
+        # It must be a part of a complex key.
+        else:
+    
+            # Block context needs additional checks.
+            # (Do we really need them? They will be caught by the parser
+            # anyway.)
+            if not self.flow_level:
+    
+                # We are allowed to start a complex value if and only if
+                # we can start a simple key.
+                if not self.allow_simple_key:
+>                   raise ScannerError(None, None,
+                            "mapping values are not allowed here",
+                            self.get_mark())
+E                   yaml.scanner.ScannerError: mapping values are not allowed here
+E                     in "<unicode string>", line 42, column 35:
+E                           title: Randomization Inference: Theory and Applications
+E                                                         ^
+
+../../K2FE_RUN_20260905T044357468Z/venv/lib/python3.12/site-packages/yaml/scanner.py:577: ScannerError
+- generated xml file: /workspace/scratch/7436fae9cb26/K2FER1_RUN_20260905T060329959Z/receipts/k2fer1-yaml-red.xml -
+=========================== short test summary info ============================
+FAILED tests/contracts/test_report_a_k1r_kinematical_mes_repairs.py::test_citation_matrix_whole_file_preserves_titles_and_keys
+1 failed in 0.12s

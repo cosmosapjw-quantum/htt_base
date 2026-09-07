@@ -45,7 +45,7 @@ INPUT_PATHS: dict[str, Path] = {
 EXPECTED_INPUT_GIT_BLOBS: dict[str, str] = {
     "base_claim_ledger": "58291e9cfac6ff85ceffbdb6bdefd50315240831",
     "claim_overlay": "394378a796a24410a4174a8222e40c5c59e9700a",
-    "base_citation_matrix": "3fbaa2f97522cca6d0ad60e0c96655d293ca0d74",
+    "base_citation_matrix": "5087d39edf094f3adf7d72eed3061521ecf0b78d",
     "citation_overlay": "902b698ef81506179cb0f6e3c5d6616a3f445c55",
     "section_map": "d42a666ff0eba8fdca8afc9b4e719de6e5e12a8d",
     "integration_matrix": "28e823ce7705f0c14a4cae5edf39dc32b69d2617",
