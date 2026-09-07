@@ -1,0 +1,133 @@
+{
+  "schema": "htt.postreview.regression_oracles.v1",
+  "status": "AUTHORED_NOT_NATIVE_EXECUTED",
+  "scope": "Mathematical and semantic regression specifications, not production PASS receipts",
+  "source": "THEORY_RESULTS.md",
+  "cases": [
+    {
+      "id": "BETA_IDEAL_SPHERICAL_3_OF_7",
+      "hypotheses": ["fixed nonzero Q", "O independent of Q", "spherical STF3 direction", "rank-three orthogonal projector"],
+      "expected_distribution": "Beta(3/2,2)",
+      "cdf": "(5/2)*x^(3/2)-(3/2)*x^(5/2), 0<=x<=1",
+      "mean": "3/7",
+      "tail_input": 0.8,
+      "tail_expected": 0.06979572136008738,
+      "decimal_check": "web calculator evaluated in MAIN",
+      "not_validated": "arbitrary masked or non-Gaussian observational null"
+    },
+    {
+      "id": "QO_LS_ILLUSTRATIVE_RMS",
+      "input": {"D2_microkelvin_squared": 226, "D3_microkelvin_squared": 1018},
+      "ratio_squared": "49*D3/(30*D2)",
+      "rms_lower": 0.882350584718888,
+      "rms_upper": 0.8878481493381544,
+      "unit": "dimensionless formal LS-coordinate RMS",
+      "decimal_check": "web calculator evaluated in MAIN",
+      "observational_result": false
+    },
+    {
+      "id": "TRACE_INVERSE_EXTREMA",
+      "inputs": ["q=diag(-1,0,1)/sqrt(2)", "q=diag(-1,-1,2)/sqrt(6)"],
+      "expected_trace_inverse": ["9/4", "20/9"],
+      "derivation": "trace(Mq^-1)=90/(40+3*tr(q^3)^2)",
+      "native_execution": false
+    },
+    {
+      "id": "STF_DERIVATIVE_CONTRACTION",
+      "operator": "TX_ab=sum_c X_cabc with X in R3 tensor STF3",
+      "expected_T_Tstar": "(7/5)*I_on_STF2",
+      "operator_norm": "sqrt(7/5)",
+      "equality_witness": "a nonzero adjoint-image vector Tstar(S)",
+      "native_execution": false
+    },
+    {
+      "id": "FINITE_BETA_MONOPOLE",
+      "input": {"T0_kelvin": 2.7255, "beta_norm": 0.001234},
+      "T0_beta_squared_microkelvin": 4.150271478,
+      "meaning": "coefficient scale, not full Frobenius quadrupole norm",
+      "decimal_check": "web calculator evaluated in MAIN",
+      "map_correction_policy": "apply only once according to the actual release"
+    },
+    {
+      "id": "SAME_TRACE_DIFFERENT_INFORMATION",
+      "input": {"N": "I2", "A": "e1", "case1_nuisance_cov": "diag(k^2,0)", "case2_nuisance_cov": "diag(0,k^2)"},
+      "expected_trace": "k^2 for both",
+      "expected_fisher": ["1/(1+k^2)", "1"],
+      "forbidden_shortcut": "infer Fisher loss from trace ratio",
+      "native_execution": false
+    },
+    {
+      "id": "BOUND_RADIUS_PAIR_VS_ZERO_REFERENCE",
+      "input": {"K": "I", "S": "I", "nuisance_radius": "R"},
+      "one_zero_reference_threshold": "norm(d)<=R",
+      "two_admissible_states_threshold": "norm(d)<=2R",
+      "native_execution": false
+    },
+    {
+      "id": "AXIAL_MINIMUM_CUTOFF",
+      "operator": "the exact pedagogical wide-mask continuum fit and axial first-order generator",
+      "expected_full_rank_cutoff": 10,
+      "expected_real_rank_at_10": 32,
+      "lower_cutoff_obstruction": "m=0 block has four rows and at most three columns at L<=9",
+      "evidence": "deduced from the accepted existing exact minor column identities",
+      "new_certificate_run": false,
+      "finite_pixel_claim": false
+    },
+    {
+      "id": "SOFT_MASK_ENDPOINT",
+      "input": "w_epsilon=1-epsilon*m, fit ell<=5, source ell>=7",
+      "expected_K_at_zero": "zero",
+      "expected_norm_bound": "epsilon*norm(V)/(1-epsilon*norm(Mff)) when denominator positive",
+      "rank_limit_caution": "generic nonzero epsilon can retain full rank while norm tends to zero",
+      "native_execution": false
+    },
+    {
+      "id": "RADIAL_RIGID_ROTATION_NULL",
+      "input": "v(r*n)=Omega cross (r*n)",
+      "expected_radial_projection": "0 for every n,r,Omega",
+      "meaning": "nonidentifiability of this rotation mode from radial data alone",
+      "native_execution": false
+    },
+    {
+      "id": "FREE_SHELL_FRAME_GAUGE",
+      "input": "d=beta+d_int; u_b=n dot (V_b-c*beta)",
+      "transformation": "beta+=a; d_int-=a; V_b+=c*a for every bin",
+      "expected": "all data predictions unchanged",
+      "native_execution": false
+    },
+    {
+      "id": "FOUR_ROWS_NOT_THREE_DIMENSIONAL_INFORMATION",
+      "input": "four unit rows n_i=e1 with positive finite errors and weights",
+      "expected_design_rank": 1,
+      "expected_data_nullity": 2,
+      "note": "a bounded prior may make a proper posterior but does not add data information in two missing directions",
+      "native_execution": false
+    },
+    {
+      "id": "DESIGN_WEIGHT_RESCALE",
+      "input": "same X,u,C; W changed to a*W with a>0",
+      "expected": "WLS estimate and sandwich covariance unchanged",
+      "precision_model_is_distinct": true,
+      "native_execution": false
+    },
+    {
+      "id": "RANK_SCORE_NONFINITE",
+      "input_construction": "observed_score=float('nan'), finite nonempty reference scores",
+      "current_source_risk": "all comparisons false, giving the minimum finite rank",
+      "required_consumer_outcome": "typed nonfinite-input rejection before scoring",
+      "historical_receipts_changed": false,
+      "native_execution": false
+    },
+    {
+      "id": "VELOCITY_RESPONSE_SHAPE",
+      "input": "source-response matrix with shape (32,48) passed as a beta-response matrix",
+      "required_outcome": "typed parameter-space mismatch",
+      "correct_beta_derivative": "D[alpha,i]=sum_A J[i,alpha,A]*s[A], shape (32,3)",
+      "native_execution": false
+    }
+  ],
+  "all_case_definitions_are_new_test_specifications": true,
+  "test_pass_count": null,
+  "new_observational_rows_consumed": 0,
+  "full_execution_release": "HELD_PENDING_MAIN_THEORY_FREEZE"
+}
