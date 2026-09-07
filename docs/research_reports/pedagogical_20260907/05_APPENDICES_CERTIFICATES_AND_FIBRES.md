@@ -365,7 +365,7 @@ v_*=(\sqrt{8/45},1/3,\sqrt{8/45})^T.
 Here \(M_q=\operatorname{diag}(8/5,1,8/5)\), \(\eta_*=1\), and
 
 \[
-K_*^TK_*=rac1{45}
+K_*^TK_*=\frac1{45}
 \begin{pmatrix}21&0&8\\0&8&0\\8&0&4\end{pmatrix},
 \qquad
 \det K_*=\frac{4\sqrt2}{135}>0.
