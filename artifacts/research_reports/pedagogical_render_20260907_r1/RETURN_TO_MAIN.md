@@ -17,3 +17,18 @@ MES MODEL SCOPE: the sufficient branch is the explicitly retained first-order ge
 FINAL BUILD: native XeLaTeX/latexmk exit 0; no overfull/underfull boxes, missing glyphs or undefined references. Two warnings about unused unicode-math/mathtools bracket and colon macro definitions are retained. [Build record](BUILD.md), [raw command exits](COMMAND_EXITS.json), [source check](evidence/source-check.json), [proof review](evidence/PROOF_REVIEW.md), [final correspondence](evidence/final-render-check.json), [page review](PAGE_REVIEW.md) and [receipt](RENDER_RECEIPT.json) give exact coverage.
 
 NEXT: MAIN reviews this complete artifact. Prior PR450/R2/K2/authority/decoder evidence and the original dirty checkout are preserved. No merge, ready transition, canonical/claim update, private corpus/style file, font binary or installed environment is part of this work.
+
+ARTIFACT_CANDIDATE: `06f90445648db42618a450c25c4e205c3cdd46c7`, tree `b933606e9e1c24706e53af4e629759c5f5f28f6b`.
+
+Publication uses the isolated branch `docs/htt-pedagogical-render-20260907-r1` and [Draft PR #461](https://github.com/cosmosapjw-quantum/htt_base/pull/461), targeting the unchanged MAIN manuscript branch. The immutable commit containing this return is the evidence publication; its exact commit/tree and final readback are supplied in the PR description and final response, avoiding a self-referential Git hash inside its own file.
+
+- [Single PDF](https://github.com/cosmosapjw-quantum/htt_base/blob/06f90445648db42618a450c25c4e205c3cdd46c7/artifacts/research_reports/pedagogical_render_20260907_r1/FROM_A_CMB_SKY_MAP_TO_PHYSICAL_CONSTRAINTS.pdf)
+- [Standalone TeX](https://github.com/cosmosapjw-quantum/htt_base/blob/06f90445648db42618a450c25c4e205c3cdd46c7/artifacts/research_reports/pedagogical_render_20260907_r1/FROM_A_CMB_SKY_MAP_TO_PHYSICAL_CONSTRAINTS.tex)
+- [Assembled Markdown](https://github.com/cosmosapjw-quantum/htt_base/blob/06f90445648db42618a450c25c4e205c3cdd46c7/artifacts/research_reports/pedagogical_render_20260907_r1/FROM_A_CMB_SKY_MAP_TO_PHYSICAL_CONSTRAINTS.md)
+- [All-page review](https://github.com/cosmosapjw-quantum/htt_base/blob/06f90445648db42618a450c25c4e205c3cdd46c7/artifacts/research_reports/pedagogical_render_20260907_r1/PAGE_REVIEW.md)
+
+REMOTE READBACK: all **213** candidate files (203 task artifacts, nine source/helper/README files and the fixed bibliography) matched exact bytes at the pinned candidate commit. The remote tree matched and was not truncated. The PDF, RETURN and receipt also passed Contents API path/ref readback. The full record is [candidate-readback.json](evidence/candidate-readback.json). The subsequent evidence-only publication carries this observed record; its final readback is performed after push.
+
+CI LIMITATION: the three jobs on candidate workflow run 34089298450 did not start. Their actual GitHub annotations report failed account payments or a spending limit. This is infrastructure nonexecution, not a native document-test failure. No old suite was rerun, billing changed, or hosted PASS inferred.
+
+The scoped publication diff check reports only a blank line at EOF in the actual built header. Those built bytes are retained; this whitespace lint is not a layout or mathematical defect. Original checkout default porcelain output still matches the preflight inventory exactly.
