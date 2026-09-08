@@ -3,6 +3,7 @@ import numpy as np
 import pytest
 from htt.infer.jwst_host_hierarchy import HostPair
 
+
 def cf4_fixture():
     from obsstat.cf4_current_stack import Cf4OperatorInputs
     ids=np.array(['b','a','c']);c=np.eye(3)+.1*np.ones((3,3))
@@ -41,6 +42,31 @@ def test_selected_latent_density_is_normalized_and_factory_unbound():
     assert not factory.empirical_eligible and factory.unfilled_prediction_slots==('distance',)
 
 
+def jwst_fixture():
+    pair=HostPair('family','host','A',30.1,.2,'B',30.,.2)
+    p=dict(product_id='jwst',source_id='table',selection_id='fixed-host',pairs=[pair])
+    ids=('family:host:A','family:host:B')
+    c=dict(matrix=np.array([[.04,.02],[.02,.04]]),source_id='shared measurement fixture',measurement_ids=ids)
+    cal=dict(source_id='calibration fixture',host_population_covariance=np.array([[.25]]),design=np.array([[1.,.5],[1.,-.5]]),
+        parameter_names=('geometry','calibration'),parameter_units=('mag','mag'),measurement_df=5.)
+    return p,c,cal
+
+
+def test_jwst_host_geometry_cancels_and_shared_covariance_once():
+    from htt.infer.r7_jwst_law import build_jwst_law
+    p,c,cal=jwst_fixture();law=build_jwst_law(p,c,cal,'GAUSSIAN')
+    np.testing.assert_allclose(law.jacobian_theta(None,None),[[0.,1.]])
+    np.testing.assert_allclose(law.covariance,[[.04]])
+    assert law.loglik([30.,.1])==law.loglik([100.,.1])
+    student=build_jwst_law(p,c,cal,'STUDENT_T')
+    assert student.specification['host_population']=='GAUSSIAN' and np.isfinite(student.loglik([30.,.1]))
+    exact=dict(c,matrix=np.full((2,2),.04))
+    singular=build_jwst_law(p,exact,cal,'GAUSSIAN')
+    assert singular.loglik([30.,0.])==-np.inf
+    assert singular.loglik([30.,singular.observed[0]])==0.
+    with pytest.raises(ValueError,match='only once'):build_jwst_law(dict(p,pairs=p['pairs']*2),c,cal,'GAUSSIAN')
+
+
 def test_desi_every_mock_is_refitted_and_covariance_is_not_known_law():
     from htt.infer.r7_desi_law import build_desi_law
     from scripts.observed_runs.run_desi_bgs_bright import _synthetic_selection,_synthetic_realization
@@ -56,3 +82,17 @@ def test_desi_every_mock_is_refitted_and_covariance_is_not_known_law():
     assert result.controls['mock_support']['abacus_count']==25
     assert len(result.controls['observed_features'])==18
     assert len(result.controls['normalization_hat'])==6
+
+
+def test_student_measurement_gaussian_host_enlarges_singular_support():
+    from htt.infer.r7_jwst_law import build_jwst_law
+    from scipy.stats import norm,t
+    pair=HostPair('family','host','A',.1,1.,'B',.123,0.)
+    p=dict(product_id='jwst',source_id='table',selection_id='fixed',pairs=[pair],measurement_mode='ABSOLUTE')
+    c=dict(matrix=np.diag([1.,0.]),source_id='known scale',measurement_ids=('family:host:A','family:host:B'))
+    cal=dict(source_id='known host',host_population_covariance=[[.25]],design=np.ones((2,1)),parameter_names=('mu',),
+        parameter_units=('mag',),measurement_df=5.,quadrature_order=128)
+    law=build_jwst_law(p,c,cal,'STUDENT_T')
+    expected=norm.logpdf(.123,scale=.5)+t.logpdf(.1-.123,df=5)
+    assert abs(law.loglik([0.])-expected)<1e-6
+    assert 'QUADRATURE_APPROXIMATION' in law.approximation
