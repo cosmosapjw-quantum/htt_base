@@ -1,0 +1,36 @@
+{
+  "checks": {
+    "O1_weighted_lower_and_scaling": null,
+    "O2_quaternion_rotation_and_chart_derivative": null,
+    "O3_interval_inclusive_counts": true,
+    "J2_rational_factor_support": true,
+    "J2_gaussian_marginal_counterexample": null
+  },
+  "counterexample": null,
+  "domain_assumption_diff": [
+    {
+      "obligation": "O1_weighted_lower_and_scaling",
+      "kind": "unresolved_scope",
+      "detail": "Generic common-index weighted spectral combination is compiled under the permitted component bounds. Exact norm multiplicities and sqrt scaling are compiled. Tensor representation, spectra and feasible identity rotation are not assembled into a Lean theorem asserting both exact orbit minimum fixtures."
+    },
+    {
+      "obligation": "O2_quaternion_rotation_and_chart_derivative",
+      "kind": "unresolved_scope",
+      "detail": "Quaternion Gram/determinant identities and actual coordinate HasDerivAt formulas, projection numerator identity, derivative squared bound and sqrt(3)<=7/4 compile. Four-chart global coverage and cell spherical-length/rotation-radius theorem are not assembled; no generic radius PASS."
+    },
+    {
+      "obligation": "J2_gaussian_marginal_counterexample",
+      "kind": "unresolved_scope",
+      "detail": "Only sign-mixture pointwise support identity compiles. No measure-theoretic construction establishes its Gaussian marginals and nonguassian joint law."
+    }
+  ],
+  "axis": "lean",
+  "original_exit_code": 2,
+  "command": [
+    "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-AC-20260909/artifacts/lean/verify.py"
+  ],
+  "original_source_sha256": "ed71a7bcf840b06d023e2c4d9eb2889d377ea4ca535568a40c9b652c89bb1e82",
+  "contract_sha256": "5ff7f84db01b6871f74f7c60b5c36430a4cae93735466e277bd9c4019ab22723",
+  "raw_output_path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-AC-20260909/artifacts/observed_cas/lean.raw.json"
+}

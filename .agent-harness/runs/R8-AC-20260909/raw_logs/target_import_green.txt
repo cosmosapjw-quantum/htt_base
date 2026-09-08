@@ -1,0 +1,17 @@
+.....F........                                                           [100%]
+=================================== FAILURES ===================================
+_________ test_exact_scaling_multiplicities_zeros_and_repeated_spectra _________
+
+    def test_exact_scaling_multiplicities_zeros_and_repeated_spectra():
+        q=np.diag([-1,0,1]);z=np.zeros((3,3,3));zero=np.zeros((3,3))
+        for x,y,exact in [((q,z),(2*q,z),np.sqrt(2)*1e5),((zero,axial()),(zero,2*axial()),np.sqrt(10)*1e5)]:
+            b=invariant_lower(x,y,128)
+>           assert float(b.lo)<=exact<=float(b.hi)
+E           AssertionError: assert np.float64(316227.76601683797) <= 316227.7660168379
+E            +  where 316227.7660168379 = float(Fraction(1681355198536411260747040245725769726916729, 5316911983139663491615228241121378304))
+E            +    where Fraction(1681355198536411260747040245725769726916729, 5316911983139663491615228241121378304) = Bound(lo=Fraction(53803366353165160343905287863224631261252785, 170141183460469231731687303715884105728), hi=Fraction(...tic': 'EXACT_RATIONAL_WITH_OUTWARD_DYADIC_ROOTS', 'scope': 'COMPUTED_STATISTIC_ONLY', 'upper_witness': 'IDENTITY_SO3'}).hi
+
+tests/r8/test_orbit_bounds.py:17: AssertionError
+=========================== short test summary info ============================
+FAILED tests/r8/test_orbit_bounds.py::test_exact_scaling_multiplicities_zeros_and_repeated_spectra
+1 failed, 13 passed in 0.85s

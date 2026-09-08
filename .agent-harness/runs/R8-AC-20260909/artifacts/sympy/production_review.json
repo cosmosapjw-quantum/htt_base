@@ -1,0 +1,194 @@
+{
+  "cas_consumer_review": {
+    "details": "Current algebra handler records raw per-obligation evidence with current contract hash and emits no proof capability. Method receipt verifies current source hashes/test exit but emits no broad CAS capability. No alternate promotion path reviewed.",
+    "independence": "Observed CAS report and sibling result files were not read. production_handlers calls evidence_dependencies with contract_path, which reads only the shared contract to list dependencies.",
+    "status": "pass_source_scope"
+  },
+  "closeout_label_confirmation": {
+    "expressions": [
+      "'scientific_outcome':'CONDITIONAL_BOUND' if usable_scopes(accepted) else 'NOT_EVALUATED'",
+      "'scientific_outcome':'CONDITIONAL_BOUND' if usable_scopes(outputs) else 'NOT_EVALUATED'"
+    ],
+    "runner_sha256": "1b65de91051427efb9f5e0f314ac3aaaf8dd654ee9ca134ae8c78d284a7a32dd",
+    "scope": "Two status labels only; no broader re-review or reviewer test rerun. Previous 28-test reviewer execution is retained; parent reported additional regression execution separately.",
+    "status": "pass",
+    "time": "2026-09-08T18:50:50.621857+00:00"
+  },
+  "completed_at": "2026-09-08T18:49:50.412010+00:00",
+  "files_read": [
+    "htt/src/common/r8_contracts.py",
+    "htt/obsstat/r8_orbit_bounds.py",
+    "htt/htt/htt/infer/r8_interval_rank.py",
+    "htt/htt/htt/infer/r8_support.py",
+    "htt/htt/htt/infer/r8_partial_law.py",
+    "htt/htt/htt/infer/r8_law_registry.py",
+    "htt/htt/htt/infer/r8_simulator_calibration.py",
+    "htt/htt/htt/infer/r7_gaussian_law.py",
+    "htt/htt/htt/infer/r7_desi_law.py",
+    "tests/r8/test_orbit_bounds.py",
+    "tests/r8/test_support.py",
+    "tests/r8/test_partial_law.py",
+    "tests/r8/test_law_registry.py",
+    "tests/r8/test_simulator_calibration.py",
+    "tests/r8/test_interval_rank.py",
+    "scripts/observed_runs/r8_mocks.py",
+    "htt/obsstat/planck_lowell_irrep_projection.py",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/review_repair_check.py",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/review_repair_check_initial.json",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/review_repair_check_final.json",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/review_probes_final.json",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/review_pytest_initial.txt",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/review_pytest_repair.txt",
+    "scripts/observed_runs/run_tensor_joint_r8.py",
+    "tests/r8/test_r8_runner.py",
+    "docs/generated/tensor_joint_r7/source_bindings.json",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/review_runner_probes.py",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/review_runner_probes_initial.json",
+    "htt/src/common/r7_evidence.py",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/production_review.json",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/review_runner_probes_final.json",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/review_pytest_runner_initial.txt",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/review_pytest_final.txt"
+  ],
+  "final_source_sha256": {
+    "htt/htt/htt/infer/r8_interval_rank.py": "2e6d72dcf160a21fb0432b3c3d49ae685bea5d798dcbd535a3796aa0b5f3b5aa",
+    "htt/htt/htt/infer/r8_law_registry.py": "7de3afc9327fbdcd28419a57c3f8eec08029cff15dcbdd99f455161070bbebbe",
+    "htt/htt/htt/infer/r8_partial_law.py": "cb4bcc2948a141e312c5ece14e4e62e9d2cd2a77f811bc27d14a0742bcf9f3db",
+    "htt/htt/htt/infer/r8_simulator_calibration.py": "43f619dec6d6285de9b4bf2fabaca73e2647fc4f16d0f8e8cc4b3ed4dfc4ecd8",
+    "htt/htt/htt/infer/r8_support.py": "eae8a040d5683eeb5f48d3259f87f689f95f9297ff86c4022507915000b86ea4",
+    "htt/obsstat/r8_orbit_bounds.py": "fb313380f20bbb786ae02b6b997d0357b598fec87df15e5a2a04e097c80a1bd0",
+    "htt/src/common/r8_contracts.py": "adfcaaf6b2a07f3d47e1a144b8a74e58408fc083a010379d2f2aee0601d16c0e",
+    "scripts/observed_runs/r8_mocks.py": "b2d2787c8e0267aa14a923af7684619d589c3adfe86cbe640563bb347348e1e8",
+    "scripts/observed_runs/run_tensor_joint_r8.py": "1b65de91051427efb9f5e0f314ac3aaaf8dd654ee9ca134ae8c78d284a7a32dd"
+  },
+  "findings": [
+    {
+      "claim_id": "R8-REV-SYMPY-01",
+      "evidence": "review_probes_initial.json:R8-REV-SYMPY-01",
+      "file": "htt/htt/htt/infer/r8_partial_law.py",
+      "input": {
+        "alpha": "1/4",
+        "mean": 0,
+        "observed": "1.150349380376008",
+        "variance": 1
+      },
+      "repair_evidence": [
+        "review_probes_final.json",
+        "review_repair_check_final.json",
+        "review_pytest_repair.txt"
+      ],
+      "requested_repair": "Conservatively retain numerical quantile-boundary cases as unresolved or use a certified comparison. State the numerical scope of approximate special functions.",
+      "severity": "P2",
+      "summary": "Un-enclosed inverse-normal quantile can falsely reject a point inside the exact acceptance interval.",
+      "symbol": "GaussianMarginal.accept",
+      "test": "The supplied reproduction must not return REJECT.",
+      "verdict": "resolved"
+    },
+    {
+      "claim_id": "R8-REV-SYMPY-02",
+      "evidence": "review_probes_initial.json:R8-REV-SYMPY-02",
+      "file": "htt/obsstat/r8_orbit_bounds.py",
+      "input": "Q=1e200*I3, O=0 versus zero tensor",
+      "repair_evidence": [
+        "review_probes_final.json",
+        "review_repair_check_final.json",
+        "review_pytest_repair.txt"
+      ],
+      "requested_repair": "Use overflow-safe scaled norm or exact rational trace/norm comparison; preserve zero/small tensor cases.",
+      "scope": "This is a domain validation defect; generic symmetric-tensor distance bound is not falsified.",
+      "severity": "P2",
+      "summary": "Overflowing floating norm widens declared STF extraction-rounding tolerance to infinity, admitting a non-STF tensor.",
+      "symbol": "_tensor_key",
+      "test": "Public invariant_lower must refuse the non-STF input rather than return a certificate.",
+      "verdict": "resolved"
+    },
+    {
+      "claim_id": "R8-REV-SYMPY-03",
+      "evidence": "review_runner_probes_initial.json",
+      "file": "scripts/observed_runs/run_tensor_joint_r8.py",
+      "repair_evidence": [
+        "review_runner_probes_final.json",
+        "review_pytest_final.txt"
+      ],
+      "requested_repair": "Advertise capabilities only when at least one actual validated, nonempty scope supports them. Keep failed scopes in receipts; withhold capability when all fail.",
+      "severity": "P1",
+      "summary": "Nonempty dictionaries containing only validation failures produce positive capabilities; all held toy scopes still emit SIMULATOR_METHOD.",
+      "symbol": "production_handlers.dispatch/observed/toy",
+      "test": "all_products_failed_dispatch.capabilities, all_products_failed_observed.capabilities and all_toys_held.capabilities must all be empty.",
+      "verdict": "resolved"
+    },
+    {
+      "claim_id": "R8-REV-SYMPY-04",
+      "evidence": "review_runner_probes_initial.json:malformed_product_isolation",
+      "file": "scripts/observed_runs/run_tensor_joint_r8.py",
+      "repair_evidence": [
+        "review_runner_probes_final.json",
+        "review_pytest_final.txt"
+      ],
+      "requested_repair": "Unpack/validate each supplied product inside its own try; preserve product-specific failure and continue.",
+      "severity": "P2",
+      "summary": "Product tuple unpacking happens before per-product try, so malformed input aborts dispatch before surviving products can run.",
+      "symbol": "execute_admitted_products",
+      "test": "Malformed None record must return local VALIDATION_FAILED without raising out of execute_admitted_products.",
+      "verdict": "resolved"
+    }
+  ],
+  "independent_of_root_production": true,
+  "initial_source_sha256": {
+    "htt/htt/htt/infer/r7_desi_law.py": "0ceb0e2f5ac1211bcf8e32a9957a46570566ccf9f1c623c242f79b23f4915407",
+    "htt/htt/htt/infer/r7_gaussian_law.py": "7d3ba747a89071fd28bda4b7278c1d9c1b0ccff42d824f78cd33bf3a5e250b64",
+    "htt/htt/htt/infer/r8_interval_rank.py": "2e6d72dcf160a21fb0432b3c3d49ae685bea5d798dcbd535a3796aa0b5f3b5aa",
+    "htt/htt/htt/infer/r8_law_registry.py": "c975ab5206ef599bdef56bc06103f42ad4d00030b4ef6fe749d42f6a2c4d6ac5",
+    "htt/htt/htt/infer/r8_partial_law.py": "3712fc7c4627d1f67df705e211986462c017fc5cbafe4a1ed40ccafad3f234fe",
+    "htt/htt/htt/infer/r8_simulator_calibration.py": "43f619dec6d6285de9b4bf2fabaca73e2647fc4f16d0f8e8cc4b3ed4dfc4ecd8",
+    "htt/htt/htt/infer/r8_support.py": "eae8a040d5683eeb5f48d3259f87f689f95f9297ff86c4022507915000b86ea4",
+    "htt/obsstat/r8_orbit_bounds.py": "fa230002acfac18cd5b969d7ae3fff61bd8805af7c35ed0ecb6f9ddb0c102991",
+    "htt/src/common/r8_contracts.py": "adfcaaf6b2a07f3d47e1a144b8a74e58408fc083a010379d2f2aee0601d16c0e",
+    "tests/r8/test_interval_rank.py": "8d76b248415bf2ccdff0887b460bb15d01d01ff673aa5df067a1011c2141b34f",
+    "tests/r8/test_law_registry.py": "07edd3372c5729f242d47baec0dc40cf00b93a9d151fa9d8a1fcd5aa2e832f8b",
+    "tests/r8/test_orbit_bounds.py": "e274810f83e76fb1121698569504a8505b60179bc37d53a9348ad2623ff9664a",
+    "tests/r8/test_partial_law.py": "edbfcdad6f96d1cf78aa64e9ce3787d444ee669120054245f621c0c0b427d568",
+    "tests/r8/test_simulator_calibration.py": "713077c511f75b58aaec1279af6d695c3789ac47520d99e330028f233a084d9d",
+    "tests/r8/test_support.py": "2aeee788437e0a68dabb3bd81b5e45246551f29dde9cbc037affd6d9392a3043"
+  },
+  "mock_generator_review": {
+    "artifact_note": "Reference pair inclusion pertains to initialized enclosures; post-refinement enclosures may be narrower. Parent will attach stage-specific initialized endpoints without full replay.",
+    "distribution": "For exact raw component map A, G=A.T*A=L*L.T; A*L^-T has orthonormal columns. IID standard Gaussian coefficients in these columns match the declared isotropic STF Gaussian law up to explicit numerical basis/decoding roundoff. Unique-component decoding prevents spurious asymmetric copies and does not drop or select rows.",
+    "source_binding": "Parent confirmed mock script unchanged during running jobs and snapshotted old loaded orbit source before guard-only repair. Parent operational statement, not independently observed process image.",
+    "status": "pass"
+  },
+  "operational_probe_failure": "First runner probe invocation omitted repository root from PYTHONPATH and raised ModuleNotFoundError scripts.observed_runs. Corrected PYTHONPATH=.:htt/src:htt/htt:htt executed successfully; no production change.",
+  "operational_status": "Stop hook checkout/run mismatch preserved; no pointer edits.",
+  "oracle": {
+    "path": ".agent-harness/runs/R8-AC-20260909/artifacts/sympy/reference_enclosure.py",
+    "scope": "Independent 256-bit exact-source spectral lower plus identity rotation upper. Selfcheck 100 pairs PASS; registered mock1 remains root execution. Shared SymPy root isolation primitive; no production import in oracle.",
+    "selfcheck": "reference_selfcheck.json",
+    "sha256": "d95fca7899713435753ce0e9924afadb225a2901653033a40f6344140731e9a5"
+  },
+  "quantile_repair_review": {
+    "independent_numeric_checks": 69,
+    "mpmath_digits": 120,
+    "proof_review": "Alternating series terms decrease after declared n>x or n>x*x/2; total and total+next term bracket exact remainder. Machin pi lower/upper signs and 160-bit rational square-root grid are correct. Positive normalization and incomplete-gamma recurrence propagate intervals conservatively.",
+    "scope": "Implementation review of replacement numerical comparator, outside five-obligation CAS. Broad high-rank extreme-quantile runtime guarantee not established.",
+    "status": "pass"
+  },
+  "remaining_scope": "None within the assigned technical review. Unimplemented full-plan units and aggregate CAS admission remain parent-owned outstanding work.",
+  "review_id": "R8-SYMPY-PRODUCTION-REVIEW-ONE",
+  "runner_resume_review": {
+    "limitations": "All four registered findings and the all-failed descriptive-label caveat are resolved. Full-plan acceptance and broad CAS promotion remain false.",
+    "scope": "Dependency presence/content and output artifact hashes invalidate cached attempts; old attempts retained; only declared action capabilities are emitted; unimplemented actions explicitly separated from missing capability. Full-plan acceptance stays false.",
+    "status": "pass_in_reviewed_scope"
+  },
+  "separate_from_cas": true,
+  "status": "pass",
+  "validation": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:htt/src:htt/htt:htt /mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python -m pytest tests/r8 -q -p no:cacheprovider",
+    "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+    "exit_code": 0,
+    "not_executed": "No observed scientific campaign or frozen mock rerun was performed by reviewer.",
+    "passed": 28,
+    "probes": "review_runner_probes_final.json",
+    "seconds": 2.22,
+    "transcript": "review_pytest_final.txt"
+  }
+}

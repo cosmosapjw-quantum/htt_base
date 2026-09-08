@@ -1,0 +1,13 @@
+PASS contract_identity
+PASS sage_version
+PASS singular_version
+PASS O1_generic_weighted_combination
+PASS O1_STF_octopole
+FAIL O1_exact_scaling_Q
+Traceback (most recent call last):
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/verify.py", line 38, in <module>
+    check('O1_exact_scaling_Q',sum(a*a for a in Q.list())==2 and Q.eigenvalues()==[-1,0,1],'fixed fixture','Qprime=2Q: sorted eigenvalue gaps have square sum 2, and R=I residual square is 2. Thus exact minimum sqrt(2)/q0.')
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/verify.py", line 12, in check
+    if not ok: raise AssertionError(name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: O1_exact_scaling_Q

@@ -1,0 +1,51 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-AC-20260909",
+  "assignment_id": "wolfram_xact_runtime",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R8-AC-20260909-AC4"
+  ],
+  "task": "Independent wolfram_xact verifier for same five CAS obligations. Replacement of unavailable gpt-5.6 native profile, not mathematical retry. Own artifacts/wolfram_xact and result only. Root sole production writer. After first independent CAS submission, a separately identified read-only review of root production arithmetic may be requested; never self-review own axis derivation.",
+  "required_inputs": [
+    {
+      "path": ".agent-harness/runs/R8-AC-20260909/CAS_CONTRACT.json",
+      "sha256": "5ff7f84db01b6871f74f7c60b5c36430a4cae93735466e277bd9c4019ab22723"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r8/THEORY.md",
+      "sha256": "9a505ce0ab3de99a1dcad7f4397621cb639307b4bb42a735b910128646ee408f"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r8/VALIDATION_MATRIX.md",
+      "sha256": "ba1fc76d711b1984c34820da9503da6a621923bf70de5844d5abe8edd3041ab9"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "apply_patch"
+  ],
+  "required_outputs": [
+    "Independent wolfram_xact script/proof/result; optional later independent review of root production, not own math"
+  ],
+  "result_path": ".agent-harness/runs/R8-AC-20260909/results/wolfram_xact_runtime.json",
+  "status": "registered",
+  "cas_axis": "wolfram_xact",
+  "cas_contract": {
+    "path": ".agent-harness/runs/R8-AC-20260909/CAS_CONTRACT.json",
+    "sha256": "5ff7f84db01b6871f74f7c60b5c36430a4cae93735466e277bd9c4019ab22723"
+  },
+  "assignment_sha256": "baa7ced453db35e8fd76c25afd0130ab43124b31135507e77d0bba6db17e03ec"
+}

@@ -1,0 +1,216 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "identity": {
+    "contract_id": "R7-ELEMENTARY-AND-EXTENDED-IMPLICATIONS",
+    "contract_version": 1,
+    "claim_ids": [
+      "RUN-TENSOR-JOINT-R7-20260908-V01"
+    ],
+    "statement_class": "scalar_algebra",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/tensor_joint_r7/THEORY.md",
+        "sha256": "e03a61a08d8e24ec5acd86cbaa3b7cec274bea5c9c4c664f7a20cb8066829dff"
+      },
+      {
+        "path": "docs/generated/tensor_joint_r7/axial_certificate_source.json",
+        "sha256": "03229ce9a8c7120a692253a655a0dd1960d1b95ae1de95ea5dd955cd69f0bf38"
+      }
+    ],
+    "claim_ceiling": "exact stated algebraic implications and fixed witness; no empirical admission",
+    "adjudicator": "adjudicator"
+  },
+  "semantics": {
+    "exact_statement": "Independently verify the obligations below. L10 is an implication from the accepted exact rational certificate, not a new recomputation of that operator. T5 is the first-order algebra and scalar norm-bound implication, not a pixel error certificate. No statistical or physical data admission.",
+    "symbol_type_domain_map": {
+      "Q": "diag(-1,0,1) real STF2",
+      "O": "symmetric STF3 with ten independent entries from T1",
+      "Theta": "positive real rate",
+      "T": "positive absolute temperature",
+      "f": "real 0<f<1/36",
+      "c,d": "positive reals",
+      "rho": "positive real",
+      "E,A,C": "compatible finite real matrices",
+      "t": "formal first-order parameter"
+    },
+    "frame_signature_units_conventions": {
+      "conventions_ref": "docs/research_program/tensor_joint_r7/THEORY.md",
+      "frame": "orthonormal outward n=-e",
+      "derivative": "T3 rate convention including normalized temperature derivative",
+      "antisymmetrization": "one half",
+      "harmonics": "orthonormal real"
+    },
+    "assumptions": [
+      "T1 witness is fixed; Q eigenvalues are distinct, hence rotations stabilizing Q are signed coordinate axes",
+      "T5 Neumann first-order coefficient under invertibility at t=0",
+      "T5 norm implication assumes operator norm bound c*f/(1-36*f) and norm(d)<=norm(K)*norm(h)",
+      "L10 supplied rational minors and their source-column identities are the accepted input; validate exact rational positivity and minimal-cutoff rank implication"
+    ],
+    "positivity_nonzero_conditions": [
+      "Theta>0",
+      "T>0",
+      "0<f<1/36",
+      "c>0",
+      "d>0"
+    ],
+    "branches": [],
+    "exclusions": [
+      "general physical closure proof",
+      "full continuous mask quadrature certification",
+      "measured covariance or exchangeability",
+      "four-axis recomputation of historical axial operator"
+    ],
+    "singular_loci": [],
+    "order_of_limits": [],
+    "boundary_or_initial_conditions": []
+  },
+  "target": {
+    "canonical_form": "zero residuals for stated algebra, nonzero rational minors, finite signed-stabilizer impossibility",
+    "equivalence_relation": "exact algebra under stated real domains",
+    "invariants": [],
+    "exact_test_obligations": [
+      "T1_trace_and_contraction",
+      "T1_no_proper_signed_stabilizer",
+      "T3_normalized_derivative_and_odd_signs",
+      "T5_first_order_inverse_coefficient",
+      "T5_scalar_cost_implication",
+      "T6_scalar_information_one_fifth",
+      "L10_accepted_minors_and_minimal_cutoff"
+    ],
+    "numeric_test_vectors": [
+      {
+        "T1_O_entries": [
+          1,
+          0,
+          0,
+          -2,
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          1
+        ]
+      },
+      {
+        "T6_U": 1,
+        "T6_V": 1,
+        "T6_E": 1,
+        "T6_G": "1/4"
+      }
+    ],
+    "approximation_order": "exact",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-50",
+    "relative_tolerance": "1e-40",
+    "forbidden_shortcuts": [
+      "Do not assume the target identity in an intermediate rewrite.",
+      "Do not import sibling solver results before adjudication."
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "independent derivation/simplification in Wolfram Language (+xAct for tensor work)",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "wolfram": "15.0.0",
+        "xact": "1.2.0+"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "independent exact symbolic verification in SymPy (+ high-precision numerics where declared)",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "sympy": "1.14.0"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "independent exact algebra in SageMath; Singular obligations apply to polynomial ideal/variety classes",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "sage": "10.9",
+        "singular": "4.3.2"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "faithful formalization and compiled proof; record scope mismatch instead of silently proving a weaker theorem",
+      "required_outputs": [
+        "lean sources",
+        "build receipt",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain"
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results",
+    "permitted_inputs": [
+      "this contract",
+      ".agent-harness/generated/CONTEXT_PACK.md",
+      "the assignment's required_inputs"
+    ],
+    "forbidden_sibling_paths": [
+      ".agent-harness/runs/*/results/*"
+    ],
+    "script_result_ownership": "per-axis; scripts and outputs are never shared before adjudication",
+    "correlation_disclosure": "record when one LLM family authored multiple axis scripts; disclosure does not void engine evidence"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "exception_schema": {
+      "axis": "wolfram_xact | sympy | sage_singular | lean",
+      "reason_class": "platform | license | computation_class | resource",
+      "bounded_probe": "exact command + output demonstrating the blocker",
+      "unique_capability_lost": false,
+      "substitute_obligation": "",
+      "claim_downgrade": "",
+      "approver": "must not be the excepted axis's agent",
+      "registered_at": "must precede the earliest axis completed_at",
+      "expiry_retry": ""
+    },
+    "aggregate_status_rule": "R0: NOT_APPLICABLE; R1/R2: PASS; R3: CAS_4AXIS_PASS; explicit R3 Rocq opt-in: CAS_5AXIS_PASS; failures: CAS_PASS_WITH_REGISTERED_EXCEPTION | CAS_CONFLICT | CAS_BLOCKED | CAS_FAIL",
+    "invalidation_triggers": [
+      "contract_hash_change",
+      "assumption_or_domain_diff",
+      "unpinned_toolchain"
+    ]
+  }
+}

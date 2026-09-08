@@ -1,0 +1,51 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-AC-20260909",
+  "assignment_id": "sage_singular",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "cas_sage_singular",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R8-AC-20260909-AC4"
+  ],
+  "task": "Independently execute the five exact O1/O2/O3/J2 obligations. Write runnable own-axis verification and proof notes only under artifacts/sage_singular. No production edits or siblings. Preserve generic versus fixture scope; unresolved proof must not pass.",
+  "required_inputs": [
+    {
+      "path": ".agent-harness/runs/R8-AC-20260909/CAS_CONTRACT.json",
+      "sha256": "5ff7f84db01b6871f74f7c60b5c36430a4cae93735466e277bd9c4019ab22723"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r8/THEORY.md",
+      "sha256": "9a505ce0ab3de99a1dcad7f4397621cb639307b4bb42a735b910128646ee408f"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r8/VALIDATION_MATRIX.md",
+      "sha256": "ba1fc76d711b1984c34820da9503da6a621923bf70de5844d5abe8edd3041ab9"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "apply_patch"
+  ],
+  "required_outputs": [
+    "Own-axis executable script, proof scope, JSON five checks, axis envelope; computation cap 15 minutes; no sibling reads"
+  ],
+  "result_path": ".agent-harness/runs/R8-AC-20260909/results/sage_singular.json",
+  "status": "registered",
+  "cas_axis": "sage_singular",
+  "cas_contract": {
+    "path": ".agent-harness/runs/R8-AC-20260909/CAS_CONTRACT.json",
+    "sha256": "5ff7f84db01b6871f74f7c60b5c36430a4cae93735466e277bd9c4019ab22723"
+  },
+  "assignment_sha256": "d4cf11431ed02927ce671c849473408371fdf2a83cab754e3735bfacb8516ca4"
+}

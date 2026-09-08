@@ -1,0 +1,63 @@
+{
+  "runner_sha256": "3fe629d5877edff794c93b332bf2cea04f12acbfb029475cc578f84687a9b443",
+  "all_products_failed_dispatch": {
+    "scientific_outcome": "CONDITIONAL_BOUND",
+    "capabilities": [
+      "GAUSSIAN_ACCEPTANCE"
+    ],
+    "products": {
+      "broken": {
+        "outcome": "VALIDATION_FAILED",
+        "reason": "method needs an admitted live law"
+      }
+    }
+  },
+  "all_products_failed_observed": {
+    "scientific_outcome": "CONDITIONAL_BOUND",
+    "capabilities": [
+      "OBSERVED_GAUSSIAN"
+    ],
+    "products": {
+      "broken": {
+        "outcome": "VALIDATION_FAILED",
+        "reason": "method needs an admitted live law"
+      }
+    }
+  },
+  "malformed_product_isolation": {
+    "raised": "TypeError",
+    "message": "cannot unpack non-iterable NoneType object"
+  },
+  "all_toys_held": {
+    "scientific_outcome": "METHOD_PARTIALLY_HELD",
+    "capabilities": [
+      "SIMULATOR_METHOD"
+    ],
+    "capability_scopes": {
+      "SIMULATOR_METHOD": []
+    },
+    "held_adapters": [
+      "mixture",
+      "selected_normal",
+      "student5"
+    ],
+    "results": {
+      "cells": [
+        {
+          "law": "student5",
+          "diagnostic_pass": false
+        },
+        {
+          "law": "mixture",
+          "diagnostic_pass": false
+        },
+        {
+          "law": "selected_normal",
+          "diagnostic_pass": false
+        }
+      ]
+    },
+    "reason": "Mixture adapter held. Supported method scope is restricted to the separately passed toy laws; no real product simulator admission."
+  },
+  "scope": "Synthetic handler integration probes; no actual product data modified"
+}

@@ -1,0 +1,34 @@
+{
+  "owner": "HTT",
+  "scope": "R8 initial A/C computed-statistic and toy-law diagnostics",
+  "claim_tier": "method_diagnostic",
+  "artifact_mode": "standard_internal",
+  "allowed_use": "External audit of actual method implementation outcomes",
+  "transfer_source": "NONE",
+  "null_status": "Registered synthetic trials only; no actual CMB law qualification",
+  "covariance_status": "Known toy laws; no inferred real-product covariance",
+  "forbidden_uses": [
+    "Bianchi identification",
+    "isotropy proof",
+    "actual catalogue coverage claim",
+    "30-pool power claim"
+  ],
+  "source_script": {
+    "path": "docs/generated/tensor_joint_r8/ac/render_results.py",
+    "sha256": "2687014b8be4e0d65774e4bcc5f6eee990572d8cf1da74fa32f99785ac3ed35b"
+  },
+  "sources": {
+    "docs/generated/tensor_joint_r8/ac/mocks/orbit_reference_intervals.json": "d23ebb1134d93475bb386e368cd7e4bddd7d7d088c03af6b508b25ec61ebd64a",
+    "docs/generated/tensor_joint_r8/ac/mocks/mock5.json": "9fd8a7c136266327ae7ad3f4b7091bad289b7b499f368f37e0772e17a526a1c2"
+  },
+  "figures": {
+    "orbit_enclosures.png": {
+      "sha256": "029c683166d6acade49d20d278039b9c830cdbc32b6014d2935baafe60a76b79",
+      "caption": "INITIALIZATION distance bounds on first 100 pairs"
+    },
+    "simulator_validation.png": {
+      "sha256": "c567ebb67bbee61c5b5d9aee3f503804a3db72405376d66c0832c6b0b585e233",
+      "caption": "Nine fixed toy experiments; mixture \u03bc=-1 held by frozen criterion"
+    }
+  }
+}

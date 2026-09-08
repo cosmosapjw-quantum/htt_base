@@ -1,0 +1,44 @@
+# Independent Wolfram+xAct derivation and scope
+
+Contract: R8-ORBIT-RANK-JOINT-JET-V1, SHA256 `5ff7f84db01b6871f74f7c60b5c36430a4cae93735466e277bd9c4019ab22723`.
+Read no sibling results or production implementation. All script calculations are exact; no numerical agreement is used as proof of a generic inequality. Dimensions are the contract's Kelvin tensor coordinates and positive Kelvin scales; normalized distances, chart coordinates and ranks are dimensionless. The mathematical tensor metric is Euclidean on a spatial frame; no spacetime signature or dynamics is asserted.
+
+## O1: generic conditional combination and exact fixtures
+
+For each fixed common R in SO(3), write rQ=||Q-RQ'R^T||F and rO=||O-R^(tensor 3)O'||F. The established symmetric spectral perturbation lemma gives rQ>=bQ>=0. Flatten O as A of shape 3 by 9; the transformed matrix is R A' (R tensor R)^T. Its left and right factors are orthogonal. Thus its singular values are unchanged, and the established Mirsky inequality gives rO>=bO>=0. The Gram matrix AA^T is S(O), so the singular values are sqrt(eigenvalues(S)). Both inequalities use the same R and require no coincident optimizer.
+
+`O1_generic_weighted_combination` proves for arbitrary real nonnegative residuals/bounds and arbitrary positive scales that (rQ²-bQ²)/q0²+(rO²-bO²)/o0²>=0. Monotonicity of square root then gives f(R)>=sqrt(bQ²/q0²+bO²/o0²) for every R; hence the minimum has this lower bound. Existence of the minimum follows from continuity and compactness of SO(3); alternatively the bound already holds for the infimum. These are conditional generic mathematics, with the named spectral lemmas accepted exactly as the contract permits.
+
+For Q=diag(-1,0,1), Q'=2Q, the spectral lower bound squared and feasible identity-rotation residual squared both equal 2. For the prescribed full symmetric rank-three O, the script explicitly fills every permutation, checks trace zero, ||O||F²=10, and S=diag(6,2,2). For O'=2O, the spectral lower bound squared and identity-rotation upper squared both equal 10. Lower=upper proves the two exact distances after division by the positive scales; these fixtures do not replace the generic proof. Zero and repeated spectra are retained. xAct separately canonicalizes the abstract symmetric rank-three index permutation. No xAct-generated spacetime curvature identity is used to establish a target.
+
+## O2: generic quaternion identities, derivative and radius
+
+The polynomial quaternion rotation numerator N satisfies N N^T=(q.q)^2 I and det N=(q.q)^3, proved coefficientwise in Wolfram Language. Therefore R=N/(q.q) is a proper orthogonal matrix for every real nonzero q. No division at zero is permitted. For chart a=0, q=(1,x)/sqrt(s), s=1+x.x>=1, the exact derivative Gram matrix is J^T J=I/s-xx^T/s². The script verifies both the derivative calculation and the sum-of-squares identity ||v||²/s-||Jv||²=(x.v)²/s²>=0 for all real v. Hence ||J||op<=1/sqrt(s). Every other chart is obtained by permuting the four ambient quaternion coordinates, an orthogonal permutation which preserves this Gram matrix and derivative norm.
+
+For any unit quaternion choose an index a maximizing its absolute component. That component is nonzero; flip the global sign if needed and divide the other components by it. The resulting ratios lie in [-1,1]. Normalization recovers the signed unit quaternion. Thus all four charts cover, including ties; the double-cover relation identifies the flipped quaternion with the same rotation.
+
+For a rectangular cell C and any t in its jth interval, t²>=dist(0,C_j)²; the script verifies this piecewise inequality generically. Thus sqrt(s)>=m_C along the entire center-to-point line segment. It also verifies sum_j displacement_j²<=sum_j halfwidth_j². Integrating the derivative bound on the segment gives spherical path length<=r_C/m_C. Geodesic distance is bounded by path length; the named quaternion double-cover angular-distance relation gives rotation angle<=2r_C/m_C, and independently angle<=pi. Therefore delta_C=min(pi,2r_C/m_C) is a valid radius. For chart spacing 1/m, halfwidths<=1/(2m), m_C>=1, yielding sqrt(3)/m<=7/(4m); this last inequality is checked for generic m>0. Rational planar rotation checks are additional fixtures. No floating-point implementation enclosure or optimizer convergence test is claimed.
+
+## O3: generic inclusive-count inequalities and exact thresholds
+
+Assume L_i<=s_i<=U_i, including row zero. The exact quantified linear-real checks prove L_i>=U_0 implies s_i>=s_0, and s_i>=s_0 implies U_i>=L_0. Thus each corresponding indicator is ordered. Summing the inequalities over any finite reference set, adding one, and dividing by positive M yields p^-<=p<=p^+. The scalar positive-denominator count implication is separately proved. Endpoint equality is preserved. Coordinatewise order-statistic monotonicity follows because if at least k entries are <=t then increasing all entries cannot increase that count; equivalently the kth statistic is min over k-subsets of the subset maximum, a composition of coordinatewise monotone min/max. This justifies passage from pairwise intervals to row-score intervals without a numerical experiment.
+
+For the exact fixed multiset, if any rows have inclusive descending rank<=t, take among them a row of smallest score. Every row in this selected set is counted in its inclusive rank, so the selected set has cardinality<=t. Exchangeability and fixed permutation-equivariant scoring make the distinguished row uniform over labels conditionally on the unordered sample, giving P(p<=alpha)<=floor(alpha M)/M<=alpha. Pointwise p_tau^+>=p at any stopping time implies {p_tau^+<=alpha} is a subset of {p<=alpha}; no new optional stopping assumption is used. These probability steps are a written finite-count proof under the explicitly admitted premises, not a Wolfram symbolic proof of real-product exchangeability.
+
+At alpha=1/20, rejection is the integer inequality 1+c_possible<=M/20, equivalently c_possible<=floor(M/20)-1. Nonrejection is 1+c_certain>M/20, equivalently c_certain>=floor(M/20). Checked M=1000 thresholds 49/50 and k=32; M=301 thresholds 14/15 and k=18. The scalar k=2 fixture scores are (2,1,1,2,8); wide intervals separate the observed final row and give both bounds 1/5. The all-zero tie fixture has p^+=1. A p^- value is not claimed to be a valid p-value.
+
+## J2: rational factor support fixture
+
+B=(3,4)^T/5, n=(-4,3)^T/5 form an orthonormal basis. For V=4, C=4BB^T has exact rank one and eigenvalues 0,4. The range is the span of B. At r=2B, n.r=0 and z=B^+r=B^Tr=2, so z²/V=1. Direct pseudoinverse evaluation agrees. At r=2B+n, n.r=1 and r-B(B^Tr)=n; it is outside support even though projection onto the supported component is unchanged. This is the specified structural rational fixture, not a generic certification of a floating eigenvalue rank decision.
+
+## J2: explicit Gaussian-marginal, non-Gaussian-joint counterexample
+
+Let Z be standard normal and S be an independent fair sign, and set X=Z, Y=SZ. The joint characteristic function is [exp(-(t+u)²/2)+exp(-(t-u)²/2)]/2. Setting either argument to zero gives the standard Gaussian characteristic function, proving both Gaussian marginals. Exact derivatives give zero means, variances one, covariance zero and E[X²Y²]=3. A centered jointly Gaussian vector with covariance I has independent coordinates and mixed moment 1; alternatively its characteristic function exp(-(t²+u²)/2) disagrees at t=u=1 by (1-exp(-1))²/2>0. Therefore marginal Gaussianity plus covariance does not supply joint Gaussianity. This is the requested counterexample to an inference shortcut, not a counterexample to a contract obligation.
+
+## Execution and limitations
+
+Run from the assigned worktree: `wolframscript -file .agent-harness/runs/R8-AC-20260909/artifacts/wolfram_xact/verify.wls`.
+
+The direct Wolfram 15.0.0 process loads xTensor 1.3.0 and exits. No MCP server or persistent kernel is started. Initial mathematics checks were all true, but result serialization used unqualified `$Version`, which xTensor shadows; initial outputs are retained as `checks.initial.json` and `engine.initial.log`. Repaired to `System`$Version` and reran the same script. This was a metadata namespace bug, not a mathematical or input change. The final result records the correct engine version.
+
+Only the five stated contract obligations are evaluated. Native low-ell Bianchi solver, R3/radiation-jet physics, product-law qualification, floating implementation certification, full SO(3) optimizer validation and four-axis adjudication are excluded. No tests of production Python were run: no production code was read or changed. Harness bootstrap named an old EXTERNAL-FUSION run and canonical checkout; own assignment and context were instead validated against the explicitly assigned R8 worktree, with matching contract/source hashes. No substantive wrong-checkout execution was used.

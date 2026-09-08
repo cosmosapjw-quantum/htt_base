@@ -1,0 +1,295 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-AC-20260909",
+  "assignment_id": "sage_singular_runtime",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "axis": "sage_singular",
+  "status": "pass",
+  "axis_status": "PASS",
+  "claim_ids": [
+    "RUN-R8-AC-20260909-AC4"
+  ],
+  "contract_sha256": "5ff7f84db01b6871f74f7c60b5c36430a4cae93735466e277bd9c4019ab22723",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R8-AC-20260909/CAS_CONTRACT.json",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/checks.json",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/proof_scope.md",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/quaternion.sing",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/sage_transcript_attempt1.txt",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/sage_transcript_attempt2.txt",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/singular_transcript.txt",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/verify.py",
+    ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/verify_attempt1.py",
+    ".agent-harness/runs/R8-AC-20260909/assignments/sage_singular_runtime.json",
+    ".agent-harness/runs/R8-AC-20260909/results/sage_singular_runtime.json",
+    "/usr/local/bin/sage",
+    "docs/research_program/tensor_joint_r8/THEORY.md",
+    "docs/research_program/tensor_joint_r8/VALIDATION_MATRIX.md"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/checks.json",
+      "sha256": "f4225e1b0460d329a127fe9d26e97dc01c5d36b1a138453b1dfc61888901dc44"
+    },
+    {
+      "path": ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/proof_scope.md",
+      "sha256": "a55974acfa088ac999cfbdc14611c53c5938170a13a3d56dc69862ed417698c8"
+    },
+    {
+      "path": ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/quaternion.sing",
+      "sha256": "4b320176e3a966eadded47ac50b31fab90e624341410bd7f3ab1a5340a63b1a0"
+    },
+    {
+      "path": ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/sage_transcript_attempt1.txt",
+      "sha256": "6e3a5ffc9a12669cf28446e751343a9c1d53762dd8b4ea4e2b01159055ef9645"
+    },
+    {
+      "path": ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/sage_transcript_attempt2.txt",
+      "sha256": "4370b550ddacda0f56d6c695cdce1283348f40f01fc42d7d0557cd527cfff758"
+    },
+    {
+      "path": ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/singular_transcript.txt",
+      "sha256": "2130d9c1b0332a3e649ea48a8fffc12b994b0203a100c3a5a1feda0d62236bdd"
+    },
+    {
+      "path": ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/verify.py",
+      "sha256": "2e000d57db69c165c1ca29aba0ec0ab0a02006f60c8daf044c4a1ebef5fc48fa"
+    },
+    {
+      "path": ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/verify_attempt1.py",
+      "sha256": "acafd211504fd6a80d777f3654ef79486fba3e75feab4163a679b57d11d648ee"
+    }
+  ],
+  "tools": {
+    "sage": "10.9",
+    "singular": "Singular for x86_64-Linux version 4.3.2 (4330, 64 bit) Apr  1 2024 04:44:00"
+  },
+  "checks": [
+    {
+      "name": "contract_identity",
+      "status": "PASS",
+      "scope": "provenance",
+      "detail": "Exact registered contract bytes."
+    },
+    {
+      "name": "sage_version",
+      "status": "PASS",
+      "scope": "toolchain",
+      "detail": "10.9"
+    },
+    {
+      "name": "singular_version",
+      "status": "PASS",
+      "scope": "toolchain",
+      "detail": "Singular for x86_64-Linux version 4.3.2 (4330, 64 bit) Apr  1 2024 04:44:00"
+    },
+    {
+      "name": "O1_generic_weighted_combination",
+      "status": "PASS",
+      "scope": "generic conditional inequality",
+      "detail": "eQ,eO are nonnegative block residual slack from Hoffman-Wielandt/Mirsky; positive q0,o0 permit division. Monotone square root and infimum preserve bound. No simultaneous attainability premise."
+    },
+    {
+      "name": "O1_STF_octopole",
+      "status": "PASS",
+      "scope": "fixed fixture",
+      "detail": "Full symmetric rank-three array; traces vanish."
+    },
+    {
+      "name": "O1_exact_scaling_Q",
+      "status": "PASS",
+      "scope": "fixed fixture",
+      "detail": "Qprime=2Q: sorted eigenvalue gaps have square sum 2, and R=I residual square is 2. Thus exact minimum sqrt(2)/q0."
+    },
+    {
+      "name": "O1_exact_scaling_O",
+      "status": "PASS",
+      "scope": "fixed fixture",
+      "detail": "Oprime=2O: singular-value gap-square sum is tr(G)=10; R=I residual square is 10. Exact minimum sqrt(10)/o0. Repeated spectrum retained."
+    },
+    {
+      "name": "O1_zero_fixture",
+      "status": "PASS",
+      "scope": "fixed fixture",
+      "detail": "Both tensors zero gives distance and invariant bound zero."
+    },
+    {
+      "name": "O1_relative_alignment_counterexample",
+      "status": "PASS",
+      "scope": "fixed counterexample",
+      "detail": "Any rotation preserving simple-spectrum diagonal Q is a diagonal sign matrix, so preserves diagonal G. Grot has a nonzero 12 entry; no common exact match. Compact SO(3) and continuity imply strictly positive joint distance, although spectral bounds vanish."
+    },
+    {
+      "name": "O2_homogeneous_rotation",
+      "status": "PASS",
+      "scope": "generic polynomial identity",
+      "detail": "For nonzero real quaternion, n>0; R=H/n has R^T R=I and det R=1, including repeated and zero components."
+    },
+    {
+      "name": "O2_standalone_Singular",
+      "status": "PASS",
+      "scope": "generic polynomial identity",
+      "detail": "Standalone /usr/bin/Singular -q quaternion.sing; exact polynomial identities, no tolerance."
+    },
+    {
+      "name": "O2_chart_derivative_identity",
+      "status": "PASS",
+      "scope": "generic rational identity",
+      "detail": "D/sqrt(s) is the Jacobian. Gram = I/s-xx^T/s^2, so v^T Gram v <= ||v||^2/s with explicit squared slack (x.v)^2/s^2."
+    },
+    {
+      "name": "O2_chart_derivative_positive_slack",
+      "status": "PASS",
+      "scope": "generic inequality certificate",
+      "detail": "s>=1; squared slack nonnegative for all real x,v. Cell s>=m_C^2 gives derivative norm <=1/m_C. Applies to all four charts by permuting coordinates."
+    },
+    {
+      "name": "O2_radius_rational_upper",
+      "status": "PASS",
+      "scope": "generic exact inequality",
+      "detail": "A spacing-1/m grid has half widths 1/(2m): 2||h||=sqrt(3)/m < 7/(4m) for positive m. For a box, integrate derivative along center-to-point segment and use quaternion double cover: delta<=min(pi,2||h||/m_C). All unit quaternions covered by choosing a positive maximal-magnitude component; ties allowed."
+    },
+    {
+      "name": "O3_certain_chain",
+      "status": "PASS",
+      "scope": "generic order proof",
+      "detail": "If Li>=U0 then si-s0=(si-Li)+(Li-U0)+(U0-s0)>=0. Hence I[Li>=U0]<=I[si>=s0]."
+    },
+    {
+      "name": "O3_possible_chain",
+      "status": "PASS",
+      "scope": "generic order proof",
+      "detail": "If si>=s0 then Ui-L0=(Ui-si)+(si-s0)+(s0-L0)>=0. Thus I[si>=s0]<=I[Ui>=L0], retaining endpoint equality. Sum and divide by M>0 proves interval count inequalities."
+    },
+    {
+      "name": "O3_wide_interval_fixture",
+      "status": "PASS",
+      "scope": "fixed fixture",
+      "detail": "Observation is last scalar point 10; reordered as row zero for counting."
+    },
+    {
+      "name": "O3_inclusive_tie_counterexample",
+      "status": "PASS",
+      "scope": "fixed counterexample",
+      "detail": "All exact scores zero: exact inclusive rank p=1; upper endpoint ranking falsely gives 1/5."
+    },
+    {
+      "name": "O3_threshold_1000",
+      "status": "PASS",
+      "scope": "exact integer threshold",
+      "detail": "Rejection iff possible count <=floor(M/20)-1. Nonrejection iff certain count >=floor(M/20)."
+    },
+    {
+      "name": "O3_threshold_301",
+      "status": "PASS",
+      "scope": "exact integer threshold",
+      "detail": "Rejection iff possible count <=floor(M/20)-1. Nonrejection iff certain count >=floor(M/20)."
+    },
+    {
+      "name": "O3_inclusive_rank_small_exhaustion",
+      "status": "PASS",
+      "scope": "finite corroboration only",
+      "detail": "All 3^5 labeled score tuples. Generic proof: if m entries have inclusive rank <=t, select their minimum score; its rank >=m, so m<=t. Exchangeability averages row labels. Pointwise p_upper>=p survives any numerical stopping time for the fixed scores."
+    },
+    {
+      "name": "J2_factor_rank_support",
+      "status": "PASS",
+      "scope": "fixed rational fixture",
+      "detail": "C=4BB^T; exact support is span(B). Full column rank is established exactly."
+    },
+    {
+      "name": "J2_reduced_quadratic",
+      "status": "PASS",
+      "scope": "fixed rational fixture",
+      "detail": "On-support reduced quadratic equals original pseudoinverse quadratic =1."
+    },
+    {
+      "name": "J2_off_support",
+      "status": "PASS",
+      "scope": "fixed counterexample",
+      "detail": "Off-support vector has same reduced projected quadratic; exact support check is necessary and rejects roff. No jitter or floating null projection."
+    },
+    {
+      "name": "J2_penrose_exact",
+      "status": "PASS",
+      "scope": "fixed rational identity",
+      "detail": "All four Penrose equations independently verify the exact pseudoinverse fixture."
+    },
+    {
+      "name": "J2_gaussian_marginals",
+      "status": "PASS",
+      "scope": "exact analytic construction",
+      "detail": "Both marginals standard Gaussian because symmetric sign mixing preserves N(0,1). Joint MGF is half exp((t+u)^2/2)+half exp((t-u)^2/2)."
+    },
+    {
+      "name": "J2_not_joint_Gaussian",
+      "status": "PASS",
+      "scope": "exact counterexample",
+      "detail": "Covariance I but E[X^2 Y^2]=3 whereas centered joint Gaussian with covariance I has 1. Equivalently X^2=Y^2 a.s.; Gaussian marginals and zero covariance alone do not admit joint Gaussian law."
+    }
+  ],
+  "domain_assumption_diff": [],
+  "counterexample": [
+    {
+      "target": "spectral descriptors are complete joint orbit invariants",
+      "finding": "FALSE: rational rotated octopole at fixed simple-spectrum Q"
+    },
+    {
+      "target": "rank upper endpoints as exact scores",
+      "finding": "FALSE: inclusive all-zero ties return p=1 while endpoint shortcut gives 1/M"
+    },
+    {
+      "target": "projected quadratic alone tests singular support",
+      "finding": "FALSE: roff has same reduced quadratic but violates exact support"
+    },
+    {
+      "target": "Gaussian marginals plus covariance imply joint Gaussian",
+      "finding": "FALSE: (Z,SZ) has covariance I and mixed fourth moment 3"
+    }
+  ],
+  "assumptions_used": [
+    "Named component Hoffman-Wielandt/Mirsky residual inequalities",
+    "Triangle/Cauchy-Schwarz and quaternion double-cover angle relation",
+    "Positive q0,o0,V and positive integer M (positive integer m for grid statement)",
+    "Fixed exact permutation-equivariant scores and exchangeable sampling for calibration only",
+    "Standard-normal MGF with independent fair sign for explicit probability construction"
+  ],
+  "obligation_status": {
+    "O1_weighted_lower_and_scaling": "PASS",
+    "O2_quaternion_rotation_and_chart_derivative": "PASS",
+    "O3_interval_inclusive_counts": "PASS",
+    "J2_rational_factor_support": "PASS",
+    "J2_gaussian_marginal_counterexample": "PASS"
+  },
+  "scope_detail": ".agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/proof_scope.md",
+  "claim_ceiling": "Five registered O1-O3/J2 obligations only; generic proofs explicitly conditional on named lemmas. Fixed rational support/scaling are fixtures. No implementation enclosure, product-law, physics, family identification, or four-axis admission.",
+  "exact_run_command": "cd /mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree && sage -python .agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/verify.py",
+  "standalone_singular_command": "/usr/bin/Singular -q .agent-harness/runs/R8-AC-20260909/artifacts/sage_singular/quaternion.sing",
+  "execution_history": [
+    {
+      "attempt": 1,
+      "exit_code": 1,
+      "classification": "verifier ordering error",
+      "detail": "Unsorted eigenvalue result compared to sorted expected list; source and failure retained."
+    },
+    {
+      "attempt": 2,
+      "exit_code": 0,
+      "check_count": 27,
+      "detail": "Explicit sorting repairs ordering comparison; no target or tolerance change."
+    }
+  ],
+  "bootstrap_checkout_mismatch": {
+    "hook_active_run": "EXTERNAL-FUSION-FOLLOWUP-20260829",
+    "hook_head": "e7dc5fd99c65",
+    "actual_run": "R8-AC-20260909",
+    "actual_head": "c5b991e6ef8e13a28da9a0848da63ded4d52c86f",
+    "action": "Recorded only; no shared pointer changes."
+  },
+  "correlation_disclosure": "Same Codex/LLM environment as team; blind independent authoring, separate Sage/Singular engines; not independent human authorship.",
+  "completed_at": "2026-09-08T18:05:27.316271+00:00",
+  "delivery_status": "HOOK_CONTEXT_MISMATCH",
+  "delivery_issue": "Stop hook resolved historical EXTERNAL-FUSION-FOLLOWUP-20260829 run in original checkout instead of registered R8 worktree; actual assignment and result exist and canonical assignment result_path matches. No shared pointers changed."
+}

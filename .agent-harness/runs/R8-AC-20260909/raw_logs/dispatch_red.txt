@@ -1,0 +1,21 @@
+
+==================================== ERRORS ====================================
+________________ ERROR collecting tests/r8/test_law_registry.py ________________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/tests/r8/test_law_registry.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests/r8/test_law_registry.py:5: in <module>
+    from htt.infer.r8_law_registry import admit_product, bind_method, run_scope, ScopedRefusal
+E   ModuleNotFoundError: No module named 'htt.infer.r8_law_registry'
+___________ ERROR collecting tests/r8/test_simulator_calibration.py ____________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/tests/r8/test_simulator_calibration.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests/r8/test_simulator_calibration.py:3: in <module>
+    from htt.infer.r8_simulator_calibration import ToyLocationLaw,AbsoluteResidual,candidate_rank
+E   ModuleNotFoundError: No module named 'htt.infer.r8_simulator_calibration'
+=========================== short test summary info ============================
+ERROR tests/r8/test_law_registry.py
+ERROR tests/r8/test_simulator_calibration.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+2 errors in 1.12s

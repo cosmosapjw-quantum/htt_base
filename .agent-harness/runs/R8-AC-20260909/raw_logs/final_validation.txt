@@ -1,0 +1,1230 @@
+.................................................................EEEEEEE [ 72%]
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE                                             [100%]
+==================================== ERRORS ====================================
+___ ERROR at setup of test_failed_cas_note_cannot_issue_capability[CAS_FAIL] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_failed_cas_note_cannot_is0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb989cfb0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_failed_cas_note_cannot_issue_capability[CAS_BLOCKED] __
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_failed_cas_note_cannot_is1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98e6b40>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+__ ERROR at setup of test_existing_observed_cas_retains_only_its_narrow_scope __
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_existing_observed_cas_ret0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98a4b90>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[contract_hash] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98e4500>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[contract_source] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb988b950>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[missing_axis] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98abfe0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[failed_axis] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98a96d0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[axis_error] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98fe4b0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[not_executed] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98fdd30>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[timeout] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo6')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98ab4d0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[exit_code] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb9894f20>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[missing_check] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98fe900>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[false_check] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo9')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98ff2c0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[assumption_diff] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo10')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb99127e0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[counterexample] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo11')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb9913e30>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[not_eligible] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo12')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98ff5c0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[stored_result] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo13')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98a53d0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[missing_contract] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo14')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98ab590>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[malformed_report] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo15')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb9913a40>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[malformed_contract] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo16')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb9911c10>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[integer_check] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo17')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb99120f0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[wrong_axis] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo18')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb9910200>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[extra_axis] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo19')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb9913620>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_cas_admission_requires_bound_observed_axis_evidence[aggregate_error] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_cas_admission_requires_bo20')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98feae0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+__ ERROR at setup of test_donor_consumer_rechecks_bytes_despite_cached_intake __
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_donor_consumer_rechecks_b0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98741d0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_intake_records_donor_only_mismatch_without_repinning __
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_intake_records_donor_only0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb574b440>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_review_pass_requires_current_reviewed_bytes[changed] __
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_review_pass_requires_curr0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb5749be0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_review_pass_requires_current_reviewed_bytes[missing] __
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_review_pass_requires_curr1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98fe240>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+__ ERROR at setup of test_review_pass_requires_current_reviewed_bytes[empty] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_review_pass_requires_curr2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb99122d0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_review_pass_requires_current_reviewed_bytes[malformed] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_review_pass_requires_curr3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb57490a0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_default_dependency_slices_reopen_only_affected_attempts[cas_arrival-affected0] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_default_dependency_slices0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb5749970>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_default_dependency_slices_reopen_only_affected_attempts[contract-affected1] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_default_dependency_slices1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb5749640>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_default_dependency_slices_reopen_only_affected_attempts[contract_source-affected2] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_default_dependency_slices2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb574a510>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_default_dependency_slices_reopen_only_affected_attempts[donor-affected3] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_default_dependency_slices3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb98a9430>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_ ERROR at setup of test_default_dependency_slices_reopen_only_affected_attempts[reviewed_source-affected4] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2175/test_default_dependency_slices4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x750fb574bfb0>
+
+    @pytest.fixture
+    def sandbox(tmp_path, monkeypatch):
+        root = tmp_path / 'repo'
+>       contract = json.loads((ROOT / OLD_RUN / 'CAS_CONTRACT.json').read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+=========================== short test summary info ============================
+ERROR tests/r7/test_evidence_binding.py::test_failed_cas_note_cannot_issue_capability[CAS_FAIL]
+ERROR tests/r7/test_evidence_binding.py::test_failed_cas_note_cannot_issue_capability[CAS_BLOCKED]
+ERROR tests/r7/test_evidence_binding.py::test_existing_observed_cas_retains_only_its_narrow_scope
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[contract_hash]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[contract_source]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[missing_axis]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[failed_axis]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[axis_error]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[not_executed]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[timeout]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[exit_code]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[missing_check]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[false_check]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[assumption_diff]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[counterexample]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[not_eligible]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[stored_result]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[missing_contract]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[malformed_report]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[malformed_contract]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[integer_check]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[wrong_axis]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[extra_axis]
+ERROR tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[aggregate_error]
+ERROR tests/r7/test_evidence_binding.py::test_donor_consumer_rechecks_bytes_despite_cached_intake
+ERROR tests/r7/test_evidence_binding.py::test_intake_records_donor_only_mismatch_without_repinning
+ERROR tests/r7/test_evidence_binding.py::test_review_pass_requires_current_reviewed_bytes[changed]
+ERROR tests/r7/test_evidence_binding.py::test_review_pass_requires_current_reviewed_bytes[missing]
+ERROR tests/r7/test_evidence_binding.py::test_review_pass_requires_current_reviewed_bytes[empty]
+ERROR tests/r7/test_evidence_binding.py::test_review_pass_requires_current_reviewed_bytes[malformed]
+ERROR tests/r7/test_evidence_binding.py::test_default_dependency_slices_reopen_only_affected_attempts[cas_arrival-affected0]
+ERROR tests/r7/test_evidence_binding.py::test_default_dependency_slices_reopen_only_affected_attempts[contract-affected1]
+ERROR tests/r7/test_evidence_binding.py::test_default_dependency_slices_reopen_only_affected_attempts[contract_source-affected2]
+ERROR tests/r7/test_evidence_binding.py::test_default_dependency_slices_reopen_only_affected_attempts[donor-affected3]
+ERROR tests/r7/test_evidence_binding.py::test_default_dependency_slices_reopen_only_affected_attempts[reviewed_source-affected4]
+65 passed, 35 errors in 5.23s

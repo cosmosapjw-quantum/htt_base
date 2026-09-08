@@ -1,0 +1,2692 @@
+{
+  "nodes": {
+    "R8-00": {
+      "actions": [
+        {
+          "scientific_outcome": "SOURCE_INTAKE_ONLY",
+          "capabilities": [
+            "SOURCE_BOUND"
+          ],
+          "details": {
+            "donor_failures": {},
+            "selected_count": 31,
+            "inventories": [
+              [
+                {
+                  "product_key": "pr3_smica",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_data",
+                  "observable_type": "temperature",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-04",
+                    "R7-06"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "pr3_components",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_pr3_component_controls",
+                  "observable_type": "temperature_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "ffp10",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_ffp10",
+                  "observable_type": "simulation_bank",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-18"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "pr4_npipe",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": null,
+                  "observable_type": "excluded",
+                  "disposition": "SKIPPED_BY_USER_SCOPE",
+                  "consumers": [
+                    "R7-00"
+                  ],
+                  "reason": "PR4/NPIPE excluded by owner",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "wmap9",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/wmap_9yr",
+                  "observable_type": "temperature_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "wmap7_simulation",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/wmap_7yr_e2e_sim",
+                  "observable_type": "simulation_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "beyondplanck_v2",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/beyondplanck_v2",
+                  "observable_type": "posterior_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "cosmoglobe_dr1",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cosmoglobe_dr1",
+                  "observable_type": "posterior_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "act_dr6_kappa",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/act_dr6_lensing",
+                  "observable_type": "lensing_kappa",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "act_dr6_sims",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/act_dr6_lensing_sims",
+                  "observable_type": "kappa_simulation",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "cf4_full",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4_full",
+                  "observable_type": "distance_velocity",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-14"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "cf4_reconstruction",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4",
+                  "observable_type": "reconstruction_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "cf4pp",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4",
+                  "observable_type": "velocity_field_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "carrick_2mpp",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/carrick_2mpp",
+                  "observable_type": "velocity_field_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "coras",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/coras_2mrs",
+                  "observable_type": "velocity_field_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "lilow",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/lilow_nn_2mrs",
+                  "observable_type": "velocity_field_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "desi_raw",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/desi",
+                  "observable_type": "catalogue",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-08"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "desi_bgs_bright_mocks",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/desi_dr1_mocks",
+                  "observable_type": "catalogue_mock_bank",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-08",
+                    "R7-18"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "desi_compressed",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2",
+                  "observable_type": "compressed_likelihood",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-08",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "union3",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/rrss_observational_inputs/union3_release-main",
+                  "observable_type": "distance_redshift",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "jwst_anchors",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/jwst_anchors",
+                  "observable_type": "host_calibration",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-10"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "jwst_sn",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/jwst_sn",
+                  "observable_type": "host_distance",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-10"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "hsc",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/data/external/hsc_s19a_y3",
+                  "observable_type": "lensing_shear",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "kids",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/hsc_kids",
+                  "observable_type": "lensing_shear",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "cosmos_web",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cosmos_web_dr1",
+                  "observable_type": "small_area_catalogue",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "quijote",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/quijote_mfi_dr1",
+                  "observable_type": "foreground_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "class_observatory",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/class_dr1",
+                  "observable_type": "polarization_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "compact_carriers",
+                  "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/compact_products",
+                  "observable_type": "derived_carrier",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-02",
+                    "R7-06"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                }
+              ],
+              [
+                {
+                  "product_key": "pr3_smica",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_data",
+                  "observable_type": "temperature",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-04",
+                    "R7-06"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "pr3_components",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_pr3_component_controls",
+                  "observable_type": "temperature_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "ffp10",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_ffp10",
+                  "observable_type": "simulation_bank",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-18"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "pr4_npipe",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": null,
+                  "observable_type": "excluded",
+                  "disposition": "SKIPPED_BY_USER_SCOPE",
+                  "consumers": [
+                    "R7-00"
+                  ],
+                  "reason": "PR4/NPIPE excluded by owner",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "wmap9",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/wmap_9yr",
+                  "observable_type": "temperature_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "wmap7_simulation",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/wmap_7yr_e2e_sim",
+                  "observable_type": "simulation_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "beyondplanck_v2",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/beyondplanck_v2",
+                  "observable_type": "posterior_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "cosmoglobe_dr1",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cosmoglobe_dr1",
+                  "observable_type": "posterior_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "act_dr6_kappa",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/act_dr6_lensing",
+                  "observable_type": "lensing_kappa",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "act_dr6_sims",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/act_dr6_lensing_sims",
+                  "observable_type": "kappa_simulation",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "cf4_full",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4_full",
+                  "observable_type": "distance_velocity",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-14"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "cf4_reconstruction",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4",
+                  "observable_type": "reconstruction_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "cf4pp",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4",
+                  "observable_type": "velocity_field_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "carrick_2mpp",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/carrick_2mpp",
+                  "observable_type": "velocity_field_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "coras",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/coras_2mrs",
+                  "observable_type": "velocity_field_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "lilow",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/lilow_nn_2mrs",
+                  "observable_type": "velocity_field_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-07",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "desi_raw",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/desi",
+                  "observable_type": "catalogue",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-08"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "desi_bgs_bright_mocks",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/desi_dr1_mocks",
+                  "observable_type": "catalogue_mock_bank",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-08",
+                    "R7-18"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "desi_compressed",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2",
+                  "observable_type": "compressed_likelihood",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-08",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "union3",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/rrss_observational_inputs/union3_release-main",
+                  "observable_type": "distance_redshift",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "jwst_anchors",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/jwst_anchors",
+                  "observable_type": "host_calibration",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-10"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "jwst_sn",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/jwst_sn",
+                  "observable_type": "host_distance",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-10"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "hsc",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/data/external/hsc_s19a_y3",
+                  "observable_type": "lensing_shear",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "kids",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/hsc_kids",
+                  "observable_type": "lensing_shear",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "cosmos_web",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cosmos_web_dr1",
+                  "observable_type": "small_area_catalogue",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-09",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "quijote",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/quijote_mfi_dr1",
+                  "observable_type": "foreground_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "class_observatory",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/class_dr1",
+                  "observable_type": "polarization_control",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-06",
+                    "R7-21"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                },
+                {
+                  "product_key": "compact_carriers",
+                  "inventory_locator": "/mnt/sn850x2t/htt_base_e2e/inventories/EXTERNAL_ASSETS_20260907T071735Z/assets.csv",
+                  "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/compact_products",
+                  "observable_type": "derived_carrier",
+                  "disposition": "CONTROL_ONLY",
+                  "consumers": [
+                    "R7-02",
+                    "R7-06"
+                  ],
+                  "reason": "Product located; sampling/response law requires adapter validation",
+                  "release": null,
+                  "units": null,
+                  "frame": null,
+                  "processing": null,
+                  "row_ids": [],
+                  "raw_ancestry": [],
+                  "uncertainty_law": null,
+                  "law_scope": null,
+                  "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE"
+                }
+              ]
+            ]
+          },
+          "process_status": "COMPLETED_SUCCESS",
+          "node_id": "R8-00",
+          "action": "bind_sources",
+          "fingerprint": "7c6a3f24e8a7440b89016e08c9fb267d37fbdfc2ed9c01c8294e75b6fa2af714",
+          "attempt": 1,
+          "artifacts": [
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/ac/campaign/R8-00/bind_sources/attempt_0001/source_binding.json",
+              "state": "PRESENT",
+              "sha256": "e37894f7a870f4b9c2241c5fe31552809a1865036c92a6fa984d17401aa50619"
+            }
+          ],
+          "elapsed_seconds": 0.0147364498116076
+        },
+        {
+          "scientific_outcome": "HISTORICAL_SCOPED",
+          "capabilities": [
+            "HISTORY_SCOPED"
+          ],
+          "reason": "Preserved R7 full-plan STOP_INVALID; no old CAS or Gaussian campaign promoted to R8.",
+          "process_status": "COMPLETED_SUCCESS",
+          "node_id": "R8-00",
+          "action": "import_historical_records",
+          "fingerprint": "04c8d4c32463570e3152a10429f5b7bb7a01e166465c6b801d4737cfe7f16947",
+          "attempt": 1,
+          "artifacts": [
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r7/ADJUDICATION.md",
+              "state": "PRESENT",
+              "sha256": "49f72921ca7448c9e468b91ad77d508fa9394bef4f18a51986a17c6e5211fdd0"
+            }
+          ],
+          "elapsed_seconds": 9.885593317449093e-05
+        }
+      ],
+      "capabilities": [
+        "HISTORY_SCOPED",
+        "SOURCE_BOUND"
+      ],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "HISTORICAL_SCOPED",
+        "SOURCE_INTAKE_ONLY"
+      ]
+    },
+    "R8-01": {
+      "actions": [
+        {
+          "scientific_outcome": "PROOF_PARTIALLY_UNRESOLVED",
+          "capabilities": [],
+          "aggregate_status": "CAS_CONFLICT",
+          "per_obligation_checks": {
+            "O1_weighted_lower_and_scaling": {
+              "wolfram_xact": true,
+              "sympy": true,
+              "sage_singular": true,
+              "lean": null
+            },
+            "O2_quaternion_rotation_and_chart_derivative": {
+              "wolfram_xact": true,
+              "sympy": true,
+              "sage_singular": true,
+              "lean": null
+            },
+            "O3_interval_inclusive_counts": {
+              "wolfram_xact": true,
+              "sympy": true,
+              "sage_singular": true,
+              "lean": true
+            },
+            "J2_rational_factor_support": {
+              "wolfram_xact": true,
+              "sympy": true,
+              "sage_singular": true,
+              "lean": true
+            },
+            "J2_gaussian_marginal_counterexample": {
+              "wolfram_xact": true,
+              "sympy": true,
+              "sage_singular": true,
+              "lean": null
+            }
+          },
+          "reason": "Full CAS component is not admitted. Individually compiled/count/support checks are retained without overriding the existing aggregate gate.",
+          "process_status": "COMPLETED_SUCCESS",
+          "node_id": "R8-01",
+          "action": "orbit_obligations",
+          "fingerprint": "691bce4c0bb659720670c6e5e60b08f8b82b190b9fd294c20dbf42bdc678a89a",
+          "attempt": 1,
+          "artifacts": [
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-AC-20260909/artifacts/observed_cas/adjudication.json",
+              "state": "PRESENT",
+              "sha256": "f3bba858dac115c16e27609810be6c0781f1c0a2eede8e8855bff7c1ac534e54"
+            },
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-AC-20260909/CAS_CONTRACT.json",
+              "state": "PRESENT",
+              "sha256": "5ff7f84db01b6871f74f7c60b5c36430a4cae93735466e277bd9c4019ab22723"
+            },
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/ac/campaign/R8-01/orbit_obligations/attempt_0001/per_obligation_checks.json",
+              "state": "PRESENT",
+              "sha256": "73520225445c8ffa836f1b61a34f7919ff9b86fa2ae240f0eb0af6a9a2bbdb6d"
+            }
+          ],
+          "elapsed_seconds": 0.000567510025575757
+        },
+        {
+          "scientific_outcome": "PROOF_PARTIALLY_UNRESOLVED",
+          "capabilities": [],
+          "aggregate_status": "CAS_CONFLICT",
+          "per_obligation_checks": {
+            "O1_weighted_lower_and_scaling": {
+              "wolfram_xact": true,
+              "sympy": true,
+              "sage_singular": true,
+              "lean": null
+            },
+            "O2_quaternion_rotation_and_chart_derivative": {
+              "wolfram_xact": true,
+              "sympy": true,
+              "sage_singular": true,
+              "lean": null
+            },
+            "O3_interval_inclusive_counts": {
+              "wolfram_xact": true,
+              "sympy": true,
+              "sage_singular": true,
+              "lean": true
+            },
+            "J2_rational_factor_support": {
+              "wolfram_xact": true,
+              "sympy": true,
+              "sage_singular": true,
+              "lean": true
+            },
+            "J2_gaussian_marginal_counterexample": {
+              "wolfram_xact": true,
+              "sympy": true,
+              "sage_singular": true,
+              "lean": null
+            }
+          },
+          "reason": "Full CAS component is not admitted. Individually compiled/count/support checks are retained without overriding the existing aggregate gate.",
+          "process_status": "COMPLETED_SUCCESS",
+          "node_id": "R8-01",
+          "action": "rank_obligations",
+          "fingerprint": "d11da9d5892dfc47edaca72cc119e2a1a4045f9519b138d40765a79a0242db4e",
+          "attempt": 1,
+          "artifacts": [
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-AC-20260909/artifacts/observed_cas/adjudication.json",
+              "state": "PRESENT",
+              "sha256": "f3bba858dac115c16e27609810be6c0781f1c0a2eede8e8855bff7c1ac534e54"
+            },
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-AC-20260909/CAS_CONTRACT.json",
+              "state": "PRESENT",
+              "sha256": "5ff7f84db01b6871f74f7c60b5c36430a4cae93735466e277bd9c4019ab22723"
+            },
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/ac/campaign/R8-01/rank_obligations/attempt_0001/per_obligation_checks.json",
+              "state": "PRESENT",
+              "sha256": "73520225445c8ffa836f1b61a34f7919ff9b86fa2ae240f0eb0af6a9a2bbdb6d"
+            }
+          ],
+          "elapsed_seconds": 0.0005360010545700788
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-01",
+          "action": "representation_obligations",
+          "fingerprint": "391fa374d55cf2f7e4572edd640a0a4990f03690b324a33e1db2684d4d7cb359",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 3.2659154385328293e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED",
+        "PROOF_PARTIALLY_UNRESOLVED"
+      ]
+    },
+    "R8-06": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-06",
+          "action": "extract_valid_tensors",
+          "fingerprint": "848b04f27e329f5eb6022df14e3c842d06309c97a611aed6de774adee128cf33",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.2849999368190765e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-06",
+          "action": "qualify_pool_law",
+          "fingerprint": "51a3aeaf3496679055ab02a98e31bb99ed31b3acdab188c4a4ac44a0c202e8a6",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.234010025858879e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-06",
+          "action": "qualify_candidate_cmb_law",
+          "fingerprint": "76e5f2de332ae99d8f38b34d9c2c83359f1ebc5cc9e246ce4044b988cdc7a323",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.0640436559915543e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-08": {
+      "actions": [
+        {
+          "scientific_outcome": "METHOD_TESTED_PROOF_SCOPE_HELD",
+          "capabilities": [],
+          "reason": "Implementation/tests recorded; broad support/partial-law CAS promotion withheld while registered Lean scope is unresolved.",
+          "process_status": "COMPLETED_SUCCESS",
+          "node_id": "R8-08",
+          "action": "gaussian_support",
+          "fingerprint": "70e8f8fbe1fdd3cb5575bc9ce7dfebc83425da0caf13f85734611311d986fc8e",
+          "attempt": 1,
+          "artifacts": [
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/ac/validation.json",
+              "state": "PRESENT",
+              "sha256": "f4dcc8b635daa76f15cc4328227d6f42584f827d0ddb44dc21074ee1cf1d08ef"
+            }
+          ],
+          "elapsed_seconds": 0.0007172031328082085
+        },
+        {
+          "scientific_outcome": "METHOD_TESTED_PROOF_SCOPE_HELD",
+          "capabilities": [],
+          "reason": "Implementation/tests recorded; broad support/partial-law CAS promotion withheld while registered Lean scope is unresolved.",
+          "process_status": "COMPLETED_SUCCESS",
+          "node_id": "R8-08",
+          "action": "partial_laws",
+          "fingerprint": "fcf172c5f875e1a32f6452ac7c9fab29ea962a466faea4ed29644a4af599777b",
+          "attempt": 1,
+          "artifacts": [
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/ac/validation.json",
+              "state": "PRESENT",
+              "sha256": "f4dcc8b635daa76f15cc4328227d6f42584f827d0ddb44dc21074ee1cf1d08ef"
+            }
+          ],
+          "elapsed_seconds": 0.0005108639597892761
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "METHOD_TESTED_PROOF_SCOPE_HELD"
+      ]
+    },
+    "R8-14": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-14",
+          "action": "jet_set",
+          "fingerprint": "aff3ad58e7db613af0bd0cec2308caaa699b45039c925de2555685ba3e5ffddc",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.2149179130792618e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-14",
+          "action": "recession_certificates",
+          "fingerprint": "bf93fe5012862e5fe0f28185f0fe7306580818d320874bb4185d4a97ab11da67",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.20397487282753e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-18": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-18",
+          "action": "restricted_stress",
+          "fingerprint": "d4e633b00d6bfc798c307d66c9c8617e9a9142ae4c819630422cc77c4349fd72",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.1939631551504135e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-22": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-22",
+          "action": "check_local_hook_context",
+          "fingerprint": "e3f8d58bd07162aeee987ab5e33256172fe06e428ac8645a78970f97fe516a0f",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.2139865905046463e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-02": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-02",
+          "action": "certified_bounds",
+          "fingerprint": "7854a4c6d57473e480608a27890320e07a6a886094b1e4d2fc40178699c5f839",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.003973349928856e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-03": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-03",
+          "action": "interval_rank",
+          "fingerprint": "e0bbcda598f2cde6d1b846817d41c1f942336858b88ef2cbdccc84e8170d2c2f",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.2149179130792618e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-04": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-04",
+          "action": "full_mv",
+          "fingerprint": "569419dd200fc1502ad9090457bae61392261d2430c6d703cbdfeb8be8d67c64",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.1639280021190643e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-09": {
+      "actions": [
+        {
+          "scientific_outcome": "CONDITIONAL_BOUND",
+          "capabilities": [
+            "KNOWN_GAUSSIAN_FACTORY"
+          ],
+          "products": {
+            "desi_compressed": {
+              "outcome": "CONDITIONAL_LAW_BOUND",
+              "scope": {
+                "product_id": "desi_compressed",
+                "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+                "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+                "model_id": "RELEASED_GAUSSIAN_QISO",
+                "dataset_ids": [
+                  "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+                ],
+                "convention_id": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+                "domain_id": "POSITIVE_QISO",
+                "conditioning_id": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+                "ordered_measurement_ids": [
+                  "BGS_BRIGHT_GCcomb_qiso"
+                ],
+                "parameter_names": [
+                  "qiso"
+                ],
+                "parameter_units": [
+                  "1"
+                ],
+                "frame": "NONANGULAR_BACKGROUND_COMPRESSION",
+                "approximation": "CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY_LAW"
+              },
+              "original_data_source": {
+                "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_syst_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5",
+                "state": "PRESENT",
+                "sha256": "836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+              },
+              "raw_catalogue_coverage": "UNVERIFIED",
+              "stat_only_alternative": "NOT_MULTIPLIED",
+              "fiducial": 8.062742859742729
+            },
+            "cf4_full": {
+              "outcome": "INPUT_UNAVAILABLE",
+              "law_status": "NO_ADMITTED_SELECTED_LAW",
+              "reason": "Full covariance in source group order and a law for the conditioned sampling variable are not supplied; raw distance errors are not substituted.",
+              "input": {
+                "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/ReadMe",
+                "state": "PRESENT",
+                "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+              },
+              "metadata_read_bytes": 19918,
+              "header_sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+            },
+            "jwst_anchors": {
+              "outcome": "INPUT_UNAVAILABLE",
+              "law_status": "NO_ADMITTED_SELECTED_LAW",
+              "reason": "Quoted per-method errors do not supply shared host/calibration covariance; earlier independent-error fit remains a scenario.",
+              "input": {
+                "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/jwst_anchors/jwst_anchors_manifest.json",
+                "state": "PRESENT",
+                "sha256": "37e828156d1b4408cc99e1121cd88eacfa3e08cbbd7fc5fcab25be18187b500f"
+              },
+              "metadata_read_bytes": 19119,
+              "header_sha256": "37e828156d1b4408cc99e1121cd88eacfa3e08cbbd7fc5fcab25be18187b500f"
+            },
+            "union3": {
+              "outcome": "INPUT_UNAVAILABLE",
+              "law_status": "NO_ADMITTED_SELECTED_LAW",
+              "reason": "A matrix alone does not bind row/redshift/compression and the selected likelihood.",
+              "input": {
+                "path": "/mnt/sn850x2t/htt_base_e2e/workdir/rrss_observational_inputs/union3_release-main/mu_mat_union3_cosmo=2_mu.fits",
+                "state": "PRESENT",
+                "sha256": "ef98b7dde1025ee7134f3242aaea3f1f0ed3f2b29a718458c550a8e4e24d0349"
+              }
+            },
+            "desi_raw": {
+              "outcome": "INPUT_UNAVAILABLE",
+              "law_status": "NO_ADMITTED_SELECTED_LAW",
+              "reason": "P sample magnitude cuts and matched random normalization are not bound; PR151 numerical outputs excluded.",
+              "input": {
+                "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks/observed/v1.5/BGS_BRIGHT-21.5_NGC_clustering.dat.fits",
+                "state": "PRESENT",
+                "sha256": "b67e8e3ee579d9673089f2c9c6930b793a2bf1895f85198472fb7fc5aa392825"
+              }
+            }
+          },
+          "process_status": "COMPLETED_SUCCESS",
+          "node_id": "R8-09",
+          "action": "known_nonsingular_law",
+          "fingerprint": "5fbd08e04f74841dc88234e19f6c593f3d182f897d434f5fd082f0d4846cb2d1",
+          "attempt": 1,
+          "artifacts": [
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/ac/campaign/R8-09/known_nonsingular_law/attempt_0001/products.json",
+              "state": "PRESENT",
+              "sha256": "91c91f1665371da6af6fa6124cdb5f013491e5a121ec265eaab4fc1796ab0ae4"
+            }
+          ],
+          "elapsed_seconds": 0.21984609100036323
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "REQUIRED_CAPABILITY_UNAVAILABLE",
+          "missing": [
+            {
+              "node": "R8-08",
+              "capability": "SUPPORT_METHOD"
+            }
+          ],
+          "capabilities": [],
+          "node_id": "R8-09",
+          "action": "known_singular_law",
+          "fingerprint": "f9acfcec19a2e77fea6fd0f284f8165d0fe9b5604ae51b7e5823ef2c89f92482",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 5.119945853948593e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "REQUIRED_CAPABILITY_UNAVAILABLE",
+          "missing": [
+            {
+              "node": "R8-08",
+              "capability": "PARTIAL_METHOD"
+            }
+          ],
+          "capabilities": [],
+          "node_id": "R8-09",
+          "action": "marginal_or_moment_law",
+          "fingerprint": "78fc9f1eb6dcf54b1607240cf292fba0a40ebd65647ff8ad5cc1b18c1c67ecab",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 3.54694202542305e-06
+        },
+        {
+          "scientific_outcome": "INPUT_UNAVAILABLE",
+          "capabilities": [],
+          "products": {
+            "desi_compressed": {
+              "outcome": "CONDITIONAL_LAW_BOUND",
+              "scope": {
+                "product_id": "desi_compressed",
+                "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+                "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+                "model_id": "RELEASED_GAUSSIAN_QISO",
+                "dataset_ids": [
+                  "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+                ],
+                "convention_id": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+                "domain_id": "POSITIVE_QISO",
+                "conditioning_id": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+                "ordered_measurement_ids": [
+                  "BGS_BRIGHT_GCcomb_qiso"
+                ],
+                "parameter_names": [
+                  "qiso"
+                ],
+                "parameter_units": [
+                  "1"
+                ],
+                "frame": "NONANGULAR_BACKGROUND_COMPRESSION",
+                "approximation": "CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY_LAW"
+              },
+              "original_data_source": {
+                "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_syst_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5",
+                "state": "PRESENT",
+                "sha256": "836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+              },
+              "raw_catalogue_coverage": "UNVERIFIED",
+              "stat_only_alternative": "NOT_MULTIPLIED",
+              "fiducial": 8.062742859742729
+            },
+            "cf4_full": {
+              "outcome": "INPUT_UNAVAILABLE",
+              "law_status": "NO_ADMITTED_SELECTED_LAW",
+              "reason": "Full covariance in source group order and a law for the conditioned sampling variable are not supplied; raw distance errors are not substituted.",
+              "input": {
+                "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/ReadMe",
+                "state": "PRESENT",
+                "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+              },
+              "metadata_read_bytes": 19918,
+              "header_sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+            },
+            "jwst_anchors": {
+              "outcome": "INPUT_UNAVAILABLE",
+              "law_status": "NO_ADMITTED_SELECTED_LAW",
+              "reason": "Quoted per-method errors do not supply shared host/calibration covariance; earlier independent-error fit remains a scenario.",
+              "input": {
+                "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/jwst_anchors/jwst_anchors_manifest.json",
+                "state": "PRESENT",
+                "sha256": "37e828156d1b4408cc99e1121cd88eacfa3e08cbbd7fc5fcab25be18187b500f"
+              },
+              "metadata_read_bytes": 19119,
+              "header_sha256": "37e828156d1b4408cc99e1121cd88eacfa3e08cbbd7fc5fcab25be18187b500f"
+            },
+            "union3": {
+              "outcome": "INPUT_UNAVAILABLE",
+              "law_status": "NO_ADMITTED_SELECTED_LAW",
+              "reason": "A matrix alone does not bind row/redshift/compression and the selected likelihood.",
+              "input": {
+                "path": "/mnt/sn850x2t/htt_base_e2e/workdir/rrss_observational_inputs/union3_release-main/mu_mat_union3_cosmo=2_mu.fits",
+                "state": "PRESENT",
+                "sha256": "ef98b7dde1025ee7134f3242aaea3f1f0ed3f2b29a718458c550a8e4e24d0349"
+              }
+            },
+            "desi_raw": {
+              "outcome": "INPUT_UNAVAILABLE",
+              "law_status": "NO_ADMITTED_SELECTED_LAW",
+              "reason": "P sample magnitude cuts and matched random normalization are not bound; PR151 numerical outputs excluded.",
+              "input": {
+                "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks/observed/v1.5/BGS_BRIGHT-21.5_NGC_clustering.dat.fits",
+                "state": "PRESENT",
+                "sha256": "b67e8e3ee579d9673089f2c9c6930b793a2bf1895f85198472fb7fc5aa392825"
+              }
+            }
+          },
+          "reason": "No actual selected singular/marginal/moment/simulator premises supplied by these source products.",
+          "process_status": "COMPLETED_SUCCESS",
+          "node_id": "R8-09",
+          "action": "simulator_law",
+          "fingerprint": "e02b7a645af539074826a80081dc0f478f747067a8d5030b30d4a4edfffc9871",
+          "attempt": 1,
+          "artifacts": [
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/ac/campaign/R8-09/simulator_law/attempt_0001/law_refusals.json",
+              "state": "PRESENT",
+              "sha256": "91c91f1665371da6af6fa6124cdb5f013491e5a121ec265eaab4fc1796ab0ae4"
+            }
+          ],
+          "elapsed_seconds": 0.17047205893322825
+        }
+      ],
+      "capabilities": [
+        "KNOWN_GAUSSIAN_FACTORY"
+      ],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "CONDITIONAL_BOUND",
+        "INPUT_UNAVAILABLE",
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-15": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-15",
+          "action": "closure_mocks",
+          "fingerprint": "da44a46d8ff097efd785220248cdcef48a4769be43437c16f0912c59175915f7",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.8349459171295166e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-15",
+          "action": "recession_mocks",
+          "fingerprint": "0f9386a24d9ef93984cb752f4344d80fa683deeaa0519df5be9d02ef895cb565",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.5550834834575653e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-19": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-19",
+          "action": "photon_channel",
+          "fingerprint": "8f080d2fe0ddeccf518217d04647df234600b48903872daf1e2ca1bc5118c67c",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.525048330426216e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-19",
+          "action": "distance_channel",
+          "fingerprint": "8fb80a190a3efbadcd73cc234674edc5a845e1704ba18beae5723bc22d9efbb4",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.2139865905046463e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-19",
+          "action": "record_radiation_jet_unavailable",
+          "fingerprint": "2b3bb9d77df84cbc35a2bda7b3c157995414b1257bbd2e6b7cd8915c0da85726",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.6349443942308426e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-05": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-05",
+          "action": "orbit_rank_mocks",
+          "fingerprint": "b1c13aa4ddba7d514cf30753703b4083052b54660bc9166c33ca26575963af87",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 3.0260998755693436e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-05",
+          "action": "mv_comparison",
+          "fingerprint": "fab25300f1617bcb259f71574c0946f73b47f5f06cf6fd31c732064e8a05b182",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.2239983081817627e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-10": {
+      "actions": [
+        {
+          "scientific_outcome": "CONDITIONAL_BOUND",
+          "capabilities": [
+            "GAUSSIAN_ACCEPTANCE"
+          ],
+          "capability_scopes": {
+            "GAUSSIAN_ACCEPTANCE": [
+              "desi_compressed"
+            ]
+          },
+          "products": {
+            "desi_compressed": {
+              "candidates": {
+                "released_reference": {
+                  "scope": {
+                    "product_id": "desi_compressed",
+                    "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+                    "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+                    "model_id": "RELEASED_GAUSSIAN_QISO",
+                    "dataset_ids": [
+                      "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+                    ],
+                    "convention_id": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+                    "domain_id": "POSITIVE_QISO",
+                    "conditioning_id": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+                    "ordered_measurement_ids": [
+                      "BGS_BRIGHT_GCcomb_qiso"
+                    ],
+                    "parameter_names": [
+                      "qiso"
+                    ],
+                    "parameter_units": [
+                      "1"
+                    ],
+                    "frame": "NONANGULAR_BACKGROUND_COMPRESSION",
+                    "approximation": "CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY_LAW",
+                    "method_id": "R8_FIXED_STRUCTURAL_GAUSSIAN_ACCEPTANCE_V1",
+                    "method_config_id": "013093cab00ca586086d840d606f94d5b27e07c06dc2f70bb5ea379dec981cc0",
+                    "alpha": [
+                      1,
+                      20
+                    ]
+                  },
+                  "membership": "ACCEPT",
+                  "quadratic": 0.838550365535873,
+                  "threshold": 3.841458820694124,
+                  "rank": 1,
+                  "outcome": "CONDITIONAL_ON_DECLARED_LAW",
+                  "numerical_status": "CERTIFIED_QUANTILE_BRACKET"
+                }
+              }
+            }
+          },
+          "process_status": "COMPLETED_SUCCESS",
+          "node_id": "R8-10",
+          "action": "nonsingular_dispatch",
+          "fingerprint": "344062df682854bfe11eac0cbe3cfc70e0951abee4aacda919a8027d51cae1d3",
+          "attempt": 1,
+          "artifacts": [
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/ac/campaign/R8-10/nonsingular_dispatch/attempt_0001/acceptance.json",
+              "state": "PRESENT",
+              "sha256": "b3fb6ed7a58fb7fec3c40059be252b06f2abfb0cb880635030a3a25b3089f0b2"
+            }
+          ],
+          "elapsed_seconds": 0.20969991106539965
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-10",
+          "action": "singular_dispatch",
+          "fingerprint": "ec0dfe3309f32a9cf12e93ccb19ea7cd42dd093f78218b16e719f1670aebf83b",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 4.47896309196949e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-10",
+          "action": "partial_dispatch",
+          "fingerprint": "9c9e0691336c171c52db5b5b430511bbb433642af16ac264a6d9dfcc2c39bd5e",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.2640451788902283e-06
+        }
+      ],
+      "capabilities": [
+        "GAUSSIAN_ACCEPTANCE"
+      ],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "CONDITIONAL_BOUND",
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-11": {
+      "actions": [
+        {
+          "scientific_outcome": "METHOD_PARTIALLY_HELD",
+          "capabilities": [
+            "SIMULATOR_METHOD"
+          ],
+          "capability_scopes": {
+            "SIMULATOR_METHOD": [
+              "selected_normal",
+              "student5"
+            ]
+          },
+          "held_adapters": [
+            "mixture"
+          ],
+          "results": {
+            "cells": [
+              {
+                "law": "student5",
+                "mu": -1.0,
+                "seed": 81007,
+                "spawn_key": [
+                  0
+                ],
+                "trials": 1000,
+                "N": 199,
+                "rejections": 51,
+                "unavailable": 0,
+                "binomial_upper": 0.07586574524837307,
+                "failure_budget": 0.0011111111111111111,
+                "tolerance": 0.085,
+                "diagnostic_pass": true
+              },
+              {
+                "law": "student5",
+                "mu": 0.0,
+                "seed": 81007,
+                "spawn_key": [
+                  1
+                ],
+                "trials": 1000,
+                "N": 199,
+                "rejections": 49,
+                "unavailable": 0,
+                "binomial_upper": 0.07348555564100857,
+                "failure_budget": 0.0011111111111111111,
+                "tolerance": 0.085,
+                "diagnostic_pass": true
+              },
+              {
+                "law": "student5",
+                "mu": 1.0,
+                "seed": 81007,
+                "spawn_key": [
+                  2
+                ],
+                "trials": 1000,
+                "N": 199,
+                "rejections": 51,
+                "unavailable": 0,
+                "binomial_upper": 0.07586574524837307,
+                "failure_budget": 0.0011111111111111111,
+                "tolerance": 0.085,
+                "diagnostic_pass": true
+              },
+              {
+                "law": "mixture",
+                "mu": -1.0,
+                "seed": 81008,
+                "spawn_key": [
+                  0
+                ],
+                "trials": 1000,
+                "N": 199,
+                "rejections": 64,
+                "unavailable": 0,
+                "binomial_upper": 0.09114109609728728,
+                "failure_budget": 0.0011111111111111111,
+                "tolerance": 0.085,
+                "diagnostic_pass": false
+              },
+              {
+                "law": "mixture",
+                "mu": 0.0,
+                "seed": 81008,
+                "spawn_key": [
+                  1
+                ],
+                "trials": 1000,
+                "N": 199,
+                "rejections": 46,
+                "unavailable": 0,
+                "binomial_upper": 0.0698976556403342,
+                "failure_budget": 0.0011111111111111111,
+                "tolerance": 0.085,
+                "diagnostic_pass": true
+              },
+              {
+                "law": "mixture",
+                "mu": 1.0,
+                "seed": 81008,
+                "spawn_key": [
+                  2
+                ],
+                "trials": 1000,
+                "N": 199,
+                "rejections": 44,
+                "unavailable": 0,
+                "binomial_upper": 0.06749314526443663,
+                "failure_budget": 0.0011111111111111111,
+                "tolerance": 0.085,
+                "diagnostic_pass": true
+              },
+              {
+                "law": "selected_normal",
+                "mu": -1.0,
+                "seed": 81009,
+                "spawn_key": [
+                  0
+                ],
+                "trials": 1000,
+                "N": 199,
+                "rejections": 53,
+                "unavailable": 0,
+                "binomial_upper": 0.07823713537488938,
+                "failure_budget": 0.0011111111111111111,
+                "tolerance": 0.085,
+                "diagnostic_pass": true
+              },
+              {
+                "law": "selected_normal",
+                "mu": 0.0,
+                "seed": 81009,
+                "spawn_key": [
+                  1
+                ],
+                "trials": 1000,
+                "N": 199,
+                "rejections": 50,
+                "unavailable": 0,
+                "binomial_upper": 0.07467678072756641,
+                "failure_budget": 0.0011111111111111111,
+                "tolerance": 0.085,
+                "diagnostic_pass": true
+              },
+              {
+                "law": "selected_normal",
+                "mu": 1.0,
+                "seed": 81009,
+                "spawn_key": [
+                  2
+                ],
+                "trials": 1000,
+                "N": 199,
+                "rejections": 43,
+                "unavailable": 0,
+                "binomial_upper": 0.06628687922726126,
+                "failure_budget": 0.0011111111111111111,
+                "tolerance": 0.085,
+                "diagnostic_pass": true
+              }
+            ],
+            "scope": "NINE_FIXED_TOY_EXPERIMENTS_ONLY; no CF4/JWST simulator admission",
+            "elapsed_seconds": 0.921493625966832,
+            "source_sha256": "0d09dbf7ebea6aa12224b736d9d0a34b0817269a66a1ee56b783fd00771d3655",
+            "numpy_version": "2.4.6",
+            "generator": "PCG64"
+          },
+          "reason": "Mixture adapter held. Supported method scope is restricted to the separately passed toy laws; no real product simulator admission.",
+          "process_status": "COMPLETED_SUCCESS",
+          "node_id": "R8-11",
+          "action": "toy_simulator_validation",
+          "fingerprint": "be76c46957b228327ffa290778a59f596c839c97e1a1eb663ece0c11976b3ee7",
+          "attempt": 1,
+          "artifacts": [
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/ac/mocks/mock5.json",
+              "state": "PRESENT",
+              "sha256": "9fd8a7c136266327ae7ad3f4b7091bad289b7b499f368f37e0772e17a526a1c2"
+            }
+          ],
+          "elapsed_seconds": 0.00020745093934237957
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-11",
+          "action": "real_candidate_simulator",
+          "fingerprint": "6bbb430ae5c706002958b7cb93af602d8384de5003ab12ea8a4817219615d1cd",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.3439060896635056e-06
+        }
+      ],
+      "capabilities": [
+        "SIMULATOR_METHOD"
+      ],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "METHOD_PARTIALLY_HELD",
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-17": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-17",
+          "action": "field_and_map_controls",
+          "fingerprint": "19f9b5872f5fc9c59b2edcda5cb5abdf4fd5ec8d716d14dd8f5f91d1965c1a2c",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.2640451788902283e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-20": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-20",
+          "action": "restricted_sky_factory",
+          "fingerprint": "cb58dda51e31a88dac22d2342b0c3468932cc9c94473489cedc90b805041f9d3",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.4049077183008194e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-20",
+          "action": "restricted_distance_factory",
+          "fingerprint": "71bfb51f8631d775fa5d69a8ebe4e3e1233c32261e96665fbb863312e22c5bab",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.2849999368190765e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-20",
+          "action": "external_channel_factory",
+          "fingerprint": "80b2a85a9b908176f01bb179b0ac84b820418054c8aaf08ec6d96967250c1b3e",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.244953066110611e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-07": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-07",
+          "action": "descriptive_morphology",
+          "fingerprint": "7561a1cee9ed5ac0d85cfdecace13b64d4c66a98db512b7d90642dcaca1c4c82",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.133892849087715e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-07",
+          "action": "observed_rank",
+          "fingerprint": "1faa22ab511367381eeab949ee030fb189ea84f7e948e584a7530aa9f5c68515",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.133892849087715e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-07",
+          "action": "candidate_state_acceptance",
+          "fingerprint": "d9bc55d0bf32fb327d80b13ba7e6334ae7728007cc1697cf27ee46479969ef83",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.023065462708473e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-12": {
+      "actions": [
+        {
+          "scientific_outcome": "CONDITIONAL_BOUND",
+          "capabilities": [
+            "OBSERVED_GAUSSIAN"
+          ],
+          "capability_scopes": {
+            "OBSERVED_GAUSSIAN": [
+              "desi_compressed"
+            ]
+          },
+          "products": {
+            "desi_compressed": {
+              "candidates": {
+                "released_reference": {
+                  "scope": {
+                    "product_id": "desi_compressed",
+                    "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+                    "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+                    "model_id": "RELEASED_GAUSSIAN_QISO",
+                    "dataset_ids": [
+                      "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+                    ],
+                    "convention_id": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+                    "domain_id": "POSITIVE_QISO",
+                    "conditioning_id": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+                    "ordered_measurement_ids": [
+                      "BGS_BRIGHT_GCcomb_qiso"
+                    ],
+                    "parameter_names": [
+                      "qiso"
+                    ],
+                    "parameter_units": [
+                      "1"
+                    ],
+                    "frame": "NONANGULAR_BACKGROUND_COMPRESSION",
+                    "approximation": "CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY_LAW",
+                    "method_id": "R8_FIXED_STRUCTURAL_GAUSSIAN_ACCEPTANCE_V1",
+                    "method_config_id": "013093cab00ca586086d840d606f94d5b27e07c06dc2f70bb5ea379dec981cc0",
+                    "alpha": [
+                      1,
+                      20
+                    ]
+                  },
+                  "membership": "ACCEPT",
+                  "quadratic": 0.838550365535873,
+                  "threshold": 3.841458820694124,
+                  "rank": 1,
+                  "outcome": "CONDITIONAL_ON_DECLARED_LAW",
+                  "numerical_status": "CERTIFIED_QUANTILE_BRACKET"
+                }
+              },
+              "confidence_region": {
+                "conditional_CI95_outer_exact": [
+                  "1382929414076238102106842157666260596566259891121/1461501637330902918203684832716283019655932542976",
+                  "1490033335566851430667933701663974952880802923599/1461501637330902918203684832716283019655932542976"
+                ],
+                "conditional_CI95_display": [
+                  0.9462387032298103,
+                  1.019522180137995
+                ],
+                "estimand": "qiso=DV/rd divided by released fiducial DV/rd",
+                "domain": "POSITIVE_QISO",
+                "interpretation": "Conditional released Gaussian summary only; no isotropy/global-tilt/posterior claim."
+              }
+            }
+          },
+          "process_status": "COMPLETED_SUCCESS",
+          "node_id": "R8-12",
+          "action": "gaussian_observation",
+          "fingerprint": "2fed4a71ba651a160d16b62fe4821280a3bdca74d272435493be01e0bf16c56c",
+          "attempt": 1,
+          "artifacts": [
+            {
+              "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/ac/campaign/R8-12/gaussian_observation/attempt_0001/observed_subsets.json",
+              "state": "PRESENT",
+              "sha256": "d8da1807735994f2b2f726ed82c5b1f4fffb70c9cf21d41445e521132deaa408"
+            }
+          ],
+          "elapsed_seconds": 0.15094419079832733
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-12",
+          "action": "singular_observation",
+          "fingerprint": "1523dd1853702fb82b4a7756dc0d530cf33e90ada8c2f64086ef7e23e671852b",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.7248170226812363e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-12",
+          "action": "partial_observation",
+          "fingerprint": "8434b541196946e0040b6749f2a7b1eecf42fdc344d3677f76609a175fd84b28",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.4940818548202515e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-12",
+          "action": "simulator_observation",
+          "fingerprint": "3b8ace17fa7ef7d90fa5f07ac976b6d85af547a84ca7873f273232c531ad1b83",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.2940803319215775e-06
+        }
+      ],
+      "capabilities": [
+        "OBSERVED_GAUSSIAN"
+      ],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "CONDITIONAL_BOUND",
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-13": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-13",
+          "action": "outer_family",
+          "fingerprint": "b2487d767f6062c12a791cd21f3d9c47181ddd16360b315c3f96de331da9aad7",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.3238826543092728e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-16": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-16",
+          "action": "conditional_physical_image",
+          "fingerprint": "0d805bcf9ed3815b32bc5f52d0bef8e15c405ca633abee161f26fb2e17fad4fb",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.295011654496193e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-16",
+          "action": "nonidentification_result",
+          "fingerprint": "1ef5840296747f7ccfd45119dad72ae3213d8137ab08bb32f1bd8971b18d9afe",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.062879502773285e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-21": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-21",
+          "action": "p0_p1_comparison",
+          "fingerprint": "b43f9a54562f9077049ce53fa42fae6de40bb524624968f861a01fa3a7e87bc2",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.2440217435359955e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-21",
+          "action": "p2_sky_comparison",
+          "fingerprint": "cde22d83931b49f7f96d6151309c72ebfc5b81a02a219b50fdf13fdf06838747",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.153916284441948e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-21",
+          "action": "p2_distance_comparison",
+          "fingerprint": "958a8c63aef589cbfe29a6030708510271341b5d7f3cfd0d38845856a7d0fdaf",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.3238826543092728e-06
+        },
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-21",
+          "action": "p3_supported_comparison",
+          "fingerprint": "6cf3d5f81f3bb8ed757f8d4a4cc3397eff1367de1f4bbdecd13dd7f364e7b7d8",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.1238811314105988e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    },
+    "R8-23": {
+      "actions": [
+        {
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "scientific_outcome": "NOT_EVALUATED",
+          "reason": "NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT",
+          "capabilities": [],
+          "node_id": "R8-23",
+          "action": "receipt_synthesis",
+          "fingerprint": "4942fb26670cbfa0756b05a21fab52783e2a3e2459ddf59d3455ae05f041bc5f",
+          "attempt": 1,
+          "artifacts": [],
+          "elapsed_seconds": 2.4649780243635178e-06
+        }
+      ],
+      "capabilities": [],
+      "process_status": "TERMINAL_ACTION_RECEIPTS",
+      "scientific_outcomes": [
+        "NOT_EVALUATED"
+      ]
+    }
+  },
+  "new_attempts": 0,
+  "node_count": 24,
+  "full_plan_accepted": false,
+  "acceptance_scope": "INITIAL_AC_INCREMENT; terminal receipt is not completed science",
+  "unimplemented_actions": [
+    "R8-01/representation_obligations",
+    "R8-06/extract_valid_tensors",
+    "R8-06/qualify_pool_law",
+    "R8-06/qualify_candidate_cmb_law",
+    "R8-14/jet_set",
+    "R8-14/recession_certificates",
+    "R8-18/restricted_stress",
+    "R8-22/check_local_hook_context",
+    "R8-02/certified_bounds",
+    "R8-03/interval_rank",
+    "R8-04/full_mv",
+    "R8-15/closure_mocks",
+    "R8-15/recession_mocks",
+    "R8-19/photon_channel",
+    "R8-19/distance_channel",
+    "R8-19/record_radiation_jet_unavailable",
+    "R8-05/orbit_rank_mocks",
+    "R8-05/mv_comparison",
+    "R8-10/singular_dispatch",
+    "R8-10/partial_dispatch",
+    "R8-11/real_candidate_simulator",
+    "R8-17/field_and_map_controls",
+    "R8-20/restricted_sky_factory",
+    "R8-20/restricted_distance_factory",
+    "R8-20/external_channel_factory",
+    "R8-07/descriptive_morphology",
+    "R8-07/observed_rank",
+    "R8-07/candidate_state_acceptance",
+    "R8-12/singular_observation",
+    "R8-12/partial_observation",
+    "R8-12/simulator_observation",
+    "R8-13/outer_family",
+    "R8-16/conditional_physical_image",
+    "R8-16/nonidentification_result",
+    "R8-21/p0_p1_comparison",
+    "R8-21/p2_sky_comparison",
+    "R8-21/p2_distance_comparison",
+    "R8-21/p3_supported_comparison",
+    "R8-23/receipt_synthesis"
+  ]
+}

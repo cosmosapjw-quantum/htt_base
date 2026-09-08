@@ -1,0 +1,98 @@
+{
+  "scientific_outcome": "INPUT_UNAVAILABLE",
+  "capabilities": [],
+  "products": {
+    "desi_compressed": {
+      "outcome": "CONDITIONAL_LAW_BOUND",
+      "scope": {
+        "product_id": "desi_compressed",
+        "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+        "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+        "model_id": "RELEASED_GAUSSIAN_QISO",
+        "dataset_ids": [
+          "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+        ],
+        "convention_id": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+        "domain_id": "POSITIVE_QISO",
+        "conditioning_id": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+        "ordered_measurement_ids": [
+          "BGS_BRIGHT_GCcomb_qiso"
+        ],
+        "parameter_names": [
+          "qiso"
+        ],
+        "parameter_units": [
+          "1"
+        ],
+        "frame": "NONANGULAR_BACKGROUND_COMPRESSION",
+        "approximation": "CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY_LAW"
+      },
+      "original_data_source": {
+        "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_syst_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5",
+        "state": "PRESENT",
+        "sha256": "836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+      },
+      "raw_catalogue_coverage": "UNVERIFIED",
+      "stat_only_alternative": "NOT_MULTIPLIED",
+      "fiducial": 8.062742859742729
+    },
+    "cf4_full": {
+      "outcome": "INPUT_UNAVAILABLE",
+      "law_status": "NO_ADMITTED_SELECTED_LAW",
+      "reason": "Full covariance in source group order and a law for the conditioned sampling variable are not supplied; raw distance errors are not substituted.",
+      "input": {
+        "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/ReadMe",
+        "state": "PRESENT",
+        "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+      },
+      "metadata_read_bytes": 19918,
+      "header_sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4"
+    },
+    "jwst_anchors": {
+      "outcome": "INPUT_UNAVAILABLE",
+      "law_status": "NO_ADMITTED_SELECTED_LAW",
+      "reason": "Quoted per-method errors do not supply shared host/calibration covariance; earlier independent-error fit remains a scenario.",
+      "input": {
+        "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/jwst_anchors/jwst_anchors_manifest.json",
+        "state": "PRESENT",
+        "sha256": "37e828156d1b4408cc99e1121cd88eacfa3e08cbbd7fc5fcab25be18187b500f"
+      },
+      "metadata_read_bytes": 19119,
+      "header_sha256": "37e828156d1b4408cc99e1121cd88eacfa3e08cbbd7fc5fcab25be18187b500f"
+    },
+    "union3": {
+      "outcome": "INPUT_UNAVAILABLE",
+      "law_status": "NO_ADMITTED_SELECTED_LAW",
+      "reason": "A matrix alone does not bind row/redshift/compression and the selected likelihood.",
+      "input": {
+        "path": "/mnt/sn850x2t/htt_base_e2e/workdir/rrss_observational_inputs/union3_release-main/mu_mat_union3_cosmo=2_mu.fits",
+        "state": "PRESENT",
+        "sha256": "ef98b7dde1025ee7134f3242aaea3f1f0ed3f2b29a718458c550a8e4e24d0349"
+      }
+    },
+    "desi_raw": {
+      "outcome": "INPUT_UNAVAILABLE",
+      "law_status": "NO_ADMITTED_SELECTED_LAW",
+      "reason": "P sample magnitude cuts and matched random normalization are not bound; PR151 numerical outputs excluded.",
+      "input": {
+        "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks/observed/v1.5/BGS_BRIGHT-21.5_NGC_clustering.dat.fits",
+        "state": "PRESENT",
+        "sha256": "b67e8e3ee579d9673089f2c9c6930b793a2bf1895f85198472fb7fc5aa392825"
+      }
+    }
+  },
+  "reason": "No actual selected singular/marginal/moment/simulator premises supplied by these source products.",
+  "process_status": "COMPLETED_SUCCESS",
+  "node_id": "R8-09",
+  "action": "simulator_law",
+  "fingerprint": "e02b7a645af539074826a80081dc0f478f747067a8d5030b30d4a4edfffc9871",
+  "attempt": 1,
+  "artifacts": [
+    {
+      "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/ac/campaign/R8-09/simulator_law/attempt_0001/law_refusals.json",
+      "state": "PRESENT",
+      "sha256": "91c91f1665371da6af6fa6124cdb5f013491e5a121ec265eaab4fc1796ab0ae4"
+    }
+  ],
+  "elapsed_seconds": 0.17047205893322825
+}

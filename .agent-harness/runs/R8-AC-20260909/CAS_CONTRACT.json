@@ -1,0 +1,190 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "identity": {
+    "contract_id": "R8-ORBIT-RANK-JOINT-JET-V1",
+    "contract_version": 1,
+    "claim_ids": [
+      "RUN-R8-AC-20260909-AC4"
+    ],
+    "statement_class": "scalar_algebra",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/tensor_joint_r8/THEORY.md",
+        "sha256": "9a505ce0ab3de99a1dcad7f4397621cb639307b4bb42a735b910128646ee408f"
+      },
+      {
+        "path": "docs/research_program/tensor_joint_r8/VALIDATION_MATRIX.md",
+        "sha256": "ba1fc76d711b1984c34820da9503da6a621923bf70de5844d5abe8edd3041ab9"
+      }
+    ],
+    "claim_ceiling": "O1-O3/J2 stated obligations only; no product law, implementation enclosure or physical admission",
+    "adjudicator": "adjudicator"
+  },
+  "semantics": {
+    "exact_statement": "Independently verify O1 common-rotation weighted spectral bound plus exact scaling fixtures; O2 homogeneous-quaternion rotation and normalized-chart derivative/radius; O3 interval inclusive-count inequalities and exact thresholds; J2 structural rational support and Gaussian-marginal nonguassian-joint counterexample. State generic versus fixture scope explicitly.",
+    "symbol_type_domain_map": {
+      "Q": "real STF2",
+      "O": "real STF3",
+      "q0,o0": "positive scales",
+      "x": "three real chart coordinates [-1,1]",
+      "M": "positive pool size including observation",
+      "alpha": "rational 1/20",
+      "B": "(3/5,4/5) rational column",
+      "V": "4"
+    },
+    "frame_signature_units_conventions": {
+      "units": "K",
+      "group": "SO(3)",
+      "multiplicity": "full symmetric tensor Frobenius"
+    },
+    "assumptions": [
+      "Hoffman-Wielandt/Mirsky component perturbation inequalities are established named lemmas; verify their common-rotation weighted combination, not simultaneous attainability.",
+      "Triangle/Cauchy-Schwarz and the quaternion double-cover angular-distance relation are named established lemmas; verify normalized-chart derivative bound.",
+      "Fixed permutation-equivariant scores and exchangeable sampling are explicit premises; no product-law admission."
+    ],
+    "positivity_nonzero_conditions": [
+      "q0>0",
+      "o0>0",
+      "V>0"
+    ],
+    "branches": [],
+    "exclusions": [
+      "R3 and jet physics",
+      "actual-product exchangeability",
+      "floating point implementation certification"
+    ],
+    "singular_loci": [
+      "zeros and repeated spectra retained"
+    ],
+    "order_of_limits": [],
+    "boundary_or_initial_conditions": []
+  },
+  "target": {
+    "canonical_form": "exact identities and conditional inequalities under explicit named hypotheses",
+    "equivalence_relation": "exact real/rational mathematics",
+    "invariants": [],
+    "exact_test_obligations": [
+      "O1_weighted_lower_and_scaling",
+      "O2_quaternion_rotation_and_chart_derivative",
+      "O3_interval_inclusive_counts",
+      "J2_rational_factor_support",
+      "J2_gaussian_marginal_counterexample"
+    ],
+    "numeric_test_vectors": [],
+    "approximation_order": "exact",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "0",
+    "relative_tolerance": "0",
+    "forbidden_shortcuts": [
+      "No numerical fixture alone establishes a generic inequality.",
+      "No sibling scripts/results before own submission.",
+      "No old R7 PASS reuse.",
+      "If the assigned proof cannot be supplied report unresolved, not PASS on a weaker statement."
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "independent derivation/simplification in Wolfram Language (+xAct for tensor work)",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "wolfram": "15.0.0",
+        "xact": "1.2.0+"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "independent exact symbolic verification in SymPy (+ high-precision numerics where declared)",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "sympy": "1.14.0"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "independent exact algebra in SageMath; Singular obligations apply to polynomial ideal/variety classes",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "sage": "10.9",
+        "singular": "4.3.2"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "faithful formalization and compiled proof; record scope mismatch instead of silently proving a weaker theorem",
+      "required_outputs": [
+        "lean sources",
+        "build receipt",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain"
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results",
+    "permitted_inputs": [
+      "this contract",
+      "assigned THEORY/VALIDATION_MATRIX",
+      "installed own-axis libraries"
+    ],
+    "forbidden_sibling_paths": [
+      ".agent-harness/runs/*/results/*"
+    ],
+    "script_result_ownership": "per-axis; scripts and outputs are never shared before adjudication",
+    "correlation_disclosure": "record when one LLM family authored multiple axis scripts; disclosure does not void engine evidence"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "exception_schema": {
+      "axis": "wolfram_xact | sympy | sage_singular | lean",
+      "reason_class": "platform | license | computation_class | resource",
+      "bounded_probe": "exact command + output demonstrating the blocker",
+      "unique_capability_lost": false,
+      "substitute_obligation": "",
+      "claim_downgrade": "",
+      "approver": "must not be the excepted axis's agent",
+      "registered_at": "must precede the earliest axis completed_at",
+      "expiry_retry": ""
+    },
+    "aggregate_status_rule": "R0: NOT_APPLICABLE; R1/R2: PASS; R3: CAS_4AXIS_PASS; explicit R3 Rocq opt-in: CAS_5AXIS_PASS; failures: CAS_PASS_WITH_REGISTERED_EXCEPTION | CAS_CONFLICT | CAS_BLOCKED | CAS_FAIL",
+    "invalidation_triggers": [
+      "contract_hash_change",
+      "assumption_or_domain_diff",
+      "unpinned_toolchain"
+    ]
+  }
+}

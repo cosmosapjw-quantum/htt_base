@@ -195,6 +195,7 @@ policy:
   - PR-244
   - PR-245
   - PR-246
+  - PR-247
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -9828,3 +9829,32 @@ prs:
   scientific_status_on_intake: OPEN
   track: INTEGRATION
   solver_gate_required: true
+
+- id: PR-247
+  title: 'R8 A/C: full tensor distance enclosures and live conditional-law execution'
+  wave: 20
+  deps: []
+  targets:
+  - R8-00..03, R8-05, R8-08..12 initial A/C increment under PR467 c5b991e6
+  files:
+  - htt/obsstat/r8_orbit_bounds.py
+  - htt/htt/htt/infer/r8_*.py
+  - tests/r8
+  - scripts/observed_runs/run_tensor_joint_r8.py
+  - docs/generated/tensor_joint_r8/ac
+  tests:
+  - python -B -m pytest -o addopts='' --import-mode=importlib tests/r8 -q
+  dod:
+  - New independently scoped CAS records; missing Lean obligations remain blocked.
+  - All-row mock1 and fixed mock3/4/5 with actual results; product-keyed live law execution.
+  - Independent source-bound review and non-force pushed commit; preserve R7 results and STOP_INVALID.
+  kill: Any endpoint-rank promotion, missing-row deletion, stale law calibration, or inherited broad CAS PASS.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R3
+  claim_tier_ceiling: transfer-conditional
+  spec: docs/research_program/tensor_joint_r8/LOCAL_CODEX_PLAN.md
+  scientific_artifact_mode: standard_internal
+  execution_authorization: USER_REQUESTED_PR467_FOLLOWUP
+  solver_gate_required: false

@@ -1,0 +1,138 @@
+{
+  "axis": "sympy",
+  "checks": {
+    "J2_gaussian_marginal_counterexample": {
+      "counterexample": null,
+      "details": {
+        "E_X2Y2_actual": 3,
+        "E_X2Y2_joint_gaussian": 1,
+        "atom_X_plus_Y_at_zero": "1/2",
+        "characteristic_function": "exp(-(t + u)**2/2)/2 + exp(-(t - u)**2/2)/2",
+        "covariance": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "domain_assumption_diff": [],
+      "proof": "Let X be standard Gaussian and S independent fair sign, Y=S*X. Conditioning on S derives phi(t,u)=0.5 exp(-(t+u)^2/2)+0.5 exp(-(t-u)^2/2). Axis restrictions are standard-normal characteristic functions; second derivatives give unit variances and zero covariance. A bivariate Gaussian with those moments would have characteristic function exp(-(t^2+u^2)/2). The mixed fourth derivatives are 3 versus 1, proving inequivalence. Also X+Y has a probability-1/2 atom at zero but variance 2, so it cannot be Gaussian. The target theorem itself is not an assumption.",
+      "scope": "One explicit probability-law counterexample, verified through exact joint characteristic function.",
+      "status": "PASS"
+    },
+    "J2_rational_factor_support": {
+      "counterexample": null,
+      "details": {
+        "B": [
+          "3/5",
+          "4/5"
+        ],
+        "V_fixture": 4,
+        "off_support_null_projection": 1,
+        "off_support_pseudoinverse_quadratic": 1,
+        "on_support_quadratic": 1,
+        "rank": 1
+      },
+      "domain_assumption_diff": [],
+      "proof": "B and N form an exact orthonormal basis. For C=V*B*B.T, the displayed Cp satisfies all four Moore-Penrose equations; range(C)=span(B), rank=1. Projection onto its orthogonal complement gives N*eta, so support is equivalent to eta=0. Reduced coordinate B^+r=z and reduced quadratic z^2/V. At V=4, r=2B is supported with quadratic 1; r=2B+N has nonzero null projection although its pseudoinverse quadratic remains 1. Thus the explicit support condition cannot be dropped.",
+      "scope": "Exact declared rational B fixture, with arbitrary V>0 and r=B*z+N*eta; not a general floating support detector.",
+      "status": "PASS"
+    },
+    "O1_weighted_lower_and_scaling": {
+      "counterexample": null,
+      "details": {
+        "O_gram": [
+          [
+            6,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            0
+          ],
+          [
+            0,
+            0,
+            2
+          ]
+        ],
+        "O_norm_squared": 10,
+        "Q_norm_squared": 2,
+        "distances": [
+          "sqrt(2)/q0",
+          "sqrt(10)/o0"
+        ],
+        "multiplicity": "all 27 rank-three entries retained; repeated eigenvalue 2 retained",
+        "nonnegative_excess": "(2*bq*eq + eq**2)/q0**2 + (2*bo*eo + eo**2)/o0**2"
+      },
+      "domain_assumption_diff": [],
+      "proof": "For every common R set residual_Q=bq+eq and residual_O=bo+eo, with all four nonnegative by the named lemmas. The symbolic difference of weighted squared residual and weighted squared lower bound is a sum of nonnegative monomials. Nonnegative square-root monotonicity and taking min_R preserve this lower bound. In the two fixtures R=I attains exactly the lower bound, proving the minimum. No simultaneous attainment is assumed for arbitrary Q/O.",
+      "scope": "Generic weighted bound conditional on named pointwise Hoffman-Wielandt/Mirsky lemmas; two exact STF scaling fixtures.",
+      "status": "PASS"
+    },
+    "O2_quaternion_rotation_and_chart_derivative": {
+      "counterexample": null,
+      "details": {
+        "charts_verified": 4,
+        "determinant_residual": 0,
+        "gram": "I/(1+x.x)-x*x.T/(1+x.x)^2",
+        "orthogonality_residual": 0,
+        "rational_radius_square_gap": "1/16"
+      },
+      "domain_assumption_diff": [],
+      "proof": "H^T H=n^2 I and det H=n^3 prove H/n is SO(3) for every nonzero quaternion. All four charts give J^T J=I/n-xx^T/n^2, so ||Jv||^2=||v||^2/n-(x.v)^2/n^2 <= ||v||^2/n. In a rectangular cell, n>=m_C^2; its center-to-point segment is inside the cell and has Euclidean length <=r_C. Integrating gives spherical length <=r_C/m_C. The named quaternion angle relation gives rotation angle <=2r_C/m_C and every principal angle <=pi, hence min(pi,2r_C/m_C). Every unit quaternion has a maximal nonzero absolute component; sign reversal makes it positive and component ratios lie in [-1,1], establishing four-chart coverage including ties. Grid spacing 1/m gives half-width 1/(2m), m_C>=1 and radius <=sqrt(3)/m <=7/(4m).",
+      "scope": "Generic real homogeneous quaternion identity for n>0 and all four normalized-chart derivatives; geometric radius conditional on named angular-distance and path-length lemmas.",
+      "status": "PASS"
+    },
+    "O3_interval_inclusive_counts": {
+      "counterexample": null,
+      "details": {
+        "all_zero_tie_p_upper": "1",
+        "endpoint_cases_checked": 100,
+        "scalar_scores": [
+          2,
+          1,
+          1,
+          2,
+          8
+        ],
+        "thresholds": {
+          "1000": {
+            "k": 32,
+            "nonreject_min_certain": 50,
+            "reject_max_possible": 49
+          },
+          "301": {
+            "k": 18,
+            "nonreject_min_certain": 15,
+            "reject_max_possible": 14
+          }
+        },
+        "wide_interval_p": "1/5"
+      },
+      "domain_assumption_diff": [],
+      "proof": "Assume Li<=si<=Ui and L0<=s0<=U0. If Li>=U0 then si-s0=(si-Li)+(Li-U0)+(U0-s0)>=0. If Ui<L0 then s0-si=(s0-L0)+(L0-Ui)+(Ui-si)>0. These prove 1[Li>=U0]<=1[si>=s0]<=1[Ui>=L0], including equality ties. Sum over references, add 1, divide by positive M. kth monotonicity: at least k coordinates s_j<=s_(k); their L_j<=s_j<=s_(k), hence L_(k)<=s_(k); apply same argument to s<=U. For conditional superuniformity, sort scores decreasingly in tie blocks: every member of a block has inclusive rank equal to its last position. Blocks with rank<=t occupy at most t positions. Exchangeability makes the distinguished position uniform conditional on the multiset, giving probability <=floor(alpha*M)/M<=alpha. Every adaptive-time p_upper still bounds this fixed exact p pointwise. This uses fixed permutation-equivariant scores and exchangeability as declared premises; no product-law admission.",
+      "scope": "Generic pointwise interval-count inequality; generic conditional rank argument stated; exact finite fixtures and integer thresholds.",
+      "status": "PASS"
+    }
+  },
+  "contract_id": "R8-ORBIT-RANK-JOINT-JET-V1",
+  "contract_sha256": "5ff7f84db01b6871f74f7c60b5c36430a4cae93735466e277bd9c4019ab22723",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "error": null,
+  "numeric_precision": "Exact symbolic/rational; no approximate comparisons used",
+  "status": "PASS",
+  "tool_versions": {
+    "executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "python": "3.12.3",
+    "sympy": "1.14.0"
+  },
+  "wall_seconds": 2.5817931268829852
+}

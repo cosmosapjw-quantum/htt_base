@@ -1,0 +1,779 @@
+{
+  "mode": "DRY_PLAN_NO_SCIENTIFIC_EXECUTION",
+  "run_dir": "docs/generated/tensor_joint_r8/ac/campaign",
+  "fixed_products": [
+    "desi_compressed",
+    "cf4_full",
+    "jwst_anchors",
+    "union3",
+    "desi_raw"
+  ],
+  "allocation": {
+    "cmb": "1/80",
+    "cf4": "1/80",
+    "distance_calibration": "1/80",
+    "desi": "1/80"
+  },
+  "actions": [
+    {
+      "node": "R8-00",
+      "action": "bind_sources",
+      "implemented": true,
+      "requires": [],
+      "possible_outputs": [
+        "SOURCE_BOUND"
+      ]
+    },
+    {
+      "node": "R8-00",
+      "action": "import_historical_records",
+      "implemented": true,
+      "requires": [],
+      "possible_outputs": [
+        "HISTORY_SCOPED"
+      ]
+    },
+    {
+      "node": "R8-01",
+      "action": "orbit_obligations",
+      "implemented": true,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "ORBIT_PROOF"
+      ]
+    },
+    {
+      "node": "R8-01",
+      "action": "rank_obligations",
+      "implemented": true,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "RANK_PROOF"
+      ]
+    },
+    {
+      "node": "R8-01",
+      "action": "representation_obligations",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "MV_PROOF"
+      ]
+    },
+    {
+      "node": "R8-02",
+      "action": "certified_bounds",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        },
+        {
+          "node": "R8-01",
+          "capability": "ORBIT_PROOF"
+        }
+      ],
+      "possible_outputs": [
+        "PAIR_BOUNDS"
+      ]
+    },
+    {
+      "node": "R8-03",
+      "action": "interval_rank",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        },
+        {
+          "node": "R8-01",
+          "capability": "RANK_PROOF"
+        }
+      ],
+      "possible_outputs": [
+        "INTERVAL_RANK"
+      ]
+    },
+    {
+      "node": "R8-04",
+      "action": "full_mv",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        },
+        {
+          "node": "R8-01",
+          "capability": "MV_PROOF"
+        }
+      ],
+      "possible_outputs": [
+        "MV_ABLATION"
+      ]
+    },
+    {
+      "node": "R8-05",
+      "action": "orbit_rank_mocks",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-02",
+          "capability": "PAIR_BOUNDS"
+        },
+        {
+          "node": "R8-03",
+          "capability": "INTERVAL_RANK"
+        }
+      ],
+      "possible_outputs": [
+        "ORBIT_METHOD_QUALIFIED"
+      ]
+    },
+    {
+      "node": "R8-05",
+      "action": "mv_comparison",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-04",
+          "capability": "MV_ABLATION"
+        },
+        {
+          "node": "R8-02",
+          "capability": "PAIR_BOUNDS"
+        }
+      ],
+      "possible_outputs": [
+        "MV_COMPARISON_QUALIFIED"
+      ]
+    },
+    {
+      "node": "R8-06",
+      "action": "extract_valid_tensors",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "CMB_TENSORS"
+      ]
+    },
+    {
+      "node": "R8-06",
+      "action": "qualify_pool_law",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "EXCHANGEABLE_POOL"
+      ]
+    },
+    {
+      "node": "R8-06",
+      "action": "qualify_candidate_cmb_law",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "CMB_CANDIDATE_FACTORY"
+      ]
+    },
+    {
+      "node": "R8-07",
+      "action": "descriptive_morphology",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-06",
+          "capability": "CMB_TENSORS"
+        }
+      ],
+      "possible_outputs": [
+        "CMB_DESCRIPTIVE"
+      ]
+    },
+    {
+      "node": "R8-07",
+      "action": "observed_rank",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-05",
+          "capability": "ORBIT_METHOD_QUALIFIED"
+        },
+        {
+          "node": "R8-06",
+          "capability": "CMB_TENSORS"
+        },
+        {
+          "node": "R8-06",
+          "capability": "EXCHANGEABLE_POOL"
+        }
+      ],
+      "possible_outputs": [
+        "CMB_RANK_RESULT"
+      ]
+    },
+    {
+      "node": "R8-07",
+      "action": "candidate_state_acceptance",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-06",
+          "capability": "CMB_CANDIDATE_FACTORY"
+        },
+        {
+          "node": "R8-05",
+          "capability": "ORBIT_METHOD_QUALIFIED"
+        }
+      ],
+      "possible_outputs": [
+        "CMB_ACCEPTANCE"
+      ]
+    },
+    {
+      "node": "R8-08",
+      "action": "gaussian_support",
+      "implemented": true,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "SUPPORT_METHOD"
+      ]
+    },
+    {
+      "node": "R8-08",
+      "action": "partial_laws",
+      "implemented": true,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "PARTIAL_METHOD"
+      ]
+    },
+    {
+      "node": "R8-09",
+      "action": "known_nonsingular_law",
+      "implemented": true,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "KNOWN_GAUSSIAN_FACTORY"
+      ]
+    },
+    {
+      "node": "R8-09",
+      "action": "known_singular_law",
+      "implemented": true,
+      "requires": [
+        {
+          "node": "R8-08",
+          "capability": "SUPPORT_METHOD"
+        }
+      ],
+      "possible_outputs": [
+        "STRUCTURAL_GAUSSIAN_FACTORY"
+      ]
+    },
+    {
+      "node": "R8-09",
+      "action": "marginal_or_moment_law",
+      "implemented": true,
+      "requires": [
+        {
+          "node": "R8-08",
+          "capability": "PARTIAL_METHOD"
+        }
+      ],
+      "possible_outputs": [
+        "PARTIAL_FACTORY"
+      ]
+    },
+    {
+      "node": "R8-09",
+      "action": "simulator_law",
+      "implemented": true,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "SIMULATOR_FACTORY"
+      ]
+    },
+    {
+      "node": "R8-10",
+      "action": "nonsingular_dispatch",
+      "implemented": true,
+      "requires": [
+        {
+          "node": "R8-09",
+          "capability": "KNOWN_GAUSSIAN_FACTORY"
+        }
+      ],
+      "possible_outputs": [
+        "GAUSSIAN_ACCEPTANCE"
+      ]
+    },
+    {
+      "node": "R8-10",
+      "action": "singular_dispatch",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-09",
+          "capability": "STRUCTURAL_GAUSSIAN_FACTORY"
+        },
+        {
+          "node": "R8-08",
+          "capability": "SUPPORT_METHOD"
+        }
+      ],
+      "possible_outputs": [
+        "SINGULAR_ACCEPTANCE"
+      ]
+    },
+    {
+      "node": "R8-10",
+      "action": "partial_dispatch",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-09",
+          "capability": "PARTIAL_FACTORY"
+        },
+        {
+          "node": "R8-08",
+          "capability": "PARTIAL_METHOD"
+        }
+      ],
+      "possible_outputs": [
+        "PARTIAL_ACCEPTANCE"
+      ]
+    },
+    {
+      "node": "R8-11",
+      "action": "toy_simulator_validation",
+      "implemented": true,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "SIMULATOR_METHOD"
+      ]
+    },
+    {
+      "node": "R8-11",
+      "action": "real_candidate_simulator",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-09",
+          "capability": "SIMULATOR_FACTORY"
+        }
+      ],
+      "possible_outputs": [
+        "SIMULATOR_CANDIDATE_EVIDENCE"
+      ]
+    },
+    {
+      "node": "R8-12",
+      "action": "gaussian_observation",
+      "implemented": true,
+      "requires": [
+        {
+          "node": "R8-10",
+          "capability": "GAUSSIAN_ACCEPTANCE"
+        }
+      ],
+      "possible_outputs": [
+        "OBSERVED_GAUSSIAN"
+      ]
+    },
+    {
+      "node": "R8-12",
+      "action": "singular_observation",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-10",
+          "capability": "SINGULAR_ACCEPTANCE"
+        }
+      ],
+      "possible_outputs": [
+        "OBSERVED_SINGULAR"
+      ]
+    },
+    {
+      "node": "R8-12",
+      "action": "partial_observation",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-10",
+          "capability": "PARTIAL_ACCEPTANCE"
+        }
+      ],
+      "possible_outputs": [
+        "OBSERVED_PARTIAL"
+      ]
+    },
+    {
+      "node": "R8-12",
+      "action": "simulator_observation",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-11",
+          "capability": "SIMULATOR_METHOD"
+        },
+        {
+          "node": "R8-11",
+          "capability": "SIMULATOR_CANDIDATE_EVIDENCE"
+        }
+      ],
+      "possible_outputs": [
+        "OBSERVED_SIMULATOR"
+      ]
+    },
+    {
+      "node": "R8-13",
+      "action": "outer_family",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "OUTER_FAMILY"
+      ]
+    },
+    {
+      "node": "R8-14",
+      "action": "jet_set",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "JET_IMAGE"
+      ]
+    },
+    {
+      "node": "R8-14",
+      "action": "recession_certificates",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "NONID_METHOD"
+      ]
+    },
+    {
+      "node": "R8-15",
+      "action": "closure_mocks",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-14",
+          "capability": "JET_IMAGE"
+        }
+      ],
+      "possible_outputs": [
+        "CLOSURE_METHOD"
+      ]
+    },
+    {
+      "node": "R8-15",
+      "action": "recession_mocks",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-14",
+          "capability": "NONID_METHOD"
+        }
+      ],
+      "possible_outputs": [
+        "NONID_QUALIFIED"
+      ]
+    },
+    {
+      "node": "R8-16",
+      "action": "conditional_physical_image",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-13",
+          "capability": "OUTER_FAMILY"
+        },
+        {
+          "node": "R8-15",
+          "capability": "CLOSURE_METHOD"
+        }
+      ],
+      "possible_outputs": [
+        "PHYSICAL_IMAGE"
+      ]
+    },
+    {
+      "node": "R8-16",
+      "action": "nonidentification_result",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-13",
+          "capability": "OUTER_FAMILY"
+        },
+        {
+          "node": "R8-15",
+          "capability": "NONID_QUALIFIED"
+        }
+      ],
+      "possible_outputs": [
+        "NONID_RESULTS"
+      ]
+    },
+    {
+      "node": "R8-17",
+      "action": "field_and_map_controls",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "CONTROL_RESULTS"
+      ]
+    },
+    {
+      "node": "R8-18",
+      "action": "restricted_stress",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "R3_HISTORY"
+      ]
+    },
+    {
+      "node": "R8-19",
+      "action": "photon_channel",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-18",
+          "capability": "R3_HISTORY"
+        }
+      ],
+      "possible_outputs": [
+        "R3_SKY_CHANNEL"
+      ]
+    },
+    {
+      "node": "R8-19",
+      "action": "distance_channel",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-18",
+          "capability": "R3_HISTORY"
+        }
+      ],
+      "possible_outputs": [
+        "R3_DISTANCE_CHANNEL"
+      ]
+    },
+    {
+      "node": "R8-19",
+      "action": "record_radiation_jet_unavailable",
+      "implemented": false,
+      "requires": [],
+      "possible_outputs": [
+        "R3_JET_STATUS"
+      ]
+    },
+    {
+      "node": "R8-20",
+      "action": "restricted_sky_factory",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-19",
+          "capability": "R3_SKY_CHANNEL"
+        }
+      ],
+      "possible_outputs": [
+        "R3_SKY_FACTORY"
+      ]
+    },
+    {
+      "node": "R8-20",
+      "action": "restricted_distance_factory",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-19",
+          "capability": "R3_DISTANCE_CHANNEL"
+        }
+      ],
+      "possible_outputs": [
+        "R3_DISTANCE_FACTORY"
+      ]
+    },
+    {
+      "node": "R8-20",
+      "action": "external_channel_factory",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "EXTERNAL_FACTORY"
+      ]
+    },
+    {
+      "node": "R8-21",
+      "action": "p0_p1_comparison",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "P0_P1_RESULTS"
+      ]
+    },
+    {
+      "node": "R8-21",
+      "action": "p2_sky_comparison",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-20",
+          "capability": "R3_SKY_FACTORY"
+        }
+      ],
+      "possible_outputs": [
+        "P2_SKY_RESULTS"
+      ]
+    },
+    {
+      "node": "R8-21",
+      "action": "p2_distance_comparison",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-20",
+          "capability": "R3_DISTANCE_FACTORY"
+        }
+      ],
+      "possible_outputs": [
+        "P2_DISTANCE_RESULTS"
+      ]
+    },
+    {
+      "node": "R8-21",
+      "action": "p3_supported_comparison",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-20",
+          "capability": "EXTERNAL_FACTORY"
+        }
+      ],
+      "possible_outputs": [
+        "P3_RESULTS"
+      ]
+    },
+    {
+      "node": "R8-22",
+      "action": "check_local_hook_context",
+      "implemented": false,
+      "requires": [
+        {
+          "node": "R8-00",
+          "capability": "SOURCE_BOUND"
+        }
+      ],
+      "possible_outputs": [
+        "OPERATIONAL_CONTEXT_RESULT"
+      ]
+    },
+    {
+      "node": "R8-23",
+      "action": "receipt_synthesis",
+      "implemented": false,
+      "requires": [],
+      "possible_outputs": [
+        "SYNTHESIS"
+      ]
+    }
+  ]
+}

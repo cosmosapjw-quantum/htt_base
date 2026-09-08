@@ -1,0 +1,37 @@
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/r8/test_interval_rank.py ________________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/tests/r8/test_interval_rank.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests/r8/test_interval_rank.py:5: in <module>
+    from htt.infer.r8_interval_rank import rank_from_score_bounds, rank_envelope
+E   ModuleNotFoundError: No module named 'htt.infer.r8_interval_rank'
+________________ ERROR collecting tests/r8/test_orbit_bounds.py ________________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/tests/r8/test_orbit_bounds.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests/r8/test_orbit_bounds.py:5: in <module>
+    from obsstat.r8_orbit_bounds import invariant_lower,refine_pair,chart_rotation,cell_radius
+E   ModuleNotFoundError: No module named 'obsstat.r8_orbit_bounds'
+________________ ERROR collecting tests/r8/test_partial_law.py _________________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/tests/r8/test_partial_law.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests/r8/test_partial_law.py:4: in <module>
+    from htt.infer.r8_partial_law import marginal_acceptance,moment_acceptance,gaussian_marginal,require_joint_gaussian
+E   ModuleNotFoundError: No module named 'htt.infer.r8_partial_law'
+__________________ ERROR collecting tests/r8/test_support.py ___________________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/tests/r8/test_support.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests/r8/test_support.py:4: in <module>
+    from htt.infer.r8_support import factor_support,contains_residual,reduced_quadratic,log_density
+E   ModuleNotFoundError: No module named 'htt.infer.r8_support'
+=========================== short test summary info ============================
+ERROR tests/r8/test_interval_rank.py
+ERROR tests/r8/test_orbit_bounds.py
+ERROR tests/r8/test_partial_law.py
+ERROR tests/r8/test_support.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 4 errors during collection !!!!!!!!!!!!!!!!!!!!
+4 errors in 0.65s

@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/scripts/observed_runs/r8_mocks.py", line 144, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/scripts/observed_runs/r8_mocks.py", line 139, in main
+    result=mock1(a.run_dir,a.oracle,a.size) if a.mock=='1' else globals()['mock'+a.mock]()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/scripts/observed_runs/r8_mocks.py", line 112, in mock1
+    pool=initialize_pool(rows,ids);initial_seconds=time.monotonic()-started
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/htt/obsstat/r8_orbit_bounds.py", line 196, in initialize_pool
+    keys=tuple(_tensor_key(row) for row in rows)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/htt/obsstat/r8_orbit_bounds.py", line 196, in <genexpr>
+    keys=tuple(_tensor_key(row) for row in rows)
+               ^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/htt/obsstat/r8_orbit_bounds.py", line 38, in _tensor_key
+    if not np.array_equal(q,q.T):raise ValueError('Q must be symmetric')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Q must be symmetric

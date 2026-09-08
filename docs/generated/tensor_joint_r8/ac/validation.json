@@ -1,0 +1,49 @@
+{
+  "exit_code": 0,
+  "r8_tests_passed": 28,
+  "selected_r7_tests_passed": 72,
+  "combined_tests_passed": 100,
+  "commands": [
+    "python -B -m pytest -o addopts='' --import-mode=importlib tests/r8 -q",
+    "Combined exact command in raw_logs/final_validation_with_complete_fixture.txt invocation record"
+  ],
+  "source_sha256": {
+    "htt/htt/htt/infer/r8_law_registry.py": "7de3afc9327fbdcd28419a57c3f8eec08029cff15dcbdd99f455161070bbebbe",
+    "htt/htt/htt/infer/r8_simulator_calibration.py": "43f619dec6d6285de9b4bf2fabaca73e2647fc4f16d0f8e8cc4b3ed4dfc4ecd8",
+    "htt/htt/htt/infer/r8_partial_law.py": "cb4bcc2948a141e312c5ece14e4e62e9d2cd2a77f811bc27d14a0742bcf9f3db",
+    "htt/htt/htt/infer/r8_support.py": "eae8a040d5683eeb5f48d3259f87f689f95f9297ff86c4022507915000b86ea4",
+    "htt/htt/htt/infer/r8_interval_rank.py": "2e6d72dcf160a21fb0432b3c3d49ae685bea5d798dcbd535a3796aa0b5f3b5aa",
+    "htt/src/common/r8_contracts.py": "adfcaaf6b2a07f3d47e1a144b8a74e58408fc083a010379d2f2aee0601d16c0e",
+    "htt/obsstat/r8_orbit_bounds.py": "fb313380f20bbb786ae02b6b997d0357b598fec87df15e5a2a04e097c80a1bd0",
+    "scripts/observed_runs/r8_mocks.py": "b2d2787c8e0267aa14a923af7684619d589c3adfe86cbe640563bb347348e1e8",
+    "scripts/observed_runs/run_tensor_joint_r8.py": "1b65de91051427efb9f5e0f314ac3aaaf8dd654ee9ca134ae8c78d284a7a32dd",
+    "tests/r8/test_partial_law.py": "08c22fb30c0f7537192941685635bd45e44db7687cd04aa783398dbebdeb96f7",
+    "tests/r8/test_law_registry.py": "42029b8208ec25f06c2998490b34664fbad121a9f91d52caf9b7191ab74b6da1",
+    "tests/r8/test_orbit_bounds.py": "10bf89b62218329bd562bfba66e31f2540287e52333db26de8a6863b6551b91e",
+    "tests/r8/test_interval_rank.py": "8d76b248415bf2ccdff0887b460bb15d01d01ff673aa5df067a1011c2141b34f",
+    "tests/r8/test_support.py": "2aeee788437e0a68dabb3bd81b5e45246551f29dde9cbc037affd6d9392a3043",
+    "tests/r8/test_r8_runner.py": "0a138887daa784a15945d2ee8f1b91bee5bda68023025a23dc8f8ee5109259d7",
+    "tests/r8/test_simulator_calibration.py": "713077c511f75b58aaec1279af6d695c3789ac47520d99e330028f233a084d9d"
+  },
+  "actual_imports": {
+    "common.r8_contracts": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/htt/src/common/r8_contracts.py",
+    "obsstat.r8_orbit_bounds": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/htt/obsstat/r8_orbit_bounds.py",
+    "htt.infer.r8_support": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/htt/htt/htt/infer/r8_support.py",
+    "htt.infer.r8_law_registry": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/htt/htt/htt/infer/r8_law_registry.py"
+  },
+  "python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+  "required_import_path": [
+    "htt/htt",
+    "htt/src",
+    "htt",
+    "."
+  ],
+  "logs": [
+    ".agent-harness/runs/R8-AC-20260909/raw_logs/r8_final.txt",
+    ".agent-harness/runs/R8-AC-20260909/raw_logs/final_validation_with_complete_fixture.txt"
+  ],
+  "limits": [
+    "Old Gaussian110000 and old R7 CAS were not re-executed.",
+    "Two missing-fixture setup-failure logs preserved; exact old CAS contract/report copied only for consumer regression fixtures."
+  ]
+}

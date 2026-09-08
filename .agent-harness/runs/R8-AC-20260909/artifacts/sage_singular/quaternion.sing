@@ -1,0 +1,9 @@
+ring r=0,(w,x,y,z),dp;
+poly n=w*w+x*x+y*y+z*z;
+matrix H[3][3]=w*w+x*x-y*y-z*z,2*(x*y-w*z),2*(x*z+w*y),2*(x*y+w*z),w*w-x*x+y*y-z*z,2*(y*z-w*x),2*(x*z-w*y),2*(y*z+w*x),w*w-x*x-y*y+z*z;
+matrix Z=transpose(H)*H;
+int i; int j; int failures=0;
+for(i=1;i<=3;i++){for(j=1;j<=3;j++){if(i==j){Z[i,j]=Z[i,j]-n*n;}if(Z[i,j]!=0){failures++;}}}
+if(det(H)-n^3!=0){failures++;}
+if(failures==0){print("SINGULAR_QUATERNION_PASS");}else{print("SINGULAR_QUATERNION_FAIL");}
+quit;
