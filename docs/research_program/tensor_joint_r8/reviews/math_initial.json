@@ -1,0 +1,126 @@
+{
+  "run_id": "HTT-R8-DESIGN-20260908",
+  "assignment_id": "R8-INDEPENDENT-MATH",
+  "context_version": "b7172ad9-r8-design-v1",
+  "independence_mode": "review-candidate",
+  "operational_harness": "CONNECTOR_RESEARCH_REVIEW_NOT_NATIVE_HOOK_ACCEPTANCE",
+  "verdict": "HOLD",
+  "reasoning": "The orbit enclosures, conservative interval ranks, union/intersection confidence construction, linear support propagation, local recession argument and selected-law normalization are analytically sound on their declared domains. Promotion should wait for one small but material physical-domain correction: THEORY P1 currently says first order near isotropy, while the cited hierarchy explicitly distinguishes small radiation anisotropy from first-order perturbation about FLRW. The latter ordering, or explicit bounds on the retained nonlinear terms, is needed for the displayed zero-remainder physical identities. This is a repairable premise issue, not evidence against the core R8 construction.",
+  "reviewed_inputs": [
+    {
+      "path": "r8_design/docs/research_program/tensor_joint_r8/THEORY.md",
+      "sha256": "78da20ab826cc31758ed8983e44122742c12baf484f9108b7599094863903ae7",
+      "hash_verified": true
+    },
+    {
+      "path": "r8_design/docs/research_program/tensor_joint_r8/SCIENTIFIC_CONTRACT.md",
+      "sha256": "22bd09b9437963d41fb8f58524ec4c4326eee293010db9af0d0172f72f4b9ef7",
+      "hash_verified": true
+    }
+  ],
+  "findings": [
+    {
+      "id": "R8-MATH-01",
+      "severity": "blocking",
+      "section": "THEORY.md, P1. Tensorized MES with genuine remainder propagation, opening premise and attribution after equation (P1); SCIENTIFIC_CONTRACT.md item 6",
+      "issue": "First order near radiation isotropy is not by itself the geometric perturbation ordering required to remove the kinematics-times-multipole terms and to use the FLRW projected time/space derivative commutator at the stated order.",
+      "counterexample_or_obstruction": "In a geodesic, collisionless local regime with small q but unrestricted shear, the term -(10/7) STF(sigma q) in the cited quadrupole hierarchy is first order in q, not second order. For sigma=s diag(-1,-1,2) and q=epsilon diag(-1,-1,2), STF(sigma q)=s epsilon diag(-1,-1,2) is nonzero. Thus the zero-remainder displayed shear identity does not follow from small radiation anisotropy alone. This is an ordering counterexample, not a claim that an arbitrary local jet extends to a global solution.",
+      "smallest_correction": "State explicitly that the zero-remainder identities are the geodesic collisionless first-order expansion about FLRW, with geometric departures, temperature gradients and the retained derivative hierarchy assigned first perturbative order. Cite the paper's equations (101)-(102), with (97)-(98) supplying the omitted nonlinear terms, and the projected-gradient commutator. In any broader small-radiation-anisotropy regime, require admitted remainder bounds to cover the omitted kinematic couplings, normalization terms and differentiated/commutator corrections; do not set those remainders to zero solely because anisotropy is small. Mirror this ordering in contract item 6.",
+      "confidence": "high",
+      "source": "https://arxiv.org/html/astro-ph/9808163v2",
+      "source_locations": "Section VI.3, equations (97)-(102); Section II, equations (4)-(5)"
+    },
+    {
+      "id": "R8-MATH-02",
+      "severity": "nonblocking_clarification",
+      "section": "THEORY.md, J2. A data-law capability ladder, opening paragraph",
+      "issue": "The covariance-completion sentence should explicitly condition its Gaussian-region construction on an admitted jointly Gaussian law. Known covariance alone, and even Gaussian marginal distributions, do not imply the chi-square pivot used later in J2.",
+      "counterexample_or_obstruction": "Let Y=(Z,S Z), where Z is standard normal and S is an independent fair sign. Both marginals are standard normal and Cov(Y)=I, but Y^T Y=2 Z^2, which is not chi-square with two degrees of freedom. Its upper tail is heavier, so a chi-square-2 rejection region can exceed its nominal level. The contract's law-admission requirement and J2's later phrase exact Gaussian member already protect the intended implementation, which is why this is a clarification rather than a separate blocker.",
+      "smallest_correction": "Prefix the sentence with 'Under an admitted jointly Gaussian family'. Route covariance-only information to J2b and known Gaussian marginals without joint Gaussianity to J2a.",
+      "confidence": "high"
+    },
+    {
+      "id": "R8-MATH-03",
+      "severity": "nonblocking_clarification",
+      "section": "THEORY.md, J3. Shared calibration is counted once, paragraph introducing equation (J3)",
+      "issue": "The displayed random-effect covariance additionally assumes that calibration noise nu is independent of eta and epsilon, or that the corresponding covariance terms vanish with joint Gaussianity authenticated.",
+      "counterexample_or_obstruction": "A Gaussian calibration noise can be correlated with eta while retaining the written marginal distribution. Then Cov(Y,c) includes Z Cov(eta,nu), and Cov(c) includes H Cov(eta,nu)+Cov(nu,eta) H^T. The subsequent instruction to add actual shared-noise cross terms is compatible with the intended result, but an explicit baseline assumption would prevent an incomplete implementation.",
+      "smallest_correction": "Say that eta, epsilon and nu are mutually independent Gaussian variables in the displayed baseline, and retain the existing rule to add admitted cross terms in more general joint laws.",
+      "confidence": "high"
+    }
+  ],
+  "claim_audit": [
+    {
+      "claims": ["O1"],
+      "status": "ANALYTICALLY_SOUND_CONDITIONAL",
+      "reasoning": "Both spectral residual inequalities hold for each common rotation, so the weighted sum of their squares is a valid lower bound even when separate minimizers differ. The Gram denominator is an upper bound on each paired singular-value sum, giving the written weaker bound. The three exact fixtures and the stabilizer obstruction have the stated directions. All distances are dimensionless because the tensor scales have kelvin units. No floating eigensolver certification was executed."
+    },
+    {
+      "claims": ["O2"],
+      "status": "ANALYTICALLY_SOUND_CONDITIONAL",
+      "reasoning": "The four maximal-component quaternion charts cover SO(3). The normalized-chart differential bound gives the stated cell radius. Forward/inverse rotation bounds justify taking the smaller tensor norm separately in each block. Downward cell lower bounds and feasible upper bounds support the pruning invariant. A stored earlier lower bound remains valid when incumbents improve. Actual precision, branch scheduling, runtime and outward rounding remain implementation obligations."
+    },
+    {
+      "claims": ["O3"],
+      "status": "ANALYTICALLY_SOUND_CONDITIONAL",
+      "reasoning": "Kth-order statistics are coordinatewise monotone; certain and possible inclusive ties have the correct inequalities. Exchangeability plus permutation equivariance makes the inclusive descending rank conservative. Pointwise domination of the same fixed exact p-value survives arbitrary numerical stopping. Simultaneous enclosure failure needs the stated global delta allowance. The M=1000 and M=301 integer exceedance thresholds are correct. This proves no observational null law or pool exchangeability."
+    },
+    {
+      "claims": ["O4"],
+      "status": "ANALYTICALLY_SOUND_CONDITIONAL",
+      "reasoning": "Amplitude-preserving reconstruction carries the same real STF tensor, including the zero-amplitude convention, so applying the same metric gives the same statistic. The rank-three trace subtraction coefficient is correct. The diagnostic chi transforms by determinant under an improper orthogonal transformation and is SO(3) invariant. Zero chi is appropriately not treated as a complete reflection test. Mirror symmetry of a coherent axial sky survives a boost within the plane spanned by the original axis and boost, supporting the stated control. Conversion and multiple-root reliability remain unexecuted."
+    },
+    {
+      "claims": ["J1"],
+      "status": "ANALYTICALLY_SOUND_CONDITIONAL",
+      "reasoning": "At the true compatible tuple, simultaneous measurement acceptance implies joint-set membership. The union bound needs no cross-scope independence. The random admission-set gamma allowance follows by another union bound, provided per-tuple acceptance guarantees are valid for the actual experiment. Shared calibration values must remain common. Nuisance supremum p-values and conservative retention of uncalibrated candidates have the correct containment directions."
+    },
+    {
+      "claims": ["J2"],
+      "status": "ANALYTICALLY_SOUND_WITH_LAW_PREMISE_CLARIFICATION",
+      "reasoning": "Marginal Gaussian Bonferroni bounds and the variance-only Markov bound have the claimed coverage. Singular Gaussian inversion correctly requires support membership and rank(C), without a fitted-parameter subtraction. The factorized reduced experiment is valid for the declared full-column-rank B and positive-definite V. A covariance matrix alone is insufficient for the Gaussian route, as finding R8-MATH-02 details."
+    },
+    {
+      "claims": ["J3"],
+      "status": "ANALYTICALLY_SOUND_WITH_INDEPENDENCE_CLARIFICATION",
+      "reasoning": "The covariance and conditional-response formulas are correct for the admitted joint Gaussian experiment, with baseline mutual independence stated explicitly as recommended. Keeping p(c|theta) unless conditioning is part of the experiment prevents loss or double use of calibration information. No calibration source has been empirically qualified by this review."
+    },
+    {
+      "claims": ["P1", "P2 support equation within P1", "P3 scalar bounds within P1"],
+      "status": "HOLD_FOR_PHYSICAL_DOMAIN_CORRECTION",
+      "reasoning": "The outward-sign transformation of the FLRW-linearized dipole and quadrupole hierarchy gives the displayed shear and vorticity coefficients. Rates are dimensionally consistent when the inherited spatial derivative includes the specified c factor. The ellipsoid-plus-Minkowski-remainder support formula is exact for its Cartesian uncertainty set, and is an outer support when integrability or other dependence shrinks that set. Remainder radii divided by positive Theta have the correct dimensionless units and monotone bound direction. The scalar envelope coefficients explicitly depend on inaccessible inherited R7 T3c definitions and are therefore not independently revalidated here. The first-order geometric and derivative ordering must be explicit before zero-remainder physical promotion."
+    },
+    {
+      "claims": ["P2. Closure frontiers and limits of inference"],
+      "status": "ANALYTICALLY_SOUND_CONDITIONAL",
+      "reasoning": "A genuine recession ray in the admitted feasible domain, killed by the observation map but not the target map, establishes local unbounded nonidentification. The text correctly limits the claim to that domain and to directions seen by the requested functional. Nested domains give nested projected sets and a valid sensitivity frontier. Compact jets, bounded remainders and a positive lower expansion bound give bounded continuous tensor images. The stated low-redshift f_g/f_o series follows by expanding H times the radial comoving-distance integral and subtracting 1+z. No global Einstein-Boltzmann realization or R3 provider execution was checked."
+    },
+    {
+      "claims": ["N1"],
+      "status": "ANALYTICALLY_SOUND_CONDITIONAL",
+      "reasoning": "The selected density is normalized for the declared observed-data selection function and a finite positive denominator. It covers a full block only when the latent and measurement law genuinely describe that joint block. Exact candidate-experiment simulation and symmetric full processing can produce exchangeable rank tests; fitted plug-in mocks or selection from another product need separate qualification. Pointwise inversion suffices for candidate-state coverage, whereas finite calibration grids alone cannot justify exclusions between grid points."
+    }
+  ],
+  "validation_boundary": {
+    "review_type": "Independent nonauthor analytical review of the two immutable candidate documents",
+    "numerical_or_cas_execution": false,
+    "scientific_code_execution": false,
+    "repository_wide_mapping": false,
+    "native_repo_context_hooks_invoked": false,
+    "native_operational_acceptance_claimed": false,
+    "observational_law_qualification_claimed": false,
+    "inherited_R7_R3_implementations_reviewed": false,
+    "sources_read": ["https://arxiv.org/html/astro-ph/9808163v2"],
+    "promotion_requirement": "Correct the first-order physical domain and obtain a review against the new candidate hashes. Optional premise clarifications in J2 and J3 should be included in the same small revision. Numerical/CAS, provider, precision and observational qualification remain future Local Codex obligations."
+  },
+  "HARNESS_RESULT": {
+    "run_id": "HTT-R8-DESIGN-20260908",
+    "assignment_id": "R8-INDEPENDENT-MATH",
+    "context_version": "b7172ad9-r8-design-v1",
+    "verdict": "HOLD",
+    "result_kind": "PORTABLE_INDEPENDENT_REVIEW_RESULT",
+    "process_status": "COMPLETE",
+    "native_hook_acceptance": false,
+    "artifact": "/workspace/scratch/baa7b9162acb/r8_review/math.json"
+  }
+}

@@ -1,0 +1,18 @@
+# Independent review and bounded corrections
+
+Run `HTT-R8-DESIGN-20260908`, source b7172ad9. Three bounded author/reuse tasks covered orbit mathematics, joint physics/statistics and source migration. Two **nonauthor** reviewers then audited distinct questions: analytical correctness and executable design. Their initial findings and confirmations are retained below. No CAS, science implementation, mock or observed-data run is part of these reviews.
+
+| Review | Initial verdict and concrete issue | Correction | Current bounded verdict |
+|---|---|---|---|
+| Mathematics | HOLD: small radiation anisotropy alone does not justify omitting kinematics-times-multipole terms. Gaussian completion and calibration-noise premises needed clarification. | P1/contract6 specify first-order FLRW geometry, temperature and derivative ordering; broader terms require remainders. J2 requires admitted joint Gaussian family. J3 states mutual independence for its baseline covariance. | `ACCEPT_ANALYTICAL_DESIGN_WITHIN_REVIEW_SCOPE` |
+| Implementation design | HOLD: combined distance/jet capability lacked jet validation; recession tool failure suppressed valid finite images. | Distance channel separated; radiation-jet export explicitly unavailable in this bounded successor. V07 finite image is independent of V08 nonID. Two action-survival checks added. Mock4 binomial diagnostic and package imports corrected. | `PROMOTE_FOR_IMPLEMENTATION` |
+
+Records: [initial math](reviews/math_initial.json), [math confirmation](reviews/math_confirmation.json), [initial design](reviews/design_initial.json), [design confirmation](reviews/design_confirmation.json). Each records reviewed hashes and scope. Assignment snapshots identify the original bounded inputs; initial hashes remain historical, and confirmation hashes identify the corrected candidate. Confirmation only addressed registered findings, not another broad assurance wave.
+
+The mathematical reviewer independently checked O1–O4/J1–J3, P1/P2 support/recession arguments and N1 at their stated domains. It checked the vorticity sign/coefficient via the FLRW commutators. It did **not** independently revalidate all inherited R7 envelope definitions, R3 implementation or actual product laws. The design reviewer checked the seven assigned design/contract/graph/validation/reuse files and structural checker, not the entire repository or theorem corpus. Those limitations remain.
+
+Structural check after repair: **24 nodes,52 actions,27 routing scenarios; PASS_STRUCTURAL_ONLY**. [structural_validation.json](reviews/structural_validation.json) records the actual command/result. These graph scenarios use symbolic capabilities; they do not run the future scheduler or establish per-product scientific calibration. Runtime sibling-product tests remain in Unit G.
+
+Operational authority: these are portable connector-mediated research reviews. Native repository context-pack/assignment hooks, launch and stop acceptance were not executed here. No global rules or installed skills were changed. Local Codex must satisfy its actual operational controls and new four-axis CAS obligations before its corresponding acceptance. The initial R7 STOP_INVALID and b7172ad wrong-checkout hook result remain unchanged.
+
+**Decision:** promote this bounded successor design for Local Codex implementation. Do not promote a new empirical, finite-amplitude physical, general non-Gaussian, provider or native-solver claim. The complete research programme remains unfinished; the current package specifies the paths and meaningful negative/conditional outcomes needed to advance it.

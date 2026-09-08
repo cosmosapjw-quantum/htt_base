@@ -1,0 +1,106 @@
+{
+  "schema": "PORTABLE_RESEARCH_REVIEW_V1",
+  "run_id": "HTT-R8-DESIGN-20260908",
+  "assignment_id": "R8-INDEPENDENT-DESIGN",
+  "context_version": "b7172ad9-r8-design-v1",
+  "independence_mode": "review-candidate",
+  "operational_harness": "CONNECTOR_RESEARCH_REVIEW_NOT_NATIVE_HOOK_ACCEPTANCE",
+  "base_commit": "b7172ad904eb357fcce78eb9c5b7164d1e86a9e6",
+  "verdict": "HOLD",
+  "summary": "The successor is sufficiently concrete and generally conservative, but two capability bundles still suppress independently valid physical results; one can also mislabel optical validation as radiation-jet qualification. Resolve these narrow design inconsistencies before implementation promotion.",
+  "blockers": [
+    {
+      "id": "D1",
+      "severity": "HIGH",
+      "category": "PHYSICAL_CHANNEL_QUALIFICATION",
+      "locations": [
+        "campaign_dag.json:R8-19.distance_jet_channel",
+        "campaign_dag.json:R8-20.restricted_distance_factory",
+        "VALIDATION_MATRIX.md:V11 and mock7",
+        "LOCAL_CODEX_PLAN.md:Unit F"
+      ],
+      "finding": "The graph produces a combined R3_DISTANCE_JET_CHANNEL from the optical V11 gate, and the distance factory consumes that combined capability. V11 and mock7 name distance, null, screen, reverse-ray and curvature/history checks; they do not define a radiation derivative-jet validation gate. Unit F instead requires sky, distance and jet channels to be admitted separately. As specified, an implementer can either emit a jet capability after optics alone or block a validated distance response whenever derivative-jet qualification is unavailable.",
+      "minimal_correction": "Split the graph into R3_DISTANCE_CHANNEL and R3_JET_CHANNEL, with separate actions and validation receipts. Make R3_DISTANCE_FACTORY depend only on the distance capability. For the jet channel, add a named obligation specifying the radiation derivative quantities, event/congruence/rate units, derivative or independent limiting/convergence checks, and closure/remainder domain; otherwise leave that capability explicitly unavailable. Do not let a joint channel name substitute for those tests.",
+      "acceptance_check": "A valid distance channel plus unavailable/failed jet validation must still enable the distance factory and distance comparison; optical PASS alone must never emit a jet capability."
+    },
+    {
+      "id": "D2",
+      "severity": "MEDIUM",
+      "category": "INDEPENDENT_PHYSICAL_SUBSET_CONTINUATION",
+      "locations": [
+        "campaign_dag.json:R8-15.closure_mocks",
+        "campaign_dag.json:R8-16.conditional_physical_image",
+        "DESIGN.md:TensorImage behavior",
+        "VALIDATION_MATRIX.md:V07-V08"
+      ],
+      "finding": "R8-15 requires both JET_IMAGE and NONID_METHOD to produce the only CLOSURE_METHOD, which R8-16 requires for every physical image. Thus failure or unavailability of the recession/nonidentification capability suppresses finite ellipsoid/remainder support images that have independently passed V07. This conflicts with the declared target-specific finite/unbounded/unresolved outcomes and branch-local continuation: a recession proof is unnecessary for a certified finite-domain image.",
+      "minimal_correction": "Separate bounded/support-image qualification from recession/nonidentification qualification. Permit R8-16 to produce certified finite-domain images using the validated V07 capability; only an unbounded/nonidentification claim should require the V08 capability. For targets requiring an unavailable recession or global enclosure method, retain unresolved outer results.",
+      "acceptance_check": "With JET_IMAGE and V07 validation present but NONID_METHOD absent, a finite compact-domain support image remains available, while unsupported nonidentification claims remain unavailable or unresolved."
+    }
+  ],
+  "nonblocking_recommendations": [
+    {
+      "id": "D3",
+      "locations": [
+        "validate_campaign.py:graph-only failure routing",
+        "LOCAL_CODEX_PLAN.md:Unit G"
+      ],
+      "finding": "The current structural failure loop confirms synthesis settlement and two provider-independent ancestor paths, but does not assert preservation of action-level or per-product sibling capabilities. It therefore passes despite D1/D2.",
+      "minimal_correction": "Add explicit structural survivor assertions for the corrected distance/jet and finite-image/nonidentification splits. Implement the already-planned runtime tests at action and product scope, including a single unavailable covariance and stale evidence, and assert both missing capabilities and surviving independent results. Keep structural PASS labeled non-scientific."
+    },
+    {
+      "id": "D4",
+      "locations": [
+        "VALIDATION_MATRIX.md:mock4"
+      ],
+      "finding": "Mock4 fixes sample counts and dependence cases but leaves the empirical coverage decision rule less precise than mock3/mock5. The phrase that rectangles must cover according to fixed allocations should not become a naive finite-sample nominal-frequency gate.",
+      "minimal_correction": "Specify the one-sided binomial diagnostic and any fixed tolerance/family budget for the three dependence experiments, or state that empirical coverage is descriptive and the deterministic/exact-law checks are the eligibility gates."
+    }
+  ],
+  "assessments": {
+    "dag_terminal_semantics": "PASS apart from the physical capability bundles above. Terminal receipt dependencies, unavailable settlement, separate process/science outcomes, and all-terminal synthesis are explicit.",
+    "mock_to_real_law": "PASS. The candidate distinguishes method tests from actual processing/selection/law admission; simulator observation requires both method and real candidate evidence, live-law binding, and domain qualification. CMB anomaly and candidate-state confidence acceptance are separate.",
+    "independent_observed_subsets": "PASS. Gaussian, singular, partial and simulator routes are separate action rules. Missing inputs do not donate alpha; an unavailable full run can produce only methods/limitations. P0/P1 result collections do not acquire eligibility from source presence or a failed competitor.",
+    "local_codex_specificity": "PASS with D1/D2 corrections. Files, interfaces, focused commands, deterministic fixtures, mock seeds/budgets/tolerances, intake, dry-plan and failure-route tests are concrete enough to begin implementation.",
+    "statistical_domains": "PASS with D4 clarification recommended. Exact versus estimated covariance, marginal versus joint laws, fixed grids versus continuous domains, fitted nuisance, allocation, unresolved inclusion and conservative union/intersection semantics are explicitly constrained. No scientific calibration was executed in this review.",
+    "retained_assets_and_code": "PASS. Explicit donor paths and archive hashes, compatibility limits, original law scopes, original R7 pins/CAS scope, and PR4/NPIPE exclusion prevent unsupported historical promotion. The overlay distinguishes inventory from admitted use.",
+    "physical_provider_safety": "HOLD for D1/D2. Otherwise explicit rate/remainder sets, first-order ordering, independent stress mutations, reverse optics tests and restricted LRS/no-general-solver limits are appropriate.",
+    "native_harness_authority": "PASS. This is explicitly a portable connector research review and supplies no native launch, hook acceptance, checkout acceptance, scientific execution, or CAS receipt."
+  },
+  "verification": {
+    "all_seven_allowed_input_hashes_match": true,
+    "inputs": {
+      "r8_design/docs/research_program/tensor_joint_r8/SCIENTIFIC_CONTRACT.md": "83e0284a69d8d50f488fbade6fc640302ca841c0213bf81991b178cf0f03afd5",
+      "r8_design/docs/research_program/tensor_joint_r8/DESIGN.md": "74d7de60dda6e9409f01bc76a75504906778cb8544f278a1ab57917719f677bf",
+      "r8_design/docs/research_program/tensor_joint_r8/LOCAL_CODEX_PLAN.md": "ae01a36cf4295d7adce1b597f704b31e2c35a39731d9c9d39f6275d1494d3bca",
+      "r8_design/docs/research_program/tensor_joint_r8/campaign_dag.json": "13e67a58d0ec9790ee3e8da89c8396273cb59d72429c966e05639be15f903180",
+      "r8_design/docs/research_program/tensor_joint_r8/validate_campaign.py": "4204549b362e4d7e9f017ec1278d982d2ee734c13baf1385d0769add9b2c5489",
+      "r8_design/docs/research_program/tensor_joint_r8/VALIDATION_MATRIX.md": "fcb9aa9a41bb0beff90c01a22ae82df8c1a73319fb243510930a8aa0d2ca5e61",
+      "r8_design/docs/research_program/tensor_joint_r8/ASSET_REUSE.md": "7f65a342005f42cc6e473cf1e6a06e6546965168cee89349b00736978802a884"
+    },
+    "structural_validator": {
+      "status": "PASS_STRUCTURAL_ONLY",
+      "nodes": 24,
+      "actions": 49,
+      "routing_scenarios": 25,
+      "science_executed": false
+    },
+    "scientific_execution": false,
+    "cas_execution": false,
+    "mock_execution": false,
+    "observed_data_execution": false,
+    "whole_repository_scan": false,
+    "sibling_reviews_read": false,
+    "native_launch_claim": false
+  },
+  "scope_limitations": [
+    "Reviewed only the assignment and seven hash-bound candidate files.",
+    "Referenced R7 sources and theorem text were not independently re-proved or read outside the assignment; this is implementation-design review, not theorem adjudication."
+  ],
+  "harness_result": {
+    "portable": true,
+    "verdict": "HOLD",
+    "authority": "CONNECTOR_RESEARCH_REVIEW_NOT_NATIVE_HOOK_ACCEPTANCE",
+    "scientific_execution": false
+  }
+}

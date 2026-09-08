@@ -1,0 +1,71 @@
+{
+  "run_id": "HTT-R8-DESIGN-20260908",
+  "assignment_id": "R8-INDEPENDENT-MATH",
+  "review_phase": "NARROW_FINDING_CONFIRMATION",
+  "context_version": "b7172ad9-r8-design-v1",
+  "independence_mode": "review-candidate",
+  "operational_harness": "CONNECTOR_RESEARCH_REVIEW_NOT_NATIVE_HOOK_ACCEPTANCE",
+  "verdict": "ACCEPT_ANALYTICAL_DESIGN_WITHIN_REVIEW_SCOPE",
+  "initial_report": "/workspace/scratch/baa7b9162acb/r8_review/math.json",
+  "initial_report_preserved": true,
+  "initial_verdict": "HOLD",
+  "reasoning": "All three registered findings are closed by the revised text. P1 and scientific-contract item 6 now explicitly restrict zero-remainder identities to the ordered first-order FLRW model and require admitted omitted-term bounds for broader domains. The written outward dipole relation and curl commutators yield the displayed vorticity expression with consistent signs and coefficients under those conventions. J2 now requires an admitted jointly Gaussian family for Gaussian covariance-completion regions. J3 states mutual independence for its baseline covariance. The initial analytical blocker is therefore resolved for this design revision; this confirmation grants no CAS, implementation or observational qualification.",
+  "reviewed_revision": [
+    {
+      "path": "r8_design/docs/research_program/tensor_joint_r8/THEORY.md",
+      "sha256": "9a505ce0ab3de99a1dcad7f4397621cb639307b4bb42a735b910128646ee408f",
+      "hash_verified": true,
+      "reviewed_sections": ["J2 opening premise", "J3 baseline random-effect premise", "P1 physical domain, hierarchy attribution and curl derivation"]
+    },
+    {
+      "path": "r8_design/docs/research_program/tensor_joint_r8/SCIENTIFIC_CONTRACT.md",
+      "sha256": "83e0284a69d8d50f488fbade6fc640302ca841c0213bf81991b178cf0f03afd5",
+      "hash_verified": true,
+      "reviewed_sections": ["Item 6"]
+    }
+  ],
+  "findings_closure": [
+    {
+      "id": "R8-MATH-01",
+      "original_severity": "blocking",
+      "status": "CLOSED",
+      "evidence": "THEORY P1 specifies first order about FLRW, geometric departures, temperature gradients and derivative ordering; identifies equations (101)-(102) as the linear hierarchy; identifies (97)-(98) as broader equations containing omitted terms; states the outward dipole relation and two commutators; and requires remainder bounds for omitted couplings and their differentiated/commutator contributions. Contract item 6 mirrors the ordering and broader-domain restriction.",
+      "analytical_check": "Substituting D log T=dot d-(2/5)div q into D_[a D_b]log T=(Theta/3)omega_ab, and then D_[a dot d_b]=dot C_ab+(Theta/3)C_ab, gives omega=(3/Theta)dot C+C-(6/(5 Theta))E. No sign, coefficient or normalization correction is required for this stated convention and ordered domain."
+    },
+    {
+      "id": "R8-MATH-02",
+      "original_severity": "nonblocking_clarification",
+      "status": "CLOSED",
+      "evidence": "J2 explicitly requires a jointly Gaussian sampling family for the covariance-completion construction and states that Gaussian marginals plus covariance information do not imply joint Gaussianity. The separate marginal and moment routes remain available."
+    },
+    {
+      "id": "R8-MATH-03",
+      "original_severity": "nonblocking_clarification",
+      "status": "CLOSED",
+      "evidence": "J3 now states that eta, epsilon and nu are mutually independent in the displayed baseline model and retains the instruction to include actual cross terms in broader models."
+    }
+  ],
+  "scope_boundary": {
+    "scope": "Only confirmation of R8-MATH-01, R8-MATH-02 and R8-MATH-03; unrelated claims were not reopened",
+    "new_numerical_or_cas_execution": false,
+    "scientific_code_execution": false,
+    "implementation_review": false,
+    "implementation_promotion": false,
+    "observational_law_qualification": false,
+    "native_context_hooks_invoked": false,
+    "native_operational_acceptance": false,
+    "remaining_obligations": "The original report's unexecuted numerical/CAS, precision, provider, inherited-definition and observational-law obligations remain unchanged."
+  },
+  "HARNESS_RESULT": {
+    "run_id": "HTT-R8-DESIGN-20260908",
+    "assignment_id": "R8-INDEPENDENT-MATH",
+    "context_version": "b7172ad9-r8-design-v1",
+    "review_phase": "NARROW_FINDING_CONFIRMATION",
+    "verdict": "ACCEPT_ANALYTICAL_DESIGN_WITHIN_REVIEW_SCOPE",
+    "result_kind": "PORTABLE_INDEPENDENT_REVIEW_CONFIRMATION",
+    "process_status": "COMPLETE",
+    "native_hook_acceptance": false,
+    "implementation_acceptance": false,
+    "artifact": "/workspace/scratch/baa7b9162acb/r8_review/math_confirmation.json"
+  }
+}
