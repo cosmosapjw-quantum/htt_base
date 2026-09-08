@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "run_id": "TENSOR-JOINT-R7-20260908",
+  "assignment_id": "control_readers",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "status": "pass",
+  "claim_ids": ["RUN-TENSOR-JOINT-R7-20260908-V00"],
+  "control_reader_evidence": [
+    {
+      "product_key": "cf4_cds_table2_table3_table4",
+      "locators": ["/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/{ReadMe,table2.dat,table3.dat,table4.dat}"],
+      "compatible_reader": {"interpreter":"/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python","imports":["astropy.table.Table"],"snippet":"Table.read(table_path, format='ascii.cds', readme=readme_path)"},
+      "observed_schema": {"table2":{"rows":55877,"columns":["PGC","Vcmb","DM","e_DM","RAdeg","DEdeg","GLON","GLAT","SGL","SGB"],"units":{"Vcmb":"km/s","DM":"mag","e_DM":"mag","RAdeg":"deg","DEdeg":"deg","GLON":"deg","GLAT":"deg"}},"table3":{"rows":38053,"columns":["1PGC","DMzp","DMav","e_DMav","Vcmb","RAdeg","DEdeg","GLON","GLAT"],"units":{"DMzp":"mag","DMav":"mag","e_DMav":"mag","Vcmb":"km/s"}},"table4":{"rows":38053,"columns":["1PGC","DMzp","e_DMzp","Dist","Vh","Vls","V3k","fV3k","Vpds","Vpwf","Vpec","RAdeg","DEdeg","GLON","GLAT","SGX","SGY","SGZ"],"units":{"Dist":"Mpc","Vh":"km/s","Vls":"km/s","V3k":"km/s","Vpec":"km/s","RAdeg":"deg","DEdeg":"deg","SGX":"Mpc"}}},
+      "law_eligibility":"UNAVAILABLE_PRODUCT_OR_LAW",
+      "missing_requirements":["Exact selected-group order and grouping/calibration rule","full covariance indexed to that order","selection function","frame/sign/units sidecars and normalized velocity-space likelihood"],
+      "note":"This reader is executable and preserves units, but a readable catalogue is not an admitted affine or raw-selection law."
+    },
+    {
+      "product_key":"desi_dr1_bgs_bright_compressed",
+      "locators":["/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_{stat-only,syst}_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5","/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_correlation-recon-poles_BGS_BRIGHT-21.5_{GCcomb,NGC,SGC}_z0.1-0.4.h5"],
+      "compatible_reader":{"interpreter":"/mnt/sn850x2t/htt_base_e2e/workdir/external_fusion_round3_20260722_envs/lowell/bin/python","packages":{"h5py":"3.16.0"},"snippet":"with h5py.File(path, 'r') as f: y=f['observable/baorecon/qiso/value'][()]; C=f['covariance/value'][()]; W=f['window/value'][()]"},
+      "observed_schema":{"bao_recon":{"likelihood_name":"gaussian_likelihood","observable":"qiso; DV_over_rd_fid","zeff":0.2952346949471036,"data_shape":[1],"covariance_shape":[1,1],"window_shape":[1,1]},"correlation_poles_GCcomb":{"likelihood_name":"gaussian_likelihood","observable":"correlation pole ell=0","data_shape":[26],"covariance_shape":[26,26],"window_shape":[26,600],"theory_multipoles":[0,2,4],"theory_bins_per_multipole":200}},
+      "law_eligibility":"QUALIFIED_CONDITIONAL_LAW_CANDIDATE",
+      "eligibility_basis":"The inspected official compressed HDF5 members explicitly name gaussian_likelihood and contain data vector, covariance matrix and window matrix. A conventional normalized Gaussian density is mechanically available after a consumer verifies covariance definiteness and applies the registered window/theory convention.",
+      "limits":["No execution or covariance-positive-definite check was performed here.","The BAO qiso observable is a compressed background-comparison product; it has no positions and cannot yield an angular dipole.","R7 must bind the exact HDF5 member/checksum, select stat-only versus syst rather than multiply alternatives, and define the model vector/fiducial-rd convention before use.","The general DESI raw BGS-BRIGHT law remains separately unavailable until its selection, mock and nuisance factors are bound."],
+      "source_definition":"official_nz_v1.5/SOURCE.txt names https://data.desi.lbl.gov/public/dr1/survey/catalogs/dr1/LSS/iron/LSScats/v1.5; the local likelihood SHA256 manifest names the selected HDF5 files."
+    },
+    {
+      "product_key":"union3_release_products",
+      "locators":["/mnt/sn850x2t/htt_base_e2e/workdir/rrss_observational_inputs/union3_release-main/{mu_mat_union3_cosmo=2_mu.fits,mu_mat_union3.1_UNITY1.7_template_cosmo=2_0_mu.fits,mu_mat_union3.1_UNITY1.8_template_cosmo=2_0_mu.fits,all_samples_union3_cosmo=2.npz,lcfit_Union3.tar.gz}"],
+      "compatible_reader":{"interpreter":"/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python","imports":["astropy.io.fits","numpy"],"snippet":"with fits.open(path, memmap=False) as h: matrix=h[0].data; samples=np.load(npz_path, allow_pickle=False)['arr']"},
+      "observed_schema":{"three_mu_fits":{"shape":[23,23],"dtype":"FITS BITPIX=-64","BUNIT":null},"samples_npz":{"key":"arr","shape":[600000,22],"dtype":"float64"},"light_curve_archive":"lcfit_Union3.tar.gz is an archive of light-curve/member files"},
+      "law_eligibility":"UNAVAILABLE_PRODUCT_OR_LAW",
+      "missing_requirements":["Documented row/parameter ordering for 23x23 matrices","units and whether each matrix is covariance, precision, or another compressed object","linkage of the 600000x22 samples to model/prior/weights","normalized release likelihood and overlap/calibration rule"],
+      "note":"FITS/NPZ readers are executable; headers inspected here do not identify a normalized likelihood or support directional-row analysis."
+    },
+    {
+      "product_key":"wmap9_ilc",
+      "locators":["/mnt/sn850x2t/htt_base_e2e/workdir/raw/wmap_9yr/core/wmap_ilc_9yr_v5.fits","/mnt/sn850x2t/htt_base_e2e/workdir/raw/wmap_9yr/core/wmap_ilc_rgn_defn_9yr_v5.fits"],
+      "compatible_reader":{"interpreter":"/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python","imports":["astropy.io.fits"],"snippet":"with fits.open(path, memmap=False) as h: temperature=h[1].data['TEMPERATURE']; n_obs=h[1].data['N_OBS']"},
+      "observed_schema":{"telescope":"WMAP","object":"ALL-SKY","healpix_nside":512,"ordering":"NESTED","rows":3145728,"columns":{"TEMPERATURE":{"format":"E","unit":"mK, thermodynamic"},"N_OBS":{"format":"E","unit":"counts"}}},
+      "law_eligibility":"CONTROL_ONLY",
+      "missing_requirements":["Release-matched WMAP9 end-to-end simulation/noise and mask law","dipole/foreground/mask and commonization convention","covariance/null calibration for a declared statistic"],
+      "note":"The map is a valid descriptive common-sky control reader; WMAP7 simulations cannot supply the WMAP9 end-to-end law."
+    }
+  ],
+  "environment_evidence":{"hdf5_decoder":"Only the known lowell environment at /mnt/sn850x2t/htt_base_e2e/workdir/external_fusion_round3_20260722_envs/lowell/bin/python imported h5py (3.16.0). The known py312/core/inference/survey interpreters did not import h5py; no installation was attempted."},
+  "operational_note":"The canonical stop-hook active-run mismatch is an operational routing error only; it does not affect product or law eligibility.",
+  "files_read":[".agent-harness/runs/TENSOR-JOINT-R7-20260908/assignments/control_readers.json","docs/research_program/tensor_joint_r7/OWNED_ASSETS.md",".agent-harness/runs/TENSOR-JOINT-R7-20260908/results/asset_binding.json","/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/{ReadMe,table2.dat,table3.dat,table4.dat}","/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/{official_nz_v1.5/SOURCE.txt,likelihood/*.h5,likelihood/dr1_vac_dr1_full-shape-bao-clustering_v1.0_data_v12_likelihood.sha256sum}","/mnt/sn850x2t/htt_base_e2e/workdir/rrss_observational_inputs/union3_release-main/{mu_mat_union3_cosmo=2_mu.fits,mu_mat_union3.1_UNITY1.7_template_cosmo=2_0_mu.fits,mu_mat_union3.1_UNITY1.8_template_cosmo=2_0_mu.fits,all_samples_union3_cosmo=2.npz,lcfit_Union3.tar.gz}","/mnt/sn850x2t/htt_base_e2e/workdir/raw/wmap_9yr/core/wmap_ilc_9yr_v5.fits"],
+  "procedure":"Targeted header/schema reads only. No fitting, likelihood evaluation, production edit, installation, data modification, or PR4/NPIPE inspection was performed."
+}

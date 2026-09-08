@@ -1,0 +1,54 @@
+{
+  "assumptions": [],
+  "attempt": 2,
+  "capabilities": [],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-13/attempt-0002/science.json"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-13",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "capability_evidence": {},
+    "jet_status": "MISSING_RADIATION_JET",
+    "law_scope": {
+      "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+      "dataset_ids": [
+        "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+      ],
+      "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+      "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+      "method_config_id": "c131fb208df5e1dfddd6ee7e05676430ff21a423c6bdb403808729ad7633be34",
+      "method_id": "gaussian_acceptance",
+      "model_id": "RELEASED_GAUSSIAN_QISO",
+      "version": "r7.1"
+    },
+    "physical_projection": "UNDEFINED: the admitted qiso-only background law supplies no T3 radiation jet; generic same-state method verified",
+    "validation": {
+      "command": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-q",
+        "tests/r7/test_mes_region.py"
+      ],
+      "exit_code": 0,
+      "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-13/attempt-0002/validation.log",
+      "log_sha256": "c2f48776b3d719cf5090b9e3f0f78a460e95ce21a6f9ff9a7e05b2b53cad3f74",
+      "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "test_sources": {
+        "tests/r7/test_mes_region.py": "1d9ef1700b5bf191fa82887e094b15cada3779d4065197f4a88c4a03b4164132"
+      }
+    }
+  },
+  "reasons": [
+    "No supported radiation-jet law for this admitted background experiment."
+  ],
+  "scientific_outcome": "INPUT_UNAVAILABLE",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

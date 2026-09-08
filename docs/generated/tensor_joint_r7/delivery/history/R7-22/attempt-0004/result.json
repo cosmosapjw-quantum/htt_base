@@ -1,0 +1,207 @@
+{
+  "assumptions": [],
+  "attempt": 4,
+  "capabilities": [],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/science.json",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/cmb_full_tensors.png",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/orbit_intervals.png",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/packet_recovery.png",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/thermal_response.png",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/calibration_information.png",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/high_source_regions.png",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/mask_cost.png",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/mes_same_state.png",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/gaussian_calibration.png",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/depth_response.png",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/jwst_host_contrasts.png",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/desi_conditional_qiso.png"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-22",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "capability_evidence": {},
+    "figures": [
+      {
+        "caption": "PR3 measured carrier and finite FFP10 pools. Recomputed from orthonormal real harmonics. Pool densities are descriptive; no exchangeability p-value.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/cmb_full_tensors.png",
+        "result_nodes": [
+          "R7-06"
+        ],
+        "scope": "see caption",
+        "sha256": "f866f023fd428a6ddaf28806c7e008a8c000a3daef8c124f98fd73124e280317",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-06/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      },
+      {
+        "caption": "Complete row-symmetric SO(3) score intervals. Lower bounds are zero under the registered resource policy; exact outlier ranks remain unresolved. q0=o0=1e-5 K.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/orbit_intervals.png",
+        "result_nodes": [
+          "R7-11"
+        ],
+        "scope": "see caption",
+        "sha256": "8af950bcfcd78e28ebd4bf3bf440a5cb9fd2e0bc00770ab70477b05bc1b5093d",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      },
+      {
+        "caption": "Actual full-carrier chart/reconstruction replay. Every sample ID, failed and unavailable chart is retained in the source artifact. Error plot floors exact zero at 1e-20 for display only; no physical inference.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/packet_recovery.png",
+        "result_nodes": [
+          "R7-11"
+        ],
+        "scope": "see caption",
+        "sha256": "5fb39161f980b02696a6d23835548ad460d459521259442aaa76be43035eb2b3",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      },
+      {
+        "caption": "Declared absolute-temperature scenario at NSIDE64. Finite pullback followed by simultaneous fit; released component processing/covariance remains unqualified.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/thermal_response.png",
+        "result_nodes": [
+          "R7-04"
+        ],
+        "scope": "see caption",
+        "sha256": "d6d4c259e2fa3b60b0ef7aa610e8d84b514e679b45bcb99c0a26f6cabb418ac8",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-04/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      },
+      {
+        "caption": "Declared scalar Fisher scenario. At G=1/4, efficient information is 1/5. No measured CF4/JWST shared-calibration link is asserted.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/calibration_information.png",
+        "result_nodes": [
+          "R7-21"
+        ],
+        "scope": "see caption",
+        "sha256": "61980ca144e690b6d870162b263b2f28137727133dfeb89ea2bf37697f4562d2",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-21/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      },
+      {
+        "caption": "Fixed scalar scenario y=1, z=0.25. H0 quotient, H1 union over |h|<=1, H2 Gaussian marginal, H3 projection of full rank-two joint acceptance. Different laws and coverage targets remain explicit.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/high_source_regions.png",
+        "result_nodes": [
+          "R7-12"
+        ],
+        "scope": "see caption",
+        "sha256": "9a5b3fa4b0cd7fdae56f8876b8f23c02d9ed7f802a61da7f345fd88853ab8f7d",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-12/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      },
+      {
+        "caption": "Finite-band axial Y70 scenario, m=t(1+mu)^2/4. Numerical polynomial quadrature; no certified binary64 quadrature enclosure. Cost direction is along the one-column image, and unsupported directions cost infinity.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/mask_cost.png",
+        "result_nodes": [
+          "R7-12"
+        ],
+        "scope": "see caption",
+        "sha256": "092a37f4a81937a0bced8411dec5132ca201a1571d3367f84ad189711f3a6b7e",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-12/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      },
+      {
+        "caption": "First-order radiation-jet scenario and exact affine positive-denominator box relaxation. Supplied derivatives are assumptions; no physical MES bound is inferred from the observed CMB.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/mes_same_state.png",
+        "result_nodes": [
+          "R7-12"
+        ],
+        "scope": "see caption",
+        "sha256": "ba08ef35e3826c5fc911db688afd6e2166312597cd049f5a85195b4cd2e09210",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-12/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      },
+      {
+        "caption": "10000 independent trials per declared cell. Exact Gaussian law stress only; no transfer to PR3 data. Cells include mirror alternatives, singular support and rank zero; refusal rates are reported in the source record.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/gaussian_calibration.png",
+        "result_nodes": [
+          "R7-18"
+        ],
+        "scope": "see caption",
+        "sha256": "20ad2fd13213464066884482377f182e2a519e09e353bc5b424d9ec63cbaa3b6",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-18/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      },
+      {
+        "caption": "Flat FLRW Omega_m=.3,H0=70 low-speed scenario. Singular spectra use the declared unweighted design and a constant nuisance; these are not measured catalogue information.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/depth_response.png",
+        "result_nodes": [
+          "R7-14"
+        ],
+        "scope": "see caption",
+        "sha256": "af4948b5e4633a87a91d27b145d22e61ac08d2d75ac89ba42b5b92848e7e8d1e",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-14/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      },
+      {
+        "caption": "Source-member-verified host differences. Dashed offsets assume independent quoted Gaussian errors; shared covariance is unprovided, so these are scenario fits and no geometry amplitude is identified.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/jwst_host_contrasts.png",
+        "result_nodes": [
+          "R7-09"
+        ],
+        "scope": "see caption",
+        "sha256": "0ddd699afdcacd4539fc080eb3559d59763ab7d4be0f3ee35d39332d8946b09e",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-09/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      },
+      {
+        "caption": "Official syst compressed likelihood, one scalar datum and its released covariance/window. Confidence is conditional on the fixed released Gaussian summary law; true raw-catalogue coverage and anisotropic response are unverified.",
+        "owner": "HTT/MIO projection consumer",
+        "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/desi_conditional_qiso.png",
+        "result_nodes": [
+          "R7-19"
+        ],
+        "scope": "see caption",
+        "sha256": "f2af94ab1c21fac4ac0442050de384c03c8885df6ac45026a1774da1bcec4043",
+        "source_result_files": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-19/attempt-0002/science.json"
+        ],
+        "visual_review": "PENDING"
+      }
+    ],
+    "manifest": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-22/attempt-0004/figure_manifest.json",
+    "render_status": "EXECUTED",
+    "unavailable_figure_roles": [],
+    "visual_audit": "PENDING"
+  },
+  "reasons": [
+    "Rendered figures require the separately recorded visual and source audit before figure-review capability."
+  ],
+  "scientific_outcome": "NOT_EVALUATED",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

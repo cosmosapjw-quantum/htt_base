@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+__ ERROR collecting tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py ___
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py:12: in <module>
+    from common.anchor_geometry import (
+E   ModuleNotFoundError: No module named 'common.anchor_geometry'
+=========================== short test summary info ============================
+ERROR tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.16s

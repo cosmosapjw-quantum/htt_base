@@ -1,0 +1,19 @@
+{
+  "assumptions": [],
+  "attempt": 1,
+  "capabilities": [],
+  "evidence": [],
+  "next_discriminator": null,
+  "node_id": "R7-22",
+  "process_status": "COMPLETED_FAILED_WITH_RECEIPT",
+  "product_results": {
+    "exception": "Traceback (most recent call last):\n  File \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/scripts/observed_runs/run_r7_campaign.py\", line 57, in settle_node\n    result=execute(node,results)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/scripts/observed_runs/run_tensor_joint_r7.py\", line 431, in figures\n    products=render_figures(node['_attempt_dir'],results)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/scripts/observed_runs/r7_report.py\", line 29, in render_figures\n    axs[1].scatter(np.linalg.norm(q[1:],axis=(1,2))*1e6,np.linalg.norm(o[1:],axis=(1,2,3))*1e6,s=3,alpha=.35,label=name)\n                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/numpy/linalg/_linalg.py\", line 2855, in norm\n    raise ValueError(\"Improper number of dimensions to norm.\")\nValueError: Improper number of dimensions to norm.\n"
+  },
+  "reasons": [
+    "ValueError: Improper number of dimensions to norm."
+  ],
+  "scientific_outcome": "VALIDATION_FAILED",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

@@ -1,0 +1,72 @@
+........................F...........................................     [100%]
+=================================== FAILURES ===================================
+_______ test_student_measurement_gaussian_host_enlarges_singular_support _______
+
+    def test_student_measurement_gaussian_host_enlarges_singular_support():
+        from scipy.stats import norm,t
+        pair=HostPair('family','host','A',.1,1.,'B',.123,0.)
+        p=dict(product_id='jwst',source_id='table',selection_id='fixed',pairs=[pair],measurement_mode='ABSOLUTE')
+        c=dict(matrix=np.diag([1.,0.]),source_id='known scale',measurement_ids=('family:host:A','family:host:B'))
+        cal=dict(source_id='known host',host_population_covariance=[[.25]],design=np.ones((2,1)),parameter_names=('mu',),
+            parameter_units=('mag',),measurement_df=5.,quadrature_order=128)
+>       law=build_jwst_law(p,c,cal,'STUDENT_T')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_catalogue_laws.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+htt/htt/htt/infer/r7_jwst_law.py:83: in build_jwst_law
+    return JointObservationLaw(scope,y,measurement_ids,names,units,lambda t,e:design@finite_array(t,shape=(len(names),)),
+<string>:21: in __init__
+    ???
+htt/htt/htt/infer/r7_gaussian_law.py:219: in __post_init__
+    object.__setattr__(self,"_execution_seal",self.execution_identity)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^
+htt/htt/htt/infer/r7_gaussian_law.py:223: in execution_identity
+    return content_id(_execution_state((self.mean,self.covariance,self.domain_contains,self.log_density,self.jacobian_theta,self.jacobian_eta)))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+htt/src/common/r7_contracts.py:58: in content_id
+    data = json.dumps(json_value(value), sort_keys=True, separators=(",",":"),
+                      ^^^^^^^^^^^^^^^^^
+htt/src/common/r7_contracts.py:53: in json_value
+    if isinstance(value, (list,tuple)): return [json_value(v) for v in value]
+                                                ^^^^^^^^^^^^^
+htt/src/common/r7_contracts.py:52: in json_value
+    if isinstance(value, dict): return {str(k): json_value(v) for k,v in value.items()}
+                                                ^^^^^^^^^^^^^
+htt/src/common/r7_contracts.py:52: in json_value
+    if isinstance(value, dict): return {str(k): json_value(v) for k,v in value.items()}
+                                                ^^^^^^^^^^^^^
+htt/src/common/r7_contracts.py:52: in json_value
+    if isinstance(value, dict): return {str(k): json_value(v) for k,v in value.items()}
+                                                ^^^^^^^^^^^^^
+htt/src/common/r7_contracts.py:52: in json_value
+    if isinstance(value, dict): return {str(k): json_value(v) for k,v in value.items()}
+                                                ^^^^^^^^^^^^^
+htt/src/common/r7_contracts.py:52: in json_value
+    if isinstance(value, dict): return {str(k): json_value(v) for k,v in value.items()}
+                                                ^^^^^^^^^^^^^
+htt/src/common/r7_contracts.py:52: in json_value
+    if isinstance(value, dict): return {str(k): json_value(v) for k,v in value.items()}
+                                                ^^^^^^^^^^^^^
+htt/src/common/r7_contracts.py:52: in json_value
+    if isinstance(value, dict): return {str(k): json_value(v) for k,v in value.items()}
+                                                ^^^^^^^^^^^^^
+htt/src/common/r7_contracts.py:52: in json_value
+    if isinstance(value, dict): return {str(k): json_value(v) for k,v in value.items()}
+                                                ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = nan
+
+    def json_value(value):
+        if isinstance(value, np.ndarray): return json_value(value.tolist())
+        if isinstance(value, np.generic): return json_value(value.item())
+        if isinstance(value,float) and not math.isfinite(value):
+>           if math.isnan(value): raise ValueError("NaN cannot be a scientific result")
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: NaN cannot be a scientific result
+
+htt/src/common/r7_contracts.py:48: ValueError
+=========================== short test summary info ============================
+FAILED tests/r7/test_catalogue_laws.py::test_student_measurement_gaussian_host_enlarges_singular_support
+1 failed, 67 passed in 4.08s

@@ -1,0 +1,119 @@
+{
+  "assumptions": [],
+  "attempt": 1,
+  "capabilities": [
+    "DONOR_TENSOR",
+    "DONOR_BOOST",
+    "DONOR_GF",
+    "DONOR_CF4",
+    "DONOR_DESI",
+    "DONOR_JWST",
+    "DONOR_ANCHOR",
+    "DONOR_KRYLOV"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0001/science.json"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-02",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "capability_evidence": {
+      "DONOR_ANCHOR": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0001/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      },
+      "DONOR_BOOST": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0001/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      },
+      "DONOR_CF4": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0001/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      },
+      "DONOR_DESI": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0001/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      },
+      "DONOR_GF": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0001/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      },
+      "DONOR_JWST": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0001/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      },
+      "DONOR_KRYLOV": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0001/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      },
+      "DONOR_TENSOR": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0001/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      }
+    },
+    "historical_wrapper_failures": "See preserved donors_dependencies.log: selected science tested independently of old PR publication dispatch.",
+    "target_imports": {
+      "common.anchor_geometry": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/anchor_geometry.py",
+      "common.mes_krylov_completion": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/mes_krylov_completion.py",
+      "obsstat.boost_response": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/boost_response.py",
+      "obsstat.cf4_current_stack": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/cf4_current_stack.py",
+      "obsstat.desi_successor_formalism": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/desi_successor_formalism.py",
+      "obsstat.jwst_distance_consistency": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/jwst_distance_consistency.py"
+    },
+    "validation": {
+      "command": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-q",
+        "tests/r7/test_source_composition.py",
+        "tests/common/test_mes_krylov_completion.py",
+        "htt/test_wu010_audit_closure.py",
+        "htt/test_wu011_task7c_error_envelope.py",
+        "tests/obsstat/test_mes_directional_moments.py",
+        "tests/common/test_mes_directional_state.py",
+        "tests/r7/test_catalogue_laws.py",
+        "tests/r7/test_mes_region.py"
+      ],
+      "exit_code": 0,
+      "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0001/validation.log",
+      "log_sha256": "1e452d7d9b24f3fefe90c1fbb9b1d4006e5c6ddfcfcca508a427074a2d432d6d",
+      "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "test_sources": {
+        "htt/test_wu010_audit_closure.py": "6434b04514621b7774c0428cdc0aa10d5b2c860699cbdea49d8e8aa388e64f87",
+        "htt/test_wu011_task7c_error_envelope.py": "9ab66064b257bd16ac5533a097936faee7c34bae4618dcebcc260e718763c4ac",
+        "tests/common/test_mes_directional_state.py": "f4271fc66f379f1b119ec65edae1fb1a27e9a52dd92d609789ecef8083f9c0b3",
+        "tests/common/test_mes_krylov_completion.py": "108de5f19f58e23f322a9be92d8c6c1e1cb897c4821d1ac063ffa67dd2233a2d",
+        "tests/obsstat/test_mes_directional_moments.py": "4b5a78fa762a98118d1a0a4fe0212567bf0624e2d25587255ae6f956963205dc",
+        "tests/r7/test_catalogue_laws.py": "b4a93be088651d940810cd06a48dfe674168b0e0cf55c0ec8654de1525d8791a",
+        "tests/r7/test_mes_region.py": "1d9ef1700b5bf191fa82887e094b15cada3779d4065197f4a88c4a03b4164132",
+        "tests/r7/test_source_composition.py": "b2713ed0216ddff535f18ba5146551000ff0b6d68e56c1ca1023a9719c604a34"
+      }
+    }
+  },
+  "reasons": [],
+  "scientific_outcome": "NOT_EVALUATED",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

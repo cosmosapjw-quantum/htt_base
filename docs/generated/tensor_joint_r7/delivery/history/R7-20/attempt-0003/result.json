@@ -1,0 +1,102 @@
+{
+  "assumptions": [],
+  "attempt": 3,
+  "capabilities": [
+    "NEGATIVE_RESULTS"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-20/attempt-0003/science.json"
+  ],
+  "next_discriminator": "Supply the exact full CF4 group covariance and sampling-law sidecar; this enables an independent conditional affine branch.",
+  "node_id": "R7-20",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "capability_evidence": {
+      "NEGATIVE_RESULTS": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-20/attempt-0003/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      }
+    },
+    "negative_and_unresolved": [
+      {
+        "capabilities": [],
+        "evidence": [],
+        "node_id": "R7-16",
+        "process_status": "BLOCKED_WITH_RECEIPT",
+        "reasons": [
+          "no satisfied capability route"
+        ],
+        "scientific_outcome": "INPUT_UNAVAILABLE"
+      },
+      {
+        "capabilities": [
+          "CF4_RECORDS"
+        ],
+        "evidence": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0003/science.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0003/cf4_table2.npz",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0003/cf4_table3.npz",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0003/cf4_table4.npz"
+        ],
+        "node_id": "R7-07",
+        "process_status": "COMPLETED_SUCCESS",
+        "reasons": [],
+        "scientific_outcome": "INPUT_UNAVAILABLE"
+      },
+      {
+        "capabilities": [],
+        "evidence": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-15/attempt-0003/science.json"
+        ],
+        "node_id": "R7-15",
+        "process_status": "COMPLETED_SUCCESS",
+        "reasons": [],
+        "scientific_outcome": "INPUT_UNAVAILABLE"
+      },
+      {
+        "capabilities": [
+          "SHAPE_METHOD"
+        ],
+        "evidence": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/science.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/paired300_scores.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/paired300_packet_recovery.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/cmbonly999_scores.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/cmbonly999_packet_recovery.json"
+        ],
+        "node_id": "R7-11",
+        "process_status": "COMPLETED_SUCCESS",
+        "reasons": [],
+        "scientific_outcome": "NUMERICALLY_UNRESOLVED"
+      },
+      {
+        "capabilities": [],
+        "evidence": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-13/attempt-0003/science.json"
+        ],
+        "node_id": "R7-13",
+        "process_status": "COMPLETED_SUCCESS",
+        "reasons": [
+          "No supported radiation-jet law for this admitted background experiment."
+        ],
+        "scientific_outcome": "INPUT_UNAVAILABLE"
+      }
+    ],
+    "next_discriminator": "Supply the exact full CF4 group covariance and sampling-law sidecar; this enables an independent conditional affine branch.",
+    "scope_limits": [
+      "No native Bianchi family identification",
+      "No true PR3 product likelihood or exchangeable full-shape rank calibration",
+      "No full CF4 covariance",
+      "JWST cross-method/host covariance missing",
+      "R3 review87 source absent",
+      "External reference transfer absent"
+    ]
+  },
+  "reasons": [],
+  "scientific_outcome": "NOT_EVALUATED",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

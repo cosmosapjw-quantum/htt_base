@@ -1,0 +1,274 @@
+{
+  "assumptions": [],
+  "attempt": 1,
+  "capabilities": [
+    "ALGEBRA_VERIFIED",
+    "FOUR_AXIS_CAS",
+    "CONTINUUM_CERTIFIED"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-01/attempt-0001/science.json",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/cas_adjudication.json",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/docs/generated/tensor_joint_r7/axial_certificate_source.json"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-01",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "accepted_certificate": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/docs/generated/tensor_joint_r7/axial_certificate_source.json",
+    "capability_evidence": {
+      "ALGEBRA_VERIFIED": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-01/attempt-0001/science.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/cas_adjudication.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/docs/generated/tensor_joint_r7/axial_certificate_source.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      },
+      "CONTINUUM_CERTIFIED": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-01/attempt-0001/science.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/cas_adjudication.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/docs/generated/tensor_joint_r7/axial_certificate_source.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      },
+      "FOUR_AXIS_CAS": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-01/attempt-0001/science.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/cas_adjudication.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/docs/generated/tensor_joint_r7/axial_certificate_source.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      }
+    },
+    "cas": {
+      "adjudicated_at": "2026-09-08T12:21:46+00:00",
+      "aggregate_status": "CAS_4AXIS_PASS",
+      "axis_statuses": {
+        "lean": "PASS",
+        "sage_singular": "PASS",
+        "sympy": "PASS",
+        "wolfram_xact": "PASS"
+      },
+      "claim_promotion_cas_eligible": true,
+      "claim_promotion_cas_requirement": "SATISFIED",
+      "contract_id": "R7-ELEMENTARY-AND-EXTENDED-IMPLICATIONS",
+      "contract_sha256": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2",
+      "errors": [],
+      "evidence_origin": "runner_observed_local_subprocess",
+      "exceptions_applied": [],
+      "execution_evidence": {
+        "lean": {
+          "argv": [
+            "python3",
+            ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/run_axis.py"
+          ],
+          "axis": "lean",
+          "completed_at": "2026-09-08T12:21:46+00:00",
+          "cwd": ".",
+          "derived_status": "PASS",
+          "errors": [],
+          "evidence_origin": "runner_observed_local_subprocess",
+          "exit_code": 0,
+          "payload": {
+            "checks": {
+              "L10_accepted_minors_and_minimal_cutoff": true,
+              "T1_no_proper_signed_stabilizer": true,
+              "T1_trace_and_contraction": true,
+              "T3_normalized_derivative_and_odd_signs": true,
+              "T5_first_order_inverse_coefficient": true,
+              "T5_scalar_cost_implication": true,
+              "T6_scalar_information_one_fifth": true
+            },
+            "counterexample": null,
+            "domain_assumption_diff": []
+          },
+          "preflight_probe": {
+            "commands": [
+              {
+                "cmd": "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 lean --version",
+                "exit": 0
+              }
+            ],
+            "pinned_toolchain": "leanprover/lean4:v4.31.0",
+            "status": "PASS",
+            "transcript_tail": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n"
+          },
+          "solver_executed": true,
+          "started_at": "2026-09-08T12:21:41+00:00",
+          "stderr_tail": "",
+          "stdout_tail": "{\"checks\":{\"T1_trace_and_contraction\":true,\"T1_no_proper_signed_stabilizer\":true,\"T3_normalized_derivative_and_odd_signs\":true,\"T5_first_order_inverse_coefficient\":true,\"T5_scalar_cost_implication\":true,\"T6_scalar_information_one_fifth\":true,\"L10_accepted_minors_and_minimal_cutoff\":true},\"domain_assumption_diff\":[],\"counterexample\":null}\n",
+          "timed_out": false,
+          "timeout_seconds": 120
+        },
+        "sage_singular": {
+          "argv": [
+            "/usr/local/bin/sage",
+            "-python",
+            ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verify.py"
+          ],
+          "axis": "sage_singular",
+          "completed_at": "2026-09-08T12:21:41+00:00",
+          "cwd": ".",
+          "derived_status": "PASS",
+          "errors": [],
+          "evidence_origin": "runner_observed_local_subprocess",
+          "exit_code": 0,
+          "payload": {
+            "checks": {
+              "L10_accepted_minors_and_minimal_cutoff": true,
+              "T1_no_proper_signed_stabilizer": true,
+              "T1_trace_and_contraction": true,
+              "T3_normalized_derivative_and_odd_signs": true,
+              "T5_first_order_inverse_coefficient": true,
+              "T5_scalar_cost_implication": true,
+              "T6_scalar_information_one_fifth": true
+            },
+            "counterexample": null,
+            "domain_assumption_diff": []
+          },
+          "preflight_probe": {
+            "commands": [
+              {
+                "cmd": "sage -c <exact factor + singular version probe>",
+                "exit": 0
+              }
+            ],
+            "status": "PASS",
+            "transcript_tail": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n"
+          },
+          "solver_executed": true,
+          "started_at": "2026-09-08T12:21:37+00:00",
+          "stderr_tail": "",
+          "stdout_tail": "{\"checks\":{\"T1_trace_and_contraction\":true,\"T1_no_proper_signed_stabilizer\":true,\"T3_normalized_derivative_and_odd_signs\":true,\"T5_first_order_inverse_coefficient\":true,\"T5_scalar_cost_implication\":true,\"T6_scalar_information_one_fifth\":true,\"L10_accepted_minors_and_minimal_cutoff\":true},\"domain_assumption_diff\":[],\"counterexample\":null}\n",
+          "timed_out": false,
+          "timeout_seconds": 120
+        },
+        "sympy": {
+          "argv": [
+            "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+            ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/verify.py"
+          ],
+          "axis": "sympy",
+          "completed_at": "2026-09-08T12:21:30+00:00",
+          "cwd": ".",
+          "derived_status": "PASS",
+          "errors": [],
+          "evidence_origin": "runner_observed_local_subprocess",
+          "exit_code": 0,
+          "payload": {
+            "checks": {
+              "L10_accepted_minors_and_minimal_cutoff": true,
+              "T1_no_proper_signed_stabilizer": true,
+              "T1_trace_and_contraction": true,
+              "T3_normalized_derivative_and_odd_signs": true,
+              "T5_first_order_inverse_coefficient": true,
+              "T5_scalar_cost_implication": true,
+              "T6_scalar_information_one_fifth": true
+            },
+            "counterexample": null,
+            "domain_assumption_diff": []
+          },
+          "preflight_probe": {
+            "commands": [
+              {
+                "cmd": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python -c <sympy exact factor probe>",
+                "exit": 0
+              }
+            ],
+            "status": "PASS",
+            "transcript_tail": "1.14.0\n"
+          },
+          "solver_executed": true,
+          "started_at": "2026-09-08T12:21:29+00:00",
+          "stderr_tail": "",
+          "stdout_tail": "{\"checks\": {\"L10_accepted_minors_and_minimal_cutoff\": true, \"T1_no_proper_signed_stabilizer\": true, \"T1_trace_and_contraction\": true, \"T3_normalized_derivative_and_odd_signs\": true, \"T5_first_order_inverse_coefficient\": true, \"T5_scalar_cost_implication\": true, \"T6_scalar_information_one_fifth\": true}, \"counterexample\": null, \"domain_assumption_diff\": []}\n",
+          "timed_out": false,
+          "timeout_seconds": 120
+        },
+        "wolfram_xact": {
+          "argv": [
+            "python3",
+            ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/wolfram_xact/run_axis.py"
+          ],
+          "axis": "wolfram_xact",
+          "completed_at": "2026-09-08T12:21:29+00:00",
+          "cwd": ".",
+          "derived_status": "PASS",
+          "errors": [],
+          "evidence_origin": "runner_observed_local_subprocess",
+          "exit_code": 0,
+          "payload": {
+            "checks": {
+              "L10_accepted_minors_and_minimal_cutoff": true,
+              "T1_no_proper_signed_stabilizer": true,
+              "T1_trace_and_contraction": true,
+              "T3_normalized_derivative_and_odd_signs": true,
+              "T5_first_order_inverse_coefficient": true,
+              "T5_scalar_cost_implication": true,
+              "T6_scalar_information_one_fifth": true
+            },
+            "counterexample": null,
+            "domain_assumption_diff": []
+          },
+          "preflight_probe": {
+            "commands": [
+              {
+                "cmd": "wolframscript -code <version+xAct probe>",
+                "exit": 0
+              }
+            ],
+            "status": "PASS",
+            "transcript_tail": "---------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nXACT_LOAD_OK\n"
+          },
+          "solver_executed": true,
+          "started_at": "2026-09-08T12:21:24+00:00",
+          "stderr_tail": "",
+          "stdout_tail": " {}}}\", \"proof_scope\": \"Free associative algebra through first order; two-sided inverse coefficient unique when inverse exists at t=0. No entrywise commutativity assumption.\", \"right_product_mod_t2\": \"{{1, {}}}\"}, \"T5_scalar_cost_implication\": {\"claim\": \"Every cancellant obeys the lower bound, hence its minimum/infimum does; K=0 or f=0 with d!=0 is infeasible by the norm premise.\", \"counterexample_set\": \"False\", \"denominator_conditions\": \"0<f<1/36, c>0; d>0; h and k nonnegative norms\"}, \"T6_scalar_information_one_fifth\": {\"E\": 1, \"G\": \"1/4\", \"U\": 1, \"V\": 1, \"claim_scope\": \"Fixed scalar Schur-complement example only\", \"gain\": \"1/5\", \"information_after\": \"1/5\", \"information_before\": \"0\"}}, \"exact_symbolic\": true, \"execution_receipt\": {\"argv\": [\"/usr/bin/wolframscript\", \"-file\", \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/wolfram_xact/verify.wl\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree\", \"returncode\": 0, \"source_sha256\": \"1dbea3d0d8748fe9a6bafeaf0e2c0c94b53c6006ab89faaa4fb3d12bc8cf4730\", \"stderr_path\": \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/wolfram_xact/20260908T122124-1332914.stderr.log\", \"stdout_path\": \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/wolfram_xact/20260908T122124-1332914.stdout.log\", \"wall_seconds\": 4.742118258960545}, \"high_precision_numeric_status\": \"Not needed: all fixed values and witnesses evaluated exactly; no float acceptance.\", \"rules\": \"Exact rational arithmetic, FullSimplify with explicitly positive T, xAct ToCanonical and parameter derivative, real Reduce, finite enumeration, free noncommutative word algebra.\", \"toolchain\": {\"wolfram\": \"15.0.0 for Linux x86 (64-bit) (May 26, 2026)\", \"xPerm\": \"1.2.4\", \"xTensor\": \"1.3.0\", \"xTensor_file\": \"/home/cosmosapjw/.WolframEngine/Applications/xAct/xTensor/Kernel/init.m\"}}\n",
+          "timed_out": false,
+          "timeout_seconds": 120
+        }
+      },
+      "missing_axes": [],
+      "note": "CAS_4AXIS_PASS requires all 4 contract-required axes to satisfy the risk-scaled contract under one contract hash; majority vote is structurally forbidden. Runner observation establishes only the CAS evidence component; it does not establish scientific validity, novelty, or overall claim readiness. Local observation is not a security attestation.",
+      "required_axes": [
+        "wolfram_xact",
+        "sympy",
+        "sage_singular",
+        "lean"
+      ],
+      "risk_tier": "R3",
+      "schema_version": 2,
+      "verification_state": "RUNNER_OBSERVED_EXECUTION"
+    },
+    "cas_scope": "Seven fixed algebra/certificate implications only; no empirical/physical closure or full continuum operator recomputation",
+    "mask_status": "FINITE_MATRIX_IDENTITY_VERIFIED; continuum norm theorem proof uses stated sup norm; pixel error certificate unavailable",
+    "validation": {
+      "command": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-q",
+        "tests/r7/test_conventions.py",
+        "tests/r7/test_extended_algebra.py"
+      ],
+      "exit_code": 0,
+      "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-01/attempt-0001/validation.log",
+      "log_sha256": "54d40dbee6995789752d47c46179170d99b592a0ea1b748f036b3c5c78fa5394",
+      "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "test_sources": {
+        "tests/r7/test_conventions.py": "d66b8886f9f74a4c6d0edece0f81579095e528a9f1395351bdb7d6d525b0c821",
+        "tests/r7/test_extended_algebra.py": "74798731c1ae4a1b1b45e22ad132c4056518083bf7e075bcd8db4bf914f87d4d"
+      }
+    }
+  },
+  "reasons": [],
+  "scientific_outcome": "NOT_EVALUATED",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

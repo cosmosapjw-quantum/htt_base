@@ -1,0 +1,141 @@
+{
+  "assumptions": [],
+  "attempt": 1,
+  "capabilities": [
+    "ADMITTED_EXPERIMENTS",
+    "SUBSET_LAWS"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-10/attempt-0001/science.json"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-10",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "P0_P1_before_provider_execution": {
+      "coefficients": [
+        -0.01711955831609735
+      ],
+      "design_id": "RELEASED_QISO_SCALAR_COLUMN",
+      "p0": {
+        "accepted": true,
+        "inside_support": true,
+        "numeric_status": "RESOLVED",
+        "quadratic": 0.838550365535873,
+        "rank": 1,
+        "threshold": 3.841458820694124
+      },
+      "p1": {
+        "accepted": true,
+        "inside_support": true,
+        "numeric_status": "RESOLVED",
+        "quadratic": 0.0,
+        "rank": 1,
+        "threshold": 3.841458820694124
+      },
+      "p1_nonidentified_directions": [
+        []
+      ],
+      "parameter_labels": [
+        "delta_qiso"
+      ],
+      "physical_interpretation": "fixed observational columns; no Bianchi family attribution",
+      "scope": "8d61f90dd73a57078922450845b7692a6bcb1b2523fcc27470749ab84004d928",
+      "status": "OBSERVATION_SPACE_COMPARISON",
+      "uncertainty": "full residual acceptance rank; no Wilks subtraction"
+    },
+    "admitted_laws": [
+      {
+        "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+        "dataset_ids": [
+          "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+        ],
+        "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+        "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+        "method_config_id": "c131fb208df5e1dfddd6ee7e05676430ff21a423c6bdb403808729ad7633be34",
+        "method_id": "gaussian_acceptance",
+        "model_id": "RELEASED_GAUSSIAN_QISO",
+        "version": "r7.1"
+      }
+    ],
+    "capability_evidence": {
+      "ADMITTED_EXPERIMENTS": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-10/attempt-0001/science.json"
+        ],
+        "scope": {
+          "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+          "dataset_ids": [
+            "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+          ],
+          "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+          "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+          "method_config_id": "c131fb208df5e1dfddd6ee7e05676430ff21a423c6bdb403808729ad7633be34",
+          "method_id": "gaussian_acceptance",
+          "model_id": "RELEASED_GAUSSIAN_QISO",
+          "version": "r7.1"
+        }
+      },
+      "SUBSET_LAWS": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-10/attempt-0001/science.json"
+        ],
+        "scope": {
+          "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+          "dataset_ids": [
+            "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+          ],
+          "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+          "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+          "method_config_id": "c131fb208df5e1dfddd6ee7e05676430ff21a423c6bdb403808729ad7633be34",
+          "method_id": "gaussian_acceptance",
+          "model_id": "RELEASED_GAUSSIAN_QISO",
+          "version": "r7.1"
+        }
+      }
+    },
+    "conditioning_target": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+    "fixed_family_alpha_allocation": {
+      "DESI_COMPRESSED": 0.05
+    },
+    "joint_components": 1,
+    "partition_law_count": 1,
+    "scope": {
+      "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+      "dataset_ids": [
+        "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+      ],
+      "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+      "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+      "method_config_id": "c131fb208df5e1dfddd6ee7e05676430ff21a423c6bdb403808729ad7633be34",
+      "method_id": "gaussian_acceptance",
+      "model_id": "RELEASED_GAUSSIAN_QISO",
+      "version": "r7.1"
+    },
+    "unresolved_cross_links": "No calibrated CF4/JWST/CMB marginal law; no product multiplication",
+    "validation": {
+      "command": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-q",
+        "tests/r7/test_joint_experiment.py"
+      ],
+      "exit_code": 0,
+      "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-10/attempt-0001/validation.log",
+      "log_sha256": "6abad1658387cd3a04620f2c53625edd73095251f681f43bec807a97b68ee2e7",
+      "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "test_sources": {
+        "tests/r7/test_joint_experiment.py": "afc9a6ac0940276a76dd9ec5987a7be25a8732e421df0ba971c09f1009312f2d"
+      }
+    }
+  },
+  "reasons": [],
+  "scientific_outcome": "CONDITIONAL_BOUND",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

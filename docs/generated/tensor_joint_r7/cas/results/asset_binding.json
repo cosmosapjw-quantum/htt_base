@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "run_id": "TENSOR-JOINT-R7-20260908",
+  "assignment_id": "asset_binding",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "status": "pass",
+  "claim_ids": ["RUN-TENSOR-JOINT-R7-20260908-V00"],
+  "product_evidence_map": [
+    {
+      "product_key": "cf4_catalogue_and_group_inputs",
+      "locator": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/{ReadMe,table2.dat,table3.dat,table4.dat}",
+      "existing_producer": "CDS catalogue J/ApJ/944/94 (Tully et al. 2023), as identified by raw/cf4_full/ReadMe",
+      "observed_binding": "ReadMe identifies table2 as 55,877 individual-galaxy distances, table3 as 38,053 group distances, and table4 as 38,053 group distances plus peculiar velocities.",
+      "law_status": "UNAVAILABLE_PRODUCT_OR_LAW",
+      "limitations": ["The inspected catalogue header describes per-row/group uncertainties but supplies no full catalogue covariance or normalized selection likelihood.", "A full-covariance/group-calibration law must be separately bound before likelihood use.", "Existing design consumer is htt/obsstat/cf4_current_stack.py::Cf4OperatorInputs/build_cf4_affine_design/analyze_cf4_current_stack (REUSE_MAP), but its design is not a substitute for the missing law."],
+      "evidence": [{"path":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/ReadMe","sha256":"2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4","locator":"File Summary and table field documentation"}]
+    },
+    {
+      "product_key": "cf4_reconstruction_control",
+      "locator": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4/CF4pp_mean_std_grids.npz",
+      "existing_producer": "Inventory asset cf4, described as Cosmicflows-4 reconstruction input",
+      "law_status": "CONTROL_ONLY",
+      "limitations": ["This is a compact reconstruction product rather than an independently inspected raw-observation likelihood.", "It shares catalogue/prior ancestry and cannot be multiplied as independent grid-cell evidence."],
+      "evidence": [{"path":"/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv","locator":"asset row cf4"}]
+    },
+    {
+      "product_key": "jwst_host_method_rows",
+      "locator": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/jwst_anchors/jwst_anchors_manifest.json; /mnt/sn850x2t/htt_base_e2e/workdir/raw/jwst_sn/cchp_jagb_zenodo_14502265/CCHP-JAGB-v1.zip",
+      "existing_producer": "jwst_anchors_manifest.json records source-table ingestion for CCHP Freedman 2025, SH0ES Riess 2025, Li 2024/2025, and Riess 2024; CCHP ZIP holds per-host CSV members.",
+      "observed_binding": "Manifest records checked source-table members, archive/member hashes, and source-checked comparison/aggregate CSV hashes. The CCHP archive contains README plus host-specific CSV files.",
+      "law_status": "UNAVAILABLE_PRODUCT_OR_LAW",
+      "limitations": ["The inspected manifest verifies source transcription and row-level uncertainties; it does not itself establish a joint CCHP--SH0ES covariance or authenticated CF4 overlap identity.", "Use as host-method contrast conditional on explicit shared-calibration/covariance handling; no positional identity inference."],
+      "existing_consumer": "htt/htt/htt/infer/jwst_host_hierarchy.py::{HostPair,contrast_covariance,gaussian_hierarchical_posterior,student_t_hierarchical_posterior} and htt/obsstat/jwst_distance_consistency.py::{build_pr309_inputs,analyze_pr309_current_stack} (REUSE_MAP).",
+      "evidence": [{"path":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/jwst_anchors/jwst_anchors_manifest.json","sha256":"37e828156d1b4408cc99e1121cd88eacfa3e08cbbd7fc5fcab25be18187b500f","locator":"fetched/transcription_receipts"},{"path":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/jwst_sn/cchp_jagb_zenodo_14502265/SOURCE.txt","locator":"Zenodo DOI and source URL"}]
+    },
+    {
+      "product_key": "desi_bgs_bright_observed_mock_law",
+      "locator": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks/observed/v1.5/BGS_BRIGHT-21.5_{NGC,SGC}_clustering.dat.fits; /mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks/desi_dr1_mock_acquisition_manifest.json",
+      "existing_producer": "DL_PIPELINE acquisition manifest, with official DESI DR1 LSS v1.5 source; DESI full-shape v1.2 checksum manifest separately binds BGS_BRIGHT likelihood HDF5 payloads.",
+      "observed_binding": "Manifest declares authenticated observed BGS_BRIGHT-21.5 NGC/SGC data and randoms, z=[0.1,0.4], WEIGHT, ICRS RA/Dec, 25 Abacus plus 1000 EZmock expected/authenticated members, and frozen random-replication registry.",
+      "law_status": "UNAVAILABLE_PRODUCT_OR_LAW",
+      "limitations": ["The acquired mock/selection evidence supports a product-specific conditional/mock law only after the R7 consumer fixes the exact count vector, cap/depth binning, weights and nuisance refit.", "Do not reuse raw/desi BGS_ANY as BGS_BRIGHT.", "HDF5 internal metadata was not inspected because h5py is unavailable in this environment; the published local SHA256 manifest binds filenames/bytes, not a R7 likelihood conclusion."],
+      "existing_consumer": "htt/obsstat/desi_successor_formalism.py::{DESISelection,DESIRealization,fit_realization,build_mock_support,evaluate_response_rank} (REUSE_MAP).",
+      "evidence": [{"path":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks/desi_dr1_mock_acquisition_manifest.json","sha256":"fdd576c8e80532dabe10b8e2220ff9e1cb18296257b9da20614e8a40f31c3385","locator":"observed, authenticated_counts, extraction_config, random_replication_registry"},{"path":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/dr1_vac_dr1_full-shape-bao-clustering_v1.0_data_v12_likelihood.sha256sum","sha256":"79be8c9fd2899516398518df150e854ac5a1dc6e5a3a3f4a991a4412e3f8c64c","locator":"BGS_BRIGHT-21.5 likelihood file entries"}]
+    },
+    {
+      "product_key": "cmb_smica_carrier_and_uncertainty",
+      "locator": "/mnt/sn850x2t/htt_base_e2e/workdir/compact_products/planck_pr3_smica_pr314/{smica_existing_plan.json,components/*}; /mnt/sn850x2t/htt_base_e2e/workdir/htt_extracted/planck_smica_map_nside16.npz",
+      "existing_producer": "SMICA existing-plan carrier; upstream observed map points to Planck PR3 R3.00 and null bank to FFP10 v3.",
+      "observed_binding": "Plan declares Galactic/RING nside=16, microK_CMB, l=2..5, 12 named features, 300 paired FFP10 CMB+noise null rows, source map/mask paths, and component hashes. Extracted carrier has I/Q/U, nside, original nside, npix, unit, and source fields.",
+      "law_status": "UNAVAILABLE_PRODUCT_OR_LAW",
+      "limitations": ["Covariance condition basis is DIAGONAL_STANDARDIZED and joint covariance is explicitly NOT_APPLICABLE_SMICA_ONLY.", "Observed statistic was not opened/seen by the plan; Commander robustness is NOT_EVALUATED. This supports only the named SMICA conditional feature/null lane, not a joint independent-map likelihood."],
+      "existing_consumer": "scripts/observed_runs/rebuild_mes_tensor_carriers.py::{harmonic_stf_matrices,project_carrier} (REUSE_MAP).",
+      "evidence": [{"path":"/mnt/sn850x2t/htt_base_e2e/workdir/compact_products/planck_pr3_smica_pr314/smica_existing_plan.json","sha256":"f9c9bb217e771017a8574a4e86cca2294dfdd70c3d3487616f624d819b8bf5bc","locator":"components, null_semantics, covariance condition, observed source"},{"path":"/mnt/sn850x2t/htt_base_e2e/workdir/compact_products/planck_pr3_smica_pr314/components/smica_existing_selection.json","locator":"feature IDs and FFP10 paired-by-ID semantics"}]
+    },
+    {
+      "product_key": "external_transfer_and_review87_candidates",
+      "locator": "/mnt/sn850x2t/htt_base_e2e/workdir/external_fusion_round3/src/htt_ext/lowell/transfer.py",
+      "existing_producer": "external_fusion_round3 ShellTransferKernel/integrate_kernel_on_edges source",
+      "law_status": "CONTROL_ONLY",
+      "limitations": ["The selected source is a typed sampled-kernel shell integrator requiring caller-supplied z, complex kernel, source name and convention; it contains no registered external-transfer numerical archive or native-solver output.", "Targeted inventory-index lookup found no bianchireview87 or bianchirustcore archive member under those names. Therefore the review87 donor identifiers in OWNED_ASSETS remain unresolved here and are not bound for this run."],
+      "evidence": [{"path":"/mnt/sn850x2t/htt_base_e2e/workdir/external_fusion_round3/src/htt_ext/lowell/transfer.py","sha256":"0366133508075368229177a6e08fac8932fcaef05b8b0914bca83d7e43e9def6","locator":"ShellTransferKernel and integrate_kernel_on_edges"},{"path":"/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/filesystem.sqlite","locator":"targeted entries-name query for review87/rustcore/aniclass"}]
+    },
+    {
+      "product_key": "pr4_npipe",
+      "locator": "excluded by assignment and OWNED_ASSETS",
+      "law_status": "SKIPPED_BY_USER_SCOPE",
+      "limitations": ["No PR4/NPIPE locator, header, archive, intake, or analysis was inspected."]
+    }
+  ],
+  "owned_assets_row_coverage": [
+    {"owned_assets_row":"PR3 SMICA","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/planck_data","existing_producer":"Planck PR3 R3.00 files named in assets.csv","disposition":"UNAVAILABLE_PRODUCT_OR_LAW","limitation":"Carrier/null metadata exist, but no validated normalized joint sampling law."},
+    {"owned_assets_row":"PR3 component controls","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/planck_pr3_component_controls","existing_producer":"Planck PR3 component-map files named in assets.csv","disposition":"CONTROL_ONLY","limitation":"No difference covariance or independent-map law inspected."},
+    {"owned_assets_row":"FFP10","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/planck_ffp10","existing_producer":"Planck FFP10 inventory asset; SMICA plan names paired CMB+noise rows","disposition":"UNAVAILABLE_PRODUCT_OR_LAW","limitation":"Paired-ID metadata alone is not a validated null law for the R7 statistic."},
+    {"owned_assets_row":"PR4/NPIPE","locator":"excluded","existing_producer":"none inspected","disposition":"SKIPPED_BY_USER_SCOPE","limitation":"Explicitly excluded; no intake or inspection."},
+    {"owned_assets_row":"WMAP9 and WMAP7 simulation","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/{wmap_9yr,wmap_7yr_e2e_sim}","existing_producer":"WMAP inventory assets","disposition":"CONTROL_ONLY","limitation":"7-year simulations are not release-matched 9-year end-to-end law."},
+    {"owned_assets_row":"BeyondPlanck v2","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/beyondplanck_v2","existing_producer":"BeyondPlanck v2 inventory asset","disposition":"CONTROL_ONLY","limitation":"Posterior draws are not independent null skies."},
+    {"owned_assets_row":"Cosmoglobe DR1","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/cosmoglobe_dr1","existing_producer":"Cosmoglobe DR1 inventory asset","disposition":"CONTROL_ONLY","limitation":"Overlaps Planck/WMAP ancestry; no independent likelihood law inspected."},
+    {"owned_assets_row":"ACT DR6 lensing/simulations","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/act_dr6_lensing and /mnt/sn850x2t/htt_base_e2e/act_dr6_lensing_sims","existing_producer":"ACT DR6 inventory assets","disposition":"CONTROL_ONLY","limitation":"Kernel, response, noise/bias and mock law not validated; kappa is not temperature/velocity."},
+    {"owned_assets_row":"CF4 full objects/groups","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full","existing_producer":"CDS J/ApJ/944/94","disposition":"UNAVAILABLE_PRODUCT_OR_LAW","limitation":"Full covariance, selection and calibration law missing from inspected header."},
+    {"owned_assets_row":"CF4 compact grid/WF/CR","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4/CF4pp_mean_std_grids.npz","existing_producer":"CF4 reconstruction inventory asset","disposition":"CONTROL_ONLY","limitation":"Conditional reconstruction shares raw-catalogue/prior ancestry."},
+    {"owned_assets_row":"CF4++/2M++/CORAS/Lilow flow controls","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/{carrick_2mpp,coras_2mrs,lilow_nn_2mrs}","existing_producer":"Carrick/CORAS/Lilow inventory assets","disposition":"CONTROL_ONLY","limitation":"Frames, grids, interpolation domains and overlap law not inspected."},
+    {"owned_assets_row":"DESI raw catalogue/random/mock","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks","existing_producer":"DL_PIPELINE authenticated acquisition manifest","disposition":"UNAVAILABLE_PRODUCT_OR_LAW","limitation":"Candidate factory only until R7 binds factors, weights, cap/depth vector, nuisance refit and validates the resulting law; raw/desi BGS_ANY is not BGS_BRIGHT."},
+    {"owned_assets_row":"DESI compressed BGS-bright v1.2","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2","existing_producer":"official_nz SOURCE and local SHA256 manifest","disposition":"CONTROL_ONLY","limitation":"HDF5 contents not inspectable in supplied venv (h5py absent); cannot reconstruct angular dipole from compressed product."},
+    {"owned_assets_row":"Union3","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/rrss_observational_inputs/union3_release-main","existing_producer":"Union3 release inventory asset","disposition":"CONTROL_ONLY","limitation":"No row/covariance/calibration/coordinate admission inspected."},
+    {"owned_assets_row":"JWST CCHP/SH0ES host data","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/{jwst_anchors,jwst_sn}","existing_producer":"source-checked jwst_anchors manifest and CCHP Zenodo archive","disposition":"UNAVAILABLE_PRODUCT_OR_LAW","limitation":"Transcribed rows and uncertainties do not establish a normalized shared-calibration covariance or CF4 identity law."},
+    {"owned_assets_row":"HSC/KiDS/COSMOS-Web","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/{hsc_kids,cosmos_web_dr1} plus data/external/hsc_s19a_y3","existing_producer":"inventory assets","disposition":"CONTROL_ONLY","limitation":"Kernel/photo-z/shape/noise law not inspected; footprint cannot become all-sky dipole evidence."},
+    {"owned_assets_row":"QUIJOTE MFI","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/quijote_mfi_dr1","existing_producer":"QUIJOTE MFI DR1 inventory asset","disposition":"CONTROL_ONLY","limitation":"Bandpass, units, calibration and mask law not inspected."},
+    {"owned_assets_row":"CLASS observatory products","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/raw/class_dr1","existing_producer":"CLASS DR1 inventory asset","disposition":"CONTROL_ONLY","limitation":"Map/transfer/noise law not inspected; distinct from CLASS Boltzmann code."},
+    {"owned_assets_row":"obs_bundle/compact carrier/derived cards","locator":"/mnt/sn850x2t/htt_base_e2e/workdir/{compact_products,htt_extracted,obs_bundle}","existing_producer":"existing compact-product and extraction producers","disposition":"CONTROL_ONLY","limitation":"May locate/reuse verified raw transformations only; historical scalar-MES ranks or invalidated outputs are not new data."}
+  ],
+  "execution_binding_followup": {
+    "cf4_runner_contract": {
+      "worker":"scripts/observed_runs/run_cf4_current_stack.py",
+      "required_admitted_components":["catalogue","row_selection","covariance","frame_definition","sign_convention","units_contract","grouping_definition","depth_definition","zoa_definition"],
+      "conditional_affine_operator":"The worker can construct an explicitly conditional affine-flow diagnostic only after an identity-admitted bundle supplies an exact selected-group order plus a covariance NPZ containing group_id and covariance_km2_s2. It additionally pins Galactic IAU_1958, VCMB_MINUS_H0_DISTANCE, units, group semantics, depth/ZoA definitions and nuisance profiles.",
+      "prepared_product_found":"/mnt/sn850x2t/htt_base_e2e/workdir/obs_bundle/pecvel/cf4_full/{cf4_full_release_manifest.json,cf4_groups.npz,cf4_pv_variants_manifest.json,cf4_pv_variants.npz}",
+      "prepared_product_observation":"The CF4 product is a 38,053-row table4-derived group carrier with distance/error, velocities and coordinates. Its variant manifest identifies Vpds, Vpwf and Vpec definitions. Neither inspected manifest supplies the runner's required row_selection, covariance, frame/sign/units sidecars, depth/ZoA configuration, or a lane-admission bundle.",
+      "disposition":"UNAVAILABLE_PRODUCT_OR_LAW",
+      "execution_limit":"The runner's FULL_ADMITTED_OFF_DIAGONAL metadata is an output label conditioned on successful identity admission; it does not qualify the currently located raw/compact CF4 products."
+    },
+    "jwst_runner_contract": {
+      "worker":"scripts/observed_runs/run_jwst_sn.py",
+      "required_admitted_components":["source_rows","host_rows","individual_errors","covariance","competitor_model"],
+      "conditional_host_operator":"The worker delegates to build_pr309_inputs only after all five exact JSON members pass identity admission. Its admitted-mode metadata says FULL_ADMITTED_SHARED_COVARIANCE, whereas its synthetic payload is explicitly synthetic-only.",
+      "prepared_product_observation":"The inspected JWST anchor manifest locates transcribed source tables and their receipts, but no pre-existing five-component JWST_SN admission bundle or raw shared-covariance JSON was resolved in the R7 worktree or the targeted asset-index entries.",
+      "disposition":"UNAVAILABLE_PRODUCT_OR_LAW",
+      "execution_limit":"Host rows/source transcription can support a future explicitly conditional host law only when the shared-calibration and peculiar-velocity covariance plus competitor source definitions are supplied and identity-admitted."
+    },
+    "registry_evidence":"The P-ref lane registry (5a3825f903546891fd90e3d708481707d59babf4) declares the CF4 nine-component and JWST_SN five-component cardinalities and name_only_forbidden=true. The current R7 worktree lacks docs/research_program/post_pr275/data_registry_v2/LANE_REGISTRY_V2.json, so the runners cannot presently load their declared registry from this checkout.",
+    "attachment_resolution":"Repeated targeted filename/path queries against the supplied asset inventory found no bianchireview87.tar(1).gz or bianchirustcoreRDAGcomplete.tar.gz. OWNED_ASSETS specifies their intended members, but provides no resolved R6 inventory path in the assigned inputs; therefore they remain unbound source candidates, not execution inputs.",
+    "operational_note":"The canonical stop hook resolves an unrelated EXTERNAL-FUSION-FOLLOWUP-20260829 run. This is an operational cwd/registration mismatch only and does not qualify or disqualify any scientific product."
+  },
+  "missing_or_contradictory_evidence": [
+    "No full CF4 covariance/selection/calibration likelihood was found in the inspected CF4 header.",
+    "No authenticated CCHP--SH0ES joint covariance or CF4 overlap identity is bound by the inspected JWST manifest.",
+    "No review87/rustcore archive member was resolved from the targeted existing inventory index.",
+    "No HDF5 internal schema was read because the local Python environment lacks h5py."
+  ],
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/assignments/asset_binding.json",
+    "docs/research_program/tensor_joint_r7/OWNED_ASSETS.md",
+    "docs/research_program/tensor_joint_r7/REUSE_MAP.md",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/filesystem.sqlite",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/ReadMe",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/raw/jwst_anchors/jwst_anchors_manifest.json",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/raw/jwst_sn/cchp_jagb_zenodo_14502265/SOURCE.txt",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/raw/jwst_sn/cchp_jagb_zenodo_14502265/CCHP-JAGB-v1.zip",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks/desi_dr1_mock_acquisition_manifest.json",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/official_nz_v1.5/SOURCE.txt",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/dr1_vac_dr1_full-shape-bao-clustering_v1.0_data_v12_likelihood.sha256sum",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/compact_products/planck_pr3_smica_pr314/smica_existing_plan.json",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/compact_products/planck_pr3_smica_pr314/components/smica_existing_selection.json",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/htt_extracted/extraction_log.txt",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/compact_products/planck_pr3_smica_pr314/components/smica_covariance.npy",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/compact_products/planck_pr3_smica_pr314/components/smica_window_operator.npz",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/htt_extracted/planck_smica_map_nside16.npz",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/external_fusion_round3/src/htt_ext/lowell/transfer.py",
+    "scripts/observed_runs/run_cf4_current_stack.py",
+    "scripts/observed_runs/run_jwst_sn.py",
+    "docs/generated/tensor_joint_r7/source_bindings.json",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/obs_bundle/pecvel/cf4_full/cf4_full_release_manifest.json",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/obs_bundle/pecvel/cf4_full/cf4_pv_variants_manifest.json",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/obs_bundle/pecvel/cf4_full/cf4_pv_variants.npz"
+  ],
+  "procedure": "Validated assignment context version and required-input SHA256 values; consumed supplied asset CSV and SQLite inventory; inspected only named product manifests/headers/filenames and selected source text; performed no storage scan, catalogue fit, source edit, PR4/NPIPE inspection, or runtime validation."
+}

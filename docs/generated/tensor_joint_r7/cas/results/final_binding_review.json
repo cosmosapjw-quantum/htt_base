@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "run_id": "TENSOR-JOINT-R7-20260908",
+  "assignment_id": "final_binding_review",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "status": "fail",
+  "claim_ids": ["RUN-TENSOR-JOINT-R7-20260908-V28"],
+  "source_data_figure_audit": {
+    "blocking_findings": [
+      {
+        "id":"R7-FBR-001",
+        "severity":"BLOCKER",
+        "finding":"The latest manuscript package is not buildable: R7-24 attempt-0002 records build_status=FAIL and no methods.pdf exists, although its process status is COMPLETED_SUCCESS.",
+        "evidence":["../campaign/nodes/R7-24/attempt-0002/result.json","../campaign/nodes/R7-24/attempt-0002/latexmk.log","../campaign/nodes/R7-24/attempt-0002/methods.tex:36"],
+        "detail":"latexmk stops at line 36 with Missing $ inserted. The caption includes m=t(1+mu)^2/4 outside math mode. The terminal package honestly retains only .tex, Markdown, and latexmk.log; it must not be described as a manuscript PDF or build pass.",
+        "required_scoped_repair":"Escape or math-wrap caption formulae, regenerate only the manuscript node and its downstream terminal receipt, then verify methods.pdf and visual pages."
+      }
+    ],
+    "preserved_failure_audit": {
+      "R7-22_attempt_0001":"PRESERVED_AND_HONEST: result.json records ValueError Improper number of dimensions to norm in r7_report.py line 29. The settled R7-22 attempt-0002 carries a distinct result receipt and nine PNG evidence hashes.",
+      "scope":"The rendering repair does not erase the failed attempt."
+    },
+    "figure_visual_audit": {
+      "status":"VISUALLY_INSPECTED_PASS_FOR_RENDERING_AND_LEGIBILITY",
+      "settled_attempt":"../campaign/nodes/R7-22/attempt-0002",
+      "images_opened":["cmb_full_tensors.png","orbit_intervals.png","high_source_regions.png","mask_cost.png","mes_same_state.png","gaussian_calibration.png","depth_response.png","jwst_host_contrasts.png","desi_conditional_qiso.png"],
+      "observations":["All nine PNGs render without clipping, blank panels, obvious broken glyphs, or unreadable axes at inspected resolution.","Figure captions and plotted content are aligned: CMB pools are labelled descriptive; orbit intervals show 0 resolved; high-source, mask, MES, calibration and depth panels visibly use scenario wording; JWST panel shows source-host order; DESI panel shows qiso with the stated conditional interval.","This visual pass does not override the manifest's PENDING status or promote any scientific claim."],
+      "evidence":"campaign_state R7-22 contains ten matching evidence hashes; independently recomputed hashes had zero mismatches."
+    },
+    "data_binding_audit": [
+      {"product":"CMB PR3/FFP10 and WMAP9","status":"NO_NEW_LIKELIHOOD_CLAIM","evidence":"R7-06 uses generated carriers and labels their law diagnostic-only; figure caption says finite pool densities are descriptive with no exchangeability p-value. WMAP9 is a control, consistent with prior reader evidence (nside=512, NESTED, thermodynamic mK).","risk":"Do not call carrier/pool outputs product-qualified confidence or reuse invalidated historical scalar results."},
+      {"product":"CF4 table2/3/4","status":"READER_AND_UNITS_CONSISTENT_BUT_LAW_UNAVAILABLE","evidence":"R7-07 retains original CDS order and reports table4 38,053 rows, Dist in Mpc and V3k/Vpec in km/s; prior reader audit confirmed the same CDS schemas. No full group covariance/selection law is emitted.","risk":"No affine likelihood or group-calibration inference is eligible."},
+      {"product":"JWST source rows","status":"SOURCE_CORRESPONDENCE_AND_SCENARIO_LABELS_PASS","evidence":"R7-09 records CCHP Ho2024.tex member SHA256 and SH0ES main.tex member SHA256, host/table rows, and explicitly labels independent quoted-error, zero-cross-covariance fits as ASSUMED SCENARIO; figures repeat that caveat.","risk":"Shared calibration covariance and CF4 overlap identity remain missing; no geometry amplitude is eligible."},
+      {"product":"DESI compressed BGS BIGHT","status":"CONDITIONAL_RELEASED_GAUSSIAN_SUMMARY_SUPPORTED","evidence":"R7-08 binds the selected syst BGS HDF5 source ID 836a2107..., qiso datum 0.9828804417, covariance 0.0003495070648, unit window, and the lowell h5py decoder; R7-19 reports only a confidence interval conditional on that fixed released Gaussian summary. Stat-only is explicitly not multiplied.","risk":"This is background qiso only: no raw-catalogue coverage, angular response, or anisotropic geometry claim."},
+      {"product":"Union3","status":"INPUT_UNAVAILABLE_HONEST","evidence":"R7-09 retains the 23x23 FITS shape but refuses use because ordering, units and likelihood meaning are not specified.","risk":"No directional-row or distance-redshift likelihood statement."}
+    ],
+    "terminal_outcome_honesty": {"status":"MIXED","pass":"Unavailable/conditional/scenario statuses in observed products are generally explicit; R7-25 carries the R7-24 no-PDF artifacts rather than inventing one.","failure":"R7-24 itself is process-successful despite build_status FAIL. Any top-level completion language must distinguish execution receipt completion from manuscript-build failure."},
+    "allowed_scoped_claims":["Nine R7-22 PNG figures have passed this independent rendering/legibility inspection, with their source-node captions and stated limits preserved.","The DESI result is a conditional confidence interval under the selected released one-dimensional Gaussian qiso summary model.","The campaign retains source-bound CMB/CF4/JWST inputs and clear scenario/control/unavailable partitions."],
+    "forbidden_or_unsupported_claims":["Manuscript PDF build passed or manuscript ready.","Product-qualified CMB tensor likelihood, FFP10 exchangeability p-value, or WMAP9 law.","CF4 full-covariance/group inference.","JWST shared-covariance or geometry-amplitude inference.","DESI angular dipole, raw-catalogue coverage, or anisotropic geometry identification.","Native Bianchi family/geometry identification."]
+  },
+  "files_read":[".agent-harness/runs/TENSOR-JOINT-R7-20260908/assignments/final_binding_review.json","docs/research_program/tensor_joint_r7/OWNED_ASSETS.md","docs/research_program/tensor_joint_r7/REVIEW_RESPONSE.md","scripts/observed_runs/run_tensor_joint_r7.py","scripts/observed_runs/r7_report.py",".agent-harness/runs/TENSOR-JOINT-R7-20260908/results/asset_binding.json",".agent-harness/runs/TENSOR-JOINT-R7-20260908/results/control_readers.json","../campaign/{campaign_state.json,conclusion.json,tracing_status.json}","../campaign/nodes/R7-06/attempt-0001/science.json","../campaign/nodes/R7-07/attempt-0001/science.json","../campaign/nodes/R7-08/attempt-0001/science.json","../campaign/nodes/R7-09/attempt-0001/science.json","../campaign/nodes/R7-19/attempt-0001/science.json","../campaign/nodes/R7-22/attempt-0001/result.json","../campaign/nodes/R7-22/attempt-0002/{result.json,science.json,figure_manifest.json,*.png}","../campaign/nodes/R7-24/attempt-0002/{result.json,science.json,integrated_data_results.md,methods.tex,latexmk.log}","../campaign/nodes/R7-25/attempt-0002/{result.json,science.json}"],
+  "procedure":"One independent targeted source/data/figure audit. Opened every settled R7-22 PNG with view_image, inspected preserved attempt-0001 failure, checked latest result/hash receipts, and performed read-only LaTeX/PDF existence checks. No production file, campaign artifact, scientific input, or sibling scientific review result was modified.",
+  "operational_note":"The canonical stop-hook active-run mismatch is an operational routing problem only and is not a product or scientific failure."
+}

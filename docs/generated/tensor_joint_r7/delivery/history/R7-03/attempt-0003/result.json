@@ -1,0 +1,48 @@
+{
+  "assumptions": [],
+  "attempt": 3,
+  "capabilities": [
+    "MES_TENSOR_MODEL"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-03/attempt-0003/science.json"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-03",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "capability_evidence": {
+      "MES_TENSOR_MODEL": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-03/attempt-0003/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      }
+    },
+    "physical_status": "First-order geodesic collisionless T3 model; measured derivative jets unavailable",
+    "validation": {
+      "command": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-q",
+        "tests/r7/test_mes_region.py"
+      ],
+      "exit_code": 0,
+      "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-03/attempt-0003/validation.log",
+      "log_sha256": "4ca152b03c9b6c6da74cb07174057934fa0779a83317e333d45b91d022ff57f5",
+      "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "test_sources": {
+        "tests/r7/test_mes_region.py": "1d9ef1700b5bf191fa82887e094b15cada3779d4065197f4a88c4a03b4164132"
+      }
+    }
+  },
+  "reasons": [],
+  "scientific_outcome": "NOT_EVALUATED",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

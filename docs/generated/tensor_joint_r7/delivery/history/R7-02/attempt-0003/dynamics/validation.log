@@ -1,0 +1,32 @@
+
+==================================== ERRORS ====================================
+___________ ERROR collecting htt/bass/collision/test_thomson_pstf.py ___________
+import file mismatch:
+imported module 'htt.bass.collision.test_thomson_pstf' has this __file__ attribute:
+  /home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/collision/test_thomson_pstf.py
+which is not the same as the test file we want to collect:
+  /mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/bass/collision/test_thomson_pstf.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules
+__________ ERROR collecting htt/bass/transport/test_ver2_geodesics.py __________
+import file mismatch:
+imported module 'htt.bass.transport.test_ver2_geodesics' has this __file__ attribute:
+  /home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/transport/test_ver2_geodesics.py
+which is not the same as the test file we want to collect:
+  /mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/bass/transport/test_ver2_geodesics.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules
+_____________ ERROR collecting tests/r7/test_physical_providers.py _____________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/tests/r7/test_physical_providers.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/r7/test_physical_providers.py:4: in <module>
+    from common.r7_contracts import UnsupportedObservable
+E   ModuleNotFoundError: No module named 'common.r7_contracts'
+=========================== short test summary info ============================
+ERROR htt/bass/collision/test_thomson_pstf.py
+ERROR htt/bass/transport/test_ver2_geodesics.py
+ERROR tests/r7/test_physical_providers.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!!
+3 errors in 0.77s

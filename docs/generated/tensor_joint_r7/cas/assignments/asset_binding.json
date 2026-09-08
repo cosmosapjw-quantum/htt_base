@@ -1,0 +1,41 @@
+{
+  "schema_version": 2,
+  "run_id": "TENSOR-JOINT-R7-20260908",
+  "assignment_id": "asset_binding",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "shared-core",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R1",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-TENSOR-JOINT-R7-20260908-V00"
+  ],
+  "task": "Read-only targeted R7 V00 owned-asset and external-member binding. Inspect existing inventory and named product manifests/headers for exact usability, missing law factors and supported fallback. No broad storage scan, source edits or scientific fits. Return compact product-keyed evidence map.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r7/OWNED_ASSETS.md",
+      "sha256": "7c04f69bb241128a351dbe925dbacf65ad9878b04c4303481d67572f738ee1a6"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r7/REUSE_MAP.md",
+      "sha256": "8f449098c2add291a00df186f4cbb23328bd1a5ecca336e307e8c627b88d2486"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    "product_evidence_map"
+  ],
+  "result_path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/results/asset_binding.json",
+  "status": "registered",
+  "assignment_sha256": "19a35234bed50a5780efbe43c4c32bb8c3991a853ca6703a8ca205752f88c151"
+}

@@ -1,0 +1,78 @@
+{
+  "assumptions": [],
+  "attempt": 3,
+  "capabilities": [
+    "SHAPE_METHOD"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/science.json",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/paired300_scores.json",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/paired300_packet_recovery.json",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/cmbonly999_scores.json",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/cmbonly999_packet_recovery.json"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-11",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "capability_evidence": {
+      "SHAPE_METHOD": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/science.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/paired300_scores.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/paired300_packet_recovery.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/cmbonly999_scores.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/cmbonly999_packet_recovery.json"
+        ],
+        "scope": "q0=o0=1e-5 K; k=ceil(sqrt(N)); fixed symmetric resource policy; no product calibration"
+      }
+    },
+    "pools": {
+      "cmbonly999": {
+        "artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/cmbonly999_scores.json",
+        "k": 32,
+        "method_id": "R7_T1_KNN_IDENTITY_THEN_CUBE1_LIMIT1024",
+        "outcome": "NUMERICALLY_UNRESOLVED",
+        "packet_recovery_artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/cmbonly999_packet_recovery.json",
+        "reason": "Complete symmetric interval pool; exact ranks withheld when enclosures overlap",
+        "resolved_rows": 0,
+        "rows": 1000
+      },
+      "paired300": {
+        "artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/paired300_scores.json",
+        "k": 18,
+        "method_id": "R7_T1_KNN_IDENTITY_THEN_CUBE1_LIMIT1024",
+        "outcome": "NUMERICALLY_UNRESOLVED",
+        "packet_recovery_artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/paired300_packet_recovery.json",
+        "reason": "Complete symmetric interval pool; exact ranks withheld when enclosures overlap",
+        "resolved_rows": 0,
+        "rows": 301
+      }
+    },
+    "scope": "q0=o0=1e-5 K; k=ceil(sqrt(N)); fixed symmetric resource policy; no product calibration",
+    "validation": {
+      "command": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-q",
+        "tests/r7/test_tensor_orbit.py"
+      ],
+      "exit_code": 0,
+      "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0003/validation.log",
+      "log_sha256": "224a89eacef8d510a0aa5cf9200b0b582e23b54815eb8c7f083da51589eacc1d",
+      "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "test_sources": {
+        "tests/r7/test_tensor_orbit.py": "3623649001f1f2aa71f745dd7fab50da30b0c9319b7f2e75c3a97e8a60b026a3"
+      }
+    }
+  },
+  "reasons": [],
+  "scientific_outcome": "NUMERICALLY_UNRESOLVED",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

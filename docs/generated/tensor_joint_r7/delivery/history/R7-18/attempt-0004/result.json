@@ -1,0 +1,389 @@
+{
+  "assumptions": [],
+  "attempt": 4,
+  "capabilities": [
+    "CALIBRATED_METHODS"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-18/attempt-0004/science.json"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-18",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "actual_driver_module_paths": {
+      "common.r7_asset_use": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_asset_use.py",
+      "common.r7_contracts": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_contracts.py",
+      "htt.infer.r7_calibration": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_calibration.py",
+      "htt.infer.r7_depth_response": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_depth_response.py",
+      "htt.infer.r7_desi_law": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_desi_law.py",
+      "htt.infer.r7_gaussian_law": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_gaussian_law.py",
+      "htt.infer.r7_joint_experiment": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_joint_experiment.py",
+      "obsstat.r7_cmb_product_response": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/r7_cmb_product_response.py"
+    },
+    "calibrations": [
+      {
+        "conditioning_target": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+        "evidence": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_confidence.py"
+        ],
+        "law_specification_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+        "mechanism": "EXACT_ACCEPTANCE_PROOF",
+        "numerical_obligations": {
+          "coverage_argument": "true-parameter residual whitened on fixed Gaussian support; chi-square rank, not fitted-parameter subtraction",
+          "exact_null_support_checked": true,
+          "finite_symmetric_PSD": true,
+          "law_domain_id": "POSITIVE_QISO",
+          "method_config_id": "09ae0134ccea9b0e51f57b2848c0e0b391554b6d9cd1e39a274b735d2b6c4ea1",
+          "rank": 1,
+          "rank_resolved": true
+        },
+        "scope": {
+          "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+          "dataset_ids": [
+            "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+          ],
+          "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+          "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+          "method_config_id": "09ae0134ccea9b0e51f57b2848c0e0b391554b6d9cd1e39a274b735d2b6c4ea1",
+          "method_id": "R7_FIXED_GAUSSIAN_ACCEPTANCE",
+          "model_id": "RELEASED_GAUSSIAN_QISO",
+          "version": "r7.1"
+        },
+        "validity": "EXACT_WITHIN_DECLARED_KNOWN_GAUSSIAN_LAW"
+      }
+    ],
+    "capability_evidence": {
+      "CALIBRATED_METHODS": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-18/attempt-0004/science.json"
+        ],
+        "scope": "Synthetic Gaussian cells and exact acceptance proof for the explicitly conditional released qiso law; product pool laws separate"
+      }
+    },
+    "operational_cells": [
+      {
+        "FPR": 0.0495,
+        "cell_id": "gaussian12_ordinary_0.0",
+        "configuration_id": "800331dbdbbd4f77183d8ac875c63b416dbdd3e366c50eefe7c19b12e8c9a765",
+        "coverage": 0.9505,
+        "coverage_CP99": [
+          0.9446446860106078,
+          0.9559215679950934
+        ],
+        "coverage_count": 9505,
+        "independent_draws": true,
+        "law_id": "ISOTROPIC_ORTHONORMAL_12_GAUSSIAN",
+        "rank": 12,
+        "refusal_rate": 0.0,
+        "rejection_CP99": [
+          0.04407843200490654,
+          0.05535531398939222
+        ],
+        "rejection_count": 495,
+        "scope": "declared synthetic known Gaussian law only",
+        "seed_entropy": 720260908,
+        "seed_spawn_key": [
+          0
+        ],
+        "status": "PASS",
+        "trials": 10000
+      },
+      {
+        "FPR": 0.0514,
+        "cell_id": "gaussian12_mirror_0.0",
+        "configuration_id": "27280eaadca9fdc7b458220a23a78de7626761f83aab6f5daead8a6836da8386",
+        "coverage": 0.9486,
+        "coverage_CP99": [
+          0.942645198981857,
+          0.9541229756703997
+        ],
+        "coverage_count": 9486,
+        "independent_draws": true,
+        "law_id": "ISOTROPIC_ORTHONORMAL_12_GAUSSIAN",
+        "rank": 12,
+        "refusal_rate": 0.0,
+        "rejection_CP99": [
+          0.045877024329600224,
+          0.05735480101814311
+        ],
+        "rejection_count": 514,
+        "scope": "declared synthetic known Gaussian law only",
+        "seed_entropy": 720260908,
+        "seed_spawn_key": [
+          1
+        ],
+        "status": "PASS",
+        "trials": 10000
+      },
+      {
+        "cell_id": "gaussian12_ordinary_0.5",
+        "configuration_id": "64bae0956ea4d8a76f511e735973dfa7fa4a8321852a54c3bf6e516172ac6014",
+        "coverage": 0.9475,
+        "coverage_CP99": [
+          0.9414885927975875,
+          0.953080691152904
+        ],
+        "coverage_count": 9475,
+        "independent_draws": true,
+        "law_id": "ISOTROPIC_ORTHONORMAL_12_GAUSSIAN",
+        "power": 0.0588,
+        "rank": 12,
+        "refusal_rate": 0.0,
+        "rejection_CP99": [
+          0.05290169537626358,
+          0.0651226999790098
+        ],
+        "rejection_count": 588,
+        "scope": "declared synthetic known Gaussian law only",
+        "seed_entropy": 720260908,
+        "seed_spawn_key": [
+          2
+        ],
+        "status": "PASS",
+        "trials": 10000
+      },
+      {
+        "cell_id": "gaussian12_mirror_0.5",
+        "configuration_id": "20ca97cc74e0b4cf9a0875b727dc4d936edf3c500474f169d1d50db78efec175",
+        "coverage": 0.9482,
+        "coverage_CP99": [
+          0.9422245325543189,
+          0.9537440456961814
+        ],
+        "coverage_count": 9482,
+        "independent_draws": true,
+        "law_id": "ISOTROPIC_ORTHONORMAL_12_GAUSSIAN",
+        "power": 0.0575,
+        "rank": 12,
+        "refusal_rate": 0.0,
+        "rejection_CP99": [
+          0.05166552294154333,
+          0.0637601725420563
+        ],
+        "rejection_count": 575,
+        "scope": "declared synthetic known Gaussian law only",
+        "seed_entropy": 720260908,
+        "seed_spawn_key": [
+          3
+        ],
+        "status": "PASS",
+        "trials": 10000
+      },
+      {
+        "cell_id": "gaussian12_ordinary_1.0",
+        "configuration_id": "d91ba94c34a1963416c0da95aba9a423c2f98a3b61d541252eb61964ec69a3fb",
+        "coverage": 0.9513,
+        "coverage_CP99": [
+          0.9454872477811982,
+          0.9566781956830349
+        ],
+        "coverage_count": 9513,
+        "independent_draws": true,
+        "law_id": "ISOTROPIC_ORTHONORMAL_12_GAUSSIAN",
+        "power": 0.0795,
+        "rank": 12,
+        "refusal_rate": 0.0,
+        "rejection_CP99": [
+          0.07268361777917623,
+          0.08672028146249355
+        ],
+        "rejection_count": 795,
+        "scope": "declared synthetic known Gaussian law only",
+        "seed_entropy": 720260908,
+        "seed_spawn_key": [
+          4
+        ],
+        "status": "PASS",
+        "trials": 10000
+      },
+      {
+        "cell_id": "gaussian12_mirror_1.0",
+        "configuration_id": "89ea40af77f06dd0b87d1a3438d216546d7f31244ddc7ebcf3941af294aef340",
+        "coverage": 0.9492,
+        "coverage_CP99": [
+          0.9432763778732551,
+          0.9546911909037782
+        ],
+        "coverage_count": 9492,
+        "independent_draws": true,
+        "law_id": "ISOTROPIC_ORTHONORMAL_12_GAUSSIAN",
+        "power": 0.0798,
+        "rank": 12,
+        "refusal_rate": 0.0,
+        "rejection_CP99": [
+          0.07297148050130141,
+          0.08703212387384872
+        ],
+        "rejection_count": 798,
+        "scope": "declared synthetic known Gaussian law only",
+        "seed_entropy": 720260908,
+        "seed_spawn_key": [
+          5
+        ],
+        "status": "PASS",
+        "trials": 10000
+      },
+      {
+        "cell_id": "gaussian12_ordinary_2.0",
+        "configuration_id": "09845a8a206bef8492db5f912eab460d96d7bf51c0e33ef69e6bc60d2ee6f5d0",
+        "coverage": 0.9508,
+        "coverage_CP99": [
+          0.944960598991141,
+          0.9562053511945484
+        ],
+        "coverage_count": 9508,
+        "independent_draws": true,
+        "law_id": "ISOTROPIC_ORTHONORMAL_12_GAUSSIAN",
+        "power": 0.1914,
+        "rank": 12,
+        "refusal_rate": 0.0,
+        "rejection_CP99": [
+          0.18136572478509078,
+          0.20172979298868293
+        ],
+        "rejection_count": 1914,
+        "scope": "declared synthetic known Gaussian law only",
+        "seed_entropy": 720260908,
+        "seed_spawn_key": [
+          6
+        ],
+        "status": "PASS",
+        "trials": 10000
+      },
+      {
+        "cell_id": "gaussian12_mirror_2.0",
+        "configuration_id": "2c39efc20d32eed2cd8a266bacb844b78b6a3ad3c4a51421f246b9139b67450c",
+        "coverage": 0.9498,
+        "coverage_CP99": [
+          0.9439077750732996,
+          0.9552591872401557
+        ],
+        "coverage_count": 9498,
+        "independent_draws": true,
+        "law_id": "ISOTROPIC_ORTHONORMAL_12_GAUSSIAN",
+        "power": 0.2014,
+        "rank": 12,
+        "refusal_rate": 0.0,
+        "rejection_CP99": [
+          0.1911641333949114,
+          0.21192177165286502
+        ],
+        "rejection_count": 2014,
+        "scope": "declared synthetic known Gaussian law only",
+        "seed_entropy": 720260908,
+        "seed_spawn_key": [
+          7
+        ],
+        "status": "PASS",
+        "trials": 10000
+      },
+      {
+        "FPR": 0.0492,
+        "cell_id": "singular_rank1",
+        "configuration_id": "e10adea98d57fffff9e99a7bf958334ae2008d9ceed3c12c7d35c4436a527e3e",
+        "coverage": 0.9508,
+        "coverage_CP99": [
+          0.944960598991141,
+          0.9562053511945484
+        ],
+        "coverage_count": 9508,
+        "independent_draws": true,
+        "law_id": "EXACT_SINGULAR_GAUSSIAN",
+        "rank": 1,
+        "refusal_rate": 0.0,
+        "rejection_CP99": [
+          0.04379464880545162,
+          0.05503940100885899
+        ],
+        "rejection_count": 492,
+        "scope": "declared synthetic known Gaussian law only",
+        "seed_entropy": 720260908,
+        "seed_spawn_key": [
+          8
+        ],
+        "status": "PASS",
+        "trials": 10000
+      },
+      {
+        "cell_id": "singular_off_null_support",
+        "configuration_id": "89110feb7288b6f16df24e658f1d7805ef549f01ed85944262783a3e4ad0b083",
+        "coverage": 0.9513,
+        "coverage_CP99": [
+          0.9454872477811982,
+          0.9566781956830349
+        ],
+        "coverage_count": 9513,
+        "independent_draws": true,
+        "law_id": "EXACT_SINGULAR_GAUSSIAN",
+        "power": 1.0,
+        "rank": 1,
+        "refusal_rate": 0.0,
+        "rejection_CP99": [
+          0.9994703085993939,
+          1.0
+        ],
+        "rejection_count": 10000,
+        "scope": "declared synthetic known Gaussian law only",
+        "seed_entropy": 720260908,
+        "seed_spawn_key": [
+          9
+        ],
+        "status": "PASS",
+        "trials": 10000
+      },
+      {
+        "FPR": 0.0,
+        "cell_id": "rank0",
+        "configuration_id": "1f12a8c66213e650c418afb40c625004174157f43adc7353a82bdbda0300df9d",
+        "coverage": 1.0,
+        "coverage_CP99": [
+          0.9994703085993939,
+          1.0
+        ],
+        "coverage_count": 10000,
+        "independent_draws": true,
+        "law_id": "DETERMINISTIC_POINT_MASS",
+        "rank": 0,
+        "refusal_rate": 0.0,
+        "rejection_CP99": [
+          0.0,
+          0.0005296914006061454
+        ],
+        "rejection_count": 0,
+        "scope": "declared synthetic known Gaussian law only",
+        "seed_entropy": 720260908,
+        "seed_spawn_key": [
+          10
+        ],
+        "status": "PASS",
+        "trials": 10000
+      }
+    ],
+    "scope": "Synthetic Gaussian cells and exact acceptance proof for the explicitly conditional released qiso law; product pool laws separate",
+    "validation": {
+      "command": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-q",
+        "tests/r7/test_calibration_scopes.py"
+      ],
+      "exit_code": 0,
+      "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-18/attempt-0004/validation.log",
+      "log_sha256": "8f72f6ef79c4ba95867373899f0d4b43c07b227d042cfa7261eac1f688b3f613",
+      "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "test_sources": {
+        "tests/r7/test_calibration_scopes.py": "e3e3bce95ee198ae35a9405255be241890b216868cf567ce0cd02620a52fab67"
+      }
+    }
+  },
+  "reasons": [],
+  "scientific_outcome": "CONDITIONAL_BOUND",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

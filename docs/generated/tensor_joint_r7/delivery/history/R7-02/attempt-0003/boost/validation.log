@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+_________________ ERROR collecting test_wu010_audit_closure.py _________________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/test_wu010_audit_closure.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+htt/test_wu010_audit_closure.py:9: in <module>
+    from obsstat.boost_response import (
+E   ModuleNotFoundError: No module named 'obsstat.boost_response'
+=========================== short test summary info ============================
+ERROR htt/test_wu010_audit_closure.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.21s

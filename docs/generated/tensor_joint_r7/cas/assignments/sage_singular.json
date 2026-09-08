@@ -1,0 +1,46 @@
+{
+  "schema_version": 2,
+  "run_id": "TENSOR-JOINT-R7-20260908",
+  "assignment_id": "sage_singular",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "cas_sage_singular",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-TENSOR-JOINT-R7-20260908-V01"
+  ],
+  "task": "Independently implement and execute exactly the shared CAS contract obligations. Own only unique result envelope and its named axis directory. No production changes, sibling results, or nested spawning. Read contract for precise claim ceiling. Return executable argv for parent run-adjudicate.",
+  "required_inputs": [
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json",
+      "sha256": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2"
+    },
+    {
+      "path": "docs/generated/tensor_joint_r7/axial_certificate_source.json",
+      "sha256": "03229ce9a8c7120a692253a655a0dd1960d1b95ae1de95ea5dd955cd69f0bf38"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    "axis_script_and_result"
+  ],
+  "result_path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/results/sage_singular.json",
+  "status": "registered",
+  "cas_axis": "sage_singular",
+  "cas_contract": {
+    "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json",
+    "sha256": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2"
+  },
+  "assignment_sha256": "45d5b0fcb82c265a14d6d1531a264abc66a98ab974ba813845bf1669d03e063d"
+}

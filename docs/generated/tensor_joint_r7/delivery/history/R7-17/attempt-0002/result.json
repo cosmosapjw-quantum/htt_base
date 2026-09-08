@@ -1,0 +1,86 @@
+{
+  "assumptions": [],
+  "attempt": 2,
+  "capabilities": [
+    "PHYSICAL_MODEL_METHODS"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-17/attempt-0002/science.json"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-17",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "P0": "released fiducial qiso=1",
+    "P1": "free positive scalar qiso",
+    "capability_evidence": {
+      "PHYSICAL_MODEL_METHODS": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-17/attempt-0002/science.json"
+        ],
+        "scope": {
+          "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+          "dataset_ids": [
+            "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+          ],
+          "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+          "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+          "method_config_id": "c131fb208df5e1dfddd6ee7e05676430ff21a423c6bdb403808729ad7633be34",
+          "method_id": "gaussian_acceptance",
+          "model_id": "RELEASED_GAUSSIAN_QISO",
+          "version": "r7.1"
+        }
+      }
+    },
+    "comparison": {
+      "coefficients": [
+        -0.01711955831609735
+      ],
+      "design_id": "RELEASED_QISO_SCALAR_COLUMN",
+      "p0": {
+        "accepted": true,
+        "inside_support": true,
+        "numeric_status": "RESOLVED",
+        "quadratic": 0.838550365535873,
+        "rank": 1,
+        "threshold": 3.841458820694124
+      },
+      "p1": {
+        "accepted": true,
+        "inside_support": true,
+        "numeric_status": "RESOLVED",
+        "quadratic": 0.0,
+        "rank": 1,
+        "threshold": 3.841458820694124
+      },
+      "p1_nonidentified_directions": [
+        []
+      ],
+      "parameter_labels": [
+        "delta_qiso"
+      ],
+      "physical_interpretation": "fixed observational columns; no Bianchi family attribution",
+      "scope": "8d61f90dd73a57078922450845b7692a6bcb1b2523fcc27470749ab84004d928",
+      "status": "OBSERVATION_SPACE_COMPARISON",
+      "uncertainty": "full residual acceptance rank; no Wilks subtraction"
+    },
+    "physical_provider_status": "R3 and external anisotropic transfer unavailable; qiso is a background estimand",
+    "scope": {
+      "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+      "dataset_ids": [
+        "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+      ],
+      "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+      "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+      "method_config_id": "c131fb208df5e1dfddd6ee7e05676430ff21a423c6bdb403808729ad7633be34",
+      "method_id": "gaussian_acceptance",
+      "model_id": "RELEASED_GAUSSIAN_QISO",
+      "version": "r7.1"
+    }
+  },
+  "reasons": [],
+  "scientific_outcome": "CONDITIONAL_BOUND",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

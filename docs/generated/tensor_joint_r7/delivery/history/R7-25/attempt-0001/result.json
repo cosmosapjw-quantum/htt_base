@@ -1,0 +1,1041 @@
+{
+  "assumptions": [],
+  "attempt": 1,
+  "capabilities": [
+    "CAMPAIGN_CONCLUSION"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-25/attempt-0001/science.json"
+  ],
+  "next_discriminator": "Provide the source-bound full CF4 group covariance and its declared sampling/conditioning law.",
+  "node_id": "R7-25",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "capability_evidence": {
+      "CAMPAIGN_CONCLUSION": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-25/attempt-0001/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      }
+    },
+    "conclusion": {
+      "empirical_scope_count": 2,
+      "interpretation": "Results are restricted to their declared experiment, law, model, data, conventions and method scope. Blocked or failed computations do not reject a physical model. Eligible empirical scopes are reported separately with their uncertainty.",
+      "missing_discriminators": [
+        "Provide the source-bound full CF4 group covariance and its declared sampling/conditioning law.",
+        "Supply the exact full CF4 group covariance and sampling-law sidecar; this enables an independent conditional affine branch."
+      ],
+      "node_outcomes": [
+        {
+          "capabilities": [
+            "SOURCE_BINDINGS",
+            "PR3_INPUT",
+            "CF4_INPUT",
+            "DESI_INPUT",
+            "JWST_INPUT",
+            "SKY_CONTROL_INPUT",
+            "FLOW_CONTROL_INPUT",
+            "BACKGROUND_AUX_INPUT",
+            "DISTANCE_AUX_INPUT",
+            "PROJECTED_AUX_INPUT"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-00/attempt-0001/science.json"
+          ],
+          "node_id": "R7-00",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [
+            "Product existence does not award a likelihood or its calibration."
+          ],
+          "scientific_outcome": "NOT_EVALUATED"
+        },
+        {
+          "capabilities": [
+            "ALGEBRA_VERIFIED",
+            "FOUR_AXIS_CAS",
+            "CONTINUUM_CERTIFIED"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-01/attempt-0001/science.json",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/cas_adjudication.json",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/docs/generated/tensor_joint_r7/axial_certificate_source.json"
+          ],
+          "node_id": "R7-01",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "NOT_EVALUATED"
+        },
+        {
+          "capabilities": [
+            "DONOR_TENSOR",
+            "DONOR_BOOST",
+            "DONOR_GF",
+            "DONOR_CF4",
+            "DONOR_DESI",
+            "DONOR_JWST",
+            "DONOR_ANCHOR",
+            "DONOR_KRYLOV"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0001/science.json"
+          ],
+          "node_id": "R7-02",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "NOT_EVALUATED"
+        },
+        {
+          "capabilities": [
+            "MES_TENSOR_MODEL"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-03/attempt-0001/science.json"
+          ],
+          "node_id": "R7-03",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "NOT_EVALUATED"
+        },
+        {
+          "capabilities": [
+            "THERMAL_RESPONSE"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-04/attempt-0001/science.json"
+          ],
+          "node_id": "R7-04",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "SCENARIO_ONLY"
+        },
+        {
+          "capabilities": [
+            "LAW_KERNELS_VERIFIED"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-05/attempt-0001/science.json"
+          ],
+          "node_id": "R7-05",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "NOT_EVALUATED"
+        },
+        {
+          "capabilities": [],
+          "evidence": [],
+          "node_id": "R7-16",
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "reasons": [
+            "no satisfied capability route"
+          ],
+          "scientific_outcome": "INPUT_UNAVAILABLE"
+        },
+        {
+          "capabilities": [
+            "CMB_RECORDS",
+            "CMB_CONTROL_RECORDS"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-06/attempt-0001/science.json",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-06/attempt-0001/paired300_tensors.npz",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-06/attempt-0001/cmbonly999_tensors.npz",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-06/attempt-0001/wmap9_tensor.npz"
+          ],
+          "node_id": "R7-06",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "SCENARIO_ONLY"
+        },
+        {
+          "capabilities": [
+            "CF4_RECORDS"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0001/science.json",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0001/cf4_table2.npz",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0001/cf4_table3.npz",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0001/cf4_table4.npz"
+          ],
+          "node_id": "R7-07",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "INPUT_UNAVAILABLE"
+        },
+        {
+          "capabilities": [
+            "BACKGROUND_CONTROL_RECORDS",
+            "BACKGROUND_LAW",
+            "DESI_RECORDS"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0001/science.json",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0001/compressed_bao.json"
+          ],
+          "node_id": "R7-08",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "CONDITIONAL_BOUND"
+        },
+        {
+          "capabilities": [
+            "JWST_RECORDS",
+            "JWST_SCENARIO",
+            "AUX_DISTANCE_RECORDS"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-09/attempt-0001/science.json"
+          ],
+          "node_id": "R7-09",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "SCENARIO_ONLY"
+        },
+        {
+          "capabilities": [],
+          "evidence": [],
+          "node_id": "R7-15",
+          "process_status": "BLOCKED_WITH_RECEIPT",
+          "reasons": [
+            "no satisfied capability route"
+          ],
+          "scientific_outcome": "INPUT_UNAVAILABLE"
+        },
+        {
+          "capabilities": [
+            "ADMITTED_EXPERIMENTS",
+            "SUBSET_LAWS"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-10/attempt-0001/science.json"
+          ],
+          "node_id": "R7-10",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "CONDITIONAL_BOUND"
+        },
+        {
+          "capabilities": [
+            "SHAPE_METHOD"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0001/science.json",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0001/paired300_scores.json",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0001/cmbonly999_scores.json"
+          ],
+          "node_id": "R7-11",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "NUMERICALLY_UNRESOLVED"
+        },
+        {
+          "capabilities": [
+            "HIGH_SOURCE_METHODS"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-12/attempt-0001/science.json"
+          ],
+          "node_id": "R7-12",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "SCENARIO_ONLY"
+        },
+        {
+          "capabilities": [
+            "DEPTH_CALIBRATION_METHOD"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-14/attempt-0001/science.json"
+          ],
+          "node_id": "R7-14",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "SCENARIO_ONLY"
+        },
+        {
+          "capabilities": [
+            "PHYSICAL_MODEL_METHODS"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-17/attempt-0001/science.json"
+          ],
+          "node_id": "R7-17",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "CONDITIONAL_BOUND"
+        },
+        {
+          "capabilities": [],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-13/attempt-0001/science.json"
+          ],
+          "node_id": "R7-13",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [
+            "No supported radiation-jet law for this admitted background experiment."
+          ],
+          "scientific_outcome": "INPUT_UNAVAILABLE"
+        },
+        {
+          "capabilities": [
+            "CALIBRATED_METHODS"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-18/attempt-0001/science.json"
+          ],
+          "node_id": "R7-18",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "CONDITIONAL_BOUND"
+        },
+        {
+          "capabilities": [
+            "OBSERVED_RESULTS"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-19/attempt-0001/science.json"
+          ],
+          "node_id": "R7-19",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "CONDITIONAL_BOUND"
+        },
+        {
+          "capabilities": [
+            "NEGATIVE_RESULTS"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-20/attempt-0001/science.json"
+          ],
+          "node_id": "R7-20",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "NOT_EVALUATED"
+        },
+        {
+          "capabilities": [
+            "COMPARISON_RESULTS"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-21/attempt-0001/science.json"
+          ],
+          "node_id": "R7-21",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "NOT_EVALUATED"
+        },
+        {
+          "capabilities": [],
+          "evidence": [],
+          "node_id": "R7-22",
+          "process_status": "COMPLETED_FAILED_WITH_RECEIPT",
+          "reasons": [
+            "ValueError: Improper number of dimensions to norm."
+          ],
+          "scientific_outcome": "VALIDATION_FAILED"
+        },
+        {
+          "capabilities": [],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-23/attempt-0001/science.json"
+          ],
+          "node_id": "R7-23",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "NOT_EVALUATED"
+        },
+        {
+          "capabilities": [
+            "MANUSCRIPT_PACKAGE"
+          ],
+          "evidence": [
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-24/attempt-0001/science.json",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-24/attempt-0001/methods.tex",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-24/attempt-0001/integrated_data_results.md",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-24/attempt-0001/latexmk.log",
+            "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-24/attempt-0001/methods.pdf"
+          ],
+          "node_id": "R7-24",
+          "process_status": "COMPLETED_SUCCESS",
+          "reasons": [],
+          "scientific_outcome": "NOT_EVALUATED"
+        }
+      ],
+      "process_complete": true,
+      "product_results": {
+        "act_dr6_kappa": {
+          "consumers": [
+            "R7-06",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "lensing_kappa",
+          "processing": null,
+          "product_key": "act_dr6_kappa",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/act_dr6_lensing",
+          "raw_ancestry": [],
+          "reason": "Different observable or small-area selection; no normalized lensing/count law or R7 physical response bound in supplied intake.",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "act_dr6_sims": {
+          "consumers": [
+            "R7-06",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "kappa_simulation",
+          "processing": null,
+          "product_key": "act_dr6_sims",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/act_dr6_lensing_sims",
+          "raw_ancestry": [],
+          "reason": "Different observable or small-area selection; no normalized lensing/count law or R7 physical response bound in supplied intake.",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "beyondplanck_v2": {
+          "consumers": [
+            "R7-06",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "posterior_control",
+          "processing": null,
+          "product_key": "beyondplanck_v2",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/beyondplanck_v2",
+          "raw_ancestry": [],
+          "reason": "Posterior product requires its analysis prior and dependence law; it cannot be used as independent Gaussian temperature draws.",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "carrick_2mpp": {
+          "consumers": [
+            "R7-07",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "velocity_field_control",
+          "processing": null,
+          "product_key": "carrick_2mpp",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/carrick_2mpp",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "cf4_full": {
+          "consumers": [
+            "R7-07",
+            "R7-14"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "distance_velocity",
+          "processing": null,
+          "product_key": "cf4_full",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4_full",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "cf4_reconstruction": {
+          "consumers": [
+            "R7-07",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "reconstruction_control",
+          "processing": null,
+          "product_key": "cf4_reconstruction",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cf4",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "cf4pp": {
+          "consumers": [
+            "R7-07",
+            "R7-21"
+          ],
+          "disposition": "UNAVAILABLE_PRODUCT_OR_LAW",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "velocity_field_control",
+          "processing": null,
+          "product_key": "cf4pp",
+          "product_locator": null,
+          "raw_ancestry": [],
+          "reason": "No existing locator resolved in the supplied inventory",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "class_observatory": {
+          "consumers": [
+            "R7-06",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "polarization_control",
+          "processing": null,
+          "product_key": "class_observatory",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/class_dr1",
+          "raw_ancestry": [],
+          "reason": "Release/frequency/observable-specific control; no cross-release covariance or WMAP9/PR3 exchangeability law supplied.",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "compact_carriers": {
+          "consumers": [
+            "R7-02",
+            "R7-06"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "derived_carrier",
+          "processing": null,
+          "product_key": "compact_carriers",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/compact_products",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "coras": {
+          "consumers": [
+            "R7-07",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "velocity_field_control",
+          "processing": null,
+          "product_key": "coras",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/coras_2mrs",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "cosmoglobe_dr1": {
+          "consumers": [
+            "R7-06",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "posterior_control",
+          "processing": null,
+          "product_key": "cosmoglobe_dr1",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cosmoglobe_dr1",
+          "raw_ancestry": [],
+          "reason": "Posterior product requires its analysis prior and dependence law; it cannot be used as independent Gaussian temperature draws.",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "cosmos_web": {
+          "consumers": [
+            "R7-09",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "small_area_catalogue",
+          "processing": null,
+          "product_key": "cosmos_web",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/cosmos_web_dr1",
+          "raw_ancestry": [],
+          "reason": "Different observable or small-area selection; no normalized lensing/count law or R7 physical response bound in supplied intake.",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "desi_bgs_bright_mocks": {
+          "consumers": [
+            "R7-08",
+            "R7-18"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "catalogue_mock_bank",
+          "processing": null,
+          "product_key": "desi_bgs_bright_mocks",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/desi_dr1_mocks",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "desi_compressed": {
+          "consumers": [
+            "R7-08",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "compressed_likelihood",
+          "processing": null,
+          "product_key": "desi_compressed",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "desi_raw": {
+          "consumers": [
+            "R7-08"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "catalogue",
+          "processing": null,
+          "product_key": "desi_raw",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/desi",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "ffp10": {
+          "consumers": [
+            "R7-06",
+            "R7-18"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "simulation_bank",
+          "processing": null,
+          "product_key": "ffp10",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_ffp10",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "hsc": {
+          "consumers": [
+            "R7-09",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "lensing_shear",
+          "processing": null,
+          "product_key": "hsc",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/data/external/hsc_s19a_y3",
+          "raw_ancestry": [],
+          "reason": "Different observable or small-area selection; no normalized lensing/count law or R7 physical response bound in supplied intake.",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "jwst_anchors": {
+          "consumers": [
+            "R7-09",
+            "R7-10"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "host_calibration",
+          "processing": null,
+          "product_key": "jwst_anchors",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/jwst_anchors",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "jwst_sn": {
+          "consumers": [
+            "R7-09",
+            "R7-10"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "host_distance",
+          "processing": null,
+          "product_key": "jwst_sn",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/jwst_sn",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "kids": {
+          "consumers": [
+            "R7-09",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "lensing_shear",
+          "processing": null,
+          "product_key": "kids",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/hsc_kids",
+          "raw_ancestry": [],
+          "reason": "Different observable or small-area selection; no normalized lensing/count law or R7 physical response bound in supplied intake.",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "lilow": {
+          "consumers": [
+            "R7-07",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "velocity_field_control",
+          "processing": null,
+          "product_key": "lilow",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/lilow_nn_2mrs",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "pr3_components": {
+          "consumers": [
+            "R7-06",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "temperature_control",
+          "processing": null,
+          "product_key": "pr3_components",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_pr3_component_controls",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "pr3_smica": {
+          "consumers": [
+            "R7-04",
+            "R7-06"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "temperature",
+          "processing": null,
+          "product_key": "pr3_smica",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_data",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "pr4_npipe": {
+          "consumers": [
+            "R7-00"
+          ],
+          "disposition": "SKIPPED_BY_USER_SCOPE",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "excluded",
+          "processing": null,
+          "product_key": "pr4_npipe",
+          "product_locator": null,
+          "raw_ancestry": [],
+          "reason": "PR4/NPIPE excluded by owner",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "quijote": {
+          "consumers": [
+            "R7-06",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "foreground_control",
+          "processing": null,
+          "product_key": "quijote",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/quijote_mfi_dr1",
+          "raw_ancestry": [],
+          "reason": "Release/frequency/observable-specific control; no cross-release covariance or WMAP9/PR3 exchangeability law supplied.",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "union3": {
+          "consumers": [
+            "R7-09",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "distance_redshift",
+          "processing": null,
+          "product_key": "union3",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/rrss_observational_inputs/union3_release-main",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "wmap7_simulation": {
+          "consumers": [
+            "R7-06",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "simulation_control",
+          "processing": null,
+          "product_key": "wmap7_simulation",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/wmap_7yr_e2e_sim",
+          "raw_ancestry": [],
+          "reason": "Release/frequency/observable-specific control; no cross-release covariance or WMAP9/PR3 exchangeability law supplied.",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        },
+        "wmap9": {
+          "consumers": [
+            "R7-06",
+            "R7-21"
+          ],
+          "disposition": "CONTROL_ONLY",
+          "fallback": "PRODUCT_SPECIFIC_CONTROL_OR_UNAVAILABLE",
+          "frame": null,
+          "inventory_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+          "law_scope": null,
+          "observable_type": "temperature_control",
+          "processing": null,
+          "product_key": "wmap9",
+          "product_locator": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/wmap_9yr",
+          "raw_ancestry": [],
+          "reason": "Product located; sampling/response law requires adapter validation",
+          "release": null,
+          "row_ids": [],
+          "uncertainty_law": null,
+          "units": null
+        }
+      },
+      "scope_results": [
+        {
+          "DV_over_rd": 7.924712263167666,
+          "DV_over_rd_CI95": [
+            7.629279348078372,
+            8.22014517825696
+          ],
+          "acceptance_of_fiducial": {
+            "accepted": true,
+            "inside_support": true,
+            "numeric_status": "RESOLVED",
+            "quadratic": 0.838550365535873,
+            "rank": 1,
+            "threshold": 3.841458820694124
+          },
+          "conditioning_target": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+          "data_estimate_qiso": 0.9828804416839027,
+          "empirical": true,
+          "outcome": "CONDITIONAL_BOUND",
+          "physical_identification": null,
+          "prior": null,
+          "qiso_CI95": [
+            0.9462387032298103,
+            1.019522180137995
+          ],
+          "scope": {
+            "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+            "dataset_ids": [
+              "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+            ],
+            "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+            "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+            "method_config_id": "09ae0134ccea9b0e51f57b2848c0e0b391554b6d9cd1e39a274b735d2b6c4ea1",
+            "method_id": "R7_FIXED_GAUSSIAN_ACCEPTANCE",
+            "model_id": "RELEASED_GAUSSIAN_QISO",
+            "version": "r7.1"
+          },
+          "scope_limit": "This exact interval covers under the declared fixed Gaussian summary model. True raw-catalogue coverage has not been independently established.",
+          "uncertainty_type": "CONFIDENCE_CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY"
+        },
+        {
+          "DV_over_rd": 7.924712263167666,
+          "DV_over_rd_CI95": [
+            7.629279348078372,
+            8.22014517825696
+          ],
+          "acceptance_of_fiducial": {
+            "accepted": true,
+            "inside_support": true,
+            "numeric_status": "RESOLVED",
+            "quadratic": 0.838550365535873,
+            "rank": 1,
+            "threshold": 3.841458820694124
+          },
+          "conditioning_target": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+          "data_estimate_qiso": 0.9828804416839027,
+          "empirical": true,
+          "outcome": "CONDITIONAL_BOUND",
+          "physical_identification": null,
+          "prior": null,
+          "qiso_CI95": [
+            0.9462387032298103,
+            1.019522180137995
+          ],
+          "scope": {
+            "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+            "dataset_ids": [
+              "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+            ],
+            "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+            "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+            "method_config_id": "09ae0134ccea9b0e51f57b2848c0e0b391554b6d9cd1e39a274b735d2b6c4ea1",
+            "method_id": "R7_FIXED_GAUSSIAN_ACCEPTANCE",
+            "model_id": "RELEASED_GAUSSIAN_QISO",
+            "version": "r7.1"
+          },
+          "scope_limit": "This exact interval covers under the declared fixed Gaussian summary model. True raw-catalogue coverage has not been independently established.",
+          "uncertainty_type": "CONFIDENCE_CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY"
+        }
+      ]
+    },
+    "next_discriminator": "Provide the source-bound full CF4 group covariance and its declared sampling/conditioning law."
+  },
+  "reasons": [],
+  "scientific_outcome": "NOT_EVALUATED",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

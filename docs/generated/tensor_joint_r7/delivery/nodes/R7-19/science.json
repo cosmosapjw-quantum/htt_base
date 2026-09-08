@@ -1,0 +1,71 @@
+{
+  "actual_driver_module_paths": {
+    "common.r7_asset_use": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_asset_use.py",
+    "common.r7_contracts": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_contracts.py",
+    "common.r7_radiation_jet": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_radiation_jet.py",
+    "htt.infer.r7_calibration": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_calibration.py",
+    "htt.infer.r7_confidence": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_confidence.py",
+    "htt.infer.r7_depth_response": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_depth_response.py",
+    "htt.infer.r7_desi_law": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_desi_law.py",
+    "htt.infer.r7_gaussian_law": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_gaussian_law.py",
+    "htt.infer.r7_high_source": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_high_source.py",
+    "htt.infer.r7_joint_experiment": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_joint_experiment.py",
+    "htt.infer.r7_mes_region": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_mes_region.py",
+    "obsstat.r7_cmb_product_response": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/r7_cmb_product_response.py",
+    "obsstat.r7_tensor_orbit": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/r7_tensor_orbit.py"
+  },
+  "calibration_identity": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+  "scope": {
+    "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+    "dataset_ids": [
+      "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+    ],
+    "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+    "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+    "method_config_id": "09ae0134ccea9b0e51f57b2848c0e0b391554b6d9cd1e39a274b735d2b6c4ea1",
+    "method_id": "R7_FIXED_GAUSSIAN_ACCEPTANCE",
+    "model_id": "RELEASED_GAUSSIAN_QISO",
+    "version": "r7.1"
+  },
+  "scope_results": [
+    {
+      "DV_over_rd": 7.924712263167666,
+      "DV_over_rd_CI95": [
+        7.629279348078372,
+        8.22014517825696
+      ],
+      "acceptance_of_fiducial": {
+        "accepted": true,
+        "inside_support": true,
+        "numeric_status": "RESOLVED",
+        "quadratic": 0.838550365535873,
+        "rank": 1,
+        "threshold": 3.841458820694124
+      },
+      "conditioning_target": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+      "data_estimate_qiso": 0.9828804416839027,
+      "empirical": true,
+      "outcome": "CONDITIONAL_BOUND",
+      "physical_identification": null,
+      "prior": null,
+      "qiso_CI95": [
+        0.9462387032298103,
+        1.019522180137995
+      ],
+      "scope": {
+        "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+        "dataset_ids": [
+          "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+        ],
+        "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+        "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+        "method_config_id": "09ae0134ccea9b0e51f57b2848c0e0b391554b6d9cd1e39a274b735d2b6c4ea1",
+        "method_id": "R7_FIXED_GAUSSIAN_ACCEPTANCE",
+        "model_id": "RELEASED_GAUSSIAN_QISO",
+        "version": "r7.1"
+      },
+      "scope_limit": "This exact interval covers under the declared fixed Gaussian summary model. True raw-catalogue coverage has not been independently established.",
+      "uncertainty_type": "CONFIDENCE_CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY"
+    }
+  ]
+}

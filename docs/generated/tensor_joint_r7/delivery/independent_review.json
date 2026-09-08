@@ -1,0 +1,153 @@
+{
+  "status": "PASS",
+  "scope": "HOST_ADJUDICATED_REPAIR_OF_REGISTERED_FINDINGS_ONLY",
+  "original_reviews": [
+    {
+      "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/results/final_scientific_review.json",
+      "sha256": "ec439f5eec804c6bfc4a0cb327c388b4a236b39cdff00cd8f4cf9c040836c2ee",
+      "original_status": "fail"
+    },
+    {
+      "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/results/final_binding_review.json",
+      "sha256": "74d4bef4cbb8b8cff122c5dc338ef9bdc0f564b3f6db5d20c3e2815febadad6f",
+      "original_status": "fail"
+    }
+  ],
+  "review_rounds": 1,
+  "repair_closeout_rounds": 1,
+  "independent_recheck_after_repairs": false,
+  "findings": [
+    {
+      "id": "SCI-01",
+      "repair": "Immutable execution-state fingerprints include closures and callable-object state. Mutations invalidate calibration.",
+      "validation": [
+        "test_mutating_captured_prediction_state_invalidates_calibration",
+        "test_mutating_callable_object_prediction_invalidates_calibration"
+      ],
+      "status": "HOST_REGRESSION_VERIFIED"
+    },
+    {
+      "id": "SCI-02",
+      "repair": "Use Gamma-precision convolution and combined support; approximation remains explicit. Exact singular oracle agrees within 1e-6 at order 128.",
+      "validation": [
+        "test_student_measurement_gaussian_host_enlarges_singular_support"
+      ],
+      "status": "HOST_REGRESSION_VERIFIED"
+    },
+    {
+      "id": "SCI-03",
+      "repair": "Confidence inversion and calibration share fixed-known-Gaussian eligibility. Estimated covariance cannot acquire exact coverage.",
+      "validation": [
+        "test_approximate_covariance_cannot_bypass_calibration_via_inversion"
+      ],
+      "status": "HOST_REGRESSION_VERIFIED"
+    },
+    {
+      "id": "SCI-04",
+      "repair": "Reference and runtime paths compare typed radiation jets, supplied numeric components, conventions and event domain.",
+      "validation": [
+        "test_typed_external_radiation_jet_reference_and_event_domain"
+      ],
+      "status": "HOST_REGRESSION_VERIFIED"
+    },
+    {
+      "id": "SCI-05",
+      "repair": "Support tolerance is bounded by roundoff; ambiguous support is unresolved, not a thickened density.",
+      "validation": [
+        "test_support_tolerance_cannot_thicken_a_singular_density"
+      ],
+      "status": "HOST_REGRESSION_VERIFIED"
+    },
+    {
+      "id": "SCI-06",
+      "repair": "Resume identities include radiation, provider and relevant test source files. Unchanged evidence is carried; affected descendants rerun.",
+      "validation": [
+        "test_default_driver_tracks_radiation_and_provider_sources",
+        "test_resume_preserves_attempt_and_reopens_only_affected_descendants"
+      ],
+      "status": "HOST_REGRESSION_VERIFIED"
+    },
+    {
+      "id": "SCI-07",
+      "repair": "Synthesis deduplicates exact scoped copies; inconsistent copies become unresolved. Actual unique empirical count is one.",
+      "validation": [
+        "test_synthesis_counts_unique_exact_scope_and_reports_conflict"
+      ],
+      "status": "HOST_REGRESSION_VERIFIED"
+    },
+    {
+      "id": "R7-FBR-001",
+      "repair": "Caption equations use explicit math mode. Actual latexmk build passed and all six pages were opened.",
+      "validation": [
+        "campaign R7-24 attempt-0007 latexmk.log",
+        "visual_review.json"
+      ],
+      "status": "HOST_REGRESSION_VERIFIED"
+    }
+  ],
+  "validation": {
+    "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/logs/r7_scope_join_validation.log",
+    "sha256": "0da52b0dd79b4a915768fbe8549df3257513753ccb6a6ef88f9ba114aa756d64",
+    "result": "75 passed"
+  },
+  "additional_registered_boundary_regressions": [
+    "Independent actual donor capabilities survive decoder failure",
+    "DESI/JWST imports survive CF4 producer failure",
+    "Observed driver requires unique full-scope serialized R7-18 calibration"
+  ],
+  "final_source_sha256": {
+    "htt/htt/htt/infer/r7_depth_response.py": "5ee677a554593b98d4146cfd3e84613559571bda62b75cc054c1f95ec4a9dcbc",
+    "htt/htt/htt/infer/r7_high_source.py": "b08652fdbb9e1a92ee381238c6093b777e560207b0ff4f95e77d727f6c222271",
+    "htt/htt/htt/infer/r7_joint_experiment.py": "bae7f665224b03112408aa97c87324d6d58c69a6a23e07ffced67869af1ee12f",
+    "htt/htt/htt/infer/r7_confidence.py": "48f9f1a768dda5151dfbc922acdd5c88f4b3c6a30920e6049887f28e8222238e",
+    "htt/htt/htt/infer/r7_cf4_law.py": "35ab9035d66efa7cdb416f6556120f398093ecfdafc8b01c13efeed0b8d89f25",
+    "htt/htt/htt/infer/r7_desi_law.py": "0ceb0e2f5ac1211bcf8e32a9957a46570566ccf9f1c623c242f79b23f4915407",
+    "htt/htt/htt/infer/r7_gaussian_law.py": "7d3ba747a89071fd28bda4b7278c1d9c1b0ccff42d824f78cd33bf3a5e250b64",
+    "htt/htt/htt/infer/r7_mes_region.py": "0ef60d75dc5ebfc235f3d567ce8efe3db16c31041bc055ed0734e093d5e3f519",
+    "htt/htt/htt/infer/r7_calibration.py": "766b0a85e2480289564de1d3d8df6e0bfdaf347817d004b475e32569e533d2d1",
+    "htt/htt/htt/infer/r7_jwst_law.py": "d4493f3b677f9eba52951a3e7030ec5275a3a913a13c8b2a9e2b36108c718ce8",
+    "htt/src/common/r7_contracts.py": "17deaa7da93d300dd34250400074a6be3a5db86cb23e24b1ab16359f58026eb3",
+    "htt/src/common/r7_asset_use.py": "7af9d32b98f9653854b49a1ba71c0e36032b853a7b25f74bc36a838de1efa6b6",
+    "htt/src/common/r7_radiation_jet.py": "c5ebd4c5156a8e704c462edf064aa0602e5aa615a1831a2246a4fd51cf239ecd",
+    "htt/obsstat/r7_tensor_orbit.py": "3066507b0b50d8b9da0e171dcbcf5be28538f406e4529ff57efd814fd33cb714",
+    "htt/obsstat/r7_cmb_product_response.py": "62108cdf916d2be56b7145ed6ea366b804209cdc93b870127d9d708594127332",
+    "htt/bass/transfer/r7_external_provider.py": "4dd559a779f700bcb72957d48ef6234d344f734bab475869160a61c376d443ad",
+    "htt/bass/transfer/r7_benchmark_provider.py": "f7c742d9951d69c3ca9ca61a510b7723611515b5c23bc518e5b8708ee0af9084",
+    "scripts/observed_runs/r7_mlflow.py": "95e9014d7026b1eb7c7fb4d22b513529237477602d33e5398a78c9255f0ab76b",
+    "scripts/observed_runs/run_r7_campaign.py": "e8a21a9c41a38372be4584c2185e6eefb69cd4cbc2770ffeeb9f986ffc85d794",
+    "scripts/observed_runs/r7_report.py": "f5e44613ebf9e974b527b0926a29ccfcd7d0ee9e10a46e681edbcbea0b62ce36",
+    "scripts/observed_runs/run_tensor_joint_r7.py": "4d66e221d2ac2a522b955968dec31e9a6e64efaf9669f6c44c8c4b458a8c314e",
+    "scripts/observed_runs/r7_scenarios.py": "890352b8f2d6f17e4460301d38d0e7a272eb4281d81126b6f6a7b94b46f58207",
+    "tests/r7/test_gaussian_law.py": "beffec0fa8e4c41a75693c73cb715fbd29f2e90aacfde19806069a6aba926cf1",
+    "tests/r7/test_joint_experiment.py": "afc9a6ac0940276a76dd9ec5987a7be25a8732e421df0ba971c09f1009312f2d",
+    "tests/r7/test_mes_region.py": "1d9ef1700b5bf191fa82887e094b15cada3779d4065197f4a88c4a03b4164132",
+    "tests/r7/test_physical_providers.py": "c064c8c44e6122356f429f64083331ddb61a67886a5a5d010c9a50209d4f8148",
+    "tests/r7/test_tensor_orbit.py": "3623649001f1f2aa71f745dd7fab50da30b0c9319b7f2e75c3a97e8a60b026a3",
+    "tests/r7/test_source_composition.py": "b2713ed0216ddff535f18ba5146551000ff0b6d68e56c1ca1023a9719c604a34",
+    "tests/r7/test_extended_algebra.py": "74798731c1ae4a1b1b45e22ad132c4056518083bf7e075bcd8db4bf914f87d4d",
+    "tests/r7/test_conventions.py": "d66b8886f9f74a4c6d0edece0f81579095e528a9f1395351bdb7d6d525b0c821",
+    "tests/r7/test_asset_routes.py": "043d5d13669a2d9cf85b09067a44dc3cb7f038732b66785360cc155ecb90d3ae",
+    "tests/r7/test_high_source.py": "fb8639dc038b21e4c949e103f319fedbbef5581e9ed1356364398275820ab3ee",
+    "tests/r7/conftest.py": "adc5304dbc89fea040baedc64a9cc4122a833dab94a227ce2a0dd98ff9930298",
+    "tests/r7/test_optional_tracing.py": "9893076f13e45b5b2991474bf8bd92cb55fc04b5eb56231bc8ecf170818012ad",
+    "tests/r7/test_campaign_routing.py": "a94eba21d5ab158e4be26dff8aee81ef421943508179766283973ad337bd2c35",
+    "tests/r7/test_calibration_scopes.py": "e3e3bce95ee198ae35a9405255be241890b216868cf567ce0cd02620a52fab67",
+    "tests/r7/test_cmb_product_response.py": "6aafcfcdb825f6fd3992dae6f577a3a234ba3a07a41f66d0bf681ba02bf18776",
+    "tests/r7/test_catalogue_laws.py": "c2aa81ac051cd864cd13da170c74d937c1f7a21e3475c29db32ae703c745d791"
+  },
+  "overall_plan_complete": false,
+  "outstanding_implementation": [
+    "Restricted R3 stress-history/Jacobi adaptation (selected review87 members absent; current provider is only source/interface handling)",
+    "Full multipole-vector ablation",
+    "Generic non-Gaussian simulator calibration",
+    "Remaining owned controls with INVENTORY_ONLY status"
+  ],
+  "scientific_limits": [
+    "Conditional released qiso Gaussian summary only; true raw-catalogue coverage unverified",
+    "No observed physical MES bound",
+    "No calibrated full-orbit CMB rank",
+    "No joint multi-survey likelihood",
+    "No native Bianchi identification"
+  ],
+  "adjudication_note": "docs/generated/tensor_joint_r7/ADJUDICATION.md"
+}

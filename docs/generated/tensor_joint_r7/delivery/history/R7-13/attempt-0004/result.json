@@ -1,0 +1,45 @@
+{
+  "assumptions": [],
+  "attempt": 4,
+  "capabilities": [],
+  "evidence": [],
+  "next_discriminator": null,
+  "node_id": "R7-13",
+  "process_status": "BLOCKED_WITH_RECEIPT",
+  "product_results": {
+    "failed_producers": {
+      "MES_TENSOR_MODEL": [
+        {
+          "node": "R7-03",
+          "reasons": [
+            "no satisfied capability route"
+          ],
+          "status": "BLOCKED_WITH_RECEIPT"
+        }
+      ],
+      "MODEL_BOUND_EXPERIMENTS": [
+        {
+          "node": "R7-17",
+          "reasons": [],
+          "status": "COMPLETED_SUCCESS"
+        }
+      ]
+    },
+    "missing_routes": [
+      [
+        "MES_TENSOR_MODEL"
+      ],
+      [
+        "MES_TENSOR_MODEL",
+        "MODEL_BOUND_EXPERIMENTS"
+      ]
+    ]
+  },
+  "reasons": [
+    "no satisfied capability route"
+  ],
+  "scientific_outcome": "INPUT_UNAVAILABLE",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

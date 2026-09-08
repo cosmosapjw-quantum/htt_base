@@ -1,0 +1,114 @@
+{
+  "assumptions": [],
+  "attempt": 2,
+  "capabilities": [
+    "COMPARISON_RESULTS"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-21/attempt-0002/science.json"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-21",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "alternative_laws": "never multiply stat-only and syst compressed DESI alternatives, or unknown-dependent products",
+    "capability_evidence": {
+      "COMPARISON_RESULTS": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-21/attempt-0002/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      }
+    },
+    "data_contributions": {
+      "R7-06": {
+        "capabilities": [
+          "CMB_RECORDS",
+          "CMB_CONTROL_RECORDS"
+        ],
+        "outcome": "SCENARIO_ONLY"
+      },
+      "R7-07": {
+        "capabilities": [
+          "CF4_RECORDS"
+        ],
+        "outcome": "INPUT_UNAVAILABLE"
+      },
+      "R7-08": {
+        "capabilities": [
+          "BACKGROUND_CONTROL_RECORDS",
+          "BACKGROUND_LAW",
+          "DESI_RECORDS"
+        ],
+        "outcome": "CONDITIONAL_BOUND"
+      },
+      "R7-09": {
+        "capabilities": [
+          "JWST_RECORDS",
+          "JWST_SCENARIO",
+          "AUX_DISTANCE_RECORDS"
+        ],
+        "outcome": "SCENARIO_ONLY"
+      },
+      "R7-10": {
+        "capabilities": [
+          "ADMITTED_EXPERIMENTS",
+          "SUBSET_LAWS"
+        ],
+        "outcome": "CONDITIONAL_BOUND"
+      }
+    },
+    "scope_results": [
+      {
+        "DV_over_rd": 7.924712263167666,
+        "DV_over_rd_CI95": [
+          7.629279348078372,
+          8.22014517825696
+        ],
+        "acceptance_of_fiducial": {
+          "accepted": true,
+          "inside_support": true,
+          "numeric_status": "RESOLVED",
+          "quadratic": 0.838550365535873,
+          "rank": 1,
+          "threshold": 3.841458820694124
+        },
+        "conditioning_target": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+        "data_estimate_qiso": 0.9828804416839027,
+        "empirical": true,
+        "outcome": "CONDITIONAL_BOUND",
+        "physical_identification": null,
+        "prior": null,
+        "qiso_CI95": [
+          0.9462387032298103,
+          1.019522180137995
+        ],
+        "scope": {
+          "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+          "dataset_ids": [
+            "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+          ],
+          "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+          "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+          "method_config_id": "09ae0134ccea9b0e51f57b2848c0e0b391554b6d9cd1e39a274b735d2b6c4ea1",
+          "method_id": "R7_FIXED_GAUSSIAN_ACCEPTANCE",
+          "model_id": "RELEASED_GAUSSIAN_QISO",
+          "version": "r7.1"
+        },
+        "scope_limit": "This exact interval covers under the declared fixed Gaussian summary model. True raw-catalogue coverage has not been independently established.",
+        "uncertainty_type": "CONFIDENCE_CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY"
+      }
+    ],
+    "shared_calibration_information_oracle": {
+      "new_information": 0.2,
+      "old_information": 0.0,
+      "scope": "analytic independent-noise scalar scenario only",
+      "variance": 5.0
+    }
+  },
+  "reasons": [],
+  "scientific_outcome": "NOT_EVALUATED",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

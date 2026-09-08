@@ -1,0 +1,48 @@
+{
+  "assumptions": [],
+  "attempt": 1,
+  "capabilities": [
+    "LAW_KERNELS_VERIFIED"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-05/attempt-0001/science.json"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-05",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "capability_evidence": {
+      "LAW_KERNELS_VERIFIED": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-05/attempt-0001/science.json"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      }
+    },
+    "coverage": "Fixed true-parameter residual on known Gaussian support; chi-square covariance rank. No Wilks subtraction.",
+    "validation": {
+      "command": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "-q",
+        "tests/r7/test_gaussian_law.py"
+      ],
+      "exit_code": 0,
+      "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-05/attempt-0001/validation.log",
+      "log_sha256": "bf043fb7fb4254afc2734e63badea35f506916098af9a4cc9ae0443fa44dcd4b",
+      "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "test_sources": {
+        "tests/r7/test_gaussian_law.py": "32142aa6e0d9997421a819cca634c2814033a2e7bd6f9c6ad442e980a9db8257"
+      }
+    }
+  },
+  "reasons": [],
+  "scientific_outcome": "NOT_EVALUATED",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

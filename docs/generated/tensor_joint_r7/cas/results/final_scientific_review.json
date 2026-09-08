@@ -1,0 +1,250 @@
+{
+  "schema_version": 2,
+  "run_id": "TENSOR-JOINT-R7-20260908",
+  "assignment_id": "final_scientific_review",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "claim_ids": [
+    "RUN-TENSOR-JOINT-R7-20260908-V28"
+  ],
+  "result_path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/results/final_scientific_review.json",
+  "files_read": [
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/assignments/final_scientific_review.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    "/home/cosmosapjw/.codex/memories/MEMORY.md",
+    "/home/cosmosapjw/.codex/bounded-work-harness/RULES.md",
+    "/home/cosmosapjw/.codex/runtime/global-execution-policy.json",
+    ".agents/skills/htt-statistical-hardening/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    "docs/research_program/tensor_joint_r7/SCIENTIFIC_CONTRACT.md",
+    "docs/research_program/tensor_joint_r7/DESIGN.md",
+    "docs/research_program/tensor_joint_r7/LOCAL_CODEX_PLAN.md",
+    "docs/research_program/tensor_joint_r7/OWNED_ASSETS.md",
+    "scripts/observed_runs/run_tensor_joint_r7.py",
+    "scripts/observed_runs/run_r7_campaign.py",
+    "scripts/observed_runs/r7_report.py",
+    "scripts/observed_runs/r7_scenarios.py",
+    "htt/src/common/r7_contracts.py",
+    "htt/src/common/r7_radiation_jet.py",
+    "htt/src/common/r7_asset_use.py",
+    "htt/obsstat/r7_tensor_orbit.py",
+    "htt/obsstat/r7_cmb_product_response.py",
+    "htt/bass/transfer/r7_benchmark_provider.py",
+    "htt/bass/transfer/r7_external_provider.py",
+    "htt/htt/htt/infer/r7_gaussian_law.py",
+    "htt/htt/htt/infer/r7_calibration.py",
+    "htt/htt/htt/infer/r7_confidence.py",
+    "htt/htt/htt/infer/r7_cf4_law.py",
+    "htt/htt/htt/infer/r7_desi_law.py",
+    "htt/htt/htt/infer/r7_jwst_law.py",
+    "htt/htt/htt/infer/r7_joint_experiment.py",
+    "htt/htt/htt/infer/r7_mes_region.py",
+    "htt/htt/htt/infer/r7_depth_response.py",
+    "htt/htt/htt/infer/r7_high_source.py",
+    "tests/r7/conftest.py",
+    "tests/r7/test_gaussian_law.py",
+    "tests/r7/test_calibration_scopes.py",
+    "tests/r7/test_catalogue_laws.py",
+    "tests/r7/test_mes_region.py",
+    "tests/r7/test_tensor_orbit.py",
+    "tests/r7/test_physical_providers.py",
+    "../campaign/campaign_state.json",
+    "../campaign/nodes/R7-00/attempt-0001/result.json",
+    "../campaign/nodes/R7-06/attempt-0001/result.json",
+    "../campaign/nodes/R7-08/attempt-0001/result.json",
+    "../campaign/nodes/R7-18/attempt-0001/result.json",
+    "../campaign/nodes/R7-19/attempt-0001/result.json",
+    "../campaign/nodes/R7-21/attempt-0001/result.json",
+    "../campaign/nodes/R7-25/attempt-0002/result.json",
+    "../campaign/nodes/R7-05/attempt-0001/validation.json",
+    "../campaign/nodes/R7-05/attempt-0001/validation.log",
+    "../campaign/nodes/R7-07/attempt-0001/validation.json",
+    "../campaign/nodes/R7-07/attempt-0001/validation.log",
+    "../campaign/nodes/R7-12/attempt-0001/validation.json",
+    "../campaign/nodes/R7-12/attempt-0001/validation.log",
+    "../campaign/nodes/R7-13/attempt-0001/validation.json",
+    "../campaign/nodes/R7-13/attempt-0001/validation.log",
+    "../campaign/nodes/R7-18/attempt-0001/validation.json",
+    "../campaign/nodes/R7-18/attempt-0001/validation.log"
+  ],
+  "failed_read_attempts": [
+    "htt/src/obsstat/r7_tensor_orbit.py (corrected to htt/obsstat/r7_tensor_orbit.py)"
+  ],
+  "findings": [
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V28",
+      "finding_id": "SCI-01",
+      "severity": "P1",
+      "title": "Mutable prediction state bypasses calibrated implementation binding",
+      "evidence": [
+        "htt/htt/htt/infer/r7_gaussian_law.py:175",
+        "htt/htt/htt/infer/r7_calibration.py:140",
+        "tests/r7/test_calibration_scopes.py"
+      ],
+      "reproduction": "Create a one-dimensional unit covariance law observed=[0], mean=lambda t,e:array(t)+state['offset'], domain=True and full fixed Gaussian method null=[0]. Calibrate once. state offset=0 yields COMPATIBLE. Change only state['offset']=100: the same law/calibration returns REJECTED_CONJUNCTION and specification_id remains equal. Direct execution reproduced both outputs.",
+      "repair": "Bind supported mean/domain providers to immutable, checked numerical state; reject unsupported mutable callables at exact calibration, and test closure and callable-object state mutation. An object token alone is insufficient.",
+      "acceptance_relevance": "Blocks exact immutable law/method qualification in DESIGN section 2; no mutation of the actual DESI mean was observed.",
+      "verdict": "FAIL",
+      "evidence_fingerprint": "a6beb5e5ad799710dcd7161365de863038b44b0eb101a9d840c716a199e10fd6"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V28",
+      "finding_id": "SCI-02",
+      "severity": "P1",
+      "title": "Gaussian-host quadrature loses support of a singular Student measurement convolution",
+      "evidence": [
+        "htt/htt/htt/infer/r7_jwst_law.py:67",
+        "tests/r7/test_catalogue_laws.py"
+      ],
+      "reproduction": "ABSOLUTE one-host rows y=(.1,.123), measurement scale diag(1,0), host covariance [[.25]], common host design (1,1), mu=0, df=5, order=16. build_jwst_law(...,'STUDENT_T').loglik([0])=-inf. Exact density has H=y_B and epsilon=y_A-y_B, unit Jacobian, hence norm.logpdf(.123,scale=.5)+t.logpdf(.1-.123,df=5)=-1.2249863249101758. Numerical output reproduced.",
+      "repair": "Use the registered Gamma-precision convolution with covariance host_scatter+measurement_scale/lambda, retaining combined support and controlled integration; at minimum refuse support-enlarging singular convolutions rather than returning zero density. Test this exact two-row oracle.",
+      "acceptance_relevance": "Blocks normalized likelihood capability for an eligible declared singular law. No missing astrophysical input is involved; current JWST observed campaign remains scenario-only.",
+      "verdict": "FAIL",
+      "evidence_fingerprint": "a73aa833b99a06781895db446d2764992a8099c03fcc053c840b2876cd611e0f"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V28",
+      "finding_id": "SCI-03",
+      "severity": "P1",
+      "title": "Confidence inversion bypasses the known-covariance eligibility restriction",
+      "evidence": [
+        "htt/htt/htt/infer/r7_confidence.py:84",
+        "htt/htt/htt/infer/r7_mes_region.py:24",
+        "htt/htt/htt/infer/r7_calibration.py:128"
+      ],
+      "reproduction": "Construct unit covariance Gaussian law with approximation='EMPIRICAL_COVARIANCE', covariance_source='estimated'. invert_acceptance with alpha=.05 returns coverage_lower=0.95, construction FIXED_GAUSSIAN_ACCEPTANCE_INVERSE_IMAGE, and contains([1])=True. calibrate_method rejects the same approximation class. Direct reproduction succeeded.",
+      "repair": "Share the supported known-law qualification check with inversion and require separately justified acceptance for empirical/estimated covariance. Ensure combine_regions cannot consume an unqualified numerical coverage_lower as marginal coverage.",
+      "acceptance_relevance": "Blocks confidence/MES capability, independently of observed qiso result, because DESIGN section 4 restricts exact inversion to known Gaussian sampling covariance.",
+      "verdict": "FAIL",
+      "evidence_fingerprint": "689751a7a14a4f7af6a0d26e09c05714a2dd6fcc51107939a2c44d7e2d56860e"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V28",
+      "finding_id": "SCI-04",
+      "severity": "P2",
+      "title": "External radiation-jet reference adapter rejects its own required output type",
+      "evidence": [
+        "htt/bass/transfer/r7_external_provider.py:31",
+        "htt/bass/transfer/r7_external_provider.py:45",
+        "tests/r7/test_physical_providers.py"
+      ],
+      "reproduction": "Backend.radiation_jet(event) returns RadiationJet(3.,2.7,'OUTWARD','normal','D'); matching ReferenceCase expected is that same typed jet. ExternalTransferProvider construction raises ValueError 'array requires real numeric values' in finite_array. Runtime _call conversely requires RadiationJet. No conforming typed backend can pass both paths.",
+      "repair": "Validate RadiationJet identity/convention/domain fields and each supplied numeric component through a typed comparator; use the same type in reference and runtime paths. Test a valid typed jet and a changed convention/component.",
+      "acceptance_relevance": "Eligible interface implementation defect, not unavailable physics. Actual external-reference data absence may still independently block empirical use.",
+      "verdict": "FAIL",
+      "evidence_fingerprint": "ca64c81456a2d7e866e5c1ecdf46a06eabd1955dcb3fa54a0d6fa5682dd4584b"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V28",
+      "finding_id": "SCI-05",
+      "severity": "P2",
+      "title": "Positive support tolerance creates an unnormalized off-support Gaussian density",
+      "evidence": [
+        "htt/htt/htt/infer/r7_gaussian_law.py:64",
+        "htt/htt/htt/infer/r7_gaussian_law.py:72"
+      ],
+      "reproduction": "gaussian_loglik([0,.5],diag([1,0]),support_tol=1)=-0.9189385332046727, finite outside the declared singular support y2=0. Across the ambient tube |y2|<=1 its density integrates to 2, and it is not the original singular measure either.",
+      "repair": "Keep an exact support density distinct from a numerical acceptance enclosure; unresolved support residuals should be typed numerical uncertainty or handled by an explicitly normalized measurement-error law. Add an off-support density test with positive tolerance.",
+      "acceptance_relevance": "Generic normalization issue; conservatively enlarging an acceptance set alone need not reduce coverage. Actual qiso covariance is full rank and unaffected.",
+      "verdict": "FAIL",
+      "evidence_fingerprint": "14f5906e39997a5a7d0123f663cd6942558f389179086a052505f01342967238"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V28",
+      "finding_id": "SCI-06",
+      "severity": "P2",
+      "title": "Resume fingerprints omit physical kernels that determine cached node validation",
+      "evidence": [
+        "scripts/observed_runs/run_tensor_joint_r7.py:463",
+        "scripts/observed_runs/run_r7_campaign.py:140"
+      ],
+      "reproduction": "Read implementation_sources: R7-03 includes driver, contracts, infer/r7 and obsstat/r7 but omits common/r7_radiation_jet.py. R7-15/16 include only driver+contracts and omit their bass/transfer providers. Resume reuses identical fingerprint/result/evidence. Therefore changes to these kernels do not invalidate their own scientific receipts. Static dependency witness; campaign was not mutated.",
+      "repair": "Add actual local physical kernel/test inputs to the relevant node dependency maps and a targeted resume test for radiation/provider edits, carrying unchanged nodes.",
+      "acceptance_relevance": "Blocks trustworthy reuse after the requested scientific repairs; operational provenance issue, not direct evidence that existing numerical values are wrong.",
+      "verdict": "FAIL",
+      "evidence_fingerprint": "36fd6689d11a4bf5d6e502e5c669c039be4490b27d458618464d3e02ad76d172"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V28",
+      "finding_id": "SCI-07",
+      "severity": "P2",
+      "title": "Synthesis counts a copied observed scope as a second empirical scope",
+      "evidence": [
+        "scripts/observed_runs/run_tensor_joint_r7.py:423",
+        "scripts/observed_runs/run_r7_campaign.py:91",
+        "../campaign/nodes/R7-19/attempt-0001/result.json",
+        "../campaign/nodes/R7-21/attempt-0001/result.json",
+        "../campaign/nodes/R7-25/attempt-0002/result.json"
+      ],
+      "reproduction": "R7-19 contains the sole DESI compressed qiso scope. R7-21 copies scope_results from ancestors. synthesize_campaign concatenates both; actual R7-25 conclusion empirical_scope_count is 2 although only one unique full ScopeKey exists.",
+      "repair": "Deduplicate exact scoped results in synthesis, preserving producer provenance and reporting conflicts rather than double-counting reducer copies. Test one producer plus its copied comparison row.",
+      "acceptance_relevance": "Blocks accurate integrated-analysis accounting only; it does not mathematically double the likelihood or narrow the reported qiso interval.",
+      "verdict": "FAIL",
+      "evidence_fingerprint": "95d059d49016ba7c26c98ad7658923a4217e67f0b086a8975e4b23482073095a"
+    }
+  ],
+  "assumptions": [
+    "Declared known Gaussian covariance is a sampling-law assumption; tests cannot establish actual-product coverage.",
+    "K harmonics and K^2 covariance; physical rates divided by Theta=3H, outward versus propagation convention explicit.",
+    "Read-only production/campaign review; no sibling result or CAS derivation read, no nested agents.",
+    "No relevant memory hit was used."
+  ],
+  "observations": {
+    "observed_qiso": 0.9828804416839027,
+    "conditional_CI95": [
+      0.9462387032298103,
+      1.019522180137995
+    ],
+    "reported_prior": null,
+    "fiducial_acceptance": true,
+    "empirical_unique_scopes": 1,
+    "reported_scope_count": 2,
+    "gaussian_stress_cells": 11,
+    "settled_stress_status": "all PASS",
+    "claim_ceiling": "Conditional released Gaussian summary result only. No native family identification, observed physical MES bound, calibrated PR3 full-orbit p-value, or fully joint multi-survey likelihood."
+  },
+  "tests": {
+    "interpreter": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "runtime": "Python 3.12; NumPy/SciPy from specified venv",
+    "direct_reproductions": [
+      "SCI-01",
+      "SCI-02",
+      "SCI-03",
+      "SCI-04",
+      "SCI-05"
+    ],
+    "campaign_readback": [
+      "SCI-07"
+    ],
+    "static_dependency_check": [
+      "SCI-06"
+    ],
+    "settled_validation_readback": {
+      "Gaussian": 13,
+      "catalogue": 4,
+      "high_source": 4,
+      "MES": 2,
+      "calibration": 4
+    },
+    "settled_validation_note": "All five receipt exit codes zero and recorded test-source hashes match current test files. These tests omit reproduced edge cases.",
+    "local_combined_pytest": "Launched once with -B -o addopts= -p no:cacheprovider; partial output received, completion was not captured. No pass total is claimed from that invocation.",
+    "preserved_initial_reproduction_errors": [
+      "Initial minimal ScopeKey lacked mandatory method_config_id; corrected fixture.",
+      "First Student reproduction attempted eigvalsh(law.covariance), but Student intentionally has covariance=None; removed that irrelevant print and reran."
+    ]
+  },
+  "nonblocking_scope_notes": [
+    "Whole-row orbit implementation retains every row and returns zero-lower/identity-upper intervals for large pools; campaign withholds rank. No exact rank promotion found.",
+    "T3 reports model-conditional states; observed qiso-only MES path correctly reports missing radiation jet. GF box relaxation and feasible inner witnesses are kept separate.",
+    "Local response rank is explicitly labeled local tangent; no scalar Q/F/G-to-family promotion found in reviewed code.",
+    "RestrictedR3Provider remains a source checker/stub even if donor files arrive; source_status and absent reference data are independent of the unimplemented R3 stress-history/Jacobi adaptation. Its physical implementation must not be counted complete.",
+    "Generic provider/factory and non-Gaussian calibration are not fully executable: simulator calibration is explicitly unsupported. These are missing implementation capabilities, not in themselves unavailable physics.",
+    "Several owned controls remain inventory entries rather than executed source-specific controls. Normalized scientific eligibility may be absent, but that does not independently prove descriptive/scenario processing is impossible. No broad inventory rediscovery was performed."
+  ],
+  "review_limits": [
+    "No CAS rederivation or four-axis re-adjudication.",
+    "No new product acquisition, broad repository discovery, campaign rerun, or production edit.",
+    "One bounded review round; findings apply to inspected source before any parent repair."
+  ]
+}
