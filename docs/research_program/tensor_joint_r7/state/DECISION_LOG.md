@@ -1,0 +1,16 @@
+# R7 decisions
+
+1. **PROMOTE for design:** full tensor/absolute frame carrier and an all-strata SO(3) orbit diagnostic; preserve the existing cyclic packet as a convenient chart and comparison, not an all-strata gate.
+2. **PROMOTE conditionally:** T3 tensor moment/jet constraints and its explicit geodesic first-order envelope. Reviewer-required SI rate derivatives, vorticity sign, odd-sky conversion and differentiated normalization were incorporated. Finite-amplitude physical remainder and actual jet coverage are not promoted.
+3. **PROMOTE for analytical method:** T4 H0–H3, T5 finite-band mask/cost, T6 calibration gain, T7 simultaneous confidence images and T8 correct branch/null semantics. Independent mathematical review upheld the proofs within their domains; the missing W derivative for parameter-dependent conditioning was corrected.
+4. **PROMOTE as benchmark design / HOLD empirical claim:** constrained R3 with correct existing dust donor. The LRS model's symmetry is a useful oracle and excludes interpreting it as a general-handedness calibration model.
+5. **PROMOTE conditional donor path:** AniLoS/AniCLASS supported regular vector/tensor modes. Scalar/unsupported IC/channel requests remain unsupported. Native stub stays unchanged.
+6. **REJECT shortcuts:** f_B-only completion, rank-as-physical-velocity Jacobian, forcing B_sigma>B_omega, scalar x_C=0 as isotropy, 999 reused-noise rows as independent, same-data duplicate likelihood, pseudoinverse without support, favorable nuisance branch as robust p, template addition as anisotropic covariance transfer.
+7. **REOPEN scheduling scope, not old validation:** user explicitly requested R7 research/design/push with alternatives. Add a successor pointer to the existing latest handoff and separate campaign IDs. Preserve canonical old PR status and old M1/M2/M3/THEORY_FREEZE snapshots.
+8. **Use existing code before rewrites:** integrate Q/P/A/D/B donors narrowly and test the actual consumer; independently emit donor capabilities. PR151 invalidated values remain excluded. Optional failure cannot remove unrelated successful donor capabilities.
+9. **Scope ownership:** math/physics/statistics work and design publication happen here; scientific execution is delegated to workstation Local Codex. Source inspection, metadata hashing and structural routing tests do not count as scientific computation.
+
+Review independence: physical and statistical producers read sealed common seeds but no sibling results; a separate blind-results mathematical reviewer checked the candidate theory. Main adjudicated corrections. Final implementation/DAG review is separate from its author and is recorded in CLOSEOUT. These are analytical/design reviews, not four-axis CAS or journal peer review.
+
+10. **PROMOTE corrected design:** independent correction review resolved method/config scope, conditional CF4, independent P0/P1, factory binding, exact-proof eligibility and model-bound MES routing. Initial FAIL is preserved in the review record.
+11. **Apply owned assets:** route every reported product to a supported law/control/scenario role; reuse exact review87 moments/optics. Same-model marginal confidence intersections use fixed union-bound budgets when cross-dependence is unknown; alternative assumptions remain unioned.
