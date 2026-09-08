@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-o",
+    "addopts=",
+    "--import-mode=importlib",
+    "-q",
+    "htt/bass/collision/test_thomson_pstf.py",
+    "htt/bass/transport/test_ver2_geodesics.py",
+    "tests/r7/test_physical_providers.py"
+  ],
+  "exit_code": 0,
+  "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/dynamics/validation.log",
+  "log_sha256": "ad263e1d2516e243dce68fc90510e06e47e319de5bcd13b63975a4e37cc77038",
+  "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+  "test_sources": {
+    "htt/bass/collision/test_thomson_pstf.py": "dd5391d29f28cac22efa9ebc4c88f851e3c96d9dc80f329c45f112c4970ec2df",
+    "htt/bass/transport/test_ver2_geodesics.py": "bfdeca56e2dcd07c8a95c5597c2fd5423f61d3e3dbb0cc4be0616f69f1f63360",
+    "tests/r7/test_physical_providers.py": "c064c8c44e6122356f429f64083331ddb61a67886a5a5d010c9a50209d4f8148"
+  }
+}

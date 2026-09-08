@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-o",
+    "addopts=",
+    "--import-mode=importlib",
+    "-q",
+    "tests/r7/test_source_composition.py",
+    "tests/common/test_mes_krylov_completion.py"
+  ],
+  "exit_code": 0,
+  "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/krylov/validation.log",
+  "log_sha256": "d73bf64838588341b4746b09375dec064652ceebb89e31f5cab788ce4a42c8bf",
+  "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+  "test_sources": {
+    "tests/common/test_mes_krylov_completion.py": "108de5f19f58e23f322a9be92d8c6c1e1cb897c4821d1ac063ffa67dd2233a2d",
+    "tests/r7/test_source_composition.py": "b2713ed0216ddff535f18ba5146551000ff0b6d68e56c1ca1023a9719c604a34"
+  }
+}

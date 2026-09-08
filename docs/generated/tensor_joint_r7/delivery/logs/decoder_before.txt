@@ -1,0 +1,16 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+________________ test_target_import_and_out_of_image_sign_flip _________________
+
+    def test_target_import_and_out_of_image_sign_flip():
+        root = Path(__file__).resolve().parents[2]
+        assert Path(decoder.__file__).resolve() == root / "htt/src/common/mes_krylov_completion.py"
+        packet = deepcopy(decoder.krylov16(*witness()))
+        packet["values"][6:] = [-v for v in packet["values"][6:]]
+>       with pytest.raises(decoder.OrbitInputError):
+E       Failed: DID NOT RAISE <class 'common.mes_krylov_completion.OrbitInputError'>
+
+tests/r7/test_source_composition.py:28: Failed
+=========================== short test summary info ============================
+FAILED tests/r7/test_source_composition.py::test_target_import_and_out_of_image_sign_flip
+1 failed, 1 passed in 0.11s

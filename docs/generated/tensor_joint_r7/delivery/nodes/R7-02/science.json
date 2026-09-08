@@ -1,0 +1,304 @@
+{
+  "actual_driver_module_paths": {
+    "common.r7_asset_use": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_asset_use.py",
+    "common.r7_contracts": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_contracts.py"
+  },
+  "donor_capability_records": {
+    "anchor": {
+      "selected_paths": [
+        "htt/src/common/anchor_geometry.py",
+        "htt/src/common/anchored_response_geometry.py",
+        "tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py",
+        "htt/src/common/orbit_nonlinearity.py",
+        "scripts/codex_harness/premise_anchor_gates.py",
+        "scripts/codex_harness/run_pr254_counterexamples.py",
+        "scripts/codex_harness/run_pr254_normalizer_benchmark.py"
+      ],
+      "status": "PASS",
+      "validation": {
+        "command": [
+          "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+          "-B",
+          "-m",
+          "pytest",
+          "-o",
+          "addopts=",
+          "--import-mode=importlib",
+          "-q",
+          "tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py",
+          "-k",
+          "counterexamples_force or benchmark_serialization or zero_denominator_status or gaussian_likelihood_probe or active_module"
+        ],
+        "exit_code": 0,
+        "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/anchor/validation.log",
+        "log_sha256": "6a5ce328f0ecb9bbd522559e006f96998fcda560ede1f290e52ecd2b7de008a0",
+        "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "test_sources": {
+          "tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py": "e8368a4d00e0fe3bd10e9676f592320bbe973d447388cb466558e7a1296bf112"
+        }
+      }
+    },
+    "boost": {
+      "selected_paths": [
+        "htt/obsstat/lorentz_sky_pullback.py",
+        "htt/obsstat/boost_response.py",
+        "htt/test_wu010_audit_closure.py",
+        "htt/obsstat/planck_lowell_irrep_projection.py"
+      ],
+      "status": "PASS",
+      "validation": {
+        "command": [
+          "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+          "-B",
+          "-m",
+          "pytest",
+          "-o",
+          "addopts=",
+          "--import-mode=importlib",
+          "-q",
+          "htt/test_wu010_audit_closure.py"
+        ],
+        "exit_code": 0,
+        "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/boost/validation.log",
+        "log_sha256": "f62856bf55710418544da7bb61bc3570a1a293c4053b2e85426b8068f0b37ac6",
+        "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "test_sources": {
+          "htt/test_wu010_audit_closure.py": "6434b04514621b7774c0428cdc0aa10d5b2c860699cbdea49d8e8aa388e64f87"
+        }
+      }
+    },
+    "cf4": {
+      "selected_paths": [
+        "htt/obsstat/cf4_current_stack.py",
+        "htt/src/common/data_identity.py"
+      ],
+      "status": "PASS",
+      "validation": {
+        "command": [
+          "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+          "-B",
+          "-m",
+          "pytest",
+          "-o",
+          "addopts=",
+          "--import-mode=importlib",
+          "-q",
+          "tests/r7/test_catalogue_laws.py",
+          "-k",
+          "cf4 or selected_latent"
+        ],
+        "exit_code": 0,
+        "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/cf4/validation.log",
+        "log_sha256": "dde2dc46a5039a591dd04bcca93c317888b73271a9be86f7e56b649e48b0d7bf",
+        "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "test_sources": {
+          "tests/r7/test_catalogue_laws.py": "c2aa81ac051cd864cd13da170c74d937c1f7a21e3475c29db32ae703c745d791"
+        }
+      }
+    },
+    "desi": {
+      "selected_paths": [
+        "htt/obsstat/desi_successor_formalism.py",
+        "scripts/observed_runs/run_desi_bgs_bright.py"
+      ],
+      "status": "PASS",
+      "validation": {
+        "command": [
+          "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+          "-B",
+          "-m",
+          "pytest",
+          "-o",
+          "addopts=",
+          "--import-mode=importlib",
+          "-q",
+          "tests/r7/test_catalogue_laws.py",
+          "-k",
+          "desi"
+        ],
+        "exit_code": 0,
+        "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/desi/validation.log",
+        "log_sha256": "a6c0d944c4fb0e1517b58884e179c376c4249125c24efe3b7dd32166d7a5e5d1",
+        "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "test_sources": {
+          "tests/r7/test_catalogue_laws.py": "c2aa81ac051cd864cd13da170c74d937c1f7a21e3475c29db32ae703c745d791"
+        }
+      }
+    },
+    "dynamics": {
+      "selected_paths": [],
+      "status": "PASS",
+      "validation": {
+        "command": [
+          "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+          "-B",
+          "-m",
+          "pytest",
+          "-o",
+          "addopts=",
+          "--import-mode=importlib",
+          "-q",
+          "htt/bass/collision/test_thomson_pstf.py",
+          "htt/bass/transport/test_ver2_geodesics.py",
+          "tests/r7/test_physical_providers.py"
+        ],
+        "exit_code": 0,
+        "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/dynamics/validation.log",
+        "log_sha256": "ad263e1d2516e243dce68fc90510e06e47e319de5bcd13b63975a4e37cc77038",
+        "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "test_sources": {
+          "htt/bass/collision/test_thomson_pstf.py": "dd5391d29f28cac22efa9ebc4c88f851e3c96d9dc80f329c45f112c4970ec2df",
+          "htt/bass/transport/test_ver2_geodesics.py": "bfdeca56e2dcd07c8a95c5597c2fd5423f61d3e3dbb0cc4be0616f69f1f63360",
+          "tests/r7/test_physical_providers.py": "c064c8c44e6122356f429f64083331ddb61a67886a5a5d010c9a50209d4f8148"
+        }
+      }
+    },
+    "gf": {
+      "selected_paths": [],
+      "status": "PASS",
+      "validation": {
+        "command": [
+          "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+          "-B",
+          "-m",
+          "pytest",
+          "-o",
+          "addopts=",
+          "--import-mode=importlib",
+          "-q",
+          "research_gates/egs3/tests/test_egs3_axis_e_gf_v8.py",
+          "research_gates/egs3/tests/test_egs3_axis_e_fractional_program.py"
+        ],
+        "exit_code": 0,
+        "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/gf/validation.log",
+        "log_sha256": "2dafa3a2ff6c25d5cb47cca495aaa18255c4571158324c1afcef530fed6f42c6",
+        "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "test_sources": {
+          "research_gates/egs3/tests/test_egs3_axis_e_fractional_program.py": "6aca3cf1622a355ce0bd6d45bb1e37aa7077a638042d25c45153ae5f23efe202",
+          "research_gates/egs3/tests/test_egs3_axis_e_gf_v8.py": "b12d424c44d563c915b8038e34ccece1773b21fa712e2fd6b29444d08c96dc34"
+        }
+      }
+    },
+    "jwst": {
+      "selected_paths": [
+        "htt/obsstat/jwst_distance_consistency.py",
+        "scripts/observed_runs/run_jwst_sn.py"
+      ],
+      "status": "PASS",
+      "validation": {
+        "command": [
+          "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+          "-B",
+          "-m",
+          "pytest",
+          "-o",
+          "addopts=",
+          "--import-mode=importlib",
+          "-q",
+          "tests/r7/test_catalogue_laws.py",
+          "-k",
+          "jwst or student"
+        ],
+        "exit_code": 0,
+        "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/jwst/validation.log",
+        "log_sha256": "dde2dc46a5039a591dd04bcca93c317888b73271a9be86f7e56b649e48b0d7bf",
+        "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "test_sources": {
+          "tests/r7/test_catalogue_laws.py": "c2aa81ac051cd864cd13da170c74d937c1f7a21e3475c29db32ae703c745d791"
+        }
+      }
+    },
+    "krylov": {
+      "selected_paths": [
+        "htt/src/common/mes_krylov_completion.py",
+        "tests/common/test_mes_krylov_completion.py"
+      ],
+      "status": "PASS",
+      "validation": {
+        "command": [
+          "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+          "-B",
+          "-m",
+          "pytest",
+          "-o",
+          "addopts=",
+          "--import-mode=importlib",
+          "-q",
+          "tests/r7/test_source_composition.py",
+          "tests/common/test_mes_krylov_completion.py"
+        ],
+        "exit_code": 0,
+        "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/krylov/validation.log",
+        "log_sha256": "d73bf64838588341b4746b09375dec064652ceebb89e31f5cab788ce4a42c8bf",
+        "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "test_sources": {
+          "tests/common/test_mes_krylov_completion.py": "108de5f19f58e23f322a9be92d8c6c1e1cb897c4821d1ac063ffa67dd2233a2d",
+          "tests/r7/test_source_composition.py": "b2713ed0216ddff535f18ba5146551000ff0b6d68e56c1ca1023a9719c604a34"
+        }
+      }
+    },
+    "processed_error": {
+      "selected_paths": [
+        "htt/obsstat/processed_boost_error_envelope.py"
+      ],
+      "status": "PASS",
+      "validation": {
+        "command": [
+          "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+          "-B",
+          "-m",
+          "pytest",
+          "-o",
+          "addopts=",
+          "--import-mode=importlib",
+          "-q",
+          "htt/test_wu011_task7c_error_envelope.py"
+        ],
+        "exit_code": 0,
+        "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/processed_error/validation.log",
+        "log_sha256": "9b11cb2f3356aba2b6bea79c5002067b83ed8c2e96bb42b301fec1fe49fd2c79",
+        "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "test_sources": {
+          "htt/test_wu011_task7c_error_envelope.py": "9ab66064b257bd16ac5533a097936faee7c34bae4618dcebcc260e718763c4ac"
+        }
+      }
+    },
+    "tensor": {
+      "selected_paths": [
+        "htt/src/common/observable_irrep_state.py",
+        "htt/obsstat/processed_boost_error_envelope.py",
+        "htt/obsstat/mes_directional_moments.py",
+        "htt/src/common/mes_directional_state.py",
+        "htt/src/common/mes_premise_normalization.py",
+        "htt/test_wu011_task7c_error_envelope.py",
+        "tests/obsstat/test_mes_directional_moments.py",
+        "tests/common/test_mes_directional_state.py",
+        "htt/src/common/statistical_foundations.py"
+      ],
+      "status": "PASS",
+      "validation": {
+        "command": [
+          "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+          "-B",
+          "-m",
+          "pytest",
+          "-o",
+          "addopts=",
+          "--import-mode=importlib",
+          "-q",
+          "tests/obsstat/test_mes_directional_moments.py",
+          "tests/common/test_mes_directional_state.py"
+        ],
+        "exit_code": 0,
+        "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/tensor/validation.log",
+        "log_sha256": "cd84e8755f28ffe0b353fd61d2485cc35c9a034b682e3d2e6ba1af3a43cb3e7f",
+        "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "test_sources": {
+          "tests/common/test_mes_directional_state.py": "f4271fc66f379f1b119ec65edae1fb1a27e9a52dd92d609789ecef8083f9c0b3",
+          "tests/obsstat/test_mes_directional_moments.py": "4b5a78fa762a98118d1a0a4fe0212567bf0624e2d25587255ae6f956963205dc"
+        }
+      }
+    }
+  },
+  "historical_wrapper_failures": "Unselected PR publication/dispatch checks remain recorded in donors_dependencies.log; scientific donor tests are separate."
+}
