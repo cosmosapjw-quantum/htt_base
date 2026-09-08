@@ -44,3 +44,9 @@
 이 캠페인은 사용자가 요청한 **공식 재계획 설계**다. 기존 M1/M2/M3와 THEORY_FREEZE의 과학적 의무를 없애거나 완료로 바꾸지 않는다. 이전의 단일 전역 release 대신, 명세·입력·검증이 충족된 분기만 실행한다. 이전 PR의 상태와 관측값은 그대로 보존한다. 특히 무효화된 DESI PR-151 결과값은 재사용하지 않고 원시 자산과 처리 코드만 재검증 대상으로 사용한다. PR4/NPIPE 자료 획득·분석 제외 지시는 유지한다.
 
 새 하네스 두 개는 모두 **3.1.0**이며 연구 phase와 coding design phase에 적용했다. 저장소의 기존 AGENTS·harness를 교체하지 않는다. GitHub 읽기·문헌 대조·해석적 연구·문서/DAG 검사와 실제 과학 실행은 구분하여 기록한다. Wolfram 연결은 MCP 서버 오류로 사용할 수 없었으며 CAS 검증은 실행 완료로 세지 않는다.
+
+
+## R8 successor after local implementation
+
+The reviewed successor design from `b7172ad904eb357fcce78eb9c5b7164d1e86a9e6` is [tensor_joint_r8](../tensor_joint_r8/README.md), with [formal replan entry](../../codex_handoff/R8_REPLAN_20260908.md). R7's frozen scientific contract/DAG/results remain historical; the R8 contract explicitly identifies its revised rank handling, physical premises and independently qualified branches. This link does not change the old full-plan acceptance status.
+

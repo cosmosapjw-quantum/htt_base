@@ -1,0 +1,98 @@
+{
+  "schema": "PORTABLE_RESEARCH_REVIEW_CONFIRMATION_V1",
+  "run_id": "HTT-R8-DESIGN-20260908",
+  "assignment_id": "R8-INDEPENDENT-DESIGN",
+  "context_version": "b7172ad9-r8-design-v1",
+  "confirmation_scope": "Registered findings D1-D4 only; current candidate identified by hashes below",
+  "independence_mode": "review-candidate",
+  "operational_harness": "CONNECTOR_RESEARCH_REVIEW_NOT_NATIVE_HOOK_ACCEPTANCE",
+  "base_commit": "b7172ad904eb357fcce78eb9c5b7164d1e86a9e6",
+  "verdict": "PROMOTE_FOR_IMPLEMENTATION",
+  "summary": "Both registered blockers are resolved in the revised design, and both registered recommendations are addressed. This confirms implementation-design readiness within the original review scope; it does not establish implementation correctness, scientific validity from execution, or native hook acceptance.",
+  "original_review": {
+    "path": "/workspace/scratch/baa7b9162acb/r8_review/design.json",
+    "sha256": "336d465ada1ea8362491d41406f3da3940079ac22cb4a6eba3e0013dbccb8819",
+    "preserved": true,
+    "verdict": "HOLD"
+  },
+  "inputs": {
+    "r8_design/docs/research_program/tensor_joint_r8/SCIENTIFIC_CONTRACT.md": "83e0284a69d8d50f488fbade6fc640302ca841c0213bf81991b178cf0f03afd5",
+    "r8_design/docs/research_program/tensor_joint_r8/DESIGN.md": "70ecbaa6a933f9a9824560bbd2ee7626a75dd6a010b3d751ad4ad13b14c578b6",
+    "r8_design/docs/research_program/tensor_joint_r8/LOCAL_CODEX_PLAN.md": "dceaea1673574d77b029d21a1de13e8768a4d978faed0a86a406a5406dc9c6d1",
+    "r8_design/docs/research_program/tensor_joint_r8/campaign_dag.json": "3235d2acbe00b40e186dba93e11d6f18ae38e837fad0cc3852697a6327d3f954",
+    "r8_design/docs/research_program/tensor_joint_r8/validate_campaign.py": "eb7dbc88ea80f8239d5cb4b3edd01791456d93c605caf027d84b3f30e7c23fcc",
+    "r8_design/docs/research_program/tensor_joint_r8/VALIDATION_MATRIX.md": "ba1fc76d711b1984c34820da9503da6a621923bf70de5844d5abe8edd3041ab9",
+    "r8_design/docs/research_program/tensor_joint_r8/ASSET_REUSE.md": "7f65a342005f42cc6e473cf1e6a06e6546965168cee89349b00736978802a884"
+  },
+  "findings_confirmation": [
+    {
+      "id": "D1",
+      "status": "RESOLVED",
+      "evidence": [
+        "R8-19.distance_channel produces R3_DISTANCE_CHANNEL; R8-20.restricted_distance_factory consumes only that distance capability.",
+        "The separate record_radiation_jet_unavailable action emits only R3_JET_STATUS; R3_JET_CHANNEL is not offered anywhere in the graph.",
+        "DESIGN JetBoundary and Unit F expressly keep radiation derivative-jet export INPUT_UNAVAILABLE until a future contracted derivative/remainder validation scope.",
+        "The structural survivor check retains R3_DISTANCE_FACTORY and P2_DISTANCE_RESULTS with the jet-status action disabled."
+      ]
+    },
+    {
+      "id": "D2",
+      "status": "RESOLVED",
+      "evidence": [
+        "R8-15.closure_mocks now consumes only JET_IMAGE and validates V07.",
+        "The separate R8-15.recession_mocks consumes NONID_METHOD and produces NONID_QUALIFIED under V08.",
+        "R8-16.conditional_physical_image uses CLOSURE_METHOD and V07/V12; the separate nonidentification_result requires NONID_QUALIFIED and V08/V12.",
+        "DESIGN explicitly allows certified compact-domain images while unavailable global/recession targets remain unresolved.",
+        "The structural survivor check retains PHYSICAL_IMAGE and excludes NONID_RESULTS when recession_certificates is disabled."
+      ]
+    },
+    {
+      "id": "D3",
+      "status": "ADDRESSED",
+      "evidence": [
+        "validate_campaign.py now checks the two registered action-level survival cases and rejects an offered R3_JET_CHANNEL.",
+        "All 52 action records require own declared validation/scope admission and always emit a receipt; the validator checks both fields.",
+        "Unit G explicitly requires product/action-level runtime survival checks, including a missing CF4 covariance with an admitted DESI law and rejection of jet-status receipts as derivative capabilities."
+      ]
+    },
+    {
+      "id": "D4",
+      "status": "ADDRESSED",
+      "evidence": [
+        "Mock4 specifies three one-sided exact binomial upper rejection-frequency bounds with failure budget 0.01/3 and diagnostic threshold alpha+0.01.",
+        "A diagnostic breach holds the relevant adapter for investigation; exact-law and deterministic fixtures remain the validity gates rather than a naive observed-coverage comparison."
+      ]
+    }
+  ],
+  "remaining_registered_blockers": [],
+  "verification": {
+    "structural_validator": {
+      "status": "PASS_STRUCTURAL_ONLY",
+      "nodes": 24,
+      "actions": 52,
+      "routing_scenarios": 27,
+      "science_executed": false
+    },
+    "scientific_execution": false,
+    "cas_execution": false,
+    "mock_execution": false,
+    "observed_data_execution": false,
+    "new_broad_review": false,
+    "sibling_reviews_read": false,
+    "native_launch_claim": false
+  },
+  "harness_result": {
+    "portable": true,
+    "verdict": "PROMOTE_FOR_IMPLEMENTATION",
+    "authority": "CONNECTOR_RESEARCH_REVIEW_NOT_NATIVE_HOOK_ACCEPTANCE",
+    "scientific_execution": false
+  },
+  "additional_narrow_change": {
+    "scope": "Import spelling in three illustrative test snippets only",
+    "observed": [
+      "from htt.infer.r8_interval_rank import rank_from_score_bounds (two snippets)",
+      "from obsstat.r8_multipole_vectors import mv_to_tensor (one snippet)"
+    ],
+    "assessment": "Latest plan read and hash bound. Scientific design is unchanged. Repository package layout was not independently re-audited during this narrow confirmation."
+  }
+}

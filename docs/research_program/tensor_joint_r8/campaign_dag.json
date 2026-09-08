@@ -1,0 +1,1688 @@
+{
+  "schema": "HTT_R8_SCIENTIFIC_DAG_V1",
+  "base_commit": "b7172ad904eb357fcce78eb9c5b7164d1e86a9e6",
+  "status": "DESIGN_ONLY_NOT_EXECUTED",
+  "scope_iteration": "each admitted product/law/model domain independently",
+  "policy": {
+    "dependency_mode": "terminal_receipts",
+    "missing_scope_acceptance": "whole_domain",
+    "capabilities_require_current_scope_binding": true,
+    "scientific_failure_is_not_global_stop": true,
+    "runtime_policy_override": false,
+    "historical_r7_unchanged": true,
+    "synthesis_requires_all_terminal": true,
+    "implicit_alpha_reallocation": false
+  },
+  "error_allocation": {
+    "cmb": "1/80",
+    "cf4": "1/80",
+    "distance_calibration": "1/80",
+    "desi": "1/80"
+  },
+  "science_outcomes": [
+    "NOT_EVALUATED",
+    "COMPATIBLE",
+    "REJECTED_CONJUNCTION",
+    "PARTIALLY_IDENTIFIED",
+    "NONIDENTIFIED",
+    "CONDITIONAL_BOUND",
+    "SCENARIO_ONLY",
+    "NUMERICALLY_UNRESOLVED",
+    "INPUT_UNAVAILABLE",
+    "VALIDATION_FAILED"
+  ],
+  "process_terminal": [
+    "COMPLETED_SUCCESS",
+    "COMPLETED_FAILED_WITH_RECEIPT",
+    "BLOCKED_WITH_RECEIPT",
+    "ABANDONED_WITH_RECEIPT"
+  ],
+  "validation_ids": [
+    "V01",
+    "V02",
+    "V03",
+    "V04",
+    "V05",
+    "V06",
+    "V07",
+    "V08",
+    "V09",
+    "V10",
+    "V11",
+    "V12"
+  ],
+  "nodes": [
+    {
+      "id": "R8-00",
+      "title": "Bind base, inherited evidence and available inputs",
+      "kind": "work",
+      "after": [],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "bind_sources",
+          "requires": [],
+          "produces": [
+            "SOURCE_BOUND"
+          ],
+          "validation": [
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "import_historical_records",
+          "requires": [],
+          "produces": [
+            "HISTORY_SCOPED"
+          ],
+          "validation": [
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "source_binding.json",
+        "historical_evidence.json",
+        "input_availability.json"
+      ],
+      "contract_refs": [
+        "CONTRACT:1",
+        "DESIGN:Operational"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-01",
+      "title": "New exact orbit, rank and representation obligations",
+      "kind": "work",
+      "after": [
+        "R8-00"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "orbit_obligations",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "ORBIT_PROOF"
+          ],
+          "validation": [
+            "V01",
+            "V02"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "rank_obligations",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "RANK_PROOF"
+          ],
+          "validation": [
+            "V03"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "representation_obligations",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "MV_PROOF"
+          ],
+          "validation": [
+            "V04"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "cas_contract.json",
+        "per_obligation_axis_results.json"
+      ],
+      "contract_refs": [
+        "THEORY:O1",
+        "THEORY:O2",
+        "THEORY:O3",
+        "THEORY:O4"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-02",
+      "title": "Certified invariant and adaptive cell bounds",
+      "kind": "work",
+      "after": [
+        "R8-00",
+        "R8-01"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "certified_bounds",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            },
+            {
+              "node": "R8-01",
+              "capability": "ORBIT_PROOF"
+            }
+          ],
+          "produces": [
+            "PAIR_BOUNDS"
+          ],
+          "validation": [
+            "V01",
+            "V02"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "bound_tests.json",
+        "pair_checkpoint.schema.json"
+      ],
+      "contract_refs": [
+        "THEORY:O1",
+        "THEORY:O2",
+        "DESIGN:Numerical"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-03",
+      "title": "Conservative interval rank engine",
+      "kind": "work",
+      "after": [
+        "R8-00",
+        "R8-01"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "interval_rank",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            },
+            {
+              "node": "R8-01",
+              "capability": "RANK_PROOF"
+            }
+          ],
+          "produces": [
+            "INTERVAL_RANK"
+          ],
+          "validation": [
+            "V03"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "rank_oracles.json"
+      ],
+      "contract_refs": [
+        "THEORY:O3"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-04",
+      "title": "Full MV and lossy-summary ablation",
+      "kind": "work",
+      "after": [
+        "R8-00",
+        "R8-01"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "full_mv",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            },
+            {
+              "node": "R8-01",
+              "capability": "MV_PROOF"
+            }
+          ],
+          "produces": [
+            "MV_ABLATION"
+          ],
+          "validation": [
+            "V04"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "representation_results.json"
+      ],
+      "contract_refs": [
+        "THEORY:O4"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-05",
+      "title": "Tensor and rank mock validation",
+      "kind": "work",
+      "after": [
+        "R8-02",
+        "R8-03",
+        "R8-04"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "orbit_rank_mocks",
+          "requires": [
+            {
+              "node": "R8-02",
+              "capability": "PAIR_BOUNDS"
+            },
+            {
+              "node": "R8-03",
+              "capability": "INTERVAL_RANK"
+            }
+          ],
+          "produces": [
+            "ORBIT_METHOD_QUALIFIED"
+          ],
+          "validation": [
+            "V01",
+            "V02",
+            "V03"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "mv_comparison",
+          "requires": [
+            {
+              "node": "R8-04",
+              "capability": "MV_ABLATION"
+            },
+            {
+              "node": "R8-02",
+              "capability": "PAIR_BOUNDS"
+            }
+          ],
+          "produces": [
+            "MV_COMPARISON_QUALIFIED"
+          ],
+          "validation": [
+            "V04"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "mock_scope_results.json",
+        "performance_intervals.json"
+      ],
+      "contract_refs": [
+        "VALIDATION:Mocks1-3"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-06",
+      "title": "CMB product and processing intake",
+      "kind": "work",
+      "after": [
+        "R8-00"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "extract_valid_tensors",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "CMB_TENSORS"
+          ],
+          "validation": [
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "qualify_pool_law",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "EXCHANGEABLE_POOL"
+          ],
+          "validation": [
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "qualify_candidate_cmb_law",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "CMB_CANDIDATE_FACTORY"
+          ],
+          "validation": [
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "cmb_product_records.json",
+        "cmb_law_sidecars.json"
+      ],
+      "contract_refs": [
+        "CONTRACT:3",
+        "CONTRACT:4",
+        "ASSETS:CMB"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-07",
+      "title": "Observed CMB morphology and candidate acceptance",
+      "kind": "work",
+      "after": [
+        "R8-05",
+        "R8-06"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "descriptive_morphology",
+          "requires": [
+            {
+              "node": "R8-06",
+              "capability": "CMB_TENSORS"
+            }
+          ],
+          "produces": [
+            "CMB_DESCRIPTIVE"
+          ],
+          "validation": [
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "observed_rank",
+          "requires": [
+            {
+              "node": "R8-05",
+              "capability": "ORBIT_METHOD_QUALIFIED"
+            },
+            {
+              "node": "R8-06",
+              "capability": "CMB_TENSORS"
+            },
+            {
+              "node": "R8-06",
+              "capability": "EXCHANGEABLE_POOL"
+            }
+          ],
+          "produces": [
+            "CMB_RANK_RESULT"
+          ],
+          "validation": [
+            "V03",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "candidate_state_acceptance",
+          "requires": [
+            {
+              "node": "R8-06",
+              "capability": "CMB_CANDIDATE_FACTORY"
+            },
+            {
+              "node": "R8-05",
+              "capability": "ORBIT_METHOD_QUALIFIED"
+            }
+          ],
+          "produces": [
+            "CMB_ACCEPTANCE"
+          ],
+          "validation": [
+            "V03",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "cmb_scope_results.json",
+        "cmb_candidate_acceptance.json"
+      ],
+      "contract_refs": [
+        "THEORY:O3",
+        "CONTRACT:8"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-08",
+      "title": "Structural support and marginal law obligations",
+      "kind": "work",
+      "after": [
+        "R8-00"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "gaussian_support",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "SUPPORT_METHOD"
+          ],
+          "validation": [
+            "V05",
+            "V06"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "partial_laws",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "PARTIAL_METHOD"
+          ],
+          "validation": [
+            "V05"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "support_cases.json",
+        "marginal_moment_cases.json"
+      ],
+      "contract_refs": [
+        "THEORY:J1",
+        "THEORY:J2",
+        "THEORY:J3"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-09",
+      "title": "Admit owned product laws independently",
+      "kind": "work",
+      "after": [
+        "R8-00",
+        "R8-08"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "known_nonsingular_law",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "KNOWN_GAUSSIAN_FACTORY"
+          ],
+          "validation": [
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "known_singular_law",
+          "requires": [
+            {
+              "node": "R8-08",
+              "capability": "SUPPORT_METHOD"
+            }
+          ],
+          "produces": [
+            "STRUCTURAL_GAUSSIAN_FACTORY"
+          ],
+          "validation": [
+            "V06",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "marginal_or_moment_law",
+          "requires": [
+            {
+              "node": "R8-08",
+              "capability": "PARTIAL_METHOD"
+            }
+          ],
+          "produces": [
+            "PARTIAL_FACTORY"
+          ],
+          "validation": [
+            "V05",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "simulator_law",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "SIMULATOR_FACTORY"
+          ],
+          "validation": [
+            "V09",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "product_law_registry.json",
+        "scenario_refusals.json"
+      ],
+      "contract_refs": [
+        "THEORY:J2",
+        "THEORY:N1",
+        "ASSETS:Distances"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-10",
+      "title": "Generic exact-law dispatch and calibration",
+      "kind": "work",
+      "after": [
+        "R8-08",
+        "R8-09"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "nonsingular_dispatch",
+          "requires": [
+            {
+              "node": "R8-09",
+              "capability": "KNOWN_GAUSSIAN_FACTORY"
+            }
+          ],
+          "produces": [
+            "GAUSSIAN_ACCEPTANCE"
+          ],
+          "validation": [
+            "V05",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "singular_dispatch",
+          "requires": [
+            {
+              "node": "R8-09",
+              "capability": "STRUCTURAL_GAUSSIAN_FACTORY"
+            },
+            {
+              "node": "R8-08",
+              "capability": "SUPPORT_METHOD"
+            }
+          ],
+          "produces": [
+            "SINGULAR_ACCEPTANCE"
+          ],
+          "validation": [
+            "V06",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "partial_dispatch",
+          "requires": [
+            {
+              "node": "R8-09",
+              "capability": "PARTIAL_FACTORY"
+            },
+            {
+              "node": "R8-08",
+              "capability": "PARTIAL_METHOD"
+            }
+          ],
+          "produces": [
+            "PARTIAL_ACCEPTANCE"
+          ],
+          "validation": [
+            "V05",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "live_law_calibration_records.json"
+      ],
+      "contract_refs": [
+        "THEORY:J2",
+        "DESIGN:Interfaces"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-11",
+      "title": "Non-Gaussian simulator methods and qualified domains",
+      "kind": "work",
+      "after": [
+        "R8-00",
+        "R8-09"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "toy_simulator_validation",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "SIMULATOR_METHOD"
+          ],
+          "validation": [
+            "V09"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "real_candidate_simulator",
+          "requires": [
+            {
+              "node": "R8-09",
+              "capability": "SIMULATOR_FACTORY"
+            }
+          ],
+          "produces": [
+            "SIMULATOR_CANDIDATE_EVIDENCE"
+          ],
+          "validation": [
+            "V09",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "simulator_mock_results.json",
+        "candidate_domain_results.json"
+      ],
+      "contract_refs": [
+        "THEORY:N1",
+        "VALIDATION:Mock5"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-12",
+      "title": "Execute every admitted observed subset",
+      "kind": "work",
+      "after": [
+        "R8-09",
+        "R8-10",
+        "R8-11"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "gaussian_observation",
+          "requires": [
+            {
+              "node": "R8-10",
+              "capability": "GAUSSIAN_ACCEPTANCE"
+            }
+          ],
+          "produces": [
+            "OBSERVED_GAUSSIAN"
+          ],
+          "validation": [
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "singular_observation",
+          "requires": [
+            {
+              "node": "R8-10",
+              "capability": "SINGULAR_ACCEPTANCE"
+            }
+          ],
+          "produces": [
+            "OBSERVED_SINGULAR"
+          ],
+          "validation": [
+            "V06",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "partial_observation",
+          "requires": [
+            {
+              "node": "R8-10",
+              "capability": "PARTIAL_ACCEPTANCE"
+            }
+          ],
+          "produces": [
+            "OBSERVED_PARTIAL"
+          ],
+          "validation": [
+            "V05",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "simulator_observation",
+          "requires": [
+            {
+              "node": "R8-11",
+              "capability": "SIMULATOR_METHOD"
+            },
+            {
+              "node": "R8-11",
+              "capability": "SIMULATOR_CANDIDATE_EVIDENCE"
+            }
+          ],
+          "produces": [
+            "OBSERVED_SIMULATOR"
+          ],
+          "validation": [
+            "V09",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "observed_subset_results.json"
+      ],
+      "contract_refs": [
+        "CONTRACT:8",
+        "THEORY:J1"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-13",
+      "title": "Joint outer confidence family with missing-scope relaxation",
+      "kind": "work",
+      "after": [
+        "R8-00",
+        "R8-07",
+        "R8-12"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "outer_family",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "OUTER_FAMILY"
+          ],
+          "validation": [
+            "V05",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "joint_region.json",
+        "conditional_family_results.json"
+      ],
+      "contract_refs": [
+        "THEORY:J1",
+        "CONTRACT:8"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-14",
+      "title": "Physical jet, remainders and closure obligations",
+      "kind": "work",
+      "after": [
+        "R8-00"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "jet_set",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "JET_IMAGE"
+          ],
+          "validation": [
+            "V07"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "recession_certificates",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "NONID_METHOD"
+          ],
+          "validation": [
+            "V08"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "jet_contract.json",
+        "remainder_images.json",
+        "recession_certificates.json"
+      ],
+      "contract_refs": [
+        "THEORY:P1",
+        "THEORY:P2"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-15",
+      "title": "Closure image and sensitivity mock verification",
+      "kind": "work",
+      "after": [
+        "R8-14"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "closure_mocks",
+          "requires": [
+            {
+              "node": "R8-14",
+              "capability": "JET_IMAGE"
+            }
+          ],
+          "produces": [
+            "CLOSURE_METHOD"
+          ],
+          "validation": [
+            "V07"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "recession_mocks",
+          "requires": [
+            {
+              "node": "R8-14",
+              "capability": "NONID_METHOD"
+            }
+          ],
+          "produces": [
+            "NONID_QUALIFIED"
+          ],
+          "validation": [
+            "V08"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "closure_mock_results.json"
+      ],
+      "contract_refs": [
+        "VALIDATION:Mock6"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-16",
+      "title": "Same-state tensorized MES physical images",
+      "kind": "work",
+      "after": [
+        "R8-13",
+        "R8-15"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "conditional_physical_image",
+          "requires": [
+            {
+              "node": "R8-13",
+              "capability": "OUTER_FAMILY"
+            },
+            {
+              "node": "R8-15",
+              "capability": "CLOSURE_METHOD"
+            }
+          ],
+          "produces": [
+            "PHYSICAL_IMAGE"
+          ],
+          "validation": [
+            "V07",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "nonidentification_result",
+          "requires": [
+            {
+              "node": "R8-13",
+              "capability": "OUTER_FAMILY"
+            },
+            {
+              "node": "R8-15",
+              "capability": "NONID_QUALIFIED"
+            }
+          ],
+          "produces": [
+            "NONID_RESULTS"
+          ],
+          "validation": [
+            "V08",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "mes_joint_images.json",
+        "closure_frontiers.json"
+      ],
+      "contract_refs": [
+        "THEORY:P1",
+        "THEORY:P2"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-17",
+      "title": "Same-position field and same-sky product controls",
+      "kind": "work",
+      "after": [
+        "R8-00",
+        "R8-06",
+        "R8-09"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "field_and_map_controls",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "CONTROL_RESULTS"
+          ],
+          "validation": [
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "control_results.json"
+      ],
+      "contract_refs": [
+        "ASSETS:Fields",
+        "ASSETS:CMB"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-18",
+      "title": "Adapt coupled restricted R3 stress history",
+      "kind": "work",
+      "after": [
+        "R8-00"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "restricted_stress",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "R3_HISTORY"
+          ],
+          "validation": [
+            "V10"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "r3_stress_tests.json",
+        "r3_histories.json"
+      ],
+      "contract_refs": [
+        "R3:N1-N13",
+        "ASSETS:R3"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-19",
+      "title": "Restricted photon and optical response",
+      "kind": "work",
+      "after": [
+        "R8-18"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "photon_channel",
+          "requires": [
+            {
+              "node": "R8-18",
+              "capability": "R3_HISTORY"
+            }
+          ],
+          "produces": [
+            "R3_SKY_CHANNEL"
+          ],
+          "validation": [
+            "V10",
+            "V11"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "distance_channel",
+          "requires": [
+            {
+              "node": "R8-18",
+              "capability": "R3_HISTORY"
+            }
+          ],
+          "produces": [
+            "R3_DISTANCE_CHANNEL"
+          ],
+          "validation": [
+            "V11"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "record_radiation_jet_unavailable",
+          "requires": [],
+          "produces": [
+            "R3_JET_STATUS"
+          ],
+          "validation": [],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "r3_channel_validation.json",
+        "r3_jet_unavailable.json"
+      ],
+      "contract_refs": [
+        "R3:N14-N29",
+        "DESIGN:JetBoundary"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-20",
+      "title": "Supported physical-provider factory admission",
+      "kind": "work",
+      "after": [
+        "R8-00",
+        "R8-09",
+        "R8-19"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "restricted_sky_factory",
+          "requires": [
+            {
+              "node": "R8-19",
+              "capability": "R3_SKY_CHANNEL"
+            }
+          ],
+          "produces": [
+            "R3_SKY_FACTORY"
+          ],
+          "validation": [
+            "V10",
+            "V11",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "restricted_distance_factory",
+          "requires": [
+            {
+              "node": "R8-19",
+              "capability": "R3_DISTANCE_CHANNEL"
+            }
+          ],
+          "produces": [
+            "R3_DISTANCE_FACTORY"
+          ],
+          "validation": [
+            "V11",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "external_channel_factory",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "EXTERNAL_FACTORY"
+          ],
+          "validation": [
+            "V11",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "provider_scope_records.json"
+      ],
+      "contract_refs": [
+        "CONTRACT:11",
+        "ASSETS:R3"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-21",
+      "title": "Local, coherent and supported physical-model comparison",
+      "kind": "work",
+      "after": [
+        "R8-00",
+        "R8-07",
+        "R8-12",
+        "R8-16",
+        "R8-20"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "p0_p1_comparison",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "P0_P1_RESULTS"
+          ],
+          "validation": [
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "p2_sky_comparison",
+          "requires": [
+            {
+              "node": "R8-20",
+              "capability": "R3_SKY_FACTORY"
+            }
+          ],
+          "produces": [
+            "P2_SKY_RESULTS"
+          ],
+          "validation": [
+            "V10",
+            "V11",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "p2_distance_comparison",
+          "requires": [
+            {
+              "node": "R8-20",
+              "capability": "R3_DISTANCE_FACTORY"
+            }
+          ],
+          "produces": [
+            "P2_DISTANCE_RESULTS"
+          ],
+          "validation": [
+            "V11",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        },
+        {
+          "action": "p3_supported_comparison",
+          "requires": [
+            {
+              "node": "R8-20",
+              "capability": "EXTERNAL_FACTORY"
+            }
+          ],
+          "produces": [
+            "P3_RESULTS"
+          ],
+          "validation": [
+            "V11",
+            "V12"
+          ],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "model_comparison_results.json",
+        "identifiable_response_combinations.json"
+      ],
+      "contract_refs": [
+        "THEORY:P2",
+        "CONTRACT:11"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-22",
+      "title": "Optional local operational checkout repair",
+      "kind": "work",
+      "after": [
+        "R8-00"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "check_local_hook_context",
+          "requires": [
+            {
+              "node": "R8-00",
+              "capability": "SOURCE_BOUND"
+            }
+          ],
+          "produces": [
+            "OPERATIONAL_CONTEXT_RESULT"
+          ],
+          "validation": [],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "operational_context_receipt.json"
+      ],
+      "contract_refs": [
+        "HARNESS:WrongCheckout"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    },
+    {
+      "id": "R8-23",
+      "title": "Synthesize all scientific and unavailable outcomes",
+      "kind": "synthesis",
+      "after": [
+        "R8-00",
+        "R8-01",
+        "R8-02",
+        "R8-03",
+        "R8-04",
+        "R8-05",
+        "R8-06",
+        "R8-07",
+        "R8-08",
+        "R8-09",
+        "R8-10",
+        "R8-11",
+        "R8-12",
+        "R8-13",
+        "R8-14",
+        "R8-15",
+        "R8-16",
+        "R8-17",
+        "R8-18",
+        "R8-19",
+        "R8-20",
+        "R8-21",
+        "R8-22"
+      ],
+      "dependency_mode": "terminal_receipts",
+      "actions": [
+        {
+          "action": "receipt_synthesis",
+          "requires": [],
+          "produces": [
+            "SYNTHESIS"
+          ],
+          "validation": [],
+          "on_missing": "BLOCKED_WITH_RECEIPT",
+          "scope_policy": "same_scope_or_explicitly_validated_map",
+          "produces_only_after": "declared_validation_and_scope_admission",
+          "emits_receipt_always": true
+        }
+      ],
+      "outputs": [
+        "scientific_synthesis.md",
+        "methods.md",
+        "next_actions.json"
+      ],
+      "contract_refs": [
+        "CONTRACT:Outcomes"
+      ],
+      "execution_status": "NOT_RUN",
+      "science_status": "NOT_EVALUATED",
+      "on_exception": "COMPLETED_FAILED_WITH_RECEIPT",
+      "settle_unavailable": true
+    }
+  ]
+}
