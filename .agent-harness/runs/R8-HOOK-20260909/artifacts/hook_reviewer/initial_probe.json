@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-HOOK-20260909",
+  "assignment_id": "hook_reviewer",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "shared-core",
+  "status": "inconclusive",
+  "phase": "initial_native_bootstrap_probe",
+  "files_read": [
+    ".agent-harness/runs/R8-HOOK-20260909/assignments/hook_reviewer.json",
+    "docs/research_program/tensor_joint_r8/HARNESS_UPDATE.md"
+  ],
+  "findings": [
+    {
+      "claim_id": "RUN-R8-HOOK-20260909-CONTEXT",
+      "verdict": "fail",
+      "evidence_fingerprint": "native-bootstrap-active-run-external-fusion-versus-explicit-r8-hook-assignment",
+      "evidence": [
+        "Injected developer bootstrap: Active run EXTERNAL-FUSION-FOLLOWUP-20260829; HEAD e7dc5fd99c65 (codex_emergency)",
+        "Explicit spawn header and read assignment: R8-HOOK-20260909/hook_reviewer at /mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree"
+      ],
+      "assumptions": [
+        "Injected bootstrap is the actual native start-hook output presented for this spawn."
+      ],
+      "conclusion": "Wrong-run native bootstrap reproduced; explicit assignment context version matches prompt but injected active-run identity does not."
+    }
+  ],
+  "validation": {
+    "operational_acceptance": "NOT_EVALUATED",
+    "scientific_validation": "NOT_IN_SCOPE",
+    "candidate_review": "AWAITING_PARENT_CANDIDATE"
+  },
+  "tool_information": {
+    "tool": "exec_command",
+    "reads": "cat via bash",
+    "result_writer": "python3 stdlib json/pathlib"
+  }
+}

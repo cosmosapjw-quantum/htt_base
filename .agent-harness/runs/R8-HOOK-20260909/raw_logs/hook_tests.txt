@@ -1,0 +1,1368 @@
+.......FF.......F...........FFFFFFFFFFF..........F....................F. [ 62%]
+........F..F..F.................FFFFFF.....                              [100%]
+=================================== FAILURES ===================================
+______________ test_shared_context_packet_is_merged_and_versioned ______________
+
+    def test_shared_context_packet_is_merged_and_versioned() -> None:
+        fragment = (REPO_ROOT / "AGENTS.md.fragment").read_text(encoding="utf-8").strip()
+        agents_text = (REPO_ROOT / "AGENTS.md").read_text(encoding="utf-8").strip()
+        assert fragment
+>       assert agents_text.endswith(fragment)
+E       AssertionError: assert False
+E        +  where False = <built-in method endswith of str object at 0x201a29b0>('<!-- Distribution note: AGENTS.md.fragment is a merge-only compatibility suffix. This merged AGENTS.md copy is author...s normalized result envelopes; it does not redo every full analysis unless a disputed claim requires a targeted rerun.')
+E        +    where <built-in method endswith of str object at 0x201a29b0> = '# AGENTS.md — `htt_base` Codex operating contract\n\n## Mission\n\nUpgrade `htt_base` before the external native low-...s normalized result envelopes; it does not redo every full analysis unless a disputed claim requires a targeted rerun.'.endswith
+
+scripts/codex_harness/test_codex_assets.py:138: AssertionError
+____________ test_shared_context_harness_and_stop_hook_fail_closed _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_shared_context_harness_an0')
+
+    def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> None:
+        validated = subprocess.run(
+            [sys.executable, ".agent-harness/scripts/validate_harness.py"],
+            cwd=REPO_ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+>       assert validated.returncode == 0, validated.stdout + validated.stderr
+E       AssertionError: {
+E           "ok": false,
+E           "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+E           "active_run": "R8-HOOK-20260909",
+E           "live_context": {
+E             "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+E             "head": "9ed6ab5cd8cbb237b9fdd84e41f906ac39896970",
+E             "dag_sha256": "e676ba36611b72601004baab417a9fef4a2d43a9f07f1bb9c3958c880a7eb86c",
+E             "status_sha256": "2a81ac5f15ecb7595a46cd44496f6921f8f89cbb55d54e2cdff4ada3b4f74de0",
+E             "run": {
+E               "run_id": "R8-HOOK-20260909",
+E               "work_unit_id": "R8-HOOK-20260909",
+E               "spec_ref": "docs/research_program/tensor_joint_r8/HARNESS_UPDATE.md",
+E               "base_ref": "9ed6ab5c",
+E               "head_ref": "HEAD",
+E               "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+E               "status": "initialized"
+E             },
+E             "live_context_id": "d7586dc8804742ab3ebf2a6fa74aea6a12cbf4c31f5b1c193e14ab6c385fdab3",
+E             "branch": "implementation/tensor-joint-r8-20260909",
+E             "dag": {
+E               "path": "docs/codex_handoff/pr_backlog.yaml",
+E               "generated_on": "2026-06-11",
+E               "scope": "htt_base_pre_native_lowell_solver_codex_dag_v2",
+E               "pr_count": 194
+E             },
+E             "status": {
+E               "path": "docs/codex_handoff/pr_status.yaml",
+E               "generated_on": "2026-07-20",
+E               "completed": 141,
+E               "blocked": 1,
+E               "pending": 22,
+E               "in_progress": "- PR-247"
+E             }
+E           },
+E           "errors": [
+E             "hook_reviewer.json: result assignment_sha256 does not match the registration seal",
+E             "hook_reviewer.json: result agent_type does not match its registration",
+E             "hook_reviewer.json: result_path inside the result does not match its registration",
+E             "hook_reviewer.json: result launch_evidence must equal the verified class 'unverified'",
+E             "hook_reviewer.json: result execution_evidence must be self_declared",
+E             "hook_reviewer.json: result started_at must be a non-empty string",
+E             "hook_reviewer.json: result completed_at must be a non-empty string",
+E             "hook_reviewer.json: result tool_versions must be an object",
+E             "hook_reviewer.json: result commands must be a list",
+E             "hook_reviewer.json: result artifacts must be a list",
+E             "hook_reviewer.json: result files_read_evidence must be self_declared",
+E             "hook_reviewer.json: result claim_results must be a list",
+E             "hook_reviewer.json: result errors must be a list",
+E             "hook_reviewer.json: finding 0 has a missing or unsafe finding_id",
+E             "hook_reviewer.json: claim_results must cover every assigned claim exactly once (missing=['RUN-R8-HOOK-20260909-CONTEXT'], extra=[])"
+E           ]
+E         }
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python', '.agent-harness/scripts/... cover every assigned claim exactly once (missing=[\'RUN-R8-HOOK-20260909-CONTEXT\'], extra=[])"\n  ]\n}\n', stderr='').returncode
+
+scripts/codex_harness/test_codex_assets.py:230: AssertionError
+_____ test_installer_copies_repo_scoped_assets_with_project_harness_config _____
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_installer_copies_repo_sco0')
+
+    def test_installer_copies_repo_scoped_assets_with_project_harness_config(
+        tmp_path: Path,
+    ) -> None:
+        codex = shutil.which("codex")
+        if codex is None:
+            pytest.skip(
+                "Codex CLI executable not installed; cannot validate installed rules"
+            )
+        target = tmp_path / "installed"
+        target.mkdir(parents=True)
+        initialized = subprocess.run(
+            ["git", "init", "-q"],
+            cwd=target,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert initialized.returncode == 0, initialized.stdout + initialized.stderr
+        completed = subprocess.run(
+            ["bash", "scripts/install_codex_handoff.sh", str(target)],
+            cwd=REPO_ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+>       assert completed.returncode == 0, completed.stdout + completed.stderr
+E       AssertionError: OK: PR-DAG, status, and remediation mirrors are synchronized
+E         32 skills OK
+E         - cavecrew
+E         - caveman
+E         - caveman-commit
+E         - caveman-compress
+E         - caveman-help
+E         - caveman-review
+E         - caveman-stats
+E         - htt-adversarial-review-loop
+E         - htt-claim-firewall
+E         - htt-claim-lane-auditor
+E         - htt-claim-provenance-ledger
+E         - htt-dag-orchestrator
+E         - htt-family-identification-gate
+E         - htt-harness-engineering
+E         - htt-latex-paper-build
+E         - htt-local-global-discrimination
+E         - htt-manuscript-figure-audit
+E         - htt-observable-statistics
+E         - htt-physics-math-audit
+E         - htt-physmath-audit
+E         - htt-plot-provenance
+E         - htt-research-plot-summary
+E         - htt-reviewer-mode-pre-submission
+E         - htt-revision-planner
+E         - htt-scientific-code-validation
+E         - htt-solver-handoff-readiness-audit
+E         - htt-ssot-handoff-maintainer
+E         - htt-statistical-hardening
+E         - htt-transfer-provenance
+E         - htt-web-crag-researcher
+E         - htt-xqpi-fg-formalism
+E         - shared-context-orchestrator
+E         Built .agent-harness/generated/CONTEXT_PACK.md
+E         context_version=2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4
+E         {
+E           "ok": false,
+E           "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+E           "active_run": null,
+E           "live_context": {
+E             "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+E             "head": "UNBORN",
+E             "dag_sha256": "e676ba36611b72601004baab417a9fef4a2d43a9f07f1bb9c3958c880a7eb86c",
+E             "status_sha256": "2a81ac5f15ecb7595a46cd44496f6921f8f89cbb55d54e2cdff4ada3b4f74de0",
+E             "run": null,
+E             "live_context_id": "722b232a02eab0c864c44dd22b035b3e95b4560a7bb67b91e213c3a4411f9f82",
+E             "branch": "master",
+E             "dag": {
+E               "path": "docs/codex_handoff/pr_backlog.yaml",
+E               "generated_on": "2026-06-11",
+E               "scope": "htt_base_pre_native_lowell_solver_codex_dag_v2",
+E               "pr_count": 194
+E             },
+E             "status": {
+E               "path": "docs/codex_handoff/pr_status.yaml",
+E               "generated_on": "2026-07-20",
+E               "completed": 141,
+E               "blocked": 1,
+E               "pending": 22,
+E               "in_progress": "- PR-247"
+E             }
+E           },
+E           "errors": [
+E             "claim registry line 1 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+E             "claim registry line 2 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+E             "claim registry line 3 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+E             "claim registry line 5 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr123_spec.yaml",
+E             "claim registry line 6 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr124_spec.yaml",
+E             "claim registry line 7 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr125_spec.yaml",
+E             "claim registry line 8 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr126_spec.yaml",
+E             "claim registry line 9 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr127_spec.yaml",
+E             "claim registry line 10 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr128_spec.yaml",
+E             "claim registry line 11 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr129_spec.yaml",
+E             "claim registry line 12 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr130_spec.yaml",
+E             "claim registry line 13 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr131_spec.yaml",
+E             "claim registry line 14 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr132_spec.yaml",
+E             "claim registry line 15 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr133_spec.yaml",
+E             "claim registry line 16 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr134_spec.yaml",
+E             "claim registry line 17 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr135_spec.yaml",
+E             "claim registry line 18 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr136_spec.yaml",
+E             "claim registry line 19 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr137_spec.yaml",
+E             "claim registry line 20 spec_refs[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr138_spec.yaml"
+E           ]
+E         }
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['bash', 'scripts/install_codex_handoff.sh', '/tmp/pytest-of-cosmosapjw/pytest-2187/test_install...[0] is missing or not a regular file: docs/research_program/long_horizon_rescue/pr138_spec.yaml"\n  ]\n}\n', stderr='').returncode
+
+scripts/codex_harness/test_codex_assets.py:739: AssertionError
+________ test_blind_assignment_sibling_read_and_undeclared_scan_blocked ________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_blind_assignment_sibling_0')
+
+    def test_blind_assignment_sibling_read_and_undeclared_scan_blocked(
+        tmp_path: Path,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        sibling = ".agent-harness/runs/run-1/results/A-OTHER.json"
+        _write_result(repo, "A-001", {"files_read": ["input.txt", sibling]})
+        envelope = {
+            "assignment_id": "A-001",
+            "context_version": CONTEXT_VERSION,
+            "status": "pass",
+            "result_path": ".agent-harness/runs/run-1/results/A-001.json",
+        }
+        completed = _stop_hook(repo, envelope)
+>       payload = json.loads(completed.stdout)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:698: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+___________ test_hook_injected_context_reread_is_duplicate_delivery ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_hook_injected_context_rer0')
+
+    def test_hook_injected_context_reread_is_duplicate_delivery(tmp_path: Path) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+    
+        start = _run(
+            [sys.executable, str(HOOKS / "subagent_start_context.py")],
+            cwd=repo,
+            input_text=json.dumps({"agent_type": "context_mapper"}),
+        )
+>       contract = json.loads(start.stdout)["hookSpecificOutput"]["additionalContext"]
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:734: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+________ test_context_pack_reread_is_blocked_even_without_delivery_log _________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_context_pack_reread_is_bl0')
+
+    def test_context_pack_reread_is_blocked_even_without_delivery_log(
+        tmp_path: Path,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+>       _subagent_context(repo)
+
+scripts/codex_harness/test_harness_enforcement.py:764: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_context_pack_reread_is_bl0/repo')
+agent_type = 'context_mapper'
+
+    def _subagent_context(repo: Path, agent_type: str = "context_mapper") -> str:
+        started = _run(
+            [sys.executable, str(HOOKS / "subagent_start_context.py")],
+            cwd=repo,
+            input_text=json.dumps({"agent_type": agent_type}),
+        )
+>       assert started.returncode == 0, started.stdout + started.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 213, in <module>
+E             main()
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 59, in main
+E             from _harness import (ActiveRunError, active_run_id, confined_repo_file,
+E         ModuleNotFoundError: No module named '_harness'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python', '/mnt/sn850x2t/htt_base_...rness import (ActiveRunError, active_run_id, confined_repo_file,\nModuleNotFoundError: No module named \'_harness\'\n').returncode
+
+scripts/codex_harness/test_harness_enforcement.py:787: AssertionError
+_______ test_subagent_context_budget_reserves_role_before_generated_view _______
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_context_budget_r0')
+
+    def test_subagent_context_budget_reserves_role_before_generated_view(
+        tmp_path: Path,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        role = repo / ".agent-harness/context/roles/context_mapper.md"
+        role.write_text("ROLE_SENTINEL\n" + ("r" * 2000), encoding="utf-8")
+        _rebuild_test_context(repo, "PACK_SENTINEL\n" + ("p" * 4000))
+    
+>       context = _subagent_context(repo)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:825: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_context_budget_r0/repo')
+agent_type = 'context_mapper'
+
+    def _subagent_context(repo: Path, agent_type: str = "context_mapper") -> str:
+        started = _run(
+            [sys.executable, str(HOOKS / "subagent_start_context.py")],
+            cwd=repo,
+            input_text=json.dumps({"agent_type": agent_type}),
+        )
+>       assert started.returncode == 0, started.stdout + started.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 213, in <module>
+E             main()
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 59, in main
+E             from _harness import (ActiveRunError, active_run_id, confined_repo_file,
+E         ModuleNotFoundError: No module named '_harness'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python', '/mnt/sn850x2t/htt_base_...rness import (ActiveRunError, active_run_id, confined_repo_file,\nModuleNotFoundError: No module named \'_harness\'\n').returncode
+
+scripts/codex_harness/test_harness_enforcement.py:787: AssertionError
+_________ test_subagent_context_refuses_oversize_view_without_fallback _________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_context_refuses_0')
+
+    def test_subagent_context_refuses_oversize_view_without_fallback(
+        tmp_path: Path,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        _rebuild_test_context(repo, "PACK_SENTINEL\n" + ("p" * 30000))
+    
+>       context = _subagent_context(repo)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:844: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_context_refuses_0/repo')
+agent_type = 'context_mapper'
+
+    def _subagent_context(repo: Path, agent_type: str = "context_mapper") -> str:
+        started = _run(
+            [sys.executable, str(HOOKS / "subagent_start_context.py")],
+            cwd=repo,
+            input_text=json.dumps({"agent_type": agent_type}),
+        )
+>       assert started.returncode == 0, started.stdout + started.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 213, in <module>
+E             main()
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 59, in main
+E             from _harness import (ActiveRunError, active_run_id, confined_repo_file,
+E         ModuleNotFoundError: No module named '_harness'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python', '/mnt/sn850x2t/htt_base_...rness import (ActiveRunError, active_run_id, confined_repo_file,\nModuleNotFoundError: No module named \'_harness\'\n').returncode
+
+scripts/codex_harness/test_harness_enforcement.py:787: AssertionError
+__________ test_subagent_rejects_unvalidated_generated_view[tampered] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_rejects_unvalida0')
+mode = 'tampered'
+
+    @pytest.mark.parametrize("mode", ["tampered", "symlink"])
+    def test_subagent_rejects_unvalidated_generated_view(
+        tmp_path: Path,
+        mode: str,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        pack = repo / ".agent-harness/generated/CONTEXT_PACK.md"
+        if mode == "tampered":
+            pack.write_text("ARBITRARY_TAMPERED_VIEW\n", encoding="utf-8")
+        else:
+            pack.unlink()
+            try:
+                pack.symlink_to(repo / "shared.md")
+            except OSError as exc:
+                pytest.skip(f"symlinks unavailable: {exc}")
+    
+>       context = _subagent_context(repo)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:869: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_rejects_unvalida0/repo')
+agent_type = 'context_mapper'
+
+    def _subagent_context(repo: Path, agent_type: str = "context_mapper") -> str:
+        started = _run(
+            [sys.executable, str(HOOKS / "subagent_start_context.py")],
+            cwd=repo,
+            input_text=json.dumps({"agent_type": agent_type}),
+        )
+>       assert started.returncode == 0, started.stdout + started.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 213, in <module>
+E             main()
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 59, in main
+E             from _harness import (ActiveRunError, active_run_id, confined_repo_file,
+E         ModuleNotFoundError: No module named '_harness'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python', '/mnt/sn850x2t/htt_base_...rness import (ActiveRunError, active_run_id, confined_repo_file,\nModuleNotFoundError: No module named \'_harness\'\n').returncode
+
+scripts/codex_harness/test_harness_enforcement.py:787: AssertionError
+__________ test_subagent_rejects_unvalidated_generated_view[symlink] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_rejects_unvalida1')
+mode = 'symlink'
+
+    @pytest.mark.parametrize("mode", ["tampered", "symlink"])
+    def test_subagent_rejects_unvalidated_generated_view(
+        tmp_path: Path,
+        mode: str,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        pack = repo / ".agent-harness/generated/CONTEXT_PACK.md"
+        if mode == "tampered":
+            pack.write_text("ARBITRARY_TAMPERED_VIEW\n", encoding="utf-8")
+        else:
+            pack.unlink()
+            try:
+                pack.symlink_to(repo / "shared.md")
+            except OSError as exc:
+                pytest.skip(f"symlinks unavailable: {exc}")
+    
+>       context = _subagent_context(repo)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:869: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_rejects_unvalida1/repo')
+agent_type = 'context_mapper'
+
+    def _subagent_context(repo: Path, agent_type: str = "context_mapper") -> str:
+        started = _run(
+            [sys.executable, str(HOOKS / "subagent_start_context.py")],
+            cwd=repo,
+            input_text=json.dumps({"agent_type": agent_type}),
+        )
+>       assert started.returncode == 0, started.stdout + started.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 213, in <module>
+E             main()
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 59, in main
+E             from _harness import (ActiveRunError, active_run_id, confined_repo_file,
+E         ModuleNotFoundError: No module named '_harness'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python', '/mnt/sn850x2t/htt_base_...rness import (ActiveRunError, active_run_id, confined_repo_file,\nModuleNotFoundError: No module named \'_harness\'\n').returncode
+
+scripts/codex_harness/test_harness_enforcement.py:787: AssertionError
+_________________ test_subagent_requires_registered_active_run _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_requires_registe0')
+
+    def test_subagent_requires_registered_active_run(tmp_path: Path) -> None:
+        repo = _init_tmp_repo(tmp_path, active=False)
+>       context = _subagent_context(repo)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:877: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_requires_registe0/repo')
+agent_type = 'context_mapper'
+
+    def _subagent_context(repo: Path, agent_type: str = "context_mapper") -> str:
+        started = _run(
+            [sys.executable, str(HOOKS / "subagent_start_context.py")],
+            cwd=repo,
+            input_text=json.dumps({"agent_type": agent_type}),
+        )
+>       assert started.returncode == 0, started.stdout + started.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 213, in <module>
+E             main()
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 59, in main
+E             from _harness import (ActiveRunError, active_run_id, confined_repo_file,
+E         ModuleNotFoundError: No module named '_harness'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python', '/mnt/sn850x2t/htt_base_...rness import (ActiveRunError, active_run_id, confined_repo_file,\nModuleNotFoundError: No module named \'_harness\'\n').returncode
+
+scripts/codex_harness/test_harness_enforcement.py:787: AssertionError
+____________ test_subagent_rejects_stale_active_run_context_version ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_rejects_stale_ac0')
+
+    def test_subagent_rejects_stale_active_run_context_version(
+        tmp_path: Path,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        (repo / "shared.md").write_text(
+            "# compact shared context changed after run start\n", encoding="utf-8"
+        )
+        rebuilt = _harness_cli(repo, "build_context_pack.py")
+        assert rebuilt.returncode == 0, rebuilt.stdout + rebuilt.stderr
+    
+>       context = _subagent_context(repo)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:894: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_subagent_rejects_stale_ac0/repo')
+agent_type = 'context_mapper'
+
+    def _subagent_context(repo: Path, agent_type: str = "context_mapper") -> str:
+        started = _run(
+            [sys.executable, str(HOOKS / "subagent_start_context.py")],
+            cwd=repo,
+            input_text=json.dumps({"agent_type": agent_type}),
+        )
+>       assert started.returncode == 0, started.stdout + started.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 213, in <module>
+E             main()
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 59, in main
+E             from _harness import (ActiveRunError, active_run_id, confined_repo_file,
+E         ModuleNotFoundError: No module named '_harness'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python', '/mnt/sn850x2t/htt_base_...rness import (ActiveRunError, active_run_id, confined_repo_file,\nModuleNotFoundError: No module named \'_harness\'\n').returncode
+
+scripts/codex_harness/test_harness_enforcement.py:787: AssertionError
+___________ test_invalid_context_budget_is_structured_not_traceback ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_invalid_context_budget_is0')
+
+    def test_invalid_context_budget_is_structured_not_traceback(tmp_path: Path) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        index_path = repo / ".agent-harness/context/CONTEXT_INDEX.json"
+        index = json.loads(index_path.read_text(encoding="utf-8"))
+        index["max_injected_chars"] = "twelve-thousand"
+        index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
+    
+        started = _run(
+            [sys.executable, str(HOOKS / "subagent_start_context.py")],
+            cwd=repo,
+            input_text=json.dumps({"agent_type": "context_mapper"}),
+        )
+>       assert started.returncode == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python', '/mnt/sn850x2t/htt_base_...rness import (ActiveRunError, active_run_id, confined_repo_file,\nModuleNotFoundError: No module named \'_harness\'\n').returncode
+
+scripts/codex_harness/test_harness_enforcement.py:914: AssertionError
+______________ test_live_context_binding_is_transient_and_scoped _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_live_context_binding_is_t0')
+
+    def test_live_context_binding_is_transient_and_scoped(tmp_path: Path) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        assert _run(["git", "add", "."], cwd=repo).returncode == 0
+        committed = _run(
+            [
+                "git",
+                "-c",
+                "user.name=Harness Test",
+                "-c",
+                "user.email=harness@example.invalid",
+                "commit",
+                "-qm",
+                "baseline",
+            ],
+            cwd=repo,
+        )
+        assert committed.returncode == 0, committed.stdout + committed.stderr
+    
+>       baseline = _live_context_id(_subagent_context(repo))
+                                    ^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:943: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_live_context_binding_is_t0/repo')
+agent_type = 'context_mapper'
+
+    def _subagent_context(repo: Path, agent_type: str = "context_mapper") -> str:
+        started = _run(
+            [sys.executable, str(HOOKS / "subagent_start_context.py")],
+            cwd=repo,
+            input_text=json.dumps({"agent_type": agent_type}),
+        )
+>       assert started.returncode == 0, started.stdout + started.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 213, in <module>
+E             main()
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 59, in main
+E             from _harness import (ActiveRunError, active_run_id, confined_repo_file,
+E         ModuleNotFoundError: No module named '_harness'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python', '/mnt/sn850x2t/htt_base_...rness import (ActiveRunError, active_run_id, confined_repo_file,\nModuleNotFoundError: No module named \'_harness\'\n').returncode
+
+scripts/codex_harness/test_harness_enforcement.py:787: AssertionError
+______ test_stop_hook_rejects_trailing_text_symlink_and_identity_mismatch ______
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_stop_hook_rejects_trailin0')
+
+    def test_stop_hook_rejects_trailing_text_symlink_and_identity_mismatch(
+        tmp_path: Path,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        _write_result(repo, "A-001", {})
+        envelope = {
+            "assignment_id": "A-001",
+            "context_version": CONTEXT_VERSION,
+            "status": "pass",
+            "result_path": ".agent-harness/runs/run-1/results/A-001.json",
+        }
+    
+        completed = _stop_hook(repo, envelope, trailing="\nextra prose after marker")
+>       payload = json.loads(completed.stdout)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:1327: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+____________ test_repository_role_profiles_fit_total_context_budget ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_repository_role_profiles_0')
+
+    def test_repository_role_profiles_fit_total_context_budget(
+        tmp_path: Path,
+    ) -> None:
+        production_index = json.loads(
+            (
+                REPO_ROOT / ".agent-harness/context/CONTEXT_INDEX.json"
+            ).read_text(encoding="utf-8")
+        )
+        repo = _init_tmp_repo(tmp_path)
+        index_path = repo / ".agent-harness/context/CONTEXT_INDEX.json"
+        index = json.loads(index_path.read_text(encoding="utf-8"))
+        for field in ("shared_files", "pack_files", "reference_only_files", "role_files"):
+            index[field] = production_index[field]
+        index["max_injected_chars"] = production_index["max_injected_chars"]
+        index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
+    
+        source_paths = set(index["shared_files"])
+        for role_files in index["role_files"].values():
+            source_paths.update(role_files)
+        for rel in sorted(source_paths):
+            target = repo / rel
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes((REPO_ROOT / rel).read_bytes())
+    
+        built = _harness_cli(repo, "build_context_pack.py")
+        assert built.returncode == 0, built.stdout + built.stderr
+        built_index = json.loads(index_path.read_text(encoding="utf-8"))
+        plan_path = repo / ".agent-harness/runs/run-1/RUN_PLAN.json"
+        plan = json.loads(plan_path.read_text(encoding="utf-8"))
+        plan["context_version"] = built_index["context_version"]
+        plan_path.write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
+    
+        budget = int(built_index["max_injected_chars"])
+        for agent_type, role_files in built_index["role_files"].items():
+>           context = _subagent_context(repo, agent_type)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:1960: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+repo = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_repository_role_profiles_0/repo')
+agent_type = 'context_mapper'
+
+    def _subagent_context(repo: Path, agent_type: str = "context_mapper") -> str:
+        started = _run(
+            [sys.executable, str(HOOKS / "subagent_start_context.py")],
+            cwd=repo,
+            input_text=json.dumps({"agent_type": agent_type}),
+        )
+>       assert started.returncode == 0, started.stdout + started.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 213, in <module>
+E             main()
+E           File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_start_context.py", line 59, in main
+E             from _harness import (ActiveRunError, active_run_id, confined_repo_file,
+E         ModuleNotFoundError: No module named '_harness'
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python', '/mnt/sn850x2t/htt_base_...rness import (ActiveRunError, active_run_id, confined_repo_file,\nModuleNotFoundError: No module named \'_harness\'\n').returncode
+
+scripts/codex_harness/test_harness_enforcement.py:787: AssertionError
+_______ test_ma03_all_result_consumers_share_strict_rejection[stop_hook] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_ma03_all_result_consumers0')
+consumer = 'stop_hook'
+
+    @pytest.mark.parametrize("consumer", ["stop_hook", "merge", "standalone"])
+    def test_ma03_all_result_consumers_share_strict_rejection(
+        tmp_path: Path,
+        consumer: str,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        _write_result(repo, "A-001", {"claim_results": []})
+    
+        completed, output = _run_result_consumer(repo, consumer, _result_envelope())
+        if consumer == "stop_hook":
+>           assert json.loads(completed.stdout)["decision"] == "block"
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:2156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+__ test_ma03_all_result_consumers_reject_missing_finding_severity[stop_hook] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_ma03_all_result_consumers3')
+consumer = 'stop_hook'
+
+    @pytest.mark.parametrize("consumer", ["stop_hook", "merge", "standalone"])
+    def test_ma03_all_result_consumers_reject_missing_finding_severity(
+        tmp_path: Path,
+        consumer: str,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        result_path = _write_result(repo, "A-001", {})
+        result = json.loads(result_path.read_text(encoding="utf-8"))
+        result["findings"][0].pop("severity")
+        result_path.write_text(json.dumps(result) + "\n", encoding="utf-8")
+    
+        completed, output = _run_result_consumer(repo, consumer, _result_envelope())
+        if consumer == "stop_hook":
+>           assert json.loads(completed.stdout)["decision"] == "block"
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:2179: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+_____ test_ma03_artifacts_cannot_bypass_blind_sibling_isolation[stop_hook] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_ma03_artifacts_cannot_byp0')
+consumer = 'stop_hook'
+
+    @pytest.mark.parametrize("consumer", ["stop_hook", "merge", "standalone"])
+    def test_ma03_artifacts_cannot_bypass_blind_sibling_isolation(
+        tmp_path: Path,
+        consumer: str,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo, "A-001")
+        _register_assignment(repo, "A-002")
+        sibling = _write_result(repo, "A-002", {})
+        sibling_ref = sibling.relative_to(repo).as_posix()
+        artifact = {
+            "path": sibling_ref,
+            "sha256": hashlib.sha256(sibling.read_bytes()).hexdigest(),
+            "bytes": sibling.stat().st_size,
+            "producer": "test",
+            "command_fingerprint": "sha256:" + "6" * 64,
+        }
+        _write_result(repo, "A-001", {"artifacts": [artifact]})
+    
+        completed, output = _run_result_consumer(repo, consumer, _result_envelope())
+        if consumer == "stop_hook":
+>           assert json.loads(completed.stdout)["decision"] == "block"
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:2206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+___ test_ma03_launch_evidence_cannot_self_promote_to_platform_authentication ___
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_ma03_launch_evidence_cann0')
+
+    def test_ma03_launch_evidence_cannot_self_promote_to_platform_authentication(
+        tmp_path: Path,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        receipt = _create_receipt(repo)
+        assert receipt["evidence_origin"] == "self_declared"
+        _write_result(repo, "A-001", {})
+        envelope = {**_result_envelope(), "launch_id": receipt["launch_id"]}
+        assert _stop_hook(repo, envelope).stdout.strip() == ""
+    
+        receipt_path = (
+            repo / ".agent-harness" / "runs" / "run-1" / "launches" / "A-001.json"
+        )
+        receipt["evidence_origin"] = "platform_authenticated"
+        receipt_path.write_text(json.dumps(receipt) + "\n", encoding="utf-8")
+        completed = _stop_hook(repo, envelope)
+>       payload = json.loads(completed.stdout)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:2393: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+_ test_ma03_launch_receipt_binds_assignment_execution_fields[profile-does not match assigned agent_type] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_ma03_launch_receipt_binds0')
+mutation = 'profile', needle = 'does not match assigned agent_type'
+
+    @pytest.mark.parametrize(
+        ("mutation", "needle"),
+        [
+            ("profile", "does not match assigned agent_type"),
+            ("fork", "fork_mode does not match"),
+            ("sandbox", "sandbox does not match installed profile"),
+            ("delivery", "context_delivery_mode must be hook_injected"),
+            ("attested_type", "attested must be boolean"),
+        ],
+    )
+    def test_ma03_launch_receipt_binds_assignment_execution_fields(
+        tmp_path: Path,
+        mutation: str,
+        needle: str,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        receipt = _create_receipt(repo)
+        _write_result(repo, "A-001", {})
+        if mutation == "profile":
+            receipt["requested_profile"] = "cas_sympy"
+            receipt["actual_profile"] = "cas_sympy"
+        elif mutation == "fork":
+            receipt["fork_mode"] = "all"
+        elif mutation == "sandbox":
+            receipt["sandbox"] = "read-only"
+        elif mutation == "delivery":
+            receipt["context_delivery_mode"] = "side_channel"
+        else:
+            receipt["attested"] = "yes"
+        receipt_path = (
+            repo / ".agent-harness" / "runs" / "run-1" / "launches" / "A-001.json"
+        )
+        receipt_path.write_text(json.dumps(receipt) + "\n", encoding="utf-8")
+    
+        envelope = {**_result_envelope(), "launch_id": receipt["launch_id"]}
+        completed = _stop_hook(repo, envelope)
+>       payload = json.loads(completed.stdout)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:2435: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+_ test_ma03_launch_receipt_binds_assignment_execution_fields[fork-fork_mode does not match] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_ma03_launch_receipt_binds1')
+mutation = 'fork', needle = 'fork_mode does not match'
+
+    @pytest.mark.parametrize(
+        ("mutation", "needle"),
+        [
+            ("profile", "does not match assigned agent_type"),
+            ("fork", "fork_mode does not match"),
+            ("sandbox", "sandbox does not match installed profile"),
+            ("delivery", "context_delivery_mode must be hook_injected"),
+            ("attested_type", "attested must be boolean"),
+        ],
+    )
+    def test_ma03_launch_receipt_binds_assignment_execution_fields(
+        tmp_path: Path,
+        mutation: str,
+        needle: str,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        receipt = _create_receipt(repo)
+        _write_result(repo, "A-001", {})
+        if mutation == "profile":
+            receipt["requested_profile"] = "cas_sympy"
+            receipt["actual_profile"] = "cas_sympy"
+        elif mutation == "fork":
+            receipt["fork_mode"] = "all"
+        elif mutation == "sandbox":
+            receipt["sandbox"] = "read-only"
+        elif mutation == "delivery":
+            receipt["context_delivery_mode"] = "side_channel"
+        else:
+            receipt["attested"] = "yes"
+        receipt_path = (
+            repo / ".agent-harness" / "runs" / "run-1" / "launches" / "A-001.json"
+        )
+        receipt_path.write_text(json.dumps(receipt) + "\n", encoding="utf-8")
+    
+        envelope = {**_result_envelope(), "launch_id": receipt["launch_id"]}
+        completed = _stop_hook(repo, envelope)
+>       payload = json.loads(completed.stdout)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:2435: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+_ test_ma03_launch_receipt_binds_assignment_execution_fields[sandbox-sandbox does not match installed profile] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_ma03_launch_receipt_binds2')
+mutation = 'sandbox', needle = 'sandbox does not match installed profile'
+
+    @pytest.mark.parametrize(
+        ("mutation", "needle"),
+        [
+            ("profile", "does not match assigned agent_type"),
+            ("fork", "fork_mode does not match"),
+            ("sandbox", "sandbox does not match installed profile"),
+            ("delivery", "context_delivery_mode must be hook_injected"),
+            ("attested_type", "attested must be boolean"),
+        ],
+    )
+    def test_ma03_launch_receipt_binds_assignment_execution_fields(
+        tmp_path: Path,
+        mutation: str,
+        needle: str,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        receipt = _create_receipt(repo)
+        _write_result(repo, "A-001", {})
+        if mutation == "profile":
+            receipt["requested_profile"] = "cas_sympy"
+            receipt["actual_profile"] = "cas_sympy"
+        elif mutation == "fork":
+            receipt["fork_mode"] = "all"
+        elif mutation == "sandbox":
+            receipt["sandbox"] = "read-only"
+        elif mutation == "delivery":
+            receipt["context_delivery_mode"] = "side_channel"
+        else:
+            receipt["attested"] = "yes"
+        receipt_path = (
+            repo / ".agent-harness" / "runs" / "run-1" / "launches" / "A-001.json"
+        )
+        receipt_path.write_text(json.dumps(receipt) + "\n", encoding="utf-8")
+    
+        envelope = {**_result_envelope(), "launch_id": receipt["launch_id"]}
+        completed = _stop_hook(repo, envelope)
+>       payload = json.loads(completed.stdout)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:2435: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+_ test_ma03_launch_receipt_binds_assignment_execution_fields[delivery-context_delivery_mode must be hook_injected] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_ma03_launch_receipt_binds3')
+mutation = 'delivery', needle = 'context_delivery_mode must be hook_injected'
+
+    @pytest.mark.parametrize(
+        ("mutation", "needle"),
+        [
+            ("profile", "does not match assigned agent_type"),
+            ("fork", "fork_mode does not match"),
+            ("sandbox", "sandbox does not match installed profile"),
+            ("delivery", "context_delivery_mode must be hook_injected"),
+            ("attested_type", "attested must be boolean"),
+        ],
+    )
+    def test_ma03_launch_receipt_binds_assignment_execution_fields(
+        tmp_path: Path,
+        mutation: str,
+        needle: str,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        receipt = _create_receipt(repo)
+        _write_result(repo, "A-001", {})
+        if mutation == "profile":
+            receipt["requested_profile"] = "cas_sympy"
+            receipt["actual_profile"] = "cas_sympy"
+        elif mutation == "fork":
+            receipt["fork_mode"] = "all"
+        elif mutation == "sandbox":
+            receipt["sandbox"] = "read-only"
+        elif mutation == "delivery":
+            receipt["context_delivery_mode"] = "side_channel"
+        else:
+            receipt["attested"] = "yes"
+        receipt_path = (
+            repo / ".agent-harness" / "runs" / "run-1" / "launches" / "A-001.json"
+        )
+        receipt_path.write_text(json.dumps(receipt) + "\n", encoding="utf-8")
+    
+        envelope = {**_result_envelope(), "launch_id": receipt["launch_id"]}
+        completed = _stop_hook(repo, envelope)
+>       payload = json.loads(completed.stdout)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:2435: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+_ test_ma03_launch_receipt_binds_assignment_execution_fields[attested_type-attested must be boolean] _
+
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2187/test_ma03_launch_receipt_binds4')
+mutation = 'attested_type', needle = 'attested must be boolean'
+
+    @pytest.mark.parametrize(
+        ("mutation", "needle"),
+        [
+            ("profile", "does not match assigned agent_type"),
+            ("fork", "fork_mode does not match"),
+            ("sandbox", "sandbox does not match installed profile"),
+            ("delivery", "context_delivery_mode must be hook_injected"),
+            ("attested_type", "attested must be boolean"),
+        ],
+    )
+    def test_ma03_launch_receipt_binds_assignment_execution_fields(
+        tmp_path: Path,
+        mutation: str,
+        needle: str,
+    ) -> None:
+        repo = _init_tmp_repo(tmp_path)
+        _register_assignment(repo)
+        receipt = _create_receipt(repo)
+        _write_result(repo, "A-001", {})
+        if mutation == "profile":
+            receipt["requested_profile"] = "cas_sympy"
+            receipt["actual_profile"] = "cas_sympy"
+        elif mutation == "fork":
+            receipt["fork_mode"] = "all"
+        elif mutation == "sandbox":
+            receipt["sandbox"] = "read-only"
+        elif mutation == "delivery":
+            receipt["context_delivery_mode"] = "side_channel"
+        else:
+            receipt["attested"] = "yes"
+        receipt_path = (
+            repo / ".agent-harness" / "runs" / "run-1" / "launches" / "A-001.json"
+        )
+        receipt_path.write_text(json.dumps(receipt) + "\n", encoding="utf-8")
+    
+        envelope = {**_result_envelope(), "launch_id": receipt["launch_id"]}
+        completed = _stop_hook(repo, envelope)
+>       payload = json.loads(completed.stdout)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+scripts/codex_harness/test_harness_enforcement.py:2435: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x7e36cb12deb0>, s = '', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+            obj, end = self.scan_once(s, idx)
+        except StopIteration as err:
+>           raise JSONDecodeError("Expecting value", s, err.value) from None
+E           json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+/usr/lib/python3.12/json/decoder.py:355: JSONDecodeError
+=========================== short test summary info ============================
+FAILED scripts/codex_harness/test_codex_assets.py::test_shared_context_packet_is_merged_and_versioned
+FAILED scripts/codex_harness/test_codex_assets.py::test_shared_context_harness_and_stop_hook_fail_closed
+FAILED scripts/codex_harness/test_codex_assets.py::test_installer_copies_repo_scoped_assets_with_project_harness_config
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_blind_assignment_sibling_read_and_undeclared_scan_blocked
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_hook_injected_context_reread_is_duplicate_delivery
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_context_pack_reread_is_blocked_even_without_delivery_log
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_subagent_context_budget_reserves_role_before_generated_view
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_subagent_context_refuses_oversize_view_without_fallback
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_subagent_rejects_unvalidated_generated_view[tampered]
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_subagent_rejects_unvalidated_generated_view[symlink]
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_subagent_requires_registered_active_run
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_subagent_rejects_stale_active_run_context_version
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_invalid_context_budget_is_structured_not_traceback
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_live_context_binding_is_transient_and_scoped
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_stop_hook_rejects_trailing_text_symlink_and_identity_mismatch
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_repository_role_profiles_fit_total_context_budget
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_ma03_all_result_consumers_share_strict_rejection[stop_hook]
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_ma03_all_result_consumers_reject_missing_finding_severity[stop_hook]
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_ma03_artifacts_cannot_bypass_blind_sibling_isolation[stop_hook]
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_ma03_launch_evidence_cannot_self_promote_to_platform_authentication
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_ma03_launch_receipt_binds_assignment_execution_fields[profile-does not match assigned agent_type]
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_ma03_launch_receipt_binds_assignment_execution_fields[fork-fork_mode does not match]
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_ma03_launch_receipt_binds_assignment_execution_fields[sandbox-sandbox does not match installed profile]
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_ma03_launch_receipt_binds_assignment_execution_fields[delivery-context_delivery_mode must be hook_injected]
+FAILED scripts/codex_harness/test_harness_enforcement.py::test_ma03_launch_receipt_binds_assignment_execution_fields[attested_type-attested must be boolean]
+25 failed, 90 passed in 22.82s

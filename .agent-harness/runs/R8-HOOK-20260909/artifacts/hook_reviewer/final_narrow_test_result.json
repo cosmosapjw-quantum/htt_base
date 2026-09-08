@@ -1,0 +1,13 @@
+{
+  "command": "python3 -B -m pytest tests/r8/test_hook_context.py scripts/codex_harness/test_harness_enforcement.py::test_subagent_requires_registered_active_run scripts/codex_harness/test_harness_enforcement.py::test_stop_hook_rejects_trailing_text_symlink_and_identity_mismatch -q -p no:cacheprovider",
+  "exit_code": 0,
+  "stdout": "....... [100%]\n7 passed in 1.03s\n",
+  "source_hashes": {
+    ".codex/hooks/_common.py": "5e3230e93e9048b2240cec9acd3c55fb707217a555682050620a8ba0065e2b6b",
+    ".codex/hooks/subagent_start_context.py": "2b4a3c92f8709fd3da0a19572e69bbd71e508dd4b9a7ba8ebc02658099773860",
+    ".codex/hooks/subagent_stop_validate.py": "39faddc0d866d6c73a40959827fed5a8f79cf74a2ef85d34b3bfa99f6a2d7a35",
+    ".agent-harness/scripts/bind_hook_context.py": "d79775a1e586a20b9d386cd6b4d220d633d71e1eeeba94248e6a2adb273cd073",
+    "tests/r8/test_hook_context.py": "ea05824cb4e66c0a8fd536c1c664602487b04efba2b452649cd31aac6c2bfb61"
+  },
+  "evidence_origin": "self_declared tool result transcript"
+}

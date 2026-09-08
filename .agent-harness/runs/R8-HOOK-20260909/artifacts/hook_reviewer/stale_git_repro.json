@@ -1,0 +1,12 @@
+{
+  "start": {
+    "returncode": 0,
+    "stdout": "{\"hookSpecificOutput\": {\"hookEventName\": \"SubagentStart\", \"additionalContext\": \"CONTEXT CONTRACT VIOLATION: Explicit launch context rejected: duplicate native start for already bound agent\"}, \"systemMessage\": \"Invalid launch binding\"}\n",
+    "stderr": ""
+  },
+  "stop": {
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "fatal: not a git repository (or any of the parent directories): .git\nTraceback (most recent call last):\n  File \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_stop_validate.py\", line 93, in <module>\n    main()\n  File \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/subagent_stop_validate.py\", line 24, in main\n    root, binding = resolve_hook_context(event, \"stop\")\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/_common.py\", line 143, in resolve_hook_context\n    root = validate_hook_binding(binding)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/_common.py\", line 84, in validate_hook_binding\n    if git_identity(root) != {k: binding[k] for k in (\"worktree_root\", \"git_dir\")}:\n       ^^^^^^^^^^^^^^^^^^\n  File \"/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.codex/hooks/_common.py\", line 64, in git_identity\n    top = subprocess.check_output(\n          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 466, in check_output\n    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['git', '-C', '/tmp', 'rev-parse', '--show-toplevel']' returned non-zero exit status 128.\n"
+  }
+}

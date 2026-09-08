@@ -1,0 +1,40 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-HOOK-20260909",
+  "assignment_id": "native_context_probe",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "shared-core",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R0",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R8-HOOK-20260909-NATIVE"
+  ],
+  "task": "After reviewed hook deployment, confirm authentic injected R8 worktree/run/assignment context and emit an honestly sourced strict result. This is an operational probe only, not scientific or independent profile admission. Own unique result/artifacts only; no production edits or nested spawning.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r8/HARNESS_UPDATE.md",
+      "sha256": "c28fb01ca3f771ba86597b446bf237c2e509a0577cfa3f4a7cdc77bbafba2a6d"
+    },
+    {
+      "path": ".codex/hooks/_common.py"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    "native-context-result"
+  ],
+  "result_path": ".agent-harness/runs/R8-HOOK-20260909/results/native_context_probe.json",
+  "status": "registered",
+  "assignment_sha256": "070b2ba0d1570cc960a4f9d224e16e71be9adbb2c556b36891347ddbd52d0c8a"
+}

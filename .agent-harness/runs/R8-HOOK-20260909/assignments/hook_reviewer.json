@@ -1,0 +1,46 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-HOOK-20260909",
+  "assignment_id": "hook_reviewer",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "shared-core",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R1",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R8-HOOK-20260909-CONTEXT"
+  ],
+  "task": "First reproduce actual native hook checkout using a read-only start/stop probe; after parent candidate is ready independently review explicit context routing and two-worktree negative tests. Only write own result/artifacts. No production edits, no nested spawning. Scientific results and previous R8 scope untouched.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r8/HARNESS_UPDATE.md",
+      "sha256": "c28fb01ca3f771ba86597b446bf237c2e509a0577cfa3f4a7cdc77bbafba2a6d"
+    },
+    {
+      "path": ".codex/hooks/_common.py"
+    },
+    {
+      "path": ".codex/hooks/subagent_start_context.py"
+    },
+    {
+      "path": ".codex/hooks/subagent_stop_validate.py"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    "review"
+  ],
+  "result_path": ".agent-harness/runs/R8-HOOK-20260909/results/hook_reviewer.json",
+  "status": "registered",
+  "assignment_sha256": "e7cd1e59dfcb21bd0e2a32e1914fa83377b45fa33a91eae0f8349172454a2a75"
+}

@@ -1,0 +1,29 @@
+{
+  "scope": "OPERATIONAL_CONTEXT_ONLY",
+  "actual_native_child_id": "01a08273-dcb6-77a3-a8a8-106a630c1b3d",
+  "actual_parent_session_id": "01a080c8-86b4-7b63-87d2-e2912091bca4",
+  "native_completion_observed": {
+    "timestamp": "2026-09-08T19:18:57.387Z",
+    "type": "event_msg",
+    "payload": {
+      "type": "task_complete",
+      "turn_id": "01a08273-dd0a-7281-8d53-36641e458711",
+      "last_agent_message": "Injected bootstrap correctly identifies the R8 run, worktree, assignment, and context version. Registered result passes strict validation. The initial missing-field validation failure is preserved in its command history.\n\nOperational context only; launch evidence remains `unverified`. Native stop consumption remains pending.\n\nHARNESS_RESULT: {\"assignment_id\":\"native_context_probe\",\"context_version\":\"2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4\",\"status\":\"pass\",\"result_path\":\".agent-harness/runs/R8-HOOK-20260909/results/native_context_probe.json\"}",
+      "started_at": 1788895026,
+      "completed_at": 1788895137,
+      "duration_ms": 110848,
+      "time_to_first_token_ms": 5306
+    }
+  },
+  "completed_status_observed_by_parent": true,
+  "post_completion_consumer_replay": {
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "binding_sha256": "b7310aeec7bbd38fb5e7ab315f25e0180c5bf77331adecb51c6687c4e7e48ba3",
+  "result_sha256": "6e3969015399526bd175a9d91a99a3d4758e3899a4e17e3491bc7cf131c04764",
+  "profile_attestation": "UNVERIFIED",
+  "scientific_admission": false,
+  "limit": "Task completion was observed through native collaboration and its transcript; explicit consumer replay is separately labelled."
+}

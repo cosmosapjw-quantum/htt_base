@@ -1,0 +1,130 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-HOOK-20260909",
+  "assignment_id": "hook_reviewer",
+  "assignment_sha256": "e7cd1e59dfcb21bd0e2a32e1914fa83377b45fa33a91eae0f8349172454a2a75",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "harness_engineer",
+  "independence_mode": "shared-core",
+  "result_path": ".agent-harness/runs/R8-HOOK-20260909/results/hook_reviewer.json",
+  "status": "pass",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-08T19:13:46.546563+00:00",
+  "completed_at": "2026-09-08T19:17:10.321154+00:00",
+  "files_read": [
+    ".agent-harness/runs/R8-HOOK-20260909/assignments/hook_reviewer.json",
+    "docs/research_program/tensor_joint_r8/HARNESS_UPDATE.md",
+    ".codex/hooks/_common.py",
+    ".codex/hooks/subagent_start_context.py",
+    ".codex/hooks/subagent_stop_validate.py",
+    ".agent-harness/scripts/bind_hook_context.py",
+    "tests/r8/test_hook_context.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/runs/R8-HOOK-20260909/RUN_PLAN.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R8-HOOK-20260909/results/hook_reviewer.json",
+    "scripts/codex_harness/test_harness_enforcement.py"
+  ],
+  "tool_versions": {
+    "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+    "pytest": "9.1.1",
+    "git": "git version 2.43.0"
+  },
+  "commands": [
+    "python3 -B -m pytest tests/r8/test_hook_context.py -q -p no:cacheprovider",
+    "Actual subprocess invocation of each hook with stale root /tmp; original outputs preserved in artifacts/hook_reviewer/stale_git*_repro.json",
+    "python3 -B -m pytest tests/r8/test_hook_context.py scripts/codex_harness/test_harness_enforcement.py::test_subagent_requires_registered_active_run scripts/codex_harness/test_harness_enforcement.py::test_stop_hook_rejects_trailing_text_symlink_and_identity_mismatch -q -p no:cacheprovider"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/R8-HOOK-20260909/artifacts/hook_reviewer/initial_probe.json",
+      "sha256": "8277c51372a5936970a28f9340104196c6e65013cde75fef0a879e01edc9f658",
+      "bytes": 1559,
+      "producer": "hook_reviewer"
+    },
+    {
+      "path": ".agent-harness/runs/R8-HOOK-20260909/artifacts/hook_reviewer/stale_git_repro.json",
+      "sha256": "2ad9d33aca53bc249e91fd0f9415ffeec07d0c008b585f22fc61903005ca622b",
+      "bytes": 2020,
+      "producer": "hook_reviewer"
+    },
+    {
+      "path": ".agent-harness/runs/R8-HOOK-20260909/artifacts/hook_reviewer/stale_git_start_repro.json",
+      "sha256": "fe6b8264bc5180b0e24bea8a0758b349424e3fbcfd6415871c480a6640ce7328",
+      "bytes": 1677,
+      "producer": "hook_reviewer"
+    },
+    {
+      "path": ".agent-harness/runs/R8-HOOK-20260909/artifacts/hook_reviewer/reviewed_source_hashes.json",
+      "sha256": "fe6b7fc382ef485a0dcaa0b4fbc4f7c28b564868237ce640232d77b0c97ef401",
+      "bytes": 544,
+      "producer": "hook_reviewer"
+    },
+    {
+      "path": ".agent-harness/runs/R8-HOOK-20260909/artifacts/hook_reviewer/focused_test_result.json",
+      "sha256": "e79fc6955b5232647b3902db79056cb9e8ef0f570c76d167c75c3946558103d2",
+      "bytes": 797,
+      "producer": "hook_reviewer"
+    },
+    {
+      "path": ".agent-harness/runs/R8-HOOK-20260909/artifacts/hook_reviewer/final_narrow_test_result.json",
+      "sha256": "0aff62702081e65a9121aa4ff71a1e8459f489fa843ecebc67d8d92fe1ff2619",
+      "bytes": 1013,
+      "producer": "hook_reviewer"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "H3_STALE_GIT_EXCEPTION",
+      "claim_id": "RUN-R8-HOOK-20260909-CONTEXT",
+      "verdict": "pass",
+      "severity": "medium",
+      "evidence_fingerprint": "stale-existing-nongit-bound-root-causes-uncaught-calledprocesserror-now-typed-rejection",
+      "statement": "Original candidate caused both hook entry points to exit 1 with empty stdout when the bound root remained present but was not a Git worktree. Parent repaired git_identity by normalizing CalledProcessError to ValueError. The added subprocess regression now confirms start contract violation and stop block decisions with exit 0 and no traceback.",
+      "assumptions_used": [
+        "Serialized stage-before-spawn operations in one parent session.",
+        "Trusted local parent controls pending context and on-disk child receipts; this is routing evidence, not authenticated model identity or scientific attestation."
+      ],
+      "evidence_refs": [
+        ".codex/hooks/_common.py:64",
+        "tests/r8/test_hook_context.py:106",
+        ".agent-harness/runs/R8-HOOK-20260909/artifacts/hook_reviewer/stale_git_start_repro.json",
+        ".agent-harness/runs/R8-HOOK-20260909/artifacts/hook_reviewer/stale_git_repro.json",
+        ".agent-harness/runs/R8-HOOK-20260909/artifacts/hook_reviewer/focused_test_result.json",
+        ".agent-harness/runs/R8-HOOK-20260909/artifacts/hook_reviewer/final_narrow_test_result.json"
+      ],
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Stage a real linked-worktree binding; complete one child start; remove only the fixture linked .git file while leaving its directory; invoke both real hook scripts as subprocesses.",
+        "Run python3 -B -m pytest tests/r8/test_hook_context.py -q -p no:cacheprovider."
+      ],
+      "unresolved": [],
+      "confidence": 1.0
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R8-HOOK-20260909-CONTEXT",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "H3_STALE_GIT_EXCEPTION"
+      ],
+      "summary": "Candidate review passes after targeted stale-Git failure repair and legacy import compatibility correction. Seven narrow tests pass: five current routing tests plus the exact two formerly failing legacy hook regressions. Explicit bindings import target-worktree harness code; unbound legacy hooks keep their installed code root while using the resolved data root. Fresh authentic native acceptance remains a separate parent-owned check."
+    }
+  ],
+  "errors": [],
+  "scope": {
+    "candidate_review": "PASS",
+    "native_operational_acceptance": "NOT_EVALUATED_BY_THIS_REVIEW",
+    "original_probe_start": "REJECTED_WRONG_CHECKOUT_RUN_CONTEXT_PRESERVED",
+    "scientific_validation": "NOT_IN_SCOPE"
+  },
+  "remaining_limitations": [
+    "This old child received EXTERNAL-FUSION bootstrap; no retroactive native acceptance is claimed.",
+    "Four initial routing tests exercise helpers; new fifth test exercises both actual hook scripts for the repaired failure. A separate newly spawned native child is required to establish the real dispatch/start/stop path.",
+    "Legacy sessions without staged hook-context directory intentionally retain cwd routing. Explicit worktree-aware launches must stage before spawning."
+  ]
+}

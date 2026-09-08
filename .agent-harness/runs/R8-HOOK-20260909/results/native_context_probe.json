@@ -1,0 +1,94 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-HOOK-20260909",
+  "assignment_id": "native_context_probe",
+  "assignment_sha256": "070b2ba0d1570cc960a4f9d224e16e71be9adbb2c556b36891347ddbd52d0c8a",
+  "agent_type": "harness_engineer",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "result_path": ".agent-harness/runs/R8-HOOK-20260909/results/native_context_probe.json",
+  "status": "pass",
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read_evidence": "self_declared",
+  "started_at": "UNKNOWN_NOT_RECORDED",
+  "completed_at": "2026-09-08T19:18:34.302832+00:00",
+  "tool_versions": {
+    "python": "3.12.3"
+  },
+  "commands": [
+    {
+      "command": "cat registered assignment at explicit worktree",
+      "exit_code": 0
+    },
+    {
+      "command": "cat context index, required inputs, and strict result validator; targeted sed of validator schema",
+      "exit_code": 0
+    },
+    {
+      "command": "Python assert injected identities match assignment/current context index and required input hash",
+      "exit_code": 0
+    },
+    {
+      "command": "Initial strict registered-result validation",
+      "exit_code": 1,
+      "validation_errors": [
+        "result independence_mode does not match its registration"
+      ],
+      "resolution": "Added required independence_mode=shared-core from sealed assignment; preserved this original failure."
+    },
+    {
+      "command": "strict_result_validation.load_and_validate_registered_result_file on corrected registered result",
+      "exit_code": 0,
+      "validation_errors": []
+    }
+  ],
+  "artifacts": [],
+  "files_read": [
+    ".agent-harness/runs/R8-HOOK-20260909/assignments/native_context_probe.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    "docs/research_program/tensor_joint_r8/HARNESS_UPDATE.md",
+    ".codex/hooks/_common.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/runs/R8-HOOK-20260909/results/native_context_probe.json",
+    ".agent-harness/HISTORICAL_RUNS.json",
+    ".agent-harness/context/CLAIM_REGISTRY.jsonl",
+    ".agent-harness/scripts/__pycache__/profile_registry.cpython-312.pyc",
+    ".codex/agents/adjudicator.toml",
+    ".codex/agents/cas_lean.toml",
+    ".codex/agents/cas_sage_singular.toml",
+    ".codex/agents/cas_sympy.toml",
+    ".codex/agents/cas_wolfram_xact.toml",
+    ".codex/agents/claim-gate-reviewer.toml",
+    ".codex/agents/claim_lane_reviewer.toml",
+    ".codex/agents/code-cartographer.toml",
+    ".codex/agents/context-mapper.toml",
+    ".codex/agents/convergence_director.toml",
+    ".codex/agents/docs-citation-auditor.toml",
+    ".codex/agents/harness_engineer.toml",
+    ".codex/agents/physics_stat_auditor.toml",
+    ".codex/agents/regression-tester.toml",
+    ".codex/agents/web_crag_researcher.toml"
+  ],
+  "findings": [],
+  "errors": [],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R8-HOOK-20260909-NATIVE",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "summary": "The mandatory bootstrap actually injected into this native child identifies R8-HOOK-20260909, /mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree, native_context_probe, and the registered context version. These values match the spawn header, registered assignment, and current context index. This records operational hook context only, without model-profile attestation, scientific acceptance, or a claim that the future stop consumer has already passed.",
+      "evidence_refs": [
+        ".agent-harness/runs/R8-HOOK-20260909/assignments/native_context_probe.json",
+        ".agent-harness/context/CONTEXT_INDEX.json",
+        ".codex/hooks/_common.py:resolve_hook_context",
+        "native injected MANDATORY SUBAGENT BOOTSTRAP in this child conversation"
+      ],
+      "evidence_fingerprint": "r8-native-context-probe-injected-run-worktree-assignment-context",
+      "assumptions_used": [
+        "Injected developer bootstrap is the received operational context; this report is self-declared."
+      ]
+    }
+  ],
+  "independence_mode": "shared-core"
+}
