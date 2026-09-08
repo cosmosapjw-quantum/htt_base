@@ -1,0 +1,183 @@
+{
+  "assumptions": [],
+  "attempt": 5,
+  "capabilities": [
+    "BACKGROUND_CONTROL_RECORDS",
+    "BACKGROUND_LAW",
+    "DESI_RECORDS"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0005/science.json",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0005/compressed_bao.json"
+  ],
+  "next_discriminator": null,
+  "node_id": "R7-08",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "actual_driver_module_paths": {
+      "common.r7_asset_use": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_asset_use.py",
+      "common.r7_contracts": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_contracts.py",
+      "htt.infer.r7_desi_law": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_desi_law.py",
+      "htt.infer.r7_gaussian_law": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_gaussian_law.py",
+      "obsstat.r7_cmb_product_response": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/r7_cmb_product_response.py"
+    },
+    "capability_evidence": {
+      "BACKGROUND_CONTROL_RECORDS": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0005/science.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0005/compressed_bao.json"
+        ],
+        "scope": "Raw BGS P adapter separate from released compressed Gaussian background likelihood"
+      },
+      "BACKGROUND_LAW": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0005/science.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0005/compressed_bao.json"
+        ],
+        "scope": "Raw BGS P adapter separate from released compressed Gaussian background likelihood"
+      },
+      "DESI_RECORDS": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0005/science.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0005/compressed_bao.json"
+        ],
+        "scope": "Raw BGS P adapter separate from released compressed Gaussian background likelihood"
+      }
+    },
+    "compressed": {
+      "artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0005/compressed_bao.json",
+      "eligibility": "CONDITIONAL_RELEASED_GAUSSIAN_SUMMARY_ONLY",
+      "interpretation": "Background qiso likelihood, conditional on released Gaussian compression. True catalogue coverage and angular response unverified.",
+      "law_scope": {
+        "conventions": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+        "dataset_ids": [
+          "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+        ],
+        "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+        "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+        "method_config_id": "c131fb208df5e1dfddd6ee7e05676430ff21a423c6bdb403808729ad7633be34",
+        "method_id": "gaussian_acceptance",
+        "model_id": "RELEASED_GAUSSIAN_QISO",
+        "version": "r7.1"
+      },
+      "law_specification_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+      "payload": {
+        "DV_over_rd_fid": 8.062742859742729,
+        "alternative": "syst selected in implementation; stat-only is not multiplied",
+        "covariance": [
+          [
+            0.00034950706479147084
+          ]
+        ],
+        "decoder": "/mnt/sn850x2t/htt_base_e2e/workdir/external_fusion_round3_20260722_envs/lowell/bin/python",
+        "likelihood_name": "gaussian_likelihood",
+        "observed": [
+          0.9828804416839027
+        ],
+        "parameter": "qiso",
+        "source_id": "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3",
+        "source_path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_syst_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5",
+        "window": [
+          [
+            1.0
+          ]
+        ],
+        "zeff": 0.2952346949471036
+      }
+    },
+    "raw": [
+      {
+        "columns": [
+          "TARGETID",
+          "Z",
+          "NTILE",
+          "RA",
+          "DEC",
+          "PHOTSYS",
+          "FRAC_TLOBS_TILES",
+          "WEIGHT_ZFAIL",
+          "WEIGHT_SYS",
+          "WEIGHT",
+          "WEIGHT_COMP",
+          "flux_g_dered",
+          "flux_r_dered",
+          "flux_z_dered",
+          "flux_w1_dered",
+          "flux_w2_dered",
+          "NX",
+          "WEIGHT_FKP"
+        ],
+        "law_status": "P sample/selection and tomographic random normalization must be bound before raw 18-vector execution",
+        "missing_P_columns": [
+          "R_MAG_ABS",
+          "R_MAG_APP"
+        ],
+        "rows": 217614,
+        "source": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks/observed/v1.5/BGS_BRIGHT-21.5_NGC_clustering.dat.fits",
+        "z_range": [
+          0.10005185386012075,
+          0.3999994562252596
+        ]
+      },
+      {
+        "columns": [
+          "TARGETID",
+          "Z",
+          "NTILE",
+          "RA",
+          "DEC",
+          "PHOTSYS",
+          "FRAC_TLOBS_TILES",
+          "WEIGHT_ZFAIL",
+          "WEIGHT_SYS",
+          "WEIGHT",
+          "WEIGHT_COMP",
+          "flux_g_dered",
+          "flux_r_dered",
+          "flux_z_dered",
+          "flux_w1_dered",
+          "flux_w2_dered",
+          "NX",
+          "WEIGHT_FKP"
+        ],
+        "law_status": "P sample/selection and tomographic random normalization must be bound before raw 18-vector execution",
+        "missing_P_columns": [
+          "R_MAG_ABS",
+          "R_MAG_APP"
+        ],
+        "rows": 82429,
+        "source": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks/observed/v1.5/BGS_BRIGHT-21.5_SGC_clustering.dat.fits",
+        "z_range": [
+          0.10003384382850282,
+          0.3999959161701791
+        ]
+      }
+    ],
+    "scope": "Raw BGS P adapter separate from released compressed Gaussian background likelihood",
+    "validation": {
+      "command": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "--import-mode=importlib",
+        "-q",
+        "tests/r7/test_catalogue_laws.py"
+      ],
+      "exit_code": 0,
+      "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-08/attempt-0005/validation.log",
+      "log_sha256": "dba11d4f6a3efaadd7dca81cfe7e523d936004547d490a6e62236cc335c24d60",
+      "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "test_sources": {
+        "tests/r7/test_catalogue_laws.py": "c2aa81ac051cd864cd13da170c74d937c1f7a21e3475c29db32ae703c745d791"
+      }
+    }
+  },
+  "reasons": [],
+  "scientific_outcome": "CONDITIONAL_BOUND",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}

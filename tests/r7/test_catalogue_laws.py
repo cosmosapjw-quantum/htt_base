@@ -39,3 +39,20 @@ def test_selected_latent_density_is_normalized_and_factory_unbound():
         mean=lambda t,e,p:np.array([4/3]),domain_id='positive',domain_contains=lambda t,e:t[0]>0,source_id='s')
     factory=build_cf4_law(product,dict(latent_block=block,selection_id='s'),dict(source_id='known'))
     assert not factory.empirical_eligible and factory.unfilled_prediction_slots==('distance',)
+
+
+def test_desi_every_mock_is_refitted_and_covariance_is_not_known_law():
+    from htt.infer.r7_desi_law import build_desi_law
+    from scripts.observed_runs.run_desi_bgs_bright import _synthetic_selection,_synthetic_realization
+    s=_synthetic_selection()
+    observed=_synthetic_realization('OBSERVED',0)
+    ez=[_synthetic_realization('EZMOCK',i) for i in range(1,1001)]
+    ab=[_synthetic_realization('ABACUS',i) for i in range(25)]
+    result=build_desi_law(dict(product_id='desi',source_ids=['fixture'],realization=observed),
+        dict(source_id='random-fixture',window_ids=s.window_ids,frame=s.coordinate_frame_id),
+        dict(ezmock=ez,abacus=ab,law_id='P_synthetic'),s)
+    assert result.outcome=='SCENARIO_ONLY'
+    assert result.controls['mock_support']['ezmock_count']==1000
+    assert result.controls['mock_support']['abacus_count']==25
+    assert len(result.controls['observed_features'])==18
+    assert len(result.controls['normalization_hat'])==6
