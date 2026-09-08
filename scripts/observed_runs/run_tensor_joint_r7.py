@@ -23,6 +23,7 @@ for path in (ROOT/'htt/src',ROOT/'htt',ROOT/'htt/htt',ROOT):
     if str(path) not in sys.path:sys.path.insert(0,str(path))
 from common.r7_contracts import BranchResult,TensorRecord,json_value,content_id
 from common.r7_asset_use import intake_inventory,verify_selected_sources
+from common.r7_evidence import cas_evidence_binding,review_evidence_binding,evidence_dependencies
 from scripts.observed_runs.run_r7_campaign import _write,_sha,synthesize_campaign
 
 DATA=Path('/mnt/sn850x2t/htt_base_e2e/workdir')
@@ -96,25 +97,27 @@ def source_intake(node,results):
 def algebra(node,results):
     validation=_tests(node,['tests/r7/test_conventions.py','tests/r7/test_extended_algebra.py'])
     cas=ROOT/'.agent-harness/runs'/RUN_ID/'cas_adjudication.json'
-    cas_data=json.loads(cas.read_text()) if cas.exists() else {'status':'CAS_BLOCKED'}
+    contract=cas.with_name('CAS_CONTRACT.json')
+    cas_data,cas_binding=cas_evidence_binding(ROOT,cas,contract)
     # The separately reused certificate has exact rational block minors; the
     # four-axis contract validates their implication, not a rebuilt operator.
     certificate=ROOT/'docs/generated/tensor_joint_r7/axial_certificate_source.json'
     caps=['ALGEBRA_VERIFIED']
-    text=json.dumps(cas_data)
-    if 'CAS_4AXIS_PASS' in text:caps+=['FOUR_AXIS_CAS','CONTINUUM_CERTIFIED']
-    return _finish(node,{'validation':validation,'cas':cas_data,'accepted_certificate':str(certificate),
+    if cas_binding['eligible']:caps+=['FOUR_AXIS_CAS','CONTINUUM_CERTIFIED']
+    return _finish(node,{'validation':validation,'cas':cas_data,'cas_binding':cas_binding,'accepted_certificate':str(certificate),
         'mask_status':'FINITE_MATRIX_IDENTITY_VERIFIED; continuum norm theorem proof uses stated sup norm; pixel error certificate unavailable',
         'cas_scope':'Seven fixed algebra/certificate implications only; no empirical/physical closure or full continuum operator recomputation'},
-        caps,extra_evidence=([cas,certificate] if cas.exists() else [certificate]))
+        caps,extra_evidence=[p for p in [*evidence_dependencies(ROOT,cas,contract),certificate] if p.is_file()])
 
 
 def donor_integration(node,results):
     # Each named donor product validates and terminates independently. A source
     # binding or optional decoder failure cannot remove another donor product.
-    binding=results['R7-00'].product_results
-    failed={p for paths in binding.get('source_binding_failures',{}).values() for p in paths}
-    original=binding.get('selected_source_binding',{}).get('records',[])
+    # Recheck at consumption even if the predecessor came from a cache.
+    binding=json.loads((ROOT/'docs/generated/tensor_joint_r7/source_bindings.json').read_text())
+    current_failures=verify_selected_sources(ROOT,binding)
+    failed={p for paths in current_failures.values() for p in paths}
+    original=binding['records']
     donor_paths=lambda tag:[r['path'] for r in original if r['donor']==tag]
     catalogue='tests/r7/test_catalogue_laws.py'
     routes=[
@@ -141,8 +144,8 @@ def donor_integration(node,results):
             if cap:caps.append(cap)
         except Exception as exc:
             records[name]={'status':'VALIDATION_FAILED','reason':str(exc),'log':str(sub['_attempt_dir']/'validation.log')}
-    return _finish(node,{'donor_capability_records':records,
-        'historical_wrapper_failures':'Unselected PR publication/dispatch checks remain recorded in donors_dependencies.log; scientific donor tests are separate.'},
+    return _finish(node,{'donor_capability_records':records,'source_binding_failures':current_failures,
+        'selective_port_validation_limits':'The full donor run recorded 10 compatibility/evidence-path omissions after selective porting. These are not established baseline failures; some tests did not reach scientific assertions. Selected route passes do not discharge every donor benchmark obligation.'},
         caps,extra_evidence=evidence)
 
 
@@ -505,8 +508,10 @@ def figures(node,results):
 def audit(node,results):
     path=node['_run_dir']/'independent_review.json'
     if not path.exists():return _finish(node,{'audit_status':'NOT_EXECUTED','reason':'Independent reviews pending'},(), 'NOT_EVALUATED')
-    review=json.loads(path.read_text());caps=['FINAL_AUDIT'] if review.get('status')=='PASS' else []
-    return _finish(node,{'independent_review':review},caps,'NOT_EVALUATED',extra_evidence=[path])
+    review,binding=review_evidence_binding(ROOT,path)
+    caps=['FINAL_AUDIT'] if binding['eligible'] else []
+    return _finish(node,{'independent_review':review,'review_binding':binding},caps,'NOT_EVALUATED',
+        extra_evidence=[p for p in evidence_dependencies(ROOT,path) if p.is_file()])
 
 
 def manuscript(node,results):
@@ -557,6 +562,17 @@ def campaign_executors(root,run_dir):
       19:[base+'r7_calibration.py',base+'r7_gaussian_law.py',base+'r7_desi_law.py'],
       22:['scripts/observed_runs/r7_report.py'],24:['scripts/observed_runs/r7_report.py']}
     sources={key:common+[ROOT/p for p in module_names.get(i,())] for i,key in enumerate(executors)}
+    # Pins, optional evidence and its named source identities must participate
+    # even when absent, so arrival can reopen a previously terminal branch.
+    manifest=ROOT/'docs/generated/tensor_joint_r7/source_bindings.json'
+    donor_files=[ROOT/r['path'] for r in json.loads(manifest.read_text())['records']]
+    sources['R7-00']+=donor_files
+    sources['R7-02'].append(manifest)
+    cas=ROOT/'.agent-harness/runs'/RUN_ID/'cas_adjudication.json'
+    sources['R7-01']+=evidence_dependencies(ROOT,cas,cas.with_name('CAS_CONTRACT.json'))
+    sources['R7-23']+=evidence_dependencies(ROOT,run_dir/'independent_review.json')
+    for key in ('R7-01','R7-23'):
+        sources[key].append(ROOT/'htt/src/common/r7_evidence.py')
     helpers={6:[_carrier_records,_wmap_control],8:[_compressed_bao],10:[_bao_law],13:[_bao_law],17:[_bao_law],
         18:[_bao_law,_calibrated_bao],19:[_bao_law,_calibrated_bao],21:[_bao_law]}
     inputs={key:{'source_design':'89a9a901e950cb186dcfedb95a250493fe4fd6fa',

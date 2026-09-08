@@ -1,0 +1,115 @@
+{
+  "status": "PASS",
+  "scope": "LOCAL_R7_E1_E6_EVIDENCE_CONSUMER_REPAIR_ONLY",
+  "base_commit": "433433409ee95f48759fca4193b727a43bde4872",
+  "acceptance_sha256": "38db1f8ef1859036feb66646440a85a0808686308e1a14e43468e8eef3dbd445",
+  "criteria": {
+    "E1": "PASS",
+    "E2": "PASS",
+    "E3": "PASS",
+    "E4": "PASS",
+    "E5": "PASS",
+    "E6": "PASS"
+  },
+  "host_test_result": "51 passed in 3.01s",
+  "independent_tests": "51 passed in 3.25s plus 9 passed in 0.36s",
+  "independent_review": {
+    "path": ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/results/evidence_review.json",
+    "sha256": "8f226febfebfcef4148249bc8e83a111c18913ad01fd567da342c2000edb56eb",
+    "status": "pass"
+  },
+  "reviewed_source_binding": {
+    "eligible": true,
+    "errors": [],
+    "source_states": {
+      "htt/src/common/r7_evidence.py": {
+        "status": "PRESENT",
+        "sha256": "a8867d4d78eefaaa3d6da5599b7e11e3bedaea1a36a3878222464d2690e9af64"
+      },
+      "scripts/observed_runs/run_r7_campaign.py": {
+        "status": "PRESENT",
+        "sha256": "7f1622c84851b128ec748e7cf9ffb5a7caf37478e753a97121bf5eb65a397de7"
+      },
+      "scripts/observed_runs/run_tensor_joint_r7.py": {
+        "status": "PRESENT",
+        "sha256": "0e4d102800108985ef6b307c1f1c4a8fd0e8d4804e3d6d50620e8f31a1e8b328"
+      },
+      "tests/r7/test_evidence_binding.py": {
+        "status": "PRESENT",
+        "sha256": "647697cf5977c9e77eca4ca24a9bc0c77d1a4302a51f2d0af7471702f5131cb8"
+      },
+      "tests/r7/test_campaign_routing.py": {
+        "status": "PRESENT",
+        "sha256": "a94eba21d5ab158e4be26dff8aee81ef421943508179766283973ad337bd2c35"
+      },
+      "AGENTS.md": {
+        "status": "PRESENT",
+        "sha256": "d0dc0228dcf175e771dc57f1813a517eb137d1649702d292d7b2728f79563b4a"
+      },
+      "docs/research_program/tensor_joint_r7/DESIGN.md": {
+        "status": "PRESENT",
+        "sha256": "5f01d32033b3c0d66a011000bd05c3ca847ea9453dac25465427b6111f4767b2"
+      },
+      ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json": {
+        "status": "PRESENT",
+        "sha256": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2"
+      },
+      ".agent-harness/runs/TENSOR-JOINT-R7-20260908/cas_adjudication.json": {
+        "status": "PRESENT",
+        "sha256": "730acce33d001c149be5a6d4e9c12e50e40c601f0ba429321d5588b5181497af"
+      },
+      "docs/research_program/tensor_joint_r7/EVIDENCE_REPAIR_20260909.md": {
+        "status": "PRESENT",
+        "sha256": "aec19ab95d445bb187a55fc9da7084f338930c2423394597bf5cf4363d1f4c0a"
+      },
+      ".agent-harness/scripts/cas_gate.py": {
+        "status": "PRESENT",
+        "sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744"
+      }
+    }
+  },
+  "final_source_sha256": {
+    "htt/src/common/r7_evidence.py": "a8867d4d78eefaaa3d6da5599b7e11e3bedaea1a36a3878222464d2690e9af64",
+    "scripts/observed_runs/run_r7_campaign.py": "7f1622c84851b128ec748e7cf9ffb5a7caf37478e753a97121bf5eb65a397de7",
+    "scripts/observed_runs/run_tensor_joint_r7.py": "0e4d102800108985ef6b307c1f1c4a8fd0e8d4804e3d6d50620e8f31a1e8b328",
+    "tests/r7/test_evidence_binding.py": "647697cf5977c9e77eca4ca24a9bc0c77d1a4302a51f2d0af7471702f5131cb8",
+    "tests/r7/test_campaign_routing.py": "a94eba21d5ab158e4be26dff8aee81ef421943508179766283973ad337bd2c35",
+    "AGENTS.md": "d0dc0228dcf175e771dc57f1813a517eb137d1649702d292d7b2728f79563b4a",
+    "docs/research_program/tensor_joint_r7/DESIGN.md": "5f01d32033b3c0d66a011000bd05c3ca847ea9453dac25465427b6111f4767b2",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/cas_adjudication.json": "730acce33d001c149be5a6d4e9c12e50e40c601f0ba429321d5588b5181497af",
+    "docs/research_program/tensor_joint_r7/EVIDENCE_REPAIR_20260909.md": "aec19ab95d445bb187a55fc9da7084f338930c2423394597bf5cf4363d1f4c0a",
+    ".agent-harness/scripts/cas_gate.py": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744"
+  },
+  "scope_limits": [
+    "No new CAS execution or scientific analysis",
+    "Full R7 acceptance remains incomplete; prior STOP_INVALID preserved",
+    "No updated FINAL_AUDIT issued for old campaign",
+    "No push or merge"
+  ],
+  "operational_hook_status": "REJECTED_WRONG_CHECKOUT_RUN_CONTEXT",
+  "launch_evidence": "UNVERIFIED",
+  "global_rules_changed": false,
+  "budgets": {
+    "active_agents": {
+      "limit": 4,
+      "used": 0
+    },
+    "metacognitive_passes": {
+      "limit": 1,
+      "used": 1
+    },
+    "repair_closeout_rounds": {
+      "limit": 1,
+      "used": 1
+    },
+    "review_rounds": {
+      "limit": 1,
+      "used": 1
+    },
+    "same_failure_retries": {
+      "limit": 1,
+      "used": 0
+    }
+  }
+}

@@ -5,6 +5,7 @@ import argparse
 from dataclasses import dataclass,replace
 from datetime import datetime,timezone
 import hashlib
+import inspect
 import json
 from pathlib import Path
 import sys
@@ -14,6 +15,7 @@ ROOT=Path(__file__).resolve().parents[2]
 for p in (ROOT/'htt/src',ROOT/'htt',ROOT/'htt/htt',ROOT):
     if str(p) not in sys.path:sys.path.insert(0,str(p))
 from common.r7_contracts import BranchResult,TERMINAL,json_value,content_id
+from common.r7_evidence import file_state
 
 
 def _write(path,value):
@@ -141,9 +143,10 @@ def run_campaign(dag_path,run_dir,*,resume=False,executors=None,input_identities
         for cap in node['declared_outputs']:producer.setdefault(cap,[]).append(node['id'])
     for node_id in order:
         node=dict(nodes[node_id]);predecessors={p:results[p] for p in order if p in ancestors[node_id]}
-        fingerprints={str(p):_sha(p) for p in sources.get(node_id,())}
+        fingerprints={str(p):file_state(p) for p in sources.get(node_id,())}
         fingerprint=content_id({'node':node,'inputs':inputs.get(node_id,{}),'implementation_sources':fingerprints,
-            'runner':_sha(__file__),'predecessors':{p:output_ids[p] for p in node['settle_after']}})
+            'runner':_sha(__file__),'file_identity_implementation':inspect.getsource(file_state),
+            'predecessors':{p:output_ids[p] for p in node['settle_after']}})
         previous=state['nodes'].get(node_id)
         if previous and previous['fingerprint']==fingerprint:
             path=run_dir/previous['result_path']

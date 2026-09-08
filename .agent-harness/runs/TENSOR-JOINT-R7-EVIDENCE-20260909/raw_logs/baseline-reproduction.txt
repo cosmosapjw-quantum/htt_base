@@ -1,0 +1,1143 @@
+43343340 driver loaded in memory; current file-state-aware runner used only by dependency fixtures; no repository source overwritten.
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFF                                            [100%]
+=================================== FAILURES ===================================
+____________ test_failed_cas_note_cannot_issue_capability[CAS_FAIL] ____________
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_failed_cas_note_cannot_is0/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+status = 'CAS_FAIL'
+
+    @pytest.mark.parametrize('status', ['CAS_FAIL', 'CAS_BLOCKED'])
+    def test_failed_cas_note_cannot_issue_capability(sandbox, status):
+        root, run, _, report = sandbox
+        report['aggregate_status'] = status
+        assert 'CAS_4AXIS_PASS' in report['note']
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:74: AssertionError
+__________ test_failed_cas_note_cannot_issue_capability[CAS_BLOCKED] ___________
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_failed_cas_note_cannot_is1/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+status = 'CAS_BLOCKED'
+
+    @pytest.mark.parametrize('status', ['CAS_FAIL', 'CAS_BLOCKED'])
+    def test_failed_cas_note_cannot_issue_capability(sandbox, status):
+        root, run, _, report = sandbox
+        report['aggregate_status'] = status
+        assert 'CAS_4AXIS_PASS' in report['note']
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:74: AssertionError
+___________ test_existing_observed_cas_retains_only_its_narrow_scope ___________
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_existing_observed_cas_ret0/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+
+    def test_existing_observed_cas_retains_only_its_narrow_scope(sandbox):
+        _, run, _, _ = sandbox
+        result = driver.algebra(node(run, 'R7-01'), {})
+        assert set(result.capabilities) == {'ALGEBRA_VERIFIED', 'FOUR_AXIS_CAS', 'CONTINUUM_CERTIFIED'}
+        assert 'Seven fixed' in result.product_results['cas_scope']
+>       assert result.product_results['cas_binding']['eligible'] is True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'cas_binding'
+
+tests/r7/test_evidence_binding.py:82: KeyError
+___ test_cas_admission_requires_bound_observed_axis_evidence[contract_hash] ____
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo0/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'contract_hash'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+__ test_cas_admission_requires_bound_observed_axis_evidence[contract_source] ___
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo1/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'contract_source'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+____ test_cas_admission_requires_bound_observed_axis_evidence[missing_axis] ____
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo2/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'missing_axis'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+____ test_cas_admission_requires_bound_observed_axis_evidence[failed_axis] _____
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo3/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'FAIL', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'failed_axis'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+_____ test_cas_admission_requires_bound_observed_axis_evidence[axis_error] _____
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo4/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'axis_error'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+____ test_cas_admission_requires_bound_observed_axis_evidence[not_executed] ____
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo5/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'not_executed'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+______ test_cas_admission_requires_bound_observed_axis_evidence[timeout] _______
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo6/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'timeout'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+_____ test_cas_admission_requires_bound_observed_axis_evidence[exit_code] ______
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo7/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'exit_code'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+___ test_cas_admission_requires_bound_observed_axis_evidence[missing_check] ____
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo8/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'missing_check'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+____ test_cas_admission_requires_bound_observed_axis_evidence[false_check] _____
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo9/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'false_check'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+__ test_cas_admission_requires_bound_observed_axis_evidence[assumption_diff] ___
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo10/repo'), PosixPath('/tmp/pytest-of-c... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'assumption_diff'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+___ test_cas_admission_requires_bound_observed_axis_evidence[counterexample] ___
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo11/repo'), PosixPath('/tmp/pytest-of-c... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'counterexample'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+____ test_cas_admission_requires_bound_observed_axis_evidence[not_eligible] ____
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo12/repo'), PosixPath('/tmp/pytest-of-c...'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': False, ...})
+defect = 'not_eligible'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+___ test_cas_admission_requires_bound_observed_axis_evidence[stored_result] ____
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo13/repo'), PosixPath('/tmp/pytest-of-c... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'stored_result'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+__ test_cas_admission_requires_bound_observed_axis_evidence[missing_contract] __
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo14/repo'), PosixPath('/tmp/pytest-of-c... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'missing_contract'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+        result = driver.algebra(node(run, 'R7-01'), {})
+>       assert result.capabilities == ('ALGEBRA_VERIFIED',)
+E       AssertionError: assert ('ALGEBRA_VER...UM_CERTIFIED') == ('ALGEBRA_VERIFIED',)
+E         
+E         Left contains 2 more items, first extra item: 'FOUR_AXIS_CAS'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:112: AssertionError
+__ test_cas_admission_requires_bound_observed_axis_evidence[malformed_report] __
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_cas_admission_requires_bo15/repo'), PosixPath('/tmp/pytest-of-c... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'malformed_report'
+
+    @pytest.mark.parametrize('defect', [
+        'contract_hash', 'contract_source', 'missing_axis', 'failed_axis', 'axis_error',
+        'not_executed', 'timeout', 'exit_code', 'missing_check', 'false_check',
+        'assumption_diff', 'counterexample', 'not_eligible', 'stored_result',
+        'missing_contract', 'malformed_report',
+    ])
+    def test_cas_admission_requires_bound_observed_axis_evidence(sandbox, defect):
+        root, run, contract, report = sandbox
+        axis = report['execution_evidence']['sympy']
+        if defect == 'contract_hash': report['contract_sha256'] = '0' * 64
+        elif defect == 'contract_source': (root / contract['identity']['source_input_hashes'][0]['path']).write_text('changed')
+        elif defect == 'missing_axis': del report['execution_evidence']['lean']
+        elif defect == 'failed_axis': report['axis_statuses']['sympy'] = 'FAIL'
+        elif defect == 'axis_error': axis['errors'] = ['invalid result']
+        elif defect == 'not_executed': axis['solver_executed'] = False
+        elif defect == 'timeout': axis['timed_out'] = True
+        elif defect == 'exit_code': axis['exit_code'] = 1
+        elif defect == 'missing_check': axis['payload']['checks'].pop(next(iter(axis['payload']['checks'])))
+        elif defect == 'false_check': axis['payload']['checks'][next(iter(axis['payload']['checks']))] = False
+        elif defect == 'assumption_diff': axis['payload']['domain_assumption_diff'] = ['changed domain']
+        elif defect == 'counterexample': axis['payload']['counterexample'] = {'witness': 1}
+        elif defect == 'not_eligible': report['claim_promotion_cas_eligible'] = False
+        elif defect == 'stored_result': report['verification_state'] = 'STORED_RESULT_INSPECTION'
+        elif defect == 'missing_contract': (root / OLD_RUN / 'CAS_CONTRACT.json').unlink()
+        write_json(root / OLD_RUN / 'cas_adjudication.json', report)
+        if defect == 'malformed_report': (root / OLD_RUN / 'cas_adjudication.json').write_text('{')
+>       result = driver.algebra(node(run, 'R7-01'), {})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/observed_runs/run_tensor_joint_r7.py:99: in algebra
+    cas=ROOT/'.agent-harness/runs'/RUN_ID/'cas_adjudication.json'
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x725907796330>, s = '{', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+>           obj, end = self.scan_once(s, idx)
+                       ^^^^^^^^^^^^^^^^^^^^^^
+E           json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+
+/usr/lib/python3.12/json/decoder.py:353: JSONDecodeError
+___________ test_donor_consumer_rechecks_bytes_despite_cached_intake ___________
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_donor_consumer_rechecks_b0/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+
+    def test_donor_consumer_rechecks_bytes_despite_cached_intake(sandbox):
+        root, run, _, _ = sandbox
+        bindings = json.loads((root / BINDINGS).read_text())
+        cached = BranchResult('R7-00', 'COMPLETED_SUCCESS', 'NOT_EVALUATED',
+            product_results={'source_binding_failures': {}, 'selected_source_binding': bindings})
+        (root / 'Q.py').write_text('# changed after intake')
+        result = driver.donor_integration(node(run, 'R7-02'), {'R7-00': cached})
+>       assert 'DONOR_KRYLOV' not in result.capabilities
+E       AssertionError: assert 'DONOR_KRYLOV' not in ('DONOR_KRYLOV', 'DONOR_BOOST', 'DONOR_TENSOR', 'DONOR_ANCHOR', 'DONOR_CF4', 'DONOR_DESI', ...)
+E        +  where ('DONOR_KRYLOV', 'DONOR_BOOST', 'DONOR_TENSOR', 'DONOR_ANCHOR', 'DONOR_CF4', 'DONOR_DESI', ...) = BranchResult(node_id='R7-02', process_status='COMPLETED_SUCCESS', scientific_outcome='NOT_EVALUATED', capabilities=('D...lication/dispatch checks remain recorded in donors_dependencies.log; scientific donor tests are separate.'}, attempt=1).capabilities
+
+tests/r7/test_evidence_binding.py:123: AssertionError
+__________ test_review_pass_requires_current_reviewed_bytes[changed] ___________
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_review_pass_requires_curr0/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'changed'
+
+    @pytest.mark.parametrize('defect', ['changed', 'missing', 'empty', 'malformed'])
+    def test_review_pass_requires_current_reviewed_bytes(sandbox, defect):
+        root, run, _, _ = sandbox
+        source = root / 'Q.py'
+        review = {'status': 'PASS', 'final_source_sha256': {source.name: driver._sha(source)}}
+        write_json(run / 'independent_review.json', review)
+        assert driver.audit(node(run, 'before'), {}).capabilities == ('FINAL_AUDIT',)
+        if defect == 'changed': source.write_text('# new implementation')
+        elif defect == 'missing': source.unlink()
+        elif defect == 'empty': write_json(run / 'independent_review.json', {'status': 'PASS', 'final_source_sha256': {}})
+        else: (run / 'independent_review.json').write_text('{')
+        result = driver.audit(node(run, 'after'), {})
+>       assert not result.capabilities
+E       AssertionError: assert not ('FINAL_AUDIT',)
+E        +  where ('FINAL_AUDIT',) = BranchResult(node_id='after', process_status='COMPLETED_SUCCESS', scientific_outcome='NOT_EVALUATED', capabilities=('F...ASS', 'final_source_sha256': {'Q.py': 'e2da07e69f5281b52a4406fa15ae4e4df26c5409f1450823e94721e6d090494f'}}}, attempt=1).capabilities
+
+tests/r7/test_evidence_binding.py:141: AssertionError
+__________ test_review_pass_requires_current_reviewed_bytes[missing] ___________
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_review_pass_requires_curr1/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'missing'
+
+    @pytest.mark.parametrize('defect', ['changed', 'missing', 'empty', 'malformed'])
+    def test_review_pass_requires_current_reviewed_bytes(sandbox, defect):
+        root, run, _, _ = sandbox
+        source = root / 'Q.py'
+        review = {'status': 'PASS', 'final_source_sha256': {source.name: driver._sha(source)}}
+        write_json(run / 'independent_review.json', review)
+        assert driver.audit(node(run, 'before'), {}).capabilities == ('FINAL_AUDIT',)
+        if defect == 'changed': source.write_text('# new implementation')
+        elif defect == 'missing': source.unlink()
+        elif defect == 'empty': write_json(run / 'independent_review.json', {'status': 'PASS', 'final_source_sha256': {}})
+        else: (run / 'independent_review.json').write_text('{')
+        result = driver.audit(node(run, 'after'), {})
+>       assert not result.capabilities
+E       AssertionError: assert not ('FINAL_AUDIT',)
+E        +  where ('FINAL_AUDIT',) = BranchResult(node_id='after', process_status='COMPLETED_SUCCESS', scientific_outcome='NOT_EVALUATED', capabilities=('F...ASS', 'final_source_sha256': {'Q.py': 'e2da07e69f5281b52a4406fa15ae4e4df26c5409f1450823e94721e6d090494f'}}}, attempt=1).capabilities
+
+tests/r7/test_evidence_binding.py:141: AssertionError
+___________ test_review_pass_requires_current_reviewed_bytes[empty] ____________
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_review_pass_requires_curr2/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'empty'
+
+    @pytest.mark.parametrize('defect', ['changed', 'missing', 'empty', 'malformed'])
+    def test_review_pass_requires_current_reviewed_bytes(sandbox, defect):
+        root, run, _, _ = sandbox
+        source = root / 'Q.py'
+        review = {'status': 'PASS', 'final_source_sha256': {source.name: driver._sha(source)}}
+        write_json(run / 'independent_review.json', review)
+        assert driver.audit(node(run, 'before'), {}).capabilities == ('FINAL_AUDIT',)
+        if defect == 'changed': source.write_text('# new implementation')
+        elif defect == 'missing': source.unlink()
+        elif defect == 'empty': write_json(run / 'independent_review.json', {'status': 'PASS', 'final_source_sha256': {}})
+        else: (run / 'independent_review.json').write_text('{')
+        result = driver.audit(node(run, 'after'), {})
+>       assert not result.capabilities
+E       AssertionError: assert not ('FINAL_AUDIT',)
+E        +  where ('FINAL_AUDIT',) = BranchResult(node_id='after', process_status='COMPLETED_SUCCESS', scientific_outcome='NOT_EVALUATED', capabilities=('F...t_discriminator=None, product_results={'independent_review': {'status': 'PASS', 'final_source_sha256': {}}}, attempt=1).capabilities
+
+tests/r7/test_evidence_binding.py:141: AssertionError
+_________ test_review_pass_requires_current_reviewed_bytes[malformed] __________
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_review_pass_requires_curr3/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+defect = 'malformed'
+
+    @pytest.mark.parametrize('defect', ['changed', 'missing', 'empty', 'malformed'])
+    def test_review_pass_requires_current_reviewed_bytes(sandbox, defect):
+        root, run, _, _ = sandbox
+        source = root / 'Q.py'
+        review = {'status': 'PASS', 'final_source_sha256': {source.name: driver._sha(source)}}
+        write_json(run / 'independent_review.json', review)
+        assert driver.audit(node(run, 'before'), {}).capabilities == ('FINAL_AUDIT',)
+        if defect == 'changed': source.write_text('# new implementation')
+        elif defect == 'missing': source.unlink()
+        elif defect == 'empty': write_json(run / 'independent_review.json', {'status': 'PASS', 'final_source_sha256': {}})
+        else: (run / 'independent_review.json').write_text('{')
+>       result = driver.audit(node(run, 'after'), {})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/r7/test_evidence_binding.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/observed_runs/run_tensor_joint_r7.py:508: in audit
+    def audit(node,results):
+               ^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/json/decoder.py:337: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <json.decoder.JSONDecoder object at 0x725907796330>, s = '{', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+>           obj, end = self.scan_once(s, idx)
+                       ^^^^^^^^^^^^^^^^^^^^^^
+E           json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+
+/usr/lib/python3.12/json/decoder.py:353: JSONDecodeError
+_ test_default_dependency_slices_reopen_only_affected_attempts[cas_arrival-affected0] _
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_default_dependency_slices0/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+change = 'cas_arrival', affected = ['R7-01', 'child', 'final']
+
+    @pytest.mark.parametrize('change,affected', [
+        ('cas_arrival', ['R7-01', 'child', 'final']),
+        ('contract', ['R7-01', 'child', 'final']),
+        ('contract_source', ['R7-01', 'child', 'final']),
+        ('donor', ['R7-00', 'R7-02', 'final']),
+        ('reviewed_source', ['R7-23', 'final']),
+    ])
+    def test_default_dependency_slices_reopen_only_affected_attempts(sandbox, change, affected):
+        root, run, _, report = sandbox
+        cas = root / OLD_RUN / 'cas_adjudication.json'
+        if change == 'cas_arrival': cas.unlink()
+        reviewed = root / 'reviewed.py'
+        reviewed.write_text('# original')
+        write_json(run / 'independent_review.json',
+                   {'status': 'PASS', 'final_source_sha256': {reviewed.name: driver._sha(reviewed)}})
+        deps = {'R7-00': [], 'R7-01': [], 'R7-02': ['R7-00'], 'R7-23': [],
+                'unrelated': [], 'child': ['R7-01'], 'final': ['R7-02', 'child', 'R7-23', 'unrelated']}
+        nodes = [dict(id=key, settle_after=value, capability_routes=[[]], declared_outputs=[], always_run=False)
+                 for key, value in deps.items()]
+        dag = run / 'dag.json'
+        write_json(dag, {'campaign_id': 'evidence-resume-fixture', 'nodes': nodes})
+        calls = []
+        def execute(n, predecessors):
+            calls.append(n['id'])
+            return BranchResult(n['id'], 'COMPLETED_SUCCESS', 'NOT_EVALUATED')
+        def invoke(resume=False):
+            _, inputs, sources, _ = driver.campaign_executors(root, run)
+            return run_campaign(dag, run, resume=resume,
+                executors={key: execute for key in deps}, input_identities=inputs, implementation_sources=sources)
+        invoke()
+        calls.clear()
+        invoke(True)
+        assert calls == []
+        if change == 'cas_arrival': write_json(cas, report)
+        elif change == 'contract':
+            path = root / OLD_RUN / 'CAS_CONTRACT.json'
+            path.write_text(path.read_text() + '\n')
+        elif change == 'contract_source': (root / 'docs/research_program/tensor_joint_r7/THEORY.md').write_text('new assumptions')
+        elif change == 'donor': (root / 'Q.py').write_text('# modified donor')
+        elif change == 'reviewed_source': reviewed.write_text('# modified reviewed source')
+        invoke(True)
+>       assert set(calls) == set(affected)
+E       AssertionError: assert set() == {'R7-01', 'child', 'final'}
+E         
+E         Extra items in the right set:
+E         'final'
+E         'R7-01'
+E         'child'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:186: AssertionError
+_ test_default_dependency_slices_reopen_only_affected_attempts[contract-affected1] _
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_default_dependency_slices1/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+change = 'contract', affected = ['R7-01', 'child', 'final']
+
+    @pytest.mark.parametrize('change,affected', [
+        ('cas_arrival', ['R7-01', 'child', 'final']),
+        ('contract', ['R7-01', 'child', 'final']),
+        ('contract_source', ['R7-01', 'child', 'final']),
+        ('donor', ['R7-00', 'R7-02', 'final']),
+        ('reviewed_source', ['R7-23', 'final']),
+    ])
+    def test_default_dependency_slices_reopen_only_affected_attempts(sandbox, change, affected):
+        root, run, _, report = sandbox
+        cas = root / OLD_RUN / 'cas_adjudication.json'
+        if change == 'cas_arrival': cas.unlink()
+        reviewed = root / 'reviewed.py'
+        reviewed.write_text('# original')
+        write_json(run / 'independent_review.json',
+                   {'status': 'PASS', 'final_source_sha256': {reviewed.name: driver._sha(reviewed)}})
+        deps = {'R7-00': [], 'R7-01': [], 'R7-02': ['R7-00'], 'R7-23': [],
+                'unrelated': [], 'child': ['R7-01'], 'final': ['R7-02', 'child', 'R7-23', 'unrelated']}
+        nodes = [dict(id=key, settle_after=value, capability_routes=[[]], declared_outputs=[], always_run=False)
+                 for key, value in deps.items()]
+        dag = run / 'dag.json'
+        write_json(dag, {'campaign_id': 'evidence-resume-fixture', 'nodes': nodes})
+        calls = []
+        def execute(n, predecessors):
+            calls.append(n['id'])
+            return BranchResult(n['id'], 'COMPLETED_SUCCESS', 'NOT_EVALUATED')
+        def invoke(resume=False):
+            _, inputs, sources, _ = driver.campaign_executors(root, run)
+            return run_campaign(dag, run, resume=resume,
+                executors={key: execute for key in deps}, input_identities=inputs, implementation_sources=sources)
+        invoke()
+        calls.clear()
+        invoke(True)
+        assert calls == []
+        if change == 'cas_arrival': write_json(cas, report)
+        elif change == 'contract':
+            path = root / OLD_RUN / 'CAS_CONTRACT.json'
+            path.write_text(path.read_text() + '\n')
+        elif change == 'contract_source': (root / 'docs/research_program/tensor_joint_r7/THEORY.md').write_text('new assumptions')
+        elif change == 'donor': (root / 'Q.py').write_text('# modified donor')
+        elif change == 'reviewed_source': reviewed.write_text('# modified reviewed source')
+        invoke(True)
+>       assert set(calls) == set(affected)
+E       AssertionError: assert set() == {'R7-01', 'child', 'final'}
+E         
+E         Extra items in the right set:
+E         'final'
+E         'R7-01'
+E         'child'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:186: AssertionError
+_ test_default_dependency_slices_reopen_only_affected_attempts[contract_source-affected2] _
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_default_dependency_slices2/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+change = 'contract_source', affected = ['R7-01', 'child', 'final']
+
+    @pytest.mark.parametrize('change,affected', [
+        ('cas_arrival', ['R7-01', 'child', 'final']),
+        ('contract', ['R7-01', 'child', 'final']),
+        ('contract_source', ['R7-01', 'child', 'final']),
+        ('donor', ['R7-00', 'R7-02', 'final']),
+        ('reviewed_source', ['R7-23', 'final']),
+    ])
+    def test_default_dependency_slices_reopen_only_affected_attempts(sandbox, change, affected):
+        root, run, _, report = sandbox
+        cas = root / OLD_RUN / 'cas_adjudication.json'
+        if change == 'cas_arrival': cas.unlink()
+        reviewed = root / 'reviewed.py'
+        reviewed.write_text('# original')
+        write_json(run / 'independent_review.json',
+                   {'status': 'PASS', 'final_source_sha256': {reviewed.name: driver._sha(reviewed)}})
+        deps = {'R7-00': [], 'R7-01': [], 'R7-02': ['R7-00'], 'R7-23': [],
+                'unrelated': [], 'child': ['R7-01'], 'final': ['R7-02', 'child', 'R7-23', 'unrelated']}
+        nodes = [dict(id=key, settle_after=value, capability_routes=[[]], declared_outputs=[], always_run=False)
+                 for key, value in deps.items()]
+        dag = run / 'dag.json'
+        write_json(dag, {'campaign_id': 'evidence-resume-fixture', 'nodes': nodes})
+        calls = []
+        def execute(n, predecessors):
+            calls.append(n['id'])
+            return BranchResult(n['id'], 'COMPLETED_SUCCESS', 'NOT_EVALUATED')
+        def invoke(resume=False):
+            _, inputs, sources, _ = driver.campaign_executors(root, run)
+            return run_campaign(dag, run, resume=resume,
+                executors={key: execute for key in deps}, input_identities=inputs, implementation_sources=sources)
+        invoke()
+        calls.clear()
+        invoke(True)
+        assert calls == []
+        if change == 'cas_arrival': write_json(cas, report)
+        elif change == 'contract':
+            path = root / OLD_RUN / 'CAS_CONTRACT.json'
+            path.write_text(path.read_text() + '\n')
+        elif change == 'contract_source': (root / 'docs/research_program/tensor_joint_r7/THEORY.md').write_text('new assumptions')
+        elif change == 'donor': (root / 'Q.py').write_text('# modified donor')
+        elif change == 'reviewed_source': reviewed.write_text('# modified reviewed source')
+        invoke(True)
+>       assert set(calls) == set(affected)
+E       AssertionError: assert set() == {'R7-01', 'child', 'final'}
+E         
+E         Extra items in the right set:
+E         'final'
+E         'R7-01'
+E         'child'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:186: AssertionError
+_ test_default_dependency_slices_reopen_only_affected_attempts[donor-affected3] _
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_default_dependency_slices3/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+change = 'donor', affected = ['R7-00', 'R7-02', 'final']
+
+    @pytest.mark.parametrize('change,affected', [
+        ('cas_arrival', ['R7-01', 'child', 'final']),
+        ('contract', ['R7-01', 'child', 'final']),
+        ('contract_source', ['R7-01', 'child', 'final']),
+        ('donor', ['R7-00', 'R7-02', 'final']),
+        ('reviewed_source', ['R7-23', 'final']),
+    ])
+    def test_default_dependency_slices_reopen_only_affected_attempts(sandbox, change, affected):
+        root, run, _, report = sandbox
+        cas = root / OLD_RUN / 'cas_adjudication.json'
+        if change == 'cas_arrival': cas.unlink()
+        reviewed = root / 'reviewed.py'
+        reviewed.write_text('# original')
+        write_json(run / 'independent_review.json',
+                   {'status': 'PASS', 'final_source_sha256': {reviewed.name: driver._sha(reviewed)}})
+        deps = {'R7-00': [], 'R7-01': [], 'R7-02': ['R7-00'], 'R7-23': [],
+                'unrelated': [], 'child': ['R7-01'], 'final': ['R7-02', 'child', 'R7-23', 'unrelated']}
+        nodes = [dict(id=key, settle_after=value, capability_routes=[[]], declared_outputs=[], always_run=False)
+                 for key, value in deps.items()]
+        dag = run / 'dag.json'
+        write_json(dag, {'campaign_id': 'evidence-resume-fixture', 'nodes': nodes})
+        calls = []
+        def execute(n, predecessors):
+            calls.append(n['id'])
+            return BranchResult(n['id'], 'COMPLETED_SUCCESS', 'NOT_EVALUATED')
+        def invoke(resume=False):
+            _, inputs, sources, _ = driver.campaign_executors(root, run)
+            return run_campaign(dag, run, resume=resume,
+                executors={key: execute for key in deps}, input_identities=inputs, implementation_sources=sources)
+        invoke()
+        calls.clear()
+        invoke(True)
+        assert calls == []
+        if change == 'cas_arrival': write_json(cas, report)
+        elif change == 'contract':
+            path = root / OLD_RUN / 'CAS_CONTRACT.json'
+            path.write_text(path.read_text() + '\n')
+        elif change == 'contract_source': (root / 'docs/research_program/tensor_joint_r7/THEORY.md').write_text('new assumptions')
+        elif change == 'donor': (root / 'Q.py').write_text('# modified donor')
+        elif change == 'reviewed_source': reviewed.write_text('# modified reviewed source')
+        invoke(True)
+>       assert set(calls) == set(affected)
+E       AssertionError: assert {'R7-02', 'final'} == {'R7-00', 'R7-02', 'final'}
+E         
+E         Extra items in the right set:
+E         'R7-00'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:186: AssertionError
+_ test_default_dependency_slices_reopen_only_affected_attempts[reviewed_source-affected4] _
+
+sandbox = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-2152/test_default_dependency_slices4/repo'), PosixPath('/tmp/pytest-of-co... 'PASS', 'sage_singular': 'PASS', 'sympy': 'PASS', 'wolfram_xact': 'PASS'}, 'claim_promotion_cas_eligible': True, ...})
+change = 'reviewed_source', affected = ['R7-23', 'final']
+
+    @pytest.mark.parametrize('change,affected', [
+        ('cas_arrival', ['R7-01', 'child', 'final']),
+        ('contract', ['R7-01', 'child', 'final']),
+        ('contract_source', ['R7-01', 'child', 'final']),
+        ('donor', ['R7-00', 'R7-02', 'final']),
+        ('reviewed_source', ['R7-23', 'final']),
+    ])
+    def test_default_dependency_slices_reopen_only_affected_attempts(sandbox, change, affected):
+        root, run, _, report = sandbox
+        cas = root / OLD_RUN / 'cas_adjudication.json'
+        if change == 'cas_arrival': cas.unlink()
+        reviewed = root / 'reviewed.py'
+        reviewed.write_text('# original')
+        write_json(run / 'independent_review.json',
+                   {'status': 'PASS', 'final_source_sha256': {reviewed.name: driver._sha(reviewed)}})
+        deps = {'R7-00': [], 'R7-01': [], 'R7-02': ['R7-00'], 'R7-23': [],
+                'unrelated': [], 'child': ['R7-01'], 'final': ['R7-02', 'child', 'R7-23', 'unrelated']}
+        nodes = [dict(id=key, settle_after=value, capability_routes=[[]], declared_outputs=[], always_run=False)
+                 for key, value in deps.items()]
+        dag = run / 'dag.json'
+        write_json(dag, {'campaign_id': 'evidence-resume-fixture', 'nodes': nodes})
+        calls = []
+        def execute(n, predecessors):
+            calls.append(n['id'])
+            return BranchResult(n['id'], 'COMPLETED_SUCCESS', 'NOT_EVALUATED')
+        def invoke(resume=False):
+            _, inputs, sources, _ = driver.campaign_executors(root, run)
+            return run_campaign(dag, run, resume=resume,
+                executors={key: execute for key in deps}, input_identities=inputs, implementation_sources=sources)
+        invoke()
+        calls.clear()
+        invoke(True)
+        assert calls == []
+        if change == 'cas_arrival': write_json(cas, report)
+        elif change == 'contract':
+            path = root / OLD_RUN / 'CAS_CONTRACT.json'
+            path.write_text(path.read_text() + '\n')
+        elif change == 'contract_source': (root / 'docs/research_program/tensor_joint_r7/THEORY.md').write_text('new assumptions')
+        elif change == 'donor': (root / 'Q.py').write_text('# modified donor')
+        elif change == 'reviewed_source': reviewed.write_text('# modified reviewed source')
+        invoke(True)
+>       assert set(calls) == set(affected)
+E       AssertionError: assert set() == {'R7-23', 'final'}
+E         
+E         Extra items in the right set:
+E         'final'
+E         'R7-23'
+E         Use -v to get more diff
+
+tests/r7/test_evidence_binding.py:186: AssertionError
+=========================== short test summary info ============================
+FAILED tests/r7/test_evidence_binding.py::test_failed_cas_note_cannot_issue_capability[CAS_FAIL]
+FAILED tests/r7/test_evidence_binding.py::test_failed_cas_note_cannot_issue_capability[CAS_BLOCKED]
+FAILED tests/r7/test_evidence_binding.py::test_existing_observed_cas_retains_only_its_narrow_scope
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[contract_hash]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[contract_source]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[missing_axis]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[failed_axis]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[axis_error]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[not_executed]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[timeout]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[exit_code]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[missing_check]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[false_check]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[assumption_diff]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[counterexample]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[not_eligible]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[stored_result]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[missing_contract]
+FAILED tests/r7/test_evidence_binding.py::test_cas_admission_requires_bound_observed_axis_evidence[malformed_report]
+FAILED tests/r7/test_evidence_binding.py::test_donor_consumer_rechecks_bytes_despite_cached_intake
+FAILED tests/r7/test_evidence_binding.py::test_review_pass_requires_current_reviewed_bytes[changed]
+FAILED tests/r7/test_evidence_binding.py::test_review_pass_requires_current_reviewed_bytes[missing]
+FAILED tests/r7/test_evidence_binding.py::test_review_pass_requires_current_reviewed_bytes[empty]
+FAILED tests/r7/test_evidence_binding.py::test_review_pass_requires_current_reviewed_bytes[malformed]
+FAILED tests/r7/test_evidence_binding.py::test_default_dependency_slices_reopen_only_affected_attempts[cas_arrival-affected0]
+FAILED tests/r7/test_evidence_binding.py::test_default_dependency_slices_reopen_only_affected_attempts[contract-affected1]
+FAILED tests/r7/test_evidence_binding.py::test_default_dependency_slices_reopen_only_affected_attempts[contract_source-affected2]
+FAILED tests/r7/test_evidence_binding.py::test_default_dependency_slices_reopen_only_affected_attempts[donor-affected3]
+FAILED tests/r7/test_evidence_binding.py::test_default_dependency_slices_reopen_only_affected_attempts[reviewed_source-affected4]
+29 failed in 0.53s

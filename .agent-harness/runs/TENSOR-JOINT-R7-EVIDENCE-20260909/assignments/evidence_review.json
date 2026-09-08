@@ -1,0 +1,82 @@
+{
+  "schema_version": 2,
+  "run_id": "TENSOR-JOINT-R7-EVIDENCE-20260909",
+  "assignment_id": "evidence_review",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R1",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E1",
+    "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E2",
+    "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E3",
+    "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E4",
+    "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E5",
+    "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E6"
+  ],
+  "task": "One independent review of the completed E1-E6 evidence-consumer repair against 43343340. Inspect changed source/tests/AGENTS/DESIGN; verify correctness and missing regression boundaries. Run only bounded deterministic tests, no CAS engines or science trials. Root owns production. Write only assigned result envelope and unique evidence under artifacts/evidence_review. Scope a possible later check to original findings; do not broaden into A03/A04/A05 algorithms or global hooks.",
+  "required_inputs": [
+    {
+      "path": "htt/src/common/r7_evidence.py",
+      "sha256": "a8867d4d78eefaaa3d6da5599b7e11e3bedaea1a36a3878222464d2690e9af64"
+    },
+    {
+      "path": "scripts/observed_runs/run_r7_campaign.py",
+      "sha256": "7f1622c84851b128ec748e7cf9ffb5a7caf37478e753a97121bf5eb65a397de7"
+    },
+    {
+      "path": "scripts/observed_runs/run_tensor_joint_r7.py",
+      "sha256": "0e4d102800108985ef6b307c1f1c4a8fd0e8d4804e3d6d50620e8f31a1e8b328"
+    },
+    {
+      "path": "tests/r7/test_evidence_binding.py",
+      "sha256": "647697cf5977c9e77eca4ca24a9bc0c77d1a4302a51f2d0af7471702f5131cb8"
+    },
+    {
+      "path": "tests/r7/test_campaign_routing.py",
+      "sha256": "a94eba21d5ab158e4be26dff8aee81ef421943508179766283973ad337bd2c35"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "d0dc0228dcf175e771dc57f1813a517eb137d1649702d292d7b2728f79563b4a"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r7/DESIGN.md",
+      "sha256": "5f01d32033b3c0d66a011000bd05c3ca847ea9453dac25465427b6111f4767b2"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json",
+      "sha256": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/cas_adjudication.json",
+      "sha256": "730acce33d001c149be5a6d4e9c12e50e40c601f0ba429321d5588b5181497af"
+    },
+    {
+      "path": ".agent-harness/templates/RESULT_ENVELOPE.json",
+      "sha256": "c71aba5d7c65259125beca492b7e72726ed25fbecb124f0547b324aafa65e9f4"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r7/EVIDENCE_REPAIR_20260909.md"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "apply_patch"
+  ],
+  "required_outputs": [
+    "Independent E1-E6 findings with exact source identities, commands and evidence; final_source_sha256 map for actual reviewed files"
+  ],
+  "result_path": ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/results/evidence_review.json",
+  "status": "registered",
+  "assignment_sha256": "a6071fb6a03a0c58f9214bc5474b807fb800d262f664f186e3ef8a7049d99666"
+}

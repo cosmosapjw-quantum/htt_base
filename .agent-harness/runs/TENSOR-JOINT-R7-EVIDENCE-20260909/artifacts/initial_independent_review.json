@@ -1,0 +1,258 @@
+{
+  "schema_version": 2,
+  "run_id": "TENSOR-JOINT-R7-EVIDENCE-20260909",
+  "assignment_id": "evidence_review",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "result_path": ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/results/evidence_review.json",
+  "assignment_sha256": "a6071fb6a03a0c58f9214bc5474b807fb800d262f664f186e3ef8a7049d99666",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "tool_observed_local_subprocess",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/cas_adjudication.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/independent_pytest.log",
+    ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/pytest.log",
+    ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/pytest_receipt.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/test_independent_boundaries.py",
+    ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/assignments/evidence_review.json",
+    ".agent-harness/scripts/cas_gate.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/asset_inventory_20260907/assets.csv",
+    "AGENTS.md",
+    "docs/generated/tensor_joint_r7/axial_certificate_source.json",
+    "docs/generated/tensor_joint_r7/source_bindings.json",
+    "docs/research_program/tensor_joint_r7/DESIGN.md",
+    "docs/research_program/tensor_joint_r7/EVIDENCE_REPAIR_20260909.md",
+    "docs/research_program/tensor_joint_r7/THEORY.md",
+    "docs/research_program/tensor_joint_r7/campaign_dag.json",
+    "htt/obsstat/boost_response.py",
+    "htt/obsstat/cf4_current_stack.py",
+    "htt/obsstat/desi_successor_formalism.py",
+    "htt/obsstat/jwst_distance_consistency.py",
+    "htt/obsstat/lorentz_sky_pullback.py",
+    "htt/obsstat/mes_directional_moments.py",
+    "htt/obsstat/planck_lowell_irrep_projection.py",
+    "htt/obsstat/processed_boost_error_envelope.py",
+    "htt/src/common/anchor_geometry.py",
+    "htt/src/common/anchored_response_geometry.py",
+    "htt/src/common/data_identity.py",
+    "htt/src/common/mes_directional_state.py",
+    "htt/src/common/mes_krylov_completion.py",
+    "htt/src/common/mes_premise_normalization.py",
+    "htt/src/common/observable_irrep_state.py",
+    "htt/src/common/orbit_nonlinearity.py",
+    "htt/src/common/r7_asset_use.py",
+    "htt/src/common/r7_contracts.py",
+    "htt/src/common/r7_evidence.py",
+    "htt/src/common/statistical_foundations.py",
+    "htt/test_wu010_audit_closure.py",
+    "htt/test_wu011_task7c_error_envelope.py",
+    "scripts/codex_harness/premise_anchor_gates.py",
+    "scripts/codex_harness/run_pr254_counterexamples.py",
+    "scripts/codex_harness/run_pr254_normalizer_benchmark.py",
+    "scripts/observed_runs/run_cf4_current_stack.py",
+    "scripts/observed_runs/run_desi_bgs_bright.py",
+    "scripts/observed_runs/run_jwst_sn.py",
+    "scripts/observed_runs/run_r7_campaign.py",
+    "scripts/observed_runs/run_tensor_joint_r7.py",
+    "tests/common/test_mes_directional_state.py",
+    "tests/common/test_mes_krylov_completion.py",
+    "tests/integration/test_cf4_current_stack.py",
+    "tests/integration/test_jwst_sn_current_stack.py",
+    "tests/obsstat/test_mes_directional_moments.py",
+    "tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py",
+    "tests/r7/test_campaign_routing.py",
+    "tests/r7/test_evidence_binding.py"
+  ],
+  "files_read_evidence": "self_declared; explicit review reads and named test-input reads; Python import/library internals and temporary fixture files excluded",
+  "started_at": null,
+  "completed_at": "2026-09-08T15:35:54.205921+00:00",
+  "tool_versions": {
+    "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+    "pytest": "8.4.2"
+  },
+  "commands": [
+    {
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "--import-mode=importlib",
+        "-q",
+        "tests/r7/test_evidence_binding.py",
+        "tests/r7/test_campaign_routing.py"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree",
+      "exit_code": 0,
+      "evidence": ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/pytest.log"
+    },
+    {
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "--import-mode=importlib",
+        "-q",
+        ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/test_independent_boundaries.py"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree",
+      "exit_code": 0,
+      "evidence": ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/independent_pytest.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "43343340",
+        "--",
+        "htt/src/common/r7_evidence.py",
+        "scripts/observed_runs/run_r7_campaign.py",
+        "scripts/observed_runs/run_tensor_joint_r7.py",
+        "tests/r7/test_evidence_binding.py",
+        "tests/r7/test_campaign_routing.py",
+        "AGENTS.md",
+        "docs/research_program/tensor_joint_r7/DESIGN.md"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/independent_pytest.log",
+      "sha256": "4326a6149a721258a65f0bb6017df2bef4fecac91560bf07f2f16de8517a5865"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/pytest.log",
+      "sha256": "3c1f83c7d7db4f4b8f01dcec775f5772bebf4c7ec072fc2ffc49361f409134f9"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/pytest_receipt.json",
+      "sha256": "5a3a97d4fd67db1360bc6efe2e0226c4fd073c5a79ab4f1e7be2cc59aac7450f"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/test_independent_boundaries.py",
+      "sha256": "884453cfd226d101fbb15007ec2e540563e6de4138b6d17d69ebac060bbc53d7"
+    }
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E1",
+      "outcome": "pass",
+      "finding_ids": [],
+      "summary": "CAS_FAIL/CAS_BLOCKED reports retaining the PASS word in notes emit only ALGEBRA_VERIFIED. Independent probes additionally reject CAS_CONFLICT, registered-exception, PASS and null aggregate states.",
+      "evidence_refs": [
+        "htt/src/common/r7_evidence.py:109",
+        "tests/r7/test_evidence_binding.py:72",
+        ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/independent_pytest.log"
+      ]
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E2",
+      "outcome": "pass",
+      "finding_ids": [],
+      "summary": "The unchanged current contract and observed four-axis record pass the consumer. Every required obligation and axis is checked; capability wording remains the existing seven fixed mathematical implications with no empirical admission. This review did not rerun or independently validate the mathematical proofs.",
+      "evidence_refs": [
+        "htt/src/common/r7_evidence.py:72",
+        "scripts/observed_runs/run_tensor_joint_r7.py:97",
+        ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/independent_pytest.log"
+      ]
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E3",
+      "outcome": "pass",
+      "finding_ids": [],
+      "summary": "CAS arrival, contract change, and contract-source change invalidate the affected fixture consumer and descendants. Independent complementary probes confirm CAS removal and contract arrival do likewise while preserving the unrelated branch.",
+      "evidence_refs": [
+        "scripts/observed_runs/run_r7_campaign.py:143",
+        "scripts/observed_runs/run_tensor_joint_r7.py:565",
+        ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/pytest.log",
+        ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/independent_pytest.log"
+      ]
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E4",
+      "outcome": "pass",
+      "finding_ids": [],
+      "summary": "Donor-only source mutation is checked at intake and again at consumption even with a cached intake result; the original pins remain unchanged and the separately valid B donor survives Q failure. Resume source slicing includes selected donor bytes.",
+      "evidence_refs": [
+        "scripts/observed_runs/run_tensor_joint_r7.py:113",
+        "tests/r7/test_evidence_binding.py:122",
+        ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/pytest.log"
+      ]
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E5",
+      "outcome": "pass",
+      "finding_ids": [],
+      "summary": "A PASS review requires a nonempty source map whose declared bytes remain available and matching. Missing, changed, empty or malformed evidence is ineligible; source changes and review arrival/removal reopen its consumer. This establishes declared-source freshness, not new assurance about review coverage or reviewer independence.",
+      "evidence_refs": [
+        "htt/src/common/r7_evidence.py:45",
+        "scripts/observed_runs/run_tensor_joint_r7.py:508",
+        ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/pytest.log",
+        ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/independent_pytest.log"
+      ]
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E6",
+      "outcome": "pass",
+      "finding_ids": [],
+      "summary": "Unchanged resumed source/input/contract/evidence creates no new attempts in both submitted and independent deterministic fixture campaigns, including the resume following each transition. Existing attempt files remain preserved.",
+      "evidence_refs": [
+        "tests/r7/test_evidence_binding.py:168",
+        ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/artifacts/evidence_review/independent_pytest.log"
+      ]
+    }
+  ],
+  "errors": [],
+  "final_source_sha256": {
+    "htt/src/common/r7_evidence.py": "a8867d4d78eefaaa3d6da5599b7e11e3bedaea1a36a3878222464d2690e9af64",
+    "scripts/observed_runs/run_r7_campaign.py": "7f1622c84851b128ec748e7cf9ffb5a7caf37478e753a97121bf5eb65a397de7",
+    "scripts/observed_runs/run_tensor_joint_r7.py": "0e4d102800108985ef6b307c1f1c4a8fd0e8d4804e3d6d50620e8f31a1e8b328",
+    "tests/r7/test_evidence_binding.py": "647697cf5977c9e77eca4ca24a9bc0c77d1a4302a51f2d0af7471702f5131cb8",
+    "tests/r7/test_campaign_routing.py": "a94eba21d5ab158e4be26dff8aee81ef421943508179766283973ad337bd2c35",
+    "AGENTS.md": "d0dc0228dcf175e771dc57f1813a517eb137d1649702d292d7b2728f79563b4a",
+    "docs/research_program/tensor_joint_r7/DESIGN.md": "5f01d32033b3c0d66a011000bd05c3ca847ea9453dac25465427b6111f4767b2",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/cas_adjudication.json": "730acce33d001c149be5a6d4e9c12e50e40c601f0ba429321d5588b5181497af",
+    "docs/research_program/tensor_joint_r7/EVIDENCE_REPAIR_20260909.md": "2525a00f8ab98b480e371fc286f720d8c38cc6ff0b69ec8a192d1d711782eae3",
+    ".agent-harness/scripts/cas_gate.py": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744"
+  },
+  "base_commit": "433433409ee95f48759fca4193b727a43bde4872",
+  "reviewed_head": "433433409ee95f48759fca4193b727a43bde4872",
+  "actual_module_files": {
+    "common.r7_evidence": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_evidence.py",
+    "scripts.observed_runs.run_tensor_joint_r7": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/scripts/observed_runs/run_tensor_joint_r7.py",
+    "scripts.observed_runs.run_r7_campaign": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/scripts/observed_runs/run_r7_campaign.py"
+  },
+  "assumptions_used": [
+    "Existing locally observed CAS adjudication is trusted as stored execution evidence; no CAS execution or proof readmission occurred.",
+    "Mutation tests run solely on disposable fixtures and cannot establish science.",
+    "Only E1-E6 acceptance is in scope; A03/A04/A05 algorithms and global hooks are excluded."
+  ],
+  "validation_summary": {
+    "assigned_tests": "51 passed in 3.25s",
+    "independent_tests": "9 passed in 0.36s",
+    "blocking_findings": 0
+  },
+  "operational_limitations": [
+    "Spawn header and assignment point to the exact target worktree and current context version. The injected startup hook named another checkout/run; explicit workdir was used for every shell call.",
+    "Launch receipt is unavailable to this reviewer; launch_id remains null and launch_evidence unverified.",
+    "Parent warned that the original-checkout stop hook may reject closeout; no actual rejection observed during technical review, and no original active pointer was changed.",
+    "The task document gained a host closeout narrative during review. Its final bytes were read; host baseline, 31-pin, historical-run and mapper-accounting statements were not independently revalidated, because they are outside the assigned completed-patch E1-E6 check. Acceptance clauses and reviewed implementation remained unchanged.",
+    "Observed native SubagentStop rejection after technical completion: hook subagent-stop:3:/home/cosmosapjw/Dropbox/bianchi/htt_base/.codex/hooks.json resolved EXTERNAL-FUSION-FOLLOWUP-20260829. It reported result outside registered run/results directory, noncanonical filename/path, missing result and missing .agent-harness/runs/EXTERNAL-FUSION-FOLLOWUP-20260829/assignments/evidence_review.json. The actual registered assignment and result exist in the explicitly assigned target worktree; no unrelated pointer, registration or hook was changed."
+  ],
+  "closeout_hook_status": "REJECTED_WRONG_CHECKOUT_RUN_CONTEXT"
+}

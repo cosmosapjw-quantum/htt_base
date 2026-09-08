@@ -1,0 +1,50 @@
+{
+  "schema_version": 2,
+  "run_id": "TENSOR-JOINT-R7-EVIDENCE-20260909",
+  "assignment_id": "cas_schema",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "code_cartographer",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "shared-core",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R1",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E1",
+    "RUN-TENSOR-JOINT-R7-EVIDENCE-20260909-E2"
+  ],
+  "task": "Read-only mapping of existing CAS report schema obligations for E1/E2 in EVIDENCE_REPAIR_20260909.md. Identify reusable functions and exact required fields; no new proof execution or production edits.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r7/EVIDENCE_REPAIR_20260909.md",
+      "sha256": "359ca522ecfa68fd9d6e5767bb4af34f7b0beeaa632c413571f2c5b93b102310"
+    },
+    {
+      "path": ".agent-harness/scripts/cas_gate.py",
+      "sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json",
+      "sha256": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/cas_adjudication.json",
+      "sha256": "730acce33d001c149be5a6d4e9c12e50e40c601f0ba429321d5588b5181497af"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    "Schema evidence and minimal compatible consumption checks with exact references"
+  ],
+  "result_path": ".agent-harness/runs/TENSOR-JOINT-R7-EVIDENCE-20260909/results/cas_schema.json",
+  "status": "registered",
+  "assignment_sha256": "f6acca1e8752e21a1d7f46f677c56d7b0be92cb559fd3e185607760c5deecaec"
+}
