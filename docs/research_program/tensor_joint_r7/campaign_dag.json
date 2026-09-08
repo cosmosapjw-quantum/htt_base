@@ -1,0 +1,900 @@
+{
+  "schema_version": "htt.r7.campaign.v1",
+  "campaign_id": "TENSOR-JOINT-R7-20260908",
+  "base_commit": "5702024e06eff4979087f07f86ee7131d13961ac",
+  "scope": "theory-design-published; scientific execution delegated to workstation Local Codex",
+  "legacy_dag": "docs/research_program/referee_seeded_20260907/03_PROGRAM_DAG.yaml",
+  "execution_release": "PER_EXPERIMENT_CAPABILITY_AND_VALIDATION",
+  "process_terminal": [
+    "COMPLETED_SUCCESS",
+    "COMPLETED_FAILED_WITH_RECEIPT",
+    "BLOCKED_WITH_RECEIPT",
+    "ABANDONED_WITH_RECEIPT"
+  ],
+  "scientific_outcomes": [
+    "NOT_EVALUATED",
+    "COMPATIBLE",
+    "REJECTED_CONJUNCTION",
+    "PARTIALLY_IDENTIFIED",
+    "NONIDENTIFIED",
+    "CONDITIONAL_BOUND",
+    "SCENARIO_ONLY",
+    "NUMERICALLY_UNRESOLVED",
+    "INPUT_UNAVAILABLE",
+    "VALIDATION_FAILED"
+  ],
+  "route_semantics": {
+    "dependency": "all settle_after records must be terminal; success is not implied",
+    "eligibility": "any capability_route whose requirements are present; [] is unconditional",
+    "capability": "only validated actual output; never emit all declared_outputs merely because a node completed",
+    "scope_join": "Match experiment_id, law_id, model_id, dataset_ids, conventions, version, method_id and method_config_id, plus conditioning target, evidence validity and parameter domain. Never treat an unbound factory as an admitted law.",
+    "no_route": "emit BLOCKED_WITH_RECEIPT and missing-capability explanation immediately",
+    "exception": "emit COMPLETED_FAILED_WITH_RECEIPT; continue independent branches",
+    "always_run": "consume terminal records regardless of upstream outcome",
+    "repair_budget": "one targeted repair/review cycle per concrete defect; unresolved result becomes terminal, reopen on discriminating new evidence"
+  },
+  "nodes": [
+    {
+      "id": "R7-00",
+      "title": "Scope, source composition and local input inventory",
+      "owner": "common",
+      "settle_after": [],
+      "capability_routes": [
+        []
+      ],
+      "declared_outputs": [
+        "SOURCE_BINDINGS",
+        "PR3_INPUT",
+        "CF4_INPUT",
+        "DESI_INPUT",
+        "JWST_INPUT",
+        "EXTERNAL_TRANSFER_INPUT",
+        "SKY_CONTROL_INPUT",
+        "FLOW_CONTROL_INPUT",
+        "BACKGROUND_AUX_INPUT",
+        "DISTANCE_AUX_INPUT",
+        "PROJECTED_AUX_INPUT"
+      ],
+      "validation_ids": [
+        "V00"
+      ],
+      "work": "Pin H/Q/P/A/D/B and attachment donors; verify products/units/IDs/covariance/selection without assuming availability. Missing product yields inventory limitation, not zero measurement. Route all owner-inventory entries in OWNED_ASSETS to product-keyed subrecords; do not scan all storage or process PR4/NPIPE.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-01",
+      "title": "Independent elementary algebra and physical conventions",
+      "owner": "common",
+      "settle_after": [
+        "R7-00"
+      ],
+      "capability_routes": [
+        [
+          "SOURCE_BINDINGS"
+        ]
+      ],
+      "declared_outputs": [
+        "ALGEBRA_VERIFIED",
+        "MASK_BOUND_VERIFIED",
+        "CONTINUUM_CERTIFIED",
+        "FOUR_AXIS_CAS"
+      ],
+      "validation_ids": [
+        "V01",
+        "V02",
+        "V03",
+        "V04"
+      ],
+      "work": "Verify STF normalization, boost adjoint, fibre, chirality witness, exact continuum rank L=10 and T5 fixed-band mask bound; CAS axes remain individually reported. ALGEBRA_VERIFIED covers the elementary STF/boost conventions only; failures of the new mask theorem or optional CAS axis withhold their separate capability, not unrelated elementary algebra.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-02",
+      "title": "Integrate existing correct donors and narrow repairs",
+      "owner": "common",
+      "settle_after": [
+        "R7-00"
+      ],
+      "capability_routes": [
+        [
+          "SOURCE_BINDINGS"
+        ]
+      ],
+      "declared_outputs": [
+        "DONOR_TENSOR",
+        "DONOR_BOOST",
+        "DONOR_GF",
+        "DONOR_CF4",
+        "DONOR_DESI",
+        "DONOR_JWST",
+        "DONOR_DYNAMICS",
+        "DONOR_ANCHOR",
+        "DONOR_KRYLOV"
+      ],
+      "validation_ids": [
+        "V05",
+        "V06"
+      ],
+      "work": "Bind repaired Q decoder, harmonic metric conversion, GF and survey donors; repair nonfinite rank input, singular Gaussian support, selected scoped defects. Do not import historical numerical conclusions. Validate and emit each donor capability separately; one donor failure does not withhold unrelated successful donor capabilities. DONOR_TENSOR certifies carrier/basis conversion only; DONOR_KRYLOV is optional chart reconstruction and cannot gate tensor retention.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-03",
+      "title": "Tensor radiation-jet and MES model",
+      "owner": "common",
+      "settle_after": [
+        "R7-01",
+        "R7-02"
+      ],
+      "capability_routes": [
+        [
+          "ALGEBRA_VERIFIED",
+          "DONOR_ANCHOR"
+        ]
+      ],
+      "declared_outputs": [
+        "MES_TENSOR_MODEL"
+      ],
+      "validation_ids": [
+        "V07"
+      ],
+      "work": "Implement T3 tensor identities, derivative envelope types and joint physical state. Preserve missing jets; validate geodesic domain and rate units.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-04",
+      "title": "CMB source to released-product response",
+      "owner": "obsstat",
+      "settle_after": [
+        "R7-00",
+        "R7-01",
+        "R7-02"
+      ],
+      "capability_routes": [
+        [
+          "ALGEBRA_VERIFIED",
+          "DONOR_BOOST"
+        ]
+      ],
+      "declared_outputs": [
+        "THERMAL_RESPONSE",
+        "PR3_RELEASE_RESPONSE"
+      ],
+      "validation_ids": [
+        "V08",
+        "V09"
+      ],
+      "work": "Validate exact thermodynamic pullback first. Emit PR3_RELEASE_RESPONSE only after actual frozen spectral/beam/correction/fit response and error checks. A thermal benchmark alone does not emit that capability.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-05",
+      "title": "Normalized observation laws and support",
+      "owner": "htt",
+      "settle_after": [
+        "R7-01",
+        "R7-02"
+      ],
+      "capability_routes": [
+        [
+          "SOURCE_BINDINGS"
+        ]
+      ],
+      "declared_outputs": [
+        "LAW_KERNELS_VERIFIED"
+      ],
+      "validation_ids": [
+        "V10",
+        "V11"
+      ],
+      "work": "Implement joint Gaussian/support and selection-normalized likelihood, nuisance conditioning, calibration Schur and confidence acceptance kernels; analytical exact oracles before real data. Statistical kernels are not blocked by an unrelated CMB algebra/donor failure.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-06",
+      "title": "PR3 and owned sky/projected product records",
+      "owner": "obsstat",
+      "settle_after": [
+        "R7-00",
+        "R7-02",
+        "R7-04",
+        "R7-05"
+      ],
+      "capability_routes": [
+        [
+          "PR3_INPUT",
+          "DONOR_TENSOR"
+        ],
+        [
+          "SKY_CONTROL_INPUT",
+          "DONOR_TENSOR"
+        ],
+        [
+          "PROJECTED_AUX_INPUT"
+        ]
+      ],
+      "declared_outputs": [
+        "CMB_RECORDS",
+        "CMB_LAW",
+        "CMB_CONTROL_RECORDS",
+        "PROJECTED_LAW"
+      ],
+      "validation_ids": [
+        "V12"
+      ],
+      "work": "Retain 32-mode rows/full QO and high-mode observations with covariance, sample lineage and chart status. Emit CMB_LAW only for a product-matched supported law; released-map morphology may survive missing physical response. Fan out by OWNED_ASSETS product_key; retain likelihood/conditional/factory/control/scenario/unavailable disposition separately. A control-only product emits no qualified temperature/catalogue law by name alone.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-07",
+      "title": "CF4 row, group, distance and affine-law adapter",
+      "owner": "htt",
+      "settle_after": [
+        "R7-00",
+        "R7-02",
+        "R7-05"
+      ],
+      "capability_routes": [
+        [
+          "CF4_INPUT",
+          "DONOR_CF4",
+          "LAW_KERNELS_VERIFIED"
+        ],
+        [
+          "FLOW_CONTROL_INPUT"
+        ]
+      ],
+      "declared_outputs": [
+        "CF4_RECORDS",
+        "CF4_LAW",
+        "CF4_SCENARIO",
+        "CF4_LAW_FACTORY",
+        "CF4_CONDITIONAL_LAW",
+        "FLOW_CONTROL_RECORDS"
+      ],
+      "validation_ids": [
+        "V13"
+      ],
+      "work": "Use P nine-parameter full-covariance affine core; bind raw distance/selection law when supported. Otherwise emit explicit conditional velocity scenario. Radial affine curl is a structural null. A law factory is a sealed measurement/selection structure awaiting a supported prediction provider; it is not an admitted empirical law. CF4_CONDITIONAL_LAW means a normalized, explicitly conditional velocity-space law with supplied covariance; CF4_SCENARIO has no calibrated-data eligibility. Fan out by OWNED_ASSETS product_key; retain likelihood/conditional/factory/control/scenario/unavailable disposition separately. A control-only product emits no qualified temperature/catalogue law by name alone.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-08",
+      "title": "DESI successor window and weighted-count law",
+      "owner": "htt",
+      "settle_after": [
+        "R7-00",
+        "R7-02",
+        "R7-05"
+      ],
+      "capability_routes": [
+        [
+          "DESI_INPUT",
+          "DONOR_DESI",
+          "LAW_KERNELS_VERIFIED"
+        ],
+        [
+          "BACKGROUND_AUX_INPUT",
+          "LAW_KERNELS_VERIFIED"
+        ]
+      ],
+      "declared_outputs": [
+        "DESI_RECORDS",
+        "DESI_LAW",
+        "DESI_SCENARIO",
+        "DESI_LAW_FACTORY",
+        "BACKGROUND_CONTROL_RECORDS",
+        "BACKGROUND_LAW"
+      ],
+      "validation_ids": [
+        "V14"
+      ],
+      "work": "Use exact P sample, 18-vector and per-row nuisance refit; repair old frame/window/weighted-mock traps. Rerun; do not consume invalidated PR151 results. A law factory is a sealed measurement/selection structure awaiting a supported prediction provider; it is not an admitted empirical law. Fan out by OWNED_ASSETS product_key; retain likelihood/conditional/factory/control/scenario/unavailable disposition separately. A control-only product emits no qualified temperature/catalogue law by name alone.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-09",
+      "title": "JWST host and calibration-law adapter",
+      "owner": "htt",
+      "settle_after": [
+        "R7-00",
+        "R7-02",
+        "R7-05"
+      ],
+      "capability_routes": [
+        [
+          "JWST_INPUT",
+          "DONOR_JWST",
+          "LAW_KERNELS_VERIFIED"
+        ],
+        [
+          "DISTANCE_AUX_INPUT",
+          "LAW_KERNELS_VERIFIED"
+        ],
+        [
+          "PROJECTED_AUX_INPUT"
+        ]
+      ],
+      "declared_outputs": [
+        "JWST_RECORDS",
+        "JWST_LAW",
+        "JWST_SCENARIO",
+        "JWST_LAW_FACTORY",
+        "DISTANCE_CONTROL_RECORDS",
+        "AUX_DISTANCE_LAW",
+        "AUX_DISTANCE_RECORDS"
+      ],
+      "validation_ids": [
+        "V15"
+      ],
+      "work": "Use fixed host-population hierarchy and measurement residual law, exact covariance support, shared method contrasts and retained absolute distances where available. A law factory is a sealed measurement/selection structure awaiting a supported prediction provider; it is not an admitted empirical law. Fan out by OWNED_ASSETS product_key; retain likelihood/conditional/factory/control/scenario/unavailable disposition separately. A control-only product emits no qualified temperature/catalogue law by name alone.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-10",
+      "title": "Shared source, overlap and calibration composition",
+      "owner": "htt",
+      "settle_after": [
+        "R7-05",
+        "R7-06",
+        "R7-07",
+        "R7-08",
+        "R7-09"
+      ],
+      "capability_routes": [
+        [
+          "LAW_KERNELS_VERIFIED",
+          "CMB_LAW"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "CF4_LAW"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "DESI_LAW"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "JWST_LAW"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "CF4_CONDITIONAL_LAW"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "CF4_LAW_FACTORY"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "DESI_LAW_FACTORY"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "JWST_LAW_FACTORY"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "PROJECTED_LAW"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "BACKGROUND_LAW"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "AUX_DISTANCE_LAW"
+        ]
+      ],
+      "declared_outputs": [
+        "ADMITTED_EXPERIMENTS",
+        "JOINT_LAW",
+        "SUBSET_LAWS",
+        "EXPERIMENT_FACTORIES",
+        "MARGINAL_EXPERIMENT_FAMILY"
+      ],
+      "validation_ids": [
+        "V16"
+      ],
+      "work": "Build valid dataset subsets and common latent law; bind cross-covariance/selection/IDs. Emit JOINT_LAW only for the actually admitted joint dataset set; missing links yield explicit partitions. Compose sealed measurement factories separately from already bound normalized laws. Factories emit EXPERIMENT_FACTORIES only, never ADMITTED_EXPERIMENTS. Direct measured/conditional laws can be admitted before physical-provider binding. With common estimand and valid marginal laws but unknown cross-dependence, retain a fixed family for union-bound simultaneous confidence, not a product likelihood.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-11",
+      "title": "Full-shape and invariant comparison procedures",
+      "owner": "obsstat",
+      "settle_after": [
+        "R7-01",
+        "R7-02",
+        "R7-06"
+      ],
+      "capability_routes": [
+        [
+          "ALGEBRA_VERIFIED",
+          "DONOR_TENSOR",
+          "CMB_RECORDS"
+        ]
+      ],
+      "declared_outputs": [
+        "SHAPE_METHOD"
+      ],
+      "validation_ids": [
+        "V17"
+      ],
+      "work": "Implement all-strata SO3 orbit distance and kth-neighbour pool score; retain full harmonic likelihood, packet, multipole-vector, power and fB ablations. Score symmetry and numeric precision checked before inference.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-12",
+      "title": "Four high-source nuisance methods",
+      "owner": "htt",
+      "settle_after": [
+        "R7-01",
+        "R7-04",
+        "R7-05",
+        "R7-06"
+      ],
+      "capability_routes": [
+        [
+          "ALGEBRA_VERIFIED",
+          "LAW_KERNELS_VERIFIED",
+          "THERMAL_RESPONSE"
+        ]
+      ],
+      "declared_outputs": [
+        "HIGH_SOURCE_METHODS"
+      ],
+      "validation_ids": [
+        "V18"
+      ],
+      "work": "Implement H0 quotient, H1 cost/feasible set, H2 marginal law and H3 measured joint law. Require actual release response per physical PR3 scope; thermal synthetic method validation can proceed alone.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-13",
+      "title": "Joint tensor-MES region and invariant projection",
+      "owner": "htt",
+      "settle_after": [
+        "R7-03",
+        "R7-05",
+        "R7-10",
+        "R7-17"
+      ],
+      "capability_routes": [
+        [
+          "MES_TENSOR_MODEL",
+          "LAW_KERNELS_VERIFIED",
+          "ADMITTED_EXPERIMENTS"
+        ],
+        [
+          "MES_TENSOR_MODEL",
+          "LAW_KERNELS_VERIFIED",
+          "MODEL_BOUND_EXPERIMENTS"
+        ]
+      ],
+      "declared_outputs": [
+        "MES_REGION_METHOD"
+      ],
+      "validation_ids": [
+        "V19"
+      ],
+      "work": "Build one acceptance/physical-jet set and its outer projections, conditional on explicit envelopes. Use supported GF subsolver; never derive missing jets from sky values. Consume direct admitted laws or later model-bound laws; retain tensor/jet equations and shared-state GF projections for both.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-14",
+      "title": "Depth and calibration discrimination procedures",
+      "owner": "htt",
+      "settle_after": [
+        "R7-05",
+        "R7-07",
+        "R7-08",
+        "R7-09",
+        "R7-10"
+      ],
+      "capability_routes": [
+        [
+          "LAW_KERNELS_VERIFIED",
+          "CF4_RECORDS"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "DESI_RECORDS"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "JWST_RECORDS"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "AUX_DISTANCE_RECORDS"
+        ]
+      ],
+      "declared_outputs": [
+        "DEPTH_CALIBRATION_METHOD"
+      ],
+      "validation_ids": [
+        "V20"
+      ],
+      "work": "Use physical fixed-z kernels, full nuisance projection and shared-calibration information. Retain nonidentification and calibration-only target when direct geometry response vanishes.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-15",
+      "title": "Restricted R3 conservation and optics benchmark",
+      "owner": "bass_py",
+      "settle_after": [
+        "R7-01",
+        "R7-02",
+        "R7-03"
+      ],
+      "capability_routes": [
+        [
+          "ALGEBRA_VERIFIED",
+          "DONOR_DYNAMICS"
+        ]
+      ],
+      "declared_outputs": [
+        "R3_BENCHMARK"
+      ],
+      "validation_ids": [
+        "V21"
+      ],
+      "work": "Use correct dust/Einstein donors, collisionless radiation stress and Jacobi optics for selected LRS model. Validate flux, energy, shear-memory, odd-mode/vorticity nulls. This is not future native solver delivery.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-16",
+      "title": "Supported external Bianchi transfer adapter",
+      "owner": "bass_py",
+      "settle_after": [
+        "R7-00",
+        "R7-01",
+        "R7-02"
+      ],
+      "capability_routes": [
+        [
+          "EXTERNAL_TRANSFER_INPUT",
+          "ALGEBRA_VERIFIED",
+          "DONOR_BOOST"
+        ]
+      ],
+      "declared_outputs": [
+        "SUPPORTED_EXTERNAL_TRANSFER"
+      ],
+      "validation_ids": [
+        "V22"
+      ],
+      "work": "Advertise actual supported regular vector/tensor channels, initial conditions and shear-rate conventions. Reference-replay only supported examples; absent modes remain unsupported.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-17",
+      "title": "Model-specific forward comparisons",
+      "owner": "htt",
+      "settle_after": [
+        "R7-04",
+        "R7-05",
+        "R7-10",
+        "R7-15",
+        "R7-16"
+      ],
+      "capability_routes": [
+        [
+          "LAW_KERNELS_VERIFIED",
+          "THERMAL_RESPONSE",
+          "R3_BENCHMARK"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "SUPPORTED_EXTERNAL_TRANSFER"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "ADMITTED_EXPERIMENTS"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "EXPERIMENT_FACTORIES",
+          "R3_BENCHMARK"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "EXPERIMENT_FACTORIES",
+          "SUPPORTED_EXTERNAL_TRANSFER"
+        ]
+      ],
+      "declared_outputs": [
+        "PHYSICAL_MODEL_METHODS",
+        "MODEL_BOUND_EXPERIMENTS"
+      ],
+      "validation_ids": [
+        "V23"
+      ],
+      "work": "Compose supported stochastic+coherent laws and matching observable providers. Keep CMB-only physical models when distance transfer is absent. No full-general covariance response from additive coherent templates. P0/P1 comparisons operate on already bound baseline/template experiments without R3/external prerequisites; only explicit supported columns are fitted. Separately bind composed factories to supported physical providers and validate units/domain/normalization before emitting MODEL_BOUND_EXPERIMENTS. Unsupported distance channels never bind.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-18",
+      "title": "Matched nulls, coverage and power calibration",
+      "owner": "htt",
+      "settle_after": [
+        "R7-05",
+        "R7-10",
+        "R7-11",
+        "R7-12",
+        "R7-13",
+        "R7-14",
+        "R7-17"
+      ],
+      "capability_routes": [
+        [
+          "LAW_KERNELS_VERIFIED",
+          "SHAPE_METHOD"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "HIGH_SOURCE_METHODS"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "MES_REGION_METHOD"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "DEPTH_CALIBRATION_METHOD"
+        ],
+        [
+          "LAW_KERNELS_VERIFIED",
+          "PHYSICAL_MODEL_METHODS"
+        ]
+      ],
+      "declared_outputs": [
+        "CALIBRATED_METHODS"
+      ],
+      "validation_ids": [
+        "V24",
+        "V25"
+      ],
+      "work": "Run conditional synthetic and product-matched calibrations separately for every available method/experiment scope. Return validity/exactness/FPR/coverage/power/refusal per scope; one passing calibration never qualifies another scope. Validation records identify method_id and method_config_id as well as experiment scope. CALIBRATED_METHODS includes a domain-valid EXACT_ACCEPTANCE_PROOF record or an appropriately calibrated simulator record, with numerical certification and conditioning target; factory-only records are ineligible. For a fixed J-scope marginal family use alpha_j=.05/J, or .04/J plus global nuisance gamma=.01. Preserve missing/unqualified marginal scope as the full parameter domain; no post-result alpha redistribution.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-19",
+      "title": "Observed inference on eligible experiment scopes",
+      "owner": "htt",
+      "settle_after": [
+        "R7-06",
+        "R7-07",
+        "R7-08",
+        "R7-09",
+        "R7-10",
+        "R7-11",
+        "R7-12",
+        "R7-13",
+        "R7-14",
+        "R7-17",
+        "R7-18"
+      ],
+      "capability_routes": [
+        [
+          "ADMITTED_EXPERIMENTS",
+          "CALIBRATED_METHODS"
+        ],
+        [
+          "MODEL_BOUND_EXPERIMENTS",
+          "CALIBRATED_METHODS"
+        ]
+      ],
+      "declared_outputs": [
+        "OBSERVED_RESULTS"
+      ],
+      "validation_ids": [
+        "V26"
+      ],
+      "work": "Join experiment and calibration by exact scope and required capability, then run eligible real-data fits/tests. Lack of a joint law does not block separately valid subsets. Unmatched scope emits blocked result, never auto-passes. Join only the same bound law and method/configuration scope; an unbound factory or scenario never qualifies. Qualified marginal-family confidence intersects same-model regions with union-bound coverage; alternative model/nuisance premises use union. Label these as dependence-robust confidence, not full-data likelihood/posterior.",
+      "always_run": false,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-20",
+      "title": "Negative and unresolved scientific synthesis",
+      "owner": "manuscript",
+      "settle_after": [
+        "R7-00",
+        "R7-01",
+        "R7-02",
+        "R7-03",
+        "R7-04",
+        "R7-05",
+        "R7-06",
+        "R7-07",
+        "R7-08",
+        "R7-09",
+        "R7-10",
+        "R7-11",
+        "R7-12",
+        "R7-13",
+        "R7-14",
+        "R7-15",
+        "R7-16",
+        "R7-17",
+        "R7-18",
+        "R7-19"
+      ],
+      "capability_routes": [
+        []
+      ],
+      "declared_outputs": [
+        "NEGATIVE_RESULTS"
+      ],
+      "validation_ids": [
+        "V27"
+      ],
+      "work": "Always collect equation counterexamples, null directions, hypothesis-conjunction rejection, unresolved numerics, missing data and next discriminators. Calculation failure is not model rejection.",
+      "always_run": true,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-21",
+      "title": "Model, nuisance and data contribution comparison",
+      "owner": "htt",
+      "settle_after": [
+        "R7-10",
+        "R7-18",
+        "R7-19",
+        "R7-20"
+      ],
+      "capability_routes": [
+        []
+      ],
+      "declared_outputs": [
+        "COMPARISON_RESULTS"
+      ],
+      "validation_ids": [
+        "V27"
+      ],
+      "work": "Compare like estimands across admitted scopes; report conditional gains, robust unions and all dataset partitions. If no empirical fit exists report only supported analytic/design conclusions. Consume every OWNED_ASSETS product-keyed control/scenario/result and report actual contribution or precise exclusion; do not discard useful historical/code comparisons just because physical inference was unavailable.",
+      "always_run": true,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-22",
+      "title": "Figures and residual-error pass",
+      "owner": "manuscript",
+      "settle_after": [
+        "R7-18",
+        "R7-19",
+        "R7-20",
+        "R7-21"
+      ],
+      "capability_routes": [
+        []
+      ],
+      "declared_outputs": [
+        "FIGURE_REVIEW"
+      ],
+      "validation_ids": [
+        "V28"
+      ],
+      "work": "Render only justified available products, including informative negative results; report unavailable figure inputs. Check units, tails, error bounds, selection and failed states. No invented curves.",
+      "always_run": true,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-23",
+      "title": "Independent physics/statistics and implementation hostile audits",
+      "owner": "manuscript",
+      "settle_after": [
+        "R7-20",
+        "R7-21",
+        "R7-22"
+      ],
+      "capability_routes": [
+        []
+      ],
+      "declared_outputs": [
+        "FINAL_AUDIT"
+      ],
+      "validation_ids": [
+        "V28"
+      ],
+      "work": "Independent reviewer checks scientific conclusions, another checks actual source/data/figure binding. One targeted correction cycle per concrete failure; unresolved issue lowers only its affected conclusions.",
+      "always_run": true,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-24",
+      "title": "Referee-bound manuscript and reproducible handoff",
+      "owner": "manuscript",
+      "settle_after": [
+        "R7-19",
+        "R7-20",
+        "R7-21",
+        "R7-22",
+        "R7-23"
+      ],
+      "capability_routes": [
+        []
+      ],
+      "declared_outputs": [
+        "MANUSCRIPT_PACKAGE"
+      ],
+      "validation_ids": [
+        "V29"
+      ],
+      "work": "Write focused methods results plus separately scoped multi-data/physical results; map R1/R2/A1 requirements, correct citations, report actual code/data availability and nonexecuted work.",
+      "always_run": true,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    },
+    {
+      "id": "R7-25",
+      "title": "Final scientific conclusion and next discriminator",
+      "owner": "manuscript",
+      "settle_after": [
+        "R7-20",
+        "R7-21",
+        "R7-23",
+        "R7-24"
+      ],
+      "capability_routes": [
+        []
+      ],
+      "declared_outputs": [
+        "CAMPAIGN_CONCLUSION"
+      ],
+      "validation_ids": [
+        "V29"
+      ],
+      "work": "Terminal synthesis succeeds as reporting even when scientific branches were rejected or blocked. It must not assert empirical conclusions absent data. Record accepted assumptions, identifiable combinations, exclusions, conditional bounds and cheapest missing discriminator.",
+      "always_run": true,
+      "initial_process_status": "PENDING",
+      "initial_scientific_outcome": "NOT_EVALUATED"
+    }
+  ]
+}

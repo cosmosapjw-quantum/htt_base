@@ -161,3 +161,15 @@ Core workflow: MAIN does science/specification and review; Local Codex does work
 Use `02_CONTINUATION_BRIEF.md`. It is standalone, paste-ready and ends with the required instruction:
 
 > Treat the attached handoff packet and inspected durable artifacts as the current source of truth. Reconstruct the canonical state before beginning new speculative work. Do not infer missing evidence from transcript summaries, and do not reopen deprecated branches unless new evidence creates a direct conflict with the current state.
+
+
+---
+
+## R7 successor design — 2026-09-08
+
+사용자의 연구·코딩 설계 및 GitHub 게시 요청에 따라 [Tensor Joint R7](../../research_program/tensor_joint_r7/README.md)을 후속 실행 설계로 추가한다. [Local Codex plan](../../research_program/tensor_joint_r7/LOCAL_CODEX_PLAN.md), [26-node campaign DAG](../../research_program/tensor_joint_r7/campaign_dag.json), [보유 관측자료·외부 코드 연결](../../research_program/tensor_joint_r7/OWNED_ASSETS.md)을 함께 읽는다.
+
+이 추가는 위 2026-09-07 snapshot의 완료 상태·관측 수치·M1/M2/M3/THEORY_FREEZE 기록을 변경하지 않는다. 후속 작업의 scheduling은 R7의 분기별 capability·law·method-validation 조건을 따른다. 전역 native 가설의 성공을 모든 분석의 전제로 두지 않으며, 결측·기각·비식별·계산 실패를 구분해 독립된 자료/방법 경로와 최종 과학적 합성을 계속한다. 과학적 전제나 입력 검증을 생략하는 release는 아니다.
+
+이번 게시 범위는 검토된 해석적 연구와 설계·DAG 구조 검증이다. Production 구현, CAS, 합성/실자료 분석은 워크스테이션 Local Codex가 실행한다. 이전 무효화 DESI PR-151 수치는 재사용하지 않고 PR4/NPIPE 획득·분석 제외를 유지한다. 새 캠페인은 기존 numeric PR card 완료로 계산하지 않으며, 기존 canonical/mirror PR 상태는 보존한다. 실제 완료·미완료 근거는 [R7 closeout](../../research_program/tensor_joint_r7/state/CLOSEOUT.md)에 있다.
+
