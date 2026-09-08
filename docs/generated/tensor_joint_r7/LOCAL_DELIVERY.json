@@ -1,0 +1,72 @@
+{
+  "delivery_kind": "LOCAL_IMPLEMENTATION_AND_SCOPED_SCIENTIFIC_RESULTS",
+  "implementation_commit": "5cd69aed1dc58d9ca15b1660a84b54a331beecc0",
+  "implementation_tree": "38ee5d7d861b184808f424f022a2bf78a2b99965",
+  "branch": "implementation/tensor-joint-r7-20260908",
+  "worktree": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree",
+  "design_commit": "89a9a901e950cb186dcfedb95a250493fe4fd6fa",
+  "base_H": "5702024e06eff4979087f07f86ee7131d13961ac",
+  "full_plan_implemented": false,
+  "campaign_process_complete": true,
+  "terminal_nodes": 26,
+  "unique_empirical_conditional_scopes": 1,
+  "bounded_work": {
+    "decision": "STOP_INVALID",
+    "scope": "Full plan acceptance; not a rejection of the valid scoped scientific results",
+    "acceptance_sha256": "a2982d9b30ef98992678d0d99b96ecb80eecb787dabcbbe0f7d5a79ce9312e33",
+    "validation_command": "python3 ~/.codex/bounded-work-harness/bounded_work.py check ../CONTRACT.json",
+    "validation_result": "PASS",
+    "budgets": {
+      "active_agents": {
+        "limit": 4,
+        "used": 0
+      },
+      "metacognitive_passes": {
+        "limit": 1,
+        "used": 1
+      },
+      "repair_closeout_rounds": {
+        "limit": 1,
+        "used": 1
+      },
+      "review_rounds": {
+        "limit": 1,
+        "used": 1
+      },
+      "same_failure_retries": {
+        "limit": 1,
+        "used": 1
+      }
+    },
+    "reason": "Full proposed ablation and other named implementation obligations remain incomplete after the single registered repair-closeout. Scoped code/tests and the 26-node terminal campaign are delivered, but full-plan acceptance is not claimed."
+  },
+  "validation": {
+    "r7_tests": 75,
+    "r7_failures": 0,
+    "independent_donor_test_executions": 135,
+    "full_donor_tests_passed": 110,
+    "full_donor_tests_failed": 10,
+    "gaussian_cells": 11,
+    "trials_per_cell": 10000,
+    "CP_level": 0.99,
+    "cas": "CAS_4AXIS_PASS for seven fixed obligations only",
+    "figures_opened": 12,
+    "pdf_pages_opened": 6,
+    "unchanged_resume_new_attempts": 0
+  },
+  "preserved": {
+    "original_checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "original_head": "e7dc5fd99c6574eee1e93b6a2ec05beb394de034",
+    "protected_files_unchanged": [
+      "docs/codex_handoff/pr_status.yaml",
+      "machine_readable/pr_status.yaml",
+      "htt/bass/transfer/native_adapter.py",
+      "docs/research_program/tensor_joint_r7/campaign_dag.json"
+    ],
+    "prior_campaign_attempts": true,
+    "original_independent_FAIL_reviews": true
+  },
+  "remote_actions": "NO_PUSH_NO_MERGE",
+  "limitations": "See IMPLEMENTATION_STATUS.md and ADJUDICATION.md; incomplete features and missing inputs are distinct.",
+  "receipt_note": "This later receipt points to the prior implementation/results commit. It does not include its own commit or hash."
+}
