@@ -18,3 +18,8 @@ or actual CMB rank is admitted.
 The older R7 full-plan STOP_INVALID and previous failure/publication history are
 unchanged. Future commits are automatically pushed for external audit under the
 owner's standing authorization; no merge is implied.
+
+The separate R8-HOOK correction binds parent launch intent to the actual native
+child ID. The fresh R8 start/stop path now completes, with 100 routing/enforcement
+tests and independent review; see [hook results](../../generated/tensor_joint_r8/hook/README.md).
+This changes operational routing only. Old incorrect launch evidence is retained.

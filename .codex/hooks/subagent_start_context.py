@@ -7,20 +7,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from _common import emit_additional_context, load_json, read_stdin_json, repo_root
+from _common import emit_additional_context, load_json, read_stdin_json, resolve_hook_context, record_bound_start
 
-HARNESS_SCRIPTS = Path(__file__).resolve().parents[2] / ".agent-harness" / "scripts"
-if str(HARNESS_SCRIPTS) not in sys.path:
-    sys.path.insert(0, str(HARNESS_SCRIPTS))
-
-from _harness import (  # noqa: E402
-    ActiveRunError,
-    active_run_id,
-    confined_repo_file,
-    format_live_context,
-    load_validated_context_pack,
-    resolve_live_context,
-)
 
 
 def record_delivery(
@@ -61,7 +49,16 @@ def violation(message: str, warning: str) -> None:
 def main() -> None:
     event = read_stdin_json()
     agent_type = str(event.get("agent_type") or "unknown")
-    root = repo_root()
+    try:
+        root, binding = resolve_hook_context(event, "start")
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        violation(f"Explicit launch context rejected: {exc}", "Invalid launch binding")
+        return
+    code_root = root if binding is not None else Path(__file__).resolve().parents[2]
+    scripts = code_root / ".agent-harness/scripts"
+    sys.path.insert(0, str(scripts))
+    from _harness import (ActiveRunError, active_run_id, confined_repo_file,
+                          format_live_context, load_validated_context_pack, resolve_live_context)
     harness = root / ".agent-harness"
     index_path = harness / "context" / "CONTEXT_INDEX.json"
 
@@ -99,6 +96,9 @@ def main() -> None:
 
     try:
         active_run = active_run_id(root, required=True)
+        if binding is not None and active_run != binding["run_id"]:
+            violation("Bound run is not active in target worktree", "Stale run binding")
+            return
     except ActiveRunError as exc:
         violation(
             f"active-run state is invalid: {exc.error_code}: {exc.message} "
@@ -162,6 +162,8 @@ def main() -> None:
     contract = f"""[MANDATORY SUBAGENT BOOTSTRAP]
 Agent type: {agent_type}
 Active run: {active_run}
+Worktree root: {root}
+Bound assignment: {binding["assignment_id"] if binding else "legacy launch"}
 Context version: {version}
 {live_context}
 
@@ -192,6 +194,11 @@ Context was delivered once by this hook (pack sha256={pack_sha256}). You MUST NO
         )
         return
 
+    try:
+        record_bound_start(binding)
+    except (OSError, ValueError) as exc:
+        violation(f"Could not consume launch binding: {exc}", "Launch binding failed")
+        return
     record_delivery(
         harness,
         active_run,
