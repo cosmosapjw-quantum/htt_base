@@ -1,0 +1,45 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-E-20260909",
+  "assignment_id": "flow_review",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "shared-core",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R8-E-20260909-FLOW"
+  ],
+  "task": "Independently bind the four inventory-named flow grid formats, units, h scaling, Galactic axis order and support using targeted original headers/readmes and existing PR319 loader; then review root implementation/output for those semantics. Root owns CMB mapping and all production edits. Only own result/artifacts; no storage scan or nested spawning. Known external paths: /mnt/sn850x2t/htt_base_e2e/{carrick_2mpp,coras_2mrs,lilow_nn_2mrs}, /mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4/CF4pp_mean_std_grids.npz. Source uncertainty is a scoped refusal, never invented metadata.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r8/ASSET_REUSE.md",
+      "sha256": "7f65a342005f42cc6e473cf1e6a06e6546965168cee89349b00736978802a884"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r8/LOCAL_CODEX_PLAN.md",
+      "sha256": "dceaea1673574d77b029d21a1de13e8768a4d978faed0a86a406a5406dc9c6d1"
+    },
+    {
+      "path": "htt/obsstat/jwst_distance_consistency.py"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "web"
+  ],
+  "required_outputs": [
+    "product-semantics-and-review"
+  ],
+  "result_path": ".agent-harness/runs/R8-E-20260909/results/flow_review.json",
+  "status": "registered",
+  "assignment_sha256": "326fb35cc3252260097753cef06585a86f379ace465b72eda0ab7c39d89f6036"
+}

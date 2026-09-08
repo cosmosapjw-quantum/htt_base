@@ -1,0 +1,313 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-E-20260909",
+  "assignment_id": "cmb_review",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "assignment_sha256": "dfe3bc76bae2b4ef3baa30d7f0f0451fc6521f5afd007be3a02a5beb87bc3e09",
+  "agent_type": "harness_engineer",
+  "independence_mode": "shared-core",
+  "status": "pass",
+  "result_path": ".agent-harness/runs/R8-E-20260909/results/cmb_review.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "NOT_MEASURED",
+  "completed_at": "2026-09-08T19:50:05.281886+00:00",
+  "tool_versions": {
+    "python": "/usr/bin/python",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "healpy": "1.19.0",
+    "astropy": "7.2.0",
+    "pytest": "9.1.1",
+    "parent_reported_execution_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "parent_execution_python_evidence": "parent supplied; independent checks used /usr/bin/python as recorded"
+  },
+  "files_read": [
+    ".agent-harness/runs/R8-E-20260909/assignments/cmb_review.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    "docs/research_program/tensor_joint_r8/LOCAL_CODEX_PLAN.md",
+    "htt/obsstat/r7_cmb_product_response.py",
+    "htt/obsstat/r8_product_intake.py",
+    "tests/r8/test_product_intake.py",
+    "scripts/observed_runs/run_r8_owned_controls.py",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-manuscript-figure-audit/SKILL.md",
+    "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb.json",
+    "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb_controls.npz",
+    "docs/generated/tensor_joint_r8/owned_controls/cmb/figures.json",
+    "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb_coefficients.png",
+    "docs/generated/tensor_joint_r8/owned_controls/cmb/same_sky_differences.png",
+    ".agent-harness/runs/R8-E-20260909/artifacts/initial_render/same_sky_differences.png",
+    ".agent-harness/runs/R8-E-20260909/artifacts/initial_render/run_r8_owned_controls.py",
+    ".agent-harness/runs/R8-E-20260909/artifacts/initial_render/figures.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "external_files_read": [
+    "/home/cosmosapjw/.codex/runtime/global-execution-policy.json",
+    "/home/cosmosapjw/.codex/bounded-work-harness/RULES.md",
+    "/home/cosmosapjw/.codex/memories/MEMORY.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/AGENTS.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/GLOBAL_EXECUTION_POLICY.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/.codex/runtime/local-router.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/MIXED_WORKER_ROUTING.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/MIXED_DEVICE_RESIDENCY.md",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_data/COM_CMB_IQU-commander_2048_R3.00_full.fits",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_pr3_component_controls/COM_CMB_IQU-nilc_2048_R3.00_full.fits",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_pr3_component_controls/COM_CMB_IQU-sevem_2048_R3.01_full.fits"
+  ],
+  "external_read_note": "Explicit external reads listed separately because strict_result_validation requires repository-relative files_read entries. Memory search had no task-relevant hits. FITS reads were headers and 13*1024 selected pixels per product, not whole-file hashes.",
+  "commands": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt:htt/src:htt/htt python -m pytest -p no:cacheprovider tests/r8/test_product_intake.py -q",
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "exit_code": 0,
+      "output": "4 passed in 1.37s"
+    },
+    {
+      "command": "Inline independent NSIDE128 NESTED FITS memfd fixture; manually group four children per NSIDE64 parent and ring2nest output mapping. Test uK conversion, TMASK .49/.5, UNSEEN, NaN.",
+      "exit_code": 0,
+      "output": "PASS; max absolute error 2.168404344971009e-19 K"
+    },
+    {
+      "command": "Inline actual NPZ/JSON replay: lstsq(design[common_mask],maps[common_mask]); inspect rank, coefficients, STF symmetry/traces, power, f_B, hashes and figure binding.",
+      "exit_code": 0,
+      "output": "All four fits rank36, 36433 common pixels, coefficient replay max error 0 K; all checked artifact fields/hashes agree."
+    },
+    {
+      "command": "Inline direct released FITS check: for RING64 indices [1,3213,6288,9367,12513,15973,20558,32862,36376,39845,43012,46084,49151], select ring2nest(64,index)*1024+arange(1024), require valid masks and compare mean to saved reduction at atol1e-18 K.",
+      "exit_code": 0,
+      "output": "All four products PASS; input header SHA256 and K_CMB/NESTED metadata agree."
+    },
+    {
+      "command": "view_image cmb_coefficients.png and same_sky_differences.png",
+      "output": "Coefficient figure legible, signed values and f_B agree. Residual figure has the reported color-scale defect."
+    },
+    {
+      "command": "One repair-closeout: source read, view_image regenerated same_sky_differences.png, SHA256 comparison of current figure inputs/render source and retained initial render artifacts.",
+      "exit_code": 0,
+      "output": "Shared symmetric +/-54.3094 microK scale visually confirmed, zero neutral, descriptive Galactic/common-mask title legible; numerical NPZ identity unchanged."
+    },
+    {
+      "command": "Final scoped CMB source read, final figure view, current source/figure SHA256 binding, and figures.json render_details consistency check.",
+      "exit_code": 0,
+      "output": "PASS; shared_symmetric_limit_microK=54.309408257631475; existing conclusion unchanged."
+    }
+  ],
+  "artifacts": [],
+  "findings": [
+    {
+      "finding_id": "CMB-DIFF-COLOR-SCALE",
+      "claim_id": "RUN-R8-E-20260909-CMB",
+      "verdict": "pass",
+      "severity": "medium",
+      "evidence_fingerprint": "r8-owned-cmb-mollview-independent-asymmetric-coolwarm-limits",
+      "statement": "Resolved in the one scoped repair-closeout: all three residual panels now use the same symmetric +/-54.3094 microK scale, with zero neutral and explicit Galactic/common-mask/descriptive labeling. Original FAIL finding and render identities are preserved in review_history.",
+      "assumptions_used": [
+        "The side-by-side signed component difference maps are intended for direct visual comparison."
+      ],
+      "evidence_refs": [
+        "scripts/observed_runs/run_r8_owned_controls.py:208",
+        "docs/generated/tensor_joint_r8/owned_controls/cmb/same_sky_differences.png",
+        "docs/generated/tensor_joint_r8/owned_controls/cmb/figures.json"
+      ],
+      "counterevidence_refs": [
+        "Each panel does show its own numerical endpoint labels."
+      ],
+      "reproduction": [
+        "Inspect render(): one max(abs(deltas[:, common_mask])) sets min=-limit,max=limit on every panel.",
+        "Open regenerated same_sky_differences.png: all three panels display -54.3094..54.3094 microK, and a Galactic/common-mask/descriptive title.",
+        "Check current figures.json source hash and unchanged cmb_controls.npz hash."
+      ],
+      "unresolved": [],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R8-E-20260909-CMB",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "CMB-DIFF-COLOR-SCALE"
+      ],
+      "summary": "Scoped numerical and rendering review PASS after one color-scale repair; original FAIL evidence retained. No law, physical, confidence or launch promotion."
+    }
+  ],
+  "errors": [],
+  "assumptions": [
+    "Released PR3 I_STOKES temperature maps in Galactic coordinates; a new masked pixel-fit method, with no beam deconvolution or independently admitted product law."
+  ],
+  "scope_limits": [
+    "No empirical rank, p-value, covariance, confidence interval, native physical response or family claim admitted.",
+    "No sibling results read; no production or shared files edited.",
+    "No full raw-map replay; targeted raw-source averaging checked at thirteen parents per map.",
+    "No persistent launch receipt present at review time; no retrospective launch promotion."
+  ],
+  "numerical_status": "PASS",
+  "rendering_status": "PASS",
+  "remaining_risks": [
+    "Cut-sky ell0..5 fit is method dependent and has no continuum/beam/covariance error certificate; explicitly descriptive.",
+    "Current synthetic repository tests do not persist the additional NESTED downgrade regression exercised independently here."
+  ],
+  "review_history": [
+    {
+      "round": "initial_independent_review",
+      "result": {
+        "schema_version": 2,
+        "run_id": "R8-E-20260909",
+        "assignment_id": "cmb_review",
+        "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+        "assignment_sha256": "dfe3bc76bae2b4ef3baa30d7f0f0451fc6521f5afd007be3a02a5beb87bc3e09",
+        "agent_type": "harness_engineer",
+        "independence_mode": "shared-core",
+        "status": "fail",
+        "result_path": ".agent-harness/runs/R8-E-20260909/results/cmb_review.json",
+        "launch_id": null,
+        "launch_evidence": "unverified",
+        "execution_evidence": "self_declared",
+        "started_at": "NOT_MEASURED",
+        "completed_at": "2026-09-08T19:46:45.404101+00:00",
+        "tool_versions": {
+          "python": "/usr/bin/python",
+          "numpy": "2.4.2",
+          "scipy": "1.17.0",
+          "healpy": "1.19.0",
+          "astropy": "7.2.0",
+          "pytest": "9.1.1"
+        },
+        "files_read": [
+          ".agent-harness/runs/R8-E-20260909/assignments/cmb_review.json",
+          ".agent-harness/context/CONTEXT_INDEX.json",
+          ".agent-harness/scripts/strict_result_validation.py",
+          "docs/research_program/tensor_joint_r8/LOCAL_CODEX_PLAN.md",
+          "htt/obsstat/r7_cmb_product_response.py",
+          "htt/obsstat/r8_product_intake.py",
+          "tests/r8/test_product_intake.py",
+          "scripts/observed_runs/run_r8_owned_controls.py",
+          ".agents/skills/htt-scientific-code-validation/SKILL.md",
+          ".agents/skills/htt-manuscript-figure-audit/SKILL.md",
+          "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb.json",
+          "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb_controls.npz",
+          "docs/generated/tensor_joint_r8/owned_controls/cmb/figures.json",
+          "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb_coefficients.png",
+          "docs/generated/tensor_joint_r8/owned_controls/cmb/same_sky_differences.png"
+        ],
+        "files_read_evidence": "self_declared",
+        "external_files_read": [
+          "/home/cosmosapjw/.codex/runtime/global-execution-policy.json",
+          "/home/cosmosapjw/.codex/bounded-work-harness/RULES.md",
+          "/home/cosmosapjw/.codex/memories/MEMORY.md",
+          "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/AGENTS.md",
+          "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/GLOBAL_EXECUTION_POLICY.md",
+          "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/.codex/runtime/local-router.md",
+          "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/MIXED_WORKER_ROUTING.md",
+          "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/MIXED_DEVICE_RESIDENCY.md",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_data/COM_CMB_IQU-commander_2048_R3.00_full.fits",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_pr3_component_controls/COM_CMB_IQU-nilc_2048_R3.00_full.fits",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/planck_pr3_component_controls/COM_CMB_IQU-sevem_2048_R3.01_full.fits"
+        ],
+        "external_read_note": "Explicit external reads listed separately because strict_result_validation requires repository-relative files_read entries. Memory search had no task-relevant hits. FITS reads were headers and 13*1024 selected pixels per product, not whole-file hashes.",
+        "commands": [
+          {
+            "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt:htt/src:htt/htt python -m pytest -p no:cacheprovider tests/r8/test_product_intake.py -q",
+            "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+            "exit_code": 0,
+            "output": "4 passed in 1.37s"
+          },
+          {
+            "command": "Inline independent NSIDE128 NESTED FITS memfd fixture; manually group four children per NSIDE64 parent and ring2nest output mapping. Test uK conversion, TMASK .49/.5, UNSEEN, NaN.",
+            "exit_code": 0,
+            "output": "PASS; max absolute error 2.168404344971009e-19 K"
+          },
+          {
+            "command": "Inline actual NPZ/JSON replay: lstsq(design[common_mask],maps[common_mask]); inspect rank, coefficients, STF symmetry/traces, power, f_B, hashes and figure binding.",
+            "exit_code": 0,
+            "output": "All four fits rank36, 36433 common pixels, coefficient replay max error 0 K; all checked artifact fields/hashes agree."
+          },
+          {
+            "command": "Inline direct released FITS check: for RING64 indices [1,3213,6288,9367,12513,15973,20558,32862,36376,39845,43012,46084,49151], select ring2nest(64,index)*1024+arange(1024), require valid masks and compare mean to saved reduction at atol1e-18 K.",
+            "exit_code": 0,
+            "output": "All four products PASS; input header SHA256 and K_CMB/NESTED metadata agree."
+          },
+          {
+            "command": "view_image cmb_coefficients.png and same_sky_differences.png",
+            "output": "Coefficient figure legible, signed values and f_B agree. Residual figure has the reported color-scale defect."
+          }
+        ],
+        "artifacts": [],
+        "findings": [
+          {
+            "finding_id": "CMB-DIFF-COLOR-SCALE",
+            "claim_id": "RUN-R8-E-20260909-CMB",
+            "verdict": "fail",
+            "severity": "medium",
+            "evidence_fingerprint": "r8-owned-cmb-mollview-independent-asymmetric-coolwarm-limits",
+            "statement": "Same-sky residual panels independently autoscale asymmetric coolwarm limits; zero is red instead of neutral and equal colors represent different temperature differences. Use one shared symmetric color scale for the three panels. This affects visual interpretation only; numerical artifacts pass the scoped checks.",
+            "assumptions_used": [
+              "The side-by-side signed component difference maps are intended for direct visual comparison."
+            ],
+            "evidence_refs": [
+              "scripts/observed_runs/run_r8_owned_controls.py:207",
+              "docs/generated/tensor_joint_r8/owned_controls/cmb/same_sky_differences.png"
+            ],
+            "counterevidence_refs": [
+              "Each panel does show its own numerical endpoint labels."
+            ],
+            "reproduction": [
+              "Open the generated PNG: COMMANDER limits -54.3094..17.2865 microK; NILC -37.3192..14.4443; SEVEM -37.7353..14.0006.",
+              "Inspect render(): hp.mollview uses coolwarm without shared min/max."
+            ],
+            "unresolved": [
+              "Parent owns targeted rendering correction and regeneration."
+            ],
+            "confidence": 0.99
+          }
+        ],
+        "claim_results": [
+          {
+            "claim_id": "RUN-R8-E-20260909-CMB",
+            "outcome": "findings_present",
+            "finding_ids": [
+              "CMB-DIFF-COLOR-SCALE"
+            ],
+            "summary": "Numerical intake and actual artifact checks pass; one medium visual interpretation defect remains. All outputs retain descriptive/no-law/no-confidence ceiling."
+          }
+        ],
+        "errors": [],
+        "assumptions": [
+          "Released PR3 I_STOKES temperature maps in Galactic coordinates; a new masked pixel-fit method, with no beam deconvolution or independently admitted product law."
+        ],
+        "scope_limits": [
+          "No empirical rank, p-value, covariance, confidence interval, native physical response or family claim admitted.",
+          "No sibling results read; no production or shared files edited.",
+          "No full raw-map replay; targeted raw-source averaging checked at thirteen parents per map.",
+          "No persistent launch receipt present at review time; no retrospective launch promotion."
+        ],
+        "numerical_status": "PASS",
+        "rendering_status": "FAIL_VISUAL_SCALE",
+        "remaining_risks": [
+          "Cut-sky ell0..5 fit is method dependent and has no continuum/beam/covariance error certificate; explicitly descriptive.",
+          "Current synthetic repository tests do not persist the additional NESTED downgrade regression exercised independently here."
+        ]
+      },
+      "retained_original_render_sha256": {
+        ".agent-harness/runs/R8-E-20260909/artifacts/initial_render/same_sky_differences.png": "1ce49dacb97c124ba554535ef420688dc4f6135e8207ed630aecd520187a6693",
+        ".agent-harness/runs/R8-E-20260909/artifacts/initial_render/run_r8_owned_controls.py": "f22805732b304677b2ac63a241b196ec26001ef5f26015936422460a977dac5f",
+        ".agent-harness/runs/R8-E-20260909/artifacts/initial_render/figures.json": "03e83ff76b7ca63f91e89127bab6887e5f4614750c645c556009f246d704fd47"
+      }
+    }
+  ],
+  "final_source_sha256": {
+    "htt/obsstat/r8_product_intake.py": "3e5ebb2fa4305937b6a6b3a8f1523ad609c39ec989437da6ad5486a7404e1229",
+    "scripts/observed_runs/run_r8_owned_controls.py": "d50075db7693003aca3caed2fda6346d27cdac5d16bd372986cfa5fe632803f2"
+  },
+  "final_plot_sha256": {
+    "docs/generated/tensor_joint_r8/owned_controls/cmb/same_sky_differences.png": "db43709a509a34fd1e56ff72497d208738aed9a6092bc42d30465e31fec481e6",
+    "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb_coefficients.png": "2e60a786545aca15c5ee72b216d73f641a5672ec9521cc847f83c26669dd294b",
+    "docs/generated/tensor_joint_r8/owned_controls/cmb/figures.json": "0db0a600584cb70296d367a9039df861252680e1d7614f252985b1ab123d9a78"
+  },
+  "final_binding_note": "Current CMB intake source unchanged on final read. CMB render slice retains the reviewed common symmetric scale; only render_details metadata was added since repair-closeout. Shared runner also includes a flow-only support change outside this review conclusion. Final regenerated difference figure reopened and the same scale/title verified. No additional review round or scientific promotion."
+}

@@ -1,0 +1,21 @@
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/r8/test_field_controls.py _______________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/tests/r8/test_field_controls.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests/r8/test_field_controls.py:4: in <module>
+    from obsstat.r8_field_controls import GridField, galactic_positions, sample_field
+E   ModuleNotFoundError: No module named 'obsstat.r8_field_controls'
+_______________ ERROR collecting tests/r8/test_product_intake.py _______________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/tests/r8/test_product_intake.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests/r8/test_product_intake.py:5: in <module>
+    from obsstat.r8_product_intake import reduce_temperature_map, fit_common_temperature_records
+E   ModuleNotFoundError: No module named 'obsstat.r8_product_intake'
+=========================== short test summary info ============================
+ERROR tests/r8/test_field_controls.py
+ERROR tests/r8/test_product_intake.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+2 errors in 0.38s

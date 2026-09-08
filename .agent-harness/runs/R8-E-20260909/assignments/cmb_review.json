@@ -1,0 +1,51 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-E-20260909",
+  "assignment_id": "cmb_review",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "shared-core",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R8-E-20260909-CMB"
+  ],
+  "task": "Independent review of new CMB measured-product intake, K units, full Q/O and frame, common mask and joint ell0..5 fit; inspect actual resulting figures once ready. No physical/null-law promotion; root owns all production. Read only targeted CMB donor/code/tests/output plus required FITS headers if needed. Own result/artifacts only, no nested spawning.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r8/LOCAL_CODEX_PLAN.md",
+      "sha256": "dceaea1673574d77b029d21a1de13e8768a4d978faed0a86a406a5406dc9c6d1"
+    },
+    {
+      "path": "htt/obsstat/r7_cmb_product_response.py",
+      "sha256": "62108cdf916d2be56b7145ed6ea366b804209cdc93b870127d9d708594127332"
+    },
+    {
+      "path": "htt/obsstat/r8_product_intake.py"
+    },
+    {
+      "path": "scripts/observed_runs/run_r8_owned_controls.py"
+    },
+    {
+      "path": "tests/r8/test_product_intake.py"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "view_image"
+  ],
+  "required_outputs": [
+    "cmb-intake-review"
+  ],
+  "result_path": ".agent-harness/runs/R8-E-20260909/results/cmb_review.json",
+  "status": "registered",
+  "assignment_sha256": "dfe3bc76bae2b4ef3baa30d7f0f0451fc6521f5afd007be3a02a5beb87bc3e09"
+}

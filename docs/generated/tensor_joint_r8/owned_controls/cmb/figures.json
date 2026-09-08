@@ -1,0 +1,33 @@
+{
+  "owner": "obsstat",
+  "scope": "DESCRIPTIVE_OWNED_CONTROLS",
+  "claim_tier": "C0",
+  "figures": [
+    "cmb_coefficients.png",
+    "same_sky_differences.png"
+  ],
+  "render_details": {
+    "cmb_differences": {
+      "shared_symmetric_limit_microK": 54.309408257631475,
+      "frame": "GALACTIC",
+      "pixels": "common valid mask",
+      "color_center_microK": 0.0
+    }
+  },
+  "inputs": {
+    "cmb_controls.npz": "196ea21a8bf8a7077560599117390d8e48e77ab2fc91194639fd5ca656e9ec7b"
+  },
+  "render_source_sha256": "d50075db7693003aca3caed2fda6346d27cdac5d16bd372986cfa5fe632803f2",
+  "visual_inspection": {
+    "status": "PASS",
+    "reviewers": [
+      "parent direct image inspection",
+      "independent assigned CMB reviewer"
+    ],
+    "scope": "Legibility, units, signed common scale and paired-support interpretation; no empirical-law promotion"
+  },
+  "caveats": [
+    "no empirical p-value/confidence/posterior",
+    "missing field rows retained in input with typed status"
+  ]
+}

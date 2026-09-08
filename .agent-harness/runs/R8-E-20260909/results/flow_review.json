@@ -1,0 +1,393 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-E-20260909",
+  "assignment_id": "flow_review",
+  "assignment_sha256": "326fb35cc3252260097753cef06585a86f379ace465b72eda0ab7c39d89f6036",
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "shared-core",
+  "result_path": ".agent-harness/runs/R8-E-20260909/results/flow_review.json",
+  "status": "pass",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read_evidence": "self_declared",
+  "started_at": "NOT_RECORDED",
+  "completed_at": "2026-09-08T19:50:34.197553+00:00",
+  "tool_versions": {
+    "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+    "numpy": "2.4.2",
+    "actual_output_verifier": {
+      "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+      "numpy": "2.4.6",
+      "astropy": "8.0.1",
+      "interpreter": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python"
+    }
+  },
+  "commands": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt python3 -m pytest tests/r8/test_field_controls.py -q -p no:cacheprovider",
+      "exit_code": 2,
+      "result": "Collection failure: ModuleNotFoundError common; reviewer import environment incomplete."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt:htt/src:htt/htt python3 -m pytest tests/r8/test_field_controls.py -q -p no:cacheprovider",
+      "exit_code": 0,
+      "result": "4 passed in0.18s"
+    },
+    {
+      "command": "strict_result_validation.validate_result_payload on own initial result with historical_runs=set(),launch=None,launch_evidence=unverified",
+      "exit_code": 0,
+      "result": "No validation errors"
+    },
+    {
+      "command": "Read original CF4 table4 with Astropy ascii.cds; compare ordered PGC IDs, V3k/100, finite/masked columns, p=r*n, every available Cartesian radial projection and unavailable NaN slots against field_rows.npz.",
+      "exit_code": 0,
+      "result": "38053 IDs exact; p=r*n exact; all invalid NaN; projection max1.14e-13 km/s."
+    },
+    {
+      "command": "For all23510 available Lilow rows, execute evaluate_pr319_2mrs_neural_radial_velocity on original arrays and original GLON/GLAT, depth_mpc=radius_proxy_hmpc/0.6711, hubble_h=0.6711; compare saved radial predictions.",
+      "exit_code": 0,
+      "result": "max_abs6.0680349633912556e-12 km/s <1e-8."
+    },
+    {
+      "command": "For every available query and all8 interpolation corners reconstruct q_corner=origin+spacing*(low+offset), then calculate largest radius by product.",
+      "exit_code": 0,
+      "result": "All accepted corners <=200 Mpc/h."
+    },
+    {
+      "command": "Inspect final run_r8_owned_controls.py render loop and actual flow_controls.png after common-support-only repair.",
+      "exit_code": 0,
+      "result": "Explicit all-available scatter and paired intersection N23491; right medians use common mask."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "htt/obsstat/r8_field_controls.py",
+      "sha256": "8d1b49c0909516ee2a07fd6a03a179c751564b8c742339cc18983ecbe9aa4428",
+      "bytes": 7785,
+      "producer": "root; independently read by flow_review"
+    },
+    {
+      "path": "scripts/observed_runs/run_r8_owned_controls.py",
+      "sha256": "d50075db7693003aca3caed2fda6346d27cdac5d16bd372986cfa5fe632803f2",
+      "bytes": 17206,
+      "producer": "root; independently read by flow_review"
+    },
+    {
+      "path": "docs/generated/tensor_joint_r8/owned_controls/execution/fields.json",
+      "sha256": "d86f259ed214b85bb72d334d4345a5d24d17e6c3404985d6bef76720bd99c652",
+      "bytes": 19132,
+      "producer": "root; independently read by flow_review"
+    },
+    {
+      "path": "docs/generated/tensor_joint_r8/owned_controls/execution/field_rows.npz",
+      "sha256": "67a8793f54f0cc0a41d81fc50429fc897051e83ed42b9a1279caee7b734a3667",
+      "bytes": 4629283,
+      "producer": "root; independently read by flow_review"
+    },
+    {
+      "path": "docs/generated/tensor_joint_r8/owned_controls/execution/flow_controls.png",
+      "sha256": "330ea6f3219055365c0d52bae174ce31ed832f0a6effa7094447b4bb0990fbf6",
+      "bytes": 625399,
+      "producer": "root; independently read by flow_review"
+    }
+  ],
+  "errors": [],
+  "review_state": "SOURCE_KERNEL_ACTUAL_OUTPUT_REVIEW_AND_ONE_REPAIR_CLOSEOUT_COMPLETE",
+  "files_read": [
+    ".agent-harness/runs/R8-E-20260909/assignments/flow_review.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    "docs/research_program/tensor_joint_r8/ASSET_REUSE.md",
+    "docs/research_program/tensor_joint_r8/LOCAL_CODEX_PLAN.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    "htt/obsstat/jwst_distance_consistency.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    "htt/obsstat/r8_field_controls.py",
+    "tests/r8/test_field_controls.py",
+    ".agent-harness/scripts/_harness.py",
+    "scripts/observed_runs/run_r8_owned_controls.py",
+    "docs/generated/tensor_joint_r8/owned_controls/execution/fields.json",
+    "docs/generated/tensor_joint_r8/owned_controls/execution/field_rows.npz",
+    "docs/generated/tensor_joint_r8/owned_controls/execution/flow_controls.png"
+  ],
+  "external_files_read": [
+    "/home/cosmosapjw/.codex/memories/MEMORY.md",
+    "/home/cosmosapjw/.codex/bounded-work-harness/RULES.md",
+    "/home/cosmosapjw/.codex/runtime/global-execution-policy.json",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/AGENTS.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/GLOBAL_EXECUTION_POLICY.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/.codex/runtime/local-router.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/MIXED_WORKER_ROUTING.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/MIXED_DEVICE_RESIDENCY.md",
+    "/mnt/sn850x2t/htt_base_e2e/carrick_2mpp/twompp_README.txt",
+    "/mnt/sn850x2t/htt_base_e2e/carrick_2mpp/twompp_velocity.npy",
+    "/mnt/sn850x2t/htt_base_e2e/coras_2mrs/coras_velocity_zCMB.npy",
+    "/mnt/sn850x2t/htt_base_e2e/coras_2mrs/cartesian_grid_velocity_zCMB.dat",
+    "/mnt/sn850x2t/htt_base_e2e/coras_2mrs/coras_2mrs.zip",
+    "/mnt/sn850x2t/htt_base_e2e/lilow_nn_2mrs/lilow_nn_2mrs.zip",
+    "/mnt/sn850x2t/htt_base_e2e/lilow_nn_2mrs/xVelocity.npy",
+    "/mnt/sn850x2t/htt_base_e2e/lilow_nn_2mrs/yVelocity.npy",
+    "/mnt/sn850x2t/htt_base_e2e/lilow_nn_2mrs/zVelocity.npy",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4/CF4pp_mean_std_grids.npz",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/table4.dat",
+    "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/ReadMe",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/R8-E-20260909/CONTRACT.json"
+  ],
+  "external_read_declaration_note": "Strict validator restricts files_read to repo-relative paths; authorized external reads are declared separately. Zip inventories do not establish reads of every member.",
+  "product_rules": {
+    "carrick": {
+      "shape": [
+        3,
+        257,
+        257,
+        257
+      ],
+      "axes": "component,X,Y,Z per README explicit indexing; i-fastest does not override ndarray indices",
+      "coordinate": "q_i=(i-128)*1.5625 Mpc/h",
+      "frame_units": "Galactic Cartesian CMB peculiar velocity km/s",
+      "release": "2M++ v1.0 Carrick et al.2015",
+      "external_dipole": "[89,-131,17] already added",
+      "support": "documented cube; conservative r<=200 sphere is valid restricted subset",
+      "corroboration_only": "33-cubed central crop gradient RMS16.212; raw XYZ curl RMS0.543 versus X/Z transpose19.045. Numerical convention diagnostic only, not observed curl."
+    },
+    "coras": {
+      "shape": [
+        201,
+        201,
+        201,
+        3
+      ],
+      "axes": "X,Y,Z,component; text row=(i*201+j)*201+k",
+      "coordinate": "q_i=2*(i-100) Mpc/h",
+      "frame_units": "Galactic Cartesian CMB peculiar velocity km/s; zCMB is input redshift reconstruction choice",
+      "release": "Lilow and Nusser2021 CORAS; Gaussian smoothing5 Mpc/h",
+      "support": "producer fills r>200 with zero; reject positive-weight corners outside sphere",
+      "external_bulk": "already added",
+      "source": "https://github.com/rlilow/CORAS#reconstructed-fields-on-a-grid"
+    },
+    "lilow": {
+      "shape": [
+        128,
+        128,
+        128
+      ],
+      "axes": "X,Y,Z per component array",
+      "coordinate": "q_i=(i-63.5)*3.125 Mpc/h",
+      "frame_units": "Galactic Cartesian CMB peculiar velocity km/s",
+      "release": "Lilow et al.2024; all three velocity hashes match PR319",
+      "support": "r<200 plus finite interpolation corners; outside NaN",
+      "h": "PR319 fixed0.6711; common r_h coordinate may be supplied as depth_mpc=r_h/0.6711 explicitly as proxy",
+      "uncertainty": "pointwise RMSE not covariance",
+      "source": "https://github.com/rlilow/2MRS-NeuralNet"
+    },
+    "cf4pp": {
+      "shape": [
+        3,
+        128,
+        128,
+        128
+      ],
+      "source": "https://projets.ip2i.in2p3.fr/cosmicflows/retrieve_CF4pp_grid_values.py",
+      "release": "Courtois et al.2025 arXiv2502.01308 DOI10.1051/0004-6361/202553677 ungrouped CF4++ HMC; not Valade2024",
+      "source_lookup": "Galactic to Supergalactic; index=floor((q+500)/(1000/128)); q=cz_CMB/100; source nearest-cell lookup; do not clip outside cube",
+      "axis_status": "REFUSED_SOURCE_AXIS_AMBIGUITY",
+      "uncertainty": "HMC pointwise field std is not complete sampling covariance",
+      "units_note": "Older CF4 FITS factor52 must not be transferred to this NPZ"
+    }
+  },
+  "coras_cache_source_parity": {
+    "cache": "/mnt/sn850x2t/htt_base_e2e/coras_2mrs/coras_velocity_zCMB.npy",
+    "source": "/mnt/sn850x2t/htt_base_e2e/coras_2mrs/cartesian_grid_velocity_zCMB.dat",
+    "criterion": "np.array_equal(np.array(source_line.split(),dtype=np.float32),cache[i,j,k])",
+    "all_pass": true,
+    "rows": [
+      {
+        "index": [
+          71,
+          123,
+          83
+        ],
+        "row": 2893277,
+        "values": [
+          -207.13,
+          -441.23,
+          55.87
+        ]
+      },
+      {
+        "index": [
+          100,
+          100,
+          100
+        ],
+        "row": 4060300,
+        "values": [
+          -18.98,
+          -550.58,
+          291.41
+        ]
+      },
+      {
+        "index": [
+          112,
+          93,
+          127
+        ],
+        "row": 4543732,
+        "values": [
+          132.06,
+          -342.52,
+          224.9
+        ]
+      },
+      {
+        "index": [
+          153,
+          74,
+          97
+        ],
+        "row": 6196324,
+        "values": [
+          -30.93,
+          -632.57,
+          198.75
+        ]
+      }
+    ],
+    "procedure": "Read .dat after one header; select row=(i*201+j)*201+k for each listed index. Parse selected decimal values to float32 and compare exactly with cached float32 array."
+  },
+  "cf4_axis_diagnostic": {
+    "indices": "itertools.product([20,43,66,89,110],repeat=3)",
+    "n": "(index-63.5)/norm(index-63.5)",
+    "natural_projection_rmse_kms": 349.6963141973544,
+    "swapped_xy_projection_rmse_kms": 2.2490432565200788e-13,
+    "swapped_xy_max_abs_kms": 1.1368683772161603e-12,
+    "interpretation": "Internal relation cannot distinguish swapped spatial axes from swapped vector components; not authority to repair."
+  },
+  "findings": [
+    {
+      "finding_id": "FLOW_CF4_AXIS_AMBIGUITY",
+      "claim_id": "RUN-R8-E-20260909-FLOW",
+      "verdict": "pass",
+      "severity": "high",
+      "evidence_fingerprint": "cf4pp-vr-vxyz-125-asymmetric-indices-center63p5-xy-swap",
+      "statement": "CF4++ Cartesian axis ambiguity is correctly handled by an explicit REFUSED_SOURCE_AXIS_AMBIGUITY product outcome and missing predictions for every row.",
+      "assumptions_used": [
+        "Radial mean equals projection of Cartesian mean at same location."
+      ],
+      "evidence_refs": [
+        "https://projets.ip2i.in2p3.fr/cosmicflows/retrieve_CF4pp_grid_values.py",
+        "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4/CF4pp_mean_std_grids.npz",
+        "docs/generated/tensor_joint_r8/owned_controls/execution/fields.json",
+        "docs/generated/tensor_joint_r8/owned_controls/execution/field_rows.npz"
+      ],
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Select125 asymmetric indices; dot v_mean[:,i,j,k] with n and compare vr_mean[i,j,k]; repeat with first two components swapped. Numeric results in cf4_axis_diagnostic."
+      ],
+      "unresolved": [
+        "Which source axes/components are swapped."
+      ],
+      "confidence": 0.99,
+      "resolution": "Source ambiguity remains scientifically unresolved; supported siblings execute and no source-axis correction is invented."
+    },
+    {
+      "finding_id": "FLOW_COMPARISON_SUPPORT",
+      "claim_id": "RUN-R8-E-20260909-FLOW",
+      "verdict": "pass",
+      "severity": "medium",
+      "evidence_fingerprint": "flow-render-last-bin-support-own-vs-intersection-23491",
+      "statement": "Resolved: comparative residual curves now use the same23491-row support intersection, while the scatter explicitly retains each field own valid rows.",
+      "assumptions_used": [
+        "A paired field comparison must condition on the same identified row set; per-product quantiles may remain separate descriptives when N is explicit."
+      ],
+      "evidence_refs": [
+        "scripts/observed_runs/run_r8_owned_controls.py:184",
+        "docs/generated/tensor_joint_r8/owned_controls/execution/field_rows.npz",
+        "docs/generated/tensor_joint_r8/owned_controls/execution/flow_controls.png"
+      ],
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Compute common=logical_and.reduce(status==AVAILABLE_CONTROL for all3 fields). Within each fixed25 Mpc/h bin compute every field-minus-Vpec median on common. Final bin has2311 common rows. Inspect final source keep=common and the actual figure support label."
+      ],
+      "unresolved": [],
+      "confidence": 0.99,
+      "initial_finding": {
+        "verdict": "fail",
+        "severity": "medium",
+        "description": "Initial right-panel curves used23634/23601/23510 separate supports under same-position title; final-bin medians shift by6.29/5.85/1.75 km/s on shared support."
+      },
+      "repair_closeout": {
+        "status": "pass",
+        "action": "Root changed rendering only to common support with explicit panel labels. Source and actual rerender inspected once; field arrays not regenerated for this finding."
+      }
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R8-E-20260909-FLOW",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "FLOW_CF4_AXIS_AMBIGUITY",
+        "FLOW_COMPARISON_SUPPORT"
+      ],
+      "summary": "Source ambiguity safely refused; one paired-support visualization finding repaired and verified. All actual field IDs, signs, proxy coordinates, support and all-row Lilow donor parity validated."
+    }
+  ],
+  "kernel_review": {
+    "blocking_findings": [],
+    "candidate_sha256": "8d1b49c0909516ee2a07fd6a03a179c751564b8c742339cc18983ecbe9aa4428",
+    "tests": "4 passed in0.18s",
+    "limitation": "Checks all8 corners including weight-zero corners; conservative refusals permitted. Caller must supply outward co-radial unit direction, as generic sampler checks only unit norm."
+  },
+  "scope_verdict": "PASS for descriptive released-field controls under E1/E2/E4. No normalized likelihood, observational covariance, global-tilt discrimination, Q/F/G promotion, or Bianchi-family identification is established. CF4++ Cartesian source refusal is an accepted scoped outcome.",
+  "actual_output_checks": {
+    "total_rows": 38053,
+    "catalogue_ids_and_order_exact": true,
+    "radius_equals_V3k_over100_exact": true,
+    "position_minus_radius_times_direction_max": 0.0,
+    "direction_norm_max_error": 2.220446049250313e-16,
+    "V3k_Vpec_GLON_GLAT_Dist_masked_rows": 0,
+    "all_missing_predictions_nan": true,
+    "all_cartesian_radial_projection_max_abs_kms": 1.1368683772161603e-13,
+    "cf4pp_refused_rows": 38053,
+    "common_available_rows": 23491,
+    "lilow_all_available_rows_donor_parity": {
+      "rows": 23510,
+      "max_abs_km_s": 6.0680349633912556e-12,
+      "reference_tolerance_km_s": 1e-08
+    },
+    "max_accepted_corner_radius_hmpc": {
+      "carrick": 199.98168861485794,
+      "coras": 200.0,
+      "lilow": 199.96948009321324
+    },
+    "row_counts": {
+      "carrick": 23634,
+      "coras": 23601,
+      "lilow": 23510
+    },
+    "plot_initial_final_bin_own_vs_common_median_kms": {
+      "carrick": [
+        46.893381956637946,
+        40.60629101478477
+      ],
+      "coras": [
+        79.1030360905014,
+        73.24838832366744
+      ],
+      "lilow": [
+        81.78691747438191,
+        80.03948972835406
+      ]
+    }
+  },
+  "primary_sources": [
+    "https://github.com/rlilow/CORAS#reconstructed-fields-on-a-grid",
+    "https://raw.githubusercontent.com/rlilow/CORAS/main/exe/compute_reconstructed_fields_on_cartesian_grid.cpp",
+    "https://github.com/rlilow/2MRS-NeuralNet",
+    "https://projets.ip2i.in2p3.fr/cosmicflows/",
+    "https://projets.ip2i.in2p3.fr/cosmicflows/retrieve_CF4pp_grid_values.py"
+  ]
+}
