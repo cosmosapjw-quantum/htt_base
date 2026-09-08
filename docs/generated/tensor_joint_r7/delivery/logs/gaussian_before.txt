@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+________________ ERROR collecting tests/r7/test_gaussian_law.py ________________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/tests/r7/test_gaussian_law.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/r7/test_gaussian_law.py:3: in <module>
+    from htt.infer.r7_gaussian_law import (
+E   ModuleNotFoundError: No module named 'htt.infer.r7_gaussian_law'
+=========================== short test summary info ============================
+ERROR tests/r7/test_gaussian_law.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.50s
