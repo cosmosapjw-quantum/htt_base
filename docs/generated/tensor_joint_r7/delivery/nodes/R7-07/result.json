@@ -1,0 +1,220 @@
+{
+  "assumptions": [],
+  "attempt": 5,
+  "capabilities": [
+    "CF4_RECORDS"
+  ],
+  "evidence": [
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/science.json",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/cf4_table2.npz",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/cf4_table3.npz",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/cf4_table4.npz"
+  ],
+  "next_discriminator": "Provide the source-bound full CF4 group covariance and its declared sampling/conditioning law.",
+  "node_id": "R7-07",
+  "process_status": "COMPLETED_SUCCESS",
+  "product_results": {
+    "actual_driver_module_paths": {
+      "common.r7_asset_use": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_asset_use.py",
+      "common.r7_contracts": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_contracts.py",
+      "obsstat.r7_cmb_product_response": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/r7_cmb_product_response.py"
+    },
+    "capability_evidence": {
+      "CF4_RECORDS": {
+        "artifacts": [
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/science.json",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/cf4_table2.npz",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/cf4_table3.npz",
+          "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/cf4_table4.npz"
+        ],
+        "scope": "R7 method/diagnostic scope; no inherited empirical eligibility"
+      }
+    },
+    "law_status": "INPUT_UNAVAILABLE: no full covariance in original selected group order; conditional affine adapter remains usable when supplied",
+    "next_discriminator": "Provide the source-bound full CF4 group covariance and its declared sampling/conditioning law.",
+    "tables": {
+      "2": {
+        "artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/cf4_table2.npz",
+        "columns": [
+          "PGC",
+          "Vcmb",
+          "DM",
+          "e_DM",
+          "GLON",
+          "GLAT"
+        ],
+        "order": "original CDS table order retained",
+        "rows": 55877,
+        "sha256": "4adb364040e2b84495c103071edbc02ca91edefc2d22b4f9814bcf47bd78acf4",
+        "source": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/table2.dat",
+        "summary": {
+          "DM": {
+            "maximum": 39.526,
+            "median": 36.546,
+            "minimum": 18.469
+          },
+          "GLAT": {
+            "maximum": 89.7742,
+            "median": 47.5331,
+            "minimum": -89.4851
+          },
+          "GLON": {
+            "maximum": 359.9979,
+            "median": 180.0866,
+            "minimum": 0.0258
+          },
+          "Vcmb": {
+            "maximum": 32575.0,
+            "median": 15104.0,
+            "minimum": -784.0
+          },
+          "e_DM": {
+            "maximum": 2.11,
+            "median": 0.5,
+            "minimum": 0.01
+          }
+        },
+        "units": {
+          "DM": "mag",
+          "GLAT": "deg",
+          "GLON": "deg",
+          "PGC": "None",
+          "Vcmb": "km / s",
+          "e_DM": "mag"
+        }
+      },
+      "3": {
+        "artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/cf4_table3.npz",
+        "columns": [
+          "1PGC",
+          "DMzp",
+          "DMav",
+          "e_DMav",
+          "Vcmb",
+          "GLON",
+          "GLAT"
+        ],
+        "order": "original CDS table order retained",
+        "rows": 38053,
+        "sha256": "26c994174821aed6ba07d484b5a49b4dabca442fa13464a0cc4b4a547ee801e4",
+        "source": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/table3.dat",
+        "summary": {
+          "DMav": {
+            "maximum": 39.587,
+            "median": 36.757,
+            "minimum": 0.0
+          },
+          "DMzp": {
+            "maximum": 39.44,
+            "median": 36.61,
+            "minimum": 20.369
+          },
+          "GLAT": {
+            "maximum": 89.6542,
+            "median": 46.2585,
+            "minimum": -89.4851
+          },
+          "GLON": {
+            "maximum": 359.9968,
+            "median": 183.1613,
+            "minimum": 0.0333
+          },
+          "Vcmb": {
+            "maximum": 32575.0,
+            "median": 15372.0,
+            "minimum": -617.0
+          },
+          "e_DMav": {
+            "maximum": 2.11,
+            "median": 0.5,
+            "minimum": 0.0
+          }
+        },
+        "units": {
+          "1PGC": "None",
+          "DMav": "mag",
+          "DMzp": "mag",
+          "GLAT": "deg",
+          "GLON": "deg",
+          "Vcmb": "km / s",
+          "e_DMav": "mag"
+        }
+      },
+      "4": {
+        "artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/cf4_table4.npz",
+        "columns": [
+          "1PGC",
+          "Dist",
+          "V3k",
+          "Vpec",
+          "GLON",
+          "GLAT"
+        ],
+        "order": "original CDS table order retained",
+        "rows": 38053,
+        "sha256": "49ee22ff74742e4b2c0940caa30e5b77f935d0cb3cf030680c2bf61225bef1d8",
+        "source": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/table4.dat",
+        "summary": {
+          "Dist": {
+            "maximum": 772.7,
+            "median": 209.9,
+            "minimum": 0.1
+          },
+          "GLAT": {
+            "maximum": 89.6542,
+            "median": 46.2585,
+            "minimum": -89.4851
+          },
+          "GLON": {
+            "maximum": 359.9968,
+            "median": 183.1613,
+            "minimum": 0.0333
+          },
+          "V3k": {
+            "maximum": 32575.0,
+            "median": 15372.0,
+            "minimum": -617.0
+          },
+          "Vpec": {
+            "maximum": 8439.0,
+            "median": -15.0,
+            "minimum": -7938.0
+          }
+        },
+        "units": {
+          "1PGC": "None",
+          "Dist": "Mpc",
+          "GLAT": "deg",
+          "GLON": "deg",
+          "V3k": "km / s",
+          "Vpec": "km / s"
+        }
+      }
+    },
+    "validation": {
+      "command": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-o",
+        "addopts=",
+        "--import-mode=importlib",
+        "-q",
+        "tests/r7/test_catalogue_laws.py"
+      ],
+      "exit_code": 0,
+      "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-07/attempt-0005/validation.log",
+      "log_sha256": "1c51e29b582b6e63ffa11c7663ff7afb173666f5fd96c35cfcede470b42c401a",
+      "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "test_sources": {
+        "tests/r7/test_catalogue_laws.py": "c2aa81ac051cd864cd13da170c74d937c1f7a21e3475c29db32ae703c745d791"
+      }
+    }
+  },
+  "reasons": [],
+  "scientific_outcome": "INPUT_UNAVAILABLE",
+  "scope": {},
+  "uncertainty_type": "NONE",
+  "valid_estimands": []
+}
