@@ -1,0 +1,94 @@
+{
+  "argv": [
+    "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/verify.py"
+  ],
+  "assignment_id": "sympy",
+  "assumptions": [
+    "T1 witness is fixed; Q eigenvalues are distinct, hence rotations stabilizing Q are signed coordinate axes",
+    "T5 Neumann first-order coefficient under invertibility at t=0",
+    "T5 norm implication assumes operator norm bound c*f/(1-36*f) and norm(d)<=norm(K)*norm(h)",
+    "L10 supplied rational minors and their source-column identities are the accepted input; validate exact rational positivity and minimal-cutoff rank implication"
+  ],
+  "cas_axis": "sympy",
+  "cas_contract_sha256": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2",
+  "checks": {
+    "L10_accepted_minors_and_minimal_cutoff": true,
+    "T1_no_proper_signed_stabilizer": true,
+    "T1_trace_and_contraction": true,
+    "T3_normalized_derivative_and_odd_signs": true,
+    "T5_first_order_inverse_coefficient": true,
+    "T5_scalar_cost_implication": true,
+    "T6_scalar_information_one_fifth": true
+  },
+  "claim_ceiling": "exact stated algebraic implications and fixed witness; no empirical admission",
+  "completed_at": "2026-09-08T12:16:37.701000+00:00",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence": [
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/verify.py",
+      "sha256": "77c5180610414f4c22b970713af9a73485d091383475627fc2c4c32ebe34ad56"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/details.json",
+      "sha256": "ff470009e343a983b5fee5ecd63dc9ebf628e5750aa44d221c3e4d0ba69d9aed"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/engine_transcript.json",
+      "sha256": "2d9d453c9d4fa56df176522a05209e580b9fdd069beeed43251ce210c8f8548d"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/initial_matrixexpr_probe.py",
+      "sha256": "fc67059ecba4a644c5338c5d815efb59879410ddf6305b73f932e739123adaa3"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/initial_matrixexpr_probe.log",
+      "sha256": "663b9ac611d89bd64f591203de1f332f68a80a9a2c704c8277638982865687b5"
+    }
+  ],
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/assignments/sympy.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/details.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/engine_transcript.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/initial_matrixexpr_probe.log",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/initial_matrixexpr_probe.py",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/verify.py",
+    "docs/generated/tensor_joint_r7/axial_certificate_source.json",
+    "docs/research_program/tensor_joint_r7/THEORY.md"
+  ],
+  "findings": [
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V01",
+      "evidence_fingerprint": "32414eea3fa44fd631602fcc3f4bd3f2e14b1a633db291337feb0209b2f4326d",
+      "evidence_references": [
+        ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/verify.py",
+        ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/details.json",
+        ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/engine_transcript.json"
+      ],
+      "statement": "All seven frozen algebraic obligations pass under the shared domains; L10 is the implication of accepted exact rational minors and source columns, not recomputation of their operator.",
+      "verdict": "pass"
+    }
+  ],
+  "independence_disclosure": "No sibling scripts, results, or derivations were read. This model-authored axis may share an LLM family with other axes; engine evidence remains distinct.",
+  "independence_mode": "blind-results",
+  "limitations": [
+    "No physical hierarchy/closure proof, empirical admission, pixel error certificate, or historical axial-operator recomputation.",
+    "SymPy 1.14.0 generic MatrixExpr inverse differentiation raises TypeError; initial failure and transcript preserved. Exact noncommutative formal-series coefficients verify the stated first-order obligation for arbitrary compatible finite matrices."
+  ],
+  "operational_notes": [
+    "Injected bootstrap active-run summary names EXTERNAL-FUSION-FOLLOWUP-20260829 and canonical cwd; explicit spawn header, R7 assignment, and R7 context index were used and agree. This mismatch does not change the mathematical contract."
+  ],
+  "result_path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/results/sympy.json",
+  "run_id": "TENSOR-JOINT-R7-20260908",
+  "schema_version": 2,
+  "status": "pass",
+  "toolchain": {
+    "python": "3.12.3",
+    "python_executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "sympy": "1.14.0"
+  }
+}

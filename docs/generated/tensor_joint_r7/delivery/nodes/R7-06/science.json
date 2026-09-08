@@ -1,0 +1,619 @@
+{
+  "actual_driver_module_paths": {
+    "common.r7_asset_use": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_asset_use.py",
+    "common.r7_contracts": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_contracts.py",
+    "obsstat.r7_cmb_product_response": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/r7_cmb_product_response.py"
+  },
+  "carriers": {
+    "arms": {
+      "cmbonly999": {
+        "artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-06/attempt-0005/cmbonly999_tensors.npz",
+        "frame": "GALACTIC",
+        "law_status": "DIAGNOSTIC_ONLY; matched true signal/noise/product likelihood and pool exchangeability unprovided",
+        "layout": "ORTHONORMAL_REAL_M0_COS_SIN",
+        "mask_id": "sha256:34390a5c2d9c1462af87d51a9a3e88971781b23054d923563723531b7f30ea94",
+        "measurement_covariance": null,
+        "observed_f_B": 0.8437247719386147,
+        "observed_powers_K2": [
+          2.1046184716646643e-10,
+          4.820208114180579e-10,
+          2.2531626901545963e-10,
+          3.054850488898175e-10
+        ],
+        "processing_id": "joint_weighted_l0_l5_fit_then_retain_l2_l5_and_declared_commonization",
+        "rows": 1000,
+        "sha256": "0770a1563f4ab19304cc54f9a77fa1624c56e2d851aa77be36b17c78bb11efd8",
+        "source_commit": "ccba350d7b725b227c64436e32af96abfe786449",
+        "units": "K"
+      },
+      "paired300": {
+        "artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-06/attempt-0005/paired300_tensors.npz",
+        "frame": "GALACTIC",
+        "law_status": "DIAGNOSTIC_ONLY; matched true signal/noise/product likelihood and pool exchangeability unprovided",
+        "layout": "ORTHONORMAL_REAL_M0_COS_SIN",
+        "mask_id": "sha256:34390a5c2d9c1462af87d51a9a3e88971781b23054d923563723531b7f30ea94",
+        "measurement_covariance": null,
+        "observed_f_B": 0.8437247719386147,
+        "observed_powers_K2": [
+          2.1046184716646643e-10,
+          4.820208114180579e-10,
+          2.2531626901545963e-10,
+          3.054850488898175e-10
+        ],
+        "processing_id": "joint_weighted_l0_l5_fit_then_retain_l2_l5_and_declared_commonization",
+        "rows": 301,
+        "sha256": "8795375d990dfa9aaa330a939a2aa959079f099e1e32858eceed987b5dca23f0",
+        "source_commit": "ccba350d7b725b227c64436e32af96abfe786449",
+        "units": "K"
+      }
+    },
+    "released_processing_metadata": {
+      "allowed_use": [
+        "map-free harmonic replay",
+        "scalar feature closure",
+        "observer-space irrep projection in PMG-WU-006"
+      ],
+      "artifact_mode": "ENABLING_REPLAYABLE_HARMONIC_CARRIER",
+      "carrier_content_id": "sha256:9fa50a818f18346766a07481242acde3afa6069e40b8a279fbc2b1e0f5d013d3",
+      "caveats": [
+        "observer-space carrier only",
+        "no physical shear, vorticity, local/global, or family identification",
+        "finite-pool and Planck/FFP10 null fidelity remain conditional",
+        "execution source was an uncommitted implementation candidate; post-execution repairs affect validation and transition boundaries only"
+      ],
+      "claim_tier": "OBSERVER_SPACE_CARRIER_ONLY",
+      "coordinate_frame": "GALACTIC",
+      "dtype": "float64",
+      "execution_git_state": {
+        "exact_execution_source_bytes_captured": false,
+        "git_head": "2c00059b2a3802f163e9ad9818f31bb32cf119f4",
+        "provenance_level": "R2_SCIENTIFIC_NUMERICAL_REPLAY",
+        "worktree_state": "DIRTY_IMPLEMENTATION_CANDIDATE"
+      },
+      "forbidden_use": [
+        "physical shear or vorticity measurement",
+        "local boost versus global tilt identification",
+        "Bianchi family identification",
+        "likelihood or posterior"
+      ],
+      "format": "PLANCK_PR3_PAIRED300_IRREP_CARRIER_V1",
+      "generating_procedure": {
+        "carrier_capture": "alm returned by the same frozen _process_map call as each scalar row",
+        "command": "python scripts/observed_runs/export_planck_paired300_irrep_carrier.py --execute-real-host --workdir /mnt/sn850x2t/htt_base_e2e/workdir",
+        "second_estimator_run": false
+      },
+      "harmonic_convention": "ORTHONORMAL_CONDON_SHORTLEY_REAL_MAP",
+      "identity_validity": {
+        "packaging_validity": "BYTE_IDENTITY_NOT_A_SCIENCE_GATE",
+        "provenance_validity": "MATCH_AFTER_REBIND",
+        "result_validity": "PASS_UNCHANGED"
+      },
+      "lmax": 5,
+      "lmin": 2,
+      "map_unit": "microK_CMB",
+      "null_mock_status": "EXACT_ORDERED_FFP10_CMB_PLUS_NOISE_300_CONDITIONAL",
+      "null_ordered_row_ids_sha256": "sha256:f40e60de955bb241543e81215636485af9bb3429ec1de983093c476e6592671f",
+      "null_shape": [
+        300,
+        32
+      ],
+      "observation_row_id": "PLANCK-PR3-SMICA-OBSERVED",
+      "observed_shape": [
+        32
+      ],
+      "operator_identity": {
+        "basis_dimension": 36,
+        "basis_order": [
+          [
+            0,
+            0,
+            "real"
+          ],
+          [
+            1,
+            0,
+            "real"
+          ],
+          [
+            1,
+            1,
+            "real"
+          ],
+          [
+            1,
+            1,
+            "imag"
+          ],
+          [
+            2,
+            0,
+            "real"
+          ],
+          [
+            2,
+            1,
+            "real"
+          ],
+          [
+            2,
+            1,
+            "imag"
+          ],
+          [
+            2,
+            2,
+            "real"
+          ],
+          [
+            2,
+            2,
+            "imag"
+          ],
+          [
+            3,
+            0,
+            "real"
+          ],
+          [
+            3,
+            1,
+            "real"
+          ],
+          [
+            3,
+            1,
+            "imag"
+          ],
+          [
+            3,
+            2,
+            "real"
+          ],
+          [
+            3,
+            2,
+            "imag"
+          ],
+          [
+            3,
+            3,
+            "real"
+          ],
+          [
+            3,
+            3,
+            "imag"
+          ],
+          [
+            4,
+            0,
+            "real"
+          ],
+          [
+            4,
+            1,
+            "real"
+          ],
+          [
+            4,
+            1,
+            "imag"
+          ],
+          [
+            4,
+            2,
+            "real"
+          ],
+          [
+            4,
+            2,
+            "imag"
+          ],
+          [
+            4,
+            3,
+            "real"
+          ],
+          [
+            4,
+            3,
+            "imag"
+          ],
+          [
+            4,
+            4,
+            "real"
+          ],
+          [
+            4,
+            4,
+            "imag"
+          ],
+          [
+            5,
+            0,
+            "real"
+          ],
+          [
+            5,
+            1,
+            "real"
+          ],
+          [
+            5,
+            1,
+            "imag"
+          ],
+          [
+            5,
+            2,
+            "real"
+          ],
+          [
+            5,
+            2,
+            "imag"
+          ],
+          [
+            5,
+            3,
+            "real"
+          ],
+          [
+            5,
+            3,
+            "imag"
+          ],
+          [
+            5,
+            4,
+            "real"
+          ],
+          [
+            5,
+            4,
+            "imag"
+          ],
+          [
+            5,
+            5,
+            "real"
+          ],
+          [
+            5,
+            5,
+            "imag"
+          ]
+        ],
+        "condition_ceiling": 100000000.0,
+        "condition_number": 6.207503806461874,
+        "estimator_id": "joint_weighted_real_harmonic_l0_l5_retain_l2_l5:v1",
+        "mask_sha256": "sha256:34390a5c2d9c1462af87d51a9a3e88971781b23054d923563723531b7f30ea94",
+        "normal_matrix_sha256": "sha256:dcb2da89c1a7b4c55d98c86797bee815c65258101f52dca24b69a8fe6435f349",
+        "operator_sha256": "sha256:a4713d44b6057dcd241a79391abb7f4960f7aa39b20eac51cd979627352b8061",
+        "relative_threshold": 1e-10,
+        "retained_dimension": 32,
+        "singular_floor": 0.15998865113244762,
+        "transfer_order": "JOINT_MASKED_FIT_THEN_BEAM_PIXEL_COMMONIZATION"
+      },
+      "operator_identity_sha256": "sha256:2710e18a6c4908fd7625e49be2449cd2b398984466b00335c0b346aecf89b4fa",
+      "owner": "obsstat",
+      "package_byte_size": 158238,
+      "package_filename": "carrier.npz",
+      "package_sha256": "sha256:0a296c21902b691eb2e2b68a9b39f626020aa8c2b14fb93a1b12116215886b93",
+      "raw_maps_reopened_by_replay": false,
+      "real_alm_layout": [
+        [
+          2,
+          0,
+          "real"
+        ],
+        [
+          2,
+          1,
+          "real"
+        ],
+        [
+          2,
+          1,
+          "imag"
+        ],
+        [
+          2,
+          2,
+          "real"
+        ],
+        [
+          2,
+          2,
+          "imag"
+        ],
+        [
+          3,
+          0,
+          "real"
+        ],
+        [
+          3,
+          1,
+          "real"
+        ],
+        [
+          3,
+          1,
+          "imag"
+        ],
+        [
+          3,
+          2,
+          "real"
+        ],
+        [
+          3,
+          2,
+          "imag"
+        ],
+        [
+          3,
+          3,
+          "real"
+        ],
+        [
+          3,
+          3,
+          "imag"
+        ],
+        [
+          4,
+          0,
+          "real"
+        ],
+        [
+          4,
+          1,
+          "real"
+        ],
+        [
+          4,
+          1,
+          "imag"
+        ],
+        [
+          4,
+          2,
+          "real"
+        ],
+        [
+          4,
+          2,
+          "imag"
+        ],
+        [
+          4,
+          3,
+          "real"
+        ],
+        [
+          4,
+          3,
+          "imag"
+        ],
+        [
+          4,
+          4,
+          "real"
+        ],
+        [
+          4,
+          4,
+          "imag"
+        ],
+        [
+          5,
+          0,
+          "real"
+        ],
+        [
+          5,
+          1,
+          "real"
+        ],
+        [
+          5,
+          1,
+          "imag"
+        ],
+        [
+          5,
+          2,
+          "real"
+        ],
+        [
+          5,
+          2,
+          "imag"
+        ],
+        [
+          5,
+          3,
+          "real"
+        ],
+        [
+          5,
+          3,
+          "imag"
+        ],
+        [
+          5,
+          4,
+          "real"
+        ],
+        [
+          5,
+          4,
+          "imag"
+        ],
+        [
+          5,
+          5,
+          "real"
+        ],
+        [
+          5,
+          5,
+          "imag"
+        ]
+      ],
+      "real_alm_layout_sha256": "sha256:bddf7d6e0cae21e9c8885fe21d623c7c5a38279e6ea25889955e91ae25fdb117",
+      "row_count": 301,
+      "scalar_feature_content_id": "sha256:3dc66a2c096efae26ce3d9bb79dbfe61a74c4ead245cbe0e5156b5d06498e74f",
+      "scalar_feature_package_sha256": "sha256:b262425eb4f3a879513c02644bcbdd3ab313e487d101f6a29cb85284c30f845b",
+      "scalar_feature_required_identity": "NUMERICAL_CONTENT_IDENTITY",
+      "scope": "Planck PR3 SMICA observer-space l=2..5 harmonic carrier with exact ordered paired-300 FFP10 conditional null rows",
+      "sky_support_status": "GALACTIC_COMMON_TEMPERATURE_MASK",
+      "source_manifest_sha256": "sha256:e5e75a70b2743f5304faab72255701fe5096c836d80b8340eb7919083b0d0811",
+      "transfer_identity": {
+        "source_beam_sha256": "sha256:6c6fa31e7693783f5840323b2bb00551c3d4bce279fd4c2a0ee2b6b3ee529f80",
+        "source_pixel_window_sha256": "sha256:9b996e4429575ebf35447cfd15fb579359a82d1682c98ad37df70dc5fef709cd",
+        "target_beam_sha256": "sha256:6c6fa31e7693783f5840323b2bb00551c3d4bce279fd4c2a0ee2b6b3ee529f80",
+        "target_pixel_window_sha256": "sha256:9b996e4429575ebf35447cfd15fb579359a82d1682c98ad37df70dc5fef709cd"
+      },
+      "transfer_identity_sha256": "sha256:d9d51903b832238bcde8996867f722dcd33c4d2913519c1245e82e56a7c72a64",
+      "transfer_source": "PLANCK_PR3_SMICA_FFP10_FROZEN_JOINT_CUTSKY"
+    },
+    "source_bindings": {
+      "docs/generated/planck_mes_smica_cmbonly_999_irrep/observable_irreps.npz": {
+        "bytes": 1235326,
+        "git_blob": "0f56899b5908ced91a870272a6815a89119e6cd7",
+        "sha256": "99530ed25fe0bb09471c15152c6515a437bf6c684ea70cc17dfc96f115552b97",
+        "source_commit": "ccba350d7b725b227c64436e32af96abfe786449"
+      },
+      "docs/generated/planck_pr3_paired300_irrep_carrier/carrier.npz": {
+        "bytes": 158238,
+        "git_blob": "5713b4a11d0790edd466fbb01eaf69a3ab420c22",
+        "sha256": "0a296c21902b691eb2e2b68a9b39f626020aa8c2b14fb93a1b12116215886b93",
+        "source_commit": "ccba350d7b725b227c64436e32af96abfe786449"
+      },
+      "docs/generated/planck_pr3_paired300_irrep_carrier/metadata.json": {
+        "bytes": 5016,
+        "git_blob": "d4fb4b65fb26fb6c6355886562ed735f94be93f4",
+        "sha256": "08be4f0ab0025969cb13b0cf4fed135ebfbc5fb2f0597ce0bfd0f1caf3f0721e",
+        "source_commit": "ccba350d7b725b227c64436e32af96abfe786449"
+      }
+    }
+  },
+  "wmap9": {
+    "O": [
+      [
+        [
+          2.7769669807082186e-06,
+          2.7070172257514263e-05,
+          1.744327946000225e-05
+        ],
+        [
+          2.7070172257514263e-05,
+          -1.2490766292971772e-05,
+          -3.6425128584034086e-07
+        ],
+        [
+          1.744327946000225e-05,
+          -3.6425128584034086e-07,
+          9.713799312263554e-06
+        ]
+      ],
+      [
+        [
+          2.7070172257514263e-05,
+          -1.2490766292971772e-05,
+          -3.6425128584034086e-07
+        ],
+        [
+          -1.2490766292971772e-05,
+          -2.843237933657933e-05,
+          -1.2336940353634575e-05
+        ],
+        [
+          -3.6425128584034086e-07,
+          -1.2336940353634575e-05,
+          1.3622070790650684e-06
+        ]
+      ],
+      [
+        [
+          1.744327946000225e-05,
+          -3.6425128584034086e-07,
+          9.713799312263554e-06
+        ],
+        [
+          -3.6425128584034086e-07,
+          -1.2336940353634575e-05,
+          1.3622070790650684e-06
+        ],
+        [
+          9.713799312263554e-06,
+          1.3622070790650684e-06,
+          -5.106339106367676e-06
+        ]
+      ]
+    ],
+    "Q": [
+      [
+        -1.4657839467234625e-05,
+        1.3917856491667192e-05,
+        1.334017683038641e-06
+      ],
+      [
+        1.3917856491667192e-05,
+        6.732857754576647e-06,
+        4.796126138301407e-06
+      ],
+      [
+        1.334017683038641e-06,
+        4.796126138301407e-06,
+        7.924981712657978e-06
+      ]
+    ],
+    "artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-06/attempt-0005/wmap9_tensor.npz",
+    "interpretation": "Descriptive WMAP9 native ILC control; release-matched covariance/null unavailable. No WMAP7 calibration transfer.",
+    "outcome": "SCENARIO_ONLY",
+    "rank": 36,
+    "retained": [
+      1.2563718541922319e-05,
+      -2.4420293795410127e-06,
+      -8.779704412192085e-06,
+      -1.957871763196724e-05,
+      2.547778405415815e-05,
+      -6.841724220458952e-06,
+      -1.5940086294927397e-05,
+      -2.2353455835189935e-06,
+      3.090718389992202e-05,
+      -7.560710799115909e-07,
+      -1.705351373473419e-05,
+      -4.645542209972714e-05,
+      1.7129094202051573e-05,
+      -1.309887968280771e-05,
+      -1.2160176411970473e-05,
+      1.441526294055416e-05,
+      -8.409738952663657e-06,
+      1.0195411485699492e-05,
+      2.7985225542237895e-05,
+      -5.139461693111918e-06,
+      1.4135365701018673e-05,
+      1.636721794845669e-05,
+      3.672320790566891e-05,
+      -1.8727490740799407e-06,
+      -1.1100012227697588e-05,
+      -3.906347387000825e-06,
+      2.561410369328578e-05,
+      -3.590317603120738e-06,
+      -7.21497027308846e-06,
+      -9.21984134966839e-06,
+      1.3416346425041724e-05,
+      -3.107138022699727e-05
+    ],
+    "sha256": "0d7c112d72bb271e532c671d94b57c9ff0dd68c4379d9201fccfc56fac3de05d",
+    "source": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/wmap_9yr/core/wmap_ilc_9yr_v5.fits",
+    "units": "K",
+    "valid_pixels": 49152
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "actual_driver_module_paths": {
+    "common.r7_asset_use": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_asset_use.py",
+    "common.r7_contracts": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/src/common/r7_contracts.py",
+    "htt.infer.r7_desi_law": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_desi_law.py",
+    "htt.infer.r7_gaussian_law": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_gaussian_law.py",
+    "htt.infer.r7_joint_experiment": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/htt/htt/infer/r7_joint_experiment.py",
+    "obsstat.r7_cmb_product_response": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/r7_cmb_product_response.py",
+    "obsstat.r7_tensor_orbit": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/htt/obsstat/r7_tensor_orbit.py"
+  },
+  "pools": {
+    "cmbonly999": {
+      "artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0005/cmbonly999_scores.json",
+      "k": 32,
+      "method_id": "R7_T1_KNN_IDENTITY_THEN_CUBE1_LIMIT1024",
+      "outcome": "NUMERICALLY_UNRESOLVED",
+      "packet_recovery_artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0005/cmbonly999_packet_recovery.json",
+      "reason": "Complete symmetric interval pool; exact ranks withheld when enclosures overlap",
+      "resolved_rows": 0,
+      "rows": 1000
+    },
+    "paired300": {
+      "artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0005/paired300_scores.json",
+      "k": 18,
+      "method_id": "R7_T1_KNN_IDENTITY_THEN_CUBE1_LIMIT1024",
+      "outcome": "NUMERICALLY_UNRESOLVED",
+      "packet_recovery_artifact": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0005/paired300_packet_recovery.json",
+      "reason": "Complete symmetric interval pool; exact ranks withheld when enclosures overlap",
+      "resolved_rows": 0,
+      "rows": 301
+    }
+  },
+  "scope": "q0=o0=1e-5 K; k=ceil(sqrt(N)); fixed symmetric resource policy; no product calibration",
+  "validation": {
+    "command": [
+      "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-o",
+      "addopts=",
+      "--import-mode=importlib",
+      "-q",
+      "tests/r7/test_tensor_orbit.py"
+    ],
+    "exit_code": 0,
+    "log": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/campaign/nodes/R7-11/attempt-0005/validation.log",
+    "log_sha256": "37411979c9f0a73b078e0e77d287c45bc320809beb9247ab6df25e0242dfa757",
+    "source_python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "test_sources": {
+      "tests/r7/test_tensor_orbit.py": "3623649001f1f2aa71f745dd7fab50da30b0c9319b7f2e75c3a97e8a60b026a3"
+    }
+  }
+}

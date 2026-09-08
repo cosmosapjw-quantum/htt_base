@@ -1,0 +1,191 @@
+{
+  "tool_versions": {
+    "sage": "10.9",
+    "singular_executable": "/usr/bin/Singular",
+    "singular": "4.3.2",
+    "python": "3.12.3"
+  },
+  "T1_trace_and_contraction": {
+    "O_trace": [
+      "0",
+      "0",
+      "0"
+    ],
+    "O_contract_Q": [
+      "0",
+      "-1",
+      "1"
+    ],
+    "chi": "0"
+  },
+  "T1_no_proper_signed_stabilizer": {
+    "proper_Q_stabilizers": [
+      {
+        "signs": [
+          -1,
+          -1,
+          1
+        ],
+        "maps_negative": false
+      },
+      {
+        "signs": [
+          -1,
+          1,
+          -1
+        ],
+        "maps_negative": false
+      },
+      {
+        "signs": [
+          1,
+          -1,
+          -1
+        ],
+        "maps_negative": false
+      },
+      {
+        "signs": [
+          1,
+          1,
+          1
+        ],
+        "maps_negative": false
+      }
+    ],
+    "all_signed_negative_maps": [
+      {
+        "signs": [
+          -1,
+          -1,
+          -1
+        ],
+        "determinant": "-1"
+      }
+    ],
+    "extension_to_SO3": "Distinct ordered eigenvalues force every Q-stabilizing rotation to preserve each one-dimensional eigenspace."
+  },
+  "T3_normalized_derivative_and_odd_signs": {
+    "normalized_derivative_residual": "0",
+    "odd_derivative_residuals": [
+      "0",
+      "0"
+    ],
+    "sigma_residual": "0",
+    "omega_residual": "0",
+    "scope": "Coefficient normalization and parity substitution only; geodesic hierarchy is a premise, not rederived."
+  },
+  "T5_first_order_inverse_coefficient": {
+    "left_inverse_coefficients": {
+      "0": "1",
+      "1": "0"
+    },
+    "right_inverse_coefficients": {
+      "0": "1",
+      "1": "0"
+    },
+    "K_coefficients": {
+      "0": "0",
+      "1": "-CC*AA"
+    },
+    "generality": "Free associative algebra preserves matrix ordering for every compatible finite size; inverse identity is modulo t^2."
+  },
+  "T5_scalar_cost_implication": {
+    "domain_map": "p=f/(1-36f)>0, inverse f=p/(1+36p); c,d>0; s=h-d/(c*p)>=0 follows from the norm premises.",
+    "nonnegative_cost_gap": "(c*p*s + 2*dd)*s/(c*p)",
+    "proof_order": "d<=k*h<=c*p*h; divide by positive c*p; write nonnegative slack s; factor h^2-(d/(c*p))^2. This is scalar order algebra; it does not establish the assumed operator bound."
+  },
+  "T6_scalar_information_one_fifth": {
+    "before": "0",
+    "after": "1/5",
+    "gain": "1/5",
+    "scope": "Fixed scalar information example; no empirical shared-calibration premise established."
+  },
+  "L10_accepted_minors_and_minimal_cutoff": {
+    "accepted_minor_implications": [
+      {
+        "m": 0,
+        "row_dimension": 4,
+        "source_ells": [
+          7,
+          8,
+          9,
+          10
+        ],
+        "exact_minor_square_positive": true
+      },
+      {
+        "m": 1,
+        "row_dimension": 4,
+        "source_ells": [
+          7,
+          8,
+          9,
+          10
+        ],
+        "exact_minor_square_positive": true
+      },
+      {
+        "m": 2,
+        "row_dimension": 4,
+        "source_ells": [
+          7,
+          8,
+          9,
+          10
+        ],
+        "exact_minor_square_positive": true
+      },
+      {
+        "m": 3,
+        "row_dimension": 3,
+        "source_ells": [
+          7,
+          8,
+          9
+        ],
+        "exact_minor_square_positive": true
+      },
+      {
+        "m": 4,
+        "row_dimension": 2,
+        "source_ells": [
+          7,
+          8
+        ],
+        "exact_minor_square_positive": true
+      },
+      {
+        "m": 5,
+        "row_dimension": 1,
+        "source_ells": [
+          7
+        ],
+        "exact_minor_square_positive": true
+      }
+    ],
+    "normal_determinants_exact_positive": true,
+    "L10_real_rank": 32,
+    "lower_cutoff_rank_upper_bounds": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 11,
+      "8": 20,
+      "9": 27
+    },
+    "m0_obstruction": "At L<=9, at most source ell 7,8,9 gives only three m=0 columns for four retained rows.",
+    "scope": "Implication from accepted rational minors and source-column identities. Historical operator/integrals were not recomputed."
+  },
+  "singular_exact_checks": {
+    "product_rule_ideal_reduction": 0,
+    "cost_polynomial_identity": 0,
+    "sigma_parity": 0,
+    "omega_parity": 0,
+    "version_numeric": 4330
+  }
+}

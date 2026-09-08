@@ -1,0 +1,45 @@
+------------------------------------------------------------
+Package xAct`xPerm`  version 1.2.4, {2025, 12, 29}
+CopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.
+Connecting to external linux executable...
+Connection established.
+------------------------------------------------------------
+Package xAct`xTensor` version 1.3.0, {2025, 12, 29}
+CopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.
+------------------------------------------------------------
+These packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.
+------------------------------------------------------------
+T1_trace_and_contraction = True
+T1_no_proper_signed_stabilizer = True
+** DefManifold: Defining manifold Space3. 
+** DefVBundle: Defining vbundle TangentSpace3. 
+** DefTensor: Defining symmetric metric tensor hh[-aa, -bb]. 
+** DefTensor: Defining antisymmetric tensor epsilonhh[-aa, -bb, -cc]. 
+** DefCovD: Defining covariant derivative CD[-aa]. 
+** DefTensor: Defining vanishing torsion tensor TorsionCD[aa, -bb, -cc]. 
+** DefTensor: Defining symmetric Christoffel tensor ChristoffelCD[aa, -bb, -cc]. 
+** DefTensor: Defining Riemann tensor RiemannCD[-aa, -bb, -cc, -dd]. 
+** DefTensor: Defining symmetric Ricci tensor RicciCD[-aa, -bb]. 
+** DefCovD: Contractions of Riemann automatically replaced by Ricci.
+** DefTensor: Defining Ricci scalar RicciScalarCD[]. 
+** DefCovD: Contractions of Ricci automatically replaced by RicciScalar.
+** DefTensor: Defining symmetric Einstein tensor EinsteinCD[-aa, -bb]. 
+** DefTensor: Defining vanishing Weyl tensor WeylCD[-aa, -bb, -cc, -dd]. 
+** DefTensor: Defining symmetric TFRicci tensor TFRicciCD[-aa, -bb]. 
+** DefTensor: Defining Kretschmann scalar KretschmannCD[]. 
+** DefCovD: Computing RiemannToWeylRules for dim 3
+** DefCovD: Computing RicciToTFRicci for dim 3
+** DefCovD: Computing RicciToEinsteinRules for dim 3
+** DefTensor: Defining weight +2 density Dethh[].      Determinant.
+** DefParameter: Defining parameter tau. 
+** DefTensor: Defining tensor qTensor[-aa, -bb]. 
+** DefTensor: Defining tensor oTensor[-aa, -bb, -cc]. 
+** DefTensor: Defining tensor dTensor[-aa]. 
+** DefTensor: Defining tensor tbar[]. 
+** DefConstantSymbol: Defining constant symbol theta. 
+T3_normalized_derivative_and_odd_signs = True
+T5_first_order_inverse_coefficient = True
+T5_scalar_cost_implication = True
+T6_scalar_information_one_fifth = True
+L10_accepted_minors_and_minimal_cutoff = True
+R7_RESULT_JSON={"checks":{"T1_trace_and_contraction":true,"T1_no_proper_signed_stabilizer":true,"T3_normalized_derivative_and_odd_signs":true,"T5_first_order_inverse_coefficient":true,"T5_scalar_cost_implication":true,"T6_scalar_information_one_fifth":true,"L10_accepted_minors_and_minimal_cutoff":true},"domain_assumption_diff":[],"counterexample":null,"evidence":{"T1_trace_and_contraction":{"Q_trace":0,"O_trace":[0,0,0],"O_contract_Q":[0,-1,1],"chi":0,"symmetric":true},"T1_no_proper_signed_stabilizer":{"proper_axis_signs":[[-1,-1,1],[-1,1,-1],[1,-1,-1],[1,1,1]],"squared_residual_norms":[40,40,88,120],"distinct_eigenvalue_commutator":true,"argument":"RQ=QR with distinct eigenvalues forces diagonal R; orthogonality yields signs; determinant +1 selects these four. Nonzero residuals rule out O -> -O."},"T3_normalized_derivative_and_odd_signs":{"xact_normalized_derivative_residual":"0","scalar_normalized_derivative_residual":"0","sigma_parity_residual":"0","omega_parity_residual":"0","odd_curl_residual":"0","manifold":"Space3 (dimension 3)","metric":"hh positive definite spatial metric; spacetime signature remains (-,+,+,+)","rate_parameter":"tau; dot=c u.nabla, CD represents c h.nabla algebraically","assumptions":"Tbar>0, Theta>0, first-order geodesic hierarchy accepted; no independent physical closure proof; antisymmetrization has 1\/2"},"T5_first_order_inverse_coefficient":{"left_product_mod_t2":"{{1, {}}}","right_product_mod_t2":"{{1, {}}}","K_first_order":"{{-t, {\"C\", \"A\"}}}","derivative_at_zero":"-C.A","proof_scope":"Free associative algebra through first order; two-sided inverse coefficient unique when inverse exists at t=0. No entrywise commutativity assumption."},"T5_scalar_cost_implication":{"counterexample_set":"False","denominator_conditions":"0<f<1\/36, c>0; d>0; h and k nonnegative norms","claim":"Every cancellant obeys the lower bound, hence its minimum\/infimum does; K=0 or f=0 with d!=0 is infeasible by the norm premise."},"T6_scalar_information_one_fifth":{"U":1,"V":1,"E":1,"G":"1\/4","information_before":"0","information_after":"1\/5","gain":"1\/5","claim_scope":"Fixed scalar Schur-complement example only"},"L10_accepted_minors_and_minimal_cutoff":{"all_rational_minors_positive":true,"all_normal_determinants_positive":true,"source_ell_bindings_match":true,"complex_row_ranks":[4,4,4,3,2,1],"real_rank":32,"minimal_source_cutoff":10,"L7_to_L9_column_count_counterexamples":"False","L_below_7":"Source band ell=7..L is empty and cannot have row rank 32","ceiling":"Implication from accepted rational minor values and accepted source-column identities. No reconstruction of the historical axial operator, numerical quadrature, or empirical result."}},"toolchain":{"wolfram":"15.0.0 for Linux x86 (64-bit) (May 26, 2026)","xTensor":"1.3.0","xPerm":"1.2.4","xTensor_file":"\/home\/cosmosapjw\/.WolframEngine\/Applications\/xAct\/xTensor\/Kernel\/init.m"},"claim_ceiling":"exact stated algebraic implications and fixed witness; no empirical admission","exact_symbolic":true,"high_precision_numeric_status":"Not needed: all fixed values and witnesses evaluated exactly; no float acceptance.","rules":"Exact rational arithmetic, FullSimplify with explicitly positive T, xAct ToCanonical and parameter derivative, real Reduce, finite enumeration, free noncommutative word algebra."}

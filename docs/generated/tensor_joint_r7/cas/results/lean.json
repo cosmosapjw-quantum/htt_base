@@ -1,0 +1,147 @@
+{
+  "schema_version": 2,
+  "run_id": "TENSOR-JOINT-R7-20260908",
+  "assignment_id": "lean",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "cas_axis": "lean",
+  "status": "pass",
+  "completed_at": "2026-09-08T12:20:55.768735+00:00",
+  "contract_sha256": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2",
+  "cas_contract": {
+    "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json",
+    "sha256": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2"
+  },
+  "claim_ids": [
+    "RUN-TENSOR-JOINT-R7-20260908-V01"
+  ],
+  "checks": {
+    "T1_trace_and_contraction": true,
+    "T1_no_proper_signed_stabilizer": true,
+    "T3_normalized_derivative_and_odd_signs": true,
+    "T5_first_order_inverse_coefficient": true,
+    "T5_scalar_cost_implication": true,
+    "T6_scalar_information_one_fifth": true,
+    "L10_accepted_minors_and_minimal_cutoff": true
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "toolchain": {
+    "lean": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)",
+    "repository_pin": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+  },
+  "command_argv": [
+    "python3",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/run_axis.py"
+  ],
+  "working_directory": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree",
+  "result_path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/results/lean.json",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/assignments/lean.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/Proof.lean",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/axis_payload.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/build_receipt.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/build_transcript.log",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/compile_initial.log",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/compile_repair1.log",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/compile_repair2.log",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/lean_paths.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/run_axis.py",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/config.json",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/Mathlib/Analysis/Calculus/Deriv/Inv.lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Determinant/Basic.lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/Mathlib/LinearAlgebra/Matrix/NonsingularInverse.lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Notation.lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/Mathlib/LinearAlgebra/Matrix/Rank.lean",
+    "docs/generated/tensor_joint_r7/axial_certificate_source.json",
+    "docs/research_program/tensor_joint_r7/THEORY.md",
+    "formal/lake-manifest.json",
+    "formal/lakefile.toml",
+    "formal/lean-toolchain"
+  ],
+  "files_read_scope": "Directly inspected inputs, toolchain source, and own generated artifacts. Compiler imports use the recorded shared mathlib dependency cache; no sibling derivation or result was inspected.",
+  "evidence": [
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/Proof.lean",
+      "sha256": "bdf056be8b41cec39401309ab1f2748efa709fd8deb9311301ce4874702aab3a"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/run_axis.py",
+      "sha256": "91b29c011c797696e5e564e0812b6f2f2351ed852327bd9a67e6777b3fe7af97"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/lean_paths.json",
+      "sha256": "f196abdd9c3a7e6e6a7b167f265f2e55a0b6bbb170e627e2291f1284c5455746"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/build_transcript.log",
+      "sha256": "fbe911624abf0d428e2e5e287baa2c80dea92a959dd356c360e34dc54c6e5683"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/build_receipt.json",
+      "sha256": "a62042033763884c46f367d3d5127fe8b7dd2afcb04afc3e244540e5dacf13d1"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/axis_payload.json",
+      "sha256": "78093b0c464d41b28f20531509593482c62d3838c44199b238f2e2628649aa99"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/compile_initial.log",
+      "sha256": "1d677330c01c280a64944816da7b8196e332f2ffc5ad27b7edad9448a07dce9e"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/compile_repair1.log",
+      "sha256": "0493cf850e97ed81ee83bc3e90dcfe6775aae59052075cf5b31352686b03aaaa"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/compile_repair2.log",
+      "sha256": "856c5968175521794ee6d8662adca9f7386dc801f6ea3bfbc735c4b010bf16e3"
+    }
+  ],
+  "assumptions_used": [
+    "Q has distinct eigenvalues and rotations stabilizing Q are diagonal signed eigenaxes, as expressly accepted by the contract.",
+    "The tensor witness is the fixed ten-entry symmetric STF3 witness in the contract.",
+    "The normalized temperature function has the declared derivative and positive absolute temperature at the evaluation point.",
+    "Theta is positive and the odd propagation/outward moments and their derivatives transform with the same sign.",
+    "T5 formalizes degree-zero/one inverse coefficient equations and rectangular compatible real matrix products, without an analytic matrix derivative or pixel error claim.",
+    "Scalar d,k,h are norm values with d>0 and k,h>=0; the accepted norm bound and cancellation inequality hold; 0<f<1/36 and c>0.",
+    "L10 accepts the rational determinant-square and source-column identities from the frozen historical certificate. Six azimuthal blocks use accepted row counts [4,4,4,3,2,1] and real stored multiplicities [1,2,2,2,2,2]."
+  ],
+  "scope_limitations": [
+    "No historical axial operator is recomputed.",
+    "No full general matrix inverse derivative theorem, continuous mask quadrature certificate, measured covariance, exchangeability, or empirical scientific admission is established.",
+    "The signed-eigenaxis reduction premise is supplied by the contract; Lean proves the exact finite signed-stabilizer impossibility."
+  ],
+  "findings": [
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V01",
+      "verdict": "pass",
+      "evidence_fingerprint": "bdf056be8b41cec39401309ab1f2748efa709fd8deb9311301ce4874702aab3a",
+      "summary": "All seven frozen algebraic obligations have compiled independent Lean proofs. All printed theorem dependencies contain only propext, Classical.choice, and Quot.sound; no sorryAx.",
+      "evidence_refs": [
+        ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/Proof.lean",
+        ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/run_axis.py",
+        ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/lean_paths.json",
+        ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/build_transcript.log",
+        ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/build_receipt.json",
+        ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/axis_payload.json"
+      ],
+      "reproduce": [
+        "python3",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/lean/run_axis.py"
+      ]
+    }
+  ],
+  "failed_attempts_preserved": [
+    "compile_initial.log",
+    "compile_repair1.log"
+  ],
+  "correlation_disclosure": "A native Codex agent authored this Lean axis; other axes may share an LLM family. No sibling sources or results were read.",
+  "operational_notes": [
+    "The spawn hook advertised an unrelated old canonical active run/cwd. Work was performed in the explicit registered R7 worktree after validating its context and assignment; any canonical stop-hook mismatch is operational, not an algebraic counterexample.",
+    "The first successful build transcript and receipt are preserved. Subsequent wrapper invocations write last_build_transcript.log and last_build_receipt.json, leaving the submitted evidence identities stable."
+  ]
+}

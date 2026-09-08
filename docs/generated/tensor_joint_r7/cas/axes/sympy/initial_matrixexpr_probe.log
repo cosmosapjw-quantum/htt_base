@@ -1,0 +1,92 @@
+3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]
+1.14.0
+Traceback (most recent call last):
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sympy/initial_matrixexpr_probe.py", line 9, in <module>
+    print(K.diff(t).subs(t,0).doit())
+          ^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/expr.py", line 3606, in diff
+    return _derivative_dispatch(self, *symbols, **assumptions)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/function.py", line 1937, in _derivative_dispatch
+    return ArrayDerivative(expr, *variables, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/tensor/array/array_derivatives.py", line 19, in __new__
+    obj = super().__new__(cls, expr, *variables, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/function.py", line 1466, in __new__
+    obj = cls._dispatch_eval_derivative_n_times(expr, v, count)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/tensor/array/array_derivatives.py", line 108, in _dispatch_eval_derivative_n_times
+    result = cls._call_derive_matexpr_by_scalar(expr, v)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/tensor/array/array_derivatives.py", line 68, in _call_derive_matexpr_by_scalar
+    return expr._eval_derivative(v)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/matrices/expressions/matexpr.py", line 232, in _eval_derivative
+    return super()._eval_derivative(x)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/cache.py", line 72, in wrapper
+    retval = cfunc(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/mul.py", line 982, in _eval_derivative
+    d = args[i].diff(s)
+        ^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/expr.py", line 3606, in diff
+    return _derivative_dispatch(self, *symbols, **assumptions)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/function.py", line 1937, in _derivative_dispatch
+    return ArrayDerivative(expr, *variables, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/tensor/array/array_derivatives.py", line 19, in __new__
+    obj = super().__new__(cls, expr, *variables, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/function.py", line 1466, in __new__
+    obj = cls._dispatch_eval_derivative_n_times(expr, v, count)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/tensor/array/array_derivatives.py", line 108, in _dispatch_eval_derivative_n_times
+    result = cls._call_derive_matexpr_by_scalar(expr, v)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/tensor/array/array_derivatives.py", line 68, in _call_derive_matexpr_by_scalar
+    return expr._eval_derivative(v)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/matrices/expressions/matpow.py", line 103, in _eval_derivative
+    return Pow._eval_derivative(self, x)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/power.py", line 1223, in _eval_derivative
+    return self * (dexp * log(self.base) + dbase * self.exp/self.base)
+                   ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/numbers.py", line 1894, in __add__
+    return Rational.__add__(self, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/decorators.py", line 76, in __sympifyit_wrapper
+    return func(a, b)
+           ^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/numbers.py", line 1461, in __add__
+    return Number.__add__(self, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/decorators.py", line 76, in __sympifyit_wrapper
+    return func(a, b)
+           ^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/numbers.py", line 463, in __add__
+    return AtomicExpr.__add__(self, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/decorators.py", line 248, in _func
+    return func(self, other)
+           ^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/decorators.py", line 117, in binary_op_wrapper
+    return f(self)
+           ^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/matrices/expressions/matexpr.py", line 28, in __sympifyit_wrapper
+    return func(a, b)
+           ^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/core/decorators.py", line 118, in binary_op_wrapper
+    return func(self, other)
+           ^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/matrices/expressions/matexpr.py", line 113, in __radd__
+    return MatAdd(other, self).doit()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/lib/python3.12/site-packages/sympy/matrices/expressions/matadd.py", line 49, in __new__
+    raise TypeError("Mix of Matrix and Scalar symbols")
+TypeError: Mix of Matrix and Scalar symbols
+
+EXIT_CODE=1

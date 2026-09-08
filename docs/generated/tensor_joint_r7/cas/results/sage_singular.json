@@ -1,0 +1,138 @@
+{
+  "schema_version": 2,
+  "run_id": "TENSOR-JOINT-R7-20260908",
+  "assignment_id": "sage_singular",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "axis": "sage_singular",
+  "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V01",
+  "cas_contract_sha256": "377c7be24bd070c3bd0dd0e39be003de0ac37f66fe205eaa8cb9d283019113a2",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/assignments/sage_singular.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/CAS_CONTRACT.json",
+    "docs/generated/tensor_joint_r7/axial_certificate_source.json",
+    "docs/research_program/tensor_joint_r7/THEORY.md",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verify.sing",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/attempt_01.stdout.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/attempt_01.stderr.txt",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/engine_result.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verification_details.json",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/singular_version.txt",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/singular_transcript.txt",
+    ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verify.py"
+  ],
+  "assumptions_used": [
+    "T1 witness is fixed; Q eigenvalues are distinct, hence rotations stabilizing Q are signed coordinate axes",
+    "T5 Neumann first-order coefficient under invertibility at t=0",
+    "T5 norm implication assumes operator norm bound c*f/(1-36*f) and norm(d)<=norm(K)*norm(h)",
+    "L10 supplied rational minors and their source-column identities are the accepted input; validate exact rational positivity and minimal-cutoff rank implication"
+  ],
+  "claim_ceiling": "Exact stated algebraic implications and fixed witnesses; L10 accepted-certificate implication only, with no empirical admission.",
+  "checks": {
+    "T1_trace_and_contraction": true,
+    "T1_no_proper_signed_stabilizer": true,
+    "T3_normalized_derivative_and_odd_signs": true,
+    "T5_first_order_inverse_coefficient": true,
+    "T5_scalar_cost_implication": true,
+    "T6_scalar_information_one_fifth": true,
+    "L10_accepted_minors_and_minimal_cutoff": true
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "findings": [
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V01",
+      "obligation": "T1_trace_and_contraction",
+      "verdict": "pass",
+      "evidence_fingerprint": "63e77414393144760fef0edcdca25269185bd727895e92a1315a0dbb4bf2e46f",
+      "evidence_ref": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verification_details.json#T1_trace_and_contraction"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V01",
+      "obligation": "T1_no_proper_signed_stabilizer",
+      "verdict": "pass",
+      "evidence_fingerprint": "50dfdbd87a4983de46c5e4f7ec364bac95348e650d87f2512667675555b37dc0",
+      "evidence_ref": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verification_details.json#T1_no_proper_signed_stabilizer"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V01",
+      "obligation": "T3_normalized_derivative_and_odd_signs",
+      "verdict": "pass",
+      "evidence_fingerprint": "3c9db558d11e202f109e1e637aa34e2dab16407b77fa800ff9fd281a0665639c",
+      "evidence_ref": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verification_details.json#T3_normalized_derivative_and_odd_signs"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V01",
+      "obligation": "T5_first_order_inverse_coefficient",
+      "verdict": "pass",
+      "evidence_fingerprint": "27eb1b7948d39700d09e59697abcda3218f9cfaded0a573aa00f0a97d3abb72c",
+      "evidence_ref": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verification_details.json#T5_first_order_inverse_coefficient"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V01",
+      "obligation": "T5_scalar_cost_implication",
+      "verdict": "pass",
+      "evidence_fingerprint": "637932db6f48aaa39a1304fac1634c0564429ec729488783375fad3aac99ac03",
+      "evidence_ref": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verification_details.json#T5_scalar_cost_implication"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V01",
+      "obligation": "T6_scalar_information_one_fifth",
+      "verdict": "pass",
+      "evidence_fingerprint": "a59a7f676632b2b33094f471820c033c9800a4d7d3ba6a2d4e3bb57c59fbd77d",
+      "evidence_ref": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verification_details.json#T6_scalar_information_one_fifth"
+    },
+    {
+      "claim_id": "RUN-TENSOR-JOINT-R7-20260908-V01",
+      "obligation": "L10_accepted_minors_and_minimal_cutoff",
+      "verdict": "pass",
+      "evidence_fingerprint": "fa1a9c01d59b4f2d24315bf7d128f492e379b6fbe6209d2a1dd1243eccb54db1",
+      "evidence_ref": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verification_details.json#L10_accepted_minors_and_minimal_cutoff"
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verify.py",
+      "sha256": "41102958ee26e990284cf8c29f34184e4aa33716bcc2a42be438082e226ce109"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/engine_result.json",
+      "sha256": "78093b0c464d41b28f20531509593482c62d3838c44199b238f2e2628649aa99"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verification_details.json",
+      "sha256": "94ff05bf681e2297689a9ee8a4e4fbea107dc343124360ee5b04011b514c54f6"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/singular_version.txt",
+      "sha256": "e3181c691f79b924f8ddf49fa34c367acea0f163b0b6403633ae4f318a98381a"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verify.sing",
+      "sha256": "7bfec086fff3e55b346bf6f84244b50f9cb67160b96cc3a47f53e0af2ad63269"
+    },
+    {
+      "path": ".agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/singular_transcript.txt",
+      "sha256": "46311b4f70c5dc48854be399806f69f2e4a7ea3fafb09b0003e7b9a2d8ad8adb"
+    }
+  ],
+  "reproduce_argv": [
+    "/usr/local/bin/sage",
+    "-python",
+    "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R7-20260908/worktree/.agent-harness/runs/TENSOR-JOINT-R7-20260908/axes/sage_singular/verify.py"
+  ],
+  "tool_versions": {
+    "sage": "10.9",
+    "singular_executable": "/usr/bin/Singular",
+    "singular": "4.3.2",
+    "python": "3.12.3"
+  },
+  "correlation_disclosure": "Independent script authored by a Codex agent; other axes may use the same LLM family. No sibling result or derivation was read.",
+  "operational_notes": [
+    "Canonical injected cwd and active-run header referred to an older run; actual explicit R7 assignment/context and source hashes were validated.",
+    "Default Sage Singular interface is 4.4.1; all Singular checks here use separately installed /usr/bin/Singular 4.3.2."
+  ],
+  "completed_at": "2026-09-08T12:21:41.177212+00:00"
+}
