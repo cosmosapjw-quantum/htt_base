@@ -1,0 +1,184 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "identity": {
+    "contract_id": "R8-O4-MV-STF-IDENTITIES-V1",
+    "contract_version": 1,
+    "claim_ids": [
+      "RUN-R8-B-20260909-O4"
+    ],
+    "statement_class": "scalar_algebra",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/tensor_joint_r8/THEORY.md",
+        "sha256": "9a505ce0ab3de99a1dcad7f4397621cb639307b4bb42a735b910128646ee408f"
+      },
+      {
+        "path": "docs/research_program/tensor_joint_r8/VALIDATION_MATRIX.md",
+        "sha256": "ba1fc76d711b1984c34820da9503da6a621923bf70de5844d5abe8edd3041ab9"
+      }
+    ],
+    "claim_ceiling": "Only STF2/STF3/null-cone algebra; no generic root isolation, numerical conversion, product law or statistical admission",
+    "adjudicator": "adjudicator"
+  },
+  "semantics": {
+    "exact_statement": "For arbitrary real Cartesian 3-vectors u,v,w and amplitude A verify the three exact identities in target. Symmetric tensors use full component multiplicity. Rank2 S=(u tensor v+v tensor u)/2; Q=A*(S-delta*(u dot v)/3). Rank3 S=sym(u tensor v tensor w), b=( (u dot v)*w+(u dot w)*v+(v dot w)*u )/3; O=A*(S-(delta_ij*b_k+delta_ik*b_j+delta_jk*b_i)/5). Unit-vector normalization is a separate numerical interface condition, not needed for these identities.",
+    "symbol_type_domain_map": {
+      "u,v,w": "arbitrary real vectors in R3",
+      "A": "real amplitude",
+      "z": "complex null-cone coordinate",
+      "delta": "3D Euclidean identity"
+    },
+    "frame_signature_units_conventions": {
+      "units": "A in K for unit input vectors",
+      "group": "SO(3)",
+      "multiplicity": "full symmetric tensor Frobenius"
+    },
+    "assumptions": [
+      "Ordinary polynomial algebra over real and complex fields.",
+      "Existence/uniqueness of full MV for harmonic tensors is the named Katz-Weeks theorem, not re-proven by this finite algebra contract."
+    ],
+    "positivity_nonzero_conditions": [],
+    "branches": [],
+    "exclusions": [
+      "generic root isolation and uniqueness proof",
+      "floating conversion certification",
+      "statistical/physical inference"
+    ],
+    "singular_loci": [
+      "A=0 and coincident vectors INCLUDED"
+    ],
+    "order_of_limits": [],
+    "boundary_or_initial_conditions": []
+  },
+  "target": {
+    "canonical_form": "Every specified polynomial identity reduces identically to zero",
+    "equivalence_relation": "exact real/rational mathematics",
+    "invariants": [],
+    "exact_test_obligations": [
+      "O4_STF2_trace_sign_permutation",
+      "O4_STF3_trace_sign_permutation",
+      "O4_null_cone_and_trace_removal"
+    ],
+    "numeric_test_vectors": [],
+    "approximation_order": "exact",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "0",
+    "relative_tolerance": "0",
+    "forbidden_shortcuts": [
+      "No numeric fixtures alone for arbitrary vectors",
+      "No sibling derivations/results before own submission",
+      "No old CAS PASS",
+      "Incomplete proof is unresolved, not a weaker PASS"
+    ],
+    "obligation_details": {
+      "O4_STF2_trace_sign_permutation": "Q is symmetric, sum_i Q_ii=0; swapping u,v leaves Q invariant; replacing (A,u) by (-A,-u) leaves Q invariant; A=0 gives zero.",
+      "O4_STF3_trace_sign_permutation": "O is symmetric in indices and under arbitrary permutations of u,v,w; sum_i O_iik=0 for k=1,2,3; replacing (A,u) by (-A,-u) leaves O invariant; A=0 gives zero.",
+      "O4_null_cone_and_trace_removal": "n(z)=(1-z^2,i*(1+z^2),2z) has n dot n=0; contracting Q with n^2 equals A*(u dot n)*(v dot n), and contracting O with n^3 equals A*(u dot n)*(v dot n)*(w dot n). Polynomial identities over complex z, no Hermitian conjugation in the bilinear dot."
+    }
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "independent derivation/simplification in Wolfram Language (+xAct for tensor work)",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "wolfram": "15.0.0",
+        "xact": "1.2.0+"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "independent exact symbolic verification in SymPy (+ high-precision numerics where declared)",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "sympy": "1.14.0"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "independent exact algebra in SageMath; Singular obligations apply to polynomial ideal/variety classes",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "sage": "10.9",
+        "singular": "4.3.2"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "faithful formalization and compiled proof; record scope mismatch instead of silently proving a weaker theorem",
+      "required_outputs": [
+        "lean sources",
+        "build receipt",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain"
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results",
+    "permitted_inputs": [
+      "this contract",
+      "assigned THEORY/VALIDATION_MATRIX",
+      "installed own-axis libraries"
+    ],
+    "forbidden_sibling_paths": [
+      ".agent-harness/runs/*/results/*"
+    ],
+    "script_result_ownership": "per-axis; scripts and outputs are never shared before adjudication",
+    "correlation_disclosure": "record when one LLM family authored multiple axis scripts; disclosure does not void engine evidence"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "exception_schema": {
+      "axis": "wolfram_xact | sympy | sage_singular | lean",
+      "reason_class": "platform | license | computation_class | resource",
+      "bounded_probe": "exact command + output demonstrating the blocker",
+      "unique_capability_lost": false,
+      "substitute_obligation": "",
+      "claim_downgrade": "",
+      "approver": "must not be the excepted axis's agent",
+      "registered_at": "must precede the earliest axis completed_at",
+      "expiry_retry": ""
+    },
+    "aggregate_status_rule": "R0: NOT_APPLICABLE; R1/R2: PASS; R3: CAS_4AXIS_PASS; explicit R3 Rocq opt-in: CAS_5AXIS_PASS; failures: CAS_PASS_WITH_REGISTERED_EXCEPTION | CAS_CONFLICT | CAS_BLOCKED | CAS_FAIL",
+    "invalidation_triggers": [
+      "contract_hash_change",
+      "assumption_or_domain_diff",
+      "unpinned_toolchain"
+    ]
+  }
+}

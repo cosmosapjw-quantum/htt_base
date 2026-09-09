@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "verification_role": "HOST_DIRECT_DISTINCT_ALGORITHM_CHECK",
+  "seed": 84004,
+  "random_cases": 200,
+  "mutation_controls": [
+    "dropped amplitude",
+    "wrong trace denominator"
+  ],
+  "max_decimal_stf_difference_K": 3.3881317890172014e-21,
+  "max_eigenframe_difference_K": 1.3552527156068805e-20,
+  "max_conversion_error_bound_K": 3.4403382608506875e-20,
+  "saved_outputs": {
+    "mock2": {
+      "rows": 45,
+      "pairs": 990,
+      "all_saved_bounds_verified": true
+    },
+    "observed_components": {
+      "rows": 4,
+      "pairs": 6,
+      "all_saved_bounds_verified": true
+    }
+  },
+  "source_hashes": {
+    "htt/obsstat/r8_multipole_vectors.py": "00bfd7c28527d25226b513372149bf81deb3779d4eecf873dd1a61bfc1329003",
+    "scripts/observed_runs/run_r8_representation_controls.py": "c2bdf3f334854d75b2e877a33738f07086d0e8ca620873e6926175c8798cf055",
+    ".agent-harness/runs/R8-B-20260909/artifacts/direct_execution/verify_reference.py": "d9791f4fbcaef16544989c43edff44f5d646d3d8d74cc2635822fa3d5d5c826c"
+  },
+  "independence": "Host authored after prior axis results; not a blind independent reviewer"
+}

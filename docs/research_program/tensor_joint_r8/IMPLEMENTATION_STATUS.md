@@ -33,3 +33,15 @@ same-sky differences. These are descriptive controls without a product law,
 covariance or empirical rank. Fourteen selected tests and independent field/CMB
 reviews pass; original plot findings and one repair are retained. See
 [owned controls](../../generated/tensor_joint_r8/owned_controls/README.md).
+
+Unit B now has a directly verified implementation: mock2 retains45 rows
+(44 reconstruct; one coincident-vector refusal), and all four observed component
+tensors reconstruct. All990+6 pair and kth-score enclosures overlap after
+conversion-error expansion. Fourteen selected tests and a distinct 200-case
+Decimal/eigenframe/reference check pass. After the owner authorized a route
+without subagents, Host completed the Lean proof and directly executed the
+other three CAS engines. All limited O4 engine checks pass. This is not a new
+independent four-axis audit; original B4 independence and old CAS_BLOCKED remain
+unfulfilled. See [representation results](../../generated/tensor_joint_r8/representations/README.md).
+The implementation/results can be delivered with this explicit ceiling; full
+R8, general root isolation and actual product-law ranks remain incomplete.

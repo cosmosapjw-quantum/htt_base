@@ -1,0 +1,72 @@
+{
+  "schema_version": 2,
+  "axis": "sage_singular",
+  "contract_sha256": "430f325399b7caf0e7513cccec64e5bdae114ecafa5ce039747e373936c82f9d",
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        ".agent-harness/runs/R8-B-20260909/artifacts/sage_singular/verify_o4.py"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "exit_code": 0,
+      "started_at": "2026-09-08T20:00:12.105917+00:00",
+      "completed_at": "2026-09-08T20:00:14.673046+00:00",
+      "elapsed_seconds": 2.567110338015482,
+      "timeout_seconds": 1800,
+      "deterministic_artifacts_before": {
+        "checks.json": "fb0d3085228df952f536ca596033fe6fcaf5724382f70d466de4fdac25bf50d4",
+        "verify_o4.sing": "1abd7e2045c7971a22260748e9b1d031972d87cf0ce2224b3d70b6a82011f074",
+        "singular_stdout.txt": "5d8e3d323f587b980ae381476359d1abe57e026dc96588b9c4a767db96b7aab6",
+        "singular_stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "deterministic_artifacts_after": {
+        "checks.json": "fb0d3085228df952f536ca596033fe6fcaf5724382f70d466de4fdac25bf50d4",
+        "verify_o4.sing": "1abd7e2045c7971a22260748e9b1d031972d87cf0ce2224b3d70b6a82011f074",
+        "singular_stdout.txt": "5d8e3d323f587b980ae381476359d1abe57e026dc96588b9c4a767db96b7aab6",
+        "singular_stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "completed_at": "2026-09-08T20:00:14.673046+00:00",
+  "evidence_class": "exact",
+  "checks": {
+    "O4_STF2_trace_sign_permutation": true,
+    "O4_STF3_trace_sign_permutation": true,
+    "O4_null_cone_and_trace_removal": true
+  },
+  "tool_versions": {
+    "sage": "10.9",
+    "singular": "4.3.2"
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "status": "PASS",
+  "source_artifacts": [
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/sage_singular/checks.json",
+      "sha256": "fb0d3085228df952f536ca596033fe6fcaf5724382f70d466de4fdac25bf50d4",
+      "bytes": 1105,
+      "producer": "sage_singular"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/sage_singular/execution_receipt.json",
+      "sha256": "716a0db9c9e3d54b3839ac3ca0e48f252d0f782e57913e4170a58ac00ad073ff",
+      "bytes": 1220,
+      "producer": "sage_singular"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/sage_singular/verify_o4.py",
+      "sha256": "ea716b3ce658a5e978a98ac3415bd7c8f954efed6ab8d2c5ff777538383bf994",
+      "bytes": 6651,
+      "producer": "sage_singular"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/sage_singular/verify_o4.sing",
+      "sha256": "1abd7e2045c7971a22260748e9b1d031972d87cf0ce2224b3d70b6a82011f074",
+      "bytes": 383387,
+      "producer": "sage_singular"
+    }
+  ]
+}

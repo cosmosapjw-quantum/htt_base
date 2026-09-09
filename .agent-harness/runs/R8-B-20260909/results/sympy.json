@@ -1,0 +1,154 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-B-20260909",
+  "assignment_id": "sympy",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "result_path": ".agent-harness/runs/R8-B-20260909/results/sympy.json",
+  "assignment_sha256": "27ff55f94e25d0771d9ad796ebfbf80cb013984ca80488b65fd6b0bd79803b28",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/R8-B-20260909/assignments/sympy.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R8-B-20260909/CAS_CONTRACT.json",
+    "docs/research_program/tensor_joint_r8/THEORY.md",
+    "docs/research_program/tensor_joint_r8/VALIDATION_MATRIX.md",
+    ".agent-harness/scripts/cas_gate.py",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/templates/CAS_AXIS_RESULT.json",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agents/skills/htt-harness-engineering/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agent-harness/runs/R8-B-20260909/artifacts/sympy/verify_o4.py",
+    ".agent-harness/runs/R8-B-20260909/artifacts/sympy/stdout.json",
+    ".agent-harness/runs/R8-B-20260909/artifacts/sympy/stderr.txt",
+    ".agent-harness/runs/R8-B-20260909/artifacts/sympy/execution.json",
+    ".agent-harness/runs/R8-B-20260909/artifacts/sympy/axis_result.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-08T19:57:50.015149+00:00",
+  "completed_at": "2026-09-08T19:59:21.414527+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "python_executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+    "sympy": "1.14.0"
+  },
+  "commands": [
+    {
+      "cmd": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python /mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-B-20260909/artifacts/sympy/verify_o4.py",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-B-20260909/artifacts/sympy/verify_o4.py"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "exit": 0,
+      "started_at": "2026-09-08T19:57:50.015149+00:00",
+      "completed_at": "2026-09-08T19:57:50.424869+00:00"
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 /mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python .agent-harness/scripts/cas_gate.py check-axis --contract .agent-harness/runs/R8-B-20260909/CAS_CONTRACT.json --result .agent-harness/runs/R8-B-20260909/artifacts/sympy/axis_result.json",
+      "exit": 0,
+      "observed_output": {
+        "ok": true,
+        "axis": "sympy",
+        "status": "PASS",
+        "verification_state": "STORED_ENVELOPE_ONLY",
+        "claim_promotion_cas_eligible": false
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/sympy/verify_o4.py",
+      "sha256": "5fe9ae6234b24b60aa7693bc2653720a59834b51aba09eb786573ee4dd5b6248",
+      "bytes": 6338,
+      "producer": "independent_sympy_axis"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/sympy/stdout.json",
+      "sha256": "4cda06a24da2e6ebbb3108e739af697bb67c4073f27c28bfae19c9129eeaab83",
+      "bytes": 22537,
+      "producer": "independent_sympy_axis"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/sympy/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "producer": "independent_sympy_axis"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/sympy/execution.json",
+      "sha256": "7bbaa96f25004ce6f402e2b7dbe796d5e7e983e5aae0a0c018d6d207a5188c76",
+      "bytes": 828,
+      "producer": "independent_sympy_axis"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/sympy/axis_result.json",
+      "sha256": "ebbae1ddf140582edd20a942470d8eed5cd2d3240a9de62fe3be81d69d90ba52",
+      "bytes": 25014,
+      "producer": "independent_sympy_axis"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/sympy/payload_validation.json",
+      "sha256": "6a8b98b4ce8f353671d70d22ecfd189242537ccef3f0ac02f6c21af68011318b",
+      "bytes": 209,
+      "producer": "independent_sympy_axis"
+    }
+  ],
+  "axis_result_path": ".agent-harness/runs/R8-B-20260909/artifacts/sympy/axis_result.json",
+  "contract_sha256": "430f325399b7caf0e7513cccec64e5bdae114ecafa5ce039747e373936c82f9d",
+  "findings": [
+    {
+      "finding_id": "R8-O4-SYMPY-EXACT",
+      "claim_id": "RUN-R8-B-20260909-O4",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "The three contracted O4 arbitrary-vector identities hold exactly: 37 STF2 checks, 381 STF3 checks, and 3 complex bilinear null-cone checks reduce to zero as QQ(i) polynomials.",
+      "assumptions_used": [
+        "arbitrary real A,u,v,w",
+        "complex z with bilinear dot and no conjugation",
+        "three-dimensional Euclidean delta",
+        "full symmetric component multiplicity"
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/R8-B-20260909/artifacts/sympy/verify_o4.py",
+        ".agent-harness/runs/R8-B-20260909/artifacts/sympy/stdout.json",
+        ".agent-harness/runs/R8-B-20260909/artifacts/sympy/execution.json"
+      ],
+      "evidence_fingerprint": "O4-three-identities:contract:430f325399b7caf0e7513cccec64e5bdae114ecafa5ce039747e373936c82f9d:sympy-script:5fe9ae6234b24b60aa7693bc2653720a59834b51aba09eb786573ee4dd5b6248",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python /mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-B-20260909/artifacts/sympy/verify_o4.py (cwd=/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree, timeout_seconds=1800)"
+      ],
+      "confidence": 1.0,
+      "unresolved": []
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R8-B-20260909-O4",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "R8-O4-SYMPY-EXACT"
+      ],
+      "summary": "PASS for assigned exact scalar-algebra obligations only; no generic root completeness, conversion certification, or statistical/physical admission. Parent observed-run adjudication remains required."
+    }
+  ],
+  "errors": [],
+  "broader_tests": "Not run: standalone assigned algebra verifier only; no production code changes.",
+  "correlation_disclosure": "Native Codex author; no sibling code or results read. Shared LLM-family authorship across axes may correlate construction; engine evidence remains separate.",
+  "external_instruction_files_read": [
+    "/home/cosmosapjw/.codex/bounded-work-harness/RULES.md",
+    "/home/cosmosapjw/.codex/runtime/global-execution-policy.json",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/AGENTS.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/GLOBAL_EXECUTION_POLICY.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/.codex/runtime/local-router.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/MIXED_WORKER_ROUTING.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/MIXED_DEVICE_RESIDENCY.md"
+  ],
+  "metadata_correction": "Stop-hook schema repair only: self-declaration enum fields, canonical repository-relative files_read, producer fields, severity vocabulary, and string reproduction commands. External instruction reads retained separately. Mathematical artifacts unchanged."
+}

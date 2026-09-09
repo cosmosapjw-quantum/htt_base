@@ -1,0 +1,23 @@
+....F.                                                                   [100%]
+=================================== FAILURES ===================================
+________________ test_zero_and_multiple_roots_retain_tensor[3] _________________
+
+l = 3
+
+    @pytest.mark.parametrize('l',[2,3])
+    def test_zero_and_multiple_roots_retain_tensor(l):
+        zero=tensor_to_mv(np.zeros((3,)*l),l)
+        assert zero.status=='ZERO_AMPLITUDE_DIRECTIONS_UNIDENTIFIED'
+        assert zero.amplitude==0 and zero.vectors is None and zero.reconstruction_enclosure.hi==0
+        v=np.tile([1.,0.,0.],(l,1));t=mv_to_tensor(1.,v,l)
+        repeated=tensor_to_mv(t,l)
+>       assert repeated.status=='MULTIPLE_ROOT_UNRESOLVED'
+E       AssertionError: assert 'ANTIPODAL_PAIR_UNRESOLVED' == 'MULTIPLE_ROOT_UNRESOLVED'
+E         
+E         - MULTIPLE_ROOT_UNRESOLVED
+E         + ANTIPODAL_PAIR_UNRESOLVED
+
+tests/r8/test_multipole_vectors.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED tests/r8/test_multipole_vectors.py::test_zero_and_multiple_roots_retain_tensor[3]
+1 failed, 5 passed in 0.23s

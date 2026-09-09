@@ -1,0 +1,194 @@
+{
+  "schema_version": 2,
+  "run_id": "R8-B-20260909",
+  "assignment_id": "wolfram_xact",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "assignment_sha256": "8a1d4078bb5d48973b83028d6fe1fd849793cbf1ce9d565bfeb5d00dc608b0f7",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/R8-B-20260909/results/wolfram_xact.json",
+  "status": "pass",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/R8-B-20260909/assignments/wolfram_xact.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R8-B-20260909/CAS_CONTRACT.json",
+    "docs/research_program/tensor_joint_r8/THEORY.md",
+    ".agent-harness/scripts/cas_gate.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-physics-math-audit/SKILL.md",
+    ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/axis_result.json",
+    ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/engine_transcript.log",
+    ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/engine_transcript_initial_failure.log",
+    ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/execution.json",
+    ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/execution_initial_failure.json",
+    ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/run_axis.py",
+    ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/scientific_result.json",
+    ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/verify.wl",
+    ".agent-harness/scripts/_harness.py"
+  ],
+  "external_files_read": [
+    "/home/cosmosapjw/.codex/runtime/global-execution-policy.json",
+    "/home/cosmosapjw/.codex/bounded-work-harness/RULES.md",
+    "/home/cosmosapjw/.codex/memories/MEMORY.md",
+    "/home/cosmosapjw/.WolframEngine/Applications/xAct/xTensor/xTensor.m",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/AGENTS.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/docs/GLOBAL_EXECUTION_POLICY.md",
+    "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/02ceeb6dc2e0568cefede48b6f9928799e61ac74/.codex/runtime/local-router.md"
+  ],
+  "started_at": "2026-09-08T19:59:08.910601+00:00",
+  "completed_at": "2026-09-08T19:59:48.831039+00:00",
+  "tool_versions": {
+    "wolfram": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+    "xact_xTensor": "1.3.0"
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel",
+        "-noprompt",
+        "-script",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/verify.wl"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "started_at": "2026-09-08T19:59:08.910601+00:00",
+      "completed_at": "2026-09-08T19:59:12.835276+00:00",
+      "elapsed_seconds": 3.9246655211318284,
+      "exit_code": 1,
+      "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]"
+    },
+    {
+      "argv": [
+        "/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel",
+        "-noprompt",
+        "-script",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/verify.wl",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/replay_bvhrspfo/payload.json"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "started_at": "2026-09-08T19:59:44.894309+00:00",
+      "completed_at": "2026-09-08T19:59:48.831039+00:00",
+      "elapsed_seconds": 3.9367160119581968,
+      "exit_code": 0,
+      "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/axis_result.json",
+      "sha256": "6764c577ddf070494b5b592d13a1234fec0ec2ea441ee384139da42e7711ca87",
+      "bytes": 2572,
+      "producer": "wolfram_xact: independent exact Wolfram/xAct script and Python capture"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/engine_transcript.log",
+      "sha256": "175ddded1880f4f09f6e751665a36089d3a86cbaf2e2e21d857c0c2979549455",
+      "bytes": 4797,
+      "producer": "wolfram_xact: independent exact Wolfram/xAct script and Python capture"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/engine_transcript_initial_failure.log",
+      "sha256": "43aa5f2c7818dae419b579461cd8658be40c3ce907fee3bc78954a1fa2063478",
+      "bytes": 5714,
+      "producer": "wolfram_xact: independent exact Wolfram/xAct script and Python capture"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/execution.json",
+      "sha256": "f3b80c4213ad91d7ffb568ffe74c9ea62785db8eebc9e646bc11ff0eeafe3d01",
+      "bytes": 714,
+      "producer": "wolfram_xact: independent exact Wolfram/xAct script and Python capture"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/execution_initial_failure.json",
+      "sha256": "92816d9a26e38d874dfcb4aa64954e6d8d83bdd379ef3a58bc44ba0199adbd72",
+      "bytes": 560,
+      "producer": "wolfram_xact: independent exact Wolfram/xAct script and Python capture"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/run_axis.py",
+      "sha256": "14d92d30cfca31bbda2943fd8d5d75ef12ab8e4c67f4f995cc0b95f646b2da1e",
+      "bytes": 2299,
+      "producer": "wolfram_xact: independent exact Wolfram/xAct script and Python capture"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/scientific_result.json",
+      "sha256": "fe50ed85f50e1095e5f49b64b75f134a106e2f76262f0f57ffcd57462632044d",
+      "bytes": 838,
+      "producer": "wolfram_xact: independent exact Wolfram/xAct script and Python capture"
+    },
+    {
+      "path": ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/verify.wl",
+      "sha256": "0c01a815cc02377f763bcfbd636e6bac28298f96d3561a3d05a694e21b737adf",
+      "bytes": 4695,
+      "producer": "wolfram_xact: independent exact Wolfram/xAct script and Python capture"
+    }
+  ],
+  "findings": [],
+  "errors": [],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R8-B-20260909-O4",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/verify.wl",
+        ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/engine_transcript.log",
+        ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/scientific_result.json"
+      ],
+      "evidence_fingerprint": "R8-O4:Wolfram-xAct:426-universal-polynomial-residuals",
+      "summary": "All three registered O4 obligations pass exact algebra: 5 xAct abstract trace/symmetry residuals, 418 full-component residuals, and 3 complex null-cone residuals reduce to zero."
+    }
+  ],
+  "contract_sha256": "430f325399b7caf0e7513cccec64e5bdae114ecafa5ce039747e373936c82f9d",
+  "axis": "wolfram_xact",
+  "axis_status": "PASS",
+  "evidence_class": "exact",
+  "checks": {
+    "O4_STF2_trace_sign_permutation": true,
+    "O4_STF3_trace_sign_permutation": true,
+    "O4_null_cone_and_trace_removal": true
+  },
+  "domain_assumption_diff": [],
+  "counterexample": null,
+  "assumptions_used": [
+    "Arbitrary real u,v,w and amplitude; algebraic simplification is polynomial and valid over their complexification.",
+    "Three-dimensional Euclidean metric, full symmetric tensor multiplicities, bilinear complex null-cone dot without conjugation.",
+    "A=0 and coincident vectors included; unit-vector normalization is not assumed."
+  ],
+  "claim_ceiling": "Only STF2/STF3/null-cone algebra. No MV uniqueness proof, root isolation, floating conversion certification, product law, inference or scientific admission.",
+  "reproduction_argv": [
+    "python3",
+    ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/run_axis.py"
+  ],
+  "reproduction_cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+  "correlation_disclosure": "Independent authoring from frozen contract with no sibling derivations or prior CAS results read; same parent model family may author multiple axes.",
+  "validation_notes": [
+    "First execution produced all 426 zero residuals but failed output/version metadata: xAct shadowed unqualified $Version and kernel Print formatting was not plain JSON. Raw initial diagnostics are retained. Repaired by System`$Version and explicit JSON file export; no polynomial definitions or thresholds changed.",
+    "Normal parent replay leaves frozen scientific and timed packaging evidence untouched; temporary payload is cleaned within owned artifact directory.",
+    "Stored axis PASS is not parent-observed adjudication; root must execute run-adjudicate.",
+    "No production files edited; repository pytest was not applicable to this isolated exact Wolfram axis."
+  ],
+  "validation_commands": [
+    {
+      "argv": [
+        "python3",
+        ".agent-harness/scripts/cas_gate.py",
+        "check-axis",
+        "--contract",
+        ".agent-harness/runs/R8-B-20260909/CAS_CONTRACT.json",
+        "--result",
+        ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/axis_result.json"
+      ],
+      "exit_code": 0,
+      "verification_state": "STORED_ENVELOPE_ONLY"
+    },
+    {
+      "procedure": "strict_result_validation.validate_result_payload on own registered result, historical_runs=set(), launch absent",
+      "errors": []
+    }
+  ]
+}

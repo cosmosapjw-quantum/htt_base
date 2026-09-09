@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/scripts/observed_runs/run_r8_representation_controls.py", line 179, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/scripts/observed_runs/run_r8_representation_controls.py", line 169, in main
+    ids,rows=synthetic();reports={'mock2':execute(ids,rows,a.run_dir,'mock2')}
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/scripts/observed_runs/run_r8_representation_controls.py", line 102, in execute
+    ts=time.monotonic();mv_pool=initialize_pool(reconstructed,ids);mv_time=time.monotonic()-ts
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/htt/obsstat/r8_orbit_bounds.py", line 197, in initialize_pool
+    keys=tuple(_tensor_key(row) for row in rows)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/htt/obsstat/r8_orbit_bounds.py", line 197, in <genexpr>
+    keys=tuple(_tensor_key(row) for row in rows)
+               ^^^^^^^^^^^^^^^^
+  File "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/htt/obsstat/r8_orbit_bounds.py", line 40, in _tensor_key
+    if not np.array_equal(o,o.transpose(p)):raise ValueError('O must be symmetric')
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: O must be symmetric

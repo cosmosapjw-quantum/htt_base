@@ -1,0 +1,82 @@
+{
+  "status": "FOUR_ENGINE_CHECKS_PASS",
+  "contract_sha256": "430f325399b7caf0e7513cccec64e5bdae114ecafa5ce039747e373936c82f9d",
+  "axes": {
+    "wolfram_xact": {
+      "status": "PASS",
+      "argv": [
+        "python3",
+        ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/run_axis.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 11.636686989106238,
+      "checks": {
+        "O4_STF2_trace_sign_permutation": true,
+        "O4_STF3_trace_sign_permutation": true,
+        "O4_null_cone_and_trace_removal": true
+      },
+      "tool_versions": {
+        "wolfram": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+        "xact_xTensor": "1.3.0"
+      },
+      "stdout_sha256": "fe50ed85f50e1095e5f49b64b75f134a106e2f76262f0f57ffcd57462632044d"
+    },
+    "sympy": {
+      "status": "PASS",
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        ".agent-harness/runs/R8-B-20260909/artifacts/sympy/verify_o4.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.6027578611392528,
+      "checks": {
+        "O4_STF2_trace_sign_permutation": true,
+        "O4_STF3_trace_sign_permutation": true,
+        "O4_null_cone_and_trace_removal": true
+      },
+      "tool_versions": {
+        "python": "3.12.3",
+        "python_executable": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "sympy": "1.14.0"
+      },
+      "stdout_sha256": "eb5ebf130d2b11e891a1808355fe00ea0472f0b1ed47cb331646e66d390db69b"
+    },
+    "sage_singular": {
+      "status": "PASS",
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        ".agent-harness/runs/R8-B-20260909/artifacts/sage_singular/verify_o4.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.402213488006964,
+      "checks": {
+        "O4_STF2_trace_sign_permutation": true,
+        "O4_STF3_trace_sign_permutation": true,
+        "O4_null_cone_and_trace_removal": true
+      },
+      "tool_versions": {
+        "sage": "10.9",
+        "singular": "4.3.2"
+      },
+      "stdout_sha256": "fb0d3085228df952f536ca596033fe6fcaf5724382f70d466de4fdac25bf50d4"
+    },
+    "lean": {
+      "status": "PASS",
+      "checks": {
+        "O4_STF2_trace_sign_permutation": true,
+        "O4_STF3_trace_sign_permutation": true,
+        "O4_null_cone_and_trace_removal": true
+      },
+      "source_sha256": "f46f52f91ff0dffcc27ae59fd1d03391bebde8a8663ba52b1ea70d2ae54d1770",
+      "receipt": "lean_direct_receipt.json",
+      "compiled_sha256": "7fc8c054f85ed3d491a43473aeea4ae8c4428493c3adbb9c1c71f7ed71ccaaa7",
+      "independence": "HOST_REPAIRED_PREVIOUS_INDEPENDENT_DRAFT"
+    }
+  },
+  "independence": "THREE_BLIND_DRAFTS_PLUS_HOST_LEAN_COMPLETION",
+  "four_axis_independent_capability": false,
+  "scientific_claim_promotion": false,
+  "scope": "O4 STF2/STF3 trace/sign/permutation and complex bilinear null cone identities only",
+  "prior_cas_adjudication": "Original CAS_BLOCKED retained; this report does not replace it"
+}

@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "axis": "wolfram_xact",
+  "status": "PASS",
+  "contract_sha256": "430f325399b7caf0e7513cccec64e5bdae114ecafa5ce039747e373936c82f9d",
+  "evidence_class": "exact",
+  "completed_at": "2026-09-08T19:59:48.831039+00:00",
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel",
+        "-noprompt",
+        "-script",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/verify.wl"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "started_at": "2026-09-08T19:59:08.910601+00:00",
+      "completed_at": "2026-09-08T19:59:12.835276+00:00",
+      "elapsed_seconds": 3.9246655211318284,
+      "exit_code": 1,
+      "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]"
+    },
+    {
+      "argv": [
+        "/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel",
+        "-noprompt",
+        "-script",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/verify.wl",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/replay_bvhrspfo/payload.json"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "started_at": "2026-09-08T19:59:44.894309+00:00",
+      "completed_at": "2026-09-08T19:59:48.831039+00:00",
+      "elapsed_seconds": 3.9367160119581968,
+      "exit_code": 0,
+      "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]"
+    }
+  ],
+  "checks": {
+    "O4_STF2_trace_sign_permutation": true,
+    "O4_STF3_trace_sign_permutation": true,
+    "O4_null_cone_and_trace_removal": true
+  },
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "exact_residual_count": 426,
+  "subchecks": {
+    "null_bilinear_norm": true,
+    "octopole_trace_removal": true,
+    "quadrupole_trace_removal": true,
+    "rank2_compensated_sign": true,
+    "rank2_symmetric": true,
+    "rank2_symmetry": true,
+    "rank2_trace": true,
+    "rank2_vector_swap": true,
+    "rank2_zero_amplitude": true,
+    "rank3_compensated_sign": true,
+    "rank3_index_permutations": true,
+    "rank3_swap12": true,
+    "rank3_swap23": true,
+    "rank3_trace": true,
+    "rank3_traces": true,
+    "rank3_vector_permutations": true,
+    "rank3_zero_amplitude": true
+  },
+  "tool_versions": {
+    "wolfram": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+    "xact_xTensor": "1.3.0"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "axes": {
+    "wolfram_xact": {
+      "argv": [
+        "python3",
+        ".agent-harness/runs/R8-B-20260909/artifacts/wolfram_xact/run_axis.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 180
+    },
+    "sympy": {
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        ".agent-harness/runs/R8-B-20260909/artifacts/sympy/verify_o4.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 180
+    },
+    "sage_singular": {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        ".agent-harness/runs/R8-B-20260909/artifacts/sage_singular/verify_o4.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 180
+    }
+  }
+}
