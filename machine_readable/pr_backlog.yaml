@@ -197,6 +197,7 @@ policy:
   - PR-246
   - PR-247
   - PR-CATALOG-001
+  - PR-CATALOG-002
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -9885,4 +9886,33 @@ prs:
   level: L0
   scope: static_project_navigation
   risk: low
+  user_authorized: true
+- id: PR-CATALOG-002
+  wave: 0
+  title: Separate existing proof evidence from unconfirmed propositions across the
+    catalog
+  owner: COMMON
+  depends:
+  - PR-CATALOG-001
+  files:
+  - scripts/project_catalog.py
+  - scripts/catalog_lib/proofs.py
+  - scripts/catalog_lib/proof_sources.py
+  - scripts/catalog_lib/proof_discovery.py
+  - tests/project_catalog
+  - docs/project_catalog/proofs
+  tests:
+  - PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -B -m pytest -c /dev/null -p no:cacheprovider
+    --confcutdir=tests/project_catalog tests/project_catalog -q
+  dod:
+  - Every proposition and proof proposal discovery hit has a classified or excluded
+    outcome
+  - Confirmed support binds statement, assumptions, exact existing evidence and version
+  - Read-only database, no research/proof execution or scientific promotion
+  - Deterministic offline export and fresh remote readback
+  kill: No confirmation from ACTIVE, PASS, matching IDs or file presence alone. Unresolved
+    support remains unconfirmed.
+  level: L0
+  scope: static_proof_evidence_navigation
+  risk: R2
   user_authorized: true

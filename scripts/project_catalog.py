@@ -31,12 +31,19 @@ def main(argv=None):
     p.add_argument('--package',type=Path,help='write compressed database parts to this directory')
     p.add_argument('--docs',type=Path,help='generate Korean navigation/list/coverage documents')
     p.add_argument('--curation',type=Path,default=ROOT/'docs/project_catalog/curation.json')
+    p.add_argument('--proof-lists',type=Path,help='export all-version existing-proof support and unconfirmed lists without changing the DB')
+    p.add_argument('--proof-reviews',type=Path,default=ROOT/'docs/project_catalog/proofs/reviewed_evidence.json',help='source-bound static review input for --proof-lists')
     p=sub.add_parser('show');p.add_argument('id')
     p=sub.add_parser('history');p.add_argument('id_or_path');p.add_argument('--limit',type=int,default=100);p.add_argument('--format',choices=['table','json','csv'],default='table')
     sub.add_parser('check')
     p=sub.add_parser('restore',help='restore the shipped database without any external source checkout')
     p.add_argument('--package',type=Path,default=DEFAULT_PACK)
     args=parser.parse_args(argv)
+    if args.command=='export' and args.proof_lists and (args.package or args.docs or args.output):
+        raise ValueError('--proof-lists cannot be combined with --package, --docs or --output')
+    if args.command=='export' and args.proof_lists:
+        if any(getattr(args,k) for k in ['kind','q','owner','status','language','evidence','source','not_in_ref','needs_update','port_status']) or args.ref not in {'baseline','all'} or args.offset or args.limit not in {50,-1} or args.format!='table':
+            raise ValueError('--proof-lists always exports all versions and all formats; query filters cannot be combined with it')
     if args.command=='restore':
         if args.db.exists():raise ValueError('destination database already exists; choose a new --db path')
         print(restore(args.package,args.db));return 0
@@ -56,6 +63,9 @@ def main(argv=None):
             summary=write_reports(c,args.docs,args.curation)
         print(json.dumps(summary,ensure_ascii=False,indent=2));return 0
     with connect(args.db,readonly=True) as c:
+        if args.command=='export' and args.proof_lists:
+            from catalog_lib.proofs import export_proof_lists
+            print(json.dumps(export_proof_lists(c,args.proof_lists,args.proof_reviews),ensure_ascii=False,indent=2));return 0
         if args.command=='show':print(json.dumps(show(c,args.id),ensure_ascii=False,indent=2));return 0
         if args.command=='history':print(render(history(c,args.id_or_path,args.limit),args.format),end='');return 0
         if args.command=='check':

@@ -1,0 +1,25 @@
+# PR-CATALOG-002 — 전체 이력의 증명 근거 확인·미확인 목록
+
+Owner: COMMON. Scope: user-requested static proof evidence navigation.
+Base: catalog `57ecfe2176bf8be28327edf500a4ca5136c6b15b`; comparison R8 `efc5f306`.
+
+기존 DB의 명제 기록과 문서·계획·주석의 증명 제안을 모아, 기존 증명 근거를
+대조한 항목과 완료 미확인 항목을 분리한다. 동일 ID라도 다른 가정·내용 버전은
+합치지 않으며, 모든 원본 레코드와 출처·버전 관계를 유지한다.
+
+`scripts/project_catalog.py export --proof-lists PATH`로 한국어 Markdown,
+CSV, JSON과 전체 원본 연결표를 재생성한다. 큰 연결표는 독립적으로 읽을 수 있는
+gzip 조각으로 배포한다. 원문 검색·검토 입력도 별도 파생 파일에 보존한다.
+기존 SQLite 및 과학적 원문 레지스트리는 수정하지 않는다.
+
+카탈로그 전용 테스트 43개와 DAG 196개 구조 검증을 통과했다. 독립 검토에서
+확인 근거의 모든 발췌·소스 연결을 대조했으며, 이후 발견된 TAR 및 단일 파일
+locator 오류를 수정하고 회귀 테스트를 추가했다. 전수 대응·불변 DB·반복 생성·
+원격 확인은 [검수 자료](../project_catalog/proofs/REVIEW.md)에 기록한다.
+
+연구 코드·연구 테스트 수집·Lean·CAS는 실행하지 않았다. 기존 소스와 표준 라이브러리
+동작을 조사했으며 외부 API 변경에 의존하지 않아 웹 검색을 수행하지 않았다.
+개별 보조정리의 저장된 근거를 상위 CAS PASS나 새로운 과학적 승인으로 승격하지 않는다.
+공통 에이전트 하네스의 봉투/종료 훅 문제는 별도 NONPASS로 보존한다.
+
+[목록 길잡이](../project_catalog/proofs/README.md)에서 최종 집계와 조회법을 제공한다.
