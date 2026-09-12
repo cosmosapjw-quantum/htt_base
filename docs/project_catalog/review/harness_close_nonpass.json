@@ -1,0 +1,64 @@
+{
+  "ok": false,
+  "error": {
+    "code": "HARNESS_VALIDATION_FAILED",
+    "message": "The active run must validate before normal close."
+  },
+  "validation": {
+    "ok": false,
+    "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+    "active_run": "PROJECT-CATALOG-20260912",
+    "live_context": {
+      "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+      "head": "0686ead7a838a1b82077066a729bb2b62ece6622",
+      "dag_sha256": "80b42fbbeea4552ce81d868618133dd96420bf5d9ae920d94867ef9013ee8d1a",
+      "status_sha256": "456b041e0318ee2f3c04b6a299ece25d3a4524eadbb51efb878c0b3997530014",
+      "run": {
+        "run_id": "PROJECT-CATALOG-20260912",
+        "work_unit_id": "PR-CATALOG-001",
+        "spec_ref": "docs/project_catalog/SPEC.md",
+        "base_ref": "efc5f30666b96782f946375551f0068bb3a30f74",
+        "head_ref": "HEAD",
+        "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+        "status": "initialized"
+      },
+      "live_context_id": "b1f81cde78f6b26c26d2abc1dac964117c914b9b3fc20c0aceaa505dcbf556d9",
+      "branch": "implementation/project-catalog-20260912",
+      "dag": {
+        "path": "docs/codex_handoff/pr_backlog.yaml",
+        "generated_on": "2026-06-11",
+        "scope": "htt_base_pre_native_lowell_solver_codex_dag_v2",
+        "pr_count": 195
+      },
+      "status": {
+        "path": "docs/codex_handoff/pr_status.yaml",
+        "generated_on": "2026-07-20",
+        "completed": 141,
+        "blocked": 2,
+        "pending": 22,
+        "in_progress": "PR-CATALOG-001"
+      }
+    },
+    "errors": [
+      "static-review.json: assignment required_inputs[1] hash mismatch (stale input): scripts/project_catalog.py",
+      "static-review.json: assignment required_inputs[2] hash mismatch (stale input): scripts/catalog_lib/db.py",
+      "static-review.json: assignment required_inputs[3] hash mismatch (stale input): scripts/catalog_lib/extract.py",
+      "static-review.json: assignment required_inputs[4] hash mismatch (stale input): scripts/catalog_lib/scan.py",
+      "static-review.json: assignment required_inputs[5] hash mismatch (stale input): scripts/catalog_lib/query.py",
+      "static-review.json: assignment required_inputs[6] hash mismatch (stale input): scripts/catalog_lib/package.py",
+      "static-review.json: assignment required_inputs[7] hash mismatch (stale input): tests/project_catalog/test_catalog.py",
+      "semantic-slice.json: result launch_evidence must equal the verified class 'unverified'",
+      "semantic-slice.json: result execution_evidence must be self_declared",
+      "semantic-slice.json: artifact 0 must contain path, sha256, bytes, and producer",
+      "semantic-slice.json: result errors must be a list of non-empty strings",
+      "semantic-slice.json: finding 'F-RUN-PROJECT-CATALOG-20260912-SEMANTIC-001' severity must be one of ['critical', 'high', 'low', 'medium']",
+      "static-review.json: assignment required_inputs[1] hash mismatch (stale input): scripts/project_catalog.py",
+      "static-review.json: assignment required_inputs[2] hash mismatch (stale input): scripts/catalog_lib/db.py",
+      "static-review.json: assignment required_inputs[3] hash mismatch (stale input): scripts/catalog_lib/extract.py",
+      "static-review.json: assignment required_inputs[4] hash mismatch (stale input): scripts/catalog_lib/scan.py",
+      "static-review.json: assignment required_inputs[5] hash mismatch (stale input): scripts/catalog_lib/query.py",
+      "static-review.json: assignment required_inputs[6] hash mismatch (stale input): scripts/catalog_lib/package.py",
+      "static-review.json: assignment required_inputs[7] hash mismatch (stale input): tests/project_catalog/test_catalog.py"
+    ]
+  }
+}

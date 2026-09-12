@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "branch": "implementation/project-catalog-20260912",
+  "artifact_commit": "398263da9a0faab2ecab516c84bfcd477a9e1395",
+  "completed_utc": "2026-09-12T14:08:37.694733+00:00",
+  "remote_checkout": "/home/cosmosapjw/.cache/htt_project_catalog_remote_20260912",
+  "remote_checkout_head": "398263da9a0faab2ecab516c84bfcd477a9e1395",
+  "manifest_sha256": "032fface7d1918407c3f5e2fed719fc36afe2f6327cefc1cc6fb13497f65da64",
+  "database_sha256": "42942d7485d4650075b0ec6baa2059d8b8e715bea9c3d59d772c301854d20e25",
+  "database_bytes": 10820591616,
+  "compressed_bytes": 2352689771,
+  "parts": 57,
+  "part_max_bytes": 41943040,
+  "push_method": "two ordinary non-force fast-forward Git pushes for the database volumes",
+  "remote_restore": "PASS: every part and restored SQLite matched transport manifest",
+  "representative_queries": "PASS: 9 query result fingerprints equal local final snapshot",
+  "remote_catalog_check": "PASS",
+  "remote_catalog_checks": {
+    "file_processing_status_missing": 0,
+    "scientific_promotion_generated": 0,
+    "dangling_edge_target": 0,
+    "orphan_archive_root": 0,
+    "fts_count_mismatch": 0,
+    "observed_regular_file_without_version": 0,
+    "git_leaf_without_file_version": 0
+  },
+  "logical_counts_equal": true,
+  "original_main_status_preserved": true,
+  "original_changed_entries": 73,
+  "scientific_execution": "NOT_EXECUTED",
+  "scientific_or_proof_promotion": "NONE",
+  "scope": "catalog transport, source-version navigation and structural validation only",
+  "commands": [
+    "git clone --depth 1 --filter=blob:none --no-checkout --single-branch https://github.com/cosmosapjw-quantum/htt_base.git <new-checkout>",
+    "git sparse-checkout set --no-cone /scripts/project_catalog.py /scripts/catalog_lib/ /docs/project_catalog/",
+    "git fetch --depth 1 --filter=blob:none origin implementation/project-catalog-20260912",
+    "git checkout --detach FETCH_HEAD",
+    "python3 -B scripts/project_catalog.py restore",
+    "python3 -B scripts/project_catalog.py query --kind analysis --q CF4",
+    "python3 -B scripts/project_catalog.py check"
+  ]
+}
