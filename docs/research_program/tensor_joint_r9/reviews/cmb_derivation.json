@@ -1,0 +1,697 @@
+{
+  "schema_version": 1,
+  "run_id": "R9-20260912",
+  "assignment_id": "cmb",
+  "context_version": "6d78f041ff9ec512b91493c6e69e3da2177ef1cb09ac83e839a141f5b587d8d1",
+  "status": "pass",
+  "status_scope": "Completed bounded independent research derivation/design only; observational admission, production implementation, independent decision promotion and runtime-model identity are not claimed.",
+  "independence": {
+    "mode": "blind-results",
+    "assignment_read_first": true,
+    "context_and_required_input_hashes_verified": true,
+    "context_pack_hashes_verified": true,
+    "sibling_results_read": false,
+    "shared_generated_view_read": false,
+    "subagents_spawned": false,
+    "production_changes": false,
+    "runtime_model_identity": "UNKNOWN_NOT_ASSERTED",
+    "bootstrap": "Explicit assignment plus CONTEXT_INDEX; host hook injection unavailable as declared by parent."
+  },
+  "summary": "The shortest CMB path is a new fixed, explicitly lossy statistic with its own admitted product law, or a processed response with an admitted conditional/joint law. The frozen full-Q/O orbit lane remains intact. A threshold-witness rank algorithm and a sextic exact-comparison fallback can improve that lane without resolving all distances. An exact ideal f_B null and a reverse-mixing correction to stochastic boost response provide substantive new mathematical discrimination.",
+  "claims": [
+    {
+      "id": "RUN-R9-20260912-CMB-01",
+      "title": "Anomaly calibration and candidate-state inversion require different capabilities",
+      "status": [
+        "derived"
+      ],
+      "evidence_scope": "Actual source bodies and stored metadata were inspected. No project code was newly executed; historical implementation evidence retains its original scope.",
+      "equations": [
+        "X_i=P_release(S_i,N_i,eta), i=0,...,M-1; under the null (X_0,...,X_{M-1}) must be jointly exchangeable after the identical complete processing experiment.",
+        "p=(1+sum_{i!=0}1{s_i>=s_0})/M, s_i=kth_{j!=i}d(X_i,X_j), k=ceil(sqrt(M-1)).",
+        "For a candidate family, C(Y)=union_{nu in admitted compatible tuples}{theta: p_{theta,nu}(Y)>alpha}; any numerically unresolved candidate remains in an outer set."
+      ],
+      "assumptions": [
+        "The null, feature/statistic, processing, row identities, tie convention, M, scales and alpha are fixed independently of the numerical refinement.",
+        "Anomaly exchangeability does not supply a simulator or normalized law at each physical candidate.",
+        "Same-sky SMICA/COMMANDER/NILC/SEVEM products are correlated controls; they cannot create independent replicate skies.",
+        "A product-specific Gaussian law must be explicitly qualified; covariance column presence alone is insufficient."
+      ],
+      "derivation": "The finite-rank proof only needs exchangeability of the fixed score vector. Conditional on its unordered values, at most floor(alpha M) indices have inclusive descending rank <=alpha M. A candidate confidence set instead needs the same level guarantee at every possible true candidate. Thus a single admitted isotropic null supports a null rejection claim, whereas physical confidence inversion needs a candidate family. Numerical enclosures support neither stochastic premise by themselves.",
+      "evidence": [
+        {
+          "source": "72f6603842ab1a096f7569588ae53681",
+          "location": "r8_interval_rank.py:29-57",
+          "relation": "supports"
+        },
+        {
+          "source": "f6d72901eb3debda502681a10fb407e2",
+          "location": "THEORY.md:76-105,115-146,197-209",
+          "relation": "supports"
+        },
+        {
+          "source": "0d2fecf8ce183d7fac4c90b691c875f7",
+          "location": "$.scope,$.empirical_eligible,$.covariance,$.observed_rank,$.records[*].measurement_covariance",
+          "relation": "limits"
+        },
+        {
+          "source": "f0bdab2c86606ef326e93e3e4c30b85f",
+          "location": "$.process_status,$.scientific_outcome,$.capabilities",
+          "relation": "limits"
+        },
+        {
+          "source": "7b5469e4dece1a9f82366a39f5129b22",
+          "location": "$.process_status,$.scientific_outcome,$.reason",
+          "relation": "limits"
+        }
+      ],
+      "counterexamples": [
+        "All exact scores equal zero, but observed interval [0,1] and reference intervals [0,0]: upper-endpoint ranking gives false 1/M; inclusive conservative p_upper is 1.",
+        "A high f_B or rejected isotropy score has no parameter-to-observation map to shear, vorticity or matter tilt. A best-fitting boost coordinate is not such a map."
+      ],
+      "next_capability": "One release-specific observed/simulation sidecar and qualified stochastic experiment, or a justified conditional law for a new statistic; observed and simulated beam/pixel/mask/fit/kinetic corrections and realization mapping must agree."
+    },
+    {
+      "id": "RUN-R9-20260912-CMB-02",
+      "title": "Threshold witnesses certify the unchanged full-orbit rank decision",
+      "status": [
+        "derived",
+        "numerically checked"
+      ],
+      "equations": [
+        "N=M-1; fix valid a<=s_0<=b.",
+        "Below witness for row i: k distinct j!=i with U_ij<a. Then s_i<=max_selected U_ij<a<=s_0.",
+        "High witness for row i: M-k distinct j!=i with L_ij>=b. At most k-1 remaining distances can be <b, hence s_i>=b>=s_0.",
+        "Let B_count be the number of certified below reference rows and H_count the number of certified high reference rows. Then (1+H_count)/M<=p<=(M-B_count)/M.",
+        "At alpha=1/20, certify rejection if B_count>=M-floor(M/20); certify non-rejection if H_count>=floor(M/20).",
+        "Observed bracket witnesses: k edges with U_0j<=b prove s_0<=b; M-k edges with L_0j>=a prove s_0>=a.",
+        "For any pivot h: L_ij <- max(L_ij,L_ih-U_jh,L_jh-U_ih,0); U_ij <- min(U_ij,U_ih+U_hj)."
+      ],
+      "assumptions": [
+        "Every bound concerns the same amplitude-preserving common-SO(3) metric with fixed positive q0,o0 and all original tensor rows retained.",
+        "Group action is isometric in the fixed weighted Frobenius norm; quotient metric/pseudometric triangle inequalities follow.",
+        "Bounds are simultaneously deterministic certificates with outward arithmetic, or one entire-run simultaneous failure allocation delta is deducted from alpha.",
+        "Edge witnesses use distinct row indices, never count the diagonal, and persist exact target/statistic/law identities."
+      ],
+      "derivation": "The two kth-order statements are direct counting lemmas. A below row is certainly not an inclusive exceedance; a high row is certainly an inclusive exceedance. Remaining rows stay possible, giving the p enclosure without determining their scores. At every adaptive numerical stop this upper endpoint still bounds the same exact p pointwise, so observed-directed scheduling adds no optional-stopping penalty. The quotient triangle bound follows by composing rotations for X_i-to-X_h and X_h-to-X_j and applying the Euclidean triangle inequality; compactness supplies minimizing rotations, though infimum approximations alone suffice. Replacing unknown exact distances by certified interval endpoints yields the stated propagation.",
+      "algorithm": [
+        "Initialize every row identity and a complete cheap enclosure bank (or a lazy representation whose finite identity upper and zero lower are reproducibly defined for every pair); no row deletion or fabricated missing-row enclosure.",
+        "Maintain a certified observed kth bracket, below/high reference witness lists, and a monotone pair certificate store.",
+        "Propagate triangle bounds through a small adaptively chosen pivot set. A pivot is a computational choice only; it does not alter the statistic.",
+        "Before refining an edge, determine which observed bracket or row threshold witness it can complete. Prefer useful cheap feasible-rotation upper witnesses for below rows; use invariant/pivot/global lower certificates for high rows.",
+        "Stop immediately at the integer decision condition. Otherwise refine only relevant ambiguous comparisons using exact threshold or enclosure routines.",
+        "On deadline or unresolved ties, emit the valid interval, UNRESOLVED, target hash, source/row binding, witness lists and first failure. A supervisor deadline/new operation budget belongs to a new computation plan; never relabel the historical 60-second failure."
+      ],
+      "numerical_checks": {
+        "integer_thresholds": [
+          {
+            "M": 31,
+            "k": 6,
+            "below_required": 30,
+            "high_required": 1
+          },
+          {
+            "M": 301,
+            "k": 18,
+            "below_required": 286,
+            "high_required": 15
+          },
+          {
+            "M": 1000,
+            "k": 32,
+            "below_required": 950,
+            "high_required": 50
+          }
+        ],
+        "execution": "Python standard-library exact integer/Fraction arithmetic; no frozen pool was loaded or continued."
+      },
+      "evidence": [
+        {
+          "source": "758a87ad0ed08563b8555bacb417c12e",
+          "location": "r8_orbit_bounds.py:225-307",
+          "relation": "supports",
+          "scope": "Existing complete pair bank and kth-relevant refinement donor; proposed witness/pivot scheduling is not implemented here."
+        },
+        {
+          "source": "72f6603842ab1a096f7569588ae53681",
+          "location": "r8_interval_rank.py:29-57",
+          "relation": "supports"
+        },
+        {
+          "source": "f6d72901eb3debda502681a10fb407e2",
+          "location": "THEORY.md:7-13,76-105",
+          "relation": "supports"
+        }
+      ],
+      "counterexamples": [
+        "Use U_ij<=a instead of strict U_ij<a for below witnesses and ties become wrongly excluded; the below comparison must remain strict.",
+        "When a=0, no nonnegative distance can prove a below witness. Improving only reference upper bounds then cannot establish rejection; the observed lower bracket must improve.",
+        "Triangle bounds need the common fixed group metric. Distances after row-dependent scales, masks or covariance norms need a new proof and can violate the claimed metric relation."
+      ],
+      "limitations": [
+        "This is a sufficient decision certificate, not a runtime theorem or proof it will resolve existing M301/M1000 pools.",
+        "The M1000 rejection certificate needs at most 950*32 explicitly selected below-edge witnesses before deduplicating, but discovering them and certifying s_0 may cost much more. This is a certificate-size observation, not a complexity bound.",
+        "Existing rank envelope target and law fields are optional; a future consumer must require detached self-contained target/source/row/law/certificate binding."
+      ]
+    },
+    {
+      "id": "RUN-R9-20260912-CMB-03",
+      "title": "SO(3) threshold comparison is a compact sextic polynomial problem",
+      "status": [
+        "derived",
+        "numerically checked"
+      ],
+      "equations": [
+        "Let h=(w,x,y,z)!=0, r=h^T h, and H(h) be the usual homogeneous degree-two quaternion rotation numerator, so R(h)=H/r in SO(3).",
+        "A=(||Q||_F^2+||Q'||_F^2)/q0^2+(||O||_F^2+||O'||_F^2)/o0^2.",
+        "P_t(h)=(A-t^2)r^3-(2r/q0^2)<Q,H Q' H^T>-(2/o0^2)<O,H^{tensor 3} O'>.",
+        "P_t(h)=r^3(f(R(h))^2-t^2); P_t is homogeneous of degree six.",
+        "For t>=0, d(X,Y)<t iff some chart h_c=1, h_j in [-1,1], has P_t(h)<0.",
+        "For t>=0, d(X,Y)>=t iff P_t(h)>=0 on all four chart cubes."
+      ],
+      "assumptions": [
+        "Tensor/scaling/threshold values are rational, including exact dyadic interpretations of finite binary64 rows; t>=0.",
+        "The isometry identities ||RQ'R^T||=||Q'|| and ||R^{tensor 3}O'||=||O'|| are used before clearing denominators.",
+        "Four largest-component quaternion charts cover all proper rotations, including overlap and boundary ties."
+      ],
+      "derivation": "Expanding the squared residual uses fixed tensor norms and two correlation terms. The Q correlation denominator is r^2 and the O correlation denominator r^3. Multiplying by r^3 gives the sextic expression; a direct unsimplified squared-residual expansion would misleadingly suggest degree twelve. Because r>0, the threshold inequality keeps its sign. A nonnegative global polynomial certificate proves a lower threshold; a strict negative rational witness proves a feasible upper comparison. Dense rational chart points guarantee an exact rational witness exists whenever the strict negative open set is nonempty.",
+      "algorithm": [
+        "Expose compare_orbit_to_threshold(pair_id,t)->LT_CERTIFIED | GE_CERTIFIED | UNKNOWN with exact certificate data.",
+        "Try feasible rational quaternion witness, spectral/pivot lower thresholds and existing interval branch-and-bound first.",
+        "If exact equality or a small margin obstructs interval termination, allow a separately qualified rational CAD/quantifier-elimination or verified polynomial-positivity fallback on the four compact cubes.",
+        "Use rationally checked SOS/Positivstellensatz output only at its actual proof scope. A failed SOS relaxation is UNKNOWN; arbitrary nonnegative sextics need not admit the selected SOS representation.",
+        "Keep hard resource accounting and return UNKNOWN rather than accepting local minima or approximate solver statuses as global certificates."
+      ],
+      "numerical_checks": {
+        "fixture": "Q=diag(1,2,-3), Q'=diag(-2,3,-1); O=STF(e1^3), O'=STF(e2^3); h=(2,1,-3,1), q0=2, o0=3, t=7/5. Toy tensor/scaling quantities only, not Kelvin data.",
+        "result": "Exact Fraction calculation: P_t/r^3-(f^2-t^2)=0; R^T R-I is exactly zero; det R=1.",
+        "scope": "One exact arithmetic identity witness plus algebraic derivation, not certified global minimization or four-axis proof."
+      },
+      "evidence": [
+        {
+          "source": "758a87ad0ed08563b8555bacb417c12e",
+          "location": "r8_orbit_bounds.py:91-124,126-203",
+          "relation": "supports",
+          "scope": "Exact chart rotations and existing rational cell bounds are implementation donors."
+        },
+        {
+          "source": "f6d72901eb3debda502681a10fb407e2",
+          "location": "THEORY.md:43-74",
+          "relation": "supports"
+        }
+      ],
+      "limitations": [
+        "No CAD engine was executed; no full metric or existing rank was solved.",
+        "Inclusive ties can require proving global nonnegativity with zeros. A strict-margin subdivision alone does not guarantee finite termination at equality.",
+        "New formal O1/O2 polynomial/chart/comparison obligations remain in four-axis execution DAG."
+      ]
+    },
+    {
+      "id": "RUN-R9-20260912-CMB-04",
+      "title": "Existing f_B admits an exact ideal conditional null for a separate fixed statistic",
+      "status": [
+        "derived",
+        "numerically checked"
+      ],
+      "equations": [
+        "For fixed Q!=0, B_Q beta=3 beta_<a Q_bc>, B_Q^*B_Q=3 M_Q, M_Q=(Q:Q)I+(6/5)Q^2; rank B_Q=3.",
+        "P_Q=B_Q(B_Q^*B_Q)^(-1)B_Q^*; f_B=||P_Q O||_F^2/||O||_F^2.",
+        "If O|Q=q ~ N(0,sigma3^2 I_7) in a Frobenius-orthonormal STF3 basis, then X=||P_q O||^2/sigma3^2~chi2_3, Y=||(I-P_q)O||^2/sigma3^2~chi2_4, independently.",
+        "Therefore f_B=X/(X+Y)~Beta(3/2,2), conditional on every admitted q!=0.",
+        "For 0<=f<=1: F(f)=(5/2)f^(3/2)-(3/2)f^(5/2); upper-tail p=1-F(f).",
+        "More generally, for an admitted central conditional Gaussian after correct whitening/nuisance removal with m dimensions and fixed conditional projector rank r, f=||P_D y||^2/||y||^2~Beta(r/2,(m-r)/2), 0<r<m."
+      ],
+      "assumptions": [
+        "An admitted ideal full-sky central isotropic conditional octupole law; Gaussian independent full-sky l=2/l=3 blocks suffice, but not every processed product obeys it.",
+        "Frobenius-orthonormal coordinates or the exact STF3 Gram metric are required. The seven unique Cartesian components do not have identity metric.",
+        "The statistic and one-sided tail are fixed in a new scientific lane; no data-driven scan over statistic, product, axis, null or tail.",
+        "Domain handling for Q=0/O=0 and numerical refusal is fixed without selectively dropping observed/simulated rows.",
+        "The general whitened version uses the actual conditional mean and covariance; conditioning on measured Q must be justified by that joint law."
+      ],
+      "derivation": "An orthonormal basis diagonalizing the rank-three projector splits a spherical seven-dimensional Gaussian into independent 3- and 4-dimensional blocks. Their squared norms are independent chi-square variables with a common scale, so the ratio is Beta. The Beta density is (15/4)f^(1/2)(1-f), whose direct integral gives the stated CDF. Unknown common sigma3 cancels. This is a mathematically calibrated partial diagnostic under an explicit law, not a replacement for the amplitude-sensitive nine-dimensional common orbit.",
+      "evidence": [
+        {
+          "source": "3b133a97660a38913262890aed371976",
+          "location": "boost_response.py:1-21,41-50,165-191,225-245,348-381",
+          "relation": "supports"
+        },
+        {
+          "source": "6d1ab7204b4111bb4932a83938b72e78",
+          "location": "T5 sections 4-7, especially 157-245",
+          "relation": "supports"
+        },
+        {
+          "source": "c4f9023b70bc764f4e85451c7db71dc1",
+          "location": "run_r8_owned_controls.py:149-167",
+          "relation": "supports",
+          "scope": "Actual existing f_B is the squared norm fraction, matching this derivation; stored products remain unqualified."
+        }
+      ],
+      "numerical_checks": {
+        "exact_check": "CDF transformed by f=v^2 gives (5v^3-3v^5)/2; endpoint normalization equals one by exact Fraction arithmetic. No observed p was computed."
+      },
+      "counterexamples": [
+        "Replacing O by lambda O for lambda!=0 leaves f_B invariant while changing the fixed-scale full Q/O orbit unless |lambda|=1 in special cases. This statistic discards amplitude and other morphology information.",
+        "An anisotropic or Q-correlated processed octupole need not have the Beta law without correct conditional centering/whitening. PR3 same-sky control metadata supplies no such law.",
+        "A large f_B also arises from an intrinsic octupole lying in Im B_Q; it does not identify a physical velocity."
+      ],
+      "next_capability": "Minimal prospective alternative: freeze f_B or a fixed covariance-aware projection statistic and obtain a release-matched null/conditional law. It needs neither pairwise SO(3) optimization nor a Bianchi solver. Ideal Beta is an exact mock/control law only until actual processing assumptions are admitted."
+    },
+    {
+      "id": "RUN-R9-20260912-CMB-05",
+      "title": "The stochastic conditional boost response includes reverse mixing",
+      "status": [
+        "derived",
+        "numerically checked",
+        "literature-supported"
+      ],
+      "equations": [
+        "For d=1 on the full sky, G_i f=n_i f-grad(n_i) dot grad(f). Since Delta n_i=-2n_i, <f,G_i g>+<G_i f,g>=0; G_i^*=-G_i.",
+        "In orthonormal real harmonics let B_i: l=2 -> l=3 and E_i: l=3 -> l=2. Then E_i=-B_i^T.",
+        "At first order q=q_s+sum_i beta_i E_i o_s+other adjacent inputs; o=o_s+sum_i beta_i B_i q_s+other adjacent inputs.",
+        "For independent zero-mean source blocks Cov(q_s)=C2 I_5, Cov(o_s)=C3 I_7, C2,C3>0, derivative_i Cov(o,q)=(C2-C3)B_i.",
+        "Consequently E[o|q]=sum_i beta_i (1-C3/C2) B_i q+O(||beta||^2), under the joint Gaussian source law and near beta=0.",
+        "In a general Gaussian processed law d=K_beta s+n, mu_beta=K_beta m, Sigma_beta=K_beta S K_beta^T+Sigma_n(beta). Derivative_i Sigma=K_i S K_0^T+K_0 S K_i^T+derivative_i Sigma_n.",
+        "The Gaussian information contains both terms I_ij=(derivative_i mu)^T Sigma^-1(derivative_j mu)+(1/2)tr(Sigma^-1(derivative_i Sigma)Sigma^-1(derivative_j Sigma))."
+      ],
+      "assumptions": [
+        "This is a first-order, zero-boost, ideal full-sky stochastic derivation with orthonormal real coordinates and d=1; C2,C3 denote source per-mode variances in those coordinates, not tensor amplitudes.",
+        "Other source multipoles are independent at beta=0, so their adjacent contributions do not add to this l=2/l=3 cross block at first order.",
+        "The absolute monopole/corrections, intrinsic dipole, mask, beams, selection and noise must be handled separately for an actual product.",
+        "A deterministic fixed-source derivative and a stochastic conditional/marginal derivative are distinct experiments."
+      ],
+      "derivation": "The divergence theorem gives skew-adjointness of the full-sky temperature generator. Therefore the reverse l=3-to-2 block is minus the transpose of the forward block. Cross covariance receives a C2 B_i term from boosting q_s into o and a C3 E_i^T term from boosting o_s into q. Their difference is essential. Gaussian conditioning multiplies that cross covariance by (C2 I)^(-1), giving the corrected conditional regression. Merely inserting observed Q into O approximately B_Q beta ignores the fact that Q itself is boosted and random.",
+      "numerical_checks": {
+        "axisymmetric_z": "Using standard Legendre polynomials with exact rational coefficient arithmetic: G P2=(9/5)P3-(4/5)P1; G P3=(16/7)P4-(9/7)P2. All coefficient residuals exactly zero. In normalized modes the forward/reverse coefficients are +9/sqrt(35), -9/sqrt(35), and the weighted adjoint residual is zero.",
+        "counterexample": "Set C2=C3>0. The l=2/l=3 first-order conditional mean response is zero although B_Q has rank three for every Q!=0. Thus algebraic inverse existence does not imply first-order statistical beta information in this block."
+      },
+      "evidence": [
+        {
+          "source": "6d1ab7204b4111bb4932a83938b72e78",
+          "location": "T5:35-91,157-245",
+          "relation": "supports"
+        },
+        {
+          "source": "577b69897accc2adefb7a63b139e02a6",
+          "location": "r7_cmb_product_response.py:68-96",
+          "relation": "limits",
+          "scope": "Thermal fixed-source map response explicitly does not provide release covariance/selection."
+        },
+        {
+          "source": "https://arxiv.org/abs/1403.6117",
+          "location": "abstract and PDF introduction/section II excerpt",
+          "relation": "supports",
+          "scope": "d=1 full-sky unitary boost operator; the conditional covariance formula is derived here."
+        },
+        {
+          "source": "https://arxiv.org/abs/2107.10846",
+          "location": "abstract",
+          "relation": "supports",
+          "scope": "Separate Doppler/aberration, intrinsic dipole and unit-conversion/beam/noise/mask effects."
+        }
+      ],
+      "limitations": [
+        "Equal C2,C3 proves absence of this block's first-order response, not a global all-orders or all-multipole no-go theorem.",
+        "The known deterministic map B_Q remains correct for a fixed source quadrupole. Its use as a physical estimator requires a model that actually makes its residual/conditioning assumptions true.",
+        "A deterministic mean-remainder ball does not automatically cover a wrong covariance or selected sampling law."
+      ],
+      "next_capability": "Differentiate the complete admitted processed joint law or supply a validated conditional candidate response. Bind K_beta, latent sky covariance/mean, noise, correction and selection assumptions; validate reverse mixing as an adversarial test."
+    },
+    {
+      "id": "RUN-R9-20260912-CMB-06",
+      "title": "A processed local response can feed a confidence set without the orbit-rank lane",
+      "status": [
+        "derived"
+      ],
+      "equations": [
+        "Under a separately admitted fixed-design Gaussian model z=A beta_obs+N eta+b+epsilon, epsilon~N(0,I), beta_obs=v_obs/c, let U span col(N)^perp, y=U^T z, D=U^T A, b'=U^T b.",
+        "For fixed b', r=rank D: C_b'(y)={beta: ||P_D(y-D beta-b')||^2<=chi2_r(1-alpha)} has coverage >=1-alpha.",
+        "For deterministic discrepancy set B', C(y)=union_{b' in B'} C_b'(y), or a certified outer approximation, preserves coverage when the true discrepancy is included.",
+        "A linear beta target L beta is estimable only when ker D is contained in ker L; equivalently row L is contained in row D.",
+        "The orthogonal residual (I-P_D)y diagnoses mismatch separately; adding its rejection to the confidence rule requires an explicit combined calibration/allocation.",
+        "Full-sky tensor amplitudes: ||B_Q beta||_F^2=3 beta^T M_Q beta. B_Q rank three and kappa(M_Q)<=5/3 do not survive arbitrary processing/nuisance projection automatically."
+      ],
+      "assumptions": [
+        "Fixed positive-definite selected covariance and fixed nuisance/response design are explicit local contracts. An observed-Q plug-in response needs the conditional-law justification of CMB-05.",
+        "Mean approximation errors have a declared deterministic image and uniform validity region; covariance/selection changes require their own law qualification.",
+        "If a proper rotation relates product frames, rotate Q,O and their full covariance consistently before sharing a beta/directional parameter with other observations.",
+        "If rank is numerically uncertain, retain ambiguous directions/outer confidence sets, not arbitrary rank cutoff or jitter."
+      ],
+      "derivation": "At the true beta,b', projecting onto col D gives a rank-r central Gaussian squared norm. Taking the union over the allowed deterministic discrepancy can only enlarge the confidence region. Projecting out a fixed nuisance eliminates its exact mean image but may also eliminate the physical response. Information lives only in the quotient response. The independent orthogonal component is a goodness-of-fit diagnostic under the same fixed Gaussian law, not part of the r-dimensional parameter pivot by default.",
+      "evidence": [
+        {
+          "source": "0453e7ba329216f9222b7d5ea9d2229b",
+          "location": "T6:82-106,223-350,450-464",
+          "relation": "supports"
+        },
+        {
+          "source": "f6d72901eb3debda502681a10fb407e2",
+          "location": "THEORY.md:115-156",
+          "relation": "supports"
+        },
+        {
+          "source": "577b69897accc2adefb7a63b139e02a6",
+          "location": "r7_cmb_product_response.py:99-128",
+          "relation": "supports",
+          "scope": "Carrier units/layout/frame/covariance donors, not proof of a sampling law."
+        }
+      ],
+      "counterexamples": [
+        "Choose N=A. Then D=0 even if the unprocessed local B_Q has rank three. All beta values remain admissible absent other restrictions.",
+        "A tiny quadrupole leaves kappa(M_Q) bounded while the absolute information scale tends to zero like ||Q||^2; good relative conditioning does not mean a precise velocity.",
+        "An unconstrained intrinsic octupole can absorb B_Q delta_beta exactly; the algebraic least-squares coordinate alone cannot distinguish it from a local boost."
+      ],
+      "next_capability": "Product-matched processed response/law receipt and certified nuisance-projected rank are the immediate dependencies. Full orbit ranks and a native cosmological solver are not logical prerequisites."
+    },
+    {
+      "id": "RUN-R9-20260912-CMB-07",
+      "title": "Physical MES images remain a separate downstream response problem",
+      "status": [
+        "derived"
+      ],
+      "equations": [
+        "C_phys={x: F_CMB(x,nu) belongs to admitted CMB acceptance and other admitted block acceptances hold for the SAME shared tuple nu}, unioned over alternative compatible nu.",
+        "Retain frame tensors Q_K,O_K for directional comparisons; common SO(3) quotient removes absolute orientation, and no invariant can recover it without external frame data.",
+        "Single-sky low multipoles constrain values; time/spatial radiation jets needed by physical shear/vorticity maps are additional state variables or externally supplied closure constraints."
+      ],
+      "assumptions": [
+        "Local observer beta is dimensionless v/c and is not matter-congruence tilt or a radiation derivative.",
+        "A supplied physical response must state units, observer field, dynamics/closure, derivative/remainder bounds and nuisance sharing.",
+        "Missing physical candidate/law blocks contribute whole-domain outer constraints and retain their fixed alpha allocation."
+      ],
+      "derivation": "Neither an anomaly score nor a local directional coefficient specifies how physical candidate state x generates the selected CMB product. The physical image therefore requires an independently supplied response/law and a consistent common state. A single observed value admits arbitrary unobserved derivative variation unless the admitted physical domain constrains it. The full Q/O representation is richer than f_B, but it does not supply the missing derivatives.",
+      "evidence": [
+        {
+          "source": "f6d72901eb3debda502681a10fb407e2",
+          "location": "THEORY.md:158-195",
+          "relation": "supports"
+        },
+        {
+          "source": "https://arxiv.org/abs/2505.02080",
+          "location": "abstract",
+          "relation": "limits",
+          "scope": "Primary-source context that low CMB multipoles do not determine primordial dipole amplitude; not a substitute for the direct local-state argument."
+        }
+      ],
+      "next_capability": "Optional externally supplied physical response/closure and an admitted candidate law; keep this downstream lane isolated from immediately useful morphology/local-response controls."
+    }
+  ],
+  "dag_requirements": [
+    {
+      "id": "CMB-CONTRACT",
+      "depends_on": [],
+      "output": "Frozen intended observable, retained information, frame, units, processing target, statistic/null or candidate family, alpha allocation and row provenance.",
+      "failure": "Ambiguous claim or changed statistic/null -> HOLD; no old-run relabeling."
+    },
+    {
+      "id": "CMB-PRODUCT-LAW",
+      "depends_on": [
+        "CMB-CONTRACT"
+      ],
+      "output": "Release-specific complete selected processing/realization/noise/correction law or joint exchangeability receipt.",
+      "failure": "INPUT_UNAVAILABLE blocks inferential labels on every affected CMB route; descriptive controls remain available."
+    },
+    {
+      "id": "CMB-RANK-WITNESS-METHOD",
+      "depends_on": [
+        "CMB-CONTRACT"
+      ],
+      "output": "Full metric donor audit, monotone threshold witness/pivot algorithm and optional sextic comparator, reproducible exact/mock falsifiers.",
+      "failure": "Arithmetic, global bound, tie or resource failure -> UNKNOWN/UNRESOLVED with all rows and first failure retained."
+    },
+    {
+      "id": "CMB-RANK-FOUR-AXIS",
+      "depends_on": [
+        "CMB-RANK-WITNESS-METHOD"
+      ],
+      "output": "Independent Wolfram/SymPy/Sage/Lean obligations for common metric, quaternion coverage/sextic sign equivalence, interval monotonicity and inclusive rank counts; floating implementation checked separately.",
+      "failure": "Any unresolved formal axis remains unresolved; no majority promotion."
+    },
+    {
+      "id": "CMB-ORBIT-OBSERVATION",
+      "depends_on": [
+        "CMB-PRODUCT-LAW",
+        "CMB-RANK-WITNESS-METHOD",
+        "CMB-RANK-FOUR-AXIS"
+      ],
+      "output": "Fixed full-orbit certified conservative rank or UNRESOLVED; distinct new authorized execution target/resource receipt.",
+      "failure": "Unqualified law -> rank diagnostic only; historical STOP_INVALID unchanged."
+    },
+    {
+      "id": "CMB-FIXED-ALTERNATIVE",
+      "depends_on": [
+        "CMB-CONTRACT",
+        "CMB-PRODUCT-LAW"
+      ],
+      "output": "New named f_B/projection statistic with exact ideal-control null plus admitted processed null calibration and frozen alternatives.",
+      "failure": "Lossy statistic cannot inherit full-orbit claim; law mismatch or undefined rows -> prescribed refusal/outer handling."
+    },
+    {
+      "id": "CMB-PROCESSED-RESPONSE",
+      "depends_on": [
+        "CMB-CONTRACT"
+      ],
+      "output": "Content-bound complete processing K_beta/J, correct units and frame, source/noise nuisance definitions, reverse-mixing and mask/transfer/correction control tests.",
+      "failure": "Deterministic thermal map alone -> no beta inference."
+    },
+    {
+      "id": "CMB-CANDIDATE-LAW",
+      "depends_on": [
+        "CMB-PRODUCT-LAW",
+        "CMB-PROCESSED-RESPONSE"
+      ],
+      "output": "Fixed-design conditional Gaussian contract or full candidate selected simulator/law; conditional-vs-marginal response distinction explicitly verified.",
+      "failure": "Covariance/conditioning/selection mismatch -> candidate not admitted, not empirical rejection."
+    },
+    {
+      "id": "CMB-DIRECTIONAL-CONFIDENCE",
+      "depends_on": [
+        "CMB-CANDIDATE-LAW"
+      ],
+      "output": "Nuisance-projected rank certificate, estimable beta/directional image and separate residual diagnostic; outer unresolved fibers preserved.",
+      "failure": "Rank zero/unrestricted nuisance -> unbounded or whole-domain result."
+    },
+    {
+      "id": "CMB-PHYSICAL-IMAGE",
+      "depends_on": [
+        "CMB-CANDIDATE-LAW",
+        "EXTERNAL-PHYSICAL-RESPONSE",
+        "JOINT-SHARED-TUPLE-CONFIDENCE"
+      ],
+      "output": "Conditional physical MES image with externally admitted jets/closure and one compatible common nuisance tuple.",
+      "failure": "Missing external physical response blocks only this lane; local/statistical outputs remain usable."
+    }
+  ],
+  "validation_requirements": [
+    "Threshold witness tests must include inclusive all-ties, exact threshold equalities, diagonal exclusion, distinct-neighbor counting, broad non-resolving intervals, M31/M301/M1000 integer boundaries, altered row/source/target rejection, and simultaneous-bound failures.",
+    "Compare threshold certificates against exact small orbit fixtures and against complete exact-distance ranks on tractable isometric examples; retain refusal cases. A runtime benchmark must measure decision resolution at fixed resources, not only interval width.",
+    "Sextic tests: rational chart boundary/overlap/proper determinant, formula identity for independent Q/O, strict negative witnesses, nonnegative polynomial with zeros, and a known SOS-inconclusive case handled UNKNOWN. Formal and floating obligations remain separate.",
+    "f_B ideal control: fixed Gaussian STF basis with declared Gram metric, nonzero Q across spectra and amplitudes, predicted Beta law, uniform conditional tails, and amplitude-loss counterexample. Parent may execute its fixed seed20260912/20000-draw cells; this child did not run Monte Carlo.",
+    "Processed response: reverse-mixing cancellation C2=C3, anisotropic conditional covariance, mean/covariance nuisance sharing, transfer-before-boost mutation, measured-Q errors-in-variables, zero/nuisance-contained response, and frame-rotation equivariance.",
+    "Candidate confidence: known fixed selected law, correct degrees of freedom rank D, not residual dimension; rank-deficient fibers; deterministic discrepancy coverage; covariance-uncertain cases held outside fixed-law proof."
+  ],
+  "exploration_execution": {
+    "executed": true,
+    "project_code_executed": false,
+    "raw_or_npz_loaded": false,
+    "frozen_experiment_restarted": false,
+    "observed_p_values_computed": false,
+    "first_failures": [
+      {
+        "command": "python importing sympy",
+        "outcome": "ModuleNotFoundError: No module named sympy",
+        "exit_code": 1
+      },
+      {
+        "command": "CODEX_PRIMARY_RUNTIME_PYTHON importing sympy",
+        "outcome": "ModuleNotFoundError: No module named sympy",
+        "exit_code": 1
+      }
+    ],
+    "recovery": "No dependency installation or repeated scientific run. Re-expressed the bounded witnesses with Python standard-library fractions.Fraction, exact polynomial coefficients, list matrix operations and integer counts.",
+    "successful_checks": [
+      "Exact rational quaternion proper rotation and sextic residual zero",
+      "Exact rational Legendre generator forward/reverse coefficient residuals zero",
+      "Exact weighted skew-adjoint residual zero",
+      "Exact Beta CDF endpoint normalization and rank integer thresholds"
+    ],
+    "formal_status": "No CAS axis completed; exact Fraction witnesses are limited algebra checks. Four-axis acceptance and parent independent review remain pending."
+  },
+  "reading_ledger": [
+    {
+      "source": "assignment/cmb.json and CONTEXT_INDEX.json",
+      "depth": "full",
+      "note": "First read assignment; verified context version, three required input hashes, then both context pack hashes."
+    },
+    {
+      "source": "SCIENTIFIC_CONTRACT.md",
+      "depth": "full"
+    },
+    {
+      "source": "prep_cmb_reading.md",
+      "depth": "targeted/full principal CMB claim sections plus ledger",
+      "note": "Combined output truncation occurred; decisive CMB law/rank/history sections were explicitly reread in bounded ranges. Do not count every source named in the seed as read."
+    },
+    {
+      "source": "source_registry.json",
+      "depth": "structural path/hash mapping",
+      "note": "Used exact mapped local originals; hash identities checked for individually read core sources."
+    },
+    {
+      "source": "PROJECT_INSTRUCTIONS.md and state/RESEARCH_STATE.md in supplied GPT-6 harness",
+      "depth": "full",
+      "note": "Harness state is blank template and supplies no runtime identity or science evidence."
+    },
+    {
+      "source": "72f6603842ab1a096f7569588ae53681",
+      "depth": "full",
+      "location": "r8_interval_rank.py:1-57",
+      "catalog_path": "htt/htt/htt/infer/r8_interval_rank.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/72f6603842ab1a096f7569588ae53681/r8_interval_rank.py",
+      "sha256": "2e6d72dcf160a21fb0432b3c3d49ae685bea5d798dcbd535a3796aa0b5f3b5aa",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "758a87ad0ed08563b8555bacb417c12e",
+      "depth": "full",
+      "location": "r8_orbit_bounds.py:1-380",
+      "note": "Truncated tail explicitly reread 310-380.",
+      "catalog_path": "htt/obsstat/r8_orbit_bounds.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/758a87ad0ed08563b8555bacb417c12e/r8_orbit_bounds.py",
+      "sha256": "422907e0051bb80e127910a07d67fc8145bd2b30a8dbc597320fc160de448ab2",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "3b133a97660a38913262890aed371976",
+      "depth": "full",
+      "location": "boost_response.py:1-399",
+      "note": "Header and validation beginning reread after combined output truncation.",
+      "catalog_path": "htt/obsstat/boost_response.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/3b133a97660a38913262890aed371976/boost_response.py",
+      "sha256": "ce953936bf24bbc4c7e3a7fc7fa40ebeb872a68375ff3eb9a6a427c887b3ce72",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "577b69897accc2adefb7a63b139e02a6",
+      "depth": "full",
+      "location": "r7_cmb_product_response.py:1-128",
+      "catalog_path": "htt/obsstat/r7_cmb_product_response.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/577b69897accc2adefb7a63b139e02a6/r7_cmb_product_response.py",
+      "sha256": "62108cdf916d2be56b7145ed6ea366b804209cdc93b870127d9d708594127332",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "6d1ab7204b4111bb4932a83938b72e78",
+      "depth": "full",
+      "location": "T5:1-371",
+      "catalog_path": "docs/research_reports/theory_packs/T5_WU010_LOCAL_OBSERVER_RESPONSE_THEOREM_PACK.md",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/6d1ab7204b4111bb4932a83938b72e78/T5_WU010_LOCAL_OBSERVER_RESPONSE_THEOREM_PACK.md",
+      "sha256": "4fab2be921c1750f67fc6615c24fda18e2a1edb6db03fd56487304d94c385286",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "0453e7ba329216f9222b7d5ea9d2229b",
+      "depth": "full",
+      "location": "T6:1-498",
+      "catalog_path": "docs/research_reports/theory_packs/T6_WU011_PROCESSED_RESPONSE_QUOTIENT_THEOREM_PACK.md",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/0453e7ba329216f9222b7d5ea9d2229b/T6_WU011_PROCESSED_RESPONSE_QUOTIENT_THEOREM_PACK.md",
+      "sha256": "287751cce8dbdde09155c36ec512a257b352bbcdf83d013889a1763bd156f14a",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "f6d72901eb3debda502681a10fb407e2",
+      "depth": "full",
+      "location": "THEORY.md:1-215",
+      "catalog_path": "docs/research_program/tensor_joint_r8/THEORY.md",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/f6d72901eb3debda502681a10fb407e2/THEORY.md",
+      "sha256": "9a505ce0ab3de99a1dcad7f4397621cb639307b4bb42a735b910128646ee408f",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "c4f9023b70bc764f4e85451c7db71dc1",
+      "depth": "selective complete function",
+      "location": "run_r8_owned_controls.py:127-168",
+      "catalog_path": "scripts/observed_runs/run_r8_owned_controls.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/c4f9023b70bc764f4e85451c7db71dc1/run_r8_owned_controls.py",
+      "sha256": "d50075db7693003aca3caed2fda6346d27cdac5d16bd372986cfa5fe632803f2",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "c5adde29df59170e7f8410e7552d1d9f",
+      "depth": "selective complete functions",
+      "location": "mes_krylov_completion.py:202-255,353-366",
+      "catalog_path": "htt/src/common/mes_krylov_completion.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/c5adde29df59170e7f8410e7552d1d9f/mes_krylov_completion.py",
+      "sha256": "d006612907e3e4d9ffb73115ad88ea88160f44592ce77044d43bab7dba46e43d",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "407d26153d57b8be23f9087cb79b8be1",
+      "depth": "function index only",
+      "location": "r7_tensor_orbit.py",
+      "catalog_path": "htt/obsstat/r7_tensor_orbit.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/407d26153d57b8be23f9087cb79b8be1/r7_tensor_orbit.py",
+      "sha256": "3066507b0b50d8b9da0e171dcbcf5be28538f406e4529ff57efd814fd33cb714",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "0d2fecf8ce183d7fac4c90b691c875f7",
+      "depth": "selective JSON metadata",
+      "location": "scope/outcome/eligibility/covariance/processing keys/record frame and covariance; tensor arrays not inspected",
+      "catalog_path": "docs/generated/tensor_joint_r8/owned_controls/cmb/cmb.json",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/0d2fecf8ce183d7fac4c90b691c875f7/cmb.json",
+      "sha256": "16488c890992dbc50d223a481461d18ff0a9e9864c99ca7b971f3b986c13bd9e",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "f0bdab2c86606ef326e93e3e4c30b85f",
+      "depth": "selective JSON metadata",
+      "location": "process/scientific status, capabilities, result keys",
+      "catalog_path": "docs/generated/tensor_joint_r8/final/campaign/R8-06/qualify_candidate_cmb_law/attempt_0001/result.json",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/f0bdab2c86606ef326e93e3e4c30b85f/result.json",
+      "sha256": "4f1eb5f4ecc78558e39bb59afdb3859f824fa5fd43b8e8d170b6cf8374d6cad9",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "7b5469e4dece1a9f82366a39f5129b22",
+      "depth": "selective JSON metadata",
+      "location": "process/scientific status, capabilities, reason",
+      "catalog_path": "docs/generated/tensor_joint_r8/final/campaign/R8-07/observed_rank/attempt_0001/result.json",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/7b5469e4dece1a9f82366a39f5129b22/result.json",
+      "sha256": "e2d25952bc68f8efb2f9753026a10340e6c99d6eefaafe457b9af626f3b2e766",
+      "actual_hash_verified": true
+    },
+    {
+      "source": "https://arxiv.org/abs/1403.6117",
+      "depth": "abstract and search-provided PDF introduction/section-II excerpt",
+      "note": "No whole-paper reading claim."
+    },
+    {
+      "source": "https://arxiv.org/abs/2107.10846",
+      "depth": "abstract"
+    },
+    {
+      "source": "https://arxiv.org/abs/2505.02080",
+      "depth": "abstract"
+    },
+    {
+      "source": "https://arxiv.org/abs/1411.7565v3",
+      "depth": "abstract",
+      "note": "Finite-rank argument is directly derived/source-local; abstract is literature context only."
+    }
+  ],
+  "limitations": [
+    "No empirical CMB anomaly, beta fit, shear/vorticity bound, native solver result, global invariant classification, novelty/priority or scientific promotion is claimed.",
+    "Frozen R8 STOP_INVALID/resource failure, unresolved M301/M1000 ranks, missing product/candidate laws and unavailable four-axis obligations persist.",
+    "No production file, old result, budget, alpha, row selection or existing experiment was changed.",
+    "Threshold/pivot/sextic designs have not been implemented or benchmarked; result status pass means bounded assignment completed only.",
+    "Symbolic-library absence was preserved; exact standard-library checks do not constitute four independent CAS axes.",
+    "Parent owns independent validation, final decision review, source-identity enrichment and publishing."
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/R9-20260912/results/cmb.json",
+      "role": "Unique declared result envelope; this file only."
+    }
+  ]
+}

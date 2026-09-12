@@ -1,0 +1,205 @@
+{
+  "scope": "research-only synthetic/reference; no observed data",
+  "status": "CHECKS_PASSED",
+  "seed": 20260912,
+  "draws_per_gaussian_cell": 100000,
+  "alpha": 0.05,
+  "atol": 1e-10,
+  "mc_tolerance": 0.005,
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "checks": {
+    "path_exact": {
+      "H": [
+        [
+          -1.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1.0,
+          1.0
+        ]
+      ],
+      "V": [
+        [
+          2.0,
+          -1.0
+        ],
+        [
+          -1.0,
+          2.0
+        ]
+      ],
+      "discarded_common_mode": [
+        0.0,
+        0.0
+      ],
+      "anchored_det": 1.0,
+      "anchored_information_error": 0.0
+    },
+    "singular_support": {
+      "duplicate_covariance": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "zero": {
+        "status": "ON_SUPPORT",
+        "rank": 0,
+        "q": 0.0
+      },
+      "violation": {
+        "status": "OUTSIDE_DETERMINISTIC_SUPPORT",
+        "rank": 0,
+        "q": null
+      }
+    },
+    "common_mode_information": {
+      "full": 3.0,
+      "contrast_only": 0.0,
+      "anchored": 3.0
+    },
+    "rectangular_transport": {
+      "dimension": 5,
+      "contrast_rank": 3,
+      "anchored_rank": 5
+    },
+    "fibre": {
+      "fixed_q": [
+        [
+          0.7071067811865475,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.7071067811865475,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "kernel_dimension": 4,
+      "eta": 0.0684375,
+      "support": 1.4075260329512815,
+      "max_sampled_value": 1.3963677662342675,
+      "witness_norm": 0.9999999999999999,
+      "contraction_error": 3.98609107286759e-17,
+      "boundary": [
+        {
+          "step": 0.01,
+          "hausdorff": 0.1414213562373088,
+          "linear_input_change": 0.0073029674334021966
+        },
+        {
+          "step": 0.0001,
+          "hausdorff": 0.014142135623720544,
+          "linear_input_change": 7.302967433397978e-05
+        },
+        {
+          "step": 1e-06,
+          "hausdorff": 0.0014142135623227451,
+          "linear_input_change": 7.302967434119623e-07
+        }
+      ]
+    },
+    "random_anchor": {
+      "paired_ratios": [
+        1.0,
+        1.0
+      ],
+      "cartesian_interval": [
+        0.5,
+        2.0
+      ],
+      "scope": "algebraic dependence control only, not a coverage simulation",
+      "zero_denominator": "undefined/unbounded by declared extended target, never epsilon-clipped"
+    }
+  },
+  "fpr": [
+    {
+      "case": "three independent inputs, two overlapping differences",
+      "correct_fpr": 0.04995,
+      "wrong_fpr": 0.05854,
+      "wrong_exact_fpr": 0.059542764294831366,
+      "wrong_reference": "chi-square 2 after deleting cross-step covariance",
+      "correct_rejections": 4995,
+      "correct_wilson95": [
+        0.048617031167803096,
+        0.051317544474832916
+      ],
+      "wrong_rejections": 5854,
+      "wrong_wilson95": [
+        0.05710184546182807,
+        0.06001207024353377
+      ]
+    },
+    {
+      "case": "two inputs rho=-0.8",
+      "rho": -0.8,
+      "true_variance": 3.6,
+      "correct_fpr": 0.05041,
+      "wrong_fpr": 0.14532,
+      "wrong_exact_fpr": 0.14405087367543934,
+      "correct_rejections": 5041,
+      "correct_wilson95": [
+        0.04907113996317051,
+        0.051783400339401923
+      ],
+      "wrong_rejections": 14532,
+      "wrong_wilson95": [
+        0.14314932246481377,
+        0.14751792626072813
+      ]
+    },
+    {
+      "case": "two inputs rho=0",
+      "rho": 0.0,
+      "true_variance": 2.0,
+      "correct_fpr": 0.04994,
+      "wrong_fpr": 0.04994,
+      "wrong_exact_fpr": 0.050000000000000024,
+      "correct_rejections": 4994,
+      "correct_wilson95": [
+        0.0486071595881036,
+        0.05130741682279465
+      ],
+      "wrong_rejections": 4994,
+      "wrong_wilson95": [
+        0.0486071595881036,
+        0.05130741682279465
+      ]
+    },
+    {
+      "case": "two inputs rho=0.8",
+      "rho": 0.8,
+      "true_variance": 0.3999999999999999,
+      "correct_fpr": 0.05064,
+      "wrong_fpr": 0.0,
+      "wrong_exact_fpr": 1.1726446842521175e-05,
+      "correct_rejections": 5064,
+      "correct_wilson95": [
+        0.04929820612255276,
+        0.05201631650998788
+      ],
+      "wrong_rejections": 0,
+      "wrong_wilson95": [
+        0.0,
+        3.841311258303963e-05
+      ]
+    }
+  ]
+}

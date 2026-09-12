@@ -1,0 +1,24 @@
+{
+  "owner": "HTT/common research",
+  "scope": "synthetic reference experiments, non-claim-bearing figure",
+  "transfer_source": "none",
+  "source": "validate_revision2.py",
+  "data": "research_checks.json",
+  "seed": 20260912,
+  "draws_per_cell": 100000,
+  "alpha": 0.05,
+  "panels": {
+    "A": "Full-covariance and deliberately misspecified rejection rates; error bars are Wilson 95% binomial intervals, exact null expectations in JSON. Observed zero rejection fraction is not zero population probability.",
+    "B": "Fixed-q norm-one STF3 contraction fibre; seed Hausdorff law sqrt(2t), three numerical points, linear reference t."
+  },
+  "files": [
+    "research_controls.png",
+    "research_controls.pdf"
+  ],
+  "visual_check": "Both panels and labels inspected after rendering; no overlap/clipping.",
+  "caveats": [
+    "No real observational data or survey FPR estimate",
+    "No production or four-axis validation",
+    "Boundary support only for fixed q and prescribed Frobenius metric"
+  ]
+}

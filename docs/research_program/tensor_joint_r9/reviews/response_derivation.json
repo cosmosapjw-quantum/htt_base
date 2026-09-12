@@ -1,0 +1,499 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-20260912",
+  "assignment_id": "response",
+  "context_version": "6d78f041ff9ec512b91493c6e69e3da2177ef1cb09ac83e839a141f5b587d8d1",
+  "assignment_sha256": "03f9513ae3703577b922af47e2afbd76180467d91e70e00fe35300be32cfaee6",
+  "agent_type": "physics_stat_auditor",
+  "claim_ids": [
+    "RUN-R9-20260912-RESPONSE"
+  ],
+  "status": "pass",
+  "status_scope": "Assigned independent derivation, source audit, counterexamples and experiment/DAG recommendations completed. PASS is not scientific admission, production validation, causal discovery or promotion.",
+  "claim_scope": "Fixed selected Gaussian linear experiment with known positive-definite covariance, fixed response/nuisance matrices, deterministic bounded discrepancy, and explicitly maintained parameter domain. All generalizations below are conditional on their stated extra premises.",
+  "scientific_admission": "NOT_ADMITTED",
+  "runtime_model_identity": "NOT_ASSERTED",
+  "independence": {
+    "mode": "blind-results",
+    "assignment_read_first": true,
+    "context_version_validated": true,
+    "required_input_hashes_validated": true,
+    "generated_shared_view_read": false,
+    "sibling_results_read": false,
+    "subagents_spawned": false,
+    "scope": "Independent candidate derivation from assignment contract and selected original source ranges. Prior-source theorem statements were audited as source facts, not treated as new independent runtime validation.",
+    "late_parent_message": "After this agent had independently derived and sent the depth-ratio identity, constant-H counterexample and low-z series, parent reported obtaining the same identity elsewhere. That comparison was not used as evidence or as an independent CAS check in this result."
+  },
+  "required_input_receipts": [
+    {
+      "path": "docs/research_program/tensor_joint_r9/SCIENTIFIC_CONTRACT.md",
+      "sha256": "aa15008a7a1b137a1e436d55ab7b3af83a2e83e1f68fd0540357b9c68bd5be7e",
+      "verified": true
+    },
+    {
+      "path": ".agent-harness/runs/R9-20260912/artifacts/seed/prep_mes_reading.md",
+      "sha256": "6c99b630cc245f1749c790a3b7202c72bb3c61e88ade087ae796d7a035dadc8c",
+      "verified": true
+    },
+    {
+      "path": ".agent-harness/runs/R9-20260912/artifacts/seed/source_registry.json",
+      "sha256": "571a6fc48aa15fbe44fd37fd503771adc1e8c3bc8ab35df0df47096da5d89089",
+      "verified": true
+    }
+  ],
+  "source_ledger": [
+    {
+      "source_id": "0453e7ba329216f9222b7d5ea9d2229b",
+      "path": "docs/research_reports/theory_packs/T6_WU011_PROCESSED_RESPONSE_QUOTIENT_THEOREM_PACK.md",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/0453e7ba329216f9222b7d5ea9d2229b/T6_WU011_PROCESSED_RESPONSE_QUOTIENT_THEOREM_PACK.md",
+      "sha256": "287751cce8dbdde09155c36ec512a257b352bbcdf83d013889a1763bd156f14a",
+      "read_scope": "223–475: deterministic response quotient, nested images, rank evidence and stochastic-model distinction",
+      "relation": "supports_scoped_source_fact; does_not_establish_new_observational_law"
+    },
+    {
+      "source_id": "cacd103698c6fc654b4b9d2c4a80f44b",
+      "path": "docs/research_reports/theory_packs/K1R_TYPED_KINEMATICAL_MES_THEOREM_PACK.md",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/cacd103698c6fc654b4b9d2c4a80f44b/K1R_TYPED_KINEMATICAL_MES_THEOREM_PACK.md",
+      "sha256": "194bde2aa224aa5a1e4881f65b70d738a92a185358f577a48d553d9e6edf6ecf",
+      "read_scope": "402–482: same-state identified set, singleton constrained fibre, velocity-frame boundary",
+      "relation": "supports_scoped_source_fact; does_not_establish_new_observational_law"
+    },
+    {
+      "source_id": "f4ee89a265c2eadf6ac76c672cb0daae",
+      "path": "htt/htt/htt/infer/r8_confidence_image.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/f4ee89a265c2eadf6ac76c672cb0daae/r8_confidence_image.py",
+      "sha256": "7622b8877b92fcf89929152dd929b38bba48be89c8c2de00f670da405befc8ef",
+      "read_scope": "complete file: fixed-tuple region composition, outer projection, recession certificate, closure frontier",
+      "relation": "supports_scoped_source_fact; does_not_establish_new_observational_law"
+    },
+    {
+      "source_id": "8501d1c560d34fcb677b951b58a0467a",
+      "path": "htt/htt/htt/infer/r7_depth_response.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/8501d1c560d34fcb677b951b58a0467a/r7_depth_response.py",
+      "sha256": "5ee677a554593b98d4146cfd3e84613559571bda62b75cc054c1f95ec4a9dcbc",
+      "read_scope": "complete file: fixed observed-redshift observer/source depth kernels",
+      "relation": "supports_scoped_source_fact; does_not_establish_new_observational_law"
+    },
+    {
+      "source_id": "577b69897accc2adefb7a63b139e02a6",
+      "path": "htt/obsstat/r7_cmb_product_response.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/577b69897accc2adefb7a63b139e02a6/r7_cmb_product_response.py",
+      "sha256": "62108cdf916d2be56b7145ed6ea366b804209cdc93b870127d9d708594127332",
+      "read_scope": "1–140: thermal response, retained carrier, packet and covariance construction",
+      "relation": "supports_scoped_source_fact; does_not_establish_new_observational_law"
+    },
+    {
+      "source_id": "6d1ab7204b4111bb4932a83938b72e78",
+      "path": "docs/research_reports/theory_packs/T5_WU010_LOCAL_OBSERVER_RESPONSE_THEOREM_PACK.md",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/6d1ab7204b4111bb4932a83938b72e78/T5_WU010_LOCAL_OBSERVER_RESPONSE_THEOREM_PACK.md",
+      "sha256": "4fab2be921c1750f67fc6615c24fda18e2a1edb6db03fd56487304d94c385286",
+      "read_scope": "150–330: boost adjoint, rank, projector, conditioning and stated stored validation",
+      "relation": "supports_scoped_source_fact; does_not_establish_new_observational_law"
+    },
+    {
+      "source_id": "cdd7813f9cfa0f01ae9b3e0a6ba38275",
+      "path": "htt/src/common/source_response_types.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/cdd7813f9cfa0f01ae9b3e0a6ba38275/source_response_types.py",
+      "sha256": "fe3f3a18ea6de28e9b0af9620ffed1c7668e33f90b1d148c48b9781547f10794",
+      "read_scope": "150–205, 300–345, 408–479: typed non-bridge, constructed subtraction, declared rank/kernel",
+      "relation": "supports_scoped_source_fact; does_not_establish_new_observational_law"
+    },
+    {
+      "source_id": "fb9fd7f9bb8edf913838d3d0645fd802",
+      "path": "htt/htt/htt/departure/local_global_mixture.py",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/fb9fd7f9bb8edf913838d3d0645fd802/local_global_mixture.py",
+      "sha256": "01b0f4bfa02a5f3cdde23bc4e1add6409249d3771651285f37b089e1ffc071b1",
+      "read_scope": "205–305, 575–690: full three-column mean-design gate and diagnostic likelihood construction",
+      "relation": "supports_scoped_source_fact; does_not_establish_new_observational_law"
+    },
+    {
+      "source_id": "f6d72901eb3debda502681a10fb407e2",
+      "path": "docs/research_program/tensor_joint_r8/THEORY.md",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/f6d72901eb3debda502681a10fb407e2/THEORY.md",
+      "sha256": "9a505ce0ab3de99a1dcad7f4397621cb639307b4bb42a735b910128646ee408f",
+      "read_scope": "114–158: fixed-law union/intersection, incomplete dependence, singular-law support, calibration",
+      "relation": "supports_scoped_source_fact; does_not_establish_new_observational_law"
+    }
+  ],
+  "derivation": [
+    {
+      "id": "RSP-D1",
+      "title": "Whiten, eliminate unrestricted fixed nuisance, and separate response from diagnostic coordinates",
+      "evidence_status": [
+        "derived"
+      ],
+      "check": "PASS",
+      "statement": "Let z∈R^m satisfy z=Aθ+Nη+b+ε, ε~N(0,I_m), with A,N fixed and η unrestricted deterministic. A physical pre-whitened experiment must supply its selection/conditioning law, mean map and known C≻0 before applying C^(-1/2); covariance alone is insufficient. Let q=rank(N), s=m−q, U∈R^(m×s) have orthonormal columns spanning col(N)^⊥. Then y=Uᵀz=Dθ+b′+e, D=UᵀA, b′=Uᵀb∈B′, e~N(0,I_s). Set r=rank(D). Choose V∈R^(s×r), W∈R^(s×(s−r)) orthonormal with col(V)=col(D) and [V W] orthogonal. Define x=Vᵀy, H=VᵀD, w=Wᵀy, δ=Vᵀb′, κ=Wᵀb′. Then x=Hθ+δ+e_x and w=κ+e_w, with e_x~N(0,I_r), e_w~N(0,I_(s−r)) independent. H has full row rank. This independence concerns fixed-law noise coordinates, not independently selectable discrepancy values.",
+      "proof": "UᵀN=0 and UᵀU=I_s remove η without estimating it. Orthogonal transformations preserve standard Gaussian covariance, and VᵀW=0 makes the jointly Gaussian transformed errors independent. Since WᵀD=0, θ appears only in x. rank(D)=rank([N A])−rank(N) follows by quotienting col(N)+col(A) by col(N). This is a dimension reduction from a declared statistic, not a generic subtraction of fitted parameter count from a chi-square threshold.",
+      "limits": "Bounded η should ordinarily be retained as a bounded shared variable; projecting all col(N) is a conservative information loss. Uncertain or data-adapted A,N require a valid conditional law or a union over qualified fixed experiments.",
+      "source_refs": [
+        "0453e7ba329216f9222b7d5ea9d2229b:section 8"
+      ]
+    },
+    {
+      "id": "RSP-D2",
+      "title": "Finite-sample response-coordinate confidence inversion with bounded discrepancy",
+      "evidence_status": [
+        "derived"
+      ],
+      "check": "PASS",
+      "statement": "Assume B is nonempty compact and fixed, and let Δ={VᵀUᵀb:b∈B}. For 0<α<1 let c_r=χ²_r(1−α). Define C_θ(x)={θ∈Θ: ∃δ∈Δ, ||x−Hθ−δ||²≤c_r}. Equivalently T(θ)=dist(x−Hθ,Δ)²≤c_r. For every fixed true θ₀∈Θ and b₀∈B, P[θ₀∈C_θ]≥1−α. The target confidence set is C_L={Lθ:θ∈C_θ}; it inherits the same coverage without any parameter-count correction. If r=0, use a degenerate zero-dimensional pivot: every θ∈Θ is retained by this response statistic. If B is nonclosed, replacing it by its closure provides an outer construction but may change exact existential membership at the boundary.",
+      "proof": "At θ₀ use the actual δ₀=VᵀUᵀb₀. Then T(θ₀)≤||x−Hθ₀−δ₀||²=||e_x||², which has the exact χ²_r law. The event ||e_x||²≤c_r therefore implies inclusion. Target coverage follows by mapping the same event, not by a separate calibration. Compactness gives attainment and measurability in this finite-dimensional setting; arbitrary nonmeasurable nuisance sets are not covered by the statement.",
+      "outer_radius_option": "If only ||δ||≤d is certified, use ||x−Hθ||≤sqrt(c_r)+d. This is exact for the outer ball Δ_out=d Ball_r and conservative for any Δ⊂Δ_out. Preserve anisotropic or asymmetric Δ when available. A large discrepancy orthogonal to col(D) need not widen the response target at all.",
+      "limits": "The bound must contain the actual mean discrepancy uniformly over the maintained θ-domain. A parameter-dependent B(θ) is allowable with pointwise containment in the inversion, but compact formulas using a single Δ then require revision. A randomly estimated discrepancy set with a 1−γ containment certificate generally yields at least 1−α−γ, not automatic 1−α."
+    },
+    {
+      "id": "RSP-D3",
+      "title": "Target estimability, bounded robust intervals, and the distinction from point identification",
+      "evidence_status": [
+        "derived"
+      ],
+      "check": "PASS",
+      "statement": "For unrestricted θ∈R^p, the linear target Lθ is constant on every exact response fibre Hθ=μ iff ker(H)⊂ker(L), equivalently L=T H for some T. With bounded Δ this condition is also necessary and sufficient for the target image of the nonempty response confidence set to be bounded. It does not imply point identification in the presence of unknown discrepancy. Under L=T H, C_L=T(x−Δ+sqrt(c_r) Ball_r). A scalar target lᵀθ=aᵀHθ therefore has exact projected endpoints [aᵀx−h_Δ(a)−sqrt(c_r)||a||, aᵀx+h_Δ(−a)+sqrt(c_r)||a||], where h_Δ(a)=sup_{δ∈Δ}aᵀδ. An ellipsoid Δ=F{u:||u||≤ρ} gives h_Δ(a)=ρ||Fᵀa||; a translated discrepancy adds the corresponding signed shift.",
+      "proof": "If v∈ker(H), every θ+tv has the same response; nonzero Lv makes the target unbounded along that line. If ker(H)⊂ker(L), define Tμ=Lθ for any Hθ=μ; this is well-defined and linear since H is surjective onto R^r. The allowable response means are μ=x−δ−e with δ∈Δ and ||e||≤sqrt(c_r), giving the set identity. Continuous linear maps of a compact set are bounded. Scalar extrema follow from support additivity and the Euclidean-ball support formula.",
+      "point_identification": "With discrepancy, exact observation mean μ has fibre {θ∈Θ:μ−Hθ∈Δ}. For unrestricted Θ, global target point identification requires Lh=0 whenever Hh∈Δ−Δ, which is stronger than ker(H)⊂ker(L). A discrepancy interval along an observed direction gives partial identification even for full-rank H. For a constrained Θ the exact criterion is that L is constant on the actual feasible fibre; full column rank is sufficient but not necessary.",
+      "recession_limit": "A feasible ray θ₀+tv with Hv=0 and Lv≠0 proves target unboundedness if it stays in Θ. Failure to find such a ray does not in general prove boundedness. For Θ={(u,v):v≥u²}, H=0 and target u, the target is unbounded although every recession direction has zero u-component. Compact domains give bounded images; general curved domains require an actual global bound.",
+      "source_refs": [
+        "cacd103698c6fc654b4b9d2c4a80f44b:K1R-T9",
+        "f4ee89a265c2eadf6ac76c672cb0daae:recession_certificate"
+      ]
+    },
+    {
+      "id": "RSP-D4",
+      "title": "Orthogonal residual is a model-compatibility diagnostic with its own error accounting",
+      "evidence_status": [
+        "derived"
+      ],
+      "check": "PASS",
+      "statement": "Let Γ={WᵀUᵀb:b∈B} and k=s−r. The residual diagnostic R(w)=dist(w,Γ)² compared with χ²_k(1−γ) has rejection probability at most γ under the maintained response-plus-discrepancy model. It contains no direct θ dependence. A large residual challenges the declared model/law/discrepancy, but does not identify the physical cause or automatically show that the response-coordinate θ interval has lost its unconditional coverage.",
+      "joint_rule": "If both response and residual restrictions enter a candidate-state region, retain the same b: ∃b∈B such that ||x−Hθ−VᵀUᵀb||²≤χ²_r(1−α) and ||w−WᵀUᵀb||²≤χ²_k(1−γ). At the true b the two pivot events are independent, hence this construction has coverage at least (1−α)(1−γ), and consequently at least 1−α−γ. Alternatively use the full projected-space norm with χ²_s(1−α_total). Separately minimizing over Δ and Γ is an outer relaxation of the common-b region. It cannot be labeled the exact shared-discrepancy image.",
+      "limits": "Do not claim a 1−α conditional interval after arbitrary residual-based model/law choice or refitting. For B={0} and a fixed residual-only gate, noise independence supports the special conditional result; that does not automatically extend to arbitrary profiled discrepancy shapes and selected candidate families. Allocate any added diagnostic rejection in the final advertised coverage."
+    },
+    {
+      "id": "RSP-D5",
+      "title": "Unknown cross-product dependence and one shared state",
+      "evidence_status": [
+        "derived",
+        "source-supported"
+      ],
+      "check": "PASS",
+      "statement": "For each fixed compatible law tuple ν and shared state x=(θ,η,b,…), assume block j has an acceptance event A_j(Y_j,x;ν) whose rejection probability is ≤α_j uniformly on its declared domain. Then C(Y)=⋃_{ν∈A}[D_ν∩⋂_j{x:A_j(Y_j,x;ν)}] covers the actual shared state with probability at least 1−Σ_jα_j whenever its true ν is included. No cross-block independence is needed. Project to Lθ only after this construction. Missing preallocated blocks contribute the whole domain and do not donate their α. Alternative laws are unioned, not intersected.",
+      "proof": "Under the true tuple, failure of any block acceptance is bounded by the sum of its marginal failure probabilities. Simultaneous acceptance inserts the same actual state into that tuple component and hence into the union. Profiling each block over a different η gives ⋂_j proj_θ C_j, a possibly strict outer superset of proj_θ(⋂_j C_j); its coverage may remain conservative but it cannot enforce shared calibration or common-cause consistency.",
+      "limits": "Gaussian marginals plus unknown correlation do not prove a joint Gaussian law. A union-null p-value is a certified supremum over its valid component p-values; a finite unbounded-error grid maximum may understate that supremum. Covariance-only or semidefinite experiments need their separate law/support qualification; adding jitter changes the experiment.",
+      "source_refs": [
+        "f6d72901eb3debda502681a10fb407e2:J1–J3",
+        "f4ee89a265c2eadf6ac76c672cb0daae:outer_region"
+      ]
+    },
+    {
+      "id": "RSP-D6",
+      "title": "Numerical outer certificates and purpose-specific approximation error",
+      "evidence_status": [
+        "derived",
+        "source-supported"
+      ],
+      "check": "PASS",
+      "statement": "A feasible discrepancy choice produces an upper bound on inf_b T(θ). Thus an upper bound ≤threshold proves membership, while an upper bound above threshold does not prove rejection. Reject only when a certified lower bound exceeds the threshold. Include unresolved candidates in outer confidence sets. For target maxima, feasible solutions give lower bounds on the maximum; an outer upper bound requires a global/dual/enclosure certificate. Convex B and Θ yield useful convex feasibility problems in the linear regime, but arbitrary direction-amplitude or nonlinear physical responses need global certification or an explicit outer relaxation.",
+      "discrepancy_contract": "Separate numerical integration error, discretization error, response linearization/truncation error, background uncertainty and measurement noise. A whitened discrepancy outer set is formed by propagating actual error sets, e.g. B′=UᵀC^(−1/2)(B_quad+B_pixel+B_trunc+B_background), provided each set has the stated containment interpretation. Target precision depends on h_Δ(a), not merely a global residual norm. Error in col(N) vanishes in the nuisance quotient; error perpendicular to col(D) affects the diagnostic; error in response directions affects target width.",
+      "source_boundary": "r7_depth_response.numerical_error is the quadrature error on ∫du/H(u), before denominator and response propagation; it is not an error bound on the entire returned response matrix and not a total low-speed truncation bias. r7_cmb_product_response explicitly labels its pixel calculation as lacking a continuum-error certificate and says released-product covariance/selection are not supplied.",
+      "source_refs": [
+        "8501d1c560d34fcb677b951b58a0467a:depth_response",
+        "577b69897accc2adefb7a63b139e02a6:ProductResponse,build_product_response",
+        "f4ee89a265c2eadf6ac76c672cb0daae:outer_contains,project"
+      ]
+    },
+    {
+      "id": "RSP-D7",
+      "title": "Local boost and common-cause interpretation require additional response contracts",
+      "evidence_status": [
+        "derived",
+        "source-supported"
+      ],
+      "check": "CONCERN",
+      "statement": "At fixed nonzero true Q, T5 supplies a rank-three octupole boost response B_Q with B_Q*B_Q=3M_Q and a four-dimensional response-orthogonal residual. The algebraic least-squares coordinate is a scoped local β_RO=v/c coordinate under that specified response. Intrinsic octupole, processing, foreground and noise laws determine whether this coordinate has a velocity interpretation. An unrestricted deterministic intrinsic STF3 nuisance spans the entire octupole space, giving r=0 after nuisance elimination. Bounded intrinsic nuisance may permit partial inference. Local β_RO does not identify β_RM, β_MO or matter-congruence shear/vorticity without further frame and physical response constraints.",
+      "precision_limit": "Scaling Q→λQ scales B_Q→λB_Q and M_Q→λ²M_Q. The condition number stays unchanged, while fixed-noise β uncertainty grows as 1/|λ|. The relative condition bound ≤5/3 is not a uniform absolute precision guarantee. Treating a measured noisy Q as a fixed error-free design also needs justification: either bind a conditional law given Q or retain the true Q as a shared unknown in the full measurement model.",
+      "common_cause_limit": "A coherent phenomenological directional response can test compatibility and discriminate declared candidate means. It does not establish a physical common cause. If product means are μ_j=A_jθ+N_jη and another mechanism produces exactly the same joint mean/law family, observations cannot distinguish them. A shared calibration vector entering like θ is a direct confounder. Independent controls must provide a response direction that constrains the coupled nuisance, not merely duplicate the same sky or background number.",
+      "source_refs": [
+        "6d1ab7204b4111bb4932a83938b72e78:sections 5–7",
+        "cacd103698c6fc654b4b9d2c4a80f44b:K1R-T8–T10",
+        "cdd7813f9cfa0f01ae9b3e0a6ba38275:non-bridge and synthetic estimator",
+        "fb9fd7f9bb8edf913838d3d0645fd802:full-design gate"
+      ]
+    },
+    {
+      "id": "RSP-D8",
+      "title": "Depth diversity is not automatically observer/source identifiability",
+      "evidence_status": [
+        "derived",
+        "numerically checked"
+      ],
+      "check": "PASS",
+      "statement": "Read the actual depth_response formula literally: I(z)=∫₀ᶻdu/H(u), f_o=(1+z)/(H(z)I(z)), f_g=(1+z)(1−f_o). Therefore f_g/f_o=H(z)I(z)−(1+z). At a single redshift, source and observer columns are proportional; even a sky spanning all three Cartesian directions has rank at most three for the six velocity coordinates. At multiple redshifts, distinct ratios can permit rank six only with sufficient sight-line geometry and nuisance-surviving directions. Constant H>0 gives I=z/H and f_g/f_o=−1 at every redshift: depth diversity never breaks the exact degeneracy.",
+      "low_z_derivation": "For H/H0=1+h1 z+h2 z²+O(z³), I H0=z−(h1/2)z²+(h1²−h2)z³/3+O(z⁴). Multiplication gives H I=z+(h1/2)z²+(2h2/3−h1²/6)z³+O(z⁴), so f_g/f_o=−1+(h1/2)z²+(2h2/3−h1²/6)z³+O(z⁴). The first departure from proportionality can be order z², leaving shallow designs poorly conditioned despite algebraic rank six.",
+      "scope": "This is a diagnostic implication of the existing flat-FLRW low-speed fixed-observed-redshift formula. It is not a Bianchi matter/radiation/optics computation and not a validated physical response for an actual distance product.",
+      "source_refs": [
+        "8501d1c560d34fcb677b951b58a0467a:depth_response"
+      ]
+    }
+  ],
+  "counterexamples": [
+    {
+      "id": "CE1",
+      "name": "Nuisance completely absorbs apparent response",
+      "fixture": "m=2, A=(1,0)ᵀ, N=(1,0)ᵀ. Before projection A has rank one; after projection D=0. Every θ can be offset by η. A fit or small residual cannot identify θ.",
+      "status": "derived_exact"
+    },
+    {
+      "id": "CE2",
+      "name": "Only a contrast is estimable",
+      "fixture": "D=(1 1). The sum θ1+θ2 is estimable; θ1 is not because v=(1,−1) lies in ker D and changes θ1. Under θ1,θ2≥0 and exact sum=0 the unique feasible point is (0,0), showing why constrained fibres supersede unconditional rank necessity.",
+      "status": "derived_exact; source-supported constrained example"
+    },
+    {
+      "id": "CE3",
+      "name": "Full rank does not eliminate bounded-bias identification width",
+      "fixture": "x=θ+b with |b|≤d, no stochastic error. D=1 has full rank yet the identified interval is [x−d,x+d]. Adding Gaussian noise and ignoring b gives Pθ[θ∈x±c]=Φ(c−b)−Φ(−c−b), which can be far below nominal.",
+      "status": "derived_exact"
+    },
+    {
+      "id": "CE4",
+      "name": "Separate discrepancy fits invent an unavailable shared state",
+      "fixture": "B={(t,t):−1≤t≤1}, observed (1,−1), candidate zero mean. Each scalar coordinate can have zero residual by choosing t=1 or t=−1 separately. With one t, squared distance is (1−t)²+(−1−t)²=2+2t²≥2. Separate profiles therefore erase a real shared-state incompatibility.",
+      "status": "derived_exact; bounded arithmetic checked"
+    },
+    {
+      "id": "CE5",
+      "name": "Shared calibration can identify a contrast which separate profiling loses",
+      "fixture": "Exact observations z1=θ+η=0 and z2=θ−η=2 imply θ=1, η=−1. Profiling η independently in each block allows every θ. A Gaussian control variant z1=θ+η+e1, z2=η+e2 identifies θ through z1−z2 with variance two for independent unit errors; dropping the control leaves r=0.",
+      "status": "derived_exact; linear solve checked"
+    },
+    {
+      "id": "CE6",
+      "name": "A model can fit a coherent direction without identifying its cause",
+      "fixture": "Two products have mean y1=u+c and y2=u+c. Replacing (u,c) by (u+t,c−t) leaves the entire joint law unchanged under any fixed noise law. Their matching axes cannot distinguish a physical common vector u from a shared calibration/foreground vector c.",
+      "status": "derived_exact"
+    },
+    {
+      "id": "CE7",
+      "name": "Post-data row selection invalidates the claimed Gaussian pivot",
+      "fixture": "Draw two independent N(θ,1) observations and retain the one with largest |Y−θ| for a null-centred diagnostic. Using a nominal 95% one-coordinate Gaussian band covers the null with probability 0.95²=0.9025. Freezing the chosen row afterwards does not restore a Gaussian selected law.",
+      "status": "derived_exact"
+    },
+    {
+      "id": "CE8",
+      "name": "Good relative boost conditioning does not imply useful information",
+      "fixture": "Let Qλ=λ diag(1,2,−3), λ→0, with fixed octupole measurement covariance. Rank is three for each λ≠0 and κ(MQλ) is constant, but each inverse-response noise scale diverges as 1/|λ|.",
+      "status": "derived_exact"
+    },
+    {
+      "id": "CE9",
+      "name": "No nonzero target recession ray does not certify a bounded target",
+      "fixture": "Θ={(u,v):v≥u²}, D=0, L=(1,0). Target u ranges over R. All recession directions have u-component zero, so a ray search returns no target-changing recession certificate although the target is unbounded.",
+      "status": "derived_exact"
+    },
+    {
+      "id": "CE10",
+      "name": "Multiple depths remain exactly confounded for an allowed toy background",
+      "fixture": "H(z)=H0>0 gives fg=−fo at all depths. With balanced sight lines ±e1,±e2,±e3 at any number of depths, six observer/source columns have rank three. This is an exact identity, not an SVD threshold inference.",
+      "status": "derived_exact; numerical replay checked"
+    }
+  ],
+  "bounded_checks": {
+    "execution": "One local read-only Python process evaluated exact rational fixtures, linear algebra and analytic depth kernels; no original production module was imported or executed, and no Monte Carlo sampling was performed by this agent.",
+    "dimensionless_toys": true,
+    "algebra_tolerance": 1e-10,
+    "results": [
+      {
+        "case": "nuisance quotient",
+        "rank_D": 1,
+        "augmented_rank_difference": 1,
+        "kernel_response": [
+          0.0,
+          0.0
+        ],
+        "kernel_target_change": 1.0
+      },
+      {
+        "case": "shared state solve",
+        "theta": 1.0,
+        "eta": -1.0
+      },
+      {
+        "case": "shared discrepancy",
+        "distance_squared_at_t_minus1_0_plus1": [
+          "4",
+          "2",
+          "4"
+        ],
+        "exact_minimum_squared": "2"
+      },
+      {
+        "case": "depth z=.01,.02 H/H0=1",
+        "ratio": [
+          -1.0,
+          -1.0
+        ],
+        "singular_values_without_common_5_over_ln10": [
+          226.29184695874486,
+          226.29184695874486,
+          226.29184695874474,
+          6.675610310481281e-15,
+          6.675610310481281e-15,
+          0.0
+        ],
+        "rank_authority": "exact fg=−fo identity; tiny singular values are roundoff"
+      },
+      {
+        "case": "depth z=.01,.02 H/H0=1+z",
+        "ratio": [
+          -0.9999501658383003,
+          -0.9998013201578967
+        ],
+        "singular_values_threefold_pairs": [
+          224.93693993539293,
+          0.006716532390273465
+        ],
+        "condition": 33490.04022694543,
+        "conditioning_flag": "severely ill-conditioned shallow fixture"
+      },
+      {
+        "case": "depth z=.1,.5 H/H0=1+z",
+        "ratio": [
+          -0.9951588022152427,
+          -0.8918023378377533
+        ],
+        "singular_values_threefold_pairs": [
+          21.447258837133955,
+          0.24940380264403156
+        ],
+        "condition": 85.99411320021149,
+        "conditioning_flag": "finite but substantial condition number"
+      }
+    ],
+    "first_failure_record": "No failed theorem computation was overwritten. Expected rank deficiency and severe conditioning are preserved as discriminating negative results. Missing guessed result-schema paths were discovery errors, not scientific failures.",
+    "production_verification": "NOT_PERFORMED",
+    "four_axis_CAS": "NOT_PERFORMED"
+  },
+  "minimal_discriminating_experiments": [
+    {
+      "id": "EXP-R1",
+      "goal": "Check uniform response-region coverage and projected-bias sensitivity",
+      "design": "Fixed dimensionless Gaussian model with s=4, r=2, one nuisance-eliminated direction; B as an anisotropic ellipsoid. Fix θ, covariance, N, A, target and alpha=.05. Run b=0 and boundary points along each response direction plus a pure orthogonal discrepancy. Compare exact projected-set inversion, isotropic outer-radius inversion and the deliberately misspecified B=0 rule.",
+      "expected_discrimination": "Projected-bound method maintains ≥.95 coverage; isotropic method may widen needlessly; ignored response bias loses coverage; pure orthogonal bias changes the diagnostic without changing response-coordinate target width.",
+      "execution_contract": "Parent-owned planned experiment; seed 20260912, 20000 draws per fixed cell, predeclared alpha and 95% binomial Monte Carlo intervals. Do not declare a coverage theorem from Monte Carlo alone."
+    },
+    {
+      "id": "EXP-R2",
+      "goal": "Identify what added calibration and depth actually buy",
+      "design": "Use explicit A/N fixtures with response-nuisance angle φ=π/2, .1, .001, 0 and one independently modeled calibration row. Separately use actual depth-kernel expressions with balanced ±Cartesian sight lines at one depth, two shallow depths and two separated depths; include constant H and H/H0=1+z.",
+      "expected_discrimination": "Target width scales as 1/|sin φ| until exact nonidentification at φ=0. Extra calibration restores information only through its coupled nuisance response. Constant H remains rank3 at all depths; shallow variable H is rank6 but weak.",
+      "execution_contract": "Exact rank fixtures plus bounded SVD/interval-error diagnostics. Rank must be accompanied by singular values, absolute response scale and numerical-error bounds; do not reuse old rank budgets."
+    },
+    {
+      "id": "EXP-R3",
+      "goal": "Catch incoherent profiling and incorrect cross-product dependence",
+      "design": "Two products with one true shared calibration/discrepancy. Include CE4 and CE5 exactly, then fixed marginal Gaussian noise with cross-correlations 0, .9 and a strongly anticorrelated admissible case. Compare one-shared-state Bonferroni intersection with independent product profiling and a deliberately false block-independent likelihood.",
+      "expected_discrimination": "Bonferroni bound survives unknown dependence; separate profiling is strictly too permissive on exact fixtures; treating correlated products as independent can overstate information.",
+      "execution_contract": "Fixed alpha allocations sum≤.05; missing blocks remain whole-domain with their allocations retained; report Monte Carlo intervals at 20000 draws/cell if simulated."
+    },
+    {
+      "id": "EXP-R4",
+      "goal": "Separate boost-coordinate recovery from noise, intrinsic structure and actual cause",
+      "design": "Hold a known Q fixed and compare pure boost, response-aligned intrinsic contamination, response-orthogonal contamination, and an arbitrary intrinsic-STF nuisance. Scale Q by fixed factors while keeping octupole noise fixed. A second stage adds measurement error to Q and compares a justified joint/conditional model with naive plug-in design.",
+      "expected_discrimination": "Only the conditional pure-boost case recovers the labeled velocity without attribution ambiguity. Orthogonal contamination triggers the residual; aligned contamination biases velocity unless bounded/modeled; unrestricted intrinsic nuisance destroys model-free boost identification. Relative condition stays good while absolute precision worsens as Q shrinks.",
+      "execution_contract": "No claim that the full released CMB product law has been validated. Candidate response and actual processing must be separately bound before observational use."
+    },
+    {
+      "id": "EXP-R5",
+      "goal": "Validate outer numerical membership and target bounds",
+      "design": "Use a one-dimensional bounded discrepancy interval and a small convex ellipsoid with analytic exact distance/support. Feed a deliberately suboptimal local fit whose objective is above threshold although the global minimum is below threshold. Include a target-changing exact kernel ray and the curved-domain no-ray counterexample.",
+      "expected_discrimination": "Only certified lower distance bounds may reject; unresolved candidates stay in the outer region. Feasible target maxima cannot be reported as outer bounds. Absence of a recession witness is not a boundedness certificate.",
+      "execution_contract": "Algebra agreement tolerance 1e-10 only in bounded well-conditioned double fixtures; unresolved conditioning receives an explicit status."
+    }
+  ],
+  "dag_requirements": {
+    "nodes": [
+      {
+        "id": "RESP-01",
+        "requires": [],
+        "output": "Immutable selected-experiment packet: ordered rows, units/frame, processing, selection/conditioning, response A, covariance role, candidate law, parameter and shared-nuisance identities, discrepancy provenance.",
+        "failure_isolation": "Absent law does not block descriptive morphology or deterministic response algebra; it blocks confidence interpretation."
+      },
+      {
+        "id": "RESP-02",
+        "requires": [
+          "RESP-01"
+        ],
+        "output": "Fixed-law qualification, covariance positive-definiteness/support certificate, and response/nuisance error contract.",
+        "failure_isolation": "Semidefinite/no-law path gets its own support/law qualification; no jitter."
+      },
+      {
+        "id": "RESP-03",
+        "requires": [
+          "RESP-01"
+        ],
+        "output": "Processed response and nuisance geometry, quotient rank/error margins, target fibre classification, absolute sensitivity, source-bound depth/boost controls.",
+        "failure_isolation": "No rank proof from column count or a nominal SVD alone. This node can complete conditionally before observational law qualification."
+      },
+      {
+        "id": "RESP-04",
+        "requires": [
+          "RESP-02",
+          "RESP-03"
+        ],
+        "output": "Rank-r bounded-discrepancy confidence inversion and separate orthogonal diagnostic, including certified outer solver behavior.",
+        "failure_isolation": "Numerically unresolved cases remain included; missing response/discrepancy/law blocks only the relevant inference branch."
+      },
+      {
+        "id": "RESP-05",
+        "requires": [
+          "RESP-04"
+        ],
+        "output": "Per-product admissible shared-state sets at fixed alpha allocations, then compatible-tuple intersection and alternative-law union; exact target projection follows.",
+        "failure_isolation": "Unknown cross-dependence invokes marginal valid sets; one missing product cannot silently change allocation or be replaced by duplicate-sky evidence."
+      },
+      {
+        "id": "RESP-06",
+        "requires": [
+          "RESP-03",
+          "RESP-05"
+        ],
+        "output": "Scoped discrimination report: local observer response, phenomenological coherent direction, calibration/background controls, and common-cause nonidentification witnesses.",
+        "failure_isolation": "Compatibility is not physical-cause identification; a missing physical bridge remains explicit."
+      },
+      {
+        "id": "RESP-07",
+        "requires": [
+          "RESP-05"
+        ],
+        "output": "Optional physical/MES image only when actual compatible derivative/remainder domain, normalization map and physical response provider are admitted.",
+        "failure_isolation": "Existing conditional MES objects remain valid conditional mathematics. This branch is not a Bianchi solver prerequisite for RESP-03 through RESP-06."
+      },
+      {
+        "id": "RESP-08",
+        "requires": [
+          "RESP-04",
+          "RESP-05",
+          "RESP-06"
+        ],
+        "output": "Independent formal/method/admission evidence and final scoped reviewer decision before production scientific promotion.",
+        "failure_isolation": "Required full production four-axis obligations remain in the execution plan; this independent derivation and toy arithmetic are not their PASS."
+      }
+    ],
+    "consumer_routes": "Product packet → law and geometry → bounded response region → same-state composition → target outputs and scoped model diagnostics. Optional physical image consumes the resulting compatible state plus separately bound derivative/remainder inputs. Background/calibration controls may help infer a coupled nuisance but cannot fabricate a directional or radiation-jet observable.",
+    "protected_boundaries": [
+      "No BASS matter/radiation/optics benchmark prerequisite",
+      "No legacy teff ownership; only explicit-purpose discrepancy mathematics",
+      "No changes to CF4 quarantine, rank budgets, frozen R8 acceptance or alpha allocations",
+      "No anomaly-to-physical-parameter conversion without candidate response/law",
+      "No production edits or external publication by this assignment"
+    ]
+  },
+  "remaining_blockers": [
+    "Actual selected observational joint or marginal laws and the provenance/meaning of supplied covariance remain product-specific admission obligations.",
+    "The deterministic discrepancy set needs justified containment of the full processing and approximation error, not a numerical-error label alone.",
+    "Common-cause physical attribution requires distinguishable physical response and control information; coherent axes or conditional boost coordinates are insufficient.",
+    "Formal production engine obligations and observational admission have not executed in this assignment."
+  ],
+  "written_at_utc": "2026-09-12T16:56:22.118339+00:00"
+}

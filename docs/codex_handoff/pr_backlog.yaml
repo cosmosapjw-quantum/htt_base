@@ -200,6 +200,7 @@ policy:
   - PR-CATALOG-002
   - PR-CATALOG-003
   - PR-CATALOG-004
+  - PR-R9-REV2
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -9962,4 +9963,28 @@ prs:
   level: L0
   scope: research_theory_compendium
   risk: R1
+  user_authorized: true
+
+- id: PR-R9-REV2
+  wave: 0
+  title: Upgrade R9 with correlated depth laws and joint tensor confidence images
+  owner: COMMON
+  depends:
+  - PR-CATALOG-004
+  files:
+  - docs/research_program/tensor_joint_r9
+  - .agent-harness/runs/R9-REV2-20260912
+  tests:
+  - python3 docs/research_program/tensor_joint_r9/revision2/run_checks.py
+  - python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  dod:
+  - Import exact predecessor R9 directory and upgrade existing program using pinned compendium and role sources
+  - Direct derivations and reproducible covariance, support, information-loss and STF fibre reference experiments with independent research review
+  - Thirty-node model-to-real-data DAG and product-specific law, calibration, tensor-functional and handoff contracts
+  - Preserve production, observational, novelty and four-axis holds; record unavailable GPT-6 archive activation honestly
+  - Ordinary commit/push with remote readback and canonical mirrors synchronized
+  kill: Synthetic research does not admit actual product laws; unavailable cross-covariance and physical providers remain explicit; no native solver or PR4 work.
+  level: L0
+  scope: substantive_research_and_design_upgrade
+  risk: R2
   user_authorized: true

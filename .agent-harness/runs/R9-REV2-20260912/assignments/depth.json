@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-REV2-20260912",
+  "assignment_id": "depth",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-REV2-20260912-DEPTH-LAW"
+  ],
+  "task": "Independently derive full correlated depth path Gaussian law, contrast information loss and anchored-path recovery; inspect seed depth implementation and give precise correction design. Write derivation and exact hand examples in result envelope only. Use fixed premises in revision spec. Do not inspect siblings or change production.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r9/REVISION_SPEC.md",
+      "sha256": "073226a95f8a4c0dbde832e3d8303fe4dd6c1aa8be350c05ffeb14e9b7409a38"
+    },
+    {
+      "path": ".agent-harness/runs/R9-REV2-20260912/artifacts/source_depth_path.py",
+      "sha256": "8256db8190193e08f4a0dfd21dda7c3a7e3fdd4c1c13f19d15f906d5ade92b8a"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "apply_patch"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-REV2-20260912/results/depth.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-REV2-20260912/results/depth.json",
+  "status": "registered",
+  "assignment_sha256": "fe1499657c283509f297320ced76385bff05ac1d765d9e84b12ce8475c746222"
+}

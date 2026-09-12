@@ -1,0 +1,56 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-REV2-20260912",
+  "assignment_id": "decision_followup",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "adjudicator",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R1",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-REV2-20260912-JET-FIX"
+  ],
+  "task": "Review only the F-JET-COVERAGE correction in R9-19/20 and matching theory/design/handoff. Accept or reject closure of the must-fix issue for research/design handoff, not production. Do not rerun old review or science. Write only assigned result envelope; reference original decision for unaffected scope.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r9/campaign_dag.json",
+      "sha256": "fd95584b0823850ff220a4dcf3d6bc65a2bd0d9264fa61f694f282b1e1484d0a"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+      "sha256": "205ab9b7bdac25a1e878114a4db9a79e9d1dd0afc47d74be547e084ac0ef1c3a"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md",
+      "sha256": "befeef7feab9a845186b81fb9d7ce84b755b332bd0bf2fd6f93d0e1c36e89529"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+      "sha256": "88bcb2129875a63a4c5984fac5f212f1fe3767c362ff106de3b36a4d5262a5e3"
+    },
+    {
+      "path": ".agent-harness/runs/R9-REV2-20260912/results/decision.json",
+      "sha256": "6093c95413db40423237275170dcb46599da3c11eb764389ebef97f23467a78e"
+    }
+  ],
+  "allowed_sibling_results": [
+    ".agent-harness/runs/R9-REV2-20260912/results/decision.json"
+  ],
+  "allowed_tools": [
+    "exec_command",
+    "apply_patch"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-REV2-20260912/results/decision_followup.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-REV2-20260912/results/decision_followup.json",
+  "status": "registered",
+  "assignment_sha256": "aa06e012d0d817334c84a8b8f11fc1a123c3390acfc6c2c94e4f036238e38311"
+}

@@ -1,0 +1,46 @@
+{
+  "scope": "reference/graph checks only; no scientific capability promotion",
+  "status": "PASS",
+  "inputs": {
+    "docs/research_program/tensor_joint_r9/revision2/validate_revision2.py": "daeff856a27c896ba6356fab48933620b254e2a1c6fd42fd5a219147df86988d",
+    "docs/research_program/tensor_joint_r9/validate_dag.py": "e28d8bbb4ad8a6d8fb956def85caaaef6656df2372d0882752a71197415d3ceb",
+    "docs/research_program/tensor_joint_r9/campaign_dag.json": "13747a0aaefaffc97c7805fd08c8bddd3cef654f2af4753ecdd70581aca2ea84",
+    "docs/research_program/tensor_joint_r9/REVISION_SPEC.md": "073226a95f8a4c0dbde832e3d8303fe4dd6c1aa8be350c05ffeb14e9b7409a38"
+  },
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/scratch/99299f5cbe0c/htt_base/docs/research_program/tensor_joint_r9/revision2/validate_revision2.py"
+      ],
+      "cwd": "/workspace/scratch/99299f5cbe0c/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 4.3454991260005045,
+      "stdout": "check_0.stdout",
+      "stderr": "check_0.stderr"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/scratch/99299f5cbe0c/htt_base/docs/research_program/tensor_joint_r9/validate_dag.py"
+      ],
+      "cwd": "/workspace/scratch/99299f5cbe0c/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 0.10245767999913369,
+      "stdout": "check_1.stdout",
+      "stderr": "check_1.stderr"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "cwd": "/workspace/scratch/99299f5cbe0c/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 0.9176144319990271,
+      "stdout": "check_2.stdout",
+      "stderr": "check_2.stderr"
+    }
+  ]
+}

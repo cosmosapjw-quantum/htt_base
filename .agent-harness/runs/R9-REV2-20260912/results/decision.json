@@ -1,0 +1,269 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-REV2-20260912",
+  "assignment_id": "decision",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "adjudicator",
+  "independence_mode": "adjudication",
+  "result_path": ".agent-harness/runs/R9-REV2-20260912/results/decision.json",
+  "assignment_sha256": "7da4989a3ddc9f751b4975b60e691ea62096bb335cc3a8e60a608d947aab7a20",
+  "status": "fail",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/R9-REV2-20260912/assignments/decision.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/context/SHARED_CONTEXT.md",
+    ".agent-harness/context/SYMBOLS.md",
+    ".agent-harness/context/FROZEN_DECISIONS.md",
+    ".agent-harness/context/roles/adjudicator.md",
+    "AGENTS.md",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-reviewer-mode-pre-submission/SKILL.md",
+    ".agents/skills/htt-adversarial-review-loop/SKILL.md",
+    "docs/research_program/tensor_joint_r9/REVISION_SPEC.md",
+    "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+    "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md",
+    "docs/research_program/tensor_joint_r9/revision2/validate_revision2.py",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/research_checks.json",
+    "docs/research_program/tensor_joint_r9/campaign_dag.json",
+    "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+    ".agent-harness/runs/R9-REV2-20260912/results/depth.json",
+    ".agent-harness/runs/R9-REV2-20260912/results/functional.json",
+    "docs/research_program/tensor_joint_r9/revision2/run_checks.py",
+    "docs/research_program/tensor_joint_r9/validate_dag.py",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/execution_receipt.json",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/check_0.stdout",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/external_context.json",
+    "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json",
+    "docs/research_program/tensor_joint_r9/README.md",
+    "docs/research_program/tensor_joint_r9/THEORY.md"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-12T00:00:00Z",
+  "completed_at": "2026-09-12T20:46:17.390472+00:00",
+  "tool_versions": {
+    "python": "3.12.14",
+    "method": "manual adversarial analytic/code review and targeted JSON/predicate checks; no CAS"
+  },
+  "commands": [
+    {
+      "command": "cat registered assignment, context index, template, repository policies and named inputs",
+      "result": "Assignment first; input SHA256 and context file hashes all matched."
+    },
+    {
+      "command": "Targeted Python: hashlib receipt comparisons, stdout/result equality, R9-19/R9-28 action predicates",
+      "result": "All recorded checks matched; alternative action availability is as stated in DEC-DAG-ALTERNATIVES."
+    },
+    {
+      "command": "git status --short; targeted rg and reads of named R9 files",
+      "result": "Production tracked changes limited to backlog files; R9 directory imported as untracked at review time."
+    }
+  ],
+  "artifacts": [],
+  "findings": [
+    {
+      "finding_id": "DEC-JET-COVERAGE",
+      "claim_id": "RUN-R9-REV2-20260912-DECISION",
+      "verdict": "fail",
+      "severity": "medium",
+      "statement": "Must fix before design handoff: R9-19/20 does not explicitly require newly measured radiation-jet uncertainty to be part of the calibrated joint inclusion event. A jet law and same-state/frame mapping alone do not let JOINT_SET retain its confidence level after augmenting it with new uncertain derivatives.",
+      "assumptions_used": [
+        "Scope is research/design handoff and bounded reference experiments; no production or scientific admission."
+      ],
+      "evidence_refs": [
+        "docs/research_program/tensor_joint_r9/campaign_dag.json:R9-19/R9-20 (lines 444-492)",
+        "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md:sections 5-6",
+        "docs/research_program/tensor_joint_r9/THEORY.md:T4",
+        "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md:F1"
+      ],
+      "evidence_fingerprint": "R9-REV2-decision:DEC-JET-COVERAGE",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Two independent 95% regions for preexisting state and new jet variables have joint inclusion probability .95^2=.9025; taking their identity image does not restore .95.",
+        "Require either jet/nuisance variables already included in the same calibrated event, or an augmented common region with a prospective joint error allocation/calibration. With neither, physical output remains conditional/scenario/unavailable; do not recycle spent alpha."
+      ],
+      "confidence": 0.96,
+      "unresolved": [
+        "Root acknowledged and plans a newly sealed targeted correction; current bound snapshot is unchanged."
+      ]
+    },
+    {
+      "finding_id": "DEC-MATH",
+      "claim_id": "RUN-R9-REV2-20260912-DECISION",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "D1-D4 and F1-F3 correctly resolve the bound seed findings at research-design level: complete covariance and deterministic support, anchored information preservation, geometric versus full-past innovations, true-point versus full-set coverage, and fixed-q fibre support with convex-hull and uncertain-anchor caveats.",
+      "assumptions_used": [
+        "Scope is research/design handoff and bounded reference experiments; no production or scientific admission."
+      ],
+      "evidence_refs": [
+        "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md:D1-D4/F1-F3",
+        ".agent-harness/runs/R9-REV2-20260912/results/depth.json:derivation",
+        ".agent-harness/runs/R9-REV2-20260912/results/functional.json:analytic_derivation"
+      ],
+      "evidence_fingerprint": "R9-REV2-decision:DEC-MATH",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Expand Cov(Yj+1-KjYj,Yk+1-KkYk) into four terms. For C=I3, eigenvalues of HCH^T are 1 and 3; dropping cross-step terms yields .5 Z1^2+1.5 Z2^2.",
+        "For the anchored transform, reconstruct Y recursively without inverting K.",
+        "On xi in C all defined f_t(xi) belong to the same outer images; this is not the event that every observationally equivalent xi lies in C.",
+        "Use LqLq*=Mq/3 to split STF3 into Rqv and ker(Lq); Cauchy-Schwarz gives the support, while support alone returns the convex hull."
+      ],
+      "confidence": 0.96,
+      "unresolved": [
+        "The donor production depth_path.py is not repaired or certified. Depth envelope fail concerns donor general-law adequacy, not a disagreement with the revised derivation."
+      ]
+    },
+    {
+      "finding_id": "DEC-REFERENCE-EVIDENCE",
+      "claim_id": "RUN-R9-REV2-20260912-DECISION",
+      "verdict": "pass",
+      "severity": "medium",
+      "statement": "Recorded reference outputs match the sealed generator and command stdout. They support the stated synthetic counterexamples, not production regression or survey-law validity. Figure-generating equations agree with the mathematical text: boundary path v_t=(1-t)v_* gives distance sqrt(2t).",
+      "assumptions_used": [
+        "Scope is research/design handoff and bounded reference experiments; no production or scientific admission."
+      ],
+      "evidence_refs": [
+        "docs/research_program/tensor_joint_r9/revision2/validate_revision2.py:main/plot",
+        "docs/research_program/tensor_joint_r9/revision2/evidence/research_checks.json",
+        "docs/research_program/tensor_joint_r9/revision2/evidence/execution_receipt.json",
+        "docs/research_program/tensor_joint_r9/revision2/evidence/check_0.stdout"
+      ],
+      "evidence_fingerprint": "R9-REV2-decision:DEC-REFERENCE-EVIDENCE",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Verified all four execution_receipt input hashes against current files and exact fpr equality between research_checks.json and check_0.stdout without rerunning Monte Carlo.",
+        "Correct rejection counts are 4995,5041,4994,5064; omitted-term counts are 5854,14532,4994,0 for the four 100000-draw cells. At rho=.8 the exact wrong tail is 1.1726446842521175e-5; zero observed rejections is not a proof of zero probability.",
+        "For v_t=(1-t)v_*, center displacement squared t^2 and fibre radius squared 2t-t^2 sum to 2t."
+      ],
+      "confidence": 0.96,
+      "unresolved": [
+        "No render inspection performed; figure consistency was checked from plotting code and recorded values. No full Monte Carlo, native solver, or production suite rerun by adjudicator."
+      ]
+    },
+    {
+      "finding_id": "DEC-DAG-ALTERNATIVES",
+      "claim_id": "RUN-R9-REV2-20260912-DECISION",
+      "verdict": "pass",
+      "severity": "medium",
+      "statement": "Alternative action requirements correctly keep physical tensor outputs behind PHYSICAL_IMAGE and provider-jet outputs behind VALIDATED_PHYSICAL_RESPONSE. Capability-level closure tests alone do not test missing alternative actions because they collapse both routes to one capability; action-level denial and provenance matching are implementation follow-up.",
+      "assumptions_used": [
+        "Scope is research/design handoff and bounded reference experiments; no production or scientific admission."
+      ],
+      "evidence_refs": [
+        "docs/research_program/tensor_joint_r9/campaign_dag.json:R9-19/R9-25/R9-28",
+        "docs/research_program/tensor_joint_r9/validate_dag.py:closure and isolation checks (lines 28-61)"
+      ],
+      "evidence_fingerprint": "R9-REV2-decision:DEC-DAG-ALTERNATIVES",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Direct predicate evaluation with only SEED admits direct_observed_jet but not validated_provider_jet; adding VALIDATED_PHYSICAL_RESPONSE admits both.",
+        "With FORMAL_IMAGES and JOINT_SET, only defined_tuple_functionals qualifies; adding PHYSICAL_IMAGE admits physical_tensor_functionals.",
+        "Follow-up: add a deny-action scenario, so direct empirical jet absent plus provider validation absent yields no JET_RESPONSE_LAW; retain action identity and source-product identity in any future executor."
+      ],
+      "confidence": 0.96,
+      "unresolved": [
+        "Current graph is explicitly assumed-qualified topology, not an execution/admission engine. Generic capability names are safe only with the documented per-product acceptance and evidence matching."
+      ]
+    },
+    {
+      "finding_id": "DEC-PROVENANCE",
+      "claim_id": "RUN-R9-REV2-20260912-DECISION",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "Seed and source provenance are sufficient for scoped replay, but the reference output is not self-contained enough to reconstruct an individual fibre witness without replaying earlier RNG consumption. This is a maintainability follow-up, not a reason to repeat the experiments.",
+      "assumptions_used": [
+        "Scope is research/design handoff and bounded reference experiments; no production or scientific admission."
+      ],
+      "evidence_refs": [
+        "docs/research_program/tensor_joint_r9/revision2/validate_revision2.py:80,139-164,184",
+        "docs/research_program/tensor_joint_r9/revision2/run_checks.py:31-37",
+        "docs/research_program/tensor_joint_r9/revision2/evidence/research_checks.json:seed/versions/checks.fibre"
+      ],
+      "evidence_fingerprint": "R9-REV2-decision:DEC-PROVENANCE",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "One RNG seeded 20260912 is consumed by all Gaussian cells before drawing the seven-component fibre direction. Changing earlier draw counts changes that direction. The recorded code hash and package versions make the current procedure recoverable.",
+        "Follow-up: record RNG/stream order and the actual direction/contraction vector or use named frozen streams in a future version; include matplotlib version if figure replay matters. Do not silently reseed the present experiment."
+      ],
+      "confidence": 0.96,
+      "unresolved": [
+        "Receipt does not bind run_checks.py, the canonical DAG validator/backlog or generated outputs, and has no UTC timestamp/worktree identity. Preserve as a reference receipt; freeze complete inputs/output identity only if a downstream release consumes it as frozen numerical evidence."
+      ]
+    },
+    {
+      "finding_id": "DEC-CLAIM-HYGIENE",
+      "claim_id": "RUN-R9-REV2-20260912-DECISION",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "GPT-6 package activation is reported adequately as blocked, with requested configuration separated from verified runtime/profile and CAS status. HTT/MIO ownership, PR4 skip, CF4 quarantine, R8 STOP_INVALID, conditional DESI/Union3, unmerged donor source and no physical sigma from observed Q remain explicit.",
+      "assumptions_used": [
+        "Scope is research/design handoff and bounded reference experiments; no production or scientific admission."
+      ],
+      "evidence_refs": [
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md:Evidence and execution boundaries",
+        "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md:sections 3,5,8",
+        "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+        "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json:harness_activation/not_executed"
+      ],
+      "evidence_fingerprint": "R9-REV2-decision:DEC-CLAIM-HYGIENE",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Read BLOCKED_PACKAGE_UNAVAILABLE alongside no original ZIP activation, generic prompted derivations, runtime_model_verification=false and no four-axis admission.",
+        "Final closeout must preserve historical versus current provenance, resolve pending REVIEW/decision links, synchronize canonical status and mirror, and record the actual commit/push/readback before claiming delivery complete."
+      ],
+      "confidence": 0.96,
+      "unresolved": [
+        "The explicit model assignment is not independently authenticated; no scientific or independent-model certification is granted by this envelope. Release/status closeout was intentionally pending at review time."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-REV2-20260912-DECISION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "DEC-JET-COVERAGE",
+        "DEC-MATH",
+        "DEC-REFERENCE-EVIDENCE",
+        "DEC-DAG-ALTERNATIVES",
+        "DEC-PROVENANCE",
+        "DEC-CLAIM-HYGIENE"
+      ],
+      "summary": "RESEARCH/DESIGN HANDOFF ACCEPTABLE AFTER ONE SCOPED REVISION: close jet augmented-region coverage ambiguity (DEC-JET-COVERAGE), then finalize status/commit/push readback. No production, empirical, novelty, native solver, model-profile or CAS admission. The other findings are passes with explicit implementation/provenance follow-up."
+    }
+  ],
+  "errors": [],
+  "timing_evidence": "Exact turn start was not recorded; started_at is a date-bound placeholder. completed_at is executor wall clock.",
+  "read_declaration": "Bound inputs and both allowed sibling derivations read, long files by targeted extracts. No generated context pack, other sibling result, repository-wide mapping, external web verification or whole Monte Carlo rerun. Read/execution evidence is self-declared generic prompted review only.",
+  "gate_verdicts": {
+    "math_research": "PASS_SCOPED",
+    "reference_tests": "PASS_SCOPED_RECORDED",
+    "regression": "NO_PRODUCTION_ADMISSION",
+    "design_handoff": "HOLD_DEC_JET_COVERAGE",
+    "claim_hygiene": "PASS_SCOPED",
+    "maintainability": "FOLLOW_UP_NONBLOCKING",
+    "GPT6_package_activation": "BLOCKED_PACKAGE_UNAVAILABLE",
+    "scientific_admission": "NOT_GRANTED",
+    "four_axis_CAS": "NOT_GRANTED"
+  },
+  "reviewer_summary": {
+    "verdict": "PASS WITH MINOR REVISIONS for internal research/design handoff only; current envelope fail holds the named correction.",
+    "minimal_publishable_claim": "Scoped Gaussian dependency and fixed-q support derivations plus reproducible synthetic counterexamples; no novelty or observational result.",
+    "fatal_blockers": [],
+    "major_concerns": [
+      "DEC-JET-COVERAGE must be explicit before physical-image design can be handed off as complete."
+    ],
+    "required_validation": [
+      "Newly sealed targeted reread of revised jet confidence-event contract; no full experiment rerun needed for prose-only correction unless generator/DAG changes."
+    ],
+    "downclaims_required": [
+      "Retain reference-only, generic-prompted, package-activation-blocked and no scientific admission language."
+    ],
+    "stronger_claims_allowed": [],
+    "release_decision": "Root may complete design handoff after the targeted correction, critical review closeout, canonical mirrors and actual delivery verification."
+  }
+}

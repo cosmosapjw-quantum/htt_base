@@ -1,0 +1,104 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-REV2-20260912",
+  "assignment_id": "decision_followup",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "adjudicator",
+  "independence_mode": "adjudication",
+  "result_path": ".agent-harness/runs/R9-REV2-20260912/results/decision_followup.json",
+  "assignment_sha256": "aa06e012d0d817334c84a8b8f11fc1a123c3390acfc6c2c94e4f036238e38311",
+  "status": "pass",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/R9-REV2-20260912/assignments/decision_followup.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    "docs/research_program/tensor_joint_r9/campaign_dag.json",
+    "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+    "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md",
+    "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+    ".agent-harness/runs/R9-REV2-20260912/results/decision.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-12T00:00:00Z",
+  "completed_at": "2026-09-12T20:49:14.371858+00:00",
+  "tool_versions": {
+    "python": "3.12.14",
+    "method": "targeted manual contract review; no CAS or experiment execution"
+  },
+  "commands": [
+    {
+      "command": "cat .agent-harness/runs/R9-REV2-20260912/assignments/decision_followup.json",
+      "result": "Read first."
+    },
+    {
+      "command": "Python JSON/hashlib verification of context version and five required input seals; print R9-19/R9-20 and original finding; targeted rg for corresponding theory/design/handoff text",
+      "result": "Context and all five seals match. Corrected coverage condition is consistent in all designated consumers."
+    }
+  ],
+  "artifacts": [],
+  "findings": [
+    {
+      "finding_id": "DEC-JET-COVERAGE-CLOSED",
+      "claim_id": "RUN-R9-REV2-20260912-JET-FIX",
+      "verdict": "pass",
+      "severity": "medium",
+      "statement": "The revised R9-19/20 acceptance and matching theory, design and handoff close the prior DEC-JET-COVERAGE must-fix for research/design handoff. A jet sampling/response law no longer suffices for physical confidence use: the same calibrated joint state-jet-anchor event or a qualified augmented joint region with prospective family error control is expressly required.",
+      "assumptions_used": [
+        "Review is limited to closure of the previously identified design ambiguity; no empirical region or production adapter has been supplied.",
+        "Scientific action acceptance is separate from assumed-capability graph closure, as already stated by the DAG semantics."
+      ],
+      "evidence_refs": [
+        "docs/research_program/tensor_joint_r9/campaign_dag.json:R9-19 acceptance and both action requirements",
+        "docs/research_program/tensor_joint_r9/campaign_dag.json:R9-20 acceptance and coverage_contract",
+        "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md:section 6 item 6 and final jet-connection subsection",
+        "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md:Review correction: augmenting the state with a jet",
+        "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md:implementation item 6",
+        ".agent-harness/runs/R9-REV2-20260912/results/decision.json:DEC-JET-COVERAGE"
+      ],
+      "evidence_fingerprint": "R9-REV2-decision:DEC-JET-COVERAGE",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Read the sealed R9-19 direct and provider alternatives: both require tracking whether jet variables already belong to the common calibrated event or augmentation still needs prospective allocation.",
+        "Read R9-20: region identity, covered variables, coverage target/procedure and prospective allocation are required; matching frame/state/covariance is explicitly insufficient. On missing coverage, no PHYSICAL_IMAGE confidence capability is earned.",
+        "Apply the original two-independent-95%-regions counterexample: its .9025 joint event cannot satisfy the revised 95% joint coverage requirement. A genuine common event or qualified prospective augmentation satisfies the corrected logical condition.",
+        "Compare the same condition in theory, model-to-data execution sequence and handoff; all preserve no post-hoc alpha donation and conditional/scenario/unavailable routing."
+      ],
+      "confidence": 0.98,
+      "unresolved": []
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-REV2-20260912-JET-FIX",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "DEC-JET-COVERAGE-CLOSED"
+      ],
+      "summary": "PASS for closure of DEC-JET-COVERAGE. Together with the unchanged original review, the research/design handoff is accepted. Nonblocking original follow-ups remain; actual status/commit/push readback is root delivery work. No scientific, production, empirical, novelty, native solver, independent-model or four-axis admission."
+    }
+  ],
+  "errors": [],
+  "resolution": {
+    "resolves_result": ".agent-harness/runs/R9-REV2-20260912/results/decision.json",
+    "resolves_finding_id": "DEC-JET-COVERAGE",
+    "source_finding_alias_in_correction": "F-JET-COVERAGE",
+    "evidence_fingerprint": "R9-REV2-decision:DEC-JET-COVERAGE",
+    "original_result_preserved": true,
+    "final_research_design_handoff_verdict": "ACCEPT",
+    "unaffected_findings": "Original DEC-MATH, DEC-REFERENCE-EVIDENCE, DEC-DAG-ALTERNATIVES, DEC-PROVENANCE and DEC-CLAIM-HYGIENE retain their recorded scoped dispositions; not reaudited in this follow-up."
+  },
+  "limits": {
+    "delivery_class": "generic_prompted",
+    "authenticated_custom_profile_or_hook": false,
+    "independent_model_certification": false,
+    "GPT6_package_activation": "BLOCKED_PACKAGE_UNAVAILABLE",
+    "four_axis_CAS_admission": false,
+    "scientific_admission": false,
+    "experiments_rerun": false,
+    "production_acceptance": false
+  },
+  "timing_evidence": "Exact start time not recorded; started_at is a date-bound placeholder; completed_at is executor wall clock.",
+  "read_declaration": "First read the new registered assignment, verified context and all new input seals, then reviewed only the named coverage correction and original finding. No generated pack or extra sibling results read; no source edits or experiment reruns."
+}

@@ -1,0 +1,115 @@
+{
+  "nodes": 30,
+  "dependency_edges": 64,
+  "structural": "PASS",
+  "isolation_scenarios": [
+    {
+      "name": "all_assumed_qualified",
+      "status": "PASS",
+      "blocked_capabilities": []
+    },
+    {
+      "name": "CF4_law_missing",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "CF4_LAW"
+      ]
+    },
+    {
+      "name": "CMB_rank_unresolved",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "CMB_RANK_QUALIFIED"
+      ]
+    },
+    {
+      "name": "CMB_candidate_law_missing",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "CMB_CANDIDATE_LAW"
+      ]
+    },
+    {
+      "name": "jet_missing",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "JET_RESPONSE_LAW"
+      ]
+    },
+    {
+      "name": "nullspace_certificate_missing",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "IDENTIFICATION_REPORT"
+      ]
+    },
+    {
+      "name": "purpose_error_unused",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "PURPOSE_ERROR_SET"
+      ]
+    },
+    {
+      "name": "rank_formal_missing",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "FORMAL_RANK"
+      ]
+    },
+    {
+      "name": "response_formal_missing",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "FORMAL_RESPONSE"
+      ]
+    },
+    {
+      "name": "JWST_law_missing",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "JWST_LAW"
+      ]
+    },
+    {
+      "name": "all_empirical_laws_missing",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "CMB_CANDIDATE_LAW",
+        "CMB_EXCHANGEABLE_POOL",
+        "CF4_LAW",
+        "JWST_LAW",
+        "DESI_LAW"
+      ]
+    },
+    {
+      "name": "joint_depth_law_missing",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "JOINT_DEPTH_LAW"
+      ]
+    },
+    {
+      "name": "depth_formal_missing",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "FORMAL_DEPTH"
+      ]
+    },
+    {
+      "name": "provider_physics_missing",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "FORMAL_PHYSICS"
+      ]
+    },
+    {
+      "name": "jet_missing_keeps_tuple_functionals",
+      "status": "PASS",
+      "blocked_capabilities": [
+        "JET_RESPONSE_LAW"
+      ]
+    }
+  ],
+  "interpretation": "Assumed-capability graph tests only. No CAS, law, mock or observation capability is earned by these tests."
+}

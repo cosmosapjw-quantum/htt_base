@@ -1,0 +1,355 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-REV2-20260912",
+  "assignment_id": "depth",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "result_path": ".agent-harness/runs/R9-REV2-20260912/results/depth.json",
+  "assignment_sha256": "fe1499657c283509f297320ced76385bff05ac1d765d9e84b12ce8475c746222",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/R9-REV2-20260912/assignments/depth.json",
+    "AGENTS.md",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    "docs/research_program/tensor_joint_r9/REVISION_SPEC.md",
+    ".agent-harness/runs/R9-REV2-20260912/artifacts/source_depth_path.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agents/skills/htt-local-global-discrimination/SKILL.md"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-12T00:00:00Z",
+  "completed_at": "2026-09-12T20:29:13.609955+00:00",
+  "tool_versions": {
+    "python": "3.12.14",
+    "method": "manual finite-dimensional Gaussian derivation; no CAS execution"
+  },
+  "commands": [],
+  "artifacts": [],
+  "findings": [
+    {
+      "finding_id": "DEPTH-F1",
+      "claim_id": "RUN-R9-REV2-20260912-DEPTH-LAW",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The per-edge residual covariance omits source-target covariance. The sum implemented is correct only when the two omitted cross terms sum to zero, a restriction not implied by nested support or marginal covariance metadata.",
+      "assumptions_used": [
+        "fixed deterministic K",
+        "joint Gaussian Y with known PSD C"
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/R9-REV2-20260912/artifacts/source_depth_path.py:1103-1111",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md:Research questions 1 and 3",
+        "inline:derivation"
+      ],
+      "evidence_fingerprint": "depth-law:DEPTH-F1:ed495b9ed9cd66b96514",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Set scalar K=1, marginal variances 1 and covariance rho. True variance is 2-2rho; code formula gives 2. At rho=0.8 the true variance is 0.4; at rho=-0.8 it is 3.6."
+      ],
+      "confidence": 0.99,
+      "unresolved": []
+    },
+    {
+      "finding_id": "DEPTH-F2",
+      "claim_id": "RUN-R9-REV2-20260912-DEPTH-LAW",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The report stores edge cells and averages their normalized scores, but has no full cross-step residual covariance. That mean remains a descriptive diagnostic, not a joint Gaussian likelihood, independent chi-square sum, or calibrated path rejection statistic.",
+      "assumptions_used": [
+        "three independent scalar depth observations",
+        "K=1"
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/R9-REV2-20260912/artifacts/source_depth_path.py:975-977,1014-1025,1093-1098,1149-1170",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md:Research questions 1 and 3",
+        "inline:derivation"
+      ],
+      "evidence_fingerprint": "depth-law:DEPTH-F2:df0cda62151e37b10743",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "For C=I3 the contrast covariance is [[2,-1],[-1,2]]. For residual (1,1), full quadratic is 2 while diagonal-only sum is 1. For (1,-1), full quadratic is 2/3 while diagonal-only sum is 1."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "I inspected only the supplied seed source; I make no claim about an uninspected HTT adapter."
+      ]
+    },
+    {
+      "finding_id": "DEPTH-F3",
+      "claim_id": "RUN-R9-REV2-20260912-DEPTH-LAW",
+      "verdict": "pass",
+      "severity": "medium",
+      "statement": "The current rank-deficient branch suppresses scores rather than applying an unsafe pseudoinverse. A complete singular Gaussian extension must distinguish valid lower-dimensional support from impossible residuals before any pseudoinverse quadratic.",
+      "assumptions_used": [
+        "known PSD covariance",
+        "explicit numerical rank/support tolerances"
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/R9-REV2-20260912/artifacts/source_depth_path.py:1112-1121,1144",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md:Research questions 1 and 3",
+        "inline:derivation"
+      ],
+      "evidence_fingerprint": "depth-law:DEPTH-F3:7f5706c2980163aec658",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "For S=diag(1,0), residual (2,0) has support-valid q=4 with rank 1; residual (0,1) is impossible although its pseudoinverse quadratic is zero."
+      ],
+      "confidence": 0.99,
+      "unresolved": []
+    },
+    {
+      "finding_id": "DEPTH-F4",
+      "claim_id": "RUN-R9-REV2-20260912-DEPTH-LAW",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "Contrast-only paths remove a d0-dimensional propagated-level subspace; for K=I this includes every constant depth mode. Retaining the initial feature block together with all uncompressed contrasts is an invertible change of coordinates, even for noninvertible rectangular transports.",
+      "assumptions_used": [
+        "all original ordered depth blocks retained",
+        "fixed known K with compatible dimensions"
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/R9-REV2-20260912/artifacts/source_depth_path.py:1099-1103,1132-1147",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md:Research questions 1 and 3",
+        "inline:derivation"
+      ],
+      "evidence_fingerprint": "depth-law:DEPTH-F4:760c05300eda72982890",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "For scalar Y=(a,b,c), (Y0,r1,r2)=(a,b-a,c-b); inverse is (a,a+r1,a+r1+r2). A common mean theta in independent Y is invisible to r but has Fisher information 3 in the full path."
+      ],
+      "confidence": 0.99,
+      "unresolved": []
+    },
+    {
+      "finding_id": "DEPTH-F5",
+      "claim_id": "RUN-R9-REV2-20260912-DEPTH-LAW",
+      "verdict": "pass",
+      "severity": "medium",
+      "statement": "The explicit depth scramble is a perturbation control. Common feature layout and nested supports do not establish exchangeability or a filtration. Its PASSED label must not become a statistical validity claim without a justified null transformation.",
+      "assumptions_used": [
+        "permutation is fixed for the displayed perturbation",
+        "null inference requires separately justified symmetry or matched simulation"
+      ],
+      "evidence_refs": [
+        ".agent-harness/runs/R9-REV2-20260912/artifacts/source_depth_path.py:1338-1345,1353-1368,1387-1393",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md:Research questions 1 and 3",
+        "inline:derivation"
+      ],
+      "evidence_fingerprint": "depth-law:DEPTH-F5:e19d7bb1f7ef5cf5dcb7",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "For Gaussian null, valid invariance requires P mu=mu and P C P^T=C (and compatibility with the complete selection/extraction procedure). A fixed permutation law otherwise has mean P mu and covariance P C P^T and need not match the original law."
+      ],
+      "confidence": 0.99,
+      "unresolved": []
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-REV2-20260912-DEPTH-LAW",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "DEPTH-F1",
+        "DEPTH-F2",
+        "DEPTH-F3",
+        "DEPTH-F4",
+        "DEPTH-F5"
+      ],
+      "summary": "Complete blind analytic derivation and correction specification provided. The supplied seed does not implement the general correlated path law; exact counterexamples establish missing terms. No scientific acceptance or real-data completion follows."
+    }
+  ],
+  "errors": [],
+  "timestamp_caveat": "started_at is a date-bound placeholder; exact turn start time was not recorded. completed_at is executor wall-clock time.",
+  "read_declaration": "I read the files in files_read, with targeted extracts for the long depth source and strict validator. I did not read generated CONTEXT_PACK.md, parent or sibling derivations/results, or external literature. I used a bounded filename search within .agent-harness and docs/codex_handoff to locate the context index/template/validator; I did not map the repository. Required input byte seals and the context version matched. This is generic_prompted blind-results work, with self-declared execution and no authenticated custom-profile, independent-model, or four-axis CAS certification.",
+  "derivation": {
+    "scope": "Research-only correction design. No production source edits, real-data run, external solver, posterior, scientific acceptance, or proof-status promotion. Status fail refers to seed general-law adequacy, not completion of this analytic assignment.",
+    "notation": "Let Y=(Y0,...,Ym), Yi in R^{di}, Y~N(mu,C), Cij=Cov(Yi,Yj), C PSD. Fixed Ki maps R^{d(i-1)} to R^{di}. For i=1,...,m, ri=Yi-Ki Y(i-1). Block row Hi has -Ki in column i-1 and I_di in column i; all other blocks vanish. R=HY, mR=Hmu, S=HCH^T.",
+    "joint_covariance": "Sij=Cij-C(i,j-1) Kj^T-Ki C(i-1,j)+Ki C(i-1,j-1) Kj^T. In particular Sii=Cii+Ki C(i-1,i-1) Ki^T-C(i,i-1) Ki^T-Ki C(i-1,i). Every block, not just neighboring i,j, is needed unless a declared law supplies exact zeros. Even block-independent Yi yield S(i,i+1)=-Cii K(i+1)^T from the shared Yi; disjoint residuals are independent only when their covariance blocks vanish under joint Gaussianity.",
+    "short_gaussian_proof": "For every deterministic t, t^T R=(H^T t)^T Y is univariate Gaussian with mean t^T Hmu and variance t^T HCH^T t. Thus R has the stated (possibly degenerate) multivariate Gaussian law. The four cross terms follow by bilinearity of covariance. PSD follows from v^T S v=(H^T v)^T C(H^T v)>=0.",
+    "centering": "For a stated model theta, test z=R-H mu(theta), not R unless Hmu(theta)=0 is the explicitly stated null. The source residual target-K source is a contrast, not generally a zero-mean innovation. A global/local candidate may itself predict nonzero contrast means.",
+    "support": "Let S=U_r Lambda_r U_r^T with strictly positive retained eigenvalues; r=rank(S), P=U_r U_r^T=S S^+. Exact support is mR+range(S). Require (I-P)z=0. On support, q=z^T S^+ z=||Lambda_r^(-1/2) U_r^T z||^2 ~ chi-square_r for the true fixed mean and known covariance. Off support, the model assigns probability zero regardless of q. For r=0, z=0 deterministically, q=0 but q/r is undefined. A nonzero z is incompatible. Do not replace missing covariance or feature inputs with zero; zero rank is a known deterministic law, unlike unavailable data.",
+    "singular_likelihood_caution": "For fixed rank/support, Gaussian density with respect to the induced r-dimensional support measure uses (2pi)^(-r/2) pdet(S)^(-1/2) exp(-q/2) and a support restriction. If support or rank changes with theta, model comparison must handle the measures and constraints explicitly; comparing pseudodeterminant densities alone is insufficient. Invertible anchored coordinates preserve the probability law, but for singular laws their induced support-volume Jacobian need not be the ambient determinant.",
+    "numerics": "Declare separate PSD validation, rank, and support tolerances on appropriately scaled/standardized quantities. Numerical rank thresholds are an approximation policy, not proof of deterministic zeros. Reject materially negative eigenvalues. Record sensitivity near the cutoff. Do not clamp a genuinely indefinite quadratic to zero or silently jitter deterministic support into full rank. Known singular but support-valid is distinct from input unavailable and from support violation.",
+    "fixed_transport_vs_innovation": "Geometric/feature Ki is fixed independently of the realization; it need not equal a regression coefficient and produces correlated contrasts. Gaussian sequential innovations instead use the entire past X_i=(Y0,...,Y(i-1)): ei=Yi-mui-C(i,past) C(past,past)^+ (X_i-mu_past). The conditional covariance is Vi=Cii-C(i,past) C(past,past)^+ C(past,i). Because a PSD block covariance implies ker(Cpast) subset ker(C(i,past)), the conditional mean is well-defined on the realized past support and Cov(ei,X_i)=0. Joint Gaussianity gives independence of ei from the full past and hence mutually independent innovations, including initial centered block. Degenerate Vi require support constraints. Regression on only Yi-1 gives innovations relative to the full past only if the corresponding Gaussian conditional Markov property is justified. Metadata nesting proves none of this.",
+    "innovation_counterexample": "Take scalar three-depth covariance with all diagonal entries 1 and off-diagonals 1/2. Adjacent regressions use K=1/2. For e1=Y1-Y0/2 and e2=Y2-Y1/2, Cov(e1,e2)=1/2-1/2-1/4+1/8=-1/8, so they are not independent innovations. Regression of Y2 on (Y0,Y1) has coefficients (1/3,1/3) and innovation variance 2/3, with covariance zero against the whole past.",
+    "contrast_kernel_and_recovery": "H has full row rank: given any contrasts and any Y0, recursively set Yi=ri+Ki Y(i-1). Its kernel consists of (v,K1 v,K2 K1 v,...,Km...K1 v), dimension d0. For Ki=I this is the constant mode. For arbitrary Ki, a literally constant vector is removed only if every Ki preserves that vector; the general loss is a transported-level mode. The square map A:Y -> (Y0,HY) is block lower triangular with identity diagonal and determinant 1, hence invertible without requiring any Ki inverse. Preserve full covariance ACA^T, whose initial-contrast blocks are Cov(Y0,ri)=C(0,i)-C(0,i-1)Ki^T, along with means and support. Replacing contrasts by scores or retaining only their marginal covariances destroys this recovery.",
+    "statistical_information_qualification": "A noninjective data transformation loses sample coordinates but need not lose information about every chosen parameter. With C fixed SPD and Gaussian mean direction d, contrast Fisher information is d^T H^T(HCH^T)^(-1)H d <= d^T C^(-1)d. Whitening makes this an orthogonal-projection inequality. Equality holds precisely when C^(-1)d lies in range(H^T). For d in ker(H), contrast mean information vanishes. If covariance varies with theta, contrast covariance may still inform theta; the common-mean counterexample assumes fixed C. On singular known support, H can be injective on range(C) even though not globally injective, so avoid saying all contrasts necessarily lose stochastic information.",
+    "dependency_conditions": [
+      "C must be a joint law for the exact same stacked estimators: shared objects, weights, masks, selections, calibration fits, reference subtraction and overlap induce cross-covariance. Marginal covariance IDs alone do not determine Cij.",
+      "If Ki is externally fixed, the linear Gaussian derivation applies. If a random Ki is independent of Y, conditioning on Ki preserves the specified Gaussian Y law; unconditional residual law can be a Gaussian mixture. If Ki is fitted from Y, H(Y)Y is generally nonlinear and neither Gaussianity nor H(Y) C H(Y)^T as its unconditional covariance follows. Conditioning on such a fitted Ki need not restore the original Gaussian law.",
+      "A fitted mean, covariance, transport, selection cut or nuisance projection needs the joint estimator law or a matched end-to-end repeated-sampling procedure. Plug-in chi-square calibration is not exact merely because the observed covariance is PSD. Independent training/cross-fitting helps isolate dependence but still requires conditioning and covariance estimation uncertainty to be specified.",
+      "For illustration of data-fit failure, choose scalar Khat=Y1/Y0 on Y0!=0. Then residual Y1-Khat Y0 is identically zero while treating the fitted Khat as fixed in an independent-unit covariance formula yields 1+Khat^2>0.",
+      "A valid Gaussian calibration is pointwise in a fixed true theta with known C. Fitting theta to the same data changes the residual law/degrees of freedom; nonlinear fitted models require explicit calibration. Nesting does not establish independent increments, exchangeability, Gaussianity or conditional sufficiency."
+    ],
+    "hand_controls": [
+      {
+        "name": "independent three-depth positive law",
+        "C": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "H": [
+          [
+            -1,
+            1,
+            0
+          ],
+          [
+            0,
+            -1,
+            1
+          ]
+        ],
+        "S": [
+          [
+            2,
+            -1
+          ],
+          [
+            -1,
+            2
+          ]
+        ],
+        "S_inverse": [
+          [
+            "2/3",
+            "1/3"
+          ],
+          [
+            "1/3",
+            "2/3"
+          ]
+        ],
+        "details": "Eigenvalues 1,3. q(1,1)=2; q(1,-1)=2/3. Under this true law q~chi-square_2. Diagonal-only qD=(r1^2+r2^2)/2 has law (1/2)Z1^2+(3/2)Z2^2, expectation 2 but variance 5 rather than chi-square_2 variance 4. Matching expected score therefore does not validate its tail."
+      },
+      {
+        "name": "two-depth cross term controls",
+        "K": 1,
+        "marginal_variances": [
+          1,
+          1
+        ],
+        "rho_to_true_variance": {
+          "-0.8": 3.6,
+          "0": 2,
+          "0.8": 0.4
+        },
+        "details": "Ignoring covariance always gives variance 2. For zero mean, naive q=r^2/2 has law (1-rho) chi-square_1; rho=0.8 under-rejects and rho=-0.8 over-rejects a nominal upper-tail chi-square test."
+      },
+      {
+        "name": "duplicate observations",
+        "C": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "S": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "details": "Y=mu+Z(1,1,1), so R=Hmu deterministically. Under common mean, R=(0,0); R=(1,0) violates support. A bare pseudoinverse reports q=0 in both cases. The source marginal-sum construction falsely uses per-edge variance 2."
+      },
+      {
+        "name": "constant mean removed and restored",
+        "model": "Y~N(theta*(1,1,1),I3)",
+        "A": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            -1,
+            1,
+            0
+          ],
+          [
+            0,
+            -1,
+            1
+          ]
+        ],
+        "anchored_covariance": [
+          [
+            1,
+            -1,
+            0
+          ],
+          [
+            -1,
+            2,
+            -1
+          ],
+          [
+            0,
+            -1,
+            2
+          ]
+        ],
+        "details": "Contrast law is independent of theta. In anchored coordinates the mean is (theta,0,0) and the full covariance is essential. theta_hat=Y0+(2 r1+r2)/3=(Y0+Y1+Y2)/3 has variance 1/3; using only Y0 has variance 1. Conditioning Y0 on contrasts gives variance 1/3 and a contrast-dependent conditional mean."
+      },
+      {
+        "name": "singular support distinction",
+        "S": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "details": "z=(2,0): q=4, rank=1, valid support. z=(0,1): pseudoinverse q=0, invalid support. Zero covariance is legitimate only with exactly known deterministic constraints."
+      }
+    ],
+    "repair_spec": [
+      "Preserve apply_covariance_transport at source lines 495-509 as the correct marginal linear-map operation; its output alone cannot determine residual covariance.",
+      "Add a joint stacked-law input keyed to exact step order, dimensions and estimator identity, including all Cij, mean-law convention, covariance origin (known/estimated/conditional), and relevant selection/calibration dependencies. Allow explicit unavailable status when cross-covariance is missing. A declared independence model may fill exact zero blocks only when justified, never as a missing-data default.",
+      "Replace lines 1108-1111 conceptually with S=H C H^T and draw per-edge covariance from Sii. Retain full S and raw R for the path consumer. Do not infer cross-step independence from corrected marginal cells.",
+      "Keep the MIO mean score at lines 1149-1170 labeled descriptive if retained. Any probability or HTT likelihood must consume the actual joint law and stated mean. Keep MIO diagnostic-only and HTT the owner of model-dependent likelihood/posterior.",
+      "Extend the lines 1112-1121 rank logic to return effective rank, support-test outcome and rank-valid score if enabled. Degrees of freedom at line 1144 must become rank for a valid support quadratic, with separate residual dimension. For rank zero define deterministic agreement/violation and no normalized score.",
+      "For HTT common-state inference, preserve either Y or the invertible anchored representation (Y0,R), its full covariance and mean. If a conditional innovation representation is desired, implement an explicitly justified full-past conditional transformation, separately from fixed feature transports.",
+      "Keep lines 1353-1368 as a declared destructive perturbation only. A joint-law permutation must transform the whole covariance P C P^T and mean Pmu; statistical permutation testing additionally requires null invariance of the complete procedure. If re-extraction is necessary under a support change, permuting values and marginal covariances is inadequate."
+    ],
+    "real_data_DAG_recommendation": "Require product model-to-data contract and matched stacked feature extraction -> complete joint estimator covariance/dependency contract -> Gaussian validity or calibrated sampling-law decision -> fixed transport H with support/rank validation -> anchored state response/rank audit -> HTT common-state likelihood and MIO diagnostic image/report. Product provider unavailable or CF4 law quarantine blocks the consuming law lane without fabricated inputs; product-specific alpha budgets stay separate. First runnable slice is the frozen synthetic controls plus one declared product whose joint covariance is actually available, before any observational rejection claim. Preserve local boost/global tilt/systematics distinction and native-provider absence. PR4 remains fully skipped; R8 STOP_INVALID and unresolved scientific claims persist.",
+    "tests_to_run": "Root should execute the spec-frozen seed=20260912, N=100000, alpha=.05 controls with numerical tolerance 1e-10 and MC tolerance .005. Include full S vs dropped within-edge terms vs dropped cross-step terms, support violations, common-mean information loss, anchored recovery, and matched full-past innovations. Do not relax thresholds or promote source proof status. I derived exact expected outcomes here; I did not execute the Monte Carlo or a native source import.",
+    "risks_and_kill_switches": "Missing cross-covariance, transport fitted without joint calibration, unknown selection dependence, response rank overlap, or Gaussian tail misfit prevents the corresponding real-data calibrated-law claim. Singular support by itself is not a universal no-information verdict, but does require explicit supported coordinates and a response-identifiability decision."
+  }
+}

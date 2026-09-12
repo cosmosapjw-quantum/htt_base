@@ -1,0 +1,345 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-REV2-20260912",
+  "assignment_id": "functional",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "result_path": ".agent-harness/runs/R9-REV2-20260912/results/functional.json",
+  "assignment_sha256": "3d3c47075a0cc3ad69a6f2e4653660a834e49fa2f0d01e55aa5b7b0f3332b4a1",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/R9-REV2-20260912/assignments/functional.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    "docs/research_program/tensor_joint_r9/REVISION_SPEC.md",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/runs/R9-REV2-20260912/results/functional.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-12T20:27:02.868550+00:00",
+  "completed_at": "2026-09-12T20:31:17.821793+00:00",
+  "tool_versions": {
+    "python": "3.12.14",
+    "numpy": "2.3.5"
+  },
+  "commands": [
+    {
+      "purpose": "Assignment first read",
+      "command": "cat .agent-harness/runs/R9-REV2-20260912/assignments/functional.json"
+    },
+    {
+      "purpose": "Targeted harness path discovery; no sibling result contents read",
+      "command": "rg --files .agent-harness/runs/R9-REV2-20260912 .agent-harness/templates .agent-harness | rg context-index/template/validator patterns"
+    },
+    {
+      "purpose": "Read assigned source, result template, context index, strict validator",
+      "command": "cat explicitly assigned source and harness files"
+    },
+    {
+      "purpose": "Verify context version and assigned source SHA-256",
+      "command": "Python hashlib/json comparison",
+      "result": "Both match"
+    },
+    {
+      "purpose": "Independent direct tensor evaluation of support boundary example",
+      "command": "Python/NumPy STF symmetrization and contraction; q=diag(1,-1,0)/sqrt(2), t=1e-8",
+      "result": "LL-adjoint identities and endpoint constraints agree to 2.23e-16; detailed outputs below"
+    },
+    {
+      "purpose": "Inspect strict-validator helper references",
+      "command": "rg -n historical_run_ids|historical_runs|validate_assignment_payload|required_inputs .agent-harness/scripts/_harness.py"
+    },
+    {
+      "purpose": "Write assigned envelope and validate payload against sealed assignment",
+      "command": "Python json serialization and strict_result_validation.validate_result_payload with historical_runs=set(), no launch receipt"
+    }
+  ],
+  "artifacts": [],
+  "findings": [
+    {
+      "finding_id": "F-IMAGE",
+      "claim_id": "RUN-R9-REV2-20260912-FUNCTIONAL-IMAGE",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "A valid joint state-and-anchor confidence region gives simultaneous true-target functional image coverage by one inclusion event, without an additional multiplicity penalty for taking images.",
+      "assumptions_used": [
+        "The common region already has the asserted joint coverage under the declared sampling experiment.",
+        "All target maps are defined at the true parameter; event measurability or an outer-probability formulation is supplied.",
+        "Computational outputs contain the exact images."
+      ],
+      "evidence_refs": [
+        "inline:analytic_derivation.coverage",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md#research-questions-and-consumers"
+      ],
+      "evidence_fingerprint": "analytic:R9-REV2-functional-F-IMAGE",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "On z0 in C(D), every f_t(z0) lies in f_t(C(D)); take the probability of this common event."
+      ],
+      "confidence": 0.97,
+      "unresolved": [
+        "No valid physical-data confidence region has been supplied or constructed here."
+      ]
+    },
+    {
+      "finding_id": "F-IDENTIFIED",
+      "claim_id": "RUN-R9-REV2-20260912-FUNCTIONAL-IMAGE",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "Uniform true-point coverage does not imply coverage of the complete identified set; a reduced-parameter confidence region lifted through every compatible state does.",
+      "assumptions_used": [
+        "Identified-set target and anchor semantics are explicitly declared."
+      ],
+      "evidence_refs": [
+        "inline:analytic_derivation.identified_set",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md#research-questions-and-consumers"
+      ],
+      "evidence_fingerprint": "analytic:R9-REV2-functional-F-IDENTIFIED",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "For 20 observationally indistinguishable states exclude one uniformly random label. Each label has 95% coverage; coverage of all 20 is zero.",
+        "For a reduced true parameter psi0 in D, every member of Theta(psi0) lies in the union of Theta(psi) over psi in D."
+      ],
+      "confidence": 0.97,
+      "unresolved": []
+    },
+    {
+      "finding_id": "F-ANCHOR",
+      "claim_id": "RUN-R9-REV2-20260912-FUNCTIONAL-IMAGE",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "Unknown or random MES denominators must be represented jointly; zero requires an undefined branch, and admissible nonzero ratios can be disconnected or unbounded.",
+      "assumptions_used": [
+        "The quotient is used only on its mathematically defined domain.",
+        "Distinguish a fixed unknown population anchor from a statistic or a predictive random anchor."
+      ],
+      "evidence_refs": [
+        "inline:analytic_derivation.anchors",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md#research-questions-and-consumers"
+      ],
+      "evidence_fingerprint": "analytic:R9-REV2-functional-F-ANCHOR",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "For numerator 1 and denominator interval [-epsilon,epsilon], obtain two unbounded rays plus an undefined zero branch.",
+        "For the correlated constraint numerator=denominator, the nonzero ratio is the singleton {1}, so touching zero alone does not prove unboundedness."
+      ],
+      "confidence": 0.97,
+      "unresolved": []
+    },
+    {
+      "finding_id": "F-FIBRE",
+      "claim_id": "RUN-R9-REV2-20260912-FUNCTIONAL-IMAGE",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "For eta<=1, the fixed-q norm-one STF3 fibre has support h(a)=a:Rqv+sqrt(1-eta)||Pker a||; eta=1 is a singleton and eta>1 is infeasible.",
+      "assumptions_used": [
+        "q is fixed, unit, symmetric trace-free rank 2 in Euclidean three-space.",
+        "STF3 uses full Cartesian Frobenius contraction and a is its STF representer."
+      ],
+      "evidence_refs": [
+        "inline:analytic_derivation.fibre",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md#research-questions-and-consumers"
+      ],
+      "evidence_fingerprint": "analytic:R9-REV2-functional-F-FIBRE",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Derive L*=STF(sym(w tensor q)), LL*=Mq/3, and Pker=I-RqLq.",
+        "Decompose any feasible o orthogonally into Rqv plus ker Lq and apply Cauchy-Schwarz, attained by the normalized projected representer."
+      ],
+      "confidence": 0.97,
+      "unresolved": []
+    },
+    {
+      "finding_id": "F-BOUNDARY",
+      "claim_id": "RUN-R9-REV2-20260912-FUNCTIONAL-IMAGE",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "Support widths can scale as sqrt(1-eta), so plug-in linearization near eta=1 is nonregular; support functions recover a convex hull, not the complete norm-one fibre.",
+      "assumptions_used": [
+        "Exact norm-one equality is preserved, rather than silently replaced by a norm ball."
+      ],
+      "evidence_refs": [
+        "inline:analytic_derivation.boundaries",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md#research-questions-and-consumers"
+      ],
+      "evidence_fingerprint": "analytic:R9-REV2-functional-F-BOUNDARY",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "For q=diag(1,-1,0)/sqrt(2) and v_t=sqrt((8/15)(1-t))e1, a unit xyz STF tensor has support interval [-sqrt(t),sqrt(t)].",
+        "At v=0 the fibre is the unit sphere in a four-dimensional kernel; its convex hull contains zero, which violates norm-one equality."
+      ],
+      "confidence": 0.97,
+      "unresolved": []
+    },
+    {
+      "finding_id": "F-CONTRACT",
+      "claim_id": "RUN-R9-REV2-20260912-FUNCTIONAL-IMAGE",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "A practical physical-image result must retain joint uncertainty provenance, domain status, target coverage semantics, and exact/outer/inner numerical guarantees across typed tensor outputs.",
+      "assumptions_used": [
+        "Interface proposal only; no production provider, solver, or inference implementation is asserted."
+      ],
+      "evidence_refs": [
+        "inline:analytic_derivation.interface",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md#research-questions-and-consumers"
+      ],
+      "evidence_fingerprint": "analytic:R9-REV2-functional-F-CONTRACT",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Use the same joint feasible set and region identifier for all x, Q, F outputs; label Pi by its probability law and G_F by its typed depth path.",
+        "Distinguish unavailable, mathematically undefined, infeasible, unbounded, and numerically unresolved outputs."
+      ],
+      "confidence": 0.97,
+      "unresolved": [
+        "Global certified optimization for uncertain q and actual response providers remains implementation work."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-REV2-20260912-FUNCTIONAL-IMAGE",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-IMAGE",
+        "F-IDENTIFIED",
+        "F-ANCHOR",
+        "F-FIBRE",
+        "F-BOUNDARY",
+        "F-CONTRACT"
+      ],
+      "summary": "Completed bounded derivation, minimal counterexamples, direct tensor boundary check, and interface proposal. These establish conditional mathematical statements, not an empirical confidence procedure or scientific admission."
+    }
+  ],
+  "errors": [],
+  "scope_evidence": {
+    "assignment_sha256": "3d3c47075a0cc3ad69a6f2e4653660a834e49fa2f0d01e55aa5b7b0f3332b4a1",
+    "context_index_version_verified": true,
+    "required_input_sha256_verified": true,
+    "delivery_class": "generic_prompted",
+    "launch_authentication": "unverified; no authenticated custom-profile/SubagentStart receipt available",
+    "independent_model_certification": false,
+    "four_axis_certification": false,
+    "scientific_acceptance": "not granted; pass denotes bounded analytic assignment completion only",
+    "generated_context_pack_read": false,
+    "sibling_results_read": false,
+    "source_classification_is_proof_admission": false,
+    "physical_provider_absence": "unavailable, never zero",
+    "preserved_constraints": [
+      "Metric (-+++); local observer boost is not matter tilt.",
+      "No native solver or Bianchi-family claims.",
+      "HTT inference; MIO diagnostics; obsstat features.",
+      "PR4 fully skipped; R8 STOP_INVALID, CF4 quarantine, conditional DESI/Union3 preserved."
+    ]
+  },
+  "analytic_derivation": {
+    "coverage": {
+      "objects": "Let D denote the complete random data, including anchor-calibration data when applicable. Let z=(theta,a) belong to a physically admissible joint domain Z, with true z0. Let C(D) subset Z satisfy P_z0[z0 in C(D)] >= 1-alpha. A uniform assertion requires inf_z P_z[z in C(D)] >= 1-alpha, not merely calibration at one nominal point.",
+      "vector_image": "For an index family T of tensor components, contractions, gauges, and directional supports, define F(z)=(f_t(z))_{t in T} and J(D)={F(z):z in C(D)}. The single event z0 in C(D) implies F(z0) in J(D), hence simultaneous image coverage >=1-alpha. The coordinate sets I_t(D)={f_t(z):z in C(D)} also satisfy P[for every t, f_t(z0) in I_t(D)]>=1-alpha. Coordinate intervals are outer sets and generally lose joint attainability information.",
+      "infinite_family": "The implication is pathwise even for infinitely many deterministic directions. Probability statements require measurable simultaneous events, or stated outer-probability bounds. The original joint region must already handle feature/model selection. An image of a region calibrated after unaccounted selection does not repair that calibration.",
+      "uncertainty_coupling": "State and anchor uncertainties need their joint dependence. If separate regions each have level 0.95, their intersection need have only 0.90 coverage by a union bound, and has 0.9025 for independent exact events. Allocate alpha_theta+alpha_a<=alpha or construct a genuinely joint region. Taking Cartesian products can conservatively ignore known dependence if the simultaneous inclusion event is valid, but cannot create the missing joint coverage.",
+      "posterior_distinction": "If instead a posterior gives P[z in C(D)|D]>=1-alpha, the same set inclusion yields a posterior credible image conditional on D. It provides no frequentist coverage without a separate calibration theorem. A confidence set is not a probability distribution on its points.",
+      "outer_sets": "Any computed J_outer containing the exact J inherits its target inclusion probability; an inner approximation or optimizer incumbent does not. Enlarging to marginal intervals or a support-defined convex outer set preserves inclusion but loses sharpness and dependence."
+    },
+    "identified_set": {
+      "distinction": "Point coverage is P_theta[theta in C]>=1-alpha for each theta. Full identified-set coverage is P_psi[Theta(psi) subset C]>=1-alpha for every reduced true parameter psi. These have different quantifier order: an infimum of pointwise probabilities does not give the probability of a simultaneous inclusion event.",
+      "counterexample": "Let Theta={1,...,20}, all with the same observable law U uniform on {1,...,20}. Set C(U)=Theta minus {U}. Then every possible theta has coverage 19/20=0.95, including uniform coverage over theta. Nevertheless P[Theta subset C(U)]=0. The identity functional makes the failure an image-coverage failure too.",
+      "sufficient_lift": "Suppose D_red is a valid joint confidence region for reduced population quantities psi and anchors a. Define Theta(psi,a) as every physical state compatible with those quantities under the stipulated forward relation. Return U(D)=union_{(psi,a) in D_red} {(theta,a):theta in Theta(psi,a)}. On (psi0,a0) in D_red, all states in Theta(psi0,a0) are included, and therefore the entire identified image {F(theta,a0):theta in Theta(psi0,a0)} is included in F(U(D)). This is a full-set coverage construction if the inverse relation includes all true compatible states.",
+      "scope": "If the anchor is itself nonidentified, define the identified set on joint (theta,a) pairs rather than silently fixing a selected anchor. Numerical undercoverage of a fibre invalidates the lifted guarantee. Full state-set coverage is sufficient but may be stronger than needed for coverage of a noninjective functional image."
+    },
+    "anchors": {
+      "ratio_domain": "For r(z)=N(z)/A(z), define Z_nonzero={z:A(z)!=0}. Compute its exact joint image over C intersect Z_nonzero. If C also contains A=0, report that the region includes an undefined-target branch, unless the application has supplied a mathematically justified extension. Dropping zero is not evidence that the true target exists.",
+      "unbounded_example": "N=1 and A in [-epsilon,epsilon], epsilon>0, gives r in (-infinity,-1/epsilon] union [1/epsilon,infinity), plus an undefined branch at zero. A positive-only denominator in (0,epsilon] gives [1/epsilon,infinity). A finite interval produced by dividing by a plug-in mean anchor fails to represent these cases.",
+      "zero_not_sufficient": "For the joint constraint N=A with A in [-epsilon,epsilon], r=1 whenever defined. Thus denominator zero crossing does not itself imply unboundedness; numerator-denominator dependence and admissible approach paths matter. Any extension at (0,0) requires an explicit domain-based argument, not arbitrary zero-filling.",
+      "random_anchor": "A fixed unknown population anchor a0 estimated by a random statistic Ahat belongs in z; the population ratio is N(theta0)/a0. A reported ratio N(theta0)/Ahat(D) is a different, data-dependent target. Conditional coverage given Ahat requires a valid conditional region, not just unconditional joint coverage. For a future genuinely random anchor, use a joint predictive target and prediction coverage; parameter confidence coverage does not automatically cover a future realization.",
+      "gauges": "MES gauges, normalized margins, and supports relative to an uncertain anchor or anchor set are maps of the complete joint state-anchor object. Evaluate their extrema over that object; do not independently extremize numerator and denominator and then claim a sharp image. Record positivity, boundedness, and existence assumptions for each gauge."
+    },
+    "fibre": {
+      "space": "H=STF3(R3) has dimension 7 and Frobenius inner product <a,o>=sum_ijk a_ijk o_ijk. q is a fixed unit STF2 tensor, Lq:H->R3 is (Lq o)_i=sum_jk o_ijk q_jk. For a general ambient linear functional use its orthogonal STF3 representer a, since all other parts annihilate H.",
+      "adjoint": "Lq* w=STF(sym(w tensor q)). In indices: (Lq*w)_ijk=(w_i q_jk+w_j q_ik+w_k q_ij)/3 -(2/15)[delta_ij(qw)_k+delta_ik(qw)_j+delta_jk(qw)_i]. This follows because sym(w tensor q) has trace (2/3)qw and its STF projection subtracts one fifth of the three delta-trace terms.",
+      "identities": "Direct contraction gives LqLq*w=w/3+(2/5)q^2w=Mq w/3, where Mq=I+(6/5)q^2. Thus Bq=3Lq*, Lq Bq=Mq, Rq=Bq Mq^-1=Lq*(LqLq*)^-1, and LqRq=I. Mq is positive definite for every q under this normalization, so Lq is surjective and dim ker Lq=7-3=4.",
+      "orthogonal_split": "P=I_H-RqLq is the orthogonal projection onto ker Lq. The minimum-norm preimage Rqv lies in im Lq* and has squared norm eta(v)=3 v^T Mq^-1 v. Every solution of Lq o=v is o=Rqv+k, with k in ker Lq, and ||o||^2=eta+||k||^2.",
+      "feasibility": "For eta<1 the norm-one fibre is Rqv+sqrt(1-eta) S(ker Lq), an affine 3-sphere. For eta=1 it is {Rqv}. For eta>1 it is empty. Nonzero kernel dimension makes eta<=1 sufficient. This is a norm-one sphere fibre; its convex hull is the corresponding closed four-ball.",
+      "support": "For eta<=1, h_v(a)=sup_{Lq o=v,||o||=1}<a,o>=<a,Rqv>+sqrt(1-eta)||Pa||. The infimum is <a,Rqv>-sqrt(1-eta)||Pa||. Moreover ||Pa||^2=||a||^2-3 (Lq a)^T Mq^-1(Lq a), and <a,Rqv>=3 (Lq a)^T Mq^-1 v. For empty fibres use an infeasible status; the formal extended-real support of the empty set is -infinity.",
+      "attainment": "If eta<1 and Pa!=0, choose k=plus or minus sqrt(1-eta) Pa/||Pa|| to attain the endpoints. If Pa=0 the functional is constant on the whole fibre, and any kernel direction of the required norm works. If eta=1 the unique point attains both endpoints. Because the kernel sphere has dimension 3, the scalar image is the entire interval between its endpoints.",
+      "simultaneous_image": "For multiple linear functionals let T:H->R^m and A=T restricted to ker Lq. Their exact image is T Rqv+sqrt(1-eta) A S(ker Lq). For eta<1, if A is injective on the four-dimensional kernel this is an ellipsoid surface; if ker A is nonzero this is the filled ellipsoid in im A because an unused kernel direction supplies the remaining norm. Scalar intervals and arbitrary support values do not in general reconstruct this nonconvex simultaneous image."
+    },
+    "boundaries": {
+      "explicit_q": "Choose q=diag(1,-1,0)/sqrt(2). Then Mq=diag(8/5,8/5,1). Let a_ijk=1/sqrt(6) for the six permutations of xyz and zero otherwise. This tensor is symmetric, trace-free, unit Frobenius norm, and Lq a=0.",
+      "interior": "At v=0, eta=0 and the functional <a,o> spans [-1,1]. The full fibre is S3 in ker Lq; zero belongs to its convex hull but is not feasible. If a instead lies in im Lq*, Pa=0 and its value is fixed even throughout this nontrivial fibre.",
+      "boundary_path": "Let v_t=sqrt((8/15)(1-t))e1 for 0<=t<=1. Then eta=1-t, <a,Rqv_t>=0, and the functional image is [-sqrt(t),sqrt(t)]. At t=0 the fibre collapses to a point. Its half-width has derivative 1/(2sqrt(t)), divergent as t approaches zero from above. Taking v=sqrt((8/15)(1+delta))e1 with delta>0 gives eta=1+delta and an empty fibre.",
+      "inference_implication": "If a valid confidence region includes inward perturbations t of order n^-1/2 near this boundary, it can generate fibre uncertainty of order n^-1/4. This is a conditional scaling observation, not a universal estimator rate. A plug-in boundary fibre has zero width and can discard these permitted states. A delta-method or Gaussian image approximation needs a separate boundary-valid theorem.",
+      "direct_check": {
+        "q": "diag(1,-1,0)/sqrt(2)",
+        "t": 1e-08,
+        "max_abs_LB_minus_M": 2.220446049250313e-16,
+        "eta": 0.99999999,
+        "norm_Rv_squared": 0.9999999899999997,
+        "sqrt_one_minus_eta": 0.00010000000025123796,
+        "kernel_tensor_norm": 1.0,
+        "L_a": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "endpoint_norms": [
+          0.9999999999999999,
+          0.9999999999999999
+        ],
+        "endpoint_constraint_errors": [
+          2.220446049250313e-16,
+          2.220446049250313e-16
+        ],
+        "endpoint_functionals": [
+          -0.00010000000025123799,
+          0.00010000000025123799
+        ],
+        "orthogonality_inner_product": 0.0,
+        "interpretation": "A direct floating-point positive control of the explicit example, not general proof or independent CAS certification."
+      }
+    },
+    "algorithm": {
+      "steps": [
+        "Specify the estimand, sampling experiment, physical domain, observer frame, state-anchor dependence, and whether the target is a true point, an identified set, or a posterior/predictive object.",
+        "Obtain a valid common region for the joint state/anchors, or a valid reduced-quantity region together with a complete inverse relation. No region is constructed by this derivation alone.",
+        "Intersect only with justified physical constraints; lift all compatible nuisance states and anchors when full-set coverage is intended. Preserve ratio zero branches and unavailable providers explicitly.",
+        "For fixed q and each admissible v, use the exact feasibility criterion eta<=1 and the fibre support formula. For uncertain q, optimize over the full joint admissible (q,v,a,other state) set; do not freeze q at an estimate.",
+        "For every requested functional or support direction solve the relevant constrained min/max problem. A linear functional of o conditional on fixed q,v has the analytic support above; remaining q,v,anchor optimization can still be nonlinear and nonconvex.",
+        "Return exact sets where available, or certified enclosing sets/bounds with the correct orientation. Attach common region provenance, domain partitions, residual/tolerance reports, and nonattainment/unboundedness status."
+      ],
+      "fixed_q_uncertain_v": "If V is a valid set of contraction values at this fixed q, the lifted set is union_{v in V,eta(v)<=1} fibre(q,v), with support sup_{v in V,eta(v)<=1}[<a,Rqv>+sqrt(1-eta(v))||Pa||]. Replace V by the joint feasible projection including anchors if the functional also uses them. For uncertain q, include an outer supremum over the admissible joint q,v pairs and use Pq, Rq, eta_q at each q.",
+      "certification": "A feasible optimizer provides a lower bound on a supremum, not a coverage-preserving upper bound. Certified dual bounds, analytic inequalities, interval enclosures, or validated global optimization can provide outer bounds. For infima the orientation reverses. Finite directions define an outer support polyhedron only if every reported support upper bound is sound; it does not certify unqueried support values as exact.",
+      "limitations": [
+        "Monte Carlo or a finite grid can miss thin boundary fibres, denominator singularities, disconnected components, and supremizing sequences. It supplies examples or inner approximations absent an additional enclosure argument.",
+        "A local solver or failed solve cannot certify emptiness or boundedness. Keep numerically unresolved separate from infeasible.",
+        "When an interval enclosure of eta straddles 1, increase precision or return an unresolved/enclosing branch; do not silently clamp a substantively negative 1-eta to zero. Known floating roundoff clipping requires a documented error bound.",
+        "Support functions characterize the closed convex hull; norm-one equality and joint attainability require the original fibre representation.",
+        "Finite support samples cannot certify the full continuum unless accompanied by a valid interpolation/Lipschitz or global bound.",
+        "Actual physical response providers and a boundary-calibrated common confidence procedure remain unavailable in this bounded assignment."
+      ]
+    },
+    "interface": {
+      "common_contract": [
+        "target_id and mathematical definition; inference kind: confidence, identified_set_confidence, posterior, predictive, diagnostic, or scenario",
+        "joint_region_id/hash; parameterization and physical domain; state-anchor dependence; anchor provenance and randomness semantics",
+        "declared alpha and calibration assumptions; coverage target and whether guarantee is pointwise/uniform and point/full-set",
+        "units, tensor rank, STF and norm conventions, metric (-+++), observer/frame and transport identifiers",
+        "status separating available, unavailable, undefined, infeasible, unbounded, and numerically_unresolved; never encode missing provider output as zero",
+        "numerical representation exact/outer/inner; bound orientation; tolerances and certificate/evidence references; boundary/ratio-domain branches",
+        "source classification and theorem assumptions kept separate from proof-registry admission; no native-solver or four-axis claim"
+      ],
+      "x": "Functional arrays indexed by actual tensor component/contraction definitions, directions, ranks, units, frame and depth; retain common uncertainty provenance instead of an older undifferentiated scalar x.",
+      "Q": "MES anchor gauge or margin object with its mathematical gauge definition, anchor data/parameter IDs, anchor-set geometry if relevant, positivity/domain rules, joint uncertainty region, and undefined/unbounded branches.",
+      "F": "Directional support object: functional representer or direction, admissible set ID, support upper/lower values or bounds, exact/outer/inner status, attainment status and fibre feasibility; all-directions claims require their own enclosing argument.",
+      "Pi": "Law-tagged exceedance surface: event definition and threshold grid, random object and conditioning, law/calibration ID, supported domain and probability semantics. Neither a confidence-set fraction nor an MIO diagnostic is automatically a posterior probability or p-value.",
+      "G_F": "Typed depth path with depth labels, feature definitions, transport/operator IDs, uncertainty-law reference and unavailable steps preserved. Cross-depth law derivation belongs to its separately assigned law adapter; this result neither reads nor certifies it.",
+      "consumer_boundary": "HTT can consume a validated physical-image confidence object for inference; MIO receives diagnostics with their actual law semantics; obsstat supplies declared feature objects. Provider absence remains unavailable. This is an interface design, not an implemented adapter."
+    }
+  },
+  "timing_evidence": "started_at is the first instrumented UTC timestamp recorded during this assignment; earlier assignment/source reads preceded this timestamp."
+}

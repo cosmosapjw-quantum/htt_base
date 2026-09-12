@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "returncode": 2,
+      "stdout": ".agent-harness/runs/R9-REV2-20260912/artifacts/source_depth_path.py:1436: new blank line at EOF.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude).agent-harness/runs/R9-REV2-20260912/artifacts/source_depth_path.py"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "sealed_copy_exception": "Extra final newline preserved because the independent assignment binds its exact bytes. No policy or gate was modified.",
+  "canonical_mirrors_equal": true,
+  "r9_json_files_parse": 24
+}

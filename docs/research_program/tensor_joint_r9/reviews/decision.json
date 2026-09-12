@@ -1,0 +1,293 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-20260912",
+  "assignment_id": "decision",
+  "parent_assignment_id": null,
+  "agent_type": "adjudicator",
+  "context_version": "6d78f041ff9ec512b91493c6e69e3da2177ef1cb09ac83e839a141f5b587d8d1",
+  "assignment_sha256": "976cadd6f5a0b453d12c1b286e0461971f1171f6ebf217ef7a929102778021cf",
+  "independence_mode": "adjudication",
+  "status": "pass",
+  "claim_ids": [
+    "RUN-R9-20260912-DECISION"
+  ],
+  "status_scope": "Independent scientific research-design handoff decision only",
+  "bootstrap": {
+    "assignment_read_first": true,
+    "context_match": true,
+    "required_input_hashes_match": true,
+    "context_pack_hashes_match": true,
+    "shared_view_read": false,
+    "explicit_host_hook_substitute": true,
+    "subagents_spawned": false,
+    "production_edits": false
+  },
+  "reviewer": {
+    "identity": "/root/r9_decision",
+    "role": "Independent decision reviewer; did not generate the candidate or design its validation",
+    "runtime_model": "Parent requested GPT-6 harness; no separate model-runtime attestation is invented",
+    "independence_limits": "Adjudication mode intentionally permits author response/cmb/products results; their assertions are evidence, not independent votes. Targeted arithmetic checks are review checks, not production validation. No subagents."
+  },
+  "input_receipts": [
+    {
+      "path": "docs/research_program/tensor_joint_r9/SCIENTIFIC_CONTRACT.md",
+      "sha256": "aa15008a7a1b137a1e436d55ab7b3af83a2e83e1f68fd0540357b9c68bd5be7e",
+      "verified_sha256": "aa15008a7a1b137a1e436d55ab7b3af83a2e83e1f68fd0540357b9c68bd5be7e",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/THEORY.md",
+      "sha256": "fff906ce84c149384c50cc8673efb2732abbb7bd317ce78e7e74ab5e043fd8b3",
+      "verified_sha256": "fff906ce84c149384c50cc8673efb2732abbb7bd317ce78e7e74ab5e043fd8b3",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/CMB_RESEARCH.md",
+      "sha256": "d20f6c9b92b74d320c621db011b1601198e100028c0d7e0a1ac92088e4b5f803",
+      "verified_sha256": "d20f6c9b92b74d320c621db011b1601198e100028c0d7e0a1ac92088e4b5f803",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/DESIGN.md",
+      "sha256": "0f55618066afb43f2d331f2beabbc930baf8ad5af3f29f67a63e46f4a7f92cf4",
+      "verified_sha256": "0f55618066afb43f2d331f2beabbc930baf8ad5af3f29f67a63e46f4a7f92cf4",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/campaign_dag.json",
+      "sha256": "061d7513ccbf104f13849948ad198cdddedda5942d511c9b9471476d390190e8",
+      "verified_sha256": "061d7513ccbf104f13849948ad198cdddedda5942d511c9b9471476d390190e8",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/evidence/research_checks.json",
+      "sha256": "a1ea4160b115731852755bfcea5af9c0507d56963d8ec57c61ff9014c03457e5",
+      "verified_sha256": "a1ea4160b115731852755bfcea5af9c0507d56963d8ec57c61ff9014c03457e5",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/evidence/cmb_research_checks.json",
+      "sha256": "2eb76f67727c75104fb8bc5f60f0305de22b017e6717169c23733089d788ba90",
+      "verified_sha256": "2eb76f67727c75104fb8bc5f60f0305de22b017e6717169c23733089d788ba90",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/evidence/dag_checks.json",
+      "sha256": "c827f4991b2bff9eb8e05bbbf86836211e670901d6bf87a024a8a8e7bfa9d4e3",
+      "verified_sha256": "c827f4991b2bff9eb8e05bbbf86836211e670901d6bf87a024a8a8e7bfa9d4e3",
+      "match": true
+    }
+  ],
+  "additional_reading": {
+    "author_results": [
+      ".agent-harness/runs/R9-20260912/results/response.json",
+      ".agent-harness/runs/R9-20260912/results/cmb.json",
+      ".agent-harness/runs/R9-20260912/results/products.json"
+    ],
+    "scripts": [
+      "docs/research_program/tensor_joint_r9/validate_research.py",
+      "docs/research_program/tensor_joint_r9/validate_cmb_research.py"
+    ],
+    "script_hashes_match_evidence": true,
+    "primary_source": {
+      "url": "https://arxiv.org/abs/1403.6117",
+      "extent": "Abstract only independently opened; supports full-sky d=1 unitarity, not this repository likelihood or all paper equations"
+    },
+    "source_scope_limit": "Reviewed sealed theory/design/raw summarized experiment records and bounded validator scripts. Author-mapped legacy source descriptions were read; I did not independently reread every original product adapter or rerun production. No raw catalogue or observed CMB likelihood was executed.",
+    "postseal_addendum": {
+      "path": "docs/research_program/tensor_joint_r9/README.md",
+      "extent": "Seed/failure disclosure at line 36 only",
+      "sha256": "979a621d0bd2cbc032b1390d0d291259a5f6eeb585359faff9c126e0ec830dea"
+    }
+  },
+  "summary_ko": "연구설계 인계에 한정하여 PROMOTE한다. 조건부 선형모형 신뢰집합, 공통 보정 결합, 깊이별 응답 퇴화, CMB 순위 인증과 확률적 boost 응답의 핵심 수학은 명시된 가정 아래 타당하다. 실제 selected law·처리오차·물리 jet 부재를 결과로 덮지 않았고, 원래 full-morphology 목적과 자료별 실패 독립성을 보존한다. 이는 관측 발견·물리 모수 제약·네 축 형식 검증·신규성 승격이 아니다.",
+  "findings": [
+    {
+      "claim_id": "R9-DEC-T1",
+      "evidence_fingerprint": "4a3e9f4c81636022b12d64da81f2bb42b54f82a6bdebb073d11bc8860bd4ca3a",
+      "proposition_scope": "Depth-kernel ratio, rank and low-redshift conditioning",
+      "verdict": "SUPPORTED_CONDITIONAL_DERIVATION",
+      "evidence": "THEORY.md T1; evidence/research_checks.json response_cells and depth_quadrature_oracle; response.json derivation and bounded_checks",
+      "assumptions": "Fixed observed z>0; positive differentiable H; coherent source-velocity coefficient; fixed angular design and nuisance treatment.",
+      "reason": "Differentiating HI-(1+z) gives H'I exactly. Constant H leaves R=-1 at every depth; repeated ratios cannot identify observer/source decomposition. The Cauchy-Binet determinant is correct, and the expansion begins at a z^2/2. Rank six in the broad-depth Cartesian toy and condition about 97928 in the shallow toy are compatible, not conflicting claims. These do not bound velocity truncation or show real-survey six-vector identification. No observer-beta to global-tilt inference is licensed.",
+      "required_action": null
+    },
+    {
+      "claim_id": "R9-DEC-T2",
+      "evidence_fingerprint": "c5168e546f35cbcd3690affe17785f03953eff8ad9c2961b585ffcb45c83c680",
+      "proposition_scope": "Nuisance-projected confidence inversion and target support",
+      "verdict": "SUPPORTED_CONDITIONAL_DERIVATION",
+      "evidence": "THEORY.md T2; validate_research.py geometry and response cells; evidence/research_checks.json",
+      "assumptions": "Fixed A,N; correctly whitened known joint Gaussian selected experiment; unrestricted nuisance; fixed nonempty discrepancy set containing truth; fixed true theta. Compact discrepancy and unrestricted theta for stated support equivalence.",
+      "reason": "At truth the projected noise has rank-r chi-square norm. Union over b preserves at least 1-alpha coverage. For ell annihilating ker D, t=ell D+ lies in col D as a row vector, so support t y+h_B(-t)+c||t|| follows; otherwise kernel translation makes the unrestricted target unbounded. Rank-zero handling is correct. The support does not constitute simultaneous coverage of every possible equivalence-class member or general coverage under estimated covariance. Nonempty B is implicit in true-b containment and should remain explicit in implementation.",
+      "required_action": null
+    },
+    {
+      "claim_id": "R9-DEC-T2B",
+      "evidence_fingerprint": "7927ff289e7325ed9ebd6a24286fad1339a81d8864776e92cbe08549505adf38",
+      "proposition_scope": "Bounded-bias mock meaning and lost orthogonal diagnostic",
+      "verdict": "SUPPORTED_WITH_LIMITS",
+      "evidence": "THEORY.md T2; evidence/research_checks.json response_cells and orthogonal_misspecification; validate_research.py",
+      "assumptions": "Dimensionless fixed spherical Gaussian fixtures, rank 3 or 6, deterministic bias norm 1.5 in response space.",
+      "reason": "Independent noncentral-chi-square evaluation gives robust coverage 0.9920648318 (rank 3) and 0.9964523971 (rank 6), versus ignored-bias coverage 0.7875234105 and 0.8394599647. This explains the reported Monte Carlo results and their conservatism. It is not empirical product calibration or proof from simulation. The orthogonal residual example correctly shows a perfect parameter-projection fit can coexist with gross model mismatch. If that residual is used to reject, the same discrepancy tuple and a joint/allocated level are essential.",
+      "required_action": null
+    },
+    {
+      "claim_id": "R9-DEC-T3",
+      "evidence_fingerprint": "f9a9ebd52177e6c1cb7262d855e9cb04f71cc83df2f74c61fbf020f074fe8410",
+      "proposition_scope": "Shared calibration intersection, missing blocks and alternative laws",
+      "verdict": "SUPPORTED_CONDITIONAL_DERIVATION",
+      "evidence": "THEORY.md T3; DESIGN.md sections 3,6; campaign_dag.json R9-16 through R9-18; products.json source_bound_findings and kernel_fixtures",
+      "assumptions": "Each block covers the same true tuple at its fixed alpha under an admitted marginal experiment; scientific equality of shared calibration variables; true law included among allowed alternatives.",
+      "reason": "Bonferroni coverage requires no cross-product independence. Joining before projection retains information that individual nuisance elimination loses: theta=2mu1-mu2 has marginal-interval radius 3z. Independent analytic coverage under rho=-.8,0,.8 is 0.9811353758,0.9973629675,0.9999994611, consistent with evidence. Missing blocks as whole domains and unions across alternative laws are correct. The future adapter must retain shared eta when joining; T2 is not permission to separately erase that shared column before T3. Present design explicitly requires the shared tuple.",
+      "required_action": null
+    },
+    {
+      "claim_id": "R9-DEC-PROD",
+      "evidence_fingerprint": "342293b1b5562d4ac9d0584e0b6edf55d3f65ba81df3c01661d87cdecc92ee70",
+      "proposition_scope": "CF4/JWST physical response and calibration bridge",
+      "verdict": "SUPPORTED_AS_RESEARCH_DESIGN",
+      "evidence": "DESIGN.md section 3; products.json derived_model, source_bound_findings, blockers",
+      "assumptions": "Low-z phenomenological affine radial field; positive numerator and denominator; declared STF basis and frame; d_L approximately r separately bounded; actual shared calibration graph not yet supplied.",
+      "reason": "Radial antisymmetric response n^T Omega n=0, bulk -K n/w, STF -K n^T E_a n/H, H -K/H and logarithmic remainder bounds have correct signs and units. Same-host contrasts cancel distance and cannot repair a common absolute H/zero-point degeneracy alone. A common method difference can help another block only through an authenticated shared nuisance. Existing fixed-distance velocity Gaussian adapters cannot be relabeled as modulus laws, and V3k must not receive duplicate observer correction. These scientific failures are recognized and remain future product obligations.",
+      "required_action": null
+    },
+    {
+      "claim_id": "R9-DEC-C1",
+      "evidence_fingerprint": "019eaa82a1acb48abe4405b83c7ce801f2a2cb3170c701f82f489d219a2328a2",
+      "proposition_scope": "Exchangeable inclusive rank and threshold witnesses",
+      "verdict": "SUPPORTED_CONDITIONAL_DERIVATION",
+      "evidence": "CMB_RESEARCH.md C1; cmb.json CMB-02 and CMB-03; validate_cmb_research.py threshold loop; evidence/cmb_research_checks.json",
+      "assumptions": "Exchangeable rows; fixed permutation-equivariant kth-neighbour statistic; simultaneous valid pair-distance enclosures; fixed rows/law/alpha; strict lower-tail witness and inclusive upper-tail witness.",
+      "reason": "Among M-1 neighbours, k upper bounds below a prove a score strictly below observed; M-k lower bounds at least b prove a score at least observed. Hence (1+H)/M <= p <= (M-B)/M. The stated integer rejection and nonrejection thresholds are exact. I additionally enumerated all 729 symmetric four-row distance matrices with off-diagonal entries 0,1,2 and k=2: with exact bounds both witness counts reproduce the tied inclusive rank in every case. This is a small exact combinatorial check, not an SO(3) runtime result. Adaptive certified refinement alone cannot inflate the rejection probability because every rejection implies the fixed exact rank rejects.",
+      "required_action": null
+    },
+    {
+      "claim_id": "R9-DEC-C1M",
+      "evidence_fingerprint": "d9b8aa31a402e1b936cf44ab0d3224222316a8b6509fb7702898d67059719421",
+      "proposition_scope": "Orbit metric pivots and quaternion threshold proposal",
+      "verdict": "SUPPORTED_DESIGN_WITH_UNEXECUTED_SOLVER",
+      "evidence": "CMB_RESEARCH.md C1; cmb.json CMB-03 exact polynomial identity; campaign_dag.json R9-10 and R9-12",
+      "assumptions": "Fixed positive scales and common tensor norm; proper rotations acting isometrically; unsquared quotient metric; certified bounds; rational threshold comparison only under the stated rational input representation.",
+      "reason": "Triangle lower/upper propagation is valid on the orbit space of the common isometric action. Squared-distance triangle substitution would be wrong. Clearing quaternion denominators after using norm invariance yields the stated homogeneous sextic; four maximum-component charts cover rotations and retain equality. Strict rational witnesses prove upper comparisons and global positivity proves lower comparisons; failed SOS or local minima are unknown. The Euclidean fixtures do not demonstrate production speedup, full SO(3) correctness, or resolution of frozen R8 pools. A fixed preprocessing normalization can itself define a new quotient pseudometric; the warning against changing metrics should be read as forbidding unproved pair-dependent metric changes, not claiming every fixed normalization violates triangle inequalities.",
+      "required_action": null
+    },
+    {
+      "claim_id": "R9-DEC-C2",
+      "evidence_fingerprint": "e753dd65f27bca961ed630170c7798a16f4f20335f51fd374752f8e6db37008a",
+      "proposition_scope": "Ideal boost-subspace Beta comparator",
+      "verdict": "SUPPORTED_CONDITIONAL_DERIVATION",
+      "evidence": "CMB_RESEARCH.md C2; cmb.json CMB-04; evidence/cmb_research_checks.json ideal_projection_fraction",
+      "assumptions": "Nonzero fixed Q; rank-three Frobenius-orthogonal projector in seven dimensions; centred isotropic Gaussian conditional O; same scaling in both orthogonal blocks.",
+      "reason": "Independent chi-square dimensions 3 and 4 give Beta(3/2,2), and integrating density (15/4)sqrt(f)(1-f) gives the stated upper tail. The 1021/20000 count is compatible with 5 percent. It discards amplitude and residual morphology and cannot estimate velocity by itself. The candidate correctly keeps it as sensitivity/ablation rather than a replacement for full morphology or an unallocated co-primary claim. Anisotropic noise, measured-Q conditioning, masks and same-sky reuse require their own law.",
+      "required_action": null
+    },
+    {
+      "claim_id": "R9-DEC-C3",
+      "evidence_fingerprint": "3c9d03fc6549790ba3593bbac71c12bf35f627f3fd659eee3f46ccba37e2cc69",
+      "proposition_scope": "Stochastic boost law includes reverse mixing",
+      "verdict": "SUPPORTED_CONDITIONAL_DERIVATION_AND_PRIMARY_SOURCE_PREMISE",
+      "evidence": "CMB_RESEARCH.md C3; cmb.json CMB-05; validate_cmb_research.py skew-generator experiment; https://arxiv.org/abs/1403.6117 abstract (independently opened)",
+      "assumptions": "Centred independent Gaussian source multipoles with positive per-mode C2,C3; orthonormal real harmonic coordinates; d=1 full-sky infinitesimal generator; derivative at zero boost.",
+      "reason": "The cited primary-source abstract supports the unitary d=1 premise. With G=[[0,-B^T],[B,0]], GC+CG^T has cross block (C2-C3)B. I evaluated this identity for C2,C3=(1,1),(1,.4),(2,3), with maximum residual 2.22e-16. Gaussian conditioning then gives (1-C3/C2)Bq. Equal spectra eliminate this first-order cross-block information even when deterministic B_Q is injective. This does not eliminate all higher-multipole, higher-order, or deterministic-mean information. The full processed law remains missing and cannot be replaced by a mean remainder ball.",
+      "required_action": null
+    },
+    {
+      "claim_id": "R9-DEC-MES",
+      "evidence_fingerprint": "efe5ff31b09350869f4b1b1a010156e41c41af0fd8337ee094f36c890ec27b95",
+      "proposition_scope": "Conditional physical image and normalization",
+      "verdict": "SUPPORTED_ONLY_AS_CONDITIONAL_RELATION",
+      "evidence": "THEORY.md T4; DESIGN.md sections 5,7; campaign_dag.json R9-19 and R9-20",
+      "assumptions": "Joint confidence coverage of the actual observed jet and shared closure/nuisance state; valid physical relation and remainders; Theta=3H; original formula premises for signed x_C.",
+      "reason": "Set-valued propagation preserves coverage when the true physical state is related to a covered tuple. S_H=(sigma:sigma)/(6H^2)=3s2 is correct for the specified R8 normalization. Low multipoles do not supply their spatial/time derivatives, and beta_obs is not matter tilt. No finite empirical MES image or departure interval is earned here; the candidate preserves this distinction.",
+      "required_action": null
+    },
+    {
+      "claim_id": "R9-DEC-DAG",
+      "evidence_fingerprint": "0f7502c958d829354b738b493bad690ff975584937d75300379148bf89772e6f",
+      "proposition_scope": "Scientific consumer paths and failure isolation",
+      "verdict": "SUFFICIENT_FOR_SCOPED_HANDOFF",
+      "evidence": "campaign_dag.json all 24 nodes; DESIGN.md sections 1,4-7; evidence/dag_checks.json",
+      "assumptions": "Capabilities mean separately qualified evidence, not successful process exit; action-level requirements are conjoined with node requirements; missing products retain fixed alpha.",
+      "reason": "The graph explicitly splits formal response/rank/image actions, product law actions, candidate and morphology CMB lanes, and optional physical-jet/MES work. CF4 absence does not gate DESI or CMB, unresolved morphology does not gate independently qualified candidate confidence, and BASS is not a prerequisite. R9-18 can form an outer set from any qualified block without pretending missing blocks are observed. The 1/160+1/160 CMB suballocation and three 1/80 product blocks sum to 1/20; Beta and Union3 are kept outside this exact co-primary family. Graph tests check hypothetical capability propagation only and earn no empirical or formal capability. No substantive branch leakage found.",
+      "required_action": null
+    },
+    {
+      "claim_id": "R9-DEC-SEED",
+      "evidence_fingerprint": "c864d88d72f68832b539cb6dafc86c977994a61fd23a54d40b65c8d62de9cec5",
+      "proposition_scope": "Seed metadata consistency",
+      "verdict": "NONBLOCKING_CLARIFIED_BY_README_ADDENDUM",
+      "evidence": "SCIENTIFIC_CONTRACT.md Completion and validation; validate_cmb_research.py rng; evidence/cmb_research_checks.json seed; README.md line 36 (read after sealed-candidate review)",
+      "assumptions": "Sealed script/output hashes match and current evidence records the actual seed.",
+      "reason": "The general contract names 20260912 while the CMB script and output use 20260913. This does not alter the analytic derivations or numerical interpretation and is not evidence of result-dependent threshold adjustment. It should be disclosed rather than silently editing evidence or rerunning until a preferred result.",
+      "required_action": null,
+      "disposition": "README explicitly records CMB seed 20260913 and response/calibration seed 20260912, with an author statement that the separate stream was fixed before the first CMB run and no seed/alpha changed after results. I verified this disclosure and the actual script/output seed; I did not independently attest the historical timing. The original sealed contract/evidence remain unchanged. No rerun or new review gate is required."
+    }
+  ],
+  "independent_execution": {
+    "tool": "read-only Python process using CODEX_PRIMARY_RUNTIME_PYTHON; numpy/scipy analytic distributions and exact integer enumeration",
+    "production_functions_executed": false,
+    "mc_rerun": false,
+    "checks": {
+      "exact_tied_rank_matrices": 729,
+      "matrix_domain": "M=4,k=2, every symmetric off-diagonal assignment in {0,1,2}; exact brackets",
+      "covariance_commutator_max_abs_residual": 2.220446049250313e-16,
+      "robust_coverage_rank3": 0.9920648318288243,
+      "robust_coverage_rank6": 0.9964523971186686,
+      "ignored_bias_coverage_rank3": 0.7875234105479606,
+      "ignored_bias_coverage_rank6": 0.8394599646521039,
+      "shared_target_coverages": {
+        "rho_minus_0_8": 0.9811353758324723,
+        "rho_0": 0.9973629674585867,
+        "rho_0_8": 0.999999461128737
+      }
+    },
+    "reproduction": "For bias norm rho=1.5 and radius c=sqrt(chi2_r(.95)), evaluate scipy.stats.ncx2.cdf((c+rho)^2,r,rho^2) and ncx2.cdf(c^2,r,rho^2). For theta=2mu1-mu2 use variance 5-4 correlation and acceptance radius 3 norm.ppf(.9875). Enumerate itertools.product(range(3),repeat=6) as upper-triangle entries of four-row distance matrices, k=2; compare exact inclusive ranks with below/high witness counts. For B=arange(35).reshape(7,5)/35 form skew G and block scalar covariance C; compare (GC+CG.T)[5:,:5] with (C2-C3)B."
+  },
+  "gate_decisions": [
+    {
+      "gate": "RESEARCH_DESIGN_HANDOFF",
+      "verdict": "PROMOTE",
+      "reason": "Fixed candidates are mathematically coherent under explicit premises; bounded experiments discriminate relevant failure modes; DAG has concrete consumers and branch isolation; no fatal scientific error for design handoff."
+    },
+    {
+      "gate": "PRODUCTION_FORMAL_FOUR_AXIS",
+      "verdict": "HOLD",
+      "reason": "Required proposition-bound Wolfram+xAct, SymPy, Sage+Singular, Lean observed execution and adjudication were not supplied. This reviewer issues no CAS aggregate."
+    },
+    {
+      "gate": "EMPIRICAL_METHOD_AND_OBSERVATIONAL_ADMISSION",
+      "verdict": "HOLD",
+      "reason": "Actual selected/source/processing laws, covariance or justified moment bounds, calibration transfer, and end-to-end qualifying mocks have not been provided for the new methods."
+    },
+    {
+      "gate": "GLOBAL_PHYSICAL_ATTRIBUTION_OR_MES_INTERVAL",
+      "verdict": "HOLD",
+      "reason": "Actual shared physical response, observer/source-to-matter relation, derivatives and remainder/closure inputs are missing."
+    },
+    {
+      "gate": "PUBLICATION_NOVELTY_PRIORITY",
+      "verdict": "HOLD",
+      "reason": "No comprehensive novelty review; linear-model, union-bound, quotient-metric, Beta-projection and boost-covariance ingredients are standard. Possible project-specific composition is a research contribution to assess later."
+    }
+  ],
+  "decision": {
+    "verdict": "PROMOTE",
+    "scope": "Research-design and execution-plan handoff only",
+    "fatal_findings": [],
+    "required_rework_before_handoff": [],
+    "nonblocking_clarifications": [
+      "R9-DEC-SEED: disclosed in README.md; closed for handoff"
+    ],
+    "claim_ceiling": "Conditional derivations and bounded toy/numerical research evidence; no empirical anomaly, velocity/tilt detection, physical departure bound, four-axis CAS PASS, or novelty claim",
+    "preserve": [
+      "R8 frozen rows/statistics/alphas and STOP_INVALID resource receipt",
+      "CF4 legacy channel-c quarantine and open findings",
+      "No BASS benchmark prerequisite",
+      "Optional purpose-error and MES consumers only",
+      "Shared nuisance before projection and missing-block alpha unused"
+    ],
+    "next_authorized_action": "Owner may finish the scoped design/handoff and authorized delivery, carrying these limitations and the actual separate CMB seed. Implement the named DAG capabilities with their existing evidence obligations; no extra meta-review loop is required."
+  },
+  "written_at_utc": "2026-09-12T17:07:55.621373+00:00"
+}

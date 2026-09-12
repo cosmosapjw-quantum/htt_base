@@ -1,0 +1,676 @@
+{
+  "schema_version": 1,
+  "program": "tensor_joint_r9",
+  "base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
+  "scope": "upgraded research/design and reference experiments; production and observation plan, not execution admission",
+  "external_capabilities": [
+    "USER_R9"
+  ],
+  "semantics": {
+    "requires_all": "all listed capability evidence is required",
+    "requires_any": "for each inner list at least one listed capability is required",
+    "may_produce": "candidate output names only; successful process exit or terminal state does not grant them",
+    "actions": "each action must satisfy both node and own requirements and independent acceptance; missing sibling output does not block",
+    "optional_purpose_error": "R9-22 is consumed only by the specific response/law needing it; not a universal dependency",
+    "depth_reporting": "Default descriptive or image of an existing confidence event; an extra rejection test requires a prospective within-product alpha split and scan calibration.",
+    "actions_same_output": "Alternative actions producing one capability each require their own acceptance; an unqualified provider cannot be relabelled as the empirical action."
+  },
+  "alpha": {
+    "family": 0.05,
+    "CMB": 0.0125,
+    "CF4": 0.0125,
+    "distance_calibration": 0.0125,
+    "DESI": 0.0125,
+    "no_redistribution": true,
+    "union3": "scenario outside exact confidence family",
+    "CMB_Beta_comparator": "descriptive/sensitivity by default; separate preregistered multiplicity if co-primary",
+    "CMB_suballocation": {
+      "morphology_test": 0.00625,
+      "candidate_confidence": 0.00625,
+      "reason": "new R9 co-primary family; preserves R8 frozen experiments separately; no post-result donation"
+    }
+  },
+  "nodes": [
+    {
+      "id": "R9-00",
+      "title": "R8/R9, source-role catalog and d514eabd compendium seed",
+      "requires_all": [
+        "USER_R9"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "SEED"
+      ],
+      "scope": "source identity",
+      "acceptance": "Read baseline, frozen failures and source registry; no DB restoration",
+      "execution_state": "SOURCE_READ_THIS_REVISION",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-01",
+      "title": "Research derivations and bounded discriminators",
+      "requires_all": [
+        "SEED"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "RESEARCH_DESIGN"
+      ],
+      "scope": "Existing T1-T4/C1-C3 plus D1-D4 and F1-F3 in revision2/THEORY_EXTENSION.md",
+      "acceptance": "Derivations, exact/toy checks, independent decision review; no formal or empirical promotion",
+      "execution_state": "RESEARCH_REFERENCE_EXECUTED_REVIEW_PENDING",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-02",
+      "title": "Scoped production mathematical admission",
+      "requires_all": [
+        "RESEARCH_DESIGN"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "FORMAL_RESPONSE",
+        "FORMAL_RANK",
+        "FORMAL_IMAGES",
+        "FORMAL_DEPTH",
+        "FORMAL_PHYSICS"
+      ],
+      "scope": "separate action per proposition set",
+      "acceptance": "Use current CAS contract and run-adjudicate for each required mathematical component; four independent axes, no blanket status. Each output separately earned.",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
+      "actions": [
+        {
+          "id": "response",
+          "requires_all": [
+            "RESEARCH_DESIGN"
+          ],
+          "produces": "FORMAL_RESPONSE",
+          "requirement": "current proposition-specific four-axis observed admission"
+        },
+        {
+          "id": "rank",
+          "requires_all": [
+            "RESEARCH_DESIGN"
+          ],
+          "produces": "FORMAL_RANK",
+          "requirement": "current proposition-specific four-axis observed admission"
+        },
+        {
+          "id": "images",
+          "requires_all": [
+            "RESEARCH_DESIGN"
+          ],
+          "produces": "FORMAL_IMAGES",
+          "requirement": "current proposition-specific four-axis observed admission"
+        },
+        {
+          "id": "depth",
+          "requires_all": [
+            "RESEARCH_DESIGN"
+          ],
+          "produces": "FORMAL_DEPTH",
+          "requirement": "proposition-specific current four-axis observed admission; only consumed by the corresponding optional component"
+        },
+        {
+          "id": "optional_physics",
+          "requires_all": [
+            "RESEARCH_DESIGN"
+          ],
+          "produces": "FORMAL_PHYSICS",
+          "requirement": "proposition-specific current four-axis observed admission; only consumed by the corresponding optional component"
+        }
+      ]
+    },
+    {
+      "id": "R9-03",
+      "title": "Common physical/calibration tuple adapters",
+      "requires_all": [
+        "SEED"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "TUPLE_ADAPTER"
+      ],
+      "scope": "CF4/JWST/distance/DESI/candidate CMB",
+      "acceptance": "Explicit row mappings and shared eta; resolve jacobian_eta empty legacy adapters; units/frame/source-domain tests; bind tensor functionals and population/data-derived/predictive anchors to the correct joint target; keep observation and physical state spaces distinct",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-04",
+      "title": "Response and discrepancy implementation",
+      "requires_all": [
+        "FORMAL_RESPONSE",
+        "TUPLE_ADAPTER"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "RESPONSE_METHOD"
+      ],
+      "scope": "rank/target support and actual response errors",
+      "acceptance": "Same-depth/constant-H and stochastic-Q counterexamples; no jitter; exact target support and constrained fibre tests; actual error set; rank is not precision: bounded-error separation and actual stochastic Fisher response require a declared law",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-05",
+      "title": "Product release and processing intake",
+      "requires_all": [
+        "SEED"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "PRODUCT_INTAKE",
+        "DESCRIPTIVE_CONTROLS"
+      ],
+      "scope": "existing small products first",
+      "acceptance": "Actual input/source/row/mask/frame semantics; same-host and same-sky are controls, not repeated independent observations",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-06",
+      "title": "New CF4 selected-law route",
+      "requires_all": [
+        "PRODUCT_INTAKE",
+        "TUPLE_ADAPTER"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "CF4_LAW"
+      ],
+      "scope": "new distance-modulus method only",
+      "acceptance": "Typed uncertainties, group/selection/calibration and selected sampling or justified moment law; exclude old P0 bulk-flow numbers; lack of law yields scenario only",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-07",
+      "title": "JWST same-host calibration-law route",
+      "requires_all": [
+        "PRODUCT_INTAKE",
+        "TUPLE_ADAPTER"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "JWST_LAW"
+      ],
+      "scope": "shared method/anchor contrast",
+      "acceptance": "Verify distance-null and retained calibration response, covariance/selection and shared-anchor identities; no direct distance dipole",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-08",
+      "title": "Released distance/background-law routes",
+      "requires_all": [
+        "PRODUCT_INTAKE",
+        "TUPLE_ADAPTER"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "DESI_LAW",
+        "UNION3_SCENARIO"
+      ],
+      "scope": "separate product actions",
+      "acceptance": "Reuse exact eligible DESI compressed law; Union3 remains approximate scenario unless a stronger law is justified. Outputs have distinct types.",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
+      "outputs_independently_qualified": true
+    },
+    {
+      "id": "R9-09",
+      "title": "Complete processed CMB response law",
+      "requires_all": [
+        "PRODUCT_INTAKE",
+        "TUPLE_ADAPTER"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "CMB_RESPONSE"
+      ],
+      "scope": "local boost or candidate sky, separate from rank null",
+      "acceptance": "Source Q uncertainty and reverse harmonic mixing, beam/mask/filter/foreground/noise/high-mode response and their fixed nuisance law; differentiate joint law",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-10",
+      "title": "Threshold-directed full-orbit method",
+      "requires_all": [
+        "FORMAL_RANK"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "ORBIT_METHOD"
+      ],
+      "scope": "full Q/O fixed-scale metric",
+      "acceptance": "Implement C1 witnesses, metric pivots and outward bounds; permutation/tie tests; exact comparison oracle; checkpoint preemption/new cumulative budget; no row loss",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-11",
+      "title": "Fixed CMB experiment qualification",
+      "requires_all": [
+        "PRODUCT_INTAKE"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "CMB_EXCHANGEABLE_POOL",
+        "CMB_CANDIDATE_LAW"
+      ],
+      "scope": "separate null/candidate actions",
+      "acceptance": "One named product, same processing/conditioning; explicit signal/noise reuse law and nuisance treatment; observed sky already examined. Each output separately earned.",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
+      "outputs_independently_qualified": true
+    },
+    {
+      "id": "R9-12",
+      "title": "End-to-end orbit null/alternative mocks",
+      "requires_all": [
+        "ORBIT_METHOD",
+        "CMB_EXCHANGEABLE_POOL"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "CMB_RANK_QUALIFIED"
+      ],
+      "scope": "primary full morphology",
+      "acceptance": "Fixed statistic and alpha; method-matched size/power, unresolved fraction, computation envelope, actual pool stress; full-MV ablation retains failed rows",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-13",
+      "title": "Observed full morphology",
+      "requires_all": [
+        "CMB_RANK_QUALIFIED",
+        "PRODUCT_INTAKE"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "CMB_MORPHOLOGY_RESULT"
+      ],
+      "scope": "PR3 one primary plus component controls",
+      "acceptance": "Certified inclusive rank interval/reject/nonreject/unresolved with actual inputs; no conversion to physical parameter set; R9 primary morphology alpha=1/160 when jointly reported with candidate confidence",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-14",
+      "title": "Processed response candidate mocks",
+      "requires_all": [
+        "CMB_RESPONSE",
+        "CMB_CANDIDATE_LAW",
+        "RESPONSE_METHOD"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "CMB_RESPONSE_QUALIFIED"
+      ],
+      "scope": "local observer beta only or explicitly named candidate",
+      "acceptance": "Injected fixed-source and stochastic-source distinction, candidatewise coverage and misspecification, zero spectrum-contrast case, low signal/degenerate target and error envelope",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-15",
+      "title": "Observed CMB candidate confidence",
+      "requires_all": [
+        "CMB_RESPONSE_QUALIFIED"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "CMB_PARAMETER_SET"
+      ],
+      "scope": "typed local beta / phenomenological candidate",
+      "acceptance": "Preserve high-mode/foreground nuisance and uncertainty in Q; no global-tilt attribution or boost subtraction without corresponding admission; R9 CMB candidate alpha=1/160 when jointly reported with primary morphology",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-16",
+      "title": "Product-specific response coverage mocks",
+      "requires_all": [
+        "RESPONSE_METHOD"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "CF4_QUALIFIED",
+        "JWST_QUALIFIED",
+        "DESI_QUALIFIED"
+      ],
+      "scope": "three independent actions with law requirements",
+      "acceptance": "Each action requires its corresponding *_LAW; actual selection/calibration designs; shared/correlated controls; reject wrong frame and mocked-law promotion",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
+      "actions": [
+        {
+          "id": "cf4",
+          "requires_all": [
+            "RESPONSE_METHOD",
+            "CF4_LAW"
+          ],
+          "produces": "CF4_QUALIFIED"
+        },
+        {
+          "id": "jwst",
+          "requires_all": [
+            "RESPONSE_METHOD",
+            "JWST_LAW"
+          ],
+          "produces": "JWST_QUALIFIED"
+        },
+        {
+          "id": "desi",
+          "requires_all": [
+            "RESPONSE_METHOD",
+            "DESI_LAW"
+          ],
+          "produces": "DESI_QUALIFIED"
+        }
+      ]
+    },
+    {
+      "id": "R9-17",
+      "title": "Observed product sets",
+      "requires_all": [
+        "TUPLE_ADAPTER"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "CF4_SET",
+        "JWST_SET",
+        "DESI_SET"
+      ],
+      "scope": "three independent actions with qualification requirements",
+      "acceptance": "Each action requires its *_QUALIFIED and actual product input; same global tuple, 1/80 for each CF4/JWST(distance-calibration)/DESI block; missing is whole domain",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
+      "actions": [
+        {
+          "id": "cf4",
+          "requires_all": [
+            "TUPLE_ADAPTER",
+            "CF4_QUALIFIED",
+            "PRODUCT_INTAKE"
+          ],
+          "produces": "CF4_SET"
+        },
+        {
+          "id": "jwst",
+          "requires_all": [
+            "TUPLE_ADAPTER",
+            "JWST_QUALIFIED",
+            "PRODUCT_INTAKE"
+          ],
+          "produces": "JWST_SET"
+        },
+        {
+          "id": "desi",
+          "requires_all": [
+            "TUPLE_ADAPTER",
+            "DESI_QUALIFIED",
+            "PRODUCT_INTAKE"
+          ],
+          "produces": "DESI_SET"
+        }
+      ]
+    },
+    {
+      "id": "R9-18",
+      "title": "Shared-nuisance joint outer set",
+      "requires_all": [
+        "TUPLE_ADAPTER"
+      ],
+      "requires_any": [
+        [
+          "CMB_PARAMETER_SET",
+          "CF4_SET",
+          "JWST_SET",
+          "DESI_SET"
+        ]
+      ],
+      "may_produce": [
+        "JOINT_SET"
+      ],
+      "scope": "CMB/CF4/distance-calibration/DESI",
+      "acceptance": "Join before projection, alternative laws union, missing blocks whole domain, total alpha <=1/20; no independence or alpha donation",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-19",
+      "title": "Observation-to-jet conditional bridge",
+      "requires_all": [
+        "SEED"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "JET_RESPONSE_LAW"
+      ],
+      "scope": "independent optional physical input",
+      "acceptance": "Actual dotQ, STF grad d, divO and other required derivatives, remainder and shared nuisance in one state. External transfer optional and explicitly conditional. No BASS benchmark dependency.",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
+      "actions": [
+        {
+          "id": "direct_observed_jet",
+          "requires_all": [
+            "SEED"
+          ],
+          "produces": "JET_RESPONSE_LAW",
+          "requirement": "actual empirical derivative law, common frame/state and remainder; no provider-model substitution"
+        },
+        {
+          "id": "validated_provider_jet",
+          "requires_all": [
+            "SEED",
+            "VALIDATED_PHYSICAL_RESPONSE"
+          ],
+          "produces": "JET_RESPONSE_LAW",
+          "requirement": "validated named provider plus actual observation-to-jet uncertainty mapping and derivative remainder"
+        }
+      ]
+    },
+    {
+      "id": "R9-20",
+      "title": "Conditional MES physical image",
+      "requires_all": [
+        "FORMAL_IMAGES",
+        "JOINT_SET",
+        "JET_RESPONSE_LAW"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "PHYSICAL_IMAGE"
+      ],
+      "scope": "sigma/omega/acceleration and permitted signed departure",
+      "acceptance": "Outer image of same-state confidence set; normalization S_H=3s2; finite/unbounded/unresolved; assumptions displayed; no scalar axis inference; confidence target is explicit, joint anchor uncertainty retained; images require certified outer inclusion, not local optimizer endpoints",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-21",
+      "title": "Identified-fibre and nullspace report",
+      "requires_all": [
+        "RESPONSE_METHOD"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "IDENTIFICATION_REPORT"
+      ],
+      "scope": "target-specific local response",
+      "acceptance": "Constrained finite targets versus unrestricted null directions; certificates scoped to declared local domain, not global Einstein existence; observable contraction fibres have exact linear supports but these identify their convex hull only; uncertain q and boundary sensitivity retained",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-22",
+      "title": "Purpose-specific representation-error adapter",
+      "requires_all": [
+        "SEED"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "PURPOSE_ERROR_SET"
+      ],
+      "scope": "optional only when actual consumer uses approximation",
+      "acceptance": "Actual kernel/moments/measure/envelope and entropy/residual bounds; legacy Teff not owner; unbounded-kernel counterexample; cannot block unrelated product analyses",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-23",
+      "title": "Scientific interpretation and report",
+      "requires_all": [],
+      "requires_any": [
+        [
+          "CMB_MORPHOLOGY_RESULT",
+          "JOINT_SET",
+          "PHYSICAL_IMAGE",
+          "IDENTIFICATION_REPORT",
+          "DESCRIPTIVE_CONTROLS",
+          "OBSERVED_DEPTH_DIAGNOSTIC",
+          "TENSOR_FUNCTIONAL_IMAGES"
+        ]
+      ],
+      "may_produce": [
+        "SCIENTIFIC_REPORT"
+      ],
+      "scope": "scope-labelled results including negative outcomes",
+      "acceptance": "Map observations to admissible model tests and remaining common-cause alternatives; preserve novelty uncertainty and original full-morphology goal; x/Q/F/Pi/G_F use the structured tensor replacements and law-specific meanings; original-quantity and transformed views never counted as separate observations",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-24",
+      "title": "Full depth covariance and invertible path method",
+      "requires_all": [
+        "TUPLE_ADAPTER",
+        "FORMAL_DEPTH"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "DEPTH_METHOD"
+      ],
+      "scope": "fixed feature transport, arbitrary compatible block sizes",
+      "acceptance": "Implement HCH^T with all cross-step terms and retain Y or (Y0,HY) and full law; support before pseudoinverse; no assumed Gaussian innovations from nesting; frozen reference and real implementation mutation checks",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-25",
+      "title": "Product-specific joint depth law",
+      "requires_all": [
+        "PRODUCT_INTAKE",
+        "TUPLE_ADAPTER"
+      ],
+      "requires_any": [
+        [
+          "CF4_LAW",
+          "JWST_LAW",
+          "CMB_CANDIDATE_LAW"
+        ]
+      ],
+      "may_produce": [
+        "JOINT_DEPTH_LAW"
+      ],
+      "scope": "one named compatible product at a time, not a pooled multi-survey law",
+      "acceptance": "All covariance blocks for the exact extraction/selection/calibration/transport procedure; fixed/estimated/conditional law explicit; product identity must match the eligible source law; missing cross covariance stays unavailable",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-26",
+      "title": "Joint depth end-to-end calibration",
+      "requires_all": [
+        "DEPTH_METHOD",
+        "JOINT_DEPTH_LAW"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "DEPTH_QUALIFIED"
+      ],
+      "scope": "same product/feature/selection/null as the law",
+      "acceptance": "Repeat all fitted transports/covariances/nuisance selections inside valid mocks; size/coverage/power and singular/common-level controls; no generic 5% additional test beyond registered product budget",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-27",
+      "title": "Observed depth diagnostic or common-law image",
+      "requires_all": [
+        "DEPTH_QUALIFIED",
+        "PRODUCT_INTAKE"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "OBSERVED_DEPTH_DIAGNOSTIC"
+      ],
+      "scope": "product-specific structured MIO path, HTT law consumed separately",
+      "acceptance": "Same input identity and processing as qualification; preserve raw vector, support, covariance, null calibration, uncertainty and unavailable status; do not multiply this diagnostic into parent likelihood",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    },
+    {
+      "id": "R9-28",
+      "title": "Joint tensor-functional and anchor images",
+      "requires_all": [
+        "FORMAL_IMAGES",
+        "JOINT_SET"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "TENSOR_FUNCTIONAL_IMAGES"
+      ],
+      "scope": "functions defined on the joint state only; physical providers required for physical quantities",
+      "acceptance": "One valid common region with explicit true-point/full-identified-set target; jointly uncertain anchors, defined denominators and outer support bounds; no missing physical quantity filled from Q/O; physical outputs consume PHYSICAL_IMAGE",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
+      "actions": [
+        {
+          "id": "defined_tuple_functionals",
+          "requires_all": [
+            "FORMAL_IMAGES",
+            "JOINT_SET"
+          ],
+          "produces": "TENSOR_FUNCTIONAL_IMAGES",
+          "requirement": "only functions already defined on the admitted tuple; absence of physical provider yields unavailable physical quantities"
+        },
+        {
+          "id": "physical_tensor_functionals",
+          "requires_all": [
+            "FORMAL_IMAGES",
+            "JOINT_SET",
+            "PHYSICAL_IMAGE"
+          ],
+          "produces": "TENSOR_FUNCTIONAL_IMAGES",
+          "requirement": "admitted physical image, same anchors and region; distinct law-tagged Pi and structured depth path"
+        }
+      ]
+    },
+    {
+      "id": "R9-29",
+      "title": "Optional external physical model and forward-response validation",
+      "requires_all": [
+        "SEED",
+        "FORMAL_PHYSICS"
+      ],
+      "requires_any": [],
+      "may_produce": [
+        "VALIDATED_PHYSICAL_RESPONSE"
+      ],
+      "scope": "named externally supplied model only; no native solver implementation",
+      "acceptance": "Frame/units/epoch/matter assumptions, Einstein constraints and conservation, FLRW/no-tilt/parity limits, source/Doppler normalization, error/remainder and convergence; restricted benchmark cannot validate a general family; no universal prerequisite for observer analyses",
+      "execution_state": "PLANNED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+    }
+  ],
+  "revision": 2,
+  "predecessor_design_commit": "5e4e899c0dfa2028d81a82ca68ccd11203947470",
+  "seed_report_commit": "d514eabdbd6a464a92ff6e51e1aba91399a054db"
+}
