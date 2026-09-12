@@ -38,3 +38,7 @@
 subagent 결과는 카탈로그 작업 트리의 THEORY-REPORT-20260913에 작성되었다. 종료 훅이 원본 checkout의 무관한 EXTERNAL-FUSION-FOLLOWUP-20260829를 검사해 전달 메타데이터에 OPERATIONAL_NONPASS가 발생했다. 해당 run에 결과를 복사하거나 원본 pointer를 바꾸지 않았다. 실제 source 검토 결과와 운영 훅 상태를 구별하며 HOST_CODEX가 보고서 수정·최종 파일 검수를 수행했다.
 
 작업 트리에서의 normal close도 초기 검토 입력이 수정 후 달라진 점과 result-envelope schema/필드 불일치로 통과하지 않았다. 초기 검토 봉인을 사후 수정하지 않고 실패를 보존했으며, 해당 작업 트리의 pointer만 abandon으로 해제했다. 최종 수정 파일은 check_report.py와 부모 source 대조로 검수했으나, 이 상태를 하네스 전체 PASS라고 부르지 않는다.
+
+## 원격 게시 확인
+
+산출물 커밋 `7e33771c300e4fdacb6c3606beff0cbe8ef3bcd0`을 일반 push한 뒤 별도 원격 checkout에서22개 보고서 파일의 byte 일치와 보고서 checker PASS를 확인했다. 고정 source55개를 원격 원문에서 직접 읽어 모두 SHA-256이 일치했다(본문 전송1,494,071 bytes). [remote_verification.json](remote_verification.json)은 확인한 산출물 커밋을 가리키며 이 기록 자체의 커밋 hash를 자기 참조하지 않는다. 원본74개 dirty/untracked 상태는 작업 전후 같았다.
