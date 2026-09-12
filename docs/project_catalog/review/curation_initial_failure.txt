@@ -1,0 +1,37 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_curated_version_bindings_survive_incremental_scan ____________
+
+project = (PosixPath('/tmp/pytest-of-cosmosapjw/pytest-18/test_curated_version_bindings_0/repo'), '9efd25366a7f19476117017c4b530...em_sources': [], ...}, PosixPath('/tmp/pytest-of-cosmosapjw/pytest-18/test_curated_version_bindings_0/catalog.sqlite'))
+tmp_path = PosixPath('/tmp/pytest-of-cosmosapjw/pytest-18/test_curated_version_bindings_0')
+
+    def test_curated_version_bindings_survive_incremental_scan(project,tmp_path):
+        from catalog_lib.reports import add_curation
+        _,_,_,scope,db=project
+        card=tmp_path/'curation.json'
+        card.write_text(json.dumps({'cards':[{'id':'C1','title':'Fixture guide','owner':'common',
+            'evidence_level':'static_curated_source_summary','question':'Where is the fixture?',
+            'source_refs':['renamed.py']}]}))
+        with connect(db) as c:
+            add_curation(c,card)
+            before=counts(c)
+            Scanner(c,scope).run()
+>           assert counts(c)==before
+E           AssertionError: assert {'sources': 2...rees': 6, ...} == {'sources': 2...rees': 6, ...}
+E             
+E             Omitting 15 identical items, use -vv to show
+E             Differing items:
+E             {'edges_by_resolution': {'recorded_relation_unresolved': 2, 'same_version_file_present': 3, 'static_call_unresolved': 5, 'unresolved_at_source_version': 8}} != {'edges_by_resolution': {'baseline_source_file_present': 1, 'recorded_relation_unresolved': 2, 'same_version_file_present': 3, 'static_call_unresolved': 5, ...}}
+E             Use -v to get more diff
+
+tests/project_catalog/test_catalog.py:278: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+git fixture: 0/2 commits, files=3
+record views: 0 files
+references: 0/9
+----------------------------- Captured stderr call -----------------------------
+git fixture: 0/2 commits, files=9
+references: 0/11
+=========================== short test summary info ============================
+FAILED ../../../../../dev/test_catalog.py::test_curated_version_bindings_survive_incremental_scan
+1 failed, 22 deselected in 0.17s

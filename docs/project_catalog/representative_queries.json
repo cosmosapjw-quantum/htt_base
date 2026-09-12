@@ -1,0 +1,640 @@
+{
+  "scope": "static catalog queries only; no research execution or proof verification",
+  "cases": {
+    "cf4_analysis": {
+      "command": "python3 -B scripts/project_catalog.py query --kind analysis --q CF4 --limit 5 --format json",
+      "returned_rows": 5,
+      "logical_sha256": "0c039f76371ed697df4c931cfba349b8f62647922e01fb3a90e895ede2408f93",
+      "rows": [
+        {
+          "id": "34860de463bc2210b2efb204e9803f55",
+          "kind": "analysis",
+          "name": "obs_loader.py",
+          "status": "static_entrypoint_candidate",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": "dl_pipeline/assets/obs_meta/obs_loader.py",
+          "observed_commit": "03bc15b490891e379ad1eed8d2cf9fb76fdaed1d"
+        },
+        {
+          "id": "08ee65cd1f6812bbc69ae19f386b2b4a",
+          "kind": "analysis",
+          "name": "cf4_grid_adapter.py",
+          "status": "static_entrypoint_candidate",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": "dl_pipeline/scripts/cf4_grid_adapter.py",
+          "observed_commit": "03bc15b490891e379ad1eed8d2cf9fb76fdaed1d"
+        },
+        {
+          "id": "f17e4e9bc40c20ba719ca54761813e9e",
+          "kind": "analysis",
+          "name": "download_jwst_anchors.py",
+          "status": "static_entrypoint_candidate",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": "dl_pipeline/scripts/download_jwst_anchors.py",
+          "observed_commit": "c2412051864af2c638203a385abe07e80754d22d"
+        },
+        {
+          "id": "a3373f49396ab8e1ecaabbeafba22d76",
+          "kind": "analysis",
+          "name": "extract_cf4_full.py",
+          "status": "static_entrypoint_candidate",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": "dl_pipeline/scripts/extract_cf4_full.py",
+          "observed_commit": "c2412051864af2c638203a385abe07e80754d22d"
+        },
+        {
+          "id": "01a2036847e8af747f2fb911ebbbb2b7",
+          "kind": "analysis",
+          "name": "extract_cf4_pv_variants.py",
+          "status": "static_entrypoint_candidate",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": "dl_pipeline/scripts/extract_cf4_pv_variants.py",
+          "observed_commit": "f94e409c85d4c9c5f1dbd9081c34e798b35b599c"
+        }
+      ]
+    },
+    "cf4_physical_locations": {
+      "command": "python3 -B scripts/project_catalog.py query --kind asset --q cf4 --limit 5 --format json",
+      "returned_rows": 5,
+      "logical_sha256": "7736c73d6475423d880d81a30cb1ad4f894b271190ae521fea0fd1c4c0293d07",
+      "rows": [
+        {
+          "kind": "directory",
+          "status": "observed",
+          "source_id": "e2e_assets",
+          "path": "TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0003/cf4"
+        },
+        {
+          "kind": "file",
+          "status": "observed",
+          "source_id": "e2e_assets",
+          "path": "TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0003/cf4/validation.json"
+        },
+        {
+          "kind": "file",
+          "status": "observed",
+          "source_id": "e2e_assets",
+          "path": "TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0003/cf4/validation.log"
+        },
+        {
+          "kind": "directory",
+          "status": "observed",
+          "source_id": "e2e_assets",
+          "path": "TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/cf4"
+        },
+        {
+          "kind": "file",
+          "status": "observed",
+          "source_id": "e2e_assets",
+          "path": "TENSOR-JOINT-R7-20260908/campaign/nodes/R7-02/attempt-0004/cf4/validation.json"
+        }
+      ]
+    },
+    "other_branch_code": {
+      "command": "python3 -B scripts/project_catalog.py query --kind code --source htt_base --ref origin/research/pr04-multicomponent --not-in-ref baseline --limit 5 --format json",
+      "returned_rows": 5,
+      "logical_sha256": "81513f114c678c195547f900798e36d20c7fee2f867ccd4453a8ab0dd2bb34ad",
+      "rows": [
+        {
+          "id": "0e2693fb515a7e82e60228fa9d00948a",
+          "kind": "code",
+          "name": "ActiveRunError",
+          "status": "definition_present",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": ".agent-harness/scripts/_harness.py",
+          "observed_commit": "23ebd04fd0783333f77c635ad48f7c9b1c7d569d"
+        },
+        {
+          "id": "fb4f5ea16957b1fc0d1fefa318b08b6d",
+          "kind": "code",
+          "name": "ActiveRunError.__init__",
+          "status": "definition_present",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": ".agent-harness/scripts/_harness.py",
+          "observed_commit": "23ebd04fd0783333f77c635ad48f7c9b1c7d569d"
+        },
+        {
+          "id": "81e79798f1f7d7dadd7f9075cf5592b3",
+          "kind": "code",
+          "name": "ActiveRunError.as_dict",
+          "status": "definition_present",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": ".agent-harness/scripts/_harness.py",
+          "observed_commit": "23ebd04fd0783333f77c635ad48f7c9b1c7d569d"
+        },
+        {
+          "id": "bf568f0c2b7da1c6ff07042b3b49ff90",
+          "kind": "code",
+          "name": "_git_head_state",
+          "status": "definition_present",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": ".agent-harness/scripts/_harness.py",
+          "observed_commit": "23ebd04fd0783333f77c635ad48f7c9b1c7d569d"
+        },
+        {
+          "id": "793b8ebef932a589f22142f9160d4d38",
+          "kind": "code",
+          "name": "_git_head_state.run",
+          "status": "definition_present",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": ".agent-harness/scripts/_harness.py",
+          "observed_commit": "23ebd04fd0783333f77c635ad48f7c9b1c7d569d"
+        }
+      ]
+    },
+    "recorded_proof_claims": {
+      "command": "python3 -B scripts/project_catalog.py query --kind proposition --status recorded_proven_or_derived --limit 5 --format json",
+      "returned_rows": 5,
+      "logical_sha256": "1a63a3bb259cd1d5d140aea62de14c8e3c502c3ebc66d0ee90077242629714fb",
+      "rows": [
+        {
+          "id": "6a712adbc1660f97fa497d234e27f92d",
+          "kind": "proposition",
+          "name": "C-PR173-MC-CERTIFIER",
+          "status": "recorded_proven_or_derived",
+          "recorded_status": "PASS_CONTRACT_DERIVED_WITH_REQUIRED_SPEC_REMEDIATIONS",
+          "source_id": "htt_base",
+          "path": "docs/generated/pr173_reviews/intake_statistics.json",
+          "observed_commit": "76675be04bafdd79b3487e9be81a03557de42ea5"
+        },
+        {
+          "id": "d6058c06d046cbbd183b9655fd445dfd",
+          "kind": "proposition",
+          "name": "PSD second-moment cone",
+          "status": "recorded_proven_or_derived",
+          "recorded_status": "DERIVED",
+          "source_id": "htt_base",
+          "path": "external_audit_research_report_20260707_v5.zip!/external_audit_research_report_20260707_v5/external_audit_evidence_matrix.json",
+          "observed_commit": "c12f20d304eb7b4f1b794ab51b3a3dbb2a7987a7"
+        },
+        {
+          "id": "16524033ec9d80ec37b1157f1c6279b4",
+          "kind": "proposition",
+          "name": "Scalar tilt trace is not sufficient",
+          "status": "recorded_proven_or_derived",
+          "recorded_status": "DERIVED",
+          "source_id": "htt_base",
+          "path": "external_audit_research_report_20260707_v5.zip!/external_audit_research_report_20260707_v5/external_audit_evidence_matrix.json",
+          "observed_commit": "c12f20d304eb7b4f1b794ab51b3a3dbb2a7987a7"
+        },
+        {
+          "id": "beeede99553b4ea2e137c06f982919e6",
+          "kind": "proposition",
+          "name": "Shear memory of anisotropic stress",
+          "status": "recorded_proven_or_derived",
+          "recorded_status": "DERIVED",
+          "source_id": "htt_base",
+          "path": "external_audit_research_report_20260707_v5.zip!/external_audit_research_report_20260707_v5/external_audit_evidence_matrix.json",
+          "observed_commit": "c12f20d304eb7b4f1b794ab51b3a3dbb2a7987a7"
+        },
+        {
+          "id": "c931fa1cc913ec934392c16258370485",
+          "kind": "proposition",
+          "name": "Dust-FLRW oracle",
+          "status": "recorded_proven_or_derived",
+          "recorded_status": "DERIVED",
+          "source_id": "htt_base",
+          "path": "external_audit_research_report_20260707_v5.zip!/external_audit_research_report_20260707_v5/external_audit_evidence_matrix.json",
+          "observed_commit": "c12f20d304eb7b4f1b794ab51b3a3dbb2a7987a7"
+        }
+      ]
+    },
+    "proposition_candidates": {
+      "command": "python3 -B scripts/project_catalog.py query --kind proposition --status candidate --limit 5 --format json",
+      "returned_rows": 5,
+      "logical_sha256": "a867f31faaa7a744b4cbde418f068b47bd2f71552aaeb82e1708534521f9ca2e",
+      "rows": [
+        {
+          "id": "5fe4df7099333ae9f4479f55e083a034",
+          "kind": "proposition",
+          "name": "C-HARNESS-INSTALL",
+          "status": "candidate",
+          "recorded_status": "pass_corrective_scope_pending_final_consumer_reseal",
+          "source_id": "htt_base",
+          "path": ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-FINAL-ADJ.json",
+          "observed_commit": "5de472cd06a80bdb79834d4414da41ab652774e2"
+        },
+        {
+          "id": "b665fd413881f34f7f8d722cae4d27d9",
+          "kind": "proposition",
+          "name": "C-PR122-NONPROMOTION",
+          "status": "candidate",
+          "recorded_status": "pass_boundary_pending_freeze_reseal",
+          "source_id": "htt_base",
+          "path": ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-FINAL-ADJ.json",
+          "observed_commit": "5de472cd06a80bdb79834d4414da41ab652774e2"
+        },
+        {
+          "id": "119526860be26bd7670d7b4ceade2756",
+          "kind": "proposition",
+          "name": "C-PR123-MECHANICS",
+          "status": "candidate",
+          "recorded_status": "PROPOSED",
+          "source_id": "htt_base",
+          "path": ".agent-harness/runs/pr123-intake-20260716/results/A-PR123-CLAIM.json",
+          "observed_commit": "6422c77f6049373e3d6baefa69227c6d82732647"
+        },
+        {
+          "id": "3c17600befde730b550f5a1778bc89d8",
+          "kind": "proposition",
+          "name": "Proposition 10 (Natural-chart entropy dominance). Let",
+          "status": "candidate",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": "PRE_MANUSCRIPT_STAGE2B5_v0_9_1.pdf",
+          "observed_commit": "622c3f547cf952d9e80c8c3bb93619c6e3ee13f7"
+        },
+        {
+          "id": "483564136e13281baac48c71f4385293",
+          "kind": "proposition",
+          "name": "Proposition 9 (Adjacent-representative and momen-                               ∥βΘ − ββ−ME ∥2 = 7.71 × 10−3 .               (48)",
+          "status": "candidate",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": "PRE_MANUSCRIPT_STAGE2B5_v0_9_1.pdf",
+          "observed_commit": "622c3f547cf952d9e80c8c3bb93619c6e3ee13f7"
+        }
+      ]
+    },
+    "planned_items": {
+      "command": "python3 -B scripts/project_catalog.py query --kind plan --status candidate --limit 5 --format json",
+      "returned_rows": 5,
+      "logical_sha256": "19ead58467dc07f8079574f98247e87b3484d719942ff8a4d1312adf82299d37",
+      "rows": [
+        {
+          "id": "e0ebc65988d80b25834a9bd51ae533cc",
+          "kind": "plan",
+          "name": "Freeze research data, claim, and transfer contracts",
+          "status": "candidate",
+          "recorded_status": "proposed",
+          "source_id": "htt_base",
+          "path": "docs/codex_handoff/pr_dag_research_program.yaml",
+          "observed_commit": "a4a4e235590cd6e111ebc7ffcd55b3591415168f"
+        },
+        {
+          "id": "3963b98fbb57c2245ad7c647c382aa70",
+          "kind": "plan",
+          "name": "Install experiment harness and manifest lanes",
+          "status": "candidate",
+          "recorded_status": "proposed",
+          "source_id": "htt_base",
+          "path": "docs/codex_handoff/pr_dag_research_program.yaml",
+          "observed_commit": "a4a4e235590cd6e111ebc7ffcd55b3591415168f"
+        },
+        {
+          "id": "f411f1863efb903344a223f8553f63ff",
+          "kind": "plan",
+          "name": "Exact prior and finite-mock calibration",
+          "status": "candidate",
+          "recorded_status": "proposed",
+          "source_id": "htt_base",
+          "path": "docs/codex_handoff/pr_dag_research_program.yaml",
+          "observed_commit": "a4a4e235590cd6e111ebc7ffcd55b3591415168f"
+        },
+        {
+          "id": "a8cd1cdc67e7eb57947e542c77603225",
+          "kind": "plan",
+          "name": "Nuisance-projected rank and Fisher audits",
+          "status": "candidate",
+          "recorded_status": "proposed",
+          "source_id": "htt_base",
+          "path": "docs/codex_handoff/pr_dag_research_program.yaml",
+          "observed_commit": "a4a4e235590cd6e111ebc7ffcd55b3591415168f"
+        },
+        {
+          "id": "9bc1e949c17faae92b78217b5c4ac2bc",
+          "kind": "plan",
+          "name": "Channel-matched occupancy and transfer stability",
+          "status": "candidate",
+          "recorded_status": "proposed",
+          "source_id": "htt_base",
+          "path": "docs/codex_handoff/pr_dag_research_program.yaml",
+          "observed_commit": "a4a4e235590cd6e111ebc7ffcd55b3591415168f"
+        }
+      ]
+    },
+    "migration_statements": {
+      "command": "python3 -B scripts/project_catalog.py query --kind port --source htt_base --ref all --limit 5 --format json",
+      "returned_rows": 5,
+      "logical_sha256": "807e8446e392270c916d20c84ce885d63276d75878e844d7b786f44892b4907f",
+      "rows": [
+        {
+          "id": "00630165c79e166965a5e0033ce4a025",
+          "kind": "port",
+          "name": "Frozen Decisions and Rejected Alternatives",
+          "status": "recorded_port_mention",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": ".agent-harness/context/FROZEN_DECISIONS.md",
+          "observed_commit": "3fa98dc3bd5da7ed1341031ca1442922b9d6c107"
+        },
+        {
+          "id": "1e6970aba6c83b2f1b14429947130777",
+          "kind": "port",
+          "name": "Frozen Decisions and Rejected Alternatives",
+          "status": "recorded_port_mention",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": ".agent-harness/context/FROZEN_DECISIONS.md",
+          "observed_commit": "76675be04bafdd79b3487e9be81a03557de42ea5"
+        },
+        {
+          "id": "7c540896ec1b62d1704149a9a476cf43",
+          "kind": "port",
+          "name": "Frozen Decisions and Rejected Alternatives",
+          "status": "recorded_port_mention",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": ".agent-harness/context/FROZEN_DECISIONS.md",
+          "observed_commit": "5de472cd06a80bdb79834d4414da41ab652774e2"
+        },
+        {
+          "id": "9524ba44a4c5cb058a186e10319d55f0",
+          "kind": "port",
+          "name": "Frozen Decisions and Rejected Alternatives",
+          "status": "recorded_port_mention",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": ".agent-harness/context/FROZEN_DECISIONS.md",
+          "observed_commit": "774290ff21d2e98db61f45b3fed2ac2f9d1c17f0"
+        },
+        {
+          "id": "a1bbd089db8ef4594002ded3781aaa62",
+          "kind": "port",
+          "name": "Frozen Decisions and Rejected Alternatives",
+          "status": "recorded_port_mention",
+          "recorded_status": "",
+          "source_id": "htt_base",
+          "path": ".agent-harness/context/FROZEN_DECISIONS.md",
+          "observed_commit": "fe7abb6aa01fdfaf0440956bd8727ddc9e1be8e7"
+        }
+      ]
+    },
+    "updates": {
+      "command": "python3 -B scripts/project_catalog.py query --needs-update --limit 5 --format json",
+      "returned_rows": 5,
+      "logical_sha256": "8ae5726cdb81b58facf4ba650ea70725842a6c14ad6554e449c13133334df87b",
+      "rows": [
+        {
+          "id": "3abd120e0be4e86ffbaeaab76482b534",
+          "kind": "update",
+          "name": "P26 successor",
+          "status": "recorded_superseded",
+          "recorded_status": "SUPERSEDED",
+          "source_id": "htt_base",
+          "path": "docs/research_program/THEOREM_REGISTRY.yaml",
+          "observed_commit": "135a0e341dd7d626f829a8ac1faa080535095a11"
+        },
+        {
+          "id": "8b16a184e97e260415541853d07c5d10",
+          "kind": "update",
+          "name": "P31 successor",
+          "status": "recorded_superseded",
+          "recorded_status": "SUPERSEDED",
+          "source_id": "htt_base",
+          "path": "docs/research_program/THEOREM_REGISTRY.yaml",
+          "observed_commit": "135a0e341dd7d626f829a8ac1faa080535095a11"
+        },
+        {
+          "id": "de56529170fbc5fba523d5bc08e57540",
+          "kind": "update",
+          "name": "P35 successor",
+          "status": "recorded_superseded",
+          "recorded_status": "SUPERSEDED",
+          "source_id": "htt_base",
+          "path": "docs/research_program/THEOREM_REGISTRY.yaml",
+          "observed_commit": "135a0e341dd7d626f829a8ac1faa080535095a11"
+        },
+        {
+          "id": "da443166a5beada948c7a0fd9f5ac14a",
+          "kind": "update",
+          "name": "P36 successor",
+          "status": "recorded_retracted",
+          "recorded_status": "RETRACTED",
+          "source_id": "htt_base",
+          "path": "docs/research_program/THEOREM_REGISTRY.yaml",
+          "observed_commit": "135a0e341dd7d626f829a8ac1faa080535095a11"
+        },
+        {
+          "id": "1f715a14794f9a88cad9776729d3fa6e",
+          "kind": "update",
+          "name": "T2p successor",
+          "status": "recorded_retracted",
+          "recorded_status": "RETRACTED",
+          "source_id": "htt_base",
+          "path": "docs/research_program/THEOREM_REGISTRY.yaml",
+          "observed_commit": "135a0e341dd7d626f829a8ac1faa080535095a11"
+        }
+      ]
+    },
+    "pre_rewrite_propositions": {
+      "command": "python3 -B scripts/project_catalog.py query --kind proposition --source htt_pre_rewrite --ref all --limit 5 --format json",
+      "returned_rows": 5,
+      "logical_sha256": "f26f013160a881b8708694a219ef2fd3ccae2a2e3054103cf787566e7f2334be",
+      "rows": [
+        {
+          "id": "24c2dd135464a39a02f335477830daeb",
+          "kind": "proposition",
+          "name": "PR-122 implements the registered exploratory C1 content-addressed release mechanics.",
+          "status": "recorded_validation_claim",
+          "recorded_status": "implemented_and_validated",
+          "source_id": "htt_pre_rewrite",
+          "path": ".agent-harness/context/CLAIM_REGISTRY.jsonl",
+          "observed_commit": "e77510170424eecd49112ed6c33424ce455b154c"
+        },
+        {
+          "id": "ae727acc9f8dd9d1ee92bfe9484d9079",
+          "kind": "proposition",
+          "name": "PR-122 implements the registered exploratory C1 content-addressed release mechanics.",
+          "status": "recorded_validation_claim",
+          "recorded_status": "implemented_and_validated",
+          "source_id": "htt_pre_rewrite",
+          "path": ".agent-harness/context/CLAIM_REGISTRY.jsonl",
+          "observed_commit": "14fa510fa3ed9e3895340b3a78291714e1547c62"
+        },
+        {
+          "id": "5744a4a4ad5a427830a69007540bc768",
+          "kind": "proposition",
+          "name": "PR-122 audit disclosure does not promote scientific status and claim release remains false.",
+          "status": "source_present",
+          "recorded_status": "verified",
+          "source_id": "htt_pre_rewrite",
+          "path": ".agent-harness/context/CLAIM_REGISTRY.jsonl",
+          "observed_commit": "e77510170424eecd49112ed6c33424ce455b154c"
+        },
+        {
+          "id": "a49165de7e89471fbf0de02b718e77bb",
+          "kind": "proposition",
+          "name": "PR-122 audit disclosure does not promote scientific status and claim release remains false.",
+          "status": "source_present",
+          "recorded_status": "verified",
+          "source_id": "htt_pre_rewrite",
+          "path": ".agent-harness/context/CLAIM_REGISTRY.jsonl",
+          "observed_commit": "14fa510fa3ed9e3895340b3a78291714e1547c62"
+        },
+        {
+          "id": "451660a589135693ba57a5001a127640",
+          "kind": "proposition",
+          "name": "PR4 download, intake, reduction, and all data analysis are skipped by user scope with zero commands.",
+          "status": "source_present",
+          "recorded_status": "verified",
+          "source_id": "htt_pre_rewrite",
+          "path": ".agent-harness/context/CLAIM_REGISTRY.jsonl",
+          "observed_commit": "14fa510fa3ed9e3895340b3a78291714e1547c62"
+        }
+      ]
+    }
+  },
+  "status": "PASS",
+  "proof_example": {
+    "id": "6a712adbc1660f97fa497d234e27f92d",
+    "name": "C-PR173-MC-CERTIFIER",
+    "recorded_status": "PASS_CONTRACT_DERIVED_WITH_REQUIRED_SPEC_REMEDIATIONS",
+    "path": "docs/generated/pr173_reviews/intake_statistics.json",
+    "observed_commit": "76675be04bafdd79b3487e9be81a03557de42ea5",
+    "proof_evidence": {
+      "recorded_proof_claim": true,
+      "reference_count": 0,
+      "bound_reference_count": 0,
+      "matching_id_records": [],
+      "support_status": "NO_BOUND_REFERENCE",
+      "proof_validation": "NOT_RECHECKED",
+      "assumption_alignment": "NOT_VERIFIED; matching IDs and file presence do not establish the same mathematical statement or a valid proof"
+    },
+    "relationship_binding": {
+      "source_id": "htt_base",
+      "observed_commit": "76675be04bafdd79b3487e9be81a03557de42ea5",
+      "note": "stored relationships apply to this representative occurrence; no assertion of applicability to every ref containing unchanged source text"
+    }
+  },
+  "history_rows": 1,
+  "csv_export_rows": 10,
+  "check": {
+    "status": "PASS",
+    "integrity": "ok",
+    "checks": {
+      "file_processing_status_missing": 0,
+      "scientific_promotion_generated": 0,
+      "dangling_edge_target": 0,
+      "orphan_archive_root": 0,
+      "fts_count_mismatch": 0,
+      "observed_regular_file_without_version": 0,
+      "git_leaf_without_file_version": 0
+    },
+    "issues": [],
+    "counts": {
+      "sources": 99,
+      "commits": 79880,
+      "refs": 6799,
+      "trees": 1178659,
+      "contents": 72873,
+      "files": 305527,
+      "records": 1675716,
+      "edges": 10901211,
+      "filesystem": 591920,
+      "gaps": 268,
+      "records_by_kind": {
+        "analysis": 10304,
+        "annotation": 16462,
+        "code": 1170314,
+        "document": 215320,
+        "evidence": 20297,
+        "feature": 93766,
+        "file": 45481,
+        "plan": 53953,
+        "port": 6085,
+        "proposition": 27122,
+        "update": 16612
+      },
+      "files_by_status": {
+        "agent_context_cache_metadata_only": 164,
+        "archive_link_metadata": 247,
+        "archive_members_enumerated": 400,
+        "git_symlink": 7,
+        "lexical_partial": 29271,
+        "metadata_only": 137029,
+        "oversized_archive": 3,
+        "oversized_text": 104,
+        "parse_error": 620,
+        "parsed": 136461,
+        "pdf_text_partial": 1221
+      },
+      "files_by_language": {
+        "archive": 403,
+        "binary_or_unclassified": 136849,
+        "c": 21172,
+        "config": 118,
+        "cpp": 407,
+        "csv": 461,
+        "fortran": 394,
+        "json": 39798,
+        "jsonl": 52,
+        "latex": 2307,
+        "lean": 67,
+        "markdown": 16256,
+        "notebook": 8,
+        "pdf": 1264,
+        "python": 64468,
+        "rust": 6585,
+        "sage": 45,
+        "shell": 229,
+        "text": 11177,
+        "toml": 301,
+        "wolfram": 374,
+        "yaml": 2792
+      },
+      "gaps_by_status": {
+        "archive_error": 1,
+        "missing_source": 20,
+        "non_commit_ref": 8,
+        "oversized_archive": 3,
+        "oversized_text": 77,
+        "parse_error": 159
+      },
+      "records_by_status": {
+        "abstract_interface": 1855,
+        "candidate": 7422,
+        "curated_navigation_candidate": 17,
+        "declaration_present": 231376,
+        "definition_present": 921416,
+        "documented": 215320,
+        "needs_implementation_review": 16347,
+        "recorded_active": 2056,
+        "recorded_conditional": 2782,
+        "recorded_followup_marker": 16462,
+        "recorded_port_mention": 6085,
+        "recorded_proven_or_derived": 5971,
+        "recorded_retracted": 334,
+        "recorded_superseded": 454,
+        "recorded_unresolved": 2686,
+        "recorded_validation_claim": 2967,
+        "source_present": 208723,
+        "static_entrypoint_candidate": 10005,
+        "stub": 16347,
+        "textual_statement": 7091
+      },
+      "edges_by_resolution": {
+        "ambiguous": 470,
+        "baseline_source_file_present": 25,
+        "recorded_relation_unresolved": 759,
+        "same_file_symbol_candidate": 1107688,
+        "same_version_file_present": 1020328,
+        "same_version_import_candidate": 66208,
+        "static_call_unresolved": 7261606,
+        "unresolved": 24,
+        "unresolved_at_source_version": 1444103
+      }
+    },
+    "claim_scope": "catalog structural checks only; research execution/proof not performed"
+  }
+}

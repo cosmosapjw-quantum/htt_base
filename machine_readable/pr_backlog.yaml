@@ -196,6 +196,7 @@ policy:
   - PR-245
   - PR-246
   - PR-247
+  - PR-CATALOG-001
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -9859,3 +9860,29 @@ prs:
   scientific_artifact_mode: standard_internal
   execution_authorization: USER_REQUESTED_PR467_FOLLOWUP
   solver_gate_required: false
+- id: PR-CATALOG-001
+  wave: 0
+  title: Build static whole-history project catalog, SQLite queries and Korean navigation
+  owner: COMMON
+  depends:
+  - PR-000
+  files:
+  - scripts/project_catalog.py
+  - scripts/catalog_lib
+  - tests/project_catalog
+  - docs/project_catalog
+  tests:
+  - PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -B -m pytest -c /dev/null -p no:cacheprovider --confcutdir=tests/project_catalog
+    tests/project_catalog -q
+  - python3 -B scripts/project_catalog.py check
+  dod:
+  - All declared history and connected sources have explicit processing coverage
+  - Version-bound feature, analysis, proposition and update queries work
+  - Only catalog code is tested; no research/proof execution or scientific promotion
+  - Compressed SQLite restores and queries from fresh remote checkout
+  kill: Preserve incomplete source/parse statuses; never promote recorded PASS or ACTIVE to a current
+    proof or execution result.
+  level: L0
+  scope: static_project_navigation
+  risk: low
+  user_authorized: true

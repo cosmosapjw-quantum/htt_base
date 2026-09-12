@@ -1,0 +1,67 @@
+{
+  "scope": "catalog tool correctness only",
+  "independent_review_original_status": "fail",
+  "resolution_authority": "parent implementation review plus catalog regression tests; not a second independent verdict",
+  "findings": [
+    {
+      "id": "F-001",
+      "repair": "git diff 호출을 제거하고 fsmonitor를 끈 Git 객체 조회와 원시 바이트 비교로 변경",
+      "regression_test": "test_scan_never_runs_git_clean_filters_or_fsmonitor",
+      "resolution": "FIXED_REGRESSION_PASSED"
+    },
+    {
+      "id": "F-002",
+      "repair": "추출 분류와 캐시에서 같은 경로 문맥 함수를 사용",
+      "regression_test": "test_same_content_different_classifier_context_is_order_independent",
+      "resolution": "FIXED_REGRESSION_PASSED"
+    },
+    {
+      "id": "F-003",
+      "repair": "추출 제한이 변경되면 새 DB를 요구하여 오래된 제한 결과의 재사용 방지",
+      "regression_test": "test_changed_extraction_limits_refuse_stale_incremental",
+      "resolution": "FIXED_REGRESSION_PASSED"
+    },
+    {
+      "id": "F-004",
+      "repair": "source 조회의 출처 필터를 sources.id에 적용",
+      "regression_test": "test_source_filter_and_invalid_exclusion",
+      "resolution": "FIXED_REGRESSION_PASSED"
+    },
+    {
+      "id": "F-005",
+      "repair": "제외 비교에서 all/working 의사 버전을 명시적으로 거부",
+      "regression_test": "test_source_filter_and_invalid_exclusion",
+      "resolution": "FIXED_REGRESSION_PASSED"
+    }
+  ],
+  "parent_findings": [
+    {
+      "id": "P-001",
+      "reproduction": "curation_initial_failure.txt",
+      "repair": "Preserve curated annotations bound to a declared baseline during generic source-edge resolution.",
+      "regression_test": "test_curated_version_bindings_survive_incremental_scan",
+      "resolution": "FIXED_REGRESSION_PASSED"
+    },
+    {
+      "id": "P-002",
+      "reproduction": "Nine sources with commit_and_ref_metadata retained kind=git because the source upsert omitted kind.",
+      "repair": "Update source kind during upsert; preserve installed-dependency classification without adding project symbols.",
+      "regression_test": "test_dependency_history_is_labeled_and_has_no_project_symbols",
+      "resolution": "FIXED_REGRESSION_PASSED"
+    },
+    {
+      "id": "P-003",
+      "reproduction": "The first full incremental scan added 17 file versions, all under the automatic .remember runtime cache.",
+      "repair": "Exclude context-cache directories from recursive collection; retain historical path metadata without extracted text; vacuum the distributed SQLite snapshot.",
+      "regression_test": "test_agent_cache_is_metadata_only_and_never_recursive",
+      "resolution": "FIXED_REGRESSION_PASSED"
+    },
+    {
+      "id": "P-004",
+      "reproduction": "One NOT_EVALUATED_PROVENANCE_REPLAY_ONLY record matched the substring PROVEN; explicit CANDIDATE states were also not classified as candidates.",
+      "repair": "Match status tokens and explicit negative markers; normalize recorded-state views without rereading unchanged source files.",
+      "regression_test": "test_status_tokens_never_turn_provenance_into_proven",
+      "resolution": "FIXED_REGRESSION_PASSED"
+    }
+  ]
+}
