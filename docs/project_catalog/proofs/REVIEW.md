@@ -55,3 +55,7 @@ locator도 처리해 1개 내용 버전을 추가로 읽었다. `source_scan.csv
 
 최종 전수 검사·반복 생성·원격 게시 결과는 `validation.json`과
 `PUBLICATION_RECEIPT.json`에서 확인한다.
+
+원격 일반 push 후 별도 체크아웃에서 최종 CLI로 생성한 220개 파일이 모두 바이트까지 일치했다. 대표 Git 증명 소스 3개도 원격 객체와 대응했다. 원본 체크아웃의 74개 변경 항목은 같은 porcelain 형식으로 대조해 동일함을 확인했다.
+
+`git diff/show --check`의 형식 검사는 CSV에 보존된 원문 공백과 Markdown 끝 빈 줄 때문에 NONPASS였다. 원문 필드의 공백을 증명 내용과 함께 임의로 정규화하지 않았으며, 이를 내용·분류·DB 관계의 오류로 판정하지 않았다.

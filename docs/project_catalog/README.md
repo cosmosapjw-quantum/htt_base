@@ -58,6 +58,7 @@ python3 -B scripts/project_catalog.py query --kind asset --q cf4 --limit 30
    명제는 [상태별 안내](PROPOSITIONS.md)와 함께 읽는다.
    전체 이력의 [기존 증명 근거 확인·완료 미확인 목록](proofs/README.md)은 원문 상태와
    별도로 증명 본문·가정·버전을 대조한 결과다. `export --proof-lists /tmp/htt-proof-lists`로 재생성한다.
+   [수학적 동치 통합 전의 중복 참고 집계](SEMANTIC_DEDUP_NOTES.md)는 약 1만 개의 문면상 묶음과 그 해석 한계를 설명한다.
 4. [조사 범위와 누락](COVERAGE.md): 실제 건수, 처리 상태, 미지원·누락·제한.
 5. [이식·구버전·업데이트 안내](PORTS_AND_UPDATES.md): 기록, 차이, 후속 확인의 구분.
 6. [SQL 예제](queries.sql): SQLite 직접 조회와 버전 비교.
