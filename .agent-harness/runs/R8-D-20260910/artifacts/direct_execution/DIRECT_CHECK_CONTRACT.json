@@ -1,0 +1,185 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "identity": {
+    "contract_id": "R8-D-DIRECT-SUPPORTING-ALGEBRA-V1",
+    "contract_version": 1,
+    "claim_ids": [
+      "P1_normalized_coefficients",
+      "P2_mock6_squared_norms",
+      "J1_set_logic_and_allocation",
+      "V08_fixture_ray"
+    ],
+    "statement_class": "scalar_algebra",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/tensor_joint_r8/THEORY.md",
+        "sha256": "9a505ce0ab3de99a1dcad7f4397621cb639307b4bb42a735b910128646ee408f"
+      },
+      {
+        "path": "docs/research_program/tensor_joint_r8/VALIDATION_MATRIX.md",
+        "sha256": "ba1fc76d711b1984c34820da9503da6a621923bf70de5844d5abe8edd3041ab9"
+      }
+    ],
+    "claim_ceiling": "Supporting algebra only; no independent CAS_4AXIS_PASS, generic probability proof, physical-law admission or production-code proof",
+    "adjudicator": "HOST_DIRECT_NOT_INDEPENDENT"
+  },
+  "semantics": {
+    "exact_statement": "Check normalized scalar P1 block identities for Theta>0; mock6 squared direction norms (20,5,3,8) and coordinate supports for the fixed diagonal; J1 pointwise set union/intersection and rational alpha total; R selecting first four coordinates with v=e8, Kv=e8 and compact constraint excluding v. These supporting obligations do not certify generic P/J theorems.",
+    "symbol_type_domain_map": {
+      "Theta": "positive real",
+      "qdot,g,divo,cdot,c,E": "real scalar tensor coordinates",
+      "rho": "nonnegative rational fixture radius",
+      "v": "e8 in R8",
+      "R": "first four rows of I8",
+      "K": "I8"
+    },
+    "frame_signature_units_conventions": {
+      "metric": "(-,+,+,+)",
+      "frame": "outward geodesic collisionless FLRW-linear radiation observer",
+      "coordinates": "orthonormal STF5 and antisymmetric3; S=sigma/Theta,W=omega/Theta",
+      "rates": "declared consistent rate units; normalized brightness derivatives"
+    },
+    "assumptions": [
+      "P1 as defined in the frozen R8 THEORY is the governing formula; this checks coordinate normalization, not a new covariant derivation.",
+      "P2 follows from Euclidean Cauchy-Schwarz and attainable ball support; generic norm/probability theorem proof is not claimed by these fixture checks.",
+      "J1 coverage additionally needs genuine candidate-state acceptance laws and compatible true tuple; only set logic and error arithmetic are executed here."
+    ],
+    "positivity_nonzero_conditions": [
+      "Theta>0"
+    ],
+    "branches": [],
+    "exclusions": [
+      "independent four-axis acceptance",
+      "generic probability coverage formalization",
+      "observed jet inference",
+      "global Einstein-Boltzmann extension"
+    ],
+    "singular_loci": [],
+    "order_of_limits": [],
+    "boundary_or_initial_conditions": []
+  },
+  "target": {
+    "canonical_form": "exact zero residuals, true finite fixture and logic checks",
+    "equivalence_relation": "exact real/rational mathematics",
+    "invariants": [],
+    "exact_test_obligations": [
+      "P1_normalized_coefficients",
+      "P2_mock6_squared_norms",
+      "J1_set_logic_and_allocation",
+      "V08_fixture_ray"
+    ],
+    "numeric_test_vectors": [],
+    "approximation_order": "exact",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "0",
+    "relative_tolerance": "0",
+    "forbidden_shortcuts": [
+      "No supporting/fixture success promoted to full P/J proof.",
+      "No direct host scripts called independent.",
+      "No old axis verdict changed."
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "Execute the four named supporting algebra obligations; record limitations explicitly",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "wolfram": "15.0.0",
+        "xact": "1.2.0+"
+      },
+      "resource_limit": {
+        "wall_seconds": 180
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "Execute the four named supporting algebra obligations; record limitations explicitly",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "python": "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "sympy": "1.14.0"
+      },
+      "resource_limit": {
+        "wall_seconds": 180
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "Execute the four named supporting algebra obligations; record limitations explicitly",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "sage": "10.9",
+        "singular": "4.3.2"
+      },
+      "resource_limit": {
+        "wall_seconds": 180
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "Execute the four named supporting algebra obligations; record limitations explicitly",
+      "required_outputs": [
+        "lean sources",
+        "build receipt",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain"
+      },
+      "resource_limit": {
+        "wall_seconds": 180
+      }
+    }
+  },
+  "independence": {
+    "mode": "HOST_DIRECT_OWNER_AUTHORIZED",
+    "permitted_inputs": [
+      "this contract",
+      "frozen R8 theory and validation",
+      "host-authored scripts and saved mock6"
+    ],
+    "forbidden_sibling_paths": [],
+    "script_result_ownership": "all scripts authored by Host; engines run directly without subagents",
+    "correlation_disclosure": "Common author and visible scripts; no blind-results independence"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "exception_schema": {
+      "axis": "wolfram_xact | sympy | sage_singular | lean",
+      "reason_class": "platform | license | computation_class | resource",
+      "bounded_probe": "exact command + output demonstrating the blocker",
+      "unique_capability_lost": false,
+      "substitute_obligation": "",
+      "claim_downgrade": "",
+      "approver": "must not be the excepted axis's agent",
+      "registered_at": "must precede the earliest axis completed_at",
+      "expiry_retry": ""
+    },
+    "aggregate_status_rule": "No independent admission requested. Direct engine success is FOUR_ENGINE_SUPPORTING_CHECKS_PASS; independent CAS remains NOT_PERFORMED.",
+    "invalidation_triggers": [
+      "contract_hash_change",
+      "assumption_or_domain_diff",
+      "unpinned_toolchain"
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+...F..FFF..F                                                             [100%]
+=================================== FAILURES ===================================
+__________ test_fixed_missing_scope_alternatives_and_unresolved_outer __________
+
+    def test_fixed_missing_scope_alternatives_and_unresolved_outer():
+        left=region(lambda x:x<=0);right=region(lambda x:x>=2)
+        tuples=[CompatibleTuple('one',dom(),{'CMB':'left','CF4':'right'})]
+        joint=outer_region({'left':left,'right':right},tuples,{'CMB':F(1,40),'CF4':F(1,40)})
+        assert not joint.contains([0.]) and not joint.contains([3.])
+        missing=outer_region({'left':left},tuples,{'CMB':F(1,40),'CF4':F(1,40)})
+>       assert missing.contains([0.]) and missing.coverage_lower==.95
+E       AssertionError: assert (True and Fraction(19, 20) == 0.95)
+E        +  where True = contains([0.0])
+E        +    where contains = JointPhysicalRegion(law=None, domain=PhysicalDomain(domain_id='R8_UNION:one', parameter_names=('x',), contains=<functi... bounds=((-10, 10),), witnesses=((0.0,), (3.0,)), assumptions=()), measurement_keys={'CMB': 'left', 'CF4': 'right'}),)).contains
+E        +  and   Fraction(19, 20) = JointPhysicalRegion(law=None, domain=PhysicalDomain(domain_id='R8_UNION:one', parameter_names=('x',), contains=<functi... bounds=((-10, 10),), witnesses=((0.0,), (3.0,)), assumptions=()), measurement_keys={'CMB': 'left', 'CF4': 'right'}),)).coverage_lower
+
+tests/r8/test_joint_region.py:21: AssertionError
+__________________ test_half_contraction_normalization[s2-0] ___________________
+
+target = 's2', index = 0
+
+    @pytest.mark.parametrize('target,index', [('s2',0),('w2',5)])
+    def test_half_contraction_normalization(target,index):
+        center=np.zeros(8);center[index]=2
+        d=JetDomain('half-contraction','GALACTIC',np.eye(8),('orthonormal tensor coordinates',))
+        im=jet_image(center,np.zeros((8,1)),0,(0,0),3,d)
+>       assert project(im,target).bounds==(2,2)  # S:S/2 and W:W/2, contract item 1
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert (Fraction(4, ...raction(4, 1)) == (2, 2)
+E         
+E         At index 0 diff: Fraction(4, 1) != 2
+E         Use -v to get more diff
+
+tests/r8/test_joint_region.py:53: AssertionError
+__________________ test_half_contraction_normalization[w2-5] ___________________
+
+target = 'w2', index = 5
+
+    @pytest.mark.parametrize('target,index', [('s2',0),('w2',5)])
+    def test_half_contraction_normalization(target,index):
+        center=np.zeros(8);center[index]=2
+        d=JetDomain('half-contraction','GALACTIC',np.eye(8),('orthonormal tensor coordinates',))
+        im=jet_image(center,np.zeros((8,1)),0,(0,0),3,d)
+>       assert project(im,target).bounds==(2,2)  # S:S/2 and W:W/2, contract item 1
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert (Fraction(4, ...raction(4, 1)) == (2, 2)
+E         
+E         At index 0 diff: Fraction(4, 1) != 2
+E         Use -v to get more diff
+
+tests/r8/test_joint_region.py:53: AssertionError
+____________ test_frontier_refuses_changed_family_and_wrong_radius _____________
+
+    def test_frontier_refuses_changed_family_and_wrong_radius():
+        d=JetDomain('fixed','GALACTIC',np.eye(8),('fixture',))
+        target=LinearTarget('s1',np.eye(8)[0])
+>       with pytest.raises(ValueError,match='fixed closure family'):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/r8/test_joint_region.py:59: Failed
+________ test_fixed_allocation_and_shared_nuisance_survive_missing_data ________
+
+    def test_fixed_allocation_and_shared_nuisance_survive_missing_data():
+        from htt.infer.r8_confidence_image import FIXED_INTEGRATED_ALLOCATION
+        unknown=PhysicalRegion(None,dom(),None,lambda x,e:AcceptanceResult(False,None,None,None,False,'NUMERICALLY_UNRESOLVED'),.99,'TEST',('u',))
+        outer=outer_region({'u':unknown},[CompatibleTuple('u',dom(),{'CMB':'u'})],FIXED_INTEGRATED_ALLOCATION)
+>       assert outer.outer_contains([0.]) and outer.coverage_lower==.95
+E       AssertionError: assert (True and Fraction(19, 20) == 0.95)
+E        +  where True = outer_contains([0.0])
+E        +    where outer_contains = JointPhysicalRegion(law=None, domain=PhysicalDomain(domain_id='R8_UNION:u', parameter_names=('x',), contains=<function...at 0x76fff20351c0>, bounds=((-10, 10),), witnesses=((0.0,), (3.0,)), assumptions=()), measurement_keys={'CMB': 'u'}),)).outer_contains
+E        +  and   Fraction(19, 20) = JointPhysicalRegion(law=None, domain=PhysicalDomain(domain_id='R8_UNION:u', parameter_names=('x',), contains=<function...at 0x76fff20351c0>, bounds=((-10, 10),), witnesses=((0.0,), (3.0,)), assumptions=()), measurement_keys={'CMB': 'u'}),)).coverage_lower
+
+tests/r8/test_joint_region.py:89: AssertionError
+=========================== short test summary info ============================
+FAILED tests/r8/test_joint_region.py::test_fixed_missing_scope_alternatives_and_unresolved_outer
+FAILED tests/r8/test_joint_region.py::test_half_contraction_normalization[s2-0]
+FAILED tests/r8/test_joint_region.py::test_half_contraction_normalization[w2-5]
+FAILED tests/r8/test_joint_region.py::test_frontier_refuses_changed_family_and_wrong_radius
+FAILED tests/r8/test_joint_region.py::test_fixed_allocation_and_shared_nuisance_survive_missing_data
+5 failed, 7 passed in 1.46s

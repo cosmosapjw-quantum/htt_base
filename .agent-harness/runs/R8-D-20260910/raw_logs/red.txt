@@ -1,0 +1,21 @@
+
+==================================== ERRORS ====================================
+__________________ ERROR collecting tests/r8/test_jet_set.py ___________________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/tests/r8/test_jet_set.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests/r8/test_jet_set.py:4: in <module>
+    from common.r8_jet_set import JetDomain,jet_image,support,p1_operator
+E   ModuleNotFoundError: No module named 'common.r8_jet_set'
+________________ ERROR collecting tests/r8/test_joint_region.py ________________
+ImportError while importing test module '/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/tests/r8/test_joint_region.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests/r8/test_joint_region.py:3: in <module>
+    from common.r8_jet_set import JetDomain,jet_image
+E   ModuleNotFoundError: No module named 'common.r8_jet_set'
+=========================== short test summary info ============================
+ERROR tests/r8/test_jet_set.py
+ERROR tests/r8/test_joint_region.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+2 errors in 0.20s

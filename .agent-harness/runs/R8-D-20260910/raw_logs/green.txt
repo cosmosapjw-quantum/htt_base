@@ -1,0 +1,20 @@
+...F..                                                                   [100%]
+=================================== FAILURES ===================================
+__________ test_fixed_missing_scope_alternatives_and_unresolved_outer __________
+
+    def test_fixed_missing_scope_alternatives_and_unresolved_outer():
+        left=region(lambda x:x<=0);right=region(lambda x:x>=2)
+        tuples=[CompatibleTuple('one',dom(),{'CMB':'left','CF4':'right'})]
+        joint=outer_region({'left':left,'right':right},tuples,{'CMB':F(1,40),'CF4':F(1,40)})
+        assert not joint.contains([0.]) and not joint.contains([3.])
+        missing=outer_region({'left':left},tuples,{'CMB':F(1,40),'CF4':F(1,40)})
+>       assert missing.contains([0.]) and missing.coverage_lower==.95
+E       AssertionError: assert (True and Fraction(19, 20) == 0.95)
+E        +  where True = contains([0.0])
+E        +    where contains = JointPhysicalRegion(law=None, domain=PhysicalDomain(domain_id='R8_UNION:one', parameter_names=('x',), contains=<functi... bounds=((-10, 10),), witnesses=((0.0,), (3.0,)), assumptions=()), measurement_keys={'CMB': 'left', 'CF4': 'right'}),)).contains
+E        +  and   Fraction(19, 20) = JointPhysicalRegion(law=None, domain=PhysicalDomain(domain_id='R8_UNION:one', parameter_names=('x',), contains=<functi... bounds=((-10, 10),), witnesses=((0.0,), (3.0,)), assumptions=()), measurement_keys={'CMB': 'left', 'CF4': 'right'}),)).coverage_lower
+
+tests/r8/test_joint_region.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED tests/r8/test_joint_region.py::test_fixed_missing_scope_alternatives_and_unresolved_outer
+1 failed, 5 passed in 1.37s

@@ -1,0 +1,109 @@
+{
+  "contract_sha256": "c2a9299fa2a751da7b7264e7be49129e15d5d24eb643f366f8425cf82b7f0062",
+  "status": "DIRECT_CHECKS_INCOMPLETE",
+  "axes": {
+    "wolfram_xact": {
+      "argv": [
+        "/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel",
+        "-noprompt",
+        "-script",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/verify.wl",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/wolfram_payload.json"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "exit_code": 0,
+      "elapsed_seconds": 6.709169955000107,
+      "log_sha256": "f6c717498f12f869b697bf3e5bebc6876ed1bdbd687004a03298ea71f27ce18a",
+      "checks": {
+        "P1_normalized_coefficients": true,
+        "P2_mock6_squared_norms": true,
+        "J1_set_logic_and_allocation": true,
+        "V08_fixture_ray": true
+      },
+      "versions": {
+        "wolfram": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+        "xact": "1.3.0"
+      },
+      "status": "PASS"
+    },
+    "sympy": {
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/verify_sympy.py"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "exit_code": 0,
+      "elapsed_seconds": 0.34417491600470385,
+      "log_sha256": "09f6d2bd8f274540498102b41ed136f5d47b6bd996285d9eea5831526b7a4c11",
+      "checks": {
+        "P1_normalized_coefficients": true,
+        "P2_mock6_squared_norms": true,
+        "J1_set_logic_and_allocation": true,
+        "V08_fixture_ray": true
+      },
+      "versions": {
+        "sympy": "1.14.0"
+      },
+      "status": "PASS"
+    },
+    "sage_singular": {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/verify_sage.py"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "exit_code": 124,
+      "elapsed_seconds": 180.0154002900017,
+      "log_sha256": "7801a70f39327d26d5592456d5435be09e42480407b741e7ed14b740cb53902f",
+      "status": "BLOCKED",
+      "classification": "PLATFORM_REBUILD_TIMEOUT_BEFORE_ALGEBRA_EXECUTION",
+      "checks": {
+        "P1_normalized_coefficients": null,
+        "P2_mock6_squared_norms": null,
+        "J1_set_logic_and_allocation": null,
+        "V08_fixture_ray": null
+      },
+      "observed_child_command": "/usr/bin/ninja -> meson --internal regenerate /home/cosmosapjw/opt/sage",
+      "rebuild_cwd": "/home/cosmosapjw/opt/sage/build/sage-distro",
+      "orphan_check": "recorded ninja and meson child processes absent after timeout"
+    },
+    "lean": {
+      "argv": [
+        "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean",
+        "-o",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/Support.olean",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/Support.lean"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "exit_code": 0,
+      "elapsed_seconds": 3.851496859002509,
+      "log_sha256": "b2cc01faafd84fdab7bcd343202f5f19215db95e3890fdf570586445abb0c50d",
+      "checks": {
+        "P1_normalized_coefficients": true,
+        "P2_mock6_squared_norms": true,
+        "J1_set_logic_and_allocation": true,
+        "V08_fixture_ray": true
+      },
+      "versions": {
+        "lean": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)"
+      },
+      "source_sha256": "749977f58d7746684890e4e5d5da02575f123e620c5949f1ac5c5266ad4863b4",
+      "compiled_sha256": "78bd1690e8adf5b40af30c3969a4a9c27094f9afd23d60b84a5149494363a2a9",
+      "status": "PASS"
+    }
+  },
+  "independence": "HOST_AUTHORED_AND_EXECUTED_NOT_BLIND",
+  "independent_four_axis_status": "NOT_PERFORMED",
+  "scientific_claim_promotion": false,
+  "scope": "Limited P1 coordinate identities, P2 mock squared norms, J1 set logic and alpha, V08 supplied ray. Generic physical/probability theorems remain outside these checks.",
+  "source_sha256": {
+    "verify.wl": "9c1c109d6528d27f39d541da8be8fb0c29e039a028da25fa328b1a883fb5ab6f",
+    "verify_sage.py": "13126d7066eaed1186bfaa30c5fc50f47611613b8a5080dc34794f5cb756802a",
+    "Support.lean": "749977f58d7746684890e4e5d5da02575f123e620c5949f1ac5c5266ad4863b4",
+    "verify_sympy.py": "23548dcf28e6702f3d75e565705711116bc182e9f93de9901b6fa0df08527fb2",
+    "run_engines.py": "6fbf32fb58521fa126961a7f95e3ac7376afd45ef035331a406e5ce9bd93308f"
+  },
+  "scope_note": "This direct-check test brief is not submitted as an independent CAS contract or aggregate admission. Required independent P/J acceptance remains unfulfilled.",
+  "runner_revision_note": "Postexecution metadata classifier distinguishes timeout BLOCKED from algebra FAIL; contract file renamed to DIRECT_CHECK_CONTRACT to avoid independent-admission implication. Executed outputs retained."
+}

@@ -1,0 +1,86 @@
+{
+  "contract_sha256": "c2a9299fa2a751da7b7264e7be49129e15d5d24eb643f366f8425cf82b7f0062",
+  "status": "DIRECT_CHECKS_INCOMPLETE",
+  "axes": {
+    "wolfram_xact": {
+      "argv": [
+        "/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel",
+        "-noprompt",
+        "-script",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/verify.wl",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/wolfram_payload.json"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "exit_code": 0,
+      "elapsed_seconds": 6.709169955000107,
+      "log_sha256": "f6c717498f12f869b697bf3e5bebc6876ed1bdbd687004a03298ea71f27ce18a",
+      "checks": {
+        "P1_normalized_coefficients": true,
+        "P2_mock6_squared_norms": true,
+        "J1_set_logic_and_allocation": true,
+        "V08_fixture_ray": true
+      },
+      "versions": {
+        "wolfram": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+        "xact": "1.3.0"
+      },
+      "status": "PASS"
+    },
+    "sympy": {
+      "argv": [
+        "/mnt/sn850x2t/htt_base_e2e/venvs/htt_base-py312-20260829/bin/python",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/verify_sympy.py"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "exit_code": 0,
+      "elapsed_seconds": 0.34417491600470385,
+      "log_sha256": "09f6d2bd8f274540498102b41ed136f5d47b6bd996285d9eea5831526b7a4c11",
+      "checks": {
+        "P1_normalized_coefficients": true,
+        "P2_mock6_squared_norms": true,
+        "J1_set_logic_and_allocation": true,
+        "V08_fixture_ray": true
+      },
+      "versions": {
+        "sympy": "1.14.0"
+      },
+      "status": "PASS"
+    },
+    "sage_singular": {
+      "argv": [
+        "/usr/local/bin/sage",
+        "-python",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/verify_sage.py"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "exit_code": 124,
+      "elapsed_seconds": 180.0154002900017,
+      "log_sha256": "7801a70f39327d26d5592456d5435be09e42480407b741e7ed14b740cb53902f",
+      "status": "FAIL"
+    },
+    "lean": {
+      "argv": [
+        "/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean",
+        "-o",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/Support.olean",
+        "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/.agent-harness/runs/R8-D-20260910/artifacts/direct_execution/Support.lean"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree",
+      "exit_code": 1,
+      "elapsed_seconds": 19.89776791100303,
+      "log_sha256": "eb9ff4f30d0de311b144d442bcc0644528627c219b657c4972bc0b4a50d66f63",
+      "status": "FAIL"
+    }
+  },
+  "independence": "HOST_AUTHORED_AND_EXECUTED_NOT_BLIND",
+  "independent_four_axis_status": "NOT_PERFORMED",
+  "scientific_claim_promotion": false,
+  "scope": "Limited P1 coordinate identities, P2 mock squared norms, J1 set logic and alpha, V08 supplied ray. Generic physical/probability theorems remain outside these checks.",
+  "source_sha256": {
+    "verify.wl": "9c1c109d6528d27f39d541da8be8fb0c29e039a028da25fa328b1a883fb5ab6f",
+    "verify_sage.py": "13126d7066eaed1186bfaa30c5fc50f47611613b8a5080dc34794f5cb756802a",
+    "Support.lean": "749977f58d7746684890e4e5d5da02575f123e620c5949f1ac5c5266ad4863b4",
+    "verify_sympy.py": "23548dcf28e6702f3d75e565705711116bc182e9f93de9901b6fa0df08527fb2",
+    "run_engines.py": "46863f80c6f3dd346a53b170a8f15c6cdf40a57d00f2e4cf15929c77b747bdcb"
+  }
+}
