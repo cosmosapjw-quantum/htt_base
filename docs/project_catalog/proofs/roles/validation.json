@@ -38,6 +38,12 @@
     "unresolved.json.gz": "f1949d514e4438a2f1f59b7422ecf70e3c811701bd7e1684e6643090478cbc1f",
     "unresolved.md": "6f8c68c28660715464b4ef8c064c35ca971ca49015ce21a15fd5de269bf116d3"
   },
+  "harness_closeout": {
+    "failure_sha256": "6e7ea867dbee74b84e08f4bd8d56673d10f29f7e4e30983e4a1d4efd5ff410ad",
+    "original_checkout_run_untouched": true,
+    "reason": "Agent result-envelope schema mismatches; preserved validation failure; cleared only the catalog run pointer with close_run --abandon. Source and export acceptance checked from actual artifacts.",
+    "status": "OPERATIONAL_NONPASS"
+  },
   "independent_review": {
     "execution_evidence": "self_declared; parent inspected actual artifacts",
     "hook_delivery": "KNOWN_MISROUTED_TO_UNRELATED_CANONICAL_RUN; no edits there",
@@ -54,7 +60,24 @@
   "original_input_hashes_unchanged": true,
   "proof_classifications_unchanged": true,
   "publication": {
-    "status": "PENDING_REMOTE_READBACK"
+    "artifact_commit": "15becf53a30b9c823e5754308eb8aca2ee8901b4",
+    "auxiliary_and_reuse_sections": 94,
+    "command": "python3 -S -B scripts/project_catalog.py --db <absent.sqlite> export --proof-roles <output>",
+    "files_verified": 31,
+    "remote_checkout": "independent sparse checkout fetched from origin",
+    "remote_verification_sha256": "fbf444b2e8e177fc6881557e908c2ae146b688005a40e2185c241e16c0bb446b",
+    "representative_links": [
+      "T-P1",
+      "T-P18",
+      "NT2-A1",
+      "PR257Orbit.mm_assoc"
+    ],
+    "research_code_executed": false,
+    "research_proposal_sections": 172,
+    "source_link_check": "Pinned metadata and exact excerpt hashes; full raw source equality independently checked before publication",
+    "sqlite_required": false,
+    "sqlite_restored": false,
+    "status": "PASS"
   },
   "repeated_outputs_identical": true,
   "research_and_proof_execution": "NOT_EXECUTED",
@@ -66,6 +89,6 @@
   "source_content_versions_reviewed": 58,
   "sqlite_sha256_after": "42942d7485d4650075b0ec6baa2059d8b8e715bea9c3d59d772c301854d20e25",
   "sqlite_unchanged": true,
-  "status": "LOCAL_CHECKS_PASS_REMOTE_PENDING",
+  "status": "STATIC_ROLE_EXPORT_AND_REMOTE_READBACK_PASS",
   "unresolved_roles": 39072
 }
