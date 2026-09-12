@@ -1,0 +1,943 @@
+{
+  "owner": "obsstat",
+  "claim_tier": "C0",
+  "scope": "observed_components",
+  "rows": [
+    {
+      "sample_id": "PR3_SMICA",
+      "conversion_seconds": 0.003238569013774395,
+      "full_mv_available": true,
+      "metric_input_status": "FULL_MV_RECONSTRUCTION",
+      "conversion": [
+        {
+          "l": 2,
+          "amplitude_K": 4.2068976360249144e-05,
+          "vectors": [
+            [
+              -0.4635393998965856,
+              0.8353386318775039,
+              0.2955344224223862
+            ],
+            [
+              0.9252957939948329,
+              0.18171298415387008,
+              0.33287848384262864
+            ]
+          ],
+          "status": "RECONSTRUCTED_WITH_ERROR_BOUND",
+          "reconstruction_norm_K": {
+            "lo": {
+              "numerator": 2117250050247583614417096835176709128057160061622452908285,
+              "denominator": 115792089237316195423570985008687907853269984665640564039457584007913129639936
+            },
+            "hi": {
+              "numerator": 1058625025123791807208548417588354564028580030811226454143,
+              "denominator": 57896044618658097711785492504343953926634992332820282019728792003956564819968
+            },
+            "certificate": {
+              "kind": "EXACT_DYADIC_RECONSTRUCTION_FROBENIUS",
+              "squared": "233/696898287454081973172991196020261297061888",
+              "input_sha256": "53beee0ecce12e5f94212b81fcdeee9bf4992ea909640510ab31f0bd306909b0",
+              "returned_tensor_sha256": "19cd5a35ac12936a406a1a670bf5cc7c6b55d568c920057fbb92ef2c4ef18825",
+              "scope": "finite represented arrays; not a root isolation or measurement uncertainty certificate"
+            }
+          },
+          "conversion_certificate": {
+            "method_id": "R8_FULL_MV_NULL_CONE_V1",
+            "root_method": "floating polynomial roots plus antipodal pairing",
+            "root_isolation": "NOT_CERTIFIED",
+            "multiple_root_policy": "refuse close repeated roots; original tensor retained",
+            "stf_input_tolerance_relative": 1e-10,
+            "root_pair_tolerance": 1e-06,
+            "root_separation_floor": 0.0001,
+            "minimum_root_chord_separation": 1.2816067017314972,
+            "maximum_pair_error": 1.4331125889805547e-15,
+            "reconstruction_relative_error_upper": 1.1768370248304473e-15
+          }
+        },
+        {
+          "l": 3,
+          "amplitude_K": 0.00013135522958604903,
+          "vectors": [
+            [
+              0.11997621596693998,
+              0.7924449343352423,
+              0.5980273686451715
+            ],
+            [
+              0.776012760362926,
+              -0.6297286331411972,
+              0.03529935347894823
+            ],
+            [
+              0.9123083876786525,
+              0.3619257593401067,
+              0.19158066316114664
+            ]
+          ],
+          "status": "RECONSTRUCTED_WITH_ERROR_BOUND",
+          "reconstruction_norm_K": {
+            "lo": {
+              "numerator": 3053297288154841769878701912461396203786597816329573640327,
+              "denominator": 115792089237316195423570985008687907853269984665640564039457584007913129639936
+            },
+            "hi": {
+              "numerator": 381662161019355221234837739057674525473324727041196705041,
+              "denominator": 14474011154664524427946373126085988481658748083205070504932198000989141204992
+            },
+            "certificate": {
+              "kind": "EXACT_DYADIC_RECONSTRUCTION_FROBENIUS",
+              "squared": "7753/11150372599265311570767859136324180752990208",
+              "input_sha256": "e897d092fc6a27ab76335613d825572ee27b141e18025c5c8cda2ff6dd33838f",
+              "returned_tensor_sha256": "d356465d20e05362924ee42a3ebe0aecea3d4cce2848f9302a5dbc08e9b51f45",
+              "scope": "finite represented arrays; not a root isolation or measurement uncertainty certificate"
+            }
+          },
+          "conversion_certificate": {
+            "method_id": "R8_FULL_MV_NULL_CONE_V1",
+            "root_method": "floating polynomial roots plus antipodal pairing",
+            "root_isolation": "NOT_CERTIFIED",
+            "multiple_root_policy": "refuse close repeated roots; original tensor retained",
+            "stf_input_tolerance_relative": 1e-10,
+            "root_pair_tolerance": 1e-06,
+            "root_separation_floor": 0.0001,
+            "minimum_root_chord_separation": 0.9891086668140707,
+            "maximum_pair_error": 5.688200336284365e-16,
+            "reconstruction_relative_error_upper": 1.1135364677523893e-15
+          }
+        }
+      ],
+      "summaries": {
+        "power_Q_frobenius_K2": 8.943231955778485e-10,
+        "power_O_frobenius_K2": 4.100420706685523e-09,
+        "f_B": 0.8755337373539263,
+        "ordinary_power_bispectrum": [
+          8.943231955778484e-10,
+          4.1004207066855215e-09,
+          -3.315189409330931e-15,
+          -4.48318406141195e-15
+        ],
+        "packet": {
+          "status": "AVAILABLE",
+          "value": {
+            "schema": "MES_SCALED_KRYLOV16_V1",
+            "action_group": "SO3",
+            "q_frobenius_amplitude": 2.9905236925626395e-05,
+            "o_frobenius_amplitude": 6.40345274573454e-05,
+            "normalization": "CONTRACTIONS_OF_UNIT_FROBENIUS_Q_AND_O",
+            "values": [
+              0.9999999999999999,
+              -0.12395572901696919,
+              0.46577765205272625,
+              -0.03843334163069965,
+              0.23265335227315878,
+              -0.0030736228352535016,
+              -0.007863821687794852,
+              0.10875785058870069,
+              -0.012707643166303944,
+              -0.013920716589399374,
+              0.05474201712599907,
+              -0.010709416583741799,
+              -0.055349870750828645,
+              -0.0021529230554510038,
+              0.02714271661079406,
+              -0.0074820737480237
+            ],
+            "triple_order": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                2
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                0,
+                2,
+                2
+              ],
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                2
+              ],
+              [
+                1,
+                2,
+                2
+              ],
+              [
+                2,
+                2,
+                2
+              ]
+            ],
+            "condition_limit": 1000000.0,
+            "measured_k_condition": 91.32008913173505,
+            "claim": "GENERIC_OBSERVABLE_ORBIT_REPRESENTATION_NOT_PHYSICAL_SOURCE_IDENTIFICATION"
+          }
+        },
+        "normalized_mv_cross_alignment": [
+          0.06394163326216551,
+          0.4540814655803012,
+          0.6153618693816082,
+          0.7830838371200114,
+          0.8753169700706972,
+          0.9736948044037586
+        ],
+        "signed_chi": -577.2669396444265,
+        "method_ids": {
+          "full_mv": "R8_FULL_MV_NULL_CONE_V1",
+          "alignment": "R8_LOSSY_ABSOLUTE_CROSS_DOTS_V1",
+          "power": "R8_LOSSY_FROBENIUS_POWERS_V1",
+          "f_B": "R8_BOOST_IMAGE_FRACTION_DIAGNOSTIC_V1"
+        }
+      }
+    },
+    {
+      "sample_id": "PR3_COMMANDER",
+      "conversion_seconds": 0.0024175348225980997,
+      "full_mv_available": true,
+      "metric_input_status": "FULL_MV_RECONSTRUCTION",
+      "conversion": [
+        {
+          "l": 2,
+          "amplitude_K": 4.128872651651679e-05,
+          "vectors": [
+            [
+              -0.4917513510274494,
+              0.8111355134472933,
+              0.31660667647299257
+            ],
+            [
+              0.9368497371551673,
+              0.11644549408626498,
+              0.3297772231360128
+            ]
+          ],
+          "status": "RECONSTRUCTED_WITH_ERROR_BOUND",
+          "reconstruction_norm_K": {
+            "lo": {
+              "numerator": 1779680677950247815691321836341078022348877994406933209357,
+              "denominator": 57896044618658097711785492504343953926634992332820282019728792003956564819968
+            },
+            "hi": {
+              "numerator": 3559361355900495631382643672682156044697755988813866418715,
+              "denominator": 115792089237316195423570985008687907853269984665640564039457584007913129639936
+            },
+            "certificate": {
+              "kind": "EXACT_DYADIC_RECONSTRUCTION_FROBENIUS",
+              "squared": "1317/1393796574908163946345982392040522594123776",
+              "input_sha256": "3a6c2334e04b134c9414014fd4571abb9bd401e2e362e5fc1fb7e8c9b4c57eed",
+              "returned_tensor_sha256": "f9c0eb6af9a316b1d6b7b1d7dc5b81411b3001dfe5f9716e897c5e54f3022128",
+              "scope": "finite represented arrays; not a root isolation or measurement uncertainty certificate"
+            }
+          },
+          "conversion_certificate": {
+            "method_id": "R8_FULL_MV_NULL_CONE_V1",
+            "root_method": "floating polynomial roots plus antipodal pairing",
+            "root_isolation": "NOT_CERTIFIED",
+            "multiple_root_policy": "refuse close repeated roots; original tensor retained",
+            "stf_input_tolerance_relative": 1e-10,
+            "root_pair_tolerance": 1e-06,
+            "root_separation_floor": 0.0001,
+            "minimum_root_chord_separation": 1.2150437212480107,
+            "maximum_pair_error": 7.701859664206228e-16,
+            "reconstruction_relative_error_upper": 1.993725179214862e-15
+          }
+        },
+        {
+          "l": 3,
+          "amplitude_K": 0.00013214676449297907,
+          "vectors": [
+            [
+              0.12350759699907361,
+              0.7814792594265388,
+              0.6115848596635326
+            ],
+            [
+              0.761001031973809,
+              -0.6469943395017056,
+              0.04770486335322439
+            ],
+            [
+              0.9141028864368607,
+              0.3680992049988742,
+              0.17005554471112286
+            ]
+          ],
+          "status": "RECONSTRUCTED_WITH_ERROR_BOUND",
+          "reconstruction_norm_K": {
+            "lo": {
+              "numerator": 10614042431844767351214137610237967719125162479961481856399,
+              "denominator": 115792089237316195423570985008687907853269984665640564039457584007913129639936
+            },
+            "hi": {
+              "numerator": 663377651990297959450883600639872982445322654997592616025,
+              "denominator": 7237005577332262213973186563042994240829374041602535252466099000494570602496
+            },
+            "certificate": {
+              "kind": "EXACT_DYADIC_RECONSTRUCTION_FROBENIUS",
+              "squared": "46845/5575186299632655785383929568162090376495104",
+              "input_sha256": "7c412142671ad5a1df9fb7e289d4da3f8e7419f72050f60a75f9b58fb42a99e9",
+              "returned_tensor_sha256": "20f1cf2f229dac2cf547fed2abccc022ce2fdf1c37714516cf891723b36b4bd5",
+              "scope": "finite represented arrays; not a root isolation or measurement uncertainty certificate"
+            }
+          },
+          "conversion_certificate": {
+            "method_id": "R8_FULL_MV_NULL_CONE_V1",
+            "root_method": "floating polynomial roots plus antipodal pairing",
+            "root_isolation": "NOT_CERTIFIED",
+            "multiple_root_policy": "refuse close repeated roots; original tensor retained",
+            "stf_input_tolerance_relative": 1e-10,
+            "root_pair_tolerance": 1e-06,
+            "root_separation_floor": 0.0001,
+            "minimum_root_chord_separation": 0.9954255959348146,
+            "maximum_pair_error": 2.6344413350070718e-15,
+            "reconstruction_relative_error_upper": 3.957338409317161e-15
+          }
+        }
+      ],
+      "summaries": {
+        "power_Q_frobenius_K2": 8.718583969993874e-10,
+        "power_O_frobenius_K2": 4.093596725570996e-09,
+        "f_B": 0.8511362082088227,
+        "ordinary_power_bispectrum": [
+          8.718583969993873e-10,
+          4.093596725570997e-09,
+          -4.5723582366749035e-15,
+          -6.422207538412263e-15
+        ],
+        "packet": {
+          "status": "AVAILABLE",
+          "value": {
+            "schema": "MES_SCALED_KRYLOV16_V1",
+            "action_group": "SO3",
+            "q_frobenius_amplitude": 2.9527248381780974e-05,
+            "o_frobenius_amplitude": 6.398122166363345e-05,
+            "normalization": "CONTRACTIONS_OF_UNIT_FROBENIUS_Q_AND_O",
+            "values": [
+              0.9999999999999999,
+              -0.17761159620349692,
+              0.4530774620611226,
+              -0.06614349002445402,
+              0.22786249159044208,
+              -9.879514399528297e-05,
+              -0.017414610421288865,
+              0.10368321813321178,
+              -0.02108960091069643,
+              -0.021665467321797468,
+              0.0529413664006143,
+              -0.016685912255215637,
+              -0.04927533173045055,
+              -0.004495114707812095,
+              0.026230573753362685,
+              -0.01129280655511958
+            ],
+            "triple_order": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                2
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                0,
+                2,
+                2
+              ],
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                2
+              ],
+              [
+                1,
+                2,
+                2
+              ],
+              [
+                2,
+                2,
+                2
+              ]
+            ],
+            "condition_limit": 1000000.0,
+            "measured_k_condition": 2730.8554779935653,
+            "claim": "GENERIC_OBSERVABLE_ORBIT_REPRESENTATION_NOT_PHYSICAL_SOURCE_IDENTIFICATION"
+          }
+        },
+        "normalized_mv_cross_alignment": [
+          0.09709227091032206,
+          0.40839455499920807,
+          0.6533360186118905,
+          0.7667824024561805,
+          0.8839196931377495,
+          0.955320988003724
+        ],
+        "signed_chi": -17.148693862181617,
+        "method_ids": {
+          "full_mv": "R8_FULL_MV_NULL_CONE_V1",
+          "alignment": "R8_LOSSY_ABSOLUTE_CROSS_DOTS_V1",
+          "power": "R8_LOSSY_FROBENIUS_POWERS_V1",
+          "f_B": "R8_BOOST_IMAGE_FRACTION_DIAGNOSTIC_V1"
+        }
+      }
+    },
+    {
+      "sample_id": "PR3_NILC",
+      "conversion_seconds": 0.003219763981178403,
+      "full_mv_available": true,
+      "metric_input_status": "FULL_MV_RECONSTRUCTION",
+      "conversion": [
+        {
+          "l": 2,
+          "amplitude_K": 4.1580611995925256e-05,
+          "vectors": [
+            [
+              -0.4420685117963823,
+              0.8430210604642168,
+              0.306416256898878
+            ],
+            [
+              0.916507580908345,
+              0.21818272964353866,
+              0.335276230327812
+            ]
+          ],
+          "status": "RECONSTRUCTED_WITH_ERROR_BOUND",
+          "reconstruction_norm_K": {
+            "lo": {
+              "numerator": 1448129632094818145570516041204962223442517316058772589167,
+              "denominator": 115792089237316195423570985008687907853269984665640564039457584007913129639936
+            },
+            "hi": {
+              "numerator": 90508102005926134098157252575310138965157332253673286823,
+              "denominator": 7237005577332262213973186563042994240829374041602535252466099000494570602496
+            },
+            "certificate": {
+              "kind": "EXACT_DYADIC_RECONSTRUCTION_FROBENIUS",
+              "squared": "109/696898287454081973172991196020261297061888",
+              "input_sha256": "2a133a6665ce7a5309132fc774192fabae333dec369242ca9ed2f6a8c5dca767",
+              "returned_tensor_sha256": "aca4f6e9bf1f36b92a63f39cac4657bb6f0fe65d64945455f9b7451b238179ac",
+              "scope": "finite represented arrays; not a root isolation or measurement uncertainty certificate"
+            }
+          },
+          "conversion_certificate": {
+            "method_id": "R8_FULL_MV_NULL_CONE_V1",
+            "root_method": "floating polynomial roots plus antipodal pairing",
+            "root_isolation": "NOT_CERTIFIED",
+            "multiple_root_policy": "refuse close repeated roots; original tensor retained",
+            "stf_input_tolerance_relative": 1e-10,
+            "root_pair_tolerance": 1e-06,
+            "root_separation_floor": 0.0001,
+            "minimum_root_chord_separation": 1.3277858120201715,
+            "maximum_pair_error": 1.4087150935148696e-15,
+            "reconstruction_relative_error_upper": 8.225422891926496e-16
+          }
+        },
+        {
+          "l": 3,
+          "amplitude_K": 0.00013145253998179227,
+          "vectors": [
+            [
+              0.12806655721884264,
+              0.7988206590719733,
+              0.5877793051494167
+            ],
+            [
+              0.7794625138830218,
+              -0.6259478847061952,
+              0.02504865431515119
+            ],
+            [
+              0.9096293455040605,
+              0.36635981453692346,
+              0.19584417298026896
+            ]
+          ],
+          "status": "RECONSTRUCTED_WITH_ERROR_BOUND",
+          "reconstruction_norm_K": {
+            "lo": {
+              "numerator": 2974437646194703307413148071679055310597702424018741901461,
+              "denominator": 57896044618658097711785492504343953926634992332820282019728792003956564819968
+            },
+            "hi": {
+              "numerator": 5948875292389406614826296143358110621195404848037483802923,
+              "denominator": 115792089237316195423570985008687907853269984665640564039457584007913129639936
+            },
+            "certificate": {
+              "kind": "EXACT_DYADIC_RECONSTRUCTION_FROBENIUS",
+              "squared": "117723/44601490397061246283071436545296723011960832",
+              "input_sha256": "5a051e48321478a057e5261e19d77cdc1df14f2128b836bd199db0750f3d456c",
+              "returned_tensor_sha256": "c3ad85b7fe4a53df1c8b9cda8086d185adb3a0558f478507861fa516b8110a99",
+              "scope": "finite represented arrays; not a root isolation or measurement uncertainty certificate"
+            }
+          },
+          "conversion_certificate": {
+            "method_id": "R8_FULL_MV_NULL_CONE_V1",
+            "root_method": "floating polynomial roots plus antipodal pairing",
+            "root_isolation": "NOT_CERTIFIED",
+            "multiple_root_policy": "refuse close repeated roots; original tensor retained",
+            "stf_input_tolerance_relative": 1e-10,
+            "root_pair_tolerance": 1e-06,
+            "root_separation_floor": 0.0001,
+            "minimum_root_chord_separation": 0.9754362726065605,
+            "maximum_pair_error": 4.783309287441108e-16,
+            "reconstruction_relative_error_upper": 2.145495688409081e-15
+          }
+        }
+      ],
+      "summaries": {
+        "power_Q_frobenius_K2": 8.68519514264534e-10,
+        "power_O_frobenius_K2": 4.13027813362953e-09,
+        "f_B": 0.8831467621762505,
+        "ordinary_power_bispectrum": [
+          8.68519514264534e-10,
+          4.1302781336295305e-09,
+          -2.126303011254728e-15,
+          -2.6635830840512315e-15
+        ],
+        "packet": {
+          "status": "AVAILABLE",
+          "value": {
+            "schema": "MES_SCALED_KRYLOV16_V1",
+            "action_group": "SO3",
+            "q_frobenius_amplitude": 2.9470655138027284e-05,
+            "o_frobenius_amplitude": 6.426723997208478e-05,
+            "normalization": "CONTRACTIONS_OF_UNIT_FROBENIUS_Q_AND_O",
+            "values": [
+              1.0,
+              -0.08307221357928424,
+              0.4703664588407498,
+              -0.022978640784608664,
+              0.23491967503704153,
+              -0.0021203017092901923,
+              -0.0025218887256305295,
+              0.11071868379146949,
+              -0.0072444064942936105,
+              -0.008788167939319382,
+              0.05548801307946411,
+              -0.006602316750536533,
+              -0.0577542578663509,
+              -0.0011010158036742382,
+              0.027622426068577795,
+              -0.0047750260741468405
+            ],
+            "triple_order": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                2
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                0,
+                2,
+                2
+              ],
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                2
+              ],
+              [
+                1,
+                2,
+                2
+              ],
+              [
+                2,
+                2,
+                2
+              ]
+            ],
+            "condition_limit": 1000000.0,
+            "measured_k_condition": 134.37913818343992,
+            "claim": "GENERIC_OBSERVABLE_ORBIT_REPRESENTATION_NOT_PHYSICAL_SOURCE_IDENTIFICATION"
+          }
+        },
+        "normalized_mv_cross_alignment": [
+          0.033259613270835896,
+          0.48873127213907247,
+          0.5862105033014373,
+          0.7969135813374671,
+          0.8645877681780818,
+          0.9792774713870267
+        ],
+        "signed_chi": -368.7273507204387,
+        "method_ids": {
+          "full_mv": "R8_FULL_MV_NULL_CONE_V1",
+          "alignment": "R8_LOSSY_ABSOLUTE_CROSS_DOTS_V1",
+          "power": "R8_LOSSY_FROBENIUS_POWERS_V1",
+          "f_B": "R8_BOOST_IMAGE_FRACTION_DIAGNOSTIC_V1"
+        }
+      }
+    },
+    {
+      "sample_id": "PR3_SEVEM",
+      "conversion_seconds": 0.0025620569940656424,
+      "full_mv_available": true,
+      "metric_input_status": "FULL_MV_RECONSTRUCTION",
+      "conversion": [
+        {
+          "l": 2,
+          "amplitude_K": 4.028482512530632e-05,
+          "vectors": [
+            [
+              -0.4169486938238314,
+              0.86408915217038,
+              0.281964047034502
+            ],
+            [
+              0.9319745923063861,
+              0.18602016612455052,
+              0.31115889363850774
+            ]
+          ],
+          "status": "RECONSTRUCTED_WITH_ERROR_BOUND",
+          "reconstruction_norm_K": {
+            "lo": {
+              "numerator": 1340323088197775806464332629745111440347337854101152820109,
+              "denominator": 57896044618658097711785492504343953926634992332820282019728792003956564819968
+            },
+            "hi": {
+              "numerator": 2680646176395551612928665259490222880694675708202305640219,
+              "denominator": 115792089237316195423570985008687907853269984665640564039457584007913129639936
+            },
+            "certificate": {
+              "kind": "EXACT_DYADIC_RECONSTRUCTION_FROBENIUS",
+              "squared": "747/1393796574908163946345982392040522594123776",
+              "input_sha256": "f697403e8154597f33e57dc723d0e03305922b9f44d250e8ffb413f7178bb0ea",
+              "returned_tensor_sha256": "6a39f2ba09bff8d0a7983bcbfc1dea8227994cf4c60a4f79e8fe530243440dfd",
+              "scope": "finite represented arrays; not a root isolation or measurement uncertainty certificate"
+            }
+          },
+          "conversion_certificate": {
+            "method_id": "R8_FULL_MV_NULL_CONE_V1",
+            "root_method": "floating polynomial roots plus antipodal pairing",
+            "root_isolation": "NOT_CERTIFIED",
+            "multiple_root_policy": "refuse close repeated roots; original tensor retained",
+            "stf_input_tolerance_relative": 1e-10,
+            "root_pair_tolerance": 1e-06,
+            "root_separation_floor": 0.0001,
+            "minimum_root_chord_separation": 1.3114023330885929,
+            "maximum_pair_error": 1.0388893785358512e-15,
+            "reconstruction_relative_error_upper": 1.5793120013857713e-15
+          }
+        },
+        {
+          "l": 3,
+          "amplitude_K": 0.00013107186819947238,
+          "vectors": [
+            [
+              0.14379421284280167,
+              0.7837343274384846,
+              0.6042215887797004
+            ],
+            [
+              0.774664442499301,
+              -0.6320811680961899,
+              0.01919370900590878
+            ],
+            [
+              0.905355603264148,
+              0.38099624257898607,
+              0.18754491403102672
+            ]
+          ],
+          "status": "RECONSTRUCTED_WITH_ERROR_BOUND",
+          "reconstruction_norm_K": {
+            "lo": {
+              "numerator": 972491290316967543279900376788668301450117508277784417587,
+              "denominator": 14474011154664524427946373126085988481658748083205070504932198000989141204992
+            },
+            "hi": {
+              "numerator": 7779930322535740346239203014309346411600940066222275340697,
+              "denominator": 115792089237316195423570985008687907853269984665640564039457584007913129639936
+            },
+            "certificate": {
+              "kind": "EXACT_DYADIC_RECONSTRUCTION_FROBENIUS",
+              "squared": "100673/22300745198530623141535718272648361505980416",
+              "input_sha256": "9493d6c994ac9a4bd1223225ab9e174174de64df7a4025c0a72803e6bcc0e75c",
+              "returned_tensor_sha256": "dce83286bfbf96b9877e488b06b6e0600923cb5e68a9e0e606c161193484914e",
+              "scope": "finite represented arrays; not a root isolation or measurement uncertainty certificate"
+            }
+          },
+          "conversion_certificate": {
+            "method_id": "R8_FULL_MV_NULL_CONE_V1",
+            "root_method": "floating polynomial roots plus antipodal pairing",
+            "root_isolation": "NOT_CERTIFIED",
+            "multiple_root_policy": "refuse close repeated roots; original tensor retained",
+            "stf_input_tolerance_relative": 1e-10,
+            "root_pair_tolerance": 1e-06,
+            "root_separation_floor": 0.0001,
+            "minimum_root_chord_separation": 0.9569708290519637,
+            "maximum_pair_error": 1.594436429147036e-15,
+            "reconstruction_relative_error_upper": 2.879947932211566e-15
+          }
+        }
+      ],
+      "summaries": {
+        "power_Q_frobenius_K2": 8.167434162396523e-10,
+        "power_O_frobenius_K2": 4.083813447338486e-09,
+        "f_B": 0.8678995053967767,
+        "ordinary_power_bispectrum": [
+          8.167434162396523e-10,
+          4.083813447338486e-09,
+          -2.285026923525274e-15,
+          -2.4301330986595527e-15
+        ],
+        "packet": {
+          "status": "AVAILABLE",
+          "value": {
+            "schema": "MES_SCALED_KRYLOV16_V1",
+            "action_group": "SO3",
+            "q_frobenius_amplitude": 2.8578723138720738e-05,
+            "o_frobenius_amplitude": 6.390472163571707e-05,
+            "normalization": "CONTRACTIONS_OF_UNIT_FROBENIUS_Q_AND_O",
+            "values": [
+              1.0000000000000002,
+              -0.09789552912100694,
+              0.46307137784888786,
+              -0.06839384238724946,
+              0.23309200163750882,
+              -0.00685718953627045,
+              -0.020360721613395753,
+              0.10776219304369558,
+              -0.01660700643903266,
+              -0.019680607905073526,
+              0.05445241948433146,
+              -0.01151839460229011,
+              -0.05205967787672351,
+              -0.0060862393751979936,
+              0.027255173512222234,
+              -0.007351493332574962
+            ],
+            "triple_order": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                2
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                0,
+                2,
+                2
+              ],
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                2
+              ],
+              [
+                1,
+                2,
+                2
+              ],
+              [
+                2,
+                2,
+                2
+              ]
+            ],
+            "condition_limit": 1000000.0,
+            "measured_k_condition": 40.541775770017246,
+            "claim": "GENERIC_OBSERVABLE_ORBIT_REPRESENTATION_NOT_PHYSICAL_SOURCE_IDENTIFICATION"
+          }
+        },
+        "normalized_mv_cross_alignment": [
+          0.004608806964029129,
+          0.46781186375500056,
+          0.6103600273381848,
+          0.787630285776852,
+          0.8637578722260415,
+          0.9729976715392025
+        ],
+        "signed_chi": -974.9939548693699,
+        "method_ids": {
+          "full_mv": "R8_FULL_MV_NULL_CONE_V1",
+          "alignment": "R8_LOSSY_ABSOLUTE_CROSS_DOTS_V1",
+          "power": "R8_LOSSY_FROBENIUS_POWERS_V1",
+          "f_B": "R8_BOOST_IMAGE_FRACTION_DIAGNOSTIC_V1"
+        }
+      }
+    }
+  ],
+  "scores": [
+    {
+      "sample_id": "PR3_SMICA",
+      "tensor_score": [
+        0.1505339047221777,
+        0.30282046521870737
+      ],
+      "mv_error_expanded_score": [
+        0.15053390472216804,
+        0.30282046521872136
+      ],
+      "ablation_complete": true
+    },
+    {
+      "sample_id": "PR3_COMMANDER",
+      "tensor_score": [
+        0.23773015303809647,
+        0.3835373391062858
+      ],
+      "mv_error_expanded_score": [
+        0.23773015303807998,
+        0.3835373391063065
+      ],
+      "ablation_complete": true
+    },
+    {
+      "sample_id": "PR3_NILC",
+      "tensor_score": [
+        0.12111838826827127,
+        0.2956260826063456
+      ],
+      "mv_error_expanded_score": [
+        0.12111838826826228,
+        0.2956260826063574
+      ],
+      "ablation_complete": true
+    },
+    {
+      "sample_id": "PR3_SEVEM",
+      "tensor_score": [
+        0.1505339047221777,
+        0.31189510305232904
+      ],
+      "mv_error_expanded_score": [
+        0.15053390472216804,
+        0.3118951030523417
+      ],
+      "ablation_complete": true
+    }
+  ],
+  "M": 4,
+  "k": 2,
+  "q0_K": "1/100000",
+  "o0_K": "1/100000",
+  "pair_checks": 6,
+  "all_pair_and_score_enclosures_overlap": true,
+  "converted_rows": 4,
+  "incomplete_rows": 0,
+  "pool_ablation_status": "COMPLETE_NUMERICAL_RECONSTRUCTION",
+  "timing_seconds": {
+    "conversion": 0.014970357995480299,
+    "tensor_pool": 0.08151118201203644,
+    "reconstructed_pool": 0.0876217819750309
+  },
+  "error_transport": "Original dyadic tensors and returned reconstruction differ by certified Frobenius norm; triangle inequality expands each pair by the sum of weighted row errors.",
+  "computational_advantage": "NOT_ESTABLISHED; timings are one execution with spectral caching, not controlled benchmark",
+  "empirical_rank": "NOT_EXECUTED_PRODUCT_LAW_UNAVAILABLE",
+  "empirical_eligible": false,
+  "caveats": [
+    "MV roots are numerical proposals, not certified root isolation",
+    "near repeated-root refusal does not remove any original tensor",
+    "full-MV reconstructs the same complete tensor information; no information gain claimed",
+    "lossy powers/absolute cross-dot alignments/f_B use separate method IDs",
+    "enclosures concern a computed statistic, not sky uncertainty"
+  ],
+  "source_hashes": {
+    "htt/obsstat/r8_multipole_vectors.py": "00bfd7c28527d25226b513372149bf81deb3779d4eecf873dd1a61bfc1329003",
+    "scripts/observed_runs/run_r8_representation_controls.py": "c2bdf3f334854d75b2e877a33738f07086d0e8ca620873e6926175c8798cf055"
+  },
+  "input_npz_sha256": "196ea21a8bf8a7077560599117390d8e48e77ab2fc91194639fd5ca656e9ec7b"
+}

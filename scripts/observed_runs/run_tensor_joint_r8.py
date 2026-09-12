@@ -48,6 +48,14 @@ def _artifact_valid(result):
     return all(identity(e['path'])==e for e in result.get('artifacts',()))
 
 
+def capability_available(node, requirement):
+    cap=requirement['capability']
+    if cap not in node['capabilities']:return False
+    scope=requirement.get('scope')
+    if scope is None:return True
+    return any(scope in a.get('capability_scopes',{}).get(cap,()) for a in node['actions'])
+
+
 def execute_campaign(dag,run_dir,handlers,*,resume=False):
     run_dir=Path(run_dir);nodes={n['id']:n for n in dag['nodes']}
     if len(nodes)!=len(dag['nodes']):raise ValueError('duplicate node ID')
@@ -76,14 +84,15 @@ def execute_campaign(dag,run_dir,handlers,*,resume=False):
             previous=sorted(base.glob('attempt_*')) if base.exists() else []
             number=1+max((int(p.name.split('_')[1]) for p in previous),default=0)
             attempt=base/f'attempt_{number:04d}';attempt.mkdir(parents=True,exist_ok=False)
-            missing=[req for req in rule['requires'] if req['capability'] not in results[req['node']]['capabilities']]
+            missing=[req for req in rule['requires'] if not capability_available(results[req['node']],req)]
             start=time.monotonic()
             if handler is None:
                 data={'process_status':'BLOCKED_WITH_RECEIPT','scientific_outcome':'NOT_EVALUATED',
                       'reason':'NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT','capabilities':[]}
             elif missing:
                 data={'process_status':'BLOCKED_WITH_RECEIPT','scientific_outcome':'NOT_EVALUATED',
-                      'reason':'REQUIRED_CAPABILITY_UNAVAILABLE','missing':missing,'capabilities':[]}
+                      'reason':'REQUIRED_CAPABILITY_UNAVAILABLE','missing':missing,'capabilities':[],
+                      'dependency_outcomes':{req['node']:results[req['node']]['scientific_outcomes'] for req in missing}}
             else:
                 try:
                     data=handler.execute(attempt,predecessors)
@@ -106,9 +115,11 @@ def execute_campaign(dag,run_dir,handlers,*,resume=False):
         results[nid]={'actions':actions,'capabilities':sorted(set(c for a in actions for c in a['capabilities'])),
                       'process_status':'TERMINAL_ACTION_RECEIPTS','scientific_outcomes':sorted(set(a['scientific_outcome'] for a in actions))}
     summary={'nodes':results,'new_attempts':new_attempts,'node_count':len(nodes),
-             'full_plan_accepted':False,'acceptance_scope':'INITIAL_AC_INCREMENT; terminal receipt is not completed science',
+             'full_plan_accepted':False,'acceptance_scope':'R8_FULL_TERMINAL_EXECUTION; formal and empirical admission separately held',
              'unimplemented_actions':[f'{n}/{a["action"]}' for n,r in results.items() for a in r['actions']
                                       if a.get('reason')=='NOT_IMPLEMENTED_IN_INITIAL_AC_INCREMENT']}
+    summary['execution_complete']=not summary['unimplemented_actions']
+    summary['action_count']=sum(len(n['actions']) for n in results.values())
     write(run_dir/'summary.json',summary);return summary
 
 
@@ -129,33 +140,23 @@ def _read_owned_laws(attempt):
                 'original_data_source':identity(payload['source_path']),'raw_catalogue_coverage':'UNVERIFIED',
                 'stat_only_alternative':'NOT_MULTIPLIED','fiducial':payload['DV_over_rd_fid']}
     except Exception as exc:records['desi_compressed']={'outcome':'INPUT_UNAVAILABLE','reason':str(exc)}
-    # Product status is based on the selected existing release documentation.
-    # Quoted distance errors are not a law for conditioned velocity residuals.
-    checks={
-      'cf4_full':(DATA/'raw/cf4_full/ReadMe','Full covariance in source group order and a law for the conditioned sampling variable are not supplied; raw distance errors are not substituted.'),
-      'jwst_anchors':(DATA/'raw/jwst_anchors/jwst_anchors_manifest.json','Quoted per-method errors do not supply shared host/calibration covariance; earlier independent-error fit remains a scenario.'),
-      'union3':(DATA/'rrss_observational_inputs/union3_release-main/mu_mat_union3_cosmo=2_mu.fits','A matrix alone does not bind row/redshift/compression and the selected likelihood.'),
-      'desi_raw':(DATA/'raw/desi_dr1_mocks/observed/v1.5/BGS_BRIGHT-21.5_NGC_clustering.dat.fits','P sample magnitude cuts and matched random normalization are not bound; PR151 numerical outputs excluded.')}
-    for name,(path,reason) in checks.items():
-        # Read only bounded named text metadata; FITS payload decode belongs to
-        # the existing product-specific intake adapter, not a fabricated law.
-        if path.is_file() and path.suffix in {'.json',''}:
-            with path.open('rb') as stream:header=stream.read(65536)
-            detail={'metadata_read_bytes':len(header),'header_sha256':hashlib.sha256(header).hexdigest()}
-        else:detail={}
-        records[name]={'outcome':'INPUT_UNAVAILABLE','law_status':'NO_ADMITTED_SELECTED_LAW',
-                       'reason':reason,'input':identity(path),**detail}
+    # Follow up the exact releases through their product-specific adapters.
+    # Union3's official README now resolves its matrix convention; its public
+    # compressed Gaussian scenario is not an exact candidate sampling law.
+    from scripts.observed_runs.r8_product_intake import inspect_products
+    for name, value in inspect_products(DATA).items():
+        records[name] = {**value, 'law_status':'NO_ADMITTED_EXACT_SELECTED_LAW'}
     return records,live
 
 
-def _compressed_confidence(live_law):
+def _compressed_confidence(live_law, alpha=F(1,20)):
     """Source-specific location inversion for the released scalar BAO producer."""
     from htt.infer.r8_partial_law import normal_critical_square,_sqrt_rational_bounds
     native=live_law.law;variance=F(float(native.covariance[0,0]));center=F(float(native.observed[0]))
-    radius=_sqrt_rational_bounds(variance*normal_critical_square(F(1,20))[1])[1]
+    radius=_sqrt_rational_bounds(variance*normal_critical_square(alpha)[1])[1]
     lo=max(F(0),center-radius);hi=center+radius
-    return {'conditional_CI95_outer_exact':[str(lo),str(hi)],
-        'conditional_CI95_display':[float(lo),float(hi)],'estimand':native.specification['mean_definition'],
+    return {'alpha':str(alpha),'conditional_CI_outer_exact':[str(lo),str(hi)],'conditional_CI95_outer_exact':[str(lo),str(hi)] if alpha==F(1,20) else None,
+        'conditional_CI_display':[float(lo),float(hi)],'conditional_CI95_display':[float(lo),float(hi)] if alpha==F(1,20) else None,'estimand':native.specification['mean_definition'],
         'domain':native.domain_id,'interpretation':'Conditional released Gaussian summary only; no isotropy/global-tilt/posterior claim.'}
 
 
@@ -259,7 +260,7 @@ def production_handlers(evidence_dir):
                 'capability_scopes':{'SIMULATOR_METHOD':passed},
                 'evidence':[path],'held_adapters':held,'results':data,
                 'reason':'Mixture adapter held. Supported method scope is restricted to the separately passed toy laws; no real product simulator admission.'}
-    return {'bind_sources':Handler(sources,(pins,*donors,*inventories)),
+    handlers = {'bind_sources':Handler(sources,(pins,*donors,*inventories)),
             'orbit_obligations':Handler(algebra,cas_dependencies),
             'rank_obligations':Handler(algebra,cas_dependencies),
             'gaussian_support':Handler(method_receipt,(evidence_dir/'validation.json',*kernels)),
@@ -272,6 +273,12 @@ def production_handlers(evidence_dir):
             'nonsingular_dispatch':Handler(dispatch,product_deps+donor_laws+kernels),
             'gaussian_observation':Handler(observed,product_deps+donor_laws+kernels),
             'toy_simulator_validation':Handler(toy,(evidence_dir/'mocks/mock5.json',))}
+    from scripts.observed_runs.r8_campaign_actions import remaining_handlers
+    handlers.update(remaining_handlers(sys.modules[__name__], evidence_dir))
+    # Resume binds generating code as well as cached data. A changed kernel
+    # invalidates a dependent receipt even if its output file was not touched.
+    shared = tuple(ROOT.glob('htt/obsstat/r8_*.py')) + tuple(ROOT.glob('htt/htt/htt/infer/r8_*.py')) + tuple(ROOT.glob('htt/src/common/r8_*.py')) + (ROOT/'htt/bass/transfer/r8_restricted_history.py', ROOT/'scripts/observed_runs/r8_product_intake.py')
+    return {name:Handler(h.execute, tuple(dict.fromkeys((*h.dependencies,*shared))), h.config_id) for name,h in handlers.items()}
 
 
 def main():

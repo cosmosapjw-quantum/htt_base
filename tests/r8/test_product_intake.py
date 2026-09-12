@@ -42,3 +42,33 @@ def test_common_mask_all_rows_and_bad_pixel(tmp_path):
     assert meta['valid_pixels']==len(d)-100
     assert np.allclose(records[1].retained,2*records[0].retained,atol=1e-17,rtol=0)
     with pytest.raises(ValueError):fit_common_temperature_records(products[:1]*2)
+
+
+# R8 full continuation: selected distance-product intake regressions.
+import numpy as np
+import pytest
+from scripts.observed_runs.r8_product_intake import decode_union3,profile_offset,inspect_products
+
+
+def test_union3_published_matrix_convention_and_offset():
+    m=np.zeros((4,4));m[0,1:]=[.1,.2,.3];m[1:,0]=[35,36,37];m[1:,1:]=np.diag([1.,2.,3.])
+    z,mu,p=decode_union3(m)
+    offset,chi=profile_offset(mu,[1,2,3],p)
+    assert offset==34 and chi==0
+    with pytest.raises(ValueError):decode_union3(m.T)
+    m[2,2]=-1
+    with pytest.raises(np.linalg.LinAlgError):decode_union3(m)
+
+
+def test_missing_product_does_not_suppress_siblings(tmp_path):
+    products=inspect_products(tmp_path)
+    assert set(products)=={'cf4_full','jwst_anchors','union3','desi_raw'}
+    assert all(v['outcome']=='INPUT_UNAVAILABLE' for v in products.values())
+
+
+def test_released_precision_antisymmetry_preserves_quadratic():
+    m=np.zeros((4,4));m[0,1:]=[.1,.2,.3];m[1:,0]=[35,36,37];m[1:,1:]=np.diag([1.,2.,3.])
+    m[1,2]+=4e-11
+    _,_,precision=decode_union3(m)
+    r=np.array([.7,-.2,.3])
+    assert r@precision@r==pytest.approx(r@m[1:,1:]@r,abs=1e-15)

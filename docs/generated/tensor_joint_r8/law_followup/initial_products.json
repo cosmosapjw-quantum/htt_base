@@ -1,0 +1,87 @@
+{
+  "owner": "HTT",
+  "scope": "RELEASE_INTAKE_AND_SCENARIO_ONLY",
+  "products": {
+    "cf4_full": {
+      "outcome": "DESCRIPTIVE_ONLY",
+      "rows": 38053,
+      "source": "J/ApJ/944/94",
+      "readme_sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+      "law_missing": [
+        "group-order full covariance",
+        "conditioned distance/velocity sampling and selection law"
+      ],
+      "declared_release_files": [
+        "ReadMe",
+        "table2.dat",
+        "table2.dat.gz",
+        "table3.dat",
+        "table3.dat.gz",
+        "table4.dat",
+        "table4.dat.gz"
+      ]
+    },
+    "jwst_anchors": {
+      "outcome": "DESCRIPTIVE_ONLY",
+      "datasets": [
+        {
+          "dataset": "cchp_trgb_jagb",
+          "host_count": 7,
+          "mean_difference_mag": -0.008142857142857451,
+          "rms_difference_mag": 0.04524378410345493,
+          "source_arxiv": "2408.06153",
+          "source_member_sha256": "sha256:680063a9d66429aca79faecb965e95a1df8943858d3b935ba757e51d020327c2"
+        },
+        {
+          "dataset": "shoes_jwst_hst",
+          "host_count": 13,
+          "mean_difference_mag": -0.03384615384615422,
+          "rms_difference_mag": 0.09790104894542963,
+          "source_arxiv": "2509.01667",
+          "source_member_sha256": "sha256:8effae414f274a706c5a8accf06d013d2bb1d090b37b95483297cf5d7ded5d90"
+        }
+      ],
+      "law_missing": [
+        "shared host/calibration covariance",
+        "validated marginal sampling law; quoted errors alone do not establish it"
+      ],
+      "geometry": "same-host shared distance cancels; method comparison is not a tilt measurement"
+    },
+    "union3": {
+      "outcome": "INPUT_UNAVAILABLE",
+      "reason": "ValueError: Union3 row/precision convention failed"
+    },
+    "desi_raw": {
+      "outcome": "RAW_CATALOGUE_CONTROL_ONLY",
+      "rows": 217614,
+      "columns": [
+        "TARGETID",
+        "Z",
+        "NTILE",
+        "RA",
+        "DEC",
+        "PHOTSYS",
+        "FRAC_TLOBS_TILES",
+        "WEIGHT_ZFAIL",
+        "WEIGHT_SYS",
+        "WEIGHT",
+        "WEIGHT_COMP",
+        "flux_g_dered",
+        "flux_r_dered",
+        "flux_z_dered",
+        "flux_w1_dered",
+        "flux_w2_dered",
+        "NX",
+        "WEIGHT_FKP"
+      ],
+      "law_missing": [
+        "bound apparent/absolute magnitude P-sample selection",
+        "matched random normalization and covariance"
+      ],
+      "PR151_numerical_reuse": false
+    }
+  },
+  "source_hashes": {
+    "scripts/observed_runs/r8_product_intake.py": "fadb886972e69199562525d011102f51c1c19190d0394181ed67231bd6698733"
+  }
+}

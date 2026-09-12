@@ -1,0 +1,939 @@
+{
+  "scientific_outcome": "DESCRIPTIVE_CONTROL",
+  "capabilities": [
+    "CONTROL_RESULTS"
+  ],
+  "capability_scopes": {
+    "CONTROL_RESULTS": [
+      "OWNED_FLOW_CONTROLS"
+    ]
+  },
+  "results": {
+    "owner": "obsstat",
+    "claim_tier": "C0",
+    "scope": "OWNED_FLOW_CONTROLS",
+    "transfer_source": "released reconstructions",
+    "source_catalogue": {
+      "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4_full/table4.dat",
+      "size_bytes": 6012374,
+      "mtime_ns": 1782373014459779991
+    },
+    "readme_sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+    "row_identity": "original table4 order, dominant-galaxy PGC group identity",
+    "rows": 38053,
+    "positive_redshift_rows": 38004,
+    "position_policy": "r_h=published CF4 V3k/100 Mpc/h and published Galactic angles; redshift-position proxy, not inferred true distance",
+    "law_status": "NONE; reconstructions can share galaxies, distances and calibration with CF4; no independent likelihood or spatial covariance",
+    "caveats": [
+      "distance/velocity conversion has no propagated uncertainty law",
+      "residual quantiles are descriptive, not confidence intervals",
+      "no observed curl or physical model identification",
+      "full CF4 row set retained, including unavailable predictions"
+    ],
+    "products": {
+      "carrick_2mpp": {
+        "outcome": "DESCRIPTIVE_CONTROL",
+        "empirical_eligible": false,
+        "metadata": {
+          "coordinate_frame": "GALACTIC_CARTESIAN",
+          "velocity_frame": "CMB",
+          "units": "km/s",
+          "release": "Carrick et al. 2015 v1.0",
+          "source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/carrick_2mpp/twompp_velocity.npy",
+          "axis_order": "components,X,Y,Z per released numpy cube indices; no transpose",
+          "smoothing_hmpc": 4.0,
+          "external_bulk": "already added by release; do not add again",
+          "uncertainty_law": null
+        },
+        "rows": 38053,
+        "available_rows": 23634,
+        "status_counts": {
+          "AVAILABLE_CONTROL": 23634,
+          "INTERPOLATION_CORNERS_OUTSIDE_SUPPORT": 148,
+          "INVALID_QUERY": 49,
+          "OUTSIDE_GRID": 7807,
+          "OUTSIDE_RELEASED_SPHERE": 6415
+        },
+        "residual_definition": "released field outward velocity minus published CF4 Vpec at fixed redshift-position proxy",
+        "residual_quantiles_km_s": [
+          -1308.8986346380912,
+          -64.66817498063259,
+          1068.2178594328816
+        ],
+        "pins": {},
+        "elapsed_seconds": 0.4379897138569504
+      },
+      "coras_zCMB": {
+        "outcome": "DESCRIPTIVE_CONTROL",
+        "empirical_eligible": false,
+        "metadata": {
+          "coordinate_frame": "GALACTIC_CARTESIAN",
+          "velocity_frame": "CMB",
+          "units": "km/s",
+          "release": "CORAS public reconstructed zCMB grid",
+          "source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/coras_2mrs/cartesian_grid_velocity_zCMB.dat",
+          "axis_order": "row=(i*201+j)*201+k; i=X,j=Y,k=Z",
+          "source_documentation": "https://github.com/rlilow/CORAS#reconstructed-fields-on-a-grid",
+          "smoothing_hmpc": 5.0,
+          "uncertainty_law": null,
+          "support": "r>200 Mpc/h zero-padded source excluded, including interpolation corners"
+        },
+        "rows": 38053,
+        "available_rows": 23601,
+        "status_counts": {
+          "AVAILABLE_CONTROL": 23601,
+          "INTERPOLATION_CORNERS_OUTSIDE_SUPPORT": 181,
+          "INVALID_QUERY": 49,
+          "OUTSIDE_GRID": 7807,
+          "OUTSIDE_RELEASED_SPHERE": 6415
+        },
+        "residual_definition": "released field outward velocity minus published CF4 Vpec at fixed redshift-position proxy",
+        "residual_quantiles_km_s": [
+          -1258.9304905160657,
+          -35.044162124466936,
+          1113.1989348892741
+        ],
+        "pins": {},
+        "elapsed_seconds": 3.399201706983149
+      },
+      "lilow_2mrs": {
+        "outcome": "DESCRIPTIVE_CONTROL",
+        "empirical_eligible": false,
+        "metadata": {
+          "model_identity": "LILOW_GANESHAIAH_VEENA_NUSSER_2024_2MRS_NEURAL_VELOCITY_FIELD",
+          "source_release": "PUBLIC_2MRS_NEURALNET_ARRAYS_ACCESSED_2026_08_25",
+          "paper_identity": "arXiv:2404.02278v2",
+          "publisher_doi": "10.1051/0004-6361/202450219",
+          "repository_url": "https://github.com/rlilow/2MRS-NeuralNet",
+          "repository_commit": "c4c141357f6c99d0d0f30784a1116afa204d91f6",
+          "coordinate_frame": "GALACTIC_CARTESIAN",
+          "velocity_frame": "CMB",
+          "grid_shape": [
+            128,
+            128,
+            128
+          ],
+          "box_side_hmpc": 400.0,
+          "cell_size_hmpc": 3.125,
+          "grid_center_convention": "CELL_CENTER_Q_N_EQUALS_N_MINUS_63_5_TIMES_3_125_HMPC",
+          "gaussian_smoothing_width_hmpc": 3.0,
+          "valid_radius_hmpc": 200.0,
+          "hubble_h": 0.6711,
+          "row_evaluation_rule": "TRILINEAR_THEN_OUTWARD_GALACTIC_RADIAL_PROJECTION",
+          "radial_sign_convention": "POSITIVE_AWAY_FROM_OBSERVER",
+          "uncertainty_role": "POINTWISE_VALIDATION_RMSE_NOT_COVARIANCE",
+          "field_byte_license_status": "UNRESOLVED_NO_REDISTRIBUTION",
+          "units": "km/s",
+          "source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/lilow_nn_2mrs",
+          "uncertainty_law": null,
+          "source_byte_binding": "caller binds PR319 selected members"
+        },
+        "rows": 38053,
+        "available_rows": 23510,
+        "status_counts": {
+          "AVAILABLE_CONTROL": 23510,
+          "INTERPOLATION_CORNERS_OUTSIDE_SUPPORT": 270,
+          "INVALID_QUERY": 49,
+          "OUTSIDE_GRID": 8063,
+          "OUTSIDE_RELEASED_SPHERE": 6161
+        },
+        "residual_definition": "released field outward velocity minus published CF4 Vpec at fixed redshift-position proxy",
+        "residual_quantiles_km_s": [
+          -1300.3645448774641,
+          -42.9250557964483,
+          1066.8964218517626
+        ],
+        "pins": {
+          "xVelocity.npy": "sha256:50edf12e9dd8a79959071eda57ccd197f2cfba2bae5233210ab6243541aa4643",
+          "yVelocity.npy": "sha256:c125f3d97aa8f9ed34110285e018df0849d955b62f0a472cebb34d196e2cb447",
+          "zVelocity.npy": "sha256:ae1e0dfadf48c27afcf7f30c53c2e978f7edeab3506c9e446ed7f73770b207d6"
+        },
+        "elapsed_seconds": 0.08957056305371225,
+        "donor_parity": {
+          "rows": [
+            "CF4-GROUP-12",
+            "CF4-GROUP-14",
+            "CF4-GROUP-16",
+            "CF4-GROUP-35",
+            "CF4-GROUP-55",
+            "CF4-GROUP-63",
+            "CF4-GROUP-68",
+            "CF4-GROUP-70",
+            "CF4-GROUP-75",
+            "CF4-GROUP-76",
+            "CF4-GROUP-80",
+            "CF4-GROUP-92",
+            "CF4-GROUP-94",
+            "CF4-GROUP-96",
+            "CF4-GROUP-102",
+            "CF4-GROUP-109",
+            "CF4-GROUP-115",
+            "CF4-GROUP-120",
+            "CF4-GROUP-123",
+            "CF4-GROUP-124",
+            "CF4-GROUP-128",
+            "CF4-GROUP-145",
+            "CF4-GROUP-146",
+            "CF4-GROUP-155",
+            "CF4-GROUP-164",
+            "CF4-GROUP-168",
+            "CF4-GROUP-171",
+            "CF4-GROUP-176",
+            "CF4-GROUP-179",
+            "CF4-GROUP-186",
+            "CF4-GROUP-205",
+            "CF4-GROUP-211",
+            "CF4-GROUP-212",
+            "CF4-GROUP-218",
+            "CF4-GROUP-222",
+            "CF4-GROUP-247",
+            "CF4-GROUP-250",
+            "CF4-GROUP-257",
+            "CF4-GROUP-259",
+            "CF4-GROUP-262",
+            "CF4-GROUP-279",
+            "CF4-GROUP-280",
+            "CF4-GROUP-282",
+            "CF4-GROUP-292",
+            "CF4-GROUP-293",
+            "CF4-GROUP-296",
+            "CF4-GROUP-298",
+            "CF4-GROUP-301",
+            "CF4-GROUP-305",
+            "CF4-GROUP-309",
+            "CF4-GROUP-312",
+            "CF4-GROUP-322",
+            "CF4-GROUP-329",
+            "CF4-GROUP-337",
+            "CF4-GROUP-345",
+            "CF4-GROUP-354",
+            "CF4-GROUP-367",
+            "CF4-GROUP-378",
+            "CF4-GROUP-382",
+            "CF4-GROUP-388",
+            "CF4-GROUP-393",
+            "CF4-GROUP-415",
+            "CF4-GROUP-424",
+            "CF4-GROUP-426",
+            "CF4-GROUP-448",
+            "CF4-GROUP-449",
+            "CF4-GROUP-451",
+            "CF4-GROUP-461",
+            "CF4-GROUP-462",
+            "CF4-GROUP-485",
+            "CF4-GROUP-507",
+            "CF4-GROUP-515",
+            "CF4-GROUP-517",
+            "CF4-GROUP-527",
+            "CF4-GROUP-548",
+            "CF4-GROUP-558",
+            "CF4-GROUP-559",
+            "CF4-GROUP-564",
+            "CF4-GROUP-574",
+            "CF4-GROUP-584",
+            "CF4-GROUP-591",
+            "CF4-GROUP-613",
+            "CF4-GROUP-616",
+            "CF4-GROUP-617",
+            "CF4-GROUP-627",
+            "CF4-GROUP-634",
+            "CF4-GROUP-635",
+            "CF4-GROUP-637",
+            "CF4-GROUP-638",
+            "CF4-GROUP-642",
+            "CF4-GROUP-644",
+            "CF4-GROUP-657",
+            "CF4-GROUP-658",
+            "CF4-GROUP-659",
+            "CF4-GROUP-679",
+            "CF4-GROUP-690",
+            "CF4-GROUP-692",
+            "CF4-GROUP-693",
+            "CF4-GROUP-695",
+            "CF4-GROUP-698"
+          ],
+          "max_abs_km_s": 2.9700686354772188e-12,
+          "tolerance_km_s": 1e-08,
+          "coordinate_conversion": "depth_mpc=(V3k/100)/registered_h; h is not fitted or transferred to other source laws"
+        }
+      },
+      "cf4pp": {
+        "outcome": "REFUSED_SOURCE_AXIS_AMBIGUITY",
+        "empirical_eligible": false,
+        "reason": "Released radial grid and Cartesian projection disagree under published lookup axes; no unprovided permutation repair.",
+        "source_documentation": "https://projets.ip2i.in2p3.fr/cosmicflows/retrieve_CF4pp_grid_values.py",
+        "diagnostic": {
+          "indices": [
+            [
+              12,
+              12,
+              12
+            ],
+            [
+              12,
+              12,
+              35
+            ],
+            [
+              12,
+              12,
+              62
+            ],
+            [
+              12,
+              12,
+              87
+            ],
+            [
+              12,
+              12,
+              113
+            ],
+            [
+              12,
+              35,
+              12
+            ],
+            [
+              12,
+              35,
+              35
+            ],
+            [
+              12,
+              35,
+              62
+            ],
+            [
+              12,
+              35,
+              87
+            ],
+            [
+              12,
+              35,
+              113
+            ],
+            [
+              12,
+              62,
+              12
+            ],
+            [
+              12,
+              62,
+              35
+            ],
+            [
+              12,
+              62,
+              62
+            ],
+            [
+              12,
+              62,
+              87
+            ],
+            [
+              12,
+              62,
+              113
+            ],
+            [
+              12,
+              87,
+              12
+            ],
+            [
+              12,
+              87,
+              35
+            ],
+            [
+              12,
+              87,
+              62
+            ],
+            [
+              12,
+              87,
+              87
+            ],
+            [
+              12,
+              87,
+              113
+            ],
+            [
+              12,
+              113,
+              12
+            ],
+            [
+              12,
+              113,
+              35
+            ],
+            [
+              12,
+              113,
+              62
+            ],
+            [
+              12,
+              113,
+              87
+            ],
+            [
+              12,
+              113,
+              113
+            ],
+            [
+              35,
+              12,
+              12
+            ],
+            [
+              35,
+              12,
+              35
+            ],
+            [
+              35,
+              12,
+              62
+            ],
+            [
+              35,
+              12,
+              87
+            ],
+            [
+              35,
+              12,
+              113
+            ],
+            [
+              35,
+              35,
+              12
+            ],
+            [
+              35,
+              35,
+              35
+            ],
+            [
+              35,
+              35,
+              62
+            ],
+            [
+              35,
+              35,
+              87
+            ],
+            [
+              35,
+              35,
+              113
+            ],
+            [
+              35,
+              62,
+              12
+            ],
+            [
+              35,
+              62,
+              35
+            ],
+            [
+              35,
+              62,
+              62
+            ],
+            [
+              35,
+              62,
+              87
+            ],
+            [
+              35,
+              62,
+              113
+            ],
+            [
+              35,
+              87,
+              12
+            ],
+            [
+              35,
+              87,
+              35
+            ],
+            [
+              35,
+              87,
+              62
+            ],
+            [
+              35,
+              87,
+              87
+            ],
+            [
+              35,
+              87,
+              113
+            ],
+            [
+              35,
+              113,
+              12
+            ],
+            [
+              35,
+              113,
+              35
+            ],
+            [
+              35,
+              113,
+              62
+            ],
+            [
+              35,
+              113,
+              87
+            ],
+            [
+              35,
+              113,
+              113
+            ],
+            [
+              62,
+              12,
+              12
+            ],
+            [
+              62,
+              12,
+              35
+            ],
+            [
+              62,
+              12,
+              62
+            ],
+            [
+              62,
+              12,
+              87
+            ],
+            [
+              62,
+              12,
+              113
+            ],
+            [
+              62,
+              35,
+              12
+            ],
+            [
+              62,
+              35,
+              35
+            ],
+            [
+              62,
+              35,
+              62
+            ],
+            [
+              62,
+              35,
+              87
+            ],
+            [
+              62,
+              35,
+              113
+            ],
+            [
+              62,
+              62,
+              12
+            ],
+            [
+              62,
+              62,
+              35
+            ],
+            [
+              62,
+              62,
+              62
+            ],
+            [
+              62,
+              62,
+              87
+            ],
+            [
+              62,
+              62,
+              113
+            ],
+            [
+              62,
+              87,
+              12
+            ],
+            [
+              62,
+              87,
+              35
+            ],
+            [
+              62,
+              87,
+              62
+            ],
+            [
+              62,
+              87,
+              87
+            ],
+            [
+              62,
+              87,
+              113
+            ],
+            [
+              62,
+              113,
+              12
+            ],
+            [
+              62,
+              113,
+              35
+            ],
+            [
+              62,
+              113,
+              62
+            ],
+            [
+              62,
+              113,
+              87
+            ],
+            [
+              62,
+              113,
+              113
+            ],
+            [
+              87,
+              12,
+              12
+            ],
+            [
+              87,
+              12,
+              35
+            ],
+            [
+              87,
+              12,
+              62
+            ],
+            [
+              87,
+              12,
+              87
+            ],
+            [
+              87,
+              12,
+              113
+            ],
+            [
+              87,
+              35,
+              12
+            ],
+            [
+              87,
+              35,
+              35
+            ],
+            [
+              87,
+              35,
+              62
+            ],
+            [
+              87,
+              35,
+              87
+            ],
+            [
+              87,
+              35,
+              113
+            ],
+            [
+              87,
+              62,
+              12
+            ],
+            [
+              87,
+              62,
+              35
+            ],
+            [
+              87,
+              62,
+              62
+            ],
+            [
+              87,
+              62,
+              87
+            ],
+            [
+              87,
+              62,
+              113
+            ],
+            [
+              87,
+              87,
+              12
+            ],
+            [
+              87,
+              87,
+              35
+            ],
+            [
+              87,
+              87,
+              62
+            ],
+            [
+              87,
+              87,
+              87
+            ],
+            [
+              87,
+              87,
+              113
+            ],
+            [
+              87,
+              113,
+              12
+            ],
+            [
+              87,
+              113,
+              35
+            ],
+            [
+              87,
+              113,
+              62
+            ],
+            [
+              87,
+              113,
+              87
+            ],
+            [
+              87,
+              113,
+              113
+            ],
+            [
+              113,
+              12,
+              12
+            ],
+            [
+              113,
+              12,
+              35
+            ],
+            [
+              113,
+              12,
+              62
+            ],
+            [
+              113,
+              12,
+              87
+            ],
+            [
+              113,
+              12,
+              113
+            ],
+            [
+              113,
+              35,
+              12
+            ],
+            [
+              113,
+              35,
+              35
+            ],
+            [
+              113,
+              35,
+              62
+            ],
+            [
+              113,
+              35,
+              87
+            ],
+            [
+              113,
+              35,
+              113
+            ],
+            [
+              113,
+              62,
+              12
+            ],
+            [
+              113,
+              62,
+              35
+            ],
+            [
+              113,
+              62,
+              62
+            ],
+            [
+              113,
+              62,
+              87
+            ],
+            [
+              113,
+              62,
+              113
+            ],
+            [
+              113,
+              87,
+              12
+            ],
+            [
+              113,
+              87,
+              35
+            ],
+            [
+              113,
+              87,
+              62
+            ],
+            [
+              113,
+              87,
+              87
+            ],
+            [
+              113,
+              87,
+              113
+            ],
+            [
+              113,
+              113,
+              12
+            ],
+            [
+              113,
+              113,
+              35
+            ],
+            [
+              113,
+              113,
+              62
+            ],
+            [
+              113,
+              113,
+              87
+            ],
+            [
+              113,
+              113,
+              113
+            ]
+          ],
+          "declared_xyz_rmse_km_s": 343.7592913249014,
+          "xy_swapped_diagnostic_rmse_km_s": 1.297282233072831e-13,
+          "source": {
+            "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/cf4/CF4pp_mean_std_grids.npz",
+            "size_bytes": 167773716,
+            "mtime_ns": 1776644891401405192
+          },
+          "array_shapes": {
+            "v_mean": [
+              3,
+              128,
+              128,
+              128
+            ],
+            "vr_mean": [
+              128,
+              128,
+              128
+            ]
+          }
+        },
+        "rows": 38053,
+        "available_rows": 0,
+        "uncertainty": "released pointwise HMC scatter is not a full covariance"
+      }
+    },
+    "rows_artifact": "field_rows.npz"
+  },
+  "process_status": "COMPLETED_SUCCESS",
+  "node_id": "R8-17",
+  "action": "field_and_map_controls",
+  "fingerprint": "a045b40ae9e61fbef97528f770d3cae5a9a5935a9024ba42f7dc2ef10ba75b24",
+  "attempt": 1,
+  "artifacts": [
+    {
+      "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/final/campaign/R8-17/field_and_map_controls/attempt_0001/field_and_map_controls.json",
+      "state": "PRESENT",
+      "sha256": "d86f259ed214b85bb72d334d4345a5d24d17e6c3404985d6bef76720bd99c652"
+    },
+    {
+      "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/owned_controls/execution/fields.json",
+      "state": "PRESENT",
+      "sha256": "d86f259ed214b85bb72d334d4345a5d24d17e6c3404985d6bef76720bd99c652"
+    }
+  ],
+  "elapsed_seconds": 0.0007554050025646575
+}

@@ -9831,17 +9831,18 @@ prs:
   solver_gate_required: true
 
 - id: PR-247
-  title: 'R8 A/C: full tensor distance enclosures and live conditional-law execution'
+  title: 'R8 full execution: orbit continuation, restricted optics and scoped synthesis'
   wave: 20
   deps: []
   targets:
-  - R8-00..03, R8-05, R8-08..12 initial A/C increment under PR467 c5b991e6
+  - R8-00..23 full terminal execution under PR467 c5b991e6; scientific acceptance remains blocked
   files:
   - htt/obsstat/r8_orbit_bounds.py
   - htt/htt/htt/infer/r8_*.py
   - tests/r8
   - scripts/observed_runs/run_tensor_joint_r8.py
-  - docs/generated/tensor_joint_r8/ac
+  - docs/generated/tensor_joint_r8
+  - htt/bass/transfer/r8_restricted_history.py
   tests:
   - python -B -m pytest -o addopts='' --import-mode=importlib tests/r8 -q
   dod:

@@ -1,0 +1,113 @@
+{
+  "scientific_outcome": "SCENARIO_ONLY",
+  "capabilities": [
+    "R3_SKY_CHANNEL"
+  ],
+  "capability_scopes": {
+    "R3_SKY_CHANNEL": [
+      "FIXED_R3_BENCHMARK"
+    ]
+  },
+  "results": {
+    "scope": "RESTRICTED_R3_NUMERICAL_BENCHMARK",
+    "channel": "sky",
+    "event": "observer a=2, positive-stream source a=1",
+    "frame": "normal LRS triad plus declared independent observer boost",
+    "units": "c=H_i=1; 8piG/(3c^2)=1",
+    "supported_settings": [
+      {
+        "kappa": 0.0,
+        "zeta": 0.0,
+        "a": 2.0,
+        "b": 4.515018498035074e-17,
+        "monopole": 0.5,
+        "quadrupole_legendre": 1.589724987934027e-14,
+        "octupole_legendre": 4.933119884809045e-18,
+        "parity_error": 0.0,
+        "scope": "THERMAL_SKY_WITHOUT_PRODUCT_BANDPASS_LAW"
+      },
+      {
+        "kappa": 0.0,
+        "zeta": 0.01,
+        "a": 2.0000000000000004,
+        "b": 0.0032308981314116995,
+        "monopole": 0.49999582326523995,
+        "quadrupole_legendre": -0.0032323411639964845,
+        "octupole_legendre": -1.4230153513872246e-18,
+        "parity_error": 0.0,
+        "scope": "THERMAL_SKY_WITHOUT_PRODUCT_BANDPASS_LAW"
+      },
+      {
+        "kappa": 0.01,
+        "zeta": 0.0,
+        "a": 2.0,
+        "b": 1.8322245123011623e-06,
+        "monopole": 0.4999999999986572,
+        "quadrupole_legendre": -1.8322249758781289e-06,
+        "octupole_legendre": 6.640738306473715e-18,
+        "parity_error": 0.0,
+        "scope": "THERMAL_SKY_WITHOUT_PRODUCT_BANDPASS_LAW"
+      },
+      {
+        "kappa": 0.01,
+        "zeta": 0.01,
+        "a": 1.9999999999999996,
+        "b": 0.003232725908690945,
+        "monopole": 0.4999958185375028,
+        "quadrupole_legendre": -0.0032341705471154213,
+        "octupole_legendre": -5.692061405548898e-19,
+        "parity_error": 0.0,
+        "scope": "THERMAL_SKY_WITHOUT_PRODUCT_BANDPASS_LAW"
+      },
+      {
+        "kappa": 0.1,
+        "zeta": 0.0,
+        "a": 2.0,
+        "b": 0.00018167274222552555,
+        "monopole": 0.4999999867977778,
+        "quadrupole_legendre": -0.00018167744864125922,
+        "octupole_legendre": -9.486769009248164e-20,
+        "parity_error": 0.0,
+        "scope": "THERMAL_SKY_WITHOUT_PRODUCT_BANDPASS_LAW"
+      },
+      {
+        "kappa": 0.1,
+        "zeta": 0.01,
+        "a": 1.9999999999999996,
+        "b": 0.003412132126374524,
+        "monopole": 0.4999953414671096,
+        "quadrupole_legendre": -0.003413738572271858,
+        "octupole_legendre": 1.2332799712022613e-18,
+        "parity_error": 0.0,
+        "scope": "THERMAL_SKY_WITHOUT_PRODUCT_BANDPASS_LAW"
+      }
+    ],
+    "failed_history_settings": 18,
+    "scientific_admission": "NOT_ADMITTED",
+    "jet_status": "INPUT_UNAVAILABLE",
+    "assumptions": [
+      "Restricted LRS benchmark; no general native solver",
+      "Correlated host numerical verification; independent four-axis CAS not completed",
+      "Photon radial Planck integral normalized to initial energy; no detector bandpass or observed covariance law",
+      "Finite fixed grid and preconjugate endpoints only; no universal error certification"
+    ]
+  },
+  "process_status": "COMPLETED_SUCCESS",
+  "node_id": "R8-19",
+  "action": "photon_channel",
+  "fingerprint": "5828f54637dd0c5f949a6da19fc62e1c0bd78484892b100c5a7c497a64ff1a75",
+  "attempt": 1,
+  "artifacts": [
+    {
+      "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/final/campaign/R8-19/photon_channel/attempt_0001/sky.json",
+      "state": "PRESENT",
+      "sha256": "e6ba88cfd7096058db54256953993c6253500951f0953f70aaecbe42acc83351"
+    },
+    {
+      "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/restricted_history/results.json",
+      "state": "PRESENT",
+      "sha256": "12db1113cea92d4a86e8d47643b58ab0cdc2a88c15476f5daf1d091fac4800ce"
+    }
+  ],
+  "elapsed_seconds": 0.005528323999897111
+}

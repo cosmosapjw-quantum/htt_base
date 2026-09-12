@@ -1,0 +1,25 @@
+{
+  "fixed_failure": {
+    "law": "mixture",
+    "mu": -1.0,
+    "seed": 81008,
+    "spawn_key": [
+      0
+    ],
+    "trials": 1000,
+    "N": 199,
+    "rejections": 64,
+    "unavailable": 0,
+    "binomial_upper": 0.09114109609728728,
+    "failure_budget": 0.0011111111111111111,
+    "tolerance": 0.085,
+    "diagnostic_pass": false
+  },
+  "recomputed_upper": 0.09114109609728728,
+  "null_tail_probability": 0.028428397283994992,
+  "analytic_size": "1/20",
+  "argument": "All 200 absolute residuals are iid continuous under each specified location law; the observed descending rank is uniform on 1..200. Reject ranks 1..10.",
+  "implementation_inspection": "Mixture sampler uses independent standard normal and Bernoulli variance selector; scales 1 and 3 give variances 1 and 9. No changed seed or rerun.",
+  "status": "ADAPTER_HELD_BY_FROZEN_DIAGNOSTIC",
+  "inference": "The 64/1000 count is possible under nominal size. This does not prove absence of all defects or override the frozen upper-bound gate."
+}

@@ -1,5 +1,39 @@
 # R8 implementation status
 
+Updated 2026-09-12. Implementation branch: `implementation/tensor-joint-r8-20260909`.
+Design: PR #467, `c5b991e6ef8e13a28da9a0848da63ded4d52c86f`.
+
+**All 24 nodes / 52 action handlers are implemented and terminal.** There are no
+unimplemented actions. The final current-source run has no runtime exceptions;
+87 targeted regressions pass. [Scientific report](../../generated/tensor_joint_r8/final/REPORT.md)
+and [eight-page PDF](../../generated/tensor_joint_r8/final/R8_scientific_synthesis.pdf)
+contain the executed results and source bindings.
+
+**PR-247 remains blocked for full acceptance.** Independent CAS/observed-law
+premises remain unfulfilled. The frozen mixture diagnostic stays held; 18 coarse
+R3 histories fail their criterion. The 60-second cooperative orbit checkpoints
+also overrun by up to 1.904 seconds, so strict bounded-continuation acceptance is
+`STOP_INVALID`. This is not a failure of the preserved interval arithmetic.
+No additional checkpoint was used to erase that resource outcome.
+
+The current results are 5 non-rejections and 25 unresolved synthetic orbit pools,
+7,186 improved pair bounds, 36 passing restricted histories, 288 optical cases
+supported by those histories (all 432 optical comparisons pass), conditional jet
+images, and the preserved field/PR3 controls. The official Union3 release layout
+is now decoded and its approximate flat-LCDM compression scenario gives
+Omega_m=0.3559244. DESI's standalone conditional qiso interval is unchanged;
+its integrated component uses alpha=1/80 with no budget redistribution.
+The radiation derivative jet and R3 observed factories remain unavailable.
+
+The requested implementation/execution pass and branch publication can finish
+with these explicit negative/scenario results. Full scientific acceptance,
+independent review and native-family identification are not claimed. The next
+session instructions are in [EXECUTION.md](../../generated/tensor_joint_r8/final/EXECUTION.md).
+The main checkout and historical R7 STOP_INVALID are preserved. No merge occurs.
+
+## Earlier incremental status (historical)
+
+
 Design: PR #467, `c5b991e6ef8e13a28da9a0848da63ded4d52c86f`.
 Implementation branch: `implementation/tensor-joint-r8-20260909`.
 Canonical successor registration: PR-247, in progress.

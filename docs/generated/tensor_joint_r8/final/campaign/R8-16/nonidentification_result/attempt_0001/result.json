@@ -1,0 +1,157 @@
+{
+  "scientific_outcome": "LOCAL_CERTIFICATE_ONLY",
+  "capabilities": [
+    "NONID_RESULTS"
+  ],
+  "capability_scopes": {
+    "NONID_RESULTS": [
+      "LOCAL_CERTIFICATE_ONLY"
+    ]
+  },
+  "results": {
+    "recession": {
+      "unrestricted": {
+        "status": "UNBOUNDED_LOCAL_DOMAIN",
+        "direction": [
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 1,
+            "denominator": 1
+          }
+        ],
+        "base_state": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "target_slope": {
+          "numerator": 1,
+          "denominator": 1
+        },
+        "scope": "specified feasible affine local-state ray only; not a global Einstein-Boltzmann extension"
+      },
+      "compact_coordinate": {
+        "status": "NOT_A_RECESSION_WITNESS"
+      },
+      "unaffected_target": {
+        "status": "TARGET_UNCHANGED"
+      }
+    },
+    "physical_scope": {
+      "scientific_outcome": "CONDITIONAL_BOUND",
+      "empirical_physical_confidence": "INPUT_UNAVAILABLE",
+      "reason": "No admitted candidate-state CMB jet/response, same-state tilt/curvature, or F/G_F denominator and depth domain is supplied.",
+      "x_C": {
+        "bounds": null,
+        "status": "OUTER_RANGE_UNRESOLVED",
+        "error": null,
+        "procedure": "registered nonlinear/global provider or positive denominator domain unavailable",
+        "scope_ids": [],
+        "functional_id": "x_C",
+        "domain_id": "R8_MOCK6_IDENTITY_MAP",
+        "assumptions": []
+      },
+      "F": {
+        "bounds": null,
+        "status": "OUTER_RANGE_UNRESOLVED",
+        "error": null,
+        "procedure": "registered nonlinear/global provider or positive denominator domain unavailable",
+        "scope_ids": [],
+        "functional_id": "F",
+        "domain_id": "R8_MOCK6_IDENTITY_MAP",
+        "assumptions": []
+      },
+      "G_F": {
+        "bounds": null,
+        "status": "OUTER_RANGE_UNRESOLVED",
+        "error": null,
+        "procedure": "registered nonlinear/global provider or positive denominator domain unavailable",
+        "scope_ids": [],
+        "functional_id": "G_F",
+        "domain_id": "R8_MOCK6_IDENTITY_MAP",
+        "assumptions": []
+      },
+      "positive_ratio_fixture": {
+        "bounds": [
+          0.49999999999999994,
+          0.6666666666666667
+        ],
+        "status": "CERTIFIED_OUTER_BOUND",
+        "error": 0.0,
+        "procedure": "v8 exact Fraction shared-box vertices and outward float conversion",
+        "scope_ids": [
+          "ratio-fixture"
+        ],
+        "functional_id": "F_ratio_fixture",
+        "domain_id": "R8_D_RATIO_FIXTURE",
+        "assumptions": [
+          "box relaxation may include unaccepted states"
+        ]
+      },
+      "zero_denominator_fixture": {
+        "bounds": null,
+        "status": "DENOMINATOR_UNRESOLVED",
+        "error": null,
+        "procedure": "v8 exact rational box denominator check",
+        "scope_ids": [
+          "ratio-fixture"
+        ],
+        "functional_id": "zero_denominator_fixture",
+        "domain_id": "R8_D_RATIO_FIXTURE",
+        "assumptions": []
+      },
+      "legacy_code": "htt/htt/htt/infer/r7_mes_region.py::affine_box_gf_bound -> obsstat.egs3_gf_interval_v8::exact_joint_interval_v8",
+      "legacy_x_C": "signed comparator needs its own normalization and same-state tilt/curvature; no value substituted from tensor norm bounds"
+    }
+  },
+  "process_status": "COMPLETED_SUCCESS",
+  "node_id": "R8-16",
+  "action": "nonidentification_result",
+  "fingerprint": "8f4ee06f6a82969c9c8adc7c141c26a836ba641354d6817e51db5de6f680c8ec",
+  "attempt": 1,
+  "artifacts": [
+    {
+      "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/final/campaign/R8-16/nonidentification_result/attempt_0001/nonidentification_result.json",
+      "state": "PRESENT",
+      "sha256": "9abc8029984225ccb13e89ea2d9782c1423b9b967b2bb3d9bdff3c7c876abc0f"
+    },
+    {
+      "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/jet_images/execution_20260912/results.json",
+      "state": "PRESENT",
+      "sha256": "32f70369c3de9b5eab0339338bc2043830848ce420357e44392be4bda5a38478"
+    }
+  ],
+  "elapsed_seconds": 0.0018487359993741848
+}

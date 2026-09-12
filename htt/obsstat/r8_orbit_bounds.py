@@ -123,6 +123,41 @@ def _lipschitz(a,b,bits):
     o=min(sum(x*x for x in a[9:]),sum(x*x for x in b[9:]))
     return _sqrt((4*q+9*o)/SCALE**2,bits)[1]
 
+def feasible_upper(X, Y, precision=128):
+    """Local search proposes an SO(3) witness; exact arithmetic certifies it.
+
+    Optimizer convergence has no lower-bound or statistical authority. Rounding
+    a homogeneous quaternion gives another exact proper rotation, so even a
+    poor or unfinished optimization supplies a valid feasible upper bound.
+    """
+    from scipy.optimize import minimize
+    from scipy.spatial.transform import Rotation
+    a = _tensor_key(X); b = _tensor_key(Y)
+    qa, oa = (np.asarray(v, float) for v in _arrays(a))
+    qb, ob = (np.asarray(v, float) for v in _arrays(b))
+    _, va = np.linalg.eigh(qa); _, vb = np.linalg.eigh(qb)
+    starts = [np.eye(3)]
+    for signs in itertools.product((-1., 1.), repeat=3):
+        r = va @ np.diag(signs) @ vb.T
+        if np.linalg.det(r) > 0: starts.append(r)
+    def value(v):
+        r = Rotation.from_rotvec(v).as_matrix()
+        dq = qa-r@qb@r.T
+        do = oa-np.einsum('ia,jb,kc,abc->ijk',r,r,r,ob)
+        return (np.sum(dq*dq)+np.sum(do*do))*1e10
+    start = min(starts, key=lambda r:value(Rotation.from_matrix(r).as_rotvec()))
+    v0 = Rotation.from_matrix(start).as_rotvec()
+    opt = minimize(value, v0, method='BFGS', options={'maxiter':40, 'gtol':1e-8})
+    v = opt.x if np.isfinite(opt.x).all() and value(opt.x) < value(v0) else v0
+    xyzw = Rotation.from_rotvec(v).as_quat(); q = np.r_[xyzw[3],xyzw[:3]]
+    chart = int(np.argmax(abs(q)))
+    center = tuple(F(float(q[j]/q[chart])).limit_denominator(1000000) for j in range(4) if j!=chart)
+    rotation = chart_rotation(chart,center)
+    lo, hi = _rotation_value(a,b,rotation,precision)
+    return Bound(lo,hi,{'scope':'FEASIBLE_VALUE_ONLY','chart':chart,'center':center,
+                       'optimizer_success':bool(opt.success),'proper_rotation':'EXACT_RATIONAL_QUATERNION'})
+
+
 def refine_pair(X,Y,prior,budget):
     if type(budget) is not int or budget<0:raise ValueError('nonnegative integer split budget required')
     a=_tensor_key(X);b=_tensor_key(Y)
@@ -136,6 +171,8 @@ def refine_pair(X,Y,prior,budget):
         lower,upper=prior.lo,prior.hi
     else:
         initial=invariant_lower(_arrays(a),_arrays(b),bits);lower,upper=initial.lo,initial.hi
+        witness=feasible_upper(_arrays(a),_arrays(b),bits)
+        upper=min(upper,witness.hi)
     inv=_invariant(a,b,bits);L=_lipschitz(a,b,bits)
     cells=[];counter=0
     def add(chart,cell):
@@ -268,3 +305,76 @@ def refine_pool(pool,observed=0,split_budget=1000000,seconds=60.):
     return {'target_hash':pool.target_hash,'new_splits':used,'total_splits':pool.splits,
             'elapsed_seconds':time.monotonic()-start,'all_rows_retained':len(pool.sample_ids),
             'stopping_reason':'CHECKPOINT_RESOURCE_OR_ORDER_RESOLUTION','inferential_eligibility':False}
+
+
+def _checkpoint_encode(value):
+    if isinstance(value,F):return {'fraction':[value.numerator,value.denominator]}
+    if isinstance(value,tuple):return {'tuple':[_checkpoint_encode(v) for v in value]}
+    if isinstance(value,list):return [_checkpoint_encode(v) for v in value]
+    if isinstance(value,dict):return {k:_checkpoint_encode(v) for k,v in value.items()}
+    return value
+
+
+def _checkpoint_decode(value):
+    if isinstance(value,list):return [_checkpoint_decode(v) for v in value]
+    if isinstance(value,dict):
+        if set(value)=={'fraction'}:return F(*value['fraction'])
+        if set(value)=={'tuple'}:return tuple(_checkpoint_decode(v) for v in value['tuple'])
+        return {k:_checkpoint_decode(v) for k,v in value.items()}
+    return value
+
+
+def restore_pool(rows, sample_ids, bounds, expected_target, splits=0):
+    """Import a trusted saved enclosure bank without repeating root isolation.
+
+    Legacy banks lack search trees. Preserve their bounds and cumulative work;
+    newly visited pairs start new trees. Never call this a recovered old tree.
+    """
+    keys=tuple(_tensor_key(row) for row in rows);ids=tuple(sample_ids);m=len(keys)
+    if m<2 or len(ids)!=m or len(set(ids))!=m:raise ValueError('invalid pool rows')
+    target=hashlib.sha256(str((METHOD,SCALE,ids,tuple(map(_hash,keys)))).encode()).hexdigest()
+    if target!=expected_target:raise ValueError('checkpoint target mismatch')
+    bank=np.array(bounds,float,copy=True)
+    if (bank.shape!=(m,m,2) or not np.isfinite(bank).all() or np.any(bank[:,:,0]<0)
+        or np.any(bank[:,:,0]>bank[:,:,1]) or not np.array_equal(bank,bank.transpose(1,0,2))
+        or np.any(bank[np.arange(m),np.arange(m)]!=0)):
+        raise ValueError('invalid checkpoint enclosure bank')
+    snapshots=[]
+    for key in keys:
+        q,o=_arrays(key);q.setflags(write=False);o.setflags(write=False);snapshots.append((q,o))
+    return PairPool(tuple(snapshots),ids,bank,target,{},int(splits))
+
+
+def save_pool(pool, path, accounting=None):
+    """Persist exact pair trees and numeric bank as an atomic bound checkpoint."""
+    import json
+    from pathlib import Path
+    path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
+    data=path.with_suffix('.npz');temporary=data.with_suffix('.npz.tmp')
+    with temporary.open('wb') as stream:
+        np.savez_compressed(stream,Q=np.asarray([r[0] for r in pool.rows],float),
+                            O=np.asarray([r[1] for r in pool.rows],float),
+                            bounds=pool.bounds,sample_ids=pool.sample_ids)
+    temporary.replace(data)
+    metadata={'schema':'R8_PAIR_POOL_V2','method':METHOD,'target_hash':pool.target_hash,
+              'data_file':data.name,'data_sha256':hashlib.sha256(data.read_bytes()).hexdigest(),
+              'splits':pool.splits,'accounting':accounting or {},
+              'pairs':[[list(ij),_checkpoint_encode((b.lo,b.hi,b.certificate))] for ij,b in sorted(pool.pairs.items())]}
+    temporary=path.with_suffix('.json.tmp');temporary.write_text(json.dumps(metadata,indent=2)+'\n');temporary.replace(path)
+
+
+def load_pool(path):
+    import json
+    from pathlib import Path
+    path=Path(path);metadata=json.loads(path.read_text())
+    if metadata['schema']!='R8_PAIR_POOL_V2' or metadata['method']!=METHOD:raise ValueError('checkpoint method mismatch')
+    data=path.parent/metadata['data_file']
+    if hashlib.sha256(data.read_bytes()).hexdigest()!=metadata['data_sha256']:raise ValueError('checkpoint bank bytes changed')
+    with np.load(data,allow_pickle=False) as z:
+        pool=restore_pool(zip(z['Q'],z['O']),tuple(z['sample_ids'].tolist()),z['bounds'],metadata['target_hash'],metadata['splits'])
+    for ij,encoded in metadata['pairs']:
+        lo,hi,certificate=_checkpoint_decode(encoded);i,j=ij
+        target=tuple(sorted((_hash(_tensor_key(pool.rows[i])),_hash(_tensor_key(pool.rows[j])))))
+        if certificate['target']!=target or certificate['method']!=METHOD:raise ValueError('checkpoint pair target mismatch')
+        pool.pairs[(i,j)]=Bound(lo,hi,certificate)
+    return pool,metadata['accounting']

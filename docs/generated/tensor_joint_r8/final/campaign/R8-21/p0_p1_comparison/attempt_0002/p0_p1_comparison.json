@@ -1,0 +1,988 @@
+{
+  "scope": "model-specific conditional comparison; no Bayes odds",
+  "P0": {
+    "desi_released_reference": {
+      "desi_compressed": {
+        "candidates": {
+          "released_reference": {
+            "scope": {
+              "product_id": "desi_compressed",
+              "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+              "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+              "model_id": "RELEASED_GAUSSIAN_QISO",
+              "dataset_ids": [
+                "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+              ],
+              "convention_id": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+              "domain_id": "POSITIVE_QISO",
+              "conditioning_id": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+              "ordered_measurement_ids": [
+                "BGS_BRIGHT_GCcomb_qiso"
+              ],
+              "parameter_names": [
+                "qiso"
+              ],
+              "parameter_units": [
+                "1"
+              ],
+              "frame": "NONANGULAR_BACKGROUND_COMPRESSION",
+              "approximation": "CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY_LAW",
+              "method_id": "R8_FIXED_STRUCTURAL_GAUSSIAN_ACCEPTANCE_V1",
+              "method_config_id": "013093cab00ca586086d840d606f94d5b27e07c06dc2f70bb5ea379dec981cc0",
+              "alpha": [
+                1,
+                20
+              ]
+            },
+            "membership": "ACCEPT",
+            "quadratic": 0.838550365535873,
+            "threshold": 3.841458820694124,
+            "rank": 1,
+            "outcome": "CONDITIONAL_ON_DECLARED_LAW",
+            "numerical_status": "CERTIFIED_QUANTILE_BRACKET"
+          }
+        },
+        "confidence_region": {
+          "alpha": "1/20",
+          "conditional_CI_outer_exact": [
+            "1382929414076238102106842157666260596566259891121/1461501637330902918203684832716283019655932542976",
+            "1490033335566851430667933701663974952880802923599/1461501637330902918203684832716283019655932542976"
+          ],
+          "conditional_CI95_outer_exact": [
+            "1382929414076238102106842157666260596566259891121/1461501637330902918203684832716283019655932542976",
+            "1490033335566851430667933701663974952880802923599/1461501637330902918203684832716283019655932542976"
+          ],
+          "conditional_CI_display": [
+            0.9462387032298103,
+            1.019522180137995
+          ],
+          "conditional_CI95_display": [
+            0.9462387032298103,
+            1.019522180137995
+          ],
+          "estimand": "qiso=DV/rd divided by released fiducial DV/rd",
+          "domain": "POSITIVE_QISO",
+          "interpretation": "Conditional released Gaussian summary only; no isotropy/global-tilt/posterior claim."
+        }
+      }
+    },
+    "union3_flat_lcdm": {
+      "outcome": "RELEASE_COMPRESSED_GAUSSIAN_SCENARIO",
+      "nodes": 22,
+      "redshift": [
+        0.05,
+        0.1,
+        0.15000000000000002,
+        0.2,
+        0.25,
+        0.3,
+        0.35000000000000003,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6000000000000001,
+        0.6500000000000001,
+        0.7000000000000001,
+        0.7500000000000001,
+        0.8,
+        0.8981381957937741,
+        0.9962763915875482,
+        1.0944145873813222,
+        1.2322444451875212,
+        1.3909612548337513,
+        2.2622599999999995
+      ],
+      "modulus": [
+        36.6303610850046,
+        38.235499177289846,
+        39.14769084871757,
+        39.83488010766378,
+        40.34031868616494,
+        40.81387463185208,
+        41.20248722312743,
+        41.5689462747702,
+        41.82264967100102,
+        42.13631123119484,
+        42.35218102948099,
+        42.59950483267475,
+        42.79312120552585,
+        42.94532246205921,
+        43.12535120582757,
+        43.31965465632178,
+        43.64759383089445,
+        44.01125622572147,
+        44.19109243795961,
+        44.577984610209874,
+        44.84235772630916,
+        45.99715949878713
+      ],
+      "precision_antisymmetry_max": 3.9904080040287226e-11,
+      "precision_eigenvalue_range": [
+        5.12112505549895,
+        7026.188342050094
+      ],
+      "omega_m": 0.3559243860459075,
+      "profile_offset_mag": 43.08869940000753,
+      "chi2": 23.95800978676527,
+      "fitted_modulus": [
+        36.66014291765545,
+        38.2362799014746,
+        39.182648377532544,
+        39.868652145351284,
+        40.410331992083634,
+        40.85956506170895,
+        41.24416122395794,
+        41.58082236339127,
+        41.88039877218789,
+        42.15035836820533,
+        42.39607393650548,
+        42.62154882737707,
+        42.829851922078284,
+        43.02339154090706,
+        43.20409510475891,
+        43.373531085227384,
+        43.678108152568335,
+        43.95171120476595,
+        44.19991123483732,
+        44.51344658101653,
+        44.83357788475225,
+        46.111770544289236
+      ],
+      "residual_mag": [
+        -0.02978183265084766,
+        -0.0007807241847643809,
+        -0.03495752881497083,
+        -0.033772037687505474,
+        -0.07001330591869248,
+        -0.045690429856868775,
+        -0.041674000830511204,
+        -0.011876088621072256,
+        -0.0577491011868716,
+        -0.014047137010493316,
+        -0.043892907024492445,
+        -0.022043994702322323,
+        -0.03673071655243376,
+        -0.07806907884785375,
+        -0.07874389893134293,
+        -0.05387642890560329,
+        -0.030514321673884126,
+        0.05954502095551817,
+        -0.008818796877712032,
+        0.0645380291933435,
+        0.008779841556908252,
+        -0.11461104550210877
+      ],
+      "omega_grid": [
+        0.1,
+        0.10500000000000001,
+        0.11,
+        0.115,
+        0.12000000000000001,
+        0.125,
+        0.13,
+        0.135,
+        0.14,
+        0.14500000000000002,
+        0.15000000000000002,
+        0.155,
+        0.16,
+        0.165,
+        0.17,
+        0.175,
+        0.18,
+        0.185,
+        0.19,
+        0.195,
+        0.2,
+        0.20500000000000002,
+        0.21000000000000002,
+        0.21500000000000002,
+        0.22,
+        0.225,
+        0.23,
+        0.23500000000000001,
+        0.24000000000000002,
+        0.245,
+        0.25,
+        0.255,
+        0.26,
+        0.265,
+        0.27,
+        0.275,
+        0.28,
+        0.28500000000000003,
+        0.29000000000000004,
+        0.29500000000000004,
+        0.30000000000000004,
+        0.30500000000000005,
+        0.31,
+        0.315,
+        0.32,
+        0.325,
+        0.33,
+        0.335,
+        0.33999999999999997,
+        0.345,
+        0.35,
+        0.355,
+        0.36,
+        0.365,
+        0.37,
+        0.375,
+        0.38,
+        0.385,
+        0.39,
+        0.395,
+        0.4,
+        0.405,
+        0.41000000000000003,
+        0.41500000000000004,
+        0.42000000000000004,
+        0.42500000000000004,
+        0.43000000000000005,
+        0.43500000000000005,
+        0.44000000000000006,
+        0.44500000000000006,
+        0.45000000000000007,
+        0.45499999999999996,
+        0.45999999999999996,
+        0.46499999999999997,
+        0.47,
+        0.475,
+        0.48,
+        0.485,
+        0.49,
+        0.495,
+        0.5,
+        0.505,
+        0.51,
+        0.515,
+        0.52,
+        0.525,
+        0.53,
+        0.535,
+        0.54,
+        0.545,
+        0.55,
+        0.555,
+        0.56,
+        0.5650000000000001,
+        0.5700000000000001,
+        0.5750000000000001,
+        0.58,
+        0.585,
+        0.59,
+        0.595,
+        0.6
+      ],
+      "profile_chi2": [
+        174.28570577128437,
+        166.54618160794848,
+        159.1268968270383,
+        152.01417984696835,
+        145.19524112222618,
+        138.65809299252808,
+        132.39147902304404,
+        126.38481145366306,
+        120.62811561271998,
+        115.11198034152011,
+        109.82751363017115,
+        104.76630279092814,
+        99.92037859821805,
+        95.28218290943323,
+        90.8445393509077,
+        86.60062671222407,
+        82.54395474120906,
+        78.66834207313096,
+        74.96789606282276,
+        71.43699431804814,
+        68.07026775762273,
+        64.86258503970272,
+        61.80903822393786,
+        58.90492954748674,
+        56.14575920857564,
+        53.527214063309046,
+        51.045157151933424,
+        48.69561797984749,
+        46.47478348661422,
+        44.378989643205124,
+        42.404713623887126,
+        40.5485665045879,
+        38.807286444304594,
+        37.17773231038279,
+        35.6568777123174,
+        34.24180541197341,
+        32.92970208113574,
+        31.717853380016187,
+        30.603639332633012,
+        29.584529977190314,
+        28.658081271421974,
+        27.821931234681454,
+        27.073796309979453,
+        26.411467930746145,
+        25.832809278158123,
+        25.335752216159,
+        24.918294392299984,
+        24.57849649342907,
+        24.314479646169804,
+        24.12442295284822,
+        24.006561154282423,
+        23.959182411505118,
+        23.98062619897243,
+        24.069281302538563,
+        24.22358391575658,
+        24.442015828722518,
+        24.72310270390158,
+        25.065412433955494,
+        25.467553576731987,
+        25.92817386308567,
+        26.44595877338459,
+        27.019630178883087,
+        27.64794504431864,
+        28.329694188460458,
+        29.063701099451194,
+        29.848820801931794,
+        30.68393877333098,
+        31.56796990663376,
+        32.49985751724304,
+        33.47857239171198,
+        34.50311187612969,
+        35.57249900222742,
+        36.685781649279306,
+        37.842031740057216,
+        39.040344469127604,
+        40.279837561950835,
+        41.55965056328965,
+        42.878944153526106,
+        44.23689949154688,
+        45.63271758300056,
+        47.06561867268858,
+        48.53484166000779,
+        50.03964353640704,
+        51.57929884379911,
+        53.1530991530747,
+        54.76035256173303,
+        56.40038320984456,
+        58.07253081351863,
+        59.776150215121135,
+        61.510610949499984,
+        63.27529682555568,
+        65.06960552251965,
+        66.89294820025574,
+        68.74474912307727,
+        70.62444529646321,
+        72.5314861161587,
+        74.46533302917238,
+        76.42545920614198,
+        78.41134922465349,
+        80.4224987630856,
+        82.45841430446072
+      ],
+      "conditional_error_budget": "NONE: no exact sampling-law admission",
+      "limitations": [
+        "Public UNITY1.5 compression; finite-sample Gaussian observation law is not established",
+        "Flat LCDM + free common offset; search bounds (0.01,0.99) are numerical domain, not prior",
+        "Released z domain 0<z<3; precision symmetric part used, preserving its quadratic form",
+        "No angular information, no R3 anisotropic distance likelihood, no product independence claim"
+      ]
+    }
+  },
+  "P1": {
+    "conditional_frontiers": [
+      {
+        "target": "S1",
+        "threshold": {
+          "numerator": 1,
+          "denominator": 1
+        },
+        "remainder_rate_radii": [
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          }
+        ],
+        "rho_lower": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "rho_upper": {
+          "numerator": 1,
+          "denominator": 1
+        },
+        "status": "CERTIFIED_GRID_BRACKET",
+        "cells": [
+          {
+            "rho": {
+              "numerator": 0,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_EXCLUDED",
+            "bounds": [
+              {
+                "numerator": 0,
+                "denominator": 1
+              },
+              {
+                "numerator": 0,
+                "denominator": 1
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 4
+            },
+            "status": "CERTIFIED_EXCLUDED",
+            "bounds": [
+              {
+                "numerator": -1,
+                "denominator": 4
+              },
+              {
+                "numerator": 1,
+                "denominator": 4
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 2
+            },
+            "status": "CERTIFIED_EXCLUDED",
+            "bounds": [
+              {
+                "numerator": -1,
+                "denominator": 2
+              },
+              {
+                "numerator": 1,
+                "denominator": 2
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -1,
+                "denominator": 1
+              },
+              {
+                "numerator": 1,
+                "denominator": 1
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 2,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -2,
+                "denominator": 1
+              },
+              {
+                "numerator": 2,
+                "denominator": 1
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 4,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -4,
+                "denominator": 1
+              },
+              {
+                "numerator": 4,
+                "denominator": 1
+              }
+            ]
+          }
+        ],
+        "scope": "nested deterministic closure sensitivity, not a prior or fitted radius"
+      },
+      {
+        "target": "W1",
+        "threshold": {
+          "numerator": 1,
+          "denominator": 1
+        },
+        "remainder_rate_radii": [
+          {
+            "numerator": 0,
+            "denominator": 1
+          },
+          {
+            "numerator": 0,
+            "denominator": 1
+          }
+        ],
+        "rho_lower": {
+          "numerator": 1,
+          "denominator": 4
+        },
+        "rho_upper": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "status": "CERTIFIED_GRID_BRACKET",
+        "cells": [
+          {
+            "rho": {
+              "numerator": 0,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_EXCLUDED",
+            "bounds": [
+              {
+                "numerator": 0,
+                "denominator": 1
+              },
+              {
+                "numerator": 0,
+                "denominator": 1
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 4
+            },
+            "status": "CERTIFIED_EXCLUDED",
+            "bounds": [
+              {
+                "numerator": -1,
+                "denominator": 2
+              },
+              {
+                "numerator": 1,
+                "denominator": 2
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 2
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -1,
+                "denominator": 1
+              },
+              {
+                "numerator": 1,
+                "denominator": 1
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -2,
+                "denominator": 1
+              },
+              {
+                "numerator": 2,
+                "denominator": 1
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 2,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -4,
+                "denominator": 1
+              },
+              {
+                "numerator": 4,
+                "denominator": 1
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 4,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -8,
+                "denominator": 1
+              },
+              {
+                "numerator": 8,
+                "denominator": 1
+              }
+            ]
+          }
+        ],
+        "scope": "nested deterministic closure sensitivity, not a prior or fitted radius"
+      },
+      {
+        "target": "S1",
+        "threshold": {
+          "numerator": 1,
+          "denominator": 1
+        },
+        "remainder_rate_radii": [
+          {
+            "numerator": 3,
+            "denominator": 10
+          },
+          {
+            "numerator": 3,
+            "denominator": 5
+          }
+        ],
+        "rho_lower": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "rho_upper": {
+          "numerator": 1,
+          "denominator": 1
+        },
+        "status": "CERTIFIED_GRID_BRACKET",
+        "cells": [
+          {
+            "rho": {
+              "numerator": 0,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_EXCLUDED",
+            "bounds": [
+              {
+                "numerator": -1,
+                "denominator": 10
+              },
+              {
+                "numerator": 1,
+                "denominator": 10
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 4
+            },
+            "status": "CERTIFIED_EXCLUDED",
+            "bounds": [
+              {
+                "numerator": -7,
+                "denominator": 20
+              },
+              {
+                "numerator": 7,
+                "denominator": 20
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 2
+            },
+            "status": "CERTIFIED_EXCLUDED",
+            "bounds": [
+              {
+                "numerator": -3,
+                "denominator": 5
+              },
+              {
+                "numerator": 3,
+                "denominator": 5
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -11,
+                "denominator": 10
+              },
+              {
+                "numerator": 11,
+                "denominator": 10
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 2,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -21,
+                "denominator": 10
+              },
+              {
+                "numerator": 21,
+                "denominator": 10
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 4,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -41,
+                "denominator": 10
+              },
+              {
+                "numerator": 41,
+                "denominator": 10
+              }
+            ]
+          }
+        ],
+        "scope": "nested deterministic closure sensitivity, not a prior or fitted radius"
+      },
+      {
+        "target": "W1",
+        "threshold": {
+          "numerator": 1,
+          "denominator": 1
+        },
+        "remainder_rate_radii": [
+          {
+            "numerator": 3,
+            "denominator": 10
+          },
+          {
+            "numerator": 3,
+            "denominator": 5
+          }
+        ],
+        "rho_lower": {
+          "numerator": 1,
+          "denominator": 4
+        },
+        "rho_upper": {
+          "numerator": 1,
+          "denominator": 2
+        },
+        "status": "CERTIFIED_GRID_BRACKET",
+        "cells": [
+          {
+            "rho": {
+              "numerator": 0,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_EXCLUDED",
+            "bounds": [
+              {
+                "numerator": -1,
+                "denominator": 5
+              },
+              {
+                "numerator": 1,
+                "denominator": 5
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 4
+            },
+            "status": "CERTIFIED_EXCLUDED",
+            "bounds": [
+              {
+                "numerator": -7,
+                "denominator": 10
+              },
+              {
+                "numerator": 7,
+                "denominator": 10
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 2
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -6,
+                "denominator": 5
+              },
+              {
+                "numerator": 6,
+                "denominator": 5
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -11,
+                "denominator": 5
+              },
+              {
+                "numerator": 11,
+                "denominator": 5
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 2,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -21,
+                "denominator": 5
+              },
+              {
+                "numerator": 21,
+                "denominator": 5
+              }
+            ]
+          },
+          {
+            "rho": {
+              "numerator": 4,
+              "denominator": 1
+            },
+            "status": "CERTIFIED_IN_EXACT_CONVEX_IMAGE",
+            "bounds": [
+              {
+                "numerator": -41,
+                "denominator": 5
+              },
+              {
+                "numerator": 41,
+                "denominator": 5
+              }
+            ]
+          }
+        ],
+        "scope": "nested deterministic closure sensitivity, not a prior or fitted radius"
+      }
+    ],
+    "physical_scope": {
+      "scientific_outcome": "CONDITIONAL_BOUND",
+      "empirical_physical_confidence": "INPUT_UNAVAILABLE",
+      "reason": "No admitted candidate-state CMB jet/response, same-state tilt/curvature, or F/G_F denominator and depth domain is supplied.",
+      "x_C": {
+        "bounds": null,
+        "status": "OUTER_RANGE_UNRESOLVED",
+        "error": null,
+        "procedure": "registered nonlinear/global provider or positive denominator domain unavailable",
+        "scope_ids": [],
+        "functional_id": "x_C",
+        "domain_id": "R8_MOCK6_IDENTITY_MAP",
+        "assumptions": []
+      },
+      "F": {
+        "bounds": null,
+        "status": "OUTER_RANGE_UNRESOLVED",
+        "error": null,
+        "procedure": "registered nonlinear/global provider or positive denominator domain unavailable",
+        "scope_ids": [],
+        "functional_id": "F",
+        "domain_id": "R8_MOCK6_IDENTITY_MAP",
+        "assumptions": []
+      },
+      "G_F": {
+        "bounds": null,
+        "status": "OUTER_RANGE_UNRESOLVED",
+        "error": null,
+        "procedure": "registered nonlinear/global provider or positive denominator domain unavailable",
+        "scope_ids": [],
+        "functional_id": "G_F",
+        "domain_id": "R8_MOCK6_IDENTITY_MAP",
+        "assumptions": []
+      },
+      "positive_ratio_fixture": {
+        "bounds": [
+          0.49999999999999994,
+          0.6666666666666667
+        ],
+        "status": "CERTIFIED_OUTER_BOUND",
+        "error": 0.0,
+        "procedure": "v8 exact Fraction shared-box vertices and outward float conversion",
+        "scope_ids": [
+          "ratio-fixture"
+        ],
+        "functional_id": "F_ratio_fixture",
+        "domain_id": "R8_D_RATIO_FIXTURE",
+        "assumptions": [
+          "box relaxation may include unaccepted states"
+        ]
+      },
+      "zero_denominator_fixture": {
+        "bounds": null,
+        "status": "DENOMINATOR_UNRESOLVED",
+        "error": null,
+        "procedure": "v8 exact rational box denominator check",
+        "scope_ids": [
+          "ratio-fixture"
+        ],
+        "functional_id": "zero_denominator_fixture",
+        "domain_id": "R8_D_RATIO_FIXTURE",
+        "assumptions": []
+      },
+      "legacy_code": "htt/htt/htt/infer/r7_mes_region.py::affine_box_gf_bound -> obsstat.egs3_gf_interval_v8::exact_joint_interval_v8",
+      "legacy_x_C": "signed comparator needs its own normalization and same-state tilt/curvature; no value substituted from tensor norm bounds"
+    },
+    "CMB_informed_physical_bound": "INPUT_UNAVAILABLE"
+  },
+  "P2": "Restricted physical predictions are available; observed factory missing.",
+  "P3": "External supported factory missing."
+}

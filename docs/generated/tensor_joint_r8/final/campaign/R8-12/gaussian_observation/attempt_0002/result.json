@@ -1,0 +1,89 @@
+{
+  "scientific_outcome": "CONDITIONAL_BOUND",
+  "capabilities": [
+    "OBSERVED_GAUSSIAN"
+  ],
+  "capability_scopes": {
+    "OBSERVED_GAUSSIAN": [
+      "desi_compressed"
+    ]
+  },
+  "products": {
+    "desi_compressed": {
+      "candidates": {
+        "released_reference": {
+          "scope": {
+            "product_id": "desi_compressed",
+            "experiment_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+            "law_id": "c82201311166d406a5a5e227ea2655db29b11bf9c1c98b633268791a6350a826",
+            "model_id": "RELEASED_GAUSSIAN_QISO",
+            "dataset_ids": [
+              "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+            ],
+            "convention_id": "R7_K_ORTHONORMAL_REAL_OUTWARD_THETA3H_V1",
+            "domain_id": "POSITIVE_QISO",
+            "conditioning_id": "PUBLISHED_GAUSSIAN_SUMMARY_MODEL_WITH_FIXED_RELEASED_COVARIANCE",
+            "ordered_measurement_ids": [
+              "BGS_BRIGHT_GCcomb_qiso"
+            ],
+            "parameter_names": [
+              "qiso"
+            ],
+            "parameter_units": [
+              "1"
+            ],
+            "frame": "NONANGULAR_BACKGROUND_COMPRESSION",
+            "approximation": "CONDITIONAL_ON_RELEASED_GAUSSIAN_SUMMARY_LAW",
+            "method_id": "R8_FIXED_STRUCTURAL_GAUSSIAN_ACCEPTANCE_V1",
+            "method_config_id": "013093cab00ca586086d840d606f94d5b27e07c06dc2f70bb5ea379dec981cc0",
+            "alpha": [
+              1,
+              20
+            ]
+          },
+          "membership": "ACCEPT",
+          "quadratic": 0.838550365535873,
+          "threshold": 3.841458820694124,
+          "rank": 1,
+          "outcome": "CONDITIONAL_ON_DECLARED_LAW",
+          "numerical_status": "CERTIFIED_QUANTILE_BRACKET"
+        }
+      },
+      "confidence_region": {
+        "alpha": "1/20",
+        "conditional_CI_outer_exact": [
+          "1382929414076238102106842157666260596566259891121/1461501637330902918203684832716283019655932542976",
+          "1490033335566851430667933701663974952880802923599/1461501637330902918203684832716283019655932542976"
+        ],
+        "conditional_CI95_outer_exact": [
+          "1382929414076238102106842157666260596566259891121/1461501637330902918203684832716283019655932542976",
+          "1490033335566851430667933701663974952880802923599/1461501637330902918203684832716283019655932542976"
+        ],
+        "conditional_CI_display": [
+          0.9462387032298103,
+          1.019522180137995
+        ],
+        "conditional_CI95_display": [
+          0.9462387032298103,
+          1.019522180137995
+        ],
+        "estimand": "qiso=DV/rd divided by released fiducial DV/rd",
+        "domain": "POSITIVE_QISO",
+        "interpretation": "Conditional released Gaussian summary only; no isotropy/global-tilt/posterior claim."
+      }
+    }
+  },
+  "process_status": "COMPLETED_SUCCESS",
+  "node_id": "R8-12",
+  "action": "gaussian_observation",
+  "fingerprint": "faf7b427babc919a73f8eb91689831b58c4816a66ca6390960844e2e6d625719",
+  "attempt": 2,
+  "artifacts": [
+    {
+      "path": "/mnt/sn850x2t/htt_base_e2e/TENSOR-JOINT-R8-20260909/worktree/docs/generated/tensor_joint_r8/final/campaign/R8-12/gaussian_observation/attempt_0002/observed_subsets.json",
+      "state": "PRESENT",
+      "sha256": "a5aef5479c7e6d8a8f73229e3dd00f6cb0e411891061a5e2048f57838772d206"
+    }
+  ],
+  "elapsed_seconds": 0.3227279309940059
+}

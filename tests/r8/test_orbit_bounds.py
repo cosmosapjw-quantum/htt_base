@@ -55,3 +55,29 @@ def test_finite_large_nonstf_is_not_admitted_by_overflowed_tolerance():
 def test_stf_guard_scales_each_irrep_independently():
     with pytest.raises(ValueError):invariant_lower((np.eye(3)*1e-200,axial()*1e200),
                                                 (np.zeros((3,3)),np.zeros((3,3,3))),128)
+
+
+def test_exact_feasible_optimizer_witness_reduces_rotated_pair():
+    from obsstat.r8_orbit_bounds import feasible_upper
+    q=np.diag([-1.,0,1])*1e-5; o=np.zeros((3,3,3))
+    r=np.array([[0.,-1.,0.],[1.,0.,0.],[0.,0.,1.]])
+    b=feasible_upper((q,o),(r@q@r.T,o))
+    assert float(b.hi)<1e-10
+    assert b.certificate['scope']=='FEASIBLE_VALUE_ONLY'
+
+
+def test_exact_tree_checkpoint_resumes_and_rejects_different_target(tmp_path):
+    from obsstat.r8_orbit_bounds import initialize_pool,save_pool,load_pool,restore_pool
+    q=np.diag([-1.,0,1])*1e-5; o=axial()*1e-5
+    rows=[(q,o),(2*q,o),(q,2*o)]
+    pool=initialize_pool(rows,('a','b','c'))
+    pool.pairs[(0,1)]=refine_pair(rows[0],rows[1],None,3)
+    pool.splits=3
+    p=tmp_path/'pool.json';save_pool(pool,p,{'previous_seconds':60.})
+    other,accounting=load_pool(p)
+    assert other.pairs==pool.pairs and other.splits==3
+    assert np.array_equal(other.bounds,pool.bounds)
+    assert accounting['previous_seconds']==60.
+    before=other.pairs[(0,1)]
+    assert refine_pair(*rows[:2],before,2)==refine_pair(*rows[:2],pool.pairs[(0,1)],2)
+    with pytest.raises(ValueError): restore_pool(rows,('b','a','c'),pool.bounds,pool.target_hash)
