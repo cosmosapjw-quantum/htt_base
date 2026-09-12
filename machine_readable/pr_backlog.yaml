@@ -199,6 +199,7 @@ policy:
   - PR-CATALOG-001
   - PR-CATALOG-002
   - PR-CATALOG-003
+  - PR-CATALOG-004
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -9937,5 +9938,28 @@ prs:
   kill: No novelty claim from a theorem name, proposal path, proof status, or missing proposal match alone.
   level: L0
   scope: static_research_role_navigation
+  risk: R1
+  user_authorized: true
+
+- id: PR-CATALOG-004
+  wave: 0
+  title: Publish comprehensive Korean mathematics physics and statistics compendium
+  owner: COMMON
+  depends:
+  - PR-CATALOG-003
+  files:
+  - docs/research_reports/theory_synthesis_20260913
+  - docs/project_catalog/README.md
+  tests:
+  - python3 docs/research_reports/theory_synthesis_20260913/build_report.py
+  - python3 docs/research_reports/theory_synthesis_20260913/check_report.py
+  dod:
+  - All investigated research branches mapped to latest retained source formulations
+  - Tensorized MES kinematics and statistical successors, morphology, depth discrimination, invariants and possessed-data theorem uses explained
+  - Korean Markdown and PDF with versioned sources, 172 proposal sections and coverage index
+  - Static source review, Academic Writing Toolkit, independent review, PDF and link checks; ordinary push and remote readback
+  kill: No new proof or research execution, source-status promotion or native family identification; preserve original checkout and database.
+  level: L0
+  scope: research_theory_compendium
   risk: R1
   user_authorized: true

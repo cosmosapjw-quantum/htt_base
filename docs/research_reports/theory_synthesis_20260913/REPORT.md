@@ -1,0 +1,968 @@
+# HTT 수학·물리·통계 종합 이론 보고서
+
+## 전체 연구 갈래의 최신 유지 결과와 텐서 기반 통합 분석
+
+2026년 9월 13일 · 한국어 이론·방법 보고서 · 편집판 1
+
+프로젝트: HTT / MIO / obsstat / BASS. 편집 책임: manuscript.
+기준은 단일 HEAD가 아닌 분기별 source 연합이다. 정확한 핀과 경로는 SOURCES.md에 있다.
+범위: 지금까지 조사된 문서·명제·연구제안의 이론 종합. 새로운 증명·연구 계산·관측 재분석 또는 과학적 수용 판정을 수행하지 않았다.
+
+## 초록
+
+이 보고서는 HTT 연구에서 갈라진 기하학, 운동론, 다유체, 복사 전달, low-ell morphology, 부분 식별과 통계 이론을 종합한다. 중심은 한 개의 스칼라 비등방 점수에서 공동 벡터·텐서 상태, MES 전제로 정규화한 허용집합, 함수별 통계량과 깊이 경로로 이동한 formalism이다. 사중극·팔중극의 완전 표현과 불변량은 관측 형태를 보존하고, congruence가 지정된 전단·와도·가속도·물질 기울기는 물리 상태를 보존한다. 이들 사이의 관계는 복사 이력, 관측 연산자, nuisance와 표본법칙을 명시한 반응 사상으로 연결한다.
+
+본문은 부호 있는 곡률 제약과 King–Ellis frame 문제, 양의 다유체 moment와 실현성, 충돌 감쇠·엔트로피·almost-EGS, 벡터·텐서 invariant geometry, 양의 이차 하늘, PSTF 온도·편광 전달, local boost와 global tilt의 depth discrimination, 공동 분수 구간, 특이·추정 covariance, 유한 순위 및 e-process를 다룬다. R8은 이 연구 흐름 중 최신 관측 표현·조건부 결합·제한 이력의 사례로 포함한다.
+
+특히 현재 tensorized formalism에서 x는 함수족의 표본별 값, Q는 premise-anchor stress, F는 방향별 support 이용, Pi는 법칙이 붙은 초과도 곡면, G_F는 구조화된 depth 경로로 대체된다. scalar compatibility view는 설명의 중심이 아니다. 보유 CMB·CF4·DESI·Union3와 제한 benchmark마다 실제 적용된 정리, 설명 가능한 대상, 빠진 입력을 연결한다. 기존 근거와 연구 후보를 구별하며, 서지·구현·저장된 검증을 새 증명으로 승격하지 않는다.
+
+<a id="s1"></a>
+
+## 1. 범위, 읽기 순서와 분기별 최신판
+
+이 보고서의 질문은 지금까지 조사된 연구 문서의 각 갈래가 어떤 수학적 대상과 물리적 질문을 다루며, 어떤 결과를 유지하고 무엇을 아직 증명하거나 관측으로 연결해야 하는가다. ‘최신’은 마지막 커밋에 들어간 내용만을 뜻하지 않는다. 각 분기의 가장 최근 유지된 정식화와 실제 구현을 선택한다. 명시적으로 대체된 구판의 반복 서술은 생략하지만, 날짜가 오래되어도 남아 있는 유효한 결과는 포함한다.
+
+여러 갈래가 하나의 Git HEAD에 모두 병합되어 있지 않다. R8 efc5f306, 벡터·텐서 foundation 6bafca66, WU009 보정 04680e99, 최신 카탈로그 9b725899를 구별한다. WU009의 원문 verdict, VT programme의 미판정 의무, 저장된 CAS 근거, 관측 실험의 적격성은 서로 소급하지 않는다. 증명 근거를 확인한 검색 묶음도 독립적인 새 정리의 개수가 아니다. [S01] [S03] [S36] [S37] [S48]
+
+| 관심 주제 | 읽을 절 | 핵심 질문 |
+|---|---|---|
+| 현재 formalism의 전체 연결 | 23 → 6 → 16 → 28 | tensorized MES·관측 반응·통계 방법이 어떻게 연결되는가 |
+| low-ell morphology와 불변량 | 7–10, 12, 23.4 | 관측 형태를 무엇까지 보존·복원하는가 |
+| 기하학·다유체·운동론 | 2–6, 11, 14–15, 24 | 어떤 물리 상태와 복사 조건이 허용되는가 |
+| 깊이에 따른 local/global 구별 | 13, 21, 23, 28 | 어떤 추가 response와 공동법칙이 필요한가 |
+| 통계 이론과 불확실성 | 16–22 | 부분 식별·covariance·순위·함수/경로를 어떻게 다루는가 |
+| 보유 데이터 및 새 증명 목표 | 25–28, 동봉 색인 | 실제 사용된 정리와 아직 남은 의무는 무엇인가 |
+
+본문의 ‘기존 유도’는 명시된 source에 논증이 있다는 뜻이고, ‘기존 증명 근거 확인’은 카탈로그가 선언·근거·버전을 연결했다는 뜻이다. 구현·수치 점검·독립 수용은 다른 상태다. 같은 T1이나 A1도 source와 조건이 다르면 별개로 보존한다. 모든 원문 상태는 편집 색인에 남기며 이번 문서가 레지스트리를 승격하지 않는다.
+
+<a id="s2"></a>
+
+## 2. 물리적 상태와 관측량의 구별
+
+### 2.1 기준계와 운동학
+
+계량 부호는 \((-,+,+,+)\), 공간 방향은 \(\epsilon_{123}=+1\)로 둔다. 무차원 단위 시간꼴 벡터 \(u^a\)와 공간 사영은
+
+\[
+u^a u_a=-1,\qquad h_{ab}=g_{ab}+u_a u_b
+\]
+
+이다. 기하학적 미분의 운동학적 분해는, 이 절에서 \(\omega_{ab}=D_{[a}u_{b]}\)로 정의하면,
+
+\[
+\nabla_a u_b=-u_a A_b+\frac{\Theta_g}{3}h_{ab}
++\sigma^{(g)}_{ab}+\omega^{(g)}_{ab}.
+\]
+
+여기서 \(A_b=u^a\nabla_a u_b\), \(\Theta_g=\nabla_a u^a\)이며 \(D\)는 공간 사영된 미분이다. 단위 관측자에 대한 기하학적 expansion·shear는 역길이 단위다. 역시간 관례는 \(H_t=cH_g\), \(\sigma^{(t)}=c\sigma^{(g)}\), \(\omega^{(t)}=c\omega^{(g)}\)로 일관되게 변환한다. 일반 상대론적 운동학의 배경은 Ellis–van Elst의 공변 형식에 두며, 특정 코드의 정규화는 그 코드의 명시적 어댑터를 따른다. [1] [S04]
+
+관측 저차 텐서와 물리 상태를 다음과 같이 분리한다.
+
+\[
+\mathcal O_{\rm low}=(Q_{ab},O_{abc}),\qquad
+\mathcal X_{\rm phys}=\mathcal K_u\times\mathcal V_{\rm frame}\times\mathcal G,
+\]
+
+\[
+\mathcal K_u=(\sigma_{ab},\omega_a,A_a),\qquad
+\mathcal V_{\rm frame}=(\beta_{\rm RO},\beta_{\rm RM},\beta_{\rm MO}).
+\]
+
+RO는 복사–관측자, RM은 복사–물질, MO는 물질–관측자 관계다. 지정된 일차 근사에서는 \(\beta_{\rm RO}=\beta_{\rm RM}+\beta_{\rm MO}+O(\beta^2)\)이나, 유한 속도의 정확한 상대론적 합성법칙으로 사용할 수 없다. 한 지점의 관측자 boost만 알면 물질의 전역 기울기도 알 수 있다는 결론은 나오지 않는다.
+
+\(Q_{ab}\)와 \(\sigma_{ab}\)는 모두 STF2 표현을 갖지만 전자는 온도 패턴, 후자는 congruence의 운동학이다. 양자의 단위도 다르다. 온도 사중극의 방향을 전단 주축으로 읽으려면 특정 복사 전달과 관측 반응이 추가되어야 한다. 마찬가지로 \(\Delta\Omega_k\)라는 부호 있는 스칼라 곡률 예산은 \({}^{(3)}R_{\langle ab\rangle}\)라는 비등방 공간곡률 텐서와 동일하지 않다. [S04] [S05]
+
+### 2.2 상태의 차원과 관측 식별 차원
+
+가속도를 포함하고 RO 속도를 일차 합성으로 유도하는 일반 물리 핵심 상태는 \(5+3+3+3+3+1=18\)개의 성분을 가진다. 자유로운 회전 작용이 성립하는 층에서는 궤도 몫 차원이 15다. 측지 분기 \(A_a=0\)에서는 각각 15와 12다. 이 계산은 상태 공간의 표현 차원이며, Einstein 제약을 만족하는 해의 차원이나 실제 자료가 식별하는 모수 수가 아니다. 특수 대칭과 stabilizer가 있는 층도 따로 취급해야 한다. [S05]
+
+<a id="s3"></a>
+
+## 3. 부호 있는 곡률 예산과 기준계 귀속
+
+### 3.1 Gauss 관계가 보존하는 것
+
+이 절에서는 자연단위 \(c=1\), \(\kappa=8\pi G\), \(H=\Theta/3>0\), 반수축 \(\sigma^2=\sigma_{ab}\sigma^{ab}/2\), \(\omega^2=\omega_{ab}\omega^{ab}/2\)를 쓴다. 저장소의 1+3 부모 항등식은
+
+\[
+\frac{\Theta^2}{3}=\kappa\mu_u+\Lambda-\frac{{}^{(3)}R}{2}
++\sigma^2-\omega^2,
+\qquad
+1=\Omega_m+\Omega_\Lambda+\Omega_k+\Omega_{\rm tilt}+\Sigma^2-W^2.
+\]
+
+여기서 \(\Sigma^2=\sigma_{ab}\sigma^{ab}/(6H^2)\), \(W^2=\omega_{ab}\omega^{ab}/(6H^2)=\omega_a\omega^a/(3H^2)\)다. 와도 벡터 제곱을 그냥 \(H^2\)로 나누면 이 관례와 세 배 차이가 난다. 와도가 있는 congruence에서는 \({}^{(3)}R\)를 그 관측자의 직교 초곡면 곡률로 가정할 수 없다. 원문의 rest-space curvature 정의와 비적분성을 함께 유지한다. [S25]
+
+완전유체의 고유 에너지밀도·압력을 \(\mu,p\), 상대 rapidity를 \(\chi\)라 하면 \(\mu_u=\mu+(\mu+p)\sinh^2\chi\)다. 따라서 관측자 에너지밀도 증가, 전단, 와도, 비교 기준 곡률의 차이는 서로 다른 부호와 물리적 기원을 갖는다. 이들을 사영한 signed comparator가 작아도 각 항이 작은 것은 아니다. 절댓값을 씌워 하나의 양의 ‘비등방 노름’으로 바꾸면 원래의 상쇄 구조를 잃는다.
+
+### 3.2 King–Ellis 계열의 기하학적 구별
+
+공간적으로 균질한 계량의 normal congruence가 hypersurface orthogonal이라는 명제와, 기울어진 유체 congruence도 irrotational이라는 명제는 다르다. 보존된 LRS Bianchi V/I 예에서 구조상수 \(k_B=1,0\), 기울기 각 \(\phi\), \(H_i=\dot a_i/a_i\)를 쓰면, 시간에 따라 방위각이 변하지 않는 운동학적 장의 와도는
+
+\[
+\omega_{ab}\omega^{ab}=
+\frac{\sinh^2\chi\,\sin^2\phi}{2}
+\left[\sinh\chi\cos\phi(H_1-H_2)-\cosh\chi\frac{k_B}{a_1}\right]^2.
+\]
+
+\(k_B\)는 광속이 아니다. 축 방향 기울기 \(\sin\phi=0\)에서는 와도가 0이지만, Bianchi I에서도 비등방 전단과 비정렬된 운동학적 관측자 장에는 회전 가능성이 남는다. 반면 특정 single-perfect-fluid Einstein 제약은 type-I tilt 자체를 금지할 수 있다. 운동학적으로 선택 가능한 벡터장, 물질 보존식, Einstein 초기 제약과 실제 국소 발달을 순서대로 확인해야 한다. 이 분기의 기존 symbolic·numerical seal은 등록된 ansatz의 근거이며 모든 물질 모형의 분류 정리가 아니다. [S26] [S27]
+
+<a id="s4"></a>
+
+## 4. 다유체, 양의 moment와 실현 가능성
+
+다유체 분기에서 normal observer에 대한 각 성분의 기울기는 \(u_i=\gamma_i(n+v_i)\)로 분해한다. 총 flux는 \(J_a=\sum_i(\mu_i+p_i)\gamma_i^2v_{ia}\)이고, 이차 moment는
+
+\[
+K_{ab}=\sum_i w_i v_{ia}v_{ib},\qquad
+w_i=(\mu_i+p_i)\gamma_i^2\ge0,
+\quad K\succeq0,
+\quad \pi_{ab}=K_{\langle ab\rangle}.
+\]
+
+반대 방향의 같은 성분을 짝지으면 \(J=0\)이어도 \(K\ne0\)이다. 양의 준정부호 행렬은 고유벡터 방향의 rank-one 항으로 분해되므로 antipodal pair를 통한 대수적 moment 실현이 가능하다. 다만 주어진 밀도·상태방정식·아광속 제한까지 고정했을 때 모든 행렬이 실현된다는 뜻은 아니다. 같은 \(\operatorname{tr}K\)라도 STF 부분은 다를 수 있어, scalar tilt energy는 응력의 형태를 결정하지 못한다. [S28]
+
+전단 방정식의 제한된 Bianchi-I 분기는 \(\dot\sigma_{ab}=\operatorname{STF}(-3H\sigma_{ab}+\kappa\pi_{ab})\)를 보존한다. 따라서 전단은 순간 응력뿐 아니라 이력에 반응한다. 무응력 dust FLRW의 \(a(t)=(1+3H_0t/2)^{2/3}\)와 같은 정확한 극한은 코드 비교 기준이지만, 비등방 실제 우주의 확인은 아니다.
+
+이 연구 흐름의 sharpness는 세 단계로 구별해야 한다. 대수적 상자의 끝점은 부등식 변수들 안에서 달성되는 값이다. 제약면의 끝점은 Einstein 초기 제약을 충족하는 자료에서 달성되는 값이다. 동역학적 끝점은 지정 물질의 해가 해당 상태를 실제로 통과한다는 주장이다. 기존 T3-lin, T3-full, T3-int 및 후속 R3는 서로 다른 단계를 다룬다. 국소 내부점 존재나 유한 시간 수치 이력을 전역 정칙성·완전한 해 공간의 sharpness로 확대하지 않는다. [S28] [S29]
+
+<a id="s5"></a>
+
+## 5. 운동론, 엔트로피와 almost-EGS의 조건
+
+### 5.1 충돌 감쇠와 기억
+
+감쇠율 \(\gamma>0\), 시간 \(t\ge0\), 초기 노름 상계 \(B_0\ge0\), 원천 상계 \(S\ge0\)를 고정하고 \(\dot B\le-\gamma B+S\)를 가정하면 기존 운동론 모듈이 사용하는 비교식은
+
+\[
+B(t)\le B_0e^{-\gamma t}+\frac{S}{\gamma}(1-e^{-\gamma t}).
+\]
+
+\(\gamma t\)는 무차원이며 \(S\)는 B의 단위/시간이다. 충돌 spectral gap, 같은 연산자·채널·기준계, 실제 원천의 노름 지배가 선행 조건이다. 초기 비등방 기억의 감쇠와 지속 원천의 바닥을 분리하는 식이지, 모든 분포가 FLRW가 된다는 정리는 아니다. dynamic-budget 분기도 같은 구조를 사용하지만 채널 문자열의 일치만으로 단위·기준계가 물리적으로 검증되는 것은 아니다. [S30] [S31]
+
+### 5.2 엔트로피에서 온도로 가는 연결
+
+엔트로피·KL divergence는 분포의 차이를 측정하고 온도 multipole은 관측 함수의 moment다. 엔트로피 제어를 온도 상계로 옮기려면 분포족, 충돌 보존량, 노름, 온도 추출의 연속성 또는 정량 bridge를 명시해야 한다. 현재 tight-coupling 진단의 \(b_L=\mathrm{source\_norm}\,\mathrm{bridge}/(L+1)\)는 입력값을 사용하는 합성 상계 계산이다. 실제 KL functional을 계산하거나 관측된 온도장에 대한 보편적 엔트로피 정리를 입증하지 않는다. 이 구별을 유지하면서 충돌 감쇠 → tail 제어 → 온도 moment → MES 전제라는 연구 경로를 남긴다. [S32]
+
+### 5.3 가시성 역문제와 EGS 강성
+
+관측 multipole은 visibility로 가중된 이력의 적분이다. 작아진 적분값은 적분 원천이 점별로 작다는 뜻이 아니며, 부호 상쇄·커널의 영공간이 장애가 된다. visibility-rigidity 분기는 전달 출처, 부호 및 rank 조건을 입력받는 진단을 구현했지만 수치적인 역원천 상계까지 제공하지 않는다. 상계의 방향을 뒤집으려면 양의 하한·비상쇄·안정성 상수 등이 추가로 필요하다. [S33]
+
+EGS 계열의 물리적 질문은 복사의 등방성 또는 거의 등방성이 congruence의 기하학을 얼마나 제한하는가다. 현재 almost-EGS 진단은 입력된 가속도·공간미분·시간미분·Weyl 관련 상계를 합성하는 제한된 계산을 제공한다. 모든 관측자의 조건, 미분 계층, 물질·충돌 조건을 단일 하늘의 작은 \(C_2\)로 대체할 수 없다. 복사 isotropic frame의 존재와 유체·관측자 frame의 일치도 별개다. 해당 코드의 cosh(beta)에서 beta는 rapidity와 같은 변수이며 \(v/c\)로 읽으면 안 된다. [S34]
+
+<a id="s6"></a>
+
+## 6. MES 부등식의 물리 내용과 한계
+
+### 6.1 한 방향의 물리적 함의
+
+MES 계열은 물질–복사 방정식과 거의 FLRW인 분기의 가정 아래 복사 비등방성으로 운동학적 이탈을 제한한다. 단일 관측자의 하늘만으로 임의의 시공간을 역복원하는 정리가 아니다. 원 논문과 COBE 연결 문헌은 이 방법의 물리적 계보를 제공한다. 여기서는 그 결과를 현재 데이터로 재계산하지 않고, 저장소가 채택한 조건과 정규화를 설명한다. [2] [3]
+
+양의 \(T_0\)와 동일 온도 단위에서
+
+\[
+\epsilon_2=\frac1{T_0}\sqrt{\frac{75C_2}{8\pi}},\qquad
+\epsilon_3=\frac1{T_0}\sqrt{\frac{245C_3}{8\pi}}
+\]
+
+이다. 그러나 이 관측 normalizer만으로 모든 관측자의 multipole 상계나 시간·공간 미분 상계가 확보되는 것은 아니다. 잔여 dipole \(\epsilon_1\)도 사전에 명시한 귀속 시나리오다.
+
+저장소의 source-matched 축약 분기에서는
+
+\[
+B_\sigma=\frac53\epsilon_1+3\epsilon_2+\frac37\epsilon_3,
+\qquad
+B_\omega=\frac{10}{3}\epsilon_1+\frac{2}{15}\epsilon_2.
+\]
+
+\(|\sigma|^2=\sigma_{ab}\sigma^{ab}\), \(|\omega|^2=\omega_{ab}\omega^{ab}\), \(\Theta=3H>0\)를 일관된 rate 관례로 쓰면
+
+\[
+\frac{\sigma_{ab}\sigma^{ab}}{6H^2}<U_\sigma=\frac32B_\sigma^2,
+\qquad
+\frac{\omega_{ab}\omega^{ab}}{6H^2}<U_\omega=\frac32B_\omega^2.
+\]
+
+이 \(3/2\)는 \(\Theta^2/(6H^2)\)에서 나온다. 반수축 \(\sigma^2=\tfrac12\sigma_{ab}\sigma^{ab}\)나 와도 벡터의 노름을 쓸 때는 반드시 변환해야 한다. geodesic·almost-EGS 분기, Copernican 또는 all-observer 확장, 미분 계층의 축약, 기준계와 잔여 dipole 조건을 제거하면 위 수치 계수의 적용 근거도 사라진다. [S04, §5] [S05]
+
+### 6.2 방향 정보와 채널별 예산
+
+양의 반지름 \(R_j\)를 가진 Euclidean sector ball의 곱 \(B=\prod_jB_{R_j}\)에 대해
+
+\[
+\rho_B(X)=\max_j\frac{\|X_j\|}{R_j},\qquad
+\rho_B(X)^2=\max_j\frac{\|X_j\|^2}{R_j^2}.
+\]
+
+따라서 진폭 gauge와 제곱 포화도는 문턱 1을 공유하지만 1 밖의 수치는 다르다. 각 sector 상계를 signed sum으로 합쳐 양·음 기여가 상쇄되도록 만드는 것과도 다르다. 노름만 제한하는 ball은 회전 아래 불변이므로 주축·방향·손잡이를 골라내지 못한다.
+
+가속도 0은 geodesic 분기의 구조적 가정이다. `NO_MES_ANCHOR`는 수치 분모가 없다는 상태이므로, 이를 측정된 반지름 0의 가속도 ball로 바꾸면 안 된다. 선택적인 Weyl·곡률·응력 sector에도 대응 근거 없이 MES 분모를 복제하지 않는다. [S05] [S10]
+
+<a id="s7"></a>
+
+## 7. 벡터·텐서 불변량과 두 기둥 연구 프로그램
+
+### 7.1 Q/O와 별개인 물리 상태 표현
+
+벡터·텐서 foundation 분기는 \(\sigma\in\mathrm{STF}_2\), polar vector \(\beta_{RM},\beta_{MO},A\), axial vector \(\omega\)를 다룬다. 이 조합은 원시 17차원이고 일반적인 SO(3) 몫은 14차원이며, scalar \(\Delta\Omega_k\)를 더하면 각각 18과 15다. 이는 관측 \(\mathrm{STF}_2\oplus\mathrm{STF}_3\)의 12/9차원과 다른 공간이다. 한 공간의 재구성 정리를 다른 공간의 완전성 증명으로 쓰지 않는다. [S35] [S36]
+
+\(R\in O(3)\)에서 polar vector는 \(Rv\), axial vector는 \(\det(R)R\omega\)로 변환한다. 따라서 \(\det[v,\sigma v,\sigma^2v]\)는 polar v에는 pseudoscalar이지만 axial v에는 O(3) scalar다. 이 parity 구별은 실제 null 대칭이 허용하는 부호 검정을 결정한다. 단순히 determinant라는 이름만으로 모두 parity-odd라고 부를 수 없다.
+
+### 7.2 크기, 모양, 방향과 퇴화 층
+
+\(I_2=\operatorname{tr}\sigma^2>0\), \(I_3=\operatorname{tr}\sigma^3\)에 대해
+
+\[
+J_\sigma=\frac{\sqrt6 I_3}{I_2^{3/2}},\quad |J_\sigma|\le1,
+\quad \Delta_\sigma=\frac{I_2^3}{2}-3I_3^2.
+\]
+
+\(|J_\sigma|=1\)은 중복 고유값의 축대칭 경계, \(J_\sigma=0\)은 고유값 \((\lambda,-\lambda,0)\) 형태를 나타낸다. \(J\)는 진폭과 독립적인 scale-free 좌표다. MES가 \(I_2\)를 제한하면 대수적으로 \(|I_3|\le I_2^{3/2}/\sqrt6\)도 얻지만, 이것은 형태를 측정하거나 형태의 MES 점유율을 정의한 것이 아니다.
+
+Gram–Krylov 생성자, 세 벡터의 determinant, Cayley–Hamilton 축약은 유한 좌표계를 설계한다. 그러나 특정 점의 Jacobian rank, 일반 층의 궤도 분리, 모든 특이 층의 분리, 전체 invariant ring의 생성은 서로 다른 문제다. stabilizer가 비자명한 모든 상태에 equivariant full frame을 하나씩 고르는 것은 불가능할 수 있으므로 층별 불변량 또는 복원 보류가 정상적인 결과다. [S35] [S37]
+
+### 7.3 최대 불변량과 통계적 충분성의 한계
+
+최대 불변량은 정해진 군 아래의 불변 검정을 좌표화한다. 외부 방향을 고정했다면 군은 SO(3) 전체가 아니라 그 방향의 stabilizer로 줄어들고 상대 방향 정보가 필요하다. 모든 정보가 저차 몇 개 좌표로 충분하다는 결론은 군 불변 문제·궤도 분리·실제 표본법칙을 충족할 때만 논의할 수 있다.
+
+원문 두 기둥 제안의 ‘유한 차원이므로 검정 family도 유한’이라는 강한 표현은 채택하지 않는다. 유한 차원 공간 위에도 무한히 많은 통계량·선택 규칙이 존재한다. Hunt–Stein/minimax 계열 역시 군의 compactness만으로 임의 검정의 최적성을 보장하지 않으며 손실·모형·불변성 조건이 필요하다. 이 항목들은 연구 목표로 남긴다. [S35, II-5.1–II-5.3]
+
+<a id="s8"></a>
+
+## 8. 저차 CMB의 완전한 텐서 표현
+
+### 8.1 실수 조화계수와 정규화
+
+실수 온도장에 대해 \(a_{\ell,-m}=(-1)^m a_{\ell m}^*\)이다. 저장 실수 좌표를
+
+\[
+c_{\ell0}=a_{\ell0},\quad
+c_{\ell m,c}=\sqrt2\,\Re a_{\ell m},\quad
+c_{\ell m,s}=-\sqrt2\,\Im a_{\ell m}\quad(m>0)
+\]
+
+로 두면
+
+\[
+\|c_\ell\|^2=\sum_m|a_{\ell m}|^2=(2\ell+1)C_\ell.
+\]
+
+이 좌표는 5차원 사중극과 7차원 팔중극을 온전히 보존한다. 원시 실수·허수 좌표에서는 계량이 \(\operatorname{diag}(1,2,2,\ldots)\)이므로, 두 저장 형식에 같은 Euclidean 계량을 적용하면 정규화가 달라진다.
+
+온도장의 해당 성분을 \(T_2(n)=Q_{ab}n^an^b\), \(T_3(n)=O_{abc}n^an^bn^c\)로 쓰는 관례에서
+
+\[
+Q:Q=\frac{15}{8\pi}\|c_2\|^2=\frac{75}{8\pi}C_2,
+\qquad
+O:O=\frac{35}{8\pi}\|c_3\|^2=\frac{245}{8\pi}C_3.
+\]
+
+따라서 \(Q,O\)는 온도 단위, 그 완전 수축은 온도 제곱 단위다. 이 항등식은 각도 패턴의 표현을 고정한다. 전단의 Hubble 정규화나 MES의 전제는 이 변환에 포함되지 않는다. [S04, §§2–3] [S06]
+
+### 8.2 스칼라 압축에서 잃는 정보
+
+\(C_2,C_3\)는 크기를 보존하지만 상대 방향과 일부 parity 정보를 버린다. 두 텐서를 따로 회전시켜 얻는 최적 정렬은 실제 관측 상태에 허용되는 하나의 공통 회전과 다르다. 이 때문에 전력, 몇 개의 수축량, 축 요약을 조합한 통계량이 완전한 \((Q,O)\)의 대체재라고 가정할 수 없다.
+
+다중극 벡터(full-MV)는 적절한 진폭·부호·순열 관례 아래 같은 온도 텐서를 표현하는 다른 좌표다. 완전한 Q/O에 비해 새로운 관측 정보를 추가하는 채널은 아니다. 다중근·일치 벡터가 있는 경우 복원 거부를 남기고 원래 텐서 행을 보존해야 한다. R8의 45개 모의 행 중 44개가 복원되고 한 행이 보류된 기록은 이 제한을 보여준다. 네 관측 component tensor의 복원 성공도 물리적 원인 식별이나 관측 순위의 적격성을 뜻하지 않는다. [S01] [S07]
+
+<a id="s9"></a>
+
+## 9. 회전 궤도, 불변량과 인증 거리
+
+### 9.1 순환 영역의 재구성
+
+\(A_Q=\sqrt{Q:Q}>0\), \(A_O=\sqrt{O:O}>0\)에서 정규화 텐서를 \(\bar Q,\bar O\)라 한다. 다음 수축 벡터는 속도가 아니라 관측 텐서로 만든 무차원 벡터다.
+
+\[
+v_a=\bar O_{abc}\bar Q_{bc},\qquad
+K=[v,\bar Qv,\bar Q^2v],\qquad \chi=\det K.
+\]
+
+\(\bar Q\)의 고유값이 단순하고 그 고유기저에서 \(v\)의 세 성분이 모두 0이 아니면 \(K\)가 가역이다. 이 순환 영역에서 \(s_2=\operatorname{tr}\bar Q^2\), \(s_3=\operatorname{tr}\bar Q^3\), \(\mu_r=v^T\bar Q^rv\)와 팔중극의 열벡터별 삼중 평가를 묶은 packet으로 대표를 재구성한다. Cayley–Hamilton 관계
+
+\[
+\bar Q^3=\frac{s_2}{2}\bar Q+\frac{s_3}{3}I
+\]
+
+가 고차 \(\mu_r\)를 정하고, Gram 행렬 \(G=K^TK\)에는 \(\det G=\chi^2\)가 성립한다. 양의 대각 Cholesky 인자와 고정된 \(\operatorname{sgn}\chi\) 보정으로 proper orientation을 선택한다. 단지 \(B^TB=G\), \(\det B=\chi\)를 요구하는 것만으로는 대표가 유일하지 않다.
+
+이 재구성의 정의역은 실제 전방 사상의 상에 속하는 비영·순환 packet이다. 임의의 숫자 packet이나 모든 특이 층을 포괄하는 정리가 아니다. \(\chi\)는 proper rotation에는 불변이지만 반사에는 부호가 바뀌므로, 명시된 거울상 예에서 스칼라 압축이 잃은 정보를 드러낸다. 이를 모든 bispectrum의 불완전성 정리로 확대하지 않는다. [S04, §3] [S08]
+
+### 9.2 하나의 회전을 사용하는 거리
+
+양의 온도 척도 \(q_0,o_0\)를 사전에 고정하고
+
+\[
+d(X,Y)^2=\min_{R\in SO(3)}
+\left\{\frac{\|Q-RQ'R^T\|_F^2}{q_0^2}
++\frac{\|O-R^{\otimes3}O'\|_F^2}{o_0^2}\right\}
+\]
+
+를 사용한다. \(S(O)_{ij}=O_{iab}O_{jab}\)라 할 때 정렬된 고유값으로 얻는 하한은
+
+\[
+b_Q=\|\lambda(Q)-\lambda(Q')\|_2,\quad
+b_O=\|\sqrt{\lambda(S(O))}-\sqrt{\lambda(S(O'))}\|_2,
+\]
+
+\[
+d\ge\sqrt{b_Q^2/q_0^2+b_O^2/o_0^2}.
+\]
+
+각 블록의 하한이 같은 모든 회전에 대해 성립하기 때문에 제곱합이 가능하다. 두 블록의 독립 최솟값이 동시에 실현된다는 주장은 아니다. 같은 잔차에 대한 서로 다른 하한을 결합할 때는 최대를 취하며 제곱합으로 중복 가산하지 않는다.
+
+R8은 quaternion chart의 셀 피복, Lipschitz 오차, 바깥쪽 반올림을 이용해 \([\ell_{ij},u_{ij}]\)를 유지한다. 최적화기가 찾은 회전은 실행 가능한 상한 증인이고, 전역 최솟값의 인증은 아니다. 고유값의 일반 부동소수점 출력도 자동으로 하한 인증이 되지 않는다. 입력 dyadic 수의 정확성은 계산된 통계량의 산술적 정의이며 관측 오차가 0이라는 뜻이 아니다. [S09, O1–O2]
+
+### 9.3 수축 섬유와 경계에서의 안정성
+
+별도 최신 연구 노트는 단위 Frobenius norm의 관측 형상 \(q=Q/\|Q\|_F\), \(o=O/\|O\|_F\)와 \(v=o:q\)만 보존했을 때 남는 형태를 분석한다. 이 v는 물리 속도가 아니다. \(L_qo=o:q\), \(\mathcal B_qw=3w_{\langle a}q_{bc\rangle}\), \(M_q=I+6q^2/5\), \(R_q=\mathcal B_qM_q^{-1}\)라 두면
+
+\[
+L_qR_q=I,\quad \dim\ker L_q=4,\quad
+\eta_v=\|R_qv\|_F^2=3v^TM_q^{-1}v.
+\]
+
+고정된 q와 v에 대한 단위 STF3 섬유는 \(\eta_v>1\)에서 공집합, \(\eta_v=1\)에서 한 점, \(\eta_v<1\)에서
+
+\[
+\mathcal F_q(v)=R_qv+\sqrt{1-\eta_v}\,S(\ker L_q)
+\]
+
+라는 affine 3-sphere다. 핵 공간이 4차원인 것과 구면이 3차원인 것을 구별한다. 이 조건은 축약된 수축·노름 문제에는 필요충분하지만 임의 완전 Krylov packet의 trilinear 일관성까지 보장하지 않는다. [S54]
+
+같은 고정 q·같은 계량의 두 비어 있지 않은 섬유 사이에는
+
+\[
+\begin{aligned}
+d_H(\mathcal F_q(v),\mathcal F_q(w))^2
+&=3(v-w)^TM_q^{-1}(v-w)\\
+&\quad+\left(\sqrt{1-\eta_v}-\sqrt{1-\eta_w}\right)^2.
+\end{aligned}
+\]
+
+포화 경계 \(\eta_{v_*}=1\)에서 \(v_t=(1-t)v_*\)를 택하면 \(d_H=\sqrt{2t}\)다. 따라서 선형 역행렬과 cyclic chart가 잘 조건화되어 있어도, 축약된 norm-constrained 가능집합은 경계에서 sharp 1/2-Hölder 민감도를 보일 수 있다. 내부 여유 \(\eta\le1-\delta\)를 고정하면 명시적 Lipschitz 상계가 회복된다. 이것은 완전 packet decoder의 반례가 아니라, 버린 정보와 비선형 경계의 안정성을 구별하는 결과다. 두 노트는 직접 유도된 비정규 companion 연구이며 독립 CAS 수용이나 새 관측 결과로 승격하지 않았다. [S55]
+
+<a id="s10"></a>
+
+## 10. 양의 이차 하늘과 역복원의 통계적 취약성
+
+이상적인 Bianchi-I blackbody 분기는 방향별 양의 온도장 T의 역제곱이 이차형식으로 닫히는 표현을 연구한다. null 방향 \(\ell=(1,n)\), \(\eta=\operatorname{diag}(-1,1,1,1)\)에 대해
+
+\[
+T(n)^{-2}=\ell^TA\ell,\qquad \ell^T\eta\ell=0.
+\]
+
+따라서 \(A\)와 \(A+h\eta\)는 같은 null-cone 값을 준다. WU009 C08–C11은 엄격히 양의 이차 하늘에서 rotation-free boost와 양의 공간 이차형식의 표현 복원을 유지한다. 이때 필요한 입력은 monopole·dipole을 포함하는 양의 절대 온도장이다. foreground 제거 후 저차 잔차 \((Q,O)\)만으로 같은 역복원이 가능하다고 바꾸지 않는다. 영점이 있는 경계, 임의 비열적 스펙트럼 또는 임의 편광으로 범위를 넓히지 않는다. 해당 78행 원문은 사용자 요약 전사이며 formal dossier는 아직 미재생 상태다. [S37]
+
+통계 모델이 \(Y=T+\varepsilon\), \(\varepsilon\)가 절단되지 않은 Gaussian 잡음이라면, 0 근방에서 양의 밀도를 가지므로 \(E[Y^{-2}]\)는 발산한다. 작은 잡음이라는 이유로 역제곱 변환의 평균·분산이 자동 존재한다고 가정할 수 없다. 따라서 직접 T 공간의 가중 Gaussian least squares와 역제곱을 비가중 적합하는 방법은 같은 likelihood가 아니다. tangent projection을 통한 일차 편향 보정도 정칙성·가중치·nuisance tangent가 정해진 국소 문제다. [S37, C15–C17]
+
+공통 blackbody와 정확한 bandpass inversion이 성립하면 채널 간 coherence는 모델의 예측이다. incoherence는 그 공통 모델의 전제 중 적어도 하나와 불일치한다는 뜻이며, foreground·calibration·전달·비열적 원인 중 하나를 단독 식별하지 않는다. 임의 T/Q/U의 보편적 유한 이차 closure는 정의되어 있지 않다. 여기서 Q는 Stokes 변수이므로 사중극 텐서와 다시 구별한다. [S37, C12–C18]
+
+<a id="s11"></a>
+
+## 11. PSTF 복사 전달과 온도·편광의 분기
+
+### 11.1 전달 frame과 충돌 frame
+
+복사 전달의 보존된 설계는 normal tetrad에서 \(\Theta_{A_\ell},E_{A_\ell},B_{A_\ell}\)를 수송하고 electron frame에서 충돌·원천·visibility를 평가한다. 두 frame이 기울어져 있으면 Lorentz 변환이 source와 multipole coupling에 들어간다. 일반 비축대칭 shear는 all-m 결합을 만들며, 사중극 방정식은 \(\ell=4\)와도 연결되므로 \(\ell=2\)만의 절단을 자동 폐쇄계로 볼 수 없다. 축정렬 LRS 예외를 일반 Bianchi에 적용하지 않는다. [S38] [S39]
+
+### 11.2 FLRW LoS 극한에서 유지되는 식
+
+conformal time \(\eta\), dimensionless optical depth \(\kappa\), visibility g의 관례에서 저장된 source 구조는
+
+\[
+S_T=g(\Theta_0+\Psi+\Pi_{\rm pol}/4)
++e^{-\kappa}(\dot\Phi+\dot\Psi)+S_{\rm Doppler},
+\qquad \Pi_{\rm pol}=\Theta_2-\sqrt6 E_2.
+\]
+
+온도는 보통의 \(j_\ell\), E-mode는 별도의 spin-2 radial projector를 사용한다. 온도 \(\Pi_{\rm pol}/4\)와 E-mode projector를 혼합하지 않는 구별은 유지한다. 그러나 Doppler source의 정규화는 이 보고서에서 미해결로 남긴다. donor는 \(v_b=\theta_b/k\)를 dimensionless peculiar velocity라 정의하면서 \(d(gv_b)/d\eta\)를 그대로 더한다. 보통 visibility의 단위가 역시간이면 이 미분은 역시간 제곱이어서 앞의 source 항들과 일치하지 않는다. source·속도·시간의 숨은 재척도 또는 Fourier 관례를 확인하기 전에는 ‘1/k를 추가하면 안 된다’는 원문의 해결 판정을 채택할 수 없다. [S38]
+
+이는 정적 편집 검토에서 발견한 source-normalization 의무다. 여기서 대체 공식을 새로 도출하거나 생산 코드를 수정하지 않았다. source monopole과 \(\Psi\)의 gauge/frame 조합도 별도의 남은 계약이다. 따라서 PSTF 설계와 일부 구현의 존재를 scalar source 전체의 정확성으로 일반화하지 않는다.
+
+### 11.3 비등방 전달과 관측 covariance
+
+비등방 배경의 일반 구조는 scalar Bessel 하나가 아니라 다중극 행렬의 propagator다.
+
+\[
+\dot X(\eta)=A(\eta)X(\eta)+S(\eta),\qquad
+X(\eta_0)=U(\eta_0,\eta_i)X_i+
+\int_{\eta_i}^{\eta_0}U(\eta_0,\eta)S(\eta)\,d\eta.
+\]
+
+서로 다른 시각의 \(A\)가 commute하지 않으면 U에 시간 순서가 필요하다. 관측 모델도 일반적으로 \(\langle a^X_{\ell m}a^{Y*}_{\ell'm'}\rangle\)의 비대각 성분을 포함하며, \(C_\ell\)만으로 이를 복원할 수 없다. BiPoSH는 이 covariance를 각운동량 결합 좌표로 표현하는 기능을 맡고 모형 evidence를 직접 만들지 않는다. 편광·원격 사중극·kSZ·parity 채널은 추가 반응 방향의 후보지만 실제 rank·mask·null 및 optical-depth 모형이 필요하다. 기존 전달/제한 benchmark와 앞으로의 native low-ell atlas를 구별하며, 이 보고서는 새 solver를 구현하거나 실행하지 않는다. [S39] [S40]
+
+<a id="s12"></a>
+
+## 12. 국소 boost 반응과 nuisance 몫공간
+
+### 12.1 전천 온도 반응
+
+하늘 방향 \(n=-e\), \(\beta^2<1\), \(\gamma=(1-\beta^2)^{-1/2}\)에서 thermodynamic temperature의 Doppler weight 1인 pullback은
+
+\[
+\widetilde T(\widetilde n)=
+\frac{T(n(\widetilde n))}{\gamma(1-\beta_{\rm RO}\cdot\widetilde n)}.
+\]
+
+일차 생성자는
+
+\[
+\delta_\beta T=(\beta\cdot n)T-
+[\beta-(\beta\cdot n)n]\cdot\nabla_{S^2}T.
+\]
+
+주파수 의존 관측량이나 다른 Doppler weight에 같은 식을 자동 적용하지 않는다. 이는 국소 복사–관측자 변환의 법칙이고 전역 물질 기울기나 전단의 전달함수가 아니다. [6] [S04, §8]
+
+사중극에서 팔중극으로의 STF 반응을 \(B_Q\beta=3\beta_{\langle a}Q_{bc\rangle}\)라 쓰면, 완전 Frobenius 내적에서
+
+\[
+B_Q^*O=3(O:Q),\qquad B_Q^*B_Q=3M_Q,
+\qquad M_Q=(Q:Q)I+\frac65Q^2.
+\]
+
+\(Q\ne0\)에서는 \(M_Q\succ0\)이고
+
+\[
+\widehat\beta_{\rm LS}=M_Q^{-1}(O:Q),\qquad
+P_{\operatorname{Im}B_Q}O=B_QM_Q^{-1}(O:Q).
+\]
+
+유지된 조건수 결과는 \(\kappa_2(M_Q)\le5/3\), \(\kappa_2(B_Q)\le\sqrt{5/3}\)다. 그러나 intrinsic 팔중극을 자유롭게 허용하면 이 좌표는 실제 속도의 유일한 추정이 아니다. 잘 조건화된 대수적 역행렬과 물리적 귀속은 다르다. [S04, §8] [S15]
+
+### 12.2 마스크 뒤의 반응
+
+boost, beam/pixel 처리, 구면 합성, 저차 모드 동시 적합, 공통화, 성분 보존의 순서는 추정량의 일부다. 마스크 전 반응과 마스크 후 반응을 혼용하면 alias와 nuisance 공간이 달라진다. 저차 반응 \(J\)와 허용된 고차 원천 \(K_{\rm hi}\)에 대해 남는 정보는
+
+\[
+J_{\rm surv}=P_{(\operatorname{Im}K_{\rm hi})^{\perp}}J,
+\qquad
+\operatorname{rank}J_{\rm surv}
+=\operatorname{rank}[K_{\rm hi}\ J]-\operatorname{rank}K_{\rm hi}.
+\]
+
+첫 식의 사영은 \((\operatorname{Im}K_{\rm hi})^\perp\) 위의 직교 사영을 뜻한다. 고차 원천을 제한 없이 더 허용하면 그 image는 커지므로 이미 소멸한 model-free survivor가 되살아나지는 않는다. 다만 열 개수가 많다는 사실만으로 image가 전체 출력 공간이라는 결론을 내릴 수 없다.
+
+등록된 연속 wide-mask 축방향 \(L=12\) 사례에는 32행 full-rank의 정확 대수 근거가 있다. 그 밖의 등록 방향은 수치 근거를 가지며, 현재 유한 HEALPix matched-control에 대한 rank는 미해결로 남아 있다. 연속 모형의 full rank를 유한 pixel 구현의 no-go 정리로 승계하지 않는다. [S04, §§9–10] [S16]
+
+<a id="s13"></a>
+
+## 13. 국소 운동, 깊이 관측과 원격 채널
+
+속도장의 일차 공간 전개 \(v(x)=b+Ax\)에서 \(x=rn\)라 두면
+
+\[
+v_r(n,r)=n^Tb+r\left[\frac{\operatorname{tr}A}{3}
++n^T A_{\rm STF}n\right],\qquad n^TA_{\rm skew}n=0.
+\]
+
+충분한 방향·깊이로 full-column-rank인 affine radial design은 bulk 3, expansion 1, shear 5 성분을 식별할 수 있지만 solid rotation은 식별하지 못한다. 반면 같은 관측에 local/global vector를 같은 response block으로 두 번 넣으면 \([R,R](a,-a)=0\)이다. 전체 nullspace가 정확히 이 모양인 것은 R의 full-column-rank를 추가 가정할 때다. 관측 행을 복제하는 것과 모수 block을 복제하는 것도 구별한다. [S28] [S37, D01–D04]
+
+깊이 shell마다 알려진 반응이 다르면 두 vector 성분을 분리할 가능성이 생긴다. ‘한 shell에서는 3, 넓은 depth에서는 6’ 같은 rank는 특정 response 설계의 결과이며 모든 survey의 보장이 아니다. 시간 block \(T\otimes I_5\)의 rank \(5\operatorname{rank}T\) 역시 같은 공통 tensor를 독립적인 이력 가중으로 관측한다는 모형에 속한다.
+
+횡방향 proper motion이나 원격 CMB multipole은 radial blind sector를 여는 후보다. 그러나 kSZ와 원격 산란의 자유로운 optical-depth 진폭은 물리 진폭과 scaling degeneracy를 만든다. cluster 배치, selection, shared-sky covariance가 필수이며 여러 지도를 쓴다는 사실만으로 독립 likelihood를 곱하지 않는다. CF4의 위치·깊이 controls가 존재하는 것과 관측 joint-law가 준비된 것은 다르다. 기존 downstream CF4 쟁점은 남은 입력·모형 의무로 유지한다. [S41] [S01]
+
+
+### 13.1 redshift 경로에서 분리하려는 대상
+
+깊이별 관측 feature를 \(y_j\), local observer endpoint boost를 \(\beta_L\), 물질 tilt 이력을 \(\beta_G(z)\)라 하면 개념적 공통 모형은
+
+\[
+y_j=R_{Lj}\beta_L+\int W_j(z)R_G(z)\beta_G(z)\,dz+N_j\nu+\varepsilon_j.
+\]
+
+이 식은 각 donor의 반응 설계를 모으는 편집상의 일반형이며 현재 적격 native response가 모두 준비되었다는 뜻이 아니다. local 항이 깊이에 공통인 경우에도 추정량·선택·거리 변환이 \(R_{Lj}\)를 바꿀 수 있다. global 항의 상수·감쇠·성장·전단 수송을 구별하려면 실제 창 \(W_j\)와 동역학을 등록해야 한다. 임의의 보편적 \(1/r\) 법칙이나 ‘깊은 곳까지 같으면 global’이라는 판정은 채택하지 않는다.
+
+여러 j를 쌓고 nuisance를 사영한 뒤 \(R_L,R_G\)의 column image와 principal angle을 비교한다. 두 image가 일치하면 global과 local 원인은 자료에서 구별되지 않는다. 같은 sky의 방향·STF 모양·parity와 진폭을 함께 사용하면 구별 가능한 방향을 늘릴 후보가 생긴다. 다만 amplitude normalizer를 바꾼 것만으로 rank가 늘어나는 것은 아니다. 이러한 rank 진단 뒤에야 joint-law 검정, HTT의 모형 비교 또는 식별집합 envelope를 붙인다. [S53]
+
+### 13.2 구현된 depth-path와 공동 covariance의 남은 차이
+
+별도 foundation의 depth_path는 깊이·mask·selection·feature layout을 각 stratum에 묶고, 중첩된 sky support 사이에서 \(y_{j+1}-K_jy_j\)를 계산한다. K는 등록된 feature transport다. 실제 code는 \(C_{j+1}+K_jC_jK_j^T\)를 잔차 covariance로 사용한다. 같은 자료가 겹칠 때의 일반식은
+
+\[
+V_j=C_{j+1}+K_jC_jK_j^T
+-C_{j+1,j}K_j^T-K_jC_{j,j+1}.
+\]
+
+따라서 현재 구현의 합산식은 cross terms가 0이거나 별도 근거로 처리된 조건에서 해석해야 한다. nested sky라는 메타데이터만으로 그 조건이 성립하지 않는다. 이 문서는 실제 구현과 필요한 일반 공동법칙을 구별하며 생산 코드를 수정하지 않았다. rank-deficient covariance에서는 점수를 미확인으로 남기는 기존 동작도 보존한다. [S52]
+
+MIO의 depth-scramble은 원래 순서와 섞인 순서의 coherence 저하를 비교하는 negative control다. 임의 scramble 하나의 PASS는 정확한 p-value가 아니다. 통계 검정으로 쓰려면 전체 경로의 교환가능성·선택 규칙·동시 law를 정의하고 각 pseudo-observation에서 같은 분석을 수행해야 한다. HTT likelihood adapter도 주어진 covariance를 소비한다는 사실과 covariance가 보유 데이터에 맞는다는 사실을 구별한다. [S52]
+
+<a id="s14"></a>
+
+## 14. 곡률의 동역학적 재개방
+
+순간 선형 반응에서 scalar curvature의 열이 0인 문제와 곡률이 전단의 시간 진화를 통해 관측에 영향을 주는 문제는 구별된다. LRS Bianchi III/Kantowski–Sachs의 지정된 두 scale-factor 분기에서
+
+\[
+\Sigma=\frac{H_1-H_2}{3H},\quad K=-\frac{{}^{(3)}R}{6H^2},\quad
+1=\Omega+\Sigma^2+K,
+\]
+
+\[
+q=\frac{1+3w}{2}(1-K)+\frac{3(1-w)}{2}\Sigma^2,
+\quad K'=2K(q+\Sigma),
+\]
+
+\[
+\Sigma'=-K-\frac{\Sigma}{2}
+\left[(1+3w)K+3(1-w)(1-\Sigma^2)\right].
+\]
+
+prime은 이 분기의 expansion-normalized 시간이다. FLRW 근방에서 감쇠 transient를 제거한 선형 particular mode는 \(\Sigma\simeq\kappa_K K\), \(\kappa_K=-2/(5+3w)\)로 이어진다. dust는 \(-2/5\), radiation은 \(-1/3\)이다. 이 계수는 선형화 수준의 결과이며 유한 진폭의 모든 차수 항등식이 아니다. 유한 구간의 곡률 상계로 쓰려면 transient, remainder와 해당 branch의 존재 조건을 포함해야 한다. [S42]
+
+따라서 거의 FLRW의 특정 동역학을 가정하면 전단 상계에서 곡률을 간접 제한하는 경로가 열리지만, 이것이 모든 Bianchi 계열의 곡률 측정이나 순간 response-rank no-go의 폐기를 뜻하지 않는다. 부호 있는 scalar K와 비등방 curvature tensor도 계속 구별한다.
+
+<a id="s15"></a>
+
+## 15. 제한된 Bianchi-I 물리 벤치마크
+
+### 15.1 상쇄되는 flux와 남는 응력
+
+R3는 LRS Bianchi I, 같은 크기의 반대 방향 dust stream 두 개, 초기 등방 Planck 복사와 \(\Lambda\)를 사용하는 제한 모형이다. proper time에서
+
+\[
+ds^2=-c^2dt^2+a_\perp^2(dx^2+dy^2)+a_\parallel^2dz^2,
+\quad a_\perp=ae^{-b},\quad a_\parallel=ae^{2b},
+\]
+
+\[
+H=\dot a/a,\quad S=\dot b,\quad
+\sigma_{\hat i\hat j}=\operatorname{diag}(-S,-S,2S)
+\]
+
+이다. \(\beta=\tanh\chi\)와 보존량 \(\kappa=a_\parallel\sinh\chi\)를 구별하면
+
+\[
+\dot\chi=-H_\parallel\tanh\chi,\qquad
+\dot\beta=-H_\parallel\beta(1-\beta^2).
+\]
+
+정반대 stream의 총 flux는 0이지만 \(p_{\parallel d}=\varepsilon_d\beta^2\)는 남는다. 따라서 운동량의 일차 상쇄는 이차 응력이나 기하학적 등방성을 뜻하지 않는다. 이것은 다성분 tilt를 하나의 bulk-flow 벡터로 치환할 때 잃을 수 있는 정보를 보여주는 구체적 물리 예다. [S19, N1–N6]
+
+### 15.2 복사와 기하학의 결합
+
+총 에너지밀도 \(\varepsilon\)와 압력을 사용하는 expanding branch는
+
+\[
+H^2=\frac{8\pi G}{3c^2}\varepsilon+\frac{\Lambda c^2}{3}+S^2,
+\qquad
+\dot S=-3HS+\frac{8\pi G}{3c^2}(p_\parallel-p_\perp).
+\]
+
+\(\varepsilon\)를 질량밀도로 바꾸지 않았으므로 \(c^{-2}\)가 필요하다. collisionless 복사의 응력은 보존된 운동량과 각도 분포의 moment로 계산하며, 임의의 유한 multipole 절단으로 닫았다고 해석하지 않는다. 양의 scale factor와 \(H>0\)인 국소 영역의 초기값 논증을 우주 전체의 정칙성으로 확대하지 않는다.
+
+normal observer의 온도장은
+
+\[
+T_n(t,\mu)=\frac{T_i a_i}{a}
+\left[e^{-2b}(1-\mu^2)+e^{4b}\mu^2\right]^{-1/2}.
+\]
+
+이 장은 \(\mu\mapsto-\mu\) 아래 짝수이므로 normal frame에서 coherent odd multipole이 사라진다. 관측자 endpoint boost는 별도 입력으로 유지한다. 두 반대 stream, 빛을 내는 positive-stream 원천, 관측자의 기준계를 동일시해서는 안 된다. [S19, N7–N14]
+
+최신 실행은 54개 history와 432개 광학 비교를 보존한다. 36개 더 엄격한 history만 수렴·잔차 기준을 통과했고, 광학 비교 자체는 432개가 통과했지만 유효 history와 함께 쓸 수 있는 것은 288개다. 이 결과는 고정된 약한 비등방 endpoint와 수치 벤치마크의 성질을 보여준다. 일반 저차 Bianchi Boltzmann solver, 임의 caustic 영역의 정리 또는 관측 likelihood가 완성되었다는 뜻은 아니다. [S01] [S20]
+
+<a id="s16"></a>
+
+## 16. 물리적 가능집합과 부분 식별
+
+물리 조건 \(\eta\)가 고정되어 있을 때 공동 가능집합은
+
+\[
+\Theta(y;\eta)=D_\eta\cap B_{\rm MES}(y;\eta)
+\cap\mathcal R_\eta^{-1}(C_y(\eta))
+\]
+
+이다. \(D_\eta\)는 물리 정의역, \(\mathcal R_\eta\)는 전방 반응, \(C_y\)는 관측과 양립하는 영역이다. 같은 자료로 만든 MES 상계와 관측 영역은 하나의 공동 조건부 체계에 속한다. 독립 likelihood처럼 곱하려면 별도의 공동 확률법칙이 필요하다.
+
+정확한 선형 반응과 정확한 관측에서 하나의 가능점 \(X_0\)가 있으면
+
+\[
+\Theta=F_y\cap(X_0+\ker\mathcal R_\eta),\qquad
+F_y=D_\eta\cap B_{\rm MES}(y;\eta).
+\]
+
+유일성은 \(\{h\in\ker\mathcal R_\eta:X_0+h\in F_y\}=\{0\}\)와 동치다. 전체 열 rank는 충분조건이지만 꼭 필요한 조건은 아니다. 예를 들어 \(x_1+x_2=0\)에 \(x_1,x_2\ge0\)를 함께 주면 rank 1에서도 원점만 남는다. 반면 경계에서 유일한 점이 얻어졌다는 사실만으로 잡음 아래의 안정적 추정이나 표본 coverage까지 얻지는 못한다. [S04, §6]
+
+관심량 \(f(X)\)의 범위는 같은 가능집합에서 \(\inf_{X\in\Theta}f(X)\), \(\sup_{X\in\Theta}f(X)\)를 구해야 한다. 분자와 분모의 주변 범위를 각각 얻어 임의로 조합하면 둘이 서로 다른 물리 상태에서 실현될 수 있다. 고정된 외부 양의 분모와 자료 의존 random anchor는 서로 다른 추론 문제다. Empty는 유지한 조건과의 불일치, unbounded는 제한되지 않은 방향, unresolved는 계산·정보 부족이다. 어느 것도 자동으로 등방성 판정으로 바뀌지 않는다. [S05] [S11]
+
+<a id="s17"></a>
+
+## 17. 공유 nuisance를 가진 분수계획 구간
+
+이 연구 분기는 분자와 분모가 같은 불확실한 물리량을 공유할 때의 정확한 범위를 다룬다. compact box B에서 affine \(N(s),D(s)\)와 \(D(s)>0\)를 가정하면
+
+\[
+I_{\rm joint}=\left[\min_{s\in B}\frac{N(s)}{D(s)},
+\max_{s\in B}\frac{N(s)}{D(s)}\right]
+\subseteq I_{\rm product}.
+\]
+
+분모가 양수인 linear-fractional 함수는 box 꼭짓점에서 끝점을 달성한다. 그러나 일반 비선형 \(\Pi(c\mid\eta)\)까지 같은 꼭짓점 규칙을 복제할 수 없다. 상한에는 quasiconvexity, 하한에는 quasiconcavity 또는 각각에 맞는 단조 조건이 필요하다. \(f(\eta)=\eta^2\), \(\eta\in[-1,1]\)의 최솟값 0은 내부점에 있다. [S43] [S35, II-4.4]
+
+공동 구간이 항상 양 끝에서 엄격히 짧아진다는 명제는 유지되지 않는다. \(N(s)=s,D(s)=1+s,s\in[0,1]\)이면 joint는 \([0,1/2]\), product는 \([0,1]\)여서 하한은 같다. 모든 N이 양수일 때 하한 일치는 분자 argmin과 분모 argmax의 교차 여부로, 상한 일치는 반대 극값 집합의 교차 여부로 표현할 수 있다. N이 0 또는 음수가 될 수 있으면 이 간단한 부호 논리는 수정해야 한다. 최신 T2G는 공유 상태와 양의 분모를 보존하며 원래의 P36/T2p를 대체한다. [S43]
+
+두 온도 대표족의 독립적인 대수 결과도 남는다. \(\mu_p(s)=((1+s)^p+(1-s)^p)/2\), \(R_p=\mu_p/\mu_4^{p/4}\), \(0\le s\le1\)에서
+
+\[
+\mu_3\mu_5-\mu_4^2=s^2(1-s^2)^3,
+\qquad R_3+R_5\ge2,
+\]
+
+마지막 등호는 \(s=0\)에서만 성립한다. \(s=1\)에서 곱의 등호가 성립해도 합의 등호는 성립하지 않는다. 이 fingerprint 합 정리는 지정 두 온도 family의 수학이며, 폐기된 Teff/TSC를 활성 물리 주체로 되살리는 근거가 아니다. [S44]
+
+<a id="s18"></a>
+
+## 18. 특이 Gaussian 법칙과 신뢰영역의 역상
+
+### 18.1 지지집합을 포함한 적합성 검정
+
+R7/R8의 Gaussian 법칙은 \(Y\sim N(\mu(\theta),C(\theta))\)이고 \(C\succeq0\)인 경우를 포함한다. \(r=\operatorname{rank}C\), \(C^+\)를 Moore–Penrose 역행렬이라 하면 잔차가 \(\operatorname{Im}C\) 안에 있을 때
+
+\[
+T_\theta=(y-\mu(\theta))^TC(\theta)^+(y-\mu(\theta))
+\]
+
+를 \(\chi^2_r\) 문턱과 비교한다. 지지집합 밖의 잔차는 Gaussian 모형과 양립하지 않는다. 역행렬이 없다는 이유로 ridge를 더하면 원래 모형의 지지집합을 바꾸므로, 단순한 계산 편의로 적용할 수 없다. \(r=0\)이면 \(y=\mu\)라는 결정론적 지지집합을 별도로 처리한다. 여기서 자유도는 모형에서 고정된 공분산 rank이며, 적합 후 잔차의 임의 자유도나 Wilks 근사로 교체하지 않는다. [S11] [S12]
+
+검정을 역전한 \(\mathcal C_{1-\alpha}(y)=\{\theta:T_\theta(y)\text{가 기각되지 않음}\}\)의 coverage는 각 \(\theta\)에서 선언한 법칙의 검정 크기 통제에 의존한다. 공분산을 자료나 유한 simulation에서 추정했다면 그 불확실성을 포함하는 다른 법칙 또는 외부 검증이 필요하다. Gaussian이라는 문자열과 양의 행렬만으로 관측 제품이 이 정리를 충족하지는 않는다.
+
+### 18.2 공통 잠재상태와 결합
+
+여러 제품이 하나의 잠재상태 \(\theta\)를 공유할 때, 고정된 전체 예산 \(\sum_j\alpha_j\le\alpha\)와 각 성분의 유효한 주변 검정을 쓰면 교집합 \(\cap_j\mathcal C_j\)은 union bound에 의해 적어도 \(1-\alpha\) coverage를 갖는다. 이 보장에는 독립성은 필요하지 않지만 각 성분의 크기 통제와 같은 상태 공간으로의 사상이 필요하다. 모든 성분이 동시에 참이어야 하는 결합에는 교집합, 대안적인 허용 모형 중 하나가 참일 수 있는 경우에는 합집합을 쓴다.
+
+한 제품이 부적격이면 그 성분을 전체 정의역으로 두고 배정된 \(\alpha_j\)를 유지한다. 다른 제품에 남는 예산을 사후 배분하지 않는다. 최신 R8의 DESI 단독 95% 구간과 통합 성분의 \(\alpha=1/80\)은 바로 이 때문에 같은 결과로 인용할 수 없다. [S01] [S11] [S13]
+
+빈도주의 신뢰영역의 물리 사상 \(f(\mathcal C)\)과 Bayesian posterior의 pushforward는 별개다. HTT의 posterior·evidence·prior sensitivity는 명시된 모형과 확률 측도 아래 해석해야 하며, MIO 진단을 likelihood 항으로 추가해 증거를 중복 계산하지 않는다. [S14]
+
+<a id="s19"></a>
+
+## 19. 추정 공분산, coverage와 식별된 집합
+
+### 19.1 알려진 covariance와 추정된 covariance
+
+Gaussian 표본에서 Wishart 공분산 추정과 필요한 독립성이 성립하는 고전적 Hotelling 모형은 \(T^2\)를 \(k(n-1)/(n-k)\,F_{k,n-k}\)로 보정한다. n은 해당 모델의 표본 수, k는 유효 차원이며 n>k가 필요하다. 다른 잔차 설계의 자유도를 이 n에 임의로 넣을 수 없다. 유한 simulation 공분산 역행렬의 Hartlap 인자 \((n-m-2)/(n-1)\)는 평균 편향 보정이지, 모든 quadratic statistic을 정확한 \(\chi^2\)로 만드는 tail 보정이 아니다. [S45]
+
+저장소의 Imbens–Manski 특별 모형은 동일 Gaussian 이동을 공유하는 두 끝점과 결정론적 너비 \(\Delta\)에서
+
+\[
+\Phi(C+\Delta/\mathrm{se})-\Phi(-C)=1-\alpha
+\]
+
+로 임계값을 정한다. 이는 해당 endpoint law의 정리이며 추정 폭·비Gaussian·자료 의존 anchor로 바로 확장되지 않는다. 점모수 coverage, true identified set 전체 coverage, 추정된 끝점의 동시 coverage를 구별해야 한다. [S45]
+
+### 19.2 사영, 검정력과 모형 경쟁
+
+알려진 Gaussian 모형에서 nuisance를 사영한 quadratic 잔차는 유효 차원과 비중심성 \(\lambda=\|P_\perp\delta\|^2\)에 의해 검정력을 갖는다. 반응 image 안에 있는 대안은 잔차 검정의 blind sector다. 차원을 늘리거나 고차 multipole을 넣는 것만으로 \(\lambda\)가 늘어나지는 않으며, 실제 응답과 잡음의 상대 크기를 확인해야 한다.
+
+정규화된 prior를 가진 모수 \(\eta\)가 likelihood에 전혀 들어가지 않으면
+
+\[
+Z=\int L(\theta)\pi(\theta)\,d\theta
+\int\pi(\eta\mid\theta)\,d\eta
+=\int L(\theta)\pi(\theta)\,d\theta.
+\]
+
+따라서 완전히 비활성인 모수의 이름이나 개수만으로 Occam penalty가 생기지 않는다. 실제 prior volume과 식별 가능 방향에 대한 의존이 필요하다. likelihood가 아닌 최적화 목적값을 확률법칙 또는 evidence로 재명명할 수도 없다. null/prior/PPC/LOOCV와 source adequacy는 HTT의 모형 의존 비교에서 각각 다른 질문을 맡는다. [S29] [S46]
+
+<a id="s20"></a>
+
+## 20. 유한 표본 순위와 수치적 중단
+
+관측을 포함한 \(M=N+1\)개 행이 귀무가설 아래 공동 교환가능하고, 전처리·추정·선택·결측·동점 처리를 포함한 전체 score 사상이 행 순열에 대해 equivariant이면
+
+\[
+p=\frac{1+\sum_{i=1}^N\mathbf1\{s_i\ge s_0\}}{N+1}
+\]
+
+는 보수적 upper-tail p-value다. 단순히 분모를 \(N+1\)로 썼다는 사실은 교환가능성을 보장하지 않는다. 유한 변환군에 대한 불변성은 해당 군 궤도 위의 순위를 정당화하며, 임의의 모든 reference 행에 대한 교환가능성과 동일하지 않다. 무작위 순열의 정확성에 관한 문헌은 이 조건의 중요성을 뒷받침한다. [4] [5] [S04, §7]
+
+R8은 고정된 거리와 \(k=\lceil\sqrt N\rceil\)의 이웃 score에 대해 \(L_i\le s_i\le U_i\)를 얻고
+
+\[
+p^- =\frac{1+\sum_{i=1}^N\mathbf1\{L_i\ge U_0\}}M,
+\qquad
+p^+ =\frac{1+\sum_{i=1}^N\mathbf1\{U_i\ge L_0\}}M
+\]
+
+을 유지한다. 그러면 \(p^-\le p\le p^+\)다. \(p^+\le\alpha\)일 때만 인증 기각, \(p^->\alpha\)일 때는 그 검정의 비기각, 나머지는 미해결이다. \(p^-\) 자체는 p-value가 아니다.
+
+고정된 정확한 통계량을 둘러싼 구간이 매 단계 참이면, 수치 세분화의 적응적 중단 시점에서도 \(p^+\ge p\)가 점별로 유지된다. 따라서 계산 중단을 선택했다는 이유만으로 추가 optional-stopping 보정이 필요하지 않다. 이 논리는 분석 척도·특징·귀무법칙·pool 크기를 자료에 따라 바꾸는 것을 허용하지 않는다. 확률적 enclosure에는 전체 과정의 동시 실패확률 통제가 따로 필요하다. [S09, O3]
+
+현재 30개 합성 pool은 5개 비기각·25개 미해결·0개 기각으로 기록되어 있다. 이는 적격한 관측 CMB pool의 검정 결과가 아니다. 계산 가능한 정확한 순위와 실제 관측법칙의 적격성은 별도 문제다. [S01]
+
+<a id="s21"></a>
+
+## 21. 함수·집합·경로 통계와 의존 자료의 결합
+
+### 21.1 scalarization과 표본별 사상
+
+결정론적 요약 \(S=f(X)\)는 두 확률법칙 사이의 total variation 또는 KL divergence를 늘리지 못한다. 벡터·텐서를 scalar로 압축한 뒤 잃은 정보를 normalizer 하나로 복구할 수 없다는 통계적 표현이다. 실제 foundation 구현은 유한 확률질량의 입력과 명시된 deterministic map에서 이 성질을 계산한다. 이것만으로 모든 scalar가 비효율적이거나 특정 tensor 검정이 최적이라고 결론내리지는 않는다. [S46]
+
+경험적 비율·posterior pushforward는 각 paired 표본에서 \(X_i/U_i\)를 계산하는 것과 \(\bar X/\bar U\)를 구별한다. 두 channel A,B의 차이 covariance는
+
+\[
+\operatorname{Cov}(A-B)=C_{AA}+C_{BB}-C_{AB}-C_{BA}.
+\]
+
+같은 sky·seed를 공유한 행의 cross block을 생략하면 다른 법칙이 된다. pairing은 강력한 방법이지만 유일한 유효 보정은 아니며, 검증된 joint statistic이나 Bonferroni 방식도 가능하다. [S46] [S37, D08]
+
+### 21.2 초과도의 순서와 집합 gauge
+
+\(X\le B\)가 같은 표본에서 거의 확실히 성립하면 \(\Pr(X>t)\le\Pr(B>t)\)다. 이 순서로 동역학적 상계를 초과도 곡선에 옮길 수 있지만, 다른 표본·기준계의 주변곡선을 조립해서 같은 부등식을 얻을 수는 없다. convex bounded acceptance body의 Minkowski gauge, 좌표 문턱, covariance ellipsoid는 각기 다른 수용 영역이다. 구조적으로 비활성인 좌표와 반지름을 모르는 좌표도 구별한다. [S47] [S46]
+
+Gaussian projection GLRT의 cone 공식은 닫힌 convex cone을 요구한다. bounded MES body에 같은 공식을 적용하면 틀릴 수 있다. 예를 들어 \([0,1]\), 관측 z=2에서 null 0에 대한 두 배 log-likelihood 개선량은 3이지만 사영값 제곱은 1이다. 이 작은 예는 집합의 형태가 검정 자체를 바꾼다는 점을 보여준다. [S37, E07]
+
+### 21.3 e-value와 mask/depth 경로
+
+비음수 \(E_j\)에 \(E_0[E_j]\le1\)이 있으면 사전에 고정한 convex average는 임의 의존 아래에서도 e-value다. 곱은 별개다. 순차 증가량이 \(E_0[e_t\mid\mathcal F_{t-1}]\le1\)을 만족해야 누적 곱의 supermartingale 논리를 사용할 수 있다. 같은 Bernoulli B를 공유한 \(E_1=E_2=2B\)는 각각 평균 1이어도 곱의 평균은 2다. 예측 가능한 channel 선택도 이 조건부 유효성을 유지해야 한다. [S37, E12–E14]
+
+mask나 depth의 nested 경로에서 \(M_t=E[Z\mid\mathcal F_t]\)라는 실제 조건부 기대값과 filtration이 있을 때 tower 및 martingale 논리를 적용할 수 있다. 중심화된 제곱적분 변수에 대한 Doob bound는 보수적인 경로 제어이지 임의 map의 calibration-free exact test가 아니다. Rao–Blackwell 역시 동일 estimand의 정당한 조건부 기대값에서 분산을 줄이는 원리이며, 내부 요약을 만들었다는 사실 자체가 그 전제를 충족하지 않는다. [S35] [S46]
+
+<a id="s22"></a>
+
+## 22. 수치 오차와 조건부 물리 사상
+
+### 22.1 행렬 오차의 허용 집합
+
+사전에 고정된 비어 있지 않은 오차 family에서 \(\Delta_f=\sum_i b_{fi}E_{fi}\), \(\|b_f\|_2\le r_f\)라 하고 \(\Delta=\sum_f\Delta_f\)라 하자. 등록된 보수적 envelope는
+
+\[
+\Gamma_E=N_{\rm fam}\sum_f r_f^2\sum_iE_{fi}E_{fi}^T
++\lambda_{\rm reg}^2I,\qquad\lambda_{\rm reg}>0
+\]
+
+이다. 해당 오차집합에 실제 오차가 속한다면 \(\Delta\Delta^T\preceq\Gamma_E\)이고 \(W=\Gamma_E^{-1/2}\)에 대해 \(\|W\Delta\|_2\le1\)이다. 따라서
+
+\[
+s_i(WK_{\rm true})\ge s_i(WK_{\rm obs})-1.
+\]
+
+관측된 whitened 특이값이 1을 초과하는 개수는 참 행렬 rank의 하한이다. 사전에 정한 양의 여유 \(\delta\)로 \(s_m\ge1+\delta\)를 얻으면 full-row-rank의 충분조건이 된다. 이 결과는 실제 오차가 등록 family에 포함된다는 별도 의무를 전제로 한다. rank 하한만으로 특이 부분공간의 방향 안정성은 보장되지 않으며, 오차 대비 양의 gap 조건도 필요하다. [S04, §11] [S17]
+
+### 22.2 복사 jet와 정확한 지지함수
+
+단일 하늘의 multipole과 복사장의 시간·공간 미분 jet는 다른 입력이다. R8의 조건부 jet 집합은 관측된 제약의 역상, 선형 등식, 타원체 불확실성과 미분 나머지 ball을 함께 유지한다. 독립 블록의 Minkowski 합 \(\mathcal J=\{\mu+Lu:\|u\|\le r\}+\sum_kB_kB_{r_k}\)에서는 방향 \(a\)의 support가
+
+\[
+h_{\mathcal J}(a)=a^T\mu+r\|L^Ta\|_2+
+\sum_k r_k\|B_k^Ta\|_2
+\]
+
+로 합쳐진다. 이 표시식은 독립 product uncertainty의 선형상에 대한 일반 형태이며, 등식 제약이 있는 실제 jet는 먼저 그 제약을 반영한 좌표와 지지공간을 사용한다. 단순히 각 성분의 오차 막대를 더한 직사각형으로 바꾸는 것은 동일한 집합이 아니다. [S09] [S18]
+
+이 jet와 같은 잠재상태에서 \(\sigma,\omega,x_C\) 등의 함수상을 구한다. \(\Theta\) 또는 모형 family가 달라질 때 분모·정의역·가능집합도 함께 달라진다. R8은 가변 expansion branch의 미해결 상태와 제한 없는 방향의 unbounded 결과를 보존한다. 204개 유한 support 질의와 34개 unrestricted 질의의 기록은 지정 fixture에서의 구현 근거다. 관측 복사 미분법칙이 없는 현재 상태에서 경험적 전단·\(x_C\)·F·\(G_F\) 구간은 얻어지지 않는다. [S01] [S18]
+
+<a id="s23"></a>
+
+## 23. 스칼라 진단을 대체하는 텐서 정규화와 통계 분석
+
+### 23.1 새로운 기본 객체와 정규화
+
+현재 formalism의 기본 입력은 하나의 x가 아니라, frame·epoch·단위·관측 지지집합이 붙은 공동 상태 X와 그 위의 함수족 \(\{\phi_j\}\)이다. 함수는 scalar뿐 아니라 polar/axial vector와 STF tensor를 반환한다. 실제 연산자에는 \(\sigma\), \(\omega\), \(A\), \(\beta_{RM}\), \(\beta_{MO}\), \(\operatorname{tr}\sigma^2\), \(\operatorname{tr}\sigma^3\), \(\beta_{RM}\cdot\omega\), \(\beta_{RM}^T\sigma\beta_{RM}\) 등이 있다. 함수의 값, 정의역, O(3) 유형, 부호, anchor 사용 가능성과 통계적 용도를 별도로 보존한다. 없는 성분은 0으로 채우지 않는다. [S49]
+
+MES premise가 허용하는 sector body B와 좌표 사상 \(X=Lz\)를 지정하면 z는 그 body에 맞춘 무차원 운동학 좌표다. 단순 product ball에서는 \(\widehat\sigma=\sigma/R_\sigma\), \(\widehat\omega=\omega/R_\omega\)처럼 쓸 수 있다. anisotropic ellipsoid·상관된 polytope에서는 같은 숫자 하나로 나누는 방식이 충분하지 않다. Q에 해당하는 anchor stress는
+
+\[
+\rho_B(X)=\inf\{t\ge0:X\in tB\},
+\qquad m_B(X)=1-\rho_B(X)
+\]
+
+라는 gauge와 margin으로 표현된다. 이 표기는 원점을 포함하는 해당 anchor body의 정의역 안에서 사용한다. 양의 margin, 경계, 초과의 의미는 조건과 일치 여부이며 거리·확률·물리 원인 판정이 아니다. 기준계가 다른 anchor, 사용할 수 없는 가속도 anchor, 비compact 지원은 별도 상태로 반환한다. [S49] [S50]
+
+### 23.2 x·Q·F·Pi·G_F의 구조적 대체
+
+| 과거 이름 | 현재 기본 객체 | 보존하는 정보와 실제 구현 |
+|---|---|---|
+| x | \(\phi_j(X_i)\)의 sample-by-functional 배열 | raw tensor/vector와 사전 지정 scalarization을 함께 보존 |
+| Q | 함수·채널별 premise-anchor gauge/margin 및 구간 | 하나의 새 분모를 발명하지 않고 기존 anchor geometry를 사용 |
+| F | 식별 가능집합의 방향별 support-utilization profile | 유한 상태집합과 선언된 anchor에 대한 실제 구현 |
+| Pi | \(\Pi_\phi(c\mid\eta,\mathcal L)\) 곡면과 부분 식별 envelope | 명시된 표본법칙의 draws에서 계산; profile objective는 제외 |
+| G_F | depth·mask·feature transport·coherence의 구조화된 경로 | depth_path에 구현; 공유 자료의 cross-covariance 보완은 별도 의무 |
+
+이 표는 과거 scalar 값을 tensor인 것처럼 이름만 바꾸는 방식이 아니다. 현재 source의 legacy compatibility view는 구조화된 Pi/G_F를 scalar slot에 억지로 넣지 않는다. 실제 depth 기능은 별도 모듈로 찾아야 한다. [S50] [S51] [S52]
+
+식별된 유한 집합 \(\mathcal I=\{X_i\}\), support \(h_A(u)=\sup_{x\in A}u^Tx\)에 대해
+
+\[
+F_+(u)=\frac{h_{\mathcal I}(u)}{h_B(u)},\qquad
+F_{\pm}(u)=\frac{\max\{h_{\mathcal I}(u),h_{\mathcal I}(-u)\}}{h_B(u)}
+\]
+
+를 정의한다. 분모는 양수인 방향에서만 사용한다. 두 번째 식은 해당 구현의 antipodal profile 정의이며, 비대칭 anchor의 반대방향 분모까지 자동 대체하는 일반 공식을 뜻하지 않는다. finite direction grid의 최대를 전 구면 최대라고 부르지 않는다. 구현은 별도로 각 상태의 gauge 최대와 witness 방향을 유지한다. 이것은 방향·부호·활성 제약을 보존하는 집합 진단이며 물질의 체적 점유율이 아니다. [S50]
+
+표본법칙 \(\mathcal L\), 물리 조건 \(\eta\)와 함수 \(\phi\)가 정해지면
+
+\[
+\Pi_\phi(c\mid\eta,\mathcal L)
+=\Pr_{\mathcal L}\{\phi(X)>c\mid\eta\},
+\quad
+[\underline\Pi,\overline\Pi]
+=\left[\inf_{\eta\in\mathcal H}\Pi_\phi,
+\sup_{\eta\in\mathcal H}\Pi_\phi\right].
+\]
+
+vector/tensor 함수의 ‘>’에는 사전에 지정한 scalarization 또는 수용집합 밖 사건이 필요하다. MIO는 matched-null·경험적 law의 진단을, HTT는 명시적 posterior law의 pushforward를 맡는다. optimizer의 한 점은 draws가 아니며, \(\mathcal H\)에서 envelope의 끝점을 계산하려면 단조성·준볼록/준오목 인증 또는 별도 최적화가 필요하다. 이렇게 구조화한 Pi도 자체적으로 p-value나 truth probability가 되지 않는다. [S51]
+
+### 23.3 CMB 관측량에서 운동학적 양으로 가는 경로
+
+관측 측은 \(Y=(c_2,c_3,a^{E,B}_{\ell m},\ldots)\), 물리 측은 \(X=(\sigma,\omega,A,\beta_{RM},\beta_{MO},\Delta\Omega_k,\ldots)\)다. 둘 사이에는 조건부 전방 사상
+
+\[
+Y=\mathcal M_{\rm obs}\mathcal T_\eta[X(\cdot)]
++N\nu+\varepsilon
+\]
+
+가 필요하다. \(\mathcal T_\eta\)는 물질·복사 이력과 frame에 따른 전달, \(\mathcal M_{\rm obs}\)는 beam·mask·pixel·estimator, \(N\nu\)는 등록 nuisance, \(\varepsilon\)는 관측 law다. 온도 tensor Q와 운동학 tensor sigma는 같은 STF2 표현을 갖더라도 이 식 없이 동일시할 수 없다. MES는 허용되는 X의 body를 제한하고, Q/O 불변량은 Y의 형태를 묘사한다. 역할이 다르지만 위 사상을 통해 하나의 역문제에 들어간다. [S04] [S53]
+
+선형화 \(J=D\mathcal R_\eta\), 양의 covariance 지지공간의 whitener W, nuisance 사영 \(P_\perp\), anchor 좌표 사상 L을 쓰면 실제 matrix-valued 반응 진단은
+
+\[
+A_{\rm anch}=P_\perp WJL,\qquad
+\mathcal I_{\rm anch}=A_{\rm anch}^TA_{\rm anch}.
+\]
+
+가역 L은 rank를 늘리지 않는다. anchor normalization은 좌표 조건과 비교 척도를 바꾸며, 새 데이터 정보를 생성하지 않는다. 특이값·핵·principal angle과 Schur 조건부 정보는 어느 운동학적 방향이 남는지를 보여준다. rank가 늘어 지원공간 자체가 달라지면 과거/현재의 부피 수축을 하나의 유한 scalar 비율로 요약하지 않는다. covariance 영공간의 잔차도 버리지 않는다. [S53]
+
+### 23.4 불변량은 무엇의 관측량인가
+
+\(C_2,C_3\), \(\operatorname{tr}Q^3\), Q/O의 상대 방향·chirality는 지정된 하늘에서 추출 가능한 형태 함수다. \(\operatorname{tr}\sigma^2\), \(\operatorname{tr}\sigma^3\), \(\beta^T\sigma\beta\), \(\beta\cdot\omega\)는 물리 상태의 함수다. 두 불변량이 같은 parity나 차수를 가진다는 사실은 값 사이의 물리적 대응을 정하지 않는다. 이 대응은 \(\mathcal T_\eta\)의 equivariance와 범위, nuisance 및 관측 noise를 거쳐야 한다.
+
+회전 quotient는 절대 좌표를 제거해 내부 morphology를 비교할 때 유용하다. local flow·외부 축·mask와의 정렬이 질문이면 그 기준도 함께 회전시키거나 stabilizer와 상대 방향을 유지해야 한다. 회전 불변량만 남긴 뒤 이미 제거한 절대 방향의 depth coherence를 추정할 수는 없다. full-MV는 Q/O의 다른 좌표이며 독립 데이터 채널이 아니다. 이렇게 표현의 동치, 통계 정보의 충분성, 물리 원인의 식별성을 분리한 것이 현재 tensorized formalism의 핵심이다. [S07] [S35] [S53]
+
+### 23.5 하나의 분석으로 연결하는 방법
+
+실제 사용 순서는 관측 제품·단위·sky support 고정, full tensor 추출과 covariance 구성, 허용된 frame/transfer family 선언, MES body 및 nuisance quotient 구성, 공동 가능집합 또는 HTT posterior 계산, 함수족·support·Pi 곡면의 표본별 사상, depth 경로와 null controls의 결합이다. 마지막 scalar 요약은 독자가 비교할 목적이 분명할 때 선택한다. 현재 provider가 없는 물리 성분에는 unavailable 상태가 남으며, 관측 tensor만으로 채워 넣지 않는다. 이 과정은 저차 morphology, MES, response rank, 부분 식별과 통계 calibration을 한 경로로 연결한다.
+
+<a id="s24"></a>
+
+## 24. 정보량, EGS bracket과 추가 관측의 역할
+
+이상적 Gaussian 독립 multipole의 단일 하늘 전력 분산은 \(\sqrt{2/(2\ell+1)}\)라는 상대 척도를 갖는다. 특정 진폭 F의 response \(r_\ell=\partial\log C_\ell/\partial\log F\)를 둔 모형에서 Fisher 정보 합은 \(\sum_\ell (2\ell+1)r_\ell^2/2\) 형태다. cut sky에서 단순 \(f_{\rm sky}\) 곱은 근사이며 full covariance의 대체가 아니다. NT2-A2의 유지된 결과는 유한 \(L\) 이후 tail이 남되 전체 tail은 수렴한다는 것이다. ‘octupole이면 충분하다’는 해석은 명시적으로 대체되었다. [S41]
+
+EGS2는 H3 등 원문의 조건 아래 \(\kappa_* a_2/(1+R_{\rm EGS})\le\Sigma\le C_{\rm up}a_2\)라는 양측 bracket을 제안한다. \(a_2\)의 노름, derivative ratio \(R_{\rm EGS}\), 두 상수는 같은 모형과 관례에 묶여야 한다. 요약 theorem map만으로 그 전제 전체나 관측 적용이 확인되는 것은 아니므로 여기서는 보편적인 수치 ceiling으로 사용하지 않는다. shear transport에서 Pi가 등장할 때도 anisotropic-stress source \(\pi_{ab}\)와 문턱 초과도 \(\Pi_{\rm exc}\)를 구별한다.
+
+추가 multipole, transverse velocity, 원격 quadrupole과 편광이 중요한 이유는 새로운 관측 response 방향을 줄 수 있기 때문이다. 원래 response에 정보가 없는 경우 더 정교한 통계량만으로 이를 해결할 수 없다. 반대로 새로운 channel도 기존 것과 같은 nuisance image에 갇혀 있으면 식별성은 늘어나지 않는다. 충분성·최적성·정보량·물리적 식별은 이 구별 아래에서 다뤄야 한다. [S28] [S41]
+
+<a id="s25"></a>
+
+## 25. 증명 근거와 역사적 연구 목표의 대응
+
+### 25.1 어떤 수를 세고 있는가
+
+기존 증명 조사에서는 104,780개 출처 발생 기록을 40,282개 검색 묶음으로 정리했다. 그중 기존 증명 근거 확인 345개, 완료 미확인 39,937개다. 확인된 근거의 종류도 저장된 Lean compilation과 trusted-base native evaluation으로 나뉜다. 보조 선언과 고정 예제도 포함하므로 이 수를 345개의 새 물리 정리라고 부를 수 없다. [S02]
+
+역할 조사에서는 직접 읽은 원문 구간으로 연구제안 목표 172개, 내부 보조 선언 93개, 명시적 문헌 이식 1개를 식별했다. 이전 목록의 시작 위치와 직접 대응하지 않는 후보 구간 129개도 별도로 보존했다. 반면 기존 검색 묶음 39,072개의 역할은 아직 보류다. 따라서 이 보고서는 과거의 모든 제안 의도를 완전히 판정했다거나 수학적 동치를 모두 통합했다고 주장하지 않는다. [S03]
+
+### 25.2 본문의 기존 이론과 보조정리
+
+실수 harmonic–STF 정규화(T1 계열), 순환 packet 재구성(T2 계열), 조건부 MES sector geometry(T3·K1R 계열), 유한-null equivariance(T4 계열), 국소 boost 반응(T5), nuisance quotient(T6), 특정 연속 mask 근거(T7), 행렬 오차 envelope(T8)는 본문의 이론을 구성한다. 이 이름은 Report A 계열 안에서의 식별자다. 다른 제안서의 T1–T8과 일치한다고 간주하지 않는다.
+
+예를 들어 행렬 결합법칙 `PR257Orbit.mm_assoc`, 고정 수치 예제 `fixed_beta2`, 상태 논리 `completeness_not_promoted`는 더 큰 증명·구현을 지지하는 내부 보조 항목으로 분류되었다. 이들의 증명 근거는 해당 선언을 지지하며 전체 궤도 분류나 실측 기울기 추정의 증명을 대신하지 않는다. 반대로 제안서가 새 증명 목표로 제시한 ‘보조정리’는 제목에 그 단어가 있어도 연구 후보일 수 있다. [S03]
+
+### 25.3 연구제안의 주요 계열과 남은 의무
+
+| 제안 계열 | 구체적 질문 | 현재 본문과의 연결 | 남은 핵심 의무 |
+|---|---|---|---|
+| T-A1, signed-carrier 계열 | 상쇄된 x로 등방성을 식별할 수 있는가 | signed projection과 sector 분리 | 물리적 실현 가능한 상태의 범위와 기준계별 정의 |
+| NT-A / NT2-A | MES·EGS와 Fisher 정보의 관계 | 채널별 상계와 표본법칙 | 실제 transfer, covariance, estimator class와 정칙성 |
+| NT2-B, B2/G2 | 전단·와도·깊이 기억을 더 강하게 제한할 수 있는가 | 물리 가능집합·R3 응력 이력 | 전제 일치, 관측 가능한 jet와 kernel, 비퇴화 조건 |
+| T2-JOINT-SUPPORT, T-JOINT-SUPPORT | 공동 제약에서 날카로운 끝점을 얻는가 | 동일 상태의 함수상 | endpoint attainability와 동역학적 실현성 |
+| T-ESTCOV / PARTIAL-ID | 추정 covariance 아래 coverage는 유지되는가 | Gaussian 역전과 부분 식별 | covariance 추정법칙, 유한 표본 또는 유효한 근사 보장 |
+| T-CLUSTER-RANK, E-VALUE | 군집·의존·스캔 상황에서 오류를 통제하는가 | 완전 분석의 대칭성 | 실제 교환 단위, 등록된 scan, 귀무 평균 조건 |
+| T-P1–T-P18 | shell/pole와 공통 잠재상태를 연결할 수 있는가 | 표현·반응·결합 집합 | pole 정의 안정성, 원격 채널 선택·공분산, 공통 물리 모형 |
+| BULK-TO-TILT, NATIVE-RANK | 유한 창 bulk flow에서 전역 tilt를 식별하는가 | 반응 image와 nuisance quotient | 창 함수, 동역학적 bridge, 적격 native Jacobian |
+| POLARIZATION, SOURCE-DISCRIMINATION | spin-2·parity가 퇴화를 깨는가 | 추가 tensor channel의 가능성 | 편광 반응·mask/null·family equivalence 검증 |
+
+이 표의 연결은 주제와 수학적 구조에 대한 편집상의 안내다. 원문 간 대체 관계나 동일 정리라는 판정은 아니다. 모든 172개 구간의 ID·제목·출처·버전은 동봉한 `PROPOSAL_INDEX.md`, CSV, JSON에서 확인할 수 있다. 상세 명제와 가정은 카탈로그의 원문 발췌로 연결된다. [S03]
+
+특히 NT2-A1의 여러 multipole Fisher 하한은 독립 Gaussian multipole과 응답 \(r_\ell=\partial\log C_\ell/\partial\log F\) 등의 가정에 의존하는 제안이다. 단일 \(\ell=2\)의 상대 전력 산포 \(\sqrt{2/5}\)를 모든 추정량·마스크·물리 모형의 보편적 바닥으로 만들 수 없다. \(f_{\rm sky}\)만 곱하는 식도 실제 cut-sky 공분산의 정확한 대체가 아니다. 이 후보를 현재 물리적 F의 정밀도 한계로 채택하지 않고, 무엇을 증명·검증해야 하는지 보여주는 연구 목표로 남긴다.
+
+<a id="s26"></a>
+
+## 26. 현재 가능한 분석과 다음 이론 연결
+
+현재 가능한 것은 완전 Q/O 표현과 동일 하늘의 component 비교, 합성 pool의 인증 거리·순위 구간, 명시된 법칙 아래의 조건부 신뢰집합, 고정 restricted-history 벤치마크, source-bound 증명·후보 조회다. 전방 provider나 관측 sampling law가 없는 채널에서 물리 구간을 생성하는 것은 이 목록에 포함되지 않는다.
+
+| 현재 근거 | 기록된 결과 | 적용 범위 |
+|---|---|---|
+| R8 orbit continuation | 7,186 pair 상한 개선; 5 비기각·25 미해결 | 고정된 합성 pool과 계산 통계량 |
+| full-MV 표현 | 모의 44/45, 관측 component 4/4 복원 | 표현·복원 검증 |
+| DESI 단독 요약 | qiso 95% 구간 [0.9462387032, 1.0195221801] | released Gaussian 조건부 법칙; 통합 alpha와 별개 |
+| Union3 압축 | 평탄 LCDM 시나리오 Omega_m=0.3559244 | 근사 Gaussian 압축·공통 modulus offset |
+| CF4 위치의 flow controls | 38,053개 위치 보존; 공통 지원 23,491개 | 기술적 비교; 관측 공동법칙 미완성 |
+| restricted R3 | 36개 유효 history와 연결된 288개 optical case | 고정 벤치마크 |
+| 조건부 jet/image | 204 finite·34 unrestricted support 질의 | 지정 fixture; 관측 미분법칙 없음 |
+
+모든 수치는 저장된 R8 결과에서 가져왔다. 이번 보고서 작성 중 연구 계산을 재실행하지 않았다. frozen mixture의 한 셀은 1,000회 중 64회 기각과 기준 초과 상한을 기록해 held 상태다. strict 60초 continuation 예산의 최대 1.904초 초과도 `STOP_INVALID`로 남는다. 후자는 자원 조건 실패이며 보존된 유리수 enclosure의 수학적 반증과 구별한다. [S01] [S20] [S24]
+
+다음 이론 진전의 우선순위는 이미 증명된 행렬 항등식을 늘리는 것보다 현재 빠진 연결을 채우는 데 있다. 첫째, 관측 제품별 선택·covariance·전방 response가 같은 자료·버전에 대응하도록 해야 한다. 둘째, 복사 derivative jet의 관측 가능성과 물리 반응의 remainder를 확보해야 한다. 셋째, 제한된 numerical benchmark에서 일반적인 물리 분기로 확장할 때 어떤 오차·정칙성 의무가 추가되는지 밝혀야 한다. 넷째, 물리적으로 가능한 endpoint와 관측적으로 구별 가능한 family를 따로 분석해야 한다.
+
+현재 이론은 관측 형태를 보존하고, 불확실성과 조건을 유지한 채 물리 질문으로 옮겨 가는 구조를 제공한다. 완전한 텐서 표현이 곧 물리 식별은 아니고, 조건부 상계가 곧 측정은 아니며, 구현 완료가 곧 과학적 수용은 아니다. 이 차이를 유지해야 역사적 제안 중 실제로 남은 정리 목표와 이미 내부 도구로 사용되는 명제가 분명해진다.
+
+<a id="s27"></a>
+
+## 27. 전체 연구 갈래의 연결과 남은 정리 프로그램
+
+본문은 한 Git HEAD의 기능 설명서가 아니라 다음 네 층을 연결한 이론 종합판이다. 운동학·물질·충돌 방정식이 허용 상태를 정하고, 불변량·관측 연산자가 그 상태에서 자료로 가는 표현을 정하며, 가능집합·오차 envelope가 잃어버린 방향과 불확실성을 보존하고, 마지막으로 표본법칙이 검정·신뢰영역·모형 비교를 정당화한다. [S48]
+
+| 연구 갈래 | 현재 유지한 내용 | 다음 구체적 증명·연결 의무 |
+|---|---|---|
+| signed comparator·frame | 부호·수축·rest-space를 고정한 제약 | 다른 congruence 사이의 완전한 물리 사상 |
+| 다유체·sharpness | flux와 응력 분리, PSD moment, 국소 해 계층 | 일반 물질·장시간의 endpoint 실현성 |
+| kinetic·EGS | 감쇠 기억, derivative 조건, visibility의 영공간 | entropy-to-temperature 및 역원천 안정성 |
+| VT 불변량 | parity·Gram·형태 좌표·특이 층의 제한 | 등록된 범위의 완전 분리와 invariant-ring 의무 |
+| Q/O·orbit | 완전 관측 carrier, 순환 복원, 인증 거리 | 특이 strata·관측 pool 법칙 및 독립 의무 |
+| 이차 하늘 | 양의 절대 T 표현과 noise 변환의 한계 | 실제 foreground·bandpass·비이상 모형에 대한 안정성 |
+| PSTF·편광 | source convention, frame 분리, 행렬 전달 | monopole 계약·native all-m morphology atlas |
+| local/global·remote | radial blind sector, depth 반응, nuisance quotient | 실제 창·광학깊이·공통 covariance의 rank |
+| 곡률 동역학 | 지정 LRS 분기의 선형 slaving | finite-amplitude remainder·branch별 존재 범위 |
+| partial identification | 공동 분수 구간·정확 집합의 교차 | random anchor 및 전체 identified-set coverage |
+| 정보·검정·e-process | 알려진 law에서의 순위·사영·조건부 결합 | 관측 estimated-cov law·선택/경로 calibration |
+| referee-seeded pole 연구 | shell/pole, common-model·source-discrimination 목표 | pole 정의·특이점 안정성·물리 response 증명 |
+
+T-P1–T-P18, revival/strengthening의 frame-push, EGS-lattice, MES-branch, physical-sharpness, surrogate·solver-null 목표는 위 행으로 연결하되 독립 정리라고 확정하지 않았다. pole의 전역 좌표화나 polarization closure처럼 정의부터 미완성인 제안은 후보로 보존한다. 문헌 배경에서 가져온 정리, 구현용 보조 선언, 독창적 연구 목표는 서로 다른 역할이며, 어떤 역할도 증명 상태를 자동 결정하지 않는다. [S03] [S29] [S48]
+
+동봉한 COVERAGE_INDEX는 현재 명제 레지스트리, 벡터·텐서 source 의무와 programme 의무, WU009 보정 목록, 모든 172개 조사된 연구제안 구간의 원문·상태·버전·본문 연결을 제공한다. 이 편집 색인은 수학적 동치의 판정이나 증명 승격이 아니다. 본문은 유지된 식을 중심으로 압축했고, 명시적으로 철회된 강한 명제는 반례 또는 후속 의무를 이해하는 데 필요한 경우만 언급했다. 새 문서나 아직 역할을 판정하지 못한 카탈로그 항목까지 완전히 검토했다고 주장하지 않는다.
+
+<a id="s28"></a>
+
+## 28. 보유 데이터에 실제로 동원된 정리와 해석
+
+이 절에서 ‘동원’은 기록으로 확인한 실행 사용과 이 보고서의 명시적 해석 연결을 구별한다. 표의 [실행]은 해당 자료의 생성 절차, [해석]은 결과의 한계를 설명하는 정리, [조건부]는 추가 전제가 필요한 적용을 뜻한다. 자료가 정리를 증명했다는 뜻은 아니다. R8 결과 수치는 저장된 final report와 acceptance에서만 가져왔고, 별도 donor의 이론이 R8에 모두 이식되었다고 가정하지 않는다. [S01] [S24]
+
+| 자료·결과 | 명시적으로 사용된 정리·구조 | 설명하는 대상 | 아직 설명하지 못하는 대상 |
+|---|---|---|---|
+| [실행] Planck 계열 저차 component Q/O | T1 표현과 null-cone full-MV 분해·복원 | 동일 온도 패턴의 크기·형태·표현 복원 | 전단·와도·Bianchi family의 직접 측정 |
+| [실행/조건부] 고정 합성 low-ell reference pools | 완전 score의 교환가능성 T4, R8 거리·순위 enclosure | 계산 중단을 포함한 인증 순위 범위 | 부적격 관측 pool의 p-value |
+| [조건부] processed/masked 저차 반응 | T5 국소 boost, T6 nuisance quotient, T8 행렬 오차 | 지정 estimator 뒤에 남는 local-response 방향 | 미검증 고차 source family의 전역 tilt 귀속 |
+| [해석] CF4 위치·깊이와 flow controls | radial antisymmetric null, depth response rank, support 정합 | 표본 위치에서의 반응·방향·깊이 비교 가능성 | 관측 공동법칙이 없는 global-tilt 검정 |
+| [실행] DESI released summary | 지정 Gaussian law의 pointwise inversion | qiso 단독 구간과 조건부 공통 상태 제약 | low-ell tensor 형태의 측정 또는 native transfer |
+| [실행] Union3 압축 거리 자료 | 공통 offset nuisance와 시나리오별 모형 사상 | 평탄 LCDM 시나리오에서의 압축 적합 | 독립적인 전단·와도 추정 |
+| [실행] 제한된 R3 history/optics | 반대 stream flux 상쇄·잔여 응력, even-T 구조, 광학 적분 | 이력에서 관측 anisotropy가 생기는 제한 예 | 일반 물질·모든 Bianchi·실제 관측 likelihood |
+| [실행: fixture] 조건부 radiation-jet fixtures | 선형 역상·support 합·공통 상태의 함수상 | 제공된 jet 조건 아래 운동학 범위 | 관측에서 확보되지 않은 시간·공간 미분 |
+
+T2 cyclic reconstruction은 본문의 조건부 이론으로 유지하지만, 위 네 관측 component에서 cyclic-domain 확인과 T2 decoder 실행이 이루어졌다는 근거는 S07에 없다. 따라서 관측 full-MV 복원과 별개로 남긴다. CF4의 radial/rank 정리도 관측 좌표 controls를 해석하는 구조적 근거이며 해당 survey에서 full rank와 관측 law를 실증했다는 뜻은 아니다.
+
+예를 들어 CMB에서 Q/O를 추출하고 CF4의 깊이별 vector를 붙여도 둘의 동시 법칙이 자동 생기지는 않는다. 먼저 같은 sky support와 방향 관례를 맞추고, local endpoint boost와 global 물질 tilt의 response를 같은 X에 연결하며, 겹친 관측의 covariance를 포함해야 한다. 그런 뒤 하나의 신뢰집합을 여러 물리 함수로 사상하면 true-point의 동시 coverage가 유지되는 경로를 사용할 수 있다. 이는 독립 p-value의 무조건 곱과 다르다. [S13] [S37, E11] [S52]
+
+관측량을 설명하는 유용한 음의 정리도 있다. radial vorticity blindness는 CF4 radial 자료만으로 와도를 채우지 못하는 이유를, scalarization의 정보 비증가는 단일 x가 morphology를 회수하지 못하는 이유를, 비활성 prior의 적분 항등식은 같은 예측을 내는 두 이름의 모형에 evidence 차이가 자동 생기지 않는 이유를 설명한다. 이러한 no-go 결과는 보유 자료에서 가능한 질문의 범위를 정하는 실제 분석 도구다.
+
+## 참고문헌과 내부 근거 안내
+
+외부 문헌은 배경·방법·원 부등식의 출처다. 본 프로젝트의 코드 적격성이나 신규성을 문헌 인용만으로 인정하지 않는다. 아래 여섯 문헌의 기본 서지·버전은 2026년 9월 13일 원문 제공처에서 확인했다. 이번 웹 대조는 서지·초록 수준이며, 세부 식은 본문에 연결한 저장소의 기존 source-matched 보고서와 이론 문서를 바탕으로 유지했다.
+
+[1] Ellis, G. F. R. and van Elst, H. (1999). Cosmological Models. NATO Science Series C 541, 1–116. arXiv:gr-qc/9812046v5 (2008 수정본). https://arxiv.org/abs/gr-qc/9812046v5
+
+[2] Maartens, R., Ellis, G. F. R. and Stoeger, W. R. (1995). Limits on anisotropy and inhomogeneity from the cosmic background radiation. Physical Review D 51, 1525–1535. https://doi.org/10.1103/PhysRevD.51.1525
+
+[3] Stoeger, W. R., Araujo, M. E. and Gebbie, T. (1997). The Limits on Cosmological Anisotropies and Inhomogeneities from COBE Data. Astrophysical Journal 476, 435–439. arXiv:astro-ph/9904346은 1999년 정정 내용을 포함한 버전이다. https://arxiv.org/abs/astro-ph/9904346
+
+[4] Ritzwoller, D. M., Romano, J. P. and Shaikh, A. M. (2024/2025). Randomization Inference: Theory and Applications. arXiv:2406.09521v2. https://arxiv.org/abs/2406.09521v2
+
+[5] Hemerik, J. and Goeman, J. (2018). Exact testing with random permutations. TEST 27, 811–825; 2017 online-first, arXiv v3 2018. https://doi.org/10.1007/s11749-017-0571-1
+
+[6] Dai, L. and Chluba, J. (2014). New operator approach to the CMB aberration kernels in harmonic space. Physical Review D 89, 123504. https://doi.org/10.1103/PhysRevD.89.123504
+
+내부 근거 [S01]–[S55]의 정확한 경로·핀·본문 대응 절과 사용 범위는 `SOURCES.md`와 `sources.csv`에 있다. `claim_traceability.csv`는 본문의 주요 진술과 기존 근거·제한을 연결하는 편집용 표이며 원문 명제 레지스트리를 변경하지 않는다. `PROPOSAL_INDEX.md`는 모든 조사된 제안 구간으로 가는 길잡이이고, `REVIEW.md`는 도구·독립 검토·PDF 검수 결과다.

@@ -1,0 +1,86 @@
+{
+  "scope": "one independent static report review followed by one parent repair",
+  "original_findings": [
+    {
+      "claim_id": "RUN-THEORY-REPORT-20260913-REVIEW:DOPPLER-UNITS",
+      "severity": "P1",
+      "blocking_relevance": "Blocks retaining section 11 as a correct stated physical formula; does not block rendering or require production repair.",
+      "target": "docs/research_reports/theory_synthesis_20260913/REPORT.md",
+      "lines": [
+        342,
+        350
+      ],
+      "finding": "The source sum uses conformal time and dimensionless v_b=theta_b/k but adds d(g v_b)/d eta to g(Theta0+Psi+Pi/4) and potential derivatives. With dimensionless optical depth and conventional visibility, g has inverse-time units; the first two terms have inverse-time units and the printed Doppler term inverse-time-squared units. The categorical no-extra-1/k sentence therefore claims a normalization resolution that the stated variables do not support.",
+      "evidence": [
+        "S38 at 9b725899:256-271 declares conformal time, dimensionless velocity and the same source formula.",
+        "S38:387-407 inserts k v_b before j_l prime; this explains its algebraic integration by parts but not the dimensional inconsistency.",
+        "REPORT.md:342-350 reproduces and endorses that donor claim."
+      ],
+      "assumptions": [
+        "eta is the conformal time printed in the report, k has its conjugate inverse-time units in c=1, optical depth is dimensionless, g is ordinary visibility, v_b=theta_b/k is dimensionless peculiar velocity.",
+        "No unstated mode-dependent rescaling of eta or velocity is supplied."
+      ],
+      "recommended_change": "Preserve the donor identity as history but mark the Doppler velocity/source normalization unresolved in this report; remove the categorical assertion that an extra 1/k is wrong. Alternatively give an explicit, dimensionally consistent convention and sourced derivation. No production-source patch or CAS rerun is requested.",
+      "validation": "Static unit check: [g]=time^-1, [v_b]=1, [d(g v_b)/d eta]=time^-2; require all S_T terms to have one common dimension, or explicitly declare the missing rescaling. Re-read amended lines against S38 without copying its resolved label as authority.",
+      "evidence_fingerprint": "REPORT:342-350:S38:256-271:conformal-time-dimensionless-vb-Doppler-source"
+    },
+    {
+      "claim_id": "RUN-THEORY-REPORT-20260913-REVIEW:OBSERVED-METHOD-ATTRIBUTION",
+      "severity": "P2",
+      "blocking_relevance": "Blocks the table assertion of explicitly applied T2 on possessed observed components; theoretical T2 discussion itself is supported.",
+      "target": "docs/research_reports/theory_synthesis_20260913/REPORT.md",
+      "lines": [
+        900,
+        908
+      ],
+      "finding": "The actual-use table assigns T2 cyclic orbit reconstruction to the observed Planck component Q/O row. The cited R8 execution documents null-cone full-MV factorization and tensor reconstruction, without a cyclic-packet execution or per-component cyclic-domain check. S04 is explicitly theory-only. These methods are different, so the row currently upgrades a relevant theorem into an applied method without the necessary source link.",
+      "evidence": [
+        "S07:7-17 identifies all four observed reconstructions, conversion-error comparisons and the complex null-cone algorithm.",
+        "S08:449-453 requires cyclic conditioned domain and gives typed refusals for other strata.",
+        "S04:37 and 972-974 retain theory-only / Planck execution deferred scope.",
+        "REPORT.md:902 and 904-906 call the method explicitly used."
+      ],
+      "assumptions": [
+        "This table is an execution/application map, as its title and introduction state.",
+        "No unlisted execution artifact establishing T2 application is presumed."
+      ],
+      "recommended_change": "Retain T1/full-MV as the documented observed representation work; label T2 as an applicable conditional theorem awaiting per-component domain/execution evidence, or cite an actual pinned T2 execution record for those components. Apply the same actual-use versus conceptual-interpretation distinction to the CF4 response-rank row.",
+      "validation": "For each theorem called explicitly applied, identify its generating procedure in the same-data execution record and verify domain conditions. S07 alone supports full-MV reconstruction, not cyclic Krylov reconstruction.",
+      "evidence_fingerprint": "REPORT:902-909:S07:7-17:T2-cyclic-vs-observed-full-MV"
+    },
+    {
+      "claim_id": "RUN-THEORY-REPORT-20260913-REVIEW:MISSING-FIBRE-SUCCESSOR",
+      "severity": "P2",
+      "blocking_relevance": "Current-task coverage omission under comprehensive latest-retained branch scope; not a demand for new mathematics.",
+      "target": "docs/research_reports/theory_synthesis_20260913/REPORT.md",
+      "lines": [
+        270,
+        314,
+        537,
+        557,
+        875,
+        896
+      ],
+      "finding": "The latest retained Q/O contraction-fibre and Hausdorff-stability companion branch is absent. S04 explicitly links it as a recent extension. It connects the T5 projector, packet consistency and partial identification, and distinguishes well-conditioned linear maps from square-root sensitivity at norm saturation, so it is not merely another copy of the cyclic reconstruction section.",
+      "evidence": [
+        "S04:1089-1093 lists both maintained companion derivations and their separate evidence ceiling.",
+        "QO_CONTRACTION_FIBRE_GEOMETRY_20260907.md at d5a5444b:84-114 classifies eta=3 v^T M_q^-1 v into empty / singleton / affine S3 fibre and states reduced-problem limitation.",
+        "QO_FIBRE_HAUSDORFF_STABILITY_20260907.md at c09fa9f1:39-130 gives exact same-q nonempty-fibre Hausdorff distance and sharp one-half Holder boundary sensitivity."
+      ],
+      "assumptions": [
+        "The request covers previously explored branches and their latest retained formulation, not only canonical theorem registry entries.",
+        "Noncanonical direct derivations can be summarized with their explicit original evidence ceiling."
+      ],
+      "recommended_change": "Add a compact subsection under orbit/partial-identification: define eta and the fibre classification, state the exact Hausdorff formula or sharp boundary conclusion, explain reduced fixed-q scope, and link the two pinned notes. Label DIRECT_DERIVATION / noncanonical / no new CAS acceptance.",
+      "validation": "Static comparison with the two pinned note bodies; preserve ker dimension 4, interior fibre S3, same fixed q and nonempty-fibre assumptions, and avoid extending the criterion to an arbitrary complete Krylov packet.",
+      "evidence_fingerprint": "S04:D.2:QO-contraction-fibre-Hausdorff:absent-report-9-16-27"
+    }
+  ],
+  "parent_disposition": {
+    "DOPPLER-UNITS": "section11.2 normalization explicitly unresolved; no substitute equation or code edit",
+    "OBSERVED-METHOD-ATTRIBUTION": "section28 distinguishes executed full-MV from conditional T2 and explanatory CF4 rank",
+    "MISSING-FIBRE-SUCCESSOR": "section9.3 and S54/S55 added; direct/noncanonical status retained"
+  },
+  "scientific_promotion": false,
+  "hook_delivery_status": "OPERATIONAL_NONPASS_WRONG_CHECKOUT"
+}

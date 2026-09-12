@@ -132,3 +132,7 @@ R8 생성 목록의 소스 링크는 R8 커밋에 고정했다. `show`/`history`
 ```bash
 python3 -S -B scripts/project_catalog.py export --proof-roles /tmp/htt-proof-roles
 ```
+
+## 전체 연구 갈래의 종합 이론 보고서
+
+[한국어 이론 보고서](../research_reports/theory_synthesis_20260913/README.md)는 각 분기의 최신 유지 결과를 모은다. low-ell morphology, tensorized MES 정규화와 통계 후속 체계, CMB–운동학 연결, 깊이에 따른 local/global 판별, 보유 데이터에 동원한 정리를 설명하며 PDF와 172개 연구제안 색인을 제공한다.
