@@ -33,12 +33,22 @@ def main(argv=None):
     p.add_argument('--curation',type=Path,default=ROOT/'docs/project_catalog/curation.json')
     p.add_argument('--proof-lists',type=Path,help='export all-version existing-proof support and unconfirmed lists without changing the DB')
     p.add_argument('--proof-reviews',type=Path,default=ROOT/'docs/project_catalog/proofs/reviewed_evidence.json',help='source-bound static review input for --proof-lists')
+    p.add_argument('--proof-roles',type=Path,help='export historical proposal and auxiliary roles from published proof lists; no SQLite restore needed')
+    p.add_argument('--proof-inputs',type=Path,default=ROOT/'docs/project_catalog/proofs',help='existing confirmed/unconfirmed lists and source occurrences for --proof-roles')
+    p.add_argument('--role-evidence',type=Path,default=ROOT/'docs/project_catalog/proofs/roles/role_evidence.json',help='source-bound historical role review input')
     p=sub.add_parser('show');p.add_argument('id')
     p=sub.add_parser('history');p.add_argument('id_or_path');p.add_argument('--limit',type=int,default=100);p.add_argument('--format',choices=['table','json','csv'],default='table')
     sub.add_parser('check')
     p=sub.add_parser('restore',help='restore the shipped database without any external source checkout')
     p.add_argument('--package',type=Path,default=DEFAULT_PACK)
     args=parser.parse_args(argv)
+    if args.command=='export' and args.proof_roles:
+        if args.proof_lists or args.package or args.docs or args.output:
+            raise ValueError('--proof-roles cannot be combined with another export mode')
+        if any(getattr(args,k) for k in ['kind','q','owner','status','language','evidence','source','not_in_ref','needs_update','port_status']) or args.ref not in {'baseline','all'} or args.offset or args.limit not in {50,-1} or args.format!='table':
+            raise ValueError('--proof-roles exports the complete source-bound role view; query filters cannot be combined with it')
+        from catalog_lib.proof_roles import export_roles
+        print(json.dumps(export_roles(args.proof_inputs,args.proof_roles,args.role_evidence),ensure_ascii=False,indent=2));return 0
     if args.command=='export' and args.proof_lists and (args.package or args.docs or args.output):
         raise ValueError('--proof-lists cannot be combined with --package, --docs or --output')
     if args.command=='export' and args.proof_lists:

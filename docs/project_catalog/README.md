@@ -120,3 +120,15 @@ python3 -B scripts/project_catalog.py export --package docs/project_catalog/data
 배포 DB는 압축 2.19 GiB(57개 조각, 조각당 최대 40 MiB), 복원 후 약 10.08 GiB다.
 첫 조회에는 다운로드된 조각의 검증·압축 해제 시간이 필요하며 이후에는 로컬 SQLite를 조회한다.
 R8 생성 목록의 소스 링크는 R8 커밋에 고정했다. `show`/`history`의 대표 관찰 커밋은 별도 정보다.
+
+
+## 연구제안 정리 후보와 내부 보조명제
+
+[역할별 길잡이](proofs/roles/README.md)에서 과거 제안서의 구체적 정리·증명 목표와
+프로젝트 내부 보조 선언을 구별한다. [제안 목표 목록](proofs/roles/research_proposals.md),
+[보조명제 목록](proofs/roles/auxiliary_propositions.md), 기존 목록 전 항목의 역할 대응 CSV·JSON을 제공한다.
+역할 분류는 기존 증명 상태 및 학술 신규성 판단과 별개다. 이 자료의 재생성에는 SQLite 복원이 필요 없다.
+
+```bash
+python3 -S -B scripts/project_catalog.py export --proof-roles /tmp/htt-proof-roles
+```

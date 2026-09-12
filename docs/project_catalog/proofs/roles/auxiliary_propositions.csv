@@ -1,0 +1,491 @@
+anchor_id,proposed_id,title,role,rationale_ko,source,line_start,line_end,excerpt,linked_item_ids,prior_proof_statuses,proof_support,novelty_assessment
+role-4805cfd8132b7b9a,,R8.scaling_norm_fixtures,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""a1cb21e68444295606be3fe8bccd2a678de813c52b1b7236600c77dcb38420b4:ad208a43"", ""git_blob"": ""cfa9be083fe869ce003e8cf631c9a8d23de88adf"", ""id"": ""4c05a9f6486442a79bda4cc66e7925a1"", ""observed_commit"": ""9ed6ab5cd8cbb237b9fdd84e41f906ac39896970"", ""path"": "".agent-harness/runs/R8-AC-20260909/artifacts/lean/R8.lean"", ""source_id"": ""htt_base""}",26,31,"theorem scaling_norm_fixtures :
+    ((-1 : ℝ)^2 + 0^2 + 1^2 = 2) ∧
+    ((2 : ℝ)^2 + 3*(-1)^2 + 3*(-1)^2 = 10) ∧
+    ((2 : ℝ)^2+(-1)^2+(-1)^2 = 6) ∧
+    ((-1 : ℝ)^2+(-1)^2 = 2) := by norm_num
+","[""db09386f3482e483e9b749d9aaaa13ff""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-380a476d9d4ba73a,,R8.tie_fixture,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""a1cb21e68444295606be3fe8bccd2a678de813c52b1b7236600c77dcb38420b4:ad208a43"", ""git_blob"": ""cfa9be083fe869ce003e8cf631c9a8d23de88adf"", ""id"": ""4c05a9f6486442a79bda4cc66e7925a1"", ""observed_commit"": ""9ed6ab5cd8cbb237b9fdd84e41f906ac39896970"", ""path"": "".agent-harness/runs/R8-AC-20260909/artifacts/lean/R8.lean"", ""source_id"": ""htt_base""}",127,129,"theorem tie_fixture (n : ℕ) : countGE (fun _ : Fin n => (0:ℝ)) 0 = n := by
+  simp [countGE]
+","[""d4dbcc4d21b54b66d5089437ce778931""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-142eff15490fc09a,,R8O4.perm_cases,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""f46f52f91ff0dffcc27ae59fd1d03391bebde8a8663ba52b1ea70d2ae54d1770:ad208a43"", ""git_blob"": ""e50864154fa083ee8da0024f2cd757009bba6411"", ""id"": ""a4ce0e38bc2df93c010f7dd93e63f060"", ""observed_commit"": ""ea0305fa9e5f23e4d22a40ab826155202e76b574"", ""path"": "".agent-harness/runs/R8-B-20260909/artifacts/direct_execution/O4.lean"", ""source_id"": ""htt_base""}",78,91," theorem perm_cases (p : Equiv.Perm (Fin 3)) :
+     (p 0 = 0 ∧ p 1 = 1 ∧ p 2 = 2) ∨
+     (p 0 = 0 ∧ p 1 = 2 ∧ p 2 = 1) ∨
+     (p 0 = 1 ∧ p 1 = 0 ∧ p 2 = 2) ∨
+     (p 0 = 1 ∧ p 1 = 2 ∧ p 2 = 0) ∨
+     (p 0 = 2 ∧ p 1 = 0 ∧ p 2 = 1) ∨
+     (p 0 = 2 ∧ p 1 = 1 ∧ p 2 = 0) := by
+  have h01 : p 0 ≠ p 1 := p.injective.ne (by decide)
+  have h02 : p 0 ≠ p 2 := p.injective.ne (by decide)
+  have h12 : p 1 ≠ p 2 := p.injective.ne (by decide)
+  generalize h0 : p 0 = x
+  generalize h1 : p 1 = y
+  generalize h2 : p 2 = z
+  fin_cases x <;> fin_cases y <;> fin_cases z <;> simp_all","[""88b23d3a661895d21a27ca1d89574a44""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-6d906962acee7dfe,,R8O4.q_cast,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""f46f52f91ff0dffcc27ae59fd1d03391bebde8a8663ba52b1ea70d2ae54d1770:ad208a43"", ""git_blob"": ""e50864154fa083ee8da0024f2cd757009bba6411"", ""id"": ""a4ce0e38bc2df93c010f7dd93e63f060"", ""observed_commit"": ""ea0305fa9e5f23e4d22a40ab826155202e76b574"", ""path"": "".agent-harness/runs/R8-B-20260909/artifacts/direct_execution/O4.lean"", ""source_id"": ""htt_base""}",132,135," theorem q_cast (A : ℝ) (u v : V ℝ) (i j : Fin 3) :
+     ((Q A u v i j : ℝ) : ℂ) = Q (A : ℂ) (complexify u) (complexify v) i j := by
+  simp only [Q, S2, delta, dot, complexify, Fin.sum_univ_succ]
+  split_ifs <;> push_cast <;> ring","[""4c7d6898fa7e7fe7f7335123fc127947""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-e98795336971b348,,R8O4.o_cast,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""f46f52f91ff0dffcc27ae59fd1d03391bebde8a8663ba52b1ea70d2ae54d1770:ad208a43"", ""git_blob"": ""e50864154fa083ee8da0024f2cd757009bba6411"", ""id"": ""a4ce0e38bc2df93c010f7dd93e63f060"", ""observed_commit"": ""ea0305fa9e5f23e4d22a40ab826155202e76b574"", ""path"": "".agent-harness/runs/R8-B-20260909/artifacts/direct_execution/O4.lean"", ""source_id"": ""htt_base""}",136,139," theorem o_cast (A : ℝ) (u v w : V ℝ) (i j k : Fin 3) :
+     ((O A u v w i j k : ℝ) : ℂ) = O (A : ℂ) (complexify u) (complexify v) (complexify w) i j k := by
+  simp only [O, S3, b, delta, dot, complexify, Fin.sum_univ_succ]
+  split_ifs <;> push_cast <;> ring","[""5a7c8d3cc151ccd4c16dd40b2e7a4b10""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-b5a19545fc943675,,R8D.fixture_norms,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""749977f58d7746684890e4e5d5da02575f123e620c5949f1ac5c5266ad4863b4:ad208a43"", ""git_blob"": ""4dde878fe9fa36b19ffa41197e52471b698ba07d"", ""id"": ""fdea02be54b1673f86d9a2639199a6e7"", ""observed_commit"": ""7b571adb2e39d233a10c6633d51da74d9d50a0ca"", ""path"": "".agent-harness/runs/R8-D-20260910/artifacts/direct_execution/Support.lean"", ""source_id"": ""htt_base""}",12,12,theorem fixture_norms : (1:ℚ)^2+2^2+1^2+2^2+1^2+2^2+1^2+2^2=20 := by norm_num,"[""480e1cc8f9f9d008cb901d669104e3f7""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-7d1f7e9a85869887,,R8D.ray_fixture,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""749977f58d7746684890e4e5d5da02575f123e620c5949f1ac5c5266ad4863b4:ad208a43"", ""git_blob"": ""4dde878fe9fa36b19ffa41197e52471b698ba07d"", ""id"": ""fdea02be54b1673f86d9a2639199a6e7"", ""observed_commit"": ""7b571adb2e39d233a10c6633d51da74d9d50a0ca"", ""path"": "".agent-harness/runs/R8-D-20260910/artifacts/direct_execution/Support.lean"", ""source_id"": ""htt_base""}",16,16,theorem ray_fixture : v 0=0 ∧ v 1=0 ∧ v 2=0 ∧ v 3=0 ∧ v 7=1 := by decide,"[""0d6796dfcf51dc77d1a57b86d9b4e17e""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-3676466847525676,,PR254R3LeanAxis.finiteMax_le_iff,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": null, ""id"": ""5627ca749a97b293d349c22322b142d4"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr254-cas-r3-20260728/artifacts/A-PR254-R3-CAS-LEAN/PR254R3LeanAxis.lean"", ""source_id"": ""worktree_b30ecf95f2f5""}",34,37,"theorem finiteMax_le_iff (f : ι → ℝ) (c : ℝ) :
+    finiteMax f ≤ c ↔ ∀ i, f i ≤ c := by
+  simp [finiteMax, Finset.sup'_le_iff]
+","[""fca70042f9085a484f255f2b1c394052""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-64b98c41530d171f,,PR254R3LeanAxis.le_finiteMax,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": null, ""id"": ""5627ca749a97b293d349c22322b142d4"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr254-cas-r3-20260728/artifacts/A-PR254-R3-CAS-LEAN/PR254R3LeanAxis.lean"", ""source_id"": ""worktree_b30ecf95f2f5""}",38,46,"theorem le_finiteMax (f : ι → ℝ) (i : ι) :
+    f i ≤ finiteMax f := by
+  unfold finiteMax
+  exact Finset.le_sup' (f := f) (Finset.mem_univ i)
+
+end FiniteMaximum
+
+/-! ## Product of typed Euclidean block balls -/
+","[""e3b91799f428c6a1450668f153b8ab09""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-58b453b9e445b0a0,,ellipsoid_fixture_form,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": null, ""id"": ""5627ca749a97b293d349c22322b142d4"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr254-cas-r3-20260728/artifacts/A-PR254-R3-CAS-LEAN/PR254R3LeanAxis.lean"", ""source_id"": ""worktree_b30ecf95f2f5""}",112,117,"theorem ellipsoid_fixture_form (u : Fin 2 → ℝ) :
+    quadraticForm ellipsoidFixtureQ u =
+      (u 0) ^ 2 / 4 + (u 1) ^ 2 / 9 := by
+  simp [quadraticForm, ellipsoidFixtureQ, Fin.sum_univ_two]
+  ring
+","[""bce6e597f8a24c68bd5ef5532a34d0de""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-4c7226f3f01c247d,,ellipsoid_fixture_positive_definite,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": null, ""id"": ""5627ca749a97b293d349c22322b142d4"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr254-cas-r3-20260728/artifacts/A-PR254-R3-CAS-LEAN/PR254R3LeanAxis.lean"", ""source_id"": ""worktree_b30ecf95f2f5""}",118,139,"theorem ellipsoid_fixture_positive_definite :
+    ∀ u : Fin 2 → ℝ, u ≠ 0 → 0 < quadraticForm ellipsoidFixtureQ u := by
+  intro u hu
+  have hcomponent : u 0 ≠ 0 ∨ u 1 ≠ 0 := by
+    by_cases h0 : u 0 = 0
+    · right
+      intro h1
+      apply hu
+      funext i
+      fin_cases i
+      · exact h0
+      · exact h1
+    · exact Or.inl h0
+  rw [ellipsoid_fixture_form]
+  rcases hcomponent with h0 | h1
+  · have hs0 : 0 < (u 0) ^ 2 := sq_pos_of_ne_zero h0
+    have hs1 : 0 ≤ (u 1) ^ 2 := sq_nonneg (u 1)
+    nlinarith
+  · have hs0 : 0 ≤ (u 0) ^ 2 := sq_nonneg (u 0)
+    have hs1 : 0 < (u 1) ^ 2 := sq_pos_of_ne_zero h1
+    nlinarith
+","[""c0d7e07abb5be1917cd1a3a391ae71bb""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-a9638c6ddcc52bf9,,polytope_fixture_normals_span,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": null, ""id"": ""5627ca749a97b293d349c22322b142d4"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr254-cas-r3-20260728/artifacts/A-PR254-R3-CAS-LEAN/PR254R3LeanAxis.lean"", ""source_id"": ""worktree_b30ecf95f2f5""}",205,215,"theorem polytope_fixture_normals_span :
+    normalsSpan polytopeFixtureNormals := by
+  unfold normalsSpan
+  intro u h
+  funext j
+  fin_cases j
+  · have h0 := h 0
+    simpa [polytopeFixtureNormals, dotProduct, Fin.sum_univ_two] using h0
+  · have h2 := h 2
+    simpa [polytopeFixtureNormals, dotProduct, Fin.sum_univ_two] using h2
+","[""05db3a53e9f6efd545160101585f6688""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-f449e4a70e270e00,,rank_fixture_S_isUnit_matrix,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": null, ""id"": ""5627ca749a97b293d349c22322b142d4"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr254-cas-r3-20260728/artifacts/A-PR254-R3-CAS-LEAN/PR254R3LeanAxis.lean"", ""source_id"": ""worktree_b30ecf95f2f5""}",356,358,"theorem rank_fixture_S_isUnit_matrix : IsUnit rankFixtureS :=
+  rankFixtureS.isUnit_iff_isUnit_det.mpr rank_fixture_S_isUnit
+","[""f590ab222207bae4af6dbc2a56fdc292""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-fefb55232afa9f8e,,rank_fixture_S_exact,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": null, ""id"": ""5627ca749a97b293d349c22322b142d4"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr254-cas-r3-20260728/artifacts/A-PR254-R3-CAS-LEAN/PR254R3LeanAxis.lean"", ""source_id"": ""worktree_b30ecf95f2f5""}",359,361,"theorem rank_fixture_S_exact : rankFixtureS.rank = 2 := by
+  simpa using Matrix.rank_of_isUnit rankFixtureS rank_fixture_S_isUnit_matrix
+","[""2e98e9d3272df1da862f09ffe5de7b5f""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-bffaae6be0749899,,rank_fixture_R_exact,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": null, ""id"": ""5627ca749a97b293d349c22322b142d4"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr254-cas-r3-20260728/artifacts/A-PR254-R3-CAS-LEAN/PR254R3LeanAxis.lean"", ""source_id"": ""worktree_b30ecf95f2f5""}",362,370,"theorem rank_fixture_R_exact : rankFixtureR.rank = 2 := by
+  have hlower : 2 ≤ rankFixtureR.rank := by
+    have hsub := Matrix.rank_submatrix_le rankFixtureR firstTwoRows id
+    rw [rank_fixture_submatrix, rank_fixture_S_exact] at hsub
+    exact hsub
+  have hupper : rankFixtureR.rank ≤ 2 := by
+    simpa using Matrix.rank_le_card_width rankFixtureR
+  exact le_antisymm hupper hlower
+","[""6dfd27b1d5457437bc941c62fe937ce1""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-22a9197b4b291804,,rank_fixture_D_det,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": null, ""id"": ""5627ca749a97b293d349c22322b142d4"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr254-cas-r3-20260728/artifacts/A-PR254-R3-CAS-LEAN/PR254R3LeanAxis.lean"", ""source_id"": ""worktree_b30ecf95f2f5""}",371,373,"theorem rank_fixture_D_det : rankFixtureD.det = 1 := by
+  norm_num [rankFixtureD, Matrix.det_fin_two]
+","[""2bf93b5f89a5ce1712fdb5dff0c16955""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-61325e7f80e21bb2,,rank_fixture_D_isUnit,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": null, ""id"": ""5627ca749a97b293d349c22322b142d4"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr254-cas-r3-20260728/artifacts/A-PR254-R3-CAS-LEAN/PR254R3LeanAxis.lean"", ""source_id"": ""worktree_b30ecf95f2f5""}",374,377,"theorem rank_fixture_D_isUnit : IsUnit rankFixtureD.det := by
+  rw [rank_fixture_D_det]
+  exact isUnit_one
+","[""e23cd9b287412491da53f9e0c622b881""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-44cc46218bc28220,,rank_fixture_RD_exact,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": null, ""id"": ""5627ca749a97b293d349c22322b142d4"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr254-cas-r3-20260728/artifacts/A-PR254-R3-CAS-LEAN/PR254R3LeanAxis.lean"", ""source_id"": ""worktree_b30ecf95f2f5""}",378,385,"theorem rank_fixture_RD_exact :
+    (rankFixtureR * rankFixtureD).rank = 2 := by
+  rw [invertible_scaling_rank rankFixtureR rankFixtureD
+      rank_fixture_D_isUnit,
+    rank_fixture_R_exact]
+
+/-! ## J1 exact outer-envelope counterexample -/
+","[""4f3201a88b39a0d33cc21f3776313947""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-c855c444d3b56d21,,PR257Orbit.Vec3.extensionality,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",44,49,"theorem Vec3.extensionality {u v : Vec3}
+    (hx : u.x = v.x) (hy : u.y = v.y) (hz : u.z = v.z) : u = v := by
+  cases u
+  cases v
+  grind
+","[""06550bbb4668ef1397238e93a65357d3""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-2a8e7a7a58e974ba,,PR257Orbit.Mat3.extensionality,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",50,59,"theorem Mat3.extensionality {A B : Mat3}
+    (h00 : A.m00 = B.m00) (h01 : A.m01 = B.m01)
+    (h02 : A.m02 = B.m02) (h10 : A.m10 = B.m10)
+    (h11 : A.m11 = B.m11) (h12 : A.m12 = B.m12)
+    (h20 : A.m20 = B.m20) (h21 : A.m21 = B.m21)
+    (h22 : A.m22 = B.m22) : A = B := by
+  cases A
+  cases B
+  grind
+","[""fadd119972d03372754d70036c1a4101""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-faf362cac87c3297,,PR257Orbit.mm_assoc,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",130,132,"theorem mm_assoc (A B C : Mat3) : mm (mm A B) C = mm A (mm B C) := by
+  apply Mat3.extensionality <;> grind [mm]
+","[""f3d387a84a1183b26b8eccf3f64e74ed""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-b5426617bdaae211,,PR257Orbit.mm_ident_left,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",133,135,"theorem mm_ident_left (A : Mat3) : mm ident A = A := by
+  apply Mat3.extensionality <;> grind [mm, ident]
+","[""774c45ad11a0488bb5527f1606a295d0""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-3c358c965bc96a70,,PR257Orbit.fromCols_mv,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",154,157,"theorem fromCols_mv (R : Mat3) (u v w : Vec3) :
+    fromCols (mv R u) (mv R v) (mv R w) = mm R (fromCols u v w) := by
+  apply Mat3.extensionality <;> grind [fromCols, mv, mm]
+","[""8bd0ca2b1ce53f9851ef2a6abab9ddc1""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-73c53125cdaf77eb,,PR257Orbit.det_sq_one,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",158,160,"theorem det_sq_one {R : Mat3} (hR : O3 R) : det R * det R = 1 := by
+  rcases hR.det_sign with h | h <;> grind
+","[""782511d2a93a698cdff1fdf905d75018""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-9212618928aa87e8,,PR257Orbit.dot_mv_adjoint,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",161,164,"theorem dot_mv_adjoint (R : Mat3) (u v : Vec3) :
+    dot (mv R u) v = dot u (mv (transpose R) v) := by
+  grind [dot, mv, transpose]
+","[""f3578bce6754bf1f2fbc5f1a20f1934d""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-1d415c875b9e22f7,,PR257Orbit.dot_mv,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",165,174,"theorem dot_mv {R : Mat3} (hR : O3 R) (u v : Vec3) :
+    dot (mv R u) (mv R v) = dot u v := by
+  calc
+    dot (mv R u) (mv R v)
+        = dot u (mv (transpose R) (mv R v)) := dot_mv_adjoint _ _ _
+    _ = dot u (mv (mm (transpose R) R) v) := by
+          rw [mv_assoc]
+    _ = dot u (mv ident v) := by rw [hR.rt_mul_r]
+    _ = dot u v := by rw [mv_ident]
+","[""d91fd6284e1e2dd923454bb009b01aae""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-40e323c0b09300a4,,PR257Orbit.trace_sigmaAction,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",203,211,"theorem trace_sigmaAction {R : Mat3} (hR : O3 R) (A : Mat3) :
+    trace (sigmaAction R A) = trace A := by
+  calc
+    trace (sigmaAction R A)
+        = trace (mm (transpose R) (mm R A)) := trace_cyclic _ _
+    _ = trace (mm (mm (transpose R) R) A) := by rw [mm_assoc]
+    _ = trace (mm ident A) := by rw [hR.rt_mul_r]
+    _ = trace A := by rw [mm_ident_left]
+","[""e28ccac02a3b30d8414fd561cfcd0f94""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-2d502b0eb33b166f,,PR257Orbit.dot_vscale_right,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",274,277,"theorem dot_vscale_right (a : Rat) (u v : Vec3) :
+    dot u (vscale a v) = a * dot u v := by
+  grind [dot, vscale]
+","[""ec6e7b5b79ff45aa55d58d6092a4db2c""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-538ba5c8f32f203b,,PR257Orbit.mv_madd,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",282,285,"theorem mv_madd (A B : Mat3) (u : Vec3) :
+    mv (madd A B) u = vadd (mv A u) (mv B u) := by
+  apply Vec3.extensionality <;> grind [mv, madd, vadd]
+","[""56a858d37bd9aaa57d87ed1c4a87d5e4""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-3ad05304ff0e2e18,,PR257Orbit.mv_mscale,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",286,289,"theorem mv_mscale (a : Rat) (A : Mat3) (u : Vec3) :
+    mv (mscale a A) u = vscale a (mv A u) := by
+  apply Vec3.extensionality <;> grind [mv, mscale, vscale]
+","[""623ffa8aedbf93b7ca57245322a805f5""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-a342638d2b0c619a,,PR257Orbit.dot_vadd_right,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",290,293,"theorem dot_vadd_right (u v w : Vec3) :
+    dot u (vadd v w) = dot u v + dot u w := by
+  grind [dot, vadd]
+","[""d77f030196588776a45796d4f06f4826""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-5d8fc2aced75db73,,PR257Orbit.fixed_tr_sigma2,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",446,446,theorem fixed_tr_sigma2 : tr2 fixedSigma = 14 := by native_decide,"[""1896e57cd27670e20f966b5791766b4f""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-d39b8ed959795a84,,PR257Orbit.fixed_tr_sigma3,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",447,447,theorem fixed_tr_sigma3 : tr3 fixedSigma = -18 := by native_decide,"[""9d2b7d772213fe34361f6d9c0f92aac4""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-0b189742bcc53704,,PR257Orbit.fixed_beta2,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",448,448,theorem fixed_beta2 : beta2 fixedBeta = 3 := by native_decide,"[""7a9591e2986900fbd53bde4a6513e884""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-aa5dda2f9face489,,PR257Orbit.fixed_beta_sigma2_beta,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",451,452,"theorem fixed_beta_sigma2_beta :
+    betaSigma2Beta fixedSigma fixedBeta = 14 := by native_decide","[""863db3f06d3662fd3f04611024a6ec21""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-0f9650ae9cb785a1,,PR257Orbit.fixed_beta_krylov_det,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",453,454,"theorem fixed_beta_krylov_det :
+    betaKrylovDet fixedSigma fixedBeta = 20 := by native_decide","[""ce328fcb86aa69bf62ab9de535d7c276""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-9ec3f80db20ed5f4,,PR257Orbit.fixed_beta_sigma2_omega,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",464,466,"theorem fixed_beta_sigma2_omega :
+    betaSigma2Omega fixedSigma fixedBeta fixedOmega = 36 := by native_decide
+","[""1cdc27b9e2a49dfded8330ca39ee4c8a""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-3745322819312c03,,PR257Orbit.fixed_beta_sigma3_beta,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",474,475,"theorem fixed_beta_sigma3_beta :
+    betaSigma3Beta fixedSigma fixedBeta = -18 := by native_decide","[""4e2c66e4632553a88f09971301c2319b""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-12105fde8fb2de59,,PR257Orbit.fixed_beta_sigma3_omega,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",478,479,"theorem fixed_beta_sigma3_omega :
+    betaSigma3Omega fixedSigma fixedBeta fixedOmega = -64 := by native_decide","[""80be90e285330c61658fba7e1466fae4""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-9ee2ef099e5df542,,PR257Orbit.completeness_not_promoted,internal_auxiliary,검증 상태·명제 묶음·유한 타입 개수를 표현하는 내부 논리 보조정리다. 선언 본문의 대상은 새로운 물리 정리의 전체 범위가 아니다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": null, ""id"": ""e1dbf1e79161e3cdbf3a58ae1e1b2d52"", ""observed_commit"": null, ""path"": "".agent-harness/runs/premise-anchor-pr257-cas-r2-20260729/artifacts/A-PR257-CAS-LEAN-R2/PR257OrbitAxis.lean"", ""source_id"": ""worktree_5ed17ce8b96a""}",527,534,"theorem completeness_not_promoted :
+    invariantRingCompletenessStatus = .UNPROVEN := rfl
+
+/-!
+  The eight contract-level checks are represented as propositions that are
+  inhabited only because the load-bearing theorems above compiled.
+-/
+","[""e610bb1a772df8aaace2cbaf46b0eafd""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-8306412c3749551b,T7,T7. 임의 의존 하 e-값 병합의 본질적 유일성 (문헌 이식),supporting_known_result,T7은 원문이 “문헌 이식”이라고 명시하므로 표준/기존 결과 보조정리로만 분류한다.,"{""content_id"": ""70d95410bce7756cff0ae09ecb6c8b12122abf40b0ca2d2da0e3dd4dce23ac78:dd0517db"", ""git_blob"": ""57cadc66d14e7a1ad4bf7910fd7d039d002866c7"", ""id"": ""e91b07f2be2abc11952f67f5683a10eb"", ""observed_commit"": ""373941f2768511cdb3612c1e5b450d4da22a486b"", ""path"": ""docs/audits/external_2026-07-09/referee_fortification/03_theorem_candidates_ko.md"", ""source_id"": ""htt_base""}",142,149,"## T7. 임의 의존 하 e-값 병합의 본질적 유일성 (문헌 이식)
+
+**진술.** Vovk–Wang의 정리를 프로그램 어휘로 이식: ""임의 의존 e-값들에 대해 admissible한 대칭 병합 함수는 convex 결합(과 그 지배 함수)뿐이다."" 따라서 P29의 convex 병합 선택은 임의가 아니라 **본질적으로 유일**하다.
+**증명 스케치.** 문헌 정리 인용 + 프로그램의 finite-cover 세팅으로의 사상(셀 e-값의 교환 가능성 확인)만 필요. 새 증명 부담 없음.
+**난이도**: 하 (이식). **역할**: P29 선택의 최적성 주장 — ""왜 곱이 아니라 합인가""라는 표준 심사 질문의 선제 차단(독립 시에는 곱이 우월하나 의존 미지 시 합이 유일 admissible). **검증 훅**: exp05 (ρ=0.9 최대 의존에서 합 병합 유효 확인).
+
+---
+",[],{},NOT_ESTABLISHED_FOR_THIS_PROPOSAL,NOT_EVALUATED
+role-94f40bef9b3df71a,,full_fixture_rank,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""4c1db75bab9aedee0a06b27c14799d303285dd7a6bffa23e33deb9cfe3cd0a60:ad208a43"", ""git_blob"": ""d3de66b7079f74a8721a3a3f145186597f6d8d24"", ""id"": ""539b86fe47ad70695b8938afaa110f2c"", ""observed_commit"": ""b5ebf80ded7b4d31e3c480d750ccbccaff60b961"", ""path"": ""docs/generated/mes_local_global_response/cas/axes/lean/PR328LocalGlobal.lean"", ""source_id"": ""htt_base""}",97,99,"theorem full_fixture_rank : fullFixture.rank = 2 := by
+  simp [fullFixture]
+","[""5e9cb89714562af70d56ff76eb7f3fa4""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-986d9a91c3f3be1b,,partial_fixture_rank,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""4c1db75bab9aedee0a06b27c14799d303285dd7a6bffa23e33deb9cfe3cd0a60:ad208a43"", ""git_blob"": ""d3de66b7079f74a8721a3a3f145186597f6d8d24"", ""id"": ""539b86fe47ad70695b8938afaa110f2c"", ""observed_commit"": ""b5ebf80ded7b4d31e3c480d750ccbccaff60b961"", ""path"": ""docs/generated/mes_local_global_response/cas/axes/lean/PR328LocalGlobal.lean"", ""source_id"": ""htt_base""}",100,103,"theorem partial_fixture_rank : partialFixture.rank = 1 := by
+  rw [partialFixture, Matrix.rank_diagonal]
+  native_decide
+","[""b788567133e62076655cda2d1e2723f0""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-0534600409804efd,,zero_fixture_rank,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""4c1db75bab9aedee0a06b27c14799d303285dd7a6bffa23e33deb9cfe3cd0a60:ad208a43"", ""git_blob"": ""d3de66b7079f74a8721a3a3f145186597f6d8d24"", ""id"": ""539b86fe47ad70695b8938afaa110f2c"", ""observed_commit"": ""b5ebf80ded7b4d31e3c480d750ccbccaff60b961"", ""path"": ""docs/generated/mes_local_global_response/cas/axes/lean/PR328LocalGlobal.lean"", ""source_id"": ""htt_base""}",104,117,"theorem zero_fixture_rank : zeroFixture.rank = 0 := by
+  simp [zeroFixture]
+
+/-! ## Conditional composition bound and strict nonidentification -/
+
+universe u
+
+section ConditionalRank
+
+variable {K E F G : Type u} [DivisionRing K]
+variable [AddCommGroup E] [Module K E]
+variable [AddCommGroup F] [Module K F]
+variable [AddCommGroup G] [Module K G]
+","[""c03b428acdb6a208d0d19ff4fa3f8221""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-1f932b980438e165,,Pr171TiltRelaxation.stableFixture,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""cb0efdb99d4bd4dafaf600c8ad819fffe08f2a57e34c49e2a3830525e8461797:ad208a43"", ""git_blob"": ""e2691e1664dcfe7a71bb5b68da1b49bdf7614364"", ""id"": ""fca4799d957c0caac5f76498bd217820"", ""observed_commit"": ""b8a857742bd6c2d727ea2009f6e8a341a031b120"", ""path"": ""docs/generated/pr171_cas/generation_3/source_snapshot/formal_pr171/Pr171TiltRelaxation/Basic.lean"", ""source_id"": ""htt_base""}",32,36,"theorem stableFixture :
+    dragTrace (1/4) (1/2) (1/3) = (-25/12 : ℚ) ∧
+    dragDet (1/4) (1/2) (1/3) = (5/6 : ℚ) := by
+  norm_num [dragTrace, dragDet]
+","[""558137ac617f63042b82c3ac8a83a27a""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-e4a0605202c791c4,,product_fixture_exact,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": ""df76a2acdfb77c78442010c68914cdddba01c587"", ""id"": ""9762f31744644e5e3265ee109f5d20a8"", ""observed_commit"": ""8aa8d7357e9dce80e54b0b0197fe71365a771f02"", ""path"": ""docs/generated/pr254_anchor_geometry/axes/lean/PR254R3LeanAxis.lean"", ""source_id"": ""htt_base""}",82,88,"theorem product_fixture_exact : productFixtureGauge = (5 : ℝ) / 2 := by
+  have h25 : Real.sqrt (25 : ℝ) = 5 := by norm_num
+  have h64 : Real.sqrt (64 : ℝ) = 8 := by norm_num
+  norm_num [productFixtureGauge, h25, h64]
+
+/-! ## Positive-definite ellipsoid -/
+","[""39a937486b1d0b224d84676848f88b86""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-684daed5b2747228,,ellipsoid_fixture_exact,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": ""df76a2acdfb77c78442010c68914cdddba01c587"", ""id"": ""9762f31744644e5e3265ee109f5d20a8"", ""observed_commit"": ""8aa8d7357e9dce80e54b0b0197fe71365a771f02"", ""path"": ""docs/generated/pr254_anchor_geometry/axes/lean/PR254R3LeanAxis.lean"", ""source_id"": ""htt_base""}",148,154,"theorem ellipsoid_fixture_exact :
+    quadraticForm ellipsoidFixtureQ ellipsoidFixtureU = 1 := by
+  rw [ellipsoid_fixture_form]
+  norm_num [ellipsoidFixtureU]
+
+/-! ## Certified centrally symmetric spanning H-polytope -/
+","[""2dcfd11fdda7506135ead3543b0f5eba""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-add01c3bb0772b63,,polytope_fixture_exact,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": ""df76a2acdfb77c78442010c68914cdddba01c587"", ""id"": ""9762f31744644e5e3265ee109f5d20a8"", ""observed_commit"": ""8aa8d7357e9dce80e54b0b0197fe71365a771f02"", ""path"": ""docs/generated/pr254_anchor_geometry/axes/lean/PR254R3LeanAxis.lean"", ""source_id"": ""htt_base""}",243,275,"theorem polytope_fixture_exact :
+    polytopeGauge polytopeFixture polytopeFixtureU = (1 : ℝ) / 2 := by
+  apply le_antisymm
+  · apply max_le
+    · apply (finiteMax_le_iff
+        (fun i =>
+          dotProduct (polytopeFixture.normal i) polytopeFixtureU /
+            polytopeFixture.bound i) ((1 : ℝ) / 2)).mpr
+      intro i
+      fin_cases i <;>
+        norm_num [polytopeFixture, polytopeFixtureNormals,
+          polytopeFixtureBounds, polytopeFixtureU, dotProduct,
+          Fin.sum_univ_two]
+    · norm_num
+  · have hterm :
+        dotProduct (polytopeFixture.normal 0) polytopeFixtureU /
+            polytopeFixture.bound 0 ≤
+          finiteMax (fun i =>
+            dotProduct (polytopeFixture.normal i) polytopeFixtureU /
+              polytopeFixture.bound i) :=
+      le_finiteMax
+        (fun i =>
+          dotProduct (polytopeFixture.normal i) polytopeFixtureU /
+            polytopeFixture.bound i) 0
+    have hraw : (1 : ℝ) / 2 ≤ rawPolytopeGauge
+        polytopeFixture polytopeFixtureU := by
+      simpa [rawPolytopeGauge, polytopeFixture, polytopeFixtureNormals,
+        polytopeFixtureBounds, polytopeFixtureU, dotProduct,
+        Fin.sum_univ_two] using hterm
+    exact hraw.trans (le_max_left _ _)
+
+/-! ## One-way outer-envelope implication -/
+","[""ea657d518434294e1ee11f45b3a71ef1""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-2b82dda709b5a5ac,,rank_fixture_submatrix,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": ""df76a2acdfb77c78442010c68914cdddba01c587"", ""id"": ""9762f31744644e5e3265ee109f5d20a8"", ""observed_commit"": ""8aa8d7357e9dce80e54b0b0197fe71365a771f02"", ""path"": ""docs/generated/pr254_anchor_geometry/axes/lean/PR254R3LeanAxis.lean"", ""source_id"": ""htt_base""}",343,348,"theorem rank_fixture_submatrix :
+    rankFixtureR.submatrix firstTwoRows id = rankFixtureS := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [rankFixtureR, rankFixtureS, firstTwoRows]
+","[""c29d15e9d066e40d8d223ab74e72d1fd""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-fc295cd90fda21cb,,rank_fixture_S_det,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": ""df76a2acdfb77c78442010c68914cdddba01c587"", ""id"": ""9762f31744644e5e3265ee109f5d20a8"", ""observed_commit"": ""8aa8d7357e9dce80e54b0b0197fe71365a771f02"", ""path"": ""docs/generated/pr254_anchor_geometry/axes/lean/PR254R3LeanAxis.lean"", ""source_id"": ""htt_base""}",349,351,"theorem rank_fixture_S_det : rankFixtureS.det = 1 := by
+  norm_num [rankFixtureS, Matrix.det_fin_two]
+","[""e98fb9eebd74faf0c5c03a5c0dd1d071""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-7630fda51051ab4d,,rank_fixture_S_isUnit,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""7ebc96847f3dbf291c3ddbca2945bbf1e0848401108ced298dfea6844ce67c25:ad208a43"", ""git_blob"": ""df76a2acdfb77c78442010c68914cdddba01c587"", ""id"": ""9762f31744644e5e3265ee109f5d20a8"", ""observed_commit"": ""8aa8d7357e9dce80e54b0b0197fe71365a771f02"", ""path"": ""docs/generated/pr254_anchor_geometry/axes/lean/PR254R3LeanAxis.lean"", ""source_id"": ""htt_base""}",352,355,"theorem rank_fixture_S_isUnit : IsUnit rankFixtureS.det := by
+  rw [rank_fixture_S_det]
+  exact isUnit_one
+","[""c437ea70c28a1299c62930e980278125""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-44851e48052e6042,,PR257Orbit.mm_ident_right,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",136,138,"theorem mm_ident_right (A : Mat3) : mm A ident = A := by
+  apply Mat3.extensionality <;> grind [mm, ident]
+","[""7ac63a2f4b99d0890cbc744f663ffd16""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-97aefe50e47b3241,,PR257Orbit.mv_assoc,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",139,142,"theorem mv_assoc (A B : Mat3) (u : Vec3) :
+    mv (mm A B) u = mv A (mv B u) := by
+  apply Vec3.extensionality <;> grind [mv, mm]
+","[""129989e2c353543b081479fd9b03fc38""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-e9cfd2b980b95555,,PR257Orbit.mv_ident,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",143,145,"theorem mv_ident (u : Vec3) : mv ident u = u := by
+  apply Vec3.extensionality <;> grind [mv, ident]
+","[""a221ac75cb41bf19cad4e6f3336d5c3c""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-ea87ca7d0eba3f97,,PR257Orbit.trace_cyclic,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",146,149,"theorem trace_cyclic (A B : Mat3) :
+    trace (mm A B) = trace (mm B A) := by
+  grind [trace, mm]
+","[""de8903950da8e522e0d03654716082f4""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-2df1a4ea65bf8340,,PR257Orbit.det_mul,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",150,153,"theorem det_mul (A B : Mat3) :
+    det (mm A B) = det A * det B := by
+  grind [det, mm]
+","[""ca8430b9d84c8d40d2860bd14d56be7c""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-fa00af408959bc89,,PR257Orbit.dot_vscale_left,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",270,273,"theorem dot_vscale_left (a : Rat) (u v : Vec3) :
+    dot (vscale a u) v = a * dot u v := by
+  grind [dot, vscale]
+","[""159964a6de5b7e45c2317b11041a906e""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-d2fb4698a55ba94d,,PR257Orbit.mv_vscale,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",278,281,"theorem mv_vscale (A : Mat3) (a : Rat) (u : Vec3) :
+    mv A (vscale a u) = vscale a (mv A u) := by
+  apply Vec3.extensionality <;> grind [mv, vscale]
+","[""ce10e280a681c61a7d5f7b5612ecca99""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-195d6c9e3d713c70,,PR257Orbit.fixed_beta_sigma_beta,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",449,450,"theorem fixed_beta_sigma_beta :
+    betaSigmaBeta fixedSigma fixedBeta = 0 := by native_decide","[""6c6a81643863c3b7f1603d8fdf43c85f""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-c3c55960e0efa2af,,PR257Orbit.fixed_omega2,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",455,455,theorem fixed_omega2 : omega2 fixedOmega = 14 := by native_decide,"[""ac02c8637cbeee423950fe5c79d3429f""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-f8fb136394fe52df,,PR257Orbit.fixed_omega_sigma_omega,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",456,457,"theorem fixed_omega_sigma_omega :
+    omegaSigmaOmega fixedSigma fixedOmega = -18 := by native_decide","[""566c3245ed6b00899328066b276ba3e8""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-f6a8f02aa7bdeec3,,PR257Orbit.fixed_omega_sigma2_omega,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",458,459,"theorem fixed_omega_sigma2_omega :
+    omegaSigma2Omega fixedSigma fixedOmega = 98 := by native_decide","[""6c18e5e04a058e0a4bf0e0925052208a""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-e689c5e2d31b8469,,PR257Orbit.fixed_beta_dot_omega,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",460,461,"theorem fixed_beta_dot_omega :
+    betaDotOmega fixedBeta fixedOmega = 6 := by native_decide","[""dfae3b9b7e377375423d38c556c7dac7""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-88ede3fc8a95d9cd,,PR257Orbit.fixed_beta_sigma_omega,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",462,463,"theorem fixed_beta_sigma_omega :
+    betaSigmaOmega fixedSigma fixedBeta fixedOmega = -4 := by native_decide","[""095100c2d3ff001bb135bd9ea28578dd""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-69d16f81e46588fd,,PR257Orbit.fixed_omega_sigma3_omega,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",476,477,"theorem fixed_omega_sigma3_omega :
+    omegaSigma3Omega fixedSigma fixedOmega = -210 := by native_decide","[""1e92cc7499ef0415f6dd0ec027145372""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-4f89926dafd5a4e5,,PR257Orbit.fixed_beta_krylov_gram,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",480,483,"theorem fixed_beta_krylov_gram :
+    det (gramMatrix fixedBeta (mv fixedSigma fixedBeta)
+      (mv fixedSigma (mv fixedSigma fixedBeta))) = 400 := by native_decide
+","[""46356c54635a35fa034f6ffc99e9c023""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-d0bc832cd16439b6,,PR257Orbit.generic_separation_not_promoted,internal_auxiliary,검증 상태·명제 묶음·유한 타입 개수를 표현하는 내부 논리 보조정리다. 선언 본문의 대상은 새로운 물리 정리의 전체 범위가 아니다.,"{""content_id"": ""89e6f7e4158548c8392826fec06b389223f0ccb71c061b2b14c7f18dfeccfcb2:ad208a43"", ""git_blob"": ""b8b1b69317e8ddf95147be4cecaa155d6f445943"", ""id"": ""bcf2df35e10e4f5be6d0aa0ffc5379a1"", ""observed_commit"": ""81ab84fc4286fca016243405563be30d3ce4b6c4"", ""path"": ""docs/generated/pr257_lowell_morphology/axes/lean/PR257OrbitAxis.lean"", ""source_id"": ""htt_base""}",524,526,"theorem generic_separation_not_promoted :
+    genericOrbitSeparationStatus = .UNPROVEN := rfl
+","[""7c94965800f0797eafe0446452c477d5""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-1c4d97828f9f1f38,,PR190NormalVorticity.registeredLowerW2Positive,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""e9aecffac4f2a8012e14f0aa7cdaf28816e2bbb3a79d40b46bd268a8603314d2:ad208a43"", ""git_blob"": ""fc36c1aa8524316f0b6958d9e00d6d720ace8f33"", ""id"": ""9daa9e445bda2d365acf19abf6c5a189"", ""observed_commit"": ""bae6ac2df15c95ee1e71a3e49b859c0added192d"", ""path"": ""docs/research_program/strengthening/pr190_cas/axes/lean/PR190NormalVorticityAxis.lean"", ""source_id"": ""htt_base""}",41,43,"theorem registeredLowerW2Positive : 0 < registeredLowerW2 := by
+  norm_num [registeredLowerW2]
+","[""dafb7e1931399b7d4ec40da14a1d588f""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-e1cdb3f8668b7482,,PR190NormalVorticity.registeredInteriorW2Positive,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""e9aecffac4f2a8012e14f0aa7cdaf28816e2bbb3a79d40b46bd268a8603314d2:ad208a43"", ""git_blob"": ""fc36c1aa8524316f0b6958d9e00d6d720ace8f33"", ""id"": ""9daa9e445bda2d365acf19abf6c5a189"", ""observed_commit"": ""bae6ac2df15c95ee1e71a3e49b859c0added192d"", ""path"": ""docs/research_program/strengthening/pr190_cas/axes/lean/PR190NormalVorticityAxis.lean"", ""source_id"": ""htt_base""}",49,51,"theorem registeredInteriorW2Positive : 0 < registeredInteriorW2 := by
+  norm_num [registeredInteriorW2]
+","[""cf5e0540e3ba68dd0bce6efeccbc0d0a""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-6b95388466ded315,,PR190NormalVorticity.refutedConstraintCannotPromote,internal_auxiliary,검증 상태·명제 묶음·유한 타입 개수를 표현하는 내부 논리 보조정리다. 선언 본문의 대상은 새로운 물리 정리의 전체 범위가 아니다.,"{""content_id"": ""e9aecffac4f2a8012e14f0aa7cdaf28816e2bbb3a79d40b46bd268a8603314d2:ad208a43"", ""git_blob"": ""fc36c1aa8524316f0b6958d9e00d6d720ace8f33"", ""id"": ""9daa9e445bda2d365acf19abf6c5a189"", ""observed_commit"": ""bae6ac2df15c95ee1e71a3e49b859c0added192d"", ""path"": ""docs/research_program/strengthening/pr190_cas/axes/lean/PR190NormalVorticityAxis.lean"", ""source_id"": ""htt_base""}",57,63,"theorem refutedConstraintCannotPromote
+    (constraint localClaim globalClaim : Prop)
+    (hConstraint : ¬ constraint) :
+    ¬ (constraint ∧ localClaim ∧ globalClaim) := by
+  intro h
+  exact hConstraint h.1
+","[""618039ba02758f75d5d8e1c14a67e232""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-7f78de30ea2fd284,,PR190NormalVorticity.axisProofBundle,internal_auxiliary,검증 상태·명제 묶음·유한 타입 개수를 표현하는 내부 논리 보조정리다. 선언 본문의 대상은 새로운 물리 정리의 전체 범위가 아니다.,"{""content_id"": ""e9aecffac4f2a8012e14f0aa7cdaf28816e2bbb3a79d40b46bd268a8603314d2:ad208a43"", ""git_blob"": ""fc36c1aa8524316f0b6958d9e00d6d720ace8f33"", ""id"": ""9daa9e445bda2d365acf19abf6c5a189"", ""observed_commit"": ""bae6ac2df15c95ee1e71a3e49b859c0added192d"", ""path"": ""docs/research_program/strengthening/pr190_cas/axes/lean/PR190NormalVorticityAxis.lean"", ""source_id"": ""htt_base""}",74,83,"theorem axisProofBundle : AxisProofBundle := by
+  constructor
+  · exact normalSpatialVorticityZero
+  · exact normalW2Zero
+  · exact registeredLowerW2Positive
+  · exact lowerEndpointSameFrameContradiction
+  · exact registeredInteriorW2Positive
+  · exact interiorEndpointSameFrameContradiction
+  · exact refutedConstraintCannotPromote
+","[""82f85631e217d5d189a4f16ac454330c""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-9122c8dc857ac1c9,,PR270PillarT.Vec3.extensionality,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",43,49,"theorem Vec3.extensionality {u v : Vec3}
+    (hx : u.x = v.x) (hy : u.y = v.y) (hz : u.z = v.z) : u = v := by
+  cases u
+  cases v
+  simp_all
+
+@[ext]","[""c13dfac898ca749fa37a2d2e4b131a93""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-49cd275c7bebcb32,,PR270PillarT.Vec3.extensionality,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""1060279ad973f754c85a9e5413d269b269facc6dea4b2f09cee8d0e3e73b872c:ad208a43"", ""git_blob"": ""16281a0301c07d5835b4d656058a2ab7493e6979"", ""id"": ""b6814a7f8ae56641354cefc574e36df7"", ""observed_commit"": ""f8370a440ba1aa395995d62153977b64eb589ee0"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",44,49,"theorem Vec3.extensionality {u v : Vec3}
+    (hx : u.x = v.x) (hy : u.y = v.y) (hz : u.z = v.z) : u = v := by
+  cases u
+  cases v
+  grind
+","[""0a9e1210e511475656496e95b483b0e5""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-19d44973006455ca,,PR270PillarT.Mat3.extensionality,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",50,59,"theorem Mat3.extensionality {A B : Mat3}
+    (h00 : A.m00 = B.m00) (h01 : A.m01 = B.m01)
+    (h02 : A.m02 = B.m02) (h10 : A.m10 = B.m10)
+    (h11 : A.m11 = B.m11) (h12 : A.m12 = B.m12)
+    (h20 : A.m20 = B.m20) (h21 : A.m21 = B.m21)
+    (h22 : A.m22 = B.m22) : A = B := by
+  cases A
+  cases B
+  simp_all
+","[""6bba02acf901de45f8b7880d578542de""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-d696e5d9eee8b5cc,,PR270PillarT.Mat3.extensionality,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""1060279ad973f754c85a9e5413d269b269facc6dea4b2f09cee8d0e3e73b872c:ad208a43"", ""git_blob"": ""16281a0301c07d5835b4d656058a2ab7493e6979"", ""id"": ""b6814a7f8ae56641354cefc574e36df7"", ""observed_commit"": ""f8370a440ba1aa395995d62153977b64eb589ee0"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",50,59,"theorem Mat3.extensionality {A B : Mat3}
+    (h00 : A.m00 = B.m00) (h01 : A.m01 = B.m01)
+    (h02 : A.m02 = B.m02) (h10 : A.m10 = B.m10)
+    (h11 : A.m11 = B.m11) (h12 : A.m12 = B.m12)
+    (h20 : A.m20 = B.m20) (h21 : A.m21 = B.m21)
+    (h22 : A.m22 = B.m22) : A = B := by
+  cases A
+  cases B
+  grind
+","[""b8ed2570c8a81ba0eeb7afab2306ab01""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-4a1fc884e18cd9d2,,PR270PillarT.mm_assoc,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",141,143,"theorem mm_assoc (A B C : Mat3) : mm (mm A B) C = mm A (mm B C) := by
+  apply Mat3.extensionality <;> simp [mm] <;> ring
+","[""f0d64adf2896eaa3bf4bb6a192cc385f""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-ca9f9390cfe0bcd3,,PR270PillarT.mm_ident_right,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",144,146,"theorem mm_ident_right (A : Mat3) : mm A ident = A := by
+  apply Mat3.extensionality <;> simp [mm, ident]
+","[""f2b72c4a0b85af2744bc9fc4d89447ff""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-5d649fc06b85ca5c,,PR270PillarT.mm_add_right,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",147,150,"theorem mm_add_right (A B C : Mat3) :
+    mm A (madd B C) = madd (mm A B) (mm A C) := by
+  apply Mat3.extensionality <;> simp [mm, madd] <;> ring
+","[""87c44d8863450c637dd65ec481d1cde4""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-0f50d87d035488fa,,PR270PillarT.mm_scale_right,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",151,154,"theorem mm_scale_right (A B : Mat3) (r : ℝ) :
+    mm A (mscale r B) = mscale r (mm A B) := by
+  apply Mat3.extensionality <;> simp [mm, mscale] <;> ring
+","[""a5f10651c5fd9932ecd135a85442e077""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-9cafecbfd2088d2d,,PR270PillarT.mpow_add,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",159,166,"theorem mpow_add (A : Mat3) (m n : ℕ) :
+    mpow A (m + n) = mm (mpow A m) (mpow A n) := by
+  induction n with
+  | zero =>
+      simp [mpow, mm_ident_right]
+  | succ n ih =>
+      rw [Nat.add_succ, mpow, ih, mpow, mm_assoc]
+","[""506a305ba87cf2ffd49f6205f9cffd6d""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-41e43de30e93f1fc,,PR270PillarT.mpow_three,internal_auxiliary,"상위 증명에서 사용하는 행렬·벡터 대수, 유한 최댓값, 형 변환·순열의 기초 보조정리다. 선언과 같은 파일의 사용 문맥을 읽어 역할을 확인했다.","{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",167,171,"theorem mpow_three (A : Mat3) :
+    mpow A 3 = mm (mm A A) A := by
+  simp [mpow, mm, ident]
+
+/-- VT-T6 contraction reduction for every power, not only one fixture. -/","[""72f87923c50f63361ba2f224776b98ac""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-0bbc1c32c57a71bb,,PR270PillarT.principalShapeFixture,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""1060279ad973f754c85a9e5413d269b269facc6dea4b2f09cee8d0e3e73b872c:ad208a43"", ""git_blob"": ""16281a0301c07d5835b4d656058a2ab7493e6979"", ""id"": ""b6814a7f8ae56641354cefc574e36df7"", ""observed_commit"": ""f8370a440ba1aa395995d62153977b64eb589ee0"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",194,199,"theorem principalShapeFixture :
+    shearI2 (-2) 0 = 8 ∧
+    shearI3 (-2) 0 = 0 ∧
+    shearDelta (-2) 0 = 256 := by
+  native_decide
+","[""49ccdf7b2554c3106e4339442ff0e60f""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-826ffd23784e383b,,PR270PillarT.principalKrylovFixture,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""1060279ad973f754c85a9e5413d269b269facc6dea4b2f09cee8d0e3e73b872c:ad208a43"", ""git_blob"": ""16281a0301c07d5835b4d656058a2ab7493e6979"", ""id"": ""b6814a7f8ae56641354cefc574e36df7"", ""observed_commit"": ""f8370a440ba1aa395995d62153977b64eb589ee0"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",224,226,"theorem principalKrylovFixture :
+    krylovDet (-2) 0 principalVector = 16 := by native_decide
+","[""b35c16cdac698eda0ed672cd13613967""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-db12abf05c906134,,PR270PillarT.principalKrylovGramFixture,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""1060279ad973f754c85a9e5413d269b269facc6dea4b2f09cee8d0e3e73b872c:ad208a43"", ""git_blob"": ""16281a0301c07d5835b4d656058a2ab7493e6979"", ""id"": ""b6814a7f8ae56641354cefc574e36df7"", ""observed_commit"": ""f8370a440ba1aa395995d62153977b64eb589ee0"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",227,232,"theorem principalKrylovGramFixture :
+    det (gramMatrix principalVector
+      (diagAction (-2) 0 principalVector)
+      (diagAction (-2) 0 (diagAction (-2) 0 principalVector))) = 256 := by
+  native_decide
+","[""aa98a5c33db50d14c6fde0d25cb40b65""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-5e5523d32070e03c,,PR270PillarT.principalShapeFixture,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",251,256,"theorem principalShapeFixture :
+    shearI2 (-2) 0 = 8 ∧
+    shearI3 (-2) 0 = 0 ∧
+    shearDelta (-2) 0 = 256 := by
+  norm_num [shearI2, shearI3, shearDelta, lambda3]
+","[""0401389d847e7c872b1adb42730decc8""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-8bbe946bd996637d,,PR270PillarT.principalKrylovFixture,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",304,307,"theorem principalKrylovFixture :
+    krylovDet (-2) 0 principalVector = 16 := by
+  norm_num [krylovDet, principalVector, diagAction, lambda3, det, fromCols]
+","[""1de18999a1708c50acde6a30433017be""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-01f1dbdcf072d656,,PR270PillarT.principalKrylovGramFixture,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",308,313,"theorem principalKrylovGramFixture :
+    det (gramMatrix principalVector
+      (diagAction (-2) 0 principalVector)
+      (diagAction (-2) 0 (diagAction (-2) 0 principalVector))) = 256 := by
+  norm_num [principalVector, gramMatrix, diagAction, lambda3, dot, det]
+","[""383bd143543698b8af22f4a28a98fe95""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-f28e24fa259ae425,,PR270PillarT.globalSeparationNotPromoted,internal_auxiliary,검증 상태·명제 묶음·유한 타입 개수를 표현하는 내부 논리 보조정리다. 선언 본문의 대상은 새로운 물리 정리의 전체 범위가 아니다.,"{""content_id"": ""1060279ad973f754c85a9e5413d269b269facc6dea4b2f09cee8d0e3e73b872c:ad208a43"", ""git_blob"": ""16281a0301c07d5835b4d656058a2ab7493e6979"", ""id"": ""b6814a7f8ae56641354cefc574e36df7"", ""observed_commit"": ""f8370a440ba1aa395995d62153977b64eb589ee0"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",330,332,"theorem globalSeparationNotPromoted :
+    globalOrbitStatus = .unproven := rfl
+","[""5439c190fc25a7ab9b33ddf4d9e5d902""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-69901122ab5f0dd5,,PR270PillarT.sourceDecompositionNotPromoted,internal_auxiliary,검증 상태·명제 묶음·유한 타입 개수를 표현하는 내부 논리 보조정리다. 선언 본문의 대상은 새로운 물리 정리의 전체 범위가 아니다.,"{""content_id"": ""1060279ad973f754c85a9e5413d269b269facc6dea4b2f09cee8d0e3e73b872c:ad208a43"", ""git_blob"": ""16281a0301c07d5835b4d656058a2ab7493e6979"", ""id"": ""b6814a7f8ae56641354cefc574e36df7"", ""observed_commit"": ""f8370a440ba1aa395995d62153977b64eb589ee0"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",333,337,"theorem sourceDecompositionNotPromoted :
+    sourceDecompositionStatus =
+      .inconclusiveMissingTypedEvolutionLaw := rfl
+
+end PR270PillarT","[""26a4e66f42ad973a5ef67d36583b8f4f""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-c280a7b095310f58,,PR270PillarT.globalSeparationNotPromoted,internal_auxiliary,검증 상태·명제 묶음·유한 타입 개수를 표현하는 내부 논리 보조정리다. 선언 본문의 대상은 새로운 물리 정리의 전체 범위가 아니다.,"{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",512,514,"theorem globalSeparationNotPromoted :
+    globalOrbitStatus = .unproven := rfl
+","[""845317082e21bb3a5848e29dfa922963""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-a13504c5b6f38efc,,PR270PillarT.sourceDecompositionNotPromoted,internal_auxiliary,검증 상태·명제 묶음·유한 타입 개수를 표현하는 내부 논리 보조정리다. 선언 본문의 대상은 새로운 물리 정리의 전체 범위가 아니다.,"{""content_id"": ""c38a5cfe77821baa037990b8459f90b0290cb3d0f504e9e1c794f9dc62829603:ad208a43"", ""git_blob"": ""d4687eb5242a9e7c19331f5e0b0453a763d6e10d"", ""id"": ""96131de905a0686162248d4408529fe6"", ""observed_commit"": ""f2e7059d96cf36d8e74be23adea757bac8ca62cd"", ""path"": ""docs/research_program/vector_tensor/cas/axes/lean/PR270PillarTAxis.lean"", ""source_id"": ""htt_base""}",515,519,"theorem sourceDecompositionNotPromoted :
+    sourceDecompositionStatus =
+      .inconclusiveMissingTypedEvolutionLaw := rfl
+
+/-- One typed object binds every emitted boolean to a compiled theorem. -/","[""368fef90304ffc344ed4b3927110849b""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-8ee85ff0ca9f2547,,Pr169UnsignedLeakage.missingPhysicalReceiptBlocksPromotion,internal_auxiliary,검증 상태·명제 묶음·유한 타입 개수를 표현하는 내부 논리 보조정리다. 선언 본문의 대상은 새로운 물리 정리의 전체 범위가 아니다.,"{""content_id"": ""78f51ccdc142c891ca4eb11709ae2a2a723ac76389b62832350c671ba34146a0:ad208a43"", ""git_blob"": ""9d71224843b1a57e93d4876f75328958fbfa38f9"", ""id"": ""04b590b6409fbbf0c3c65db613cb3fab"", ""observed_commit"": ""43ea72444bf6c7eda2a931b784eb67fd336ab16d"", ""path"": ""formal_pr169/Pr169UnsignedLeakage/Basic.lean"", ""source_id"": ""htt_base""}",84,91,"theorem missingPhysicalReceiptBlocksPromotion :
+    ¬ physicalPromotion missingBundle := by
+  intro h
+  have impossible := h 0
+  simp [missingBundle] at impossible
+
+end Pr169UnsignedLeakage
+","[""8625a512c1cdb33d29de8c33167ec8f3""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-be438d8ca950da0c,,Pr170BuchertTwoPatch.registeredTypeCount,internal_auxiliary,검증 상태·명제 묶음·유한 타입 개수를 표현하는 내부 논리 보조정리다. 선언 본문의 대상은 새로운 물리 정리의 전체 범위가 아니다.,"{""content_id"": ""8b7c8dec8a5b7fe1549dda19a47210d8ae322b01ae8d70788a483d5ca8843d3d:ad208a43"", ""git_blob"": ""a5bd5df9899a0802facf5c88246628c78d763e01"", ""id"": ""98e3c69335e4e01e650144cfb94b5547"", ""observed_commit"": ""c936fabd1527bb8c38cb13b98fc1ee608d0c5738"", ""path"": ""formal_pr170/Pr170BuchertTwoPatch/Basic.lean"", ""source_id"": ""htt_base""}",80,82,"theorem registeredTypeCount : Fintype.card BianchiType = 11 := by decide
+
+end Pr170BuchertTwoPatch","[""81f4d04dd32b7831272672a11c46136a""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED
+role-f609a78c9dbd1bb2,,Pr171TiltRelaxation.persistentFixture,internal_auxiliary,명시된 고정 벡터·행렬·숫자 예제의 값이나 랭크를 확인하는 검증 보조정리다. 해당 예제의 계산을 일반 정리 후보 전체와 구별한다.,"{""content_id"": ""cb0efdb99d4bd4dafaf600c8ad819fffe08f2a57e34c49e2a3830525e8461797:ad208a43"", ""git_blob"": ""e2691e1664dcfe7a71bb5b68da1b49bdf7614364"", ""id"": ""e418ad365151a5d6bb2e1b0b55da3d3f"", ""observed_commit"": ""b8a857742bd6c2d727ea2009f6e8a341a031b120"", ""path"": ""formal_pr171/Pr171TiltRelaxation/Basic.lean"", ""source_id"": ""htt_base""}",37,40,"theorem persistentFixture :
+    ((-1 : ℚ) * 1 + 1 * 1 = 0) ∧ (1 * 1 + (-1) * 1 = 0) := by
+  norm_num
+","[""9060f9e61d072058cf37528eac759883""]","{""existing_proof_support_confirmed"": 1}",existing_support_at_exact_declaration,NOT_EVALUATED

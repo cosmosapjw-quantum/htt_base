@@ -198,6 +198,7 @@ policy:
   - PR-247
   - PR-CATALOG-001
   - PR-CATALOG-002
+  - PR-CATALOG-003
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -9915,4 +9916,26 @@ prs:
   level: L0
   scope: static_proof_evidence_navigation
   risk: R2
+  user_authorized: true
+- id: PR-CATALOG-003
+  wave: 0
+  title: Distinguish historically proposed research theorems from internal auxiliary propositions
+  owner: COMMON
+  depends:
+  - PR-CATALOG-002
+  files:
+  - scripts/catalog_lib/proof_roles.py
+  - scripts/project_catalog.py
+  - docs/project_catalog/proofs/roles
+  - tests/project_catalog
+  tests:
+  - PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -B -m pytest -c /dev/null -p no:cacheprovider --confcutdir=tests/project_catalog tests/project_catalog -q
+  dod:
+  - Every current proof-list item retains its identity and receives an evidence-bound role or explicit unresolved/excluded outcome
+  - Historical proposal intent and auxiliary use remain separate from proof status and scholarly novelty
+  - Read-only sources and deterministic offline export; ordinary push and remote readback
+  kill: No novelty claim from a theorem name, proposal path, proof status, or missing proposal match alone.
+  level: L0
+  scope: static_research_role_navigation
+  risk: R1
   user_authorized: true
