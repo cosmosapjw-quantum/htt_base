@@ -1,0 +1,911 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-20260912",
+  "assignment_id": "products",
+  "parent_assignment_id": null,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "6d78f041ff9ec512b91493c6e69e3da2177ef1cb09ac83e839a141f5b587d8d1",
+  "independence_mode": "blind-results",
+  "status": "COMPLETED_BOUNDED_RESEARCH_INPUT",
+  "claim_ids": [
+    "RUN-R9-20260912-PRODUCTS"
+  ],
+  "bootstrap": {
+    "assignment_read_first": true,
+    "context_match": true,
+    "required_input_hashes_match": true,
+    "shared_view_read": false,
+    "sibling_results_read": false,
+    "subagents_spawned": false,
+    "production_edits": false,
+    "explicit_host_hook_substitute": true
+  },
+  "summary_ko": "가장 짧은 새 방향성 관측 경로는 CF4 거리모듈러스의 깊이·각도 반응과 같은 호스트 방법차의 공통 보정인자를 한 상태에서 결합하는 것이다. 같은 호스트 차는 기하를 지우지만 CF4와 실제로 공유되는 방법차 보정인자를 제한할 수 있다. 핵심 판별기는 결합 설계의 영공간과 깊이에 따른 dipole 반응이다. 현재 원본은 이 연결에 필요한 경험적 선택법칙·공분산·보정 전이 자료를 제공하지 않으므로 새 실자료 신뢰영역은 아직 없다. CF4 기존 채널 c 격리, BASS 비의존성, 공통 nuisance 단일 tuple을 유지한다.",
+  "scope": {
+    "evidence_labels": [
+      "derived",
+      "numerically checked",
+      "implementation-read",
+      "unresolved"
+    ],
+    "evidence_note": "Implementation source was read, not imported or executed. The phrase implementation-verified is not used for these adapters. Numerical execution below concerns self-contained toy laws and algebra only.",
+    "no_empirical_admission": true,
+    "no_legacy_cf4_replacement": true,
+    "no_bass_prerequisite": true,
+    "no_global_tilt_claim": true,
+    "reference_limit": "Mapped originals and targeted product dossier only. No catalogue database, raw acquisition, sibling results, unavailable direct dependencies, or new physics solver was read/executed.",
+    "inference_target": "Directional distance-response coefficients and which linear functionals remain estimable after declared calibration/background/selection nuisance; global physical tilt is only a later optional response image."
+  },
+  "source_reading": [
+    {
+      "catalog_path": "htt/htt/htt/infer/r7_cf4_law.py",
+      "id": "ae6878aa8d1f779566dffc2b2a1a832b",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/ae6878aa8d1f779566dffc2b2a1a832b/r7_cf4_law.py",
+      "registry_hash_match": true,
+      "sha256": "35ab9035d66efa7cdb416f6556120f398093ecfdafc8b01c13efeed0b8d89f25",
+      "extent": "FULL_TEXT lines 1-121"
+    },
+    {
+      "catalog_path": "htt/htt/htt/infer/r7_jwst_law.py",
+      "id": "64fb41145e2dc44238a734eba1c5a8bd",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/64fb41145e2dc44238a734eba1c5a8bd/r7_jwst_law.py",
+      "registry_hash_match": true,
+      "sha256": "d4493f3b677f9eba52951a3e7030ec5275a3a913a13c8b2a9e2b36108c718ce8",
+      "extent": "FULL_TEXT lines 1-87"
+    },
+    {
+      "catalog_path": "htt/htt/htt/infer/r7_desi_law.py",
+      "id": "cad688c231738ab9007080c003a80f7a",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/cad688c231738ab9007080c003a80f7a/r7_desi_law.py",
+      "registry_hash_match": true,
+      "sha256": "0ceb0e2f5ac1211bcf8e32a9957a46570566ccf9f1c623c242f79b23f4915407",
+      "extent": "FULL_TEXT lines 1-75"
+    },
+    {
+      "catalog_path": "htt/htt/htt/infer/r8_confidence_image.py",
+      "id": "f4ee89a265c2eadf6ac76c672cb0daae",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/f4ee89a265c2eadf6ac76c672cb0daae/r8_confidence_image.py",
+      "registry_hash_match": true,
+      "sha256": "7622b8877b92fcf89929152dd929b38bba48be89c8c2de00f670da405befc8ef",
+      "extent": "TARGETED full outer_region, CompatibleTuple, project and part recession_certificate; downstream tail not relied on"
+    },
+    {
+      "catalog_path": "htt/src/common/cf4_manifest.py",
+      "id": "f71d98368bcee6099a4b04ac0c1f147e",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/f71d98368bcee6099a4b04ac0c1f147e/cf4_manifest.py",
+      "registry_hash_match": true,
+      "sha256": "174c0b7253f126fd725e9f81d60059d528c46c058a7cbc21faba11d38738c581",
+      "extent": "TARGETED lines 1-147: release identity and typed table3/table4 registry"
+    },
+    {
+      "catalog_path": "tests/r7/test_catalogue_laws.py",
+      "id": "8d263e44c6944a541c325eea183c4f95",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/8d263e44c6944a541c325eea183c4f95/test_catalogue_laws.py",
+      "registry_hash_match": true,
+      "sha256": "c2aa81ac051cd864cd13da170c74d937c1f7a21e3475c29db32ae703c745d791",
+      "extent": "FULL_TEXT lines 1-98; tests read, not run"
+    },
+    {
+      "catalog_path": "htt/htt/htt/core/cf4_observational_input.py",
+      "id": "ecd5c7d193524ce265f6eabc32d50317",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/ecd5c7d193524ce265f6eabc32d50317/cf4_observational_input.py",
+      "registry_hash_match": true,
+      "sha256": "93c67f7b81e6ccc31d5af8c47bbfc817bfe5cc9c8761cc252d89c28e328713cb",
+      "extent": "FULL_TEXT lines 1-103"
+    },
+    {
+      "catalog_path": "scripts/observed_runs/r8_product_intake.py",
+      "id": "8fb6977b53cf675838df52f0e4e411b6",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/8fb6977b53cf675838df52f0e4e411b6/r8_product_intake.py",
+      "registry_hash_match": true,
+      "sha256": "a35f6bdba42d9c88fc87390b62a2b3d5eb6522553bd82dce63f0528233b79f68",
+      "extent": "FULL_TEXT lines 1-120"
+    },
+    {
+      "catalog_path": "htt/htt/htt/infer/r7_gaussian_law.py",
+      "id": "37edeeb87f0edb2928e310da6921e185",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/37edeeb87f0edb2928e310da6921e185/r7_gaussian_law.py",
+      "registry_hash_match": true,
+      "sha256": "7d3ba747a89071fd28bda4b7278c1d9c1b0ccff42d824f78cd33bf3a5e250b64",
+      "extent": "TARGETED lines 100-283: conditional derivative, calibration_information_gain, JointObservationLaw and factory"
+    },
+    {
+      "catalog_path": "htt/htt/htt/infer/r7_calibration.py",
+      "id": "1fb00a1484e2d8678a60dd0685fc7314",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/1fb00a1484e2d8678a60dd0685fc7314/r7_calibration.py",
+      "registry_hash_match": true,
+      "sha256": "766b0a85e2480289564de1d3d8df6e0bfdaf347817d004b475e32569e533d2d1",
+      "extent": "FULL_TEXT method, calibration, stress, observed join functions"
+    },
+    {
+      "catalog_path": "htt/htt/htt/infer/r8_partial_law.py",
+      "id": "72d0119fb0ea4895c897f26fc5e90d81",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/72d0119fb0ea4895c897f26fc5e90d81/r8_partial_law.py",
+      "registry_hash_match": true,
+      "sha256": "cb4bcc2948a141e312c5ece14e4e62e9d2cd2a77f811bc27d14a0742bcf9f3db",
+      "extent": "TARGETED lines 1-85: marginal/moment assumptions and acceptance"
+    },
+    {
+      "catalog_path": "htt/htt/htt/infer/r8_law_registry.py",
+      "id": "1c8564df3f73195cccc3a593db8b8a7c",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/1c8564df3f73195cccc3a593db8b8a7c/r8_law_registry.py",
+      "registry_hash_match": true,
+      "sha256": "7de3afc9327fbdcd28419a57c3f8eec08029cff15dcbdd99f455161070bbebbe",
+      "extent": "TARGETED lines 139-226: PartialObservationLaw admission and dispatch"
+    },
+    {
+      "catalog_path": "docs/generated/cf4_forward_likelihood_design.md",
+      "id": "4e0663abc65d6b76abe1c780a713e68b",
+      "local_path": "/workspace/scratch/baa7b9162acb/htt_claim_tree_prep_57ecfe21/sources/4e0663abc65d6b76abe1c780a713e68b/cf4_forward_likelihood_design.md",
+      "registry_hash_match": true,
+      "sha256": "c814c0a3d472a634cc58f046d8270b1846bec40e3a4bc8ea85b1b10bdbdfb01b",
+      "extent": "FULL_TEXT lines 1-75"
+    }
+  ],
+  "source_bound_findings": [
+    {
+      "id": "PROD-F1",
+      "status": "implementation-read",
+      "relation": "supports",
+      "claim": "CF4 original distance/redshift product is available in typed source semantics, but its reconstruction columns cannot become a true-flow sampling vector.",
+      "sources": [
+        "f71d98368bcee6099a4b04ac0c1f147e:TABLE3_COLUMNS,TABLE4_COLUMNS"
+      ],
+      "details": "table3 has DMzp, DMav and method-specific moduli, uncertainties/counts and coordinates. table4 has DMzp/e_DMzp/Dist, Vh, V3k and reconstructions Vpds/Vpwf/Vpec. V3k is frame-derived; fV3k cosmology-corrected; SGX/SGY/SGZ are cz units. Select one documented original distance variable, declared redshift frame and stable 1PGC order. Do not consume both combined DMav and its constituent method measurements as independent data."
+    },
+    {
+      "id": "PROD-F2",
+      "status": "implementation-read",
+      "relation": "limits",
+      "claim": "The existing nine-column CF4 affine adapter is a conditional radial velocity experiment with fixed distances; it cannot justify a distance-modulus sampling law.",
+      "sources": [
+        "ae6878aa8d1f779566dffc2b2a1a832b:build_cf4_law lines 94-121",
+        "8d263e44c6944a541c325eea183c4f95:test_cf4_conditional_order_full_covariance_and_radial_curl_null"
+      ],
+      "details": "Requires Cf4OperatorInputs, full covariance in original group order, selected IDs, KNOWN_GAUSSIAN_CONDITIONAL and fixed distances/directions. Theta=(trace/3,Bx,By,Bz,Sxx,Syy,Sxy,Sxz,Syz); jacobian_eta is empty. Quoted distance errors neither supply this conditional covariance nor license conditioning on noisy distance without modeling its effect."
+    },
+    {
+      "id": "PROD-F3",
+      "status": "implementation-read",
+      "relation": "supports",
+      "claim": "Same-host geometry cancellation and shared measurement covariance are explicit in the JWST adapter.",
+      "sources": [
+        "64fb41145e2dc44238a734eba1c5a8bd:build_jwst_law lines 23-87",
+        "8d263e44c6944a541c325eea183c4f95:test_jwst_host_geometry_cancels_and_shared_covariance_once"
+      ],
+      "details": "Builds source_y, source design, host incidence H and transform T. Contrast mode y=T source_y, D=T design, V=T C T^T; T H=0. In the source fixture transform design=[0,1] and variance .04, using source covariance [[.04,.02],[.02,.04]]. Host Normal population cancels in contrasts. Student measurement scale is not variance; absolute mode convolves Normal host population with Student measurement through Gamma precision quadrature."
+    },
+    {
+      "id": "PROD-F4",
+      "status": "implementation-read",
+      "relation": "limits",
+      "claim": "The current adapters do not themselves connect CF4 and JWST to one shared physical/calibration tuple.",
+      "sources": [
+        "ae6878aa8d1f779566dffc2b2a1a832b:final JointObservationLaw construction",
+        "64fb41145e2dc44238a734eba1c5a8bd:final JointObservationLaw construction",
+        "f4ee89a265c2eadf6ac76c672cb0daae:outer_region"
+      ],
+      "details": "Both affine CF4 and JWST expose their fitted linear coefficients as theta with empty jacobian_eta. A new explicit global parameter embedding is required; coincident parameter names, a copied calibration source ID, or separate nuisance fitting is insufficient. outer_region expects the same ordered estimand and compatible tuple. Product-specific responses must first map to that tuple."
+    },
+    {
+      "id": "PROD-F5",
+      "status": "implementation-read",
+      "relation": "limits",
+      "claim": "Existing CF4 selected latent adapter is a useful exact specification skeleton, not a supplied empirical law or scalable full-catalogue integrator.",
+      "sources": [
+        "ae6878aa8d1f779566dffc2b2a1a832b:SelectedLatentBlock,build_cf4_law lines 19-93"
+      ],
+      "details": "Requires intensity, normalized joint measurement density, selection probability, finite integration domains, fixed selected block/count and shared eta. Numerical nquad over joint observations and latent variables is only plausible for small blocks. It does not justify factorizing correlated groups or supply a Poisson count law. QUADPACK error estimates are operational rather than certified bounds. The unbound factory lacks its distance provider."
+    },
+    {
+      "id": "PROD-F6",
+      "status": "implementation-read",
+      "relation": "supports",
+      "claim": "Existing native qiso and Union3 scenario routes can remain useful controls while the new directional path is built.",
+      "sources": [
+        "cad688c231738ab9007080c003a80f7a:build_compressed_bao_law",
+        "8fb6977b53cf675838df52f0e4e411b6:decode_union3,profile_offset,union3_scenario"
+      ],
+      "details": "qiso is conditional on the released fixed Gaussian scalar law and positive-qiso domain; it lacks angular response. Union3 preserves the published precision quadratic, fits flat-LCDM shape with one free common offset and has no exact-law budget or angular information. Neither by itself identifies directional/global tilt. Raw DESI requires exact selection, matched randoms and a normalized law; all mocks are refitted by build_desi_law."
+    },
+    {
+      "id": "PROD-F7",
+      "status": "implementation-read",
+      "relation": "limits",
+      "claim": "CF4 legacy channel c stays blocked independently of the new-method research branch.",
+      "sources": [
+        "ecd5c7d193524ce265f6eabc32d50317:OPEN_FINDING_IDS,CF4QuarantineStatus,normalize_active_channels"
+      ],
+      "details": "OPEN findings C1-K5-MV-F1, C3-K5-VCORR-ML-F1 and N-DATA-CF4-DOWNSTREAM retain no numerical or replacement payload. Implicit channel sets and explicit c are refused. The new product must receive a distinct observation/method scope based on original rows and must not be presented as adjudication of or replacement for these findings."
+    }
+  ],
+  "derived_model": {
+    "status": "derived",
+    "purpose": "Concrete first-order low-redshift phenomenology for a new original-distance-variable branch, with actual calibration and selection response. This is not a Bianchi solution or newly asserted empirical law.",
+    "conventions": "metric (-,+,+,+); c retained in w=c z for an explicitly justified low-z redshift convention; w and B km/s, r Mpc, H and S km/s/Mpc, mu and calibration offsets mag; n is the observer-to-source unit direction in one fixed declared frame.",
+    "general_model": "mu_ij = 25 + 5 log10(d_L(z_i,n_i;theta)/Mpc) + g_ij^T eta + x_ij^T kappa + b_ij + epsilon_ij. eta is the same physical calibration tuple across every participating product. kappa includes product-specific nuisance with explicit sharing maps; b belongs to a fixed discrepancy set. No Gaussian epsilon law is inferred from a quoted e_DM column.",
+    "local_derivation": [
+      "Postulate the local affine recession field v(x)=B+(H I+S+Omega)x for the bounded low-z phenomenological candidate, with S symmetric trace-free and Omega antisymmetric; x=r n.",
+      "Radial data have w=n^T v=n^T B+r(H+n^T S n), since n^T Omega n=0.",
+      "If w-n^T B>0 and H+n^T S n>0, r=(w-n^T B)/(H+n^T S n). Using d_L approximately r is a further low-z approximation; finite-redshift distance corrections must be supplied or bounded before product admission.",
+      "At baseline B=0,S=0,H=H0, set K=5/ln(10), u=n^T B/w, q=(deltaH+n^T S n)/H0. Then mu-mu0=K[ln(1-u)-ln(1+q)]+g^T eta+x^T kappa+b_cosmo.",
+      "Linearized responses are partial_Ba mu=-K n_a/w, partial_Sa mu=-K n^T E_a n/H0, partial_H mu=-K/H0. Here E_a is the explicitly declared five-component STF matrix basis, not an implicit normalization.",
+      "For source distance D=10^((mu-25)/5) Mpc, changing the calibration zero point changes inferred distance multiplicatively; a Gaussian law in mu does not become Gaussian in D or in peculiar velocity by relabeling."
+    ],
+    "response_discriminators": [
+      {
+        "response": "Bulk B",
+        "pattern": "Dipole n_a/w in modulus residuals; decays with depth at this order",
+        "test": "Freeze multiple depth bins and evaluate residualized singular values under the same method/selection design; compare mirror signs and orientations. A single shell can be exactly collinear with a sky dipole calibration term."
+      },
+      {
+        "response": "STF affine S",
+        "pattern": "Quadrupole n^T E_a n, depth-independent at this leading approximation",
+        "test": "Preserve absolute sky frame and verify angular design spans the tested STF combinations. Axial-only or incomplete sky directions may fail to identify off-diagonal components."
+      },
+      {
+        "response": "H/background",
+        "pattern": "Common modulus offset at first order and an exact scale degeneracy with an unrestricted common calibration shift",
+        "test": "Report scale-free directional functionals or supply an actual non-canceling absolute anchor. Same-host contrasts cannot establish H0."
+      },
+      {
+        "response": "Calibration/method",
+        "pattern": "Source-defined incidence, metallicity, crowding, zero-point and method effects where supported by source metadata",
+        "test": "Same-host contrast rows constrain only differences that survive T. Transfer to CF4 requires the same calibrator graph and physically justified coefficients, not sky proximity."
+      },
+      {
+        "response": "Selection nuisance",
+        "pattern": "Can produce depth-, sky- and method-dependent residual means",
+        "test": "Inject the actual selected sampling process, or predeclare defensible nuisance/discrepancy bounds; method counts alone cannot predict this mean."
+      }
+    ],
+    "frame_warning": "V3k already uses a CMB-frame transformation. A proposed local observer beta=v/c cannot be independently added to these rows without forwarding the original frame conversion and distinguishing source bulk B from observer velocity. Matter-congruence tilt and its derivatives remain separate physical variables.",
+    "linearization_remainder": {
+      "formula": "For |u|<=rho_u<1 and |q|<=rho_q<1, |R_mu| <= K/2 [u^2/(1-rho_u)+q^2/(1-rho_q)] <= K/2 [rho_u^2/(1-rho_u)+rho_q^2/(1-rho_q)]. Add an independently justified |b_cosmo(z)| bound and other model errors.",
+      "proof": "The Taylor remainder of ln(1+x) has absolute series bound sum_{k>=2}|x|^k/k <= x^2/[2(1-rho)] on |x|<=rho<1.",
+      "consumer": "Feed this rowwise magnitude box, with any justified correlations retained, to the R9 deterministic model-discrepancy set before nuisance projection and confidence inversion. Domain positivity and the finite-redshift remainder are part of the response contract.",
+      "unresolved": "No source-bound cosmographic/selection error bound for actual CF4 rows was supplied. The algebraic log remainder alone does not make the response empirically accurate."
+    }
+  },
+  "calibration_bridge": {
+    "status": "derived; toy numerically checked",
+    "equations": [
+      "Original same-host rows: d_J=H_host mu_host+G_J eta+epsilon_J. A contrast T obeying T H_host=0 gives y_J=T d_J=(T G_J)eta+T epsilon_J, V_J=T C_J T^T.",
+      "Distance block: y_C=A_C theta+G_C eta+X_C kappa+b_C+epsilon_C. Calibration block: y_J=0*theta+J eta+X_J kappa+b_J+epsilon_J, with J=T G_J.",
+      "Local structural target L theta is identifiable on an unrestricted linear domain iff every (delta_theta,delta_eta,delta_kappa) in ker([[A_C,G_C,X_C],[0,J,X_J]]) obeys L delta_theta=0. With bounds, evaluate feasible fibres rather than claiming full-rank identification.",
+      "The contrasts help a CF4-confounded target exactly when they rule out its calibration compensation: A_C delta_theta+G_C delta_eta+X_C delta_kappa=0 cannot coexist with J delta_eta+X_J delta_kappa=0 for a target-changing direction.",
+      "Under known joint covariance and a fixed Gaussian selected law, whiten the stacked law and compute this criterion by nuisance projection. If cross-product covariance is unknown, use source-qualified marginal block regions at fixed alpha with the same unprofiled tuple, then project their intersection; do not use a block-diagonal covariance by default."
+    ],
+    "absolute_scale_counterexample": "If eta0 is a common additive calibration zero point, r changes under H -> H exp(t), eta0 -> eta0+K t with mu invariant in the isotropic low-z model. Same-host T1=0 leaves this degeneracy intact. A method-difference calibration is not an absolute anchor.",
+    "shared_tuple_counterexample": "Toy y_C=theta+eta+e_C and y_J=eta+e_J. Both scalar means at the one common eta give theta interval y_C-y_J +/- z*(sigma_C+sigma_J) under two Bonferroni marginal bands. Profiling eta independently in each block first yields all theta; replacing eta by independent eta_C,eta_J likewise removes the gain.",
+    "monotonic_information_condition": "For a declared independent known-Gaussian toy with nuisance information E>0 and calibrator information G>=0, existing calibration_information_gain computes I_old=U-V E^-1 V^T and I_new=U-V(E+G)^-1 V^T. This conditional Schur-complement statement is not permission to assume empirical cross-product independence.",
+    "source_consumers": [
+      "37edeeb87f0edb2928e310da6921e185:calibration_information_gain",
+      "64fb41145e2dc44238a734eba1c5a8bd:build_jwst_law",
+      "f4ee89a265c2eadf6ac76c672cb0daae:outer_region"
+    ],
+    "prohibited_shortcuts": [
+      "Do not combine CCHP and SH0ES as a single observed population without justified common covariance/selection/identity inputs.",
+      "Do not consume original absolute rows and their deterministic contrasts twice.",
+      "Do not copy a JWST method coefficient into a CF4 nuisance column without the actual calibration-transfer graph.",
+      "Do not use positional overlap as proof of physical source identity or independent calibration."
+    ]
+  },
+  "selected_law": {
+    "status": "derived specification; empirical premises unresolved",
+    "formula": "p_sel(y|theta,eta,Z,N_fixed) = S(y) integral lambda(xi|theta,eta,Z) p(y|xi,theta,eta,Z) dxi / integral S(y') integral lambda(xi|theta,eta,Z) p(y'|xi,theta,eta,Z) dxi dy'.",
+    "required_inputs": [
+      "Original ordered measurement y and units/frame; selected observation IDs and known duplicate lineage",
+      "Observed-variable definition, redshift/distance convention and transfer to latent distance",
+      "Source population intensity or an actual justified conditioning rule",
+      "Selection probability over all sampled measurement variables, including method/depth/sky selection and its parameter dependence",
+      "Joint measurement and host/group/calibration law or an explicitly justified marginal law; actual covariance order and shared parameters",
+      "Declared selected count versus population count target",
+      "Domain where normalization, positivity and response approximation are valid"
+    ],
+    "counterexample": "With Y=mu+sigma epsilon, epsilon standard Normal, selecting Y<=t gives E[Y|selected]=mu-sigma phi(a)/Phi(a), a=(t-mu)/sigma. At t=mu the shift is -0.7978845608 sigma. Varying threshold by sky/method can create a coherent residual pattern. Observed method counts do not determine t or the truncated mean.",
+    "implementation_limit": "SelectedLatentBlock accepts S(y), no explicit theta/eta arguments. If selection itself depends on unknown parameters beyond y, the present callable interface needs a versioned extension; hiding variable selection in external mutable closure would violate a transparent law contract.",
+    "full_catalogue_frontier": "Do not feed 38,053 groups to naive nested quadrature or factor the catalogue independently. First use a small justified selected block, an analytic normalization, a separately justified sparse latent model, or original-coordinate marginal/moment premises. Scalability is a method issue; missing empirical law remains a scientific issue."
+  },
+  "route_choice": [
+    {
+      "route_id": "P0_NATIVE_CONTROLS",
+      "priority": "available parallel control",
+      "target": "Existing native qiso conditional interval; Union3 background-shape scenario; source-transcribed same-host descriptive differences.",
+      "action": "Retain these outputs with current scopes and source values. No new benchmark dependency or reinterpretation as directional inference.",
+      "first_frontier": "No model-specific directional response; qiso only scalar and Union3 nonangular."
+    },
+    {
+      "route_id": "P1_SHARED_CALIBRATION_DESIGN",
+      "priority": "shortest new scientifically informative increment",
+      "target": "Which CF4 directional coefficients could become estimable from actual shared method-difference information.",
+      "action": "Create source-defined ordered original distance rows, calibration incidence/transfer maps, selected-design response matrices and no-law rank/depth diagnostics. Then use matched, fully specified mocks to quantify information gain with coverage, width and RMSE together.",
+      "first_frontier": "Actual calibration transfer/selection/covariance premises. Descriptive rank diagnostics can execute before empirical law admission, but cannot yield empirical confidence."
+    },
+    {
+      "route_id": "P2_NEW_CF4_DISTANCE_LAW",
+      "priority": "preferred empirical directional destination",
+      "target": "A new independent distance-modulus likelihood/acceptance scope with bulk/STF response, explicit nuisances and discrepancy.",
+      "action": "Bind a selected distance-variable law using one of the justified paths below. Keep legacy c absent and deliver a separate original-row analysis. Evaluate target fibres and orthogonal adequacy residuals.",
+      "law_options": [
+        "Known selected joint Gaussian law with source-bound covariance and fixed design",
+        "Original-coordinate Gaussian marginal laws or proved variance bounds through r8_partial_law, preserving selection mean and fixed allocations",
+        "Normalized selected latent measurement model plus an actually calibrated non-Gaussian/simulator acceptance method"
+      ],
+      "first_frontier": "Current releases do not provide the qualifying law premises. An implemented adapter and a successful mock are insufficient."
+    },
+    {
+      "route_id": "P3_OPTIONAL_PHYSICAL_IMAGE",
+      "priority": "conditional future consumer only",
+      "target": "MES/global physical functionals under an externally supplied same-state response.",
+      "action": "Map the accepted common tuple into physical functionals only when the physical response identifies the requested target and its approximation/support are documented.",
+      "first_frontier": "No matter-congruence tilt/jet response supplied; radial antisymmetric kernel and observer/source separation persist. No BASS solver or benchmark prerequisite is introduced."
+    }
+  ],
+  "execution_dag_requirements": [
+    {
+      "node": "PROD-R1_SOURCE_VARIABLE",
+      "depends_on": [],
+      "inputs": [
+        "Pinned CF4 table3/table4 column authority",
+        "Selected source measurement IDs/order",
+        "CCHP and SH0ES original host/method receipts"
+      ],
+      "work": "Choose one original distance sampling vector, fixed frame and source incidence without duplicate derived rows.",
+      "outputs": [
+        "ordered_original_measurements",
+        "source_measurement_map",
+        "frame_distance_convention"
+      ],
+      "consumers": [
+        "PROD-R2_RESPONSE",
+        "PROD-R3_CALIBRATION",
+        "PROD-R4_LAW"
+      ],
+      "failure_isolation": "Missing group covariance does not block source-semantic or descriptive response work."
+    },
+    {
+      "node": "PROD-R2_RESPONSE",
+      "depends_on": [
+        "PROD-R1_SOURCE_VARIABLE"
+      ],
+      "inputs": [
+        "Bounded H/B/STF candidate domain",
+        "Low-z/finite-redshift distance response"
+      ],
+      "work": "Construct A_C, positive-distance domain and purpose-specific discrepancy B. Verify zero response for radial antisymmetric Omega and preserve sky frame.",
+      "outputs": [
+        "directional_response",
+        "discrepancy_set",
+        "target_L"
+      ],
+      "consumers": [
+        "PROD-R5_IDENTIFICATION",
+        "PROD-R6_MOCK"
+      ],
+      "failure_isolation": "Missing finite-z response bound limits the branch to declared phenomenological mocks; does not block qiso/native controls."
+    },
+    {
+      "node": "PROD-R3_CALIBRATION",
+      "depends_on": [
+        "PROD-R1_SOURCE_VARIABLE"
+      ],
+      "inputs": [
+        "Actual calibrator graph and method metadata",
+        "Source covariance or justified marginal contrast premises"
+      ],
+      "work": "Build G_C and J=T G_J in one ordered eta tuple; keep CCHP/SH0ES separate absent common law. Identify common-zero-point and unsupported transfer directions.",
+      "outputs": [
+        "shared_tuple_embedding",
+        "contrast_operator",
+        "nuisance_incidence",
+        "calibration_transfer_status"
+      ],
+      "consumers": [
+        "PROD-R5_IDENTIFICATION",
+        "PROD-R6_MOCK",
+        "PROD-R7_OBSERVED"
+      ],
+      "failure_isolation": "Missing transfer produces no-calibration-gain branch; no fabricated shared nuisance or empirical combination."
+    },
+    {
+      "node": "PROD-R4_LAW",
+      "depends_on": [
+        "PROD-R1_SOURCE_VARIABLE"
+      ],
+      "inputs": [
+        "Actual selected sampling/conditioning premise",
+        "Ordered covariance or valid marginal/moment evidence",
+        "Selection normalization if latent route"
+      ],
+      "work": "Bind one honest selected law and its mean; distinguish source scientific availability from numerical support/normalization capability.",
+      "outputs": [
+        "bound_law_or_scoped_refusal",
+        "sampling_target",
+        "law_alternatives"
+      ],
+      "consumers": [
+        "PROD-R6_MOCK",
+        "PROD-R7_OBSERVED"
+      ],
+      "failure_isolation": "No-law branch retains descriptive diagnostics; cannot enter exact-law confidence merely because adapters exist."
+    },
+    {
+      "node": "PROD-R5_IDENTIFICATION",
+      "depends_on": [
+        "PROD-R2_RESPONSE",
+        "PROD-R3_CALIBRATION"
+      ],
+      "inputs": [
+        "A_C,G_C,J,X matrices",
+        "Target L and domain"
+      ],
+      "work": "Find target-changing nuisance fibres and test depth/angular/method separation. Report the smallest projected singular values with conditioning flags; exact degeneracy is a scientific conclusion.",
+      "outputs": [
+        "estimable_target_basis",
+        "kernel_counterexamples",
+        "planned_discriminators"
+      ],
+      "consumers": [
+        "PROD-R6_MOCK",
+        "PROD-R7_OBSERVED",
+        "PROD-R8_PHYSICAL_IMAGE"
+      ],
+      "failure_isolation": "Rank-zero or target-changing fibres produce an unbounded target statement, not jitter or a solver rejection."
+    },
+    {
+      "node": "PROD-R6_MOCK",
+      "depends_on": [
+        "PROD-R2_RESPONSE",
+        "PROD-R3_CALIBRATION",
+        "PROD-R5_IDENTIFICATION"
+      ],
+      "inputs": [
+        "Fully declared synthetic law; separately, qualifying PROD-R4_LAW if real-product calibration is attempted",
+        "Fixed selected design and processing pipeline"
+      ],
+      "work": "Generate model -> latent/source measurement -> selection/frame/host transform -> product statistic with the same nuisance refit on every realization. Run matched baseline, directional, calibration-only, selection-only and adversarial collinearity cells; retain mirror signs. For material gain compare coverage, width and RMSE with MC uncertainty, not width alone.",
+      "outputs": [
+        "mock_discriminator_results",
+        "method_coverage_scope",
+        "selection_and_nuisance_failure_examples"
+      ],
+      "consumers": [
+        "PROD-R7_OBSERVED"
+      ],
+      "failure_isolation": "Toy method success remains synthetic. Four-axis formal production validation and actual empirical law gates remain separate execution obligations."
+    },
+    {
+      "node": "PROD-R7_OBSERVED",
+      "depends_on": [
+        "PROD-R1_SOURCE_VARIABLE",
+        "PROD-R2_RESPONSE",
+        "PROD-R3_CALIBRATION",
+        "PROD-R4_LAW",
+        "PROD-R5_IDENTIFICATION",
+        "PROD-R6_MOCK"
+      ],
+      "inputs": [
+        "Qualified law and actual selected observations",
+        "One shared tuple domain",
+        "Fixed error allocations"
+      ],
+      "work": "Evaluate same-state block acceptance and project the intersection; union alternative law tuples. If covariance is unknown across products, use valid marginal/Bonferroni combination. Retain numerical unresolved candidates in the outer region.",
+      "outputs": [
+        "new_method_observation_space_region",
+        "nuisance_and_residual_diagnostics",
+        "legacy_quarantine_preserved"
+      ],
+      "consumers": [
+        "PROD-R8_PHYSICAL_IMAGE",
+        "native_observation_report"
+      ],
+      "failure_isolation": "CF4 unavailable leaves its fixed alpha unused; never reallocate the R8 1/80 blocks. New standalone allocations must be declared under a new scope, not overwrite historical R8."
+    },
+    {
+      "node": "PROD-R8_PHYSICAL_IMAGE",
+      "depends_on": [
+        "PROD-R7_OBSERVED",
+        "PROD-R5_IDENTIFICATION",
+        "external_physical_response_if_supplied"
+      ],
+      "inputs": [
+        "Accepted same-state tuple",
+        "External target response with normalization and bounded approximation"
+      ],
+      "work": "Project only identified physical functionals with certified outer bounds; preserve unbounded or unsupported targets.",
+      "outputs": [
+        "conditional_physical_image_or_frontier"
+      ],
+      "consumers": [
+        "future_physical_interpretation"
+      ],
+      "failure_isolation": "This optional node cannot gate completion of observation-space products and does not require BASS benchmarks."
+    }
+  ],
+  "consumer_mapping": [
+    {
+      "existing": "htt/htt/htt/infer/r7_jwst_law.py:build_jwst_law",
+      "reuse": "HostPair ordering, contrast T, T C T^T, Normal host population and distinct measurement families",
+      "extension": "Add explicit source-bound embedding from its local theta to global calibration eta; do not directly label geometry parameter as physical tilt."
+    },
+    {
+      "existing": "htt/htt/htt/infer/r7_cf4_law.py:build_cf4_law affine lane",
+      "reuse": "Original covariance/group-order validation and declared affine radial design in a fixed-distance experiment",
+      "extension": "Keep as conditional velocity lane; new modulus law requires its own observed variable and calibration response, not renamed inputs."
+    },
+    {
+      "existing": "htt/htt/htt/infer/r7_cf4_law.py:SelectedLatentBlock",
+      "reuse": "Selection-weighted latent integral and selected-count target",
+      "extension": "Supply actual intensity, measurement density, selection and provider. Larger correlated blocks require a separate justified computational adapter."
+    },
+    {
+      "existing": "htt/htt/htt/infer/r7_gaussian_law.py:JointObservationLaw",
+      "reuse": "Ordered mean/covariance/domain and theta/eta Jacobians",
+      "extension": "Bind one common tuple/eta implementation with explicit source calibration transfer and law premise."
+    },
+    {
+      "existing": "htt/htt/htt/infer/r7_gaussian_law.py:calibration_information_gain",
+      "reuse": "Conditional Schur-complement information comparison where E is PD",
+      "extension": "Use only for declared Gaussian model or mock; it cannot establish missing data independence."
+    },
+    {
+      "existing": "htt/htt/htt/infer/r8_law_registry.py:PartialObservationLaw and r8_partial_law.py",
+      "reuse": "Original-coordinate Gaussian marginal or variance-upper-bound acceptance without a copula claim",
+      "extension": "Actual selected mean, variances/bounds, frame and source law must be supplied. Does not avoid selection-bias modeling."
+    },
+    {
+      "existing": "htt/htt/htt/infer/r8_confidence_image.py:CompatibleTuple,outer_region",
+      "reuse": "Same ordered estimand, fixed exact alpha, intersection within compatible tuples and union across alternatives",
+      "extension": "Ensure each block region evaluates the same eta and has the full source measurement map before any target projection. Missing blocks keep alpha unused."
+    },
+    {
+      "existing": "htt/htt/htt/infer/r7_calibration.py:GaussianMethod,calibrate_method",
+      "reuse": "Full-residual known-Gaussian acceptance with method-specific binding",
+      "extension": "This registered method accepts alpha .05/.04 and FULL_RESIDUAL_CHISQUARE_WITH_SUPPORT only. The R9 projected response confidence method is a new method requiring its own proof/implementation/validation; do not silently subtract fitted df or reuse an old receipt."
+    },
+    {
+      "existing": "scripts/observed_runs/r8_product_intake.py",
+      "reuse": "Source-bound descriptive intake, Union3 offset-profiled scenario",
+      "extension": "Preserve product status labels until the new law and response actually execute."
+    },
+    {
+      "existing": "htt/htt/htt/core/cf4_observational_input.py",
+      "reuse": "Legacy channel-c quarantine enforcement",
+      "extension": "No modification proposed; new analysis uses a distinct product/method scope without consuming or replacing quarantined numeric payloads."
+    }
+  ],
+  "validation": {
+    "scope": "Self-contained toy selected-Gaussian/calibration algebra and Monte Carlo; no actual adapter execution or observed-data run.",
+    "numeric": {
+      "alpha_each": 0.025,
+      "alpha_total": 0.05,
+      "cells": [
+        {
+          "CP99": [
+            0.9633989085157695,
+            0.9699767349436532
+          ],
+          "count": 19336,
+          "fraction": 0.9668,
+          "metric": "joint_true_tuple_coverage",
+          "rho": -0.95
+        },
+        {
+          "CP99": [
+            0.9738643929599957,
+            0.9794060235479741
+          ],
+          "count": 19535,
+          "fraction": 0.97675,
+          "metric": "projected_theta_coverage",
+          "rho": -0.95
+        },
+        {
+          "CP99": [
+            0.9481802524494755,
+            0.9560027677403432
+          ],
+          "count": 19044,
+          "fraction": 0.9522,
+          "metric": "joint_true_tuple_coverage",
+          "rho": 0
+        },
+        {
+          "CP99": [
+            0.9977021832087091,
+            0.9991495566713333
+          ],
+          "count": 19971,
+          "fraction": 0.99855,
+          "metric": "projected_theta_coverage",
+          "rho": 0
+        },
+        {
+          "CP99": [
+            0.9631371394077302,
+            0.9697386325606371
+          ],
+          "count": 19331,
+          "fraction": 0.96655,
+          "metric": "joint_true_tuple_coverage",
+          "rho": 0.95
+        },
+        {
+          "CP99": [
+            0.9997351192187828,
+            1
+          ],
+          "count": 20000,
+          "fraction": 1,
+          "metric": "projected_theta_coverage",
+          "rho": 0.95
+        }
+      ],
+      "kernel_fixtures": [
+        {
+          "case": "CF4 theta+eta only",
+          "matrix": [
+            [
+              1,
+              1
+            ]
+          ],
+          "null_vector": [
+            1,
+            -1
+          ],
+          "rank": 1,
+          "theta_information": 0
+        },
+        {
+          "case": "shared calibrator eta added",
+          "matrix": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "null_vectors": [],
+          "rank": 2,
+          "theta_information": 0.5
+        },
+        {
+          "case": "method contrast does not calibrate common zero point",
+          "matrix": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "null_vector": [
+            1,
+            -1,
+            0
+          ],
+          "rank": 2
+        },
+        {
+          "case": "unshared eta_C eta_J",
+          "matrix": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "null_vector": [
+            1,
+            -1,
+            0
+          ],
+          "rank": 2
+        }
+      ],
+      "log_remainder_check": {
+        "bounds": [
+          0.00013571702559476615,
+          0.01357170255947662,
+          0.05428681023790648,
+          0.01357170255947662,
+          0.05428681023790648
+        ],
+        "errors": [
+          0.00010930291708783303,
+          0.011640211851749717,
+          0.050255583137030234,
+          0.010183815160500709,
+          0.03838825166512766
+        ],
+        "satisfied": true,
+        "x": [
+          0.01,
+          0.1,
+          0.2,
+          -0.1,
+          -0.2
+        ]
+      },
+      "radial_curl_null": {
+        "max_abs": 0
+      },
+      "seed": 20260912,
+      "toy_units": "dimensionless whitened variables",
+      "trials_per_cell": 20000,
+      "truncation_counterexample": {
+        "conditional_mean_in_sigma": -0.7978845608028654,
+        "formula": "mu - sigma*phi(a)/Phi(a)",
+        "one_sided_threshold_in_sigma": 0
+      },
+      "z": 2.241402727604947
+    },
+    "algebra": {
+      "depth_discriminator": [
+        {
+          "augmented_rank": 2,
+          "depths": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "nuisance_rank": 2,
+          "projected_response_norm": 3.1401849173675503e-16
+        },
+        {
+          "augmented_rank": 3,
+          "depths": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "nuisance_rank": 2,
+          "projected_response_norm": 0.5
+        }
+      ],
+      "exact_nulls": [
+        {
+          "matrix": [
+            [
+              1,
+              1
+            ]
+          ],
+          "null_residual": [
+            0
+          ],
+          "null_vector": [
+            1,
+            -1
+          ],
+          "rank": 1
+        },
+        {
+          "matrix": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "null_residual": [
+            0,
+            0
+          ],
+          "null_vector": [
+            1,
+            -1,
+            0
+          ],
+          "rank": 2
+        },
+        {
+          "matrix": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "null_residual": [
+            0,
+            0
+          ],
+          "null_vector": [
+            1,
+            -1,
+            0
+          ],
+          "rank": 2
+        }
+      ]
+    },
+    "interpretation": [
+      "At rho=0 the common true tuple has observed coverage .9522, CP99 [.9481803,.9560028]; the exact two-block union-bound argument supplies the >=.95 claim, not a Monte Carlo lower bound.",
+      "Projected theta intervals overcover, especially at positive correlation, because the unknown-dependence-safe rectangle projection is conservative. These are not empirical CF4/JWST widths.",
+      "One-shell dipole response is collinear with a sky-dipole nuisance (residual norm about 3.14e-16); adding a second normalized depth shell leaves residual norm .5 and augments rank. Actual survey windows/method maps may alter or remove this gain.",
+      "The exact null vectors demonstrate common calibration/H scale degeneracy and the failure of unshared eta_C/eta_J to identify theta.",
+      "The log remainder bound passed all declared toy points |x|<=.2; the check does not supply missing finite-redshift or selection error bounds."
+    ],
+    "reproduction_python": "import numpy as np,json,math\nfrom scipy.stats import norm,beta\nrng=np.random.default_rng(20260912)\nn=20000; alpha=.05; z=norm.ppf(1-alpha/4)\ndef cp(k):\n return [0. if k==0 else float(beta.ppf(.005,k,n-k+1)),1. if k==n else float(beta.ppf(.995,k+1,n-k))]\nout={'seed':20260912,'trials_per_cell':n,'toy_units':'dimensionless whitened variables','alpha_total':alpha,'alpha_each':alpha/2,'z':float(z),'cells':[]}\nfor rho in [-.95,0.,.95]:\n e=rng.multivariate_normal([0.,0.],[[1.,rho],[rho,1.]],n)\n joint=(np.abs(e[:,0])<=z)&(np.abs(e[:,1])<=z)\n projected=np.abs(e[:,0]-e[:,1])<=2*z\n for typ,event in [('joint_true_tuple_coverage',joint),('projected_theta_coverage',projected)]:\n  k=int(event.sum());out['cells'].append({'rho':rho,'metric':typ,'count':k,'fraction':k/n,'CP99':cp(k)})\nout['kernel_fixtures']=[\n {'case':'CF4 theta+eta only','matrix':[[1,1]],'rank':1,'theta_information':0,'null_vector':[1,-1]},\n {'case':'shared calibrator eta added','matrix':[[1,1],[0,1]],'rank':2,'theta_information':.5,'null_vectors':[]},\n {'case':'method contrast does not calibrate common zero point','matrix':[[1,1,1],[0,0,1]],'rank':2,'null_vector':[1,-1,0]},\n {'case':'unshared eta_C eta_J','matrix':[[1,1,0],[0,0,1]],'rank':2,'null_vector':[1,-1,0]}\n]\nx=np.array([.01,.1,.2,-.1,-.2]);rho=.2;K=5/math.log(10)\nerrs=abs(K*(np.log1p(-x)+x));bound=K*x*x/(2*(1-rho))\nout['log_remainder_check']={'x':x.tolist(),'errors':errs.tolist(),'bounds':bound.tolist(),'satisfied':bool(np.all(errs<=bound))}\nout['truncation_counterexample']={'one_sided_threshold_in_sigma':0.,'conditional_mean_in_sigma':-math.sqrt(2/math.pi),'formula':'mu - sigma*phi(a)/Phi(a)'}\nnvec=np.concatenate([np.eye(3),-np.eye(3)])\nS=np.array([[.1,.02,.03],[.02,-.04,.05],[.03,.05,-.06]])\nO=np.array([[0.,1.,-2.],[-1.,0.,3.],[2.,-3.,0.]])\ncurl=np.einsum('ni,ij,nj->n',nvec,O,nvec)\nout['radial_curl_null']={'max_abs':float(abs(curl).max())}\nprint(json.dumps(out,indent=2))\n\nimport numpy as np,json\nfixtures=[([[1,1]],[1,-1]),([[1,1,1],[0,0,1]],[1,-1,0]),([[1,1,0],[0,0,1]],[1,-1,0])]\nout={'exact_nulls':[]}\nfor matrix,null in fixtures:\n m=np.array(matrix);v=np.array(null)\n out['exact_nulls'].append({'matrix':matrix,'null_vector':null,'null_residual':(m@v).tolist(),'rank':int(np.linalg.matrix_rank(m))})\nnx=np.array([1.,0.,0.,-1.,0.,0.])\nout['depth_discriminator']=[]\nfor depth in [[1]*6,[1]*6+[2]*6]:\n d=np.array(depth);n=np.tile(nx,len(d)//6)\n a=n/d;G=np.column_stack([np.ones(len(d)),n])\n residual=a-G@np.linalg.lstsq(G,a,rcond=None)[0]\n out['depth_discriminator'].append({'depths':depth,'nuisance_rank':int(np.linalg.matrix_rank(G)),'augmented_rank':int(np.linalg.matrix_rank(np.column_stack([G,a]))),'projected_response_norm':float(np.linalg.norm(residual))})\nprint(json.dumps(out,indent=2))\n",
+    "tolerance": "1e-10 for algebra comparisons; no changed thresholds after results; CP99 descriptive MC intervals; finite double-precision statistical quantile used operationally.",
+    "production_formal_validation": "NOT_EXECUTED. Parent design must retain required independent method review and four-axis production obligations. This assignment makes no CAS PASS claim."
+  },
+  "blockers": [
+    {
+      "id": "SOURCE_DEPENDENCY_UNREAD",
+      "status": "unresolved",
+      "detail": "obsstat.cf4_current_stack, infer.jwst_host_hierarchy and older rest_frame.cf4_likelihood implementations are not present among the targeted mapped local originals; dependency behavior is inferred only where directly exercised/asserted in the read law adapters and source test fixtures."
+    },
+    {
+      "id": "CF4_SELECTED_LAW_ABSENT",
+      "status": "blocked empirical admission",
+      "detail": "Source-bound selected sampling/conditioning law and original group covariance or justified marginal/moment premises are missing."
+    },
+    {
+      "id": "SHARED_CALIBRATION_TRANSFER_ABSENT",
+      "status": "unresolved",
+      "detail": "No authenticated mapping makes CCHP/SH0ES method differences the same nuisance tuple in CF4. The exact graph and coefficient semantics must be supplied."
+    },
+    {
+      "id": "LOW_Z_RESPONSE_ERROR_UNBOUND",
+      "status": "unresolved",
+      "detail": "The derived affine distance formula is bounded phenomenology. Actual finite-redshift response and selection discrepancy require evidence before physical/product claims."
+    },
+    {
+      "id": "RADIAL_TARGET_KERNEL",
+      "status": "derived limitation",
+      "detail": "Antisymmetric radial response is exactly zero; common H/calibration scale is confounded absent a non-canceling anchor; observer beta and matter tilt are distinct."
+    },
+    {
+      "id": "CF4_LEGACY_QUARANTINE_OPEN",
+      "status": "blocked affected legacy claims",
+      "detail": "C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM remain OPEN. New methodology is not their adjudication."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/R9-20260912/results/products.json",
+      "kind": "bounded_research_result",
+      "contains": "source mapping, derived response and calibration bridge, mock execution code/results, branch-isolated execution requirements"
+    }
+  ],
+  "decision": "HANDOFF_INPUT_ONLY; final promotion belongs to independent parent-arranged decision review",
+  "HARNESS_RESULT": "R9-20260912/products COMPLETED_BOUNDED_RESEARCH_INPUT"
+}
