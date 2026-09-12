@@ -1,0 +1,316 @@
+{
+  "scope": "R9_RESEARCH_MOCKS_ONLY",
+  "seed": 20260912,
+  "draws_per_cell": 20000,
+  "alpha": 0.05,
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "symbolic_local": "stdlib fractions; SymPy unavailable",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39"
+  },
+  "script_sha256": "f327caf6d43e50e7b141eb0eec3f77e427956845e088cd4c5e0c155c887b94ad",
+  "interpretation": "Finite design checks, not product law validation or proof by Monte Carlo.",
+  "exact_rational": {
+    "projector": "[[Fraction(4, 5), Fraction(-2, 5)], [Fraction(-2, 5), Fraction(1, 5)]]",
+    "identified_map": "[Fraction(2, 1), Fraction(-1, 1)]",
+    "status": "PASS_EXACT_LOW_DIMENSIONAL_IDENTITIES",
+    "four_axis_CAS": "NOT_EXECUTED"
+  },
+  "response_cells": [
+    {
+      "name": "constant_two_depths",
+      "H_family": "constant",
+      "depths": [
+        0.02,
+        0.15
+      ],
+      "rank": 3,
+      "singular_values": [
+        223.97883836211983,
+        223.9788383621198,
+        223.97883836211977,
+        2.5809158257642773e-14,
+        1.2561211728084472e-14,
+        6.224668355703218e-15
+      ],
+      "condition_identified": 1.0000000000000002,
+      "full_six_parameter_identified": false,
+      "bias_radius": 1.5,
+      "chi_radius": 2.7954834829151074,
+      "robust_ball_confidence": {
+        "covered": 19843,
+        "draws": 20000,
+        "coverage": 0.99215,
+        "binomial_95_percent": [
+          0.9908276345154746,
+          0.9933261154096938
+        ]
+      },
+      "ignored_bias_control": {
+        "covered": 15812,
+        "draws": 20000,
+        "coverage": 0.7906,
+        "binomial_95_percent": [
+          0.7848939827566987,
+          0.7962214210677782
+        ]
+      },
+      "rank_threshold": "max(shape)*eps*smax; fixture diagnostic only",
+      "parameter_units": "dimensionless v/c; noise is a dimensionless whitened fixture"
+    },
+    {
+      "name": "lcdm_same_depth",
+      "H_family": "lcdm",
+      "depths": [
+        0.05,
+        0.05
+      ],
+      "rank": 3,
+      "singular_values": [
+        127.4447829566356,
+        127.44478295663558,
+        127.44478295663558,
+        1.3158559889719408e-14,
+        8.613448754193376e-15,
+        5.491817728225723e-15
+      ],
+      "condition_identified": 1.0000000000000002,
+      "full_six_parameter_identified": false,
+      "bias_radius": 1.5,
+      "chi_radius": 2.7954834829151074,
+      "robust_ball_confidence": {
+        "covered": 19843,
+        "draws": 20000,
+        "coverage": 0.99215,
+        "binomial_95_percent": [
+          0.9908276345154746,
+          0.9933261154096938
+        ]
+      },
+      "ignored_bias_control": {
+        "covered": 15806,
+        "draws": 20000,
+        "coverage": 0.7903,
+        "binomial_95_percent": [
+          0.7845910597877201,
+          0.7959244316280516
+        ]
+      },
+      "rank_threshold": "max(shape)*eps*smax; fixture diagnostic only",
+      "parameter_units": "dimensionless v/c; noise is a dimensionless whitened fixture"
+    },
+    {
+      "name": "lcdm_shallow",
+      "H_family": "lcdm",
+      "depths": [
+        0.005,
+        0.02
+      ],
+      "rank": 6,
+      "singular_values": [
+        899.3852826969352,
+        899.3852826969352,
+        899.3852826969351,
+        0.009184164943587352,
+        0.009184164943580346,
+        0.009184164943578097
+      ],
+      "condition_identified": 97927.82340280355,
+      "full_six_parameter_identified": true,
+      "bias_radius": 1.5,
+      "chi_radius": 3.54846265920102,
+      "robust_ball_confidence": {
+        "covered": 19919,
+        "draws": 20000,
+        "coverage": 0.99595,
+        "binomial_95_percent": [
+          0.9949686974713234,
+          0.9967824534278288
+        ]
+      },
+      "ignored_bias_control": {
+        "covered": 16764,
+        "draws": 20000,
+        "coverage": 0.8382,
+        "binomial_95_percent": [
+          0.8330220865402455,
+          0.8432794004422877
+        ]
+      },
+      "rank_threshold": "max(shape)*eps*smax; fixture diagnostic only",
+      "parameter_units": "dimensionless v/c; noise is a dimensionless whitened fixture"
+    },
+    {
+      "name": "lcdm_spread",
+      "H_family": "lcdm",
+      "depths": [
+        0.02,
+        0.15
+      ],
+      "rank": 6,
+      "singular_values": [
+        222.7784637642678,
+        222.77846376426774,
+        222.77846376426763,
+        0.08909767428389907,
+        0.0890976742838942,
+        0.08909767428388637
+      ],
+      "condition_identified": 2500.3847244591666,
+      "full_six_parameter_identified": true,
+      "bias_radius": 1.5,
+      "chi_radius": 3.54846265920102,
+      "robust_ball_confidence": {
+        "covered": 19921,
+        "draws": 20000,
+        "coverage": 0.99605,
+        "binomial_95_percent": [
+          0.9950795176336632,
+          0.9968715379701454
+        ]
+      },
+      "ignored_bias_control": {
+        "covered": 16822,
+        "draws": 20000,
+        "coverage": 0.8411,
+        "binomial_95_percent": [
+          0.8359588597671692,
+          0.8461417777988051
+        ]
+      },
+      "rank_threshold": "max(shape)*eps*smax; fixture diagnostic only",
+      "parameter_units": "dimensionless v/c; noise is a dimensionless whitened fixture"
+    },
+    {
+      "name": "lcdm_deeper",
+      "H_family": "lcdm",
+      "depths": [
+        0.1,
+        0.5
+      ],
+      "rank": 6,
+      "singular_values": [
+        47.824128221032105,
+        47.824128221032105,
+        47.82412822103209,
+        0.41079431220615115,
+        0.4107943122061509,
+        0.4107943122061508
+      ],
+      "condition_identified": 116.4186718267713,
+      "full_six_parameter_identified": true,
+      "bias_radius": 1.5,
+      "chi_radius": 3.54846265920102,
+      "robust_ball_confidence": {
+        "covered": 19931,
+        "draws": 20000,
+        "coverage": 0.99655,
+        "binomial_95_percent": [
+          0.9956358053939225,
+          0.9973147324156517
+        ]
+      },
+      "ignored_bias_control": {
+        "covered": 16783,
+        "draws": 20000,
+        "coverage": 0.83915,
+        "binomial_95_percent": [
+          0.8339840680876665,
+          0.8442171406620778
+        ]
+      },
+      "rank_threshold": "max(shape)*eps*smax; fixture diagnostic only",
+      "parameter_units": "dimensionless v/c; noise is a dimensionless whitened fixture"
+    }
+  ],
+  "shared_calibration_cells": [
+    {
+      "correlation": -0.8,
+      "common_nuisance_join": {
+        "covered": 19645,
+        "draws": 20000,
+        "coverage": 0.98225,
+        "binomial_95_percent": [
+          0.9803233161726108,
+          0.9840346052889316
+        ]
+      },
+      "per_product_alpha": 0.025,
+      "target_radius": 6.724208182814841,
+      "independence_assumed_control": {
+        "covered": 17585,
+        "draws": 20000,
+        "coverage": 0.87925,
+        "binomial_95_percent": [
+          0.8746540162613547,
+          0.883735421047521
+        ]
+      },
+      "separate_nuisance_projection": "WHOLE_REAL_LINE_FOR_THETA"
+    },
+    {
+      "correlation": 0.0,
+      "common_nuisance_join": {
+        "covered": 19941,
+        "draws": 20000,
+        "coverage": 0.99705,
+        "binomial_95_percent": [
+          0.996196342924205,
+          0.9977535878981301
+        ]
+      },
+      "per_product_alpha": 0.025,
+      "target_radius": 6.724208182814841,
+      "independence_assumed_control": {
+        "covered": 18950,
+        "draws": 20000,
+        "coverage": 0.9475,
+        "binomial_95_percent": [
+          0.9443183156920955,
+          0.9505507894884748
+        ]
+      },
+      "separate_nuisance_projection": "WHOLE_REAL_LINE_FOR_THETA"
+    },
+    {
+      "correlation": 0.8,
+      "common_nuisance_join": {
+        "covered": 20000,
+        "draws": 20000,
+        "coverage": 1.0,
+        "binomial_95_percent": [
+          0.9998155730360381,
+          1.0
+        ]
+      },
+      "per_product_alpha": 0.025,
+      "target_radius": 6.724208182814841,
+      "independence_assumed_control": {
+        "covered": 19978,
+        "draws": 20000,
+        "coverage": 0.9989,
+        "binomial_95_percent": [
+          0.9983350576371105,
+          0.9993105115010565
+        ]
+      },
+      "separate_nuisance_projection": "WHOLE_REAL_LINE_FOR_THETA"
+    }
+  ],
+  "oriented_discrepancy": {
+    "directional_support": 0.1,
+    "scalar_radius_support": 2.0,
+    "interpretation": "Known fixture G only; no measured entropy, kernel or Teff consumer."
+  },
+  "depth_quadrature_oracle": {
+    "max_abs_error": 1.1102230246251565e-16,
+    "tolerance": 1e-10
+  },
+  "orthogonal_misspecification": {
+    "parameter_residual": 0.0,
+    "model_residual": 8.0,
+    "interpretation": "Perfect parameter-fit score does not establish model adequacy."
+  }
+}

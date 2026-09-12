@@ -196,6 +196,7 @@ policy:
   - PR-245
   - PR-246
   - PR-247
+  - PR-248
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -9858,4 +9859,32 @@ prs:
   spec: docs/research_program/tensor_joint_r8/LOCAL_CODEX_PLAN.md
   scientific_artifact_mode: standard_internal
   execution_authorization: USER_REQUESTED_PR467_FOLLOWUP
+  solver_gate_required: false
+
+- id: PR-248
+  title: 'R9 research: response identifiability and model-to-observation design'
+  wave: 20
+  deps: []
+  targets:
+  - Formal replan from PR-247 terminal evidence; no inherited success dependency
+  - R9 research derivations, bounded discriminators, independent decision and 24-node handoff
+  files:
+  - docs/research_program/tensor_joint_r9
+  tests:
+  - python3 docs/research_program/tensor_joint_r9/validate_research.py
+  - python3 docs/research_program/tensor_joint_r9/validate_cmb_research.py
+  - python3 docs/research_program/tensor_joint_r9/validate_dag.py
+  dod:
+  - Source-bound physical/statistical derivations and actual bounded checks
+  - Independent scoped research-design decision; formal and empirical holds retained
+  - Branch-isolated model/mock/product-law/observation DAG and executable handoff
+  kill: 'No BASS benchmark dependency; no noisy-Q fixed-design shortcut; no CF4 quarantine bypass; no missing-block alpha donation.'
+  cost: medium
+  level: L2
+  scope: pre-solver
+  risk: R2
+  claim_tier_ceiling: research-design-only
+  spec: docs/research_program/tensor_joint_r9/SCIENTIFIC_CONTRACT.md
+  scientific_artifact_mode: standard_internal
+  execution_authorization: USER_REQUESTED_R9_GPT6_RESEARCH_AND_PUSH
   solver_gate_required: false
