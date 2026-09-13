@@ -1,0 +1,43 @@
+{
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "harness/physmath-coding-gpt6-astra/tools/validate_harness.py",
+        "--json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1019976339994173,
+      "stdout": "delivery_0.stdout",
+      "stderr": "delivery_0.stderr"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "exit_code": 0,
+      "seconds": 0.9076068659996963,
+      "stdout": "delivery_1.stdout",
+      "stderr": "delivery_1.stderr"
+    }
+  ],
+  "canonical_mirrors_equal": true,
+  "package_member_checks": [
+    {
+      "package": "research",
+      "members": 74,
+      "all_member_bytes_equal": true
+    },
+    {
+      "package": "coding",
+      "members": 60,
+      "all_member_bytes_equal": true
+    }
+  ],
+  "protected_scientific_historical_and_root_files_equal": 62,
+  "prior_commit": "247de8d232b401974d0deab2f9e9111974a0fbbb",
+  "old_packages_and_production_paths_changed": false,
+  "scientific_runs": 0
+}

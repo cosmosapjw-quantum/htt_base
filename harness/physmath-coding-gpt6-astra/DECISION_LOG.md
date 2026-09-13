@@ -1,0 +1,23 @@
+# DECISION_LOG.md
+
+## D-001
+
+DATE / OWNER:
+
+DECISION: PROMOTE / HOLD / REWORK / REVERT
+
+OBJECT / ACCEPTANCE / ORIGINAL_MOTIVATION:
+
+EVIDENCE_STATUS / ACTUAL_RESULTS:
+
+SOURCE_IDENTITY / AUTHORITY_PROVENANCE:
+
+RATIONALE / ALTERNATIVES:
+
+PROTECTED_INVARIANTS / EXISTING_AUTHORIZATION:
+
+CLAIM_CEILING / UNTESTED_REGIME / RESIDUAL_RISK:
+
+NEXT_ACTION:
+
+PROMOTE is a scoped research-use decision, not external publication authorization. REWORK continues autonomously if the required repair remains within the approved objective.

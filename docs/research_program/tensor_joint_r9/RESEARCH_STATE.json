@@ -8,7 +8,7 @@
   "base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
   "research_run": "R9-REV2-20260912",
   "owner": "HTT research",
-  "status": "RESEARCH_DESIGN_HANDOFF_ACCEPTED_RESEARCH_HARNESS_ACTIVE",
+  "status": "RESEARCH_DESIGN_HANDOFF_ACCEPTED_BOTH_HARNESSES_AVAILABLE_AND_SCOPED_APPLIED",
   "completed": [
     "Pinned compendium and R9 intake",
     "D1-D4 and F1-F3 direct derivations",
@@ -18,14 +18,14 @@
     "two blind analytic result envelopes",
     "30-node upgraded DAG design",
     "integrated independent decision and scoped jet-coverage correction reviewed",
-    "2026-09-13: exact research ZIP recovered, verified, read and applied to R9 continuation/closeout"
+    "2026-09-13: exact research ZIP recovered, verified, read and applied to R9 continuation/closeout",
+    "2026-09-13: subsequently supplied coding ZIP verified/read; its bounded integration and handoff contract applied"
   ],
   "not_executed": [
     "production depth_path migration",
     "four-axis CAS admission",
     "new observational inference",
-    "native BASS solver",
-    "GPT-6 coding archive activation"
+    "native BASS solver"
   ],
   "preserved_failures": [
     "R8 STOP_INVALID",
@@ -33,7 +33,7 @@
     "CF4 quarantine",
     "R9 initial SymPy import failure"
   ],
-  "next": "R9-03/05 common tuple and small-product intake, R9-24/25 full joint depth covariance adapter; research package is vendored, coding package must be supplied before the selected coding-harness phase",
+  "next": "R9-03/05 common tuple and small-product intake, R9-24/25 full joint depth covariance adapter under the vendored research/coding contracts; both exact archives now available",
   "runtime": {
     "python": "3.12.14",
     "numpy": "2.3.5",
@@ -106,18 +106,21 @@
   "checkout_base_commit": "d514eabdbd6a464a92ff6e51e1aba91399a054db",
   "harness_activation": {
     "requested": "GPT-6 Astra v4.0.0",
-    "task": "research",
-    "status": "LOADED_AND_APPLIED_RESEARCH_CONTINUATION",
+    "task": "research_and_coding",
+    "status": "LOADED_AND_APPLIED_SCOPED_RESEARCH_AND_CODING_CLOSEOUT",
     "date": "2026-09-13",
     "archive_path": "harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip",
     "sha256": "dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7",
     "package_root": "harness/physmath-research-gpt6-astra",
     "active_state": "revision2/harness_activation/STATE.md",
     "receipt": "revision2/harness_activation/ACTIVATION.json",
-    "scope": "R9 revision 2 state recovery, evidence status reconciliation and research closeout; no scientific rerun or retroactive package execution",
+    "scope": "Research state recovery/closeout and coding-package integration/handoff contract; no R9 production implementation or scientific rerun",
     "runtime_model_verification": false,
     "model_performance_status": "NOT_EVALUATED",
-    "coding_package_status": "NOT_SUPPLIED_NOT_ACTIVATED"
+    "coding_package_status": "LOADED_AND_APPLIED_PACKAGE_INTEGRATION_CONTRACT",
+    "coding_package_root": "harness/physmath-coding-gpt6-astra",
+    "coding_contract": "revision2/harness_activation/CODING_CONTRACT.md",
+    "research_only_checkpoint_commit": "543b76b2f36084c555ecd113ae3c608472912313"
   },
   "harness_aggregate": {
     "status": "NOT_A_WHOLE_CURRENT_RUN_PASS",
@@ -137,5 +140,5 @@
     "source_commit": "247de8d232b401974d0deab2f9e9111974a0fbbb"
   },
   "independent_decision_source_commit": "247de8d232b401974d0deab2f9e9111974a0fbbb",
-  "harness_application_review": ".agent-harness/runs/R9-HARNESS-20260913/results/activation_review.json (repository-relative; delivery-scope review, not a science verdict)"
+  "harness_application_review": ".agent-harness/runs/R9-HARNESS-BOTH-20260913/results/coding_followup.json"
 }

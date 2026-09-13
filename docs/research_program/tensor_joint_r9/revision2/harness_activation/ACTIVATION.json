@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "scope": "package acquisition/read/application to an existing research closeout; not a new scientific execution",
+  "scope": "Both exact package acquisition/read; research continuation/closeout plus coding integration/handoff contract; not production implementation",
   "date": "2026-09-13",
   "base_commit": "247de8d232b401974d0deab2f9e9111974a0fbbb",
   "base_tree": "a3b116e4344bbabebb982e6dfe5bd0d064240a25",
@@ -100,11 +100,75 @@
   "production_changes": 0,
   "observational_runs": 0,
   "coding_harness": {
-    "status": "NOT_SUPPLIED_NOT_ACTIVATED",
-    "required_before": "claiming the user-selected future coding-harness application"
+    "status": "LOADED_AND_APPLIED_PACKAGE_INTEGRATION_CONTRACT",
+    "archive_path": "harness/archives/physmath-coding-harness-gpt6-astra-v4.0.0-20260908.zip",
+    "sha256": "dc99e7ab2f9629dcce3ec0758d97e19acc5b645f86e208d1b338bb6430ff8d7a",
+    "bytes": 63509,
+    "library_file_id": "libfile_b1f31b28c0688191a06a4ae8f943d862",
+    "package_root": "harness/physmath-coding-gpt6-astra",
+    "member_count": 60,
+    "sha256sums_verified_members": 59,
+    "zip_crc": "PASS",
+    "active_contract": "CODING_CONTRACT.md",
+    "tests": "coding_evidence/execution.json",
+    "read_files": [
+      {
+        "path": "START_HERE.md",
+        "sha256": "6dc8576427fb2ac2354f3a323e25ae4ac960f1f7ee71b04b73fed6a5903b8fa0"
+      },
+      {
+        "path": "README.md",
+        "sha256": "b7f74bd22aa3f6fce29351a6f6a94bffdb391ea2567f82487761ee117178e860"
+      },
+      {
+        "path": "AGENTS.md",
+        "sha256": "6c9d6b4477b1a847b14f6aecb6f9085a959063887435019b63a35b15495369d9"
+      },
+      {
+        "path": "SCIENTIFIC_CONTRACT.md",
+        "sha256": "dd99e174892b69da5fc5ff91f6e7c906f2734062418126011585af794a1bd957"
+      },
+      {
+        "path": "RUN_STATE.md",
+        "sha256": "baa2634f6c9853686c699fe3d93005ba221da8dec6ce1b05734597b1978bff51"
+      },
+      {
+        "path": "VALIDATION_MATRIX.md",
+        "sha256": "df54d7eb0c9a0859159ac5def78b5365810a9343175ad5be75b2b1eb53e10e2b"
+      },
+      {
+        "path": "docs/MODEL_ROUTING.md",
+        "sha256": "0d2850924187a1c3d8269b7e9623f9f707abeccf278208dcd53a43007e7cbc68"
+      },
+      {
+        "path": "prompts/00_ultralight.md",
+        "sha256": "c2c911af1aa79ab720ab1d5c4efc440d5de3334cd6496e845cfb4de2856a144b"
+      },
+      {
+        "path": "prompts/phases/00_task_contract.md",
+        "sha256": "8c4e385246774adde369b6fc1975122452f1541153177d302dde9f3710135f92"
+      },
+      {
+        "path": "prompts/phases/10_promote_revert_closeout.md",
+        "sha256": "5be6a4d8f0affc3d3cfe86b491e2a2eca016901ba7102a31eda50a6813261305"
+      },
+      {
+        "path": "prompts/handoff/work_to_codex.md",
+        "sha256": "a7988a77ba096d4353c212801e5f2661aedf7bf748720a1bf976d2ab6a27e808"
+      },
+      {
+        "path": "tools/validate_harness.py",
+        "sha256": "b4ec8bb9f4bfca90531d078d68662704d10300ccfe27277e5af4f810a74523b6"
+      },
+      {
+        "path": "tools/init_harness.py",
+        "sha256": "f76a421d80e37181a7d844cbc5f06001aeb7d107d97d36c79fdf68f161ef5ba4"
+      }
+    ]
   },
   "prior_run_aggregate": "NOT_A_WHOLE_CURRENT_RUN_PASS; historical status retained",
   "model_performance": "NOT_EVALUATED",
-  "review_result": ".agent-harness/runs/R9-HARNESS-20260913/results/activation_review.json",
-  "review_scope": "delivery only, no scientific claim promotion"
+  "review_result": ".agent-harness/runs/R9-HARNESS-BOTH-20260913/results/coding_followup.json",
+  "review_scope": "delivery only, no scientific claim promotion",
+  "research_only_checkpoint_commit": "543b76b2f36084c555ecd113ae3c608472912313"
 }

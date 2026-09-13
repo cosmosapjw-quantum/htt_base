@@ -1,0 +1,3 @@
+# Phase 6 — Software Validation
+
+Run applicable import/build, targeted behavior, original reproduction/acceptance and affected regression checks. Record real command, exit, raw output, TestIDs and actual source. Classify implementation failures separately from runtime/permission and numerical/theory failures. A recurring failure after new evidence or a repair is a diagnostic result, not an automatic blocker. Stop unchanged blind retry; continue evidence-driven correction within scope and explicit budget. End optional checks once the required observable is established and concrete remaining risks are resolved.

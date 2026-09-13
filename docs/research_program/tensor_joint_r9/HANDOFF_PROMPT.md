@@ -19,11 +19,15 @@ PROJECT_INSTRUCTIONS.md와 revision2/harness_activation/STATE.md를 읽어라.
 현재 과학 SSOT는 이 R9의 RESEARCH_STATE.json과 고정 REVISION_SPEC.md다.
 원본 연구 ZIP을 다시 요청할 필요는 없다.
 
-별도 coding: physmath-coding-harness-gpt6-astra-v4.0.0-20260908.zip
-  libfile_b1f31b28c0688191a06a4ae8f943d862
+코딩 원본도 2026-09-13 추가 공급되어 검증·열람했고,
+이번 패키지 통합·검증·인계 계약에 적용했다.
+  harness/archives/physmath-coding-harness-gpt6-astra-v4.0.0-20260908.zip
   sha256 dc99e7ab2f9629dcce3ec0758d97e19acc5b645f86e208d1b338bb6430ff8d7a
-코딩 원본은 아직 공급·적용되지 않았다. 해당 코딩 하네스로의 전환을 주장하기 전에
-이 별도 원본을 확보·검증·열람하라. 연구 closeout의 완료와 구별하라.
+harness/physmath-coding-gpt6-astra/START_HERE.md와 AGENTS.md,
+revision2/harness_activation/CODING_CONTRACT.md를 읽어라.
+두 ZIP 모두 저장소에 있으므로 재첨부를 요구하지 마라.
+루트 AGENTS/과학 기준/기존 evidence를 패키지 템플릿으로 덮어쓰지 마라.
+R9 production adapter 구현이나 새 관측 실행이 완료된 것은 아니다.
 기존 R9 수치 실험은 이전 실행이며 이번 패키지 적용으로 재실행·소급 인증되지 않았다.
 R9-REV2-20260912의 전체 run 비통과 상태와 기존 과학적 HOLD도 유지하라.
 

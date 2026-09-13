@@ -1,0 +1,346 @@
+{
+  "package": "/workspace/scratch/4fd52c9489d1/build/physmath-coding-harness-gpt6-astra-v4.0.0",
+  "author_role": "bounded coding-package implementer",
+  "original_package_preserved": true,
+  "checks": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "tools/validate_harness.py",
+        "--json"
+      ],
+      "cwd": "/workspace/scratch/4fd52c9489d1/build/physmath-coding-harness-gpt6-astra-v4.0.0",
+      "exit_code": 0,
+      "stdout": "{\n  \"package_structure\": \"PASS\",\n  \"scientific_acceptance\": \"NOT_EVALUATED\",\n  \"model_performance\": \"NOT_EVALUATED\",\n  \"authority_verification\": \"NOT_PERFORMED_BY_STRUCTURE_VALIDATOR\",\n  \"errors\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_package_tools.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/4fd52c9489d1/build/physmath-coding-harness-gpt6-astra-v4.0.0",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_broken_manifest_is_rejected_without_traceback (test_package_tools.HarnessBehavior.test_broken_manifest_is_rejected_without_traceback) ... ok\ntest_escaping_entrypoint_is_rejected (test_package_tools.HarnessBehavior.test_escaping_entrypoint_is_rejected) ... ok\ntest_initializer_creates_missing_state_in_selected_root (test_package_tools.HarnessBehavior.test_initializer_creates_missing_state_in_selected_root) ... ok\ntest_initializer_preserves_existing_bytes_and_is_idempotent (test_package_tools.HarnessBehavior.test_initializer_preserves_existing_bytes_and_is_idempotent) ... ok\ntest_valid_package_separates_structure_from_scientific_acceptance (test_package_tools.HarnessBehavior.test_valid_package_separates_structure_from_scientific_acceptance) ... ok\ntest_version_disagreement_is_rejected (test_package_tools.HarnessBehavior.test_version_disagreement_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.261s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_model_router.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/4fd52c9489d1/build/physmath-coding-harness-gpt6-astra-v4.0.0",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_alias_collision_is_config_error (test_model_router.ModelRouterTests.test_alias_collision_is_config_error) ... ok\ntest_all_gpt56_aliases (test_model_router.ModelRouterTests.test_all_gpt56_aliases) ... ok\ntest_all_gpt6_astra_aliases (test_model_router.ModelRouterTests.test_all_gpt6_astra_aliases) ... ok\ntest_both_dispatch_research_then_coding (test_model_router.ModelRouterTests.test_both_dispatch_research_then_coding) ... ok\ntest_case_and_outer_whitespace_normalize (test_model_router.ModelRouterTests.test_case_and_outer_whitespace_normalize) ... ok\ntest_coding_dispatch (test_model_router.ModelRouterTests.test_coding_dispatch) ... ok\ntest_custom_registry_path_is_used (test_model_router.ModelRouterTests.test_custom_registry_path_is_used) ... ok\ntest_default_research_does_not_select_coding (test_model_router.ModelRouterTests.test_default_research_does_not_select_coding) ... ok\ntest_duplicate_json_key_is_config_error (test_model_router.ModelRouterTests.test_duplicate_json_key_is_config_error) ... ok\ntest_explicit_harness_works_without_known_model (test_model_router.ModelRouterTests.test_explicit_harness_works_without_known_model) ... ok\ntest_explicit_old_harness_overrides_new_model (test_model_router.ModelRouterTests.test_explicit_old_harness_overrides_new_model) ... ok\ntest_malformed_json_is_config_error (test_model_router.ModelRouterTests.test_malformed_json_is_config_error) ... ok\ntest_missing_label_does_not_inspect_environment (test_model_router.ModelRouterTests.test_missing_label_does_not_inspect_environment) ... ok\ntest_missing_package_or_inconsistent_path_is_config_error (test_model_router.ModelRouterTests.test_missing_package_or_inconsistent_path_is_config_error) ... ok\ntest_missing_registry_is_config_error (test_model_router.ModelRouterTests.test_missing_registry_is_config_error) ... ok\ntest_selection_does_not_claim_loaded_executed_or_identity (test_model_router.ModelRouterTests.test_selection_does_not_claim_loaded_executed_or_identity) ... ok\ntest_unknown_and_future_models_do_not_route (test_model_router.ModelRouterTests.test_unknown_and_future_models_do_not_route) ... ok\ntest_unsupported_override_is_rejected_by_cli (test_model_router.ModelRouterTests.test_unsupported_override_is_rejected_by_cli) ... ok\ntest_wrong_version_or_root_is_config_error (test_model_router.ModelRouterTests.test_wrong_version_or_root_is_config_error) ... ok\n\n----------------------------------------------------------------------\nRan 19 tests in 1.402s\n\nOK\n"
+    }
+  ],
+  "baseline_red_observation": {
+    "command": "python checks/test_coding_package.py inputs/physmath-coding-harness-gpt56(3)",
+    "actual_exit": 1,
+    "tests_run": 6,
+    "failures": 5,
+    "errors": 1,
+    "meaning": "old validator accepted corrupt manifest, escaping entrypoint and version mismatch; JSON scope reporting absent; initializer changed empty evidence and lacks --root",
+    "raw_capture_location": "tool output in authoring session; this summary is not a raw log"
+  },
+  "skill_asset_count": 5,
+  "skill_bytes_preserved": true,
+  "original_to_target_files": [
+    {
+      "path": ".agents/skills/independent-diff-review/SKILL.md",
+      "source_sha256": "8a61f0e106bb2e75bc8d221d2b48fbd2e4fee8f9404b60dcf46bd65d456834f6",
+      "target_sha256": "8a61f0e106bb2e75bc8d221d2b48fbd2e4fee8f9404b60dcf46bd65d456834f6",
+      "unchanged": true
+    },
+    {
+      "path": ".agents/skills/numerical-validation/SKILL.md",
+      "source_sha256": "6fa8bd8f91dc48a5b86e91ea13957e1f9ef1d2f0db8169a2bdab770fcba25736",
+      "target_sha256": "6fa8bd8f91dc48a5b86e91ea13957e1f9ef1d2f0db8169a2bdab770fcba25736",
+      "unchanged": true
+    },
+    {
+      "path": ".agents/skills/reproducibility-closeout/SKILL.md",
+      "source_sha256": "a1b0ef5275a892dc22b49bba1a3598898064e333ef6df30b0eaa30139fd5f367",
+      "target_sha256": "a1b0ef5275a892dc22b49bba1a3598898064e333ef6df30b0eaa30139fd5f367",
+      "unchanged": true
+    },
+    {
+      "path": ".agents/skills/research-code-task/SKILL.md",
+      "source_sha256": "99a730dd6172d776bb4080206f43bcc8b84d0d3d274cbc8df6b9affc1fcf2e24",
+      "target_sha256": "99a730dd6172d776bb4080206f43bcc8b84d0d3d274cbc8df6b9affc1fcf2e24",
+      "unchanged": true
+    },
+    {
+      "path": ".agents/skills/scientific-validation/SKILL.md",
+      "source_sha256": "f93d9e128b1b821c1a72a6f2c39db4d6e2a25bb2f222624c3c722229f25c7f03",
+      "target_sha256": "f93d9e128b1b821c1a72a6f2c39db4d6e2a25bb2f222624c3c722229f25c7f03",
+      "unchanged": true
+    },
+    {
+      "path": ".gitignore",
+      "source_sha256": "f23e934d3faefade98919b284d35d8f83d973d498b5471aad2c0f92ce7bea9c6",
+      "target_sha256": "f23e934d3faefade98919b284d35d8f83d973d498b5471aad2c0f92ce7bea9c6",
+      "unchanged": true
+    },
+    {
+      "path": "AGENTS.md",
+      "source_sha256": "1c010dee428f445e37220bae2da35466595b06733bbe24cdb52075e7dc1cea8e",
+      "target_sha256": "6c9d6b4477b1a847b14f6aecb6f9085a959063887435019b63a35b15495369d9",
+      "unchanged": false
+    },
+    {
+      "path": "CHANGELOG.md",
+      "source_sha256": "d16504b8941ff54c5270750a4599577a9af874b49d87a73ba29176a425599d61",
+      "target_sha256": "5bc537c66da101ca77ce2303c24f193a2c6f8aedc8c5311a1e16dc74d60b8bdb",
+      "unchanged": false
+    },
+    {
+      "path": "DECISION_LOG.md",
+      "source_sha256": "12d80b0ba61a1bda60bd89ff569a75458449cffccc4c3318aa1e425af32aff62",
+      "target_sha256": "a79e18f86c2cb95598d36e7be01f7838b74bcbde8cac0204010f96935d8eff03",
+      "unchanged": false
+    },
+    {
+      "path": "FAILURE_LOG.md",
+      "source_sha256": "deff55c44e1c6c029cde455d5ba38d43a58cbdf25be923e6e819441d77a5419a",
+      "target_sha256": "54bc00b0b8a54748e0dcd487fba452b7fa473632cbae4b90410092671779e808",
+      "unchanged": false
+    },
+    {
+      "path": "LICENSE",
+      "source_sha256": "1126322e2cc8d165adc4c792eeb195717de2bcc7b39be1ce77959d78e87ef685",
+      "target_sha256": "1126322e2cc8d165adc4c792eeb195717de2bcc7b39be1ce77959d78e87ef685",
+      "unchanged": true
+    },
+    {
+      "path": "Makefile",
+      "source_sha256": "735558f05a2f42aff9000919018e4718accf2ee4b267b68d1d86fd2c537397de",
+      "target_sha256": "735558f05a2f42aff9000919018e4718accf2ee4b267b68d1d86fd2c537397de",
+      "unchanged": true
+    },
+    {
+      "path": "PLANS.md",
+      "source_sha256": "9890539797bcddc39af2b5547e5ecbceee3916e2388a47b6482f0c62a5d747b4",
+      "target_sha256": "c22cdf4cabc99fb9dffc90108bca7a4199644d28c27bc0417ac9c9ca3b5bdc47",
+      "unchanged": false
+    },
+    {
+      "path": "README.md",
+      "source_sha256": "b95a8fef881d6565f539facf869bba94dc73ff42275a9ce491be0012e411c3a9",
+      "target_sha256": "b7f74bd22aa3f6fce29351a6f6a94bffdb391ea2567f82487761ee117178e860",
+      "unchanged": false
+    },
+    {
+      "path": "RUN_STATE.md",
+      "source_sha256": "2fd3bbc9d5bc0a1456773bf2b0fbeff7a53dd3dda509e12ef3f9044fab758a24",
+      "target_sha256": "baa2634f6c9853686c699fe3d93005ba221da8dec6ce1b05734597b1978bff51",
+      "unchanged": false
+    },
+    {
+      "path": "SCIENTIFIC_CONTRACT.md",
+      "source_sha256": "3adf972f6d995f4c08232055ccd7f35539e39d8af3c0069f7030fefce1d06554",
+      "target_sha256": "dd99e174892b69da5fc5ff91f6e7c906f2734062418126011585af794a1bd957",
+      "unchanged": false
+    },
+    {
+      "path": "START_HERE.md",
+      "source_sha256": "d557b59a8b3022093efb5b811b3b849f4941339d582a0e82cb4f1efb5ded0797",
+      "target_sha256": "6dc8576427fb2ac2354f3a323e25ae4ac960f1f7ee71b04b73fed6a5903b8fa0",
+      "unchanged": false
+    },
+    {
+      "path": "VALIDATION_MATRIX.md",
+      "source_sha256": "05adaecb7b9910c49f34d050188a341c5c966fadecc29f1bb76f2b914655f23c",
+      "target_sha256": "df54d7eb0c9a0859159ac5def78b5365810a9343175ad5be75b2b1eb53e10e2b",
+      "unchanged": false
+    },
+    {
+      "path": "VERSION",
+      "source_sha256": "b2f44d3b6e29f8b1b73ea4735f006affc4d198e1fd9c7d50e736159b1ef636c6",
+      "target_sha256": "e1d49c569ae09b2ede16e2d83820a3809b35eb6c44c13ba9b5330598d6b8f43c",
+      "unchanged": false
+    },
+    {
+      "path": "docs/CODEX_SETUP.md",
+      "source_sha256": "9a9449ef1b7e8e20ebd50d6394b3674e46646bd69d13e4b348ba73d2e834a5cf",
+      "target_sha256": "74fc84ecb5c7aa53ff6a52630dabb8556ae6d5272c51525747f4274c23b5bdb6",
+      "unchanged": false
+    },
+    {
+      "path": "docs/CUSTOMIZATION.md",
+      "source_sha256": "a4dc747037cc39263339a1a342bc5f7ea3ebcf9507dc1e2675f68841b1449466",
+      "target_sha256": "f78883a6270b4f18ff43e728b0d97731f45db40e61fefab8a4e4c52360ac5b1d",
+      "unchanged": false
+    },
+    {
+      "path": "docs/EVAL_HARNESS.md",
+      "source_sha256": "40b4bd8556ca5d3a83eac22c18a05c517a47e8c0745b3c3996ce4e98bc267afc",
+      "target_sha256": "939ebc219a262742871501fd93f3b7c05a29dae3a01d4fe11464aa3c2996a93f",
+      "unchanged": false
+    },
+    {
+      "path": "docs/MODEL_ROUTING.md",
+      "source_sha256": "d7e2be015abfa4e183fce54f962b08be7ce52f2a8edc4829bb7652f14226e7d6",
+      "target_sha256": "0d2850924187a1c3d8269b7e9623f9f707abeccf278208dcd53a43007e7cbc68",
+      "unchanged": false
+    },
+    {
+      "path": "docs/PARALLELIZATION_AND_WORKTREES.md",
+      "source_sha256": "aeb08c19a9f1bea09b7beebe6e7d3a88ce6fa76a6132ab961b1c41d8ffa43442",
+      "target_sha256": "764848e76294cb59ce757ad478519aebf239efd697c5528a65cbba8b857b3613",
+      "unchanged": false
+    },
+    {
+      "path": "docs/RESEARCH_BASIS.md",
+      "source_sha256": "139d48f4c21f78a73e654ba5c0b681de5a1682ec6c9204c884b8b2a26179d84c",
+      "target_sha256": "60f783a567ff5aca2bf720be12a8bd706f6c4399d4aa1579aee3002c1017eea6",
+      "unchanged": false
+    },
+    {
+      "path": "docs/SKILL_PROMOTION.md",
+      "source_sha256": "0f18ae1a006c93476c47bba47a3c683feac851135ed7ce49d3f611a690b043bc",
+      "target_sha256": "0f18ae1a006c93476c47bba47a3c683feac851135ed7ce49d3f611a690b043bc",
+      "unchanged": true
+    },
+    {
+      "path": "docs/WORKFLOW.md",
+      "source_sha256": "0911b628203936802141b25c3dfe622503c4ce751ddd7fbe1e696b5d72a4099c",
+      "target_sha256": "fdea911f6dae34b7cf98b3eea4e3763a7d54946d651068732a6fcbfb7e8c7a2c",
+      "unchanged": false
+    },
+    {
+      "path": "manifest.json",
+      "source_sha256": "92a5759c63a25ca31fbdc0072d2ae0a3b37638d6165f5e9fdc3a0d42ed4faf5d",
+      "target_sha256": "483223c56f70e172099844f1de49db289e9d8da6096dbb00084b0e57c0da4129",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/00_ultralight.md",
+      "source_sha256": "147d117a55e55183ead3da72dd644e1e84f86772ffb4cc96d1e88d056558e52d",
+      "target_sha256": "c2c911af1aa79ab720ab1d5c4efc440d5de3334cd6496e845cfb4de2856a144b",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/01_deep_once.md",
+      "source_sha256": "6a0606b5d2eef2acb20e511e7ae44af30f7aff2ecfac39180dddc64d69faeaeb",
+      "target_sha256": "0252808ad62bc3437477811ee98f3f13e0dcd142a1c83083e0a5cb85403c3e8a",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/handoff/codex_to_work.md",
+      "source_sha256": "1b463b5b73f04222b9c9352e90f4e085f9f264178c3a966c1a0b3e17aca1e64f",
+      "target_sha256": "f73f278191100b86df85ab604e5bf3a8b1d323957363dfff2e9f89c7e7b91aa0",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/handoff/work_to_codex.md",
+      "source_sha256": "b8ec19ac7b380560ffeb689f1fc0242e00444372268293150d515ae29b852b09",
+      "target_sha256": "a7988a77ba096d4353c212801e5f2661aedf7bf748720a1bf976d2ab6a27e808",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/phases/00_task_contract.md",
+      "source_sha256": "897454fc1c2034faadc879b3d98aaa0a7e79ef67835a3808e6ae4ed09c8e6b0c",
+      "target_sha256": "8c4e385246774adde369b6fc1975122452f1541153177d302dde9f3710135f92",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/phases/01_reproduction_acceptance.md",
+      "source_sha256": "5361cf5d49479a2f7119a56604a0a9e593bf2606b94e963bf487e1a7ad7fed05",
+      "target_sha256": "4cfdad3e2114812a1f3f8fd3541bd2ff81a26201ca3b22a1c40a44e054505a3e",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/phases/02_repository_localization.md",
+      "source_sha256": "ea854ff8392a66074230be15560fac5f2342dddb544907b83657b472e986b53b",
+      "target_sha256": "0044db3ba9e57af9166d2a13441a868bd131948c58dbbc3a597737f67fbcaa7d",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/phases/03_bounded_solution_design.md",
+      "source_sha256": "2e6ee0e40e5abdfab2b846230966c76d64abfb4a04df7c454fe258d3b0e8eb05",
+      "target_sha256": "4168faa37257d0fd06b7cecdb7a9ab1e4792a619f7425669a0fb2ed6adeac219",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/phases/04_execution_plan.md",
+      "source_sha256": "9a1ab767f73413067193de123cbf7ff2f5ad119cfd43563a9d8801930827c5e0",
+      "target_sha256": "d0c62d85d04f0db9373acba82521ee6785ef4d8ecb6d69d76ab101264ddd2546",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/phases/05_implementation.md",
+      "source_sha256": "a2aa669b2ba032c4d863b26cabfedd84865ccad79df680f96a3b331b7ea8d0ca",
+      "target_sha256": "c0b16e363935eb46501d9f2beb67b666f4c15ec6ef9d5bb1d725eb7585fd4267",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/phases/06_software_validation.md",
+      "source_sha256": "5721f3f4877330db0f510f71002e1c7f02384f8a20130ef06aa97bb9d8cd2d7b",
+      "target_sha256": "5afa2a2485ae1b2ed8ba8352e7654777b8db6ac557bec2d03a851c959ea69b0d",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/phases/07_scientific_validation.md",
+      "source_sha256": "1008473fcfb21e874f4a171b54ffcbb5aea835e9fa77791f267123b36d814deb",
+      "target_sha256": "7ae2c65b796b68e0f667ac0e253c4d81c751f2035800bcc9f7bcc660dc2b0b91",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/phases/08_numerical_reproducibility.md",
+      "source_sha256": "971c05e6e920c77ed1bcfeb1870d63816f6f590e0eb6b6472a7783130a8059b7",
+      "target_sha256": "9ede50a3446488d51cc5f06315b786883c12aa04dc01851e84aaa7443c3c31e0",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/phases/09_independent_diff_review.md",
+      "source_sha256": "b38807f655f4c7c0afc2aeb343ddf0671268784c9f83bafb3518f368c35fb09a",
+      "target_sha256": "4f80088570fbfaeaf15759b2deb59c519128a0a235f1205ea5de59ab8272ce70",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/phases/10_promote_revert_closeout.md",
+      "source_sha256": "2074af512830a4e56f77785a62abb45970fe7e19be6d169f799b7233b2b5cd07",
+      "target_sha256": "5be6a4d8f0affc3d3cfe86b491e2a2eca016901ba7102a31eda50a6813261305",
+      "unchanged": false
+    },
+    {
+      "path": "prompts/review/pr_review.md",
+      "source_sha256": "bc2d094a7d5f861c34e364b1a38ae8fb7d25595f5c939eafa1a9a68e8d4f39ba",
+      "target_sha256": "925bf12bf5e94441c76ec9c619af0be64ee85e9657157bb828c39062bd35340d",
+      "unchanged": false
+    },
+    {
+      "path": "tools/init_harness.py",
+      "source_sha256": "638787e8d48c46175bb877385e1d0e695e76184e3246a943bca7c96471e2ac29",
+      "target_sha256": "f76a421d80e37181a7d844cbc5f06001aeb7d107d97d36c79fdf68f161ef5ba4",
+      "unchanged": false
+    },
+    {
+      "path": "tools/validate_harness.py",
+      "source_sha256": "63fa97e2444b7a9784a0f45775ebec76467b34919687d58f86a1dcc44287e8b3",
+      "target_sha256": "b4ec8bb9f4bfca90531d078d68662704d10300ccfe27277e5af4f810a74523b6",
+      "unchanged": false
+    }
+  ],
+  "scientific_acceptance": "NOT_EVALUATED",
+  "cross_model_performance": "NOT_EVALUATED",
+  "skill_reference_limitation": "Keystone implementation body read; referenced isolation/red/proof/checkpoint resources returned failed to read skill resource. Applied explicit body outcome contract with isolated copy, pre-change behavioral RED and current focused checks; parent review pending.",
+  "external_mutation": "NONE",
+  "pending_event": "Parent independently reviews package, integrates common release validation, and handles authorized archive/storage/cleanup/memory."
+}

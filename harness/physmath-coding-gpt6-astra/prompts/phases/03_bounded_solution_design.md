@@ -1,0 +1,3 @@
+# Phase 3 — Bounded Solution Design
+
+When a real choice exists, compare materially different feasible solutions by observable behavior, preserved original motivation, physical/numerical implications, affected files, compatibility, needed evidence and reversibility. Choose the comparison breadth from the scientific question and explicit budget, not an arbitrary candidate cap. Select the smallest sufficient conceptual change. Do not add architectural alternatives purely to fill a quota. Keep approximation, closure, tolerance and SSOT fixed unless existing authorization permits change. Continue with the selected plan without a routine approval pause.

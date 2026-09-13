@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-HARNESS-BOTH-20260913",
+  "assignment_id": "coding_followup",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "adjudicator",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R1",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-HARNESS-BOTH-20260913-CODING"
+  ],
+  "task": "Review only the newly user-supplied coding package and current combined R9 package application/state/handoff. Reuse the closed research-only review for unchanged acquisition facts. Verify exact coding archive/member hashes and current contracts, preservation of root AGENTS/scientific holds, and no conflation of package integration with production/scientific execution. Scope acceptance to this delivery; no scientific reruns or promotion. Record generic_prompted/unverified launch evidence and write only the assigned result. Prior research-only snapshot is remotely retained at 543b76b2f36084c555ecd113ae3c608472912313, tree equal to local 0b676304.",
+  "required_inputs": [
+    {
+      "path": "harness/archives/physmath-coding-harness-gpt6-astra-v4.0.0-20260908.zip",
+      "sha256": "dc99e7ab2f9629dcce3ec0758d97e19acc5b645f86e208d1b338bb6430ff8d7a"
+    },
+    {
+      "path": "harness/physmath-coding-gpt6-astra/AGENTS.md",
+      "sha256": "6c9d6b4477b1a847b14f6aecb6f9085a959063887435019b63a35b15495369d9"
+    },
+    {
+      "path": "harness/physmath-coding-gpt6-astra/SCIENTIFIC_CONTRACT.md",
+      "sha256": "dd99e174892b69da5fc5ff91f6e7c906f2734062418126011585af794a1bd957"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/CODING_CONTRACT.md",
+      "sha256": "060e0f70b18f3a6990a6905e508fdf77c87e4b183532db09bae850e0f2021aab"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/STATE.md",
+      "sha256": "c40b11b2d79443f449e14665cdca613afaa529a5c3869fa0f1a0f0cabe0220df"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/ACTIVATION.json",
+      "sha256": "264250d26d8296338427cdf1e44b662ea318360cdf054bdbfa3742b0cf01ffd6"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/coding_evidence/execution.json",
+      "sha256": "c470c6b8a44e24e04dc3726050d2e58d11b8790d0a55543d82c8a15e220276fe"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json",
+      "sha256": "69f381b8cc84b98804dc0aaa992c0c5dce8d30649c52b41829d3e3f248e93e26"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+      "sha256": "a0ab92742df38345510c28307791c931bffb33a2b6ccf94710ffe6585341c4eb"
+    },
+    {
+      "path": ".agent-harness/runs/R9-HARNESS-20260913/results/activation_review.json",
+      "sha256": "d6e2e9c92b7b32a0706af2c90b45cbf9dea4e281c6a3c750f88fb07d82b09af1"
+    }
+  ],
+  "allowed_sibling_results": [
+    ".agent-harness/runs/R9-HARNESS-20260913/results/activation_review.json"
+  ],
+  "allowed_tools": [
+    "exec_command",
+    "apply_patch"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-HARNESS-BOTH-20260913/results/coding_followup.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-HARNESS-BOTH-20260913/results/coding_followup.json",
+  "status": "registered",
+  "assignment_sha256": "6e94ae2b8e2e5b96d689b0e85b42c4efdd2687ad91ac0ef9e5136aac0bd43cda"
+}

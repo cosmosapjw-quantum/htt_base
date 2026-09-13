@@ -1,0 +1,3 @@
+# Phase 7 — Scientific Validation
+
+Check relevant definitions → derivation → computational form → implementation; dimensions/units, signs/normalization, covariance/symmetry, conservation, analytic limits, initial/boundary conditions, positivity, approximation order, closure and validity regime. Preserve original scientific purpose. Record an independent reviewer/oracle and its dependencies; otherwise label self-review. Use PASS/CONCERN/FAIL/NOT_APPLICABLE/NOT_EVALUATED/BLOCKED with evidence. No promotion across a required FAIL or unevaluated gate; repair in-scope defects and recheck affected claims without restarting all prior reviews.
