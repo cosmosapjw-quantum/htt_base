@@ -201,6 +201,7 @@ policy:
   - PR-CATALOG-003
   - PR-CATALOG-004
   - PR-R9-REV2
+  - PR-R9-INTAKE
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -9994,5 +9995,37 @@ prs:
   kill: Synthetic research does not admit actual product laws; unavailable cross-covariance and physical providers remain explicit; no native solver or PR4 work.
   level: L0
   scope: substantive_research_and_design_upgrade
+  risk: R2
+  user_authorized: true
+
+- id: PR-R9-INTAKE
+  wave: 0
+  title: Implement R9 shared product intake and complete covariance paths
+  owner: COMMON
+  depends:
+  - PR-R9-REV2
+  files:
+  - htt/src/common/depth_path.py
+  - htt/src/common/r9_product.py
+  - htt/src/common/tensor_functionals.py
+  - htt/htt/htt/infer/r9_depth_law.py
+  - htt/htt/htt/infer/r9_confidence_image.py
+  - htt/obsstat/r9_product_intake.py
+  - scripts/observed_runs/run_tensor_joint_r9_product.py
+  - tests/r9
+  - docs/research_program/tensor_joint_r9/revision2/implementation
+  tests:
+  - PYTHONPATH=htt/src:htt:htt/htt python3 -m pytest -q tests/r9 htt/src/common/test_r9_depth_path.py htt/src/common/test_r9_tensor_functionals.py
+  - python3 docs/research_program/tensor_joint_r9/revision2/run_checks.py
+  - python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  dod:
+  - Verify exact GPT-6 archives and continue revision 2 from 9e9539ed without overwriting prior evidence
+  - Complete H C H-transpose including cross terms and preserve original or initial-plus-contrast observation, mean and response
+  - Preserve singular support, missing and fitted-law refusals, and require common state-jet-anchor coverage for physical images
+  - Execute and independently review one retained DESI release-conditional product under unchanged alpha budgets
+  - Preserve all formal, empirical and physical holds; synchronize state and handoff; commit and ordinary push/readback
+  kill: No native solver, scientific admission, invented multi-depth product, quarantine reuse or alpha redistribution; reference replay runs in an isolated source copy.
+  level: L0
+  scope: r9_scoped_implementation_and_conditional_product
   risk: R2
   user_authorized: true

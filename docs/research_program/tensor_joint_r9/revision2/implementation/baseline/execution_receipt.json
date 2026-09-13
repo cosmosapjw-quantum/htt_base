@@ -1,0 +1,46 @@
+{
+  "scope": "reference/graph checks only; no scientific capability promotion",
+  "status": "PASS",
+  "inputs": {
+    "docs/research_program/tensor_joint_r9/revision2/validate_revision2.py": "daeff856a27c896ba6356fab48933620b254e2a1c6fd42fd5a219147df86988d",
+    "docs/research_program/tensor_joint_r9/validate_dag.py": "b38830e3ee14ab324fbb7f80f2917e1d987b1b7438acdd753d4de41b704cb6d1",
+    "docs/research_program/tensor_joint_r9/campaign_dag.json": "fd95584b0823850ff220a4dcf3d6bc65a2bd0d9264fa61f694f282b1e1484d0a",
+    "docs/research_program/tensor_joint_r9/REVISION_SPEC.md": "073226a95f8a4c0dbde832e3d8303fe4dd6c1aa8be350c05ffeb14e9b7409a38"
+  },
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/sn850x2t/htt_base_e2e/R9-INTAKE-20260913/baseline/docs/research_program/tensor_joint_r9/revision2/validate_revision2.py"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/R9-INTAKE-20260913/baseline",
+      "exit_code": 0,
+      "elapsed_seconds": 2.3053691829991294,
+      "stdout": "check_0.stdout",
+      "stderr": "check_0.stderr"
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "/mnt/sn850x2t/htt_base_e2e/R9-INTAKE-20260913/baseline/docs/research_program/tensor_joint_r9/validate_dag.py"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/R9-INTAKE-20260913/baseline",
+      "exit_code": 0,
+      "elapsed_seconds": 0.023413614006130956,
+      "stdout": "check_1.stdout",
+      "stderr": "check_1.stderr"
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/R9-INTAKE-20260913/baseline",
+      "exit_code": 0,
+      "elapsed_seconds": 0.4715847000043141,
+      "stdout": "check_2.stdout",
+      "stderr": "check_2.stderr"
+    }
+  ]
+}

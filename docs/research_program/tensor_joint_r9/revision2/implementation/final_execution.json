@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "python3",
+      "-m",
+      "pytest",
+      "-q",
+      "htt/src/common/test_r9_depth_path.py",
+      "htt/src/common/test_r9_tensor_functionals.py",
+      "tests/r9",
+      "tests/r7/test_gaussian_law.py",
+      "tests/r7/test_catalogue_laws.py",
+      "tests/r8/test_joint_region.py",
+      "tests/r8/test_jet_set.py",
+      "tests/r8/test_product_intake.py"
+    ],
+    "cwd": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree",
+    "exit_code": 0,
+    "seconds": 3.9323908949882025,
+    "stdout": "final_0.stdout",
+    "stderr": "final_0.stderr"
+  },
+  {
+    "command": [
+      "/mnt/sn850x2t/htt_base_e2e/workdir/external_fusion_round3_20260722_envs/lowell/bin/python",
+      "scripts/observed_runs/run_tensor_joint_r9_product.py",
+      "--input",
+      "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_syst_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5",
+      "--output",
+      "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/docs/research_program/tensor_joint_r9/revision2/implementation/desi_product_final.json"
+    ],
+    "cwd": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree",
+    "exit_code": 0,
+    "seconds": 1.2286613449978177,
+    "stdout": "final_1.stdout",
+    "stderr": "final_1.stderr"
+  }
+]

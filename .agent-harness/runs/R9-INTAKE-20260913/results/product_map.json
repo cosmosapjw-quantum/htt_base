@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-INTAKE-20260913",
+  "assignment_id": "product_map",
+  "assignment_sha256": "e11552e7d56682a1639a8a7078530262615b53222afe91882d537aef78b9a324",
+  "agent_type": "context_mapper",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/R9-INTAKE-20260913/results/product_map.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-13T11:00:00+09:00",
+  "completed_at": "2026-09-13T11:12:53+09:00",
+  "status": "pass",
+  "tool_versions": {"shell": "bash", "python3": "3.12.3", "hdf_reader_python": "3.11.15", "h5py": "3.16.0"},
+  "commands": ["sha256sum required assignment inputs", "rg and numbered source inspection of assigned consumers", "h5py read-only inspection of named DESI HDF input"],
+  "files_read": [
+    ".agent-harness/runs/R9-INTAKE-20260913/assignments/product_map.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+    "htt/htt/htt/infer/r7_desi_law.py",
+    "scripts/observed_runs/run_tensor_joint_r7.py",
+    "scripts/observed_runs/run_tensor_joint_r8.py",
+    "scripts/observed_runs/r8_product_intake.py"
+  ],
+  "artifacts": [],
+  "findings": [{
+    "finding_id": "DESI_PREPARED_SCALAR_QISO_MAP",
+    "claim_id": "RUN-R9-INTAKE-20260913-PRODUCT",
+    "verdict": "pass",
+    "severity": "low",
+    "evidence_fingerprint": "desi-dr1-bgs-v12-qiso-836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3",
+    "statement": "The prepared DESI input is the same-release scalar BGS_BRIGHT GCcomb qiso compressed Gaussian summary: qiso=0.9828804416839027, covariance=[[0.00034950706479147084]], window=[[1.0]], zeff=0.2952346949471036, and DV_over_rd_fid=8.062742859742729. Existing R7 and R8 consumers use this scalar conditional law; no actual multi-depth covariance is bound by this product.",
+    "assumptions_used": ["The named HDF path is the assigned prepared input.", "The producer's published fixed Gaussian-summary interpretation remains conditional as stated by its consumer code."],
+    "evidence_refs": [
+      "external-data:/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_syst_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5#sha256=836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3",
+      "scripts/observed_runs/run_tensor_joint_r7.py:253-289", "htt/htt/htt/infer/r7_desi_law.py:48-75", "scripts/observed_runs/run_tensor_joint_r8.py:126-160", "scripts/observed_runs/r8_product_intake.py:92-100", "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md:51-53,69,77-90"
+    ],
+    "counterevidence_refs": [],
+    "reproduction": ["Use configured HDF Python and h5py to read /name, /observable/baorecon/qiso/value, /covariance/value, /window/value, baorecon.zeff, and qiso.DV_over_rd_fid.", "Compare values to _compressed_bao and build_compressed_bao_law in cited R7 sources."],
+    "unresolved": [
+      "No bound raw P-sample selection, matched random normalization, matched mock sampling law, normalized law builder, or multi-depth covariance was identified for the separate 18-feature adapter.",
+      "The scalar released law is conditional on the published Gaussian summary; true raw-catalogue coverage and angular response remain unverified.",
+      "The default-cwd stop hook examined legacy run EXTERNAL-FUSION-FOLLOWUP-20260829 rather than this assigned worktree/run. No authenticated hook or profile PASS is available for this result."
+    ],
+    "confidence": 0.98
+  }],
+  "claim_results": [{"claim_id": "RUN-R9-INTAKE-20260913-PRODUCT", "outcome": "findings_present", "finding_ids": ["DESI_PREPARED_SCALAR_QISO_MAP"], "summary": "Mapped the prepared scalar qiso product, source identity, consumer paths, and lack of actual multi-depth covariance in the prepared compressed input."}],
+  "errors": [],
+  "limitations": ["Read-only mapping only; no product execution, observational rerun, scientific admission, or claim promotion was performed.", "No authenticated hook/profile PASS was obtained. The observed stop-hook mismatch is an execution-context limitation."]
+}

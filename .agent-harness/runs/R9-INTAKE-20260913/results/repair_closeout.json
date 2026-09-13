@@ -1,0 +1,71 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-INTAKE-20260913",
+  "assignment_id": "repair_closeout",
+  "assignment_sha256": "18cc88c9cfd524c6596a656c598f2da8bc29a245d5eb01ea58b9393fbf41706e",
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "adjudication",
+  "result_path": ".agent-harness/runs/R9-INTAKE-20260913/results/repair_closeout.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-13T02:20:00Z",
+  "completed_at": "2026-09-13T02:24:07Z",
+  "tool_versions": {
+    "host_python": "3.12.3",
+    "host_numpy": "2.4.2",
+    "host_scipy": "1.17.0",
+    "compatible_h5py": "3.16.0"
+  },
+  "commands": [
+    "sha256sum of every registered repair-closeout input",
+    "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt/src:htt:htt/htt python -m pytest -q tests/r9 htt/src/common/test_r9_depth_path.py htt/src/common/test_r9_tensor_functionals.py tests/r7/test_gaussian_law.py tests/r7/test_catalogue_laws.py tests/r8/test_joint_region.py tests/r8/test_jet_set.py tests/r8/test_product_intake.py",
+    "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt/src:htt:htt/htt direct undefined-ratio and original-singular-support counterexamples",
+    "in-memory current-source rerun comparison against desi_product_final.json",
+    "source-hash comparison between desi_product_final.json and all listed current source files"
+  ],
+  "artifacts": [],
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R9-INTAKE-20260913/assignments/repair_closeout.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+    "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json",
+    "docs/research_program/tensor_joint_r9/revision2/implementation/repair_reproduction.json",
+    "docs/research_program/tensor_joint_r9/revision2/implementation/repair_reproduction.stdout",
+    "docs/research_program/tensor_joint_r9/revision2/implementation/final_execution.json",
+    "docs/research_program/tensor_joint_r9/revision2/implementation/desi_product_final.json",
+    "docs/research_program/tensor_joint_r9/revision2/implementation/reference_comparison.json",
+    "htt/htt/htt/infer/r7_confidence.py",
+    "htt/htt/htt/infer/r7_gaussian_law.py",
+    "htt/htt/htt/infer/r9_confidence_image.py",
+    "htt/htt/htt/infer/r9_depth_law.py",
+    "tests/r9/test_confidence_image.py",
+    "tests/r9/test_intake_depth.py"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-INTAKE-20260913-REPAIR",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_refs": [
+        "htt/htt/htt/infer/r9_confidence_image.py:92-99",
+        "tests/r9/test_confidence_image.py:44-58",
+        "htt/htt/htt/infer/r9_depth_law.py:120-139",
+        "tests/r9/test_intake_depth.py:80-84",
+        "docs/research_program/tensor_joint_r9/revision2/implementation/repair_reproduction.json",
+        "docs/research_program/tensor_joint_r9/revision2/implementation/final_execution.json",
+        "docs/research_program/tensor_joint_r9/revision2/implementation/desi_product_final.json",
+        "docs/research_program/tensor_joint_r9/revision2/implementation/reference_comparison.json",
+        "55 focused tests passed"
+      ],
+      "evidence_fingerprint": "r9-repair-undefined-image-support-precondition-source-bound-final-product-v1",
+      "summary": "Scoped repair-closeout accepted. If a ratio has an undefined witness, the returned functional image now has no numerical confidence_lower even with an outer bound; only event_coverage_lower remains, explicitly scoped to the joint event. Full-past conditioning now rejects an original observation outside singular deterministic support before forming conditionals. The current-source final product preserves the qiso and DV/rd intervals, alpha 1/80, family alpha 1/20, conditional diagnostic tier, no-depth status, unavailable physical image, and all HOLDs; each declared final source hash matches current bytes. The reference comparison is correctly limited: FPR rows and support/witness/norm/boundary invariants pass, but the degenerate-SVD coordinate random functional is not an exact or numerically-equivalent fibre-target replay. This is a basis-dependent numerical-output limitation, not an immutable-input failure, and it establishes no formal or scientific result. Handoff/state retain the distinction between scalar qiso conditional validation and multi-depth/local-global/native/family capability; the state was still marked review-pending when read, so no authenticated launch, formal/CAS, empirical, or scientific admission is inferred."
+    }
+  ],
+  "errors": [],
+  "status": "pass"
+}

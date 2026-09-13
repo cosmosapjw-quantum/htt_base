@@ -134,8 +134,11 @@
       ],
       "scope": "CF4/JWST/distance/DESI/candidate CMB",
       "acceptance": "Explicit row mappings and shared eta; resolve jacobian_eta empty legacy adapters; units/frame/source-domain tests; bind tensor functionals and population/data-derived/predictive anchors to the correct joint target; keep observation and physical state spaces distinct",
-      "execution_state": "PLANNED",
-      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+      "execution_state": "IMPLEMENTED_SCOPED_NOT_ADMITTED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
+      "implementation_evidence": "revision2/implementation/CONTRACT.md",
+      "admitted_capabilities": [],
+      "remaining_obligation": "Other products and shared physical-provider responses remain unqualified; one DESI observable tuple and synthetic nuisance tests implemented."
     },
     {
       "id": "R9-04",
@@ -166,8 +169,11 @@
       ],
       "scope": "existing small products first",
       "acceptance": "Actual input/source/row/mask/frame semantics; same-host and same-sky are controls, not repeated independent observations",
-      "execution_state": "PLANNED",
-      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+      "execution_state": "IMPLEMENTED_SCOPED_NOT_ADMITTED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
+      "implementation_evidence": "revision2/implementation/CONTRACT.md",
+      "admitted_capabilities": [],
+      "remaining_obligation": "Only retained DESI qiso source executed; no CF4/JWST/CMB depth law granted."
     },
     {
       "id": "R9-06",
@@ -576,8 +582,11 @@
       ],
       "scope": "fixed feature transport, arbitrary compatible block sizes",
       "acceptance": "Implement HCH^T with all cross-step terms and retain Y or (Y0,HY) and full law; support before pseudoinverse; no assumed Gaussian innovations from nesting; frozen reference and real implementation mutation checks",
-      "execution_state": "PLANNED",
-      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+      "execution_state": "IMPLEMENTED_SCOPED_NOT_ADMITTED",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
+      "implementation_evidence": "revision2/implementation/CONTRACT.md",
+      "admitted_capabilities": [],
+      "remaining_obligation": "FORMAL_DEPTH four-axis admission remains HOLD; implementation tests alone grant no DEPTH_METHOD capability."
     },
     {
       "id": "R9-25",
@@ -598,8 +607,11 @@
       ],
       "scope": "one named compatible product at a time, not a pooled multi-survey law",
       "acceptance": "All covariance blocks for the exact extraction/selection/calibration/transport procedure; fixed/estimated/conditional law explicit; product identity must match the eligible source law; missing cross covariance stays unavailable",
-      "execution_state": "PLANNED",
-      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions"
+      "execution_state": "ADAPTER_IMPLEMENTED_PRODUCT_DEPTH_LAW_UNAVAILABLE",
+      "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
+      "implementation_evidence": "revision2/implementation/CONTRACT.md",
+      "admitted_capabilities": [],
+      "remaining_obligation": "Eligible CF4/JWST/CMB complete joint depth law unavailable; scalar DESI is not a substitute prerequisite."
     },
     {
       "id": "R9-26",

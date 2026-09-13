@@ -1,0 +1,213 @@
+{
+  "owner": "HTT",
+  "scope": "ONE_RETAINED_RELEASE_CONDITIONAL_QISO_ANALYSIS",
+  "claim_tier": "CONDITIONAL_DIAGNOSTIC",
+  "transfer_source": "OBSERVATION_SPACE",
+  "sky_support_status": "NONANGULAR_SUMMARY",
+  "null_mock_status": "FIXED_RELEASE_GAUSSIAN_MODEL_ONLY",
+  "payload": {
+    "likelihood_name": "gaussian_likelihood",
+    "parameter": "qiso",
+    "observed": [
+      0.9828804416839027
+    ],
+    "covariance": [
+      [
+        0.00034950706479147084
+      ]
+    ],
+    "window": [
+      [
+        1.0
+      ]
+    ],
+    "zeff": 0.2952346949471036,
+    "DV_over_rd_fid": 8.062742859742729,
+    "source_id": "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3",
+    "source_sha256": "836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3",
+    "source_path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_fullshape_bgs_bright_v1.2/likelihood/likelihood_bao-recon_syst_BGS_BRIGHT-21.5_GCcomb_z0.1-0.4.h5",
+    "source_bytes": 22845,
+    "alternative": "syst only; stat alternative and raw catalogue are not independent factors"
+  },
+  "intake": {
+    "product_id": "DESI_DR1_BGS_COMPRESSED_SYST",
+    "release": "DESI_DR1_FULLSHAPE_BGS_v1.2",
+    "source_ids": [
+      "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+    ],
+    "row_ids": [
+      "BGS_BRIGHT_GCcomb_qiso"
+    ],
+    "feature_units": [
+      "1"
+    ],
+    "frame": "NONANGULAR_BACKGROUND_COMPRESSION",
+    "epoch": "zeff=0.2952346949471036",
+    "extraction": "released qiso scalar",
+    "selection": "RELEASED_BGS_BRIGHT_Z0.1_0.4_COMPRESSION",
+    "group": "released GCcomb sample",
+    "calibration": "released fiducial DV/rd",
+    "mask": "NOT_APPLICABLE_NONANGULAR_SUMMARY",
+    "covariance_source": "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3:covariance/value",
+    "covariance_row_ids": [
+      "BGS_BRIGHT_GCcomb_qiso"
+    ],
+    "law_kind": "RELEASE_CONDITIONAL_GAUSSIAN"
+  },
+  "embedding": {
+    "state_id": "R9_DESI_QISO_BACKGROUND",
+    "state_names": [
+      "qiso"
+    ],
+    "state_units": [
+      "1"
+    ],
+    "state_roles": [
+      "OBSERVABLE"
+    ],
+    "frame": "NONANGULAR_BACKGROUND_COMPRESSION",
+    "epoch": "zeff=0.2952346949471036",
+    "local_parameter_names": [
+      "qiso"
+    ],
+    "local_parameter_units": [
+      "1"
+    ],
+    "nuisance_names": [],
+    "nuisance_units": [],
+    "theta_map": [
+      [
+        1.0
+      ]
+    ],
+    "eta_map": []
+  },
+  "H": [],
+  "T": [
+    [
+      1.0
+    ]
+  ],
+  "observed": [
+    0.9828804416839027
+  ],
+  "covariance": [
+    [
+      0.00034950706479147084
+    ]
+  ],
+  "mean_at_qiso_1": [
+    1.0
+  ],
+  "jacobian": [
+    [
+      1.0
+    ]
+  ],
+  "law_specification": {
+    "source_ids": [
+      "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3"
+    ],
+    "selection_law": "RELEASED_BGS_BRIGHT_Z0.1_0.4_COMPRESSION",
+    "covariance_source": "DESI_DR1_FULLSHAPE_BGS_v1.2:836a2107c1edfb655f7a5c41701607dd8542efe4dae4309737658829cfe63ba3:covariance/value",
+    "mean_definition": "qiso=DV/rd divided by released fiducial DV/rd",
+    "observed_parameter": "qiso",
+    "fiducial": 8.062742859742729,
+    "zeff": 0.2952346949471036,
+    "window": [
+      [
+        1.0
+      ]
+    ],
+    "covariance": [
+      [
+        0.00034950706479147084
+      ]
+    ],
+    "model_assumption": "fixed published Gaussian summary law, not verified true catalogue covariance",
+    "conditional_confidence_only": true,
+    "product_intake": "d8de374c354f6d3abe372cbea7d3411072140566cc146a5c4a68d028eabf11c9",
+    "shared_state_embedding": "780543357bcd4a37e90eebbc61cee50b6d2f92ab4060bb2254d80e1b32f035da",
+    "original_law": "312275c1b503177e7a7352a021ffcb775906503840a3a97102119a0b846018c5",
+    "shared_state_roles": [
+      "OBSERVABLE"
+    ],
+    "depth_representation": "6364c1d701d1e51ae04f758ec33e5f3e41f968790baf71b60ba6f6d4a3d3f8d3",
+    "view": "INITIAL_AND_CONTRASTS",
+    "transform": [
+      [
+        1.0
+      ]
+    ],
+    "not_an_independent_measurement": true
+  },
+  "alpha": "1/80",
+  "family_alpha": "1/20",
+  "no_redistribution": true,
+  "qiso_interval": [
+    0.9361855679766953,
+    1.02957531539111
+  ],
+  "confidence_lower": 0.9875,
+  "DV_over_rd_interval": [
+    7.548223503598291,
+    8.30120102273704
+  ],
+  "depth_diagnostic": {
+    "status": "NO_DEPTH_CONTRASTS",
+    "probability": null,
+    "owner": "MIO",
+    "independent_likelihood": false
+  },
+  "physical_image": {
+    "product_id": "R9_PHYSICAL_IMAGE",
+    "outcome": "INPUT_UNAVAILABLE",
+    "reasons": [
+      "common state-jet-anchor coverage unavailable"
+    ],
+    "controls": null
+  },
+  "product_multi_depth_law": "UNAVAILABLE",
+  "mocks": {
+    "seed": 20260912,
+    "draws": 100000,
+    "rejections": 1225,
+    "rejection_rate": 0.012249999999999983,
+    "nominal_alpha": "1/80",
+    "mc_tolerance": 0.005,
+    "actual_api_crosschecks": 128,
+    "status": "PASS_CONDITIONAL_PIPELINE"
+  },
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1"
+  },
+  "holds": [
+    "R8 STOP_INVALID",
+    "25 unresolved R8 pools",
+    "CF4 quarantine",
+    "PR4 skip",
+    "production admission HOLD",
+    "empirical admission HOLD",
+    "novelty HOLD",
+    "four-axis CAS HOLD"
+  ],
+  "caveats": [
+    "Previously explored release; no new holdout or raw-survey coverage claim.",
+    "One scalar block has no depth contrast or angular morphology.",
+    "No native transfer, global tilt, physical shear/vorticity or family identification.",
+    "No multiplication of transformed view, same sky, stat alternative or depth score."
+  ],
+  "source_hashes": {
+    "scripts/observed_runs/run_tensor_joint_r9_product.py": "ec0d07d439a434414ccf4fea6447ed6103e99ba6c4de4fdcfefd2312397c02d3",
+    "htt/obsstat/r9_product_intake.py": "1477d5a59be86d4db503ac2cea0006bf117a71ff7f5305f5ec300d2dcc1d7add",
+    "htt/src/common/depth_path.py": "7b3115ced6d68ec1ede814df6662127719bc2a12cb4cebe97098c50e6274432f",
+    "htt/src/common/r9_product.py": "d22f91bc315c1604864e7dbc8cdca02cf7c773be0b35dd0d0dfeb08fcd3a9037",
+    "htt/htt/htt/infer/r9_depth_law.py": "c9a419274bbb668e6adf2710d04787ccdfc1eaf9c99d09b3fe22eb3a361e9583",
+    "htt/htt/htt/infer/r9_confidence_image.py": "9ebe6b8afb2142370a07481601a70411b40a03224cb36ef615f541eb789785a9",
+    "htt/htt/htt/infer/r7_desi_law.py": "0ceb0e2f5ac1211bcf8e32a9957a46570566ccf9f1c623c242f79b23f4915407",
+    "htt/htt/htt/infer/r7_gaussian_law.py": "7d3ba747a89071fd28bda4b7278c1d9c1b0ccff42d824f78cd33bf3a5e250b64",
+    "htt/htt/htt/infer/r7_confidence.py": "48f9f1a768dda5151dfbc922acdd5c88f4b3c6a30920e6049887f28e8222238e"
+  }
+}

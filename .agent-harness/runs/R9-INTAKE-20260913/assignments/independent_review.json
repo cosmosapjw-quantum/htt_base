@@ -1,0 +1,89 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-INTAKE-20260913",
+  "assignment_id": "independent_review",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-INTAKE-20260913-IMPLEMENTATION"
+  ],
+  "task": "One independent final correctness/science/numerical/regression/claim review of the new R9 intake/full covariance/coverage adapter and actual DESI conditional path. Acceptance CONTRACT.md and inherited handoff define scope. Run bounded counterexamples on actual APIs if useful. No production edits; sole writer root owns changes, others exist, do not revert. No sibling-result reading, no nested spawning. Review is native/Host, no formal/CAS or scientific promotion. Write schema-valid result only at assigned path with source-scoped concrete findings and one scoped acceptance recommendation; no new gates. Check singular support, complete covariance and initial signal, fitted-law refusals, actual shared nuisance, joint jet-anchor confidence event, undefined ratio/boundary, product alpha/source/input/output binding. No evidence from default cwd hooks counts for this worktree.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/implementation/CONTRACT.md",
+      "sha256": "6f95448a3733d53f40ea01a0d7cac92f76b9c6985081ecb458618fa513faf9b3"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/implementation/desi_product.json",
+      "sha256": "781e04698c05fe79aa6bc27ca8a1e1c2b8841e34f6e2d3ba64beed58a5925760"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/implementation/validation.json",
+      "sha256": "fe9d51ac2fdc64e619ad021a60865666fc2237daa0fedf5dbb3aa4ed38602c65"
+    },
+    {
+      "path": "htt/src/common/depth_path.py",
+      "sha256": "7b3115ced6d68ec1ede814df6662127719bc2a12cb4cebe97098c50e6274432f"
+    },
+    {
+      "path": "htt/src/common/r9_product.py",
+      "sha256": "d22f91bc315c1604864e7dbc8cdca02cf7c773be0b35dd0d0dfeb08fcd3a9037"
+    },
+    {
+      "path": "htt/src/common/tensor_functionals.py",
+      "sha256": "0d34fb6c9c5bdd1f2bb828f545501de150089644a36b4ab233f7881d7bb21a70"
+    },
+    {
+      "path": "htt/htt/htt/infer/r9_depth_law.py",
+      "sha256": "c9a419274bbb668e6adf2710d04787ccdfc1eaf9c99d09b3fe22eb3a361e9583"
+    },
+    {
+      "path": "htt/htt/htt/infer/r9_confidence_image.py",
+      "sha256": "9ebe6b8afb2142370a07481601a70411b40a03224cb36ef615f541eb789785a9"
+    },
+    {
+      "path": "htt/obsstat/r9_product_intake.py",
+      "sha256": "1477d5a59be86d4db503ac2cea0006bf117a71ff7f5305f5ec300d2dcc1d7add"
+    },
+    {
+      "path": "scripts/observed_runs/run_tensor_joint_r9_product.py",
+      "sha256": "ec0d07d439a434414ccf4fea6447ed6103e99ba6c4de4fdcfefd2312397c02d3"
+    },
+    {
+      "path": "tests/r9/test_intake_depth.py",
+      "sha256": "2860afea64af4f9446e92c4eebf83a002e2657b7afeb4fc7348a050963f8192d"
+    },
+    {
+      "path": "tests/r9/test_confidence_image.py",
+      "sha256": "61c5e2852f04c65cbbb35fbd9b7550437d0617e75f4f808b8a4a5c7cf12cbacd"
+    },
+    {
+      "path": "htt/src/common/test_r9_depth_path.py",
+      "sha256": "fcd4b3c56b69dcdd2323f7599fce7575373ed2aa19898d04ab394d6f050bfac0"
+    },
+    {
+      "path": "htt/src/common/test_r9_tensor_functionals.py",
+      "sha256": "516b8dc5a1da6ea63262d8aa46d653ba2d09572ba083d1f2dba893018a8d9f8e"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-INTAKE-20260913/results/independent_review.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-INTAKE-20260913/results/independent_review.json",
+  "status": "registered",
+  "assignment_sha256": "347cb1a3072d1502f38d8acb6c0dfab4e99df79ebc485c953a6d4c270e80135c"
+}

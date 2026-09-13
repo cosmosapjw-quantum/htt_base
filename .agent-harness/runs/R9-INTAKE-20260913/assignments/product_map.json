@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-INTAKE-20260913",
+  "assignment_id": "product_map",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R1",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-INTAKE-20260913-PRODUCT"
+  ],
+  "task": "Read-only mapping: identify prepared same-release DESI BAO full-vector or qiso scalar input law, actual files, source identities and existing consumer path. No implementation or new observation interpretation. Only specified files and direct source/data references. Determine whether a multi-depth law actually exists; do not invent one. Return exact input/invocation, uncertainties, units and row definitions. Root is sole production writer, you are not alone; never revert others. Write only unique result path; no nested spawning.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+      "sha256": "2f1a636a88d43bcc95bd00f2e7327509032dcd1d1d4683b5a67ebd68ab724a99"
+    },
+    {
+      "path": "htt/htt/htt/infer/r7_desi_law.py",
+      "sha256": "0ceb0e2f5ac1211bcf8e32a9957a46570566ccf9f1c623c242f79b23f4915407"
+    },
+    {
+      "path": "scripts/observed_runs/run_tensor_joint_r7.py",
+      "sha256": "0e4d102800108985ef6b307c1f1c4a8fd0e8d4804e3d6d50620e8f31a1e8b328"
+    },
+    {
+      "path": "scripts/observed_runs/run_tensor_joint_r8.py",
+      "sha256": "bf7b301cf53859390d661be61409d763ecd9c333797cc8f9a43b4ec29a27c2b5"
+    },
+    {
+      "path": "scripts/observed_runs/r8_product_intake.py",
+      "sha256": "a35f6bdba42d9c88fc87390b62a2b3d5eb6522553bd82dce63f0528233b79f68"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-INTAKE-20260913/results/product_map.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-INTAKE-20260913/results/product_map.json",
+  "status": "registered",
+  "assignment_sha256": "e11552e7d56682a1639a8a7078530262615b53222afe91882d537aef78b9a324"
+}

@@ -1,0 +1,84 @@
+{
+  "status": "CHECKS_PASSED",
+  "fpr": [
+    {
+      "case": "three independent inputs, two overlapping differences",
+      "correct_fpr": 0.04995,
+      "wrong_fpr": 0.05854,
+      "wrong_exact_fpr": 0.059542764294831366,
+      "wrong_reference": "chi-square 2 after deleting cross-step covariance",
+      "correct_rejections": 4995,
+      "correct_wilson95": [
+        0.048617031167803096,
+        0.051317544474832916
+      ],
+      "wrong_rejections": 5854,
+      "wrong_wilson95": [
+        0.05710184546182807,
+        0.06001207024353377
+      ]
+    },
+    {
+      "case": "two inputs rho=-0.8",
+      "rho": -0.8,
+      "true_variance": 3.6,
+      "correct_fpr": 0.05041,
+      "wrong_fpr": 0.14532,
+      "wrong_exact_fpr": 0.14405087367543934,
+      "correct_rejections": 5041,
+      "correct_wilson95": [
+        0.04907113996317051,
+        0.051783400339401923
+      ],
+      "wrong_rejections": 14532,
+      "wrong_wilson95": [
+        0.14314932246481377,
+        0.14751792626072813
+      ]
+    },
+    {
+      "case": "two inputs rho=0",
+      "rho": 0.0,
+      "true_variance": 2.0,
+      "correct_fpr": 0.04994,
+      "wrong_fpr": 0.04994,
+      "wrong_exact_fpr": 0.050000000000000024,
+      "correct_rejections": 4994,
+      "correct_wilson95": [
+        0.0486071595881036,
+        0.05130741682279465
+      ],
+      "wrong_rejections": 4994,
+      "wrong_wilson95": [
+        0.0486071595881036,
+        0.05130741682279465
+      ]
+    },
+    {
+      "case": "two inputs rho=0.8",
+      "rho": 0.8,
+      "true_variance": 0.3999999999999999,
+      "correct_fpr": 0.05064,
+      "wrong_fpr": 0.0,
+      "wrong_exact_fpr": 1.1726446842521175e-05,
+      "correct_rejections": 5064,
+      "correct_wilson95": [
+        0.04929820612255276,
+        0.05201631650998788
+      ],
+      "wrong_rejections": 0,
+      "wrong_wilson95": [
+        0.0,
+        3.841311258303963e-05
+      ]
+    }
+  ],
+  "checks": [
+    "path_exact",
+    "singular_support",
+    "common_mode_information",
+    "rectangular_transport",
+    "fibre",
+    "random_anchor"
+  ]
+}

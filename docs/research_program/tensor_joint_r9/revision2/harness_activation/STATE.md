@@ -3,15 +3,29 @@
 PROJECT: HTT R9
 HARNESS_VERSION: 4.0.0
 LAST_UPDATED: 2026-09-13
-EXECUTION_STATUS: RESEARCH_CLOSEOUT_AND_CODING_INTEGRATION_CONTRACT_APPLIED
+EXECUTION_STATUS: R9_SCOPED_IMPLEMENTATION_AND_CONDITIONAL_PRODUCT_INDEPENDENTLY_REVIEWED
 MODEL_IDENTITY: UNKNOWN
 MODEL_IDENTITY_SOURCE: no trusted executing-model metadata asserted; explicit user choice selects the GPT-6 Astra harness only
 MODEL_PERFORMANCE_STATUS: NOT_EVALUATED
 OWNER: root / HTT common research
-CURRENT_PHASE: state recovery and Phase 10 closeout; focused independent delivery review
+CURRENT_PHASE: R9-03/05 and R9-24/25 implementation, validation and independent review
 MODE: local-validation
 
 ## Goal, scope and completion
+
+Current continuation from `9e9539edcdbd7bbf66e458cdce685c7a112f8a04` applies
+both exact archives to the actual adapters and a retained DESI conditional
+product path. See [implementation contract](../implementation/CONTRACT.md),
+[validation](../implementation/final_execution.json) and
+[product result](../implementation/desi_product_final.json). Archive SHA256 and all
+vendor-member bytes were reverified. The 55 relevant tests pass. Original
+reference invariants replay successfully; SVD-coordinate random fibre support
+is not the same numeric target across environments, as retained in
+`../implementation/reference_comparison.json`. Independent review and targeted repair closeout pass; see ../implementation/REVIEW.md.
+The scientific HOLDs and R9-25 missing observed multi-depth law remain.
+
+The following sections preserve the earlier **package-only integration** scope
+at 9e9539ed. They do not describe the new implementation as unexecuted.
 
 Apply both exact research and coding ZIPs supplied by the user to the already published R9 revision 2. Preserve the original aim of connecting full tensor morphology, local/global responses and conditional physical inference to qualified data products. The current action resolves both missing package inputs; it does not start a new theory program, migrate production code or execute new observations. The prior user authorization covers this same branch's documents and push.
 

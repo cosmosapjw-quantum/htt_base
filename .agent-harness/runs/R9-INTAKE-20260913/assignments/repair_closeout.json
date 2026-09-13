@@ -1,0 +1,77 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-INTAKE-20260913",
+  "assignment_id": "repair_closeout",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-INTAKE-20260913-REPAIR"
+  ],
+  "task": "Same reviewer, only one coherent repair-closeout, not a fresh broad review. Preserve original review result. Owner reproduced two actual failures: undefined ratio got numerical confidence_lower despite undefined witness, and full-past conditioning accepted tiny off-support original observation. Review narrow fixes and regression logs; compare old and final DESI result remains same within declared tolerances with changed source identities. Review current state/handoff scope for no overclaim. Final acceptance limited to scoped code/conditional product and preserved HOLDs; no scientific/CAS promotion. Read source and direct dependencies as needed; no production edits, no spawning; write only assigned result. New scope beyond these fixes deferred.",
+  "required_inputs": [
+    {
+      "path": "htt/htt/htt/infer/r9_depth_law.py",
+      "sha256": "4a5a06a3a8534d731a109c8299cc060a2958913cb09b1820e94daedfdd0c5783"
+    },
+    {
+      "path": "htt/htt/htt/infer/r9_confidence_image.py",
+      "sha256": "1060c29b4551e15cd763beddb4e4ffd567972aea41f058974136167b13d16eff"
+    },
+    {
+      "path": "tests/r9/test_intake_depth.py",
+      "sha256": "88277651812b04a6f3792e08aa9ec6bf7ad2db5b77b44e5aa89cb9057deae7a6"
+    },
+    {
+      "path": "tests/r9/test_confidence_image.py",
+      "sha256": "dfb53b77e645eeb38e2397d812410fcbc4c3ca26a4fa302911ee7045844f90cd"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/implementation/repair_reproduction.json",
+      "sha256": "690ad0c96f1c5fa9d6b31d8f1e63e013187666f900a21d0eb8df994473835f94"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/implementation/repair_reproduction.stdout",
+      "sha256": "f4ed0d34fa304698910ac17cead1d2934c54602e905308df5ac2bc472303d88c"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/implementation/final_execution.json",
+      "sha256": "4f5f09dd97e0d6a67cb9eeaef540c1dc457b2dd1a23a2790b075119715914283"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/implementation/desi_product_final.json",
+      "sha256": "80e5d75a930c28cc79f4c4f76d2a5e0004bd7fe8f739f0aa26cb581813605ba3"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/implementation/reference_comparison.json",
+      "sha256": "8b257e2b52bd3603820a05f2b4c020519518d8bf5d273e6a0156868e62c1d6f2"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json"
+    }
+  ],
+  "allowed_sibling_results": [
+    ".agent-harness/runs/R9-INTAKE-20260913/results/independent_review.json"
+  ],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-INTAKE-20260913/results/repair_closeout.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-INTAKE-20260913/results/repair_closeout.json",
+  "status": "registered",
+  "assignment_sha256": "18cc88c9cfd524c6596a656c598f2da8bc29a245d5eb01ea58b9393fbf41706e"
+}

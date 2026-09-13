@@ -1,5 +1,15 @@
 # R9 revision 2 — coding-harness application contract
 
+Current continuation: the user's authorized adapter/product implementation
+starts at `9e9539edcdbd7bbf66e458cdce685c7a112f8a04`. Its scientific contract,
+scope, actual APIs and validation matrix are in
+[../implementation/CONTRACT.md](../implementation/CONTRACT.md).
+Both exact packages are now applied to implementation/validation/review, with
+fresh identity evidence in `../implementation/archive_verification.json`.
+The earlier package-only contract below remains historical; it does not waive
+the numerical checks required for this continuation. Templates and original
+scientific evidence remain unchanged.
+
 Date: 2026-09-13. Owner: HTT/common root. Current layer: package integration, validation, review and handoff. The supplied GPT-6 Astra v4.0.0 coding core is applied to this bounded integration; the R9 production adapter has not been implemented by this action.
 
 ## Objective and authority

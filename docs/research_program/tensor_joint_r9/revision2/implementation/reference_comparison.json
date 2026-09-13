@@ -1,0 +1,26 @@
+{
+  "status": "REFERENCE_INVARIANTS_PASS_EXACT_FIBRE_TARGET_REPLAY_NOT_ESTABLISHED",
+  "initial_blanket_comparison": {
+    "exit_code": 1,
+    "failure": "AssertionError: all numerical fields <= 1e-10",
+    "maximum_absolute_difference": 0.29408554825056177
+  },
+  "fpr_rows_exact_match": true,
+  "fibre_support_previous": 1.4075260329512815,
+  "fibre_support_current": 1.1134404847007198,
+  "classification": "numerical output / basis-dependent random functional; not immutable source mismatch",
+  "explanation": "Reference SVD basis has sign/degenerate-subspace freedom; random coordinate direction is not frozen as an ambient STF tensor. Changed support is not claimed the same target or numerically equivalent. Both runs satisfy unchanged support/witness/norm/boundary assertions.",
+  "tolerance_unchanged": 1e-10,
+  "old_versions": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "new_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0"
+  },
+  "plot_visual_audit": "OPENED_AND_REVIEWED: two synthetic panels and labels",
+  "four_axis_CAS": "NOT_EXECUTED"
+}

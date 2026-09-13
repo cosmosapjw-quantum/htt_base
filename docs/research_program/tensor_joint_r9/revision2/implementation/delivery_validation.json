@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "python3",
+      "scripts/codex_harness/validate_pr_dag.py",
+      "docs/codex_handoff/pr_backlog.yaml"
+    ],
+    "cwd": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree",
+    "exit_code": 0,
+    "stdout": "delivery_0.stdout",
+    "stderr": "delivery_0.stderr"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/codex_harness/progress_report.py",
+      "docs/codex_handoff/pr_backlog.yaml",
+      "docs/codex_handoff/pr_status.yaml",
+      "--checkpoint-every",
+      "5"
+    ],
+    "cwd": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree",
+    "exit_code": 0,
+    "stdout": "delivery_1.stdout",
+    "stderr": "delivery_1.stderr"
+  },
+  {
+    "command": [
+      "python3",
+      ".agent-harness/scripts/close_run.py",
+      "--abandon"
+    ],
+    "cwd": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree",
+    "exit_code": 0,
+    "stdout": "delivery_2.stdout",
+    "stderr": "delivery_2.stderr"
+  }
+]

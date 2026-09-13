@@ -1,0 +1,33 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___ test_same_tuple_ratio_keeps_zero_branch_and_does_not_invent_outer_bound ____
+
+    def test_same_tuple_ratio_keeps_zero_branch_and_does_not_invent_outer_bound():
+        region, event = event_fixture()
+        target = StateFunctional('ratio', lambda x: float(x[1])/float(x[2]), ('jet', 'anchor'))
+        result = physical_confidence_image(region, target, event=event)
+        assert result['projection'].status == 'OUTER_RANGE_UNRESOLVED'
+        assert result['coverage_lower'] is None
+        assert result['projection'].undefined_witnesses == ((1, 1, 0),)
+        # An explicitly supplied outer bound is scoped to the same joint event.
+        def bound(r, f):
+            return BoundCertificate((-np.inf, np.inf), 'UNBOUNDED_OUTER_IMAGE', 0.,
+                                    'full real relaxation retains nonzero-anchor ratios', r.scope_ids, f.functional_id, r.domain.domain_id)
+        result = physical_confidence_image(region, target, event=event, bound_provider=bound)
+>       assert result['coverage_lower'] is None
+E       assert 0.9875 is None
+
+tests/r9/test_confidence_image.py:56: AssertionError
+_________ test_innovations_check_original_support_before_conditioning __________
+
+    def test_innovations_check_original_support_before_conditioning():
+        law, intake, _ = fixture(np.diag([1., 0., 1.]), [1., 1e-16, 0.])
+        p = DepthRepresentation((2, 1), (np.zeros((1, 2)),), law.measurement_ids, 'fixed')
+>       with pytest.raises(ValueError, match='support'):
+E       Failed: DID NOT RAISE ValueError
+
+tests/r9/test_intake_depth.py:83: Failed
+=========================== short test summary info ============================
+FAILED tests/r9/test_confidence_image.py::test_same_tuple_ratio_keeps_zero_branch_and_does_not_invent_outer_bound
+FAILED tests/r9/test_intake_depth.py::test_innovations_check_original_support_before_conditioning
+2 failed in 0.97s

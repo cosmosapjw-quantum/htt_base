@@ -1,0 +1,25 @@
+[
+  {
+    "command": [
+      "python3",
+      "scripts/codex_harness/validate_pr_dag.py",
+      "docs/codex_handoff/pr_backlog.yaml"
+    ],
+    "exit_code": 0,
+    "seconds": 0.4961817349976627,
+    "stdout": "canonical_0.stdout",
+    "stderr": "canonical_0.stderr"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/codex_harness/progress_report.py",
+      "docs/codex_handoff/pr_backlog.yaml",
+      "docs/codex_handoff/pr_status.yaml"
+    ],
+    "exit_code": 0,
+    "seconds": 0.7737825789954513,
+    "stdout": "canonical_1.stdout",
+    "stderr": "canonical_1.stderr"
+  }
+]
