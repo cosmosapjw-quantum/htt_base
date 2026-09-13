@@ -1,4 +1,4 @@
-# R9 revision 2 handoff — public calibration inputs and remaining selected law
+# R9 revision 2 handoff — fixed ambient fibre replay and remaining observation law
 
 저장소 `cosmosapjw-quantum/htt_base`, 브랜치
 `implementation/project-catalog-20260912`를 이어서 작업하라.
@@ -6,6 +6,7 @@
 실제 다중 깊이 실행은 `c532862651235ed0586a0677b61a43b2e09b3c85`에서,
 이번 선택·보정 입력 continuation은 사용자가 확인한
 `51ed1e913ac358f9a2569fce8ccb5dc3c1650305`에서 시작했다.
+이번 고정 ambient STF 수치 비교는 `af5fe14a60658ff7926e58ea512bd3014aeba2ba`를 이어서 수행했다.
 이 인계 파일을 포함하는 전달 커밋을 다음 immutable starting point로 고정하라.
 R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초기화하지 마라.
 
@@ -17,7 +18,8 @@ R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초
 4. `revision2/selected_law/README.md`, `input_inventory.json`, `final/result.json`, 실행·검수 기록.
    이어서 `revision2/multidepth/README.md`, `analysis.json`과 이전 실행·검수 기록.
 5. 이전 `revision2/implementation/REVIEW.md`, `reference_comparison.json`, `desi_product_final.json`.
-6. `revision2/THEORY_EXTENSION.md` D1–D4/F1–F3와 `MODEL_TO_DATA.md`의 제품 조건.
+6. `revision2/ambient_fibre/README.md`, `comparison.json`, `PR_DELTA.md`와 독립 수치 검수.
+7. `revision2/THEORY_EXTENSION.md` D1–D4/F1–F3와 `MODEL_TO_DATA.md`의 제품 조건.
 
 ## 원본 하네스
 
@@ -134,9 +136,23 @@ anchor law가 필요하다. 준비된 stage를 같은 전체 모의자료에서 
 기존 R9-03/05 adapter 구현을 다시 시작하거나 DESI scalar를 반복 실행하지 마라.
 물리 image는 동일한 calibrated state–jet–anchor 사건이 갖춰져야 한다.
 
-Fibre 재현 차이는 별도 수치 의무다. 다음 비교는 동일한 **ambient STF 방향**을
-고정한 뒤 각 환경의 SVD 좌표로 옮겨야 한다. 같은 SVD-coordinate 난수 seed만으로
-같은 support target을 정의했다고 보지 마라.
+Fibre 비교는 동일한 **ambient STF 방향** a와 q,v를 먼저 고정해 실행했다.
+두 기존 Python/NumPy 환경과 35개 기저 표현에서 support=0.9745422070448619가
+일치했다. Cartesian reference와의 최대 support 오차는 4.45e-16 미만,
+ambient witness 오차는 7.90e-16 미만이며 허용오차 1e-10을 유지했다.
+`revision2/ambient_fibre/comparison.json`과 독립 검수 결과를 소비하라.
+이것은 새 고정 target의 유한 수치 비교다. 원래 난수 ambient target은 복구하지
+않았고, 이전 두 서로 다른 target의 결과와 원본 evidence는 그대로 보존했다.
+임의 기저에 대한 증명, 불확실 q, 경계 인증, 네 축 CAS나 물리 coverage가 아니다.
+같은 SVD-coordinate 난수 seed만으로 같은 target을 정의했다고 보지 마라.
+
+다음 독립 실행 가능 경로는 R9-02의 현재 명제별 CAS 계약과 네 축 실행이다.
+`FORMAL_DEPTH` 계약 미작성은 구현할 작업이며 외부 자료 부족과 구분하라.
+이번 readiness map은 pinned Lean 4.31 core와 SymPy 실행을 확인했고,
+mathlib는 현재 formal 프로젝트에 설정되지 않았다. Sage-to-Singular probe는
+30초 안에 끝나지 않아 NOT_MEASURED다. 별도 실행 파일은 대소문자를 구분하는
+`/usr/bin/Singular`에 있으므로 소문자 `singular` 검색 실패를 미설치로 읽지 마라.
+계약/도구 준비 자체는 formal admission이 아니다. 과거 R8 계약을 대입하지 마라.
 
 기존 R8 STOP_INVALID, 25 unresolved pools, CF4 quarantine, PR4 skip,
 production/empirical/novelty/four-axis HOLD와 R9-REV2-20260912의
@@ -152,16 +168,18 @@ CMB 내부 두 항 각각 1/160이다. 빠진 제품의 alpha를 재배분하지
 Native Boltzmann solver를 구현/시뮬레이션하거나 Bianchi family를 주장하지 마라.
 
 Subagent 시작 전에 실제 worktree의 context pack과 등록 assignment를 사용하라.
-이번 default-cwd hook는 다른 과거 run을 보았으므로 authenticated launch로 기록하지
-않았다. 실제 지정 worktree의 결과를 직접 검증하라. 독립 검수는 현재 구현에 한정하며
-네 축 CAS를 대체하지 않는다. canonical 상태/미러/PR_DELTA, commit/push와 원격
-commit/file-body readback을 끝낸 후 새 과학 입력을 기다려라.
+이번 독립 수치 검수와 입력 map의 launch authentication은 미확인이다. 등록 result의
+직접 검증과 scoped review를 authenticated lifecycle 또는 네 축 CAS로 승격하지 마라.
+사용자가 local 검증 후 push 전후 별도 worktree/clone 재검증을 생략하도록 지시했다.
+현재 worktree에서 필요한 검증을 마치고 단계별 commit/push 후 원격 ref를 확인하라.
 
-전역 Codex 하네스의 현재 runtime authority는 `0f4eb82dda7217762352ce797c5b369834f65867`이며
-이전 0b6022e1 적용 receipt는 역사적 증거로 유지한다. 현재 정책은 MIXED/BUDGET_FIRST다.
-관리 fleet의 읽기 전용 조회에서 qwen3.6-35b-a3b READY/busy=0을 확인했으나 이번 작업의
-local model dispatch는 0회다. 정책·설치·서비스 상태를 실제 local 위임 성공이나 작업 적격성으로
-간주하지 마라. 새 native child는 exact worktree/run/assignment와 전역 launch marker로
-등록하며, 이 세션의 SubagentStop은 GLOBAL_HOOK_IDENTITY_OR_STATE_UNVERIFIED:CuhError를 반환했다.
-최종 독립검수 결과 파일의 직접 검증은 통과했으나 authenticated lifecycle은 미확인이다.
-runtime 정책 적용은 과학 하네스 ZIP 적용과 별도이며 과거 receipt나 frozen budget을 초기화하지 않는다.
+전역 Codex runtime authority는 현재 `3379cc219ed6b5e44a2b50d7224324a89fdf77ab`다.
+80df의 opaque spawn-message 거부 후 3379의 exact-task-name fallback을 적용했고,
+이전에 거부된 동일 등록 작업의 native 실행을 재개했다. 공식 installer 재적용은
+GLOBAL_POLICY_UNCHANGED였으며 hook 5개의 현재 hash 신뢰/활성 설정을 공식
+app-server config API로 저장했다. 사용자에게 /hooks 승인과 reload 권한을 받았다.
+`reloadUserConfig=true`는 임시 app-server에 요청됐지만 현재 데스크톱 스레드의
+reload와 새 authenticated lifecycle event는 확인되지 않았다. 승인 저장, 실행 재개,
+실행 중 클라이언트 reload 상태를 구분하라. 이 단계 local model dispatch는 0회다.
+기존 0f4/0b6022/80df receipts와 거부 기록, frozen budgets는 유지한다.
+전역 runtime 적용은 과학 하네스 ZIP 적용이나 과학적 admission과 별도다.

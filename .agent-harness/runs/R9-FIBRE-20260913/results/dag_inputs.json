@@ -1,0 +1,150 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-FIBRE-20260913",
+  "assignment_id": "dag_inputs",
+  "assignment_sha256": "8cb82ecdd5a3644cc8dbe52a454c9e090f5862930b697564bc3eb54ddf11c17d",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "context_mapper",
+  "independence_mode": "shared-core",
+  "result_path": ".agent-harness/runs/R9-FIBRE-20260913/results/dag_inputs.json",
+  "status": "fail",
+  "launch_id": "",
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-09-13T22:52:00+09:00",
+  "completed_at": "2026-09-13T22:58:53+09:00",
+  "tool_versions": {
+    "lean_pinned": "4.31.0",
+    "lake_pinned": "5.0.0-src+68218e8",
+    "sympy": "1.14.0",
+    "sage": "10.9",
+    "wolframscript": "1.14.0",
+    "wolfram_kernel": "15.0.0"
+  },
+  "commands": [
+    "sha256sum assigned campaign_dag.json and selected_law/input_inventory.json",
+    "python3 targeted JSON summary of campaign DAG and selected-law inventory",
+    "cd formal && elan show && lake env lean Egs3V7.lean",
+    "python3 SymPy import check; Sage and Wolfram binary version checks"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/R9-FIBRE-20260913/artifacts/dag_inputs/readiness_map.json",
+      "sha256": "fb1980341b55c4988297109471b5989a28505c7dd82f1d4ec8d82f26375da50c",
+      "bytes": 6882,
+      "producer": "dag_inputs",
+      "command_fingerprint": "dag-input-readiness-map-v1"
+    }
+  ],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R9-FIBRE-20260913/assignments/dag_inputs.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    "docs/research_program/tensor_joint_r9/campaign_dag.json",
+    "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json",
+    "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+    "docs/research_program/tensor_joint_r9/revision2/selected_law/input_inventory.json",
+    "docs/research_program/tensor_joint_r9/revision2/implementation/current_graph.stdout",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/PR_DELTA.md",
+    "formal/lean-toolchain",
+    "formal/lakefile.toml",
+    "formal/lake-manifest.json",
+    "formal/Egs3V7.lean"
+  ],
+  "findings": [
+    {
+      "finding_id": "R9_FORMAL_DEPTH_HOLD",
+      "claim_id": "RUN-R9-FIBRE-20260913-NEXT-INPUTS",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "r9-formal-depth-contract-absent-v1",
+      "statement": "FORMAL_DEPTH is unavailable: R9-02 depth is planned and R9-24 remains scoped-not-admitted; no current R9 proposition-specific depth CAS contract was located in the assigned R9/formal paths.",
+      "assumptions_used": [
+        "Only current R9-specific formal evidence can support the R9-02 depth action.",
+        "Historical R8 CAS material is not a substitute."
+      ],
+      "evidence_refs": [
+        "docs/research_program/tensor_joint_r9/campaign_dag.json:R9-02,R9-24",
+        "docs/research_program/tensor_joint_r9/revision2/implementation/current_graph.stdout:depth_formal_missing",
+        ".agent-harness/runs/R9-FIBRE-20260913/artifacts/dag_inputs/readiness_map.json:formal_depth"
+      ],
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Inspect R9-02 and R9-24 in the assigned campaign DAG.",
+        "Search the assigned tensor_joint_r9 and formal paths for a current R9 depth CAS contract."
+      ],
+      "unresolved": [
+        "The contract must be authored and independently executed before any formal admission."
+      ],
+      "confidence": 0.99
+    },
+    {
+      "finding_id": "R9_SELECTED_LAW_EXTERNAL_INPUT_HOLD",
+      "claim_id": "RUN-R9-FIBRE-20260913-NEXT-INPUTS",
+      "verdict": "fail",
+      "severity": "high",
+      "evidence_fingerprint": "r9-selected-law-input-inventory-hold-v1",
+      "statement": "The selected-law and joint-depth path remains blocked by unavailable upstream preselection, rejection/refit, group-richness, CF3-anchor, and angular-selection inputs; public DESI, SDSS feature, and CF3 point-calibration replays do not remove those blocks.",
+      "assumptions_used": [
+        "The selected_law input inventory is authoritative for this bounded input review.",
+        "No nearby population, public selected rows, or inferred crosswalk may replace an unavailable source input."
+      ],
+      "evidence_refs": [
+        "docs/research_program/tensor_joint_r9/revision2/selected_law/input_inventory.json:stage_status",
+        "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json:selected_law_connection",
+        "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md:next_science_execution_and_hold",
+        ".agent-harness/runs/R9-FIBRE-20260913/artifacts/dag_inputs/readiness_map.json:independent_root_blockers"
+      ],
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Read stage_status in the frozen selected-law inventory.",
+        "Compare it with R9-06, R9-25, and R9-26 prerequisites in the campaign DAG."
+      ],
+      "unresolved": [
+        "Original upstream inputs must be acquired before a same-complete-survey replay can begin.",
+        "The official random-catalogue acquisition failure is preserved and is not retried in this work unit."
+      ],
+      "confidence": 0.99
+    },
+    {
+      "finding_id": "R9_FOUR_AXIS_READINESS_INCOMPLETE",
+      "claim_id": "RUN-R9-FIBRE-20260913-NEXT-INPUTS",
+      "verdict": "fail",
+      "severity": "medium",
+      "evidence_fingerprint": "r9-cas-runtime-readiness-mixed-v1",
+      "statement": "The pinned Lean core lane is usable and SymPy imports, but the formal project has no mathlib dependency, no current R9 depth contract, and the Sage-to-Singular interface was not measured successfully; four-axis readiness cannot be inferred from installed binaries.",
+      "assumptions_used": [
+        "A successful tool binary or core-lane compile does not constitute a four-axis formal admission."
+      ],
+      "evidence_refs": [
+        "formal/lean-toolchain",
+        "formal/lakefile.toml",
+        ".agent-harness/runs/R9-FIBRE-20260913/artifacts/dag_inputs/readiness_map.json:toolchain_readiness"
+      ],
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Run cd formal && elan show && lake env lean Egs3V7.lean.",
+        "Run python3 -c import sympy and inspect the formal lakefile for its mathlib declaration."
+      ],
+      "unresolved": [
+        "Sage-to-Singular interface readiness is NOT_MEASURED after the bounded initial probe.",
+        "No R9 proposition-specific four-axis CAS contract exists to exercise the runtimes."
+      ],
+      "confidence": 0.96
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-FIBRE-20260913-NEXT-INPUTS",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "R9_FORMAL_DEPTH_HOLD",
+        "R9_SELECTED_LAW_EXTERNAL_INPUT_HOLD",
+        "R9_FOUR_AXIS_READINESS_INCOMPLETE"
+      ],
+      "summary": "Targeted evidence identifies the formal-depth contract gap, the independent external selected-law/physical-input blockers, and incomplete four-axis readiness. No scientific claim is admitted."
+    }
+  ],
+  "errors": []
+}

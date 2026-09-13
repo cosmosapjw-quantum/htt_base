@@ -8,7 +8,7 @@
   "base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
   "research_run": "R9-REV2-20260912",
   "owner": "HTT research",
-  "status": "R9_REV2_PUBLIC_CALIBRATION_CONNECTION_INDEPENDENTLY_REVIEWED",
+  "status": "R9_REV2_FIXED_AMBIENT_FIBRE_NUMERICALLY_REPRODUCED",
   "completed": [
     "Pinned compendium and R9 intake",
     "D1-D4 and F1-F3 direct derivations",
@@ -27,7 +27,8 @@
     "Independent native review and same-reviewer targeted repair closeout accepted; 55 tests and final source-bound DESI rerun pass",
     "Real SDSS PV v1.1.0 observation and 2048 complete mock catalogues replayed into four depths with full estimated Cjk, means and angular responses; no law/coverage admission",
     "Independent same-reviewer closeout confirms full saved-vector moments/transforms, box split, source binding and the shared zero-point regression; 25 relevant tests pass",
-    "Public CF3/SDSS PGC296 and TF-rule294 point-calibration connection, Tempel33641 exact objID matches, full shared-offset depth operator and35relevant tests independently reviewed; selected law and physical coverage unavailable"
+    "Public CF3/SDSS PGC296 and TF-rule294 point-calibration connection, Tempel33641 exact objID matches, full shared-offset depth operator and35relevant tests independently reviewed; selected law and physical coverage unavailable",
+    "Fixed ambient STF q,a,v compared across 35 basis representations in two existing Python/NumPy environments; Cartesian and independent 80-decimal checks agree below 1e-10;38 relevant tests pass. No new scientific admission."
   ],
   "not_executed": [
     "four-axis CAS admission",
@@ -41,7 +42,7 @@
     "CF4 quarantine",
     "R9 initial SymPy import failure"
   ],
-  "next": "Acquire the original SDSS preselection supersets/SQL and FP generation/refit/rejection code, exact richness bins and modified mask/spline, full CF3-to-Tempel calibration crosswalk and shared anchor law. Repeat all data-estimated stages in the same complete surveys. Public296/294 galaxy and33641 Tempel joins do not qualify the selected law; physical local/global response remains a separate input. Preserve every HOLD and existing alpha; ambient-STF fibre comparison is separate.",
+  "next": "Complete current proposition-specific R9-02 depth four-axis work where toolchains permit; a missing CAS contract is implementation work, not an external-input blocker. In parallel acquire the original preselection supersets/SQL, FP generation/refit/rejection, richness bins and mask/spline, full CF3 group crosswalk/shared anchor law, and separately validated physical local/global response. Repeat all fitted stages on the same complete survey realizations. Preserve all HOLDs and alpha; do not repeat unchanged conditional product runs.",
   "runtime": {
     "python": "3.12.14",
     "numpy": "2.3.5",
@@ -219,5 +220,38 @@
       "python": "3.12.3",
       "numpy": "2.4.2"
     }
+  },
+  "ambient_fibre": {
+    "base_commit": "af5fe14a60658ff7926e58ea512bd3014aeba2ba",
+    "work_unit": "PR-R9-FIBRE",
+    "owner": "common numerical validation",
+    "scope": "Fixed-q interior STF fibre numerical reproduction",
+    "status": "SAME_AMBIENT_TARGET_COMPARISON_PASS",
+    "method": "revision2/ambient_fibre/README.md",
+    "result": "revision2/ambient_fibre/comparison.json",
+    "execution": "revision2/ambient_fibre/execution.json",
+    "validation": "revision2/ambient_fibre/validation.json",
+    "support": 0.9745422070448619,
+    "basis_count_per_environment": 35,
+    "environment_count": 2,
+    "tolerance": 1e-10,
+    "old_target_replay": "NOT_CLAIMED_ORIGINAL_AMBIENT_TARGET_UNRECOVERED",
+    "review_status": "PASS_SCOPED_NO_BLOCKING_DEFECT",
+    "independent_review": ".agent-harness/runs/R9-FIBRE-20260913/results/fibre_review.json",
+    "input_readiness": ".agent-harness/runs/R9-FIBRE-20260913/artifacts/dag_inputs/readiness_map.json",
+    "input_readiness_note": "Readiness FAIL records missing prerequisites. Singular executable exists at /usr/bin/Singular; the lower-case probe does not establish absence. Sage interface remains NOT_MEASURED. Current R9 CAS contract remains to be implemented.",
+    "authenticated_launch": "UNVERIFIED",
+    "current_run_aggregate": "NO_AUTHENTICATED_WHOLE_RUN_PASS; numerical review PASS and unavailable DAG inputs remain separate",
+    "alpha_consumed": 0,
+    "scientific_admission": "HOLD"
+  },
+  "global_policy_current": {
+    "source_commit": "3379cc219ed6b5e44a2b50d7224324a89fdf77ab",
+    "hook_trust": "FIVE_EXACT_INSTALLED_HOOK_HASHES_APPROVED",
+    "receipt": "revision2/ambient_fibre/hook_trust_approval.json",
+    "retry": "Previously denied same registered native assignment launched after repaired install",
+    "reload": "REQUESTED_IN_TEMPORARY_APP_SERVER; CURRENT_DESKTOP_THREAD_UNVERIFIED",
+    "local_model_dispatches_this_stage": 0,
+    "historical_receipts_preserved": true
   }
 }

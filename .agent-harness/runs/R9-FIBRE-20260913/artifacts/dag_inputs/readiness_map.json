@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "run_id": "R9-FIBRE-20260913",
+  "assignment_id": "dag_inputs",
+  "claim_id": "RUN-R9-FIBRE-20260913-NEXT-INPUTS",
+  "scope": "read-only targeted R9 DAG, selected-law-input, and CAS readiness map",
+  "source_identity": {
+    "campaign_dag": {
+      "path": "docs/research_program/tensor_joint_r9/campaign_dag.json",
+      "sha256": "1b6c44533f016903c48d028a8f00354b913cf63100264e7822fb46e26cf07bfd"
+    },
+    "selected_law_inventory": {
+      "path": "docs/research_program/tensor_joint_r9/revision2/selected_law/input_inventory.json",
+      "sha256": "13ddc9dd2d08b8dda0207ef4e0cfec452842adc0dedf1d566100e65a7afc1a3e"
+    },
+    "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4"
+  },
+  "completed_paths_not_to_repeat": [
+    "Retained DESI Gaussian-summary conditional path already executed.",
+    "SDSS PV v1.1.0 release-feature replay with 2048 mocks already executed as a diagnostic.",
+    "Public CF3/SDSS point-calibration connection already executed as a diagnostic."
+  ],
+  "formal_depth": {
+    "dag_action": "R9-02/depth",
+    "current_status": "UNAVAILABLE",
+    "evidence": [
+      "R9-02 is PLANNED and requires a current proposition-specific four-axis observed admission.",
+      "R9-24 is IMPLEMENTED_SCOPED_NOT_ADMITTED and records FORMAL_DEPTH four-axis admission as HOLD.",
+      "No R9 proposition-specific CAS contract file was located under the assigned tensor_joint_r9 documentation or formal project paths; historical R8 material is not substituted."
+    ],
+    "minimal_next_action": "Prepare the depth proposition's current CAS_CONTRACT and four independent axis assignments before any R9-02 depth execution or DEPTH_METHOD admission."
+  },
+  "independent_root_blockers": [
+    {
+      "blocker": "SDSS preselection population",
+      "status": "UNAVAILABLE",
+      "missing_inputs": "Exact Table 1 superset row identities, SQL, Portsmouth cross-match, and missing-observation rules.",
+      "minimal_next_action": "Acquire those original survey-selection inputs; do not infer them from the final 34,059-row public PV file."
+    },
+    {
+      "blocker": "Visual and FP rejection history",
+      "status": "UNAVAILABLE",
+      "missing_inputs": "The 42,170 pre-visual and 34,562 pre-FP rows, per-iteration 503 rejection identities, and complete fitting/rejection code.",
+      "minimal_next_action": "Acquire the original row-level rejection history and code before replaying selection or FP stages."
+    },
+    {
+      "blocker": "FP generation and refit",
+      "status": "PARTIAL_INPUTS_ONLY",
+      "missing_inputs": "Pre-selection halos/subhalos, rank-order assignments/seeds, fitted error/colour/redshift-spline procedures, mask modifications, and full FP/refit/outlier procedure.",
+      "minimal_next_action": "Acquire the original generator/refit package and run it on the same complete-survey mock population; selected mock rows are not a substitute."
+    },
+    {
+      "blocker": "Group-richness refit",
+      "status": "PARTIAL_INPUTS_ONLY",
+      "missing_inputs": "Exact richness-bin boundaries and assignments, fitted FP parameters, full-mock generator/refit, mock-to-observed grouping prescription, and same-realisation memberships.",
+      "minimal_next_action": "Acquire the bin/refit specification and complete grouping mapping before any group-richness calibration replay."
+    },
+    {
+      "blocker": "Shared CF3 anchor law",
+      "status": "UNAVAILABLE",
+      "missing_inputs": "Exact calibration overlaps/exclusions/group associations, group averaging/error convention, shared CF3 distance-ladder/zero-point and cosmic-variance law, and same-mock anchor draws.",
+      "minimal_next_action": "Acquire the group-level CF3 crosswalk and shared anchor law, then repeat in the full same-realisation survey."
+    },
+    {
+      "blocker": "Angular selection",
+      "status": "PARTIAL_INPUTS_ONLY",
+      "missing_inputs": "Exact modified NYU-VAGC DR7 mangle polygons and fitted redshift-spline estimation procedure.",
+      "minimal_next_action": "Obtain the original mask/spline inputs; retain the recorded official random-catalogue HTTP 504 acquisition failure and do not retry it in this work unit."
+    },
+    {
+      "blocker": "Physical local/global response",
+      "status": "UNAVAILABLE",
+      "missing_inputs": "Validated physical state-to-eta response under declared frames, distance/time/depth kernels, selection and nuisance response, jointly validated with the state-jet-anchor event.",
+      "minimal_next_action": "Supply a separately validated physical response input; phenomenological additive eta-shell response does not unlock the physical image."
+    }
+  ],
+  "runnable_next_actions": [
+    {
+      "action": "R9-02 depth preparation",
+      "readiness": "PREPARATION_ONLY",
+      "reason": "Research design exists, but the required current proposition-specific CAS contract and four-axis admission do not."
+    },
+    {
+      "action": "Selected-law upstream-input acquisition",
+      "readiness": "EXTERNAL_INPUT_REQUIRED",
+      "reason": "It is the concrete prerequisite for R9-06, R9-25, and R9-26; no replacement input is authorized."
+    },
+    {
+      "action": "Physical response input acquisition",
+      "readiness": "EXTERNAL_INPUT_REQUIRED",
+      "reason": "It is independent of the selected-law path and required before validated-provider jet or physical-image work."
+    }
+  ],
+  "toolchain_readiness": {
+    "lean_core": {
+      "configured_toolchain": "leanprover/lean4:v4.31.0",
+      "observed": "formal/lean-toolchain selected Lean 4.31.0; lake env lean Egs3V7.lean completed successfully.",
+      "status": "USABLE_PINNED_CORE_LANE"
+    },
+    "mathlib": {
+      "observed": "formal/lakefile.toml declares a pure Lean 4 core lane with no mathlib dependency; no mathlib requirement appears in the formal project configuration.",
+      "status": "NOT_CONFIGURED_FOR_R9_FORMAL_LANE"
+    },
+    "sympy": {
+      "observed": "python3 import succeeded; version 1.14.0.",
+      "status": "USABLE"
+    },
+    "sage_singular": {
+      "observed": "SageMath 10.9 binary reports successfully; standalone singular is absent from PATH. The first Sage interface-to-Singular probe did not finish in the 30-second readiness window.",
+      "status": "SAGE_BINARY_AVAILABLE_SINGULAR_INTERFACE_NOT_MEASURED"
+    },
+    "wolfram": {
+      "observed": "wolframscript reports 1.14.0 and WolframKernel reports 15.0.0.",
+      "status": "BINARY_AVAILABLE_NO_R9_COMPUTATION_RUN"
+    }
+  },
+  "claim_boundary": "This map does not execute a campaign node, construct a CAS contract, acquire data, establish toolchain qualification, or admit any formal, empirical, or scientific capability.",
+  "launch_provenance": "UNVERIFIED: parent reports the original lifecycle record has claim=null and child=null; no authenticated lifecycle pass is asserted."
+}

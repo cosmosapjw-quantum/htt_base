@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-FIBRE-20260913",
+  "assignment_id": "dag_inputs",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "shared-core",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R1",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-FIBRE-20260913-NEXT-INPUTS"
+  ],
+  "task": "Read-only bounded remaining R9 DAG evidence map. Read the 30-node campaign, current RESEARCH_STATE, selected_law/input_inventory and R9 handoff. Identify concrete runnable next nodes, required missing inputs, and installed CAS toolchain readiness from exact existing configuration. Inspect targeted paths only; no repo-wide rediscovery, author contact, model dispatch or claim admission. Distinguish frozen designs from current execution; final scientific authority belongs to root. Return minimal next step for every independent root blocker and available tools, including whether FORMAL_DEPTH contract exists and Lean toolchain/mathlib usable. Root implements fibre numerical comparison independently. Write only artifacts/dag_inputs/ and declared schema2 result; no sibling results.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r9/campaign_dag.json",
+      "sha256": "1b6c44533f016903c48d028a8f00354b913cf63100264e7822fb46e26cf07bfd"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/selected_law/input_inventory.json",
+      "sha256": "13ddc9dd2d08b8dda0207ef4e0cfec452842adc0dedf1d566100e65a7afc1a3e"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "web"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-FIBRE-20260913/results/dag_inputs.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-FIBRE-20260913/results/dag_inputs.json",
+  "status": "registered",
+  "assignment_sha256": "8cb82ecdd5a3644cc8dbe52a454c9e090f5862930b697564bc3eb54ddf11c17d"
+}

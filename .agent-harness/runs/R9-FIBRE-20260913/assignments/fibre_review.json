@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-FIBRE-20260913",
+  "assignment_id": "fibre_review",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-FIBRE-20260913-REVIEW"
+  ],
+  "task": "Independent scoped review of the fixed ambient STF fibre comparison. Governing F1/F2 of external frozen PR-R9-FIBRE contract and revision2 THEORY_EXTENSION F3. Verify q/a/v are fixed before basis formation, full Frobenius conventions, production helper use, Cartesian adjoint reference and fixed target invariance, negative control, source-bound two-environment evidence, tests and preservation of original incomparable targets/1e-10 tolerance/HOLD. Independently check the support/reference by a different calculation if possible. No formal or physical admission. No sibling dag_inputs result. Root owns code/docs. Write only own artifacts/fibre_review and schema2 result. One review and one coherent repair-closeout maximum.",
+  "required_inputs": [
+    {
+      "path": "scripts/observed_runs/check_r9_ambient_fibre.py",
+      "sha256": "220c5790cf96526018ff08d4d18a9a3d79507d20e86ad2501bbebfc1a1f19ffa"
+    },
+    {
+      "path": "tests/r9/test_ambient_fibre.py",
+      "sha256": "22cd67870bf91717be670bb4d3078824086b871a256cbe3cbd0fed8f117f0227"
+    },
+    {
+      "path": "htt/src/common/tensor_functionals.py",
+      "sha256": "0d34fb6c9c5bdd1f2bb828f545501de150089644a36b4ab233f7881d7bb21a70"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/ambient_fibre/README.md",
+      "sha256": "2f8ebd290f57bbc64580654dcf4462250c46274430ef778ffe482f844512f609"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/ambient_fibre/system.json",
+      "sha256": "e3fd10fa2b269569d8c60d3ca4421017490efb4a5540e2f0934efd5caf218096"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/ambient_fibre/lowell.json",
+      "sha256": "cb67bb3c34a8c1e1f8cfd38d2e3eee0a1530feec208d245ec495035ca89c9a60"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/ambient_fibre/comparison.json",
+      "sha256": "0021c385b261e828847f6a6a0be7dfa56231a5045a6ebe23dcf4c0bd8f16b4d7"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md",
+      "sha256": "befeef7feab9a845186b81fb9d7ce84b755b332bd0bf2fd6f93d0e1c36e89529"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-FIBRE-20260913/results/fibre_review.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-FIBRE-20260913/results/fibre_review.json",
+  "status": "registered",
+  "assignment_sha256": "1e6805dbce281724dcc0bb58fd588abbc4fdf6f22dc2385c0d0b647b1372b844"
+}

@@ -204,6 +204,7 @@ policy:
   - PR-R9-INTAKE
   - PR-R9-MULTIDEPTH
   - PR-R9-SELECTED-LAW
+  - PR-R9-FIBRE
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -10081,5 +10082,29 @@ prs:
   kill: Public overlap and point-estimator execution do not admit the selected observation law; no group-calibration substitution, covariance zero-fill, new alpha or physical local/global inference.
   level: L0
   scope: r9_public_calibration_input_connection
+  risk: R2
+  user_authorized: true
+
+- id: PR-R9-FIBRE
+  wave: 0
+  title: Reproduce fixed ambient STF support across coordinate bases
+  owner: COMMON
+  depends:
+  - PR-R9-SELECTED-LAW
+  files:
+  - scripts/observed_runs/check_r9_ambient_fibre.py
+  - tests/r9/test_ambient_fibre.py
+  - docs/research_program/tensor_joint_r9/revision2/ambient_fibre
+  tests:
+  - OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q tests/r9 htt/src/common/test_r9_depth_path.py htt/src/common/test_r9_tensor_functionals.py
+  - python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  dod:
+  - Fix ambient STF q, a and v before coordinate conversion and compare sign, permutation and rotated bases in two existing environments
+  - Compare support and ambient witnesses to a Cartesian reference at the inherited tolerance, preserving the original evidence and a changed-target negative control
+  - Complete an independent scoped numerical review and a bounded remaining-input readiness map
+  - Preserve all scientific HOLDs and alpha budgets; synchronize canonical state, commit and push with remote-ref verification
+  kill: Finite numerical comparisons do not certify arbitrary bases, boundaries, uncertain-q fibres, four-axis CAS or survey coverage; no separate verification worktree or clone.
+  level: L0
+  scope: r9_fixed_ambient_fibre_numerical_reproduction
   risk: R2
   user_authorized: true

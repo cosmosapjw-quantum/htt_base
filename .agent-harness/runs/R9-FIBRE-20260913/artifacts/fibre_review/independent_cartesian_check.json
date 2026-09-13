@@ -1,0 +1,21 @@
+{
+  "scope": "Independent numerical review of the fixed ambient STF3 fibre comparison only; no scientific, physical, or four-axis admission.",
+  "method": "80-decimal Python Decimal arithmetic on explicit Cartesian 3x3x3 entries. The calculation does not import NumPy, the saved SVD basis, or fixed_contraction_support.",
+  "formula": "M=diag(8/5,8/5,1); center=STF((3 M^-1 v) outer q); null=a-STF((3 M^-1 L_q(a)) outer q); h=a:center+sqrt(1-eta)*||null||_F.",
+  "precision_decimal_digits": 80,
+  "eta": "0.068437500000000000000000000000000000000000000000000000000000000000000000000000006",
+  "eta_formula_3vMinvv": "0.0684375",
+  "radius": "0.96517485462479802421874297448923957746553191727966492554492347246794588862689291",
+  "null_frobenius_norm": "0.97987388904284392011768338266193724546621272667275079565718271396129937239475257",
+  "support": "0.97454220704486222647545845679874969731968314919281159907405310777682289856399481",
+  "stored_support": "0.9745422070448619",
+  "absolute_difference_to_stored_support": "0.00000000000000032647545845679874969731968314919281159907405310777682289856399481",
+  "ambient_direction_norm_minus_one": "0E-40",
+  "ambient_direction_trace_max": "1E-80",
+  "q_frobenius_norm_minus_one": "1E-79",
+  "witness_norm_minus_one": "-1E-80",
+  "contraction_residual_l2": "2E-81",
+  "null_projection_contraction_l2": "2.0E-80",
+  "objective_minus_support": "-3E-80",
+  "conclusion": "The independently calculated support agrees with the stored double-precision target by about 3.27e-16, well inside the inherited 1e-10 tolerance."
+}
