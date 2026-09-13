@@ -8,7 +8,7 @@
   "base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
   "research_run": "R9-REV2-20260912",
   "owner": "HTT research",
-  "status": "R9_REV2_REAL_MULTIDEPTH_RELEASE_DIAGNOSTIC_INDEPENDENTLY_REVIEWED",
+  "status": "R9_REV2_PUBLIC_CALIBRATION_CONNECTION_INDEPENDENTLY_REVIEWED",
   "completed": [
     "Pinned compendium and R9 intake",
     "D1-D4 and F1-F3 direct derivations",
@@ -26,7 +26,8 @@
     "Retained DESI Gaussian-summary conditional path executed at alpha=1/80 with 100000 model draws",
     "Independent native review and same-reviewer targeted repair closeout accepted; 55 tests and final source-bound DESI rerun pass",
     "Real SDSS PV v1.1.0 observation and 2048 complete mock catalogues replayed into four depths with full estimated Cjk, means and angular responses; no law/coverage admission",
-    "Independent same-reviewer closeout confirms full saved-vector moments/transforms, box split, source binding and the shared zero-point regression; 25 relevant tests pass"
+    "Independent same-reviewer closeout confirms full saved-vector moments/transforms, box split, source binding and the shared zero-point regression; 25 relevant tests pass",
+    "Public CF3/SDSS PGC296 and TF-rule294 point-calibration connection, Tempel33641 exact objID matches, full shared-offset depth operator and35relevant tests independently reviewed; selected law and physical coverage unavailable"
   ],
   "not_executed": [
     "four-axis CAS admission",
@@ -40,7 +41,7 @@
     "CF4 quarantine",
     "R9 initial SymPy import failure"
   ],
-  "next": "Obtain and repeat the SDSS PV upstream selection/FP generator and fitting, group-richness correction and CF3 group-level calibration on the same complete mock surveys; then qualify the selected joint law within existing budgets. Keep R9-24 formal and R9-25/26/27 scientific capabilities on HOLD; ambient-STF fibre comparison is a separate obligation.",
+  "next": "Acquire the original SDSS preselection supersets/SQL and FP generation/refit/rejection code, exact richness bins and modified mask/spline, full CF3-to-Tempel calibration crosswalk and shared anchor law. Repeat all data-estimated stages in the same complete surveys. Public296/294 galaxy and33641 Tempel joins do not qualify the selected law; physical local/global response remains a separate input. Preserve every HOLD and existing alpha; ambient-STF fibre comparison is separate.",
   "runtime": {
     "python": "3.12.14",
     "numpy": "2.3.5",
@@ -188,5 +189,35 @@
     "current_run_aggregate": "NOT_A_WHOLE_CURRENT_RUN_PASS: initial review required-input seals remain pre-repair; snapshots and failure retained; current closeout is separate"
   },
   "historical_campaign_execution_snapshot_note": "campaign_dag.json is the input snapshot sealed by the final independent followup; R9-01 execution_state retains its pre-decision label. Current scoped acceptance is recorded in this RESEARCH_STATE.json and revision2/evidence/decision.json; no capability is granted by that acceptance.",
-  "global_policy_refresh": "revision2/multidepth/global_policy_refresh.json"
+  "global_policy_refresh": "revision2/multidepth/global_policy_refresh.json",
+  "selected_law_connection": {
+    "base_commit": "51ed1e913ac358f9a2569fce8ccb5dc3c1650305",
+    "work_unit": "PR-R9-SELECTED-LAW",
+    "owner": "HTT calibration; obsstat depth extraction",
+    "status": "PUBLIC_INPUT_CONNECTION_EXECUTED",
+    "method": "revision2/selected_law/README.md",
+    "input_inventory": "revision2/selected_law/input_inventory.json",
+    "result": "revision2/selected_law/final/result.json",
+    "execution": "revision2/selected_law/execution.json",
+    "validation": "revision2/selected_law/validation.json",
+    "cf3_pgc_overlap": 296,
+    "tf_rule_retained": 294,
+    "tempel_objid_matches": 33641,
+    "tempel_objid_unmatched": 418,
+    "joint_covariance": "UNAVAILABLE_NOT_ZERO_FILLED",
+    "selected_observation_law": "UNAVAILABLE",
+    "official_group292_calibration": "UNAVAILABLE",
+    "physical_local_global_response": "UNAVAILABLE",
+    "coverage_image": "UNAVAILABLE_NO_COMMON_STATE_JET_ANCHOR_EVENT",
+    "alpha_consumed": 0,
+    "review_status": "PASS_SCOPED_NO_BLOCKING_DEFECT",
+    "independent_review": ".agent-harness/runs/R9-SELECTED-LAW-20260913/results/calibration_review.json",
+    "review_validation": "revision2/selected_law/review_validation.json",
+    "authenticated_launch": "UNVERIFIED",
+    "current_run_aggregate": "NO_AUTHENTICATED_WHOLE_RUN_PASS; direct registered result validation and scoped independent review only",
+    "runtime": {
+      "python": "3.12.3",
+      "numpy": "2.4.2"
+    }
+  }
 }

@@ -1,11 +1,10 @@
-# R9 revision 2 handoff — public calibration inputs and remaining selected law
+# R9 revision 2 handoff — real SDSS PV depth replay and remaining observation law
 
 저장소 `cosmosapjw-quantum/htt_base`, 브랜치
 `implementation/project-catalog-20260912`를 이어서 작업하라.
 기존 intake/adapter 구현은 `9e9539edcdbd7bbf66e458cdce685c7a112f8a04`에서 시작했고,
-실제 다중 깊이 실행은 `c532862651235ed0586a0677b61a43b2e09b3c85`에서,
-이번 선택·보정 입력 continuation은 사용자가 확인한
-`51ed1e913ac358f9a2569fce8ccb5dc3c1650305`에서 시작했다.
+이번 실제 다중 깊이 continuation은 사용자가 확인한
+`c532862651235ed0586a0677b61a43b2e09b3c85`에서 시작했다.
 이 인계 파일을 포함하는 전달 커밋을 다음 immutable starting point로 고정하라.
 R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초기화하지 마라.
 
@@ -14,8 +13,7 @@ R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초
 1. `AGENTS.md`와 관련 repo skills, canonical `docs/codex_handoff/pr_backlog.yaml` 및 `pr_status.yaml`.
 2. 이 디렉터리의 `RESEARCH_STATE.json`, 고정 `REVISION_SPEC.md`, `campaign_dag.json`.
 3. `revision2/harness_activation/STATE.md`, `CODING_CONTRACT.md`와 `revision2/implementation/CONTRACT.md`.
-4. `revision2/selected_law/README.md`, `input_inventory.json`, `final/result.json`, 실행·검수 기록.
-   이어서 `revision2/multidepth/README.md`, `analysis.json`과 이전 실행·검수 기록.
+4. `revision2/multidepth/README.md`, `analysis.json`, 최종 실행·검수 기록.
 5. 이전 `revision2/implementation/REVIEW.md`, `reference_comparison.json`, `desi_product_final.json`.
 6. `revision2/THEORY_EXTENSION.md` D1–D4/F1–F3와 `MODEL_TO_DATA.md`의 제품 조건.
 
@@ -23,7 +21,7 @@ R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초
 
 GPT-6 Astra v4.0.0의 두 원본 ZIP을 이번 구현에서도 등록 SHA256과 모든
 vendor member bytes로 재검증한 c532 evidence를 유지한다. 이번 continuation에서도
-51ed 단계의 두 ZIP 등록 SHA256 검증과 관련 core/phase 적용 증거를 유지한다.
+두 ZIP의 등록 SHA256 일치를 확인하고 관련 core/phase를 적용했다.
 
 - 연구: `harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip`
   SHA256 `dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7`.
@@ -95,30 +93,6 @@ local boost/global tilt 응답으로 바꾸어 읽지 마라.
 이 입력들을 확보하기 전에는 `ESTIMATED_REQUIRES_CALIBRATION`을 유지하고,
 HTT Gaussian inversion이나 p-value를 생성하지 마라. 현재 alpha 소비는 0이다.
 
-## 공개 선택·보정 입력 continuation
-
-`htt.infer.sdss_cf3_calibration`과 `run_sdss_cf3_calibration.py`가 공개 CF3 table3의
-PGC를 실제 SDSS 행에 연결한다. 공통 296행에서 공개 TF tracer H/I 규칙으로
-PGC 39712, 59838을 제외한 294행의 진단 영점을 계산했다.
-flat Ωm=0.31, H0=75와 명시된 luminosity-distance 변환/개별 폭 가중에서
-delta=+0.00043862234757611747 dex다. 이는 표준오차·신뢰구간·공식 그룹 보정의
-재현 결과가 아니다. 원저자의 변환·가중 코드와의 수치 일치도 미확인이다.
-
-보정과 깊이 관측이 같은 SDSS 행을 사용하는 의존성을
-`G=[M,0]+(M1)lᵀ`로 보존한다. 전체 입력 covariance가 주어지면 `G C_joint Gᵀ`를
-사용해야 하며 교차 항을 지우지 마라. 현재 C_joint는 unavailable이다.
-공통 영점은 H contrast에서 소거되고 초기 Y0에 남는다. 관측값을 직접 다시 적합한
-결과와 operator 경로를 비교했다. 기존 SDSS feature 결과와 DESI 실험은 그대로 유지한다.
-
-Tempel 2017의 공개 584,449행에서 objID로 SDSS 33,641행을 연결했고 그룹 ID·richness는
-모두 일치했다. 미연결 418행과 CF3 전체 보정 은하에 대한 group crosswalk는 남아 있다.
-정확한 대응 없이 sky 근접이나 같은 halo mass를 그룹 identity로 사용하지 마라.
-공개 mock의 FP 참값·관측값·오차도 최종 선택된 행에만 있으며 선택 전 모집단은 아니다.
-
-관련 구현 테스트 35개와 실제 공개 자료 연결 실행이 통과했고 독립 검수에서 차단 결함이 없었다. 검수 상태는
-`RESEARCH_STATE.json`의 `selected_law_connection.review_status`를 소비하라.
-selected law, 전체 upstream refit, 물리 응답과 공통 coverage는 계속 unavailable이다.
-
 ## 다음 과학 실행과 HOLD
 
 R9-03/05와 R9-24/25의 **scoped implementation**이 실자료/형식적 capability를
@@ -126,10 +100,6 @@ R9-03/05와 R9-24/25의 **scoped implementation**이 실자료/형식적 capabil
 법칙이 여전히 필요하다. 다음 핵심은 SDSS PV의 선택 전 parent population과
 FP 생성·적합 코드, group-richness correction 및 CF3 group-level calibration을
 확보해, 자료로 추정하는 단계들을 같은 전체 모의자료 안에서 반복하는 것이다.
-이번 공개 CF3 개별 연결로도 공식 292-group 보정, richness-bin FP refit, 원시 선택법칙은
-완성되지 않았다. `input_inventory.json`의 남은 입력부터 확보하라. 원 논문이 요청 자료로
-명시한 exact SQL/supersets, 생성·적합 코드, 수정된 창과 fitted spline, CF3 그룹 대응·공유
-anchor law가 필요하다. 준비된 stage를 같은 전체 모의자료에서 반복하라.
 현재 release feature replay의 mean/C/창 응답은 그 입력 확보를 대체하지 않는다.
 기존 R9-03/05 adapter 구현을 다시 시작하거나 DESI scalar를 반복 실행하지 마라.
 물리 image는 동일한 calibrated state–jet–anchor 사건이 갖춰져야 한다.
@@ -157,11 +127,7 @@ Subagent 시작 전에 실제 worktree의 context pack과 등록 assignment를 �
 네 축 CAS를 대체하지 않는다. canonical 상태/미러/PR_DELTA, commit/push와 원격
 commit/file-body readback을 끝낸 후 새 과학 입력을 기다려라.
 
-전역 Codex 하네스의 현재 runtime authority는 `0f4eb82dda7217762352ce797c5b369834f65867`이며
-이전 0b6022e1 적용 receipt는 역사적 증거로 유지한다. 현재 정책은 MIXED/BUDGET_FIRST다.
-관리 fleet의 읽기 전용 조회에서 qwen3.6-35b-a3b READY/busy=0을 확인했으나 이번 작업의
-local model dispatch는 0회다. 정책·설치·서비스 상태를 실제 local 위임 성공이나 작업 적격성으로
-간주하지 마라. 새 native child는 exact worktree/run/assignment와 전역 launch marker로
-등록하며, 이 세션의 SubagentStop은 GLOBAL_HOOK_IDENTITY_OR_STATE_UNVERIFIED:CuhError를 반환했다.
-최종 독립검수 결과 파일의 직접 검증은 통과했으나 authenticated lifecycle은 미확인이다.
-runtime 정책 적용은 과학 하네스 ZIP 적용과 별도이며 과거 receipt나 frozen budget을 초기화하지 않는다.
+전역 Codex 하네스는 사용자 hook 수정 후 `0b6022e1eac1807f2363080690a6f07cf306e811`
+merged authority로 다시 적용했다. 공식 설치/명령 일치 검사는 통과했지만 실제
+auto-dispatch 성공은 미확인이다. runtime 정책 적용은 과학 하네스 ZIP 적용과
+별도이며, 과거 receipt나 frozen budget을 초기화하지 않는다.

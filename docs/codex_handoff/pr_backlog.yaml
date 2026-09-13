@@ -203,6 +203,7 @@ policy:
   - PR-R9-REV2
   - PR-R9-INTAKE
   - PR-R9-MULTIDEPTH
+  - PR-R9-SELECTED-LAW
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -10054,5 +10055,31 @@ prs:
   kill: Estimated mock moments are not a known Gaussian or calibrated physical law; no p-value, budget transfer, CF4 quarantine reuse, native solver or R9 capability admission.
   level: L0
   scope: r9_real_multidepth_release_feature_diagnostic
+  risk: R2
+  user_authorized: true
+- id: PR-R9-SELECTED-LAW
+  wave: 0
+  title: Connect public CF3 calibration inputs to the SDSS depth path
+  owner: HTT
+  depends:
+  - PR-R9-MULTIDEPTH
+  files:
+  - htt/htt/htt/infer/sdss_cf3_calibration.py
+  - scripts/observed_runs/run_sdss_cf3_calibration.py
+  - tests/r9/test_sdss_cf3_calibration.py
+  - docs/research_program/tensor_joint_r9/revision2/selected_law
+  tests:
+  - OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q tests/r9/test_sdss_cf3_calibration.py
+  - python3 scripts/observed_runs/run_sdss_cf3_calibration.py --help
+  - python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  dod:
+  - Acquire public CF3 and Tempel calibration inputs and identify exact unavailable pre-selection, FP, richness and anchor inputs
+  - Execute a public PGC calibration diagnostic with explicit distance and weighting conventions
+  - Connect the same fitted shared offset to all depths, retaining input cross terms and the initial observation block
+  - Validate the bounded implementation independently without claiming full-survey refitting, physical response or coverage
+  - Preserve existing evidence and HOLDs; update canonical state and handoff; commit and push with remote readback
+  kill: Public overlap and point-estimator execution do not admit the selected observation law; no group-calibration substitution, covariance zero-fill, new alpha or physical local/global inference.
+  level: L0
+  scope: r9_public_calibration_input_connection
   risk: R2
   user_authorized: true

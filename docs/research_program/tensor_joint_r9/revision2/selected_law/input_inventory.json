@@ -1,0 +1,171 @@
+{
+  "owner": "HTT upstream calibration input acquisition; obsstat retains feature ownership",
+  "scope": "SDSS PV public selection and calibration connection",
+  "base_commit": "51ed1e913ac358f9a2569fce8ccb5dc3c1650305",
+  "claim_tier": "DIAGNOSTIC_ONLY",
+  "alpha_spent": 0,
+  "paper": "https://arxiv.org/html/2201.03112",
+  "release": "https://zenodo.org/records/6824749",
+  "raw_release_columns": [
+    "PGC",
+    "coords",
+    "objid",
+    "specObjID",
+    "plate",
+    "RA",
+    "Dec",
+    "l",
+    "b",
+    "deVMag_g",
+    "deVMagErr_g",
+    "deVMag_r",
+    "deVMagErr_r",
+    "deVRad_r",
+    "deVRadErr_r",
+    "deVAB_r",
+    "deVABErr_r",
+    "extinction_g",
+    "extinction_r",
+    "kcor_r",
+    "kcor_g",
+    "absmag_r",
+    "zhelio",
+    "zhelioerr",
+    "zcmb",
+    "SIGMA_STARS",
+    "SIGMA_STARS_ERR",
+    "IDgroupT17",
+    "NgroupT17",
+    "zcmb_group",
+    "M",
+    "in_mask",
+    "nbar",
+    "r",
+    "er",
+    "i",
+    "ei",
+    "s",
+    "es",
+    "Sn",
+    "logdist",
+    "logdist_err",
+    "logdist_alpha",
+    "logdist_corr",
+    "logdist_corr_err",
+    "logdist_corr_alpha"
+  ],
+  "mock_columns": [
+    "ID",
+    "RA",
+    "Dec",
+    "z_true",
+    "z_obs",
+    "z_obs_cen",
+    "cen_flag",
+    "subhalomass",
+    "parenthalomass",
+    "deVMag_r",
+    "gmr",
+    "kcor",
+    "extinction_r",
+    "rtrue",
+    "r",
+    "er",
+    "strue",
+    "s",
+    "es",
+    "itrue",
+    "i",
+    "ei",
+    "x",
+    "y",
+    "z",
+    "vxcen",
+    "vycen",
+    "vzcen",
+    "vx",
+    "vy",
+    "vz",
+    "nbar",
+    "logdist_true",
+    "logdist",
+    "logdist_err",
+    "logdist_alpha"
+  ],
+  "stage_status": {
+    "preselection_population": {
+      "status": "UNAVAILABLE",
+      "needed": "Exact Table1 superset row identities, SQL, Portsmouth cross-match and missing-observation rules.",
+      "evidence": "paper section2.1 and Data Availability: queries and other code/data on reasonable request. Public PV file has only final34059rows; final morphology values0/2 and FP-outlier removals already applied."
+    },
+    "visual_and_fp_rejection": {
+      "status": "UNAVAILABLE",
+      "needed": "Pre-visual42170/pre-FP34562 rows and per-iteration503 rejection identities plus complete fitting/rejection code."
+    },
+    "fp_generation_and_fit": {
+      "status": "PARTIAL_INPUTS_ONLY",
+      "available": "Released r,s,i and errors/Sn; each mock contains FP truth/measurements/errors. Paper specifies generation, selection-normalisation and fitting method.",
+      "needed": "Original pre-selection halos/subhalos, rank-order assignments/seeds, fitted error/colour/redshift-spline procedures, mask modifications, full FP/refit/outlier procedure.",
+      "do_not_substitute": "Selected mock rows and final fitted parameters do not recover the rejected population or repeat estimates from full data."
+    },
+    "group_richness_refit": {
+      "status": "PARTIAL_INPUTS_ONLY",
+      "available": "Observed Tempel IDgroupT17,NgroupT17,zcmb_group and logdist_corr.",
+      "needed": "Exact richness bin boundaries/assignments, fitted FP parameters and generator/refit for every bin and full mock; mock-to-observed grouping prescription and same-realisation memberships.",
+      "public_objid_join": {
+        "matched_rows": 33641,
+        "unmatched_rows": 418,
+        "group_id_mismatches": 0,
+        "richness_mismatches": 0,
+        "result": "tempel_sdss_join.json",
+        "qualification": "Input correspondence only; not richness-bin FP refitting or complete CF3 group mapping."
+      }
+    },
+    "shared_cf3_anchor_law": {
+      "status": "UNAVAILABLE",
+      "needed": "Exact calibration overlaps/exclusions/group associations, group averaging/error convention, shared CF3 distance-ladder/zero-point and cosmic-variance law; repeat with full same-realisation survey.",
+      "available": "CF3 individual distances and tracer tags, exact296 PGC overlaps and documented TF exclusion rule. Public individual point estimator runs; no global calibration covariance or same-mock anchor draws."
+    },
+    "physical_local_global_response": {
+      "status": "UNAVAILABLE",
+      "needed": "Physical map from local/global state to observed eta under specified frames, distances, time/depth kernels, selection and nuisance response; validated together with state-jet-anchor event. Additive eta shell response is phenomenological."
+    },
+    "angular_selection": {
+      "status": "PARTIAL_INPUTS_ONLY",
+      "available": "Observed in_mask flag and public selected-footprint random catalogue product identity.",
+      "needed": "Exact modified NYU-VAGC DR7 mangle polygons and fitted redshift-spline estimation procedure; released randoms are outputs, not parent galaxy population.",
+      "randoms_acquisition": "ACQUISITION_UNAVAILABLE: official API then official file URL both HTTP504, bytes0; no further same-failure retry in this work unit."
+    },
+    "cf3_individual_connection": {
+      "status": "PUBLIC_PGC_RULE_EXECUTED_DIAGNOSTIC_ONLY",
+      "source": "J/AJ/152/50 table3",
+      "exact_pgc_overlap": 296,
+      "tf_rule_excluded_pgc": [
+        39712,
+        59838
+      ],
+      "retained_rows": 294,
+      "result": "final/result.json",
+      "qualification": "Individual single-FP point estimate; does not replace preferred group292 calibration or shared anchor law."
+    }
+  },
+  "public_related_code_checked": [
+    {
+      "url": "https://github.com/KSaid-1/DESI_fuji_FP",
+      "commit": "a5d7afa8b7764f3323b000a82484afa1cbeb2f4b",
+      "files": [
+        {
+          "name": "DESI_FP_routines.py",
+          "sha256": "732e923b6eaedf556a8489993270965b49e0b4201be1692a3ed675edb2cfa36b"
+        },
+        {
+          "name": "CosmoFunc.py",
+          "sha256": "0fdc7204b888d436c5786f35e1ab36015031ec57931d53c50aada10c7006c84b"
+        }
+      ],
+      "status": "RELATED_DESI_CODE_NOT_ORIGINAL_SDSS_GENERATOR",
+      "action": "Inspected externally; not substituted or vendored."
+    }
+  ],
+  "not_attempted": "Author contact is not authorized; no messages sent. No nearby population or new solver substituted."
+}

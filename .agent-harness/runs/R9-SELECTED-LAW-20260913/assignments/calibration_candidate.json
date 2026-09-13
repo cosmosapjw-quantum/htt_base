@@ -1,0 +1,46 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-SELECTED-LAW-20260913",
+  "assignment_id": "calibration_candidate",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "shared-core",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-SELECTED-LAW-20260913-CALIBRATION"
+  ],
+  "task": "A1/A2: Public CF32016 and Tempel2017 input acquisition and candidate calibration connection, governed by handoff next selected-law task and SDSS PV2201.03112 section5.4 equations24/25. Runtime profile cuhg_terra_worker Terra/medium is global-authority selected; repo agent_type denotes harness responsibility only. Root owns production integration. No nested spawning. Write only unique artifacts/calibration_candidate and result envelope.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+      "sha256": "8ad343d3daa84fac429085427b73be7364966d90a7b5a3fe644e339bd20045ff"
+    },
+    {
+      "path": "htt/obsstat/sdss_pv_depth.py",
+      "sha256": "4e93ecb4d1d842d1e9a3832e8f91b90fbf329d4f7ab9d115b508ace36d9a2e54"
+    },
+    {
+      "path": "scripts/observed_runs/run_sdss_pv_depth.py",
+      "sha256": "5640dea7a01a5398ad2c4025e003ce8fdf2a6bbf4f45f63f4583c5bf7762396c"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "web"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-SELECTED-LAW-20260913/results/calibration_candidate.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-SELECTED-LAW-20260913/results/calibration_candidate.json",
+  "status": "registered",
+  "assignment_sha256": "1dd5e253cd4c91df93f42d8b2cb3aaa287168f3ebb2c746f917fd49f9e995c66"
+}

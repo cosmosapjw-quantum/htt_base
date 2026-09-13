@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "run_id": "R9-SELECTED-LAW-20260913",
+  "assignment_id": "calibration_review",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "claim_id": "RUN-R9-SELECTED-LAW-20260913-REVIEW",
+  "status": "pass",
+  "verdict": "PASS_SCOPED_NO_BLOCKING_DEFECT",
+  "reviewed_at_utc": "2026-09-13T08:59:48Z",
+  "worktree": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree",
+  "head": "51ed1e913ac358f9a2569fce8ccb5dc3c1650305",
+  "independence_mode": "blind-results",
+  "scope": "Public SDSS-CF3 individual calibration diagnostic and depth-operator connection only; no selected-law, Gaussian-acceptance, four-axis, or scientific-admission verdict.",
+  "blocking_findings": [],
+  "evidence": {
+    "production_identity": "All nine registered production/result SHA-256 values matched the assignment.",
+    "public_point_recomputation": {
+      "pgc_overlap": 296,
+      "excluded_tf_pgc": [39712, 59838],
+      "retained_rows": 294,
+      "offset_dex": 0.0004386223475760956,
+      "saved_offset_dex": 0.00043862234757611747,
+      "max_abs_difference": 2.1846673775582914e-17
+    },
+    "tempel_join_recomputation": {
+      "matched_rows": 33641,
+      "unmatched_rows": 418,
+      "duplicate_matches": 0,
+      "group_or_richness_mismatches": 0
+    },
+    "fresh_runner_replay": "Result fields and every saved NPZ array were exactly equal to final output.",
+    "tests": "35 passed in 0.92s",
+    "covariance_operator": "PASS: explicit full joint covariance, PSD/rank boundary, no diagonal fallback, consensus/zero-singleton semantics, shared coefficients, and G identity checked."
+  },
+  "claim_boundaries": {
+    "joint_covariance": "UNAVAILABLE_NOT_ZERO_FILLED",
+    "selected_observation_law": "UNAVAILABLE",
+    "official_group292_calibration": "UNAVAILABLE",
+    "physical_local_global_response": "UNAVAILABLE",
+    "state_jet_anchor_coverage": "UNAVAILABLE",
+    "scientific_admission": "NOT_EVALUATED"
+  },
+  "actual_artifact_binding": "VERIFIED_BY_FRESH_REPLAY",
+  "authenticated_launch_status": "UNVERIFIED_NO_DURABLE_LAUNCH_BINDING_FOUND",
+  "repair_requested": false,
+  "result_path": ".agent-harness/runs/R9-SELECTED-LAW-20260913/results/calibration_review.json",
+  "artifact_path": ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_review/review.md"
+}

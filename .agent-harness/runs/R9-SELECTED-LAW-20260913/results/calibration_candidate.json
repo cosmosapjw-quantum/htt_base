@@ -1,0 +1,83 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-SELECTED-LAW-20260913",
+  "assignment_id": "calibration_candidate",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "harness_engineer",
+  "independence_mode": "shared-core",
+  "status": "inconclusive",
+  "result_path": ".agent-harness/runs/R9-SELECTED-LAW-20260913/results/calibration_candidate.json",
+  "assignment_sha256": "1dd5e253cd4c91df93f42d8b2cb3aaa287168f3ebb2c746f917fd49f9e995c66",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+    "htt/obsstat/sdss_pv_depth.py",
+    "scripts/observed_runs/run_sdss_pv_depth.py",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R9-SELECTED-LAW-20260913/assignments/calibration_candidate.json",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/sources/CF3_ReadMe.txt",
+    ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/sources/CF3_table3.dat",
+    ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/sources/Tempel2017_ReadMe.txt",
+    ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/sources/Tempel2017_table1.dat"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "UNKNOWN",
+  "completed_at": "2026-09-13T08:45:21Z",
+  "tool_versions": {"python": "3.12.3", "numpy": "1.26.4", "pytest": "8.3.5"},
+  "commands": [
+    "PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q .agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/tests",
+    "PYTHONDONTWRITEBYTECODE=1 python3 .agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/run_public_input_diagnostic.py",
+    "PYTHONDONTWRITEBYTECODE=1 python3 .agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/run_depth_connection_diagnostic.py"
+  ],
+  "artifacts": [
+    {"path": ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/cf3_sdss_calibration_candidate.py", "sha256": "07c77f381f9bd68ffd6aad70501a9b12cbdf91e87d4ee6c60d8022e095a870ec", "bytes": 14102, "producer": "calibration_candidate"},
+    {"path": ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/public_input_diagnostic.json", "sha256": "24d579fe0cf82de01d0ed43e4633ba94425b463f8518cf8c7da98d654a5c407b", "bytes": 1824, "producer": "run_public_input_diagnostic.py"},
+    {"path": ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/individual_depth_connection.json", "sha256": "874f166cf0358a231a55962e92f9355262d5e4fe586c9dc29daed45b2bd7af43", "bytes": 3096, "producer": "run_depth_connection_diagnostic.py"},
+    {"path": ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/individual_depth_connection.npz", "sha256": "fc0f15e2b1f5ef50a9da4b891a3a6ffb4e588409520c13133e75878149041f55", "bytes": 12881, "producer": "run_depth_connection_diagnostic.py"}
+    ,{"path": ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/run_calibration_candidate.py", "sha256": "a914f486c1c5add43ce51fc0e49e1a6d25606943a12215935a8766e3f66b1dd7", "bytes": 4352, "producer": "calibration_candidate"}
+    ,{"path": ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/final_rule294/result.json", "sha256": "fd0adcf877d5f507c8055e66dc06206893bcc75f2840317cce9ee37a80f2fac4", "bytes": 3979, "producer": "run_calibration_candidate.py"}
+  ],
+  "findings": [
+    {
+      "finding_id": "F_PUBLIC_PGC_DIAGNOSTIC",
+      "claim_id": "RUN-R9-SELECTED-LAW-20260913-CALIBRATION",
+      "verdict": "pass",
+      "severity": "medium",
+      "statement": "The primary public CF3 table3 and SDSS PV release yield an exact PGC overlap of 296 rows; CF3's documented H/I Tully-Fisher rule yields RULE_BASED_PUBLIC294, whose unshifted individual diagnostic and 36-feature depth connection execute with an explicit physical-Mpc distance convention.",
+      "assumptions_used": ["flat Omega_m=0.31", "H0=75 km/s/Mpc", "CF3 DM is luminosity-distance modulus", "SDSS zcmb is the available individual redshift", "unit-weight SVD angular projection"],
+      "evidence_refs": [".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/public_input_diagnostic.json", ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/final_rule294/result.json", "VizieR J/AJ/152/50 table3"],
+      "evidence_fingerprint": "cf3-table3:8acd4718:sdss-public:a48cfd9a:exact-pgc-overlap:296:unshifted-individual-depth",
+      "counterevidence_refs": [],
+      "reproduction": ["run_public_input_diagnostic.py", "run_depth_connection_diagnostic.py"],
+      "confidence": 0.95,
+      "unresolved": ["RULE_BASED_PUBLIC294 is not a byte-exact author pair replay.", "This is neither Eq24 nor Eq25 replay."]
+    },
+    {
+      "finding_id": "F_OFFICIAL_CALIBRATION_UNAVAILABLE",
+      "claim_id": "RUN-R9-SELECTED-LAW-20260913-CALIBRATION",
+      "verdict": "inconclusive",
+      "severity": "high",
+      "statement": "Public inputs do not establish the official 292-group calibration or a calibration covariance/law: no CF3-to-Tempel member crosswalk or joint SDSS-CF3 covariance is supplied. The candidate refuses covariance fallback and retains the status UNAVAILABLE_NOT_ZERO_FILLED.",
+      "assumptions_used": ["No unverified CF3-to-Tempel crossmatch is constructed", "Per-object widths are point-estimator weights only"],
+      "evidence_refs": [".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/public_input_diagnostic.json", ".agent-harness/runs/R9-SELECTED-LAW-20260913/artifacts/calibration_candidate/individual_depth_connection.json", "VizieR J/A+A/602/A100 ReadMe"],
+      "evidence_fingerprint": "cf3-tempel-public-inputs:no-crosswalk:no-joint-covariance:eq25-unavailable",
+      "counterevidence_refs": ["arXiv:2201.03112 Section 5.4 reports 292 groups and -0.0037+-0.0040 dex"],
+      "reproduction": ["inspect public_input_diagnostic.json joint_covariance_status", "inspect individual_depth_connection.json full_mock_repetition_status"],
+      "confidence": 0.99,
+      "unresolved": ["Exact CF3-to-Tempel group membership", "Joint covariance or a fully declared calibration law", "Full supplied mock input repetition"]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-SELECTED-LAW-20260913-CALIBRATION",
+      "outcome": "findings_present",
+      "finding_ids": ["F_PUBLIC_PGC_DIAGNOSTIC", "F_OFFICIAL_CALIBRATION_UNAVAILABLE"],
+      "summary": "A bounded public individual-input diagnostic and downstream depth operator are available; official/group calibration, calibrated covariance, full mock repetition, alpha consumption, and scientific admission remain unavailable."
+    }
+  ],
+  "errors": []
+}

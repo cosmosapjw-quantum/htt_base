@@ -3,15 +3,28 @@
 PROJECT: HTT R9
 HARNESS_VERSION: 4.0.0
 LAST_UPDATED: 2026-09-13
-EXECUTION_STATUS: REAL_SDSS_MULTIDEPTH_DIAGNOSTIC_INDEPENDENTLY_REVIEWED
+EXECUTION_STATUS: PUBLIC_CF3_CALIBRATION_CONNECTION_INDEPENDENTLY_REVIEWED
 MODEL_IDENTITY: UNKNOWN
 MODEL_IDENTITY_SOURCE: no trusted executing-model metadata asserted; explicit user choice selects the GPT-6 Astra harness only
 MODEL_PERFORMANCE_STATUS: NOT_EVALUATED
 OWNER: root / HTT common research
-CURRENT_PHASE: real SDSS PV multi-depth release extraction, full-mock replay and independent closeout
+CURRENT_PHASE: public selection/calibration input acquisition and independent closeout
 MODE: local-validation
 
-## Current real-product continuation
+## Current selection/calibration continuation
+
+Start: `51ed1e913ac358f9a2569fce8ccb5dc3c1650305`. Read ../selected_law/README.md,
+input_inventory.json and final/result.json. Public CF3/SDSS PGC296 and documented
+TF-exclusion294 point calibration are connected to all 36 depth features; shared
+input dependence and the initial block are preserved. Tempel objID 33641 joins
+match group/richness exactly, with 418 unmatched rows retained. 35 relevant tests
+pass; scoped independent review passes with no blocking defect. Full selected law, group 292 calibration,
+full-mock upstream refits, physical response and common coverage remain unavailable.
+The original 2048-mock/DESI/reference evidence and every HOLD/budget stay unchanged.
+Current runtime authority is 0f4eb82; the 0b6022e1 receipt below is historical.
+Managed Qwen status READY is not local task qualification or dispatch success.
+
+## Historical real-product continuation
 
 The accepted starting commit is `c532862651235ed0586a0677b61a43b2e09b3c85`.
 The active product/method is [SDSS PV multi-depth](../multidepth/README.md).

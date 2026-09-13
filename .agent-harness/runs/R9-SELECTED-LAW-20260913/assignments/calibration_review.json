@@ -1,0 +1,76 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-SELECTED-LAW-20260913",
+  "assignment_id": "calibration_review",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-SELECTED-LAW-20260913-REVIEW"
+  ],
+  "task": "A3 independent read-only scientific/code/claim review of integrated public CF3 calibration and36depth connection, governed by selected_law/README.md and original SDSS2201.03112 section5.4. Inspect actual final production sources and primary raw inputs; verify PGC/tracer/Tempel joins, distance/weight conventions, PSD and cross-term/initial-block handling, actual-run binding, withheld full selected law/physical/coverage states. No sibling candidate derivation/results. Root owns repairs; one review and one repair-closeout maximum; no nested spawning.",
+  "required_inputs": [
+    {
+      "path": "htt/htt/htt/infer/sdss_cf3_calibration.py",
+      "sha256": "720376cd4d475fca99997f5434e09fb6665e16d67946a4ef7d7d824438dbc47c"
+    },
+    {
+      "path": "scripts/observed_runs/run_sdss_cf3_calibration.py",
+      "sha256": "77e56ec70a40f14a29b3c3d03c15fe5c71e5a7309520e37e3d211ca079503281"
+    },
+    {
+      "path": "tests/r9/test_sdss_cf3_calibration.py",
+      "sha256": "39faaef413d14a4fe0855a6f1a01c7ca4f06c51059d204de644ab0bba3283ce3"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/selected_law/README.md",
+      "sha256": "1a3e4c059e17f36acbeb52797f08cf9f3db6fdcdb66251aec7b3d8a47202c630"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/selected_law/input_inventory.json",
+      "sha256": "13ddc9dd2d08b8dda0207ef4e0cfec452842adc0dedf1d566100e65a7afc1a3e"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/selected_law/final/result.json",
+      "sha256": "137cb23055333cbef16d1416be83382f8746323c78982f74a208fd73d0ca6d02"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/selected_law/final/rows_and_coefficients.npz",
+      "sha256": "73abfdeb4b9be194a13eea0223ff4f258298445f6e729ddb198a381db00ec025"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/selected_law/tempel_sdss_join.json",
+      "sha256": "6e9f3a1ce37839e46a0c36b407c33714dcbf2652619fa84c35f804324065deb1"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/selected_law/tempel_sdss_rows.npz",
+      "sha256": "1a70aff5d2536f3461c5ecd555bfd0642472c202ee8866b98c484960fd49ceed"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "web"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-SELECTED-LAW-20260913/results/calibration_review.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-SELECTED-LAW-20260913/results/calibration_review.json",
+  "status": "registered",
+  "assignment_sha256": "03f470fb3408006c901386cce5204dd8f81d22997538a6fbb2a51f950ee70f57"
+}
