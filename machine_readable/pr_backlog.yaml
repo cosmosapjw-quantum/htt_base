@@ -206,6 +206,7 @@ policy:
   - PR-R9-SELECTED-LAW
   - PR-R9-FIBRE
   - PR-R9-DEPTH-FORMAL
+  - PR-R9-MOVING-Q
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -10132,4 +10133,26 @@ prs:
   level: L0
   scope: r9_proposition_specific_formal_attempt_and_scope_adjudication
   risk: R3
+  user_authorized: true
+
+- id: PR-R9-MOVING-Q
+  wave: 0
+  title: Derive and independently review moving-q fibre stability
+  owner: COMMON
+  depends:
+  - PR-R9-DEPTH-FORMAL
+  files:
+  - docs/research_program/tensor_joint_r9/revision2/moving_q
+  tests:
+  - OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 docs/research_program/tensor_joint_r9/revision2/moving_q/check_moving_q.py --output /tmp/r9-moving-q-new.json
+  - python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  dod:
+  - Derive explicit uniform and interior Hausdorff bounds in the shared ambient STF frame with centre, projection and radius control
+  - Separate nonempty, singleton and empty fibres; retain prior fixed-q support and sharpness source statuses and raw-Q amplitude conditions
+  - Execute new synthetic falsification controls and independent proof, constants, boundary and actual-diff review with preserved failures
+  - Keep scientific and four-axis admission separate; update revision2 canonical state and push with remote-ref verification
+  kill: No plug-in q, convex-hull substitution, empty-fibre finite distance, observational inference, policy weakening, old experiment replay, or separate verification checkout.
+  level: L0
+  scope: r9_moving_q_deterministic_fibre_theory
+  risk: R2
   user_authorized: true

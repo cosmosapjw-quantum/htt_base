@@ -1,4 +1,4 @@
-# R9 revision 2 handoff — current depth proof attempt and independent theory
+# R9 revision 2 handoff — depth obligations and moving-q stability
 
 저장소 `cosmosapjw-quantum/htt_base`, 브랜치
 `implementation/project-catalog-20260912`를 이어서 작업하라.
@@ -25,10 +25,27 @@ Lean core에서 이종 블록의 residual-after-reconstruction 한쪽 합성이 
 반대 합성, 실수 covariance/PSD와 전체 Gaussian 법칙은 남았다. 현재 Mathlib
 import는 실패한다. Wolfram/Sage 결과 요약의 등록 스키마 오류도 보존했다.
 엔진 실제 실행, 유효한 result envelope, authenticated lifecycle을 구분하라.
+현재 연구 run은 NON_PASS다. 두 result 스키마 오류로 normal close가 거절됐고,
+원본·오류를 보존한 채 정확한 local active pointer만 정리했다.
+`.agent-harness/runs/R9-THEORY-20260914/CLOSEOUT.md`가 범위별 판정을 연결한다.
 
-다음 독립 이론 단계는 같은 ambient 좌표계의 uncertain-q fibre에 대한 명시적
-Hausdorff 안정성 상계다. 외부 자료 없이 직접 유도·합성 검사·독립 검수가 가능하다.
-다음 단일 형식 의무는 pinned Lean core에서 이종 블록 역방향 재구성 합성이다.
+같은 ambient 좌표계의 uncertain-q fibre에 대해 MQ1/MQ2를 직접 유도했다.
+두 fibre가 모두 비어 있지 않을 때, A=3√(2/5), ε=||q−q′||F+||v−v′||2로 두면
+전역적으로 dH≤2Aε+√(2A)√ε다. 두 η≤1−δ인 내부에는
+Cδ=A[2+√((1−δ)/δ)]의 Lipschitz 상계가 성립한다. 중심·사영·반지름의 변화를
+분리하며 전역 kernel 기저는 가정하지 않는다. η<1/η=1/η>1, 원시 Q의 양의
+진폭 하한과 Q=0 분기를 구분한다. 기존 fixed-q 경계 예로 지수 1/2의 sharpness와
+δ^(−1/2) 차수를 확인했으며 이를 새 반례로 세지 않았다.
+
+`revision2/moving_q/RESEARCH_NOTE.md`, `REVIEW.md`, `PR_DELTA.md`를 읽어라.
+새 합성 360쌍 검사와 독립 derivation/diff 검수는 scoped PASS다. 유한 방향 표본은
+거리의 lower witness이며 해석적 증명이 전체 상계를 준다. 네 축 admission,
+관측 coverage 또는 물리 응답으로 승격하지 마라. 원문 끝의 pending-review 표기는
+검수 당시 고정된 문구이며 별도 REVIEW.md가 현재 판정을 기록한다.
+
+다음 단일 작업은 pinned Lean core에서 **이종 블록 역방향 재구성 합성**을 증명하는
+것이다. 기존 `DepthCore.lean`과 실패 로그에서 이어가라. 이 보조정리만 통과해도
+D3 전체·FORMAL_DEPTH는 미수용이며 실수 행렬/전체 법칙과 D1/D2/D4 의무가 남는다.
 완료된 DESI/SDSS/CF3/fixed-ambient 실행은 변경 없이 재실행하지 마라.
 
 ## 먼저 읽을 현재 상태

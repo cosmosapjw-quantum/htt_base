@@ -1,4 +1,22 @@
-# R9 revision 2 — research harness continuation state
+## 2026-09-14 current research continuation
+
+The user explicitly postpones external data acquisition. Current scope is
+R9-02.depth proposition-specific formal attempts, followed by moving-q
+contraction-fibre stability research. The four current contracts and actual
+axis evidence are in `../depth_formal/`; the new direct derivation and synthetic
+checks are in `../moving_q/`. D1-D4 all have raw CAS_FAIL from unproved full obligations; FORMAL_DEPTH is
+BLOCKED. MQ1/MQ2 have direct derivations, new synthetic checks and scoped
+independent review PASS; scientific/novelty admission remains HOLD.
+Current run is NON_PASS: two author result summaries fail registered schema,
+and normal close was rejected; only the exact local active pointers were
+administratively cleared. Authenticated lifecycle remains UNVERIFIED.
+Both original GPT-6 Astra v4.0.0 archive SHA256 values match the registered
+identities again (`../depth_formal/input_snapshot.json`). Existing member-byte
+verification remains unchanged. No initializer, package template, old result,
+production module, global policy or error budget is overwritten. Earlier
+input-acquisition instructions below describe their historical continuations.
+
+# Historical 2026-09-13 research harness continuation record
 
 PROJECT: HTT R9
 HARNESS_VERSION: 4.0.0

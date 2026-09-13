@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-THEORY-20260914",
+  "assignment_id": "moving_q_review",
+  "assignment_sha256": "a31584c0ad9e5edb44eed9a0c201f1b9ddf3822583198f52710a75723872859b",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "result_path": ".agent-harness/runs/R9-THEORY-20260914/results/moving_q_review.json",
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-09-14T01:44:00+09:00",
+  "completed_at": "2026-09-14T01:53:53+09:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2"
+  },
+  "commands": [
+    "python3 docs/research_program/tensor_joint_r9/revision2/moving_q/check_moving_q.py --output .agent-harness/runs/R9-THEORY-20260914/artifacts/moving_q_review/check_moving_q_reexecution.json",
+    "independent 7D Moore-Penrose and sampled stress checks executed with python3 stdin"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/R9-THEORY-20260914/artifacts/moving_q_review/REVIEW_REPORT.md",
+      "sha256": "73adf96a6572d3e965ded5598c5ad10233d72dc87dbaebc7611a6af9a42bca7e",
+      "bytes": 4767,
+      "producer": "moving_q_review independent physics/statistics audit"
+    },
+    {
+      "path": ".agent-harness/runs/R9-THEORY-20260914/artifacts/moving_q_review/check_moving_q_reexecution.json",
+      "sha256": "2e7b8dbf28e400d81d6ff6a6127fd3169683af00c21917789add82f45efb2e72",
+      "bytes": 303545,
+      "producer": "docs/research_program/tensor_joint_r9/revision2/moving_q/check_moving_q.py"
+    },
+    {
+      "path": ".agent-harness/runs/R9-THEORY-20260914/artifacts/moving_q_review/independent_checks_transcript.txt",
+      "sha256": "b00dc9742251b7f3225491d067272808ff60e0603d6db968a3ac3fb73f8a5caf",
+      "bytes": 4745,
+      "producer": "moving_q_review evidence closeout preserving initial inline commands and captured stdout"
+    }
+  ],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R9-THEORY-20260914/assignments/moving_q_review.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    "docs/research_program/tensor_joint_r9/revision2/moving_q/RESEARCH_NOTE.md",
+    "docs/research_program/tensor_joint_r9/revision2/moving_q/check_moving_q.py",
+    "docs/research_program/tensor_joint_r9/revision2/moving_q/synthetic.json",
+    "docs/research_program/tensor_joint_r9/revision2/moving_q/execution.json",
+    "docs/research_reports/notes/QO_CONTRACTION_FIBRE_GEOMETRY_20260907.md",
+    "docs/research_reports/notes/QO_FIBRE_HAUSDORFF_STABILITY_20260907.md",
+    "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md",
+    "docs/research_reports/theory_packs/T5_WU010_LOCAL_OBSERVER_RESPONSE_THEOREM_PACK.md"
+  ],
+  "findings": [],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-THEORY-20260914-MOVING-Q-REVIEW",
+      "outcome": "examined_no_findings",
+      "finding_ids": [],
+      "evidence_fingerprint": "moving-q-mq1-mq2-independent-audit-v1",
+      "evidence_refs": [
+        ".agent-harness/runs/R9-THEORY-20260914/artifacts/moving_q_review/REVIEW_REPORT.md",
+        ".agent-harness/runs/R9-THEORY-20260914/artifacts/moving_q_review/check_moving_q_reexecution.json",
+        ".agent-harness/runs/R9-THEORY-20260914/artifacts/moving_q_review/independent_checks_transcript.txt",
+        "docs/research_program/tensor_joint_r9/revision2/moving_q/RESEARCH_NOTE.md:23-200",
+        "docs/research_program/tensor_joint_r9/revision2/moving_q/check_moving_q.py:38-184"
+      ],
+      "summary": "Scoped independent review found MQ1/MQ2 algebra, constants, degeneracy handling, source-status ceiling, and synthetic-code interpretation consistent with the sealed assumptions; no formal, CAS, or scientific claim is promoted."
+    }
+  ],
+  "errors": []
+}

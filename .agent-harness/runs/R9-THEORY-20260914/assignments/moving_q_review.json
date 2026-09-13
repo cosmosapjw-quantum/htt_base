@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-THEORY-20260914",
+  "assignment_id": "moving_q_review",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-THEORY-20260914-MOVING-Q-REVIEW"
+  ],
+  "task": "Independent adversarial review of new moving-q fibre MQ1/MQ2 proof, constants, domain, degeneracy, raw-Q normalization and actual new code/evidence diff. Check inherited source factors and statuses. Re-derive bounds and seek counterexamples using own analytic/numerical work. Judge entire nonconvex sets, not supports; verify centre/projection/radius arguments, no global smooth basis, boundary/empty, sharpness reuse, delta dependence, and fixed-q evidence ceiling. You are not alone: root owns source/docs, write only own assignment artifacts/result. No downloads/old experiments/global changes. One review plus one coherent same-issue repair-closeout if needed; max1200seconds current review. Deliver actionable findings or scoped PASS and strict schema2 result. No sibling depth-axis results.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/moving_q/RESEARCH_NOTE.md",
+      "sha256": "6215abda078e7e7ffa346006cc30aaf3874c877b061683f3ee137527f63da4c6"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/moving_q/check_moving_q.py",
+      "sha256": "5f1e8471a0760f9f0d9941c1358c8857a74b23c470955eb179ee1c7af514f85a"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/moving_q/synthetic.json",
+      "sha256": "2e7b8dbf28e400d81d6ff6a6127fd3169683af00c21917789add82f45efb2e72"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/moving_q/execution.json",
+      "sha256": "065658e256e55bfa0c86f9ceb829656cfb4402c96a68a9a58b29d334b7c7cf70"
+    },
+    {
+      "path": "docs/research_reports/notes/QO_CONTRACTION_FIBRE_GEOMETRY_20260907.md",
+      "sha256": "6329fe907d58e07ce0dcd41b07313816324960dbef62939e54918ed482bc2d74"
+    },
+    {
+      "path": "docs/research_reports/notes/QO_FIBRE_HAUSDORFF_STABILITY_20260907.md",
+      "sha256": "4109960a8a2b0b0592767ff773fbbebf2f12bdc0ab037bb78997dc447ae44032"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md",
+      "sha256": "befeef7feab9a845186b81fb9d7ce84b755b332bd0bf2fd6f93d0e1c36e89529"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-THEORY-20260914/results/moving_q_review.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-THEORY-20260914/results/moving_q_review.json",
+  "status": "registered",
+  "assignment_sha256": "a31584c0ad9e5edb44eed9a0c201f1b9ddf3822583198f52710a75723872859b"
+}

@@ -1,0 +1,12 @@
+{
+  "reason": "Normal close rejected the two invalid registered result summaries. Preserve errors and NON_PASS; clear only the exact active local run pointers. No result, validator, policy, trust or evidence changed.",
+  "guarded_run": "R9-THEORY-20260914",
+  "argv": [
+    "python3",
+    ".agent-harness/scripts/close_run.py",
+    "--abandon"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"ok\": true,\n  \"abandoned\": true,\n  \"cleared_pointers\": [\n    \".agent-harness/runtime/ACTIVE_RUN\"\n  ],\n  \"run_directory_deleted\": false\n}\n",
+  "stderr": ""
+}

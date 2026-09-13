@@ -1,0 +1,83 @@
+This artifact preserves the exact inline commands and stdout captured during the
+initial moving_q_review. It was written during evidence closeout; none of the
+three numerical searches below was rerun for this artifact.
+
+=== 80-pair sampled stress check ===
+$ python3 - <<'PY'
+import importlib.util, numpy as np
+p='docs/research_program/tensor_joint_r9/revision2/moving_q/check_moving_q.py'
+spec=importlib.util.spec_from_file_location('mq',p); mq=importlib.util.module_from_spec(spec); spec.loader.exec_module(mq)
+rng=np.random.default_rng(981723)
+worst={'global_ratio':0.0,'separated_ratio':0.0,'interior_ratio':0.0,'projection_ratio':0.0,'centre_ratio':0.0}
+for n in range(80):
+    q=mq.normalize_q(rng.normal(size=(3,3))); qp=mq.normalize_q(q+10**rng.uniform(-8,0)*rng.normal(size=(3,3)))
+    et=float(rng.choice([0.0,.11,.55,.93,.999999,1.0])); ep=float(rng.choice([0.0,.21,.67,.97,.9999,1.0]))
+    f=mq.fibre(q,rng.normal(size=3),et); g=mq.fibre(qp,rng.normal(size=3),ep)
+    h=np.linalg.norm(q-qp); b=np.linalg.norm(f['v']-g['v']); eps=h+b
+    D=np.sqrt(3)*b+mq.A*h
+    # own 4096-direction lower witnesses and the candidate upper bounds
+    x,_=mq.sample_points(f,rng,2048); y,_=mq.sample_points(g,rng,2048)
+    w=max(mq.distances_to_fibre(x,g).max(),mq.distances_to_fibre(y,f).max())
+    global_bound=2*mq.A*eps+np.sqrt(2*mq.A*eps)
+    sep=D+np.sqrt(2*D)+np.sqrt(2)*min(1,mq.K*h)
+    delta=1-max(et,ep)
+    interior=mq.A*(2+np.sqrt((1-delta)/delta))*eps if delta>0 else None
+    worst['global_ratio']=max(worst['global_ratio'],w/global_bound if global_bound else 0)
+    worst['separated_ratio']=max(worst['separated_ratio'],w/sep if sep else 0)
+    if interior: worst['interior_ratio']=max(worst['interior_ratio'],w/interior)
+    proj=np.linalg.norm(f['p']-g['p'],2)
+    worst['projection_ratio']=max(worst['projection_ratio'],proj/min(1,mq.K*h) if h else 0)
+    centre=np.linalg.norm(f['c']-g['c'])
+    worst['centre_ratio']=max(worst['centre_ratio'],centre/D if D else 0)
+assert all(v <= 1+1e-10 for v in worst.values()), worst
+print({'random_pairs':80,'directions_per_side':2048,'worst_ratios':worst})
+PY
+stdout:
+{'random_pairs': 80, 'directions_per_side': 2048, 'worst_ratios': {'global_ratio': np.float64(0.40904482579437984), 'separated_ratio': np.float64(0.6027543408402127), 'interior_ratio': np.float64(0.3582366783808584), 'projection_ratio': np.float64(0.992935339218633), 'centre_ratio': np.float64(0.984111984961286)}}
+
+=== 100-case independent 7D Moore-Penrose check ===
+$ python3 - <<'PY'
+import importlib.util,numpy as np
+path='docs/research_program/tensor_joint_r9/revision2/moving_q/check_moving_q.py'
+s=importlib.util.spec_from_file_location('mq',path); mq=importlib.util.module_from_spec(s); s.loader.exec_module(mq)
+u,sv,vh=np.linalg.svd(mq.STF,full_matrices=False); U=u[:,:7]
+rng=np.random.default_rng(468271)
+max_p=max_c=max_eta=max_l=0.0
+for _ in range(100):
+ q=mq.normalize_q(rng.normal(size=(3,3))); v=rng.normal(size=3)
+ raw=np.zeros((3,27))
+ for i in range(3): raw[i,9*i:9*(i+1)]=q.ravel()
+ L=raw@U
+ Pin=np.eye(7)-L.T@np.linalg.inv(L@L.T)@L
+ cin=L.T@np.linalg.inv(L@L.T)@v
+ l,r,p,m=mq.maps(q)
+ max_p=max(max_p,np.linalg.norm(U@Pin@U.T-p,2))
+ max_c=max(max_c,np.linalg.norm(U@cin-r@v))
+ max_eta=max(max_eta,abs(cin@cin-3*v@np.linalg.solve(m,v)))
+ max_l=max(max_l,abs(np.linalg.norm(L,2)**2-np.linalg.eigvalsh(m).max()/3))
+assert max(max_p,max_c,max_eta,max_l)<2e-12,(max_p,max_c,max_eta,max_l)
+print({'independent_7d_moore_penrose_checks':100,'max_projection_diff':max_p,'max_center_diff':max_c,'max_eta_diff':max_eta,'max_normal_matrix_diff':max_l})
+PY
+stdout:
+{'independent_7d_moore_penrose_checks': 100, 'max_projection_diff': np.float64(8.832322020771878e-16), 'max_center_diff': np.float64(2.1170336732285428e-15), 'max_eta_diff': np.float64(1.0658141036401503e-14), 'max_normal_matrix_diff': np.float64(7.771561172376096e-16)}
+
+=== 80-case general STF2 normal-matrix check ===
+$ python3 - <<'PY'
+import importlib.util,numpy as np
+path='docs/research_program/tensor_joint_r9/revision2/moving_q/check_moving_q.py'
+s=importlib.util.spec_from_file_location('mq',path); mq=importlib.util.module_from_spec(s); s.loader.exec_module(mq)
+u,sv,vh=np.linalg.svd(mq.STF,full_matrices=False); U=u[:,:7]
+rng=np.random.default_rng(791)
+worst=0.0
+for _ in range(80):
+ q=(rng.normal(size=(3,3)));q=(q+q.T)/2-np.eye(3)*np.trace(q)/3
+ raw=np.zeros((3,27))
+ for i in range(3):raw[i,9*i:9*(i+1)]=q.ravel()
+ L=raw@U
+ rhs=(np.linalg.norm(q)**2*np.eye(3)+(6/5)*q@q)/3
+ worst=max(worst,np.linalg.norm(L@L.T-rhs,2))
+assert worst<2e-14,worst
+print({'general_STF2_normal_matrix_trials':80,'max_operator_residual':worst})
+PY
+stdout:
+{'general_STF2_normal_matrix_trials': 80, 'max_operator_residual': np.float64(5.20966814601376e-15)}

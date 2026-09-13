@@ -1,3 +1,16 @@
+## 2026-09-14 current bounded theory-code scope
+
+Apply the existing coding protocol to the four current depth contract runners
+and minimal synthetic moving-q checks. Work from bc5e028d on the same revision-2
+branch; no production migration or new observed run is required. Missing formal
+libraries and incomplete proofs retain their actual statuses. Independent
+review covers the new moving-q proof, constants, boundaries, source and code.
+Preserve the first parser/elaboration/serialization failures and their coherent
+repair evidence. The completed DESI, SDSS2048, CF3 and fixed-ambient runs are not
+replayed. Current commands/results live in `../depth_formal/` and `../moving_q/`.
+Per user instruction, validate in the current worktree and verify remote refs
+after staged ordinary pushes; no extra validation worktree or clone.
+
 # R9 revision 2 — coding-harness application contract
 
 ## Current continuation from c5328626

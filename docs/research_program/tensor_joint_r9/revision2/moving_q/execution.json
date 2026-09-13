@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "docs/research_program/tensor_joint_r9/revision2/moving_q/check_moving_q.py",
+    "--output",
+    "docs/research_program/tensor_joint_r9/revision2/moving_q/synthetic.json"
+  ],
+  "cwd": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree",
+  "environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit_code": 0,
+  "first_attempt": {
+    "exit_code": 1,
+    "reason": "NumPy bool values failed JSON serialization after numerical checks; raw traceback, partial JSON and original source retained.",
+    "repair": "Convert only check flags to Python bool; serialize before opening output. No math, tolerance or cases changed."
+  },
+  "old_observation_or_fixed_ambient_replay": false
+}
