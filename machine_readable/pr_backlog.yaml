@@ -9974,14 +9974,18 @@ prs:
   files:
   - docs/research_program/tensor_joint_r9
   - .agent-harness/runs/R9-REV2-20260912
+  - .agent-harness/runs/R9-HARNESS-20260913
+  - harness/physmath-research-gpt6-astra
+  - harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip
   tests:
+  - python3 harness/physmath-research-gpt6-astra/tools/validate_workspace.py
   - python3 docs/research_program/tensor_joint_r9/revision2/run_checks.py
   - python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
   dod:
   - Import exact predecessor R9 directory and upgrade existing program using pinned compendium and role sources
   - Direct derivations and reproducible covariance, support, information-loss and STF fibre reference experiments with independent research review
   - Thirty-node model-to-real-data DAG and product-specific law, calibration, tensor-functional and handoff contracts
-  - Preserve production, observational, novelty and four-axis holds; record unavailable GPT-6 archive activation honestly
+  - Preserve production, observational, novelty and four-axis holds; preserve historical unavailable activation; record 2026-09-13 research-only acquisition and application separately
   - Ordinary commit/push with remote readback and canonical mirrors synchronized
   kill: Synthetic research does not admit actual product laws; unavailable cross-covariance and physical providers remain explicit; no native solver or PR4 work.
   level: L0

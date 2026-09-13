@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "scope": "package acquisition/read/application to an existing research closeout; not a new scientific execution",
+  "date": "2026-09-13",
+  "base_commit": "247de8d232b401974d0deab2f9e9111974a0fbbb",
+  "base_tree": "a3b116e4344bbabebb982e6dfe5bd0d064240a25",
+  "selection_basis": "explicit user harness selection and attached exact ZIP",
+  "selection_does_not_verify_runtime_model": true,
+  "archive": {
+    "path": "harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip",
+    "bytes": 70628,
+    "sha256": "dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7",
+    "library_file_id": "libfile_07a54bff29548191bb87edd4bbe9cc73"
+  },
+  "zip_member_count": 74,
+  "sha256sums_verified_members": 73,
+  "sha256sums_self_excluded": true,
+  "zip_crc": "PASS",
+  "member_byte_equality": "PASS",
+  "package_root": "harness/physmath-research-gpt6-astra",
+  "read_files": [
+    {
+      "path": "START_HERE.md",
+      "sha256": "a9cf2210ce516e7db362335de4f754fb44147f541b7243995882a513f979f64d"
+    },
+    {
+      "path": "PROJECT_INSTRUCTIONS.md",
+      "sha256": "a306f9ae283d13cec262e4300f19f045c9803a13ad2814d25d7a4b612ab447dc"
+    },
+    {
+      "path": "prompts/00_integrated_work_run.md",
+      "sha256": "9a8c428264f462d2d043eff6d38700884950a7c87dd5b6b030516ecf2e9ae63d"
+    },
+    {
+      "path": "state/RESEARCH_STATE.md",
+      "sha256": "63ff3abee4b088c107a56865f576c59b0e748ed33a943829d3e8ff73d73ca98f"
+    },
+    {
+      "path": "state/README.md",
+      "sha256": "7481b8c97f509110f3684a0784ebb80c38ea08f1071f548aec59c3ca3f91ebb6"
+    },
+    {
+      "path": "docs/MODEL_ROUTING.md",
+      "sha256": "0d2850924187a1c3d8269b7e9623f9f707abeccf278208dcd53a43007e7cbc68"
+    },
+    {
+      "path": "prompts/routing/MODEL_AND_EFFORT.md",
+      "sha256": "7678eab42bc0c70fa9a214bc38bcaa1646ed871f60c5e4f64f82225c45e6a32c"
+    },
+    {
+      "path": "docs/CUSTOMIZATION.md",
+      "sha256": "6f79f1bedbe9abb69271e0e3e35d1081154059306328b232ac42401cf3226186"
+    },
+    {
+      "path": "policies/APPROVAL_BOUNDARIES.md",
+      "sha256": "b8e9aa8bb52ae7e76c6a99a2cb47cdd822d2f741526be5f1fa022caacd1750c7"
+    },
+    {
+      "path": "policies/EVIDENCE_AND_CITATION.md",
+      "sha256": "e3c3e498edc5b7f60f2398018e1316c31ed6aa4d17d7a89b606de63a40416916"
+    },
+    {
+      "path": "policies/STOP_RULES.md",
+      "sha256": "f3c4a47febf3c686d4957a6dca862bf9dbdd8904c150623c3032cfd99985be5e"
+    },
+    {
+      "path": "policies/PHASE_GATES.md",
+      "sha256": "3fec84ecaabb71dbb7a373b0f5b5fea2c5ec845ac0dd726bffedadfdea0c5f98"
+    },
+    {
+      "path": "prompts/phases/08_external_decision_gate.md",
+      "sha256": "bafe21a2eec1d19b3628c1cb5da8ca0f5c848619d49d078977e1d0846b78b272"
+    },
+    {
+      "path": "prompts/phases/10_closeout_compaction.md",
+      "sha256": "2f3c26f5b6291abf6c63ec2cc5b4d8ac2d961216c321aa6def2a3e6c686153f6"
+    },
+    {
+      "path": "state/CLOSEOUT.md",
+      "sha256": "e70f4312025a991677ecbee493c7f38f408a48091d49bd696378fa345e7ef27b"
+    },
+    {
+      "path": "tools/validate_workspace.py",
+      "sha256": "ff3cdb7dc70b63243c93b743c803f39ccd635b4ff3f33919e891e69d0cb59c97"
+    },
+    {
+      "path": "tools/init_workspace.py",
+      "sha256": "3e41da98d9f33fc34bb8e693b6a0ab9745a558b2068c4ba614e74077305b0460"
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "1e8ca39679bf223c21ed3efb6dbead8095bb4d56f140ff5e061778126df24dcc"
+    }
+  ],
+  "applied_phase": "existing-scope recovery, evidence/state reconciliation, Phase 10 closeout, focused delivery review",
+  "active_state_adapter": "STATE.md",
+  "source_of_truth": "../../RESEARCH_STATE.json",
+  "tests": "evidence/execution.json",
+  "scientific_reruns": 0,
+  "production_changes": 0,
+  "observational_runs": 0,
+  "coding_harness": {
+    "status": "NOT_SUPPLIED_NOT_ACTIVATED",
+    "required_before": "claiming the user-selected future coding-harness application"
+  },
+  "prior_run_aggregate": "NOT_A_WHOLE_CURRENT_RUN_PASS; historical status retained",
+  "model_performance": "NOT_EVALUATED",
+  "review_result": ".agent-harness/runs/R9-HARNESS-20260913/results/activation_review.json",
+  "review_scope": "delivery only, no scientific claim promotion"
+}

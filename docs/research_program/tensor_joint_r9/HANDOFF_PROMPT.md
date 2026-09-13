@@ -10,17 +10,22 @@ R9 원본은 5e4e899c0dfa2028d81a82ca68ccd11203947470이다.
 R10 별도 계획으로 초기화하거나 기존 증거를 최신 실행으로 덮어쓰지 마라.
 
 사용자가 선택한 하네스는 GPT-6 Astra v4.0.0이다.
-physmath-research-loop 스킬의 registry를 읽어 다음 원본 ZIP을 확보·확인하라.
-research: physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip
-  libfile_07a54bff29548191bb87edd4bbe9cc73
+연구 원본은 2026-09-13에 실제 취득·검증·열람하여 continuation/closeout에 적용했다.
+repo의 harness/physmath-research-gpt6-astra/START_HERE.md,
+PROJECT_INSTRUCTIONS.md와 revision2/harness_activation/STATE.md를 읽어라.
+원본 ZIP은 harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip이다.
   sha256 dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7
-coding: physmath-coding-harness-gpt6-astra-v4.0.0-20260908.zip
+패키지 안의 state는 NOT_RUN 템플릿이며 현재 프로젝트 상태로 대체하지 마라.
+현재 과학 SSOT는 이 R9의 RESEARCH_STATE.json과 고정 REVISION_SPEC.md다.
+원본 연구 ZIP을 다시 요청할 필요는 없다.
+
+별도 coding: physmath-coding-harness-gpt6-astra-v4.0.0-20260908.zip
   libfile_b1f31b28c0688191a06a4ae8f943d862
   sha256 dc99e7ab2f9629dcce3ec0758d97e19acc5b645f86e208d1b338bb6430ff8d7a
-START_HERE, core instructions, 현재 상태와 이번 phase를 읽고 적용하라.
-이번 전달 세션은 Library retrieval 기능과 원본 ZIP이 없어 package activation이
-BLOCKED_PACKAGE_UNAVAILABLE였다. 저장소 프로토콜로 연구/설계를 수행했지만
-GPT-6 원본 패키지를 로드했다는 완료 기록은 없다. 재확인 없이 이를 PASS로 바꾸지 마라.
+코딩 원본은 아직 공급·적용되지 않았다. 해당 코딩 하네스로의 전환을 주장하기 전에
+이 별도 원본을 확보·검증·열람하라. 연구 closeout의 완료와 구별하라.
+기존 R9 수치 실험은 이전 실행이며 이번 패키지 적용으로 재실행·소급 인증되지 않았다.
+R9-REV2-20260912의 전체 run 비통과 상태와 기존 과학적 HOLD도 유지하라.
 
 먼저 AGENTS.md와 관련 .agents/skills, canonical pr_backlog/pr_status를 읽어라.
 그다음 tensor_joint_r9의 RESEARCH_STATE.json, REVISION_SPEC.md,

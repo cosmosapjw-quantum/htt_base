@@ -1,6 +1,6 @@
 # R9 research contract
 
-> **Current revision 2**: report-seeded upgrade from `5e4e899c` on the `d514eabd` catalog base. Read [model-to-data design](revision2/MODEL_TO_DATA.md), [new derivations](revision2/THEORY_EXTENSION.md), and [revision review](revision2/REVIEW.md) first. The 30-node DAG preserves R9-00…23 and adds R9-24…29. Original R9 evidence below remains historical. This revision ran reference experiments, not production or observations; exact GPT-6 archive activation is blocked in this session.
+> **Current revision 2**: report-seeded upgrade from `5e4e899c` on the `d514eabd` catalog base. Read [model-to-data design](revision2/MODEL_TO_DATA.md), [new derivations](revision2/THEORY_EXTENSION.md), and [revision review](revision2/REVIEW.md) first. The 30-node DAG preserves R9-00…23 and adds R9-24…29. Original R9 evidence below remains historical. This revision ran reference experiments, not production or observations; the original session had no GPT-6 archive. Research-only package acquisition/application was completed on 2026-09-13; see [current activation](revision2/harness_activation/STATE.md). The coding package and historical whole-run aggregate remain separate.
 
 Owner: HTT research. User authorization: 2026-09-12 request to run GPT-6 physics/statistics research from the completed claim-tree exploration, publish a model-to-observation DAG/design and push a handoff. This is a substantive research/replan increment, not a revival of frozen R8 acceptance.
 

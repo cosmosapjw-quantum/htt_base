@@ -1,5 +1,7 @@
 # Independent research decision and closeout
 
+> Current package application: [2026-09-13 research activation](revision2/harness_activation/STATE.md). The review below is historical; its execution status is not retroactively changed.
+
 > Current revision 2 review: [revision2/REVIEW.md](revision2/REVIEW.md). The following is preserved predecessor R9 review evidence.
 
 Decision: **PROMOTE for research-design handoff only**. Reviewer `/root/r9_decision` did not generate the candidates or design their experiments. Its fixed-input review is preserved in [reviews/decision.json](reviews/decision.json). Production four-axis admission, new empirical inference, global physical attribution and novelty remain **HOLD**.

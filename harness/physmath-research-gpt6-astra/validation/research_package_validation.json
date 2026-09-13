@@ -1,0 +1,188 @@
+{
+  "checked_at_utc": "2026-09-08T19:35:01.852320+00:00",
+  "scope": "PACKAGING_ONLY",
+  "model_performance": "NOT_EVALUATED",
+  "scientific_validity": "NOT_EVALUATED",
+  "source_dir": "/workspace/scratch/4fd52c9489d1/inputs/physmath-research-harness-gpt56(3)",
+  "result_dir": "/workspace/scratch/4fd52c9489d1/build/physmath-research-harness-gpt6-astra-v4.0.0",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "tools/validate_workspace.py"
+  ],
+  "actual_exit": 0,
+  "stdout": "PASS — PACKAGING_ONLY: required files, JSON, manifest consistency, preserved skill frontmatter.\nScientific validity, execution provenance, and model performance are NOT_EVALUATED by this check.\n",
+  "stderr": "",
+  "legacy_skills": [
+    {
+      "path": ".agents/skills/adversarial-review/SKILL.md",
+      "source_sha256": "3f8b746a09081aefb0d9460b6764eb827ee58c9bccb22538b64beb5559ba0dca",
+      "result_sha256": "3f8b746a09081aefb0d9460b6764eb827ee58c9bccb22538b64beb5559ba0dca",
+      "byte_identical": true
+    },
+    {
+      "path": ".agents/skills/claim-source-audit/SKILL.md",
+      "source_sha256": "abc66ea993ac04adebb79f2dad426ffca53fec6fc2feaba2734c339fe6cc7df8",
+      "result_sha256": "abc66ea993ac04adebb79f2dad426ffca53fec6fc2feaba2734c339fe6cc7df8",
+      "byte_identical": true
+    },
+    {
+      "path": ".agents/skills/evidence-acquisition/SKILL.md",
+      "source_sha256": "f334ae609b46b0e471f65b22f8dafd28ad3ddec778eb33a68c78d529c237f8bc",
+      "result_sha256": "f334ae609b46b0e471f65b22f8dafd28ad3ddec778eb33a68c78d529c237f8bc",
+      "byte_identical": true
+    },
+    {
+      "path": ".agents/skills/hypothesis-space/SKILL.md",
+      "source_sha256": "fac7207cfdf128489f7969177e3053df2802358e081544f63815a35928d1cd06",
+      "result_sha256": "fac7207cfdf128489f7969177e3053df2802358e081544f63815a35928d1cd06",
+      "byte_identical": true
+    },
+    {
+      "path": ".agents/skills/physics-math-validation/SKILL.md",
+      "source_sha256": "908531f1c3ca7a506f1907728240ecef5a27865d501759e4607f4064ea21ba55",
+      "result_sha256": "908531f1c3ca7a506f1907728240ecef5a27865d501759e4607f4064ea21ba55",
+      "byte_identical": true
+    },
+    {
+      "path": ".agents/skills/research-closeout/SKILL.md",
+      "source_sha256": "8118feaad0d47dd0f3e3b929cd82135c419612f30a983b7f8fc59de0c288ee99",
+      "result_sha256": "8118feaad0d47dd0f3e3b929cd82135c419612f30a983b7f8fc59de0c288ee99",
+      "byte_identical": true
+    },
+    {
+      "path": ".agents/skills/research-contract/SKILL.md",
+      "source_sha256": "0d0960ec4f833006a06bfbb5c4ba851c1ec6d035cec0a64c66ef596843649945",
+      "result_sha256": "0d0960ec4f833006a06bfbb5c4ba851c1ec6d035cec0a64c66ef596843649945",
+      "byte_identical": true
+    },
+    {
+      "path": ".agents/skills/verification-design/SKILL.md",
+      "source_sha256": "82529d9fb82a354eef3758e1248bf6ca869924b9b0b92f099db3e07b3dcb0344",
+      "result_sha256": "82529d9fb82a354eef3758e1248bf6ca869924b9b0b92f099db3e07b3dcb0344",
+      "byte_identical": true
+    }
+  ],
+  "state_template_pairs": [
+    {
+      "name": "CLOSEOUT.md",
+      "render_matches_state": true
+    },
+    {
+      "name": "DECISION_LOG.md",
+      "render_matches_state": true
+    },
+    {
+      "name": "EVIDENCE_LEDGER.md",
+      "render_matches_state": true
+    },
+    {
+      "name": "HYPOTHESIS_GRAPH.md",
+      "render_matches_state": true
+    },
+    {
+      "name": "NEGATIVE_RESULTS.md",
+      "render_matches_state": true
+    },
+    {
+      "name": "RESEARCH_STATE.md",
+      "render_matches_state": true
+    }
+  ],
+  "python_syntax": [
+    {
+      "file": "tools/init_workspace.py",
+      "status": "PASS"
+    },
+    {
+      "file": "tools/resolve_model.py",
+      "status": "PASS"
+    },
+    {
+      "file": "tools/validate_workspace.py",
+      "status": "PASS"
+    }
+  ],
+  "artifacts_edited_by_agent_finished": true,
+  "ownership_returned_to_parent": true,
+  "known_remaining_package_issues": [],
+  "repair_history": [
+    {
+      "checked_at_utc": "2026-09-08T19:38:56.646130+00:00",
+      "scope": "Restore original independent final PROMOTE decision; no new gate",
+      "review_issue": "Conditional wording weakened source final-promotion independence",
+      "repair": "Actual decision reviewer excluded from candidate production and verification design; no owner self-promotion; unavailable => HOLD + INDEPENDENT_REVIEW_UNAVAILABLE; local exploratory work and in-scope correction may continue",
+      "changed_files": [
+        "PROJECT_INSTRUCTIONS.md",
+        "policies/PHASE_GATES.md",
+        "prompts/00_integrated_work_run.md",
+        "prompts/quick/deep_once.md",
+        "prompts/routing/PARALLELIZATION.md",
+        "policies/STOP_RULES.md",
+        "docs/WORKFLOW.md",
+        "prompts/phases/10_closeout_compaction.md",
+        "docs/MIGRATION_NOTES.md",
+        "examples/EXAMPLE_RUN.md",
+        "prompts/phases/08_external_decision_gate.md"
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "tools/validate_workspace.py"
+      ],
+      "actual_exit": 0,
+      "stdout": "PASS — PACKAGING_ONLY: required files, JSON, manifest consistency, preserved skill frontmatter.\nScientific validity, execution provenance, and model performance are NOT_EVALUATED by this check.\n",
+      "stderr": "",
+      "legacy_skills": [
+        {
+          "path": ".agents/skills/adversarial-review/SKILL.md",
+          "source_sha256": "3f8b746a09081aefb0d9460b6764eb827ee58c9bccb22538b64beb5559ba0dca",
+          "result_sha256": "3f8b746a09081aefb0d9460b6764eb827ee58c9bccb22538b64beb5559ba0dca",
+          "byte_identical": true
+        },
+        {
+          "path": ".agents/skills/claim-source-audit/SKILL.md",
+          "source_sha256": "abc66ea993ac04adebb79f2dad426ffca53fec6fc2feaba2734c339fe6cc7df8",
+          "result_sha256": "abc66ea993ac04adebb79f2dad426ffca53fec6fc2feaba2734c339fe6cc7df8",
+          "byte_identical": true
+        },
+        {
+          "path": ".agents/skills/evidence-acquisition/SKILL.md",
+          "source_sha256": "f334ae609b46b0e471f65b22f8dafd28ad3ddec778eb33a68c78d529c237f8bc",
+          "result_sha256": "f334ae609b46b0e471f65b22f8dafd28ad3ddec778eb33a68c78d529c237f8bc",
+          "byte_identical": true
+        },
+        {
+          "path": ".agents/skills/hypothesis-space/SKILL.md",
+          "source_sha256": "fac7207cfdf128489f7969177e3053df2802358e081544f63815a35928d1cd06",
+          "result_sha256": "fac7207cfdf128489f7969177e3053df2802358e081544f63815a35928d1cd06",
+          "byte_identical": true
+        },
+        {
+          "path": ".agents/skills/physics-math-validation/SKILL.md",
+          "source_sha256": "908531f1c3ca7a506f1907728240ecef5a27865d501759e4607f4064ea21ba55",
+          "result_sha256": "908531f1c3ca7a506f1907728240ecef5a27865d501759e4607f4064ea21ba55",
+          "byte_identical": true
+        },
+        {
+          "path": ".agents/skills/research-closeout/SKILL.md",
+          "source_sha256": "8118feaad0d47dd0f3e3b929cd82135c419612f30a983b7f8fc59de0c288ee99",
+          "result_sha256": "8118feaad0d47dd0f3e3b929cd82135c419612f30a983b7f8fc59de0c288ee99",
+          "byte_identical": true
+        },
+        {
+          "path": ".agents/skills/research-contract/SKILL.md",
+          "source_sha256": "0d0960ec4f833006a06bfbb5c4ba851c1ec6d035cec0a64c66ef596843649945",
+          "result_sha256": "0d0960ec4f833006a06bfbb5c4ba851c1ec6d035cec0a64c66ef596843649945",
+          "byte_identical": true
+        },
+        {
+          "path": ".agents/skills/verification-design/SKILL.md",
+          "source_sha256": "82529d9fb82a354eef3758e1248bf6ca869924b9b0b92f099db3e07b3dcb0344",
+          "result_sha256": "82529d9fb82a354eef3758e1248bf6ca869924b9b0b92f099db3e07b3dcb0344",
+          "byte_identical": true
+        }
+      ],
+      "model_performance": "NOT_EVALUATED",
+      "scientific_validity": "NOT_EVALUATED"
+    }
+  ]
+}

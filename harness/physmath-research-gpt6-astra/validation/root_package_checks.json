@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "research",
+    "check": "package_validator",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "/workspace/scratch/4fd52c9489d1/build/physmath-research-harness-gpt6-astra-v4.0.0/tools/validate_workspace.py"
+    ],
+    "exit": 0,
+    "stdout": "PASS — PACKAGING_ONLY: required files, JSON, manifest consistency, preserved skill frontmatter.\nScientific validity, execution provenance, and model performance are NOT_EVALUATED by this check.\n",
+    "stderr": ""
+  },
+  {
+    "kind": "research",
+    "check": "local_markdown_links",
+    "broken": []
+  },
+  {
+    "kind": "coding",
+    "check": "package_validator",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "/workspace/scratch/4fd52c9489d1/build/physmath-coding-harness-gpt6-astra-v4.0.0/tools/validate_harness.py"
+    ],
+    "exit": 0,
+    "stdout": "Coding harness package structure: PASS\nScientific acceptance and model performance: NOT_EVALUATED\nSource authority is not established by this structure check.\n",
+    "stderr": ""
+  },
+  {
+    "kind": "coding",
+    "check": "local_markdown_links",
+    "broken": []
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "scope": "Package integrity, structure and selection only; no scientific replay or empirical model benchmark",
+  "member_hash_count": 73,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "tools/validate_workspace.py"
+      ],
+      "cwd": "/workspace/scratch/99299f5cbe0c/harness_intake",
+      "exit_code": 0,
+      "elapsed_seconds": 0.08738549900226644,
+      "stdout": "check_0.stdout",
+      "stderr": "check_0.stderr"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/resolve_model.py",
+        "--harness",
+        "gpt6-astra",
+        "--task",
+        "research"
+      ],
+      "cwd": "/workspace/scratch/99299f5cbe0c/harness_intake",
+      "exit_code": 0,
+      "elapsed_seconds": 0.10846581700025126,
+      "stdout": "check_1.stdout",
+      "stderr": "check_1.stderr"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_model_router.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/99299f5cbe0c/harness_intake",
+      "exit_code": 0,
+      "elapsed_seconds": 4.602444259999174,
+      "stdout": "check_2.stdout",
+      "stderr": "check_2.stderr"
+    }
+  ]
+}

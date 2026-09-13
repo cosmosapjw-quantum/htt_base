@@ -1,6 +1,6 @@
 # HTT R9 — 관측 응답·공유 보정·조건부 물리 추론
 
-> **Current revision 2**: report-seeded upgrade from `5e4e899c` on the `d514eabd` catalog base. Read [model-to-data design](revision2/MODEL_TO_DATA.md), [new derivations](revision2/THEORY_EXTENSION.md), and [revision review](revision2/REVIEW.md) first. The 30-node DAG preserves R9-00…23 and adds R9-24…29. Original R9 evidence below remains historical. This revision ran reference experiments, not production or observations; exact GPT-6 archive activation is blocked in this session.
+> **Current revision 2**: report-seeded upgrade from `5e4e899c` on the `d514eabd` catalog base. Read [model-to-data design](revision2/MODEL_TO_DATA.md), [new derivations](revision2/THEORY_EXTENSION.md), and [revision review](revision2/REVIEW.md) first. The 30-node DAG preserves R9-00…23 and adds R9-24…29. Original R9 evidence below remains historical. This revision ran reference experiments, not production or observations; the original session had no GPT-6 archive. Research-only package acquisition/application was completed on 2026-09-13; see [current activation](revision2/harness_activation/STATE.md). The coding package and historical whole-run aggregate remain separate.
 
 R8 `efc5f30666b96782f946375551f0068bb3a30f74`와 catalog 기반 42개 주장 카드를 시드로 수행한 GPT‑6 Astra v4.0.0 연구·설계다. **실제 유도·bounded mock 계산은 완료했으며, production 구현·formal CAS·새 실자료 추론은 후속 DAG에 남아 있다.**
 

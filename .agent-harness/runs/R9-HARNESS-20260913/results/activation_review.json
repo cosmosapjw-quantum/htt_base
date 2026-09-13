@@ -1,0 +1,399 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-HARNESS-20260913",
+  "assignment_id": "activation_review",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "adjudicator",
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "result_path": ".agent-harness/runs/R9-HARNESS-20260913/results/activation_review.json",
+  "assignment_sha256": "ffd5e6e80f45a40db48d4a548bad18478a8ea2b4f8058fc422b03b1ba703ad08",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "execution_mode": "generic_prompted",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R9-HARNESS-20260913/assignments/activation_review.json",
+    ".agent-harness/runs/R9-REV2-20260912/RUN_PLAN.json",
+    ".agent-harness/runs/R9-REV2-20260912/RUN_SUMMARY.json",
+    ".agent-harness/runs/R9-REV2-20260912/artifacts/initial_decision_inputs/HANDOFF_PROMPT.md",
+    ".agent-harness/runs/R9-REV2-20260912/artifacts/initial_decision_inputs/MODEL_TO_DATA.md",
+    ".agent-harness/runs/R9-REV2-20260912/artifacts/initial_decision_inputs/THEORY_EXTENSION.md",
+    ".agent-harness/runs/R9-REV2-20260912/artifacts/initial_decision_inputs/campaign_dag.json",
+    ".agent-harness/runs/R9-REV2-20260912/artifacts/initial_decision_inputs/manifest.json",
+    ".agent-harness/runs/R9-REV2-20260912/artifacts/source_depth_path.py",
+    ".agent-harness/runs/R9-REV2-20260912/assignments/decision.json",
+    ".agent-harness/runs/R9-REV2-20260912/assignments/decision_followup.json",
+    ".agent-harness/runs/R9-REV2-20260912/assignments/depth.json",
+    ".agent-harness/runs/R9-REV2-20260912/assignments/functional.json",
+    ".agent-harness/runs/R9-REV2-20260912/results/decision.json",
+    ".agent-harness/runs/R9-REV2-20260912/results/decision_followup.json",
+    ".agent-harness/runs/R9-REV2-20260912/results/depth.json",
+    ".agent-harness/runs/R9-REV2-20260912/results/functional.json",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    "AGENTS.md",
+    "docs/PR_DELTAS/pr-r9-rev2.md",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/codex_handoff/pr_status.yaml",
+    "docs/research_program/tensor_joint_r9/CMB_RESEARCH.md",
+    "docs/research_program/tensor_joint_r9/DESIGN.md",
+    "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+    "docs/research_program/tensor_joint_r9/README.md",
+    "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json",
+    "docs/research_program/tensor_joint_r9/REVIEW.md",
+    "docs/research_program/tensor_joint_r9/REVISION_SPEC.md",
+    "docs/research_program/tensor_joint_r9/SCIENTIFIC_CONTRACT.md",
+    "docs/research_program/tensor_joint_r9/THEORY.md",
+    "docs/research_program/tensor_joint_r9/campaign_dag.json",
+    "docs/research_program/tensor_joint_r9/evidence/canonical_dag_initial_failure.log",
+    "docs/research_program/tensor_joint_r9/evidence/canonical_dag_validation.log",
+    "docs/research_program/tensor_joint_r9/evidence/canonical_progress.log",
+    "docs/research_program/tensor_joint_r9/evidence/canonical_progress_initial_failure.log",
+    "docs/research_program/tensor_joint_r9/evidence/cmb_research_checks.json",
+    "docs/research_program/tensor_joint_r9/evidence/dag_checks.json",
+    "docs/research_program/tensor_joint_r9/evidence/external_context.json",
+    "docs/research_program/tensor_joint_r9/evidence/figure_manifest.json",
+    "docs/research_program/tensor_joint_r9/evidence/final_verification.json",
+    "docs/research_program/tensor_joint_r9/evidence/research_checks.json",
+    "docs/research_program/tensor_joint_r9/evidence/response_and_coverage.pdf",
+    "docs/research_program/tensor_joint_r9/evidence/response_and_coverage.png",
+    "docs/research_program/tensor_joint_r9/evidence/wolfram_depth.json",
+    "docs/research_program/tensor_joint_r9/evidence/wolfram_linear.json",
+    "docs/research_program/tensor_joint_r9/reviews/cmb_derivation.json",
+    "docs/research_program/tensor_joint_r9/reviews/decision.json",
+    "docs/research_program/tensor_joint_r9/reviews/products_derivation.json",
+    "docs/research_program/tensor_joint_r9/reviews/response_derivation.json",
+    "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+    "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/check_0.stderr",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/check_0.stdout",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/check_1.stderr",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/check_1.stdout",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/check_2.stderr",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/check_2.stdout",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/dag_checks.json",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/decision.json",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/execution_receipt.json",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/external_context.json",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/figure_manifest.json",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/import_verification.json",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/post_review_dag.stderr",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/post_review_dag.stdout",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/post_review_validation.json",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/research_checks.json",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/research_controls.pdf",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/research_controls.png",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/review_validation.json",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/staged_validation.json",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/wolfram_depth.txt",
+    "docs/research_program/tensor_joint_r9/revision2/evidence/wolfram_depth.wl",
+    "docs/research_program/tensor_joint_r9/revision2/harness_activation/ACTIVATION.json",
+    "docs/research_program/tensor_joint_r9/revision2/harness_activation/STATE.md",
+    "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/check_0.stderr",
+    "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/check_0.stdout",
+    "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/check_1.stderr",
+    "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/check_1.stdout",
+    "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/check_2.stderr",
+    "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/check_2.stdout",
+    "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/delivery_validation.json",
+    "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/execution.json",
+    "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/member_hashes.json",
+    "docs/research_program/tensor_joint_r9/revision2/run_checks.py",
+    "docs/research_program/tensor_joint_r9/revision2/validate_revision2.py",
+    "harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip",
+    "harness/physmath-research-gpt6-astra/.agents/skills/adversarial-review/SKILL.md",
+    "harness/physmath-research-gpt6-astra/.agents/skills/claim-source-audit/SKILL.md",
+    "harness/physmath-research-gpt6-astra/.agents/skills/evidence-acquisition/SKILL.md",
+    "harness/physmath-research-gpt6-astra/.agents/skills/hypothesis-space/SKILL.md",
+    "harness/physmath-research-gpt6-astra/.agents/skills/physics-math-validation/SKILL.md",
+    "harness/physmath-research-gpt6-astra/.agents/skills/research-closeout/SKILL.md",
+    "harness/physmath-research-gpt6-astra/.agents/skills/research-contract/SKILL.md",
+    "harness/physmath-research-gpt6-astra/.agents/skills/verification-design/SKILL.md",
+    "harness/physmath-research-gpt6-astra/.gitignore",
+    "harness/physmath-research-gpt6-astra/CHANGELOG.md",
+    "harness/physmath-research-gpt6-astra/LICENSE",
+    "harness/physmath-research-gpt6-astra/MODEL_ROUTER.json",
+    "harness/physmath-research-gpt6-astra/Makefile",
+    "harness/physmath-research-gpt6-astra/PROJECT_INSTRUCTIONS.md",
+    "harness/physmath-research-gpt6-astra/README.md",
+    "harness/physmath-research-gpt6-astra/RELEASE_VALIDATION.json",
+    "harness/physmath-research-gpt6-astra/SHA256SUMS",
+    "harness/physmath-research-gpt6-astra/SOURCE_PROVENANCE.json",
+    "harness/physmath-research-gpt6-astra/START_HERE.md",
+    "harness/physmath-research-gpt6-astra/VERSION",
+    "harness/physmath-research-gpt6-astra/docs/CUSTOMIZATION.md",
+    "harness/physmath-research-gpt6-astra/docs/MIGRATION_EVIDENCE.md",
+    "harness/physmath-research-gpt6-astra/docs/MIGRATION_NOTES.md",
+    "harness/physmath-research-gpt6-astra/docs/MODEL_REGRESSION.md",
+    "harness/physmath-research-gpt6-astra/docs/MODEL_ROUTING.md",
+    "harness/physmath-research-gpt6-astra/docs/RESEARCH_BASIS.md",
+    "harness/physmath-research-gpt6-astra/docs/WORKFLOW.md",
+    "harness/physmath-research-gpt6-astra/docs/WORK_AND_PROJECT_SETUP.md",
+    "harness/physmath-research-gpt6-astra/examples/EXAMPLE_EVIDENCE_LEDGER.md",
+    "harness/physmath-research-gpt6-astra/examples/EXAMPLE_RUN.md",
+    "harness/physmath-research-gpt6-astra/manifest.json",
+    "harness/physmath-research-gpt6-astra/policies/APPROVAL_BOUNDARIES.md",
+    "harness/physmath-research-gpt6-astra/policies/EVIDENCE_AND_CITATION.md",
+    "harness/physmath-research-gpt6-astra/policies/PHASE_GATES.md",
+    "harness/physmath-research-gpt6-astra/policies/STOP_RULES.md",
+    "harness/physmath-research-gpt6-astra/prompts/00_integrated_work_run.md",
+    "harness/physmath-research-gpt6-astra/prompts/phases/01_research_contract.md",
+    "harness/physmath-research-gpt6-astra/prompts/phases/02_evidence_acquisition_deep_research.md",
+    "harness/physmath-research-gpt6-astra/prompts/phases/03_claim_source_audit.md",
+    "harness/physmath-research-gpt6-astra/prompts/phases/04_hypothesis_space.md",
+    "harness/physmath-research-gpt6-astra/prompts/phases/05_independent_adversarial_review.md",
+    "harness/physmath-research-gpt6-astra/prompts/phases/06_physics_math_validation.md",
+    "harness/physmath-research-gpt6-astra/prompts/phases/07_verification_design.md",
+    "harness/physmath-research-gpt6-astra/prompts/phases/08_external_decision_gate.md",
+    "harness/physmath-research-gpt6-astra/prompts/phases/09_survivor_formalization.md",
+    "harness/physmath-research-gpt6-astra/prompts/phases/10_closeout_compaction.md",
+    "harness/physmath-research-gpt6-astra/prompts/quick/deep_once.md",
+    "harness/physmath-research-gpt6-astra/prompts/quick/ultralight.md",
+    "harness/physmath-research-gpt6-astra/prompts/routing/CHAT_WORK_DEEP_RESEARCH.md",
+    "harness/physmath-research-gpt6-astra/prompts/routing/MODEL_AND_EFFORT.md",
+    "harness/physmath-research-gpt6-astra/prompts/routing/PARALLELIZATION.md",
+    "harness/physmath-research-gpt6-astra/state/CLOSEOUT.md",
+    "harness/physmath-research-gpt6-astra/state/DECISION_LOG.md",
+    "harness/physmath-research-gpt6-astra/state/EVIDENCE_LEDGER.md",
+    "harness/physmath-research-gpt6-astra/state/HYPOTHESIS_GRAPH.md",
+    "harness/physmath-research-gpt6-astra/state/NEGATIVE_RESULTS.md",
+    "harness/physmath-research-gpt6-astra/state/README.md",
+    "harness/physmath-research-gpt6-astra/state/RESEARCH_STATE.md",
+    "harness/physmath-research-gpt6-astra/templates/state/CLOSEOUT.md",
+    "harness/physmath-research-gpt6-astra/templates/state/DECISION_LOG.md",
+    "harness/physmath-research-gpt6-astra/templates/state/EVIDENCE_LEDGER.md",
+    "harness/physmath-research-gpt6-astra/templates/state/HYPOTHESIS_GRAPH.md",
+    "harness/physmath-research-gpt6-astra/templates/state/NEGATIVE_RESULTS.md",
+    "harness/physmath-research-gpt6-astra/templates/state/RESEARCH_STATE.md",
+    "harness/physmath-research-gpt6-astra/tests/test_model_router.py",
+    "harness/physmath-research-gpt6-astra/tools/init_workspace.py",
+    "harness/physmath-research-gpt6-astra/tools/resolve_model.py",
+    "harness/physmath-research-gpt6-astra/tools/validate_workspace.py",
+    "harness/physmath-research-gpt6-astra/validation/independent_review.json",
+    "harness/physmath-research-gpt6-astra/validation/research_init_validation.json",
+    "harness/physmath-research-gpt6-astra/validation/research_package_validation.json",
+    "harness/physmath-research-gpt6-astra/validation/root_package_checks.json",
+    "harness/physmath-research-gpt6-astra/validation/router_forward.json",
+    "harness/physmath-research-gpt6-astra/validation/router_test_execution.json",
+    "machine_readable/pr_backlog.yaml",
+    "machine_readable/pr_status.yaml"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-13T00:32:02.359088+00:00",
+  "completed_at": "2026-09-13T00:34:32.541082+00:00",
+  "tool_versions": {
+    "python": "3.12.14",
+    "git": "git version 2.51.1"
+  },
+  "commands": [
+    {
+      "command": "Python stdlib zipfile/hashlib verification of archive members, SHA256SUMS, member_hashes receipt and assignment required_inputs",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff 247de8d2 -- docs/research_program/tensor_joint_r9 docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml",
+      "exit_code": 0
+    },
+    {
+      "command": "Python byte comparison of 61 delivery_validation.protected_paths against git show 247de8d232b401974d0deab2f9e9111974a0fbbb:<path>",
+      "exit_code": 0
+    },
+    {
+      "command": "Python JSON state-history equality and active-state/SSOT/receipt path checks",
+      "exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip",
+      "sha256": "dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7",
+      "bytes": 70628,
+      "producer": "root-provided review input; identity independently checked"
+    },
+    {
+      "path": "harness/physmath-research-gpt6-astra/PROJECT_INSTRUCTIONS.md",
+      "sha256": "a306f9ae283d13cec262e4300f19f045c9803a13ad2814d25d7a4b612ab447dc",
+      "bytes": 5686,
+      "producer": "root-provided review input; identity independently checked"
+    },
+    {
+      "path": "harness/physmath-research-gpt6-astra/START_HERE.md",
+      "sha256": "a9cf2210ce516e7db362335de4f754fb44147f541b7243995882a513f979f64d",
+      "bytes": 1064,
+      "producer": "root-provided review input; identity independently checked"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/STATE.md",
+      "sha256": "9577f2d1ca2fa0b2ff54358a277bcfe2fd9acf537b5c98ba3728b29064d996be",
+      "bytes": 4567,
+      "producer": "root-provided review input; identity independently checked"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/ACTIVATION.json",
+      "sha256": "9d9d5bea5bd599713be0a94d03ff6133989b8b2477a4c410c500ebd82db9d2be",
+      "bytes": 4203,
+      "producer": "root-provided review input; identity independently checked"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/execution.json",
+      "sha256": "3bc89d1472c0ad7a8f0c001c2a60b3788a2ae00f7defff3bc33e3366dc41be1e",
+      "bytes": 1300,
+      "producer": "root-provided review input; identity independently checked"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/member_hashes.json",
+      "sha256": "2888ca4e1676bd06432b056082c1a66a645c5aa516df176107d1860cd171427f",
+      "bytes": 9884,
+      "producer": "root-provided review input; identity independently checked"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json",
+      "sha256": "ad1f3dd37081ddf026c319e184f81191138fa7dbe215cc33b131530129e3cdc1",
+      "bytes": 6383,
+      "producer": "root-provided review input; identity independently checked"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+      "sha256": "082d151efee74e4c856c23914b2e5933dac80d0e28f756e0a8d69c4d6908ce6d",
+      "bytes": 5990,
+      "producer": "root-provided review input; identity independently checked"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+      "sha256": "8a39cf99772cbaab0e81d3b8476083e6e8c2a2b3960480ff226328e1e1ed289e",
+      "bytes": 15095,
+      "producer": "root-provided review input; identity independently checked"
+    },
+    {
+      "path": ".agent-harness/templates/RESULT_ENVELOPE.json",
+      "sha256": "c71aba5d7c65259125beca492b7e72726ed25fbecb124f0547b324aafa65e9f4",
+      "bytes": 1290,
+      "producer": "root-provided review input; identity independently checked"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/delivery_validation.json",
+      "sha256": "872a2c97a0a156d3fc93671483854479d40124858f89c63eb075567c0df4e6ab",
+      "bytes": 5618,
+      "producer": "root-provided review input; identity independently checked"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "ACTIVATION-IDENTITY",
+      "claim_id": "RUN-R9-HARNESS-20260913-ACTIVATION",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "The sealed research archive has the expected SHA-256, 74 unique safe file members and clean ZIP CRC; every vendored member is byte-identical, with 73 verified SHA256SUMS entries excluding SHA256SUMS itself. The member_hashes receipt and all 11 assignment input seals match actual bytes.",
+      "assumptions_used": [
+        "Scope is the exact research-only snapshot registered before the user supplied the coding ZIP.",
+        "Hash/CRC equality establishes package identity only."
+      ],
+      "evidence_refs": [
+        "harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip",
+        "harness/physmath-research-gpt6-astra/SHA256SUMS",
+        "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/member_hashes.json",
+        ".agent-harness/runs/R9-HARNESS-20260913/assignments/activation_review.json"
+      ],
+      "evidence_fingerprint": "sha256:dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7:74-members:73-sums:vendored-byte-equality",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Use Python zipfile.ZipFile.testzip(); require 74 distinct member names with no absolute or parent traversal paths. Compare ZipFile.read(name) to package_root/name bytes for every member.",
+        "Parse SHA256SUMS into digest/path pairs; require exactly 73 distinct paths, matching all archive names except SHA256SUMS, and recompute each SHA-256.",
+        "Recompute SHA-256 for the assignment required_inputs and all member_hashes.json entries; all matched."
+      ],
+      "confidence": 0.99,
+      "unresolved": []
+    },
+    {
+      "finding_id": "ACTIVATION-APPLICATION",
+      "claim_id": "RUN-R9-HARNESS-20260913-ACTIVATION",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "The research-only stage applies the package core, integrated contract and Phase 10 to current state recovery and closeout. The active STATE adapter resolves to the existing scientific SSOT, while vendored state/CLOSEOUT remain NOT_RUN templates. Current text separates acquisition/application from predecessor numerical execution, runtime-model identity, model performance, future coding selection, and scientific admission. No must-fix issue was found within that temporal snapshot.",
+      "assumptions_used": [
+        "The authorized objective is package closeout delivery, not a new scientific calculation or promotion.",
+        "User-supplied coding ZIP arrived after this snapshot; NOT_SUPPLIED_NOT_ACTIVATED is reviewed only as the historical research-stage status and must be updated by the separately scoped followup.",
+        "Commit/push and remote readback remain root-owned delivery steps outside this verdict."
+      ],
+      "evidence_refs": [
+        "harness/physmath-research-gpt6-astra/START_HERE.md",
+        "harness/physmath-research-gpt6-astra/PROJECT_INSTRUCTIONS.md",
+        "harness/physmath-research-gpt6-astra/docs/MODEL_ROUTING.md",
+        "harness/physmath-research-gpt6-astra/prompts/phases/10_closeout_compaction.md",
+        "docs/research_program/tensor_joint_r9/revision2/harness_activation/STATE.md",
+        "docs/research_program/tensor_joint_r9/revision2/harness_activation/ACTIVATION.json",
+        "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json",
+        "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+        "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+        "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/execution.json",
+        "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/check_1.stdout"
+      ],
+      "evidence_fingerprint": "R9-HARNESS-20260913:research-stage:state-adapter:phase10:selection-vs-application:sealed-before-coding-intake",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Read START_HERE, PROJECT_INSTRUCTIONS, MODEL_ROUTING, integrated work contract, PHASE_GATES and Phase 10; compare required scope/evidence distinctions to the active STATE adapter and current handoff.",
+        "Resolve ACTIVATION.active_state_adapter, source_of_truth and tests relative to the activation directory; all are existing intended files.",
+        "Check raw router output: explicit_user_harness_override selects task research while model_identity_verified, model_switched, harness_loaded and harness_executed remain false. Actual application is separately evidenced by the state adapter, not inferred from routing.",
+        "Inspect raw packaging/router test receipts: recorded exits 0; 19 router tests reported OK; these are package/routing checks only."
+      ],
+      "confidence": 0.98,
+      "unresolved": []
+    },
+    {
+      "finding_id": "ACTIVATION-HISTORY",
+      "claim_id": "RUN-R9-HARNESS-20260913-ACTIVATION",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "The bounded diff against 247de8d232b401974d0deab2f9e9111974a0fbbb changes acquisition/status/handoff text and package delivery references only. All 61 protected scientific/historical source and evidence files are independently byte-equal to that commit. Production, empirical and novelty HOLD, four-axis non-admission, preserved failures, predecessor activation facts and NOT_A_WHOLE_CURRENT_RUN_PASS remain intact; this review grants package closeout acceptance only.",
+      "assumptions_used": [
+        "This is a claim-hygiene and source-preservation check, not scientific revalidation.",
+        "The existing scoped design decision is historical evidence, not a new decision in this run."
+      ],
+      "evidence_refs": [
+        "git:247de8d232b401974d0deab2f9e9111974a0fbbb",
+        "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/delivery_validation.json",
+        "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json",
+        "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "evidence_fingerprint": "git:247de8d232b401974d0deab2f9e9111974a0fbbb:research-activation-diff:61-protected-files:science-holds-and-history-preserved",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Review git diff 247de8d2 for the current R9 documents and canonical card/status changes.",
+        "For every protected_paths entry in delivery_validation.json, compare current file bytes directly with git show 247de8d232b401974d0deab2f9e9111974a0fbbb:<path>; all 61 matched. No numerical research was rerun.",
+        "Compare current RESEARCH_STATE with the version at 247de8d2: previous_revision, preserved_failures, production_admission, empirical_admission, novelty, runtime, seed_addendum, research_run, independent_decision and campaign_execution_snapshot_note are equal. Historical activation equals the former activation except its explicit source_commit; all former aggregate fields are preserved."
+      ],
+      "confidence": 0.99,
+      "unresolved": []
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-HARNESS-20260913-ACTIVATION",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "ACTIVATION-IDENTITY",
+        "ACTIVATION-APPLICATION",
+        "ACTIVATION-HISTORY"
+      ],
+      "summary": "PASS for the sealed research-only acquisition/application snapshot and package closeout scope. No scientific or whole-run promotion. Coding-package intake supplied later requires the separately registered followup."
+    }
+  ],
+  "errors": [],
+  "independent_context": {
+    "scope": "Bounded assignment inputs and directly relevant core/routing/Phase 10/current state, raw receipts, current diff and protected byte identities. No candidate generation or scientific experiment design was performed.",
+    "sibling_results_read": [],
+    "root_evidence_read": [
+      "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/delivery_validation.json"
+    ],
+    "launch_attestation": "No SubagentStart/profile attestation was supplied; actual execution recorded as generic_prompted, launch_id null and launch_evidence unverified. No independent-model identity claim.",
+    "discovery_note": "Initial run-local context-index lookup was absent; AGENTS identified the canonical index, which matched before substantive review. A bounded harness symbol-location search incidentally emitted a generated-context matching line; CONTEXT_PACK was never opened or relied upon.",
+    "read_scope_note": "files_read includes byte-only reads for ZIP/member equality and protected-file comparison; package policy content was read only for the named core/routing/Phase 10 slice.",
+    "timestamp_note": "started_at records the earliest captured wall-clock timestamp during verification, not an instrumented launch time.",
+    "temporal_boundary": "Root reported the later coding ZIP before result completion and confirmed sealed required_inputs remain unchanged. This verdict does not assert the coding ZIP is absent after that user steering."
+  }
+}

@@ -91,9 +91,11 @@ CF4의 관측 law가 없으면 CF4 empirical set과 이를 소비하는 depth la
 
 ## 8. 하네스와 실제 수행 상태
 
+**2026-09-13 후속:** 사용자가 연구 ZIP을 공급했다. 등록 SHA256과 내부 73개 hash를 확인하고 원본 core·선택 phase를 읽어 연구 continuation/closeout에 적용했다. [현재 적용 상태](harness_activation/STATE.md)를 따른다. 별도 코딩 ZIP은 미공급이며, 아래 문단은 `247de8d2`에서 종료한 원래 연구 실행의 역사적 기록이다. 40만 회 실험이나 기존 독립 판정을 소급 재인증하지 않는다.
+
 `physmath-research-loop`의 명시적 선택은 GPT-6 Astra v4.0.0이다. 하지만 이번 세션에는 registry의 연구/코딩 ZIP을 읽는 도구가 없고 첨부에도 없어, GPT-6 원본 패키지를 로드·적용했다는 확인은 **BLOCKED_PACKAGE_UNAVAILABLE**이다. 저장소의 `htt-dag-orchestrator`, `htt-physics-math-audit`, claim firewall/provenance, tensor formalism, local/global, scientific-code-validation, handoff 규칙을 읽고 연구를 수행했다. 두 유도 agent는 GPT-6 Astra로 명시 배정했지만 custom profile/hook 실행은 미인증이다. 이를 원본 하네스 로드나 네 축 CAS 수용으로 포장하지 않는다.
 
-다음 GPT-6 하네스 세션은 등록된 두 ZIP을 확보해 SHA256을 확인하고 START_HERE 및 core instructions를 읽어야 한다. 그 전에도 여기 포함된 공개된 저장소 프로토콜과 reference 코드/설계는 재현·검토할 수 있다. 이번 전달의 연구·설계 상태와 하네스 패키지 활성화 상태를 별도로 보존한다.
+원래 전달 당시에는 다음 세션이 등록된 두 ZIP을 확보해 읽어야 했다. 현재 연구 ZIP은 저장소에 보존·적용되어 있으며, 코딩 전환에는 별도 코딩 ZIP 취득이 남아 있다. 그 전에도 여기 포함된 공개된 저장소 프로토콜과 reference 코드/설계는 재현·검토할 수 있다. 이번 전달의 연구·설계 상태와 하네스 패키지 활성화 상태를 별도로 보존한다.
 
 ### 검수 후 확정한 jet 연결
 

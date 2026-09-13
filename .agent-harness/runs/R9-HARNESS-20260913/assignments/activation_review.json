@@ -1,0 +1,78 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-HARNESS-20260913",
+  "assignment_id": "activation_review",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "adjudicator",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R1",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-HARNESS-20260913-ACTIVATION"
+  ],
+  "task": "Independently review the user-supplied GPT-6 research package acquisition and its scoped application to the existing R9 closeout. Verify ZIP and unpacked member identity, source/core and current state alignment, research versus coding distinction, and no retroactive scientific or prior whole-run promotion. Inspect the bounded current diff and raw package checks. This is a delivery-only review; do not redo D1-D4/F1-F3 science or run old experiments. Write only the assigned result envelope; report must-fix findings or accepted scope, actual independent context, and generic_prompted/unverified launch evidence.",
+  "required_inputs": [
+    {
+      "path": "harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip",
+      "sha256": "dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7"
+    },
+    {
+      "path": "harness/physmath-research-gpt6-astra/PROJECT_INSTRUCTIONS.md",
+      "sha256": "a306f9ae283d13cec262e4300f19f045c9803a13ad2814d25d7a4b612ab447dc"
+    },
+    {
+      "path": "harness/physmath-research-gpt6-astra/START_HERE.md",
+      "sha256": "a9cf2210ce516e7db362335de4f754fb44147f541b7243995882a513f979f64d"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/STATE.md",
+      "sha256": "9577f2d1ca2fa0b2ff54358a277bcfe2fd9acf537b5c98ba3728b29064d996be"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/ACTIVATION.json",
+      "sha256": "9d9d5bea5bd599713be0a94d03ff6133989b8b2477a4c410c500ebd82db9d2be"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/execution.json",
+      "sha256": "3bc89d1472c0ad7a8f0c001c2a60b3788a2ae00f7defff3bc33e3366dc41be1e"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/harness_activation/evidence/member_hashes.json",
+      "sha256": "2888ca4e1676bd06432b056082c1a66a645c5aa516df176107d1860cd171427f"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/RESEARCH_STATE.json",
+      "sha256": "ad1f3dd37081ddf026c319e184f81191138fa7dbe215cc33b131530129e3cdc1"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+      "sha256": "082d151efee74e4c856c23914b2e5933dac80d0e28f756e0a8d69c4d6908ce6d"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+      "sha256": "8a39cf99772cbaab0e81d3b8476083e6e8c2a2b3960480ff226328e1e1ed289e"
+    },
+    {
+      "path": ".agent-harness/templates/RESULT_ENVELOPE.json",
+      "sha256": "c71aba5d7c65259125beca492b7e72726ed25fbecb124f0547b324aafa65e9f4"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "apply_patch"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-HARNESS-20260913/results/activation_review.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-HARNESS-20260913/results/activation_review.json",
+  "status": "registered",
+  "assignment_sha256": "ffd5e6e80f45a40db48d4a548bad18478a8ea2b4f8058fc422b03b1ba703ad08"
+}

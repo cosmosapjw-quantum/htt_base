@@ -1,0 +1,16 @@
+[
+  {
+    "check": "default_init_preserves_existing_including_empty",
+    "passed": true,
+    "exit": 0,
+    "stdout": "keep  state/CLOSEOUT.md\nkeep  state/DECISION_LOG.md\nkeep  state/EVIDENCE_LEDGER.md\nkeep  state/HYPOTHESIS_GRAPH.md\nkeep  state/NEGATIVE_RESULTS.md\nkeep  state/RESEARCH_STATE.md\n",
+    "stderr": ""
+  },
+  {
+    "check": "missing_state_created_existing_evidence_preserved",
+    "passed": true,
+    "exit": 0,
+    "stdout": "keep  state/CLOSEOUT.md\nkeep  state/DECISION_LOG.md\nkeep  state/EVIDENCE_LEDGER.md\nwrite state/HYPOTHESIS_GRAPH.md\nkeep  state/NEGATIVE_RESULTS.md\nkeep  state/RESEARCH_STATE.md\n",
+    "stderr": ""
+  }
+]

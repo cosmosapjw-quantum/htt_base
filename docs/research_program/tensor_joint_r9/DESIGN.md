@@ -1,6 +1,6 @@
 # R9 — 관측 응답에서 공동 물리 해석까지
 
-> **Current revision 2**: report-seeded upgrade from `5e4e899c` on the `d514eabd` catalog base. Read [model-to-data design](revision2/MODEL_TO_DATA.md), [new derivations](revision2/THEORY_EXTENSION.md), and [revision review](revision2/REVIEW.md) first. The 30-node DAG preserves R9-00…23 and adds R9-24…29. Original R9 evidence below remains historical. This revision ran reference experiments, not production or observations; exact GPT-6 archive activation is blocked in this session.
+> **Current revision 2**: report-seeded upgrade from `5e4e899c` on the `d514eabd` catalog base. Read [model-to-data design](revision2/MODEL_TO_DATA.md), [new derivations](revision2/THEORY_EXTENSION.md), and [revision review](revision2/REVIEW.md) first. The 30-node DAG preserves R9-00…23 and adds R9-24…29. Original R9 evidence below remains historical. This revision ran reference experiments, not production or observations; the original session had no GPT-6 archive. Research-only package acquisition/application was completed on 2026-09-13; see [current activation](revision2/harness_activation/STATE.md). The coding package and historical whole-run aggregate remain separate.
 
 목표는 **전체 Q/O 형태, 관측자·source 방향 응답, 자료 간 보정과 조건부 물리 집합을 같은 연구 질문에 연결하는 것**이다. R8의 실행 성과와 실패를 출발점으로 삼는다. BASS의 물질–복사–광학 벤치마크를 진행하거나 HTT 선행 조건으로 요구하지 않는다.
 
