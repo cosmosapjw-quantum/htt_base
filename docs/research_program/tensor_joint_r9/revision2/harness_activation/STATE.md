@@ -3,15 +3,36 @@
 PROJECT: HTT R9
 HARNESS_VERSION: 4.0.0
 LAST_UPDATED: 2026-09-13
-EXECUTION_STATUS: R9_SCOPED_IMPLEMENTATION_AND_CONDITIONAL_PRODUCT_INDEPENDENTLY_REVIEWED
+EXECUTION_STATUS: REAL_SDSS_MULTIDEPTH_DIAGNOSTIC_INDEPENDENTLY_REVIEWED
 MODEL_IDENTITY: UNKNOWN
 MODEL_IDENTITY_SOURCE: no trusted executing-model metadata asserted; explicit user choice selects the GPT-6 Astra harness only
 MODEL_PERFORMANCE_STATUS: NOT_EVALUATED
 OWNER: root / HTT common research
-CURRENT_PHASE: R9-03/05 and R9-24/25 implementation, validation and independent review
+CURRENT_PHASE: real SDSS PV multi-depth release extraction, full-mock replay and independent closeout
 MODE: local-validation
 
-## Goal, scope and completion
+## Current real-product continuation
+
+The accepted starting commit is `c532862651235ed0586a0677b61a43b2e09b3c85`.
+The active product/method is [SDSS PV multi-depth](../multidepth/README.md).
+The consumed configuration fixes four cumulative windows and a 36-component
+log-distance feature vector. The code preserves shared-catalogue cross-depth
+covariance, actual angular responses and the free shared eta zero point.
+The relevant repaired test suite passes 25 tests. All 2,048 released mock catalogues passed the complete archive checksum and
+feature replay; training/evaluation each use 128 boxes and 1,024 catalogues.
+See ../multidepth/final/result.json and final_execution.json. The targeted
+independent numerical closeout passes; see the R9-MULTIDEPTH-20260913
+results/repair_closeout.json and ../multidepth/PR_DELTA.md.
+The existing DESI scalar execution and original reference experiments are not
+rerun. Missing raw selection/group/CF3 calibration and physical common coverage
+remain unavailable, with zero new alpha consumption and all scientific HOLDs.
+
+The global runtime policy was reapplied after the user hook fix, using merged
+`0b6022e1eac1807f2363080690a6f07cf306e811`. Official installers/checks match the
+installed policy and hook command; actual automatic dispatch is not verified.
+This does not establish runtime model identity or change old task budgets.
+
+## Historical first-adapter scope and completion
 
 Current continuation from `9e9539edcdbd7bbf66e458cdce685c7a112f8a04` applies
 both exact archives to the actual adapters and a retained DESI conditional
@@ -52,6 +73,6 @@ The root has applied PROJECT_INSTRUCTIONS plus the integrated contract, phase ga
 
 ## Next action and stop
 
-Both harnesses are now locally available at harness/physmath-research-gpt6-astra and harness/physmath-coding-gpt6-astra with exact archives under harness/archives. Read its START_HERE.md, PROJECT_INSTRUCTIONS.md and this state, then ../../HANDOFF_PROMPT.md. Continue R9-03/05 and R9-24/25 according to the selected next phase and available product laws. Read CODING_CONTRACT.md and the coding START_HERE/AGENTS before the next coding phase; neither ZIP needs to be requested again. Stop this attachment-recovery task once the focused delivery checks and remote readback are complete; no new science claim is admitted.
+Both harnesses are now locally available at harness/physmath-research-gpt6-astra and harness/physmath-coding-gpt6-astra with exact archives under harness/archives. Read its START_HERE.md, PROJECT_INSTRUCTIONS.md and this state, then ../../HANDOFF_PROMPT.md. Continue the real product observation-law work in the current handoff; the c532 scoped R9-03/05 and R9-24/25 implementation is already complete. Read CODING_CONTRACT.md and the coding START_HERE/AGENTS before the next coding phase; neither ZIP needs to be requested again. Stop this attachment-recovery task once the focused delivery checks and remote readback are complete; no new science claim is admitted.
 
 The coding core was applied using its staging/merge policy and task/validation/closeout contract. Root AGENTS and old packages were preserved; no initializer reset project files. Packaged tool tests and protected-source comparisons are the current acceptance evidence. Scientific validation rows are not applicable to this package-only diff and remain required for the later numerical/production changes where relevant.

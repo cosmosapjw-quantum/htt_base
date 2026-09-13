@@ -1,0 +1,56 @@
+{
+  "base_commit": "c532862651235ed0586a0677b61a43b2e09b3c85",
+  "checks": [
+    {
+      "name": "protected_baseline",
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "c532862651235ed0586a0677b61a43b2e09b3c85",
+        "--",
+        "harness",
+        "htt/src/common",
+        "htt/htt/htt/infer",
+        "docs/research_program/tensor_joint_r9/REVISION_SPEC.md",
+        "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md",
+        "docs/research_program/tensor_joint_r9/revision2/evidence",
+        "docs/research_program/tensor_joint_r9/revision2/implementation",
+        "docs/research_program/tensor_joint_r9/revision2/run_checks.py"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "source_docs_whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)docs/research_program/tensor_joint_r9/revision2/multidepth/archive_download.log"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "raw_log_whitespace": {
+    "initial_check_exit": 2,
+    "classification": "RAW_TRANSPORT_STDOUT_FORMATTING_ONLY",
+    "disposition": "Original aria2 trailing spaces preserved byte-for-byte; source/docs check excludes only that raw log. No scientific failure or evidence rewrite.",
+    "initial_receipt_write": "aborted before creation, following git add returned pathspec exit 128; this file is the completed receipt"
+  },
+  "canonical_mirrors": "BYTE_IDENTICAL",
+  "canonical_completed_count": 148,
+  "dag_count": 201,
+  "dag_validation": "PASS via validate_pr_dag.py in this closeout",
+  "focused_tests": "25 passed; numerical sources unchanged since validation_repair.json",
+  "runner_help": "PASS",
+  "review_validation": "review_validation.json",
+  "science_holds": "UNCHANGED",
+  "remote_readback": "Pending delivery commit; recorded externally afterward to avoid self-reference"
+}

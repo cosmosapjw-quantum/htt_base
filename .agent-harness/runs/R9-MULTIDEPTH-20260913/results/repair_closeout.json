@@ -1,0 +1,128 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-MULTIDEPTH-20260913",
+  "assignment_id": "repair_closeout",
+  "assignment_sha256": "7b39de8bb4b3583c506623916364727c454371947e4647d1fad86700569568f4",
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "adjudication",
+  "result_path": ".agent-harness/runs/R9-MULTIDEPTH-20260913/results/repair_closeout.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "UNKNOWN",
+  "completed_at": "UNKNOWN",
+  "timing_evidence": "self_declared_unmeasured; timestamps were not measured and are recorded as UNKNOWN",
+  "status": "pass",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "pytest": "10 passed in 0.19s; repair suite receipt records 25 passed"
+  },
+  "commands": [
+    "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q tests/r9/test_sdss_pv_depth.py",
+    "read-only NumPy recomputation from final/mock_features.npz and final/moments.npz of C, HCHT, TCTT, means, responses, residuals, ranks, and split membership",
+    "strict_result_validation.load_and_validate_registered_result_file on this result"
+  ],
+  "artifacts": [],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R9-MULTIDEPTH-20260913/assignments/repair_closeout.json",
+    ".agent-harness/runs/R9-MULTIDEPTH-20260913/results/independent_review.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    "htt/obsstat/sdss_pv_depth.py",
+    "scripts/observed_runs/run_sdss_pv_depth.py",
+    "tests/r9/test_sdss_pv_depth.py",
+    "htt/src/common/depth_path.py",
+    "htt/src/common/r9_product.py",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/analysis.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/README.md",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/PR_DELTA.md",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/validation_repair.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/tests_repair.stdout",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/reader_initial_failure.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/reader_repair_smoke.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/archive_verification.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/final_execution.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/final/result.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/final/provenance.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/final/observed.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/final/mock_features.npz",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/final/moments.npz",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/final/mock_members.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/final/intake.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/final/embedding.json"
+  ],
+  "findings": [
+    {
+      "finding_id": "R9_ZERO_POINT_RANK_FIX_CONFIRMED",
+      "claim_id": "RUN-R9-MULTIDEPTH-20260913-CLOSEOUT",
+      "verdict": "pass",
+      "severity": "medium",
+      "evidence_fingerprint": "shared-eta-state-36x37-rank36-null-sign-regression-and-final-replay",
+      "statement": "The earlier zero-point rank/null test gap is repaired. The actual runner helper and its regression test require a 36-by-37 response with rank 36, the four shell-monopole coefficients at -1 and shared eta offset at +1 as an exact null direction, dex units, and a SHARED_NUISANCE role. The final saved observed response independently has the same shape, rank, and zero null residual.",
+      "assumptions_used": [
+        "The shared additive eta zero point is intentionally unidentifiable because no CF3/group calibration law is supplied.",
+        "All shell features and the nuisance offset retain the declared dex unit."
+      ],
+      "evidence_refs": [
+        "scripts/observed_runs/run_sdss_pv_depth.py:44-59",
+        "tests/r9/test_sdss_pv_depth.py:101-116",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/validation_repair.json",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final/observed.json"
+      ],
+      "counterevidence_refs": [],
+      "reproduction": [
+        "The focused test passes 10/10.",
+        "Read final observed shared_state_response and verify shape (36,37), numerical rank 36, and infinity norm of the prescribed null response equal to zero."
+      ],
+      "unresolved": [],
+      "confidence": 0.99
+    },
+    {
+      "finding_id": "R9_FINAL_NUMERICAL_AND_CLAIM_CEILINGS_CONFIRMED",
+      "claim_id": "RUN-R9-MULTIDEPTH-20260913-CLOSEOUT",
+      "verdict": "pass",
+      "severity": "medium",
+      "evidence_fingerprint": "final-2048-vector-cjk-hcht-tctt-provenance-intake-ceiling-recomputation",
+      "statement": "The source-bound final replay is numerically and semantically consistent. From the saved 2048 by 36 vectors, independent recomputation exactly reproduces saved training mean/C, HCHT, TCTT, transformed means/responses, evaluation residuals, fitted-minus-truth moments, and observed residuals. All 256 boxes supply exactly observers 0 through 7; even/odd split is 128/128 boxes and 1024/1024 vectors with no box leakage. The output remains an estimated-moment diagnostic: law_kind ESTIMATED_REQUIRES_CALIBRATION, probability null, alpha 0, physical response and state-jet-anchor coverage unavailable, and no likelihood/prior/posterior/x/Q/Pi/F/G/family result is emitted.",
+      "assumptions_used": [
+        "The checked MD5 and saved SHA256 bind the downloaded archive and final artifacts to the stated release within this repository's evidence boundary.",
+        "A box split prevents shared-box train/evaluation leakage but does not establish iid sampling, coverage, or a physical observation law."
+      ],
+      "evidence_refs": [
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/archive_verification.json",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final_execution.json",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final/mock_features.npz",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final/moments.npz",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final/result.json",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final/intake.json",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final/provenance.json",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final/mock_members.json"
+      ],
+      "counterevidence_refs": [
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/final/result.json limitations explicitly exclude a calibrated size, coverage, p-value, physical local/global response, and raw per-galaxy covariance."
+      ],
+      "reproduction": [
+        "Load saved mock_features.npz, select box modulo 2 equal to zero, calculate ddof=1 covariance, and compare C, HCHT, TCTT, means, responses, and residuals to moments.npz/result.json; every checked maximum absolute difference was 0.0 except initial restoration 1.474514954580286e-17."
+      ],
+      "unresolved": [
+        "The product remains ineligible for a physical selected observation law, confidence image, local/global discrimination, or family identification until the named upstream/calibration inputs and separate acceptance gates exist."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-MULTIDEPTH-20260913-CLOSEOUT",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "R9_ZERO_POINT_RANK_FIX_CONFIRMED",
+        "R9_FINAL_NUMERICAL_AND_CLAIM_CEILINGS_CONFIRMED"
+      ],
+      "summary": "The sole pre-repair numerical finding is closed. Final immutable saved artifacts and provenance pass the specified full-vector recomputations and split/identity checks. This is acceptance of the diagnostic extraction and its stated estimated-moment status only; it does not promote any physical, likelihood, local/global, Q/F/G, or family claim."
+    }
+  ],
+  "errors": []
+}

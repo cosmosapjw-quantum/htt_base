@@ -1,0 +1,65 @@
+{
+  "release": "10.5281/zenodo.6824749",
+  "analysis": {
+    "schema_version": 1,
+    "product_id": "SDSS_PV_ZENODO_6824749_SINGLE_FP_DEPTH_DIAGNOSTIC",
+    "release": "10.5281/zenodo.6824749",
+    "version": "1.1.0",
+    "base_commit": "c532862651235ed0586a0677b61a43b2e09b3c85",
+    "redshift_min": 0.0033,
+    "redshift_maxima": [
+      0.025,
+      0.05,
+      0.075,
+      0.1
+    ],
+    "redshift_field_data": "zcmb",
+    "redshift_field_mock": "z_obs",
+    "data_mask": "in_mask == 1",
+    "mock_mask": "released mock selection; no additional sky cut",
+    "distance_field": "logdist",
+    "preferred_distance_control": "logdist_corr",
+    "weights": "unit; quoted marginal errors are not treated as independent noise",
+    "frame": "published equatorial RA/Dec degrees; Cartesian axes (RA=0,Dec=0),(RA=90,Dec=0),north pole",
+    "basis": [
+      "monopole",
+      "dipole_x",
+      "dipole_y",
+      "dipole_z",
+      "stf_xx",
+      "stf_yy",
+      "stf_xy",
+      "stf_xz",
+      "stf_yz"
+    ],
+    "basis_units": "dex log10 distance ratio for every coefficient",
+    "transport": "adjacent identity 9x9; fixed feature-coordinate subtraction",
+    "training_split": "even simulation-box ID; all its observers stay in same split",
+    "evaluation_split": "odd simulation-box ID; all its observers stay in same split",
+    "expected_mock_count": 2048,
+    "expected_box_count": 256,
+    "rank_relative_tolerance": 1e-10,
+    "inference": "DIAGNOSTIC_ONLY",
+    "alpha_consumed": 0,
+    "state_jet_anchor_coverage": "UNAVAILABLE",
+    "law_status": "UNAVAILABLE_FOR_PHYSICAL_INFERENCE",
+    "physical_response_status": "UNAVAILABLE; additive eta angular-shell response only",
+    "stage_repetition": "Released post-selection FP outputs reused. Depth selection and angular projection repeated on each full catalogue; covariance/mean fitted only on training-box split. Upstream FP, group-richness correction and CF3 calibration not rerun.",
+    "predeclaration": "Defined after reading release descriptions and one raw row; no blindness or confirmatory registration claimed."
+  },
+  "analysis_sha256": "8e0c8a30a7c95ca1f1f2bd799e847e0635d1f21a0395ea4e679305b64931abe5",
+  "sources": {
+    "scripts/observed_runs/run_sdss_pv_depth.py": "65d3368eb6922a0b650ac7af381b0a4eb9a26fe88e6732923c24011133da9119",
+    "htt/obsstat/sdss_pv_depth.py": "48fb5109b22cb46c56a790e96eff49dbd856d4f39d11c530ad067915f8aa6b1e",
+    "htt/src/common/depth_path.py": "7b3115ced6d68ec1ede814df6662127719bc2a12cb4cebe97098c50e6274432f"
+  },
+  "data": {
+    "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/sdss_pv_zenodo_6824749/SDSS_PV_public.dat",
+    "md5": "b5b6e31caf7ea469c2ac2cb775fa8d14",
+    "sha256": "a48cfd9a9a3c27ff908f98972b2e26536e514b6635f9ed14c656dff3e5075485"
+  },
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.4.2"
+  }
+}

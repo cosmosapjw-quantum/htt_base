@@ -1,0 +1,97 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-MULTIDEPTH-20260913",
+  "assignment_id": "repair_closeout",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "adjudication",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-MULTIDEPTH-20260913-CLOSEOUT"
+  ],
+  "task": "Close the existing rank/null regression finding and independently recompute the final SDSS PV 2048-catalogue feature covariance/transform results; no new scientific admission or whole-archive replay.",
+  "required_inputs": [
+    {
+      "path": "htt/obsstat/sdss_pv_depth.py",
+      "sha256": "4e93ecb4d1d842d1e9a3832e8f91b90fbf329d4f7ab9d115b508ace36d9a2e54"
+    },
+    {
+      "path": "scripts/observed_runs/run_sdss_pv_depth.py",
+      "sha256": "5640dea7a01a5398ad2c4025e003ce8fdf2a6bbf4f45f63f4583c5bf7762396c"
+    },
+    {
+      "path": "tests/r9/test_sdss_pv_depth.py",
+      "sha256": "4e9e94d51223d10ae2833df048612dcf78422fb085da363a0321ecfae34f85f7"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/analysis.json",
+      "sha256": "ecffe2cf31beee78c6554a64a83e8fafde50994cf4620d35abff45a35e687b5d"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/final/result.json",
+      "sha256": "82e13c33c13b3ba0a68a64dd40ae5febd01ac357d1cb8d64580f7382f1bde9e5"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/final/provenance.json",
+      "sha256": "5b063ff94283b97fcf0b7079bc10cc9283e4b368e7174f4de31e50c19233d2ac"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/final/observed.json",
+      "sha256": "6a1121fce4a90b348e3dbbb540bba47af96e6db714bc7ae18001b0226867fe06"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/final/mock_features.npz",
+      "sha256": "8944043c70d756c636a372b9f5e92fac8d30b257c2ebbbe3e9328b4468be513e"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/final/moments.npz",
+      "sha256": "58f5bb7d97864efa84c3200b7073f88cb610314063b21b1ef0eecc412528d659"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/final/mock_members.json",
+      "sha256": "0a571abc0d325919bbdf302e5b6474979f9733f6778cec594907614b938be751"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/final/intake.json",
+      "sha256": "2ffb8fcd4df81c2df3b8b9a134d5d27b9e8eadf9beaaae151888dd5036ccca73"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/final/embedding.json",
+      "sha256": "c9e5ca9cdacda555db1bdec0540c17dba3de672a8ee4e671d39a51936fd0716c"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/archive_verification.json",
+      "sha256": "1432533231406abecad3a3c0c1d3bd172f8b9b9dc1acfd7334b33fbf82f934fb"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/final_execution.json",
+      "sha256": "7f796e81e0123f886ad1ab1a165b3c952d828fcf184387c2a6f5ceb76f8f5102"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/README.md"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/multidepth/PR_DELTA.md"
+    }
+  ],
+  "allowed_sibling_results": [
+    ".agent-harness/runs/R9-MULTIDEPTH-20260913/results/independent_review.json"
+  ],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-MULTIDEPTH-20260913/results/repair_closeout.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-MULTIDEPTH-20260913/results/repair_closeout.json",
+  "status": "registered",
+  "assignment_sha256": "7b39de8bb4b3583c506623916364727c454371947e4647d1fad86700569568f4"
+}

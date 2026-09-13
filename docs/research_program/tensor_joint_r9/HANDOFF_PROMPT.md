@@ -1,8 +1,10 @@
-# R9 revision 2 handoff — implemented intake and complete covariance adapter
+# R9 revision 2 handoff — real SDSS PV depth replay and remaining observation law
 
 저장소 `cosmosapjw-quantum/htt_base`, 브랜치
 `implementation/project-catalog-20260912`를 이어서 작업하라.
-이번 구현은 `9e9539edcdbd7bbf66e458cdce685c7a112f8a04`에서 시작했다.
+기존 intake/adapter 구현은 `9e9539edcdbd7bbf66e458cdce685c7a112f8a04`에서 시작했고,
+이번 실제 다중 깊이 continuation은 사용자가 확인한
+`c532862651235ed0586a0677b61a43b2e09b3c85`에서 시작했다.
 이 인계 파일을 포함하는 전달 커밋을 다음 immutable starting point로 고정하라.
 R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초기화하지 마라.
 
@@ -11,13 +13,15 @@ R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초
 1. `AGENTS.md`와 관련 repo skills, canonical `docs/codex_handoff/pr_backlog.yaml` 및 `pr_status.yaml`.
 2. 이 디렉터리의 `RESEARCH_STATE.json`, 고정 `REVISION_SPEC.md`, `campaign_dag.json`.
 3. `revision2/harness_activation/STATE.md`, `CODING_CONTRACT.md`와 `revision2/implementation/CONTRACT.md`.
-4. `revision2/implementation/REVIEW.md`, 실행/검증 JSON, `reference_comparison.json`, `desi_product.json`.
-5. `revision2/THEORY_EXTENSION.md` D1–D4/F1–F3와 `MODEL_TO_DATA.md`의 제품 조건.
+4. `revision2/multidepth/README.md`, `analysis.json`, 최종 실행·검수 기록.
+5. 이전 `revision2/implementation/REVIEW.md`, `reference_comparison.json`, `desi_product_final.json`.
+6. `revision2/THEORY_EXTENSION.md` D1–D4/F1–F3와 `MODEL_TO_DATA.md`의 제품 조건.
 
 ## 원본 하네스
 
 GPT-6 Astra v4.0.0의 두 원본 ZIP을 이번 구현에서도 등록 SHA256과 모든
-vendor member bytes로 재검증하고 실제 core/관련 phase를 읽어 적용했다.
+vendor member bytes로 재검증한 c532 evidence를 유지한다. 이번 continuation에서도
+두 ZIP의 등록 SHA256 일치를 확인하고 관련 core/phase를 적용했다.
 
 - 연구: `harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip`
   SHA256 `dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7`.
@@ -62,14 +66,47 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt/src:htt:htt/htt python3 -m pytest -q te
 SVD 기준벡터의 자유도로 random-coordinate fibre support 값은 환경 간 동일하지 않았다.
 허용오차를 변경하지 않았으며 이를 exact fibre-target replay PASS로 부르지 마라.
 
+## 실제 SDSS PV 다중 깊이 경로
+
+전체 2,048개 mock / 256개 box 실행과 관련 테스트 25개가 통과했고, 같은 독립
+검수자가 최종 저장 벡터의 수치 재계산 및 영점 퇴화 수정 검수를 완료했다.
+현재 수용 범위는 release feature diagnostic이다. 실제 선택 관측법칙과 물리
+state–jet–anchor coverage는 unavailable이며 과학적 HOLD를 승격하지 않는다.
+
+
+`revision2/multidepth/README.md`와 실행기가 읽는 `analysis.json`이 이번 제품과
+추출 절차를 정의한다. 공식 v1.1.0 release의 `logdist`를 네 누적 redshift 창에서
+9개 angular feature로 추출한다. 같은 전체 mock 카탈로그에서 36성분 Y와 각 창의
+응답을 함께 다시 적합하고, simulation box 단위로 학습·평가를 분리한다.
+전체 sample Cjk, mean/response, HCHᵀ와 초기 Y0를 포함한 변환을 저장한다.
+최종 실행 상태와 수치는 `revision2/multidepth/final/result.json`을 소비하라.
+
+공개 mock의 반복 ID는 서로 다른 행을 가리킬 수 있다. source ID와 행 번호를
+보존하며 ID 중복만으로 행을 버리지 마라. 공통 additive eta 영점은 36개 shell
+계수와 함께 37차원 state에 들어가며, 36차원 관측 응답의 정확한 퇴화를 유지한다.
+계수는 dex 단위의 현상론적 log-distance feature다. 물리 velocity/shear/Q/O 또는
+local boost/global tilt 응답으로 바꾸어 읽지 마라.
+
+이 경로가 추정하는 것은 release feature의 전체 covariance다. 원시 은하 covariance,
+확정 Gaussian 법칙 또는 survey coverage가 아니다. `logdist_corr`의 group-richness
+보정, CF3 영점 보정, 관측 자료로 조정한 선택·FP·오차 생성기의 전체 반복이 없다.
+이 입력들을 확보하기 전에는 `ESTIMATED_REQUIRES_CALIBRATION`을 유지하고,
+HTT Gaussian inversion이나 p-value를 생성하지 마라. 현재 alpha 소비는 0이다.
+
 ## 다음 과학 실행과 HOLD
 
 R9-03/05와 R9-24/25의 **scoped implementation**이 실자료/형식적 capability를
 승격하지 않는다. R9-24 `FORMAL_DEPTH`와 R9-25 적격 CF4/JWST/CMB의 실제 전체 깊이
-법칙이 여전히 필요하다. 다음은 정확한 선택·group·calibration·mask·frame과 모든
-Cjk, mean/response를 갖춘 해당 제품 하나를 연결하고, 같은 전체 raw mocks에서
-selection/fit/covariance/transport를 반복하는 단계다. 준비된 DESI scalar를 그
-필수 선행 조건의 대용으로 쓰지 마라. provider/jet가 없으면 해당 물리 함수만 막는다.
+법칙이 여전히 필요하다. 다음 핵심은 SDSS PV의 선택 전 parent population과
+FP 생성·적합 코드, group-richness correction 및 CF3 group-level calibration을
+확보해, 자료로 추정하는 단계들을 같은 전체 모의자료 안에서 반복하는 것이다.
+현재 release feature replay의 mean/C/창 응답은 그 입력 확보를 대체하지 않는다.
+기존 R9-03/05 adapter 구현을 다시 시작하거나 DESI scalar를 반복 실행하지 마라.
+물리 image는 동일한 calibrated state–jet–anchor 사건이 갖춰져야 한다.
+
+Fibre 재현 차이는 별도 수치 의무다. 다음 비교는 동일한 **ambient STF 방향**을
+고정한 뒤 각 환경의 SVD 좌표로 옮겨야 한다. 같은 SVD-coordinate 난수 seed만으로
+같은 support target을 정의했다고 보지 마라.
 
 기존 R8 STOP_INVALID, 25 unresolved pools, CF4 quarantine, PR4 skip,
 production/empirical/novelty/four-axis HOLD와 R9-REV2-20260912의
@@ -89,3 +126,8 @@ Subagent 시작 전에 실제 worktree의 context pack과 등록 assignment를 �
 않았다. 실제 지정 worktree의 결과를 직접 검증하라. 독립 검수는 현재 구현에 한정하며
 네 축 CAS를 대체하지 않는다. canonical 상태/미러/PR_DELTA, commit/push와 원격
 commit/file-body readback을 끝낸 후 새 과학 입력을 기다려라.
+
+전역 Codex 하네스는 사용자 hook 수정 후 `0b6022e1eac1807f2363080690a6f07cf306e811`
+merged authority로 다시 적용했다. 공식 설치/명령 일치 검사는 통과했지만 실제
+auto-dispatch 성공은 미확인이다. runtime 정책 적용은 과학 하네스 ZIP 적용과
+별도이며, 과거 receipt나 frozen budget을 초기화하지 않는다.

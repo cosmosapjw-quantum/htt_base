@@ -1,0 +1,62 @@
+PGC: Principal Galaxies Catalog number.
+coords: RA and Dec formatted in hours, minutes and seconds.
+objid: SDSS photometric object identifier.
+specObjID: SDSS spectroscopic object identifier.
+plate: SDSS spectroscopic plate number.
+RA: Right Ascension in deg.
+Dec: Declination in deg.
+l: Galactic longitude in deg.
+b: Galactic latitude in deg.
+deVMag_g: g-band apparent magnitude from a deVaucoleurs profile fit.
+deVMagErr_g: error on g-band apparent magnitude from a deVaucoleurs profile fit.
+deVMag_r: r-band apparent magnitude from a deVaucoleurs profile fit.
+deVMagErr_r: error on r-band apparent magnitude from a deVaucoleurs profile fit.
+deVRad_r: angular r-band scale radius from a deVaucoleurs profile fit.
+deVRadErr_r: error on angular r-band scale radius from a deVaucoleurs profile fit.
+deVAB_r: r-band axial ratio from a deVaucoleurs profile fit.
+deVABErr_r: error on r-band axial ratio from a deVaucoleurs profile fit.
+extinction_g: Milky Way Galactic extinction in the g-band.
+extinction_r: Milky Way Galactic extinction in the r-band.
+kcor_g: g-band k-correction from Chilingarian et. al., 2014 using g-r colours.
+kcor_r: r-band k-correction from Chilingarian et. al., 2014 using g-r colours.
+absmag_r: r-band absolute magnitude accounting for k-correction, evolution and Galactic extinction.
+zhelio: observed heliocentric redshift.
+zhelioerr: error in the observed heliocentric redshift.
+zcmb: CMB-frame redshift using Planck CMB dipole.
+SIGMA_STARS: velocity dispersion from the Portsmouth catalogue (Thomas et. al., 2013)
+SIGMA_STARS_ERR: error on the velocity dispersion from the Portsmouth catalogue (Thomas et. al., 2013)
+IDgroupT17: ID for Tempel et. al., 2017 group containing the galaxy.
+NgroupT17: Total number of galaxies (including those not in the SDSS PV catalogue) in the Tempel et. al., 2017 group
+containing the galaxy.
+zcmb_group: Group averaged, CMB-frame redshift for Tempel et. al., 2017 group containing the galaxy.
+M: Tempel et. al., 2014 morphological classification. 0 = unclear, 1 = spiral, 2 = elliptical (all 1 entries have been removed
+already).
+in_mask: Flag for whether galaxy is within the SDSS NYU-VAGC DR7 large scale structure angular mask. 1 means the galaxy
+is within the mask, and so can be used for clustering measurements or comparison with the provided random catalogue.
+nbar: Number density of SDSS galaxies per unit volume at the galaxy’s location. Units of h3 Mpc-3, used mainly for
+clustering measurements.
+r: log10(effective radius). One of the fundamental plane parameters. Effective radius has units of h-1 kpc.
+er: error on r.
+i: log10(surface brightness at the effective radius). One of the fundamental plane parameters. Surface brightness has units
+of Lsun pc-2.
+ei: error on i.
+s: log10(velocity dispersion). One of the fundamental plane parameters. Velocity dispersion has units of km s-1.
+es: error on s.
+Sn: The weight given to each galaxy when fitting the fundamental plane. See Eqs. 16 & 18.
+logdist: Mean of the logarithmic distance ratio distribution from a single FP fit to the full sample. Can be treated as the
+Gaussian mean if logdist_alpha is ignored (but is not the skew-normal ‘location’ parameter). Equivalent to log10(dz/dH),
+where dz is the distance to zcmb assuming some cosmological model, and dH is the distance derived from the distance
+indicator.
+logdist_err: Standard deviation of the logdistance ratio distribution from a single FP fit to the full sample. Can be treated as
+the Gaussian standard deviation if logdist_alpha is ignored (but is not the skew-normal ‘scale’ parameter).
+logdist_alpha: The “alpha” parameter of the skew-normal pdf calculated for each galaxy’s logarithmic distance ratio
+distribution from a single FP fit to the full sample. Gives an overall skewness quite close to zero because the pdf for each
+galaxy is close to Gaussian.
+logdist_corr: Same as logdist, but from multiple FP fits as a function of group richness. This is the preferred measurement,
+but zero-point calibration should be carried out at the group-level (i.e., by assuming objects in the same group are at the
+same distance), not with individual objects.
+logdist_corr_err: Same as logdist_err, but from multiple FP fits as a function of group richness. This is the preferred
+measurement but see caveat above.
+logdist_corr_alpha: Same as logdist_alpha, but from multiple FP fits as a function of group richness. This is the preferred
+measurement but see caveat above.
+

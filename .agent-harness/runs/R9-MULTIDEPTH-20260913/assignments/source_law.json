@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-MULTIDEPTH-20260913",
+  "assignment_id": "source_law",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R1",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-MULTIDEPTH-20260913-LAW"
+  ],
+  "task": "Read-only primary-source analysis of SDSS PV Howlett 2022 arXiv2201.03112 and public Zenodo release 6640513 or official successor. Determine exactly which selection, calibration, FP fit, grouping and distance-inference stages are repeated in released 2048 mocks, their raw columns, available generation/fitting code, and missing stages for common state-jet-anchor coverage. Do not download large mocks; root owns acquisition and production. Primary paper and release only, no broad repository search. Do not read sibling results. You are not alone; do not revert edits. Write only assignment result and small evidence under its artifacts/source_law folder. No nested spawning.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md",
+      "sha256": "671897761ba5b77449ae5fa3ecf5ce2bce8ee0e9266d35578a58a4f9f69075ee"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+      "sha256": "2f1a636a88d43bcc95bd00f2e7327509032dcd1d1d4683b5a67ebd68ab724a99"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "web"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-MULTIDEPTH-20260913/results/source_law.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-MULTIDEPTH-20260913/results/source_law.json",
+  "status": "registered",
+  "assignment_sha256": "2a61e490dd10589ef6cf1c6fba15df5583b34dffb3273c33d94c84c7397395d2"
+}

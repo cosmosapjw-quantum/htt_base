@@ -8,7 +8,7 @@
   "base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
   "research_run": "R9-REV2-20260912",
   "owner": "HTT research",
-  "status": "R9_REV2_SCOPED_IMPLEMENTATION_AND_CONDITIONAL_PRODUCT_ACCEPTED",
+  "status": "R9_REV2_REAL_MULTIDEPTH_RELEASE_DIAGNOSTIC_INDEPENDENTLY_REVIEWED",
   "completed": [
     "Pinned compendium and R9 intake",
     "D1-D4 and F1-F3 direct derivations",
@@ -24,7 +24,9 @@
     "R9-24/25 full-covariance and initial-block adapter implemented on current R7 APIs; formal/empirical capability held",
     "Original revision2/run_checks.py replayed in separate source copy; invariants pass, SVD-coordinate fibre target not identical",
     "Retained DESI Gaussian-summary conditional path executed at alpha=1/80 with 100000 model draws",
-    "Independent native review and same-reviewer targeted repair closeout accepted; 55 tests and final source-bound DESI rerun pass"
+    "Independent native review and same-reviewer targeted repair closeout accepted; 55 tests and final source-bound DESI rerun pass",
+    "Real SDSS PV v1.1.0 observation and 2048 complete mock catalogues replayed into four depths with full estimated Cjk, means and angular responses; no law/coverage admission",
+    "Independent same-reviewer closeout confirms full saved-vector moments/transforms, box split, source binding and the shared zero-point regression; 25 relevant tests pass"
   ],
   "not_executed": [
     "four-axis CAS admission",
@@ -38,7 +40,7 @@
     "CF4 quarantine",
     "R9 initial SymPy import failure"
   ],
-  "next": "Acquire one qualified CF4/JWST/CMB selected joint depth law with all Cjk, mean/response and full pipeline mocks; retain R9-24 FORMAL_DEPTH and R9-25 empirical HOLD until their existing gates execute.",
+  "next": "Obtain and repeat the SDSS PV upstream selection/FP generator and fitting, group-richness correction and CF3 group-level calibration on the same complete mock surveys; then qualify the selected joint law within existing budgets. Keep R9-24 formal and R9-25/26/27 scientific capabilities on HOLD; ambient-STF fibre comparison is a separate obligation.",
   "runtime": {
     "python": "3.12.14",
     "numpy": "2.3.5",
@@ -119,14 +121,14 @@
     "package_root": "harness/physmath-research-gpt6-astra",
     "active_state": "revision2/harness_activation/STATE.md",
     "receipt": "revision2/harness_activation/ACTIVATION.json",
-    "scope": "Current authorized R9 adapter implementation and conditional product execution; original package-only evidence retained separately",
+    "scope": "Existing adapters plus current real SDSS PV release extraction/full estimated covariance; both original ZIP identities preserved; selected law and physical coverage remain unavailable",
     "runtime_model_verification": false,
     "model_performance_status": "NOT_EVALUATED",
     "coding_package_status": "APPLIED_TO_R9_SCOPED_IMPLEMENTATION",
     "coding_package_root": "harness/physmath-coding-gpt6-astra",
     "coding_contract": "revision2/harness_activation/CODING_CONTRACT.md",
     "research_only_checkpoint_commit": "543b76b2f36084c555ecd113ae3c608472912313",
-    "current_verification": "revision2/implementation/archive_verification.json"
+    "current_verification": "revision2/multidepth/harness_identity.json"
   },
   "harness_aggregate": {
     "status": "NOT_A_WHOLE_CURRENT_RUN_PASS",
@@ -136,7 +138,7 @@
     "run_id": "R9-REV2-20260912",
     "historical_at_commit": "247de8d232b401974d0deab2f9e9111974a0fbbb"
   },
-  "campaign_execution_snapshot_note": "campaign_dag.json is the input snapshot sealed by the final independent followup; R9-01 execution_state retains its pre-decision label. Current scoped acceptance is recorded in this RESEARCH_STATE.json and revision2/evidence/decision.json; no capability is granted by that acceptance.",
+  "campaign_execution_snapshot_note": "Current operational snapshot records the scoped c532 adapters and real SDSS release feature execution. Historical source-sealed decisions remain at their pinned commits; current updates grant no scientific capability.",
   "historical_harness_activation": {
     "requested": "GPT-6 Astra v4.0.0",
     "status": "BLOCKED_PACKAGE_UNAVAILABLE",
@@ -161,5 +163,30 @@
     "coverage_image": "UNAVAILABLE_NO_COMMON_STATE_JET_ANCHOR_EVENT",
     "independent_review": ".agent-harness/runs/R9-INTAKE-20260913/results/repair_closeout.json",
     "current_run_aggregate": "NOT_A_WHOLE_CURRENT_RUN_PASS: initial review seals remain prerepair; exact source snapshots preserved, final repair assignment validates current sources"
-  }
+  },
+  "multidepth": {
+    "base_commit": "c532862651235ed0586a0677b61a43b2e09b3c85",
+    "work_unit": "PR-R9-MULTIDEPTH",
+    "owner": "obsstat",
+    "scope": "SDSS PV single-FP release feature diagnostic",
+    "status": "RELEASE_FEATURE_REPLAY_COMPLETE",
+    "method": "revision2/multidepth/README.md",
+    "analysis": "revision2/multidepth/analysis.json",
+    "result": "revision2/multidepth/final/result.json",
+    "execution": "revision2/multidepth/final_execution.json",
+    "mock_count": 2048,
+    "box_count": 256,
+    "feature_dimension": 36,
+    "covariance": "FULL_CJK_ESTIMATE_FROM_SHARED_RELEASE_CATALOGUES",
+    "selected_observation_law": "UNAVAILABLE_UPSTREAM_SELECTION_FP_GROUP_CF3_REPLAY_MISSING",
+    "law_kind": "ESTIMATED_REQUIRES_CALIBRATION",
+    "physical_local_global_response": "UNAVAILABLE",
+    "coverage_image": "UNAVAILABLE_NO_COMMON_STATE_JET_ANCHOR_EVENT",
+    "alpha_consumed": 0,
+    "review_status": "PASS_SCOPED_INDEPENDENT_REPAIR_CLOSEOUT",
+    "independent_review": ".agent-harness/runs/R9-MULTIDEPTH-20260913/results/repair_closeout.json",
+    "current_run_aggregate": "NOT_A_WHOLE_CURRENT_RUN_PASS: initial review required-input seals remain pre-repair; snapshots and failure retained; current closeout is separate"
+  },
+  "historical_campaign_execution_snapshot_note": "campaign_dag.json is the input snapshot sealed by the final independent followup; R9-01 execution_state retains its pre-decision label. Current scoped acceptance is recorded in this RESEARCH_STATE.json and revision2/evidence/decision.json; no capability is granted by that acceptance.",
+  "global_policy_refresh": "revision2/multidepth/global_policy_refresh.json"
 }

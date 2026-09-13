@@ -1,0 +1,73 @@
+{
+  "release": "10.5281/zenodo.6824749",
+  "analysis": {
+    "schema_version": 1,
+    "product_id": "SDSS_PV_ZENODO_6824749_SINGLE_FP_DEPTH_DIAGNOSTIC",
+    "release": "10.5281/zenodo.6824749",
+    "version": "1.1.0",
+    "base_commit": "c532862651235ed0586a0677b61a43b2e09b3c85",
+    "redshift_min": 0.0033,
+    "redshift_maxima": [
+      0.025,
+      0.05,
+      0.075,
+      0.1
+    ],
+    "redshift_field_data": "zcmb",
+    "redshift_field_mock": "z_obs",
+    "data_mask": "in_mask == 1",
+    "mock_mask": "source section 3.2.1 applies same NYU-VAGC DR7 angular mask; all released mock rows eligible for depth cut",
+    "distance_field": "logdist",
+    "preferred_distance_control": "logdist_corr",
+    "weights": "unit; quoted marginal errors are not treated as independent noise",
+    "frame": "published equatorial RA/Dec degrees; Cartesian axes (RA=0,Dec=0),(RA=90,Dec=0),north pole",
+    "basis": [
+      "monopole",
+      "dipole_x",
+      "dipole_y",
+      "dipole_z",
+      "stf_xx",
+      "stf_yy",
+      "stf_xy",
+      "stf_xz",
+      "stf_yz"
+    ],
+    "basis_units": "dex log10 distance ratio for every coefficient",
+    "transport": "adjacent identity 9x9; fixed feature-coordinate subtraction",
+    "training_split": "even simulation-box ID; all its observers stay in same split",
+    "evaluation_split": "odd simulation-box ID; all its observers stay in same split",
+    "expected_mock_count": 2048,
+    "expected_box_count": 256,
+    "rank_relative_tolerance": 1e-10,
+    "inference": "DIAGNOSTIC_ONLY",
+    "alpha_consumed": 0,
+    "state_jet_anchor_coverage": "UNAVAILABLE",
+    "law_status": "UNAVAILABLE_FOR_PHYSICAL_INFERENCE",
+    "physical_response_status": "UNAVAILABLE; additive eta angular-shell response only",
+    "stage_repetition": "Released post-selection FP outputs reused. Depth selection and angular projection repeated on each full catalogue; covariance/mean fitted only on training-box split. Upstream FP, group-richness correction and CF3 calibration not rerun.",
+    "predeclaration": "Defined after reading release descriptions and one raw row; no blindness or confirmatory registration claimed.",
+    "source_method": "https://arxiv.org/html/2201.03112 sections 2.5, 3.2.1, 3.2.2, 5.3, 5.4",
+    "calibration_scope": "No raw-survey law: mock population, measurement-error and selection functions were tuned to data; group-richness correction and CF3 calibration not repeated."
+  },
+  "analysis_sha256": "ecffe2cf31beee78c6554a64a83e8fafde50994cf4620d35abff45a35e687b5d",
+  "sources": {
+    "scripts/observed_runs/run_sdss_pv_depth.py": "5640dea7a01a5398ad2c4025e003ce8fdf2a6bbf4f45f63f4583c5bf7762396c",
+    "htt/obsstat/sdss_pv_depth.py": "4e93ecb4d1d842d1e9a3832e8f91b90fbf329d4f7ab9d115b508ace36d9a2e54",
+    "htt/src/common/depth_path.py": "7b3115ced6d68ec1ede814df6662127719bc2a12cb4cebe97098c50e6274432f",
+    "htt/src/common/r9_product.py": "d22f91bc315c1604864e7dbc8cdca02cf7c773be0b35dd0d0dfeb08fcd3a9037"
+  },
+  "data": {
+    "path": "/mnt/sn850x2t/htt_base_e2e/workdir/raw/sdss_pv_zenodo_6824749/SDSS_PV_public.dat",
+    "md5": "b5b6e31caf7ea469c2ac2cb775fa8d14",
+    "sha256": "a48cfd9a9a3c27ff908f98972b2e26536e514b6635f9ed14c656dff3e5075485"
+  },
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.4.2"
+  },
+  "mocks": {
+    "path": "/home/cosmosapjw/.cache/htt-r9/sdss_pv_zenodo_6824749/mocks.tar.gz",
+    "md5": "9ba3e8876f6f08a2af00d30cbf1c6cd9",
+    "sha256": "eaac95f323e6dcb6c3626122793d734790f8b27cb0b231f31e60cdd6255b0536"
+  }
+}

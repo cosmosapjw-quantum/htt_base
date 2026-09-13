@@ -1,0 +1,104 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-MULTIDEPTH-20260913",
+  "assignment_id": "independent_review",
+  "assignment_sha256": "dff158a4f7ddb8a1e1cdc79adc2e15e151ebecb9269a89bce55e5fd089c02e33",
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/R9-MULTIDEPTH-20260913/results/independent_review.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "started_at": "2026-09-13T03:16:00Z",
+  "completed_at": "2026-09-13T03:27:47Z",
+  "status": "fail",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "pytest": "9 passed in 0.20s"
+  },
+  "commands": [
+    "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q tests/r9/test_sdss_pv_depth.py",
+    "read-only current-extractor replay of the official data and linear-rank check"
+  ],
+  "artifacts": [],
+  "files_read_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R9-MULTIDEPTH-20260913/assignments/independent_review.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    "htt/obsstat/sdss_pv_depth.py",
+    "scripts/observed_runs/run_sdss_pv_depth.py",
+    "tests/r9/test_sdss_pv_depth.py",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/analysis.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/observed_initial/observed.json",
+    "docs/research_program/tensor_joint_r9/revision2/multidepth/README.md",
+    "htt/src/common/depth_path.py",
+    "htt/src/common/r9_product.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "R9_ZERO_POINT_RANK_TEST_GAP",
+      "claim_id": "RUN-R9-MULTIDEPTH-20260913-REVIEW",
+      "verdict": "fail",
+      "severity": "medium",
+      "evidence_fingerprint": "sdss-pv-shared-state-response-36x37-rank36-exact-null",
+      "statement": "The implementation correctly retains the additive eta zero-point degeneracy, but no regression test protects its rank or sign. Current direct replay gives shared_state_response shape (36,37), rank 36, and exact null vector with -1 for every shell monopole and +1 for the shared zero point. A future response refactor could silently turn this unidentifiable nuisance into an apparent calibrated mode.",
+      "assumptions_used": [
+        "The four shell monopole coordinates and the additive eta zero point have the common declared dex unit.",
+        "The shared zero point is intentionally free because the CF3/group calibration law is unavailable."
+      ],
+      "evidence_refs": [
+        "scripts/observed_runs/run_sdss_pv_depth.py:80-105",
+        "tests/r9/test_sdss_pv_depth.py:60-90",
+        "read-only replay: shared_state_response shape=(36,37), rank=36, null residual infinity norm=0"
+      ],
+      "counterevidence_refs": [
+        "tests/r9/test_sdss_pv_depth.py:60-74 checks that the contrast map removes a constant offset, but not the 37-coordinate shared-state degeneracy."
+      ],
+      "reproduction": [
+        "Build the 36-column shell response from extract_depth, append the runner's shared-offset column, and assert rank 36 plus R @ [-1,0,...,-1,0,+1] = 0 to numerical tolerance."
+      ],
+      "unresolved": [],
+      "confidence": 0.99
+    },
+    {
+      "finding_id": "R9_SOURCE_BOUND_FINAL_REPLAY_REQUIRED",
+      "claim_id": "RUN-R9-MULTIDEPTH-20260913-REVIEW",
+      "verdict": "pass",
+      "severity": "low",
+      "evidence_fingerprint": "observed-intake-dev-output-current-y-response-equal-but-source-stale",
+      "statement": "The inspected observed_intake development output numerically agrees with the current extractor (counts [890,7277,19160,33121], max absolute Y and response differences zero), but its provenance embeds older runner/extractor/config hashes. It is therefore evidence for extraction continuity only; final acceptance requires the planned new source-bound replay after the full mock archive passes its official checksum.",
+      "assumptions_used": [
+        "Development output is not presented as final validation.",
+        "The official release checksum must be verified before the full archive is consumed."
+      ],
+      "evidence_refs": [
+        "external:/mnt/sn850x2t/htt_base_e2e/R9-MULTIDEPTH-20260913/observed_intake/provenance.json",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth/analysis.json",
+        "read-only replay: max_abs_Y=0 and max_abs_response=0 against observed_intake"
+      ],
+      "counterevidence_refs": [],
+      "reproduction": [
+        "After archive MD5 equals 9ba3e8876f6f08a2af00d30cbf1c6cd9, run the documented runner to a new output directory and require its provenance to cite the final source and analysis hashes."
+      ],
+      "unresolved": [
+        "The 10.6 GB archive identity and 2048-member replay were deliberately not attempted while the download remains partial."
+      ],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-MULTIDEPTH-20260913-REVIEW",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "R9_ZERO_POINT_RANK_TEST_GAP",
+        "R9_SOURCE_BOUND_FINAL_REPLAY_REQUIRED"
+      ],
+      "summary": "Units and signs are internally consistent: additive angular coefficients and shared-state coordinates are dex, angular basis and response are dimensionless, and no velocity/physical response is inferred. The code preserves full Cjk and HCHt transforms, keeps boxes intact across the train/evaluation split, and emits estimated moments rather than a likelihood, posterior, probability, x/Q/Pi/F/G result, or family identification. Add the rank/null regression test, then perform the source-bound full replay before any final numerical use."
+    }
+  ],
+  "errors": []
+}

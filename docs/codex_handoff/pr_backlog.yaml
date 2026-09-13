@@ -202,6 +202,7 @@ policy:
   - PR-CATALOG-004
   - PR-R9-REV2
   - PR-R9-INTAKE
+  - PR-R9-MULTIDEPTH
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -10027,5 +10028,31 @@ prs:
   kill: No native solver, scientific admission, invented multi-depth product, quarantine reuse or alpha redistribution; reference replay runs in an isolated source copy.
   level: L0
   scope: r9_scoped_implementation_and_conditional_product
+  risk: R2
+  user_authorized: true
+- id: PR-R9-MULTIDEPTH
+  wave: 0
+  title: Replay real SDSS PV depth features with complete catalogue mock covariance
+  owner: OBSSTAT
+  depends:
+  - PR-R9-INTAKE
+  files:
+  - htt/obsstat/sdss_pv_depth.py
+  - scripts/observed_runs/run_sdss_pv_depth.py
+  - tests/r9/test_sdss_pv_depth.py
+  - docs/research_program/tensor_joint_r9/revision2/multidepth
+  tests:
+  - OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q tests/r9/test_sdss_pv_depth.py
+  - python3 scripts/observed_runs/run_sdss_pv_depth.py --help
+  - python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  dod:
+  - Bind the official SDSS PV v1.1.0 data and complete 2048-mock release by published checksums
+  - Repeat fixed depth selection and angular extraction on each complete catalogue and retain full sample Cjk, mean, response and initial block
+  - Preserve mock rows with repeated source IDs, whole-box training/evaluation separation and free shared zero-point degeneracy
+  - Explicitly withhold raw-survey law and physical coverage where upstream fitted selection, group-richness and CF3 calibration repetitions are unavailable
+  - Independent review and coherent repair closeout, canonical handoff and ordinary push/readback
+  kill: Estimated mock moments are not a known Gaussian or calibrated physical law; no p-value, budget transfer, CF4 quarantine reuse, native solver or R9 capability admission.
+  level: L0
+  scope: r9_real_multidepth_release_feature_diagnostic
   risk: R2
   user_authorized: true

@@ -1,5 +1,31 @@
 # R9 revision 2 — coding-harness application contract
 
+## Current continuation from c5328626
+
+The user accepted `c532862651235ed0586a0677b61a43b2e09b3c85` as the next base.
+The current coding task is the real SDSS PV multi-depth release extraction in
+[../multidepth/README.md](../multidepth/README.md), with consumed settings in
+[../multidepth/analysis.json](../multidepth/analysis.json). The existing common
+intake and full covariance adapter are reused. Source-bound full-catalogue
+execution (2,048 mocks, zero failures), 25 relevant tests and the independent
+repair closeout are complete; see ../multidepth/PR_DELTA.md.
+
+This continuation implements per-catalogue depth extraction and angular window
+response, shared zero-point degeneracy, a simulation-box training/evaluation
+split, and full estimated feature covariance with initial-level information.
+Its validation includes real row parsing, additive-field/JVP recovery, singular
+refusal, cross-depth covariance, split leakage and the actual 36-by-37 shared
+state rank/null regression. It does not reconstruct the absent upstream
+selection/FP/group/CF3 law, create a calibrated probability, spend new alpha,
+or admit physical state–jet–anchor coverage. No existing tolerance or HOLD is
+changed. Source review and numerical replay are independent of formal admission.
+
+Both original archive SHA256 values match their registered identities again;
+the prior full member/vendor verification and package templates remain intact.
+The older contract below describes its own historical scope only.
+
+## Historical package and first-adapter continuation
+
 Current continuation: the user's authorized adapter/product implementation
 starts at `9e9539edcdbd7bbf66e458cdce685c7a112f8a04`. Its scientific contract,
 scope, actual APIs and validation matrix are in

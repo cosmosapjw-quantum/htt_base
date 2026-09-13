@@ -1,0 +1,21 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/r9",
+    "htt/src/common/test_r9_depth_path.py",
+    "htt/src/common/test_r9_tensor_functionals.py"
+  ],
+  "returncode": 0,
+  "seconds": 1.5751876060094219,
+  "finding": "R9_ZERO_POINT_RANK_TEST_GAP",
+  "resolution": "actual runner helper + SharedStateEmbedding null/rank/sign regression",
+  "source_sha256": {
+    "htt/obsstat/sdss_pv_depth.py": "4e93ecb4d1d842d1e9a3832e8f91b90fbf329d4f7ab9d115b508ace36d9a2e54",
+    "scripts/observed_runs/run_sdss_pv_depth.py": "5640dea7a01a5398ad2c4025e003ce8fdf2a6bbf4f45f63f4583c5bf7762396c",
+    "tests/r9/test_sdss_pv_depth.py": "4e9e94d51223d10ae2833df048612dcf78422fb085da363a0321ecfae34f85f7"
+  },
+  "snapshots": "pre_repair_sources preserves six frozen initial review inputs; one live input has no SHA field and was skipped after initial KeyError, no source lost"
+}

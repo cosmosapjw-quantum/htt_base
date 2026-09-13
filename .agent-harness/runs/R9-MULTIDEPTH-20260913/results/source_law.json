@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-MULTIDEPTH-20260913",
+  "assignment_id": "source_law",
+  "assignment_sha256": "2a61e490dd10589ef6cf1c6fba15df5583b34dffb3273c33d94c84c7397395d2",
+  "agent_type": "context_mapper",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/R9-MULTIDEPTH-20260913/results/source_law.json",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-13T11:00:00+09:00",
+  "completed_at": "2026-09-13T11:30:00+09:00",
+  "status": "inconclusive",
+  "tool_versions": {"shell": "bash", "python3": "3.12.3", "pdf_text": "pdftotext", "web_sources": "arXiv HTML and Zenodo REST"},
+  "commands": ["sha256sum required assignment inputs", "read-only arXiv HTML inspection of Howlett et al. 2022 (arXiv:2201.03112v2)", "read-only Zenodo REST inspection of record 6640513 and latest successor 6824749", "download and pdftotext only the two small official release descriptions; no mock archive download"],
+  "files_read": [".agent-harness/runs/R9-MULTIDEPTH-20260913/assignments/source_law.json", ".agent-harness/context/CONTEXT_INDEX.json", "docs/research_program/tensor_joint_r9/HANDOFF_PROMPT.md", "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md", ".agent-harness/runs/R9-INTAKE-20260913/results/product_map.json", ".agent-harness/runs/R9-MULTIDEPTH-20260913/artifacts/source_law/mock_description.pdf", ".agent-harness/runs/R9-MULTIDEPTH-20260913/artifacts/source_law/data_description.pdf", ".agent-harness/runs/R9-MULTIDEPTH-20260913/artifacts/source_law/mock_description.txt", ".agent-harness/runs/R9-MULTIDEPTH-20260913/artifacts/source_law/data_description.txt"],
+  "artifacts": [
+    {"path": ".agent-harness/runs/R9-MULTIDEPTH-20260913/artifacts/source_law/mock_description.pdf", "sha256": "6daf3efd3921bfca653391d4969d17970fa25b14d72ca0fd4588aa3f37fe331e", "bytes": 82919, "producer": "Zenodo record 6824749 official file download"},
+    {"path": ".agent-harness/runs/R9-MULTIDEPTH-20260913/artifacts/source_law/mock_description.txt", "sha256": "9da4a2a93e6e6292e934d2587a4f7f0ef1cd110c9fd3c063a33c9d58b29f9766", "bytes": 4180, "producer": "pdftotext from official mock_description.pdf"},
+    {"path": ".agent-harness/runs/R9-MULTIDEPTH-20260913/artifacts/source_law/data_description.pdf", "sha256": "9e167fb6f6e3d5c172e08b42d78187a427c25e2eb275b220dae2441690ae449a", "bytes": 74681, "producer": "Zenodo record 6824749 official file download"},
+    {"path": ".agent-harness/runs/R9-MULTIDEPTH-20260913/artifacts/source_law/data_description.txt", "sha256": "1ff198d1ad7bc96a5764463026c9004fb35b43df07663700dca094f9970a9c94", "bytes": 4466, "producer": "pdftotext from official data_description.pdf"}
+  ],
+  "findings": [
+    {
+      "finding_id": "SDSSPV_MOCK_PROCESSING_AND_COLUMNS",
+      "claim_id": "RUN-R9-MULTIDEPTH-20260913-LAW",
+      "verdict": "pass",
+      "severity": "low",
+      "evidence_fingerprint": "howlett2022-v2-zenodo6824749-v1.1.0:released-mock-fp-selection-distance-columns",
+      "statement": "Howlett et al. describe 256 l-picola boxes with eight observers each and the official mock description identifies 2,048 catalogue files plus released row-level sky, redshift, halo, velocity, selection-photometry, true/observed FP, and uncorrected fitted distance-ratio columns. The release supports a newly frozen mock-based observational depth-feature extraction and common-replicate covariance calculation, with mock and box IDs retained.",
+      "assumptions_used": ["Zenodo v1.1.0 is the intended public successor of v1.0.0.", "A depth extraction will retain mock/box identity and will not assume same-box observer catalogues are iid."],
+      "evidence_refs": ["https://arxiv.org/html/2201.03112#S3.SS2", "https://arxiv.org/html/2201.03112#S3.SS2.SSS1", ".agent-harness/runs/R9-MULTIDEPTH-20260913/artifacts/source_law/mock_description.txt#sha256=9da4a2a93e6e6292e934d2587a4f7f0ef1cd110c9fd3c063a33c9d58b29f9766", "https://zenodo.org/records/6824749"],
+      "counterevidence_refs": [],
+      "reproduction": ["Verify the Zenodo latest-record metadata reports mocks.tar.gz MD5 9ba3e8876f6f08a2af00d30cbf1c6cd9.", "Read mock_description.pdf and map each stated column to a frozen feature extractor before opening mock members."],
+      "unresolved": ["The source calls the catalogues non-overlapping but same-box observer catalogues share a simulation volume; the release evidence does not establish an iid interpretation.", "The parent implementation must retain box/mock identifiers and specify any cluster-aware uncertainty treatment."],
+      "confidence": 0.96
+    },
+    {
+      "finding_id": "SDSSPV_PREFERRED_DATA_TO_MOCK_LAW_GAP",
+      "claim_id": "RUN-R9-MULTIDEPTH-20260913-LAW",
+      "verdict": "inconclusive",
+      "severity": "high",
+      "evidence_fingerprint": "howlett2022-v2-zenodo6824749-v1.1.0:single-fp-mock-versus-group-richness-corrected-data-and-no-joint-coverage",
+      "statement": "Released mock distance fields are logdist/logdist_err/logdist_alpha from a single FP fit. The preferred public-data fields are logdist_corr/logdist_corr_err/logdist_corr_alpha from FP fits split by Tempel group richness, with a group-level CF3 zero-point calibration. The mock description supplies neither group-richness nor corrected distance fields, and provides no released state--jet variables, anchor, response, prospective allocation, or jointly calibrated coverage event. Thus the release does not establish a complete common state-jet-anchor confidence law.",
+      "assumptions_used": ["Parent analysis distinguishes the data single-FP lane from the preferred group-richness-corrected lane.", "A physical confidence image requires the joint coverage conditions specified in the assigned R9 model-to-data contract."],
+      "evidence_refs": ["https://arxiv.org/html/2201.03112#S5.SS3", "https://arxiv.org/html/2201.03112#S5.SS4", ".agent-harness/runs/R9-MULTIDEPTH-20260913/artifacts/source_law/mock_description.txt#sha256=9da4a2a93e6e6292e934d2587a4f7f0ef1cd110c9fd3c063a33c9d58b29f9766", ".agent-harness/runs/R9-MULTIDEPTH-20260913/artifacts/source_law/data_description.txt#sha256=1ff198d1ad7bc96a5764463026c9004fb35b43df07663700dca094f9970a9c94", "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md:106-120"],
+      "counterevidence_refs": [],
+      "reproduction": ["Compare the data-description definitions of logdist and logdist_corr with the mock-description distance fields.", "Use paper §5.3 and §5.4 to confirm group-richness refitting and group-level zero-point calibration.", "Before analysis, choose the uncorrected single-FP data lane with its non-preferred limitation or obtain/calibrate an equivalently corrected mock law; neither supplies state-jet-anchor joint coverage."],
+      "unresolved": ["No released pre-selection parent, visual/reject decision ledger, Tempel group mapping/richness, CF3 cross-match/calibration draw, exact fitting code/configuration/seeds, or intermediate selection record was identified.", "No release-complete law exists for the final depth-bin target, its mask/row policy, nuisance/calibration handling, covariance estimator, state--jet coupling, anchor, or full-identified-set coverage procedure.", "The allowed analysis did not download or inspect the large mock archive; row descriptions are source evidence, not acquired-data validation."],
+      "confidence": 0.99
+    }
+  ],
+  "claim_results": [{"claim_id": "RUN-R9-MULTIDEPTH-20260913-LAW", "outcome": "findings_present", "finding_ids": ["SDSSPV_MOCK_PROCESSING_AND_COLUMNS", "SDSSPV_PREFERRED_DATA_TO_MOCK_LAW_GAP"], "summary": "Mapped released mock processing and fields, then identified the single-FP mock versus preferred group-richness-corrected data mismatch and the absence of a common state-jet-anchor coverage law."}],
+  "errors": [],
+  "limitations": ["Read-only primary-source mapping only; no large mock archive was downloaded, no product execution occurred, and no scientific admission or claim promotion was performed.", "The default-cwd start/stop hooks point to a different legacy checkout/run. The actual-worktree assignment was read and the result was written at its registered path, but no authenticated native launch/profile PASS is available.", "No transfer result was evaluated; this result makes no transfer-conditional label or conclusion."]
+}
