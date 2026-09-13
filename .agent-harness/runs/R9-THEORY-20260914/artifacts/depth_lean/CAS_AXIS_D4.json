@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "axis": "lean",
+  "contract_id": "R9-DEPTH-D4-20260914",
+  "contract_sha256": "dbfb9a933c97b0077c32b69a752e99115adb5a39fc95cd982fd39d5527a67a85",
+  "status": "MISALIGNED_ASSUMPTIONS",
+  "commands": [{"cmd":"timeout 180 .agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh D4","exit":0}],
+  "tool_versions": {"lean":"4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)","lake":"5.0.0-src+68218e8","toolchain":"formal/lean-toolchain = leanprover/lean4:v4.31.0"},
+  "source_output_hashes": [
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean","sha256":"eef71e3a57f2d413ed0a861393661d4e441a900bc02c790c1d2e6b7b21a31d10","bytes":14006,"producer":"depth_lean"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/raw_logs/D4.final2.stdout","sha256":"18d48bb93d992ac15b093a8d6ceba8edf13ac3b34c75b11b9569d0e21feed46e","bytes":348,"producer":"lake env lean"}
+  ],
+  "domain_assumption_diff": ["The runner compiles but the pinned project lacks conditional Gaussian, Moore-Penrose inverse, Schur-complement, and independence developments required by D4."],
+  "counterexample": null,
+  "evidence_class": "exact",
+  "completed_at": "2026-09-13T16:54:35Z"
+}

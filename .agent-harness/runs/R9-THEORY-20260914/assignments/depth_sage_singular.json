@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-THEORY-20260914",
+  "assignment_id": "depth_sage_singular",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "cas_sage_singular",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-THEORY-20260914-DEPTH_SAGE_SINGULAR"
+  ],
+  "task": "Independent sage_singular verifier for D1,D3 then D2,D4 under four current contracts. Read OBLIGATIONS.md and cas_gate.py run-adjudicate payload schema. You are not alone: root owns shared files; never revert others. Write only .agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/ and own strict schema2 result. No sibling output. Produce actual executable source and raw engine evidence, per-proposition obligation status and a runner accepting proposition ID. General obligations must not PASS from finite examples or assumed target. At most1200seconds total and180seconds per engine command; one targeted repair. No new dependencies/downloads, global changes, other-axis results, or nested agents. Root runs submitted commands through cas_gate.run-adjudicate. Wolfram processes must exit after calls. Sage uses actual Singular (case-sensitive /usr/bin/Singular). Lean runs pinned formal/lean-toolchain; missing mathlib must remain unavailable. Preserve all failures and missing obligations. End with HARNESS_RESULT.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/OBLIGATIONS.md",
+      "sha256": "163a15073e610b8ba9cfcf3267e1ec7e9a3be3a051897f4374fd4cf5acc420b6"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D1.json",
+      "sha256": "37b2295ab9f752f4fe2dfd56040cb6ccce2a13266c3090f7613703fccf64171e"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D3.json",
+      "sha256": "7ad2043a43aec9efc6d0638677db4a79a1678845aea0d4a759a2a6933e021d11"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D2.json",
+      "sha256": "a049a85d7958a4dbb6b9371b168c5ca2a2ec56090b35363005a892789c0c03fa"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D4.json",
+      "sha256": "dbfb9a933c97b0077c32b69a752e99115adb5a39fc95cd982fd39d5527a67a85"
+    },
+    {
+      "path": "formal/lean-toolchain",
+      "sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+    },
+    {
+      "path": ".agent-harness/scripts/cas_gate.py",
+      "sha256": "fcaaa08083221fa69ff22066d6fb9f769913bd774b15628dbf684544c69f0744"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-THEORY-20260914/results/depth_sage_singular.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-THEORY-20260914/results/depth_sage_singular.json",
+  "status": "registered",
+  "cas_axis": "sage_singular",
+  "cas_contract": {
+    "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D1.json",
+    "sha256": "37b2295ab9f752f4fe2dfd56040cb6ccce2a13266c3090f7613703fccf64171e"
+  },
+  "assignment_sha256": "d0d1ade453793a845df979beab0ce900983f70b15504eba29460ee82e963ef72"
+}

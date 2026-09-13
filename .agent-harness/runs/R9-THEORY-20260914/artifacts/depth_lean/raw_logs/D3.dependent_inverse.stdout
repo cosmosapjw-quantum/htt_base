@@ -1,0 +1,48 @@
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:216:2: error: Unnecessary `generalizing` argument: Variable `initial` is generalized automatically
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:247:2: error: Unnecessary `generalizing` argument: Variable `initial` is generalized automatically
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:248:14: error: Tactic `rfl` failed: The left-hand side
+  reconstructDependent ops transport initial (residualsDependent ops transport (DepChain.single a✝))
+is not definitionally equal to the right-hand side
+  DepChain.single a✝
+
+case single
+α : Nat → Type u
+ops : (level : Nat) → AddSubCancel (α level)
+transport : (level : Nat) → α level → α level.succ
+start depth start✝ : Nat
+a✝ initial : α start✝
+⊢ reconstructDependent ops transport initial (residualsDependent ops transport (DepChain.single a✝)) =
+    DepChain.single a✝
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:258:48: error: unsolved goals
+α : Nat → Type u
+ops : (level : Nat) → AddSubCancel (α level)
+transport : (level : Nat) → α level → α level.succ
+start✝ depth start : Nat
+first initial : α start
+second : α start.succ
+ih :
+  ∀ (initial : α start.succ),
+    reconstructDependent ops transport initial (residualsDependent ops transport (DepChain.single second)) =
+      DepChain.single second
+this : AddSubCancel (α start.succ) := ops start.succ
+⊢ DepChain.step first (reconstructDependent ops transport second DepResidual.nil) =
+    DepChain.step first (DepChain.single second)
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:257:84: error: Type mismatch
+  rfl
+has type
+  ?m.115 = ?m.115
+but is expected to have type
+  reconstructDependent ops transport initial
+      (residualsDependent ops transport (DepChain.step first (DepChain.single second))) =
+    DepChain.step first
+      (reconstructDependent ops transport (second - transport start first + transport start first) DepResidual.nil)
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:266:77: error: Type mismatch
+  rfl
+has type
+  ?m.209 = ?m.209
+but is expected to have type
+  reconstructDependent ops transport initial
+      (residualsDependent ops transport (DepChain.step first (DepChain.step second tail))) =
+    DepChain.step first
+      (reconstructDependent ops transport (second - transport start first + transport start first)
+        (residualsDependent ops transport (DepChain.step second tail)))

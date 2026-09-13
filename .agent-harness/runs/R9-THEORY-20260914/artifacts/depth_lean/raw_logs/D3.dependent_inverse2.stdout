@@ -1,0 +1,17 @@
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:57:20: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  residuals transport (reconstruct transport initial (next :: tail))
+in the target expression
+  residual :: residuals transport (reconstruct transport (residual + transport initial) (next :: tail)) =
+    residual :: next :: tail
+
+α : Type u
+inst✝ : AddSubCancel α
+transport : α → α
+initial residual next : α
+tail : List α
+ih : residuals transport (reconstruct transport initial (next :: tail)) = next :: tail
+⊢ residual :: residuals transport (reconstruct transport (residual + transport initial) (next :: tail)) =
+    residual :: next :: tail
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:216:2: error: Unnecessary `generalizing` argument: Variable `initial` is generalized automatically
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:250:2: error: Invalid target: Index in target's type is not a variable (consider using the `cases` tactic instead)
+  start.succ

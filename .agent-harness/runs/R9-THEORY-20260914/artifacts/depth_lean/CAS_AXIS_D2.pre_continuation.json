@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "axis": "lean",
+  "contract_id": "R9-DEPTH-D2-20260914",
+  "contract_sha256": "a049a85d7958a4dbb6b9371b168c5ca2a2ec56090b35363005a892789c0c03fa",
+  "status": "INCONCLUSIVE",
+  "commands": [{"cmd":"timeout 180 .agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh D2","exit":1}],
+  "tool_versions": {"lean":"4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)","lake":"5.0.0-src+68218e8","toolchain":"formal/lean-toolchain = leanprover/lean4:v4.31.0"},
+  "source_output_hashes": [
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean","sha256":"ad79234046f29ec464f466d33082b011e6278af96c023005aa7294645684261e","bytes":5812,"producer":"depth_lean"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/raw_logs/D2.stdout","sha256":"4edde7fb7aec9ebdf6b94b86a0a68d1e3b852d5038e240062bbf4c6e458900a7","bytes":1225,"producer":"lake env lean"}
+  ],
+  "domain_assumption_diff": ["The runner did not execute because the shared helper failed to elaborate. The core-Lean project also lacks the real Gaussian, image-support, pseudoinverse, whitening, and chi-square developments required by D2."],
+  "counterexample": null,
+  "evidence_class": "exact",
+  "completed_at": "2026-09-13T16:45:14Z"
+}

@@ -1,0 +1,108 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-THEORY-20260914",
+  "assignment_id": "depth_wolfram_xact",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "axis": "wolfram_xact",
+  "status": "INCONCLUSIVE",
+  "contract_sha256": "37b2295ab9f752f4fe2dfd56040cb6ccce2a13266c3090f7613703fccf64171e",
+  "contract_sha256_by_proposition": {
+    "D1": "37b2295ab9f752f4fe2dfd56040cb6ccce2a13266c3090f7613703fccf64171e",
+    "D3": "7ad2043a43aec9efc6d0638677db4a79a1678845aea0d4a759a2a6933e021d11",
+    "D2": "a049a85d7958a4dbb6b9371b168c5ca2a2ec56090b35363005a892789c0c03fa",
+    "D4": "dbfb9a933c97b0077c32b69a752e99115adb5a39fc95cd982fd39d5527a67a85"
+  },
+  "evidence_class": "exact",
+  "completed_at": "2026-09-13T16:47:01Z",
+  "engine": {
+    "wolfram": "15.0.0 for Linux x86 (64-bit) (May 26, 2026)",
+    "xact_xTensor": "1.3.0",
+    "xact_xPerm": "1.2.4",
+    "probe_status": "PASS",
+    "probe_raw": ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/raw/toolchain_probe.combined.log"
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel",
+        "-noprompt",
+        "-script",
+        ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/verify_depth.wl",
+        "D1"
+      ],
+      "timeout_seconds": 180,
+      "exit": 0,
+      "raw_combined": ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/raw/D1.combined.log"
+    },
+    {
+      "argv": [
+        "/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel",
+        "-noprompt",
+        "-script",
+        ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/verify_depth.wl",
+        "D3"
+      ],
+      "timeout_seconds": 180,
+      "exit": 0,
+      "raw_combined": ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/raw/D3.combined.log"
+    }
+  ],
+  "source": {
+    "path": ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/verify_depth.wl",
+    "sha256": "6653e4cb6b6a464c63e1d5250f5e832f0103f08d55c2a1d37b1940440b423090",
+    "runner_protocol": "WolframKernel -noprompt -script verify_depth.wl D1|D3|D2|D4; one RawJSON document intended on stdout"
+  },
+  "resource_limits": {
+    "axis_wall_seconds": 1200,
+    "per_engine_command_seconds": 180,
+    "repair_budget": 1,
+    "repair_budget_state": "EXHAUSTED"
+  },
+  "propositions": {
+    "D1": {
+      "status": "INCONCLUSIVE",
+      "checks": {
+        "D1_MEAN_COVARIANCE_LINEAR_MAP": null,
+        "D1_ALL_CROSS_STEP_BLOCKS": null,
+        "D1_PSD_PULLBACK_GENERAL_DIMENSION": null
+      },
+      "domain_assumption_diff": [],
+      "counterexample": null,
+      "evidence": "The engine reached a source parser error before evaluating the runner; no theorem or fixture claim is established."
+    },
+    "D3": {
+      "status": "INCONCLUSIVE",
+      "checks": {
+        "D3_RECURSION_BOTH_INVERSES_ARBITRARY_BLOCKS": null,
+        "D3_KERNEL_SURJECTIVITY_DETERMINANT": null,
+        "D3_FULL_LAW_SUPPORT_PRESERVED": null
+      },
+      "domain_assumption_diff": [],
+      "counterexample": null,
+      "evidence": "The engine reached the same source parser error before evaluating the runner; no theorem or fixture claim is established."
+    },
+    "D2": {
+      "status": "INCONCLUSIVE",
+      "checks": {
+        "D2_GAUSSIAN_PUSHFORWARD_SUPPORT": null,
+        "D2_SUPPORTED_PSEUDOINVERSE_CHISQUARE": null,
+        "D2_RANK_ZERO_AND_OFF_SUPPORT": null
+      },
+      "domain_assumption_diff": [],
+      "counterexample": null,
+      "evidence": "Not executed: D1/D3 prerequisite runner compilation failed and the one permitted targeted repair was exhausted."
+    },
+    "D4": {
+      "status": "INCONCLUSIVE",
+      "checks": {
+        "D4_PSD_RANGE_SCHUR_SUPPORT": null,
+        "D4_FULL_PAST_CONDITIONAL_GAUSSIAN": null,
+        "D4_INNOVATION_INDEPENDENCE_AND_FIXED_LAW_LIMIT": null
+      },
+      "domain_assumption_diff": [],
+      "counterexample": null,
+      "evidence": "Not executed: D1/D3 prerequisite runner compilation failed and the one permitted targeted repair was exhausted."
+    }
+  },
+  "limitation": "The installed Wolfram+xAct toolchain is available, but this bounded axis attempt produced no admissible proposition result. No finite fixture, all-dimensional result, probabilistic result, or four-axis admission is claimed."
+}

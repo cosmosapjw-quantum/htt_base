@@ -1,0 +1,93 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-THEORY-20260914",
+  "assignment_id": "depth_lean",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "cas_lean",
+  "independence_mode": "blind-results",
+  "status": "inconclusive",
+  "result_path": ".agent-harness/runs/R9-THEORY-20260914/results/depth_lean.json",
+  "assignment_sha256": "a59fa0127cf15107ebc33f7385fdd918b8ef17f6fd977583cd0c7ce48d55fd6b",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/runs/R9-THEORY-20260914/assignments/depth_lean.json",
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/context/roles/cas_common.md",
+    ".agent-harness/scripts/cas_gate.py",
+    ".agent-harness/scripts/strict_result_validation.py",
+    ".agent-harness/templates/CAS_AXIS_RESULT.json",
+    ".agent-harness/templates/RESULT_ENVELOPE.json",
+    "docs/research_program/tensor_joint_r9/revision2/depth_formal/OBLIGATIONS.md",
+    "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D1.json",
+    "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D3.json",
+    "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D2.json",
+    "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D4.json",
+    "formal/lean-toolchain",
+    "formal/lakefile.toml",
+    "formal/Egs3V7.lean",
+    "formal/Egs3V7/Basic.lean"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-13T16:34:00Z",
+  "completed_at": "2026-09-13T16:58:47Z",
+  "tool_versions": {
+    "lean": "4.31.0 (commit 68218e876d2a38b1985b8590fff244a83c321783)",
+    "lake": "5.0.0-src+68218e8",
+    "toolchain": "formal/lean-toolchain = leanprover/lean4:v4.31.0"
+  },
+  "commands": [
+    {"cmd":"lake --version","exit":0},
+    {"cmd":"lake env lean --version","exit":0},
+    {"cmd":"timeout 180 .agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh D1","exit":1},
+    {"cmd":"timeout 180 .agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh D3","exit":1},
+    {"cmd":"timeout 180 .agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh D2","exit":1},
+    {"cmd":"timeout 180 .agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh D4","exit":1},
+    {"cmd":"timeout 180 bash -c 'cd formal && lake env lean --run ../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/MathlibProbe.lean'","exit":1},
+    {"cmd":"timeout 180 .agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh D1","exit":0},
+    {"cmd":"timeout 180 .agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh D3","exit":0},
+    {"cmd":"timeout 180 .agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh D2","exit":0},
+    {"cmd":"timeout 180 .agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh D4","exit":0}
+  ],
+  "artifacts": [
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean","sha256":"eef71e3a57f2d413ed0a861393661d4e441a900bc02c790c1d2e6b7b21a31d10","bytes":14006,"producer":"depth_lean","command_fingerprint":"lean-depth-source-v2"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh","sha256":"57010deab0cc38ba3d6645dbcb90a0de22f87a45283daebff7ffd87569d225f9","bytes":588,"producer":"depth_lean","command_fingerprint":"lean-depth-runner-v1"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/OBLIGATION_SCOPE.md","sha256":"d05ae2586245ff9c651fc1bbb6463183f3920dc3287c77d576b24815cb32bf9d","bytes":1856,"producer":"depth_lean"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/EXECUTION_RECEIPT.md","sha256":"3f8b997e209869e759fe4ce7b963890bfd9be299c8a25d636dfff3f2d1e1655e","bytes":1364,"producer":"depth_lean"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/raw_logs/D1.stdout","sha256":"9a568a776ac3b22c9290e54eda9968afdfcde834ffbdf4eadeb2ef52a8ef9434","bytes":1446,"producer":"lake env lean","command_fingerprint":"lean-D1-initial-failure"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/raw_logs/D1.repair.stdout","sha256":"4edde7fb7aec9ebdf6b94b86a0a68d1e3b852d5038e240062bbf4c6e458900a7","bytes":1225,"producer":"lake env lean","command_fingerprint":"lean-D1-repair-failure"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/raw_logs/D3.repair.stdout","sha256":"4edde7fb7aec9ebdf6b94b86a0a68d1e3b852d5038e240062bbf4c6e458900a7","bytes":1225,"producer":"lake env lean","command_fingerprint":"lean-D3-repair-failure"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/raw_logs/D2.stdout","sha256":"4edde7fb7aec9ebdf6b94b86a0a68d1e3b852d5038e240062bbf4c6e458900a7","bytes":1225,"producer":"lake env lean","command_fingerprint":"lean-D2-failure"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/raw_logs/D4.stdout","sha256":"4edde7fb7aec9ebdf6b94b86a0a68d1e3b852d5038e240062bbf4c6e458900a7","bytes":1225,"producer":"lake env lean","command_fingerprint":"lean-D4-failure"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/CAS_AXIS_D1.json","sha256":"e27615e90567349d9b2c29e64414b6dce491c5f39aa86912ab2a454eb374e1d9","bytes":1254,"producer":"depth_lean"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/CAS_AXIS_D3.json","sha256":"4c25cb3f0f80f0dce52a62a72130072ff592e0afa87a5746c1e970b70d4993a9","bytes":1362,"producer":"depth_lean"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/CAS_AXIS_D2.json","sha256":"c3bd760578ff93a7e743fbf1997e1d6766c3d16b9c9a2b01c0b00f54e1e04b7b","bytes":1256,"producer":"depth_lean"},
+    {"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/CAS_AXIS_D4.json","sha256":"ff1d697fa302f5ed1294dc200a09de4d44cd4cddbb73e95eb411378f1a464190","bytes":1261,"producer":"depth_lean"}
+  ],
+  "findings": [
+    {
+      "finding_id": "depth_lean_partial_helper_misaligned",
+      "claim_id": "RUN-R9-THEORY-20260914-DEPTH_LEAN",
+      "verdict": "inconclusive",
+      "severity": "high",
+      "statement": "The final helper compiles and proves finite homogeneous two-sided reconstruction and one heterogeneous dependent composition, but no D1, D2, D3, or D4 contract obligation has Lean PASS evidence.",
+      "assumptions_used": ["The four frozen contracts and OBLIGATIONS.md inputs matched their assigned SHA-256 values.","Lean is pinned by formal/lean-toolchain and was observed as version 4.31.0."],
+      "evidence_refs": [".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/raw_logs/D3.final3.stdout",".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/raw_logs/D3.dependent_first_inverse.stdout",".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/OBLIGATION_SCOPE.md"],
+      "evidence_fingerprint": "lean-depth-partial-dependent-reconstruction-v1",
+      "counterevidence_refs": [],
+      "reproduction": ["cd formal && lake env lean --run ../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean D1","repeat with D3, then D2 and D4"],
+      "confidence": 1.0,
+      "unresolved": ["The reverse dependent-block composition remains unproved.","A compiled recursion helper does not establish the full real-matrix or probabilistic contracts."]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-THEORY-20260914-DEPTH_LEAN",
+      "outcome": "findings_present",
+      "finding_ids": ["depth_lean_partial_helper_misaligned"],
+      "summary": "Lean-axis execution is inconclusive; no formal depth-law obligation is discharged."
+    }
+  ],
+  "errors": []
+}

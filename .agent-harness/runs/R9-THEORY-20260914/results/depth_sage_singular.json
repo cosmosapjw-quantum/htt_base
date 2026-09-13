@@ -1,0 +1,107 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-THEORY-20260914",
+  "assignment_id": "depth_sage_singular",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "axis": "sage_singular",
+  "status": "INCONCLUSIVE",
+  "evidence_class": "exact",
+  "contract_sha256": "37b2295ab9f752f4fe2dfd56040cb6ccce2a13266c3090f7613703fccf64171e",
+  "contract_hashes": {
+    "D1": "37b2295ab9f752f4fe2dfd56040cb6ccce2a13266c3090f7613703fccf64171e",
+    "D3": "7ad2043a43aec9efc6d0638677db4a79a1678845aea0d4a759a2a6933e021d11",
+    "D2": "a049a85d7958a4dbb6b9371b168c5ca2a2ec56090b35363005a892789c0c03fa",
+    "D4": "dbfb9a933c97b0077c32b69a752e99115adb5a39fc95cd982fd39d5527a67a85"
+  },
+  "commands": [
+    {
+      "argv": ["/usr/local/bin/sage", "-python", ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/depth_sage_singular_runner.py", "D1"],
+      "cwd": ".",
+      "timeout_seconds": 180,
+      "exit_code": 0
+    },
+    {
+      "argv": ["/usr/local/bin/sage", "-python", ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/depth_sage_singular_runner.py", "D3"],
+      "cwd": ".",
+      "timeout_seconds": 180,
+      "exit_code": 0
+    },
+    {
+      "argv": ["/usr/local/bin/sage", "-python", ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/depth_sage_singular_runner.py", "D2"],
+      "cwd": ".",
+      "timeout_seconds": 180,
+      "exit_code": 0
+    },
+    {
+      "argv": ["/usr/local/bin/sage", "-python", ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/depth_sage_singular_runner.py", "D4"],
+      "cwd": ".",
+      "timeout_seconds": 180,
+      "exit_code": 0
+    }
+  ],
+  "toolchain": {
+    "sage": "10.9",
+    "sage_path": "/usr/local/bin/sage",
+    "singular": "4.3.2",
+    "singular_path": "/usr/bin/Singular",
+    "profile_observed": true,
+    "authenticated_launch_claimed": false
+  },
+  "per_proposition": {
+    "D1": {
+      "obligation_status": "INCONCLUSIVE",
+      "checks": {
+        "D1_MEAN_COVARIANCE_LINEAR_MAP": false,
+        "D1_ALL_CROSS_STEP_BLOCKS": false,
+        "D1_PSD_PULLBACK_GENERAL_DIMENSION": false
+      },
+      "reason": "Only a scalar symbolic cross-block expansion was computed; general block dimensions, PSD pullback proof, and finite-second-moment law are not discharged."
+    },
+    "D3": {
+      "obligation_status": "INCONCLUSIVE",
+      "checks": {
+        "D3_RECURSION_BOTH_INVERSES_ARBITRARY_BLOCKS": false,
+        "D3_KERNEL_SURJECTIVITY_DETERMINANT": false,
+        "D3_FULL_LAW_SUPPORT_PRESERVED": false
+      },
+      "reason": "Only a two-step scalar recursion and triangular determinant were computed; arbitrary blocks and full law/support preservation are not discharged."
+    },
+    "D2": {
+      "obligation_status": "INCONCLUSIVE",
+      "checks": {
+        "D2_GAUSSIAN_PUSHFORWARD_SUPPORT": false,
+        "D2_SUPPORTED_PSEUDOINVERSE_CHISQUARE": false,
+        "D2_RANK_ZERO_AND_OFF_SUPPORT": false
+      },
+      "reason": "A rank-one diagonal score identity was computed; no general Gaussian/support/chi-square proof, rank-zero branch, or off-support proof was supplied."
+    },
+    "D4": {
+      "obligation_status": "INCONCLUSIVE",
+      "checks": {
+        "D4_PSD_RANGE_SCHUR_SUPPORT": false,
+        "D4_FULL_PAST_CONDITIONAL_GAUSSIAN": false,
+        "D4_INNOVATION_INDEPENDENCE_AND_FIXED_LAW_LIMIT": false
+      },
+      "reason": "Only nonsingular scalar Schur-complement algebra was computed; singular pseudoinverse/range, conditional law, and independence obligations remain unproved."
+    }
+  },
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "artifacts": {
+    "runner": {
+      "path": ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/depth_sage_singular_runner.py",
+      "sha256": "54295555b44c0ea6b9c2914ccbc09fc505d957f246ca04b52875a9e8f31f727d"
+    },
+    "raw_engine_results": {
+      "path": ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/raw_engine_results.json",
+      "sha256": "b50a65de4037210b5628ef2350a067b0939a3ac21f81ed52bee31dec42a8531f"
+    },
+    "detail": {
+      "path": ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/DETAILS.md",
+      "sha256": "581f09b50f5f8e77f20415bee9a2ba1577ccd6a51a022e619e4614ec37e27147"
+    }
+  },
+  "completed_at": "2026-09-13T16:43:13Z",
+  "claim_ceiling": "diagnostic_only",
+  "evidence_scope": "Exact finite symbolic calculations plus Sage/Singular process execution. This stored result is not runner-observed claim-promotion evidence and does not discharge any full proposition."
+}

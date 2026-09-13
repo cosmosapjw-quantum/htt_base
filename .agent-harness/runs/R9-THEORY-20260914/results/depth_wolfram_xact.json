@@ -1,0 +1,27 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-THEORY-20260914",
+  "assignment_id": "depth_wolfram_xact",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "axis": "wolfram_xact",
+  "status": "INCONCLUSIVE",
+  "contract_sha256": "37b2295ab9f752f4fe2dfd56040cb6ccce2a13266c3090f7613703fccf64171e",
+  "contract_sha256_by_proposition": {"D1":"37b2295ab9f752f4fe2dfd56040cb6ccce2a13266c3090f7613703fccf64171e","D3":"7ad2043a43aec9efc6d0638677db4a79a1678845aea0d4a759a2a6933e021d11","D2":"a049a85d7958a4dbb6b9371b168c5ca2a2ec56090b35363005a892789c0c03fa","D4":"dbfb9a933c97b0077c32b69a752e99115adb5a39fc95cd982fd39d5527a67a85"},
+  "evidence_class": "exact",
+  "completed_at": "2026-09-13T16:56:45Z",
+  "engine": {"wolfram":"15.0.0 for Linux x86 (64-bit) (May 26, 2026)","xact_xTensor":"1.3.0","xact_xPerm":"1.2.4","xact_probe_status":"PASS","xact_probe_raw":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/raw/toolchain_probe.combined.log"},
+  "commands": [
+    {"proposition":"D1","argv":["/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel","-noprompt","-script",".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/verify_depth_repaired.wl","D1"],"timeout_seconds":180,"exit":0,"raw_stdout":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/raw/D1.repaired.stdout.json"},
+    {"proposition":"D3","argv":["/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel","-noprompt","-script",".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/verify_depth_repaired.wl","D3"],"timeout_seconds":180,"exit":0,"raw_stdout":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/raw/D3.repaired.stdout.json"},
+    {"proposition":"D2","argv":["/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel","-noprompt","-script",".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/verify_depth_repaired.wl","D2"],"timeout_seconds":180,"exit":0,"raw_stdout":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/raw/D2.repaired.stdout.json"},
+    {"proposition":"D4","argv":["/usr/local/Wolfram/WolframEngine/15.0/Executables/WolframKernel","-noprompt","-script",".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/verify_depth_repaired.wl","D4"],"timeout_seconds":180,"exit":0,"raw_stdout":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/raw/D4.repaired.stdout.json"}
+  ],
+  "sources": {"repaired_runner":{"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/verify_depth_repaired.wl","sha256":"bfc7d7f93d68dd5c3ec3a3f4a1193083a83b094e23fec9f0b5a7a55ad5698ee8"},"preserved_failed_runner":{"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/verify_depth.wl","sha256":"2eb472a1701dca87bd2e0b0c7928cabac8d29d724c990c204d5491d974a61ff7"},"preserved_pre_repair_result":{"path":".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/raw/axis_result_before_repair.json","sha256":"a9c1f2fda4d29bd7e0d81ce19721bc3b69d3e692af68c21ccdd04b01397d01b7"}},
+  "propositions": {
+    "D1":{"runner_derived_status":"FAIL","checks":{"D1_MEAN_COVARIANCE_LINEAR_MAP":false,"D1_ALL_CROSS_STEP_BLOCKS":false,"D1_PSD_PULLBACK_GENERAL_DIMENSION":false},"domain_assumption_diff":[],"counterexample":null,"scope":"Finite exact fixture only; no general proof."},
+    "D3":{"runner_derived_status":"FAIL","checks":{"D3_RECURSION_BOTH_INVERSES_ARBITRARY_BLOCKS":false,"D3_KERNEL_SURJECTIVITY_DETERMINANT":false,"D3_FULL_LAW_SUPPORT_PRESERVED":false},"domain_assumption_diff":[],"counterexample":null,"scope":"Finite exact fixture only; no general proof."},
+    "D2":{"runner_derived_status":"FAIL","checks":{"D2_GAUSSIAN_PUSHFORWARD_SUPPORT":false,"D2_SUPPORTED_PSEUDOINVERSE_CHISQUARE":false,"D2_RANK_ZERO_AND_OFF_SUPPORT":false},"domain_assumption_diff":[],"counterexample":null,"scope":"No general Gaussian/support/chi-square proof."},
+    "D4":{"runner_derived_status":"FAIL","checks":{"D4_PSD_RANGE_SCHUR_SUPPORT":false,"D4_FULL_PAST_CONDITIONAL_GAUSSIAN":false,"D4_INNOVATION_INDEPENDENCE_AND_FIXED_LAW_LIMIT":false},"domain_assumption_diff":[],"counterexample":null,"scope":"No conditional-Gaussian or innovation-independence proof."}
+  },
+  "limitation": "The repaired runner executed D1,D3 before D2,D4. Its finite fixture does not discharge the quantified contracts, so every check is false. Outer INCONCLUSIVE denotes missing theorem-level proof; cas_gate will mechanically derive FAIL for each false-check payload. No CAS admission follows."
+}

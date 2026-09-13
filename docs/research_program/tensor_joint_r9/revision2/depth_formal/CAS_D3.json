@@ -1,0 +1,190 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "identity": {
+    "contract_id": "R9-DEPTH-D3-20260914",
+    "contract_version": 1,
+    "claim_ids": [
+      "RUN-R9-THEORY-20260914-DEPTH-D3"
+    ],
+    "statement_class": "theorem",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/OBLIGATIONS.md",
+        "sha256": "163a15073e610b8ba9cfcf3267e1ec7e9a3be3a051897f4374fd4cf5acc420b6"
+      },
+      {
+        "path": "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md",
+        "sha256": "befeef7feab9a845186b81fb9d7ce84b755b332bd0bf2fd6f93d0e1c36e89529"
+      }
+    ],
+    "claim_ceiling": "diagnostic_only",
+    "adjudicator": "HOST_CODEX"
+  },
+  "semantics": {
+    "exact_statement": "For arbitrary compatible block sizes and fixed linear K_j (rectangular/singular allowed), T(Y)=(Y0,HY) is bijective with inverse recursion Y_(j+1)=r_j+K_jY_j. Prove both inverse compositions for any finite depth; T is block triangular with identity diagonal and determinant one. ker H consists exactly of propagated initial states and H is surjective. The full transformed joint mean/covariance/support (including initial-cross terms) represents the same experiment, including singular C.",
+    "symbol_type_domain_map": {
+      "Y_j": "real d_j vector, d_j positive finite",
+      "C": "real symmetric PSD full joint covariance, may be singular",
+      "K_j": "fixed real d_(j+1) by d_j matrix",
+      "H": "block differences; H_j has -K_j and I",
+      "T": "Y -> (Y0,HY)"
+    },
+    "frame_signature_units_conventions": {
+      "conventions_ref": "docs/research_program/tensor_joint_r9/revision2/depth_formal/OBLIGATIONS.md",
+      "symbols_ref": "docs/research_program/tensor_joint_r9/revision2/depth_formal/OBLIGATIONS.md",
+      "metric": "Euclidean finite dimensional; compatible feature units; no physical spacetime claim"
+    },
+    "assumptions": [
+      "Finite depth and compatible block sizes; fixed transports and specified full law; singular PSD permitted.",
+      "D1 needs only finite second moments. D2/D4 require joint Gaussianity. D3 is deterministic before applying to a law."
+    ],
+    "positivity_nonzero_conditions": [
+      "C positive semidefinite, not necessarily definite"
+    ],
+    "branches": [
+      "rank zero",
+      "singular covariance",
+      "rectangular or singular K"
+    ],
+    "exclusions": [
+      "fitted/adaptive law without a separate sampling model",
+      "observational coverage or FORMAL_DEPTH promotion from partial checks"
+    ],
+    "singular_loci": [
+      "kernel C; kernel V; deterministic support"
+    ],
+    "order_of_limits": [],
+    "boundary_or_initial_conditions": [
+      "retain the initial Y0 block"
+    ]
+  },
+  "target": {
+    "canonical_form": "For arbitrary compatible block sizes and fixed linear K_j (rectangular/singular allowed), T(Y)=(Y0,HY) is bijective with inverse recursion Y_(j+1)=r_j+K_jY_j. Prove both inverse compositions for any finite depth; T is block triangular with identity diagonal and determinant one. ker H consists exactly of propagated initial states and H is surjective. The full transformed joint mean/covariance/support (including initial-cross terms) represents the same experiment, including singular C.",
+    "equivalence_relation": "Exact identities/proof of the full declared proposition over the stated domain, not equality on examples.",
+    "invariants": [],
+    "exact_test_obligations": [
+      "D3_RECURSION_BOTH_INVERSES_ARBITRARY_BLOCKS",
+      "D3_KERNEL_SURJECTIVITY_DETERMINANT",
+      "D3_FULL_LAW_SUPPORT_PRESERVED"
+    ],
+    "numeric_test_vectors": [],
+    "approximation_order": "exact",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "1e-10",
+    "relative_tolerance": "1e-10",
+    "forbidden_shortcuts": [
+      "Do not assume the target identity in an intermediate rewrite.",
+      "Do not import sibling solver results before adjudication."
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "independent derivation/simplification in Wolfram Language (+xAct for tensor work); attempt the full proposition; report partial scope and missing probability/library obligations honestly",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "wolfram": "15.0.0",
+        "xact": "1.2.0+"
+      },
+      "resource_limit": {
+        "wall_seconds": 1200,
+        "per_subprocess_seconds": 180
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "independent exact symbolic verification in SymPy (+ high-precision numerics where declared); attempt the full proposition; report partial scope and missing probability/library obligations honestly",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "python": "/usr/bin/python3",
+        "sympy": "1.14.0"
+      },
+      "resource_limit": {
+        "wall_seconds": 1200,
+        "per_subprocess_seconds": 180
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "independent exact algebra in SageMath; Singular obligations apply to polynomial ideal/variety classes; attempt the full proposition; report partial scope and missing probability/library obligations honestly",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "sage": "10.9",
+        "singular": "4.3.2"
+      },
+      "resource_limit": {
+        "wall_seconds": 1200,
+        "per_subprocess_seconds": 180
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "faithful formalization and compiled proof; record scope mismatch instead of silently proving a weaker theorem; attempt the full proposition; report partial scope and missing probability/library obligations honestly",
+      "required_outputs": [
+        "lean sources",
+        "build receipt",
+        "axis result envelope"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain"
+      },
+      "resource_limit": {
+        "wall_seconds": 1200,
+        "per_subprocess_seconds": 180
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results",
+    "permitted_inputs": [
+      "this contract",
+      "docs/research_program/tensor_joint_r9/revision2/depth_formal/OBLIGATIONS.md",
+      "assignment required inputs"
+    ],
+    "forbidden_sibling_paths": [
+      ".agent-harness/runs/R9-THEORY-20260914/artifacts/OTHER_AXIS",
+      "revision2/depth_formal/OTHER_AXIS"
+    ],
+    "script_result_ownership": "per-axis; scripts and outputs are never shared before adjudication",
+    "correlation_disclosure": "record when one LLM family authored multiple axis scripts; disclosure does not void engine evidence"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "exception_schema": {
+      "axis": "wolfram_xact | sympy | sage_singular | lean",
+      "reason_class": "platform | license | computation_class | resource",
+      "bounded_probe": "exact command + output demonstrating the blocker",
+      "unique_capability_lost": false,
+      "substitute_obligation": "",
+      "claim_downgrade": "",
+      "approver": "must not be the excepted axis's agent",
+      "registered_at": "must precede the earliest axis completed_at",
+      "expiry_retry": ""
+    },
+    "aggregate_status_rule": "R0: NOT_APPLICABLE; R1/R2: PASS; R3: CAS_4AXIS_PASS; explicit R3 Rocq opt-in: CAS_5AXIS_PASS; failures: CAS_PASS_WITH_REGISTERED_EXCEPTION | CAS_CONFLICT | CAS_BLOCKED | CAS_FAIL",
+    "invalidation_triggers": [
+      "contract_hash_change",
+      "assumption_or_domain_diff",
+      "unpinned_toolchain"
+    ]
+  }
+}

@@ -77,7 +77,7 @@
       ],
       "scope": "separate action per proposition set",
       "acceptance": "Use current CAS contract and run-adjudicate for each required mathematical component; four independent axes, no blanket status. Each output separately earned.",
-      "execution_state": "PLANNED",
+      "execution_state": "DEPTH_ATTEMPT_EXECUTED_OTHER_ACTIONS_UNCHANGED",
       "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
       "actions": [
         {
@@ -110,7 +110,11 @@
             "RESEARCH_DESIGN"
           ],
           "produces": "FORMAL_DEPTH",
-          "requirement": "proposition-specific current four-axis observed admission; only consumed by the corresponding optional component"
+          "requirement": "proposition-specific current four-axis observed admission; only consumed by the corresponding optional component",
+          "execution_state": "FOUR_AXIS_EXECUTED_FULL_OBLIGATIONS_BLOCKED",
+          "evidence": "revision2/depth_formal/ADJUDICATION.json",
+          "admitted_capabilities": [],
+          "remaining_obligation": "All D1-D4 full contracts; compiled helpers and finite identities do not admit FORMAL_DEPTH."
         },
         {
           "id": "optional_physics",
@@ -591,8 +595,9 @@
       "on_missing": "BLOCK_THIS_ACTION_ONLY; emit no admitted capability; preserve reason and continue independent actions",
       "implementation_evidence": "revision2/implementation/CONTRACT.md",
       "admitted_capabilities": [],
-      "remaining_obligation": "FORMAL_DEPTH four-axis admission remains HOLD; implementation tests alone grant no DEPTH_METHOD capability.",
-      "continuation_evidence": "revision2/multidepth/README.md"
+      "remaining_obligation": "D1-D4 each actually run on all four axes; raw CAS_FAIL from unproved obligations, FORMAL_DEPTH BLOCKED. Reverse heterogeneous inverse, real PSD and full singular Gaussian laws remain. Existing implementation unchanged; no DEPTH_METHOD admission.",
+      "continuation_evidence": "revision2/multidepth/README.md",
+      "formal_evidence": "revision2/depth_formal/ADJUDICATION.json"
     },
     {
       "id": "R9-25",
@@ -714,5 +719,6 @@
   ],
   "revision": 2,
   "predecessor_design_commit": "5e4e899c0dfa2028d81a82ca68ccd11203947470",
-  "seed_report_commit": "d514eabdbd6a464a92ff6e51e1aba91399a054db"
+  "seed_report_commit": "d514eabdbd6a464a92ff6e51e1aba91399a054db",
+  "session_scope_20260914": "User defers new observational-input acquisition; formal depth and independent theory research only. Existing acquisition plans remain historical/future inputs."
 }

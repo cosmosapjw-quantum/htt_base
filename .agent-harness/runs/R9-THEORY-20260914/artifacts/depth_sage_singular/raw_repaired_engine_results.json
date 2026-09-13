@@ -1,0 +1,49 @@
+{
+  "runner": ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/depth_sage_singular_runner_repaired.py",
+  "engine": {
+    "sage": "/usr/local/bin/sage 10.9",
+    "singular": "/usr/bin/Singular 4.3.2",
+    "singular_ideal": "ideal(0)",
+    "negative_control": "reduce(1, ideal(0)) = 1"
+  },
+  "runs": {
+    "D1": {
+      "exit_code": 0,
+      "finite_identity_checks": {
+        "sage_scalar_cross_block_residual_zero": true,
+        "singular_scalar_cross_block_normal_form_zero": true,
+        "singular_negative_control_nonzero": true
+      },
+      "contract_checks": false
+    },
+    "D3": {
+      "exit_code": 0,
+      "finite_identity_checks": {
+        "sage_two_step_both_inverse_residuals_zero": true,
+        "sage_triangular_determinant_one": true,
+        "singular_two_step_inverse_normal_forms_zero": true,
+        "singular_negative_control_nonzero": true
+      },
+      "contract_checks": false
+    },
+    "D2": {
+      "exit_code": 0,
+      "finite_identity_checks": {
+        "sage_rank_one_supported_score_cleared_residual_zero": true,
+        "singular_rank_one_score_cleared_normal_form_zero": true,
+        "singular_negative_control_nonzero": true
+      },
+      "contract_checks": false
+    },
+    "D4": {
+      "exit_code": 0,
+      "finite_identity_checks": {
+        "sage_scalar_schur_cleared_residual_zero": true,
+        "singular_scalar_schur_cleared_normal_form_zero": true,
+        "singular_negative_control_nonzero": true
+      },
+      "contract_checks": false
+    }
+  },
+  "scope": "Raw summary of repaired finite calculations. It does not establish a general contract obligation."
+}

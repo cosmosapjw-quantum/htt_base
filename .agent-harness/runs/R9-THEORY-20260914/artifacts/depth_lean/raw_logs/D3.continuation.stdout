@@ -1,0 +1,26 @@
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:43:12: error: unsolved goals
+case cons.nil
+α : Type u
+inst✝ : AddSubCancel α
+transport : α → α
+residual initial : α
+ih : ∀ (initial : α), residuals transport (reconstruct transport initial []) = []
+⊢ residual + transport initial - transport initial = residual
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:44:23: error: unsolved goals
+case cons.cons
+α : Type u
+inst✝ : AddSubCancel α
+transport : α → α
+residual initial next : α
+tail : List α
+ih : ∀ (initial : α), residuals transport (reconstruct transport initial (next :: tail)) = next :: tail
+⊢ residuals transport
+      ((residual + transport initial) :: reconstruct transport (next + transport (residual + transport initial)) tail) =
+    next :: tail
+../.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/DepthCore.lean:45:70: warning: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  simp [reconstruct, residuals, AddSubCancel.add_sub_cancel',̵ ̵i̵h̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

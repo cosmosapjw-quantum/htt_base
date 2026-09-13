@@ -205,6 +205,7 @@ policy:
   - PR-R9-MULTIDEPTH
   - PR-R9-SELECTED-LAW
   - PR-R9-FIBRE
+  - PR-R9-DEPTH-FORMAL
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -10107,4 +10108,28 @@ prs:
   level: L0
   scope: r9_fixed_ambient_fibre_numerical_reproduction
   risk: R2
+  user_authorized: true
+
+- id: PR-R9-DEPTH-FORMAL
+  wave: 0
+  title: Execute current depth proof obligations and preserve incomplete admission
+  owner: COMMON
+  depends:
+  - PR-R9-FIBRE
+  files:
+  - docs/research_program/tensor_joint_r9/revision2/depth_formal
+  - .agent-harness/runs/R9-THEORY-20260914
+  tests:
+  - python3 .agent-harness/scripts/cas_gate.py run-adjudicate --contract docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D1.json --run-spec docs/research_program/tensor_joint_r9/revision2/depth_formal/run_D1.json
+  - python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  dod:
+  - Bind D1 and D3 then D2 and D4 to separate current contracts and R9-24 consumer obligations
+  - Run four independently authored engine attempts and parent-observed adjudication for each proposition
+  - Preserve actual errors and coherent repairs, exact checked scope and missing general or probabilistic proof obligations
+  - Keep FORMAL_DEPTH and DEPTH_METHOD blocked unless all full obligations pass; retain existing direct derivations as prior results
+  - Update canonical state and staged push with remote-ref verification in the existing worktree
+  kill: No finite fixture or compiled helper substitutes for arbitrary block or Gaussian proof; no policy weakening, new data acquisition, old-product replay, extra verification worktree, or scientific admission from process success.
+  level: L0
+  scope: r9_proposition_specific_formal_attempt_and_scope_adjudication
+  risk: R3
   user_authorized: true

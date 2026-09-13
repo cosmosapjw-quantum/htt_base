@@ -1,4 +1,4 @@
-# R9 revision 2 handoff — fixed ambient fibre replay and remaining observation law
+# R9 revision 2 handoff — current depth proof attempt and independent theory
 
 저장소 `cosmosapjw-quantum/htt_base`, 브랜치
 `implementation/project-catalog-20260912`를 이어서 작업하라.
@@ -9,6 +9,27 @@
 이번 고정 ambient STF 수치 비교는 `af5fe14a60658ff7926e58ea512bd3014aeba2ba`를 이어서 수행했다.
 이 인계 파일을 포함하는 전달 커밋을 다음 immutable starting point로 고정하라.
 R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초기화하지 마라.
+
+## 2026-09-14 우선 적용 continuation
+
+이번 작업은 기준 bc5e028d16c10a8a60080a59f5cd6adaf7595238와 동일한 HEAD에서
+시작했다. 이후 변경을 보존하고 R9 revision 2를 유지한다. 사용자 지시에 따라
+**추가 관측자료 확보·요청·기존 확보 시도 반복은 보류**한다. 아래의 외부 입력
+목록은 남은 의무 기록이며 이번 세션의 실행 지시가 아니다.
+
+R9-02.depth의 D1/D3/D2/D4를 명제별 현재 계약으로 연결하고 각 네 축을 실제
+`run-adjudicate`로 실행했다. 원시 판정은 네 명제 모두 CAS_FAIL이고, 일반 증명
+의무가 남아 FORMAL_DEPTH는 BLOCKED다. 반례 발견을 뜻하지 않는다.
+`revision2/depth_formal/OBLIGATIONS.md`, `ADJUDICATION.md/json`과 원시 실행을 읽어라.
+Lean core에서 이종 블록의 residual-after-reconstruction 한쪽 합성이 컴파일됐지만
+반대 합성, 실수 covariance/PSD와 전체 Gaussian 법칙은 남았다. 현재 Mathlib
+import는 실패한다. Wolfram/Sage 결과 요약의 등록 스키마 오류도 보존했다.
+엔진 실제 실행, 유효한 result envelope, authenticated lifecycle을 구분하라.
+
+다음 독립 이론 단계는 같은 ambient 좌표계의 uncertain-q fibre에 대한 명시적
+Hausdorff 안정성 상계다. 외부 자료 없이 직접 유도·합성 검사·독립 검수가 가능하다.
+다음 단일 형식 의무는 pinned Lean core에서 이종 블록 역방향 재구성 합성이다.
+완료된 DESI/SDSS/CF3/fixed-ambient 실행은 변경 없이 재실행하지 마라.
 
 ## 먼저 읽을 현재 상태
 
@@ -121,7 +142,7 @@ Tempel 2017의 공개 584,449행에서 objID로 SDSS 33,641행을 연결했고 �
 `RESEARCH_STATE.json`의 `selected_law_connection.review_status`를 소비하라.
 selected law, 전체 upstream refit, 물리 응답과 공통 coverage는 계속 unavailable이다.
 
-## 다음 과학 실행과 HOLD
+## 보존된 관측 입력 의무와 HOLD — 이번 세션 확보 보류
 
 R9-03/05와 R9-24/25의 **scoped implementation**이 실자료/형식적 capability를
 승격하지 않는다. R9-24 `FORMAL_DEPTH`와 R9-25 적격 CF4/JWST/CMB의 실제 전체 깊이
@@ -146,8 +167,8 @@ ambient witness 오차는 7.90e-16 미만이며 허용오차 1e-10을 유지했�
 임의 기저에 대한 증명, 불확실 q, 경계 인증, 네 축 CAS나 물리 coverage가 아니다.
 같은 SVD-coordinate 난수 seed만으로 같은 target을 정의했다고 보지 마라.
 
-다음 독립 실행 가능 경로는 R9-02의 현재 명제별 CAS 계약과 네 축 실행이다.
-`FORMAL_DEPTH` 계약 미작성은 구현할 작업이며 외부 자료 부족과 구분하라.
+이전 bc5e028d 시점에는 R9-02의 명제별 CAS 계약과 네 축 실행이 미완료였다.
+현재는 위의 depth_formal 실행·판정이 그 readiness 상태를 갱신한다. 아래 기록은 이전 상태다.
 이번 readiness map은 pinned Lean 4.31 core와 SymPy 실행을 확인했고,
 mathlib는 현재 formal 프로젝트에 설정되지 않았다. Sage-to-Singular probe는
 30초 안에 끝나지 않아 NOT_MEASURED다. 별도 실행 파일은 대소문자를 구분하는

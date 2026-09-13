@@ -1,0 +1,64 @@
+{
+  "procedure": "strict_result_validation.load_and_validate_registered_result_file(repo, path, run_id=R9-THEORY-20260914, context_version=2aadf7ee...)",
+  "meaning": "Registered result schema/input-seal validation only; not authenticated lifecycle or theorem admission.",
+  "results": {
+    "depth_wolfram_xact": {
+      "path": ".agent-harness/runs/R9-THEORY-20260914/results/depth_wolfram_xact.json",
+      "sha256": "7ba6791bd9e0599b36a6bd1d2ae0c7e8e4260dc4182cb5668e0f8558faf5d898",
+      "status": "FAIL",
+      "errors": [
+        "result status is invalid",
+        "result assignment_sha256 does not match the registration seal",
+        "result agent_type does not match its registration",
+        "result independence_mode does not match its registration",
+        "result_path inside the result does not match its registration",
+        "result launch_evidence must equal the verified class 'unverified'",
+        "result execution_evidence must be self_declared",
+        "result started_at must be a non-empty string",
+        "result tool_versions must be an object",
+        "result artifacts must be a list",
+        "result files_read must be a list of non-empty strings",
+        "result files_read_evidence must be self_declared",
+        "result findings must be a list",
+        "result claim_results must be a list",
+        "result errors must be a list",
+        "claim_results must cover every assigned claim exactly once (missing=['RUN-R9-THEORY-20260914-DEPTH_WOLFRAM_XACT'], extra=[])"
+      ]
+    },
+    "depth_sympy": {
+      "path": ".agent-harness/runs/R9-THEORY-20260914/results/depth_sympy.json",
+      "sha256": "00f488548e925d82a7ab8c48956ef100ee2b8c6efb80b67cd128ca727990eb98",
+      "status": "PASS",
+      "errors": []
+    },
+    "depth_sage_singular": {
+      "path": ".agent-harness/runs/R9-THEORY-20260914/results/depth_sage_singular.json",
+      "sha256": "57822a4932f9bdcb479c555e3a29ad70fb309ac7c45f4540b3756426be5c18ca",
+      "status": "FAIL",
+      "errors": [
+        "result status is invalid",
+        "result assignment_sha256 does not match the registration seal",
+        "result agent_type does not match its registration",
+        "result independence_mode does not match its registration",
+        "result_path inside the result does not match its registration",
+        "result launch_evidence must equal the verified class 'unverified'",
+        "result execution_evidence must be self_declared",
+        "result started_at must be a non-empty string",
+        "result tool_versions must be an object",
+        "result artifacts must be a list",
+        "result files_read must be a list of non-empty strings",
+        "result files_read_evidence must be self_declared",
+        "result findings must be a list",
+        "result claim_results must be a list",
+        "result errors must be a list",
+        "claim_results must cover every assigned claim exactly once (missing=['RUN-R9-THEORY-20260914-DEPTH_SAGE_SINGULAR'], extra=[])"
+      ]
+    },
+    "depth_lean": {
+      "path": ".agent-harness/runs/R9-THEORY-20260914/results/depth_lean.json",
+      "sha256": "ce87d142ba8517c15c5a365707bfc4157cf06e799809a3f4147a5bb4915f3fbe",
+      "status": "PASS",
+      "errors": []
+    }
+  }
+}

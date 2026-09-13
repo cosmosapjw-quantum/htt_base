@@ -1,0 +1,44 @@
+{
+  "observed_profile": {
+    "sage_command": ["/usr/local/bin/sage", "--version"],
+    "sage_stdout": "SageMath version 10.9, Release Date: 2026-05-04",
+    "singular_command": ["/usr/bin/Singular", "--version"],
+    "singular_stdout_prefix": "Singular for x86_64-Linux version 4.3.2 (4330, 64 bit) Apr  1 2024 04:44:00",
+    "profile_status": "PASS"
+  },
+  "runs": [
+    {
+      "proposition": "D1",
+      "argv": ["/usr/local/bin/sage", "-python", ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/depth_sage_singular_runner.py", "D1"],
+      "timeout_seconds": 180,
+      "exit_code": 0,
+      "stdout": "{\"checks\":{\"D1_ALL_CROSS_STEP_BLOCKS\":false,\"D1_MEAN_COVARIANCE_LINEAR_MAP\":false,\"D1_PSD_PULLBACK_GENERAL_DIMENSION\":false},\"counterexample\":null,\"domain_assumption_diff\":[]}",
+      "stderr": ""
+    },
+    {
+      "proposition": "D3",
+      "argv": ["/usr/local/bin/sage", "-python", ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/depth_sage_singular_runner.py", "D3"],
+      "timeout_seconds": 180,
+      "exit_code": 0,
+      "stdout": "{\"checks\":{\"D3_FULL_LAW_SUPPORT_PRESERVED\":false,\"D3_KERNEL_SURJECTIVITY_DETERMINANT\":false,\"D3_RECURSION_BOTH_INVERSES_ARBITRARY_BLOCKS\":false},\"counterexample\":null,\"domain_assumption_diff\":[]}",
+      "stderr": ""
+    },
+    {
+      "proposition": "D2",
+      "argv": ["/usr/local/bin/sage", "-python", ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/depth_sage_singular_runner.py", "D2"],
+      "timeout_seconds": 180,
+      "exit_code": 0,
+      "stdout": "{\"checks\":{\"D2_GAUSSIAN_PUSHFORWARD_SUPPORT\":false,\"D2_RANK_ZERO_AND_OFF_SUPPORT\":false,\"D2_SUPPORTED_PSEUDOINVERSE_CHISQUARE\":false},\"counterexample\":null,\"domain_assumption_diff\":[]}",
+      "stderr": ""
+    },
+    {
+      "proposition": "D4",
+      "argv": ["/usr/local/bin/sage", "-python", ".agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/depth_sage_singular_runner.py", "D4"],
+      "timeout_seconds": 180,
+      "exit_code": 0,
+      "stdout": "{\"checks\":{\"D4_FULL_PAST_CONDITIONAL_GAUSSIAN\":false,\"D4_INNOVATION_INDEPENDENCE_AND_FIXED_LAW_LIMIT\":false,\"D4_PSD_RANGE_SCHUR_SUPPORT\":false},\"counterexample\":null,\"domain_assumption_diff\":[]}",
+      "stderr": ""
+    }
+  ],
+  "evidence_scope": "Exact finite symbolic algebra and engine invocation only; no general proposition is discharged."
+}
