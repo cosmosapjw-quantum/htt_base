@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "lake",
+    "env",
+    "lean",
+    "R9Depth/BlockBridge.lean"
+  ],
+  "cwd": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal",
+  "source_sha256": "9052134225b923acb706281fb27d92846ecadedbabdd2083d89c218581899631",
+  "exit_code": 1,
+  "stdout": "R9Depth/BlockBridge.lean:74:53: error: unsolved goals\nd : \u2115 \u2192 \u2115\nK : (j : \u2115) \u2192 Matrix (Fin (d (j + 1))) (Fin (d j)) \u211d\ns n : \u2115\ny : Ix d s (n + 1) \u2192 \u211d\n\u22a2 Sum.elim (y \u2218 Sum.inl) (injectFirst d (s + 1) n (-(K s *\u1d65 y \u2218 Sum.inl)) + transform d K (s + 1) n *\u1d65 y \u2218 Sum.inr) =\n    Sum.elim (y \u2218 Sum.inl) (injectFirst d (s + 1) n (-(K s *\u1d65 y \u2218 Sum.inl)) + transform d K (s + 1) n *\u1d65 y \u2218 Sum.inr)\n'R9Block.determinant_one' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.transform_step' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]\n",
+  "stderr": "",
+  "seconds": 1.692115562967956,
+  "LEAN_PATH": "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+}

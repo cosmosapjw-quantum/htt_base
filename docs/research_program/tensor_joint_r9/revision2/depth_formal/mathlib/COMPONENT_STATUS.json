@@ -9,7 +9,7 @@
     },
     "D3": {
       "D3_RECURSION_BOTH_INVERSES_ARBITRARY_BLOCKS": "LEAN_CHECKED_GENERAL",
-      "D3_KERNEL_SURJECTIVITY_DETERMINANT": "PARTIAL_SURJECTIVITY_CHECKED_KERNEL_AND_DETERMINANT_MISSING",
+      "D3_KERNEL_SURJECTIVITY_DETERMINANT": "LEAN_CHECKED_GENERAL_MATRIX_FORM",
       "D3_FULL_LAW_SUPPORT_PRESERVED": "NOT_YET_FORMALIZED"
     },
     "D2": {
@@ -25,11 +25,13 @@
   },
   "sources": [
     "formal/R9Depth/Recursion.lean",
-    "formal/R9Depth/Covariance.lean"
+    "formal/R9Depth/Covariance.lean",
+    "formal/R9Depth/BlockBridge.lean"
   ],
   "final_executions": [
     "recursion_checked/execution.json",
-    "covariance_blocks/execution.json"
+    "covariance_blocks/execution.json",
+    "../block_bridge/attempt06/execution.json"
   ],
   "independent_review": "BLOCKED_AUTHENTICATION_UNVERIFIED",
   "FORMAL_DEPTH": "BLOCKED",
@@ -40,5 +42,7 @@
   "whole_run": "NON_PASS",
   "review_result_status": "fail",
   "review_result": ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/results/depth_mathlib_review.json",
-  "review_scope": "Self-declared source review and matching compiler artifacts exist; not admitted as authenticated independent review. Full D3/D2/D4 remain incomplete."
+  "review_scope": "Self-declared source review and matching compiler artifacts exist; not admitted as authenticated independent review. Full D3/D2/D4 remain incomplete.",
+  "latest_continuation": "../block_bridge/STATUS.json",
+  "new_source_review": "HOST_SELF_REVIEW_ONLY; existing reviewer result does not cover BlockBridge.lean"
 }

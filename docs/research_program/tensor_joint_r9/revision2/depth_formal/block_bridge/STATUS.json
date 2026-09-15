@@ -1,0 +1,87 @@
+{
+  "work_unit": "R9-D3-BLOCK-BRIDGE-20260915",
+  "base_commit": "e71b3375789460b6abf5c72bbc52b95801fa894d",
+  "user_base": "bc5e028d16c10a8a60080a59f5cd6adaf7595238",
+  "owner": "common",
+  "scope": "Existing D3 deterministic theorem, Host Lean formalization; not a new mathematical discovery",
+  "contract": "../CAS_D3.json",
+  "contract_sha256": "7ad2043a43aec9efc6d0638677db4a79a1678845aea0d4a759a2a6933e021d11",
+  "source": "formal/R9Depth/BlockBridge.lean",
+  "source_sha256": "6ef13a4ab56119c47a0b4c04e30423dc3896b5cb2e09e63578a7b8e66c30a087",
+  "final_execution": "attempt06/execution.json",
+  "components": {
+    "ordered_heterogeneous_T_and_exact_residual_recursion": "LEAN_CHECKED_GENERAL",
+    "T_determinant_one_and_bijective": "LEAN_CHECKED_GENERAL",
+    "H_surjective_and_kernel_exactly_propagated_initial_state": "LEAN_CHECKED_GENERAL",
+    "zero_depth_empty_residual_space": "LEAN_CHECKED_GENERAL",
+    "D3_full_joint_measure_support_and_moment_bridge": "NOT_YET_FORMALIZED",
+    "D2_singular_Gaussian_support_pseudoinverse_chisquare": "NOT_YET_FORMALIZED",
+    "D4_full_past_conditional_innovation": "NOT_YET_FORMALIZED"
+  },
+  "independent_review": "BLOCKED_AUTHENTICATION_UNVERIFIED",
+  "review_mode": "HOST_SELF_REVIEW_ONLY_FOR_THIS_NEW_SOURCE",
+  "inherited_review_blocker": {
+    "source": "../mathlib/routing_status.json",
+    "error": "GLOBAL_HOOK_IDENTITY_OR_STATE_UNVERIFIED:CHILD_BINDING_MISSING",
+    "current_registration_child": null,
+    "new_child_dispatches": 0,
+    "unchanged_blocker_not_retried": true,
+    "new_source_review_not_claimed_from_old_artifacts": true
+  },
+  "four_axis_admission": "CAS_BLOCKED_NO_NEW_ELIGIBLE_FULL_CONTRACT_RESULTS",
+  "prior_four_axis_raw_status": "CAS_FAIL_UNCHANGED",
+  "prior_D3_engine_commands": {
+    "wolfram_xact": [
+      "WolframKernel",
+      "-noprompt",
+      "-script",
+      "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_wolfram_xact/verify_depth_repaired.wl",
+      "D3"
+    ],
+    "sympy": [
+      "/usr/bin/python3",
+      "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sympy/depth_sympy_runner.py",
+      "D3"
+    ],
+    "sage_singular": [
+      "/usr/local/bin/sage",
+      "-python",
+      "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_sage_singular/depth_sage_singular_runner_repaired.py",
+      "D3"
+    ],
+    "lean": [
+      "/usr/bin/bash",
+      "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/.agent-harness/runs/R9-THEORY-20260914/artifacts/depth_lean/run_depth_lean.sh",
+      "D3"
+    ]
+  },
+  "prior_execution_records": "../host_execution/D3",
+  "new_engine_execution": "HOST_LEAN_ONLY; old independently authored scripts do not consume this new source and were not replayed",
+  "engine_paths_now": {
+    "WolframKernel": "/usr/local/bin/WolframKernel",
+    "Sage": "/usr/local/bin/sage",
+    "Singular": "/usr/bin/Singular",
+    "lowercase_singular": null,
+    "lean": "/home/cosmosapjw/.elan/bin/lean"
+  },
+  "archives": {
+    "research": {
+      "path": "harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip",
+      "sha256": "dae76c90f2e5d691bcdd595dadbe470bacacba3bb2a036ff9788ffe7d3bfabb7",
+      "status": "MATCH_EXISTING_APPLICATION_PRESERVED"
+    },
+    "coding": {
+      "path": "harness/archives/physmath-coding-harness-gpt6-astra-v4.0.0-20260908.zip",
+      "sha256": "dc99e7ab2f9629dcce3ec0758d97e19acc5b645f86e208d1b338bb6430ff8d7a",
+      "status": "MATCH_EXISTING_APPLICATION_PRESERVED"
+    }
+  },
+  "global_runtime_authority": "3379cc219ed6b5e44a2b50d7224324a89fdf77ab",
+  "global_lifecycle": "UNVERIFIED",
+  "FORMAL_DEPTH": "BLOCKED",
+  "scientific_admission": "HOLD",
+  "whole_run": "NON_PASS",
+  "alpha_consumed": 0,
+  "moving_q": "MQ1/MQ2 previous derivation and scoped review preserved unchanged; no new numerical run",
+  "next_single_formal_task": "Construct the measurable/homeomorphic full-law and support pushforward for the proved T, retaining initial cross-covariances."
+}

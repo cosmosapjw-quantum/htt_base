@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "lake",
+    "env",
+    "lean",
+    "R9Depth/BlockBridge.lean"
+  ],
+  "cwd": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal",
+  "source_sha256": "3c7381ad7f6e9e824d7a1434be19e736d7761f45d67dd1745a81f399bba6569b",
+  "exit_code": 1,
+  "stdout": "R9Depth/BlockBridge.lean:78:2: error: No goals to be solved\nR9Depth/BlockBridge.lean:157:12: error: unsolved goals\ncase mp.inl\nd : \u2115 \u2192 \u2115\nK : (j : \u2115) \u2192 Matrix (Fin (d (j + 1))) (Fin (d j)) \u211d\ns n : \u2115\ny : Ix d s (n + 1) \u2192 \u211d\nh : contrastMatrix d K s n *\u1d65 y = 0\nj : Fin (d s)\n\u22a2 (transform d K s (n + 1) *\u1d65 y) (Sum.inl j) = y (Sum.inl j)\nR9Depth/BlockBridge.lean:157:21: warning: This simp argument is unused:\n  transform_step\n\nHint: Omit it from the simp argument list.\n  simp [t\u0335r\u0335a\u0335n\u0335s\u0335f\u0335o\u0335r\u0335m\u0335_\u0335s\u0335t\u0335e\u0335p\u0335,\u0335 \u0335injectFirst]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n'R9Block.determinant_one' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.transform_step' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.transform_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.transform_propagated' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.contrast_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.kernel_iff_propagated' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]\n",
+  "stderr": "",
+  "seconds": 3.125343539984897,
+  "LEAN_PATH": "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean:/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+}

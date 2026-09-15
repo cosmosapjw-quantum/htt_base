@@ -10,6 +10,32 @@
 이 인계 파일을 포함하는 전달 커밋을 다음 immutable starting point로 고정하라.
 R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초기화하지 마라.
 
+## 우선 적용 continuation — D3 block bridge, 2026-09-15
+
+현재 전달은 e71b3375 이후 변경을 보존한 후속이다. 기준 bc5e028d의 자손이며
+R9 revision 2를 유지한다. `revision2/depth_formal/block_bridge/README.md`,
+`STATUS.json`, `REVIEW.md`와 `formal/R9Depth/BlockBridge.lean`을 먼저 읽어라.
+
+D3의 실제 잔차 행 재귀, 임의 이종 블록 T의 determinant=1·전단사성,
+H의 전사성 및 `ker H = 전파된 초기 상태`를 일반 Lean 명제로 컴파일했다.
+깊이 0의 빈 잔차 공간도 포함한다. 기존 직접 유도의 형식화이며 새 정리가 아니다.
+최종 기록 attempt06은 소스와 일치하고 sorryAx가 없다. 실패 기록은 보존했다.
+
+**다음 단일 형식 작업은 T의 전체 공동 measure/support/moment 사상 연결**이다.
+초기 블록과 초기–잔차 교차 공분산을 포함하고 특이 law를 허용하라.
+그 뒤 D2/D4와 현재 계약의 독립 네 축 수용이 필요하다. FORMAL_DEPTH는 BLOCKED다.
+
+이번 소스는 Host가 작성·자체 검수했다. 이전 검수 결과는 새 소스를 검수한 것이
+아니다. 현재 등록 child binding은 null이며 이전 CHILD_BINDING_MISSING을 보존한다.
+새 이름 등록·우회·불변 실패 재시도는 하지 않았다. 기존 16회 네 축 실행과
+CAS_FAIL은 그대로 두며, 새 소스를 사용하지 않는 이전 runner를 반복하지 않았다.
+이 차단은 형식 수용에만 적용하고 독립적으로 가능한 증명을 중단시키지 마라.
+
+MQ1/MQ2의 moving-q 전역·내부 상계는 이미 유도·합성 검사·범위 한정 검수를
+완료했다. 그 결과와 원문 상태를 그대로 이어받고 재실행·재발견으로 세지 마라.
+관측자료 확보는 계속 보류한다. 모든 HOLD·quarantine·STOP_INVALID·오차 및 alpha
+예산, 미확보 law/물리 response/state–jet–anchor coverage 상태를 유지한다.
+
 ## 현재 mathlib continuation — 2026-09-15
 
 사용자의 Continue에 따라 동일 work unit R9-DEPTH-MATHLIB-20260914를 이어간다.
