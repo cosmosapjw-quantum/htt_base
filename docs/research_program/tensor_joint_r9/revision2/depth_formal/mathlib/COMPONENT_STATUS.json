@@ -1,0 +1,44 @@
+{
+  "base_commit": "9ca515ad891e59eff72eb06dfef05f06131bfb2c",
+  "scope": "Host-compiled general Lean components under unchanged original D1-D4 contracts; not four-axis payload/adjudication",
+  "components": {
+    "D1": {
+      "D1_MEAN_COVARIANCE_LINEAR_MAP": "LEAN_CHECKED_GENERAL",
+      "D1_ALL_CROSS_STEP_BLOCKS": "LEAN_CHECKED_GENERAL",
+      "D1_PSD_PULLBACK_GENERAL_DIMENSION": "LEAN_CHECKED_GENERAL"
+    },
+    "D3": {
+      "D3_RECURSION_BOTH_INVERSES_ARBITRARY_BLOCKS": "LEAN_CHECKED_GENERAL",
+      "D3_KERNEL_SURJECTIVITY_DETERMINANT": "PARTIAL_SURJECTIVITY_CHECKED_KERNEL_AND_DETERMINANT_MISSING",
+      "D3_FULL_LAW_SUPPORT_PRESERVED": "NOT_YET_FORMALIZED"
+    },
+    "D2": {
+      "D2_GAUSSIAN_PUSHFORWARD_SUPPORT": "FULL_OBLIGATION_NOT_YET_FORMALIZED",
+      "D2_SUPPORTED_PSEUDOINVERSE_CHISQUARE": "NOT_YET_FORMALIZED",
+      "D2_RANK_ZERO_AND_OFF_SUPPORT": "NOT_YET_FORMALIZED"
+    },
+    "D4": {
+      "D4_PSD_RANGE_SCHUR_SUPPORT": "NOT_YET_FORMALIZED",
+      "D4_FULL_PAST_CONDITIONAL_GAUSSIAN": "NOT_YET_FORMALIZED",
+      "D4_INNOVATION_INDEPENDENCE_AND_FIXED_LAW_LIMIT": "FULL_OBLIGATION_NOT_YET_FORMALIZED"
+    }
+  },
+  "sources": [
+    "formal/R9Depth/Recursion.lean",
+    "formal/R9Depth/Covariance.lean"
+  ],
+  "final_executions": [
+    "recursion_checked/execution.json",
+    "covariance_blocks/execution.json"
+  ],
+  "independent_review": "BLOCKED_AUTHENTICATION_UNVERIFIED",
+  "FORMAL_DEPTH": "BLOCKED",
+  "four_axis_admission": false,
+  "current_other_axis_results": "Prior CAS_FAIL remains unchanged; no re-labelling or unchanged rerun",
+  "scientific_admission": "HOLD",
+  "independent_review_error": "GLOBAL_HOOK_IDENTITY_OR_STATE_UNVERIFIED:CHILD_BINDING_MISSING",
+  "whole_run": "NON_PASS",
+  "review_result_status": "fail",
+  "review_result": ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/results/depth_mathlib_review.json",
+  "review_scope": "Self-declared source review and matching compiler artifacts exist; not admitted as authenticated independent review. Full D3/D2/D4 remain incomplete."
+}

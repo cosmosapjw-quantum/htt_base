@@ -10,6 +10,40 @@
 이 인계 파일을 포함하는 전달 커밋을 다음 immutable starting point로 고정하라.
 R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초기화하지 마라.
 
+## 현재 mathlib continuation — 2026-09-15
+
+사용자의 Continue에 따라 동일 work unit R9-DEPTH-MATHLIB-20260914를 이어간다.
+현재 설치된 공용 mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f와
+Lean v4.31.0 캐시 연결이 실제로 성공했다. 기존 core 전용 manifest는 유지한다.
+`revision2/depth_formal/mathlib/README.md`와 `COMPONENT_STATUS.json`을 먼저 읽어라.
+
+`formal/R9Depth/Recursion.lean`에서 이종 블록 역방향 합성, 양방향 동치와 임의
+직사각 실수 행렬 specialization이 컴파일됐다. `Covariance.lean`에서는 D1의 실제
+기댓값·전체 HCHᵀ·실수 PSD 및 네 교차 블록 항을 일반 차원에서 컴파일했다.
+이는 기존 정리의 형식화이며 새 수학 정리로 세지 않는다. 독립 검수 판정은
+COMPONENT_STATUS와 검수 원문에서 확인하라.
+
+FORMAL_DEPTH는 아직 BLOCKED다. **다음 단일 의무는 D3의 flattened block-linear
+map과 determinant/kernel/full-law bridge**다. 그 뒤 D2의 특이 지지집합·의사역행렬
+χ² 법칙과 D4의 전체 과거 조건부 Gaussian·innovation 독립성을 형식화해야 한다.
+확률 라이브러리가 전부 없다는 이전 설명은 현재 상태가 아니다. 설치된 Gaussian
+map/independence 정리는 사용 가능하지만 전체 필요한 연결 증명은 아직 없다.
+사용자는 FORMAL_DEPTH 해제 뒤에 16개 연구 묶음을 진행하도록 지시했다.
+기존 MQ1/MQ2를 다시 실행하거나 새 발견으로 세지 말고, 이 선행 조건을 생략하지 마라.
+
+이전 child continuation hook 거부는 보존했고 Host가 현재 증명을 작성했다.
+새 독립 검수 depth_mathlib_review는 launch cl_617136dbc88895e44bec01b87c3a18fd로
+등록·요청했으나 `GLOBAL_HOOK_IDENTITY_OR_STATE_UNVERIFIED:CHILD_BINDING_MISSING`으로
+최종 중단 응답을 반환했다. 종료 시 검수 보고서와 성공한 재컴파일 2건도 발견됐다.
+Host가 소스/hash/trace를 확인했으나 result의 launch_id는 null이고 실행 근거는
+self_declared다. 양쪽 기록을 보존하며 독립 검수 수용은
+BLOCKED_AUTHENTICATION_UNVERIFIED로 둔다. 보고서의 fail은 D3/D2/D4 전체 의무가
+미완료라는 뜻이며 통과한 보조정리의 반례가 아니다.
+동일 작업의 검수 1회 예산을 소진했고 우회·새 이름 재시도는 하지 않았다.
+다음 실행은 현재 client binding/lifecycle을 복구한 뒤 정확한 증명 검수를
+재개하는 것이다. 그 뒤 위 D3 잔여 의무를 진행하라. 현재 실행 신원과 네 축 수용은 별도 상태다.
+관측 입력 확보 보류, 기존 모든 HOLD와 예산, 원본 실행 증거를 유지한다.
+
 ## 2026-09-14 우선 적용 continuation
 
 이번 작업은 기준 bc5e028d16c10a8a60080a59f5cd6adaf7595238와 동일한 HEAD에서

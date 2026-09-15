@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-DEPTH-MATHLIB-20260914",
+  "assignment_id": "depth_mathlib_review",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "physics_stat_auditor",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "RUN-R9-DEPTH-MATHLIB-20260914-DEPTH_MATHLIB_REVIEW"
+  ],
+  "task": "Independently review current formal/R9Depth/Recursion.lean and Covariance.lean against unchanged D1/D3 full contracts and the known incomplete D2/D4 obligations. Verify exact assumptions, arbitrary dimensions/depth, actual inverse equivalence and real specialization, full covariance four cross terms and PSD, actual Lean axioms, and source diff. Recompile each current source once using existing shared pinned mathlib and trace wrapper to unique owned directories. Do not rerun old products or numerical baselines. Examine MLflow trace compiler outputs (not only status); trace success is not proof admission. Identify remaining D3 determinant/full-law and D2/D4 obligations explicitly; do not accept all FORMAL_DEPTH. You are not alone; write ONLY .agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review and your own registered result. No source/shared edits or nested agents. One review and one coherent same-issue closeout if needed, cumulative1200seconds. Return exact findings and valid strict schema2 registered result, use source/schema helpers to avoid old envelope defects.",
+  "required_inputs": [
+    {
+      "path": "formal/R9Depth/Recursion.lean",
+      "sha256": "30fc8640f35ac544cee3244c65222a9e88cd61ff3335891a20b3b2860e820824"
+    },
+    {
+      "path": "formal/R9Depth/Covariance.lean",
+      "sha256": "f6cac1f75f837b30bada5e79851949d025e305586cbc4a9ec9fe821343740eb5"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/mathlib/verify_lean.py",
+      "sha256": "d32294f8e8882da88c89c4e63d2fd4806f233117ff83dd9efb0110bbe761434f"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D1.json",
+      "sha256": "37b2295ab9f752f4fe2dfd56040cb6ccce2a13266c3090f7613703fccf64171e"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D3.json",
+      "sha256": "7ad2043a43aec9efc6d0638677db4a79a1678845aea0d4a759a2a6933e021d11"
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/OBLIGATIONS.md",
+      "sha256": "163a15073e610b8ba9cfcf3267e1ec7e9a3be3a051897f4374fd4cf5acc420b6"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "exec_command",
+    "apply_patch"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/results/depth_mathlib_review.json"
+  ],
+  "result_path": ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/results/depth_mathlib_review.json",
+  "status": "registered",
+  "assignment_sha256": "d6352dd5dd09873edce97cad994b3c4e49d8c0044da18a4fb106b8cdb19e353d"
+}

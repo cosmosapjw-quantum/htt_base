@@ -1,0 +1,149 @@
+{
+  "schema_version": 2,
+  "run_id": "R9-DEPTH-MATHLIB-20260914",
+  "assignment_id": "depth_mathlib_review",
+  "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "result_path": ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/results/depth_mathlib_review.json",
+  "assignment_sha256": "d6352dd5dd09873edce97cad994b3c4e49d8c0044da18a4fb106b8cdb19e353d",
+  "launch_id": null,
+  "launch_evidence": "unverified",
+  "execution_evidence": "self_declared",
+  "files_read": [
+    ".agent-harness/context/CONTEXT_INDEX.json",
+    ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/assignments/depth_mathlib_review.json",
+    ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/RUN_PLAN.json",
+    ".agent-harness/scripts/strict_result_validation.py",
+    "formal/R9Depth/Recursion.lean",
+    "formal/R9Depth/Covariance.lean",
+    "formal/lean-toolchain",
+    "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D1.json",
+    "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D3.json",
+    "docs/research_program/tensor_joint_r9/revision2/depth_formal/OBLIGATIONS.md",
+    "docs/research_program/tensor_joint_r9/revision2/depth_formal/mathlib/verify_lean.py",
+    ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/recursion_compile/execution.json",
+    ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/recursion_compile/trace.json",
+    ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/covariance_compile/execution.json",
+    ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/covariance_compile/trace.json"
+  ],
+  "files_read_evidence": "self_declared",
+  "started_at": "2026-09-15T15:21:00+09:00",
+  "completed_at": "2026-09-15T15:27:33+09:00",
+  "tool_versions": {
+    "wrapper_python": "Python 3.12.3",
+    "lean_toolchain_pin": "leanprover/lean4:v4.31.0",
+    "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+    "mlflow": "3.16.0"
+  },
+  "commands": [
+    "/mnt/sn850x2t/htt_base_e2e/R9-DEPTH-MATHLIB-20260914/trace-env/bin/python docs/research_program/tensor_joint_r9/revision2/depth_formal/mathlib/verify_lean.py Recursion --output .agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/recursion_compile --trace-store /mnt/sn850x2t/htt_base_e2e/R9-DEPTH-MATHLIB-20260914/mlruns",
+    "/mnt/sn850x2t/htt_base_e2e/R9-DEPTH-MATHLIB-20260914/trace-env/bin/python docs/research_program/tensor_joint_r9/revision2/depth_formal/mathlib/verify_lean.py Covariance --output .agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/covariance_compile --trace-store /mnt/sn850x2t/htt_base_e2e/R9-DEPTH-MATHLIB-20260914/mlruns"
+  ],
+  "artifacts": [
+    {
+      "path": ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/review.md",
+      "sha256": "74d0bdc171051d55617553b193c3098914d3e9f4df49bef8b81170bbe31e9364",
+      "bytes": 4166,
+      "producer": "depth_mathlib_review"
+    },
+    {
+      "path": ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/recursion_compile/execution.json",
+      "sha256": "497e0c0fc0595d41b133f5159714da832c43a15c3c3302c08f634f88ace6e742",
+      "bytes": 1533,
+      "producer": "verify_lean.py",
+      "command_fingerprint": "r9-depth-recursion-compile-v1"
+    },
+    {
+      "path": ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/recursion_compile/trace.json",
+      "sha256": "9be68f6926d89ba650043c5d7732da3cb6e2794d9a45ed2d461d6faf7ad97aff",
+      "bytes": 10629,
+      "producer": "verify_lean.py",
+      "command_fingerprint": "r9-depth-recursion-trace-v1"
+    },
+    {
+      "path": ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/covariance_compile/execution.json",
+      "sha256": "81bda6a0f80c45d7d867c439e6d90aae8e2d73f1dd07e36a63b5aaff2f153416",
+      "bytes": 3870,
+      "producer": "verify_lean.py",
+      "command_fingerprint": "r9-depth-covariance-compile-v1"
+    },
+    {
+      "path": ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/covariance_compile/trace.json",
+      "sha256": "d90e2b8dded0dfc4ee4ca952265842523c1aa96215aa9b74135debe32ee13df8",
+      "bytes": 15371,
+      "producer": "verify_lean.py",
+      "command_fingerprint": "r9-depth-covariance-trace-v1"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-D3-PARTIAL-CONTRACT",
+      "claim_id": "RUN-R9-DEPTH-MATHLIB-20260914-DEPTH_MATHLIB_REVIEW",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The compiled D3 source proves both finite-depth inverse compositions and a real rectangular-matrix specialization, but does not prove D3's determinant-one, kernel characterization, matrix-form H surjectivity, or transformed full-law/support obligations.",
+      "assumptions_used": [
+        "D3 is assessed against CAS_D3.json's complete exact statement.",
+        "The two-sided recursion equivalence is a scoped deterministic result only."
+      ],
+      "evidence_refs": [
+        "formal/R9Depth/Recursion.lean:33-36",
+        "formal/R9Depth/Recursion.lean:65-154",
+        "formal/R9Depth/Recursion.lean:157-172",
+        "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D3.json target.exact_test_obligations",
+        ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/recursion_compile/execution.json"
+      ],
+      "evidence_fingerprint": "source:recursion-d3-inverses-no-det-kernel-law-v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Run the recorded Recursion verify_lean.py command and inspect execution.json stdout for exit_code 0 and printed axioms.",
+        "Compare Recursion.lean declarations to the D3 exact_test_obligations in CAS_D3.json."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "A future proof must define the flattened matrix/operator, prove determinant one and ker/surjectivity, and formalize full-law/support preservation including initial-cross terms for singular covariance."
+      ]
+    },
+    {
+      "finding_id": "F-D2-D4-ABSENT",
+      "claim_id": "RUN-R9-DEPTH-MATHLIB-20260914-DEPTH_MATHLIB_REVIEW",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "Neither reviewed Lean source supplies the D2 singular Gaussian pushforward/support/chi-square obligations or the D4 full-past singular conditional-innovation and independence obligations; full FORMAL_DEPTH remains blocked.",
+      "assumptions_used": [
+        "OBLIGATIONS.md defines D2 and D4 as required distinct propositions.",
+        "No formal theorem not present in the reviewed sources is inferred."
+      ],
+      "evidence_refs": [
+        "formal/R9Depth/Covariance.lean:6-8",
+        "formal/R9Depth/Recursion.lean:5-6",
+        "docs/research_program/tensor_joint_r9/revision2/depth_formal/OBLIGATIONS.md:D2",
+        "docs/research_program/tensor_joint_r9/revision2/depth_formal/OBLIGATIONS.md:D4",
+        ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/artifacts/depth_mathlib_review/covariance_compile/execution.json"
+      ],
+      "evidence_fingerprint": "scope:d2-d4-no-lean-theorems-v1",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Inspect the declarations in the two reviewed sources and compare them with D2 and D4 in OBLIGATIONS.md."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "D2 and D4 require their own faithful formalizations and all required independent axes before any complete-contract adjudication."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "RUN-R9-DEPTH-MATHLIB-20260914-DEPTH_MATHLIB_REVIEW",
+      "outcome": "findings_present",
+      "finding_ids": [
+        "F-D3-PARTIAL-CONTRACT",
+        "F-D2-D4-ABSENT"
+      ],
+      "summary": "D1's scoped linear covariance, four-cross-term, and PSD lemmas compile with only standard printed axioms; D3's two-sided finite-depth recursion equivalence also compiles. The complete D3, D2, D4, and FORMAL_DEPTH contracts remain unfulfilled."
+    }
+  ],
+  "errors": []
+}

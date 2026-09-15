@@ -1,0 +1,79 @@
+{
+  "info": {
+    "trace_id": "tr-62d1861bcddc7d27161431f67bf83297",
+    "trace_location": {
+      "type": "MLFLOW_EXPERIMENT",
+      "mlflow_experiment": {
+        "experiment_id": "978985985798132058"
+      }
+    },
+    "request_time": "2026-09-13T17:33:26.782Z",
+    "state": "OK",
+    "trace_metadata": {
+      "mlflow.source.git.commit": "9ca515ad891e59eff72eb06dfef05f06131bfb2c",
+      "mlflow.source.type": "LOCAL",
+      "mlflow.trace_schema.version": "3",
+      "mlflow.trace.sizeStats": "{\"total_size_bytes\": 11229, \"num_spans\": 2, \"max\": 3856, \"p25\": 3854, \"p50\": 3855, \"p75\": 3855}",
+      "mlflow.source.git.branch": "implementation/project-catalog-20260912",
+      "mlflow.trace.sizeBytes": "11229",
+      "mlflow.traceInputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"6f8df797092b1c00ada4ba28e7adfabfbee1eb13f1705eb8b4e734894bc868cd\", \"mathlib_commit\": \"fabf...",
+      "mlflow.source.name": "docs/research_program/tensor_joint_r9/revision2/depth_formal/mathlib/verify_lean.py",
+      "mlflow.traceOutputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"6f8df797092b1c00ada4ba28e7adfabfbee1eb13f1705eb8b4e734894bc868cd\", \"mathlib_commit\": \"fabf...",
+      "mlflow.source.git.repoURL": "https://github.com/cosmosapjw-quantum/htt_base.git",
+      "mlflow.user": "cosmosapjw"
+    },
+    "tags": {
+      "mlflow.artifactLocation": "file:///mnt/sn850x2t/htt_base_e2e/R9-DEPTH-MATHLIB-20260914/mlruns/978985985798132058/traces/tr-62d1861bcddc7d27161431f67bf83297/artifacts",
+      "mlflow.traceName": "r9_depth_validation"
+    },
+    "request_preview": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"6f8df797092b1c00ada4ba28e7adfabfbee1eb13f1705eb8b4e734894bc868cd\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e...",
+    "response_preview": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"6f8df797092b1c00ada4ba28e7adfabfbee1eb13f1705eb8b4e734894bc868cd\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e...",
+    "execution_duration_ms": 2455
+  },
+  "data": {
+    "spans": [
+      {
+        "trace_id": "YtGGG83cfScWFDH2e/gylw==",
+        "span_id": "D5mm2ERO7Sw=",
+        "parent_span_id": null,
+        "name": "r9_depth_validation",
+        "start_time_unix_nano": 1789320806782081577,
+        "end_time_unix_nano": 1789320809237632753,
+        "events": [],
+        "status": {
+          "code": "STATUS_CODE_OK",
+          "message": ""
+        },
+        "attributes": {
+          "mlflow.traceRequestId": "\"tr-62d1861bcddc7d27161431f67bf83297\"",
+          "mlflow.spanType": "\"CHAIN\"",
+          "mlflow.spanInputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"6f8df797092b1c00ada4ba28e7adfabfbee1eb13f1705eb8b4e734894bc868cd\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean\"]}",
+          "mlflow.spanOutputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"6f8df797092b1c00ada4ba28e7adfabfbee1eb13f1705eb8b4e734894bc868cd\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean\"], \"exit_code\": 0, \"stdout\": \"R9Depth/Covariance.lean:26:0: warning: automatically included section variable(s) unused in theorem `R9Depth.mean_linear_map`:\\n  [Fintype m]\\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\\n  omit [Fintype m] in theorem ...\\n\\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\\nR9Depth/Covariance.lean:37:0: warning: automatically included section variable(s) unused in theorem `R9Depth.covariance_linear_map`:\\n  [Fintype m]\\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\\n  omit [Fintype m] in theorem ...\\n\\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\\n'R9Depth.mean_linear_map' depends on axioms: [propext, Classical.choice, Quot.sound]\\n'R9Depth.covariance_linear_map' depends on axioms: [propext, Classical.choice, Quot.sound]\\n'R9Depth.covariance_pullback_psd' depends on axioms: [propext, Classical.choice, Quot.sound]\\n\", \"stderr\": \"\", \"elapsed_seconds\": 2.4274800829880405}",
+          "mlflow.spanLogLevel": "10"
+        },
+        "links": []
+      },
+      {
+        "trace_id": "YtGGG83cfScWFDH2e/gylw==",
+        "span_id": "dab9NJ8I6L4=",
+        "parent_span_id": "D5mm2ERO7Sw=",
+        "name": "lean_compile",
+        "start_time_unix_nano": 1789320806809590655,
+        "end_time_unix_nano": 1789320809237449429,
+        "events": [],
+        "status": {
+          "code": "STATUS_CODE_OK",
+          "message": ""
+        },
+        "attributes": {
+          "mlflow.traceRequestId": "\"tr-62d1861bcddc7d27161431f67bf83297\"",
+          "mlflow.spanType": "\"TOOL\"",
+          "mlflow.spanInputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"6f8df797092b1c00ada4ba28e7adfabfbee1eb13f1705eb8b4e734894bc868cd\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean\"]}",
+          "mlflow.spanOutputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"6f8df797092b1c00ada4ba28e7adfabfbee1eb13f1705eb8b4e734894bc868cd\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean\"], \"exit_code\": 0, \"stdout\": \"R9Depth/Covariance.lean:26:0: warning: automatically included section variable(s) unused in theorem `R9Depth.mean_linear_map`:\\n  [Fintype m]\\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\\n  omit [Fintype m] in theorem ...\\n\\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\\nR9Depth/Covariance.lean:37:0: warning: automatically included section variable(s) unused in theorem `R9Depth.covariance_linear_map`:\\n  [Fintype m]\\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\\n  omit [Fintype m] in theorem ...\\n\\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\\n'R9Depth.mean_linear_map' depends on axioms: [propext, Classical.choice, Quot.sound]\\n'R9Depth.covariance_linear_map' depends on axioms: [propext, Classical.choice, Quot.sound]\\n'R9Depth.covariance_pullback_psd' depends on axioms: [propext, Classical.choice, Quot.sound]\\n\", \"stderr\": \"\", \"elapsed_seconds\": 2.4274800829880405}",
+          "mlflow.spanLogLevel": "20"
+        },
+        "links": []
+      }
+    ]
+  }
+}

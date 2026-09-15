@@ -207,6 +207,7 @@ policy:
   - PR-R9-FIBRE
   - PR-R9-DEPTH-FORMAL
   - PR-R9-MOVING-Q
+  - PR-R9-DEPTH-MATHLIB
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -10155,4 +10156,29 @@ prs:
   level: L0
   scope: r9_moving_q_deterministic_fibre_theory
   risk: R2
+  user_authorized: true
+
+- id: PR-R9-DEPTH-MATHLIB
+  wave: 0
+  title: Formalize general Lean depth components using installed mathlib
+  owner: COMMON
+  depends:
+  - PR-R9-MOVING-Q
+  files:
+  - formal/R9Depth
+  - docs/research_program/tensor_joint_r9/revision2/depth_formal/mathlib
+  - .agent-harness/runs/R9-DEPTH-MATHLIB-20260914
+  tests:
+  - See mathlib/README.md for the pinned cache and source-bound Lean execution commands
+  - python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  dod:
+  - Compile both heterogeneous reconstruction compositions for arbitrary compatible real blocks with no sorry or target axioms
+  - Discharge or precisely identify the remaining unchanged D1-D4 obligations and require all axes before formal admission
+  - Complete independent scoped proof and source review and one coherent repair closeout
+  - Trace actual proof compilation and verify captured trace and span records
+  - Preserve scientific HOLDs and original evidence; update state and push with remote-ref verification
+  kill: Independent review admission is blocked by CHILD_BINDING_MISSING despite self-declared result artifacts; no whole-run PASS, FORMAL_DEPTH release, dependent research launch, policy weakening or verification checkout.
+  level: L0
+  scope: r9_general_lean_depth_components
+  risk: R3
   user_authorized: true

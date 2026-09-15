@@ -1,0 +1,79 @@
+{
+  "info": {
+    "trace_id": "tr-b0014fab38b3dbf25bb9047baac7e2d8",
+    "trace_location": {
+      "type": "MLFLOW_EXPERIMENT",
+      "mlflow_experiment": {
+        "experiment_id": "978985985798132058"
+      }
+    },
+    "request_time": "2026-09-15T06:25:24.984Z",
+    "state": "OK",
+    "trace_metadata": {
+      "mlflow.source.type": "LOCAL",
+      "mlflow.user": "cosmosapjw",
+      "mlflow.source.git.branch": "implementation/project-catalog-20260912",
+      "mlflow.traceInputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"f6cac1f75f837b30bada5e79851949d025e305586cbc4a9ec9fe821343740eb5\", \"mathlib_commit\": \"fabf...",
+      "mlflow.source.git.repoURL": "https://github.com/cosmosapjw-quantum/htt_base.git",
+      "mlflow.trace.sizeStats": "{\"total_size_bytes\": 14477, \"num_spans\": 2, \"max\": 5480, \"p25\": 5478, \"p50\": 5479, \"p75\": 5479}",
+      "mlflow.traceOutputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"f6cac1f75f837b30bada5e79851949d025e305586cbc4a9ec9fe821343740eb5\", \"mathlib_commit\": \"fabf...",
+      "mlflow.source.name": "docs/research_program/tensor_joint_r9/revision2/depth_formal/mathlib/verify_lean.py",
+      "mlflow.trace_schema.version": "3",
+      "mlflow.source.git.commit": "9ca515ad891e59eff72eb06dfef05f06131bfb2c",
+      "mlflow.trace.sizeBytes": "14477"
+    },
+    "tags": {
+      "mlflow.traceName": "r9_depth_validation",
+      "mlflow.artifactLocation": "file:///mnt/sn850x2t/htt_base_e2e/R9-DEPTH-MATHLIB-20260914/mlruns/978985985798132058/traces/tr-b0014fab38b3dbf25bb9047baac7e2d8/artifacts"
+    },
+    "request_preview": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"f6cac1f75f837b30bada5e79851949d025e305586cbc4a9ec9fe821343740eb5\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e...",
+    "response_preview": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"f6cac1f75f837b30bada5e79851949d025e305586cbc4a9ec9fe821343740eb5\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e...",
+    "execution_duration_ms": 2615
+  },
+  "data": {
+    "spans": [
+      {
+        "trace_id": "sAFPqziz2/JbuQR7qsfi2A==",
+        "span_id": "UWovlSjslU8=",
+        "parent_span_id": null,
+        "name": "r9_depth_validation",
+        "start_time_unix_nano": 1789453524984556090,
+        "end_time_unix_nano": 1789453527600367291,
+        "events": [],
+        "status": {
+          "code": "STATUS_CODE_OK",
+          "message": ""
+        },
+        "attributes": {
+          "mlflow.traceRequestId": "\"tr-b0014fab38b3dbf25bb9047baac7e2d8\"",
+          "mlflow.spanType": "\"CHAIN\"",
+          "mlflow.spanInputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"f6cac1f75f837b30bada5e79851949d025e305586cbc4a9ec9fe821343740eb5\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean\"]}",
+          "mlflow.spanOutputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"f6cac1f75f837b30bada5e79851949d025e305586cbc4a9ec9fe821343740eb5\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean\"], \"exit_code\": 0, \"stdout\": \"R9Depth/Covariance.lean:27:0: warning: automatically included section variable(s) unused in theorem `R9Depth.mean_linear_map`:\\n  [Fintype m]\\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\\n  omit [Fintype m] in theorem ...\\n\\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\\nR9Depth/Covariance.lean:38:0: warning: automatically included section variable(s) unused in theorem `R9Depth.covariance_linear_map`:\\n  [Fintype m]\\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\\n  omit [Fintype m] in theorem ...\\n\\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\\nR9Depth/Covariance.lean:79:14: warning: This simp argument is unused:\\n  zero_add\\n\\nHint: Omit it from the simp argument list.\\n  simp only [Matrix.fromBlocks_transpose, Matrix.transpose_one, Matrix.transpose_zero,\\n      Matrix.transpose_neg, Matrix.fromBlocks_multiply, Matrix.toBlocks_fromBlocks\u2082\u2082, Matrix.one_mul,\\n  \u0332  \u0332 \u0332 \u0332Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero, add_zero, z\u0335e\u0335r\u0335o\u0335_\u0335a\u0335d\u0335d\u0335,\u0335 \u0335Matrix.add_mul, Matrix.neg_mul,\\n  \u0332  \u0332 \u0332 \u0332Matrix.mul_neg, neg_neg]\\n\\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\\nR9Depth/Covariance.lean:79:72: warning: This simp argument is unused:\\n  neg_neg\\n\\nHint: Omit it from the simp argument list.\\n  simp only [Matrix.fromBlocks_transpose, Matrix.transpose_one, Matrix.transpose_zero,\\n      Matrix.transpose_neg, Matrix.fromBlocks_multiply, Matrix.toBlocks_fromBlocks\u2082\u2082, Matrix.one_mul,\\n  \u0332  \u0332 \u0332 \u0332Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add, Matrix.add_mul,\\n  \u0332  \u0332 \u0332 \u0332Matrix.neg_mul, M\u0335a\u0335t\u0335r\u0335i\u0335x\u0335.\u0335m\u0335u\u0335l\u0335_\u0335n\u0335e\u0335g\u0335,\u0335 \u0335n\u0335e\u0335g\u0335_\u0335n\u0335e\u0335g\u0335]\u0335M\u0332a\u0332t\u0332r\u0332i\u0332x\u0332.\u0332m\u0332u\u0332l\u0332_\u0332n\u0332e\u0332g\u0332]\u0332\\n\\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\\n'R9Depth.mean_linear_map' depends on axioms: [propext, Classical.choice, Quot.sound]\\n'R9Depth.covariance_linear_map' depends on axioms: [propext, Classical.choice, Quot.sound]\\n'R9Depth.covariance_pullback_psd' depends on axioms: [propext, Classical.choice, Quot.sound]\\n'R9Depth.all_cross_step_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]\\n\", \"stderr\": \"\", \"elapsed_seconds\": 2.585253555967938}",
+          "mlflow.spanLogLevel": "10"
+        },
+        "links": []
+      },
+      {
+        "trace_id": "sAFPqziz2/JbuQR7qsfi2A==",
+        "span_id": "bU2vUmk+9VI=",
+        "parent_span_id": "UWovlSjslU8=",
+        "name": "lean_compile",
+        "start_time_unix_nano": 1789453525014385465,
+        "end_time_unix_nano": 1789453527600137278,
+        "events": [],
+        "status": {
+          "code": "STATUS_CODE_OK",
+          "message": ""
+        },
+        "attributes": {
+          "mlflow.traceRequestId": "\"tr-b0014fab38b3dbf25bb9047baac7e2d8\"",
+          "mlflow.spanType": "\"TOOL\"",
+          "mlflow.spanInputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"f6cac1f75f837b30bada5e79851949d025e305586cbc4a9ec9fe821343740eb5\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean\"]}",
+          "mlflow.spanOutputs": "{\"argv\": [\"lake\", \"env\", \"lean\", \"R9Depth/Covariance.lean\"], \"cwd\": \"/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal\", \"source_sha256\": \"f6cac1f75f837b30bada5e79851949d025e305586cbc4a9ec9fe821343740eb5\", \"mathlib_commit\": \"fabf563a7c95a166b8d7b6efca11c8b4dc9d911f\", \"lean_toolchain\": \"leanprover/lean4:v4.31.0\", \"LEAN_PATH\": [\"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean\", \"/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean\"], \"exit_code\": 0, \"stdout\": \"R9Depth/Covariance.lean:27:0: warning: automatically included section variable(s) unused in theorem `R9Depth.mean_linear_map`:\\n  [Fintype m]\\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\\n  omit [Fintype m] in theorem ...\\n\\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\\nR9Depth/Covariance.lean:38:0: warning: automatically included section variable(s) unused in theorem `R9Depth.covariance_linear_map`:\\n  [Fintype m]\\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\\n  omit [Fintype m] in theorem ...\\n\\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\\nR9Depth/Covariance.lean:79:14: warning: This simp argument is unused:\\n  zero_add\\n\\nHint: Omit it from the simp argument list.\\n  simp only [Matrix.fromBlocks_transpose, Matrix.transpose_one, Matrix.transpose_zero,\\n      Matrix.transpose_neg, Matrix.fromBlocks_multiply, Matrix.toBlocks_fromBlocks\u2082\u2082, Matrix.one_mul,\\n  \u0332  \u0332 \u0332 \u0332Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero, add_zero, z\u0335e\u0335r\u0335o\u0335_\u0335a\u0335d\u0335d\u0335,\u0335 \u0335Matrix.add_mul, Matrix.neg_mul,\\n  \u0332  \u0332 \u0332 \u0332Matrix.mul_neg, neg_neg]\\n\\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\\nR9Depth/Covariance.lean:79:72: warning: This simp argument is unused:\\n  neg_neg\\n\\nHint: Omit it from the simp argument list.\\n  simp only [Matrix.fromBlocks_transpose, Matrix.transpose_one, Matrix.transpose_zero,\\n      Matrix.transpose_neg, Matrix.fromBlocks_multiply, Matrix.toBlocks_fromBlocks\u2082\u2082, Matrix.one_mul,\\n  \u0332  \u0332 \u0332 \u0332Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add, Matrix.add_mul,\\n  \u0332  \u0332 \u0332 \u0332Matrix.neg_mul, M\u0335a\u0335t\u0335r\u0335i\u0335x\u0335.\u0335m\u0335u\u0335l\u0335_\u0335n\u0335e\u0335g\u0335,\u0335 \u0335n\u0335e\u0335g\u0335_\u0335n\u0335e\u0335g\u0335]\u0335M\u0332a\u0332t\u0332r\u0332i\u0332x\u0332.\u0332m\u0332u\u0332l\u0332_\u0332n\u0332e\u0332g\u0332]\u0332\\n\\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\\n'R9Depth.mean_linear_map' depends on axioms: [propext, Classical.choice, Quot.sound]\\n'R9Depth.covariance_linear_map' depends on axioms: [propext, Classical.choice, Quot.sound]\\n'R9Depth.covariance_pullback_psd' depends on axioms: [propext, Classical.choice, Quot.sound]\\n'R9Depth.all_cross_step_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]\\n\", \"stderr\": \"\", \"elapsed_seconds\": 2.585253555967938}",
+          "mlflow.spanLogLevel": "20"
+        },
+        "links": []
+      }
+    ]
+  }
+}

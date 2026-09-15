@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "lake",
+    "env",
+    "lean",
+    "R9Depth/Recursion.lean"
+  ],
+  "cwd": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal",
+  "source_sha256": "9d99a9aab004ddc053695988b65c3f306a1ca756cc028adcac7344c4f61770ea",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lean_toolchain": "leanprover/lean4:v4.31.0",
+  "LEAN_PATH": [
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean"
+  ],
+  "exit_code": 1,
+  "stdout": "R9Depth/Recursion.lean:271:21: error: Type mismatch\n  add_sub_cancel\nhas type\n  \u2200 (a b : ?m.14), a + (b - a) = b\nbut is expected to have type\n  \u2200 (a b : \u03b1), a + b - b = a\n'DepthLean.reconstructDependent_residualsDependent' depends on axioms: [propext]\n'DepthLean.residualsDependent_reconstructDependent' depends on axioms: [propext]\n",
+  "stderr": "",
+  "elapsed_seconds": 1.1856518980057444
+}

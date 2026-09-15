@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "lake",
+    "env",
+    "lean",
+    "R9Depth/Recursion.lean"
+  ],
+  "exit_code": 1,
+  "stdout": "R9Depth/Recursion.lean:271:21: error(lean.synthInstanceFailed): failed to synthesize instance of type class\n  AddCommGroup ?m.14\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nR9Depth/Recursion.lean:267:0: warning: Definition `DepthLean.addGroupCancellation` of class type must be marked with `@[reducible]` or `@[implicit_reducible]`\n'DepthLean.reconstructDependent_residualsDependent' depends on axioms: [propext]\n'DepthLean.residualsDependent_reconstructDependent' depends on axioms: [propext]\n",
+  "stderr": ""
+}
