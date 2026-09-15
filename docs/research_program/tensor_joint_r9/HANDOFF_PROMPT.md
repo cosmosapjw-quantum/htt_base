@@ -10,6 +10,27 @@
 이 인계 파일을 포함하는 전달 커밋을 다음 immutable starting point로 고정하라.
 R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초기화하지 마라.
 
+## 우선 적용 — 기존 검수 binding 진단, 2026-09-15
+
+`revision2/depth_formal/binding_diagnosis/REPORT.md`와 `STATUS.json`을 읽어라.
+launch cl_617136dbc88895e44bec01b87c3a18fd의 parent call과 실제 child UUID
+01a0a3bc-edad-78d3-90b9-8d2322b416ed를 원시 session 사건으로 연결했다.
+원인은 **실제 child cwd와 등록 worktree의 불일치**다. Start에서
+CHILD_CWD_MISMATCH로 binding이 생성되지 않아 Stop의 CHILD_BINDING_MISSING이
+뒤따랐다. 검수 파일 존재는 이 오류를 취소하지 않는다.
+
+native task 시간은 286.233초이며 1200초와의 산술 차이는 913.767초다.
+검수 1회는 이미 사용했고, 산술 잔여 시간은 재개 권한이 아니다.
+공식 plan-continuation은 WORKSPACE_JOB_UNAVAILABLE로 종료됐다. 등록의
+continuation_context와 sandbox는 null이고 등록 당시 HEAD도 현재와 다르다.
+따라서 기존 정책에서 인증 closeout은 BLOCKED/UNVERIFIED다. 과거 원시 결과와
+STOP_BUDGET/NON_PASS를 변경하거나 새 task로 예산을 재설정하지 마라.
+
+이 작업은 진단·상태 전달로 종료했다. 새로운 검수나 전역 유지보수는 별도 명시적
+범위를 요구하며 이번에 수행하지 않았다. 이후 수학 작업은 아래 8887b4eb의
+flattened map·determinant/kernel 증명을 보존하고 **D3의 전체 law/support/moment
+연결**을 이어가는 것이다. FORMAL_DEPTH 전의 16개 묶음 착수는 보류한다.
+
 ## 우선 적용 continuation — D3 block bridge, 2026-09-15
 
 현재 전달은 e71b3375 이후 변경을 보존한 후속이다. 기준 bc5e028d의 자손이며

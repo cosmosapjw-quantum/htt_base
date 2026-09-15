@@ -1,0 +1,554 @@
+{
+  "scope": "Read-only Host forensic diagnosis; no new lifecycle authority or retrospective binding",
+  "launch": {
+    "child": null,
+    "claim": {
+      "session_id": "01a0987d-8380-72a1-a10b-fef9d0c9d3c2",
+      "tool_use_id": "call_aHoKbTLPpMup0jkd50hgmSv0"
+    },
+    "continuation_context": null,
+    "exits": {},
+    "harness_contract": {
+      "assignment_id": "depth_mathlib_review",
+      "assignment_sha256": "sha256:e071cd1c484c2248048db6d6c3fc27c66ae9eb02602f5a4f97e0e8bf17ea16fb",
+      "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+      "run_id": "R9-DEPTH-MATHLIB-20260914",
+      "validation_protocol": "strict_result_validation.py",
+      "validator_sha256": "8b81911d7970c5176585a3396e3e8c5795572cdf9fafa70cf5a0dd629ac5c4f9"
+    },
+    "identity": {
+      "head_commit": "9ca515ad891e59eff72eb06dfef05f06131bfb2c",
+      "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git/worktrees/worktree11",
+      "worktree_root": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree"
+    },
+    "launch_id": "cl_617136dbc88895e44bec01b87c3a18fd",
+    "profile": {
+      "effort": "high",
+      "model": "gpt-5.6-terra",
+      "model_reasoning_effort": "high",
+      "profile_id": "cuhg_terra_guide",
+      "sandbox_policy": null
+    },
+    "run_id": "R9-DEPTH-MATHLIB-20260914",
+    "schema": "cuhg-child-lifecycle/v1",
+    "session_id": "01a0987d-8380-72a1-a10b-fef9d0c9d3c2",
+    "task_id": "depth_mathlib_review",
+    "task_name": "depth_mathlib_review",
+    "validator_argv": [
+      "/mnt/sn850x2t/htt_base_e2e/R9-DEPTH-MATHLIB-20260914/trace-env/bin/python",
+      "docs/research_program/tensor_joint_r9/revision2/depth_formal/mathlib/verify_lean.py",
+      "Covariance",
+      "--output",
+      "/mnt/sn850x2t/htt_base_e2e/R9-DEPTH-MATHLIB-20260914/host_review_validation",
+      "--trace-store",
+      "/mnt/sn850x2t/htt_base_e2e/R9-DEPTH-MATHLIB-20260914/mlruns"
+    ],
+    "validator_files": {
+      "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/docs/research_program/tensor_joint_r9/revision2/depth_formal/mathlib/verify_lean.py": "d32294f8e8882da88c89c4e63d2fd4806f233117ff83dd9efb0110bbe761434f",
+      "/usr/bin/python3.12": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+    }
+  },
+  "lifecycle_source": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/lifecycle/lifecycle.json",
+  "parent_tool_events": [
+    {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/09/13/rollout-2026-09-13T10-59-17-01a0987d-8380-72a1-a10b-fef9d0c9d3c2.jsonl",
+      "line": 3995,
+      "timestamp": "2026-09-15T06:24:22.743Z",
+      "call_id": "call_aHoKbTLPpMup0jkd50hgmSv0",
+      "type": "function_call",
+      "task_name": "depth_mathlib_review",
+      "requested_model": "gpt-5.6-terra",
+      "requested_effort": "high",
+      "fork_turns": "none",
+      "opaque_message_sha256": "6ae8803c3c233717c5d70b20572e0819202705b412ff94ed0ddc10948afa81d1"
+    },
+    {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/09/13/rollout-2026-09-13T10-59-17-01a0987d-8380-72a1-a10b-fef9d0c9d3c2.jsonl",
+      "line": 3998,
+      "timestamp": "2026-09-15T06:24:23.351Z",
+      "call_id": "call_aHoKbTLPpMup0jkd50hgmSv0",
+      "type": "function_call_output",
+      "output": {
+        "task_name": "/root/depth_mathlib_review"
+      }
+    }
+  ],
+  "child_session_events": [
+    {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/09/15/rollout-2026-09-15T15-24-22-01a0a3bc-edad-78d3-90b9-8d2322b416ed.jsonl",
+      "line": 1,
+      "timestamp": "2026-09-15T06:24:23.164Z",
+      "event_type": "session_meta",
+      "payload": {
+        "id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+        "session_id": "01a0987d-8380-72a1-a10b-fef9d0c9d3c2",
+        "parent_thread_id": "01a0987d-8380-72a1-a10b-fef9d0c9d3c2",
+        "timestamp": "2026-09-15T06:24:22.966Z",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "originator": "codex_vscode",
+        "cli_version": "0.154.0-alpha.6.2",
+        "source": {
+          "subagent": {
+            "thread_spawn": {
+              "parent_thread_id": "01a0987d-8380-72a1-a10b-fef9d0c9d3c2",
+              "depth": 1,
+              "agent_path": "/root/depth_mathlib_review",
+              "agent_nickname": "Ampere",
+              "agent_role": null
+            }
+          }
+        },
+        "agent_path": "/root/depth_mathlib_review",
+        "model_provider": "openai"
+      },
+      "raw_line_sha256": "20206ea9c123b632df1db535d38a5d425582d227943b6ed7c2d92e7868b74ad2"
+    },
+    {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/09/15/rollout-2026-09-15T15-24-22-01a0a3bc-edad-78d3-90b9-8d2322b416ed.jsonl",
+      "line": 8,
+      "timestamp": "2026-09-15T06:24:26.774Z",
+      "event_type": "turn_context",
+      "payload": {
+        "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218",
+        "root_turn_id": "01a0a3b8-8029-7ab0-8100-fa71cb7aab7d",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "model": "gpt-5.6-terra",
+        "effort": "high",
+        "sandbox_policy": {
+          "type": "danger-full-access"
+        }
+      },
+      "raw_line_sha256": "a040f8bf80f003c61bc21cb20f06e5609b3e484d84b1fbc33331784dfc718acd"
+    },
+    {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/09/15/rollout-2026-09-15T15-24-22-01a0a3bc-edad-78d3-90b9-8d2322b416ed.jsonl",
+      "line": 9,
+      "timestamp": "2026-09-15T06:24:26.991Z",
+      "event_type": "response_item",
+      "payload": {
+        "role": "developer",
+        "messages": [
+          "GLOBAL_HOOK_IDENTITY_OR_STATE_UNVERIFIED:CHILD_CWD_MISMATCH: execution is unverified; return to the Host for reconciliation."
+        ]
+      },
+      "raw_line_sha256": "ad2ac4582a28df5c8302abcceee3e3ac20f37e8dab41f72eba7113f9fcbb2bd3"
+    },
+    {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/09/15/rollout-2026-09-15T15-24-22-01a0a3bc-edad-78d3-90b9-8d2322b416ed.jsonl",
+      "line": 137,
+      "timestamp": "2026-09-15T06:29:06.264Z",
+      "event_type": "response_item",
+      "payload": {
+        "role": "user",
+        "messages": [
+          "<hook_prompt hook_run_id=\"subagent-stop:4:/home/cosmosapjw/.codex/hooks.json\">GLOBAL_HOOK_IDENTITY_OR_STATE_UNVERIFIED:CHILD_BINDING_MISSING</hook_prompt>"
+        ]
+      },
+      "raw_line_sha256": "e647a3f4218f57c9a3d44dcb70a28f12b0daf9a4b463aff98940ebd79034830a"
+    },
+    {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/09/15/rollout-2026-09-15T15-24-22-01a0a3bc-edad-78d3-90b9-8d2322b416ed.jsonl",
+      "line": 142,
+      "timestamp": "2026-09-15T06:29:09.150Z",
+      "event_type": "response_item",
+      "payload": {
+        "role": "assistant",
+        "messages": [
+          "GLOBAL_HOOK_IDENTITY_OR_STATE_UNVERIFIED:CHILD_BINDING_MISSING. Returning control to Host; no further action taken."
+        ]
+      },
+      "raw_line_sha256": "2239d89ca9f7cd9a1fbfa0bca10a216c27364a494aa381f99e144797b1f8be88"
+    },
+    {
+      "path": "/home/cosmosapjw/.codex/sessions/2026/09/15/rollout-2026-09-15T15-24-22-01a0a3bc-edad-78d3-90b9-8d2322b416ed.jsonl",
+      "line": 145,
+      "timestamp": "2026-09-15T06:29:09.383Z",
+      "event_type": "event_msg",
+      "payload": {
+        "type": "task_complete",
+        "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218",
+        "last_agent_message": "GLOBAL_HOOK_IDENTITY_OR_STATE_UNVERIFIED:CHILD_BINDING_MISSING. Returning control to Host; no further action taken.",
+        "started_at": 1789453463,
+        "completed_at": 1789453749,
+        "duration_ms": 286233,
+        "time_to_first_token_ms": 7060
+      },
+      "raw_line_sha256": "c581da79e4e077d496f29f799763ab9db6c36ca7c3bca4cc4976d935dd1c1dbc"
+    }
+  ],
+  "current_error_file": {
+    "path": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/errors/11ab87e5f586a2bdb445eaeba436e3a868a487cded703d06568c1e617c43cb65.json",
+    "current_record": {
+      "code": "CHILD_BINDING_MISSING",
+      "event": "SubagentStop",
+      "result": "NON_ADMITTED",
+      "source": "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3379cc219ed6b5e44a2b50d7224324a89fdf77ab/src/cuhg/codex_hooks/global_dispatch.py",
+      "type": "CuhError"
+    }
+  },
+  "hook_event_count_for_child_turn": 38,
+  "hook_events": [
+    {
+      "child_id": null,
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "BUDGET_ROUTE_VALIDATED",
+      "tool": "collaboration.spawn_agent",
+      "turn_id": "01a0a3b8-8029-7ab0-8100-fa71cb7aab7d"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "apply_patch",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "apply_patch",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "apply_patch",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "apply_patch",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PreToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    },
+    {
+      "child_id": "01a0a3bc-edad-78d3-90b9-8d2322b416ed",
+      "event": "PostToolUse",
+      "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+      "status": "NO_POLICY_ACTION",
+      "tool": "Bash",
+      "turn_id": "01a0a3bc-ee28-7213-b5b0-245001bc2218"
+    }
+  ],
+  "global_dispatch_source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+  "assignment": {
+    "path": ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914/assignments/depth_mathlib_review.json",
+    "file_byte_sha256": "e071cd1c484c2248048db6d6c3fc27c66ae9eb02602f5a4f97e0e8bf17ea16fb",
+    "canonical_payload_sha256_excluding_seal": "d6352dd5dd09873edce97cad994b3c4e49d8c0044da18a4fb106b8cdb19e353d",
+    "both_registered_digests_match": true,
+    "required_inputs": [
+      {
+        "path": "formal/R9Depth/Recursion.lean",
+        "sha256": "30fc8640f35ac544cee3244c65222a9e88cd61ff3335891a20b3b2860e820824",
+        "current_matches": true
+      },
+      {
+        "path": "formal/R9Depth/Covariance.lean",
+        "sha256": "f6cac1f75f837b30bada5e79851949d025e305586cbc4a9ec9fe821343740eb5",
+        "current_matches": true
+      },
+      {
+        "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/mathlib/verify_lean.py",
+        "sha256": "d32294f8e8882da88c89c4e63d2fd4806f233117ff83dd9efb0110bbe761434f",
+        "current_matches": true
+      },
+      {
+        "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D1.json",
+        "sha256": "37b2295ab9f752f4fe2dfd56040cb6ccce2a13266c3090f7613703fccf64171e",
+        "current_matches": true
+      },
+      {
+        "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D3.json",
+        "sha256": "7ad2043a43aec9efc6d0638677db4a79a1678845aea0d4a759a2a6933e021d11",
+        "current_matches": true
+      },
+      {
+        "path": "docs/research_program/tensor_joint_r9/revision2/depth_formal/OBLIGATIONS.md",
+        "sha256": "163a15073e610b8ba9cfcf3267e1ec7e9a3be3a051897f4374fd4cf5acc420b6",
+        "current_matches": true
+      }
+    ]
+  },
+  "prior_bounded_budget_source": {
+    "path": "/home/cosmosapjw/.codex/sessions/2026/09/13/rollout-2026-09-13T10-59-17-01a0987d-8380-72a1-a10b-fef9d0c9d3c2.jsonl",
+    "line": 4081,
+    "call_id": "call_MIoHQBEeQcrkCnAhQuP991Ci",
+    "raw_line_sha256": "388274d5e7c8d328fda49c8405fbb25d5a9d15f19f49112a8f5332a0c65d552c",
+    "observed_contract_work_unit": "R9-DEPTH-MATHLIB-20260914",
+    "review_rounds": {
+      "limit": 1,
+      "used": 1
+    },
+    "repair_closeout_rounds": {
+      "limit": 1,
+      "used": 0
+    },
+    "evidence_type": "prior Host tool output of the actual ephemeral contract; not a new reservation"
+  },
+  "raw_line_hash_scope": "Exact UTF-8 JSONL record bytes including the terminating newline; no whitespace normalization."
+}
