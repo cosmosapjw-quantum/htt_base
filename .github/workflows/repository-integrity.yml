@@ -39,10 +39,12 @@ jobs:
       - name: Set up Python 3.12
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: "3.12"
+          python-version: "3.12.14"
       - name: Install contract-test dependencies
         run: |
-          python -m pip install 'pytest>=8,<9' 'PyYAML>=6,<7' 'numpy>=1.26,<3'
+          python -m pip install \
+            'pytest>=8,<9' 'PyYAML>=6,<7' 'numpy==2.5.2' \
+            'scipy==1.18.1' 'threadpoolctl==3.6.0'
           python -m pip install 'healpy==1.19.0'
           python -m pip install -e './htt'
       - name: Validate DAG and synchronized mirrors
@@ -110,7 +112,41 @@ jobs:
             --synthetic-profile \
             --rows full \
             --output "${RUNNER_TEMP}/pr310-hsc-kids-synthetic.json"
+      - name: Validate PR-315 portable projection byte determinism
+        env:
+          LANG: "C"
+          LC_ALL: "C"
+          PYTHONHASHSEED: "0"
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+          NUMEXPR_NUM_THREADS: "1"
+          VECLIB_MAXIMUM_THREADS: "1"
+          OPENBLAS_CORETYPE: "Haswell"
+        run: |
+          out="${RUNNER_TEMP}/pr315-determinism"
+          mkdir -p "$out"
+          python -B scripts/observed_runs/check_pr315_portable_determinism.py \
+            --package docs/generated/pr315_planck_smica_feature_replay.npz \
+            --metadata docs/generated/pr315_planck_smica_feature_replay.json \
+            --output "$out/run-1.json"
+          python -B scripts/observed_runs/check_pr315_portable_determinism.py \
+            --package docs/generated/pr315_planck_smica_feature_replay.npz \
+            --metadata docs/generated/pr315_planck_smica_feature_replay.json \
+            --output "$out/run-2.json"
+          cmp "$out/run-1.json" "$out/run-2.json"
+          sha256sum "$out/run-1.json" "$out/run-2.json"
       - name: Run PR-324 joint cut-sky and portable replay contracts
+        env:
+          LANG: "C"
+          LC_ALL: "C"
+          PYTHONHASHSEED: "0"
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+          NUMEXPR_NUM_THREADS: "1"
+          VECLIB_MAXIMUM_THREADS: "1"
+          OPENBLAS_CORETYPE: "Haswell"
         run: |
           env PYTHONPATH=htt:htt/src:htt/htt python -m pytest -q \
             tests/integration/test_planck_pr3_admission_preparation.py \
