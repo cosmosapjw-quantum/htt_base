@@ -10,6 +10,24 @@
 이 인계 파일을 포함하는 전달 커밋을 다음 immutable starting point로 고정하라.
 R9 revision 2를 계속하며 R10 또는 새로운 과학 프로그램으로 초기화하지 마라.
 
+## 최신 적용 — 전역 하네스·클라이언트 유지보수, 2026-09-16
+
+`revision2/depth_formal/client_maintenance/STATUS.json`과 `README.md`를 읽어라.
+사용자가 승인한 유지보수를 Astra xhigh로 수행했다. 전역 PR #52의 merge
+`cb20ca9c7238287f1d65bc525d9ba27a5c92037a`를 공식 설치했고, 새 hook 다섯 개의
+trusted 상태 및 현재 세션의 새 소스 Pre/PostToolUse 사건을 확인했다.
+과학 하네스 ZIP의 별도 권한·hash는 변경하지 않았다.
+
+spawn 전 실제 client cwd·동결 Git 신원을 확인하고 새 등록의 sandbox 누락을
+차단한다. `global_hook.py inspect`는 과거 기록을 읽기만 한다. 기존 검수의
+소급 인증이나 예산 재설정은 하지 않는다. 818개 단위 검사와 별도 Astra xhigh
+소스 검수 PASS는 새 과학 수용이나 child lifecycle E2E의 근거가 아니다.
+
+다음 child 작업은 실제 Codex client를 지정 worktree에서 열고 수행하라.
+현재 대화의 기본 cwd와 shell subprocess의 cwd를 혼동하지 마라. 과거
+R9 검수는 UNVERIFIED, FORMAL_DEPTH는 BLOCKED를 유지한다. 다음 수학 작업은
+이미 컴파일된 determinant/kernel을 보존한 D3의 전체 law/support/moment 연결이다.
+
 ## 우선 적용 — 기존 검수 binding 진단, 2026-09-15
 
 `revision2/depth_formal/binding_diagnosis/REPORT.md`와 `STATUS.json`을 읽어라.

@@ -1,0 +1,316 @@
+{
+  "policy-install": {
+    "argv": [
+      "python3",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/scripts/codex_harness/install_global_execution_policy.py",
+      "--repo-root",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a",
+      "--codex-home",
+      "/home/cosmosapjw/.codex",
+      "--cosmo-root",
+      "/home/cosmosapjw/cosmo_lab/.worktrees/CODEX-SCIENTIFIC-DELEGATION-20260829",
+      "--cosmo-python",
+      "/home/cosmosapjw/cosmo_lab/.venv/bin/python",
+      "--backup-dir",
+      "/mnt/sn850x2t/local_ai_foundry/70_experiments/r9_client_maintenance_20260915/installation-backup"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"backups\": [\"/mnt/sn850x2t/local_ai_foundry/70_experiments/r9_client_maintenance_20260915/installation-backup/AGENTS.md.backup.20260916T004523447164Z\", \"/mnt/sn850x2t/local_ai_foundry/70_experiments/r9_client_maintenance_20260915/installation-backup/global-execution-policy.json.backup.20260916T004523447312Z\"], \"changed_paths\": [\"/home/cosmosapjw/.codex/AGENTS.md\", \"/home/cosmosapjw/.codex/runtime/global-execution-policy.json\"], \"status\": \"GLOBAL_POLICY_INSTALLED\"}\n",
+    "stderr": ""
+  },
+  "policy-check": {
+    "argv": [
+      "python3",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/scripts/codex_harness/install_global_execution_policy.py",
+      "--repo-root",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a",
+      "--codex-home",
+      "/home/cosmosapjw/.codex",
+      "--cosmo-root",
+      "/home/cosmosapjw/cosmo_lab/.worktrees/CODEX-SCIENTIFIC-DELEGATION-20260829",
+      "--cosmo-python",
+      "/home/cosmosapjw/cosmo_lab/.venv/bin/python",
+      "--backup-dir",
+      "/mnt/sn850x2t/local_ai_foundry/70_experiments/r9_client_maintenance_20260915/installation-backup",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"paths\": [], \"status\": \"GLOBAL_POLICY_UNCHANGED\"}\n",
+    "stderr": ""
+  },
+  "hook-install": {
+    "argv": [
+      "python3",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/scripts/codex_harness/install_local_router_hook.py",
+      "--source-root",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a",
+      "--python",
+      "/usr/bin/python3.12",
+      "--hooks-file",
+      "/home/cosmosapjw/.codex/hooks.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"changed\": true, \"command\": \"/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py\", \"backup\": \"/home/cosmosapjw/.codex/hooks.json.backup.20260916T004537691922Z.d4c61c06412d\", \"events\": [\"UserPromptSubmit\", \"PreToolUse\", \"PostToolUse\", \"SubagentStart\", \"SubagentStop\"], \"client_trust\": \"VERIFY_EXACT_CURRENT_HASH_WITH_NATIVE_CLIENT\"}\n",
+    "stderr": ""
+  },
+  "hook-check": {
+    "argv": [
+      "python3",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/scripts/codex_harness/install_local_router_hook.py",
+      "--source-root",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a",
+      "--python",
+      "/usr/bin/python3.12",
+      "--hooks-file",
+      "/home/cosmosapjw/.codex/hooks.json",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"changed\": false, \"command\": \"/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py\", \"backup\": null, \"events\": [\"UserPromptSubmit\", \"PreToolUse\", \"PostToolUse\", \"SubagentStart\", \"SubagentStop\"], \"client_trust\": \"VERIFY_EXACT_CURRENT_HASH_WITH_NATIVE_CLIENT\"}\n",
+    "stderr": ""
+  },
+  "hooks-before": {
+    "model_calls": 0,
+    "protocol": "actual installed Codex app-server hooks/list",
+    "hooks": [
+      {
+        "eventName": "preToolUse",
+        "currentHash": "sha256:4f4a34d42ff272295ad8177a952f4fc74f46ff7043cb45dadc68f230158fdb0e",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "trusted",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3379cc219ed6b5e44a2b50d7224324a89fdf77ab/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "postToolUse",
+        "currentHash": "sha256:6401a7a9708a1a93bee0e544fa8b273adb68f85bcd584a98a71d7556a2bb0b05",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "trusted",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3379cc219ed6b5e44a2b50d7224324a89fdf77ab/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "userPromptSubmit",
+        "currentHash": "sha256:bb93b0b478ac957afe1225e6d3da3a090e171566e06d7984b85e1f26dc34827f",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "trusted",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3379cc219ed6b5e44a2b50d7224324a89fdf77ab/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "subagentStart",
+        "currentHash": "sha256:f7b2bace656ee86fa702903cbb8470e82ecc1ece2e8f812d26cdf52114d7eedb",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "trusted",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3379cc219ed6b5e44a2b50d7224324a89fdf77ab/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "subagentStop",
+        "currentHash": "sha256:0f70d87a7124b12e56209ac0ab834d2214d824a0b22d16bc579b2d21c955b90f",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "trusted",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/3379cc219ed6b5e44a2b50d7224324a89fdf77ab/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      }
+    ]
+  },
+  "hooks-after": {
+    "model_calls": 0,
+    "protocol": "actual installed Codex app-server hooks/list",
+    "hooks": [
+      {
+        "eventName": "preToolUse",
+        "currentHash": "sha256:8d2f03d96cd5e54ce556b9be409e7c249dcdd7f7f237e7c385b0c2278a85ed4c",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "modified",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "postToolUse",
+        "currentHash": "sha256:217146d0740cf9782c5201fce5b08346cb92116cd978e0b7ede987801e43f4c4",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "modified",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "userPromptSubmit",
+        "currentHash": "sha256:68ee2b64a8893fa0ef2c33a62f15df506464404c745ee13426f5999124bca0d4",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "modified",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "subagentStart",
+        "currentHash": "sha256:ae97f953d91a63fedb743c9051e42f2dacd7d8b42834f76e2311917c01188641",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "modified",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "subagentStop",
+        "currentHash": "sha256:56cae12b67c67dd2d23de171325d016a640bf3bef6ef07191af4fc651e4d7635",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "modified",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      }
+    ]
+  },
+  "hooks-final": {
+    "model_calls": 0,
+    "protocol": "actual installed Codex app-server hooks/list",
+    "hooks": [
+      {
+        "eventName": "preToolUse",
+        "currentHash": "sha256:8d2f03d96cd5e54ce556b9be409e7c249dcdd7f7f237e7c385b0c2278a85ed4c",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "trusted",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "postToolUse",
+        "currentHash": "sha256:217146d0740cf9782c5201fce5b08346cb92116cd978e0b7ede987801e43f4c4",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "trusted",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "userPromptSubmit",
+        "currentHash": "sha256:68ee2b64a8893fa0ef2c33a62f15df506464404c745ee13426f5999124bca0d4",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "trusted",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "subagentStart",
+        "currentHash": "sha256:ae97f953d91a63fedb743c9051e42f2dacd7d8b42834f76e2311917c01188641",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "trusted",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      },
+      {
+        "eventName": "subagentStop",
+        "currentHash": "sha256:56cae12b67c67dd2d23de171325d016a640bf3bef6ef07191af4fc651e4d7635",
+        "enabled": true,
+        "sourcePath": "/home/cosmosapjw/.codex/hooks.json",
+        "trustStatus": "trusted",
+        "command": "/usr/bin/python3.12 /mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/cb20ca9c7238287f1d65bc525d9ba27a5c92037a/src/cuhg/codex_hooks/global_dispatch.py",
+        "statusMessage": "CUHG canonical routing and lifecycle"
+      }
+    ]
+  },
+  "live-hook-source": {
+    "session_id": "01a0987d-8380-72a1-a10b-fef9d0c9d3c2",
+    "event_source": "/home/cosmosapjw/.codex/runtime/global-hooks/v1/sessions/1fad3b41e7fa7b06bd255ef1e95fef3b4919bc456678207f35f1bf65354980fb.json",
+    "installed_source_sha256": "e8ef3695065b9cdd2a73facf9aaf3bd61ad3b723ca37c37221ef7b9234f212e9",
+    "last_events": [
+      {
+        "child_id": null,
+        "event": "PostToolUse",
+        "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+        "status": "NO_POLICY_ACTION",
+        "tool": "request_user_input_async",
+        "turn_id": "01a0a7a7-a145-7662-8ace-99c0d1b06f76"
+      },
+      {
+        "child_id": null,
+        "event": "PreToolUse",
+        "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+        "status": "NO_POLICY_ACTION",
+        "tool": "Bash",
+        "turn_id": "01a0a7a7-a145-7662-8ace-99c0d1b06f76"
+      },
+      {
+        "child_id": null,
+        "event": "PreToolUse",
+        "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+        "status": "NO_POLICY_ACTION",
+        "tool": "Bash",
+        "turn_id": "01a0a7a7-a145-7662-8ace-99c0d1b06f76"
+      },
+      {
+        "child_id": null,
+        "event": "PostToolUse",
+        "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+        "status": "NO_POLICY_ACTION",
+        "tool": "Bash",
+        "turn_id": "01a0a7a7-a145-7662-8ace-99c0d1b06f76"
+      },
+      {
+        "child_id": null,
+        "event": "PostToolUse",
+        "source_sha256": "086078093af283c79232143485219ab4ed91558c5877f4975db3358d125d6f39",
+        "status": "NO_POLICY_ACTION",
+        "tool": "Bash",
+        "turn_id": "01a0a7a7-a145-7662-8ace-99c0d1b06f76"
+      },
+      {
+        "child_id": null,
+        "event": "PreToolUse",
+        "source_sha256": "e8ef3695065b9cdd2a73facf9aaf3bd61ad3b723ca37c37221ef7b9234f212e9",
+        "status": "NO_POLICY_ACTION",
+        "tool": "Bash",
+        "turn_id": "01a0a7af-35dd-73e3-a230-9e63db7438ce"
+      },
+      {
+        "child_id": null,
+        "event": "PostToolUse",
+        "source_sha256": "e8ef3695065b9cdd2a73facf9aaf3bd61ad3b723ca37c37221ef7b9234f212e9",
+        "status": "NO_POLICY_ACTION",
+        "tool": "Bash",
+        "turn_id": "01a0a7af-35dd-73e3-a230-9e63db7438ce"
+      },
+      {
+        "child_id": null,
+        "event": "PreToolUse",
+        "source_sha256": "e8ef3695065b9cdd2a73facf9aaf3bd61ad3b723ca37c37221ef7b9234f212e9",
+        "status": "NO_POLICY_ACTION",
+        "tool": "Bash",
+        "turn_id": "01a0a7af-35dd-73e3-a230-9e63db7438ce"
+      }
+    ],
+    "current_source_observed": true,
+    "new_child_lifecycle_test": "NOT_RUN",
+    "past_review_admission": "UNVERIFIED"
+  },
+  "installation-validation": {
+    "policy_check_exit": 0,
+    "checks": {
+      "/home/cosmosapjw/.codex/config.toml": true,
+      "/home/cosmosapjw/.config/cuh-g/execution-policy.json": true,
+      "/home/cosmosapjw/.config/cuh-g/model-fleet.json": true,
+      "/home/cosmosapjw/.codex/runtime/active-local-router-job.json": true,
+      "original_R9_launch_unchanged": true,
+      "exact_reviewed_source_in_installed_merge": true
+    },
+    "global_install": "INSTALLED",
+    "authority": "cb20ca9c7238287f1d65bc525d9ba27a5c92037a",
+    "client_trust": "MODIFIED_PENDING_OWNER_CLIENT_ACTION",
+    "reload": "UNVERIFIED",
+    "old_review_admission": "UNVERIFIED",
+    "local_llm_calls": 0
+  }
+}
