@@ -1,0 +1,48 @@
+{
+  "argv": [
+    "lake",
+    "env",
+    "lean",
+    "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal/R9Depth/LawSupport.lean"
+  ],
+  "dependency_argv": [
+    [
+      "lake",
+      "env",
+      "lean",
+      "-o",
+      "/tmp/r9-law-support-opbhli_k/R9Depth/BlockBridge.olean",
+      "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal/R9Depth/BlockBridge.lean"
+    ],
+    [
+      "lake",
+      "env",
+      "lean",
+      "-o",
+      "/tmp/r9-law-support-opbhli_k/R9Depth/Covariance.olean",
+      "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal/R9Depth/Covariance.lean"
+    ]
+  ],
+  "cwd": "/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal",
+  "source_sha256": "d7203a5e135b10dbd78c64fa029789c05343b809de8cfcbd52b64c264f8c5851",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lean_toolchain": "leanprover/lean4:v4.31.0",
+  "LEAN_PATH": [
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean"
+  ],
+  "exit_code": 0,
+  "stdout": "'R9Block.determinant_one' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.transform_step' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.transform_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.transform_propagated' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.contrast_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.kernel_iff_propagated' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.contrast_one' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.contrast_recursion' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Block.zero_depth_contrasts' depends on axioms: [propext, Classical.choice, Quot.sound]\n\n/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal/R9Depth/Covariance.lean:27:0: warning: automatically included section variable(s) unused in theorem `R9Depth.mean_linear_map`:\n  [Fintype m]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype m] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal/R9Depth/Covariance.lean:38:0: warning: automatically included section variable(s) unused in theorem `R9Depth.covariance_linear_map`:\n  [Fintype m]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [Fintype m] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`\n/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal/R9Depth/Covariance.lean:79:14: warning: This simp argument is unused:\n  zero_add\n\nHint: Omit it from the simp argument list.\n  simp only [Matrix.fromBlocks_transpose, Matrix.transpose_one, Matrix.transpose_zero,\n      Matrix.transpose_neg, Matrix.fromBlocks_multiply, Matrix.toBlocks_fromBlocks\u2082\u2082, Matrix.one_mul,\n  \u0332  \u0332 \u0332 \u0332Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero, add_zero, z\u0335e\u0335r\u0335o\u0335_\u0335a\u0335d\u0335d\u0335,\u0335 \u0335Matrix.add_mul, Matrix.neg_mul,\n  \u0332  \u0332 \u0332 \u0332Matrix.mul_neg, neg_neg]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal/R9Depth/Covariance.lean:79:72: warning: This simp argument is unused:\n  neg_neg\n\nHint: Omit it from the simp argument list.\n  simp only [Matrix.fromBlocks_transpose, Matrix.transpose_one, Matrix.transpose_zero,\n      Matrix.transpose_neg, Matrix.fromBlocks_multiply, Matrix.toBlocks_fromBlocks\u2082\u2082, Matrix.one_mul,\n  \u0332  \u0332 \u0332 \u0332Matrix.mul_one, Matrix.zero_mul, Matrix.mul_zero, add_zero, zero_add, Matrix.add_mul,\n  \u0332  \u0332 \u0332 \u0332Matrix.neg_mul, M\u0335a\u0335t\u0335r\u0335i\u0335x\u0335.\u0335m\u0335u\u0335l\u0335_\u0335n\u0335e\u0335g\u0335,\u0335 \u0335n\u0335e\u0335g\u0335_\u0335n\u0335e\u0335g\u0335]\u0335M\u0332a\u0332t\u0332r\u0332i\u0332x\u0332.\u0332m\u0332u\u0332l\u0332_\u0332n\u0332e\u0332g\u0332]\u0332\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n'R9Depth.mean_linear_map' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Depth.covariance_linear_map' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Depth.covariance_pullback_psd' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Depth.all_cross_step_blocks' depends on axioms: [propext, Classical.choice, Quot.sound]\n\n/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal/R9Depth/LawSupport.lean:116:6: warning: try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`\n/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal/R9Depth/LawSupport.lean:106:5: warning: Variable name `hT` is not explicitly referenced.\n\nThe binding can be removed (if unused) or named `_` (if used implicitly).\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n/mnt/sn850x2t/htt_base_e2e/PROJECT-CATALOG-20260912/worktree/formal/R9Depth/LawSupport.lean:148:5: warning: Variable name `hT` is not explicitly referenced.\n\nThe binding can be removed (if unused) or named `_` (if used implicitly).\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n'R9Depth.transformLinearEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Depth.map_transform_symm_map' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Depth.support_map_homeomorph' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Depth.matrix_range_congruence' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Depth.transform_matrix_range_congruence' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Depth.transform_mean_transport' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Depth.transform_covariance_transport' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "stderr": "\n\n",
+  "elapsed_seconds": 7.556613658962306,
+  "axiom_check": {
+    "sorryAx_present": false,
+    "source_print_axioms_present": true
+  }
+}

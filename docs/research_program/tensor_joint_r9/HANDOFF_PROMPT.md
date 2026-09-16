@@ -75,6 +75,27 @@ MQ1/MQ2의 moving-q 전역·내부 상계는 이미 유도·합성 검사·범�
 관측자료 확보는 계속 보류한다. 모든 HOLD·quarantine·STOP_INVALID·오차 및 alpha
 예산, 미확보 law/물리 response/state–jet–anchor coverage 상태를 유지한다.
 
+## D3 law/support/moment bridge closeout — 2026-09-16
+
+`formal/R9Depth/LawSupport.lean` is a Host-authored, source-bound assembly of
+the existing `BlockBridge` and `Covariance` results. It compiles the retained
+transform as a linear/continuous/measurable equivalence, both measure
+round-trips and parameter-family round-trip, generic support transport under a
+homeomorphism, singular/zero covariance affine-range transport, and the D1
+full mean/covariance specialization. The initial block and every cross term
+remain in the full transformed covariance; `H` alone is not claimed equivalent.
+
+Evidence is `revision2/depth_formal/law_support/STATUS.json` and
+`attempt01/execution.json`. The pinned Gaussian base characterization
+`supp N(μ,C)=μ+Im C` remains a separate D2 obligation, as do D2
+pseudoinverse/rank-zero laws and D4 full-past conditional innovation. This
+Host self-review does not authenticate the historical child review:
+`CHILD_CWD_MISMATCH → CHILD_BINDING_MISSING`, review usage 1, native 286.233 s,
+official continuation `WORKSPACE_JOB_UNAVAILABLE`; independent review and
+`FORMAL_DEPTH` remain blocked, with prior STOP_BUDGET/NON_PASS/CAS_FAIL and all
+HOLD/quarantine/alpha budgets preserved. The next single task is the D2
+singular-Gaussian support bridge.
+
 ## 현재 mathlib continuation — 2026-09-15
 
 사용자의 Continue에 따라 동일 work unit R9-DEPTH-MATHLIB-20260914를 이어간다.

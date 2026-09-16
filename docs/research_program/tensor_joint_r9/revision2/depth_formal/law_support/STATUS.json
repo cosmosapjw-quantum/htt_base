@@ -1,0 +1,52 @@
+{
+  "work_unit": "R9-D3-FULL-LAW-SUPPORT-MOMENT-BRIDGE-20260916",
+  "base_commit": "77355d5edec95393092e300298739c14aeec4fe1",
+  "scope": "Host-local assembly of existing D3 transform and D1 results",
+  "contract": "../CAS_D3.json",
+  "claim_id": "RUN-R9-THEORY-20260914-DEPTH-D3",
+  "source": "formal/R9Depth/LawSupport.lean",
+  "source_sha256": "d7203a5e135b10dbd78c64fa029789c05343b809de8cfcbd52b64c264f8c5851",
+  "execution": "attempt01/execution.json",
+  "status": "HOST_LEAN_COMPILED_SCOPED",
+  "declarations": {
+    "transformLinearEquiv": "PROVED_COMPILED",
+    "transformContinuousLinearEquiv": "PROVED_COMPILED",
+    "transformHomeomorph": "PROVED_COMPILED",
+    "transformMeasurableEquiv": "PROVED_COMPILED",
+    "map_transform_symm_map": "PROVED_COMPILED",
+    "map_transform_map_symm": "PROVED_COMPILED",
+    "transform_family_roundtrip": "PROVED_COMPILED",
+    "support_map_homeomorph": "PROVED_COMPILED",
+    "matrix_range_congruence": "PROVED_COMPILED",
+    "transform_matrix_range_congruence": "PROVED_COMPILED",
+    "affine_range_transport": "PROVED_COMPILED",
+    "transform_affine_range_transport": "PROVED_COMPILED",
+    "transform_mean_transport": "REUSED_D1_COMPILED_SPECIALIZATION",
+    "transform_covariance_transport": "REUSED_D1_COMPILED_SPECIALIZATION"
+  },
+  "edge_cases": {
+    "arbitrary_finite_dimension": "covered by generic theorem parameters",
+    "depth_zero": "transformLinearEquiv specializes to identity; inherited zero-depth bridge retained",
+    "C_zero": "included by unconstrained matrix range theorem",
+    "nonzero_singular_C": "included; no definiteness assumption",
+    "rectangular_or_singular_K": "inherited from BlockBridge transform",
+    "initial_block": "retained in full transform and covariance specialization",
+    "H_alone_equivalence": "not claimed"
+  },
+  "gaussian_base_support": "D2_SEPARATE_OPEN_IF_NOT_SUPPLIED",
+  "review": {
+    "mode": "HOST_SELF_REVIEW_ONLY",
+    "independent_review": "BLOCKED_AUTHENTICATION_UNVERIFIED",
+    "FORMAL_DEPTH": "BLOCKED",
+    "four_axis_admission": "CAS_BLOCKED_NO_NEW_AXIS_RUN",
+    "scientific_admission": "HOLD",
+    "prior_STOP_BUDGET_NON_PASS_CAS_FAIL": "PRESERVED"
+  },
+  "historical_binding": {
+    "cause": "CHILD_CWD_MISMATCH_THEN_CHILD_BINDING_MISSING",
+    "review_usage": 1,
+    "observed_native_duration_seconds": 286.233,
+    "nominal_arithmetic_remainder_seconds": 913.767,
+    "official_continuation": "WORKSPACE_JOB_UNAVAILABLE"
+  }
+}
