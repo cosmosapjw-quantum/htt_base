@@ -21,6 +21,22 @@ WORKFLOW_PATH = REPO_ROOT / ".github/workflows/repository-integrity.yml"
 DEFAULT_BRANCH = "research/pr04-multicomponent"
 CHECKOUT_ACTION = "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09"
 SETUP_PYTHON_ACTION = "actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1"
+REQUIRED_PYTHON_VERSIONS = {
+    "repository-contracts": "3.12.14",
+    "python-package-smoke": "3.12",
+    "rust-compile": "3.12",
+}
+PR315_CANONICAL_ENV = {
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PYTHONHASHSEED": "0",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "OPENBLAS_CORETYPE": "Haswell",
+}
 REQUIRED_JOBS = {
     "repository-contracts": "Repository contracts",
     "python-package-smoke": "Python package smoke",
@@ -31,7 +47,23 @@ REQUIRED_COMMANDS = {
         "test ! -e .agent-harness/ACTIVE_RUN",
         "test ! -e .agent-harness/runtime/ACTIVE_RUN",
         "python3 .agent-harness/scripts/validate_harness.py",
-        "python -m pip install 'pytest>=8,<9' 'PyYAML>=6,<7' 'numpy>=1.26,<3'",
+        (
+            "python -m pip install 'pytest>=8,<9' 'PyYAML>=6,<7' "
+            "'numpy==2.5.2' 'scipy==1.18.1' 'threadpoolctl==3.6.0'"
+        ),
+        (
+            "python -B scripts/observed_runs/check_pr315_portable_determinism.py "
+            "--package docs/generated/pr315_planck_smica_feature_replay.npz "
+            "--metadata docs/generated/pr315_planck_smica_feature_replay.json "
+            '--output "$out/run-1.json"'
+        ),
+        (
+            "python -B scripts/observed_runs/check_pr315_portable_determinism.py "
+            "--package docs/generated/pr315_planck_smica_feature_replay.npz "
+            "--metadata docs/generated/pr315_planck_smica_feature_replay.json "
+            '--output "$out/run-2.json"'
+        ),
+        'cmp "$out/run-1.json" "$out/run-2.json"',
         "python scripts/codex_harness/sync_pr_dag_mirrors.py --check",
         (
             "python scripts/codex_harness/validate_pr_dag.py "
@@ -178,8 +210,12 @@ def _contract_errors(workflow: dict[str, Any]) -> list[str]:
         ]
         if len(setup_steps) != 1:
             errors.append(f"{job_id} must use the pinned Python setup action once")
-        elif setup_steps[0].get("with", {}).get("python-version") != "3.12":
-            errors.append(f"{job_id} must use Python 3.12")
+        elif setup_steps[0].get("with", {}).get("python-version") != (
+            REQUIRED_PYTHON_VERSIONS[job_id]
+        ):
+            errors.append(
+                f"{job_id} must use Python {REQUIRED_PYTHON_VERSIONS[job_id]}"
+            )
 
         commands = _shell_commands(job)
         if any(
@@ -203,12 +239,42 @@ def _contract_errors(workflow: dict[str, Any]) -> list[str]:
                 errors.append(
                     "clean-clone harness validation must be the first run step"
                 )
+            pr315_step_names = {
+                "Validate PR-315 portable projection byte determinism",
+                "Run PR-324 joint cut-sky and portable replay contracts",
+            }
+            pr315_steps = [
+                step
+                for step in steps
+                if isinstance(step, dict) and step.get("name") in pr315_step_names
+            ]
+            if len(pr315_steps) != 2 or any(
+                step.get("env") != PR315_CANONICAL_ENV for step in pr315_steps
+            ):
+                errors.append(
+                    "PR-315 replay steps must use the canonical numerical environment"
+                )
 
     return errors
 
 
 def test_repository_integrity_workflow_satisfies_minimal_contract() -> None:
     assert _contract_errors(_load_workflow()) == []
+
+
+@pytest.mark.parametrize(
+    "step_name",
+    (
+        "Validate PR-315 portable projection byte determinism",
+        "Run PR-324 joint cut-sky and portable replay contracts",
+    ),
+)
+def test_rejects_pr315_numerical_environment_drift(step_name: str) -> None:
+    workflow = copy.deepcopy(_load_workflow())
+    steps = workflow["jobs"]["repository-contracts"]["steps"]
+    step = next(candidate for candidate in steps if candidate.get("name") == step_name)
+    del step["env"]["OPENBLAS_CORETYPE"]
+    assert _contract_errors(workflow)
 
 
 @pytest.mark.parametrize(
