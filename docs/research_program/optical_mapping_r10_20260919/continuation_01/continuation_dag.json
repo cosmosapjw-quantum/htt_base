@@ -1,0 +1,311 @@
+{
+  "schema_version": "htt.research_continuation.v1",
+  "owner": "HTT research",
+  "status": "PROPOSED_NOT_EXECUTED",
+  "authority": "Sequencing overlay only; inherits existing R10 and canonical gates, confers no scientific admission",
+  "base": {
+    "commit": "748dbdeec56ac58ed0b440f04eb4d492ab2cb185",
+    "tree": "cfd5849e7f61a2d1ac7dbbd69783dd93eaa8f274",
+    "tested_source": "dcc5c7c215c671dc8036771e520bcafa4056cd65",
+    "tested_source_tree": "ef6bb19ea87c0fd6fcc0a45d1f46522be39c567c",
+    "campaign_path": "docs/research_program/optical_mapping_r10_20260919/campaign_dag.json"
+  },
+  "unchanged": [
+    "campaign_dag.json:36 nodes including 24 R9 nodes",
+    "canonical DAG/status",
+    "production source",
+    "local_execution original outputs and failure logs",
+    "alpha allocations",
+    "original dirty checkout and EXTERNAL-FUSION run"
+  ],
+  "semantics": {
+    "requires_all": "All listed local sequencing nodes must supply the stated outcome. Node completion never confers an inherited capability automatically.",
+    "required_decisions": "Additional existing consumer decisions; validate exact scope/source/contract, never status substrings.",
+    "optional_evidence": "Does not add a mandatory edge.",
+    "on_block": "Block only the dependent action. RC-03 and RC-07 do not depend on native review or T9 formal readiness."
+  },
+  "nodes": [
+    {
+      "id": "RC-00",
+      "title": "Pin source and inspect live worktree",
+      "parent_actions": [
+        "OP-00"
+      ],
+      "requires_all": [],
+      "acceptance": "Read frozen/current identities, changed source scope, dirty files and pending registration; preserve all original artifacts.",
+      "outputs": [
+        "source_scope_map"
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "RC-01",
+      "title": "Reconcile real native client identity",
+      "parent_actions": [
+        "OP-10"
+      ],
+      "requires_all": [
+        "RC-00"
+      ],
+      "acceptance": "Real client opened at registered worktree; pending launch reconciled through supported native procedure; no spoof or duplicate child.",
+      "outputs": [
+        "native_dispatch_readiness"
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "RC-02",
+      "title": "Complete one registered independent checkpoint review",
+      "parent_actions": [
+        "OP-10"
+      ],
+      "requires_all": [
+        "RC-00",
+        "RC-01"
+      ],
+      "acceptance": "Evidence-bearing independent review of source checkpoint, actual consumers and claim scope; preserve findings and negative results.",
+      "outputs": [
+        "checkpoint_review_findings"
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "RC-03",
+      "title": "Execute flat shear ray-to-radiation-to-STF oracle",
+      "parent_actions": [
+        "OP-05"
+      ],
+      "requires_all": [
+        "RC-00"
+      ],
+      "uses_T9_hierarchy": false,
+      "acceptance": "Execute proposed characteristic oracle with declared domain/units, independent energy inner product, brightness and temperature derivative limits, parity/sign/power controls and separate angular convergence.",
+      "outputs": [
+        "exploratory_shear_ray_results"
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "RC-04",
+      "title": "Resolve T9 representation and consumer contract",
+      "parent_actions": [
+        "OP-06",
+        "OP-11:t9"
+      ],
+      "requires_all": [
+        "RC-00"
+      ],
+      "acceptance": "Bind direct Pi, packed, moment and mixed valid-subspace adapters; actual caller LHS/RHS and time sign; include general ell obligations for shared coefficient edits.",
+      "outputs": [
+        "scoped_T9_contract",
+        "source_bound_T9_diagnosis"
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "RC-05",
+      "title": "Execute scoped four-axis FORMAL_T9",
+      "parent_actions": [
+        "OP-11:t9"
+      ],
+      "requires_all": [
+        "RC-01",
+        "RC-04"
+      ],
+      "optional_evidence": [
+        "RC-03"
+      ],
+      "acceptance": "Current common CAS_CONTRACT and four independent axes; run-adjudicate returns exact consumer-eligible structured result for affected scope. Missing axes block this component.",
+      "outputs": [
+        "scoped_FORMAL_T9_result"
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "RC-06",
+      "title": "Conditionally repair or reuse the existing T9 consumer",
+      "parent_actions": [
+        "OP-07:repair",
+        "OP-07:reuse"
+      ],
+      "requires_all": [
+        "RC-02",
+        "RC-04",
+        "RC-05"
+      ],
+      "optional_evidence": [
+        "RC-03"
+      ],
+      "required_decisions": [
+        "checkpoint_review_blockers_resolved_for_affected_scope",
+        "FORMAL_T9_current_source_contract_eligible",
+        "candidate_blast_radius_within_contract"
+      ],
+      "exclusive_outcomes": [
+        "PATCH_REQUIRED",
+        "NO_PATCH_NEEDED"
+      ],
+      "actions": [
+        {
+          "id": "repair",
+          "when": "PATCH_REQUIRED",
+          "acceptance": "Minimal candidate; preserved original RED; separate physics regression GREEN and old-sign mutation FAIL; affected public/cache/shared paths verified."
+        },
+        {
+          "id": "reuse",
+          "when": "NO_PATCH_NEEDED",
+          "acceptance": "Verify current already-fixed/convention-equivalent source and existing OP-07 reuse eligibility; no second sign flip."
+        }
+      ],
+      "unresolved": "NO_ELIGIBILITY; do not patch",
+      "outputs": [
+        "scoped_consumer_candidate_or_reuse_evidence"
+      ],
+      "status": "PLANNED"
+    },
+    {
+      "id": "RC-07",
+      "title": "Advance one ready R9 product law or identification result",
+      "parent_actions": [
+        "R9-05",
+        "R9-06",
+        "R9-07",
+        "R9-08",
+        "R9-09",
+        "R9-21"
+      ],
+      "requires_all": [
+        "RC-00"
+      ],
+      "required_decisions": [
+        "original_R9_action_dependencies_satisfied"
+      ],
+      "acceptance": "Reuse pinned donor/current local work; execute one available real selected-law/response binding or produce a concrete unsupported-target result; no blanket mocks, invented law or optical prerequisite.",
+      "outputs": [
+        "scoped_R9_scientific_result"
+      ],
+      "status": "PLANNED",
+      "parent_action_selection": "Select one currently eligible action and inherit its own requirements; this list is not an ALL dependency."
+    },
+    {
+      "id": "RC-08",
+      "title": "Return terminal or partial research checkpoint",
+      "parent_actions": [
+        "return_policy",
+        "OP-10"
+      ],
+      "requires_all": [],
+      "trigger": "ANY_TERMINAL_OR_PARTIAL_CHECKPOINT_INCLUDING_RC00_FAILURE",
+      "acceptance": "Preserve first failure, results and exact scope; non-force push to isolated branch; return commit/tree/tested-source/review/CAS/alpha and next action.",
+      "outputs": [
+        "main_return_packet"
+      ],
+      "status": "PLANNED"
+    }
+  ],
+  "return_policy": {
+    "node": "RC-08",
+    "requires_all_success": false,
+    "production_admission": "UNCHANGED_HOLD_UNLESS_SEPARATELY_EARNED",
+    "alpha_spent_by_this_plan": 0
+  },
+  "validation_scenarios": [
+    {
+      "id": "native_blocked",
+      "blocked": [
+        "RC-01"
+      ],
+      "must_remain_runnable": [
+        "RC-03",
+        "RC-04",
+        "RC-07",
+        "RC-08"
+      ],
+      "must_be_blocked": [
+        "RC-02",
+        "RC-05",
+        "RC-06"
+      ]
+    },
+    {
+      "id": "review_blocked",
+      "blocked": [
+        "RC-02"
+      ],
+      "must_remain_runnable": [
+        "RC-03",
+        "RC-04",
+        "RC-05",
+        "RC-07",
+        "RC-08"
+      ],
+      "must_be_blocked": [
+        "RC-06"
+      ]
+    },
+    {
+      "id": "formal_blocked",
+      "blocked": [
+        "RC-05"
+      ],
+      "must_remain_runnable": [
+        "RC-02",
+        "RC-03",
+        "RC-04",
+        "RC-07",
+        "RC-08"
+      ],
+      "must_be_blocked": [
+        "RC-06"
+      ]
+    },
+    {
+      "id": "optional_oracle_fails",
+      "blocked": [
+        "RC-03"
+      ],
+      "must_remain_runnable": [
+        "RC-04",
+        "RC-05",
+        "RC-06",
+        "RC-07",
+        "RC-08"
+      ],
+      "must_be_blocked": []
+    },
+    {
+      "id": "r9_law_unavailable",
+      "blocked": [
+        "RC-07"
+      ],
+      "must_remain_runnable": [
+        "RC-01",
+        "RC-02",
+        "RC-03",
+        "RC-04",
+        "RC-05",
+        "RC-06",
+        "RC-08"
+      ],
+      "must_be_blocked": []
+    },
+    {
+      "id": "initial_pin_fails",
+      "blocked": [
+        "RC-00"
+      ],
+      "must_remain_runnable": [
+        "RC-08"
+      ],
+      "must_be_blocked": [
+        "RC-01",
+        "RC-02",
+        "RC-03",
+        "RC-04",
+        "RC-05",
+        "RC-06",
+        "RC-07"
+      ]
+    }
+  ]
+}
