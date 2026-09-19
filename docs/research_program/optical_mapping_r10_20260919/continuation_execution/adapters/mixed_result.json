@@ -1,0 +1,78 @@
+{
+  "status": "NUMERICAL_RANK_OBSTRUCTION",
+  "input_order": [
+    "sigma+",
+    "sigma-",
+    "xy",
+    "xz",
+    "yz"
+  ],
+  "output_order": [
+    -2,
+    -1,
+    0,
+    1,
+    2
+  ],
+  "source_matrix": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      -1.7888543819998317,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "singular_values": [
+    1.7888543819998317,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "rank": 1,
+  "direct_physical_rank": 5,
+  "source_pi0": 1,
+  "source_valid_slots": [
+    "ell=0,m=0"
+  ],
+  "left_or_right_sign_changes_rank": false,
+  "conclusion": "No invertible input/output convention adapter can turn this isotropic-input map into the full physical STF shear map. Formal proof and repair remain unexecuted.",
+  "actual_caller": "No tracked production caller of this standalone builder found; runtime ops.A_mix is supplied by ver3_layout_protocol.assemble_mixing_block, a distinct builder.",
+  "scope": "this exposed module at pinned bytes, ell_min=0 L_max=2 only",
+  "formal_eligible": false,
+  "sources": {
+    "htt/bass/hierarchy/mode_mixing_blocks.py": "28f190c20540ee0e351d00a8c7abff15dae0cf2dbbe4ad1fc94bad4b8060a6eb",
+    "htt/bass/hierarchy/ver2_native_integrator.py": "403ba6f74b1570835ebe8658c831995c3edcf9671d659ad11b6bafa16b2bac3d",
+    "htt/bass/hierarchy/ver3_layout_protocol.py": "e33ec236d3d224830423fd953415ae7937b21b8b01e177574041375ec9e255ef",
+    "htt/bass/los/family_backend_protocol.py": "cee6d54657cbfefbe480d0218d22ff932fc04c45ded6ac3fa31c56a97ebfe55f"
+  }
+}
