@@ -1,0 +1,313 @@
+{
+  "owner": "HTT research / Host Codex",
+  "claim_ceiling": "DIAGNOSTIC_ONLY",
+  "admission": "HOLD",
+  "session_id": "01a0c1b2-cc3d-7760-8724-ea144882d474",
+  "actual_client_metadata_source": "/home/cosmosapjw/.codex/sessions/2026/09/21/rollout-2026-09-21T11-01-55-01a0c1b2-cc3d-7760-8724-ea144882d474.jsonl",
+  "actual_client_metadata_excerpt": [
+    {
+      "type": "session_meta",
+      "id": "01a0c1b2-cc3d-7760-8724-ea144882d474",
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_R10_OPTICAL_MAPPING_LOCAL_RESEARCH/worktree",
+      "source": "cli",
+      "git": {
+        "commit_hash": "48e77f8d05a01b9df78d37475e9fae48f65bad6d",
+        "branch": "research/r10-optical-mapping-local-20260920",
+        "repository_url": "https://github.com/cosmosapjw-quantum/htt_base.git"
+      }
+    },
+    {
+      "type": "turn_context",
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_R10_OPTICAL_MAPPING_LOCAL_RESEARCH/worktree",
+      "model": "gpt-6-astra",
+      "sandbox_policy": {
+        "type": "workspace-write",
+        "network_access": false,
+        "exclude_tmpdir_env_var": false,
+        "exclude_slash_tmp": false
+      }
+    }
+  ],
+  "initial_HEAD": "48e77f8d05a01b9df78d37475e9fae48f65bad6d",
+  "initial_tree": "05c577d096ce6640442d1cc6338879dd6e018eb1",
+  "native_launch_record": {
+    "child": null,
+    "claim": null,
+    "continuation_context": null,
+    "exits": {},
+    "harness_contract": {
+      "assignment_id": "optical_review",
+      "assignment_sha256": "sha256:673e9183f080228b0b6b949f2991c9e494fdbc9b5890d423ac356e819035ea6c",
+      "context_version": "2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4",
+      "run_id": "HTT-R10-OPTICAL-LOCAL-20260920",
+      "validation_protocol": "strict_result_validation.py",
+      "validator_sha256": "8b81911d7970c5176585a3396e3e8c5795572cdf9fafa70cf5a0dd629ac5c4f9"
+    },
+    "identity": {
+      "head_commit": "c8bd214a61088b684cad1d08873f05227cf5bfb0",
+      "repo_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git",
+      "repo_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "worktree_id": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.git/worktrees/worktree12",
+      "worktree_root": "/mnt/sn850x2t/htt_base_e2e/HTT_R10_OPTICAL_MAPPING_LOCAL_RESEARCH/worktree"
+    },
+    "launch_id": "cl_57e1777283bfeda24c9ae6dcdb579394",
+    "profile": {
+      "effort": "high",
+      "model": "gpt-5.6-terra",
+      "model_reasoning_effort": "high",
+      "profile_id": "cuhg_terra_guide",
+      "sandbox_policy": {
+        "type": "danger-full-access"
+      }
+    },
+    "run_id": "HTT-R10-OPTICAL-LOCAL-20260920",
+    "schema": "cuhg-child-lifecycle/v1",
+    "session_id": "01a0badd-c7d7-7193-a1a7-df4f9fb2da3f",
+    "task_id": "optical_review",
+    "task_name": "r10_optical_review",
+    "validator_argv": [
+      "python3",
+      "-m",
+      "pytest",
+      "docs/research_program/optical_mapping_r10_20260919/local_execution/test_optical_fixture.py",
+      "-q"
+    ],
+    "validator_files": {
+      "/mnt/sn850x2t/htt_base_e2e/HTT_R10_OPTICAL_MAPPING_LOCAL_RESEARCH/worktree/docs/research_program/optical_mapping_r10_20260919/local_execution/test_optical_fixture.py": "910a95b6494b5acf0bb8455474c8bf447b8faa8b02110fa4a8379af4710eab71"
+    }
+  },
+  "native_launch_record_canonical_sha256": "0b33bb7bfb8b58842a7e700cbef03020c520ef90d4a2b26a0d724aecc2cf04b4",
+  "assignment_file_sha256": "673e9183f080228b0b6b949f2991c9e494fdbc9b5890d423ac356e819035ea6c",
+  "original_required_inputs": [
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/SCIENTIFIC_CONTRACT.md",
+      "sha256": "ea70d7b1c7a5a1acc5492a8efc4a35b482540d1d57311565ef5319d541b9c89f",
+      "actual_sha256": "ea70d7b1c7a5a1acc5492a8efc4a35b482540d1d57311565ef5319d541b9c89f",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/local_execution/optical_fixture.py",
+      "sha256": "40582e9838723b1489e2902fc04dd12cb4b67131a8d306b1c006065f0877a100",
+      "actual_sha256": "40582e9838723b1489e2902fc04dd12cb4b67131a8d306b1c006065f0877a100",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/local_execution/t9_diagnosis.py",
+      "sha256": "51ce3e61af175f68ff8eae1577d3e0720705452cc2a50183c8eab13234be0051",
+      "actual_sha256": "51ce3e61af175f68ff8eae1577d3e0720705452cc2a50183c8eab13234be0051",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/local_execution/CONVENTIONS.md",
+      "sha256": "5845250ed355b529360ef192afbe9b55faaf04c57b42fdab26994723848a993d",
+      "actual_sha256": "5845250ed355b529360ef192afbe9b55faaf04c57b42fdab26994723848a993d",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/local_execution/optical_results.json",
+      "sha256": "e6ba8228d4af1dba7d12e73c5ae10ae7bd941416bdebc9a35a4f1a70e1ecf1b7",
+      "actual_sha256": "e6ba8228d4af1dba7d12e73c5ae10ae7bd941416bdebc9a35a4f1a70e1ecf1b7",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/local_execution/t9_results.json",
+      "sha256": "c014996c1de8ac4f14dbd5e0efca54e365dc1e347f31807105a2094795264614",
+      "actual_sha256": "c014996c1de8ac4f14dbd5e0efca54e365dc1e347f31807105a2094795264614",
+      "match": true
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/local_execution/r9_reuse.json",
+      "sha256": "03606ea4711f0441efc8fe61d3cf8377d630549ba7c21ab7c73e02a6ce1d19b1",
+      "actual_sha256": "03606ea4711f0441efc8fe61d3cf8377d630549ba7c21ab7c73e02a6ce1d19b1",
+      "match": true
+    }
+  ],
+  "scope_gap": "original seven inputs exclude all three continuation research paths; no review scope expansion performed",
+  "prospective_review_scope": [
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/README.md",
+      "sha256": "81b85da581c1a644821fd1a2b8f7e90ed8b5f393e136c6312013b24811ad0e7d"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/__pycache__/run.cpython-312.pyc",
+      "sha256": "a283739d3e947be756cbf6cea6649f7372346772ffd13ba8c2f919d7018b4fb4"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/__pycache__/test_projection.cpython-312.pyc",
+      "sha256": "b66d3b0d4414c47972c3d675d5d3278d088873734fe7ea21d0d719d912ba3e6b"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt01/config.json",
+      "sha256": "52c670701e6e65dedb7ef609c00b70162dd665d6c621ddff9ae223b7b4d9b89a"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt01/resolution_diagnostic.json",
+      "sha256": "cd3fdd71fa98dbfc592f4834849258c52489904e5a23f6d6c9bb2564f295e053"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt01/source.py",
+      "sha256": "ee627722472fb526da1ffdb998fa48dfa907e8792d15d4fbea5b4e7e0f4613f7"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt01.log",
+      "sha256": "aedb6ed00f119f6bf6c7e6ed90c6676cd5d667a1501d385c6719a809ceba041d"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt02/config.json",
+      "sha256": "52c670701e6e65dedb7ef609c00b70162dd665d6c621ddff9ae223b7b4d9b89a"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt02/result.json",
+      "sha256": "d65e5d4748717b843ed02b9dcbe8c4a8f38e789b7f5f61dc8d73308bf175fa9f"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt02.log",
+      "sha256": "bb8a3e736b2627ca6b37a4a93ffc0daf116c60342ef8d8eaf97a225a94cbbaba"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/projection_tests.log",
+      "sha256": "44db11a76567b3dd80fdd9e95e9759960db1f4e391b02867e85d0c4d619faf8a"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/run.py",
+      "sha256": "4db87bfee47c3e8c3615f201d6153ba88946bf07bdf5574ce256e8e3939ee698"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/summary.json",
+      "sha256": "4162a9aff3979f9e486f51db2c45da389a2ef6eaa93b1094c0bdb266ac2e11f9"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/test_projection.py",
+      "sha256": "8562270cdef6f5ea0bd9eb1ad93f034770bbdd08ef95cb6e92cd48d9199b70ec"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/CAS_CONTRACT_FULL_PACKED_DRAFT.json",
+      "sha256": "dfca0234ccac77a3d9565d93f6985f7ebe842c43ae5af7d8e418c9bc5bad7623"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/CAS_CONTRACT_MIXED_DRAFT.json",
+      "sha256": "d8be312dd0bb8fe146023a2ccc2ab2602b068a9f2450ba85373e48e39f203b35"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/README.md",
+      "sha256": "496d8e9fd12b0d1d2ee6e71c2049a99b52d1cb8e1bbdaa728d2ddaac2bb943f1"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/mixed_probe.log",
+      "sha256": "38663aef9b59b70ff91efa783c8474fa5fd2a8b3d26c1ab3624733589d39611a"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/mixed_result.json",
+      "sha256": "6110908ba5a73cbc1b6be5ae185496fb36b8ef3ea986cffdab25cf8763cffea2"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/probe_mixed.py",
+      "sha256": "03256771387bdcb3ce28b964151aba52d4988a99d15c2ba65267b457f3014f89"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/test_gradient_discriminator.py",
+      "sha256": "d9a4d8c9de73e9971b9cba96c9d5b864e0b2047746e1b0eb709c910536eafc71"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/r9/README.md",
+      "sha256": "65b873d4693a9f21aa5c04118eeff1f0bc14f61dbc59680957254d1e074e980d"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/r9/response_null.py",
+      "sha256": "468432ef59c7c596b974bdef9c22537d771b203fdfcd0f9eaaac9160fc8b6671"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/r9/result.json",
+      "sha256": "cbde7e77bf9c3d47b4da8582bbdda27e245790666a0a179863f04b68464dae43"
+    },
+    {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/r9/run.log",
+      "sha256": "30d60630d6f22fdda9790a5f7ea5bd3a6a3d61fdbf63ef66cbe201c87577bc1a"
+    },
+    {
+      "path": "htt/bass/hierarchy/mode_mixing_blocks.py",
+      "sha256": "28f190c20540ee0e351d00a8c7abff15dae0cf2dbbe4ad1fc94bad4b8060a6eb"
+    },
+    {
+      "path": "htt/bass/hierarchy/ver2_native_integrator.py",
+      "sha256": "403ba6f74b1570835ebe8658c831995c3edcf9671d659ad11b6bafa16b2bac3d"
+    },
+    {
+      "path": "htt/bass/hierarchy/ver3_layout_protocol.py",
+      "sha256": "e33ec236d3d224830423fd953415ae7937b21b8b01e177574041375ec9e255ef"
+    },
+    {
+      "path": "htt/bass/los/family_backend_protocol.py",
+      "sha256": "cee6d54657cbfefbe480d0218d22ff932fc04c45ded6ac3fa31c56a97ebfe55f"
+    }
+  ],
+  "prospective_review_scope_status": "REFERENCE_ONLY_NOT_REGISTERED_ASSIGNMENT",
+  "caller_read_boundary": {
+    "standalone": "_C9, _coupling_coefficient, shear adapter definitions",
+    "ver3": "assemble_mixing_block opening and full-m loop, lines 1959-2022",
+    "ver2": "_AuxiliaryOperatorSample.drive lines 1168-1190",
+    "supplier": "family_backend_protocol import and constructor slices 650-667,719-732"
+  },
+  "inspection_observed": {
+    "command": [
+      "python3",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/fd1069a655bdf365d4242cb375f17e94dc884863/scripts/codex_harness/global_hook.py",
+      "inspect",
+      "--launch-id",
+      "cl_57e1777283bfeda24c9ae6dcdb579394",
+      "--client-cwd",
+      "/mnt/sn850x2t/htt_base_e2e/HTT_R10_OPTICAL_MAPPING_LOCAL_RESEARCH/worktree"
+    ],
+    "exit_code": 0,
+    "prospective_issues": [
+      "REGISTERED_IDENTITY_CHANGED"
+    ],
+    "client_worktree_mismatch_resolved": true,
+    "claimed": false,
+    "child": null,
+    "continuation_context_present": false
+  },
+  "continuation_attempt": {
+    "command": [
+      "python3",
+      "/mnt/sn850x2t/local_ai_foundry/60_runtime/cuhg/policy-authorities/fd1069a655bdf365d4242cb375f17e94dc884863/scripts/codex_harness/native_workspace_job.py",
+      "plan-continuation",
+      "--run-dir",
+      ".agent-harness/runs/HTT-R10-OPTICAL-LOCAL-20260920"
+    ],
+    "exit_code": 2,
+    "stdout": {
+      "claim_admitted": false,
+      "detail": "WORKSPACE_JOB_UNAVAILABLE: Cannot read workspace_job.json.",
+      "reason": "WORKSPACE_JOB_UNAVAILABLE",
+      "status": "WORKSPACE_JOB_NOT_EXECUTED"
+    }
+  },
+  "sandbox_observation": {
+    "registered": {
+      "type": "danger-full-access"
+    },
+    "current_client": "workspace-write with restricted filesystem and network; see native turn metadata",
+    "match": false,
+    "meaning": "Host comparison; inspect output does not assess sandbox compatibility"
+  },
+  "budget": {
+    "historical_launches_reserved_for_same_run_task": 1,
+    "observed_bound_children": 0,
+    "known_native_dispatch_limit": 2,
+    "remaining_spendable_balance": "UNAVAILABLE_NO_WORKSPACE_JOB",
+    "same_task_budget_reset": false,
+    "new_dispatches": 0
+  },
+  "pending_mutated": false,
+  "assignment_mutated": false,
+  "next_required_action": "Recover an existing attributable workspace job if one exists, or have the runtime maintainer supply supported same-task unclaimed-launch supersession with preserved reservation/budget and expanded source scope. Do not prepare a fresh job or manually edit registration.",
+  "required_review_questions": [
+    "Assess the angular acceptance change from all-grid to finest-pair: preserve attempt01 FAIL, inspect its source/config/log/diagnostic and attempt02 criterion/results; do not count unchanged tolerance numbers as unchanged acceptance.",
+    "Distinguish maximum pointwise residual 8.89659e-14, forward derivative relative error 4.74753e-4 and Richardson relative error 1.78975e-6; do not summarize all as 1e-13 derivative accuracy.",
+    "Review current tested source 99b8e433 ray, mixed and R9 paths and these version-2 drafts with their finite discriminator; old seven-file review does not cover the new scope.",
+    "Require independent general-ell proof using explicit ambient gradient; do not read Host proof/results in blind CAS axes.",
+    "Keep mixed rank obstruction negative; no standalone/ver3 or full-packed positive consumer eligibility follows.",
+    "Keep R9 conditional mean-response scope and unavailable law/calibration; decide actual target l only when supplied."
+  ]
+}

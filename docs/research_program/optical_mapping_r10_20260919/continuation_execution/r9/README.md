@@ -37,3 +37,34 @@ Selected observation law, joint covariance/noise law와 물리 boost/tilt respon
 새 mock 호출 0, confidence/rejection/coverage 계산 없음. CMB/CF4/JWST/DESI의 다른
 원 DAG 경로는 이 결과와 무관하게 기존 의존성을 따른다. 원 R8 STOP_INVALID,
 unresolved pools, P0 quarantine, PR284 deferred, PR4/NPIPE exclusion은 변경하지 않았다.
+
+## MAIN 이후의 target 구분 — 새 데이터 실행 아님
+
+위 저장 rank와 `Y=R beta+R c delta`, R 가역이라는 선형 평균 모형을 전제로,
+관측 평균은 `gamma=beta+c delta`를 정한다. 자유로운 beta와 delta의 null 방향은
+`(-c,1)`이므로 beta-only target `l^T beta`는 **정확히 `l^T c=0`일 때**
+평균응답에서 식별된다. 이 35차원 공간에는 세 독립 shell monopole 상대 조합과
+32개 nonmonopole 성분이 들어간다. 기존 target인 네 monopole 평균은
+monopole 네 자리의 l을 각각 1/4로 놓으므로 `l^T c=1`이며 식별되지 않는다.
+
+depth contrast는 별도 질문이다. 저장 근거의 `HR c≈0`, `rank(HR)=27`을
+조건으로 `row(HR)`는 `c`의 직교공간보다 8차원 작다. 따라서
+`l^T c=0`만으로 contrast에서의 식별성을 보장할 수 없고,
+`l in row(HR)`를 따로 확인해야 한다. H는 모든 angular 성분의 깊이 공통 모드를
+제거하는 contrast이므로 scalar 영점만 제거하는 것보다 더 많은 평균 정보를 버린다.
+그 제거가 실제 과학 target에 필요한 nuisance 처리를 나타내는지는 아직 미평가다.
+관심 l이 이 row space 밖이면 원 R 또는 가역 T를 보존한 경로가 필요하다.
+가역 T도 원 1차원 ambiguity는 없애지 않는다. 높은 rank 자체를 목표로 삼지 않는다.
+
+추가 calibration `z=a^T beta+b delta`가 있을 때 원 null에 대한 응답은
+`b-a^T c`이므로 이 값이 0이 아닐 때 구조적 ambiguity를 깬다. 실제 외부
+calibration과 selected noise law 없이 hard constraint 또는 임의 prior를
+데이터로 대체하지 않는다. 평균의 동등성은 parameter-dependent covariance의
+동등성을 함의하지 않는다.
+
+이번 보완은 MAIN의 조건부 대수 결론과 저장 결과를 정리한 것이다. donor NPZ,
+`response_null.py`의 수치 계산은 다시 실행하지 않았다. 고정 donor의 observed.json에서
+H의 대표 행을 읽어 인접 깊이의 같은 angular 성분을 빼는 정의를 확인했으며,
+관측 rank/null/잔차를 재계산하지 않았다. 새 target l 및 새 calibration/
+selected law가 제공되지 않아 추가 target의 row(HR) membership과 통계 분석은
+`UNEVALUATED`이며 alpha는 0이다. R9 action은 T9/CAS의 대기열에 넣지 않는다.

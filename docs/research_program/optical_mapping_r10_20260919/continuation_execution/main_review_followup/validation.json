@@ -1,0 +1,136 @@
+{
+  "owner": "HTT research / Host Codex",
+  "claim_tier": "DIAGNOSTIC_ONLY",
+  "transfer_source": "none",
+  "scope": "Changed finite gradient discriminator and draft-contract semantics only; no source physics/data replay or formal admission",
+  "status": "HOST_CHANGED_CELL_CHECKS_PASS",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/test_gradient_discriminator.py",
+        "-v"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_R10_OPTICAL_MAPPING_LOCAL_RESEARCH/worktree",
+      "exit_code": 0,
+      "seconds": 0.04424008703790605,
+      "stdout": "",
+      "stderr": "test_ambient_and_tangent_generators_agree (__main__.GradientConventionTest.test_ambient_and_tangent_generators_agree) ... ok\ntest_trace_removal_defines_a_nonzero_rank_three_reference (__main__.GradientConventionTest.test_trace_removal_defines_a_nonzero_rank_three_reference) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nOK\n"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/mnt/sn850x2t/htt_base_e2e/HTT_R10_OPTICAL_MAPPING_LOCAL_RESEARCH/worktree",
+      "exit_code": 0,
+      "seconds": 0.010818934999406338,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "contracts": {
+    "FULL_PACKED": {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/CAS_CONTRACT_FULL_PACKED_DRAFT.json",
+      "sha256": "dfca0234ccac77a3d9565d93f6985f7ebe842c43ae5af7d8e418c9bc5bad7623",
+      "host_structural_check": "PASS",
+      "four_axis_execution": "NOT_EXECUTED",
+      "frozen": false,
+      "positive_consumer_eligible": false
+    },
+    "MIXED": {
+      "path": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/CAS_CONTRACT_MIXED_DRAFT.json",
+      "sha256": "d8be312dd0bb8fe146023a2ccc2ab2602b068a9f2450ba85373e48e39f203b35",
+      "host_structural_check": "PASS",
+      "four_axis_execution": "NOT_EXECUTED",
+      "frozen": false,
+      "positive_consumer_eligible": false
+    }
+  },
+  "preserved_git_files": [
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/mixed_probe.log",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/mixed_result.json",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/probe_mixed.py",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/commands.json",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/host_review.json",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/r9/response_null.py",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/r9/result.json",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/r9/run.log",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/resume_inspection.json",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/return/CONTINUATION_PROMPT.md",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/return/RETURN_TO_MAIN.md",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/runtime.json",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/README.md",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt01.log",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt01/config.json",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt01/resolution_diagnostic.json",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt01/source.py",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt02.log",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt02/config.json",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt02/convergence.png",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/attempt02/result.json",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/projection_tests.log",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/run.py",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/summary.json",
+    "docs/research_program/optical_mapping_r10_20260919/continuation_execution/shear_ray/test_projection.py",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/CONVENTIONS.md",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/MAIN_CONTINUATION_PROMPT.md",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/RETURN_TO_MAIN.md",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/figure_manifest.json",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/optical_attempt01.log",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/optical_attempt02.log",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/optical_fixture.py",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/optical_residuals.png",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/optical_results.json",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/plan_manifest.log",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/pytest.log",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/r9_execution.log",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/r9_reuse.json",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/r9_reuse.py",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/review_blocker.json",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/runtime.json",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/t9_attempt01.log",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/t9_attempt02.log",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/t9_attempt03.log",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/t9_diagnosis.py",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/t9_results.json",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/test_optical_fixture.py",
+    "docs/research_program/optical_mapping_r10_20260919/local_execution/validation.json"
+  ],
+  "production_and_canonical_dag_unchanged": true,
+  "pending_and_assignment_unchanged": true,
+  "host_review": {
+    "status": "HOST_SELF_REVIEW_ONLY",
+    "rounds": 1,
+    "checks": [
+      "ambient/tangent definition and exact finite mutant separation",
+      "full/packed general-ell obligation retained",
+      "blind deliveries exclude Host derivations/results; source hash list is not allowlist",
+      "mixed negative theorem cannot grant positive eligibility",
+      "standalone and ver3 caller identity separated by targeted source slices",
+      "R9 conditional mean statement; new target/law unprovided",
+      "initial FAIL, acceptance change and distinct errors preserved"
+    ],
+    "open_findings": [
+      "native independent review unavailable: registered identity/sandbox/scope plus missing workspace job",
+      "formal freeze/engines/adjudication absent; RC06 prerequisites unmet"
+    ]
+  },
+  "not_run": [
+    "RC03 42-row oracle",
+    "old 85 residual / 5 pytest",
+    "R9 response_null.py and donor NPZ replay",
+    "mock pools",
+    "native child",
+    "CAS axes or run-adjudicate",
+    "production candidate/regression/mutation",
+    "CI",
+    "figure visual review"
+  ],
+  "alpha_spent": 0,
+  "new_observation_law": "UNAVAILABLE",
+  "additional_R9_target": "UNEVALUATED_NO_NEW_TARGET",
+  "admission": "HOLD"
+}

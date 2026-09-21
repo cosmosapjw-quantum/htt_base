@@ -15,15 +15,26 @@ STF tensor T에서 angular L2 norm은 `Delta_l (T:T)`이다.
 packed norm을 angular norm으로 바로 읽지 않는다. 기저 부호·순서를 외부
 spherical m convention과 동일시하지 않는다.
 
-검증할 general-l 명제: `m=l-2`, harmonic homogeneous `P_m(e)`에 대해,
-collisionless pure-shear brightness generator는
-`L_S P_m=(S e).grad(P_m)-(m+4)(e.S.e)P_m`이다.
+검증할 general-l 명제: `m=l-2`, R³에서 정의한 homogeneous harmonic
+`P_m(x)=Pi_A_m x^{A_m}`에 대해 ambient Cartesian 미분 `partial/partial x_i`를
+먼저 계산하고 `x=e`, `|e|=1`에 제한한다. `grad_S2=(I-ee^T)grad_R3`이므로
+collisionless pure-shear brightness generator의 두 표기는
+`L_S P_m=(S e).grad_R3(P_m)|_e-(m+4)(e.S.e)P_m(e)`와
+`(S e).grad_S2(P_m)-4(e.S.e)P_m(e)`이다.
+동치에 필요한 Euler identity는 `e.grad_R3(P_m)=m P_m`이다.
 첫 항의 polynomial degree는 m이므로 rank m+2 harmonic 성분이 없다.
 따라서 direct RHS의 l<-l-2 항은 `-(l+2) STF(S tensor Pi_l-2)`다.
 이는 draft의 증명 대상이며 이번 실행의 여섯 ell=2 테스트가 general-l 증명을
 대체하지 않는다. 에너지 부분 적분에는 `E^4 f -> 0` 양 끝 경계와 적분가능성이 필요하다.
 적분 moment RHS는 `-(l+2) Delta_l/Delta_l-2 STF(S tensor J_l-2)`이고,
 ell=2에서는 `-(8/15)S J0`이다. ell=0,1에 아래 source는 없다.
+
+MAIN 보완의 exact discriminator는 `m=1`, `ell=3`, `P1=x`,
+`S=diag(1,-1,0)`이다. `x(x²-y²)`의 degree-3 harmonic 부분에 대한 계수는
+올바른 두 generator에서 -5이며, `grad_S2`에 다시 `-(m+4)`를 붙인 변이에서는
+-6이다. [검사 코드](test_gradient_discriminator.py)는 유리수 다항식의 미분과
+trace 제거를 직접 실행한다. 이는 한 벡터의 Host diagnostic이며 일반 ell 증명,
+등록된 SymPy/CAS 축 또는 native independent review가 아니다.
 
 현재 `terms.py:T9_shear_down`은 **LHS** 항에 `-(l+2)`를 넣는다.
 `packed_operators.py:_t9_basis_ops`는 이 함수로 cache를 만든다.
@@ -51,6 +62,12 @@ ell=0,1에는 비물리 padded slot이 있고 ell>2에는 full STF의 2ell+1개�
 전체 부호 반전은 rank를 고칠 수 없다. 이 수치 counterexample은 ell=2 / Lmax=2 /
 ell_min=0에 한정한다. mixed 전체 T7/T8/T9 수정이나 admission으로 확대하지 않는다.
 
+mixed 계약의 대상은 negative theorem이다. 가역 A,B와 `k!=0`에 대해
+`rank(k A M B)=rank(M)`이므로 rank 1 map의 4차원 kernel은 정규화로 복구되지
+않는다. 1차원 shear 제한 모델을 새로 정의하는 것은 full STF 동등성을 입증하지
+않는다. 이 obstruction이 네 축에서 증명되더라도 standalone/ver3에 대한
+`T9_CONSUMER_ELIGIBLE`은 false이다. full/packed 일반 ell 계약도 별도 scope다.
+
 호출 추적:
 
 - `rg -n 'mode_mixing_blocks|assemble_A_mix_block' htt --glob '*.py' --glob '!test*'`
@@ -70,6 +87,13 @@ mixed 계약을 분리하고 mixed는 unresolved로 유지한다. 전체 RHS 반
 
 두 schema-v2 draft는 source byte hash, 의미, 대상, 축별 의무를 제공한다.
 아직 native 검수와 toolchain seal이 해결되지 않아 frozen execution contract가 아니다.
+계약 version 2에는 위 gradient 정의와 test vector, 표현·시간·단위 정의를 직접
+포함했다. 이 README에는 Host 유도와 rank 결과가 있으므로 blind 축의 입력에서
+제외한다. source identity 목록은 전달 allowlist가 아니다. 특히 유도가 포함된
+SCIENTIFIC_CONTRACT, probe/검사 코드, 저장 결과와 반환 문서도 축에 전달하지 않는다.
+공유 target은 증명 대상이며, 그 target을 확인한 Host 풀이를 공유하지 않는다.
+현재 실제 client cwd는 맞지만 기존 pending의 source/sandbox/scope와 지원되는
+continuation 결속은 해결되지 않았다. RC-01이 막혀 RC-05를 실행하지 않았다.
 네 엔진 독립 실행과 `cas_gate.py run-adjudicate`는 수행하지 않았다.
 저장된 이전 adjudication, host derivation, 이 수치 probe, preflight가 이를 대신하지 않는다.
 일반 ell 계수를 수정하려면 general-l 의무와 적용 public/shared 경로 regression,

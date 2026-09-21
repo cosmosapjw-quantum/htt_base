@@ -9,7 +9,7 @@
   ],
   "identity": {
     "contract_id": "R10-RC04-T9-MIXED",
-    "contract_version": 1,
+    "contract_version": 2,
     "claim_ids": [
       "R10_T9_MIXED"
     ],
@@ -38,7 +38,7 @@
     "plan_commit": "ddd600e8a0c49382e644e5e7df56e272f40bde80"
   },
   "semantics": {
-    "exact_statement": "Determine the valid input/output subspaces and whether any invertible input and output basis adapters can identify the pinned standalone five-m shear-down map with physical STF T9. For ell_min=0, Lmax=2, source ell0 m0=1, compute rank of its map from arbitrary real shear coordinates and compare to S->STF(S). Distinguish the actual ver3 caller graph, which uses a different builder.",
+    "exact_statement": "Derive the exact 5x5 isotropic-input shear map M of the pinned standalone assemble_A_mix_block at ell_min=0,Lmax=2,source(ell=0,m=0)=1; determine kernel and image. Prove rank(k A M B)=rank(M) for invertible real 5x5 A,B and nonzero real k, and determine the obstruction to equivalence with the full rank-2 STF physical map. This is a negative theorem scope; no positive standalone or ver3 consumer eligibility follows. Trace the separate ver3 supplier identity without importing the standalone verdict into it.",
     "symbol_type_domain_map": {
       "ell": "integer >=0",
       "S": "real symmetric trace-free 3x3, inverse proper-length",
@@ -47,14 +47,22 @@
       "Pi_A_l": "direct STF brightness coefficient",
       "J_A_l": "integral brightness moment Delta_l Pi_A_l",
       "Delta_l": "4pi l!/(2l+1)!!",
-      "eta": "conformal length-time, ds=a d eta"
+      "eta": "conformal length-time, ds=a d eta",
+      "M": "5x5 standalone map from real shear5 input to ell2 output slots; derive from pinned source",
+      "A,B": "arbitrary invertible real 5x5 output/input coordinate adapters",
+      "k": "nonzero real overall time or sign normalization",
+      "shear5": "(plus,minus,xy,xz,yz); real physical STF input S=[[plus+minus/sqrt(3),xy,xz],[xy,-plus+minus/sqrt(3),yz],[xz,yz,-2*minus/sqrt(3)]]"
     },
     "frame_signature_units_conventions": {
       "signature": "(-,+,+,+)",
       "spatial_metric": "Euclidean delta_ij in local orthonormal rest frame",
-      "c": "1; time expressed as length",
+      "c": "c remains explicit in x0=c t and p=(epsilon/c)(u+e); s and eta are length-valued, ds=a d eta; no physical-seconds derivative without the c adapter",
       "sky_direction": "n=-photon propagation e",
-      "conventions_ref": "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/README.md"
+      "direct_expansion": "Pi(e)=sum_l Pi_A_l e^{A_l}; all Pi_A_l spatial symmetric trace-free; J_A_l=integral Pi(e)e_<A_l> dOmega=Delta_l Pi_A_l",
+      "packed_coordinates": "Q_l has Frobenius-orthonormal STF columns; pack(T)=Q_l^T vec(T), vec(unpack(v))=Q_l v; angular norm squared=Delta_l (T:T)",
+      "shear_time_adapter": "S=sigma is geometric proper-length shear; if source supplies conformal Sigma, sigma=Sigma/a; conformal RHS=a times proper-length RHS, applied once",
+      "standalone_slots": "slot(ell,m)=5*(ell-ell_min)+(m+2), m=-2,-1,0,1,2; isotropic source has only ell0,m0 nonzero; all padded slots zero",
+      "standalone_shear_components": "source shear_5vec_to_quadrupole_components is (xy,yz,minus,xz,plus); this permutation does not establish a real/complex spherical harmonic adapter"
     },
     "assumptions": [
       "collisionless massless occupation; initially isotropic case only for ell=2 oracle",
@@ -76,7 +84,9 @@
       "massive species kinetic law",
       "blanket RHS sign reversal",
       "general physical eligibility for standalone five-m truncation",
-      "transferring standalone findings to ver3 mixing solely by matching variable name"
+      "transferring standalone findings to ver3 mixing solely by matching variable name",
+      "T9_CONSUMER_ELIGIBLE from this negative theorem, even if all four axes pass",
+      "positive full/packed general-ell eligibility from this separate mixed scope"
     ],
     "singular_loci": [
       "zero reference norm: use absolute equality, no relative division"
@@ -91,7 +101,7 @@
     ]
   },
   "target": {
-    "canonical_form": "Exact source-derived 5x5 isotropic-input map, kernel and image; invertible-adapter existence or obstruction. Any positive repaired mixed claim needs full real/complex basis and valid-subspace proof before contracting physical T9.",
+    "canonical_form": "Exact standalone M, kernel and image derived from source; rank(k A M B)=rank(M); negative full-STF equivalence obstruction. A restricted one-dimensional model must declare its own domain and is not full-STF equivalence.",
     "equivalence_relation": "Exact map equivalence on explicitly stated valid subspaces; rank obstruction suffices for nonexistence on full rank-two STF shear domain",
     "invariants": [
       "trace-free and permutation-symmetric output",
@@ -99,12 +109,11 @@
       "sigma=Sigma/a and ds=a d eta applied once"
     ],
     "exact_test_obligations": [
-      "derive exact Wigner values from formula, including ell0/1 padded-slot restrictions",
-      "derive real shear5 Cartesian and complex-spherical transformations with phases/norms",
-      "prove rank obstruction or supply invertible intertwiners",
-      "analyze closure of restricted m=-2..2 under arbitrary shear; general ell must not be assumed",
-      "trace standalone LHS/RHS documentation and actual current ver3 RHS supplier independently",
-      "no mixed repair eligibility until obligations cover every changed coefficient and current consumer"
+      "derive exact Wigner values from the pinned formula and its ell/source/target m guards; include ell0/1 padded-slot restrictions",
+      "derive M as a map of the declared real shear5 coordinates and identify its exact kernel and image",
+      "prove rank(k A M B)=rank(M) for all invertible A,B and k nonzero; compare to the injective full physical STF shear map",
+      "state any restricted shear subspace explicitly; do not claim full-STF equivalence from a one-dimensional restriction",
+      "identify the standalone function and separate ver3 supplier/caller by source identity; do not infer ver3 physical equivalence or defect from this negative theorem"
     ],
     "numeric_test_vectors": [
       {
@@ -160,7 +169,14 @@
       "Do not label finite ell probes a general ell proof.",
       "Do not use this author draft or another axis result as derivation evidence.",
       "Do not accept stored result strings or preflight as engine execution."
-    ]
+    ],
+    "consumer_eligibility": {
+      "result_kind": "NEGATIVE_THEOREM_ONLY",
+      "T9_CONSUMER_ELIGIBLE": false,
+      "standalone_positive_eligibility": false,
+      "ver3_positive_eligibility": false,
+      "full_packed_positive_eligibility": false
+    }
   },
   "axes": {
     "wolfram_xact": {
@@ -232,16 +248,24 @@
   "independence": {
     "mode": "blind-results",
     "permitted_inputs": [
-      "this contract after freezing",
-      "registered assignment required inputs; no sibling outputs"
+      "this definitions/assumptions/target/test-vector contract after a supported freeze",
+      "only registered mathematical definitions and pinned source code needed to derive the target; no host derivation or saved result"
     ],
     "forbidden_sibling_paths": [
       ".agent-harness/runs/*/results/*",
       "docs/research_program/optical_mapping_r10_20260919/continuation_execution/**/result.json",
-      "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/mixed_result.json"
+      "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/mixed_result.json",
+      "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/README.md",
+      "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/probe_mixed.py",
+      "docs/research_program/optical_mapping_r10_20260919/continuation_execution/adapters/test_gradient_discriminator.py",
+      "docs/research_program/optical_mapping_r10_20260919/continuation_execution/host_review.json",
+      "docs/research_program/optical_mapping_r10_20260919/continuation_execution/main_review_followup/*",
+      "docs/research_program/optical_mapping_r10_20260919/continuation_execution/return/*",
+      "docs/research_program/optical_mapping_r10_20260919/SCIENTIFIC_CONTRACT.md"
     ],
     "script_result_ownership": "per-axis; scripts and outputs are never shared before adjudication",
-    "correlation_disclosure": "record when one LLM family authored multiple axis scripts; disclosure does not void engine evidence"
+    "correlation_disclosure": "record when one LLM family authored multiple axis scripts; disclosure does not void engine evidence",
+    "source_identity_is_not_delivery_allowlist": true
   },
   "exceptions_adjudication": {
     "preregistered_exceptions": [],
@@ -265,8 +289,8 @@
   },
   "execution_status": "DRAFT_NOT_FROZEN_NOT_ELIGIBLE",
   "draft_blockers": [
-    "RC01 native client identity mismatch; pending unexecuted",
-    "RC02 checkpoint review not performed",
-    "exact axis toolchain versions/locks not verified for this continuation"
+    "RC01 actual client cwd matches, but pending registered HEAD/sandbox/scope remain historical; supported plan-continuation returned WORKSPACE_JOB_UNAVAILABLE",
+    "RC02 current three-path checkpoint independent review not performed; original seven-file assignment preserved",
+    "exact axis toolchain versions/locks not verified for this continuation; no axis dispatched"
   ]
 }
