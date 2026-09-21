@@ -42,9 +42,14 @@ shell의 `pwd`만으로 client 일치를 주장하지 않았다.
 
 `cl_57e1777283bfeda24c9ae6dcdb579394`는 여전히 등록 HEAD `c8bd214...`,
 `danger-full-access` sandbox, 과거 `optical_review` assignment에 결속돼 있다.
-현재 실제 client는 `workspace-write`다. read-only inspect의 남은 오류는
+최초 검사 당시 실제 client는 `workspace-write`였다. read-only inspect의 남은 오류는
 `REGISTERED_IDENTITY_CHANGED`; sandbox 차이는 Host가 따로 비교한 사실이다.
 frozen 7개 입력과 assignment 파일 hash는 그대로 맞지만 새 세 연구 경로를 포함하지 않는다.
+
+11:28 KST 재개 turn `01a0c1ca-d0cc-79f1-8fe5-bf0e6b179377`의 실제 client metadata는
+`danger-full-access`를 기록한다. 따라서 sandbox 차이는 현재 해소됐으며 최초 snapshot은
+과거 증거로 보존한다. 등록 HEAD/scope와 missing workspace job은 그대로 남아 있다.
+권한 변경만으로 registration 또는 독립 검수가 갱신됐다고 하지 않는다.
 
 지원되는 다음 명령을 **기존 run**에 실제 실행했다.
 
