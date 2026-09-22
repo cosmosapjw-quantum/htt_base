@@ -41,6 +41,25 @@ rotate the global context version and enter the generated view. Files under
 `SHARED_CONTEXT.md` is a historical pointer, not a default conventions source.
 Use the governing spec or scientific contract for the current work unit.
 
+## Existing primary checkout
+
+The owner-directed default is the existing primary checkout and its branches.
+Do not create new worktrees or repository clones for routine agent work. Preserve
+local edits and keep a single production writer. The compact rule in
+`context/FROZEN_DECISIONS.md` is included by `build_context_pack.py`; historical
+assignments keep their original context and directory bindings. This is an agent
+instruction policy, not a new shell interceptor or deletion authorization.
+
+## Post-write verification default
+
+Follow the project-wide selective readback policy in `AGENTS.md`: routine R1
+uses provider success, remote identity and available integrity metadata. Full
+content readback is reserved for its R3 triggers or an explicit override.
+The compact rule in `context/FROZEN_DECISIONS.md` is already an indexed shared
+source; `build_context_pack.py` delivers it to future agent contexts. This is
+instruction-level policy, not automatic interception of Git/upload commands.
+Historical assignments and frozen acceptance requirements remain intact.
+
 ## Start a run
 
 ```bash

@@ -6,6 +6,92 @@ Upgrade `htt_base` before the external native low-ell Bianchi solver arrives. Th
 
 Work in the canonical DAG defined by `docs/codex_handoff/pr_backlog.yaml`; `machine_readable/pr_backlog.yaml` is a synchronized compatibility mirror. Never skip dependency gates to chase figures or headline results.
 
+## Existing-checkout policy (owner direction, 2026-09-22)
+
+Use the existing primary checkout for ongoing work. On the owner's machine this
+is `/home/cosmosapjw/Dropbox/bianchi/htt_base`; `main` is the publication branch.
+Do not create another Git worktree, clone, or full repository copy for routine
+implementation, review, validation, or recovery. Use branches in this checkout,
+small patches/backups, and disposable test fixtures as needed. Preserve existing
+user edits and use one production writer; reviewers may work read-only here.
+If a tool or frozen assignment requires another directory, report the exact
+constraint instead of silently creating a checkout or rebinding its identity.
+Historical worktrees, registrations, budgets and failed receipts remain evidence;
+this policy does not authorize their deletion or retroactive admission. A new
+worktree requires a later explicit owner exception naming its purpose.
+This instruction supersedes older default-isolation recommendations for this
+project. Deliver its compact form through the existing shared context pack.
+
+## Project-wide selective readback policy
+
+Owner-directed default (2026-09-22): apply this policy to all project agents,
+harness workflows, Git publication, and artifact uploads. Do not perform
+post-write content readback when authoritative remote identity, provider success,
+and available integrity metadata already establish the mutation. This supersedes
+older blanket post-push clone/download/readback habits in project guidance.
+
+| Verification tier | Required evidence | Use |
+|---|---|---|
+| R0 | Provider success | Temporary, low-risk operations |
+| R1 | Provider success, remote ID/ref, available size/hash metadata | Routine default |
+| R2 | API/remote metadata plus manifest cross-check | Canonical checkpoint |
+| R3 | Actual download/readback plus byte/hash verification | Recovery, release, audit, or a trigger below |
+
+These are mutation-verification tiers, separate from scientific risk/claim tiers.
+Use an existing manifest for R2; do not manufacture one solely for readback.
+
+```yaml
+readback_policy:
+  default: selective
+  default_tier: R1
+  github:
+    post_push_readback: false
+    verify_remote_ref: true
+    verify_commit_sha: true
+    verify_tree_sha: optional
+  artifact_upload:
+    immediate_download_readback: false
+    require:
+      - provider_success_receipt
+      - remote_object_id
+      - size_if_available
+      - sha256_if_available
+  large_artifacts:
+    download_for_verification: false
+    retain_local_source_until_receipt: true
+  force_readback_when:
+    - canonical_release
+    - audit
+    - destructive_or_overwrite_mutation
+    - restore_or_recovery
+    - runtime_interruption_recovery
+    - provider_reports_checksum_or_size_mismatch
+    - provenance_conflict
+    - authority_change
+    - trust_boundary_crossing
+    - external_or_untrusted_import
+    - user_explicitly_requests_readback
+  manual_override:
+    enable_readback: true
+```
+
+The force conditions take precedence over default `false` values, including for
+large artifacts. `manual_override.enable_readback` permits an explicit per-operation
+override; it does not turn on readback globally. Routine non-force pushes to an
+existing trusted remote remain R1; a network round trip alone is not a new trust
+boundary. Release, authority replacement, or non-fast-forward overwrite is R3.
+Record unavailable metadata as unavailable, never invent it or claim byte
+verification from provider success alone. Missing required success/identity
+evidence leaves the mutation unverified; obtain that evidence before closing it.
+
+Preserve historical receipts and frozen task-specific acceptance requirements.
+This policy changes post-write verification defaults, not scientific validation,
+CAS/input/context seals, overwrite authorization, or claim-admission gates.
+It is agent/harness instruction policy, not a transport hook that intercepts
+arbitrary upload commands. Deliver its compact rule through the existing shared
+context index and regenerate the context pack after changes; do not rewrite
+historical assignments to match a new context version.
+
 ## Non-negotiable scientific boundaries
 
 1. Do not implement or simulate the future external low-ell Bianchi Boltzmann solver in this repo. Only build adapter schemas, transfer registries, `AtlasEntryLite`, `ObservableVector`, validation harnesses, and pre-solver diagnostics.

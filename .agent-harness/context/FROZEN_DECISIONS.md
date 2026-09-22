@@ -20,5 +20,25 @@
 | D-PR177-STRICT-SUPPORT | Interpret the canonical `40<L<763` support literally as integer multipoles 41..762 and use one frozen five-component score | The user-authorized plan and canonical backlog override an inclusive intake paraphrase; endpoint or scan drift changes the estimand | PR-177 and direct consumers | A separately preregistered estimand with its own null calibration and claim lane |
 | D-PR177-AUTHORITY-REPLAY | Bind result eligibility to frozen PR-152 pins, complete feature/deep input maps, and a separate 401-unit raw-feature replay | Self-consistent card/cache or provenance resealing is not independent source authority; final reviews required complete-map reconstruction | PR-177 result consumers | A stronger external source-attestation mechanism preserving all current falsifiers |
 
+## Existing checkout only (owner direction, 2026-09-22)
+
+Work in the existing primary checkout (owner path: `/home/cosmosapjw/Dropbox/bianchi/htt_base`), on branches such as `main`. No new worktree, clone or full repo copy without a new explicit owner exception. Preserve dirty work; one production writer, read-only reviewers, small backups/test fixtures. Do not delete old worktrees or rebind historical assignments. Report exact path constraints; see AGENTS.md.
+
+## Selective post-write verification (owner direction, 2026-09-22)
+
+Apply `AGENTS.md` / Project-wide selective readback policy to every task.
+Default R1: provider success + remote ID/ref + available size/hash; Git checks
+remote ref and commit SHA, tree SHA optional. No routine post-push clone/content
+readback or immediate upload redownload; retain large local sources until receipt.
+R0: low-risk temporary provider success. R2: canonical checkpoint metadata plus
+existing manifest. R3: actual readback and byte/hash verification for release/audit,
+overwrite/destruction, restore or interruption recovery, checksum/size mismatch,
+provenance conflict, authority/trust-boundary change, external/untrusted import,
+or explicit user request. These triggers override default no-download settings.
+Manual override enables per-operation readback, not global always-on readback.
+Unavailable metadata stays unavailable; missing required success/identity means
+unverified. Preserve frozen acceptance, historical receipts and scientific gates.
+These verification tiers are separate from scientific risk/claim tiers.
+
 Agents must not silently reopen a frozen decision. A proposed reversal is a
 meta-finding with new evidence and an explicit reopen condition.

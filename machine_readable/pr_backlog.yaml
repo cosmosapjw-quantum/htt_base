@@ -208,6 +208,7 @@ policy:
   - PR-R9-DEPTH-FORMAL
   - PR-R9-MOVING-Q
   - PR-R9-DEPTH-MATHLIB
+  - PR-MES-R7-SOURCE-IMAGE
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -10186,3 +10187,28 @@ prs:
   scope: r9_general_lean_depth_components
   risk: R3
   user_authorized: true
+
+- id: PR-MES-R7-SOURCE-IMAGE
+  wave: 0
+  title: Implement the conditional four-parameter frozen source image
+  owner: COMMON
+  depends:
+  - PR-R9-INTAKE
+  files:
+  - htt/src/common/conditional_source_image.py
+  - htt/obsstat/mes_r7_source_image.py
+  - htt/src/common/test_conditional_source_image.py
+  - docs/research_program/mes_r7/README.md
+  tests:
+  - PYTHONPATH=htt/src:htt:htt/htt python3 -m pytest -q htt/src/common/test_conditional_source_image.py
+  dod:
+  - One frozen replay with preregistered numerical comparisons and separate byte identity
+  - Validated four-variable box kernel and a real conditional adapter consumer
+  - One bounded independent implementation review and targeted repair closeout
+  - Preserve R9 D2 D4 FORMAL_DEPTH status, budgets, failures and scientific HOLDs
+  kill: No physical inference, ellipsoid implementation claim, native solver, production enable or remote mutation.
+  level: L0
+  scope: owner_authorized_independent_conditional_source_image_slice
+  risk: R2
+  user_authorized: true
+  authorization: User message 2026-09-21 21:58 KST; MES_R7_CONDITIONAL_SOURCE_IMAGE_IMPLEMENTATION independent of R9 execution priority.

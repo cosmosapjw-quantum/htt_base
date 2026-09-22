@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/usr/bin/python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/session_start_context.py\"",
+            "command": "/usr/bin/python3 -B \"$(git rev-parse --show-toplevel)/.codex/hooks/session_start_context.py\"",
             "timeout": 20,
             "statusMessage": "Loading shared-context harness"
           }
@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/usr/bin/python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/subagent_start_context.py\"",
+            "command": "/usr/bin/python3 -B \"$(git rev-parse --show-toplevel)/.codex/hooks/subagent_start_context.py\"",
             "timeout": 20,
             "statusMessage": "Injecting canonical subagent context"
           }
@@ -32,7 +32,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/usr/bin/python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/subagent_stop_validate.py\"",
+            "command": "/usr/bin/python3 -B \"$(git rev-parse --show-toplevel)/.codex/hooks/subagent_stop_validate.py\"",
             "timeout": 20,
             "statusMessage": "Validating subagent handoff"
           }
