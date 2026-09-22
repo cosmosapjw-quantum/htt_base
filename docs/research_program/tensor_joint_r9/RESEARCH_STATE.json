@@ -8,7 +8,7 @@
   "base_commit": "efc5f30666b96782f946375551f0068bb3a30f74",
   "research_run": "R9-REV2-20260912",
   "owner": "HTT research",
-  "status": "R9_REV2_D3_LAW_SUPPORT_MOMENT_BRIDGE_COMPILED_FULL_DEPTH_BLOCKED",
+  "status": "R9_REV2_D2_SUPPORT_BRIDGE_COMPILED_FULL_DEPTH_BLOCKED",
   "completed": [
     "Pinned compendium and R9 intake",
     "D1-D4 and F1-F3 direct derivations",
@@ -31,7 +31,8 @@
     "Fixed ambient STF q,a,v compared across 35 basis representations in two existing Python/NumPy environments; Cartesian and independent 80-decimal checks agree below 1e-10;38 relevant tests pass. No new scientific admission.",
     "D1/D3 then D2/D4 current contracts and 16 actual four-axis executions; finite algebra and Lean recursion helpers recorded; no full FORMAL_DEPTH admission.",
     "MQ1 global moving-q Hausdorff modulus and MQ2 interior Lipschitz bound directly derived, new synthetic checks and scoped independent review passed; no CAS/novelty/observational admission.",
-    "D3 full retained-transform law roundtrip, generic support transport, singular covariance affine-range transport, and D1 mean/covariance specialization Host Lean compiled; D2 Gaussian base support and D4 innovation remain open."
+    "D3 full retained-transform law roundtrip, generic support transport, singular covariance affine-range transport, and D1 mean/covariance specialization Host Lean compiled; D2 Gaussian base support and D4 innovation remain open.",
+    "2026-09-22: D2 fixed singular-Gaussian support, actual-moment bridge, rectangular H C H^T pushforward support, off-support null complement and zero-covariance Dirac law Host Lean compiled in primary main; no pseudoinverse chi-square, D4 or formal admission."
   ],
   "not_executed": [
     "four-axis CAS admission",
@@ -45,7 +46,7 @@
     "CF4 quarantine",
     "R9 initial SymPy import failure"
   ],
-  "next": "Formalize D2 singular Gaussian support/pseudoinverse obligations and D4 full-past conditional innovation; preserve the scoped D3 law/support/moment bridge.",
+  "next": "Positive-eigenspace whitening and supported pseudoinverse chi-square law, retaining rank-zero and off-support branches. D4 and four-axis/independent admission remain open.",
   "runtime": {
     "python": "3.12.14",
     "numpy": "2.3.5",
@@ -260,7 +261,7 @@
   "depth_formal": {
     "base_commit": "bc5e028d16c10a8a60080a59f5cd6adaf7595238",
     "work_unit": "PR-R9-DEPTH-FORMAL",
-    "status": "D3_LAW_SUPPORT_SCOPED_COMPILED_FULL_DEPTH_BLOCKED",
+    "status": "D2_SUPPORT_SCOPED_COMPILED_FULL_DEPTH_BLOCKED",
     "obligations": "revision2/depth_formal/OBLIGATIONS.md",
     "adjudication": "revision2/depth_formal/ADJUDICATION.json",
     "scope_note": "revision2/depth_formal/ADJUDICATION.md",
@@ -277,7 +278,8 @@
     "authenticated_lifecycle": "UNVERIFIED",
     "whole_run_status": "NON_PASS",
     "alpha_consumed": 0,
-    "law_support": "revision2/depth_formal/law_support/STATUS.json"
+    "law_support": "revision2/depth_formal/law_support/STATUS.json",
+    "gaussian_support": "revision2/depth_formal/gaussian_support/STATUS.json"
   },
   "session_scope_20260914": {
     "starting_head": "bc5e028d16c10a8a60080a59f5cd6adaf7595238",
@@ -366,5 +368,30 @@
     "historical_review_admission": "UNVERIFIED",
     "formal_depth": "BLOCKED",
     "scientific_claim_change": false
+  },
+  "depth_gaussian_support": {
+    "task": "R9_D2_SINGULAR_GAUSSIAN_SUPPORT_BRIDGE",
+    "evidence": "revision2/depth_formal/gaussian_support/STATUS.json",
+    "status": "HOST_LEAN_COMPILED_SCOPED",
+    "source_sha256": "3f33423153a2f75afce56e855d4c3a25af90819d9007972f7db6f916e5ba42eb",
+    "review": "HOST_SELF_REVIEW_ONLY",
+    "D2": "INCOMPLETE_PSEUDOINVERSE_CHISQUARE_OPEN",
+    "formal_depth_admission": "BLOCKED",
+    "scientific_admission": "HOLD",
+    "alpha_consumed": 0
+  },
+  "depth_codex_only_continuation": {
+    "evidence": "revision2/depth_formal/gaussian_support/codex_only_continuation.json",
+    "status": "STOP_BUDGET_NO_CANDIDATE",
+    "task_id": "R9-D2-D4-REMAINING-FORMALIZATION-20260922",
+    "run_id": "R9-D2-D4-CODEX-20260922",
+    "execution_policy": {
+      "execution_mode": "CODEX_ONLY",
+      "routing_objective": "BUDGET_FIRST"
+    },
+    "new_proof_files": 0,
+    "observed_tokens": 730883,
+    "independent_review": "NOT_RUN",
+    "scientific_admission": "HOLD"
   }
 }

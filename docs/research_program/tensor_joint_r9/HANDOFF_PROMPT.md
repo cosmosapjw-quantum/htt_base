@@ -1,5 +1,39 @@
 # R9 revision 2 handoff — depth obligations and moving-q stability
 
+## 최우선 continuation — D2 support bridge, 2026-09-22
+
+현재 작업 위치는 원 저장소 `/home/cosmosapjw/Dropbox/bianchi/htt_base`,
+브랜치 `main`, 기반 HEAD `ce606eca7303b04fe64e55c08d1705564689bc7e`다.
+아래의 역사적 worktree/브랜치 시작 지시를 새 실행 위치로 사용하지 마라.
+새 worktree/clone/전체 복사본을 만들지 말고 사용자 변경과 기존 증거를 보존하라.
+
+`revision2/depth_formal/gaussian_support/README.md`, `STATUS.json` 및
+`formal/R9Depth/GaussianSupport.lean`을 읽어라. 고정 Lean v4.31.0/mathlib
+fabf563a7c95a166b8d7b6efca11c8b4dc9d911f에서 `supp N(m,C)=m+Im C`,
+실제 Gaussian 평균·전체 covariance 연결, 직사각 H의 `H m+Im(H C Hᵀ)`
+support, support 바깥 영측도 및 C=0의 Dirac/단일점 support가 컴파일됐다.
+`final/execution.json`은 현재 source에 결합되어 있고 sorryAx가 없다.
+D3 원 증명과 MES frozen replay는 반복하지 않았다. 원 실패 로그는 보존했다.
+
+**다음 단일 수학 작업은 support 위의 의사역행렬 quadratic score χ² 법칙**이다.
+양의 고유공간 whitening을 유도하고 `zᵀV⁺z ~ χ²(rank V)`를 증명하라.
+rank-zero와 off-support 분기를 유지하라. 현재 zero-covariance 증명은 C=0으로
+표현되며 rank 함수와 zero matrix 연결은 별도 미구현이다. D2 전체, D4의 full-past
+conditional innovation 및 네 축 수용은 미완료이고 FORMAL_DEPTH는 BLOCKED다.
+
+Support 증명의 작성·검수는 Host-only다. 이후 사용자가 Codex-only continuation과
+main push를 승인했다. 과거 활성 포인터는 소유자의 별도 승인 후 공식
+`close_run.py --abandon`으로 정리했고 역사적 파일/수락은 보존했다. 새 run은
+`R9-D2-D4-CODEX-20260922`다. `gaussian_support/codex_only_continuation.json`의
+실제 Sol/high thread와 고정 사용량을 읽어라. 500000-token 한도를 넘어 중단했고
+최종 관측량은 730883이다. 새 D2/D4 source나 독립 검수는 반환되지 않았다.
+예산을 초기화하거나 다른 task/thread로 우회하지 마라. 추가 generation은
+명시적 소유자 증액 승인과 공식 같은-task 기록을 먼저 요구한다.
+MES CHILD_CONTINUATION_NOT_RESERVED는 별도 역사적 종료 수락 문제이며
+D2의 수학적 선행조건이 아니다. 이번 게시 묶음은 검증된 support source와 정확한 미완료 상태다.
+모든 physical HOLD, reference U_R/optical HOLD, empirical MES D=HOLD_NOT_COMPUTED,
+미확보 mean/correlation/transfer 및 alpha 예산을 유지하라.
+
 저장소 `cosmosapjw-quantum/htt_base`, 브랜치
 `implementation/project-catalog-20260912`를 이어서 작업하라.
 기존 intake/adapter 구현은 `9e9539edcdbd7bbf66e458cdce685c7a112f8a04`에서 시작했고,

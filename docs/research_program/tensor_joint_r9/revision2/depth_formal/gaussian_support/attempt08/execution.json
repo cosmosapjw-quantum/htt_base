@@ -1,0 +1,25 @@
+{
+  "exit_code": 1,
+  "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal/R9Depth/GaussianSupport.lean:206:29: error: Application type mismatch: The argument\n  x\nhas type\n  EuclideanSpace.{0, u_2} \u211d \u03ba\nof sort `Type u_2` but is expected to have type\n  EuclideanSpace.{0, u_1} \u211d \u03b9\nof sort `Type u_1` in the application\n  ContinuousLinearMap.adjoint_inner_left L x\n/home/cosmosapjw/Dropbox/bianchi/htt_base/formal/R9Depth/GaussianSupport.lean:219:10: error(lean.unknownIdentifier): Unknown constant `ContinuousLinearMap.toLinearMap_injective`\n/home/cosmosapjw/Dropbox/bianchi/htt_base/formal/R9Depth/GaussianSupport.lean:220:4: error: No goals to be solved\n/home/cosmosapjw/Dropbox/bianchi/htt_base/formal/R9Depth/GaussianSupport.lean:227:2: error: Type mismatch: After simplification, term\n  support_map_gaussian m C hC L\n has type\n  @Eq (Set (EuclideanSpace \u211d \u03ba)) (Measure.map (\u21d1L) (multivariateGaussian m C)).support\n    (Set.range fun x => L m + (toEuclideanCLM (H * C * H\u1d40)) x)\nbut is expected to have type\n  @Eq (Set (EuclideanSpace \u211d \u03ba))\n    (Measure.map (\u21d1(LinearMap.toContinuousLinearMap (toEuclideanLin H))) (multivariateGaussian m C)).support\n    (Set.range fun x => (toEuclideanLin H) m + (toEuclideanCLM (H * C * H\u1d40)) x)\n'R9Gaussian.support_multivariateGaussian' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.support_zero_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.mem_support_iff' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.measure_outside_affine_support' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.zero_covariance_law' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.support_gaussian_of_moments' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.support_map_gaussian' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.covariance_map_gaussian' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]\n'R9Gaussian.support_matrix_map_gaussian' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]\n",
+  "stderr": "",
+  "argv": [
+    "lake",
+    "env",
+    "lean",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal/R9Depth/GaussianSupport.lean"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal",
+  "source_sha256": "a0647e5d0930ff1ef60d3fe74a3a54a729b74c26d71fbdb9f7b758aee1397333",
+  "source_changed": false,
+  "elapsed_seconds": 30.85671081102919,
+  "LEAN_PATH": [
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean"
+  ]
+}

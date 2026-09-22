@@ -1,0 +1,25 @@
+{
+  "exit_code": 1,
+  "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal/R9Depth/GaussianSupport.lean:193:4: error: Type mismatch\n  Eq.symm (Set.range_comp ?m.979 ?m.980)\nhas type\n  ?m.979 '' Set.range ?m.980 = Set.range (?m.979 \u2218 ?m.980)\nbut is expected to have type\n  (Set.range fun x => L m + B x) = (fun z => L m + z) '' Set.range \u21d1B\n/home/cosmosapjw/Dropbox/bianchi/htt_base/formal/R9Depth/GaussianSupport.lean:195:2: error: Type mismatch\n  Set.range_comp ?m.989 ?m.990\nhas type\n  Set.range (?m.989 \u2218 ?m.990) = ?m.989 '' Set.range ?m.990\nbut is expected to have type\n  (fun z => L m + z) '' Set.range \u21d1(L \u2218SL toEuclideanCLM C \u2218SL ContinuousLinearMap.adjoint L) =\n    Set.range fun x => L m + (L \u2218SL toEuclideanCLM C \u2218SL ContinuousLinearMap.adjoint L) x\n'R9Gaussian.support_multivariateGaussian' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.support_zero_covariance' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.mem_support_iff' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.measure_outside_affine_support' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.zero_covariance_law' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.support_gaussian_of_moments' depends on axioms: [propext, Classical.choice, Quot.sound]\n'R9Gaussian.support_map_gaussian' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]\n",
+  "stderr": "",
+  "argv": [
+    "lake",
+    "env",
+    "lean",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal/R9Depth/GaussianSupport.lean"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/formal",
+  "source_sha256": "5f099d61a8bdfba90f8fb021084ae5942f79fbffea4723822e05ef34b7a006fd",
+  "source_changed": false,
+  "elapsed_seconds": 6.093006829032674,
+  "LEAN_PATH": [
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/LeanSearchClient/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/Qq/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/aesop/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/batteries/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/importGraph/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/mathlib/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/plausible/.lake/build/lib/lean",
+    "/mnt/sn850x2t/htt_base_e2e/lean-shared/v4.31.0/packages/proofwidgets/.lake/build/lib/lean"
+  ]
+}

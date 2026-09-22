@@ -1,0 +1,76 @@
+{
+  "task_id": "R9-D2-D4-REMAINING-FORMALIZATION-20260922",
+  "run_id": "R9-D2-D4-CODEX-20260922",
+  "execution_policy": {
+    "execution_mode": "CODEX_ONLY",
+    "routing_objective": "BUDGET_FIRST"
+  },
+  "status": "STOP_BUDGET_NO_CANDIDATE",
+  "source_digest": "a92d48d6135716b38557ddbbf9b996d0f964c24d7c7f10ac6d841f3888562bdf",
+  "selection_id": "cw_9a40bb00979c466a9c8fe16cd574e398",
+  "transport": "codex_exec",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "high",
+  "thread_id": "01a0c76c-3ca3-7910-b3c0-2398731916c4",
+  "turn_id": "01a0c76c-3d9b-7522-a58d-1f5f8b4d0c88",
+  "sandbox_mode": "workspace-write",
+  "observed_tokens_at_stop": 730883,
+  "first_over_limit_observation": 525425,
+  "raw_token_limit": 500000,
+  "wall_seconds": 293.50099992752075,
+  "native_dispatches": 1,
+  "local_model_calls": 0,
+  "proof_files_returned": 0,
+  "independent_review": "NOT_DISPATCHED_BUDGET_EXHAUSTED",
+  "formal_admission": "BLOCKED",
+  "owner_budget_amendment": "REQUESTED_NOT_GRANTED",
+  "historical_acceptance": "UNCHANGED",
+  "pointer_transition": {
+    "owner_approval": "2026-09-22 13:33 KST: 과거 포인터 정리 후 계속 진행",
+    "old_run": "EXTERNAL-FUSION-FOLLOWUP-20260829",
+    "normal_close": "HARNESS_VALIDATION_FAILED_STALE_CONTEXT_AND_INPUTS",
+    "operation": "close_run.py --abandon",
+    "historical_files_preserved": 38,
+    "new_run": "R9-D2-D4-CODEX-20260922",
+    "historical_acceptance": "UNCHANGED"
+  },
+  "failures": [
+    "NORMAL_CLOSE_STALE_CONTEXT_AND_INPUTS",
+    "CONTINUATION_RESOURCE_BINDING_INVALID_FOR_ARTIFACT_WORKSPACE",
+    "STOP_BUDGET"
+  ],
+  "evidence": {
+    "author_runtime.jsonl": {
+      "local_ref": ".agent-harness/runs/R9-D2-D4-CODEX-20260922/artifacts/host/author_runtime.jsonl",
+      "sha256": "9166a0c2d117b18c06871c2a441755af4c1b924f7eb8979c7fee5d3f0c81b4a6"
+    },
+    "author_runtime.stderr": {
+      "local_ref": ".agent-harness/runs/R9-D2-D4-CODEX-20260922/artifacts/host/author_runtime.stderr",
+      "sha256": "eed795d8735d730dde0bc6e72e4ecf72e65dae8b6c759bcb906631b9eab1c31a"
+    },
+    "author_runtime_observed.json": {
+      "local_ref": ".agent-harness/runs/R9-D2-D4-CODEX-20260922/artifacts/host/author_runtime_observed.json",
+      "sha256": "0bdc6242332dddda279b9f217e3fbccfea337c780574803cf963efe6bbd2d545"
+    },
+    "author_observation.json": {
+      "local_ref": ".agent-harness/runs/R9-D2-D4-CODEX-20260922/artifacts/host/author_observation.json",
+      "sha256": "acca8fd59f093e90c0e11473483184ae3b21ba2e7ef9e66d06926ea851093a44"
+    },
+    "author_budget_stop.json": {
+      "local_ref": ".agent-harness/runs/R9-D2-D4-CODEX-20260922/artifacts/host/author_budget_stop.json",
+      "sha256": "94c0db7e83c664b428e2c8ab5826b1337a689b1b8e6143794301efefb390a295"
+    },
+    "author_reconcile.json": {
+      "local_ref": ".agent-harness/runs/R9-D2-D4-CODEX-20260922/artifacts/host/author_reconcile.json",
+      "sha256": "ceb511b58cbfd3376360a1af61dffcb2809600ffc9d31f6c5bbd012129a6f498"
+    },
+    "author_registration_final.stderr": {
+      "local_ref": ".agent-harness/runs/R9-D2-D4-CODEX-20260922/artifacts/host/author_registration_final.stderr",
+      "sha256": "277a8b5b8a215a7ee53a20b687c930ee3820a1f9f5f8809d74ce71ffcf825b64"
+    },
+    "close.stderr": {
+      "local_ref": ".agent-harness/runs/R9-D2-D4-CODEX-20260922/artifacts/host/close.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

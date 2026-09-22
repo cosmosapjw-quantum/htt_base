@@ -1,0 +1,66 @@
+{
+  "task": "R9_D2_SINGULAR_GAUSSIAN_SUPPORT_BRIDGE",
+  "base_commit": "ce606eca7303b04fe64e55c08d1705564689bc7e",
+  "owner": "HTT/common",
+  "source": "formal/R9Depth/GaussianSupport.lean",
+  "source_sha256": "3f33423153a2f75afce56e855d4c3a25af90819d9007972f7db6f916e5ba42eb",
+  "governing_contract": "../CAS_D2.json",
+  "contract_sha256": "a049a85d7958a4dbb6b9371b168c5ca2a2ec56090b35363005a892789c0c03fa",
+  "evidence": "final/execution.json",
+  "mathlib_commit": "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f",
+  "lean_toolchain": "leanprover/lean4:v4.31.0",
+  "status": "HOST_LEAN_COMPILED_SCOPED",
+  "components": {
+    "base_gaussian_support": "PROVED_COMPILED_ALL_FINITE_REAL_PSD",
+    "arbitrary_gaussian_actual_moments_bridge": "PROVED_COMPILED",
+    "rectangular_matrix_pushforward_support": "PROVED_COMPILED_H_C_HT",
+    "actual_mapped_covariance_operator": "PROVED_COMPILED",
+    "off_support_complement_null": "PROVED_COMPILED",
+    "zero_covariance_dirac_and_singleton_support": "PROVED_COMPILED",
+    "supported_pseudoinverse_chisquare": "NOT_PROVED",
+    "rank_function_to_zero_matrix_interface": "NOT_ADDED",
+    "D4": "OPEN_UNCHANGED"
+  },
+  "axiom_check": {
+    "sorryAx_present": false,
+    "printed_declarations": 9,
+    "expected_declarations": 9
+  },
+  "review": {
+    "mode": "HOST_SELF_REVIEW_ONLY",
+    "rounds": 1,
+    "blocking_findings": [],
+    "independent_review": "BLOCKED_AUTHENTICATION_UNVERIFIED_UNCHANGED",
+    "four_axis_admission": "NO_NEW_AXIS_RUN",
+    "FORMAL_DEPTH": "BLOCKED",
+    "whole_D2": "INCOMPLETE",
+    "scientific_admission": "HOLD"
+  },
+  "preserved": {
+    "D3": "UNCHANGED_NOT_RECOMPILED",
+    "historical_assignments_and_budgets": "UNCHANGED",
+    "MES_child": "CHILD_CONTINUATION_NOT_RESERVED",
+    "physical_source_closure": "HOLD",
+    "target_source_response": "HOLD",
+    "reference_U_R_optical_bridge": "HOLD",
+    "empirical_MES_D": "HOLD_NOT_COMPUTED",
+    "alpha_consumed": 0,
+    "active_run_pointer_at_support_compile": "EXTERNAL-FUSION-FOLLOWUP-20260829"
+  },
+  "routing": {
+    "opportunity_id": "op_9e0cc3d3df7ebde35abcf9f396c6abaa8f0ab88e228254654461f154ede794a1",
+    "reason": "NO_QUALIFIED_EXECUTOR",
+    "authorship": "HOST_CODEX",
+    "model_dispatches": 0,
+    "new_child_assignments": 0
+  },
+  "next_single_task": "Positive-eigenspace whitening and supported pseudoinverse chi-square law, retaining rank-zero and off-support branches.",
+  "publication": {
+    "authorization": "2026-09-22 owner explicitly requested Codex-only continuation and push",
+    "branch": "main",
+    "mode": "non-force",
+    "verification_tier": "R1",
+    "receipt_local_ref": ".agent-harness/runs/R9-D2-D4-CODEX-20260922/artifacts/host/publication_receipt.json"
+  },
+  "continuation": "codex_only_continuation.json"
+}

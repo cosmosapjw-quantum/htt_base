@@ -1,3 +1,35 @@
+# PR-R9-DEPTH-MATHLIB — D2 support continuation, 2026-09-22
+
+The fixed singular Gaussian law previously had no compiled connection between
+its topological support and the affine covariance image. `GaussianSupport.lean`
+now proves that connection, actual-moment characterization, rectangular mapped
+support/covariance, off-support null complement and the zero-covariance Dirac
+case. It permits singular matrices and empty finite index types.
+
+Pinned Lean v4.31.0 and mathlib fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+compiled the source with nine checked public axiom dependencies and no sorryAx.
+The original failed development probes are retained under `gaussian_support/`.
+Source/evidence binding and Host differential review pass for this component.
+No existing MES replay, D3 compile, full pytest suite or four-axis run was repeated.
+
+Owner-authorized Codex-only followup reserved one Sol/high author. Its observed
+usage exhausted the unchanged 500000-token limit before returning any additional
+proof file. Usage, stopped thread, registration failures and raw runtime are
+preserved. Independent review was not dispatched. The old active pointer was
+cleared only after explicit owner approval; old records were not rebound.
+See `gaussian_support/codex_only_continuation.json` for current execution status.
+
+The DAG card remains blocked. Supported pseudoinverse chi-square/rank-zero
+interface, D4 full-past conditional Gaussian/innovation law, independent review
+and current four-axis acceptance remain open. Physical closure, target/source
+response, reference U_R/optical bridge and empirical MES D HOLDs are unchanged.
+Publication is authorized in the primary main checkout, using a non-force push
+and R1 remote-ref identity verification, with no verification clone/worktree.
+
+---
+
+## Historical four-axis attempt (unchanged)
+
 # PR-R9-DEPTH-FORMAL
 
 The existing depth adapter had no current proposition-specific formal execution

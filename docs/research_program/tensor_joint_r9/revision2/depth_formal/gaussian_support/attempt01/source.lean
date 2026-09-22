@@ -1,0 +1,25 @@
+import Mathlib.Probability.Distributions.Gaussian.Multivariate
+import Mathlib.MeasureTheory.Measure.Support
+import Mathlib.Analysis.InnerProductSpace.Adjoint
+import Mathlib.Topology.Algebra.Module.FiniteDimension
+open MeasureTheory ProbabilityTheory Matrix
+#check Measure.map_apply
+#check Measure.IsOpenPosMeasure.map
+#check Measure.AbsolutelyContinuous.isOpenPosMeasure
+#check PiLp.continuous_toLp
+#check continuous_toLp
+#check toLp_surjective
+#check WithLp.toLp_surjective
+#check ContinuousLinearMap.toLinearMap_adjoint
+#check LinearMap.adjoint_toContinuousLinearMap
+#check ContinuousLinearMap.adjoint_toLinearMap
+#check LinearMap.IsSymmetric
+#check IsSelfAdjoint.adjoint_eq
+#check LinearMap.range_self_comp_adjoint
+#check Submodule.closed_of_finiteDimensional
+#check Submodule.isClosed_of_finiteDimensional
+#check Homeomorph.isClosed_image
+#check Homeomorph.addLeft
+#check Matrix.toEuclideanCLM
+#check Measure.support_dirac
+#check Measure.support_mem_ae
