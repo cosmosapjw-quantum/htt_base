@@ -13,6 +13,13 @@ checkout에서 수행하며 새 worktree나 clone을 만들지 않는다.
 PR328 handoff 행은 primary checkout에만 있는 local intake의 신원을 기록하며,
 committed validator는 다른 checkout에 그 intake가 없다는 이유로 실패하지 않는다.
 
+55개 baseline의 신원은 `validate_remaining_pr_replan.py`의 `FROZEN_BASELINE`에
+기준 커밋·status 경로·Git blob·정확한 ID 목록으로 고정한다. 완료된 카드도 이
+집합에 남으며 다른 완료 카드로 교체할 수 없다. planning family는 `source_path`
+당 정확히 한 행이다. 이후 extension은 기존 등록 절차를 따르며 baseline을
+덮어쓰지 않는다. 외부 감사 F01/F02의 수정과 검증 범위는
+`docs/PR_DELTAS/pr-replan-20260927.md`에 기록한다.
+
 ## 확인된 상태
 
 canonical backlog에는 207개 카드가 있었고 상태는 완료 152, blocked 4,

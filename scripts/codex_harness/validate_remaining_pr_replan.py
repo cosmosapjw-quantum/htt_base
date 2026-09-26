@@ -22,6 +22,28 @@ CROSSWALK = REPO / "docs/codex_handoff/remaining_pr_crosswalk.csv"
 PLAN = REPO / "docs/codex_handoff/REMAINING_PR_EXECUTION_PLAN_KO.md"
 MERMAID = REPO / "docs/codex_handoff/pr_dag.mmd"
 
+# Historical non-completed IDs, read from this exact commit's status blob.
+# Keep this record independent of the live crosswalk and current card states:
+# completion must not permit replacing a historical baseline member.
+# No Git history or network is required by the production validator.
+FROZEN_BASELINE = {
+    "commit": "85e261f49c9df9389946eef74d80c1ccd0509816",
+    "status_path": "docs/codex_handoff/pr_status.yaml",
+    "status_blob": "4ee78066941f86690b0b6044c9ffd4574fd4a2fc",
+    "ids": (
+        "PR-151", "PR-155", "PR-156", "PR-157", "PR-158", "PR-159",
+        "PR-160", "PR-161", "PR-162", "PR-163", "PR-164", "PR-165",
+        "PR-166", "PR-172", "PR-178", "PR-181", "PR-183", "PR-190",
+        "PR-191", "PR-192", "PR-193", "PR-194", "PR-195", "PR-196",
+        "PR-198", "PR-199", "PR-201", "PR-202", "PR-203", "PR-204",
+        "PR-205", "PR-206", "PR-207", "PR-208", "PR-229", "PR-230",
+        "PR-231", "PR-232", "PR-233", "PR-234", "PR-235", "PR-236",
+        "PR-237", "PR-238", "PR-239", "PR-240", "PR-241", "PR-242",
+        "PR-243", "PR-244", "PR-245", "PR-246", "PR-247",
+        "PR-MES-R7-SOURCE-IMAGE", "PR-R9-DEPTH-MATHLIB",
+    ),
+}
+
 ALLOWED_DISPOSITIONS = {
     "IMPLEMENTED_REUSE",
     "PARTIAL_REMAINDER",
@@ -115,9 +137,12 @@ def validate() -> dict[str, int]:
     if len(row_ids) != len(set(row_ids)):
         raise ValueError("crosswalk contains duplicate canonical card rows")
     baseline_ids = set(row_ids)
-    if len(baseline_ids) != 55:
+    expected_baseline_ids = set(FROZEN_BASELINE["ids"])
+    if baseline_ids != expected_baseline_ids:
         raise ValueError(
-            f"expected 55 frozen baseline crosswalk cards, found {len(baseline_ids)}"
+            f"frozen baseline identity mismatch ({FROZEN_BASELINE['commit']}): "
+            f"missing={sorted(expected_baseline_ids - baseline_ids)}, "
+            f"extra={sorted(baseline_ids - expected_baseline_ids)}"
         )
     if not set(noncompleted).issubset(baseline_ids):
         raise ValueError(
@@ -149,7 +174,10 @@ def validate() -> dict[str, int]:
             if successor not in backlog_ids:
                 raise ValueError(f"{pr_id} references unknown successor {successor}")
 
-    family_paths = {row.get("source_path", "") for row in family_rows}
+    family_keys = [row.get("source_path", "") for row in family_rows]
+    family_paths = set(family_keys)
+    if len(family_keys) != len(family_paths):
+        raise ValueError("crosswalk contains duplicate planning-family source_path rows")
     if family_paths != REQUIRED_FAMILIES:
         raise ValueError(
             "planning-family coverage mismatch: "
