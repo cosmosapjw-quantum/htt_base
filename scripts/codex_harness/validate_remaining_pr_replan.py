@@ -106,8 +106,6 @@ def validate() -> dict[str, int]:
         )
 
     noncompleted = {pr_id: state for pr_id, state in states.items() if state != "completed"}
-    if len(noncompleted) != 55:
-        raise ValueError(f"expected the frozen 55 non-completed cards, found {len(noncompleted)}")
 
     with CROSSWALK.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
@@ -116,18 +114,24 @@ def validate() -> dict[str, int]:
     row_ids = [row.get("original_id", "") for row in canonical_rows]
     if len(row_ids) != len(set(row_ids)):
         raise ValueError("crosswalk contains duplicate canonical card rows")
-    if set(row_ids) != set(noncompleted):
+    baseline_ids = set(row_ids)
+    if len(baseline_ids) != 55:
         raise ValueError(
-            "crosswalk canonical coverage mismatch: "
-            f"missing={sorted(set(noncompleted) - set(row_ids))}, "
-            f"extra={sorted(set(row_ids) - set(noncompleted))}"
+            f"expected 55 frozen baseline crosswalk cards, found {len(baseline_ids)}"
+        )
+    if not set(noncompleted).issubset(baseline_ids):
+        raise ValueError(
+            "current non-completed card is absent from the baseline crosswalk: "
+            f"missing={sorted(set(noncompleted) - baseline_ids)}"
         )
     for row in canonical_rows:
         pr_id = row["original_id"]
-        if row.get("canonical_status") != noncompleted[pr_id]:
+        if pr_id not in states:
+            raise ValueError(f"crosswalk references missing canonical card {pr_id}")
+        if row.get("canonical_status") != states[pr_id]:
             raise ValueError(
                 f"{pr_id} crosswalk status {row.get('canonical_status')!r} "
-                f"does not match {noncompleted[pr_id]!r}"
+                f"does not match {states[pr_id]!r}"
             )
         if row.get("disposition") not in ALLOWED_DISPOSITIONS:
             raise ValueError(f"{pr_id} has invalid disposition {row.get('disposition')!r}")
@@ -190,7 +194,8 @@ def validate() -> dict[str, int]:
 
     return {
         "cards": len(backlog_ids),
-        "noncompleted": len(noncompleted),
+        "current_noncompleted": len(noncompleted),
+        "baseline_crosswalk_cards": len(canonical_rows),
         "canonical_crosswalk_rows": len(canonical_rows),
         "planning_families": len(family_rows),
         "extensions": len(extensions),

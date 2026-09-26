@@ -1,0 +1,89 @@
+schema: htt.long_horizon.pr204_act_closure.v1
+pr_id: PR-204
+owner: OBSSTAT
+contributors: [HTT]
+implementation_scope: [obsstat]
+public_use: false
+claim_tier_ceiling: conditional
+claim_level: {scheme: roadmap_rescue_v1, level: C1}
+
+purpose: >-
+  Close the already executed ACT DR6 strict validated-band release-summary
+  branch while preserving the raw-QE/RDN0 reconstruction as a named input
+  blocker. This contract creates no new ACT estimator, numerical result,
+  response calibration, likelihood, or physical interpretation.
+
+release_summary_branch:
+  upstream_pr: PR-177
+  accepted_scientific_result: NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION
+  exact_support:
+    inequality: 40 < L < 763
+    integer_min: 41
+    integer_max: 762
+    integer_count: 722
+    endpoints_40_and_763_included: false
+    coordinate_frame: Equatorial
+  release_simulation_count: 400
+  required_rank_fractions:
+    controlled: 102/401
+    raw: 99/401
+    mask_change: 398/401
+  required_relation_to_alpha: RESOLVED_ABOVE_ALPHA
+  interpretation: >-
+    Conditional null comparison for the registered five-component
+    fractional-variance feature under the released reconstruction and exactly
+    400 released simulations. It is not an amplitude constraint, detection,
+    isotropy result, pre-QE response validation, or physical attribution.
+
+raw_qe_branch:
+  upstream_pr: PR-152
+  accepted_decision: DEFER_RAW_QE_RDN0_PUBLIC_INPUTS_LARGE_RECONSTRUCTION
+  required_missing_inputs:
+    - four_split_cmb_maps
+    - pinned_filtering_configuration
+    - response_normalization
+    - analysis_mask
+    - software_environment_lock
+    - simulation_input_manifest
+    - executed_quadratic_estimator_pipeline
+    - realisation_dependent_n0
+  terminal: BLOCKED_INPUT_RAW_QE_EXECUTION_RECEIPT
+  future_positive_branch: >-
+    A future raw-QE result requires the complete configuration-locked typed
+    receipt already defined by PR-152 and a separate validator. Its presence
+    must not be accepted by this release-summary closure adapter.
+
+source_identities:
+  docs/generated/pr177_act_modulation_result.json: 5c0a1ab89eb6887b13f71a5171b5b0ab23f4c1ede19a11af16fe4d546d802a61
+  docs/generated/pr177_mask_control.json: c1575df48c04295a8ec5208ef15d09e9e04dbd62e77a60c8e81841560d74f2e3
+  docs/generated/pr177_mc_resolution.json: 9cea8cab00ae59b2f56c09a146bb943199f37a742d65efd1a879ed7ed36163f7
+  docs/generated/pr177_result_card.json: 513cad677b3737f9dbe8d8657533024252b21d12f7bee5894307218bd2ec56d0
+  docs/generated/pr152_availability_decision.json: 30d6d1a97112b011c0e3dbdcff16d0453b85f92e82b65a6170656039f29ab6d5
+  docs/generated/pr152_inventory.json: 3be58014deb2d3b280b10f27cbfb9efb7df0ca075b08bcd7053b9e8c1dd1245d
+
+author_gates:
+  mechanics: PASS_REUSE_PR177_IDENTICAL_PIPELINE
+  identification: PASS_EXACT_VALIDATED_SUPPORT
+  calibration: PASS_RELEASE_SIMULATION_RANK_ONLY
+  provenance: PASS_FROZEN_SOURCE_IDENTITIES
+  independence: OPEN
+
+terminal: EVIDENCE_READY_RELEASE_SUMMARY_RAW_QE_BLOCKED
+forbidden_requests:
+  - anisotropy_detection
+  - physical_modulation_amplitude
+  - sky_power_measurement
+  - raw_qe_reproduction
+  - pre_qe_injection_coverage
+  - bianchi_family_identification
+  - publication_use
+
+kill_switches:
+  - any support outside integer 41 through 762
+  - any endpoint inclusion or coordinate-frame drift
+  - release simulation count other than 400
+  - controlled, raw, or mask-change rank drift
+  - candidate or detection promotion of the PR-177 null
+  - missing or shortened raw-QE blocker inventory
+  - treating released-kappa post-processing as pre-QE injection response
+  - accepting a future positive raw-QE receipt without its separate validator

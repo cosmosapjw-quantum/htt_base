@@ -1,0 +1,134 @@
+{
+  "anisotropic_modulation_claim_status": "WITHHELD_PRE_QE_RESPONSE_COVERAGE_NOT_COMPUTED",
+  "author_gates": {
+    "calibration": "PASS_RELEASE_SIMULATION_RANK_ONLY",
+    "identification": "PASS_EXACT_VALIDATED_SUPPORT",
+    "independence": "OPEN",
+    "mechanics": "PASS_REUSE_PR177_IDENTICAL_PIPELINE",
+    "provenance": "PASS_FROZEN_SOURCE_IDENTITIES"
+  },
+  "caveats": [
+    "Conditional on the exact PR-177 released reconstruction and 400-member release ensemble.",
+    "The registered mask-squared control is a bounded sensitivity and has no causal interpretation.",
+    "Raw-QE/RDN0 and pre-QE injection coverage were not executed.",
+    "No amplitude, detection, isotropy, physical-response, geometry, or family-identification claim is supported."
+  ],
+  "claim_id": "C-PR204-ACT-CLOSURE",
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_status": "CONDITIONAL",
+  "claim_tier": "conditional",
+  "covariance_status": "observation_inclusive_5d_leave_one_out_empirical_covariance_exactly_400_release_simulations",
+  "detection_claim": false,
+  "evidence_type": "artifact",
+  "family_identification": false,
+  "generating_command": "PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/codex_harness/run_pr204_act_closure.py --write",
+  "implementation_scope": [
+    "obsstat"
+  ],
+  "implementation_sha256": {
+    "docs/research_program/long_horizon_rescue/pr204_spec.yaml": "d920000051ac36f5360b6075b63b40882f714c1931d7732e22ea6b3c23868724",
+    "htt/obsstat/act_modulation_closure.py": "6d167b79a95413f148927e8217441cd3390377d5d5f164a75dcdfc44ff3fee75",
+    "scripts/codex_harness/run_pr204_act_closure.py": "eca80f0ffc1302e8368fae82162e4fb41d9a2269f8b896024e4f9bd1a008fcda"
+  },
+  "independence_gate": "OPEN",
+  "isotropy_claim": false,
+  "null_mock_status": "exactly_400_authenticated_release_reconstructed_simulations_conditional_exchangeability",
+  "owner": "OBSSTAT",
+  "physical_attribution": false,
+  "process_status": "COMPLETED_SUCCESS_WITH_TYPED_BLOCKED_BRANCH",
+  "public_use": false,
+  "publication_use": false,
+  "raw_qe_branch": {
+    "missing_inputs": [
+      "four_split_cmb_maps",
+      "pinned_filtering_configuration",
+      "response_normalization",
+      "analysis_mask",
+      "software_environment_lock",
+      "simulation_input_manifest",
+      "executed_quadratic_estimator_pipeline",
+      "realisation_dependent_n0"
+    ],
+    "raw_qe_reproduced": false,
+    "status": "BLOCKED_INPUT_RAW_QE_EXECUTION_RECEIPT",
+    "typed_execution_receipt": "missing"
+  },
+  "release_summary": {
+    "analysis_support": {
+      "coordinate_frame": "Equatorial",
+      "endpoints_40_and_763_included": false,
+      "inequality": "40 < L < 763",
+      "integer_count": 722,
+      "integer_max": 762,
+      "integer_min": 41
+    },
+    "mask_control": "registered_MK_squared_sensitivity_only_no_causal_attribution",
+    "physical_interpretation": "not_evaluated",
+    "rank_summary": {
+      "controlled": {
+        "guard_interval": [
+          0.16944885802620666,
+          0.3392793215249155
+        ],
+        "rank": 0.2543640897755611,
+        "rank_fraction": "102/401",
+        "relation_to_alpha": "RESOLVED_ABOVE_ALPHA"
+      },
+      "mask_change": {
+        "guard_interval": [
+          0.9815548130650192,
+          1.0
+        ],
+        "rank": 0.9925187032418953,
+        "rank_fraction": "398/401",
+        "relation_to_alpha": "RESOLVED_ABOVE_ALPHA"
+      },
+      "raw": {
+        "guard_interval": [
+          0.1922761398164394,
+          0.30148944621847334
+        ],
+        "rank": 0.24688279301745636,
+        "rank_fraction": "99/401",
+        "relation_to_alpha": "RESOLVED_ABOVE_ALPHA"
+      }
+    },
+    "raw_qe_reproduced": false,
+    "release_simulation_count": 400,
+    "status": "CLOSED_CONDITIONAL_NULL_COMPARISON"
+  },
+  "response_and_injection_boundary": {
+    "amplitude_constraint": "NOT_COMPUTED",
+    "post_reconstruction_injection_as_pre_qe_response": "FORBIDDEN",
+    "pre_qe_injection_coverage": "BLOCKED_INPUT_RAW_QE_EXECUTION_RECEIPT",
+    "release_simulation_rank_calibration": "PASS_REUSED_PR177"
+  },
+  "schema": "htt.pr204.act_modulation_closure.v1",
+  "scientific_effect": "none_new_reuses_pr177_conditional_null",
+  "scientific_result": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+  "semantic_digest": "2edfcf3bba508cd7b3cc65c0623a9f0aaa38b86544341ed85193b93e9fbe6d71",
+  "sky_support_status": "released_baseline_reconstructed_kappa_equatorial_MK_ge_0p99_core_not_independently_reprocessed",
+  "source_sha256": {
+    "docs/generated/pr152_availability_decision.json": "30d6d1a97112b011c0e3dbdcff16d0453b85f92e82b65a6170656039f29ab6d5",
+    "docs/generated/pr152_inventory.json": "3be58014deb2d3b280b10f27cbfb9efb7df0ca075b08bcd7053b9e8c1dd1245d",
+    "docs/generated/pr177_act_modulation_result.json": "5c0a1ab89eb6887b13f71a5171b5b0ab23f4c1ede19a11af16fe4d546d802a61",
+    "docs/generated/pr177_mask_control.json": "c1575df48c04295a8ec5208ef15d09e9e04dbd62e77a60c8e81841560d74f2e3",
+    "docs/generated/pr177_mc_resolution.json": "9cea8cab00ae59b2f56c09a146bb943199f37a742d65efd1a879ed7ed36163f7",
+    "docs/generated/pr177_result_card.json": "513cad677b3737f9dbe8d8657533024252b21d12f7bee5894307218bd2ec56d0"
+  },
+  "terminal": "EVIDENCE_READY_RELEASE_SUMMARY_RAW_QE_BLOCKED",
+  "transfer_source": "none",
+  "unresolved_inputs": [
+    "four_split_cmb_maps",
+    "pinned_filtering_configuration",
+    "response_normalization",
+    "analysis_mask",
+    "software_environment_lock",
+    "simulation_input_manifest",
+    "executed_quadratic_estimator_pipeline",
+    "realisation_dependent_n0"
+  ]
+}

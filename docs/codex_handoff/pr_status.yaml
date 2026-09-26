@@ -1,5 +1,6 @@
 generated_on: '2026-09-27'
 completed:
+- PR-204
 - PR-REPLAN-20260927
 - PR-R9-MOVING-Q
 - PR-R9-DEPTH-FORMAL
@@ -176,7 +177,6 @@ pending:
 - PR-201
 - PR-202
 - PR-203
-- PR-204
 - PR-205
 - PR-206
 - PR-207
@@ -430,6 +430,15 @@ execution_resolutions:
     result_card_receipt: docs/generated/pr200_result_card.json
     result_card_receipt_sha256: 82e202360fef3c33a8b7c5dde4ef6a53c117b2a219de295be61f1a02d5175aa1
     resolved_on: '2026-07-21'
+  PR-204:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-204.md
+    result_card_receipt: docs/generated/pr204_result_card.json
+    result_card_receipt_sha256: 45f0d61c3d6c7c0f7be9c7904644e1fb999c6e01b7c345e64a9db3467716175b
+    resolved_on: '2026-09-27'
+    scientific_status_effect: none_new_reuses_pr177_conditional_null
+    scientific_status_after: NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION
+    success_dependency_satisfied: true
   PR-189:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-189.md
@@ -2138,3 +2147,5 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
 # PR-R9-DEPTH-MATHLIB continuation 2026-09-22: D2 singular-Gaussian support/actual-moment/H C H^T/zero-covariance bridge Host Lean compiled (gaussian_support/STATUS.json). Supported pseudoinverse chi-square and D4 remain open. Codex-only followup STOP_BUDGET without candidate or independent review; preserved usage 730883 against 500000 cap. Card stays blocked; no completed PR increment; all HOLDs preserved.
 
 # PR-REPLAN-20260927: current-repository planning documents were reconciled against main at 85e261f4. The crosswalk distinguishes implementation, partial remainder, failed/held execution, external dependency and supersession. This changes scheduling metadata only: no scientific claim, physical input, historical lifecycle receipt or HOLD is promoted. The later approved R9 total budget of 2000000 and preserved usage 730883 are recorded in the execution plan; the remaining continuation blocker is EXISTING_CHILD_NOT_CLOSED / OUTCOME_UNKNOWN.
+
+# PR-204: the existing PR-177 strict-band conditional null is closed as the release-summary branch. Raw-QE/RDN0 stays BLOCKED_INPUT_RAW_QE_EXECUTION_RECEIPT with eight named missing inputs; no new ACT number, amplitude constraint, pre-QE coverage, physical interpretation, Independence pass or publication use is created.

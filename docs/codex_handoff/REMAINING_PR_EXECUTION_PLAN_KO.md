@@ -19,6 +19,10 @@ canonical backlog에는 207개 카드가 있었고 상태는 완료 152, blocked
 pending 22, dormant external 28, background 1이었다. 이 55개를 모두 미구현으로
 읽지 않는다.
 
+`PR-REPLAN-20260927` 이후 첫 실행 slice인 PR-204는 PR-177의 strict-band
+conditional null을 release-summary branch로 닫고 raw-QE/RDN0를 여덟 개의 명명된
+입력 차단으로 보존했다. 새 ACT 수치나 물리 주장은 생성하지 않았다.
+
 - MES R7 source image는 구현·frozen replay·검수 내용이 존재하며 역사적 child
   종료 수락만 남아 있다.
 - R8 PR-247은 24개 node와 52개 handler가 구현·종료되었다. `STOP_INVALID`와
