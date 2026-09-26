@@ -1,5 +1,5 @@
 {
-  "generated_on": "2026-06-11",
+  "generated_on": "2026-09-27",
   "scope": "htt_base_pre_native_lowell_solver_codex_dag_v2",
   "policy": {
     "topological_order": [
@@ -195,7 +195,39 @@
       "PR-243",
       "PR-244",
       "PR-245",
-      "PR-246"
+      "PR-246",
+      "PR-247",
+      "PR-CATALOG-001",
+      "PR-CATALOG-002",
+      "PR-CATALOG-003",
+      "PR-CATALOG-004",
+      "PR-REPLAN-20260927",
+      "PR-R9-REV2",
+      "PR-R9-INTAKE",
+      "PR-R9-MULTIDEPTH",
+      "PR-R9-SELECTED-LAW",
+      "PR-R9-FIBRE",
+      "PR-R9-DEPTH-FORMAL",
+      "PR-R9-MOVING-Q",
+      "PR-R9-DEPTH-MATHLIB",
+      "PR-MES-R7-SOURCE-IMAGE"
+    ],
+    "strict_extension_cards": [
+      "PR-247",
+      "PR-CATALOG-001",
+      "PR-CATALOG-002",
+      "PR-CATALOG-003",
+      "PR-CATALOG-004",
+      "PR-REPLAN-20260927",
+      "PR-R9-REV2",
+      "PR-R9-INTAKE",
+      "PR-R9-MULTIDEPTH",
+      "PR-R9-SELECTED-LAW",
+      "PR-R9-FIBRE",
+      "PR-R9-DEPTH-FORMAL",
+      "PR-R9-MOVING-Q",
+      "PR-R9-DEPTH-MATHLIB",
+      "PR-MES-R7-SOURCE-IMAGE"
     ],
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
@@ -11797,6 +11829,479 @@
       "scientific_status_on_intake": "OPEN",
       "track": "INTEGRATION",
       "solver_gate_required": true
+    },
+    {
+      "id": "PR-247",
+      "title": "R8 full execution: orbit continuation, restricted optics and scoped synthesis",
+      "wave": 20,
+      "deps": [],
+      "targets": [
+        "R8-00..23 full terminal execution under PR467 c5b991e6; scientific acceptance remains blocked"
+      ],
+      "files": [
+        "htt/obsstat/r8_orbit_bounds.py",
+        "htt/htt/htt/infer/r8_*.py",
+        "tests/r8",
+        "scripts/observed_runs/run_tensor_joint_r8.py",
+        "docs/generated/tensor_joint_r8",
+        "htt/bass/transfer/r8_restricted_history.py"
+      ],
+      "tests": [
+        "python -B -m pytest -o addopts='' --import-mode=importlib tests/r8 -q"
+      ],
+      "dod": [
+        "New independently scoped CAS records; missing Lean obligations remain blocked.",
+        "All-row mock1 and fixed mock3/4/5 with actual results; product-keyed live law execution.",
+        "Independent source-bound review and non-force pushed commit; preserve R7 results and STOP_INVALID."
+      ],
+      "kill": "Any endpoint-rank promotion, missing-row deletion, stale law calibration, or inherited broad CAS PASS.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3",
+      "claim_tier_ceiling": "transfer-conditional",
+      "spec": "docs/research_program/tensor_joint_r8/LOCAL_CODEX_PLAN.md",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "USER_REQUESTED_PR467_FOLLOWUP",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-CATALOG-001",
+      "wave": 0,
+      "title": "Build static whole-history project catalog, SQLite queries and Korean navigation",
+      "owner": "COMMON",
+      "depends": [
+        "PR-000"
+      ],
+      "files": [
+        "scripts/project_catalog.py",
+        "scripts/catalog_lib",
+        "tests/project_catalog",
+        "docs/project_catalog"
+      ],
+      "tests": [
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -B -m pytest -c /dev/null -p no:cacheprovider --confcutdir=tests/project_catalog tests/project_catalog -q",
+        "python3 -B scripts/project_catalog.py check"
+      ],
+      "dod": [
+        "All declared history and connected sources have explicit processing coverage",
+        "Version-bound feature, analysis, proposition and update queries work",
+        "Only catalog code is tested; no research/proof execution or scientific promotion",
+        "Compressed SQLite restores and queries from fresh remote checkout"
+      ],
+      "kill": "Preserve incomplete source/parse statuses; never promote recorded PASS or ACTIVE to a current proof or execution result.",
+      "level": "L0",
+      "scope": "static_project_navigation",
+      "risk": "low",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-CATALOG-002",
+      "wave": 0,
+      "title": "Separate existing proof evidence from unconfirmed propositions across the catalog",
+      "owner": "COMMON",
+      "depends": [
+        "PR-CATALOG-001"
+      ],
+      "files": [
+        "scripts/project_catalog.py",
+        "scripts/catalog_lib/proofs.py",
+        "scripts/catalog_lib/proof_sources.py",
+        "scripts/catalog_lib/proof_discovery.py",
+        "tests/project_catalog",
+        "docs/project_catalog/proofs"
+      ],
+      "tests": [
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -B -m pytest -c /dev/null -p no:cacheprovider --confcutdir=tests/project_catalog tests/project_catalog -q"
+      ],
+      "dod": [
+        "Every proposition and proof proposal discovery hit has a classified or excluded outcome",
+        "Confirmed support binds statement, assumptions, exact existing evidence and version",
+        "Read-only database, no research/proof execution or scientific promotion",
+        "Deterministic offline export and fresh remote readback"
+      ],
+      "kill": "No confirmation from ACTIVE, PASS, matching IDs or file presence alone. Unresolved support remains unconfirmed.",
+      "level": "L0",
+      "scope": "static_proof_evidence_navigation",
+      "risk": "R2",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-CATALOG-003",
+      "wave": 0,
+      "title": "Distinguish historically proposed research theorems from internal auxiliary propositions",
+      "owner": "COMMON",
+      "depends": [
+        "PR-CATALOG-002"
+      ],
+      "files": [
+        "scripts/catalog_lib/proof_roles.py",
+        "scripts/project_catalog.py",
+        "docs/project_catalog/proofs/roles",
+        "tests/project_catalog"
+      ],
+      "tests": [
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -B -m pytest -c /dev/null -p no:cacheprovider --confcutdir=tests/project_catalog tests/project_catalog -q"
+      ],
+      "dod": [
+        "Every current proof-list item retains its identity and receives an evidence-bound role or explicit unresolved/excluded outcome",
+        "Historical proposal intent and auxiliary use remain separate from proof status and scholarly novelty",
+        "Read-only sources and deterministic offline export; ordinary push and remote readback"
+      ],
+      "kill": "No novelty claim from a theorem name, proposal path, proof status, or missing proposal match alone.",
+      "level": "L0",
+      "scope": "static_research_role_navigation",
+      "risk": "R1",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-CATALOG-004",
+      "wave": 0,
+      "title": "Publish comprehensive Korean mathematics physics and statistics compendium",
+      "owner": "COMMON",
+      "depends": [
+        "PR-CATALOG-003"
+      ],
+      "files": [
+        "docs/research_reports/theory_synthesis_20260913",
+        "docs/project_catalog/README.md"
+      ],
+      "tests": [
+        "python3 docs/research_reports/theory_synthesis_20260913/build_report.py",
+        "python3 docs/research_reports/theory_synthesis_20260913/check_report.py"
+      ],
+      "dod": [
+        "All investigated research branches mapped to latest retained source formulations",
+        "Tensorized MES kinematics and statistical successors, morphology, depth discrimination, invariants and possessed-data theorem uses explained",
+        "Korean Markdown and PDF with versioned sources, 172 proposal sections and coverage index",
+        "Static source review, Academic Writing Toolkit, independent review, PDF and link checks; ordinary push and remote readback"
+      ],
+      "kill": "No new proof or research execution, source-status promotion or native family identification; preserve original checkout and database.",
+      "level": "L0",
+      "scope": "research_theory_compendium",
+      "risk": "R1",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-R9-REV2",
+      "wave": 0,
+      "title": "Upgrade R9 with correlated depth laws and joint tensor confidence images",
+      "owner": "COMMON",
+      "depends": [
+        "PR-CATALOG-004"
+      ],
+      "files": [
+        "docs/research_program/tensor_joint_r9",
+        ".agent-harness/runs/R9-REV2-20260912",
+        ".agent-harness/runs/R9-HARNESS-20260913",
+        ".agent-harness/runs/R9-HARNESS-BOTH-20260913",
+        "harness/physmath-research-gpt6-astra",
+        "harness/physmath-coding-gpt6-astra",
+        "harness/archives/physmath-research-harness-gpt6-astra-v4.0.0-20260908.zip",
+        "harness/archives/physmath-coding-harness-gpt6-astra-v4.0.0-20260908.zip"
+      ],
+      "tests": [
+        "python3 harness/physmath-research-gpt6-astra/tools/validate_workspace.py",
+        "python3 harness/physmath-coding-gpt6-astra/tools/validate_harness.py --json",
+        "python3 docs/research_program/tensor_joint_r9/revision2/run_checks.py",
+        "python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "dod": [
+        "Import exact predecessor R9 directory and upgrade existing program using pinned compendium and role sources",
+        "Direct derivations and reproducible covariance, support, information-loss and STF fibre reference experiments with independent research review",
+        "Thirty-node model-to-real-data DAG and product-specific law, calibration, tensor-functional and handoff contracts",
+        "Preserve production, observational, novelty and four-axis holds; preserve historical unavailable activation; record 2026-09-13 research and coding package acquisition/application separately",
+        "Ordinary commit/push with remote readback and canonical mirrors synchronized"
+      ],
+      "kill": "Synthetic research does not admit actual product laws; unavailable cross-covariance and physical providers remain explicit; no native solver or PR4 work.",
+      "level": "L0",
+      "scope": "substantive_research_and_design_upgrade",
+      "risk": "R2",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-R9-INTAKE",
+      "wave": 0,
+      "title": "Implement R9 shared product intake and complete covariance paths",
+      "owner": "COMMON",
+      "depends": [
+        "PR-R9-REV2"
+      ],
+      "files": [
+        "htt/src/common/depth_path.py",
+        "htt/src/common/r9_product.py",
+        "htt/src/common/tensor_functionals.py",
+        "htt/htt/htt/infer/r9_depth_law.py",
+        "htt/htt/htt/infer/r9_confidence_image.py",
+        "htt/obsstat/r9_product_intake.py",
+        "scripts/observed_runs/run_tensor_joint_r9_product.py",
+        "tests/r9",
+        "docs/research_program/tensor_joint_r9/revision2/implementation"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt:htt/htt python3 -m pytest -q tests/r9 htt/src/common/test_r9_depth_path.py htt/src/common/test_r9_tensor_functionals.py",
+        "python3 docs/research_program/tensor_joint_r9/revision2/run_checks.py",
+        "python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "dod": [
+        "Verify exact GPT-6 archives and continue revision 2 from 9e9539ed without overwriting prior evidence",
+        "Complete H C H-transpose including cross terms and preserve original or initial-plus-contrast observation, mean and response",
+        "Preserve singular support, missing and fitted-law refusals, and require common state-jet-anchor coverage for physical images",
+        "Execute and independently review one retained DESI release-conditional product under unchanged alpha budgets",
+        "Preserve all formal, empirical and physical holds; synchronize state and handoff; commit and ordinary push/readback"
+      ],
+      "kill": "No native solver, scientific admission, invented multi-depth product, quarantine reuse or alpha redistribution; reference replay runs in an isolated source copy.",
+      "level": "L0",
+      "scope": "r9_scoped_implementation_and_conditional_product",
+      "risk": "R2",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-R9-MULTIDEPTH",
+      "wave": 0,
+      "title": "Replay real SDSS PV depth features with complete catalogue mock covariance",
+      "owner": "OBSSTAT",
+      "depends": [
+        "PR-R9-INTAKE"
+      ],
+      "files": [
+        "htt/obsstat/sdss_pv_depth.py",
+        "scripts/observed_runs/run_sdss_pv_depth.py",
+        "tests/r9/test_sdss_pv_depth.py",
+        "docs/research_program/tensor_joint_r9/revision2/multidepth"
+      ],
+      "tests": [
+        "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q tests/r9/test_sdss_pv_depth.py",
+        "python3 scripts/observed_runs/run_sdss_pv_depth.py --help",
+        "python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "dod": [
+        "Bind the official SDSS PV v1.1.0 data and complete 2048-mock release by published checksums",
+        "Repeat fixed depth selection and angular extraction on each complete catalogue and retain full sample Cjk, mean, response and initial block",
+        "Preserve mock rows with repeated source IDs, whole-box training/evaluation separation and free shared zero-point degeneracy",
+        "Explicitly withhold raw-survey law and physical coverage where upstream fitted selection, group-richness and CF3 calibration repetitions are unavailable",
+        "Independent review and coherent repair closeout, canonical handoff and ordinary push/readback"
+      ],
+      "kill": "Estimated mock moments are not a known Gaussian or calibrated physical law; no p-value, budget transfer, CF4 quarantine reuse, native solver or R9 capability admission.",
+      "level": "L0",
+      "scope": "r9_real_multidepth_release_feature_diagnostic",
+      "risk": "R2",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-R9-SELECTED-LAW",
+      "wave": 0,
+      "title": "Connect public CF3 calibration inputs to the SDSS depth path",
+      "owner": "HTT",
+      "depends": [
+        "PR-R9-MULTIDEPTH"
+      ],
+      "files": [
+        "htt/htt/htt/infer/sdss_cf3_calibration.py",
+        "scripts/observed_runs/run_sdss_cf3_calibration.py",
+        "tests/r9/test_sdss_cf3_calibration.py",
+        "docs/research_program/tensor_joint_r9/revision2/selected_law"
+      ],
+      "tests": [
+        "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q tests/r9/test_sdss_cf3_calibration.py",
+        "python3 scripts/observed_runs/run_sdss_cf3_calibration.py --help",
+        "python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "dod": [
+        "Acquire public CF3 and Tempel calibration inputs and identify exact unavailable pre-selection, FP, richness and anchor inputs",
+        "Execute a public PGC calibration diagnostic with explicit distance and weighting conventions",
+        "Connect the same fitted shared offset to all depths, retaining input cross terms and the initial observation block",
+        "Validate the bounded implementation independently without claiming full-survey refitting, physical response or coverage",
+        "Preserve existing evidence and HOLDs; update canonical state and handoff; commit and push with remote readback"
+      ],
+      "kill": "Public overlap and point-estimator execution do not admit the selected observation law; no group-calibration substitution, covariance zero-fill, new alpha or physical local/global inference.",
+      "level": "L0",
+      "scope": "r9_public_calibration_input_connection",
+      "risk": "R2",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-R9-FIBRE",
+      "wave": 0,
+      "title": "Reproduce fixed ambient STF support across coordinate bases",
+      "owner": "COMMON",
+      "depends": [
+        "PR-R9-SELECTED-LAW"
+      ],
+      "files": [
+        "scripts/observed_runs/check_r9_ambient_fibre.py",
+        "tests/r9/test_ambient_fibre.py",
+        "docs/research_program/tensor_joint_r9/revision2/ambient_fibre"
+      ],
+      "tests": [
+        "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q tests/r9 htt/src/common/test_r9_depth_path.py htt/src/common/test_r9_tensor_functionals.py",
+        "python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "dod": [
+        "Fix ambient STF q, a and v before coordinate conversion and compare sign, permutation and rotated bases in two existing environments",
+        "Compare support and ambient witnesses to a Cartesian reference at the inherited tolerance, preserving the original evidence and a changed-target negative control",
+        "Complete an independent scoped numerical review and a bounded remaining-input readiness map",
+        "Preserve all scientific HOLDs and alpha budgets; synchronize canonical state, commit and push with remote-ref verification"
+      ],
+      "kill": "Finite numerical comparisons do not certify arbitrary bases, boundaries, uncertain-q fibres, four-axis CAS or survey coverage; no separate verification worktree or clone.",
+      "level": "L0",
+      "scope": "r9_fixed_ambient_fibre_numerical_reproduction",
+      "risk": "R2",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-R9-DEPTH-FORMAL",
+      "wave": 0,
+      "title": "Execute current depth proof obligations and preserve incomplete admission",
+      "owner": "COMMON",
+      "depends": [
+        "PR-R9-FIBRE"
+      ],
+      "files": [
+        "docs/research_program/tensor_joint_r9/revision2/depth_formal",
+        ".agent-harness/runs/R9-THEORY-20260914"
+      ],
+      "tests": [
+        "python3 .agent-harness/scripts/cas_gate.py run-adjudicate --contract docs/research_program/tensor_joint_r9/revision2/depth_formal/CAS_D1.json --run-spec docs/research_program/tensor_joint_r9/revision2/depth_formal/run_D1.json",
+        "python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "dod": [
+        "Bind D1 and D3 then D2 and D4 to separate current contracts and R9-24 consumer obligations",
+        "Run four independently authored engine attempts and parent-observed adjudication for each proposition",
+        "Preserve actual errors and coherent repairs, exact checked scope and missing general or probabilistic proof obligations",
+        "Keep FORMAL_DEPTH and DEPTH_METHOD blocked unless all full obligations pass; retain existing direct derivations as prior results",
+        "Update canonical state and staged push with remote-ref verification in the existing worktree"
+      ],
+      "kill": "No finite fixture or compiled helper substitutes for arbitrary block or Gaussian proof; no policy weakening, new data acquisition, old-product replay, extra verification worktree, or scientific admission from process success.",
+      "level": "L0",
+      "scope": "r9_proposition_specific_formal_attempt_and_scope_adjudication",
+      "risk": "R3",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-R9-MOVING-Q",
+      "wave": 0,
+      "title": "Derive and independently review moving-q fibre stability",
+      "owner": "COMMON",
+      "depends": [
+        "PR-R9-DEPTH-FORMAL"
+      ],
+      "files": [
+        "docs/research_program/tensor_joint_r9/revision2/moving_q"
+      ],
+      "tests": [
+        "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 docs/research_program/tensor_joint_r9/revision2/moving_q/check_moving_q.py --output /tmp/r9-moving-q-new.json",
+        "python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "dod": [
+        "Derive explicit uniform and interior Hausdorff bounds in the shared ambient STF frame with centre, projection and radius control",
+        "Separate nonempty, singleton and empty fibres; retain prior fixed-q support and sharpness source statuses and raw-Q amplitude conditions",
+        "Execute new synthetic falsification controls and independent proof, constants, boundary and actual-diff review with preserved failures",
+        "Keep scientific and four-axis admission separate; update revision2 canonical state and push with remote-ref verification"
+      ],
+      "kill": "No plug-in q, convex-hull substitution, empty-fibre finite distance, observational inference, policy weakening, old experiment replay, or separate verification checkout.",
+      "level": "L0",
+      "scope": "r9_moving_q_deterministic_fibre_theory",
+      "risk": "R2",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-R9-DEPTH-MATHLIB",
+      "wave": 0,
+      "title": "Formalize general Lean depth components using installed mathlib",
+      "owner": "COMMON",
+      "depends": [
+        "PR-R9-MOVING-Q"
+      ],
+      "files": [
+        "formal/R9Depth",
+        "docs/research_program/tensor_joint_r9/revision2/depth_formal/mathlib",
+        "docs/research_program/tensor_joint_r9/revision2/depth_formal/block_bridge",
+        "docs/research_program/tensor_joint_r9/revision2/depth_formal/binding_diagnosis",
+        "docs/research_program/tensor_joint_r9/revision2/depth_formal/client_maintenance",
+        ".agent-harness/runs/R9-DEPTH-MATHLIB-20260914"
+      ],
+      "tests": [
+        "See block_bridge/README.md for the source-bound general matrix proof compilation",
+        "See mathlib/README.md for the pinned cache and source-bound Lean execution commands",
+        "python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "dod": [
+        "Compile both heterogeneous reconstruction compositions for arbitrary compatible real blocks with no sorry or target axioms",
+        "Discharge or precisely identify the remaining unchanged D1-D4 obligations and require all axes before formal admission",
+        "Complete independent scoped proof and source review and one coherent repair closeout",
+        "Trace actual proof compilation and verify captured trace and span records",
+        "Preserve scientific HOLDs and original evidence; update state and push with remote-ref verification"
+      ],
+      "kill": "Independent review admission is blocked by CHILD_BINDING_MISSING despite self-declared result artifacts; no whole-run PASS, FORMAL_DEPTH release, dependent research launch, policy weakening or verification checkout.",
+      "level": "L0",
+      "scope": "r9_general_lean_depth_components",
+      "risk": "R3",
+      "user_authorized": true
+    },
+    {
+      "id": "PR-MES-R7-SOURCE-IMAGE",
+      "wave": 0,
+      "title": "Implement the conditional four-parameter frozen source image",
+      "owner": "COMMON",
+      "depends": [
+        "PR-R9-INTAKE"
+      ],
+      "files": [
+        "htt/src/common/conditional_source_image.py",
+        "htt/obsstat/mes_r7_source_image.py",
+        "htt/src/common/test_conditional_source_image.py",
+        "docs/research_program/mes_r7/README.md"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt:htt/htt python3 -m pytest -q htt/src/common/test_conditional_source_image.py"
+      ],
+      "dod": [
+        "One frozen replay with preregistered numerical comparisons and separate byte identity",
+        "Validated four-variable box kernel and a real conditional adapter consumer",
+        "One bounded independent implementation review and targeted repair closeout",
+        "Preserve R9 D2 D4 FORMAL_DEPTH status, budgets, failures and scientific HOLDs"
+      ],
+      "kill": "No physical inference, ellipsoid implementation claim, native solver, production enable or remote mutation.",
+      "level": "L0",
+      "scope": "owner_authorized_independent_conditional_source_image_slice",
+      "risk": "R2",
+      "user_authorized": true,
+      "authorization": "User message 2026-09-21 21:58 KST; MES_R7_CONDITIONAL_SOURCE_IMAGE_IMPLEMENTATION independent of R9 execution priority."
+    },
+    {
+      "id": "PR-REPLAN-20260927",
+      "wave": 0,
+      "title": "Reconcile all remaining planning requirements with the current implementation DAG",
+      "owner": "COMMON",
+      "depends": [
+        "PR-CATALOG-004"
+      ],
+      "files": [
+        "docs/codex_handoff/remaining_pr_crosswalk.csv",
+        "docs/codex_handoff/REMAINING_PR_EXECUTION_PLAN_KO.md",
+        "scripts/codex_harness/validate_remaining_pr_replan.py",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "scripts/codex_harness/test_pr_dag_harness.py"
+      ],
+      "tests": [
+        "python3 -B scripts/codex_harness/validate_remaining_pr_replan.py",
+        "python3 -B scripts/codex_harness/sync_pr_dag_mirrors.py --check",
+        "python3 -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "python3 -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_pr_dag_harness.py"
+      ],
+      "dod": [
+        "Map every non-completed canonical card and each current-repository planning family to implementation evidence, a typed disposition and a successor lane",
+        "Separate implemented capability, failed or held execution, external input dependency, supersession and genuinely unimplemented work",
+        "Synchronize canonical YAML, JSON, Mermaid and machine-readable mirrors",
+        "Preserve R9 task identity, recorded usage, failed receipts, scientific HOLDs and the primary-checkout policy"
+      ],
+      "kill": "No D2 or D4 proof implementation, observational rerun, native solver implementation, scientific claim promotion, new worktree or remote publication in this replan PR.",
+      "level": "L0",
+      "scope": "current_repo_remaining_work_reconciliation",
+      "risk": "R1",
+      "user_authorized": true,
+      "authorization": "User request 2026-09-27 to implement the approved current-code remaining-PR integration plan."
     }
   ]
 }

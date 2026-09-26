@@ -448,6 +448,11 @@ def _pr_range(first: int, last: int) -> list[str]:
     return [f"PR-{number:03d}" for number in range(first, last + 1)]
 
 
+def _numeric_pr_number(pr_id: str) -> int | None:
+    match = re.fullmatch(r"PR-(\d+)", pr_id)
+    return int(match.group(1)) if match else None
+
+
 def _require_string_list(card: dict[str, Any], field: str) -> list[str]:
     value = card.get(field)
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
@@ -553,7 +558,10 @@ def _validate_rescue_status(status: dict[str, Any], info: DagInfo) -> None:
     if not isinstance(resolutions, dict):
         raise ValueError("status execution_resolutions must be a mapping")
     rescue_ids = {
-        pr_id for pr_id in info.ids if int(pr_id[-3:]) >= RESCUE_FIRST_PR
+        pr_id
+        for pr_id in info.ids
+        if (number := _numeric_pr_number(pr_id)) is not None
+        and number >= RESCUE_FIRST_PR
     }
     terminal = set(states["completed"]) | set(states["blocked"]) | set(states["skipped"])
     expected_resolutions_by_bucket = {
@@ -638,18 +646,53 @@ def validate_long_horizon_rescue_slice(
             "legacy-revival round-2 intake must be atomic; "
             f"missing={sorted(revival_ids - actual_revival_ids)}"
         )
-    expected_total = (
+    expected_core_total = (
         RESCUE_WITH_ADVOCATE_CARD_COUNT
         if actual_advocate_ids
         else RESCUE_PRE_ADVOCATE_CARD_COUNT
     )
     if actual_strengthen_ids:
-        expected_total += STRENGTHEN_CARD_COUNT
+        expected_core_total += STRENGTHEN_CARD_COUNT
     if actual_revival_ids:
-        expected_total += REVIVAL_CARD_COUNT
-    if len(info.ids) != expected_total:
+        expected_core_total += REVIVAL_CARD_COUNT
+
+    policy = data.get("policy")
+    if not isinstance(policy, dict):
+        raise ValueError("policy must be a mapping")
+    extension_obj = policy.get("strict_extension_cards", [])
+    if not isinstance(extension_obj, list) or any(
+        not isinstance(value, str) or not value for value in extension_obj
+    ):
+        raise ValueError("policy.strict_extension_cards must be a string list")
+    extension_ids = set(extension_obj)
+    if len(extension_ids) != len(extension_obj):
+        raise ValueError("policy.strict_extension_cards contains duplicates")
+    unknown_extensions = sorted(extension_ids - actual_ids)
+    if unknown_extensions:
         raise ValueError(
-            f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
+            "policy.strict_extension_cards references unknown cards: "
+            f"{unknown_extensions}"
+        )
+    unregistered_extensions = sorted(
+        pr_id
+        for pr_id in actual_ids
+        if pr_id not in extension_ids
+        and (
+            (number := _numeric_pr_number(pr_id)) is None
+            or number > REVIVAL_LAST_PR
+        )
+    )
+    if unregistered_extensions:
+        raise ValueError(
+            "strict rescue slice has unregistered extension cards: "
+            f"{unregistered_extensions}"
+        )
+    actual_core_total = len(actual_ids - extension_ids)
+    if actual_core_total != expected_core_total:
+        raise ValueError(
+            "strict rescue slice expects "
+            f"{expected_core_total} historical cards, found {actual_core_total}; "
+            f"registered_extensions={len(extension_ids)}"
         )
 
     if actual_advocate_ids:

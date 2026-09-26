@@ -124,6 +124,34 @@ def test_validate_can_write_mermaid_graph_from_backlog(tmp_path: Path) -> None:
     assert "PR_000 --> PR_003" in rendered
 
 
+def test_current_strict_slice_accepts_only_registered_extensions() -> None:
+    completed = _run(
+        str(VALIDATOR),
+        str(REPO_ROOT / "docs/codex_handoff/pr_backlog.yaml"),
+        "--status",
+        str(REPO_ROOT / "docs/codex_handoff/pr_status.yaml"),
+        "--strict-rescue-slice",
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert "DAG valid" in completed.stdout
+
+
+def test_strict_slice_rejects_an_unregistered_extension(tmp_path: Path) -> None:
+    backlog = yaml.safe_load(
+        (REPO_ROOT / "docs/codex_handoff/pr_backlog.yaml").read_text(encoding="utf-8")
+    )
+    backlog["policy"]["strict_extension_cards"].remove("PR-REPLAN-20260927")
+    mutated = tmp_path / "backlog.yaml"
+    _write_yaml(mutated, backlog)
+
+    completed = _run(str(VALIDATOR), str(mutated), "--strict-rescue-slice")
+
+    assert completed.returncode != 0
+    assert "unregistered extension cards" in completed.stderr
+    assert "PR-REPLAN-20260927" in completed.stderr
+
+
 def test_progress_report_orders_unblocked_by_policy_and_reports_weighted_metrics(
     tmp_path: Path,
 ) -> None:

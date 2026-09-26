@@ -1,4 +1,4 @@
-generated_on: '2026-06-11'
+generated_on: '2026-09-27'
 scope: htt_base_pre_native_lowell_solver_codex_dag_v2
 policy:
   topological_order:
@@ -200,6 +200,23 @@ policy:
   - PR-CATALOG-002
   - PR-CATALOG-003
   - PR-CATALOG-004
+  - PR-REPLAN-20260927
+  - PR-R9-REV2
+  - PR-R9-INTAKE
+  - PR-R9-MULTIDEPTH
+  - PR-R9-SELECTED-LAW
+  - PR-R9-FIBRE
+  - PR-R9-DEPTH-FORMAL
+  - PR-R9-MOVING-Q
+  - PR-R9-DEPTH-MATHLIB
+  - PR-MES-R7-SOURCE-IMAGE
+  strict_extension_cards:
+  - PR-247
+  - PR-CATALOG-001
+  - PR-CATALOG-002
+  - PR-CATALOG-003
+  - PR-CATALOG-004
+  - PR-REPLAN-20260927
   - PR-R9-REV2
   - PR-R9-INTAKE
   - PR-R9-MULTIDEPTH
@@ -10212,3 +10229,32 @@ prs:
   risk: R2
   user_authorized: true
   authorization: User message 2026-09-21 21:58 KST; MES_R7_CONDITIONAL_SOURCE_IMAGE_IMPLEMENTATION independent of R9 execution priority.
+
+- id: PR-REPLAN-20260927
+  wave: 0
+  title: Reconcile all remaining planning requirements with the current implementation DAG
+  owner: COMMON
+  depends:
+  - PR-CATALOG-004
+  files:
+  - docs/codex_handoff/remaining_pr_crosswalk.csv
+  - docs/codex_handoff/REMAINING_PR_EXECUTION_PLAN_KO.md
+  - scripts/codex_harness/validate_remaining_pr_replan.py
+  - scripts/codex_harness/validate_pr_dag.py
+  - scripts/codex_harness/test_pr_dag_harness.py
+  tests:
+  - python3 -B scripts/codex_harness/validate_remaining_pr_replan.py
+  - python3 -B scripts/codex_harness/sync_pr_dag_mirrors.py --check
+  - python3 -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - python3 -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_pr_dag_harness.py
+  dod:
+  - Map every non-completed canonical card and each current-repository planning family to implementation evidence, a typed disposition and a successor lane
+  - Separate implemented capability, failed or held execution, external input dependency, supersession and genuinely unimplemented work
+  - Synchronize canonical YAML, JSON, Mermaid and machine-readable mirrors
+  - Preserve R9 task identity, recorded usage, failed receipts, scientific HOLDs and the primary-checkout policy
+  kill: No D2 or D4 proof implementation, observational rerun, native solver implementation, scientific claim promotion, new worktree or remote publication in this replan PR.
+  level: L0
+  scope: current_repo_remaining_work_reconciliation
+  risk: R1
+  user_authorized: true
+  authorization: User request 2026-09-27 to implement the approved current-code remaining-PR integration plan.
