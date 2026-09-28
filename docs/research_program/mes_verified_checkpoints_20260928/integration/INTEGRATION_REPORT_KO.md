@@ -23,4 +23,4 @@ I1/I2 안의 원문·실패 기록·과거 후보·독립 검토·상태·검증
 - `pytest scripts/codex_harness/test_pr_dag_harness.py`: 42 passed.
 - 작성 문서·DAG의 staged `git diff --check`: PASS. 역사적 I1/I2 원문에는 원래 CRLF와 끝 공백이 있어 전체 staged diff에는 whitespace 경고가 있다. 원본 바이트 동일성이 수락 기준이므로 이 파일들을 공백 교정하지 않았다.
 
-Host 자체 검토에서 원본/매핑 유일성, Git filter 영향, 기존 사용자 변경, claim 문구, 상대 링크를 확인했다. 추가 과학 감사 루프는 실행하지 않았다.
+Host 자체 검토에서 원본/매핑 유일성, Git filter 영향, 기존 사용자 변경, claim 문구, 상대 링크를 확인했다. 등록 commit `ddf13fdc834c50c350a9d15d08321f0ee945065c`의 tree에서도 702개 blob이 원본 계산값과 같았다. 이 commit은 `origin/main`에 fast-forward 게시되었고 원격 tree 및 I1/I2 대표 blob 2개가 확인되었다. 추가 과학 감사 루프는 실행하지 않았다.
